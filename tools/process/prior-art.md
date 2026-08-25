@@ -58,36 +58,39 @@ relation). **Run the LADDER in § 2a** — it has four rungs and the last one is
 arXiv-era literature) against cases where this project already knew the answer. The measurements are
 in § 2b; the rungs below are what they license.**
 
-**Rung 0 — `.claude-local/papers/` FIRST.** The downloaded-source library. Cheapest rung, and a scout
+**Rung 1 — `.claude-local/papers/` FIRST.** The downloaded-source library. Cheapest rung, and a scout
 once declared Aczel unobtainable while it sat on disk. **Grep loosely** — scanned books carry OCR'd
 intra-word spaces, so a tight-pattern miss is not evidence of absence.
 
-**Rung 1 — `theoremsearch`.** Claim-shaped rather than file-shaped: it matches on *statement*, which is
+**Rung 2 — `theoremsearch`.** Claim-shaped rather than file-shaped: it matches on *statement*, which is
 the thing a title search cannot reach. Three standing rules, each measured:
-- **THREE PHRASINGS MINIMUM**, along the § *NOT IN THE LIBRARY IS A CLAIM* step (c) axes. Measured: the
+- **THREE PHRASINGS MINIMUM**, along the four axes in § `R-NOTINLIB` (body:
+  `tools/process/not-in-the-library.md`) — POLARITY, PART OF SPEECH, VOCABULARY, DISPLAY. Measured: the
   noun form put the right theorem at rank 1 and the **verb** form dropped it out of the top 5 entirely,
   same claim, same index. **A single-phrasing negative is worthless.**
-- **IGNORE THE SIMILARITY SCORE.** It is anti-correlated with relevance in the measured range — pure
-  noise scored 0.69 and genuine prior art scored 0.61, and an unrelated algebraic-geometry lemma
-  outranked the correct coalgebra theorem at 0.71. Any threshold keeping the garbage discards the find.
+- **IGNORE THE SIMILARITY SCORE.** **No threshold keeps the garbage out without discarding the find** —
+  pure noise scored 0.69 while genuine prior art scored 0.61, and an unrelated algebraic-geometry lemma
+  outranked the correct coalgebra theorem at 0.71. ⚠ That is a claim about THRESHOLDS, not that the
+  score runs backwards: exact statements of Lawvere's fixed-point theorem have come back at 0.676-0.686,
+  and other exact hits at 0.834 and 0.777. **Rank by reading; never filter on the number.**
   This is DC-17's *ignore self-reported confidence* arriving through a new door: the score **is** the
   API's confidence.
 - **A NULL RESULT IS UNINFORMATIVE.** The index is coverage-bounded and the bound is invisible from the
-  result. Never write "no prior art exists" from a rung-1 null; it does not even license
-  "none located as of &lt;date&gt;" on its own, because rung 2 has not run yet.
+  result. Never write "no prior art exists" from a rung-2 null; it does not even license
+  "none located as of &lt;date&gt;" on its own, because rung 3 has not run yet.
 
-**Rung 2 — the open web.** Runs when rung 1 returns no good match, **and also when it returns a
+**Rung 3 — the open web.** Runs when rung 2 returns no good match, **and also when it returns a
 neighbourhood hit whose actual source needs identifying**. This is where everything pre-arXiv lives —
 Lawvere 1969, Aczel 1988, Ostrowski, Gentzen, Carlström — and `theoremsearch` structurally cannot return
-those as sources, only as things other people cite. Skipping rung 2 on a rung-1 null is how a coverage
+those as sources, only as things other people cite. Skipping rung 3 on a rung-2 null is how a coverage
 gap becomes a recorded novelty claim.
 
-**Rung 3 — RETRIEVE AND READ THE FULL DOCUMENT.** File it in `papers/` as `author_topic_year[_id].pdf`,
+**Rung 4 — RETRIEVE AND READ THE FULL DOCUMENT.** File it in `papers/` as `author_topic_year[_id].pdf`,
 **validating before filing** (a tiny PDF is an error page, not a paper). **A citation is not confirmed
 until this rung.** Draft-from-source is unchanged by any of the above: existence may be cited freely; a
 source's *content* may not be asserted without the passage in hand.
 
-⚠ **RUNGS 1 AND 2 ARE DISCOVERY. ONLY RUNG 3 IS VERIFICATION.** The ladder makes finding candidates
+⚠ **RUNGS 1-3 ARE DISCOVERY. ONLY RUNG 4 IS VERIFICATION.** The ladder makes finding candidates
 cheaper; it does not make any of them citable. See § 2b for the measurement that settles this.
 
 ## 2b. Why the ladder is shaped this way — the calibration, 2026-08-23
@@ -216,11 +219,11 @@ knowledge already lives there, so this prevents false-positive "gaps" — the Br
 already cited in `PadicTree.lean`, and a web-first sweep once "rediscovered" it.
 
 **The adversary gate detects, it does not search.** If a distinctive cross-field claim lacks a
-specialist-branch citation — in the content or in the CLAIMS Convergence ledger — and there is no
-`pa_cleared.txt` covering the push, it adds a kill-list item; `ar_cleared.txt` is withheld and the
-pre-push hook blocks.
+specialist-branch citation — in the content or in the CLAIMS Convergence ledger — and the ledger step
+`prior_art` is not recorded and current for the push, it adds a kill-list item; the adversary gate
+then records a FAIL rather than reporting a PASS, and the push stays blocked.
 
-**The pre-push hook also checks `pa_cleared.txt` directly** on trigger 5 — a new `.lean` file, or
+**The pre-push hook also checks the `prior_art` step directly** on trigger 5 — a new `.lean` file, or
 ≥50 net `.lean` lines in the push. This closes the library-duplication leak: a non-synthesis `.lean`
 re-proof of an existing library lemma (a `lawvere_fixedpoint` duplicating Mathlib's
 `Function.exists_fixed_point_of_surjective`) carries no synthesis claim for the adversary to detect,
@@ -231,7 +234,7 @@ synthesis claim in the target field's terms, searches for and **reads from sourc
 branch, and either cites it — with the honest delta, credit pointing outward — or records "searched,
 none found". For a new or substantially-expanded `.lean` file the scope also includes a
 **library-duplication check** on the file's central and named results, bounded to those rather than
-every helper lemma. On PASS it writes `.claude-local/pa_cleared.txt`.
+every helper lemma. It records its verdict in the verdictLedger under step `prior_art`.
 
 **Same-session self-review does not satisfy this.** The review must be a separate scout context with
 no conversation history.
@@ -245,7 +248,7 @@ identified prior art; `.claude-local/notes/prior_art_*` holds the per-search fin
 
 ## Prior-Art Search — Trigger Conditions and Gate
 
-The framework's value is its *delta* against prior art, so an uncited closest-prior-art reads as "unaware" — the crank-triage failure mode. **It BLOCKS at push:** the adversary gate detects synthesis-layer content and withholds `ar_cleared.txt`, and the pre-push hook checks `pa_cleared.txt` directly on trigger 5.
+The framework's value is its *delta* against prior art, so an uncited closest-prior-art reads as "unaware" — the crank-triage failure mode. **It BLOCKS at push:** the adversary gate detects synthesis-layer content and records a FAIL rather than reporting a PASS, and the pre-push hook checks the ledger's `prior_art` step directly on trigger 5.
 
 ### ⚠ TRIGGER 0 — SEARCH BEFORE YOU BUILD. Hard rule, and it is the cheapest one here.
 
@@ -296,7 +299,7 @@ the standard name cited instead.
 5. **A new `.lean` file, or a large net addition to one** (≥50 net `.lean` lines) — a substantial original *construction* is in-scope even if it is not a cross-field synthesis claim. This is the mechanical complement to synthesis-detection, and what would have caught ZP-D's `T` (the van der Put / Kozyrev ball-indicator ONB).
 
 **`/prior-art-review` is the deep gate**, a fresh-agent scout — same-session self-review does not
-satisfy it. On PASS it writes `.claude-local/pa_cleared.txt`. **The record:** the CLAIMS "Convergence
+satisfy it. It records its verdict in the verdictLedger under step `prior_art`. **The record:** the CLAIMS "Convergence
 with established work" table is the public ledger; `.claude-local/notes/prior_art_*` holds the
 per-search findings.
 

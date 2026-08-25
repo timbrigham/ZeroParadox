@@ -56,6 +56,7 @@ from vendored import is_vendored  # noqa: E402
 import vendored  # noqa: E402
 import report    # noqa: E402  the one formatter every entry point announces itself with
 import agent_gate  # noqa: E402  the interpretation layer — ADVISORY, never blocks (rung 5)
+import record      # noqa: E402  the ledger client — review freshness is asked, never re-derived
 STATE = os.path.join(PRIV, "batch_state.json")
 # The ones that GATE. `check_poles.py` is a counter with no baseline (REL-3) and is excluded
 # deliberately — see check_suite.
@@ -324,6 +325,161 @@ _LEG_NOUN = {"logic": "checker(s)", "switch": "exemption switch(es)", "docs": "r
 _LEG_BLOCKING = {"logic": True, "switch": True, "docs": False}
 
 
+# ⚠⚠ THE VERDICT REGISTRY — WRITTEN BY THE PRODUCER, NEVER BY THE CALLER. `RLY28-1`.
+#
+# Every fix before this one asked *"does the call site LOOK like it honours the result?"* — a
+# whole-file substring, then a windowed substring, then an AST shape test, then an AST Name test.
+# All four were defeated, because a caller that receives a number can always throw it away, and
+# `bad += routing_verdict(state, ranges) * 0` throws it away while leaving every one of those
+# tokens exactly where the test looks for it. Measured 2026-08-23: `prepush` went exit 1 → exit 0,
+# "prepush PASS", with three `/rely FAIL` rows still printed above it and `guards.py` at 81 ok / 0
+# FAIL.
+#
+# **So the caller stops being the one who reports the number.** A step records its own outcome HERE,
+# at the point it computes it, and `prepush_verdict()` reads the registry. `bad += f(...) * 0` is
+# then INERT rather than merely detectable — there is nothing left for the annihilation to delete.
+# Deleting the registry write instead moves the step out of `_EXPECTED`, and the completeness check
+# fails closed on the absence, which is the one thing a "warrant satisfied while empty" cannot do.
+#
+# ⚠ THIS IS NOT A SECOND VERDICT STORE. `bad` is gone from the enforcement path entirely; the
+# registry is the only place a push-time failure count lives, so there is nothing to drift against.
+_VERDICT = {}
+
+# Steps that MUST report before a verdict means anything. A step that never ran leaves no row, and
+# absence-of-evidence is exactly what this project keeps mistaking for success — so it is an error.
+_EXPECTED = ("routing",)
+
+
+def verdict_reset():
+    """Start a push judgement. Called ONCE, at the top of the run that will be judged."""
+    _VERDICT.clear()
+
+
+def verdict_record(step, failures):
+    """Record one step's failure count. ⚠ Called BY THE STEP, never by whoever consumes it."""
+    _VERDICT[step] = int(failures)
+    return _VERDICT[step]
+
+
+def prepush_verdict():
+    """The push verdict: (failures, missing_steps). ⚠ A MISSING STEP IS NOT A PASS.
+
+    Returns the total only alongside the steps that never reported, so a caller cannot read a
+    zero out of a registry that is empty because nothing ran.
+
+    ⚠ THIS IS THE QUERY, NOT THE ENFORCEMENT. Call `enforce_prepush_verdict` to act on it — a
+    returned number is a number a caller can throw away, which is the whole history below."""
+    missing = tuple(s for s in _EXPECTED if s not in _VERDICT)
+    return sum(_VERDICT.values()), missing
+
+
+def enforce_prepush_verdict(other_bad=0):
+    """DECIDE AND ACT IN ONE UNIT. Returns None on success; otherwise it does not return at all.
+
+    ⚠⚠ ATTEMPT SIX, AND THE FIRST FIVE ALL DIED THE SAME DEATH. Every previous repair left the
+    verdict as a VALUE HANDED TO THE CALLER, and a caller handed a value can discard it:
+
+        bad += routing_verdict(state, ranges) * 0          <- defeated attempts 1-4
+        _routing_bad, _missing = 0, ()                     <- defeated attempt 5, measured 2026-08-24
+
+    That last one was found by a reliability trial against the fix written the same day: one added
+    line took `batch.py prepush` to **exit 0, "prepush PASS"**, printed directly under two live
+    `/rely FAIL` rows, while `guards.py` reported **81/81 ok** including all three brand-new
+    `push verdict registry:` rows, and the mutation probe reported **11 of 11**. Every control was
+    individually true and the artifact as a whole was worthless — because the controls call the
+    query in their own frame, where the property really does still hold.
+
+    **So the value is gone.** There is no number to zero, no tuple to rebind: this function reads the
+    registry and DIES. `other_bad` covers only the inline checks, so annihilating it (`* 0`) cannot
+    touch a routing failure — that count comes from the registry, written by its own producer.
+
+    ⚠ THE REMAINING SURFACE IS DELETION, AND IT IS DELIBERATELY THE ONLY ONE. Removing the call, or
+    wrapping it to swallow `SystemExit`, is loud: `guards.py` asserts the name is read inside
+    `cmd_prepush`, and `probe_routing_behavioural.py` runs `batch.py prepush` end to end and requires
+    a NON-ZERO EXIT — an observable no source-level trick can fake, which is what the first five
+    controls lacked."""
+    total, missing = prepush_verdict()
+    if missing:
+        # ⚠ A STEP THAT NEVER REPORTED IS NOT A PASS. An empty registry reads as "nothing ran",
+        # never as "nothing wrong" — the one thing a warrant-satisfied-while-empty cannot do.
+        die("push verdict incomplete — %s never reported. A step that did not run cannot have "
+            "passed; this is a fail-CLOSED refusal, not a finding about the corpus."
+            % ", ".join(missing))
+    if total + other_bad:
+        # ⚠ `RLY27-7`: routing failures are not "signals missing". Name what actually failed.
+        die("%d push check(s) failed — %d routing, %d other. Read the FAIL rows above."
+            % (total + other_bad, total, other_bad))
+
+
+def rely_record():
+    """The current `rely` ledger record as `{verdict, reason, subjects}`, or None if there is none.
+
+    None means BOTH "no record" and "the ledger could not be asked". They are different facts and
+    neither is coverage, so both land here — every caller treats None as fail-CLOSED."""
+    try:
+        out = record._call('inventory', {'ref': common.INDEX, 'action': 'push'})
+        if not out or not out.get('ok') or not isinstance(out.get('rows'), list):
+            return None
+        rid = None
+        for r in out['rows']:
+            if r.get('step') == 'rely':
+                rid = r.get('record_id')
+                break
+        if not rid:
+            return None
+        got = record._call('get', {'id': rid})
+        rec = (got or {}).get('record') or {}
+        return {"verdict": rec.get("verdict"), "reason": rec.get("reason") or "",
+                "subjects": rec.get("subjects") or []}
+    except Exception:                                          # noqa: BLE001 — cannot ask == none
+        return None
+
+
+def rely_reviewed_blobs():
+    """`{repo-relative path: blob id}` that the `rely` record covers, or None if it cannot be asked."""
+    rec = rely_record()
+    if rec is None:
+        return None
+    by_rel = {s.get("path", "").replace("\\", "/"): s.get("git_blob_id")
+              for s in rec["subjects"] if s.get("path")}
+    # ⚠ RE-KEYED TO THE `CHECKERS` ENTRY, to match `checker_blobs()`. The record stores repo-relative
+    # paths (it must — that is what a subject IS); the routing rows have always spoken in CHECKERS
+    # entries. Translating here keeps ONE vocabulary at the comparison and leaves the record honest.
+    out = {}
+    for c in CHECKERS:
+        r = os.path.relpath(_checker_path(c), REPO).replace("\\", "/")
+        if r in by_rel:
+            out[c] = by_rel[r]
+    return out
+
+
+def checker_blobs():
+    """`{CHECKERS entry: blob id}` from the INDEX — the ledger-keyed twin of `checker_hashes()`.
+
+    ⚠ BLOB IDS, NOT SHA-256 — the identifier the ledger keys on and the one git already has.
+    `checker_hashes()` still exists and still fingerprints content for the batch freeze; this is the
+    COMPARISON key. Keeping the two distinct is `gitRobot.md` § 12-0-quater's whole point: a field
+    named for something it does not hold is how two halves of one system disagree in silence.
+
+    ⚠ KEYED BY THE `CHECKERS` ENTRY, NOT BY PATH, so the row text and the `moved` list read exactly
+    as they did before the retirement.
+
+    ⚠ A MISSING FILE GETS `<ABSENT>`, NOT AN OMISSION — carried over from `checker_hashes()`, where
+    it was learned the hard way: skipping it meant DELETING a checker did not trip the routing,
+    because the key simply vanished and nothing compared unequal (/rely pass 2). A path the index
+    does not carry lands here too, which is the same fact for this purpose."""
+    rel_of, rels = {}, []
+    for c in CHECKERS:
+        p = _checker_path(c)
+        if os.path.exists(p):
+            r = os.path.relpath(p, REPO).replace("\\", "/")
+            rel_of[c] = r
+            rels.append(r)
+    subjects, _skipped = common.ledger_subjects(sorted(set(rels)), common.INDEX)
+    by_rel = {s["path"].replace("\\", "/"): s["git_blob_id"] for s in subjects}
+    return {c: by_rel.get(rel_of.get(c, ""), "<ABSENT>") for c in CHECKERS}
+
+
 def routing_bad(rows):
     """How many routing rows actually BLOCK — the one place the enforcement decision is made.
 
@@ -350,7 +506,10 @@ def routing_verdict(state, ranges):
     for agent, ran, why, blocking in rows:
         print("  %-18s %-4s %s"
               % (agent, ("ok" if ran else ("FAIL" if blocking else "WARN")), why))
-    return routing_bad(rows)
+    # ⚠ RECORDED HERE, BY THE PRODUCER — this is the line `RLY28-1` could not reach. The return
+    # value is retained for direct callers and controls, but it is NO LONGER how the push learns
+    # the verdict, so discarding it at the call site changes nothing.
+    return verdict_record("routing", routing_bad(rows))
 # ⚠ `register.md` IS DELIBERATELY NOT IN THIS LIST, AND IT WAS ADDED AND THEN REMOVED — the reasoning
 # is worth more than the entry. It IS a switch: every hash check compares a script against a token
 # recorded there, and blanking one disarmed a check while `checker_hashes()` stayed byte-identical
@@ -889,16 +1048,25 @@ def check_routing(state, ranges=None):
     does not see, and it records WHICH REVIEWED VERSION each checker was last cleared at rather than
     merely that the file changed. Two routes to one property, which is this bundle's own rule."""
     rows = []
-    # (a) the verification layer, by hash against the last /rely signal
-    sig = os.path.join(PRIV, "rely_cleared.txt")
-    reviewed = {}
-    if os.path.exists(sig):
-        for line in io.open(sig, encoding="utf-8").read().splitlines()[1:]:
-            parts = line.split()
-            if len(parts) == 2:
-                reviewed[parts[1]] = parts[0]
-    now = checker_hashes()
-    moved = [c for c, h in now.items() if reviewed.get(c) != h]
+    # (a) the verification layer, by BLOB ID against the last /rely record.
+    #
+    # ⚠⚠ THE LEDGER, NOT `rely_cleared.txt`. That file is RETIRED (2026-08-24) — the last of the
+    # `*_cleared.txt` scheme. `tools/verify/README.md` had already reached this conclusion and
+    # written it down: the signal *"can be edited, its verdict changes, and no subject moves… A scope
+    # cannot close it; only making `rely` a record instead of a file can."*
+    #
+    # ⚠ THE READER MOVED IN THE SAME CHANGE AS THE WRITER. Retiring the file while this still read it
+    # would make every checker look unreviewed for ever — fail-closed, but unsatisfiable, which is
+    # the shape that teaches people to bypass.
+    reviewed = rely_reviewed_blobs()
+    now = checker_blobs()
+    if reviewed is None:
+        # ⚠ CANNOT ASK != NOTHING CHANGED. An unreachable ledger must not read as full coverage, so
+        # every routed file counts as moved. This is the same fail-CLOSED direction `stale_or_missing`
+        # takes by returning None rather than an empty set.
+        moved = sorted(now)
+    else:
+        moved = [c for c, h in now.items() if reviewed.get(c) != h]
     # ⚠ NOT `"/rely" in state["reviews"]`. That let a CLAIM in the unhashed `batch_state.json`
     # discharge a HASH obligation: measured `prepush PASS`, exit 0, with seven checkers changed
     # since /rely last signed them — and the warning text still printing beside the word `ok`.
@@ -1353,56 +1521,64 @@ def signal_verdict(name):
     return (first[:150] + "…") if len(first) > 150 else first
 
 
+REVIEW_STEPS = ("editorial", "adversary", "prior_art")
+
+
 def check_signals(ranges=None):
-    """Validate each signal — EXISTENCE IS NOT ENOUGH.
+    """Ask the LEDGER whether each review step is recorded and current. Returns (step, ok, why).
 
-    ⚠ The first version checked only that the file was present, and `prepush` PASSED on signals
-    written for an earlier push that covered none of the 18 files changed since. A stale-signal
-    fail-open is the exact failure the SHA-256-per-file scheme exists to prevent, reproduced in the
-    tool meant to enforce it. A signal is valid iff (a) every file it records still hashes to the
-    recorded value, and (b) every reviewable changed file is covered by a recorded hash.
+    ⛔ THE PROSE SIGNAL FILES ARE RETIRED (`PROCESS_V2.md` § 6a-v). This used to read
+    `er/ar/pa_cleared.txt` and re-hash every file they named. Those files could be written by any
+    process, recorded NO AUTHOR, and held one verdict for N passes — measured 2026-08-24, three
+    concurrent passes of one prose gate raced on a single path and the survivor was decided by
+    scheduling, leaving an unattributed verdict on disk that `prepush` then echoed as cleared.
 
-    ⚠ Two rules below exist to keep this in step with the hook, which is a SECOND implementation of
-    the same logic (PIPE-1). Both were measured as divergences on 2026-08-10:
-      * NOTHING REVIEWABLE CHANGED -> no signal is required at all. The hook prints "review signals
-        not required" and skips the section; this checked unconditionally, so a CLAUDE.md-only edit
-        was blocked here and waved through there.
-      * A GATE-EXEMPT file recorded in a signal must not stale it. Reviewers list CLAUDE.md for
-        coverage, and it is edited constantly — so its hash drifting invalidated all three signals
-        for a file no gate reviews. Exempt means exempt in both directions."""
+    ⚠⚠ ONE QUESTION, SERVER-SIDE. `record.stale_or_missing` is the only staleness predicate;
+    re-deriving freshness here would be the mirror defect at exactly the point the split exists to
+    protect — two implementations of "is this verdict still good", disagreeing silently. This
+    reports; it never decides what GATES. gitRobot owns admission.
+
+    ⚠ UNREACHABLE LEDGER FAILS **CLOSED**. `stale_or_missing` returns None when it cannot ask, and
+    None is not an empty set: "no steps need re-running" and "I could not find out" render
+    identically otherwise, which is the absence-as-success shape this whole layer exists to remove.
+    """
     changed = set(reviewable_changed(ranges))
-    out = []
     if not changed:
-        return [(n, True, "no reviewable change in scope — signal not required")
-                for n in ("er_cleared.txt", "ar_cleared.txt", "pa_cleared.txt")]
-    for name in ("er_cleared.txt", "ar_cleared.txt", "pa_cleared.txt"):
-        p = os.path.join(PRIV, name)
-        if not os.path.exists(p):
-            out.append((name, False, "missing"))
-            continue
-        recorded, drifted = {}, []
-        for line in io.open(p, encoding="utf-8").read().splitlines()[1:]:
-            parts = line.split(None, 1)
-            if len(parts) == 2 and len(parts[0]) == 64:
-                recorded[parts[1].strip()] = parts[0]
-        for rel, want in recorded.items():
-            _n = rel.replace(chr(92), '/').lower()
-            if _n in EXEMPT_PATHS or _n.startswith(EXEMPT_PREFIXES):
-                continue          # gate-exempt: its hash must not gate anything
-            fp = os.path.join(REPO, rel)
-            got = (hashlib.sha256(io.open(fp, "rb").read()).hexdigest()
-                   if os.path.exists(fp) else "<deleted>")
-            if got != want:
-                drifted.append(rel)
-        uncovered = sorted(changed - set(recorded))
-        if drifted:
-            out.append((name, False, "STALE — %d reviewed file(s) changed since: %s"
-                        % (len(drifted), ", ".join(drifted[:3]))))
-        elif uncovered:
-            out.append((name, False, "does not cover %d changed file(s): %s"
-                        % (len(uncovered), ", ".join(uncovered[:3]))))
+        # Unchanged rule, and it was a measured hook divergence (PIPE-1): nothing reviewable in
+        # scope means no review is owed at all.
+        return [(s, True, "no reviewable change in scope — review not required")
+                for s in REVIEW_STEPS]
+    # ⚠⚠ POSITIVE STATUS, NEVER "ABSENT FROM THE RE-RUN SET". This asked `stale_or_missing` and took
+    # `s not in need` as a pass — a PROXY, and it failed open in three ways at once: `SATISFIED`,
+    # `NOT_APPLICABLE` and *a step the registry has never heard of* all sit outside that set, so a
+    # typo in `REVIEW_STEPS` became a permanent green with an affirmative message. Measured
+    # 2026-08-24: `prior_art` is `NOT_APPLICABLE` with `record_id: null` and printed `ok REQUIRED`
+    # on a trigger-5 push. Ask what a PASS PROVES, then build the state where the proxy holds and
+    # the property does not — DC-18.
+    status = record.step_status("HEAD", "push")
+    if status is None:
+        return [(s, False, "UNDECIDED — the ledger could not be asked, so freshness is UNKNOWN. "
+                           "This is a recording-path failure, not a finding about the corpus; "
+                           "it fails CLOSED on purpose.") for s in REVIEW_STEPS]
+    out = []
+    for s in REVIEW_STEPS:
+        st = status.get(s)
+        if st is None:
+            # ⚠ AN UNKNOWN STEP IS A FAILURE, NOT A PASS. The ledger returns a row for every
+            # REGISTERED step, so a missing key means this name is not registered — a caller
+            # asking about a gate that does not exist has established nothing whatsoever.
+            out.append((s, False, "NOT REGISTERED in the ledger — this step name buys no coverage. "
+                                  "Fix the name or register the type; do not read it as a pass."))
+        elif st == "SATISFIED":
+            out.append((s, True, "SATISFIED — recorded and current in the ledger"))
+        elif st == "NOT_APPLICABLE":
+            # Legitimate, and it must SAY SO rather than borrow the word "recorded": nothing was
+            # examined, and the reason is the ledger's to state.
+            out.append((s, True, "NOT_APPLICABLE — the ledger declares this step does not gate "
+                                 "here. Nothing was examined; this is not a clean bill."))
         else:
-            out.append((name, True, "fresh, covers %d file(s)" % len(recorded)))
+            out.append((s, False, "%s — run the gate and let it record its own verdict "
+                                  "(`record.py --step %s`)" % (st, s)))
     return out
 
 
@@ -1623,6 +1799,9 @@ def cmd_prepush(ranges=None):
     print("trigger 5: %s (%d insertions, new .lean file: %s)"
           % ("FIRES — prior-art review REQUIRED" if fires else "does not fire", ins, newfile))
     bad = 0
+    # ⚠ ONE judgement per run. Without this a second `cmd_prepush` in the same process would
+    # inherit the first run's rows, and a step that failed to run would look like it had reported.
+    verdict_reset()
     # Purity and SSOT are enforced HERE as well as at precommit, because precommit is a manual
     # command and the pre-commit hook never blocks — so before this they were the only two
     # obligations with no automatic enforcement anywhere (Tim, 2026-08-09). They are safe at push in
@@ -1641,7 +1820,12 @@ def cmd_prepush(ranges=None):
     # ⚠ A non-blocking row still PRINTS, and prints WARN rather than FAIL — a downgraded gate must
     # get louder, not quieter (`RLY25-1`: a report publishing `pass` for a property it stopped
     # checking).
-    bad += routing_verdict(state, ranges)
+    # ⚠ THE RETURN VALUE IS DELIBERATELY NOT ACCUMULATED. `routing_verdict` records its own count in
+    # the verdict registry, and `prepush_verdict()` below is what decides the push. Annihilating
+    # this line (`* 0`) or deleting it changes no verdict — the first is inert, the second leaves
+    # `routing` missing from `_EXPECTED` and fails CLOSED. That is `RLY28-1`, closed at the shape
+    # rather than at the fourth tripwire.
+    routing_verdict(state, ranges)
     # THE INTERPRETATION LAYER. Advisory by construction: `agent_gate.run()` always returns 0 and
     # `bad` is deliberately NOT incremented, so a fuzzy component can never stop a push.
     # ⚠ DO NOT PROMOTE THIS TO BLOCK. Measured 2026-08-21 before adoption: 1 false positive in 6
@@ -1664,34 +1848,33 @@ def cmd_prepush(ranges=None):
     print("  scope: %d reviewable file(s)%s"
           % (len(scope), (" — e.g. " + ", ".join(scope[:3])) if scope else " (none)"))
     meta = {
-        "er_cleared.txt": ("/editorial-review", "internal consistency + prose precision",
-                           "any reviewable prose in the push"),
-        "ar_cleared.txt": ("/adversary-review", "cold-reader triage + central-claim audit",
-                           "any reviewable prose in the push"),
-        "pa_cleared.txt": ("/prior-art-review", "closest prior art cited or shown absent",
-                           "trigger 5: a new .lean file, or >=50 inserted .lean lines"),
+        "editorial": ("/editorial-review", "internal consistency + prose precision",
+                      "any reviewable prose in the push"),
+        "adversary": ("/adversary-review", "cold-reader triage + central-claim audit",
+                      "any reviewable prose in the push"),
+        "prior_art": ("/prior-art-review", "closest prior art cited or shown absent",
+                      "trigger 5: a new .lean file, or >=50 inserted .lean lines"),
     }
     for name, valid, why in check_signals(ranges):
-        need = (name != "pa_cleared.txt") or fires
+        need = (name != "prior_art") or fires
         ok = valid or not need
         agent, purpose, when = meta[name]
         print("  %-20s %-4s %s" % (agent, "ok" if ok else "FAIL",
                                    "REQUIRED" if need else "not required"))
         print("      purpose  %s" % purpose)
         print("      fires on %s" % when)
-        print("      signal   %s/%s — %s"
-              % (os.path.relpath(PRIV, REPO).replace("\\", "/"), name, why))
-        v = signal_verdict(name)
-        if v:
-            print("      verdict  %s" % v)
+        print("      ledger   step `%s` — %s" % (name, why))
         bad += 0 if ok else 1
     # ⚠ BEFORE the `die`, not after the PASS. On the success path only it would print just when the
     # push was already clear — and a recurrence count matters MOST while something is failing. That
     # placement would have re-created the original defect (surfacing at the rarest moment) in a new
     # location, which is the shape this whole change exists to correct.
     _recurrence_note()
-    if bad:
-        die("%d review signal(s) missing — run the gates" % bad)
+    # ⚠⚠ ONE CALL, NO RETURN VALUE, NOTHING TO DISCARD. `enforce_prepush_verdict` reads the registry
+    # and DIES on a failure; it does not hand this frame a number to rebind, zero out or ignore.
+    # That is `RLY28-1` attempt six, and the five before it all failed at exactly this line by
+    # leaving a value here for the caller to throw away.
+    enforce_prepush_verdict(bad)
     if state:
         state["stages"]["prepush"] = {"ok": True, "tool": self_hash()}
         save(state)

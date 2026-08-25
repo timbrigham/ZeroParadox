@@ -141,12 +141,50 @@ def targets():
     return common.targets(skip_names=SKIP_NAMES, is_vendored=is_vendored)
 
 
+# ⚠⚠ A SENTENCE ENDS AT A DOT FOLLOWED BY WHITESPACE — NOT AT ANY DOT. Splitting on every `.`
+# truncates at the first dotted TOKEN, and this corpus is full of them: `lean_action_ci.yml`,
+# `check_prose.py`, `arXiv:2104.02549`, `v1.14`. Measured 2026-08-25 on `prose-to-lean.md:25`, where
+# the sentence the checker actually saw began `'yml`, 1,270 …'` — the `measured 2026-08-08` sitting
+# immediately before it had been cut off at the dot in the filename, so a properly dated negative
+# was reported as undated. **A gate that fires on its own project's ratified wording gets muted**, and
+# this file already says so about a different near-miss.
+_SENTENCE_END = re.compile(r'\.(?=\s|$)')
+
+
 def sentence_around(text, pos):
     """The sentence containing `pos`. Evidence must be IN it — proximity is not aboutness."""
-    start = max(text.rfind('.', 0, pos), text.rfind('\n\n', 0, pos)) + 1
-    end = text.find('.', pos)
-    end = len(text) if end < 0 else end + 1
-    return text[start:end]
+    start = 0
+    for m in _SENTENCE_END.finditer(text, 0, pos):
+        start = m.end()
+    start = max(start, text.rfind('\n\n', 0, pos) + 1)
+    m = _SENTENCE_END.search(text, pos)
+    return text[start:(m.end() if m else len(text))]
+
+
+# ⚠⚠ USE VERSUS MENTION. A phrase inside QUOTES is being NAMED, not asserted — and this checker
+# cannot otherwise tell the rule that forbids a phrase from an instance of it. Measured 2026-08-25:
+# five of six live hits were mentions, and every one arrived because the CLAUDE.md compression sweep
+# moved rule bodies out of `CLAUDE.md` (already skipped, `common.SKIP_NAMES`) into `tools/process/`,
+# which is scanned. `not-in-the-library.md` IS `R-NOTINLIB`'s body and must list *"not in Mathlib"* to
+# be useful; `core-objects.md` QUOTES a universal negative it is recording as CLOSED.
+#
+# ⚠ THIS IS THE PROPERTY, NOT A PROXY. The alternative considered and rejected was skipping
+# `tools/process/**` by path: `common.targets` skips by BASENAME and `SKIP_DIRS` is shared across
+# every checker, so a path carve would either exempt 28 filenames in a list that goes stale or
+# exempt the directory from checkers that should still see it. Asking "is this asserted or quoted?"
+# also fixes retraction text wherever it lives, which `DEFECTS.md`'s own header names as a standing
+# problem: *"retraction text quoting an error pollutes every search."*
+#
+# ⚠ IT FAILS OPEN IN ONE NARROW WAY, STATED SO NOBODY DISCOVERS IT LATER: a negative ASSERTED inside
+# quotes is missed. Bold or italic emphasis is NOT quoting and still fires — which is what the live
+# sample looks like, the one genuine assertion being `**retained nowhere in the repo**`, unquoted.
+_QUOTES = '"“”'
+
+
+def is_mention(text, pos):
+    """True when the match at `pos` sits inside a quoted span on its own line."""
+    bol = text.rfind('\n', 0, pos) + 1
+    return sum(text.count(q, bol, pos) for q in _QUOTES) % 2 == 1
 
 
 def scan_text(t):
@@ -157,6 +195,8 @@ def scan_text(t):
     for m in CLAIM.finditer(norm):
         sent = sentence_around(norm, m.start())
         if EVIDENCE.search(sent):
+            continue
+        if is_mention(norm, m.start()):
             continue
         # Line number against the ORIGINAL text, never the normalized copy.
         line = body.count('\n', 0, m.start()) + 1
@@ -198,6 +238,12 @@ MUST_FIRE = [
         ('"nowhere in the framework"', 'This has been found nowhere in the framework.'),
         ('"not in Mathlib"', 'The covering relation is not in Mathlib.'),
         ('"never been found"', 'Such a witness has never been found.'),
+        # ⚠⚠ THE TWINS FOR THE TWO 2026-08-25 SUPPRESSORS. Without these, widening either one
+        # into a hole is invisible — a suppressor is only safe while its firing case still fires.
+        ('EMPHASIS IS NOT QUOTING — bold still fires',
+         'These logs are **retained nowhere in the repo** and that is correct.'),
+        ('a dotted token does NOT import a date from the NEXT sentence',
+         'Regenerated per run on lean_action_ci.yml, retained nowhere in the repo. Measured 2026-08-08.'),
         ('"no X anywhere in the corpus"', 'There is no such instance anywhere in the corpus.'),
         # ⚠ THE WRAPPED SHAPE. A flat pattern misses this, and it is how a real one hid.
         ('wrapped across a Lean comment', '-- the corpus\n--     does not have\n-- any such case'),
@@ -207,6 +253,17 @@ MUST_SUPPRESS = [
         ('an ISO date in the sentence', 'No instance exists in the tree at 2026-08-01.'),
         ('the ratified "not located"', 'Not located in Mathlib; searched three vocabularies.'),
         ('a retraction quoting it', 'An earlier draft said none exists; that was FALSE and is retracted.'),
+        # ⚠⚠ USE-VS-MENTION AND THE DOTTED-TOKEN SENTENCE CUT, both added 2026-08-25 from live
+        # hits. Each is paired with a MUST_FIRE twin below, because a suppressor with no matching
+        # firing case is indistinguishable from a checker that stopped working.
+        ('the RULE naming its own forbidden phrase',
+         'Before writing "not in Mathlib", confirm the name elaborates.'),
+        ('retraction QUOTING the closed defect',
+         'The index had asserted "No essential case has ever been found" and is now fixed.'),
+        ('a date cut off by a dotted FILENAME',
+         'Measured 2026-08-08 on lean_action_ci.yml, regenerated per run, retained nowhere in the repo.'),
+        ('a date cut off by a dotted VERSION',
+         'Checked at v1.14 on 2026-08-01: no instance exists in the pinned tree.'),
         ('ordinary prose', 'The bottom is the diagonal fixed point.'),
         ('a bounded, non-universal claim', 'This file contains no `sorry`.'),
         # ⚠ THE REGRESSION CONTROLS. Every one of these is a real hit from the first run, and every

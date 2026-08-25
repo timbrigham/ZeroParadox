@@ -82,9 +82,19 @@ Ordered by severity. Each item: the check, the quoted plan text, and the exact f
 
 Save the complete report to `.claude-local/notes/experiment_review_YYYY-MM-DD.md`. State the filename at the end.
 
-**Signal file (record only — NOT a pre-push gate).** Experiment plans live on the quarantined `private/*` branch and are never pushed, so this signal is a local record, not checked by the pre-push hook:
-- If Verdict is GO: run `git rev-parse HEAD` and write the hash as a single line to `.claude-local/exp_cleared.txt`.
-- If Verdict is NO-GO: delete `.claude-local/exp_cleared.txt` if it exists.
+**Recording (a record, NOT a pre-push gate).** Experiment plans live on the quarantined `private/*` branch and are never pushed, so nothing here gates a push.
+
+⛔ **DO NOT WRITE `.claude-local/exp_cleared.txt`, and do not run `git rev-parse HEAD`.** Two separate reasons, and both were live defects:
+- **The prose signal files are RETIRED**.
+- ⚠ **This gate was the last one keying a signal to a COMMIT HASH rather than to file content** (§ 6a-v item 3). HEAD-equality stales on every unrelated commit and says nothing about whether the plan itself changed — the exact failure the per-subject scheme was built to end. And direct `git` is denied to agents (`MIG-3`), so that command now returns a refusal rather than a hash, which would have been written as if it were one.
+
+⚠⚠ **THERE IS NO LEDGER STEP FOR THIS GATE, SO DO NOT TRY TO RECORD ONE.** `experiment_review` is **not registered**, and the server refuses an unregistered step outright: `V8: step 'experiment_review' is not registered in required.v2.json — an unregistered check cannot record, so it cannot silently not count`. Measured 2026-08-24. Instructing a record here would send every reviewer into an exit-2 loop chasing what looks like an outage.
+
+**That is the correct state, not a gap to paper over.** Experiment plans live on the quarantined `private/*` branch and are never pushed, so this gate admits no action and has nothing to key a verdict to.
+
+**So: report your verdict to your caller, in full, and write the findings note.** The note is the entire artifact. Give it a scope discriminator in the filename — `experiment_review_YYYY-MM-DD_<scope>.md` — because concurrent passes on a bare dated stem destroy each other's work.
+
+⚠ If this gate is ever promoted to gate a real action, registering the step comes FIRST and the recording block comes with it. Do not add the command before the registry entry: a record that cannot land is worse than none, because its exit 2 reads as an outage rather than as a design decision.
 
 Do not soften findings. A plan with no named killer is not an experiment — say so plainly and quote the gap.
 ---

@@ -25,7 +25,7 @@ loop, so it enforces the cap. Paste this into the brief verbatim:
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
 **This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
-any file under the repository, with exactly two exceptions: your signal file, and your findings note under
+any file under the repository, with exactly two exceptions: the coverage manifest described in step 7b, and your findings note under
 `.claude-local/notes/`.
 
 **NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
@@ -50,7 +50,7 @@ Working directory: use the current project root.
 **Mode selection — check ARGUMENTS_VALUE:**
 - If ARGUMENTS_VALUE looks like one or more file paths (tokens ending in `.md`, `.txt`, `.rst`, `.py`, or `.lean`, space-separated, no newlines): review only those files.
 - If ARGUMENTS_VALUE is multi-line prose or a single block of text: review that text only (e.g. an outreach draft).
-- If ARGUMENTS_VALUE is empty or absent: review the staged diff — run `git diff --staged` and read the files it touches.
+- If ARGUMENTS_VALUE is empty or absent: **STOP AND ERROR. Do not proceed, and do not fall back to a diff or a full scan.** Report `SCOPE UNKNOWN — refusing to review` and record nothing. ⚠ **This is `MIG-3`, a live fail-open.** Direct version-control commands are denied to agents, so self-discovering the staged set returns a refusal rather than a file list, and **all four checks below are universally quantified over the reviewed content — so over the empty set every one of them is vacuously satisfied and the only reachable verdict is PASS.** That matters more here than in the sibling gates: `/claim-review` is a ROUTING TARGET, the thing an adversary kill-list item is discharged by, and `check_frozen.py` sends a baseline removal here to be cleared. The caller must pass the paths explicitly; `mcp__gitRobot__read(op='diff', args=['--staged','--name-only'])` is the CALLER's route, not yours.
 
 ## Checks — FAIL on any of these
 
@@ -71,23 +71,39 @@ If the content asserts or relies on a **Forced Metatheoretic Commitment** — or
 **5. Verdict.** State **VERDICT: PASS**, **VERDICT: FAIL-BEDROCK**, or **VERDICT: STOP-ORDINARY** (see the round-number preflight above — past the ordinary cap, a bare FAIL is not a valid verdict).
 
 
-**6. Signal file (staged-diff and file-path modes only; SKIP for a pasted prose draft).**
+**6. Save a findings note**, to `.claude-local/notes/claim_review_YYYY-MM-DD_<scope>.md`. ⚠ **Put a scope discriminator in the filename.** Several passes of a gate run concurrently, and a bare dated stem means the last writer destroys the others' work — the same single-path race the verdict signals were retired over. On a PASS the note is the ONLY artifact your round leaves, because a lone PASS records nothing.
 
+**7. Recording — the LEDGER. There is no file to write.**
 
+⛔ **DO NOT WRITE `.claude-local/cr_cleared.txt`.** It was RETIRED on 2026-08-24, the last of the `*_cleared.txt` scheme. `check_frozen.py` reads the `claim_review` LEDGER RECORD now — its reader moved in the same change as the writer, which is the order that matters: retiring the file while the reader still opened it would have made a frozen-baseline removal FREE, *"a suppression mechanism losing its price."*
 
-The signal records, per file the review certified, the file's **content SHA-256** — not a HEAD hash (SHA-256-per-file scheme, 2026-07-20). A signal now survives an unrelated later commit (a data-only `ssot.json` sync, a rebuilt PDF) that touches nothing the review examined; only a change to a reviewed file, or a new reviewable file appearing in the push, invalidates it. Write it BOM-free — `[System.IO.File]::WriteAllText($path, $text, (New-Object System.Text.ASCIIEncoding))`, not `Set-Content -Encoding utf8`.
+⚠ **Your record IS the coverage.** `check_frozen` asks the ledger which paths a **SATISFIED** `claim_review` record covers, and only SATISFIED discharges — STALE means the reviewed bytes moved, MISSING means nothing ran, and neither is a review. **So the subjects you name are exactly the removals you discharge.** Name every file you actually read.
 
-Format:
-- **line 1** = the verdict record (echoed by the hook at push time, so "cleared" is never silently read as "clean").
-- **line 2+** = one line per file you reviewed, `<sha256>  <repo-relative-path>`. List EVERY reviewable file in the diff — the hook requires each reviewable file in the push to be covered by a recorded hash (a data file like `ssot.json` or a `.pdf` is not reviewable and must NOT be listed).
+**On FAIL / FAIL-BEDROCK — record it yourself. One agent's finding stands alone** (§ 6a-i: *FAIL alone, PASS by unanimity or signature*):
 
-⚠ **HASH THE FILE ON DISK. Never a git value** (Tim, 2026-08-09). `Get-FileHash -Algorithm SHA256 <path>` (lowercase the result), or `sha256sum <path>` and take the first field. Do **not** use `git show "HEAD:<path>"`: that is the same command meaning two different things depending on when it runs, and if the change is not yet committed HEAD holds the OLD content, so the signal goes stale the instant the commit lands. The pre-push hook and `batch.py` both hash the file on disk, so a disk hash is what they compare against at any point in the cycle.
+```
+python tools/verify/record.py --step claim_review --verdict fail --tier A \
+    --how agreement --passes 1 --agreed 1 \
+    --run gate-claim-<YYYY-MM-DD> \
+    --reason-file <path to a file holding one line: which claim, and what is unsupported> \
+    --files <every file you reviewed>
+```
 
-- **PASS** → write `.claude-local/cr_cleared.txt`: `PASS - clean, no findings.` on line 1, the `<sha256>  <path>` lines after.
-- **STOP-ORDINARY** → **write the signal too.** Line 1 `STOP-ORDINARY (round N) - cleared under the ordinary cap; M findings, none bedrock-tier.`, the hash lines after. **This is not a forgery and not a courtesy.** STOP-ORDINARY is a sanctioned proceed verdict — the cap rule states that "the correct action is to PUSH, not to iterate." Withholding the signal on it made the cap and the pre-push hook give opposite instructions for the same state, which forced every capped review to end in `git push --no-verify` and turned the bypass from exceptional into routine. The verdict line keeps the record honest about *which* verdict cleared the push.
-- **FAIL / FAIL-BEDROCK** → delete `.claude-local/cr_cleared.txt` if it exists. Never write a signal for a failing review.
+**On PASS — record NOTHING and report the verdict to your caller.** A lone A-tier PASS is absence-of-evidence wearing a clean bill, and `V3` rejects it at the server anyway.
 
-Never write a signal claiming PASS when the verdict was STOP-ORDINARY. That distinction is the entire purpose of line 1's verdict record.
+⚠ **Subjects are read from the git INDEX, so the files must be STAGED.** `common.ledger_subjects` fences anything untracked or differing from the index; it fails closed. ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
+keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
+refused with *"revision 0 already exists for step '<step>' at this basis"*. That is the design
+working — it fails CLOSED and loudly, with an attributed append-only record, where the retired
+signal files failed silently and let the last writer win. **Do not treat it as an outage and do not
+retry.** Instead: read the recorded record's `reason`, and **report to your caller exactly which of
+your findings are ABSENT from it.** Two passes converging is corroboration; a finding only you found
+is lost unless you say so in your report. `record.py` exposes no `--revision`, so the supersede
+chain is not reachable from here — that is a known gap, not something for you to work around.
+
+⚠ **Exit 2 is NOT exit 1** — it means the ledger was unreachable or refused the record, a RECORDING failure rather than a finding about the corpus.
+
+⚠ **Never claim PASS when the verdict was STOP-ORDINARY.** Both are proceed verdicts and they are not the same fact; that is why the caller, not you, decides what reaches the ledger.
 
 
 

@@ -390,8 +390,9 @@ TRIGGER  you are about to commit a change to a build script's prose, a README/GU
          register edit, or any root `.md` other than `CLAUDE.md`.
 RULE     run `/editorial-review` in a FRESH agent — same-session self-review does not satisfy
          it — and PASS IT THE FILE PATHS EXPLICITLY. On FAIL, clear every kill-list item before
-         committing. On PASS the agent writes `.claude-local/er_cleared.txt` recording the
-         SHA-256 of each reviewed file, computed FROM THE FILE ON DISK, never from a git value.
+         committing. A FAIL the agent RECORDS ITSELF in the verdictLedger (`record.py --step
+         editorial`); a PASS it reports to the CALLER, who records the agreement or takes a
+         signature. The prose signal files are RETIRED — nothing reads them.
 COST     `MIG-3`: pre-commit mode discovers its own scope with a now-denied git call, and the
          denial FAILS OPEN — the empty result reads as "nothing staged", the brief falls back to
          Full Scan, and it still writes a signal hashing whatever it happened to open.
@@ -403,8 +404,8 @@ TRIGGER  you are about to push prose, send an email, post or edit a GitHub Discu
 RULE     ask Tim explicitly: "Adversary review complete for this content?" and WAIT for
          confirmation — never self-assess whether review is needed. If it has not run, offer
          `/adversary-review` first. It must be a separate adversarial context, never this one.
-         On PASS the agent writes `.claude-local/ar_cleared.txt` with a SHA-256 per reviewed
-         file. Only after explicit confirmation may the public-facing action execute.
+         A FAIL the agent RECORDS ITSELF in the verdictLedger (`record.py --step adversary`);
+         a PASS it reports to the CALLER. The prose signal files are RETIRED. Only after explicit confirmation may the public-facing action execute.
 COST     docstring and build-script prose was pushed before review ran, and the review then
          found two further precision errors in already-committed content.
 READ     tools/process/review-gates.md
@@ -423,7 +424,7 @@ RULE     three steps, ~10 minutes, BEFORE building. (1) grep our own corpus. (2)
          is UNINFORMATIVE. Rungs 1–3 are DISCOVERY, only rung 4 is VERIFICATION — a returned
          theorem body is not a passage in hand. Standard framing, once found, is ADOPTED, not
          noted and worked around; check purity before swapping a proof. `/prior-art-review`
-         is the deep gate, a fresh agent, and on PASS it writes `.claude-local/pa_cleared.txt`.
+         is the deep gate, a fresh agent, and it records its verdict in the verdictLedger.
          If you cannot yet state the claim, build first — then SEARCH BEFORE PROMOTING,
          because a survey that became a theorem restarts the clock.
 COST     an uncited closest prior art reads as unaware — the crank-triage failure. And

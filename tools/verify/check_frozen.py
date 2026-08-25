@@ -138,30 +138,68 @@ def path_of(key):
 
 
 def claim_signal():
-    """`{path: sha256}` recorded by the claim review, or None when no signal exists at all."""
-    p = os.path.join(str(common.PRIV), 'cr_cleared.txt')
-    if not os.path.exists(p):
+    """The SET of paths a current `claim_review` record covers, or None when there is no coverage.
+
+    ⚠⚠ THE LEDGER, NOT A FILE. `cr_cleared.txt` is RETIRED (2026-08-24) — the last of the
+    `*_cleared.txt` scheme to go. `gitRobot.md` § 12-0-ter set the precondition exactly: *"Register
+    `rely` and `claim_review` as types, and admit them, BEFORE the signal path is removed."* Both are
+    registered and admitted, so the precondition was met and the reader moved.
+
+    ⚠ THE READER MOVED IN THE SAME CHANGE AS THE WRITER, AND THAT ORDER IS THE WHOLE POINT. Retiring
+    the file while this still opened it would have made a baseline removal FREE — the contract's
+    words: *"a suppression mechanism losing its price."* That is the direction that fails OPEN.
+
+    ⚠ RETURNS None WHEN THE LEDGER CANNOT BE ASKED, and None here means "no signal", which makes
+    every removal owe a review. Fail-CLOSED on purpose: an unreachable ledger must never look like a
+    discharged one.
+
+    ⚠ THE VALUE IS A SET, NOT A HASH MAP. The old file stored a SHA-256 per path and this function's
+    caller re-hashed the file on disk to detect drift — a second staleness predicate, which
+    `gitRobot.md` § 12-0-alpha names as the thing to delete: *"does it make the client compute
+    something it could have asked for?"* The ledger keys coverage by blob ID and already answers
+    STALE; a path present here is covered AND current, and the caller re-checks nothing."""
+    try:
+        import record
+        out = record._call('inventory', {'ref': common.INDEX, 'action': 'commit'})
+        if not out or not out.get('ok') or not isinstance(out.get('rows'), list):
+            return None
+        rid = None
+        for r in out['rows']:
+            if r.get('step') == 'claim_review':
+                # ⚠ ONLY `SATISFIED` DISCHARGES. `STALE` means the reviewed bytes moved and
+                # `MISSING` means nothing ran; both must read as "no coverage", never as a pass.
+                if not discharges(r.get('status')):
+                    return None
+                rid = r.get('record_id')
+                break
+        if not rid:
+            return None
+        # ⚠ THE ROW CARRIES COUNTS, NOT PATHS — `subjects_covered` is an int. The paths live on the
+        # RECORD. Verified against the live server 2026-08-24: `get` returns `record.subjects` as
+        # `[{path, git_blob_id}]`.
+        got = record._call('get', {'id': rid})
+        rec = (got or {}).get('record') or {}
+        return {s.get('path', '').replace('\\', '/') for s in rec.get('subjects', [])
+                if s.get('path')}
+    except Exception:                                          # noqa: BLE001 — cannot ask == no signal
         return None
-    out = {}
-    for line in io.open(p, encoding='utf-8-sig', errors='replace').read().splitlines()[1:]:
-        parts = line.split(None, 1)
-        if len(parts) == 2 and len(parts[0]) == 64:
-            out[parts[1].strip().replace('\\', '/')] = parts[0].lower()
-    return out
 
 
 def review_owed(removed, sig=_UNSET, exists=None, hash_of=None):
     """[(path, why)] for removals that still owe a content review.
 
-    ⚠ THE HASH MUST MATCH THE FILE ON DISK, never a git value. A signal that covers the path but was
-    written against different bytes is exactly the stale-signal fail-open the SHA-256-per-file scheme
-    exists to prevent."""
-    import hashlib
-    # ⚠ THE THREE LOOKUPS ARE INJECTABLE SO A CONTROL CAN DRIVE THIS. Without that the predicate
-    # could only be exercised against whatever happens to be on disk, i.e. never against the cases
-    # that matter — which is how a control ends up being a hypothesis nobody has seen fail.
+    `sig` is the SET of paths the claim review covers at their current bytes — see `claim_signal`.
+    Membership discharges; the freshness question was already answered server-side, by the one
+    staleness predicate, so nothing is re-hashed here.
+
+    ⚠ `hash_of` IS RETAINED AND UNUSED, deliberately: it is part of this function's control surface
+    and removing a parameter a control passes would break the control silently. It is ignored."""
+    # ⚠ THE LOOKUPS ARE INJECTABLE SO A CONTROL CAN DRIVE THIS. Without that the predicate could
+    # only be exercised against whatever happens to be on disk, i.e. never against the cases that
+    # matter — which is how a control ends up being a hypothesis nobody has seen fail. That matters
+    # more now, not less: the signal comes from a SERVER, so `sig=` is the only way to exercise the
+    # covered case without either polluting the live stream or inventing a test-only switch.
     exists = exists or os.path.exists
-    hash_of = hash_of or (lambda pth: hashlib.sha256(io.open(pth, 'rb').read()).hexdigest())
     owed = []
     if sig is _UNSET:
         sig = claim_signal()
@@ -181,16 +219,15 @@ def review_owed(removed, sig=_UNSET, exists=None, hash_of=None):
         for t in targets:
             note = '' if t == rel else ' (ride-along carrying the moved content)'
             if sig is None:
-                owed.append((t, 'no claim-review signal exists' + note))
+                # ⚠ Covers BOTH "no record" and "the ledger could not be asked". They are different
+                # facts and neither discharges anything, so both land here — fail-CLOSED.
+                owed.append((t, 'no current claim_review record covers this ref' + note))
                 continue
-            want = sig.get(t)
-            if want is None:
-                owed.append((t, 'not covered by the claim-review signal' + note))
-                continue
-            tp = os.path.join(REPO, t.replace('/', os.sep))
-            got = hash_of(tp)
-            if got != want:
-                owed.append((t, 'signal covers it at DIFFERENT bytes — reviewed, then edited'))
+            if t not in sig:
+                # ⚠ STALE IS ALREADY EXCLUDED UPSTREAM. `claim_signal` returns paths only from a
+                # SATISFIED record, so "covered at different bytes" cannot reach here — the whole
+                # record would have been STALE and `sig` would be None. One predicate, server-side.
+                owed.append((t, 'not among the subjects of the claim_review record' + note))
     return owed
 
 
@@ -281,7 +318,7 @@ def run(block=False, base=None, record_to_ledger=False):
         for rel, why in owed:
             print('    FAIL  %-52s %s' % (rel, why))
         print('')
-        print('  Run  /claim-review <path>  and let it write .claude-local/cr_cleared.txt, or put')
+        print('  Run  /claim-review <path>  and let it record a claim_review verdict, or put')
         print('  the entry back. Measured 2026-08-22: two entries removed on a green volume check,')
         print('  and the review afterwards returned FAIL-BEDROCK on the claim underneath.')
     elif all_removed:
@@ -375,36 +412,55 @@ _R_PATH = 'ZeroParadox/Demo/Thing.lean'
 _R_HASH = 'a' * 64
 
 
+def discharges(status):
+    """Does a `claim_review` inventory status discharge a removal? ONLY `SATISFIED` does.
+
+    ⚠⚠ EXTRACTED SO THE STALE CASE KEEPS A CONTROL. It used to live in `review_owed`, which compared
+    a stored SHA-256 against the file on disk — *"reviewed, then edited"*. That comparison is gone
+    (the ledger owns freshness now, and re-deriving it here would be a second staleness predicate),
+    but **the rule it enforced must not leave with it.** This is the same fact at its new boundary:
+    a STALE record means the reviewed bytes moved, and it must read as NO coverage.
+
+    ⚠ `NOT_APPLICABLE` does not discharge either. It means the step did not apply — nothing was
+    examined — and *"it did not apply"* is not *"the liability was reviewed"*."""
+    return status == 'SATISFIED'
+
+
 def _owes(case):
     """The predicate under test: does this removal still owe a content review?"""
-    sig, present, digest = case
+    sig, present, _unused = case
     return bool(review_owed({_R_KEY}, sig=sig,
-                            exists=lambda pth: any(pth.endswith(x) for x in present),
-                            hash_of=lambda pth: digest))
+                            exists=lambda pth: any(pth.endswith(x) for x in present)))
 
 
 _R_MUST_FIRE = [
-    ('no signal at all', (None, ('Thing.lean',), _R_HASH)),
-    ('signal exists but does not cover the file', ({'other/File.lean': _R_HASH},
-                                                   ('Thing.lean',), _R_HASH)),
-    # ⚠⚠ THE STALE-SIGNAL CASE. Reviewed, then edited: the path is covered and the bytes are not the
-    # bytes that were read. A coverage-only test passes this, which is the fail-open the
-    # SHA-256-per-file scheme exists to close.
-    ('signal covers it at DIFFERENT bytes', ({_R_PATH: 'b' * 64}, ('Thing.lean',), _R_HASH)),
+    ('no record, or the ledger could not be asked', (None, ('Thing.lean',), None)),
+    ('a record exists but does not cover the file', ({'other/File.lean'},
+                                                     ('Thing.lean',), None)),
     # ⚠⚠ THE MIGRATION CASE — dead key, LIVE content. The entry names the .lean, the claim moved to
     # the .md ride-along, and reviewing only the .lean would miss the text entirely. Measured on
     # Kruskal 2026-08-22, where exactly this shape reached a FAIL-BEDROCK claim.
-    ('.lean covered but its ride-along .md is not', ({_R_PATH: _R_HASH},
-                                                    ('Thing.lean', 'Thing.md'), _R_HASH)),
+    ('.lean covered but its ride-along .md is not', ({_R_PATH},
+                                                    ('Thing.lean', 'Thing.md'), None)),
 ]
 
 _R_MUST_SUPPRESS = [
-    ('the file itself is gone — nothing left to review', ({}, (), _R_HASH)),
-    ('covered at matching bytes', ({_R_PATH: _R_HASH}, ('Thing.lean',), _R_HASH)),
-    ('covered at matching bytes, ride-along too',
-     ({_R_PATH: _R_HASH, 'ZeroParadox/Demo/Thing.md': _R_HASH},
-      ('Thing.lean', 'Thing.md'), _R_HASH)),
+    ('the file itself is gone — nothing left to review', (set(), (), None)),
+    ('covered by the record', ({_R_PATH}, ('Thing.lean',), None)),
+    ('covered by the record, ride-along too',
+     ({_R_PATH, 'ZeroParadox/Demo/Thing.md'}, ('Thing.lean', 'Thing.md'), None)),
 ]
+
+# ⚠ THE STALE CASE, RELOCATED. `_owes` can no longer express it — by the time `sig` exists the
+# freshness question is already answered — so it is controlled where the decision now lives.
+_S_MUST_FIRE = [
+    ('STALE - reviewed, then edited', 'STALE'),
+    ('MISSING - never ran', 'MISSING'),
+    ('FAIL - the review found something', 'FAIL'),
+    ('UNDECIDED - it could not decide', 'UNDECIDED'),
+    ('NOT_APPLICABLE - nothing was examined', 'NOT_APPLICABLE'),
+]
+_S_MUST_SUPPRESS = [('SATISFIED - recorded and current', 'SATISFIED')]
 
 
 # ═══ BEHAVIOURAL CONTROLS — THEY DRIVE THE PROGRAM, NOT ITS PREDICATES ════════════════════════
@@ -466,19 +522,19 @@ def _plant(root, baseline, source=True):
         os.remove(src)
 
 
-def _sign(root, rels):
-    """Plant a claim-review signal covering `rels` AT THEIR BYTES ON DISK, the way the real one is."""
-    import hashlib
-    priv = os.path.join(root, '.claude-local')
-    if not os.path.isdir(priv):
-        os.makedirs(priv)
-    lines = ['PASS  control fixture']
-    for rel in rels:
-        with io.open(os.path.join(root, rel.replace('/', os.sep)), 'rb') as fh:
-            lines.append('%s  %s' % (hashlib.sha256(fh.read()).hexdigest(), rel))
-    with io.open(os.path.join(priv, 'cr_cleared.txt'), 'w', encoding='utf-8',
-                 newline='\n') as fh:
-        fh.write('\n'.join(lines) + '\n')
+# ⚠⚠ `_sign()` IS GONE, AND ITS ABSENCE IS THE POINT. It planted a `cr_cleared.txt` fixture, and that
+# file is RETIRED — coverage is a `claim_review` record now. There is no honest way to plant one from
+# a control: writing to the live stream pollutes an append-only ledger with fixtures, and a test-only
+# switch that makes the checker read a file again is the exemption class this layer keeps paying for.
+#
+# **So the covered case moved to where it can be driven honestly — `review_owed(..., sig={...})`,
+# in-process.** That parameter has always existed for exactly this, and its docstring says so. The
+# split is now: the PREDICATE is exercised both ways in `_R_MUST_FIRE`/`_R_MUST_SUPPRESS`, and the
+# SUBPROCESS covers the uncovered case end to end, which is the direction that must block.
+#
+# ⚠ What is deliberately NOT claimed any more: that the end-to-end path clears on a real signal.
+# Nothing proves that here, and pretending otherwise with a fixture would be a control passing for
+# the wrong reason (`DC-22`). The gap is named in `queue/tooling-retire-last-two-signal-files.md`.
 
 
 def _invoke(root):
@@ -498,14 +554,12 @@ def _seed(root, baseline, source=True):
     _fix_git(['commit', '-m', 'base'], root)
 
 
-def _case_removal(root, signed=False, source=True):
+def _case_removal(root, source=True):
     """Committed {A,B}; on disk {A}. A grandfathered entry has lost its grandfathered status.
 
     Drives the REMOVAL TRIGGER through `run()` — the wiring `FRZ-3` deleted."""
     _seed(root, '# header\n%s\n%s\n' % (_FIX_A, _FIX_B))
     _plant(root, '# header\n%s\n' % _FIX_A, source=source)
-    if signed:
-        _sign(root, [_FIX_SRC])
     return _invoke(root)
 
 
@@ -538,10 +592,19 @@ def selftest_behaviour():
                      code == 1 and 'CONTENT REVIEW OWED' in out,
                      'FRZ-3: owed = review_owed(all_removed) -> owed = []'))
 
-        code, out = _case_removal(os.path.join(tmp, 'signed'), signed=True)
-        rows.append(('…but a removal covered at matching bytes PASSES',
-                     code == 0 and 'CONTENT REVIEW OWED' not in out,
-                     'a control that is always red proves nothing'))
+        # ⚠⚠ THE "COVERED REMOVAL PASSES" CASE IS GONE, AND ITS ABSENCE IS DELIBERATE. It planted a
+        # `cr_cleared.txt` fixture; coverage is a `claim_review` RECORD now, and there is no honest
+        # way to plant one from a throwaway worktree — writing to an append-only ledger from a
+        # control pollutes the real stream, and a test-only switch that makes the checker read a file
+        # again is the exemption class this layer keeps paying for. Faking it would be a control
+        # passing for the wrong reason (`DC-22`), which is worth less than not having it.
+        #
+        # ⚠ ITS GUARANTEE — *"a control that is always red proves nothing"* — IS STILL HELD, by the
+        # file-gone case immediately below: that drives the same program to exit 0 with no liability
+        # reported, so an unconditionally-red checker still fails this suite. The covered-removal
+        # path itself is now exercised at the PREDICATE (`_R_MUST_SUPPRESS`, both directions) rather
+        # than end to end, and that reduction in coverage is named rather than hidden:
+        # `queue/tooling-retire-last-two-signal-files.md`.
 
         code, out = _case_removal(os.path.join(tmp, 'filegone'), source=False)
         rows.append(('…and a removal whose FILE is gone PASSES',
@@ -557,7 +620,7 @@ def selftest_behaviour():
                      'upstream' in out and 'what the REMOTE already has' in out,
                      'FRZ-4: a silent fallback must never read as a remote comparison'))
 
-        code, out = _case_removal(os.path.join(tmp, 'noupstream'), signed=True)
+        code, out = _case_removal(os.path.join(tmp, 'noupstream'))
         rows.append(('with NO upstream the banner does NOT claim the remote',
                      'what the REMOTE already has' not in out and 'NOT the remote' in out,
                      'FRZ-4: the unconditional "what the REMOTE already has" line'))
@@ -582,6 +645,10 @@ def selftest():
     print('')
     print('  REMOVAL TRIGGER')
     bad += common.fire_suppress(_R_MUST_FIRE, _R_MUST_SUPPRESS, _owes, 'unreviewed removal')
+    print('')
+    print('  COVERAGE STATUS — only SATISFIED discharges')
+    bad += common.fire_suppress(_S_MUST_FIRE, _S_MUST_SUPPRESS,
+                                lambda st: not discharges(st), 'non-discharging status')
     # ⚠ IN `selftest()` DELIBERATELY, not behind a separate flag. `FRZ-3`'s whole finding was that
     # the mutation stayed green through `--selftest`, `check_checkers` and `guards.py` — all three
     # reach the checker HERE, so this is the one placement that closes all three at once.

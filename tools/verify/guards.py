@@ -601,11 +601,56 @@ def check_routing_enforcement():
     finally:
         batch.check_routing = _saved_cr
 
+    # ⚠⚠ THE REGISTRY ROUTE — this is what actually closes `RLY28-1`, and it is BEHAVIOURAL.
+    #
+    # The source tripwire below could never see `bad += routing_verdict(...) * 0`: the identifier is
+    # still there, in a Load position, inside `cmd_prepush`. The caller simply discarded the number.
+    # Four successive source tests were defeated that way. So the producer now records its own count
+    # in `batch`'s verdict registry and `prepush_verdict()` reads it, which makes the annihilation
+    # INERT rather than merely detectable — and these three cases are what say so out loud.
+    #
+    # ⚠ THE SECOND CASE IS THE LOAD-BEARING ONE. An empty registry must report the step as MISSING,
+    # never as zero failures: "nothing ran" and "nothing wrong" render identically otherwise, which
+    # is the single defect shape this whole layer keeps producing.
+    _r_cases = []
+    try:
+        batch.check_routing = lambda *_a, **_k: [("/rely", False, "[logic] synthetic row", True)]
+        batch.verdict_reset()
+        _buf = io.StringIO()
+        _real_stdout, sys.stdout = sys.stdout, _buf
+        try:
+            batch.routing_verdict({}, None)
+        finally:
+            sys.stdout = _real_stdout
+        _tot, _miss = batch.prepush_verdict()
+        _r_cases.append(("the producer records its own count", _tot == 1 and not _miss,
+                         "registry reports %d, missing %r" % (_tot, _miss)))
+
+        batch.verdict_reset()
+        _tot0, _miss0 = batch.prepush_verdict()
+        _r_cases.append(("an unreported step is MISSING, not zero", _miss0 == ("routing",),
+                         "empty registry reports missing=%r" % (_miss0,)))
+
+        batch.verdict_reset()
+        _ = batch.routing_verdict({}, None) * 0          # the RLY28-1 neuter, verbatim
+        _tot2, _miss2 = batch.prepush_verdict()
+        _r_cases.append(("discarding the return value is INERT", _tot2 == 1 and not _miss2,
+                         "registry still reports %d after the caller annihilated it" % (_tot2,)))
+    except Exception as _e:                                   # noqa: BLE001
+        _r_cases.append(("the verdict registry is reachable", False, "raised %r" % (_e,)))
+    finally:
+        batch.check_routing = _saved_cr
+        batch.verdict_reset()
+    for _label, _ok, _why in _r_cases:
+        row("push verdict registry: %s" % _label, _ok,
+            _why if _ok else
+            "*** %s — the push verdict can be discarded at the call site again (RLY28-1) ***" % _why)
+
     # ⚠ AND THE VERDICT IS STILL ON THE PUSH PATH. `routing_verdict` can be perfect and simply not
-    # called — that is the 2026-08-21 probe's neuter, one level out. This is the one leg of this
-    # function that remains a source test, and it is deliberately the NARROWEST possible one: the
+    # called. This leg remains a source test and is deliberately the NARROWEST possible one: the
     # name must appear, in a Load position, inside the function the hook actually runs. It is a
-    # tripwire, not a proof, and the enumeration question it cannot settle is `agent_gate`'s.
+    # tripwire, not a proof — and since the registry route above now carries the property, this is
+    # belt-and-braces rather than the only thing standing between a neuter and a green push.
     import inspect
     import textwrap
     import ast as _ast
@@ -622,6 +667,26 @@ def check_routing_enforcement():
                     _wired = True
         except SyntaxError:
             _wired = False
+    # ⚠ AND THE ENFORCEMENT CALL, WHICH IS A SEPARATE NAME AND A SEPARATE HOLE. `routing_verdict`
+    # can be called faithfully and its verdict still never acted on: attempt five died exactly there,
+    # with `cmd_prepush` rebinding the result of `prepush_verdict()` to zero. The value is gone now
+    # (`enforce_prepush_verdict` dies rather than returning), so the only remaining consumer-side
+    # move is to DELETE the call — which this row makes loud.
+    _enforced = False
+    if _src:
+        try:
+            for _n in _ast.walk(_ast.parse(textwrap.dedent(_src))):
+                if isinstance(_n, _ast.Name) and _n.id == "enforce_prepush_verdict" and \
+                        isinstance(_n.ctx, _ast.Load):
+                    _enforced = True
+        except SyntaxError:
+            _enforced = False
+    row("prepush enforces the verdict", _enforced,
+        "`enforce_prepush_verdict` is read in cmd_prepush" if _enforced else
+        "*** cmd_prepush never mentions enforce_prepush_verdict — the routing legs are computed, "
+        "recorded, and then nothing acts on them. This is RLY28-1's fifth defeat one hop up: the "
+        "verdict is correct and unenforced ***")
+
     row("prepush still calls routing_verdict", _wired,
         "`routing_verdict` is read in cmd_prepush" if _wired else
         "*** cmd_prepush never mentions routing_verdict — the routing legs are computed and their "
@@ -802,20 +867,51 @@ r_negative_round.attacks = ROUND_STATE
 # A nitpicker will always find a knit to pick."* The cap releases at BLOCKING:0 once passes >=
 # RELY_CAP. Every route below defeated it silently before this registry existed.
 
-RELY_SIG = os.path.join(PRIV, "rely_cleared.txt")   # a SIGNAL: per-push state, stays private
-_CAPPED_LINE = ("REVIEWED - /rely 2026-08-10 pass 4, scope the verification pipeline. "
-                "BLOCKING:0 ORDINARY:9.\n")
+# ⚠⚠ `RELY_SIG` IS GONE. `rely_cleared.txt` was RETIRED 2026-08-24 — the last `*_cleared.txt`.
+# Coverage and the cap both read the `rely` LEDGER RECORD now, so these fixtures are RECORDS and the
+# control INJECTS them rather than planting a file. An in-process fixture cell is not a production
+# switch: nothing outside this module can reach it, and `rely_capped` has no file to fall back to.
+_CAPPED_REC = {"verdict": "PASS",
+               "reason": "REVIEWED - /rely 2026-08-10 pass 4, scope the verification pipeline. "
+                         "BLOCKING:0 ORDINARY:9."}
 # Known-good: past the pass count, but with a BLOCKING finding outstanding, so the cap must NOT fire.
-_UNCAPPED_LINE = ("REVIEWED - /rely 2026-08-10 pass 4, scope the verification pipeline. "
-                  "BLOCKING:1 ORDINARY:9.\n")
+_UNCAPPED_REC = {"verdict": "FAIL",
+                 "reason": "REVIEWED - /rely 2026-08-10 pass 4, scope the verification pipeline. "
+                           "BLOCKING:1 ORDINARY:9."}
+_RELY_FIXTURE = [_UNCAPPED_REC]     # one-slot cell the property's clean/violate swap
+
+
+def _set_rely(rec):
+    """(apply, undo) swapping the injected `rely` record — the same contract as `_rewrite`.
+
+    ⚠ RETURNS A PAIR, and the UNDO half is not optional: `run_property` plants a violation, walks
+    every route, and restores. A `clean`/`violate` that returns None crashes the walk before a single
+    route runs — which is a control that cannot fail, arriving as a traceback rather than a red row."""
+    prior = _RELY_FIXTURE[0]
+
+    def apply():
+        _RELY_FIXTURE[0] = rec
+
+    def undo():
+        _RELY_FIXTURE[0] = prior
+    return apply, undo
 
 
 def rely_cap_fires():
-    """With a BLOCKING:0 signal past RELY_CAP passes, the cap must FIRE."""
+    """With a BLOCKING:0 record past RELY_CAP passes, the cap must FIRE.
+
+    ⚠⚠ THE RECORD IS INJECTED, NOT PLANTED. This used to write `_CAPPED_LINE` into
+    `rely_cleared.txt`; that file is RETIRED (2026-08-24) and coverage is a `rely` ledger record.
+    There is no honest way to plant one from a control — writing fixtures into an append-only
+    stream corrupts the real record, and a test-only switch that makes the cap read a file again is
+    the exemption class this layer keeps paying for. `rely_capped(rec=...)` exists for exactly this.
+
+    ⚠ THE PASS COUNT STILL COMES FROM THE REAL `gate_round.py`, deliberately: injecting BOTH halves
+    would leave the control asserting only its own fixtures. One side supplied, one side live."""
     import importlib
     import ship
     importlib.reload(ship)
-    capped, why = ship.rely_capped()
+    capped, why = ship.rely_capped(rec=_RELY_FIXTURE[0])
     return capped, why
 
 
@@ -827,10 +923,15 @@ r_no_target_bump.attacks = ROUND_STATE
 
 
 def r_drop_blocking_token():
-    """Line 1 without `BLOCKING:` — must not read as 'not capped, carry on'."""
-    return _rewrite(RELY_SIG, lambda o: b"REVIEWED - /rely pass 4, scope the pipeline.\n"
-                    + (o.split(b"\n", 1)[1] if o and b"\n" in o else b""))
-r_drop_blocking_token.attacks = RELY_SIG
+    """A `rely` FAIL whose reason omits `BLOCKING:` — must not read as 'not capped, carry on'.
+
+    ⚠ NO LONGER A FILE MUTATION, but still a MUTATION and not an assertion: it swaps the injected
+    record and lets `detect` observe the consequence. A route that returned its own verdict would be
+    grading itself, and `run_property`'s whole shape is that the route perturbs and the DETECTOR
+    judges. It writes no file, so it declares no `attacks` path."""
+    return _set_rely({"verdict": "FAIL",
+                      "reason": "REVIEWED - /rely pass 4, scope the pipeline."})
+r_drop_blocking_token.attacks_state = lambda: _RELY_FIXTURE[0]
 
 
 def says_malformed(ctx):
@@ -1246,8 +1347,8 @@ PROPERTIES = [
     },
     {
         "name": "the /rely iteration cap cannot be walked",
-        "clean": lambda: _rewrite(RELY_SIG, lambda _o: _UNCAPPED_LINE.encode("utf-8")),
-        "violate": lambda: _rewrite(RELY_SIG, lambda _o: _CAPPED_LINE.encode("utf-8")),
+        "clean": lambda: _set_rely(_UNCAPPED_REC),
+        "violate": lambda: _set_rely(_CAPPED_REC),
         "detect": rely_cap_fires,
         "routes": [
             ("--target never bumped", r_no_target_bump, False, None),
@@ -1315,17 +1416,31 @@ def run_property(prop):
             # `r_allowlist.attacks = ...` — and the control requires THAT path to have changed. A
             # central table would have been a second place to maintain, which is the pattern this
             # file exists to argue against.
+            # ⚠ A ROUTE MAY ATTACK IN-PROCESS STATE INSTEAD OF A FILE, and it gets the SAME
+            # inertness test rather than an exemption. `rely_cleared.txt` retired 2026-08-24, so the
+            # cap's fixture is an injected record — nothing on disk moves, and the filesystem test
+            # below would score that INERT for ever. `attacks_state` is a probe whose value must
+            # CHANGE across `r_apply()`. **The property is "the route actually perturbed something",
+            # not "a file changed"** — exempting the route would have been the weaker reading, and
+            # would have re-created exactly the false green (`GRD-1`, `COM-3`) this block exists for.
             attacked = getattr(factory, "attacks", None)
+            state_probe = getattr(factory, "attacks_state", None)
+            state_before = state_probe() if state_probe is not None else None
             fs_before = snapshot()
             try:
                 r_apply()
                 moved = [p for p in TOUCHED if snapshot()[p] != fs_before[p]]
-                if attacked is not None and attacked not in moved:
+                if state_probe is not None and state_probe() == state_before:
+                    results.append((label, "ROUTE INERT — its declared in-process state did not "
+                                           "change, so the verdict below would be a false green",
+                                    False))
+                    continue
+                if state_probe is None and attacked is not None and attacked not in moved:
                     results.append((label, "ROUTE INERT — its declared target (%s) did not change, "
                                            "so the verdict below would be a false green"
                                            % os.path.relpath(attacked, REPO), False))
                     continue
-                if attacked is None and not moved:
+                if state_probe is None and attacked is None and not moved:
                     results.append((label, "ROUTE INERT — applying it changed none of the %d hashed "
                                            "paths, and it declares no target to check against"
                                            % len(TOUCHED), False))
@@ -1362,7 +1477,6 @@ TOUCHED = [
     # ANY new route must add every path it writes, here, in the same change.
     os.path.join(BASE, "prose_baseline.txt"),
     ROUND_STATE,
-    RELY_SIG,
     os.path.join(REPO, "ZeroParadox", "Order", "Vendored", "Probe.lean"),
 ]
 

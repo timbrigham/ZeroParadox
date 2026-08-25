@@ -70,7 +70,7 @@ command, **including the one that would rename it**; the only escape is a glob a
 same day.)
 
 ⚠ **TOOLS THAT USE GIT INTERNALLY ARE UNAFFECTED.** The hook intercepts **agent tool calls**, not
-subprocesses spawned by a Python process. `batch.py`, `hooks.py`, all 21 checkers that shell git,
+subprocesses spawned by a Python process. `batch.py`, `hooks.py`, every checker that shells git,
 `check_frozen.py`'s upstream-ref basis and every build script keep working untouched. **Do not
 "migrate" them** — there is nothing wrong with them, and rewriting them onto an MCP server the
 pipeline cannot depend on would break the gates.

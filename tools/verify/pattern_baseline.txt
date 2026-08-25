@@ -53,6 +53,7 @@ EVIDENCE	as\s+of\s+\d{4}|\b20\d\d-\d\d-\d\d\b|located\s+as\s+of|searched\s+as\s+
 SKIP_NAMES	DEFECT_CLASSES.md
 SKIP_NAMES	check_negatives.py
 SKIP_NAMES	negatives_baseline.txt
+_SENTENCE_END	\.(?=\s|$)
 _N	\bhas\s+never\s+been\s+(?:found|located|observed)\b
 _N	\bnever\s+been\s+(?:found|located|observed)\b
 _N	\bno\s+(?:\w+[\s-]+){0,3}anywhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase)

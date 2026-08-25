@@ -49,8 +49,8 @@ visible as one.
 3. **Explicit hypothesis.** Visible on the face of the statement. **Prefer this for anything that can be
    false.**
 
-**Rollout — AS-TOUCHED, not a rewrite.** The corpus has ~1400 declarations on the class form and there is
-no realistic big-bang migration. Every new or edited commitment uses the hypothesis form immediately;
+**Rollout — AS-TOUCHED, not a rewrite.** The class form is used widely enough that no big-bang
+migration is realistic. Every new or edited commitment uses the hypothesis form immediately;
 where an existing class carries a commitment, add a **companion explicit-hypothesis theorem** rather than
 refactoring the class. First candidates: `KleeneStructure`'s identification, and **AX-B1**, which is the
 framework's one substantive modelling commitment and currently the least visible of the three (encoding 1).

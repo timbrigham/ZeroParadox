@@ -25,8 +25,9 @@ loop, so it enforces the cap. Paste this into the brief verbatim:
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
 **This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
-any file under the repository, with exactly two exceptions: your signal file, and your findings note under
-`.claude-local/notes/`.
+any file under the repository, with exactly ONE exception: your findings note under
+`.claude-local/notes/`. ⚠ **There is no signal file any more** — verdicts go to the ledger, and the
+recording section below is the only place you write a verdict.
 
 **NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
 to the **session scratchpad directory** named in your environment — never under `ZeroParadox/` or
@@ -48,7 +49,7 @@ Working directory: `C:\Workspace\ZeroParadox`. Private working files are in `.cl
 
 **Mode selection — check ARGUMENTS_VALUE first:**
 
-- If ARGUMENTS_VALUE is empty or absent: **Pre-commit mode** — run `git diff --staged --name-only` to identify staged files. Review those files plus any paired documents (if a companion script is staged, also read its formal doc; if register.md is staged, check all version strings). If nothing is staged, fall back to **Full Scan**.
+- If ARGUMENTS_VALUE is empty or absent: **STOP AND ERROR. Do not proceed, and do not fall back to Full Scan.** Report `SCOPE UNKNOWN — refusing to review` and record nothing. ⚠ **This is `MIG-3`, and it is a live fail-open.** Direct `git` is denied to agents, so self-discovering the staged set returns a refusal rather than a file list; the brief then read the empty result as *"nothing staged"* and fell through to Full Scan — certifying a scope nobody asked for, and recording a verdict over it. **An empty scope is not an empty diff.** The caller must pass the paths explicitly; `mcp__gitRobot__read(op='diff', args=['--staged','--name-only'])` is the only sanctioned way to obtain them, and it is the CALLER's job, not yours.
 - If ARGUMENTS_VALUE contains file paths (tokens ending in `.py`, `.md`, `.lean`): **Targeted mode** — review only those files.
 - If ARGUMENTS_VALUE is `full`: **Full Scan** — review all public-facing documents and build scripts.
 
@@ -220,21 +221,37 @@ Ordered by severity. Each item: file, line, violation, required fix.
 
 Save the complete report to `.claude-local\notes\editorial_review_YYYY-MM-DD.md`. State the filename at the end of your response.
 
-**Signal file**
+**Recording your verdict — the LEDGER, not a file**
 
-The signal records, per file the review certified, the file's **content SHA-256** — not a HEAD hash (SHA-256-per-file scheme, 2026-07-20). A signal now survives an unrelated later commit (a data-only `ssot.json` sync, a rebuilt PDF) that touches nothing the review examined; only a change to a reviewed file, or a new reviewable file appearing in the push, invalidates it. Write it BOM-free — `[System.IO.File]::WriteAllText($path, $text, (New-Object System.Text.ASCIIEncoding))`, not `Set-Content -Encoding utf8`.
+⛔ **DO NOT WRITE `.claude-local/er_cleared.txt`. The prose signal files are RETIRED**. They could be written by any process, recorded **no author**, and held one verdict for N passes — measured 2026-08-24, three concurrent editorial passes raced on that one path and the survivor was decided by scheduling, with an unattributed `PASS` on disk that no reader could trace. A ledger record is authored, append-only, and keyed per subject, so none of that is expressible.
 
-Format:
-- **line 1** = the verdict record (echoed by the hook at push time, so "cleared" is never silently read as "clean").
-- **line 2+** = one line per file you reviewed, `<sha256>  <repo-relative-path>`. List EVERY reviewable file in the diff — the hook requires each reviewable file in the push to be covered by a recorded hash (a data file like `ssot.json` or a `.pdf` is not reviewable and must NOT be listed).
+**On FAIL / FAIL-BEDROCK — record it yourself. One agent's finding stands alone:**
 
-⚠ **HASH THE FILE ON DISK. Never a git value** (Tim, 2026-08-09). `Get-FileHash -Algorithm SHA256 <path>` (lowercase the result), or `sha256sum <path>` and take the first field. Do **not** use `git show "HEAD:<path>"`: that is the same command meaning two different things depending on when it runs, and this is a **pre-commit** gate, so HEAD holds the OLD content and the signal goes stale the instant the commit lands. The pre-push hook and `batch.py` both hash the file on disk, so a disk hash is what they compare against at any point in the cycle.
+```
+python tools/verify/record.py --step editorial --verdict fail --tier A \
+    --how agreement --passes 1 --agreed 1 \
+    --run gate-editorial-<YYYY-MM-DD> \
+    --reason-file <path to a file holding one line: what failed> \
+    --files <every file you reviewed>
+```
 
-- **PASS** → write `.claude-local\er_cleared.txt`: `PASS - clean, no findings.` on line 1, the `<sha256>  <path>` lines after.
-- **STOP-ORDINARY** → **write the signal too.** Line 1 `STOP-ORDINARY (round N) - cleared under the ordinary cap; M findings, none bedrock-tier.`, the hash lines after. **This is not a forgery and not a courtesy.** STOP-ORDINARY is a sanctioned proceed verdict — the cap rule states that "the correct action is to PUSH, not to iterate." Withholding the signal on it made the cap and the pre-push hook give opposite instructions for the same state, which forced every capped review to end in `git push --no-verify` and turned the bypass from exceptional into routine. The verdict line keeps the record honest about *which* verdict cleared the push.
-- **FAIL / FAIL-BEDROCK** → delete `.claude-local\er_cleared.txt` if it exists. Never write a signal for a failing review.
+**On PASS — record NOTHING, and report the verdict to your caller.** § 6a-i: *FAIL alone, PASS by unanimity or signature.* A lone A-tier PASS is absence-of-evidence wearing a clean bill, and `V3` rejects it at the server anyway. The caller either runs `policy.agreement.min_passes` independent passes and records the agreement, or takes a human signature. **Your job ends at reporting.**
 
-Never write a signal claiming PASS when the verdict was STOP-ORDINARY. That distinction is the entire purpose of line 1's verdict record.
+⚠ **Subjects are read from the git INDEX, so the files you reviewed must be STAGED.** `common.ledger_subjects` fences anything untracked or differing from the index — it fails closed, which is why a review of bytes that have since changed cannot be recorded by accident. If it fences a path, say so; do not work around it.
+
+⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
+keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
+refused with *"revision 0 already exists for step '<step>' at this basis"*. That is the design
+working — it fails CLOSED and loudly, with an attributed append-only record, where the retired
+signal files failed silently and let the last writer win. **Do not treat it as an outage and do not
+retry.** Instead: read the recorded record's `reason`, and **report to your caller exactly which of
+your findings are ABSENT from it.** Two passes converging is corroboration; a finding only you found
+is lost unless you say so in your report. `record.py` exposes no `--revision`, so the supersede
+chain is not reachable from here — that is a known gap, not something for you to work around.
+
+⚠ **Exit 2 is NOT exit 1.** `record.py` exits 2 when the ledger could not be reached or refused the record — the review may have been fine and simply went unrecorded. Report that as a RECORDING failure, never as a finding about the corpus.
+
+⚠ **Never claim PASS when the verdict was STOP-ORDINARY.** Both are proceed verdicts and they are not the same fact; the distinction is why the caller, not you, decides what reaches the ledger.
 
 Do not soften findings. A failed check is a failed check. Name the file, the line, and the exact string.
 ---

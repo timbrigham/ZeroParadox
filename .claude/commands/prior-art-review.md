@@ -25,8 +25,12 @@ loop, so it enforces the cap. Paste this into the brief verbatim:
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
 **This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
-any file under the repository, with exactly two exceptions: your signal file, and your findings note under
-`.claude-local/notes/`.
+any file under the repository, with exactly two exceptions: your findings note under
+`.claude-local/notes/`, and **any source PDF you retrieve at rung D, filed into `.claude-local/papers/`**.
+⚠ **The second is not a loophole, it is what makes rung A work.** Both live under `.claude-local/`,
+which is gitignored — so none of them touches the tracked tree, and the read-only property this section
+is protecting is unaffected. A scout that reads a source and files nothing leaves the library exactly as
+poor as it found it, and the decay is invisible because it looks like restraint.
 
 **NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
 to the **session scratchpad directory** named in your environment — never under `ZeroParadox/` or
@@ -59,7 +63,7 @@ Working directory: use the current project root.
 
 **Mode selection — check ARGUMENTS_VALUE:**
 - File paths (tokens ending in `.md`, `.txt`, `.rst`, `.py`, or `.lean`, space-separated): review only those files.
-- Empty or absent: review the staged diff — run `git diff --staged` and read the files it touches.
+- Empty or absent: **STOP AND ERROR. Do not proceed, and do not fall back to a diff.** Report `SCOPE UNKNOWN — refusing to review` and record nothing. Direct version-control commands are denied to agents here (`MIG-3`, the OPEN entry about brief scope discovery — not the closed one about `common.py` mirrors, which shares the id). ⚠ **The denial itself is loud, not silent** — measured 2026-08-24 through both shells, it returns a ~25-line `BLOCKED:` message naming the command, the reason and the substitute. **What fails open is the BEHAVIOUR, not the call:** an agent told to review the staged diff, handed a refusal instead of a file list, has no instruction for that state and falls back to a scope of nothing — and every PASS condition below is **vacuously true of the empty set**, so the PASS writes the signal that clears the push. An empty scope is not an empty diff. If you need the staged list, the caller must pass it explicitly; `mcp__gitRobot__read(op='diff', args=['--staged','--name-only'])` is the only sanctioned way to obtain it, and it is the CALLER's job, not yours.
 - A single block of prose: review that text only.
 
 ## Scope — what counts
@@ -69,12 +73,24 @@ Evaluate only **synthesis / bridge claims**: a distinctive claim that unifies or
 1. **Check our own corpus FIRST (before any web search).** Grep the repo and `.claude-local` (notes, `external/`, outreach) for an existing reference to the claim/concept — much of this project's prior-art knowledge already lives there (citations inside `.lean` docstrings, vendored libraries, outreach drafts, research notes). Anything already cited there is NOT a gap; do not "rediscover" it. Only what is genuinely uncited in our own corpus proceeds to a web search.
 2. **State the claim** in the target field's own terms.
 3. **Identify the specialist branch** that would own it (the subfield and the kind of result).
-3. **Search the literature** (web search), then **read the actual source** — do not stop at search summaries. To read a source: use WebFetch; if a domain is not reachable that way, download it via PowerShell `Invoke-WebRequest -Uri <url> -OutFile .claude-local/<name>.pdf` and open it with the Read tool (this works for any publisher — arXiv, Dagstuhl/LIPIcs, nLab, journal sites). **Draft from source, not from snippets:** a search summary is a lead, not a citation. If you genuinely cannot read the source, say so and treat the citation as unverified.
-4. **Verdict for this claim:**
+4. **Search the literature — run the LADDER in order. Do not skip a rung, and do not stop early.**
+   - **Rung A — `.claude-local/papers/`.** The downloaded-source library. **Grep loosely** (OCR'd scans carry intra-word spaces, so a tight-pattern miss is not absence).
+   - **Rung B — `theoremsearch`** (MCP tool `mcp__theoremsearch__theorem_search`). Matches on the STATEMENT, not the title, so it reaches claims a title search cannot. Four rules, each measured:
+     1. **THREE PHRASINGS MINIMUM.** Vary them along the four axes in CLAUDE.md § `R-NOTINLIB` (body: `tools/process/not-in-the-library.md`): **POLARITY** (how the corpus would say it if it DISAGREED with you), **PART OF SPEECH** (the verb that builds it, not the noun), **VOCABULARY** (the domain's words), **DISPLAY** (never conclude absence from TRUNCATED output). Measured 2026-08-23: the noun form put the right theorem at rank 1 and the **verb** form dropped it out of the top 5 entirely — same claim, same index. **A single-phrasing negative is worthless.**
+     2. **DISPLAY is this rung's own exposure.** `theoremsearch` returns a capped list, so a scout who reads the cap and stops **has measured the cap, not the literature**. Re-run untruncated.
+     3. **IGNORE the `similarity`/`score` field.** The 7-case calibration of 2026-08-23 found **no threshold that keeps the garbage out without discarding the find** — noise scored 0.69 while genuine prior art scored 0.61. ⚠ That is a claim about THRESHOLDS, **not** that the score runs backwards. Measured 2026-08-24 across two independent probes: exact statements of Lawvere's fixed-point theorem returned 0.676, 0.683 and 0.686, other exact hits 0.834 and 0.777, and relevant fixed-point theorems 0.732 and 0.728 against irrelevant ones at 0.687 and 0.680. **Rank by reading; never filter on the number.**
+     4. ⚠ **`paper_filter` takes a TITLE, not an arXiv id.** Passing an id returns empty and reads exactly like absence.
+   - **Rung C — the open web.** Run it when rung B returns no good match, **and also when rung B returns a neighbourhood hit whose real source still needs identifying**. Everything pre-arXiv lives here — Lawvere 1969, Aczel 1988, Ostrowski, Gentzen, Carlström. `theoremsearch` cannot return those as sources, only as work other people cite, **and the reason is the corpus boundary rather than a quirk: the index is built from arXiv, so a work published before it did not exists in the index only inside the reference lists of papers that cite it.** A Gentzen-1936 query returns modern arXiv papers citing Gentzen, never Gentzen.
+   - **Rung D — RETRIEVE AND READ THE FULL SOURCE.** Use WebFetch; if a domain is not reachable that way, download it via PowerShell `Invoke-WebRequest -Uri <url> -OutFile .claude-local/papers/<author_topic_year[_id]>.pdf` and open it with the Read tool (this works for any publisher — arXiv, Dagstuhl/LIPIcs, nLab, journal sites). **Download straight into `.claude-local/papers/` under that name** — one destination, so filing is not a second step anyone can skip — and **validate before you rely on it** (a tiny PDF is an error page, not a paper). ⚠ **This is the one place the read-only rule yields, and it is deliberate**: filing the source is what feeds rung A for every later scout, so a review that reads a PDF and leaves nothing behind makes the library decay while looking like diligence.
+
+   ⚠⚠ **RUNGS A–C ARE DISCOVERY. ONLY RUNG D IS VERIFICATION.** **Draft from source, not from snippets — and a `theoremsearch` theorem body is a snippet, not a passage in hand.** Measured 2026-08-23: a returned body read as our recorded citation renumbered for a journal version, and the PDF showed the two statements were different (connexity versus splitting). The returned `slogan` field is an **LLM paraphrase**, `label`/`link` come back **null**, and ambient hypotheses are inconsistently included. If you genuinely cannot read the source, say so and treat the citation as **unverified**.
+
+   ⚠ **A NULL FROM RUNG B IS UNINFORMATIVE ON ITS OWN.** The index is coverage-bounded and the bound is invisible from the result — a paper this project holds on disk is verifiably absent from it. Never write "no prior art exists" from rung B, and do not record "none located as of &lt;date&gt;" until rung C has also run.
+5. **Verdict for this claim:**
    - **Prior art exists and is already cited** in the content → OK (after confirming the citation is real and correctly directed).
    - **Prior art exists and is NOT cited** → FAIL for this claim: give the full citation (author, year, venue), state the claim's honest *delta* against it (what the framework genuinely adds), and the credit direction (framework is an instance joining the program, never subsuming it).
    - **A diligent search finds no closer specialist prior art** → OK, but record "searched [date], no closer prior art found" so the determination is on file.
-5. **Citation-direction check:** for any prior art the content already cites, confirm it is cited in the correct direction (framework as instance/extension, not the prior work as an instance of the framework) and that the source actually says what the content claims it says.
+6. **Citation-direction check:** for any prior art the content already cites, confirm it is cited in the correct direction (framework as instance/extension, not the prior work as an instance of the framework) and that the source actually says what the content claims it says.
 
 ## Output
 **Verdict:** **VERDICT: PASS**, **VERDICT: FAIL-BEDROCK**, or **VERDICT: STOP-ORDINARY** — see the round-number preflight above; past the ordinary cap, a bare FAIL is not a valid verdict.
@@ -86,22 +102,36 @@ Evaluate only **synthesis / bridge claims**: a distinctive claim that unifies or
 
 Save the findings to `.claude-local/notes/prior_art_review_YYYY-MM-DD.md`, listing every source consulted and every PDF saved. State the filename at the end.
 
-**Signal file (staged-diff and file-path modes only; SKIP for a pasted prose block):**
+**Recording your verdict — the LEDGER, not a file** (file-path mode only; SKIP for a pasted prose block, and there is no staged-diff mode — see the mode selection above, where an empty scope is a refusal):
 
 
-The signal records, per file the review certified, the file's **content SHA-256** — not a HEAD hash (SHA-256-per-file scheme, 2026-07-20). A signal now survives an unrelated later commit (a data-only `ssot.json` sync, a rebuilt PDF) that touches nothing the review examined; only a change to a reviewed file, or a new reviewable file appearing in the push, invalidates it. Write it BOM-free — `[System.IO.File]::WriteAllText($path, $text, (New-Object System.Text.ASCIIEncoding))`, not `Set-Content -Encoding utf8`.
+⛔ **DO NOT WRITE `.claude-local/pa_cleared.txt`. The prose signal files are RETIRED.** Nothing GATES on that path any more — `batch.py`'s review check asks the ledger, and `hooks.py` and `guards.py` never opened it. ⚠ One reader remains and it is informational only: `check_release_ready.py` prints whether the file is present and never blocks on it, so its absence costs a line of output, not a refusal. It could be written by any process, recorded **no author**, and held one verdict for N passes; measured 2026-08-24, three concurrent passes of a sibling gate raced on one such path and the survivor was decided by scheduling. A ledger record is authored, append-only and keyed per subject, so none of that is expressible.
 
-Format:
-- **line 1** = the verdict record (echoed by the hook at push time, so "cleared" is never silently read as "clean").
-- **line 2+** = one line per file you reviewed, `<sha256>  <repo-relative-path>`. For a new `.lean` file this is normally the one file. List EVERY reviewable file in the diff — the hook requires each reviewable file in the push to be covered by a recorded hash (a data file like `ssot.json` or a `.pdf` is not reviewable and must NOT be listed).
+**On FAIL / FAIL-BEDROCK — record it yourself. One agent's finding stands alone** (*FAIL alone, PASS by unanimity or signature*):
 
-⚠ **HASH THE FILE ON DISK. Never a git value** (Tim, 2026-08-09). `Get-FileHash -Algorithm SHA256 <path>` (lowercase the result), or `sha256sum <path>` and take the first field. Do **not** use `git show "HEAD:<path>"`: that is the same command meaning two different things depending on when it runs, and if the change is not yet committed HEAD holds the OLD content, so the signal goes stale the instant the commit lands. The pre-push hook and `batch.py` both hash the file on disk, so a disk hash is what they compare against at any point in the cycle.
+```
+python tools/verify/record.py --step prior_art --verdict fail --tier A \
+    --how agreement --passes 1 --agreed 1 \
+    --run gate-prior-art-<YYYY-MM-DD> \
+    --reason-file <path to a file holding one line: the uncited closest prior art> \
+    --files <every file the CALLER handed you>
+```
 
-- **PASS** → write `.claude-local/pa_cleared.txt`: `PASS - clean, no findings.` on line 1, the `<sha256>  <path>` lines after.
-- **STOP-ORDINARY** → **write the signal too.** Line 1 `STOP-ORDINARY (round N) - cleared under the ordinary cap; M findings, none bedrock-tier.`, the hash lines after. **This is not a forgery and not a courtesy.** STOP-ORDINARY is a sanctioned proceed verdict — the cap rule states that "the correct action is to PUSH, not to iterate." Withholding the signal on it made the cap and the pre-push hook give opposite instructions for the same state, which forced every capped review to end in `git push --no-verify` and turned the bypass from exceptional into routine. The verdict line keeps the record honest about *which* verdict cleared the push.
-- **FAIL / FAIL-BEDROCK** → delete `.claude-local/pa_cleared.txt` if it exists. Never write a signal for a failing review.
+**On PASS — record NOTHING and report the verdict to your caller.** A lone A-tier PASS is absence-of-evidence wearing a clean bill, and the server's `V3` rejects it anyway. The caller either runs three independent passes and records the agreement, or takes a human signature.
 
-Never write a signal claiming PASS when the verdict was STOP-ORDINARY. That distinction is the entire purpose of line 1's verdict record.
+⚠ **`--run` is REQUIRED, and `--reason-file` is not optional politeness.** `V9` refuses a record with no run id, and a spawned gate has no pipeline to inherit one from. The reason goes in a FILE because the PreToolUse hook denies any command containing the denied version-control token — arguments included — so an honest reason describing a scope-discovery defect blocks the very command that reports it. Measured three times on 2026-08-24, by three separate review agents.
+
+⚠ **Subjects are read from the INDEX, so the files must be STAGED**, and `--ref` defaults to `INDEX` for exactly that reason. `common.ledger_subjects` fences anything untracked or differing from the index; it fails closed. ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
+keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
+refused with *"revision 0 already exists for step '<step>' at this basis"*. That is the design
+working — it fails CLOSED and loudly, with an attributed append-only record, where the retired
+signal files failed silently and let the last writer win. **Do not treat it as an outage and do not
+retry.** Instead: read the recorded record's `reason`, and **report to your caller exactly which of
+your findings are ABSENT from it.** Two passes converging is corroboration; a finding only you found
+is lost unless you say so in your report. `record.py` exposes no `--revision`, so the supersede
+chain is not reachable from here — that is a known gap, not something for you to work around.
+
+⚠ **Exit 2 is NOT exit 1** — it means the ledger was unreachable or refused the record, a RECORDING failure rather than a finding about the corpus.
 
 
 

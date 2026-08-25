@@ -6,8 +6,9 @@ Read `$ARGUMENTS` to determine the mode, then spawn an Agent using the Agent too
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
 **This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
-any file under the repository, with exactly two exceptions: your signal file, and your findings note under
-`.claude-local/notes/`.
+any file under the repository, with exactly ONE exception: your findings note under
+`.claude-local/notes/`. ⚠ **There is no signal file any more** — verdicts go to the ledger, and the
+recording section below is the only place you write a verdict.
 
 **NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
 to the **session scratchpad directory** named in your environment — never under `ZeroParadox/` or
@@ -76,7 +77,7 @@ Working directory: use the current project root.
 
 ## Claim-status routing (all modes)
 
-While reviewing, note whether the content asserts any unproved or conjectural claim — anything stated with confidence that is not a cited, proved result (a conjecture, a "we expect / this shows" about an open question, a universal, an evidential summary, a choice/independence statement). **Detecting the presence of such a claim is in scope; evaluating it in depth is NOT your job — that belongs to `/claim-review` and its proof-theory-referee persona.** If any such claim is present, add a kill-list item: "Conjectural/unproved claim present — `/claim-review` must pass for this content (`.claude-local/cr_cleared.txt` matching HEAD) before clearance." A kill-list item withholds the clean verdict, so `ar_cleared.txt` is not written and the pre-push hook blocks until claim-review has run.
+While reviewing, note whether the content asserts any unproved or conjectural claim — anything stated with confidence that is not a cited, proved result (a conjecture, a "we expect / this shows" about an open question, a universal, an evidential summary, a choice/independence statement). **Detecting the presence of such a claim is in scope; evaluating it in depth is NOT your job — that belongs to `/claim-review` and its proof-theory-referee persona.** If any such claim is present, add a kill-list item: "Conjectural/unproved claim present — `/claim-review` must be recorded and current in the ledger for this content before clearance." A kill-list item withholds the clean verdict, so you record a FAIL rather than reporting a PASS, and the push stays blocked until claim-review has run and recorded. ⚠ **Ledger step `claim_review`, keyed per file — not a signal file, and not HEAD-equality.**
 
 ---
 
@@ -84,7 +85,7 @@ While reviewing, note whether the content asserts any unproved or conjectural cl
 
 While reviewing, detect whether the content is **synthesis / bridge-layer content** — material that unifies, connects, or identifies a structure across more than one field or framework. Tells: the words "synthesis layer" or "bridge"; cross-framework identity or correspondence claims; "the same X across Y", "is an instance of", "corresponds to", "unifies"; a recognized phenomenon attributed across domains (a diagonal / fixed-point / initial-object / limit / self-reference claim spanning fields); or a layer whose distinctive claim sits in a specialist subfield the framework is not native to. **A claim whose central content is a single named classical theorem the framework merely invokes (e.g. Ostrowski, Gentzen) is NOT synthesis content for this purpose — skip it.**
 
-If synthesis-layer content is present, check whether its distinctive cross-field claim **cites the specialist branch that owns it** — a specific prior-art citation near the claim, or in the project's "Convergence with established work" ledger (CLAIMS.md). **Detecting an uncited synthesis/construction claim is in scope; performing the literature search is NOT your job — that belongs to `/prior-art-review` and its literature-scout persona.** This routing also fires on a distinctive **construction**, not only a cross-field claim: if the staged diff introduces a new `.lean` file, or a large net addition to one (a substantial original construction the framework is not native to), treat its central construction as in-scope for prior-art even if it is not a cross-field synthesis claim. Before flagging anything, confirm it is genuinely uncited — check near the claim, the CLAIMS "Convergence with established work" ledger, and the rest of the repo (an already-cited result is not a gap). If a distinctive synthesis claim lacks a specialist-branch citation and there is no `.claude-local/pa_cleared.txt` matching HEAD, add a kill-list item: "Synthesis claim without specialist prior-art citation — `/prior-art-review` must pass for this content (`.claude-local/pa_cleared.txt` matching HEAD) before clearance." A kill-list item withholds the clean verdict, so `ar_cleared.txt` is not written and the pre-push hook blocks until prior-art-review has run.
+If synthesis-layer content is present, check whether its distinctive cross-field claim **cites the specialist branch that owns it** — a specific prior-art citation near the claim, or in the project's "Convergence with established work" ledger (CLAIMS.md). **Detecting an uncited synthesis/construction claim is in scope; performing the literature search is NOT your job — that belongs to `/prior-art-review` and its literature-scout persona.** This routing also fires on a distinctive **construction**, not only a cross-field claim: if the staged diff introduces a new `.lean` file, or a large net addition to one (a substantial original construction the framework is not native to), treat its central construction as in-scope for prior-art even if it is not a cross-field synthesis claim. Before flagging anything, confirm it is genuinely uncited — check near the claim, the CLAIMS "Convergence with established work" ledger, and the rest of the repo (an already-cited result is not a gap). If a distinctive synthesis claim lacks a specialist-branch citation and the ledger step `prior_art` is not recorded and current for this content, add a kill-list item: "Synthesis claim without specialist prior-art citation — `/prior-art-review` must be recorded and current in the ledger before clearance." A kill-list item withholds the clean verdict, so you record a FAIL rather than reporting a PASS, and the push stays blocked until prior-art-review has run and recorded. ⚠ **Ledger step `prior_art`, keyed per file — not a signal file, and not HEAD-equality.**
 
 ---
 
@@ -190,7 +191,7 @@ Do NOT let source-reading retro-justify a suspicion away — a suspicion a cold 
 
 **Step 4a — SHIP THE CODE, NOT A DESCRIPTION OF IT.** Every finding that can be settled mechanically — (a) counterexamples, (e) trivial witnesses, (f) refuting `example`s — **must carry the actual Lean, verified to elaborate before you report it**, in a fenced block, with the imports it needs and the file and line it belongs at. A finding reading *"a trivial witness exists"* costs the reader the whole build; a finding that hands over eight lines that compile costs them a paste. State which snippets you ran and what the elaborator said. If you could not get one to run, say so — never present an unrun snippet as verified.
 
-**Step 5 — Save + verdict + signal** as in Document Scan Step 4–6 (write to `.claude-local/notes/adversary_review_YYYY-MM-DD.md`; signal file per kill-list outcome).
+**Step 5 — Save + verdict + record** as in Document Scan Step 4–6. ⚠ Write your note to a filename that CANNOT collide with a concurrent pass — `.claude-local/notes/adversary_review_YYYY-MM-DD_<scope>.md`; several passes of this gate run at once and a shared stem destroys the others' work, which is the same single-path race the signal files were retired over. Then record per the recording section: a FAIL goes to the ledger, a PASS is reported to the caller.
 
 ---
 
@@ -216,10 +217,15 @@ Produce a `### [filename]` section for each.
 
 Apply when no argument is provided.
 
-**Step 1 — Enumerate public documents.**
-Run `git ls-files`. Collect:
+**Step 1 — Obtain the document list. DO NOT ENUMERATE IT YOURSELF.**
+
+⚠⚠ **This step used to say "run `git ls-files`", and that was a live fail-open (`MIG-3`).** Direct `git` is denied to agents, so the call returns a refusal rather than a file list, the collected set is empty — and **every PASS condition in this mode is vacuously true of the empty set**, so the mode reports clean having read nothing. An empty enumeration is not an empty repository.
+
+**The caller passes the list.** If you were not given one, **STOP AND ERROR**: report `SCOPE UNKNOWN — refusing to review` and record nothing. The sanctioned way for the caller to obtain it is `mcp__gitRobot__read(op='ls-files')`, filtered as below.
+
+The filter the caller should apply, and which you should sanity-check against what you were handed:
 - **Prose files:** `.md`, `.txt`, `.rst` — exclude `historical/`, `.claude-local/`, `.lake/`, `scripts/` (except `scripts/README.md`).
-- **Build scripts:** `scripts/build_*.py` — all of them except `build_gen2.py`.
+- **Build scripts:** every `scripts/build_*.py`.
 
 **Step 2a — Review each prose document.**
 
@@ -251,21 +257,39 @@ Apply:
 - **FAIL-BEDROCK** — a violated core invariant, a FABRICATED claim about an external source, or a false premise carrying a conclusion. Also any outstanding routing item (claim-review or prior-art-review required). The loop continues.
 - **STOP-ORDINARY** — past the ordinary cap and nothing found is bedrock-tier: triage-trigger vocabulary, ask-size, hedging a tier too strong, citation scope, wording. Report the findings, then state explicitly that the correct action is to PUSH, not to iterate. Do not recommend another round.
 
-**Step 6 — Signal file**
+**Step 6 — Record your verdict in the LEDGER, not a file**
 
-The signal records, per file the review certified, the file's **content SHA-256** — not a HEAD hash (SHA-256-per-file scheme, 2026-07-20). A signal now survives an unrelated later commit (a data-only `ssot.json` sync, a rebuilt PDF) that touches nothing the review examined; only a change to a reviewed file, or a new reviewable file appearing in the push, invalidates it. Write it BOM-free — `[System.IO.File]::WriteAllText($path, $text, (New-Object System.Text.ASCIIEncoding))`, not `Set-Content -Encoding utf8`.
+⛔ **DO NOT WRITE `.claude-local/ar_cleared.txt`. The prose signal files are RETIRED**. They could be written by any process, recorded **no author**, and held one verdict for N passes — measured 2026-08-24, three concurrent passes of a prose gate raced on one such path and the survivor was decided by scheduling, leaving an unattributed verdict no reader could trace. A ledger record is authored, append-only and keyed per subject, so none of that is expressible.
 
-Format:
-- **line 1** = the verdict record (echoed by the hook at push time, so "cleared" is never silently read as "clean").
-- **line 2+** = one line per file you reviewed, `<sha256>  <repo-relative-path>`. List EVERY reviewable file in the diff — the hook requires each reviewable file in the push to be covered by a recorded hash (a data file like `ssot.json` or a `.pdf` is not reviewable and must NOT be listed).
+**On FAIL / FAIL-BEDROCK, or with any kill-list item outstanding — record it yourself. One agent's finding stands alone:**
 
-⚠ **HASH THE FILE ON DISK. Never a git value** (Tim, 2026-08-09). `Get-FileHash -Algorithm SHA256 <path>` (lowercase the result), or `sha256sum <path>` and take the first field. Do **not** use `git show "HEAD:<path>"`: that is the same command meaning two different things depending on when it runs, and if the change is not yet committed HEAD holds the OLD content, so the signal goes stale the instant the commit lands. The pre-push hook and `batch.py` both hash the file on disk, so a disk hash is what they compare against at any point in the cycle.
+```
+python tools/verify/record.py --step adversary --verdict fail --tier A \
+    --how agreement --passes 1 --agreed 1 \
+    --run gate-adversary-<YYYY-MM-DD> \
+    --reason-file <path to a file holding one line: what failed> \
+    --files <every file you reviewed>
+```
 
-- **PASS / clean (no kill-list items)** → write `.claude-local/ar_cleared.txt`: `PASS - clean, no findings.` on line 1, the `<sha256>  <path>` lines after.
-- **STOP-ORDINARY** → **write the signal too.** Line 1 `STOP-ORDINARY (round N) - cleared under the ordinary cap; M findings, none bedrock-tier.`, the hash lines after. **This is not a forgery and not a courtesy.** STOP-ORDINARY is a sanctioned proceed verdict — the cap rule states that "the correct action is to PUSH, not to iterate." Withholding the signal on it made the cap and the pre-push hook give opposite instructions for the same state, which forced every capped review to end in `git push --no-verify` and turned the bypass from exceptional into routine. The verdict line keeps the record honest about *which* verdict cleared the push.
-- **FAIL / FAIL-BEDROCK, or any kill-list item outstanding** → delete `.claude-local/ar_cleared.txt` if it exists. Never write a signal for a failing review. The routing items above (claim-review / prior-art-review required) are kill-list items and withhold clearance in the normal way.
+The routing items above (claim-review / prior-art-review required) are kill-list items and withhold clearance in the normal way — record the FAIL and name them in `--reason`.
 
-Never write a signal claiming PASS when the verdict was STOP-ORDINARY. That distinction is the entire purpose of line 1's verdict record.
+**On PASS — record NOTHING, and report the verdict to your caller.** § 6a-i: *FAIL alone, PASS by unanimity or signature.* A lone A-tier PASS is absence-of-evidence wearing a clean bill, and `V3` rejects it at the server anyway. The caller either runs `policy.agreement.min_passes` independent passes and records the agreement, or takes a human signature.
+
+⚠ **Subjects are read from the git INDEX, so the files you reviewed must be STAGED.** `common.ledger_subjects` fences anything untracked or differing from the index — it fails closed, so a review of bytes that have since changed cannot be recorded by accident. If it fences a path, say so; do not work around it.
+
+⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
+keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
+refused with *"revision 0 already exists for step '<step>' at this basis"*. That is the design
+working — it fails CLOSED and loudly, with an attributed append-only record, where the retired
+signal files failed silently and let the last writer win. **Do not treat it as an outage and do not
+retry.** Instead: read the recorded record's `reason`, and **report to your caller exactly which of
+your findings are ABSENT from it.** Two passes converging is corroboration; a finding only you found
+is lost unless you say so in your report. `record.py` exposes no `--revision`, so the supersede
+chain is not reachable from here — that is a known gap, not something for you to work around.
+
+⚠ **Exit 2 is NOT exit 1.** `record.py` exits 2 when the ledger could not be reached or refused the record — the review may have been fine and simply went unrecorded. Report that as a RECORDING failure, never as a finding about the corpus.
+
+⚠ **Never claim PASS when the verdict was STOP-ORDINARY.** Both are proceed verdicts and they are not the same fact; the distinction is why the caller, not you, decides what reaches the ledger.
 Do not summarize or soften findings. If something reads as crank grand-theory to a cold reader, say so plainly and quote the string.
 ---
 

@@ -58,17 +58,23 @@ if BASE not in sys.path:
 import report                                    # noqa: E402
 import batch                                     # noqa: E402
 
-# gate key -> (command file to read, signal file it writes, human name)
+# gate key -> (command file to read, LEDGER STEP it records, human name)
+#
+# ⚠ THE MIDDLE FIELD WAS A SIGNAL FILENAME UNTIL 2026-08-24 AND IS NOW A LEDGER STEP. The prose
+# signal files are retired: a FAIL is recorded by the gate itself, a PASS is reported to the caller
+# who records the agreement or takes a signature. This field is printed so an operator can see WHAT
+# each gate must produce; naming a file nothing writes any more would send them looking for it.
 GATES = {
-    "editorial": ("editorial-review.md", "er_cleared.txt", "/editorial-review"),
-    "adversary": ("adversary-review.md", "ar_cleared.txt", "/adversary-review"),
-    "prior-art": ("prior-art-review.md", "pa_cleared.txt", "/prior-art-review"),
-    # ⚠ `/rely` writes `rely_cleared.txt` too, as of 2026-08-10. It used to write nothing while
-    # `batch.py`'s routing blocked on that exact file — so it was the one gate that did not produce
-    # the metadata the hook consumes, and the CALLER had to write it about its own work, which is
-    # the self-certification the routing exists to prevent. Its line 1 records REVIEWED, never PASS:
-    # `/rely` still issues no verdict, it records which hashes were examined.
-    "rely":      ("rely.md",             "rely_cleared.txt", "/rely"),
+    "editorial": ("editorial-review.md", "editorial", "/editorial-review"),
+    "adversary": ("adversary-review.md", "adversary", "/adversary-review"),
+    "prior-art": ("prior-art-review.md", "prior_art", "/prior-art-review"),
+    # ⚠ `/rely` WROTE `rely_cleared.txt` FROM 2026-08-10 TO 2026-08-24, AND NOW WRITES NOTHING BUT A
+    # RECORD. The file was a hash manifest the routing legs compared against; both legs and the cap
+    # read the `rely` record's subjects instead, so the last of the `*_cleared.txt` scheme is gone.
+    # `tools/verify/README.md` had already named this as the only real fix: the signal *"can be
+    # edited, its verdict changes, and no subject moves… only making `rely` a record instead of a
+    # file can"* close it.
+    "rely":      ("rely.md",             "rely", "/rely"),
 }
 
 
@@ -134,10 +140,12 @@ def required_gates(ranges):
     return scope, need
 
 
+_UNSET = object()
+
 RELY_CAP = 2
 
 
-def rely_capped():
+def rely_capped(rec=_UNSET):
     """Is `/rely` past its iteration cap with nothing BLOCKING outstanding?
 
     ⚠ Tim, 2026-08-10: *"any non bedrock failure should cap at a certain iteration. it used to be
@@ -155,17 +163,29 @@ def rely_capped():
     # "not capped" for a MISSING file, so reading the wrong directory did not error, it just
     # answered False forever. Caught only because guards.py plants a must-fire control here and
     # reported BASELINE BROKEN; without that control the cap would have quietly stopped existing.
-    sig = os.path.join(PRIV, "rely_cleared.txt")
-    if not os.path.exists(sig):
+    # ⚠⚠ THE LEDGER, NOT `rely_cleared.txt`. That file is RETIRED (2026-08-24). `rec` is injectable
+    # so a control can drive both directions without planting a fixture — the signal comes from a
+    # SERVER now, and that is the only honest way to exercise it.
+    if rec is _UNSET:
+        rec = batch.rely_record()
+    if rec is None:
+        # ⚠ Covers BOTH "no record" and "the ledger could not be asked", and returns NOT CAPPED —
+        # which is the conservative direction here: an uncapped loop costs a round, a wrongly-capped
+        # one ships findings. Note this is the OPPOSITE polarity to a coverage check, deliberately.
         return False, ""
-    line1 = io.open(sig, encoding="utf-8-sig", errors="replace").readline()
-    m = re.search(r"BLOCKING:\s*(\d+)", line1, re.I)
-    blocking = int(m.group(1)) if m else None
-    if blocking is None:
-        # A cap that cannot read the signal is not a cap. Say so instead of quietly not capping —
+    # ⚠ BLOCKING COMES FROM THE VERDICT FIRST, the reason text second. The brief records a FAIL only
+    # when BLOCKING > 0 and records nothing at BLOCKING:0, so the verdict already carries the fact
+    # and the prose is corroboration — the reverse of the old file, where prose was all there was.
+    m = re.search(r"BLOCKING:\s*(\d+)", rec.get("reason") or "", re.I)
+    if m:
+        blocking = int(m.group(1))
+    elif rec.get("verdict") == "PASS":
+        blocking = 0
+    else:
+        # A cap that cannot read the record is not a cap. Say so instead of quietly not capping —
         # silent non-capping is precisely the unbounded loop the cap exists to stop.
-        return False, ("SIGNAL MALFORMED — no `BLOCKING:<n>` on line 1 of rely_cleared.txt, so the "
-                       "cap cannot be evaluated. Re-run /rely; do not read this as 'not capped'.")
+        return False, ("RECORD MALFORMED — a `rely` FAIL with no `BLOCKING:<n>` in its reason, so "
+                       "the cap cannot be evaluated. Re-run /rely; do not read this as 'not capped'.")
 
     # ⚠ COUNT PASSES FROM THE SIGNAL, not only from the round counter. Measured 2026-08-10: five
     # /rely passes had run and `gate_round.json` recorded `rely-verification-layer x1`, because the
@@ -174,7 +194,7 @@ def rely_capped():
     # that cannot be skipped by forgetting a flag. Take the larger of the two.
     _rc, out = batch.sh(sys.executable, os.path.join(BASE, "gate_round.py"), "show")
     pm = re.search(r"rely-verification-layer\s+x(\d+)", out)
-    sm = re.search(r"\bpass\s+(\d+)", line1, re.I)
+    sm = re.search(r"\bpass\s+(\d+)", rec.get("reason") or "", re.I)
     passes = max(int(pm.group(1)) if pm else 0, int(sm.group(1)) if sm else 0)
     if blocking == 0 and passes >= RELY_CAP:
         return True, ("capped at %d passes with BLOCKING:0 — remaining findings are ledgered debt, "
@@ -299,13 +319,15 @@ def cmd_verify(ranges):
         ("scope", "%d reviewable file(s)" % len(scope)),
         ("expect", ", ".join(sorted(keys)) or "no gates required"),
     ])
+    # ⚠ STEP NAMES, NOT FILENAMES. `check_signals` asks the LEDGER now; the prose signal files are
+    # retired (`PROCESS_V2.md` § 6a-v) and `signal_verdict` no longer has anything to read. Keeping
+    # the old filename key here would have compared `"editorial" != "pa_cleared.txt"` — always true,
+    # so prior-art would have been demanded on every release regardless of trigger 5.
     for name, valid, why in batch.check_signals(ranges):
-        needed = (name != "pa_cleared.txt") or ("prior-art" in keys)
+        needed = (name != "prior_art") or ("prior-art" in keys)
         ok = valid or not needed
         print("  %-20s %-4s %s" % (name, "ok" if ok else "FAIL", why))
-        v = batch.signal_verdict(name)
-        if v:
-            print("      verdict  %s" % v)
+        print("      ledger   step `%s`" % name)
         bad += 0 if ok else 1
     if "rely" in keys:
         print("  %-20s %-4s %s" % ("/rely", "FAIL",

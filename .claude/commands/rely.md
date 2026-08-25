@@ -52,9 +52,9 @@ Pass 6's reviewer reported that reading the code found nothing the code did not 
 
 ## HARD CONSTRAINTS
 
-**READ-ONLY on the working tree.** Do NOT modify, create, or delete any repo file, with exactly two exceptions: the findings note under `.claude-local/notes/`, and the signal file described at the end.
+**READ-ONLY on the working tree.** Do NOT modify, create, or delete any repo file, with exactly ONE exception: the findings note under `.claude-local/notes/`. ⚠ **There is no signal file any more** — your verdict goes to the ledger, and the recording section at the end is the only place you write one.
 
-⚠ **This section used to say "No signal file — this is not a gate and must not block a push." That became FALSE and stayed false** (corrected 2026-08-10). `batch.py`'s routing was added later and DOES block a push until `rely_cleared.txt` records the current hash of every verification-layer file — because a checker change is invisible to `git diff` (`.claude-local/` is gitignored), so the hash signal is the only way the pipeline can see it. The result was the one gate that did not produce the metadata the hook consumes, leaving **the caller to write it about its own work** — exactly the self-certification this routing exists to prevent. **You now write it.** See "Signal file" at the end.
+⚠ **You still produce the metadata the pipeline consumes — it is just a RECORD now.** `batch.py`'s routing legs block a push until a `rely` record covers the current blob of every verification-layer file, because a checker change is invisible to an ordinary diff of the pushed range. That obligation has not softened; only its container changed. **What has NOT changed is why you write it at all:** before 2026-08-10 this gate produced nothing, so the CALLER wrote the metadata about its own work — the exact self-certification this routing exists to prevent.
 
 **NO SCRATCH FILES IN THE REPO.** Everything you build goes in the session scratchpad, never under `ZeroParadox/`, and is deleted when done. **You will be building a lot — be disciplined about this.**
 
@@ -153,38 +153,68 @@ Save to `.claude-local/notes/reliability_YYYY-MM-DD_<scope>.md`. State the filen
 
 **No verdict of PASS or FAIL.** If you tried to break it and could not, say so — *"I attempted X, Y and Z and all three held"* is the most valuable output this agent produces, and it is only worth anything because you ran them.
 
-## Signal file — `.claude-local/rely_cleared.txt`
+## Recording — TWO DIFFERENT FACTS, AND THEY SPLIT AT THE LEG
 
-**Write it whether you found things or not.** It is NOT a pass certificate; it records **which
-versions of the verification layer were actually examined**, which is the only question the routing
-asks. Withholding it does not make the layer safer — it just leaves the caller to write it about its
-own work.
+⚠ **`/rely` records in two places because it produces two kinds of thing** (the recording contract § 6a-iv):
+its **routing check is a hash comparison (tier M)** — which versions of the layer were examined — and
+its **findings are judgement (tier A)**. Split at the leg, never at the check.
 
-Format, matching what `batch.py` reads:
-- **line 1** = the record, and it must NOT read as a clearance. It **must carry a severity split**:
-  `REVIEWED (not certified clean) — /rely <date>, scope <what>. BLOCKING:<n> ORDINARY:<n>. <ids or "reported in the note">. This records WHICH HASHES WERE EXAMINED, never that they are defect-free.`
+### 1. There is NO hash file any more
+
+⛔ **DO NOT WRITE `.claude-local/rely_cleared.txt`.** It was RETIRED on 2026-08-24, the last of the
+`*_cleared.txt` scheme. `batch.py`'s routing legs and `ship.py`'s cap read the `rely` LEDGER RECORD
+now, and the readers moved in the same change as the writer.
+
+⚠ **YOUR SUBJECTS ARE THE COVERAGE — this is the part that changed for you.** The routing legs
+compare each routed file's **blob ID** against the subjects of your record. **A file you do not name
+counts as UNREVIEWED**, exactly as a changed one does, and there is no partial credit. So name every
+file in scope you actually examined; a short subject list is not modesty, it is a smaller claim and
+the gate will read it as one.
+
+⚠ **`tools/verify/README.md` had already reached this conclusion and written it down** — the old
+signal *"can be edited, its verdict changes, and no subject moves… A scope cannot close it; only
+making `rely` a record instead of a file can."*
+
+### 2. The findings record — the LEDGER
+
+**If you found anything BLOCKING, record it. One agent's finding stands alone** (§ 6a-i: *FAIL alone,
+PASS by unanimity or signature*):
+
+```
+python tools/verify/record.py --step rely --verdict fail --tier A \
+    --how agreement --passes 1 --agreed 1 \
+    --run gate-rely-<YYYY-MM-DD> \
+    --reason-file <path to a file holding: BLOCKING:<n> — the highest-severity fail-open, one line> \
+    --files <every file in tools/verify/ you actually examined>
+```
+
+**With `BLOCKING:0`, record NOTHING and report to your caller.** You issue no PASS — you never have —
+and a lone A-tier PASS is rejected at the server anyway. The caller decides whether the round is a
+signature or an agreement.
+
+⚠ **Subjects come from the git INDEX: the files must be STAGED.** `common.ledger_subjects` fences
+anything untracked or differing from the index. It fails closed; do not work around it.
+
+⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
+keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
+refused with *"revision 0 already exists for step '<step>' at this basis"*. That is the design
+working — it fails CLOSED and loudly, with an attributed append-only record, where the retired
+signal files failed silently and let the last writer win. **Do not treat it as an outage and do not
+retry.** Instead: read the recorded record's `reason`, and **report to your caller exactly which of
+your findings are ABSENT from it.** Two passes converging is corroboration; a finding only you found
+is lost unless you say so in your report. `record.py` exposes no `--revision`, so the supersede
+chain is not reachable from here — that is a known gap, not something for you to work around.
+
+⚠ **Exit 2 is NOT exit 1** — it means the ledger was unreachable or refused the record, which is a
+RECORDING failure, not a finding about the layer.
+
+### Severity, and the cap
 
 ⚠ **CLASSIFY EVERY FINDING AS BLOCKING OR ORDINARY, and get this right — the loop's termination depends on it.** **BLOCKING** means the finding lets bad work THROUGH: a gate that reports success it has not earned, a check that can be walked past, a signal that can be forged, an exemption anything can grant itself. **ORDINARY** is everything else — a mislabelled manifest line, a discarded return code at a site that fails closed anyway, a stale docstring, a dead pointer.
 
+⚠ **Put `BLOCKING:<n> ORDINARY:<n>` in your record's `--reason-file`, and lead with what it does NOT mean.** `ship.py`'s cap parses that count straight out of the reason, so the phrasing is load-bearing rather than decorative:
+`REVIEWED (not certified clean) — /rely <date> pass <n>, scope <what>. BLOCKING:<n> ORDINARY:<n>. <ids or "reported in the note">. This records WHICH BLOBS WERE EXAMINED, never that they are defect-free.`
+
 ⚠ **`/rely` is capped at TWO passes when `BLOCKING:0`** (Tim, 2026-08-10: *"any non bedrock failure should cap at a certain iteration… A nitpicker will always find a knit to pick."*). Four unbounded passes on this layer found 10 → 4 → 6 → 9 and never converged, because each pass reviews code changed in response to the last. **Do not inflate a finding to BLOCKING to keep the loop alive, and do not deflate one to end it.** If you are unsure whether something lets bad work through, say so explicitly in the note and call it BLOCKING — the caller can then judge with the evidence in front of them.
-- **line 2+** = `<first-12-hex-of-sha256>  <filename>`, two spaces, **one per file in `batch.py`'s
-  `CHECKERS` list**. Basename only, not a path. **Do not write the set down here** — it grows,
-  and the enumeration that used to sit on this line went stale as soon as a checker was added.
-  `batch.py` is authoritative and computes it:
 
-  ```
-  python -c "import sys;sys.path.insert(0,'tools/verify');import batch;[print(h,' ',c) for c,h in sorted(batch.checker_hashes().items())]"
-  ```
-
-  ⚠ **Both halves of that command were wrong until 2026-08-15, and the editorial gate proved
-  it by RUNNING it:** the path said `.claude-local`, so it exited **2** and emitted zero hashes
-  — while `batch.py prepush` still BLOCKED on the signal it was meant to produce. **The gate
-  was unsatisfiable from its own documentation.** It failed closed, which is the right
-  direction, but a reviewer following this file could not have cleared the push it blocked.
-
-⚠ **Hash the FILE ON DISK.** Never a git value. Write BOM-free:
-`[System.IO.File]::WriteAllText($p, $s, (New-Object System.Text.ASCIIEncoding))`.
-
-⚠ **If you found a fail-open that is still UNFIXED when you finish, say so in line 1 and name the
-ledger ids.** A future reader must be able to tell "examined, and here is what is wrong with it"
-from "examined, nothing found" by reading one line.
+⚠ **If you found a fail-open that is still UNFIXED when you finish, say so in the reason and name the ledger ids.** A future reader must be able to tell "examined, and here is what is wrong with it" from "examined, nothing found" without opening the note.

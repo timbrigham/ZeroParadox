@@ -111,8 +111,84 @@ def stale_or_missing(ref, action='commit'):
             if r.get('status') in ('STALE', 'MISSING', 'LEGACY_IDENTITY', 'FAIL', 'UNDECIDED')}
 
 
+def step_status(ref, action='commit'):
+    """`{step: status}` for every registered step at `ref`. None if it cannot ask.
+
+    ⚠⚠ THE POSITIVE FORM, AND IT EXISTS BECAUSE THE NEGATIVE ONE FAILED OPEN. `stale_or_missing`
+    answers "which steps need re-running", and a caller that treats **absence from that set** as
+    "recorded and current" has built a proxy: the implication runs one way only. Needing a re-run
+    does imply not-current; NOT needing one does **not** imply recorded. `SATISFIED`,
+    `NOT_APPLICABLE`, and *a step the registry has never heard of* all sit outside the re-run set and
+    all rendered as an affirmative pass — so a typo in a caller's step list became a permanent green
+    with a confident message (measured 2026-08-24 by a reliability trial, on `prior_art`, which is
+    `NOT_APPLICABLE` with `record_id: null` and printed `ok REQUIRED`).
+
+    ⚠ A step the ledger does not return is ABSENT from this map, and a caller must treat an absent
+    key as a FAILURE to establish anything — never as a pass. That is the whole reason this returns
+    statuses rather than a set."""
+    try:
+        out = _call('inventory', {'ref': ref, 'action': action})
+    except (urllib.error.URLError, OSError, TimeoutError):
+        return None
+    if not out or not out.get('ok') or not isinstance(out.get('rows'), list):
+        return None
+    return {r.get('step'): r.get('status') for r in out['rows'] if r.get('step')}
+
+
+def module_evidence(*paths, repo=None):
+    """`[{path, git_blob_id}]` for the code that PRODUCED a verdict — V16's evidence field.
+
+    ⚠⚠ NOT `inputs`, AND THE DISTINCTION IS ENFORCED SERVER-SIDE. `V4` requires every `inputs` entry
+    to name a RECORD ALREADY IN THE STREAM (an aggregate naming what it aggregated), so a blob id
+    there is refused by V4 before V16 ever reads it. Measured and pinned in the server's suite as
+    `test_a_blob_id_in_inputs_is_refused_by_v4`, which asserts BOTH rules fire. Collapsing the two
+    would also leave V4 unable to tell an aggregate's predecessor from a checker's own source.
+
+    ⚠ NOT `subjects` either: `coverage()` reads subjects, so folding evidence in would have every
+    checker certifying its own source file as reviewed corpus.
+
+    ⚠⚠ HASHES THE WORKING-TREE FILE, NOT THE INDEX, ON PURPOSE — the bytes that RAN are the bytes on
+    disk. A checker edited but not staged is a different checker, and a verdict it produced must say
+    so. This is the one place in the bundle where the disk copy is the honest subject.
+
+    ⚠ REPO-RELATIVE, FORWARD SLASHES. An absolute Windows path appends clean and then matches nothing
+    for ever — the same shape as the `sha256`-named-blob-id defect, which made every record read
+    STALE and the gate unsatisfiable rather than strict.
+
+    **What this buys is not un-forgeability — it is EXPIRY.** Copying a blob id is easy and §2 rules
+    out keys anyway. But the ledger indexes evidence like a switch, so editing the checker moves a
+    blob the record names and the key goes STALE. **A forged mechanical PASS expires the next time the
+    code it lied about changes.**"""
+    import hashlib
+    root = os.path.abspath(repo or os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                os.pardir, os.pardir))
+    out = []
+    for p in paths:
+        if not p:
+            continue
+        ap = os.path.abspath(p)
+        try:
+            data = open(ap, "rb").read()
+        except OSError:
+            # ⚠⚠ A MISSING MODULE YIELDS NO ENTRY, AND AN EARLIER VERSION OF THIS EMITTED
+            # `<ABSENT>` AS THE BLOB ID. That was wrong and would have failed confusingly: structural
+            # validation requires 40 lowercase hex, so the server refuses with a message about hex
+            # LENGTH — nonsense to anyone reading it, and it buries the actual fact (the producer is
+            # gone) under a format complaint. Caught by the ledger's author before the flip, 2026-08-25.
+            #
+            # Omitting is the fail-CLOSED direction and it lands on a clearer message: with nothing
+            # left to declare, `evidence` is empty and V16 refuses with ITS own error, which names
+            # what to do. ⚠ The residual case — one of several modules absent, so evidence is short
+            # but non-empty — is invisible to V16's weak form ("carry SOME evidence") and is caught
+            # by the STRICT form, where the registry declares the module a type must name.
+            continue
+        blob = hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
+        out.append({"path": os.path.relpath(ap, root).replace("\\", "/"), "git_blob_id": blob})
+    return out
+
+
 def emit(step, tier, verdict, subjects, basis, reason=None,
-         inputs=(), decided=None, cost=None, revision=0):
+         inputs=(), decided=None, cost=None, revision=0, evidence=()):
     """Append one record. Returns its id, or None if refused or unreachable.
 
     `subjects` is a list of {"path", "blob"} — WHAT THIS VERDICT IS ABOUT, not
@@ -144,6 +220,16 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
         "run": {"id": os.environ.get("ZPLEDGER_RUN"), "started": None,
                 "policy_sha": None, "env": {}},
     }
+    # ⚠⚠ THE KEY IS OMITTED WHEN EMPTY, AND THAT IS WHAT MAKES THIS LANDABLE BEFORE THE SERVER MOVES.
+    # `V7` rejects unknown top-level keys rather than ignoring them — measured 2026-08-25 against the
+    # RUNNING server: a record carrying `evidence` came back
+    # `V7: unknown top-level key(s) ['evidence'] — rejected, not ignored`.
+    # So sending `"evidence": []` unconditionally would refuse EVERY mechanical record the moment
+    # this file landed, before any restart. Adding the key only when there is something to say keeps
+    # this version compatible with both servers, which is the only reason the two halves can be
+    # landed in either order rather than needing an atomic cutover.
+    if evidence:
+        record["evidence"] = list(evidence)
 
     last_error = None
     for attempt in range(_TRANSPORT_TRIES):
@@ -196,6 +282,12 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
 
 def _cli(argv):
     import argparse
+    import io
+    # ⚠ IMPORTED BEFORE THE PARSER IS BUILT, so `--ref`'s default can be `common.INDEX` rather than
+    # the literal "INDEX". A second spelling of a constant is the mirror defect at the smallest
+    # possible scale, and this one decides what a verdict is ABOUT.
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import common
     ap = argparse.ArgumentParser(
         prog="record.py",
         description="Record a REVIEW gate's verdict in the ledger (mechanical checkers use "
@@ -224,8 +316,44 @@ def _cli(argv):
                     help="how many of them concurred (agreement only)")
     ap.add_argument("--who", default=None, help="who decided it (agent id, or a person)")
     ap.add_argument("--reason", default=None, help="one line, recorded on a FAIL")
-    ap.add_argument("--ref", default="HEAD", help="basis ref (default HEAD)")
+    # ⚠⚠ CONTENT NEVER TRAVELS ON A COMMAND LINE, AND HERE IT IS NOT A STYLE POINT. The PreToolUse
+    # hook denies any command containing a word-boundary `git`, ARGUMENTS INCLUDED — so an honest
+    # `--reason` describing a MIG-3 defect is blocked by the very token it has to name, and the
+    # command reporting the finding cannot be run. Measured three times on 2026-08-24, by three
+    # separate review agents. A file has no such edge.
+    ap.add_argument("--reason-file", default=None,
+                    help="path to a file holding the reason. Use this whenever the reason names a "
+                         "denied token (`git`, `gh`) or contains quotes or non-ASCII.")
+    # ⚠⚠ DEFAULT IS `INDEX`, NOT `HEAD`, AND THE OLD DEFAULT MADE THIS CLI UNUSABLE. Every review
+    # brief says to STAGE the files it reviewed — and staging is precisely what makes content differ
+    # from HEAD, so `ledger_subjects` fenced all of them and the run recorded NOTHING. Measured
+    # 2026-08-24 on one five-file scope: `HEAD` -> 0 of 5 subjects, exit 2; `INDEX` -> 5 of 5.
+    # A pre-commit gate's subject is the staged content, so that is what it records.
+    ap.add_argument("--ref", default=common.INDEX,
+                    help="basis ref (default INDEX = the staged content, which is what a "
+                         "pre-commit review actually examined). Pass HEAD to record a review of "
+                         "already-committed content.")
+    # ⚠ V9 REFUSES A RECORD WITH NO RUN ID, and a spawned review gate has no pipeline to inherit one
+    # from: `ZPLEDGER_RUN` is set by `batch.py precommit` and `hooks.py` only. Every brief mandates a
+    # FRESH ISOLATED AGENT, so every review gate hit this and none could record. Naming the run
+    # explicitly is not "the caller's imagination" — the gate invocation IS a run, and saying which
+    # one is exactly what V9 asks for.
+    ap.add_argument("--run", default=None,
+                    help="run id for this gate invocation (V9). Required when ZPLEDGER_RUN is "
+                         "unset. Use gate-<step>-<YYYY-MM-DD>.")
     a = ap.parse_args(argv)
+
+    if a.reason_file:
+        if a.reason:
+            ap.error("pass --reason or --reason-file, not both")
+        a.reason = io.open(a.reason_file, encoding="utf-8").read().strip()
+    if a.run:
+        os.environ["ZPLEDGER_RUN"] = a.run
+    if not os.environ.get("ZPLEDGER_RUN"):
+        ap.error("--run is required here: V9 refuses a record with no run id, and a spawned review "
+                 "gate has no pipeline to inherit ZPLEDGER_RUN from. Pass --run "
+                 "gate-%s-<YYYY-MM-DD>. Do NOT invent a pipeline run id to impersonate one."
+                 % a.step)
 
     # ⚠ A SIGNATURE WITH NO SIGNATORY IS A `*_cleared.txt` WITH EXTRA STEPS. The file-based signals
     # this replaces could be created by anyone and recorded no author; if `who` may be null here, the
@@ -245,14 +373,21 @@ def _cli(argv):
     # honest single round is not `agreement` at all; a human accepting it is `signature`, which is
     # deliberately a different signal — an accept is corpus DEBT, where `override` is evidence the
     # step is defective. They must never share a code path.
-    if a.how == "agreement" and (a.passes < 3 or a.agreed != a.passes):
-        ap.error("--how agreement needs --passes >= 3 with --agreed equal to it (V3, "
+    # ⚠⚠ CONDITIONED ON **PASS**, BECAUSE V3 IS. The server's rule is `verdict: PASS` + `how:
+    # agreement` requires unanimity at or above the threshold. This mirror applied it to EVERY
+    # verdict, which made it STRICTER THAN ITS OWN AUTHORITY and rejected the one thing
+    # `PROCESS_V2.md` § 6a-i explicitly permits: **"FAIL alone, PASS by unanimity or signature."**
+    # A single review agent that finds a real defect must be able to record it — withholding a FAIL
+    # because one agent is not a quorum is absence-of-evidence rendering as success, which is the
+    # defect this entire ledger exists to remove. Measured 2026-08-24: with the guard unconditional,
+    # a lone gate had NO recordable verdict at all, and every review key stayed MISSING while seven
+    # honest rounds wrote seven files nothing read.
+    if a.verdict == "pass" and a.how == "agreement" and (a.passes < 3 or a.agreed != a.passes):
+        ap.error("a PASS under --how agreement needs --passes >= 3 with --agreed equal to it (V3, "
                  "policy.agreement.min_passes = 3); got passes=%d agreed=%d. One agent round is "
-                 "not an agreement - if a human is accepting it, use --how signature --who <name>."
+                 "not an agreement - if a human is accepting it, use --how signature --who <name>. "
+                 "A FAIL needs none of this: one agent's finding stands on its own."
                  % (a.passes, a.agreed))
-
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import common
 
     # ⚠⚠ NO CHECK CAN DECIDE WHETHER A NAME BELONGS TO A PERSON, SO IT IS STATED INSTEAD OF TESTED.
     # `agreement` refuses a single agent round, which makes the tempting fix `signature` with the

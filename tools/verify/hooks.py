@@ -130,6 +130,9 @@ PRE_PUSH_PLAN = [
     ("hooks armed", "BLOCK", "the installed hooks match their tracked sources"),
     ("quarantine", "BLOCK", "private/* branches never reach a remote"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
+    ("routing control", "BLOCK", "the behavioural mutation probe: 9 neuters of the routing routes, "
+                                 "each required to turn its named ROW red (~225s; fails CLOSED on a "
+                                 "moved anchor). Does NOT yet cover RLY28-1 — a tenth mutation is owed"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_claude_md", "BLOCK", "CLAUDE.md shape contract: rooted paths resolve, named checkers exist "
                                  "(3 legs still PENDING — it says so on every run)"),
@@ -316,6 +319,37 @@ def pre_push(stream):
     if _rc_guards != 0:
         print("\nPush blocked: a guarded property can be walked, or a guard left files mutated.")
         print("Read the FAIL lines above — each names the ROUTE. Fix the route, do not skip the run.")
+        return 1
+
+    # ⚠⚠ THE CONTROL FOR THE TWO ROUTES ABOVE, AND UNTIL NOW NOTHING RAN IT. `guards.py` green is
+    # not evidence: ROUTE 3 and ROUTE 5 have been defeated FOUR times (whole-file substring →
+    # windowed substring → AST shape → AST name), and each repair moved the hole rather than
+    # closing it, because every attempt asked "does the consumer's SOURCE look like it honours the
+    # flag?" — a static approximation with an escape every time. `probe_routing_behavioural.py`
+    # asks the behavioural question instead: it drives the consumer with synthetic rows in its own
+    # detached worktree and requires the named ROW to go red. It was written, it works, and it had
+    # ZERO automatic callers — so the one artifact that can falsify the guard ran only when a human
+    # remembered. Measured 2026-08-24 by `/rely`: 9 of 9, 225s, and it was the only thing in the
+    # layer that reacted to a live neuter of `cmd_prepush`.
+    #
+    # ⚠ IT ASSERTS THE ROW, NOT THE EXIT CODE, and it fails CLOSED — a mutation whose anchor has
+    # moved reports `MUTATION DID NOT APPLY` rather than passing, so a refactor that slides the
+    # anchor blocks the push instead of silently retiring the control.
+    #
+    # ⚠ `RLY28-1` IS CLOSED AT THE SHAPE, NOT HERE. The router's producer now records its own count
+    # in `batch`'s verdict registry and the push verdict is read from that, so multiplying the
+    # returned count by zero at the call site — the neuter that took the gate from exit 1 to exit 0
+    # on 2026-08-23 while three FAIL rows sat on screen — is now INERT rather than merely
+    # detectable. Two mutations here pin both directions: annihilating the return must stay GREEN,
+    # and deleting the producer's record must go RED. What THIS wiring closes is `RLY29-1`: the
+    # control had no caller, so nothing ever ran the one artifact that can falsify the guard.
+    print("\n=== Routing control (behavioural mutation probe) ===")
+    _rc_probe = py("probe_routing_behavioural.py")
+    if _rc_probe != 0:
+        print("\nPush blocked: the routing control did not behave as required.")
+        print("Each row above names the mutation and the ROW that had to go red. A row reading")
+        print("MUTATION DID NOT APPLY means the anchor moved — the control is no longer testing")
+        print("what it claims, which is a fail-open in the making. Fix the control, never skip it.")
         return 1
 
     print("\n=== File-reference check ===")

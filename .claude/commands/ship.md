@@ -55,8 +55,9 @@ mode, round, permitted verdicts, signal written, what this round must attack.
 3. **Sources are on disk in `.claude-local/papers/`** — check before calling one unobtainable; never
    record a fetch failure as a fact about a source.
 
-⚠ **Adversary's crank mode routes off `pa_cleared.txt`.** Tell it prior-art is running concurrently
-and to check that signal at the END of its run, or it raises a routing kill for a gate beside it.
+⚠ **Adversary's crank mode routes off the ledger's `prior_art` step.** Tell it prior-art is running
+concurrently and to check that step at the END of its run, or it raises a routing kill for a gate
+running beside it. ⚠ The prose signal files are retired — do not send it looking for `pa_cleared.txt`.
 
 ⚠ **Reviewers may only `gate_round.py show`.** A reviewer that bumps burns the cap.
 

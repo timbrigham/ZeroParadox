@@ -609,8 +609,36 @@ def ledger_subjects(rels, ref='HEAD'):
     return subjects, skipped
 
 
+def _producer_modules(module=None):
+    """The files that PRODUCED this verdict: the calling checker, plus this module.
+
+    ⚠⚠ DERIVED FROM THE STACK RATHER THAN PASSED BY EACH CHECKER, AND THAT IS THE POINT. The
+    alternative is a `module=__file__` argument at all sixteen call sites — which works until the
+    seventeenth checker is written, and then that one records with no evidence and NOBODY NOTICES.
+    An obligation every author must remember is the shape this project has measured failing seven
+    times. Derivation needs nobody to remember anything.
+
+    ⚠ IT RETURNS THE FIRST FRAME OUTSIDE THIS FILE, so one level of wrapping still names the wrapper
+    rather than lying about the checker. If a caller ever needs to override it, `module=` is
+    explicit and wins — but reach for that only when the derived answer is wrong, not to be tidy.
+
+    ⚠ AND IT FAILS LOUD, NOT SILENT: if the caller cannot be determined the list is just this module,
+    evidence is short, and the STRICT form (registry-declared `module` per type) refuses it. Better a
+    refused record than one that quietly names the wrong producer."""
+    import inspect
+    me = os.path.abspath(__file__)
+    caller = os.path.abspath(module) if module else None
+    if caller is None:
+        for fr in inspect.stack()[1:]:
+            f = os.path.abspath(fr.filename)
+            if f != me:
+                caller = f
+                break
+    return [p for p in (caller, me) if p]
+
+
 def record_if_asked(step, scanned, bad, reason, argv=None, tier='M', ref='HEAD', withheld=None,
-                    switches=()):
+                    switches=(), module=None):
     """⭐ THE ONE CALL EVERY CHECKER MAKES. Identical shape everywhere, by design.
 
         rc = common.record_if_asked('check_x', scanned, bad, 'why it failed', argv)
@@ -661,10 +689,11 @@ def record_if_asked(step, scanned, bad, reason, argv=None, tier='M', ref='HEAD',
     scanned = list(scanned) + [s for s in switches if s not in set(scanned)]
     bad = set(bad)
     return emit_verdict(step, ok_rels=[r for r in scanned if r not in bad],
-                        bad_rels=sorted(bad), reason=reason, tier=tier, ref=ref)
+                        bad_rels=sorted(bad), reason=reason, tier=tier, ref=ref,
+                        module=module)
 
 
-def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD'):
+def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD', module=None):
     """Record one step's verdict in the ledger. Returns 0, or 2 if it could NOT be recorded.
 
     ⚠⚠ ONE DEFINITION, CALLED BY EVERY CHECKER. Fifteen copies of this block is the mirror defect
@@ -722,8 +751,24 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     if bad:
         why = '%s — %d failing subject(s): %s' % (reason or 'see the run output', len(bad),
                                                   ', '.join(bad[:5]) + ('…' if len(bad) > 5 else ''))
+    # ⚠⚠ V16: A MECHANICAL VERDICT NAMES THE CODE THAT PRODUCED IT. Without this the ledger cannot
+    # tell "the checker ran and exited 0" from "an agent said it did" — measured 2026-08-24, a record
+    # with `tier: M`, `how: mechanical`, `verdict: PASS` and real blob IDs validated `ok: true` from
+    # an arbitrary caller. `LED-6`.
+    #
+    # ⚠ WHAT THIS BUYS IS EXPIRY, NOT UN-FORGEABILITY. Copying a blob id is easy and the design rules
+    # out keys anyway. But the ledger INDEXES evidence like an exemption switch, so editing a checker
+    # moves a blob its own records name, the key goes STALE, and the step re-runs. A forged mechanical
+    # PASS expires the next time the code it lied about changes.
+    #
+    # ⚠ `common.py` IS NAMED ALONGSIDE THE CHECKER, DELIBERATELY, AND IT IS NOT FREE. This module owns
+    # `ledger_subjects`, `ledger_basis` and this function — the identity and recording machinery — so
+    # a verdict produced under a different `common.py` was produced by different code and should not
+    # inherit the old one's key. The cost is real: editing this file stales EVERY mechanical step at
+    # once. That is the honest bill, and it is why this file should change rarely.
     rid = record.emit(step=step, tier=tier, verdict=verdict, subjects=subjects,
-                      basis=ledger_basis(ref), reason=why)
+                      basis=ledger_basis(ref), reason=why,
+                      evidence=record.module_evidence(*_producer_modules(module)))
     if rid is None:
         print('UNDECIDED: %s ran but its %s verdict was not recorded' % (step, verdict))
         return 2

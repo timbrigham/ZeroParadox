@@ -52,7 +52,7 @@ run backwards?*
 **Measured, same day:** `seed-independent` → 0 hits; the inverse `"a seed, not"` → the section that
 already proved it, by Tim, eight days earlier. `atTop (nhds _)` → 13 convergent files; the inverse
 `atTop atTop` → the divergences, in files the survey never saw. Both had already shipped into docstrings
-as measured fact. See § *NOT IN THE LIBRARY IS A CLAIM* step (c) for the operational form.
+as measured fact. See § `R-NOTINLIB` (body: `tools/process/not-in-the-library.md`) for the operational form.
 
 **⚠ Where it STOPS, and the framework already names the exception.** *"Every instance"* is the right
 instinct and needs one qualifier the corpus itself supplies: the fifth POV KIND, **INVARIANT** — *"the
