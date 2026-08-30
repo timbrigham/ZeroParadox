@@ -83,7 +83,7 @@ not attempted here. `#print axioms` reports how a proof was written, never what 
 
 ## The `ℕ∞`-numeral finding — reported, not explained away
 
-The one `Classical.choice` on the constructive side was not predicted. On the ℕ side it arrives
+The one INSTANCE-LEVEL `Classical.choice` on the constructive side was not predicted. On the ℕ side it arrives
 through Mathlib's `ℕ∞` NUMERAL, not the addition and not the valuation — and, on ℕ, not the carrier:
 `enat_add_choice` (`(a : ℕ∞) + (b : ℕ∞) = ↑(a + b)`) reports `[propext, Classical.choice, Quot.sound]`
 — but that is its PROOF TERM, not an instance: the same proposition proved by induction and `rfl`

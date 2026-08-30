@@ -280,8 +280,9 @@ set_option linter.flexible false in
     in it, tainted anyway. ⚠ The class's own
     numeral is a SEPARATE cost, and an ACCIDENTAL one: respelling the successor as a cast from ℕ
     clears the class outright. ⚠ The two counterfactual PAIRS below emit exactly that — carrier,
-    then numeral. The universals in this paragraph (any lawful join serves; ruled out for every
-    spelling) are NOT emitted and cannot be: a footprint list settles instances, never universals. -/
+    then numeral. ⚠ Several claims here are universals, or facts about how the axiom printer
+    behaves, and are NOT emitted and cannot be: a footprint list settles instances, never
+    universals and never the tool's own semantics. -/
 example : ∃ h : ZPSemilattice ℤ_[2], Nonempty (@ValuationStructure ℤ_[2] h) := by
   classical
   letI : LinearOrder ℤ_[2] := IsWellOrder.linearOrder (WellOrderingRel (α := ℤ_[2]))
@@ -335,11 +336,17 @@ open ZeroParadox
 #print axioms q2Val_scale
 -- ⭐ THE COUNTERFACTUALS. Two minimal pairs, each varying exactly one thing, so the attribution
 -- is checkable rather than argued.
+-- ⚠ `check_classes` does NOT audit the two classes below: its DECL regex admits only whitespace
+-- or an attribute before `class`, so a leading `private` blocks the match, and these are the only
+-- `private class` declarations in the corpus. They are purity probes, never requirements classes,
+-- and nothing instantiates them -- but that exemption is an accident of a regex, not a decision.
+-- Written down here rather than left implicit (R-EXEMPT); ledgered as CLSPRIV-1.
 -- Carrier, not class: same class, two carriers, opposite answers.
 private def _zpsZ2 : Type := ZPSemilattice ℤ_[2]
 private def _zpsN : Type := ZPSemilattice ℕ
--- Numeral, and ACCIDENTAL: the SAME CLASS, two spellings of the successor, opposite answers.
--- Stated at the class rather than at a bare ℕ∞ value, because the claim is about the class.
+-- Numeral, and ACCIDENTAL: `ValuationStructure`'s six fields transcribed TWICE (§ I), differing
+-- only in how the successor is spelled. Stated at the class, not at a bare ℕ∞ value, because
+-- that is the level the claim is about.
 private class _VSlit (L : Type*) [ZPSemilattice L] where
   scale : L → L
   val : L → ℕ∞
@@ -354,6 +361,18 @@ private class _VScast (L : Type*) [ZPSemilattice L] where
   val_bot : val ZPSemilattice.bot = ⊤
   val_unique : ∀ x : L, val x = ⊤ → x = ZPSemilattice.bot
   val_scale : ∀ x : L, x ≠ ZPSemilattice.bot → val (scale x) = val x + ((1 : ℕ) : ℕ∞)
+-- ⚠ `_VSlit` transcribes `ValuationStructure`'s six fields (§ I), so the attribution rests on
+-- the two agreeing. These make that MACHINE-CHECKED: both directions elaborate only if the
+-- field lists match, so adding, dropping or renaming a field breaks the build instead of
+-- silently turning the comment into a claim about a different class. Both directions are
+-- needed -- one catches a field lost, the other a field gained. Anonymous, so nothing is owed.
+example {L : Type*} [ZPSemilattice L] (v : ValuationStructure L) : _VSlit L :=
+  { scale := v.scale, val := v.val, scale_bot := v.scale_bot, val_bot := v.val_bot,
+    val_unique := v.val_unique, val_scale := v.val_scale }
+example {L : Type*} [ZPSemilattice L] (w : _VSlit L) : ValuationStructure L :=
+  { scale := w.scale, val := w.val, scale_bot := w.scale_bot, val_bot := w.val_bot,
+    val_unique := w.val_unique, val_scale := w.val_scale }
+
 #print axioms _zpsZ2
 #print axioms _zpsN
 #print axioms _VSlit
@@ -363,6 +382,8 @@ private class _VScast (L : Type*) [ZPSemilattice L] where
 -- no other constituent of the class is tainted. Both lines below are carrier-free.
 #print axioms ValuationStructure
 #print axioms instAddMonoidWithOneENat
+
+-- Back to the 2-adic side: this one names the carrier, and is tainted accordingly.
 #print axioms q2Scale_unique_fp
 
 -- The degenerate witnesses making the NO-GO gauge's bound sharp for this class.

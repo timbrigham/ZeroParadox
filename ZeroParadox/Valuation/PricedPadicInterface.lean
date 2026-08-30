@@ -250,10 +250,6 @@ open ZeroParadox
 -- ⚠ That localization holds on ℕ only. On ℤ_[2] nothing separates: the choice is INTRODUCED at
 -- layer 0 (`padicValNat`), below the completion, and `Padic`/`PadicInt` INHERIT rather than add
 -- it — which is why both report it. Every statement mentioning that carrier carries it.
--- The two numeral bundles the docstring above names. Emitted, per this file's own rule that an
--- instance's footprint must never be inferred from a theorem that mentions it.
-#print axioms instAddMonoidWithOneENat
-#print axioms instCommSemiringENat
 #print axioms v2nat
 #print axioms v2
 #print axioms v2_bot
@@ -264,6 +260,18 @@ open ZeroParadox
 #print axioms v2_scale
 #print axioms nScale_unique_fp
 #print axioms nScale_ne_self
+
+-- ⭐ THE NUMERAL CLAIM, EMITTED. The docstring at § I says the ℕ∞ numerals `0` and `1` carry
+-- choice and that ≥ 2 do not. These print exactly that, at the level of the claim -- the numerals
+-- themselves, not the bundles they resolve through -- plus the two bundles for the routing.
+private def _enatZero : ℕ∞ := 0
+private def _enatOne : ℕ∞ := 1
+private def _enatTwo : ℕ∞ := 2
+#print axioms _enatZero
+#print axioms _enatOne
+#print axioms _enatTwo
+#print axioms instAddMonoidWithOneENat
+#print axioms instCommSemiringENat
 
 -- Constructive side: the ball face.
 #print axioms AgreeTo

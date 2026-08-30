@@ -616,8 +616,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1684,
-        "files": 139
+        "declarations": 1687,
+        "files": 140
       },
       "entries": [
         {
@@ -14561,6 +14561,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "38440604-4596-4f57-baeb-83449e6d3752",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "",
+            "qualified": "_enatZero",
+            "short": "_enatZero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_enatZero",
+            "short": "_enatZero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 20: emit the numeral claim where the claim lives. The docstring says the ℕ∞ numerals 0 and 1 carry choice and ≥2 do not; these print that at the level of the numerals rather than the bundles they resolve through.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30575,6 +30612,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7d03c661-b738-42a9-81d4-cf5770c10753",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "",
+            "qualified": "_enatTwo",
+            "short": "_enatTwo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_enatTwo",
+            "short": "_enatTwo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 20: emit the numeral claim where the claim lives. The docstring says the ℕ∞ numerals 0 and 1 carry choice and ≥2 do not; these print that at the level of the numerals rather than the bundles they resolve through.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7d7eedda-a77b-4be8-a066-8a6b3711c013",
           "new": {
@@ -40399,6 +40473,43 @@
             ]
           },
           "reason": "Meta helper renamed in source to remove ExtractDeps/Snapshot qualified collision",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a9f8f559-5d40-42b4-8067-95432e447192",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "",
+            "qualified": "_enatOne",
+            "short": "_enatOne"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_enatOne",
+            "short": "_enatOne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 20: emit the numeral claim where the claim lives. The docstring says the ℕ∞ numerals 0 and 1 carry choice and ≥2 do not; these print that at the level of the numerals rather than the bundles they resolve through.",
           "verify": {
             "axioms": null,
             "sorry_free": true
