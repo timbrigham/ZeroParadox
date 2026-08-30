@@ -102,8 +102,8 @@ theorem nScale_bot : 2 * 0 = 0 := rfl
 here with the successor taken on ℕ (`v2nat n n + 1`) and then cast, so the statement is choice-free.
 This is the mathematical content of ZP-J's `val_scale` on this carrier; the one lemma needing fuel
 saturation. Compare `v2_scale`, which states the same fact in the axiom's literal `+ 1`-in-`ℕ∞` form and
-thereby inherits `Classical.choice` from Mathlib's `ℕ∞` additive instance (`enat_add_choice`), not from
-the carrier. -/
+thereby inherits `Classical.choice` from the ambient `ℕ∞` LITERAL (`AddMonoidWithOne ℕ∞`), not from
+the addition and not from the carrier. -/
 theorem v2_scale_nat (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = ((v2nat n n + 1 : ℕ) : ℕ∞) := by
   have h2n : 2 * n ≠ 0 := by omega
   rw [v2, if_neg h2n]
@@ -113,12 +113,17 @@ theorem v2_scale_nat (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = ((v2nat n n + 1 : �
   rw [e, v2nat_succ, if_neg (by omega : ¬ (2 * n) % 2 = 1), if_neg h2n,
       show (2 * n) / 2 = n from by omega, v2nat_stable (2 * n - 1) n (by omega)]
 
-/-- **`ℕ∞` addition carries `Classical.choice` — the localization instrument.** Mathlib's additive
-instance on `ℕ∞ = WithTop ℕ` is classical, so any `ℕ∞` sum inherits `Classical.choice` at the instance
-level, regardless of the summands. `Nat.cast : ℕ → ℕ∞` is by contrast choice-free (`v2` above proves
-it). This is why the `val_scale` axiom, stated as `val x + 1 : ℕ∞`, carries choice on **every** carrier
-— the choice is the ambient `ℕ∞` instance, not the valuation and not anything p-adic. The documented
-instance hazard, here located exactly. -/
+/-- **The `ℕ∞` LITERAL carries `Classical.choice` — the localization instrument, corrected.**
+⚠⚠ This docstring previously said ℕ∞ ADDITION is classical "regardless of the summands". That is
+FALSE, measured 2026-08-30: `Add ℕ∞`, `HAdd ℕ∞ ℕ∞ ℕ∞`, `NatCast ℕ∞` and `(a : ℕ∞) + (b : ℕ∞)`
+all report NO axioms. What carries choice is the LITERAL: `One ℕ∞`, `OfNat ℕ∞ 1` and the bundled
+`AddMonoidWithOne ℕ∞`. Hence `(a : ℕ∞) + 1` carries it and `(a : ℕ∞) + ((1 : ℕ) : ℕ∞)` does not.
+The CONCLUSION stands and is confirmed directly — `#print axioms ValuationStructure` reports
+`Classical.choice`, so `val_scale` as spelled costs choice on every carrier — but it follows from
+the numeral, not from the operator. ⚠ And this theorem does not witness it: the same proposition
+proved by `induction b with | zero => rfl | succ n ih => rfl` reports NO axioms, so the footprint
+below comes from THIS proof term, not from any instance in the statement. An instance's footprint
+must be EMITTED, never inferred from a theorem that mentions it. -/
 theorem enat_add_choice (a b : ℕ) : (a : ℕ∞) + (b : ℕ∞) = ((a + b : ℕ) : ℕ∞) :=
   (Nat.cast_add a b).symm
 

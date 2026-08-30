@@ -83,8 +83,10 @@ not attempted here. `#print axioms` reports how a proof was written, never what 
 
 The one `Classical.choice` on the constructive side was not predicted. It arrives through Mathlib's
 additive instance on `ℕ∞ = WithTop ℕ`, not through anything about the valuation or the p-adics:
-`enat_add_choice` (`(a : ℕ∞) + (b : ℕ∞) = ↑(a + b)`) reports `[propext, Classical.choice, Quot.sound]`,
-so **every** `ℕ∞` sum inherits choice at the instance level. This is the documented instance hazard,
+`enat_add_choice` (`(a : ℕ∞) + (b : ℕ∞) = ↑(a + b)`) reports `[propext, Classical.choice, Quot.sound]`
+— but that is its PROOF TERM, not an instance: the same proposition proved by induction and `rfl`
+reports no axioms at all. Measured 2026-08-30, `ℕ∞` ADDITION is choice-free and the LITERAL `1` is
+what is tainted (`One ℕ∞`, `AddMonoidWithOne ℕ∞`). This is the documented instance hazard,
 here located exactly — and it has a consequence for the ZP-J layer: because `ValuationStructure.val`
 targets `ℕ∞` and `val_scale` is stated as `val x + 1`, the *statement* of that axiom carries
 `Classical.choice` on **any** carrier, `ℕ` and `ℤ_[2]` alike. So `q2Val_scale` (`ZeroParadox/Valuation/Scale.lean`)

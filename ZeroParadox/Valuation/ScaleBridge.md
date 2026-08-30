@@ -19,10 +19,11 @@ bottom 0, over which all four axioms discharge. **The join is free.** The four a
 only `bot` and never the join, so any associative, commutative, idempotent operation with 0 as
 its identity serves; "the larger under some total order, unless one side is zero" is one.
 What has NOT been located as of 2026-08-30 is a *natural* join arising from the ring operations —
-searched: every `ZPSemilattice` instance in this corpus (six, none on a p-adic carrier), and
+searched: every registered `ZPSemilattice` instance in this corpus — none on a p-adic carrier — and
 `ZeroParadox/Valuation/Scale.lean` § V. That is a statement about what has been written down, not
-about what exists. ⚠ The witness is choice-dependent (it well-orders the carrier) and
-adds no new axiom: § V's own `q2Val_unique` and `q2Val_scale` already carry `Classical.choice`.
+about what exists. ⚠ The witness is choice-dependent, and by three routes rather than one: the join's well-order,
+`instDecidableEqZ2` (which taints `q2Val` whatever the join is), and the literal `1` in
+`val_scale` (which taints the class type itself). It adds no new axiom: § V's own `q2Val_unique` and `q2Val_scale` already carry `Classical.choice`.
 A choice-free join is not ruled out; none has been built.
 
 This tests the conjecture that the constraint is an **encoding artefact, not a mathematical gap**. It

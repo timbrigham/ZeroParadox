@@ -206,8 +206,8 @@ theorem val_selfMem_singleton :
 
 /-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE.** ℕ∞ carries BOTH structures — `instNatInfZPS`
     and `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which IMPORTS this file.
-    ⚠ §V also says ℤ_[2] "cannot be a formal ValuationStructure instance". **Read "is NOT
-    DEFINED", and so read it is still true**: no `ZPSemilattice ℤ_[2]` instance is registered,
+    ⚠ §V also says ℤ_[2] "cannot be a formal ValuationStructure instance". **§V's own "so"
+    makes that the not-defined reading, and so read it is still true**: no `ZPSemilattice ℤ_[2]` instance is registered,
     so the bare expression fails synthesis. Read MODALLY it is false, and the example at the
     end of § V is the witness — it supplies a semilattice with bottom 0 and discharges all
     four axioms over it. Two measurements, no more: `#synth` fails, and the existential is
@@ -268,11 +268,14 @@ set_option linter.flexible false in
 /-- Statement: ℤ_[2] DOES admit a `ValuationStructure`, once a semilattice is supplied. The join
     is free — the four axioms mention only `bot` and never the join — so any associative,
     commutative, idempotent operation with 0 as its identity serves. ⚠ It adds NO new axiom:
-    `q2Val_unique` and `q2Val_scale` above already carry `Classical.choice`. ⚠⚠ And the choice
-    is NOT the join's. `instDecidableEqZ2` makes `val := q2Val` choice-dependent whatever the
-    join is, and `ZeroParadox/Valuation/PricedPadicInterface.lean` measures the deeper source:
-    ℕ∞ addition is classical at the INSTANCE level, so `val_scale` stated as `val x + 1`
-    carries choice on EVERY carrier. So a choice-free join alone would not buy a choice-free
+    `q2Val_unique` and `q2Val_scale` above already carry `Classical.choice`. ⚠⚠ The join is not
+    the ONLY source — there are THREE, measured 2026-08-30: the well-order this join uses; 
+    `instDecidableEqZ2`, which taints `q2Val` whatever the join is; and the literal `1` in
+    `val_scale`, which resolves through the choice-tainted `AddMonoidWithOne ℕ∞` and so taints
+    the CLASS TYPE (`#print axioms ValuationStructure`). ⚠ NOT the addition: `Add ℕ∞` and
+    `(a : ℕ∞) + (b : ℕ∞)` are axiom-free. The third is ACCIDENTAL — `v2_scale_nat` in
+    `ZeroParadox/Valuation/PricedPadicInterface.lean` states the same fact with the successor
+    cast from ℕ and is choice-free. So a choice-free join alone would not buy a choice-free
     witness. Whether one exists is not established either way here. -/
 example : ∃ h : ZPSemilattice ℤ_[2], Nonempty (@ValuationStructure ℤ_[2] h) := by
   classical
@@ -316,6 +319,8 @@ open ZeroParadox
 #print axioms val_bot_self_mem
 #print axioms val_quine_unique
 #print axioms val_selfMem_singleton
+#print axioms q2Val
+#print axioms instDecidableEqZ2
 #print axioms q2Val_unique
 #print axioms q2Val_scale
 #print axioms q2Scale_unique_fp
