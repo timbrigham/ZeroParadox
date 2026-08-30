@@ -94,3 +94,46 @@ the counter and who may only read it; `--target` slugs; and the block that goes 
 brief with N substituted. **Open it before spawning any gate.** Why it matters: a rule about a loop
 does not fire from inside the loop — on 2026-07-19 three rounds ran against a 2-round cap because
 nobody was counting, and a reviewer that bumped the counter itself burned the cap a round early.
+
+---
+
+## What the cap is bounding: two measured failure modes, and a kill-list split
+
+*Migrated from private memories, 2026-08-28.*
+
+⚠ **THIS RULE WAS IN THE MEMORY INDEX AND DID NOT BIND — three rounds were run anyway.** Its own body
+recorded the lesson: *"enforcement-critical rules belong in `CLAUDE.md` or the task brief, not in a
+memory body."* It is the standing example, and the reason this migration exists at all.
+
+**1. FIX-INDUCED ERRORS — why the loop does not terminate on its own.** Every fix is new prose, and
+new prose carries new claims. Measured 2026-07-19: **two of round 3's eight findings were introduced
+BY round 2's fixes** — a Lemma mischaracterisation written while correcting a citation, and an
+evidence-to-measurement upgrade written while correcting hedging. **A loop whose corrections generate
+roughly 0.25 errors each asymptotes above zero and never terminates.** Re-confirmed 2026-08-01 across
+three consecutive rounds: round 2 measured **2 of its 5** findings as created by round-1 fixes, and
+round 3 found another created by a round-2 fix. **The asymptote is a repeated measurement, not a
+theory.**
+
+**2. FIX-THE-SITE, NOT-THE-CLASS.** Three of round 3's findings were unpropagated instances of round
+2's fixes. **Before declaring any kill fixed, grep the corpus for the CLAIM, not just the named
+file.** Caveat learned the same day: retractions that *quote* the error pollute that grep — search for
+the assertion's SHAPE, and read the hits rather than counting them.
+
+### Split every kill list before applying anything
+
+**MECHANICAL — apply immediately, no sign-off:** literal em-dashes in rendered prose; version strings
+in body prose outside the tagline; vocabulary terms from the vocabulary reference; `register.md`
+version mismatches; a cross-reference whose named file does not exist; a pronoun with no antecedent.
+
+**CONTENT — present each to Tim and wait for an explicit yes or no:** removing or weakening a sourced
+claim or citation; de-attributing a named mathematician or result; softening "proved" / "derived";
+removing a sentence that makes a substantive mathematical point; removing terminology from the body
+(especially a field name such as "p-adic topology"); any rewrite that changes **what the document
+asserts** rather than how it is phrased.
+
+**Why — four content errors were introduced across review cycles** because agents applied general
+heuristics without domain knowledge, and all four needed manual restoration: p-adic topology cut from
+the ZP-J disclaimer (it was active content); an Aczel citation cut as "unverifiable" (the manuscript
+is in the repo); *"not three separate properties that happen to coincide"* cut as dramatic (it is
+precisely what T-EXEC proves); and *"the ZP version of AFA's central uniqueness theorem"* weakened to
+"analogous to" (the stronger framing was the accurate one).

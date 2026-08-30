@@ -320,7 +320,7 @@ def cmd_verify(ranges):
         ("expect", ", ".join(sorted(keys)) or "no gates required"),
     ])
     # ⚠ STEP NAMES, NOT FILENAMES. `check_signals` asks the LEDGER now; the prose signal files are
-    # retired (`PROCESS_V2.md` § 6a-v) and `signal_verdict` no longer has anything to read. Keeping
+    # retired (`tools/process/review-gates.md`) and `signal_verdict` has nothing to read. Keeping
     # the old filename key here would have compared `"editorial" != "pa_cleared.txt"` — always true,
     # so prior-art would have been demanded on every release regardless of trigger 5.
     for name, valid, why in batch.check_signals(ranges):

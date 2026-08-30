@@ -189,7 +189,7 @@ def double_encoded_runs(text):
     # Corpus exposure measured: 295 multi-character runs across 70 tracked files already carry such
     # a masker.
     #
-    # Both failures were *"which cut is right"*, which is the enumeration shape CLAUDE.md § RUNG 5
+    # Both failures were *"which cut is right"*, which is the enumeration shape CLAUDE.md § R-NOCONV
     # names — each fix closes the cut its author thought of. A predicate with no cut point cannot get
     # the cut wrong. Measured on adoption: fires on all 12 `_MUST_FIRE` and all 3 round-3 attacks,
     # silent on all 6 `_MUST_SUPPRESS`, and **0 hits across the whole 409-file tracked corpus** — so

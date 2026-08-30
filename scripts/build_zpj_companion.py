@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.29 | July 2026
+Version 1.30 | August 2026
+v1.30: FIELD-COUNT SLIP CORRECTED (companion sync with ZP-J v2.6). "AFAStructure has three typeclass fields - three things you must prove" counted the DATA field as an obligation: SetTheoryAFA.lean:80 declares `selfMem : L -> Prop`, a predicate you SUPPLY, alongside two laws you prove. Same slip the formal document carried for DecorationUniverse, where counting `collect` as a law is what made two laws read as three.
 v1.29: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.28: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.26: FMC precision (sweep Step 4) — Key Results box and the T-EXEC body line now split the proved structural fixed point (axiom-free) from the argued set-membership reading (the ZF+AFA setting itself).
@@ -171,7 +172,7 @@ def abstraction_chain_table():
          'unique_fp as a theorem: ⊥ is the only fixed point of scale'],
         ['AbstractSelfApp',
          'A self-application with ⊥ as fixed point and ⊥ as the only fixed point',
-         'All three AFA fields (selfMem, bot_self_mem, quine_unique) as theorems'],
+         'bot_self_mem and quine_unique as theorems; selfMem supplied as a definition (data)'],
         ['AFAStructure',
          'selfMem, bot_self_mem, quine_unique directly as typeclass fields',
          'T-EXEC, J1, CC-1 as proved theorems'],
@@ -193,7 +194,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.29'
+VERSION = '1.30'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -415,7 +416,9 @@ def build():
     # ── The Abstraction Chain ────────────────────────────────────────────────
     E.append(Paragraph('The Abstraction Chain: Peeling Back the Layers', CS['h1']))
     E.append(cbody(
-        'AFAStructure has three typeclass fields  - three things you must prove for '
+        'AFAStructure has three typeclass fields, but they are not three things you must '
+        'prove: `selfMem` is DATA  - a predicate you supply, saying which elements count as '
+        'self-containing  - and the other two are the laws you must prove for '
         'your lattice before ZP-J\'s results apply. ZP-J shows that these three fields '
         'can themselves be derived from something simpler, in two steps:'))
     E.append(abstraction_chain_table())
@@ -423,7 +426,7 @@ def build():
     E.append(cbody(
         'Reading the table bottom-up: AFAStructure requires the most direct commitment. '
         'AbstractSelfApp requires less  - its selfApp operation with fixed_bot and '
-        'unique_fp together are sufficient to derive all three AFA fields as theorems. '
+        'unique_fp together are sufficient to derive the two AFA LAWS as theorems, with selfMem supplied as a definition rather than proved. '
         'ValuationStructure requires even less  - four axioms about a depth measure, '
         'from which unique_fp becomes a theorem and AbstractSelfApp follows.'))
     E.append(cbody(

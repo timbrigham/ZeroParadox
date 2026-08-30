@@ -142,7 +142,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 **Relationship to Mathlib:** Extends `Mathlib.Combinatorics.Quiver.Basic`
 
-**Reason:** Mathlib's `Quiver` is a bare directed graph (objects + edges) with no distinguished root or accessibility requirement. `APG` adds `root : V` and the accessibility proof (every vertex reachable from root), matching Aczel's definition of Accessible Pointed Graph. Both fields are required by AFA's decoration theorem.
+**Reason:** Mathlib's `Quiver` is a bare directed graph (objects + edges) with no distinguished root or accessibility requirement. `APG` adds `root : V` and the accessibility proof (every vertex reachable from root), matching Aczel's definition of Accessible Pointed Graph (1988 p. 4). ⚠ **Neither field is load-bearing for anything proved here, and no claim of necessity should be made in either direction**: `decoration_unique` binds the structure as `_G` and never uses it, so what is proved holds for every finite quiver, accessible or not — which is structurally Aczel's own generality (p. 6). Verified at the binders 2026-08-29; this entry previously claimed both fields were required, contradicting the `[ZP-CUSTOM]` comment it mirrors (`ZeroParadox/Settheory/APG.lean`, corrected 2026-08-09).
 
 ---
 

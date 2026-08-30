@@ -212,11 +212,11 @@ theorem da2_bottom_characterization {L : Type*} [ZPSemilattice L] (S : L) :
     subst h
     exact bot_join
 
-/-- C-DA2 (corollary): In any sequence starting at ⊥ that has advanced,
-    the current state plays the ⊥ role for a distinct successor instantiation.
-    The terminal state satisfies ∀ x, join S x = x in the new semilattice
-    while S ≠ bot in the prior one — the Zero Paradox at the instantiation boundary.
-    Formal consequence: da2_bottom_characterization applied to the successor semilattice. -/
+/-- C-DA2 (Conditional Claim). `Statement:` a non-⊥ state cannot satisfy the join-identity —
+    the contrapositive of the role fact, inside ONE semilattice.
+    `Reading:` taking S to play the ⊥ role for a DISTINCT successor instantiation is the
+    framework's reading, never this statement (SnapCannotBe.lean:41). Nothing here builds a
+    second semilattice or a second bottom, and it is not a novelty witness. -/
 theorem c_da2_novelty {L : Type*} [ZPSemilattice L] (S : L)
     (hS_not_bot : S ≠ bot) :
     ¬(∀ x : L, join S x = x) := by

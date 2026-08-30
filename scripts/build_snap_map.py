@@ -90,7 +90,7 @@ IS_FACES = [
      ["t_snap_derived"]),
     ("verb", "*one-way*: the departure from ⊥ does not reverse. No join can return to a strictly lower state (algebraic form), and the 2-adic and Kleisli faces prove the same irreversibility topologically and categorically",
      ["t_snap_irreversible", "c3_irreversible", "fC_no_return"]),
-    ("verb", "a chart-reading of the LIMIT - `Statement:` INVERSION, `Reading:` INVERSION and conjectural, since no snap transition appears in the statement - valuation face: the same ω-tower's encodings descend to the 2-adic floor 0 = ⊥ (the ascent to ε₀ resolving onto a new bottom ⊥ₙ₊₁) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rise to ∞. The inversion is the passage between the two charts",
+    ("verb", "a chart-reading of the LIMIT - `Statement:` INVERSION, `Reading:` INVERSION and conjectural, since no snap transition appears in the statement - valuation face: the same ω-tower's encodings descend to the 2-adic floor 0 = ⊥ (the ascent to ε₀ resolving back onto the floor - the SAME 0 it started from, `snap_arc_z2_loop`; reading it as a new bottom ⊥ₙ₊₁ is C-DA2, a commitment) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rise to ∞. The inversion is the passage between the two charts",
      ["snap_is_frameflip", "snap_frameflip_tower_tendsto_infty"]),
     ("verb", "a chart-reading of the SEAM (the seam is what the frame-flip FIXES, not a flip, and no snap appears), category face: the categorical seam is an op-self-dual zero object of the module category ModuleCat ℂ - initial and terminal at once, with the op-duality frame-change swapping the two",
      ["catseam_is_frameflip"]),
@@ -205,7 +205,7 @@ This is a **reference** for the framework's central transition, the **snap** - t
 
 It is a **beginning, not a resolution.** What is *proved* is that the snap is derived rather than assumed, one-way, takes its first step from below, and that the domain snaps form one **family** (MC-1, membership proved per domain); what is *retired* is the reading that they are numerically one object (ill-typed - the members are provably distinct); and what stays *open* is the choice-freeness of the first step's minimality. The frame-change faces are proved theorems that compose known results, so no new theorem is claimed there; what stays a conjecture is only the abstract cross-domain reading - that they are literally one change of frame (a type boundary) - written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
 
-> **See it - [The Snap Loop](snap-loop.html).** The snap-arc ⊥ → ε₀ as one interactive 2-adic loop: a single discrete step of ε₀ away from bottom, then a return to bottom (a new successor null). Floor and ceiling are both ⊥; ε₀ is the first step from bottom, opening the gap between them - never a bottom and never 0. It maps the trajectory as a whole, not the route between - that runs through internal state with no external description. Hover any point for the checkable Lean witness.
+> **See it - [The Snap Loop](snap-loop.html).** The snap-arc ⊥ → ε₀ as one interactive 2-adic loop: a single discrete step of ε₀ away from bottom, then a return to bottom (to A bottom - that it is a NEW one is a commitment, and in this 2-adic realization the arc returns to the same 0). Floor and ceiling are both ⊥; ε₀ is the first step from bottom, opening the gap between them - never a bottom and never 0. It maps the trajectory as a whole, not the route between - that runs through internal state with no external description. Hover any point for the checkable Lean witness.
 
 ---
 

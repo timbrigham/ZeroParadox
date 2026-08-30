@@ -31,13 +31,15 @@
         "*.pdf",
         "*.ttf"
       ],
-      "reason": "its property is tracked TEXT files; a BOM test on a font or a published PDF is meaningless. Stated as an exclusion rather than an extension allow-list on purpose: a new text extension must NOT silently fall out of scope, which is the direction an allow-list fails in"
+      "reason": "its property is tracked TEXT files; a BOM test on a font or a published PDF is meaningless. Stated as an exclusion rather than an extension allow-list on purpose: a new text extension must NOT silently fall out of scope, which is the direction an allow-list fails in",
+      "module": "tools/verify/check_encoding.py"
     },
     "check_paths": {
       "family": "mechanical",
       "switches": [
         "tools/verify/vendored_files.txt"
-      ]
+      ],
+      "module": "tools/verify/check_paths.py"
     },
     "check_frozen": {
       "family": "mechanical",
@@ -58,38 +60,57 @@
         "tools/verify/prose_baseline.txt"
       ],
       "reason": "superseded by the independent-git-spaces rewrite; the frozen baselines describe a topology that no longer exists, so the freeze comparison cannot succeed and never will. STILL REGISTERED on purpose -- Tim, 2026-08-23: 'I have no problem if you want to still allow it to be submitted, it just shouldn't be required in order to pass.' Recording stays valid; gating stops.",
-      "actions": []
+      "actions": [],
+      "module": "tools/verify/check_frozen.py"
     },
     "check_prose": {
       "family": "mechanical",
       "switches": [
         "tools/verify/prose_baseline.txt",
         "tools/verify/vendored_files.txt"
-      ]
+      ],
+      "module": "tools/verify/check_prose.py",
+      "scope": [
+        "ZeroParadox/*.lean"
+      ],
+      "reason": "reads the LEAN CORPUS only -- it walks the tree and takes fn.endswith('.lean'), so its verdict is about ZeroParadox/*.lean (218 files) and nothing else. With no declared scope the registry's strict default bound it to all 504 tracked paths, so it recorded ~218 of 504 for ever and re-running reproduced it identically; the gap was a missing DECLARATION, not a producer that skipped work. NB the glob is `ZeroParadox/*.lean` and NOT `ZeroParadox/**/*.lean`: `**/` requires at least one '/' and drops the five files directly under ZeroParadox/ (AxiomProfile, BottomCannotBe, ClaimsMirror, DiagonalFixedPoint, Miniature) -- three of which R-COREOBJ names as authoritative -- while rendering as 213/213 COMPLETE. Measured 2026-08-26."
     },
     "check_pov": {
       "family": "mechanical",
       "switches": [
         "tools/verify/pov_baseline.txt",
         "tools/verify/vendored_files.txt"
-      ]
+      ],
+      "module": "tools/verify/check_pov.py"
     },
     "check_modal": {
       "family": "mechanical",
       "switches": [
         "tools/verify/modal_baseline.txt",
         "tools/verify/vendored_files.txt"
-      ]
+      ],
+      "module": "tools/verify/check_modal.py"
     },
     "check_classes": {
       "family": "mechanical",
       "switches": [
         "tools/verify/class_baseline.txt",
         "tools/verify/vendored_files.txt"
-      ]
+      ],
+      "module": "tools/verify/check_classes.py",
+      "scope": [
+        "ZeroParadox/*.lean"
+      ],
+      "reason": "reads the LEAN CORPUS only -- it walks the tree and takes fn.endswith('.lean'), so its verdict is about ZeroParadox/*.lean (218 files) and nothing else. With no declared scope the registry's strict default bound it to all 504 tracked paths, so it recorded ~218 of 504 for ever and re-running reproduced it identically; the gap was a missing DECLARATION, not a producer that skipped work. NB the glob is `ZeroParadox/*.lean` and NOT `ZeroParadox/**/*.lean`: `**/` requires at least one '/' and drops the five files directly under ZeroParadox/ (AxiomProfile, BottomCannotBe, ClaimsMirror, DiagonalFixedPoint, Miniature) -- three of which R-COREOBJ names as authoritative -- while rendering as 213/213 COMPLETE. Measured 2026-08-26."
     },
     "check_invariants": {
-      "family": "mechanical"
+      "family": "mechanical",
+      "module": "tools/verify/check_invariants.py",
+      "scope": [
+        "ZeroParadox/*.lean",
+        "LEAN_CUSTOM_REGISTRY.md"
+      ],
+      "reason": "reads the LEAN CORPUS only -- it walks the tree and takes fn.endswith('.lean'), so its verdict is about ZeroParadox/*.lean (218 files) and nothing else. With no declared scope the registry's strict default bound it to all 504 tracked paths, so it recorded ~218 of 504 for ever and re-running reproduced it identically; the gap was a missing DECLARATION, not a producer that skipped work. NB the glob is `ZeroParadox/*.lean` and NOT `ZeroParadox/**/*.lean`: `**/` requires at least one '/' and drops the five files directly under ZeroParadox/ (AxiomProfile, BottomCannotBe, ClaimsMirror, DiagonalFixedPoint, Miniature) -- three of which R-COREOBJ names as authoritative -- while rendering as 213/213 COMPLETE. Measured 2026-08-26. It also reads LEAN_CUSTOM_REGISTRY.md, which is the registry its invariants are checked against."
     },
     "check_hashes": {
       "family": "mechanical",
@@ -98,35 +119,40 @@
         "scripts/build_*.py",
         "scripts/zp_utils.py"
       ],
-      "reason": "fingerprints the register, the build scripts it names, and zp_utils.py -- the module every build script imports, verified against shared_build_baseline.txt. The three excluded builders render GENERATED markdown (BOTTOMELEMENT.md, SNAP.md, MANIFEST.md) which carries no register row, so no fingerprint is owed; they are named individually rather than matched so a fourth such builder re-arms the warning instead of inheriting the exemption.",
+      "reason": "fingerprints the register, the build scripts it names, and zp_utils.py -- the module every build script imports, verified against shared_build_baseline.txt. Three excluded builders render GENERATED markdown (BOTTOMELEMENT.md, SNAP.md, MANIFEST.md) which carries no register row, so no fingerprint is owed; they are named individually rather than matched so a further such builder re-arms the warning instead of inheriting the exemption -- which is exactly what happened on 2026-08-29, and the entry below was added deliberately rather than by a glob. `scripts/build_bottom_matrix.py` is the FOURTH, and it is excluded for a different reason worth stating separately: it is a DATA MODULE, not a page builder. It renders no document at all -- `build_dictionary_map.py` imports its `CELLS` dict -- so it owes no register row for the same reason its importer does not, one step further removed. It moved here from gitignored `.claude-local/` on 2026-08-29 so a clone can regenerate BOTTOMELEMENT.md; while private it was a PUBLISHED page's source that nobody outside one machine could run, which is the shape R-SCRIPTS retired the script mirror over.",
       "scope_exclude": [
         "scripts/build_dictionary_map.py",
         "scripts/build_manifest.py",
-        "scripts/build_snap_map.py"
+        "scripts/build_snap_map.py",
+        "scripts/build_bottom_matrix.py"
       ],
       "switches": [
         "tools/verify/shared_build_baseline.txt"
-      ]
+      ],
+      "module": "tools/verify/check_hashes.py"
     },
     "check_moved": {
       "family": "mechanical",
       "switches": [
         "tools/verify/vendored_files.txt"
-      ]
+      ],
+      "module": "tools/verify/check_moved.py"
     },
     "check_negatives": {
       "family": "mechanical",
       "switches": [
         "tools/verify/negatives_baseline.txt",
         "tools/verify/vendored_files.txt"
-      ]
+      ],
+      "module": "tools/verify/check_negatives.py"
     },
     "check_figures": {
       "family": "mechanical",
       "switches": [
         "tools/verify/figures_baseline.txt",
         "tools/verify/vendored_files.txt"
-      ]
+      ],
+      "module": "tools/verify/check_figures.py"
     },
     "check_checkers": {
       "family": "mechanical",
@@ -140,20 +166,52 @@
       "reason": "audits the 19 checker modules, not the tooling directory; stays dynamic because a checker added later matches check_*.py on its own",
       "switches": [
         "tools/verify/vendored_files.txt"
-      ]
+      ],
+      "module": "tools/verify/check_checkers.py"
     },
     "guards": {
       "family": "mechanical",
       "switches": [
         "tools/verify/vendored_files.txt"
-      ]
+      ],
+      "module": "tools/verify/guards.py",
+      "scope": [
+        "tools/verify/guards.py",
+        "tools/verify/batch.py",
+        "tools/verify/ship.py",
+        "tools/verify/common.py",
+        "tools/verify/report.py",
+        "tools/verify/agent_gate.py",
+        "tools/verify/check_classes.py",
+        "tools/verify/check_figures.py",
+        "tools/verify/check_frozen.py",
+        "tools/verify/check_modal.py",
+        "tools/verify/check_negatives.py",
+        "tools/verify/check_pov.py",
+        "tools/verify/check_prose.py",
+        "tools/verify/class_baseline.txt",
+        "tools/verify/figures_baseline.txt",
+        "tools/verify/modal_baseline.txt",
+        "tools/verify/negatives_baseline.txt",
+        "tools/verify/pov_baseline.txt",
+        "tools/verify/prose_baseline.txt",
+        "tools/verify/vendored_files.txt"
+      ],
+      "reason": "asserts properties of the ROUTING AND ENFORCEMENT LOGIC, so its scope is the code it exercises plus the exemption switches it plants violations into -- not the whole tree. With no declared scope the strict default bound it to all 504 tracked paths while it recorded a handful, and it sat green on a gating row at 4/504. ⚠ It formerly recorded TOUCHED, its RESTORATION-PROOF set, as subjects: the paths it scribbles on rather than the code it judges. That ran the staleness backwards -- editing batch.py, the file whose routing this guards, did NOT re-arm it, while editing a baseline it merely writes to did. Corrected 2026-08-26 (verdictLedger.md § 4a-R, R-1)."
     },
     "decls": {
-      "family": "mechanical"
+      "family": "mechanical",
+      "module": "tools/verify/batch.py",
+      "scope": [
+        "ZeroParadox/*.lean",
+        "ssot.json",
+        "tools/verify/decl_baseline.txt"
+      ],
+      "reason": "reads the LEAN CORPUS only -- it walks the tree and takes fn.endswith('.lean'), so its verdict is about ZeroParadox/*.lean (218 files) and nothing else. With no declared scope the registry's strict default bound it to all 504 tracked paths, so it recorded ~218 of 504 for ever and re-running reproduced it identically; the gap was a missing DECLARATION, not a producer that skipped work. NB the glob is `ZeroParadox/*.lean` and NOT `ZeroParadox/**/*.lean`: `**/` requires at least one '/' and drops the five files directly under ZeroParadox/ (AxiomProfile, BottomCannotBe, ClaimsMirror, DiagonalFixedPoint, Miniature) -- three of which R-COREOBJ names as authoritative -- while rendering as 213/213 COMPLETE. Measured 2026-08-26. It also reads ssot.json and its own decl_baseline.txt switch, both named in scope because a subject set is everything the verdict depends on, not merely the corpus it walks."
     },
     "pdf_coupling": {
       "family": "mechanical",
-      "when": "**/*.pdf",
+      "when": "*.pdf",
       "reason": "only meaningful when a PDF changed"
     },
     "editorial": {
@@ -162,17 +220,20 @@
         "push",
         "tag"
       ],
-      "reason": "the published prose surface. The exclusions are policy, not tidying: CLAUDE.md exempts tools/verify/** and tools/process/** from both prose gates, and ZeroParadox/*.md are ride-along docs beside their .lean, reviewed as corpus rather than as publications.",
+      "reason": "the published prose surface. The exclusions are policy, not tidying: CLAUDE.md exempts tools/verify/** and tools/process/** from both prose gates (/rely covers those instead), and ZeroParadox/*.md are ride-along docs beside their .lean, reviewed as corpus rather than as publications. CLAUDE.md itself is excluded for the same reason it names -- operating machinery that asserts nothing about the mathematics, so editorial and adversary have no claim on it. .claude/commands/*.md is IN scope by CLAUDE.md R-EXEMPT: the gate briefs are published deliberately, as the artifact showing how this project reviews itself, so both prose gates fire on them; published-and-exempt is not a category to reason into. The blanket `.claude/*.md` exclusion was removed on 2026-08-25 because it silently cancelled that -- `*` DOES cross `/` here (measured: check_encoding's scope [\"*\"] covers 450 tracked files), so the blanket entry matched every brief under commands/. `*.html` was added 2026-08-29: the three interactive maps (bottom-family-tree, diagonal-family, snap-loop) are PUBLISHED and linked from README and GUIDE, and were in NO gate's scope until then -- `inventory` listed snap-loop.html under subjects_unscoped for adversary, editorial AND claim_review. The cost was measured, not argued: bottom-family-tree.html carried, twice, a citation R-BEDROCK prohibits in terms (`rInv_swaps` credited for a COINCIDENCE, when it proves an EXCHANGE between provably distinct points) while its .md sibling was corrected the same day, because nothing looked at it. `_layouts/*` is excluded because the Jekyll layout is chrome -- CSS and one routing comment, no mathematical content -- and it is excluded BY PATH rather than by narrowing the glob, so a new .html at the root falls INTO scope rather than silently out of it; same direction check_encoding's reason states for the same argument. ⚠ These are reviewed by AGENT and deliberately NOT by a glyph checker: the HTML entity-encodes every math symbol, so check_poles scores ZERO on these files and ELEVEN after decoding, and only 2 of those 11 were defects -- the other 9 are the ratified naming idiom, and the discriminator (swaps versus coincide) is semantic.",
       "scope": [
         "*.md",
         "scripts/build_*.py",
-        "scripts/PDF_Rendering_Standards.md"
+        "scripts/PDF_Rendering_Standards.md",
+        ".claude/commands/*.md",
+        "*.html"
       ],
       "scope_exclude": [
+        "CLAUDE.md",
         "ZeroParadox/*.md",
         "tools/*.md",
-        ".claude/*.md",
-        ".github/*.md"
+        ".github/*.md",
+        "_layouts/*"
       ]
     },
     "adversary": {
@@ -181,17 +242,20 @@
         "push",
         "tag"
       ],
-      "reason": "the published prose surface. The exclusions are policy, not tidying: CLAUDE.md exempts tools/verify/** and tools/process/** from both prose gates, and ZeroParadox/*.md are ride-along docs beside their .lean, reviewed as corpus rather than as publications.",
+      "reason": "the published prose surface. The exclusions are policy, not tidying: CLAUDE.md exempts tools/verify/** and tools/process/** from both prose gates (/rely covers those instead), and ZeroParadox/*.md are ride-along docs beside their .lean, reviewed as corpus rather than as publications. CLAUDE.md itself is excluded for the same reason it names -- operating machinery that asserts nothing about the mathematics, so editorial and adversary have no claim on it. .claude/commands/*.md is IN scope by CLAUDE.md R-EXEMPT: the gate briefs are published deliberately, as the artifact showing how this project reviews itself, so both prose gates fire on them; published-and-exempt is not a category to reason into. The blanket `.claude/*.md` exclusion was removed on 2026-08-25 because it silently cancelled that -- `*` DOES cross `/` here (measured: check_encoding's scope [\"*\"] covers 450 tracked files), so the blanket entry matched every brief under commands/. `*.html` was added 2026-08-29: the three interactive maps (bottom-family-tree, diagonal-family, snap-loop) are PUBLISHED and linked from README and GUIDE, and were in NO gate's scope until then -- `inventory` listed snap-loop.html under subjects_unscoped for adversary, editorial AND claim_review. The cost was measured, not argued: bottom-family-tree.html carried, twice, a citation R-BEDROCK prohibits in terms (`rInv_swaps` credited for a COINCIDENCE, when it proves an EXCHANGE between provably distinct points) while its .md sibling was corrected the same day, because nothing looked at it. `_layouts/*` is excluded because the Jekyll layout is chrome -- CSS and one routing comment, no mathematical content -- and it is excluded BY PATH rather than by narrowing the glob, so a new .html at the root falls INTO scope rather than silently out of it; same direction check_encoding's reason states for the same argument. ⚠ These are reviewed by AGENT and deliberately NOT by a glyph checker: the HTML entity-encodes every math symbol, so check_poles scores ZERO on these files and ELEVEN after decoding, and only 2 of those 11 were defects -- the other 9 are the ratified naming idiom, and the discriminator (swaps versus coincide) is semantic.",
       "scope": [
         "*.md",
         "scripts/build_*.py",
-        "scripts/PDF_Rendering_Standards.md"
+        "scripts/PDF_Rendering_Standards.md",
+        ".claude/commands/*.md",
+        "*.html"
       ],
       "scope_exclude": [
+        "CLAUDE.md",
         "ZeroParadox/*.md",
         "tools/*.md",
-        ".claude/*.md",
-        ".github/*.md"
+        ".github/*.md",
+        "_layouts/*"
       ]
     },
     "prior_art": {
@@ -227,7 +291,34 @@
         "tools/verify/pov_baseline.txt",
         "tools/verify/prose_baseline.txt"
       ],
-      "reason": "a removal is a removal FROM those baselines"
+      "reason": "a removal is a removal FROM those baselines",
+      "module": "tools/verify/check_frozen.py"
+    },
+    "agent_gate": {
+      "family": "mechanical",
+      "actions": [],
+      "reason": "ADVISORY interpretation layer - it RECORDS but must never GATE. agent_gate.run() always returns 0 and batch.py deliberately does not increment `bad`, because the layer is fuzzy: measured 2026-08-21 before adoption, 1 false positive in 6 healthy runs, and byte-identical input returned TRUSTWORTHY twice and NOT_TRUSTWORTHY once. The >=2-of-3 vote takes that to 0 but the variance is real, and blocking on a coin flip is how a gate earns itself a bypass (CLAUDE.md rung 5: the screen may replace the enumeration, never the verdict). It is registered so that a CLEAN run leaves a record - verdictLedger.md section 2, 'a step that passes MUST emit a record; silence is never a pass' - which names this file as the measured instance of the defect. Its verdict is honest (it records what it found) and its status is non-gating, which is the registry/admission split working as designed.",
+      "module": "tools/verify/agent_gate.py"
+    },
+    "check_fields": {
+      "family": "mechanical",
+      "actions": [],
+      "scope": [
+        "scripts/build_*.py",
+        "*.md",
+        "ZeroParadox/*.lean"
+      ],
+      "reason": "ADVISORY reading list, registered so it can RECORD but gating nothing. Its JUDGEMENT half is computed from the Lean - it resolves each `field := binding` in every instance to a theorem or a def - and cannot be wrong. Its ENUMERATION half is a text scan over prose blocks and can be, so CLAUDE.md rung 5 applies: the screen may replace the enumeration, never the verdict. Registered 2026-08-26 after /rely RLY35-3: unregistered meant V8 refused every record, `--record` exited 2 for ever, and run_field_discipline turned that into a printed WARN while precommit still said PASS - a checker that runs, costs time, and can never leave a key, which is the exact 'silence is never a pass' defect one layer over.",
+      "module": "tools/verify/check_fields.py"
+    },
+    "check_claude_md": {
+      "family": "mechanical",
+      "when": "CLAUDE.md",
+      "module": "tools/verify/check_claude_md.py",
+      "scope": [
+        "CLAUDE.md"
+      ],
+      "reason": "the shape contract for CLAUDE.md itself, and it gates ONLY when that file is in the change -- Tim, 2026-08-26: a full re-analysis of it on every commit 'is nuts'. `when` is what makes that precise rather than a discipline: NOT_APPLICABLE on every commit that does not touch the file, REQUIRED and starting MISSING on one that does, so it fails CLOSED with nothing remembered. Registered after a measured miss -- unregistered meant V8 refused every append, the checker could never leave a key, and `inventory` never listed it, so R-NOTINLIB reached 36 lines against a 12-line cap as the largest entry in the file while '16 of 18 admission keys' read as near-complete. Same class as check_fields/RLY35-3, closed the same day. PUSH-TIME IS THE RIGHT MOMENT and that is a fact about readers, not a concession: the agent editing CLAUDE.md already holds the desired state in context, so the file's only real consumer is the NEXT session and a push is when it reaches one. NB a recorded PASS claims the two BLOCKING legs only -- rooted paths resolve, named checkers exist -- because the cap and history legs are WARN and three legs are declared PENDING and are NOT passing."
     }
   },
   "_switches_v15": "A subject set is everything the verdict DEPENDS ON, not merely everything the checker read. Found by ZeroParadox 2026-08-23: check_pov recorded 291 subjects and NOT pov_baseline.txt, so grandfathering a violation into that baseline left the record reading SATISFIED -- every file it named was unchanged. V15 refuses a record that omits a declared switch, which turns a convention into a contract: with the switch as a subject, editing a baseline moves a blob the record names, the key goes STALE, and the checker re-runs. Declaring switches is NOT a narrowing and costs no reason -- it makes a type stricter.",

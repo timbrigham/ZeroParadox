@@ -73,6 +73,12 @@
             "command": "& tools\\verify\\claude_hooks\\block_git_gh.ps1",
             "shell": "powershell",
             "statusMessage": "Checking for direct git/gh..."
+          },
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\block_checker_truncation.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking for truncated checker output..."
           }
         ]
       },
@@ -84,6 +90,12 @@
             "command": "& tools\\verify\\claude_hooks\\block_git_gh.ps1",
             "shell": "powershell",
             "statusMessage": "Checking for direct git/gh..."
+          },
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\block_checker_truncation.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking for truncated checker output..."
           }
         ]
       },

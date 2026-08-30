@@ -80,7 +80,7 @@ Evaluate only **synthesis / bridge claims**: a distinctive claim that unifies or
      2. **DISPLAY is this rung's own exposure.** `theoremsearch` returns a capped list, so a scout who reads the cap and stops **has measured the cap, not the literature**. Re-run untruncated.
      3. **IGNORE the `similarity`/`score` field.** The 7-case calibration of 2026-08-23 found **no threshold that keeps the garbage out without discarding the find** — noise scored 0.69 while genuine prior art scored 0.61. ⚠ That is a claim about THRESHOLDS, **not** that the score runs backwards. Measured 2026-08-24 across two independent probes: exact statements of Lawvere's fixed-point theorem returned 0.676, 0.683 and 0.686, other exact hits 0.834 and 0.777, and relevant fixed-point theorems 0.732 and 0.728 against irrelevant ones at 0.687 and 0.680. **Rank by reading; never filter on the number.**
      4. ⚠ **`paper_filter` takes a TITLE, not an arXiv id.** Passing an id returns empty and reads exactly like absence.
-   - **Rung C — the open web.** Run it when rung B returns no good match, **and also when rung B returns a neighbourhood hit whose real source still needs identifying**. Everything pre-arXiv lives here — Lawvere 1969, Aczel 1988, Ostrowski, Gentzen, Carlström. `theoremsearch` cannot return those as sources, only as work other people cite, **and the reason is the corpus boundary rather than a quirk: the index is built from arXiv, so a work published before it did not exists in the index only inside the reference lists of papers that cite it.** A Gentzen-1936 query returns modern arXiv papers citing Gentzen, never Gentzen.
+   - **Rung C — the open web.** Run it when rung B returns no good match, **and also when rung B returns a neighbourhood hit whose real source still needs identifying**. Everything pre-arXiv lives here — Lawvere 1969, Aczel 1988, Ostrowski, Gentzen, Carlström. `theoremsearch` cannot return those as sources, only as work other people cite, **and the reason is the corpus boundary rather than a quirk: the index is built from arXiv, so a work published before arXiv existed appears in the index only inside the reference lists of papers that cite it.** A Gentzen-1936 query returns modern arXiv papers citing Gentzen, never Gentzen.
    - **Rung D — RETRIEVE AND READ THE FULL SOURCE.** Use WebFetch; if a domain is not reachable that way, download it via PowerShell `Invoke-WebRequest -Uri <url> -OutFile .claude-local/papers/<author_topic_year[_id]>.pdf` and open it with the Read tool (this works for any publisher — arXiv, Dagstuhl/LIPIcs, nLab, journal sites). **Download straight into `.claude-local/papers/` under that name** — one destination, so filing is not a second step anyone can skip — and **validate before you rely on it** (a tiny PDF is an error page, not a paper). ⚠ **This is the one place the read-only rule yields, and it is deliberate**: filing the source is what feeds rung A for every later scout, so a review that reads a PDF and leaves nothing behind makes the library decay while looking like diligence.
 
    ⚠⚠ **RUNGS A–C ARE DISCOVERY. ONLY RUNG D IS VERIFICATION.** **Draft from source, not from snippets — and a `theoremsearch` theorem body is a snippet, not a passage in hand.** Measured 2026-08-23: a returned body read as our recorded citation renumbered for a journal version, and the PDF showed the two statements were different (connexity versus splitting). The returned `slogan` field is an **LLM paraphrase**, `label`/`link` come back **null**, and ambient hypotheses are inconsistently included. If you genuinely cannot read the source, say so and treat the citation as **unverified**.
@@ -107,17 +107,30 @@ Save the findings to `.claude-local/notes/prior_art_review_YYYY-MM-DD.md`, listi
 
 ⛔ **DO NOT WRITE `.claude-local/pa_cleared.txt`. The prose signal files are RETIRED.** Nothing GATES on that path any more — `batch.py`'s review check asks the ledger, and `hooks.py` and `guards.py` never opened it. ⚠ One reader remains and it is informational only: `check_release_ready.py` prints whether the file is present and never blocks on it, so its absence costs a line of output, not a refusal. It could be written by any process, recorded **no author**, and held one verdict for N passes; measured 2026-08-24, three concurrent passes of a sibling gate raced on one such path and the survivor was decided by scheduling. A ledger record is authored, append-only and keyed per subject, so none of that is expressible.
 
-**On FAIL / FAIL-BEDROCK — record it yourself. One agent's finding stands alone** (*FAIL alone, PASS by unanimity or signature*):
+**On FAIL / FAIL-BEDROCK — record it yourself. One agent's finding stands alone.** ⚠ Record a PASS too, with `--how delegated` — the older *"FAIL alone, PASS by unanimity or signature"* rule is RETIRED, predating the `delegated` route added 2026-08-25:
 
 ```
 python tools/verify/record.py --step prior_art --verdict fail --tier A \
-    --how agreement --passes 1 --agreed 1 \
-    --run gate-prior-art-<YYYY-MM-DD> \
+    --how delegated --who prior_art \
+    --evidence .claude/commands/prior-art-review.md \
+    --run gate-prior_art-<YYYY-MM-DD> \
     --reason-file <path to a file holding one line: the uncited closest prior art> \
-    --files <every file the CALLER handed you>
+    --files <every file you reviewed>
 ```
 
-**On PASS — record NOTHING and report the verdict to your caller.** A lone A-tier PASS is absence-of-evidence wearing a clean bill, and the server's `V3` rejects it anyway. The caller either runs three independent passes and records the agreement, or takes a human signature.
+**On PASS — RECORD IT, with `--how delegated`.** This changed on 2026-08-25 and the old instruction here was *"record NOTHING"*. That was correct while `agreement` was the only route: V3 refuses a lone A-tier PASS, `mechanical` would be a lie about a computation, and `signature` asserts a PERSON accepted it. So a gate could report findings and had **no way to report success** — measured across the whole stream that day, nine agent reviews, every one a FAIL, and not a single recorded PASS. Absence of a pass therefore meant nothing, which is the exact ambiguity this ledger exists to remove.
+
+```
+python tools/verify/record.py --step prior_art --verdict pass --tier A \
+    --how delegated --who prior_art \
+    --evidence .claude/commands/prior-art-review.md \
+    --run gate-prior_art-<YYYY-MM-DD> \
+    --files <every file you reviewed>
+```
+
+⚠ **`--evidence` is the BRIEF, not the checker, and it is what makes a delegated PASS accountable.** Attribution is not authentication — no key material exists here and *"prove you are that agent"* was never available. What IS checkable is which instructions governed the round: **editing this brief stales the key and the gate re-runs.** A delegated verdict cannot outlive its instructions.
+
+⚠ **`delegated` claims no consensus and must not be dressed as one.** It records ONE agent round, honestly. If a caller genuinely runs three independent passes, that is still `--how agreement` and it remains the stronger claim; V3 is untouched.
 
 ⚠ **`--run` is REQUIRED, and `--reason-file` is not optional politeness.** `V9` refuses a record with no run id, and a spawned gate has no pipeline to inherit one from. The reason goes in a FILE because the PreToolUse hook denies any command containing the denied version-control token — arguments included — so an honest reason describing a scope-discovery defect blocks the very command that reports it. Measured three times on 2026-08-24, by three separate review agents.
 

@@ -20,8 +20,13 @@ RULE     a `PreToolUse` hook inspects the WHOLE command string for a word-bounda
 COST     ⚠ the matcher sees ARGUMENTS: a path containing the standalone token blocks the whole
          command, so never put a bare `git` in a filename. Tools using it INTERNALLY are
          unaffected — `batch.py`, the checkers and the build scripts keep working; do not
-         "migrate" them. This is layer 2 of 3 and layer 3 does not exist: only remote branch
-         protection with required status checks is sound, and it is still not configured.
+         "migrate" them. ⚠ THE "LAYER 3 IS MISSING" CLAIM IS RETIRED (Tim, 2026-08-27, and
+         re-measured the same day): `main` reports `protected: true`, the GitHub MCP surface
+         exposed to agents is READ-ONLY — every tool is a `get_`/`list_`/`search_`, with no
+         release, merge or push among them — and that sits on top of this hook and `gitRobot`.
+         Do not re-open this as a backlog item. Two facts my read tools CANNOT see, left to
+         Tim: whether required status checks are configured on `main`, and `illustrated`
+         reports `protected: false`, which is where every commit here actually lands.
 READ     .claude-local/notes/access_controls_2026-08-22.md
 
 ## R-EXEMPT  What is gate-exempt, and why you may not infer the next one.
@@ -87,7 +92,12 @@ RULE     consult `.claude-local/DEFECT_CLASSES.md` by DEFAULT. In a brief, name 
 COST     PREFER A DETECTOR WHOSE VERB IS *RUN* OVER ONE WHOSE VERB IS *READ*: across ~20 agent
          runs every BEDROCK finding came from EXECUTING something and every ORDINARY one from
          READING something, without exception. Six of seventeen rows have a mechanical checker
-         and eleven do not — that is visible debt, not a solved problem.
+         and eleven do not — that is visible debt, not a solved problem. ⚠ AND FOR PROSE THAT
+         SHIPS, THE DETECTOR RUNS ON THE RENDERED TEXT, NEVER THE SOURCE: a claim-sweep's unit
+         is the extracted PDF, because a claim can span two adjacent string literals, sit inside
+         a `Drawing` where no prose checker reaches it, or survive at sites the source grep never
+         listed. Measured 2026-08-27: a gate named four sites and counting the rendered text
+         found six.
 
 ## R-DEFECTS  A defect's home is the ledger. Read it before choosing work.
 TRIGGER  you found a defect, you are choosing what to work on next, or you are about to
@@ -114,7 +124,13 @@ RULE     re-read this file FROM DISK first — `grep -n "^## " CLAUDE.md` before
          a detector, 3rd the trigger is wrong, 4th+ build the checker. Never add a second
          rule saying the same thing louder, and never skip to writing a new section.
 COST     a mid-session edit never reaches agents spawned after it, so a correct fix can be
-         unreachable; and a rule stated twice fires in neither place.
+         unreachable; and a rule stated twice fires in neither place. ⚠ RETIREMENT IS A
+         LEGITIMATE OUTCOME AND SOMETIMES THE ONLY ONE: `R-DEVMODE` had its trigger re-keyed
+         2026-08-27 to fire on Tim's message arriving rather than on self-classification, and it
+         still never fired, so it was retired the same day rather than re-worded a third time.
+         Its tool `where.py` was never the problem and survives on `R-EDITLEAN`'s trigger, which
+         binds to a concrete ACTION. **A second rule pointing at a tool that already has a
+         working trigger is the "stated twice" defect wearing a new name.**
 READ     tools/process/recurrence-protocol.md
 
 ## R-NOCONV  A check that misses 3x, or a loop that will not settle, changes SHAPE.
@@ -140,6 +156,9 @@ RULE     (1) read `ZeroParadox/MANIFEST.md`, the by-folder index of the whole co
          the claim, then READ THE HITS. Do BOTH: searching the CLAIM finds paraphrases,
          searching the NAME finds every citing site, and the identifier sweep is the
          mechanical one, so it is the one that cannot be talked past.
+         (3) LOAD THE FOLDER THE FILE LIVES IN — `where.py "<Tim's words, VERBATIM>"` and load
+         what it ranks first. Not the file, not neighbours picked by name: the FOLDER, because
+         the house style lives across it and a manifest line cannot show you a class's SHAPE.
 COST     measured on a docstring edit made after grepping three theorem names: the wording
          survey found 4 citing sites and `grep -n "l_inf"` returns 9, and the appended
          paragraph re-committed an overclaim that had ALREADY been corrected — in the very
@@ -147,27 +166,53 @@ COST     measured on a docstring edit made after grepping three theorem names: t
          convention of this shape and the previous seven leaked; until `refs.py` prints
          reverse references at edit time, this one is remembered, and remembered rules fail
          here by construction.
+         ⚠ VERBATIM IS LOAD-BEARING, measured 2026-08-27: Tim's own sentence ranked
+         `Valuation/` at relevance 1.00 with the next candidate at 0.39, and a PARAPHRASE of the
+         same request dropped that folder off the list entirely and returned four wrong ones.
 READ     tools/process/core-objects.md
 
 ## R-COREOBJ  Read the Lean before writing about the bottom, the snap, or epsilon-zero.
 TRIGGER  you are about to write any prose, figure, docstring, companion text, note or
-         outreach copy naming the bottom, the snap, epsilon-zero, choice, or computation.
-RULE     open that object's authoritative Lean file and ground every statement in a NAMED
-         theorem there. Never reconstruct from memory, from notes, or from this file. If
+         outreach copy naming the bottom, the snap, epsilon-zero, choice, or computation —
+         INCLUDING any claim about WHERE a `Classical.choice` comes from, whether a result is
+         choice-free, whether a footprint is forced or inherited, or what `#print axioms` shows —
+         OR YOU ARE ANSWERING A QUESTION ABOUT ONE OF THEM, IN CHAT. Conversation is NOT
+         exempt: R-NARRATE makes it the highest-traffic surface these claims cross, it is
+         the only one no checker can see, and "I was already reading authoritative Lean"
+         is how the routing fails — the index below is the file, not a nearby one.
+RULE     LOAD THE SUBJECT'S WHOLE ROW BELOW — every file on it — and ground every statement
+         in a NAMED theorem. Never reconstruct from memory, from notes, or from this file. If
          this file and the Lean disagree, THE LEAN WINS — stop and ask Tim.
-           bottom  `ZeroParadox/BottomCannotBe.lean` + `BOTTOMELEMENT.md`
-           snap    `ZeroParadox/Order/SnapCannotBe.lean` + `ZeroParadox/Order/Snap.lean`
-           eps-0   `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`
-           also    `ZeroParadox/DiagonalFixedPoint.lean` (keystone) ·
-                   `ZeroParadox/Category/ChoiceCannotBe.lean` (choice) ·
-                   `ZeroParadox/Computability/Kleene.lean` (computation) ·
-                   `ZeroParadox/ClaimsMirror.lean` (a claim's status)
+         ⚠⚠ THE ROW IS THE UNIT, NEVER THE FILE. Do not pick the one your noun matches best;
+         a table you dispatch on can be dispatched WRONG, and every destination here verifies,
+         so landing on the wrong one reads exactly like "nothing is recorded". **Every real finding
+         comes from COLLIDING two facts, and you cannot collide facts you are fetching one at a
+         time.** Measured: the largest row is ~850 lines. There is no budget argument for
+         loading half of one.
+           bottom      `ZeroParadox/BottomCannotBe.lean` · `BOTTOMELEMENT.md` ·
+                       `ZeroParadox/DiagonalFixedPoint.lean` (the keystone fixed point)
+           snap        `ZeroParadox/Order/SnapCannotBe.lean` · `ZeroParadox/Order/Snap.lean`
+           eps-0       `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`
+           choice      `ZeroParadox/Category/ChoiceCannotBe.lean` (choice as an OBJECT, a face of
+                       the bottom) · `ZeroParadox/AxiomProfile.lean` (the core/realization split;
+                       T-SNAP at no axioms at all) · `ZeroParadox/Ordinal/SyntacticCollapse.lean`
+                       (the choice-free surrogate; the standing conjecture's two halves; Mathlib's
+                       ℚ instances choice-tainted at the INSTANCE level)
+           computation `ZeroParadox/Computability/Kleene.lean`
+           a claim's status  `ZeroParadox/ClaimsMirror.lean` · `CLAIMS.md`
          Every gloss carries `Statement:` (what it proves, best form an elaborating `example`)
          or `Reading:` (interpretation, NOT a claim about the theorem). No third option.
          `Idiom:` is vocabulary for a NAMED phenomenon, never a gloss, and it SUPPRESSES —
          apply it only after verifying the site.
 COST     the `#check` lines cannot overclaim and the glosses beside them can: two false ones
          survived four adversary rounds inside a file whose stated premise is that it cannot.
+         ⚠ AND MEASURED 2026-08-27: the trigger FIRED on "choice" and routed to ONE file of
+         three, which is worse than not firing — three successive causal stories about a single
+         `Classical.choice` were written and two were false, while `SyntacticCollapse.lean` already
+         held the measured answer. Tim caught it from memory, which is the thing this index exists
+         to replace. **The first fix was a FINER DISPATCH TABLE and that was the wrong lesson**
+         (Tim: *"why the hell would you only want to load half of that information into memory at
+         any given time?"*) — the dispatch is the defect, not its resolution. Load the row.
 READ     tools/process/core-objects.md
 
 ## R-BEDROCK  Machine-checked invariants. Never violate; verify at the theorem, never assume.
@@ -237,9 +282,13 @@ READ     tools/process/gated-conventions.md
 
 ## R-BRIEF  A rule that must not be violated belongs in the BRIEF, never only in memory.
 TRIGGER  you are delegating to a spawned agent.
-RULE     carry the relevant rules into the brief VERBATIM — a spawned agent receives this file
-         and the memory INDEX, but never memory BODIES, so a rule living in a memory body
-         reaches it as one line among a hundred. Always include: draft from source, never
+RULE     carry the relevant rules into the brief VERBATIM. ⚠ A spawned agent receives a POSSIBLY
+         STALE SNAPSHOT of this file — measured 2026-08-27: an agent spawned AFTER a committed
+         edit got the pre-edit text and said so, *"the instruction was not in front of me"*. So
+         a rule you fixed this session binds NOTHING you spawn unless the brief carries it, and
+         a control test of a rule change measures DELIVERY unless the agent is told to read the
+         entry FROM DISK. Memory BODIES never arrive at all — only the index, one line among a
+         hundred. Always include: draft from source, never
          describe a source you have not read; start new `.lean` files from
          `.claude-local/templates/`; never write a bare "bottom" — say which level; the literal
          `ε₀ = 0` only as a guard or a theorem argument; standard mathematical term first, ZP
@@ -328,20 +377,23 @@ COST     the gates check WORDING against SOURCES — they cannot see an unmeasur
          it in a minute.
 READ     tools/process/claim-revalidation.md
 
-## R-NOTINLIB  "Not in the library" is a CLAIM. Probe it before you believe it.
-TRIGGER  you are about to write "not in Mathlib", "the corpus does not have", "no instance
-         exists", or any dated survey negative.
-RULE     a failed `#synth` or grep is evidence about YOUR PROBE, never about the library.
-         Confirm the name imports and elaborates; re-run with universes explicit; ask whether
-         it DECOMPOSES into pieces that are present; remember attribute-generated siblings
-         have no source line, so `#check` is the authority and grep is not. Run THREE
-         phrasings varied along axes, never synonyms: POLARITY (how the corpus would say it
-         if it DISAGREED with you) · PART OF SPEECH (the verb that builds it, not the noun) ·
-         VOCABULARY (the domain's words) · DISPLAY (never conclude absence from TRUNCATED
-         output — re-run untruncated or print `file:line` and open the hits). Then write
-         "not located as of &lt;date&gt;, searched as follows" — never "absent".
-COST     three recorded negatives were false and had already shipped into docstrings as
-         measured fact; and correcting them turned "one of four hypotheses holds" into three.
+## R-NOTINLIB  "Not in the library" is a CLAIM. So is "this is OPEN". Probe both.
+TRIGGER  you are about to write that anything is ABSENT or OPEN — in Mathlib OR IN THIS CORPUS:
+         "not in Mathlib" · "no instance exists" · "no such X is claimed" · "would need a
+         bridge" · "it is open" · any dated survey negative. A RETRACTION counts.
+RULE     a failed `#synth` or grep is evidence about YOUR PROBE, never about the library. Read
+         the `CLAIMS.md` row before assigning a status, and CITE it; `#check` is the authority.
+         Run THREE phrasings varied by AXIS, never synonyms — POLARITY (how the corpus would say
+         it if it DISAGREED) · PART OF SPEECH · VOCABULARY · DISPLAY (never conclude absence from
+         TRUNCATED output). Write "not located as of &lt;date&gt;, searched as follows", never "absent".
+         ⚠ NEVER NARROW THE PROBE'S OWN SCOPE. An exclusion you typed is not a fact about the
+         corpus, and "not in X" is not "not anywhere" — say which set you searched.
+COST     three false negatives shipped into docstrings as measured fact; and an UNDERCLAIM is
+         invisible to every other gate, so a retraction is where this fires and nothing else does.
+         Measured 2026-08-27: `PROCESS_V2.md does not exist anywhere` reached a commit message,
+         from a grep that `grep -v`'d the one directory holding it, then an `ls` of a directory
+         that never had it. Both probes were honest; the conclusion added a quantifier neither
+         earned. The cited sections were real too.
 READ     tools/process/not-in-the-library.md
 
 ## R-LOOPCAP  Stopping is a decision about SEVERITY, never a wait for silence.
@@ -360,9 +412,9 @@ COST     the cap's licence assumes findings stay outstanding; acting on them cre
 READ     tools/process/review-loop-cap.md
 
 ## R-TRUNC  Never truncate a hook-running command; never write a `--no-verify` fallback.
-TRIGGER  you are about to put `| head`, `| grep -q`, `| grep -m`, `| Select-Object -First N`
-         or any early-exiting consumer around a command that runs a gate — or to chain
-         `|| ... --no-verify`.
+TRIGGER  you are about to put a PIPE after a `tools/verify` path — `| head`, `| tail`, `| grep`,
+         `| Select-String`, `| Select-Object -First/-Last`, `-Tail`, `-TotalCount`, or any other
+         early-exiting or filtering consumer — or to chain `|| ... --no-verify`.
 RULE     redirect to a file and read it: `python tools/verify/batch.py prepush > log 2>&1`,
          then open the log. `--no-verify` is a separately-typed decision, never a fallback and
          never chained. If a push is blocked, read the reason and fix it — the block is the
@@ -370,7 +422,21 @@ RULE     redirect to a file and read it: `python tools/verify/batch.py prepush >
 COST     BOTH bypasses succeed SILENTLY and the push looks green: the identical push exited 1
          bare and 0 through `| head -5`, because the hook died of SIGPIPE before its `exit 1`,
          and the review-signal check runs LAST. A twelve-file push with a stale signal reached
-         `origin` that way.
+         `origin` that way. ⚠ RE-KEYED 2026-08-28, and the OLD trigger is why this leaked: it said
+         "a command that runs a GATE", a one-file `check_encoding` run did not feel like one, and
+         `| Select-Object -Last 2` hid four warnings an hour after this rule was quoted. A CATEGORY
+         leaks; A PIPE AFTER A PATH binds. A fail-closed `PreToolUse` hook keyed to INVOCATION
+         (`claude_hooks/block_checker_truncation.ps1`, 39 controls) catches the NAMED consumers, and
+         reading checker SOURCE stays free. ⚠⚠ IT IS A DENYLIST, SO THE TRIGGER LIST ABOVE IS STILL
+         LOAD-BEARING MEMORY. An earlier version of this line said "nothing here is remembered";
+         that was measured FALSE 2026-08-29 — 15 of 19 filters walked through, among them `sed -n`,
+         `awk`, `wc -l`, `cut`, `sort`, `uniq`, `less`, `ForEach-Object`, `Measure-Object` and
+         `Select-Object -Skip/-Index`, and ripgrep passes while GNU grep is denied even though ripgrep
+         is the one this project tells you to PREFER. A denylist is porous by construction: every fix
+         closes the cut its author thought of. THE FIX IS TO INVERT — deny any pipe after a checker
+         invocation, allow-list the sinks (`RLY40-1`). It also matches on the whole command STRING,
+         so writing ABOUT truncation beside a checker path trips it. Still unsealed either way:
+         run-then-grep across two calls looks clean, and `--no-verify` is unhooked.
 READ     tools/process/push-gate-bypass.md
 
 ## R-STAGE  Stage NAMED PATHS. Never `-A` on the main repo.
@@ -390,9 +456,10 @@ TRIGGER  you are about to commit a change to a build script's prose, a README/GU
          register edit, or any root `.md` other than `CLAUDE.md`.
 RULE     run `/editorial-review` in a FRESH agent — same-session self-review does not satisfy
          it — and PASS IT THE FILE PATHS EXPLICITLY. On FAIL, clear every kill-list item before
-         committing. A FAIL the agent RECORDS ITSELF in the verdictLedger (`record.py --step
-         editorial`); a PASS it reports to the CALLER, who records the agreement or takes a
-         signature. The prose signal files are RETIRED — nothing reads them.
+         committing. THE AGENT RECORDS ITS OWN VERDICT, FAIL and PASS alike (`record.py --step
+         editorial --how delegated`). STOP-ORDINARY is the one exception — a PROCEED verdict
+         that is NOT a pass, so it goes to the CALLER, who decides what reaches the ledger and
+         carries the findings as `outstanding`. The prose signal files are RETIRED.
 COST     `MIG-3`: pre-commit mode discovers its own scope with a now-denied git call, and the
          denial FAILS OPEN — the empty result reads as "nothing staged", the brief falls back to
          Full Scan, and it still writes a signal hashing whatever it happened to open.
@@ -404,8 +471,10 @@ TRIGGER  you are about to push prose, send an email, post or edit a GitHub Discu
 RULE     ask Tim explicitly: "Adversary review complete for this content?" and WAIT for
          confirmation — never self-assess whether review is needed. If it has not run, offer
          `/adversary-review` first. It must be a separate adversarial context, never this one.
-         A FAIL the agent RECORDS ITSELF in the verdictLedger (`record.py --step adversary`);
-         a PASS it reports to the CALLER. The prose signal files are RETIRED. Only after explicit confirmation may the public-facing action execute.
+         THE AGENT RECORDS ITS OWN VERDICT, FAIL and PASS alike (`record.py --step adversary
+         --how delegated`); STOP-ORDINARY is the exception and goes to the CALLER, who decides
+         what reaches the ledger. The prose signal files are RETIRED. Only after explicit
+         confirmation may the public-facing action execute.
 COST     docstring and build-script prose was pushed before review ran, and the review then
          found two further precision errors in already-committed content.
 READ     tools/process/review-gates.md
@@ -514,9 +583,9 @@ RULE     edit the file in `scripts/` and commit it like any other source file �
          copy step. A new script gets a row in `scripts/README.md` in the same commit. The
          fonts ship beside them under `scripts/fonts/` with their licences, so a clone can
          actually build; if a font is added or replaced, read its `name` table id 13 and ship
-         whatever licence it declares. Five scripts remain private-only and none emits a
-         tracked artifact — `scripts/build_dictionary_map.py` imports one and says so rather
-         than raising `ModuleNotFoundError`.
+         whatever licence it declares. The private-only scripts emit no tracked artifact ⚠ AND
+         "EMITS" WAS THE WRONG TEST: `build_bottom_matrix.py` passed it while SUPPLYING the whole
+         data table of a published page, so it moved here 2026-08-29. Ask what a script FEEDS.
 COST     the retired mirror asked a human to remember a copy step while `register.md`
          fingerprinted only the PRIVATE copy — so the PUBLISHED script sat outside the
          integrity check and drifted three months unnoticed. A mirror plus a discipline adds
@@ -547,7 +616,9 @@ RULE     use the `PowerShell` tool, not Bash with Unix commands. Use `Glob` for 
          invoking an external process (a build script, `lake build`, `python <script>`) uses
          `timeout: 300000`; if it times out, diagnose rather than retry blindly.
 COST     a prepended `cd` produces a command string that misses the allowlist and triggers an
-         avoidable permission prompt.
+         avoidable permission prompt. ⚠ AND CONTENT NEVER TRAVELS ON A COMMAND LINE — argv breaks on
+         LENGTH (Windows caps at ~32k), QUOTING and ENCODING; move it by file or stdin.
+READ     tools/process/shell-conventions.md
 
 ## R-INDEXES  README is the formal index; GUIDE is the general-reader hub.
 TRIGGER  a document is versioned up, an open question closes, a claim's status changes, or a
@@ -639,18 +710,6 @@ COST     only ~10% of 767 notes were ever referenced again, and on one day four 
          PENDING work goes FALSE the moment the work is done — never act on a note's
          self-reported status; verify at the artifact.
 
-## R-DEVMODE  Before fresh development, load the subsystem. Do not start from targeted search.
-TRIGGER  you are beginning fresh mathematical development.
-RULE     `python .claude-local/where.py "<Tim's phrasing, verbatim>"` for ranked folders and
-         token cost, `--files` for the list, `--spine` for the always-load core. Then load the
-         ~50k spine — the five `#check`-only indexes plus `MANIFEST.md`, `CLAIMS.md`,
-         `BOTTOMELEMENT.md`, `SNAP.md` — plus the one or two folders it names. Load two or
-         three; it produces a SHORTLIST, not an answer, and it cannot route a concept with no
-         corpus vocabulary. Tim's Engineer's Takes are the bridge between his register and the
-         Lean body, and all of them together are cheap enough to load wholesale.
-COST     every real finding comes from COLLIDING two facts, and you cannot collide facts you
-         are fetching one at a time. Not this for error-sweeps: a claim-sweep's unit is the
-         RENDERED PDF text, never the source.
 
 ## R-LEANDEV  Stub first. Build, commit, then fill proofs one at a time.
 TRIGGER  you are creating a new `.lean` file or starting a proof.

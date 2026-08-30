@@ -155,15 +155,22 @@ theorem state_sequence_monotone (S : ℕ → L) (hS : IsStateSequence S) :
   calc S n ⊔ (S n ⊔ α n) = (S n ⊔ S n) ⊔ α n := by rw [join_assoc]
     _ = S n ⊔ α n                               := by rw [join_idem]
 
-/-! ## R1 — No Top Element; Strict State Sequences -/
+/-! ## No Top Element (`HasNoTop`); Strict State Sequences
 
-/-- R1: L has no top element — every state has a strictly greater successor.
-    Algebraic expression of unbounded ascent: the framework never terminates. -/
+⚠ **NOT ZP-A's R1**, which is NO-SUBTRACTION (`scripts/build_zpa.py` Remark R1, exported there as
+"no subtraction / additive ontology"; `t_snap_irreversible` cites it that way). Cite `HasNoTop`
+and this file for the ORDER property. One label over two propositions is a citation nothing can
+check: both readings verify, of different claims.
+
+⚠ **`HasNoTop` is AVAILABILITY; `IsStrictStateSequence` is OCCURRENCE** — a next step existing is
+not a chain taking one. NO-GO gauge: `ZeroParadox/Valuation/SemilatticeInstance.lean` § Ib (DC-32). -/
+
+/-- `HasNoTop`: L has no top element — every state has a strictly greater successor.
+    The order CONDITION for unbounded ascent; it does not assert that any chain ascends. -/
 def HasNoTop (L : Type*) [ZPSemilattice L] : Prop :=
   ∀ x : L, ∃ y : L, le x y ∧ x ≠ y
 
-/-- A strict state sequence: monotone by T3 AND every step is a proper ascent.
-    Models a maximal ascending chain in a no-top lattice (R1 prevents stalling). -/
+/-- A strict state sequence: monotone by T3 AND every step is a proper ascent — the OCCURRENCE. -/
 def IsStrictStateSequence {L : Type*} [ZPSemilattice L] (S : ℕ → L) : Prop :=
   IsStateSequence S ∧ ∀ n, S n ≠ S (n + 1)
 

@@ -49,12 +49,22 @@ Each prints its own invocation path; run with no arguments for a report.
 
 ---
 
-## The type registry and the policy live in the LEDGER, not here.
+## The type registry and the policy live HERE, and the ledger reads them from here.
 
-`required.v2.json` and `policy.v1.json` used to sit in this directory. They are gone, and they
-must not come back: the ledger serves both, and a second copy makes every inventory wrong in the
-most convincing way available — both sides internally consistent, disagreeing about what
-*complete* means.
+`required.v2.json` and `policy.v1.json` sit in this directory, and the verdict ledger LIVE-READS
+both from the working tree — `ZPLEDGER_CONFIG` points at `tools/verify/`. Moved back 2026-08-25 by
+Tim's decision: the bar belongs in the history it gates, where the prose gates and the checkers can
+see it disagree with `CLAUDE.md`. While they lived in the ledger's own tree, nothing in this
+repository could.
+
+⚠ **THE RULE THAT SURVIVED THE MOVE IS "ONE COPY", NOT "NOT HERE".** Two copies make every
+inventory wrong in the most convincing way available — both sides internally consistent,
+disagreeing about what *complete* means. There is exactly one copy and it is this one.
+
+⚠⚠ **EDIT THESE THE WAY YOU EDIT A LIVE GATE, BECAUSE THEY NOW ARE ONE.** There is no restart
+between the edit and the gate using it. A malformed edit does not fail loudly at deploy — it makes
+the config UNLOADABLE, and an unloadable config serves UNDECIDED and refuses every commit and push.
+Load, modify and re-parse in one script rather than hand-editing JSON.
 
 **It had already happened.** When the copies were removed the ledger served 24 types while the
 local file carried 22, missing `rely` and `claim_review`; the served `policy_sha` (`8c85b6c0`)

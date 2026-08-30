@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the valuation-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here - see the declaration docstring) — P8's tower encoding sends the ω-tower (climbing to ε₀) to the 2-adic floor 0 = ⊥: its stage-encodings converge to a new bottom ⊥ₙ₊₁ in the encoding chart, while the SAME encodings, viewed through the Riemann-sphere frame-change rInv (0↔∞), diverge to the antipode ∞. rInv is the passage between the two charts. (The encodings converge to ⊥; ε₀, the ordinal sup of the stages, is never ⊥ — ε₀ ≠ ⊥.) Conjectural synthesis at the operator/space level; the abstract cross-domain "snap = frame-change" stays open. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the valuation-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here - see the declaration docstring) — P8's tower encoding sends the ω-tower (climbing to ε₀) to the 2-adic floor 0 = ⊥: its stage-encodings converge to 0 in the encoding chart (reading that floor as a NEW bottom ⊥ₙ₊₁ is C-DA2, a commitment no theorem here carries), while the SAME encodings, viewed through the Riemann-sphere frame-change rInv (0↔∞), diverge to the antipode ∞. rInv is the passage between the two charts. (The encodings converge to ⊥; ε₀, the ordinal sup of the stages, is never ⊥ — ε₀ ≠ ⊥.) Conjectural synthesis at the operator/space level; the abstract cross-domain "snap = frame-change" stays open. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Ordinal.P8
 import ZeroParadox.Valuation.RiemannSphere
 import Mathlib.Tactic
@@ -8,8 +8,7 @@ set_option maxHeartbeats 400000
 /-!
 # The tower limit's two chart-readings: ⊥ and ∞ are two charts, swapped by `rInv`
 
-Experimental probe in the bottom-diagram mapping campaign — not a finalized layer. Curated results
-are indexed in ZeroParadox/MANIFEST.md.
+Experimental probe in the bottom-diagram campaign — not a finalized layer; results are indexed in ZeroParadox/MANIFEST.md.
 
 ## Engineer's Take
 
@@ -20,38 +19,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ---
 
-## Formal Overview (AI-assisted)
-
-Two prior results meet here. **P8** (`Ordinal/P8.lean`) built the tower-rank encoding
-`cnf_encode : {α < ε₀} → ℤ₂`, and proved that the ω-tower's encodings converge to `0`
-(`cnf_encode_tower_tendsto_zero`): the tower climbing to `ε₀` has stage-encodings that land on the 2-adic floor `0 = ⊥` (a new bottom ⊥ₙ₊₁), so in
-this **encoding chart** the ascent to `ε₀` resolves onto the bottom — the encodings *converge to* ⊥, not `ε₀` *being* ⊥ (`ε₀ ≠ ⊥`). **RiemannSphere** (`Valuation/RiemannSphere.lean`)
-built the inversion `rInv` on the one-point compactification `OnePoint ℚ₂`, a homeomorphism that swaps
-the floor `0` with the point at infinity `∞` (`rInv_swaps`) — the change of frame / chart-transition.
-
-`Statement:` INVERSION — `rInv` exchanges the floor `0` with `∞`, and one tower of encodings reads as
-converging to either pole depending which chart it is viewed through (`snap_is_frameflip`).
-`Reading:` INVERSION — the framework reads the snap as an instance of that exchange. Conjectural: no
-snap transition appears in the statement.
-
-The result is the **valuation-frame realization of the POLE EXCHANGE** (the snap-as-instance reading is
-ZP-Q's conjecture, not established here — see the declaration docstring below):
-`snap_frameflip_tower_tendsto_infty` — the *same* tower encodings, pushed into `OnePoint ℚ₂` and viewed
-through `rInv`, tend to `∞`. So one sequence, two charts: it falls to the floor `0` in the encoding
-chart and rises to the antipode `∞` in the `rInv` chart, and `rInv` is the
-passage between them. `snap_is_frameflip` bundles both limits with the `0 ↔ ∞` swap: the descent to ⊥
-and the ascent to ∞ are the *same* tower-encodings under the frame-change.
-
-**Fences.** This is the **valuation point of view's** shape of the frame-change, not the abstract
-cross-domain claim: the general statement "the snap `⊥ → ε₀` IS the change of point of view" remains a
-conjecture (see `.claude-local/notes/snap_is_the_frame_change_2026-07-11.md`). It also inherits P8's
-honest scope — the tower-rank encoding is a *constructed* witness (valuation growth built into the rank),
-not an independent CNF↔2-adic structural identity. No dynamical or physical claim; no claim of
-mathematical novelty (this composes two proved results).
-
-## Structure
-- § I  The tower under the frame-change: `rInv ∘ encode` tends to `∞`
-- § II The two charts, bundled: descent to `0` and ascent to `∞` are one tower, swapped by `rInv`
+The formal overview and every fence live in the ride-along `SnapFrameChange.md`; each result is
+stated once more at its own declaration below.
 -/
 
 namespace ZeroParadox

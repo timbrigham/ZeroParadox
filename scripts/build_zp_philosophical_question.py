@@ -1,5 +1,7 @@
 """
-Build: The Philosophical Question That Started This (v1.15)
+Build: The Philosophical Question That Started This (v1.17)
+v1.17: OCCUPANCY OVERCLAIM RETRACTED (sync with ZP-I; editorial + adversary round 6). "ZP-I proves T-IZ - every maximal ascending chain converges to a limit that fills the bottom role" asserted OCCUPANCY as part of what is proved, fencing only the successor reading beneath it. Convergence to 0 is the theorem; reading that limit as an occupant of the bottom role is a first commitment and reading the occupant as a successor null is a second. Not merely unproved: ZPSemilattice Q_[2] does not synthesize, so the join-identity is not statable of the limit. v1.16 retracted the novelty conjunct of this same sentence and left the occupancy conjunct standing - the fourth half-application in that arc, and this site was never in its scope.
+v1.16: NOVELTY OVERCLAIM RETRACTED (sync with ZP-I v1.16). "every maximal ascending chain converges to its own successor null" rendered the successor reading as part of what T-IZ proves. It is not: the theorem gives the ROLE identification (the limit fills the bottom role, and anything filling it IS the bottom), while reading that occupant as a NEW bottom rather than the one already there is a modelling commitment. Same family as v1.15's occurrence retraction, one commitment further in.
 v1.15: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. 'You cannot avoid it' asserted occurrence; the surrounding passage's derivability claim (the snap was an axiom, now a theorem) is correct and is kept.
 v1.14: rendered layer COUNT eliminated (project-wide counter removal) - "Thirteen formal layers"/"Thirteen layers" de-counted; stale "ZP-A through ZP-M" range dropped from the body and the endnote.
 v1.13: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).
@@ -41,7 +43,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -337,8 +339,10 @@ def build():
         '(AX-1). <b>ZP-G</b> and <b>ZP-H</b> extend the result categorically: '
         'four functors show that all four frameworks are realizations of one abstract '
         'structure. <b>ZP-I</b> proves T-IZ — every maximal ascending chain converges '
-        'to its own successor null — establishing that the framework is a closed cycle, '
-        'not merely an emergence theorem.'))
+        'to zero — which, read first as a limit filling the bottom role and then as a return to a <i>successor</i> '
+        'null rather than to the same one, makes the framework a closed cycle and not merely '
+        'an emergence theorem. That reading is a modelling commitment; the role identification '
+        'is the theorem.'))
     E.append(body(
         'The topological and algebraic cores of these results are verified in Lean 4. '
         'T-SNAP is derived: the Binary Snap\'s shape is not assumed. Its occurrence still is.'))

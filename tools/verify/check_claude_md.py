@@ -10,6 +10,9 @@ check is the RLY25-1 defect this file exists to avoid.
 """
 import io, os, re, sys, argparse
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402  (path set above so this runs from any cwd, as the other checkers do)
+
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 SELF = os.path.relpath(os.path.abspath(__file__), os.getcwd()).replace(os.sep, '/')
@@ -45,6 +48,9 @@ TRANSIENT = {
 }
 PATHISH = re.compile(r'^[\w.\-/]+\.(md|py|lean|json|txt|sh|yml|yaml|ps1)$')
 BACKTICKED = re.compile(r'`([^`\n]+)`')
+# ⚠ `READ <path>` — 37 uses in CLAUDE.md, and the paths leg could not see one of them
+# until 2026-08-27 (RLY37-1). It is this file's dominant pointer idiom.
+READ_LINE = re.compile(r'^READ\s+(\S+)', re.M)
 CHECKER_NAMED = re.compile(r'`(check_\w+\.py|guards\.py|batch\.py|hooks\.py|report\.py)`')
 HISTORY_IDIOMS = re.compile(
     r'this line said|used to read|used to say|previously read|was FALSE|'
@@ -70,17 +76,35 @@ def cited_paths(text):
     hypotheticals the file uses to state a rule."""
     roots = set(os.listdir(ROOT))
     rooted, loose = {}, {}
-    for m in BACKTICKED.finditer(text):
-        tok = m.group(1).strip()
-        if PLACEHOLDER.search(tok) or tok.startswith(('http', 'C:', 'origin/')):
-            continue
-        if not PATHISH.match(tok):
-            continue
-        ln = text[:m.start()].count('\n') + 1
+
+    def offer(tok, ln):
+        if tok.startswith(('http', 'C:', 'origin/')) or not PATHISH.match(tok):
+            return
         if '/' in tok and tok.split('/')[0] in roots:
             rooted.setdefault(tok, ln)
         else:
             loose.setdefault(tok, ln)
+
+    for m in BACKTICKED.finditer(text):
+        ln = text[:m.start()].count('\n') + 1
+        # ⚠ SPLIT, don't DISCARD. A backticked COMMAND carries a real path beside a
+        # placeholder argument — `python tools/verify/check_release_ready.py <tag>` is the
+        # R-RELEASE idiom, and dropping the whole token on `[<>*?]` threw the path away with
+        # the placeholder. Strip the placeholder ARGUMENTS; keep the parts that are paths.
+        for part in m.group(1).strip().split():
+            if PLACEHOLDER.search(part):
+                continue
+            offer(part, ln)
+
+    # ⚠ `READ <path>` IS THIS FILE'S DOMINANT POINTER IDIOM AND WAS INVISIBLE HERE.
+    # RLY37-1, 2026-08-27: the leg advertised "every ROOTED repo-relative path resolves" while
+    # walking backticked tokens ONLY. Measured on the live file: 37 `READ` lines, ZERO of them
+    # in this set. `guards.py` states CLAUDE.md is "routed NOWHERE by design", so this leg is
+    # one of the file's only two mechanical covers — and `DC-34` (a stale routing destination)
+    # is exactly a dead READ line, filed the same day this hole was found.
+    for m in READ_LINE.finditer(text):
+        offer(m.group(1).strip(), text[:m.start()].count('\n') + 1)
+
     return rooted, loose
 
 
@@ -131,6 +155,16 @@ def selftest():
         ('placeholder-skipped', 'name it `.claude-local/notes/scan_YYYY-MM-DD.md`.',        False),
         ('broken-rooted-path',  'open `tools/process/definitely_not_here.md` first.',       True),
         ('missing-checker',     'run `check_definitely_absent.py` before committing.',      True),
+        # RLY37-1 (2026-08-27). The leg walked BACKTICKED tokens only, so `READ <path>` --
+        # this file's dominant pointer idiom, 37 uses -- was invisible, and a dead READ line
+        # is exactly what DC-34 (stale routing destination) looks like. Both halves, because
+        # a must-fire alone would also pass if the new harvester matched everything.
+        ('read-line-live',      'READ     tools/process/pipeline.md',                      False),
+        ('read-line-dead',      'READ     tools/process/definitely_not_here.md',            True),
+        # And the placeholder filter DISCARDED whole commands rather than the placeholder
+        # argument, dropping the R-RELEASE idiom's real path with it.
+        ('cmd-placeholder-live', 'run `python tools/verify/check_hashes.py <tag>` first.',  False),
+        ('cmd-placeholder-dead', 'run `python tools/verify/check_absent.py <tag>` first.',  True),
     ]
     bad = 0
     for name, text, must_fire in cases:
@@ -153,6 +187,12 @@ def main():
                     help='Phase 0: print the section manifest and stop')
     ap.add_argument('--selftest', action='store_true',
                     help='run the controls for this checker (both halves)')
+    # ⚠ DECLARED, not merely read. `record_if_asked` gates on `--record` in `sys.argv`, but
+    # argparse rejects an undeclared flag BEFORE the checker body runs — measured 2026-08-26,
+    # `--record` exited 2 with "unrecognized arguments" and recorded nothing, which reads
+    # identically to a ledger refusal at the call site in `hooks.py`.
+    ap.add_argument('--record', action='store_true',
+                    help='record the two BLOCKING legs to the verdictLedger (V9 needs ZPLEDGER_RUN)')
     args = ap.parse_args()
 
     if args.selftest:
@@ -225,6 +265,35 @@ def main():
         print('      CLAUDE.md:%d  %s' % (ln, l.strip()[:64]))
 
     print('\n' + '=' * 78)
+    # ⚠ RECORDING, added 2026-08-26. Before this the checker RAN and could never leave a KEY:
+    # unregistered, so V8 refused every append, and `inventory` never listed it — which is how
+    # `R-NOTINLIB` reached 36 lines against a 12-line cap, the largest entry in the file, with
+    # "16 of 18 admission keys" reading as near-complete while this sat outside the denominator.
+    # Identical to the `check_fields` defect (`/rely` RLY35-3) closed the same day: a checker that
+    # runs, costs time, and can never be missed from the inventory is the "silence is never a
+    # pass" defect one layer over.
+    #
+    # ⚠ SUBJECT IS `CLAUDE.md` ITSELF, and the registry pairs this with `when: "CLAUDE.md"` so the
+    # key is NOT_APPLICABLE on every commit that does not touch the file — Tim, 2026-08-26:
+    # a full re-analysis on every commit "is nuts". When the file IS in the change the key starts
+    # MISSING and fails CLOSED, so nothing has to be remembered.
+    #
+    # ⚠ WHY PUSH-TIME IS SUFFICIENT, and it is a fact about who READS this file rather than a
+    # concession. The agent editing `CLAUDE.md` already holds the desired state in context; the
+    # file's only real consumer is the NEXT session, and a push is exactly when it becomes
+    # available to one. An edit-time trigger would warn the reader who least needs it, at the cost
+    # of one more remembered rule — and R-EDITLEAN records that remembered rules "fail here by
+    # construction", seven leaks running.
+    #
+    # ⚠ THE VERDICT IS THE BLOCKING LEGS ONLY. The WARN counts are a reading list and the three
+    # PENDING legs are NOT checked and NOT passing, so a recorded PASS here claims exactly two
+    # properties — rooted paths resolve, named checkers exist — and never the shape contract whole.
+    _rc = common.record_if_asked(
+        'check_claude_md', ['CLAUDE.md'], ([] if not bad else ['CLAUDE.md']),
+        'CLAUDE.md names a rooted path or a checker that does not exist',
+        module='tools/verify/check_claude_md.py')
+    if _rc:
+        return _rc
     if bad:
         print('BLOCKED: %d blocking leg(s) failed. %d leg(s) still PENDING.'
               % (bad, len(PENDING)))

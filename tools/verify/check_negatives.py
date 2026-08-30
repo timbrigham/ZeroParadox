@@ -95,6 +95,47 @@ _N = [
     r"\bthere\s+is\s+no\s+" + _QUAL + r"in\s+(?:Mathlib|the\s+corpus|the\s+framework)",
     r"\bthe\s+corpus\s+does\s+not\s+have\b",
     r"\bno\s+such\s+" + _QUAL + r"in\s+(?:Mathlib|the\s+corpus|the\s+framework)",
+    # ── STATUS negatives ────────────────────────────────────────────────────────────────────
+    # Added 2026-08-26 after a MEASURED MISS, and the miss is the argument for the whole group.
+    # Every pattern above enumerates the vocabulary of EXISTENCE. An absence claim written in the
+    # vocabulary of STATUS walks straight past them: `no such bridge is claimed here` missed
+    # `no such <qual> in the corpus` BY ONE WORD, and `it is OPEN` / `would need a type bridge`
+    # matched nothing at all. What was written was that a cross-carrier identity was an OPEN gap.
+    # CLAIMS.md had already retired that identity as ILL-TYPED — "never a claim to hold" — so the
+    # prose manufactured debt the project had closed, in the retraction of an overclaim.
+    #
+    # ⚠ THE ASYMMETRY THIS EXISTS TO CLOSE. Every other gate here hunts OVERCLAIMS: adversary
+    # triages for grandiosity, editorial checks wording against sources, /rely executes. An
+    # UNDERCLAIM is invisible to all three — it reads as modest, its "source" is an absence with
+    # nothing to check against, and prose does not execute. A retraction is itself a NEW claim and
+    # inherits the same burden; nothing else in this layer says so.
+    #
+    # ⚠ MUST NOT FIRE ON A PROVED IMPOSSIBILITY. "no fixed point exists" (Lawvere) and "no
+    # cross-setting map exists" (a type boundary) are WALLS — theorems, listed above as correct as
+    # written. The tell these match is UNRESOLVED STATUS, never non-existence.
+    #
+    # CLAIMS.md is the ratified register of claim status, so citing it DISCHARGES these (EVIDENCE).
+    # ⚠⚠ SCOPED TO A MISSING ARTIFACT, NOT TO OPEN STATUS AS SUCH — and the first draft got this
+    # WRONG in the direction this file warns about hardest. Including `question` and a bare
+    # pronoun form fired on NINE standing sites, every one honest and correct as written
+    # ("Whether the existence half of Aczel's theorem generalises … is an open question").
+    # Stating that a QUESTION is open is the epistemic honesty this project runs on; asserting
+    # that a BRIDGE, GAP or JUNCTION is open asserts a MISSING CONSTRUCTION, which is the defect.
+    # A gate that fires on its own project's ratified wording gets muted, and then it is not a
+    # gate — this file's own EVIDENCE block says exactly that about a different pattern.
+    # ⚠ And the baseline is NOT the escape hatch: `--baseline` is refused (exit 2, `guards.py`),
+    # so a strengthening that fires on good prose must be narrowed, never absorbed.
+    r"\b(?:gap|bridge|junction|identity)\s+(?:is|remains)\s+(?:still\s+)?open\b",
+    r"\b(?:is|remains)\s+an\s+open\s+(?:gap|bridge|junction)\b",
+    # ⚠ THE PRONOUN FORM, SENTENCE-SCOPED. The noun-anchored patterns MISSED THE REAL DEFECT on
+    # their first control run: what was written was "…is a TYPE bridge and it is OPEN", where the
+    # word before `is` is a pronoun. Anchoring on the noun alone repeats the one-word-short
+    # failure this whole group exists to close, so this reaches back for the artifact noun within
+    # the same sentence — precise enough to leave "that remains open" about a genuine question
+    # alone, which is measured: all nine standing sites stay silent.
+    r"\b(?:bridge|gap|junction)\b[^.]{0,80}\b(?:it|this|that)\s+(?:is|remains)\s+(?:still\s+)?open\b",
+    r"\bwould\s+need\s+an?\s+" + _QUAL + r"(?:bridge|theorem|lemma|instance|proof|construction)\b",
+    r"\bno\s+such\s+" + _QUAL + r"is\s+claimed\b",
 ]
 CLAIM = re.compile("|".join("(?:%s)" % p for p in _N), re.I)
 
@@ -125,7 +166,17 @@ EVIDENCE = re.compile(
     r"used\s+to\s+(?:say|read)|"            # prior-state prose quoting it
     r"corrected\b|"
     r"WAS\s+FALSE|"
-    r"this\s+line\s+said",
+    r"this\s+line\s+said|"
+    # ⚠ THE STATUS PATTERNS ARE DISCHARGED BY CITING THE REGISTER. `CLAIMS.md` is the ratified
+    # record of what is open, closed, or retired — the same role `register.md` plays for versions.
+    # "open, per the CLAIMS.md T-IZ row" is a POINTER to a ratified status and passes; a bare
+    # "it is OPEN" is the author assigning one, and does not. `ill-typed` and `retired` are the
+    # ratified vocabulary for a question that was withdrawn rather than left outstanding, which is
+    # the exact distinction the 2026-08-26 miss collapsed.
+    r"CLAIMS\.md|"
+    r"ClaimsMirror|"
+    r"ill-typed|"
+    r"retired\b",
     re.I)
 
 # The shared skips (`CLAUDE.md`, `register.md`, `RELEASES.md`) live in `common.SKIP_NAMES`. What is
@@ -228,6 +279,14 @@ def load_baseline():
 # ⚠ MODULE-LEVEL, not local to `selftest`. `check_checkers.py` audits that every checker SHIPS
 # must-fire and must-suppress controls, and it can only see them if they are named at module level.
 MUST_FIRE = [
+        # ⚠ THE STATUS GROUP IS THE 2026-08-26 MISS, VERBATIM from the prose that slipped through.
+        # Written from the real text, not a paraphrase — which is exactly how the two cases below
+        # it were built, and the same thing it exposes: `no such bridge is claimed here` cleared
+        # `no such <qual> in the corpus` by ONE WORD, and the other two matched nothing at all.
+        ('the real one: "no such bridge is claimed"',
+         'Closing that junction would need a type bridge, and no such bridge is claimed here.'),
+        ('a bare status assignment', 'Joining the two is a TYPE bridge and it is OPEN.'),
+        ('the same, spelled out', 'That junction is an open gap between the two carriers.'),
         # ⚠ THE FIRST TWO ARE THE ACTUAL PUBLISHED DEFECT, VERBATIM from ChoiceCannotBe.lean.
         # Written from the real text rather than a paraphrase, which is what exposed the missing
         # adjective slot: the first version of this checker could not match either of them.
@@ -249,6 +308,25 @@ MUST_FIRE = [
         ('wrapped across a Lean comment', '-- the corpus\n--     does not have\n-- any such case'),
 ]
 MUST_SUPPRESS = [
+        # ── STATUS group, 2026-08-26. Paired one-for-one with the MUST_FIRE twins above; a
+        # suppressor with no firing twin cannot be told from a checker that stopped working.
+        # ⚠ THE WALLS. These are PROVED impossibilities, and this project's results ARE walls —
+        # firing on them would make the checker fight its own corpus and earn itself a mute.
+        ('a proved wall, not a status', 'No fixed point exists; that is Lawvere, and it is proved.'),
+        ('a type boundary, proved', 'No cross-setting map exists between the two carriers.'),
+        # ⚠ THE DISCHARGE. Pointing at the ratified register is the honest form; assigning a
+        # status yourself is the defect. This pair is the whole distinction the 2026-08-26 miss
+        # collapsed, and it is why CLAIMS.md is EVIDENCE rather than another skip.
+        ('open, but CITED to the register', 'The junction remains open, per the CLAIMS.md T-IZ row.'),
+        ('withdrawn, not outstanding', 'That identity is retired as ill-typed rather than open.'),
+        # ⚠ THE NARROWING CONTROLS, verbatim from the NINE STANDING SITES the first over-broad
+        # draft fired on. Each is honest prose stating that a genuine QUESTION is unanswered, which
+        # is the epistemic honesty this project runs on — not a claim that a construction is
+        # missing. Pinned here so a future widening cannot silently re-break them, and because a
+        # narrowing with no suppression control is a change nobody can watch fail.
+        ('a genuine open question', 'Whether the existence half generalises is an open question.'),
+        ('the same, with "remains"', 'A formal embedding remains an open question.'),
+        ('a bare "that remains open"', 'This does not settle whether the floor hosts a descent; that remains open.'),
         ('dated: "as of 2026-08-15"', 'None located as of 2026-08-15, searched as follows.'),
         ('an ISO date in the sentence', 'No instance exists in the tree at 2026-08-01.'),
         ('the ratified "not located"', 'Not located in Mathlib; searched three vocabularies.'),

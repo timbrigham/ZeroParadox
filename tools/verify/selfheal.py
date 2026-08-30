@@ -68,7 +68,7 @@ SHAPES = [
      "and asserts the caller sees non-zero. Three instances so far were found by reading, not by a test."),
     ("SH-2", "encoding / BOM / codepage",
      r"\bascii\b|BOM|cp1252|UnicodeEncode|line_buffering|em-dash",
-     None,
+     "DC-33",
      "One import that sets utf-8 + line buffering for every entry point (report.py does this now). "
      "Any NEW standalone script must import it or set both explicitly."),
     ("SH-3", "fixed ONE OF TWO routes to the same property",
@@ -96,6 +96,10 @@ SHAPES = [
      "check is exercised once in a state where it MUST fail."),
     ("SH-7", "duplicated definition that drifted",
      r"second (copy|implementation)|re-implement|two (partial )?implementations|drifted|paraphrase",
+     # ⚠ NOT DC-31. Mapped there 2026-08-27 and reverted the same day: DC-31 is a SHADOWED
+     # top-level name inside ONE module, and none of the rows this pattern matches is that.
+     # They are cross-file duplication and paraphrase drift. A row that does not cover the
+     # shape is worse than no row, because the banner then reports the shape as covered.
      None,
      "One definition, imported. If two languages need it, one of them delegates. Measured cost so "
      "far: two hook implementations, two vendored rules, two ways to spawn agents."),
@@ -143,8 +147,13 @@ def main():
         n = sum(1 for r in rows if re.search(pat, r, re.I))       # DISTINCT ROWS, not matches
         if n < THRESHOLD and not show_all:
             continue
-        mark = "!" if n >= THRESHOLD and not cls else " "
-        print("  %-6s %-42s %6d%s %s" % (sid, name, n, mark, cls or "— none —"))
+        # ⚠ EXISTENCE is checked; COVERAGE is not and cannot be cheaply. RLY37-1 measured
+        # the old behaviour: `cls="banana"` suppressed the mark and still printed
+        # "0 still have no class row", a sentence naming a file the code never read.
+        bogus = bool(cls) and cls.split()[0] not in known
+        mark = "!" if n >= THRESHOLD and (not cls or bogus) else " "
+        shown = (cls + "  ⚠ NO SUCH ROW") if bogus else (cls or "— none —")
+        print("  %-6s %-42s %6d%s %s" % (sid, name, n, mark, shown))
         if n >= THRESHOLD:
             flagged.append((sid, name, n, cls, fix))
 

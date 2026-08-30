@@ -360,7 +360,9 @@ and exactly one honoured it, for months, with nothing noticing — which is past
 *fix the trigger* rung and into *discipline will not work here*.
 
 **Measured the day it was retired.** Unlinked from both indexes: `ABOUTME.md`,
-`BOTTOMELEMENT_findings.md`, `CLAUDE.md`, `LEAN_CUSTOM_REGISTRY.md`, `RELEASES.md`,
+`BOTTOMELEMENT_findings.md` (which no longer exists — folded into the generated `BOTTOMELEMENT.md`
+on 2026-08-29, so its stale hand-written legend became computed; the measurement below stands as
+recorded on the day), `CLAUDE.md`, `LEAN_CUSTOM_REGISTRY.md`, `RELEASES.md`,
 `register.md`, `scripts/PDF_Rendering_Standards.md`. Only `ABOUTME.md` carried a notice. Its own
 table named two files and one of them, `ZP_Gen2_Applications.pdf`, had been moved to the private
 folder and was not tracked at all.

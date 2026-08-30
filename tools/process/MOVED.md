@@ -37,7 +37,7 @@ section is preserved verbatim in the body named below.
 | GitHub Issues — Transparency and Engagement Policy | `R-ISSUES` | `tools/process/naming-and-labels.md` || Framework Structure (for context) | `R-FRAMEWORK` | `tools/process/lean-development.md` |
 | Session Handoff File / Four-Fingerprint Scan / Communication Quality / Reviewer Feedback | `R-HANDOFF` | `tools/process/lean-development.md` |
 | High-Value Insight Capture — Standing Rule | `R-CAPTURE` | `tools/process/lean-development.md` |
-| Development mode — LOAD THE SECTION BEFORE YOU WORK | `R-DEVMODE` | `tools/process/lean-development.md` |
+| Development mode — LOAD THE SECTION BEFORE YOU WORK | ⛔ `R-DEVMODE` **RETIRED 2026-08-27** (Tim: *"it's never fired right"*). The BODY is kept and re-headed; its live triggers are `R-EDITLEAN` step 3, which invokes `where.py` on a concrete action, and `R-COREOBJ`, which now says load the whole subject ROW. | `tools/process/lean-development.md` |
 | Stub-First Protocol / Proof Documentation Workflow / Operational Rules / .claudecodes | `R-LEANDEV` | `tools/process/lean-development.md` || THE GATE-ENFORCED CONVENTIONS | `R-GATED` | `tools/process/gated-conventions.md` |
 | Every brief carries the CONTROL OBJECTS | `R-CONTROLS` | `tools/process/gated-conventions.md` |
 | Rules That Must Reach Spawned Agents | `R-BRIEF` | `tools/process/gated-conventions.md` |

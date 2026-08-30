@@ -155,13 +155,13 @@ Save to `.claude-local/notes/reliability_YYYY-MM-DD_<scope>.md`. State the filen
 
 ## Recording — TWO DIFFERENT FACTS, AND THEY SPLIT AT THE LEG
 
-⚠ **`/rely` records in two places because it produces two kinds of thing** (the recording contract § 6a-iv):
+⚠ **`/rely` records in two places because it produces two kinds of thing:**
 its **routing check is a hash comparison (tier M)** — which versions of the layer were examined — and
 its **findings are judgement (tier A)**. Split at the leg, never at the check.
 
 ### 1. There is NO hash file any more
 
-⛔ **DO NOT WRITE `.claude-local/rely_cleared.txt`.** It was RETIRED on 2026-08-24, the last of the
+⛔ **DO NOT WRITE `.claude-local/rely_cleared.txt`.** It was RETIRED on 2026-08-24, in the change that retired the
 `*_cleared.txt` scheme. `batch.py`'s routing legs and `ship.py`'s cap read the `rely` LEDGER RECORD
 now, and the readers moved in the same change as the writer.
 
@@ -177,20 +177,46 @@ making `rely` a record instead of a file can."*
 
 ### 2. The findings record — the LEDGER
 
-**If you found anything BLOCKING, record it. One agent's finding stands alone** (§ 6a-i: *FAIL alone,
-PASS by unanimity or signature*):
+**If you found anything BLOCKING, record it. One agent's finding stands alone.** ⚠ Record a clean run
+too — `--verdict pass --how delegated`. A gate that can only report failure makes absence of a pass
+mean nothing, which is the ambiguity this ledger exists to remove. (The older *"FAIL alone, PASS by
+unanimity or signature"* rule is RETIRED: it predates the `delegated` route, added 2026-08-25.):
 
 ```
 python tools/verify/record.py --step rely --verdict fail --tier A \
-    --how agreement --passes 1 --agreed 1 \
+    --how delegated --who rely \
+    --evidence .claude/commands/rely.md \
     --run gate-rely-<YYYY-MM-DD> \
     --reason-file <path to a file holding: BLOCKING:<n> — the highest-severity fail-open, one line> \
     --files <every file in tools/verify/ you actually examined>
 ```
 
-**With `BLOCKING:0`, record NOTHING and report to your caller.** You issue no PASS — you never have —
-and a lone A-tier PASS is rejected at the server anyway. The caller decides whether the round is a
-signature or an agreement.
+**With `BLOCKING:0`, RECORD YOUR OWN PASS with `--how delegated`:**
+
+```
+python tools/verify/record.py --step rely --verdict pass --tier A \
+    --how delegated --who rely \
+    --evidence .claude/commands/rely.md \
+    --run gate-rely-<YYYY-MM-DD> \
+    --reason-file <path to a file holding: BLOCKING:0 ORDINARY:<n>, scope <what>> \
+    --files <every file in tools/verify/ you actually examined>
+```
+
+⚠ **THIS INVERTED ON 2026-08-25 AND THE REASON MATTERS.** This paragraph used to say *"record NOTHING
+YOURSELF"* and hand the coverage to the caller. That was forced, not chosen: a lone A-tier PASS was
+rejected at the server (V3 wants three concurring passes), `mechanical` would have been a lie about a
+computation, and `signature` asserts a PERSON accepted it. Measured across the whole stream that day —
+editorial 3xFAIL, adversary 3xFAIL, rely 3xFAIL: **nine agent reviews, every one a FAIL, and no
+delegated review had ever recorded a PASS.** A `rely` record existed ONLY when something was found, so
+the routing gate — which discharges on SUBJECTS — was satisfied exactly when this layer was BROKEN and
+unsatisfied when it was sound. **Clean and never-ran were the same state**, which is the one
+distinction this layer exists to keep.
+
+⚠ **`delegated` claims ONE round and no consensus, which is what this gate actually is.** It is not a
+weaker `agreement`; it is an honest label for a different thing. A genuine three-pass panel still
+records `--how agreement`, and that remains the stronger claim. **The accountability is this brief:**
+`--evidence` pins the verdict to the instructions it ran under, so editing this file stales the key
+and the gate re-runs. A delegated verdict cannot outlive its instructions.
 
 ⚠ **Subjects come from the git INDEX: the files must be STAGED.** `common.ledger_subjects` fences
 anything untracked or differing from the index. It fails closed; do not work around it.

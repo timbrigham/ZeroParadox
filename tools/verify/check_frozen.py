@@ -160,7 +160,9 @@ def claim_signal():
     STALE; a path present here is covered AND current, and the caller re-checks nothing."""
     try:
         import record
-        out = record._call('inventory', {'ref': common.INDEX, 'action': 'commit'})
+        # ⚠ `read_ref` — see record.read_ref: the write path resolved INDEX and this read path did
+        # not, so a live claim_review record was invisible here and read as "never reviewed".
+        out = record._call('inventory', {'ref': record.read_ref(common.INDEX), 'action': 'commit'})
         if not out or not out.get('ok') or not isinstance(out.get('rows'), list):
             return None
         rid = None

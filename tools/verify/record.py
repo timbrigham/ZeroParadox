@@ -135,6 +135,33 @@ def step_status(ref, action='commit'):
     return {r.get('step'): r.get('status') for r in out['rows'] if r.get('step')}
 
 
+def read_ref(ref):
+    """The ref to ASK the ledger about, with `INDEX` resolved exactly as WRITING resolves it.
+
+    ⚠⚠ THE WRITE PATH RESOLVED THE SENTINEL AND THE READ PATH DID NOT, so the two disagreed about
+    what `INDEX` MEANS. `common.ledger_basis` turns `INDEX` into a real tree via `write-tree` before
+    recording; the readers passed the literal string `'INDEX'` straight through. The ledger has no
+    such ref, so it answered about nothing — and answered `ok: true` while doing it.
+
+    Measured 2026-08-25, same server, same moment: `ref='INDEX'` returned every step MISSING with
+    `scope: 0`; `ref='da22ddfa…'` returned `rely` FAIL with 58 of 59 subjects covered. **A record
+    was unreachable by its own consumer**, and the symptom was indistinguishable from "no record
+    exists" — which is exactly the collapse this layer exists to prevent, arriving through the ref
+    rather than through a verdict.
+
+    It failed CLOSED, so nothing was let through; what it did instead was mask a real inversion
+    underneath it. Fixed here rather than in `common.py` on purpose: evidence names the checker AND
+    `common.py`, so touching that file stales every mechanical step at once, and this bug does not
+    need that bill paid.
+
+    ⚠ `common` is imported INSIDE the function, matching every other site here: `common` imports
+    `record` for `module_evidence`, so a module-level import would be circular."""
+    import common
+    if ref == common.INDEX:
+        return common.ledger_basis(common.INDEX)['value']
+    return ref
+
+
 def module_evidence(*paths, repo=None):
     """`[{path, git_blob_id}]` for the code that PRODUCED a verdict — V16's evidence field.
 
@@ -188,7 +215,7 @@ def module_evidence(*paths, repo=None):
 
 
 def emit(step, tier, verdict, subjects, basis, reason=None,
-         inputs=(), decided=None, cost=None, revision=0, evidence=()):
+         inputs=(), decided=None, cost=None, revision=0, evidence=(), outstanding=()):
     """Append one record. Returns its id, or None if refused or unreachable.
 
     `subjects` is a list of {"path", "blob"} — WHAT THIS VERDICT IS ABOUT, not
@@ -230,6 +257,22 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
     # landed in either order rather than needing an atomic cutover.
     if evidence:
         record["evidence"] = list(evidence)
+    # ⚠⚠ V18: FINDINGS RIDE ON THE RECORD, NOT IN A REASON STRING. A gate that reaches its ORDINARY
+    # cap under `R-LOOPCAP` is told to STOP AND PUSH — "reviewed, ordinary findings outstanding,
+    # cap reached, proceed". That verdict ADMITS, so the findings must travel with it or they
+    # evaporate at exactly the moment the work is allowed through.
+    #
+    # ⚠ A CLEAN PASS AND A CAPPED PASS ARE DIFFERENT FACTS. Both are SATISFIED downstream, so the
+    # rendered line is the only place a reader can still tell them apart — it marks "⚠N
+    # outstanding". Omitting this key is what a genuinely clean pass looks like; sending it empty
+    # would claim findings exist and name none.
+    #
+    # ⚠ `outstanding` IS PART OF `payload()`, so re-recording the same verdict with findings
+    # DROPPED is a V11 conflict rather than a silent dedupe. They cannot be edited away quietly.
+    # And the server refuses `severity: bedrock` (or any word it does not know) on a PASS — the
+    # severity split is the entire safety of this route and must never become a way to ship one.
+    if outstanding:
+        record["outstanding"] = list(outstanding)
 
     last_error = None
     for attempt in range(_TRANSPORT_TRIES):
@@ -306,10 +349,45 @@ def _cli(argv):
                     help="A = an agent gate actually ran; H = a human decided. 'M' is mechanical "
                          "and belongs to common.record_if_asked, not here.")
     ap.add_argument("--how", required=True,
-                    choices=["agreement", "signature", "override"],
-                    help="agreement = 3+ independent passes concurred and the round RAN; "
-                         "signature = a PERSON accepted a verdict the round did not produce; "
+                    choices=["delegated", "agreement", "signature", "override"],
+                    help="delegated = ONE agent round, no consensus claimed (the normal route for "
+                         "a gate brief); agreement = 3+ independent passes concurred and the round "
+                         "RAN; signature = a PERSON accepted a verdict the round did not produce; "
                          "override = a regrade, the gate erred. 'mechanical' is REFUSED here.")
+    # ⚠⚠ THE BRIEF, NOT THE AGENT — AND THIS IS WHY `delegated` NEEDED NO NEW MECHANISM.
+    # Attribution is not authentication: `sign` already concedes that, and no key material exists
+    # here, so "prove you are that agent" was never on the table. What IS checkable is WHICH
+    # INSTRUCTIONS GOVERNED THE ROUND and whether they have since changed. So a delegated PASS
+    # carries the brief's blob id, and **editing the brief stales the key and the gate re-runs**.
+    # A delegated verdict cannot outlive its instructions. That is V16's machinery pointed at
+    # review rather than at checkers.
+    ap.add_argument("--evidence", nargs="+", default=None,
+                    help="path(s) to the BRIEF this round ran under, e.g. "
+                         ".claude/commands/adversary-review.md. REQUIRED for a delegated PASS. "
+                         "Not the checker module — the instructions.")
+    # ⚠ A FILE, NOT ARGV. Findings carry prose notes, and prose on a command line breaks on
+    # length, quoting and encoding — the same reason `--reason-file` exists. JSON list of
+    # {"severity": "ordinary", "note": "...", "path": "..."} ; `path` optional, `note` REQUIRED
+    # (a finding nobody can read is lost, not carried).
+    # ⚠⚠ SUPERSEDE, NOT OVERWRITE. V11 makes (step, basis, revision) unique, so a second,
+    # different verdict about the SAME content is refused rather than silently replacing the
+    # first — branching is unrepresentable, not merely detected. Raising the revision is the
+    # sanctioned route the refusal itself names, and it is NOT a deletion: the original stays in
+    # the append-only stream and `inventory` resolves the TIP only. That is what makes a regrade
+    # auditable — you can always see what the verdict USED to be and that it changed.
+    #
+    # ⚠ Its absence was a real dead end: a /rely round hit V11, found no `--revision`, and
+    # correctly stopped rather than retrying a rejected record. A refusal naming a remedy the
+    # tool cannot perform is a remedy nobody can take (`LED-2`).
+    ap.add_argument("--revision", type=int, default=0,
+                    help="supersede an existing verdict at this basis (V11). The prior record "
+                         "REMAINS in the stream; inventory resolves the tip. Use when a verdict "
+                         "is genuinely being restated, never to retry a refusal.")
+    ap.add_argument("--outstanding-file", default=None,
+                    help="JSON file of findings to carry ON the record (V18). Use when the round "
+                         "reached its ORDINARY cap and R-LOOPCAP says stop-and-push: the verdict "
+                         "admits, and these ride with it so they do not evaporate. Only severity "
+                         "'ordinary' may accompany a PASS.")
     ap.add_argument("--passes", type=int, default=1,
                     help="how many independent passes ran (agreement only)")
     ap.add_argument("--agreed", type=int, default=1,
@@ -363,6 +441,37 @@ def _cli(argv):
         ap.error("--who is required with --how %s: a sign-off with no signatory records nothing "
                  "about who is accountable for it" % a.how)
 
+    # ⚠⚠ THE `delegated` CONTRACT, AND IT EXISTS BECAUSE REVIEW HAD NO PASS ROUTE AT ALL.
+    # Measured across the whole stream 2026-08-25: editorial 3xFAIL, adversary 3xFAIL, rely 3xFAIL —
+    # **nine agent reviews, every one a FAIL, and no delegated review had ever recorded a PASS.**
+    # Not once. `agreement` refuses a lone round (V3 wants 3 unanimous), `mechanical` is a lie about
+    # a computation, and `signature` asserts a PERSON accepted it. A gate could report findings and
+    # had no way to report success — so absence of a PASS meant nothing, which is the exact
+    # ambiguity this ledger exists to remove, sitting inside the review layer the whole time.
+    #
+    # ⚠ `who` ON EVERY delegated RECORD, PASS OR FAIL. It names the GATE (e.g. "adversary"), not a
+    # person and not a process — attribution, openly not authentication.
+    if a.how == "delegated":
+        if not a.who:
+            ap.error("--who is required with --how delegated: name the GATE that ran "
+                     "(e.g. --who adversary). It is attribution, not authentication.")
+        if a.tier != "A":
+            ap.error("--how delegated requires --tier A: it records that an AGENT gate actually "
+                     "ran. 'H' claims a human decided, which is --how signature.")
+        # ⚠ EVIDENCE ON THE PASS ONLY, AND THE ASYMMETRY IS DELIBERATE. A FAIL BLOCKS, so it cannot
+        # fail-open; demanding the brief's blob from an agent that could not read the brief would
+        # stop it reporting the finding at all. A PASS is what lets work through, so a PASS is what
+        # must be pinned to the instructions that authorised it.
+        if a.verdict == "pass" and not a.evidence:
+            ap.error("--evidence is required for a delegated PASS: give the path to the BRIEF this "
+                     "round ran under (e.g. .claude/commands/adversary-review.md). A PASS is what "
+                     "lets work through, so it is pinned to the instructions that authorised it — "
+                     "edit the brief and this key goes stale, and the gate re-runs. A FAIL needs "
+                     "no evidence: it blocks, so it cannot fail-open.")
+    elif a.evidence:
+        ap.error("--evidence belongs to --how delegated. The other routes record a human decision "
+                 "or a genuine multi-pass agreement, neither of which is pinned to one brief.")
+
     # ⚠ V3 IS MIRRORED HERE ONLY TO FAIL FAST, AND THE DEFAULT IS THE TRAP IT CLOSES. A PASS under
     # `agreement` needs `agreed == passes` AND `passes >= policy.agreement.min_passes` (3). The
     # natural default is one pass — a single agent round — which produces a record that is accepted
@@ -375,8 +484,11 @@ def _cli(argv):
     # step is defective. They must never share a code path.
     # ⚠⚠ CONDITIONED ON **PASS**, BECAUSE V3 IS. The server's rule is `verdict: PASS` + `how:
     # agreement` requires unanimity at or above the threshold. This mirror applied it to EVERY
-    # verdict, which made it STRICTER THAN ITS OWN AUTHORITY and rejected the one thing
-    # `PROCESS_V2.md` § 6a-i explicitly permits: **"FAIL alone, PASS by unanimity or signature."**
+    # verdict, which made it STRICTER THAN ITS OWN AUTHORITY and rejected a lone agent's FAIL.
+    # ⚠ Live routing is `tools/process/review-gates.md` and the gate briefs: since 2026-08-25 an
+    # agent records BOTH its FAIL and its PASS under `--how delegated`, and `agreement` stays the
+    # stronger claim for a genuine three-pass round. The earlier "FAIL alone, PASS by unanimity or
+    # signature" doctrine is RETIRED, and the file that stated it is not in this repository.
     # A single review agent that finds a real defect must be able to record it — withholding a FAIL
     # because one agent is not a quorum is absence-of-evidence rendering as success, which is the
     # defect this entire ledger exists to remove. Measured 2026-08-24: with the guard unconditional,
@@ -412,8 +524,37 @@ def _cli(argv):
         print("  nothing recordable for %s at %s — the review certified no recordable file"
               % (a.step, a.ref))
         return 2
+    # ⚠ `module_evidence` COMPOSES UNCHANGED — it hashes working-tree bytes to a repo-relative
+    # path with forward slashes, which is exactly what the brief needs; only the TARGET differs
+    # (the instructions, not the producing module). A brief that does not exist yields NO entry,
+    # so the server refuses with its own message rather than accepting a fabricated blob id.
+    # ⚠ MIRRORED HERE ONLY TO FAIL FAST. The server owns V18 and refuses either way; catching it
+    # at parse time means a gate brief gets a usage error naming the rule, rather than a refusal
+    # an agent might read as "the ledger is down".
+    outstanding = ()
+    if a.outstanding_file:
+        outstanding = json.loads(io.open(a.outstanding_file, encoding="utf-8").read())
+        if not isinstance(outstanding, list) or not outstanding:
+            ap.error("--outstanding-file must hold a non-empty JSON list of findings; omit the "
+                     "flag entirely for a genuinely clean pass")
+        for f in outstanding:
+            if not isinstance(f, dict) or not f.get("note"):
+                ap.error("every outstanding finding needs a `note`: a finding nobody can read is "
+                         "lost, not carried, and the record would assert findings exist while "
+                         "saying nothing about them")
+            if a.verdict == "pass" and f.get("severity") != "ordinary":
+                ap.error("a PASS may only carry severity 'ordinary'; got %r. This route exists for "
+                         "R-LOOPCAP's stop-and-push at the ORDINARY cap and must NEVER become a "
+                         "way to ship a bedrock or blocking finding — BEDROCK gets 5 rounds and "
+                         "must not ship. Record the FAIL instead." % f.get("severity"))
+    ev = module_evidence(*a.evidence) if a.evidence else ()
+    if a.evidence and len(ev) != len(set(a.evidence)):
+        print("  WARNING: %d brief path(s) given, %d resolved — a brief that is absent or "
+              "untracked contributes NO evidence, and the ledger will refuse the PASS rather "
+              "than accept an unpinned one." % (len(set(a.evidence)), len(ev)))
     rid = emit(step=a.step, tier=a.tier, verdict=a.verdict.upper(), subjects=subjects,
-               basis=common.ledger_basis(a.ref), reason=a.reason,
+               basis=common.ledger_basis(a.ref), reason=a.reason, evidence=ev,
+               outstanding=outstanding, revision=a.revision,
                decided={"how": a.how, "passes": a.passes, "agreed": a.agreed, "who": a.who})
     if rid is None:
         return 2

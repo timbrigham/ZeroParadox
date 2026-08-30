@@ -104,3 +104,32 @@ Position is the lever — measured 2026-08-15, line 127 fired all day and line 2
 An unenforced section sitting at line 1200 is already in the zone where rules do not fire, so
 "keeping it in `CLAUDE.md`" is not the protection it sounds like. **Not yet acted on; raised
 2026-08-20.**
+
+---
+
+## `/rely` is expensive — when to run it, and what to substitute when you skip it
+
+*Migrated from a private memory, 2026-08-28.* Tim, 2026-08-26: *"the rely command is expensive and not
+required every run now. let's avoid calling it unnecessary."* Measured cost of one pass: **~95 tool
+calls, ~258k tokens, ~30 minutes wall clock.**
+
+As of 2026-08-26 (gitRobot 98c3480) **`rely` no longer admits COMMIT or PUSH.** It stays registered,
+still records, and still gates a TAG; the ledger reports it under `registered_not_admitting` with
+`gating: false`, so **a green push cannot be misread as rely having passed.**
+
+**Why it was demoted:** its scope is `tools/verify/*` and it gated commit, so every fix to the
+verification tooling staled it **while it blocked the commit carrying that fix** — deadlocked by
+construction. It was also unsatisfiable: as of 2026-08-26 the registry declared 60 files of scope while `rely.md`'s own
+pre-flight forbids running at full breadth, so it could never read COMPLETE.
+
+**Run it when** the verification layer changes materially, before a tag or release, or when a control
+is suspected of passing for the wrong reason. **Not** on an ordinary prose cycle, and not merely
+because something under `tools/verify/` was touched.
+
+⚠ **DO NOT READ THIS AS PERMISSION TO STOP.** It is the only gate that **EXECUTES** rather than reads,
+and the measured law is that every BEDROCK finding came from executing and every ORDINARY one from
+reading. Briefed to attack the controls, it found **6 BLOCKING in one pass, all six inside the control
+written to fix the previous pass.**
+
+**When you skip it, substitute the mutation test yourself:** write the mutation that should turn the
+control red and RUN it, both directions. **A control nobody has seen fail is a hypothesis.**

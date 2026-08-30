@@ -64,8 +64,9 @@ open ZeroParadox
     Abstracts the shared structure between:
       Set theory (AFA): f x = {x},  unique fixed point = Quine atom = ⊥
       2-adic integers:  f x = 2 * x, unique fixed point = 0 (v₂ = +∞)
-    From these two fields, AFAStructure's three class fields become theorems. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Abstracts the shared fixed-point pattern between AFA set theory (f x = {x}, unique fixed point = Quine atom) and 2-adic multiplication (f x = 2x, unique fixed point = 0). Mathlib has Function.IsFixedPt (a predicate) but no typeclass for "type with a self-application operation whose unique fixed point is a designated bottom element." Allows AFAStructure's three fields to become theorems.
+    From these two fields, AFAStructure's two LAWS become theorems; its `selfMem` field is DATA
+    and is supplied by `def selfMemDerived` (:83), not proved. See §III. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Abstracts the shared fixed-point pattern between AFA set theory (f x = {x}, unique fixed point = Quine atom) and 2-adic multiplication (f x = 2x, unique fixed point = 0). Mathlib has Function.IsFixedPt (a predicate) but no typeclass for "type with a self-application operation whose unique fixed point is a designated bottom element." Allows AFAStructure's two LAWS to become theorems; its selfMem field is DATA, supplied by definition.
 class AbstractSelfApp (L : Type*) [ZPSemilattice L] where
   /-- The self-application operation: x ↦ f(x). -/
   selfApp : L → L
@@ -109,7 +110,13 @@ theorem selfMem_eq_singleton_bot :
 /-! ## § III. AFAStructure Instance from AbstractSelfApp
 
     Any AbstractSelfApp structure yields an AFAStructure.
-    selfMem, bot_self_mem, and quine_unique are now theorems, not axioms. -/
+
+    ⚠ TWO of the three fields become theorems, not three. `bot_self_mem` and `quine_unique` are
+    LAWS and are discharged by `derived_bot_self_mem` and `derived_quine_unique`. `selfMem` is
+    DATA — a predicate — and is SUPPLIED by `def selfMemDerived` (:83), not proved. The earlier
+    wording here said all three "are now theorems"; that counted the data field as a law, and the
+    slip propagated verbatim into ZP-J and its companion, where it took a gate round to catch.
+    See §V below for what carrying this structure does NOT establish. -/
 
 instance toAFAStructure : AFAStructure L where
   selfMem      := selfMemDerived

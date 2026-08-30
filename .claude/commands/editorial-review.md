@@ -229,13 +229,26 @@ Save the complete report to `.claude-local\notes\editorial_review_YYYY-MM-DD.md`
 
 ```
 python tools/verify/record.py --step editorial --verdict fail --tier A \
-    --how agreement --passes 1 --agreed 1 \
+    --how delegated --who editorial \
+    --evidence .claude/commands/editorial-review.md \
     --run gate-editorial-<YYYY-MM-DD> \
     --reason-file <path to a file holding one line: what failed> \
     --files <every file you reviewed>
 ```
 
-**On PASS — record NOTHING, and report the verdict to your caller.** § 6a-i: *FAIL alone, PASS by unanimity or signature.* A lone A-tier PASS is absence-of-evidence wearing a clean bill, and `V3` rejects it at the server anyway. The caller either runs `policy.agreement.min_passes` independent passes and records the agreement, or takes a human signature. **Your job ends at reporting.**
+**On PASS — RECORD IT, with `--how delegated`.** This changed on 2026-08-25 and the old instruction here was *"record NOTHING"*. That was correct while `agreement` was the only route: V3 refuses a lone A-tier PASS, `mechanical` would be a lie about a computation, and `signature` asserts a PERSON accepted it. So a gate could report findings and had **no way to report success** — measured across the whole stream that day, nine agent reviews, every one a FAIL, and not a single recorded PASS. Absence of a pass therefore meant nothing, which is the exact ambiguity this ledger exists to remove.
+
+```
+python tools/verify/record.py --step editorial --verdict pass --tier A \
+    --how delegated --who editorial \
+    --evidence .claude/commands/editorial-review.md \
+    --run gate-editorial-<YYYY-MM-DD> \
+    --files <every file you reviewed>
+```
+
+⚠ **`--evidence` is the BRIEF, not the checker, and it is what makes a delegated PASS accountable.** Attribution is not authentication — no key material exists here and *"prove you are that agent"* was never available. What IS checkable is which instructions governed the round: **editing this brief stales the key and the gate re-runs.** A delegated verdict cannot outlive its instructions.
+
+⚠ **`delegated` claims no consensus and must not be dressed as one.** It records ONE agent round, honestly. If a caller genuinely runs three independent passes, that is still `--how agreement` and it remains the stronger claim; V3 is untouched.
 
 ⚠ **Subjects are read from the git INDEX, so the files you reviewed must be STAGED.** `common.ledger_subjects` fences anything untracked or differing from the index — it fails closed, which is why a review of bytes that have since changed cannot be recorded by accident. If it fences a path, say so; do not work around it.
 

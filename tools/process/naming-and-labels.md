@@ -123,6 +123,50 @@ split is superseded:
   there (draft MC1.md folded in + archived to `.claude-local/notes/` 2026-07-15).
 - **Rollout DONE (2026-07-15):** README, CLAIMS, SNAP + BOTTOMELEMENT via their generators. Do not touch RELEASES.md.
 
+## Standard mathematics first, ZP shorthand after — DECLARED, not merely ordered
+
+*Migrated from a private memory, 2026-08-28. `CLAUDE.md` carries the ordering in a clause; the
+declaration form and the reason it is a defence rather than a courtesy were recorded only privately.*
+
+**Standard operating procedure at every edit pass, not a triage call.** A cold reader — a
+mathematician, a set theorist — meets standard mathematics first and pattern-matches to familiar
+territory before ZP-internal vocabulary arrives. **Leading with the branded term signals crank
+grand-theory before rigorous content registers.** Violations look like *"its own successor null"*
+before saying it is the 2-adic Cauchy limit, or *"DA-1"* before saying it is an execution-event
+condition.
+
+**SHARPENED (Tim, 2026-06-27) — declare the shorthand explicitly.** The pattern is:
+
+> *[official mathematical term or description] — within this document, the shorthand for this is
+> "[ZP term]".*
+
+**This does double duty, and the second job is the important one.** It satisfies the ordering rule,
+and it is the **equivocation defence**: declaring the ZP word — and especially the symbol ⊥, which is
+used across frameworks — as shorthand for a **structural role** rather than a literal cross-framework
+identity forecloses the *"ontology built on an equivocation"* referee charge before it is made. The
+reviews will flag ZP-specific language anyway, so preempt it everywhere in this form.
+
+Worked examples from ZP-W: *"the wall"* → "the class of impossibility theorems for self-referential
+fixed points at a structure's least element; within this document, the shorthand is *the wall*".
+*"the snap"* → "the forced transition from the least element to ε₀; … the shorthand is *the snap*".
+Cross-framework ⊥ → "the least or initial element of each structure; within this document ⊥ denotes
+that shared structural position — a notational shorthand, not a cross-framework identity."
+
+**The precedent is ordinary mathematical practice:** the symbol 1 means the multiplicative identity,
+the identity matrix, or the terminal object. Same symbol, declared structural role, no equivocation.
+
+### No English idioms in formal content — the reason is TRANSLATION
+
+Tim, 2026-06-13: *"porthole is great but not formal.. if we ever had to translate this that would be
+a pain in the ass of an idiom. translations should be relatively easy."*
+
+Structure and theorem names, formal-document prose, and anything externally facing use the
+**recognised** term — **"fork"** (least-versus-greatest fixed point), not "porthole"; *"the diagonal
+fixed point"*, not a coined image. A vivid idiom survives only as a **clearly flagged nickname, used
+once, pointing at the formal term**. Applied in ZP-O: "fork" is the formal name and "porthole" was
+demoted to a flagged nickname. This is the existing de-jargoning ethos with a second motive: idiomatic
+English does not carry across a translation, and forces awkward localisation of a *name*.
+
 ## GitHub Issues — Transparency and Engagement Policy
 
 The Zero Paradox project treats GitHub Issues as a public transparency mechanism, consistent with the project's core transparency commitment. Issues are not just a bug tracker — they are the public record of what is open, contested, or unresolved in the framework.

@@ -22,13 +22,13 @@ structures (the "walls"). It closes a standing gap: a framework built on ⊥ tha
 
 One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each coincidence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
-**Proved, with one commitment - the same element.** In any Kleene-structured ZP lattice, the *Quine atom* (a set that is its own only member, set theory / AFA), the *order-bottom* ⊥, and the *algebraic join-identity* are proved to be the **same element** - the three-name core, **axiom-free** ([`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean)). The fourth name, the *Kleene fixed point* (a program that reproduces itself, computability), is *joined* to the other three by an explicit structural commitment: the [`KleeneStructure`](ZeroParadox/Computability/Kleene.lean) typeclass names the computational fixed point as the same role - the motivating commitment, not a derived theorem. So the set that is its own only member is identified with the program that prints itself by that commitment, not proved equal. The computational witness rests on Mathlib's recursion theorem, which carries `Classical.choice`; the three-name core needs none.
+**Proved, with one commitment - the same element.** In any ZP lattice carrying an AFA structure, the *Quine atom* (a set that is its own only member, set theory / AFA), the *order-bottom* ⊥, and the *algebraic join-identity* are proved to be the **same element** - the three-name core, **axiom-free** ([`t_exec_triple_iff`](ZeroParadox/Settheory/SetTheoryAFA.lean)). The fourth name, the *Kleene fixed point* (a program that reproduces itself, computability), is *joined* to the other three by an explicit structural commitment: the [`KleeneStructure`](ZeroParadox/Computability/Kleene.lean) typeclass names the computational fixed point as the same role - the motivating commitment, not a derived theorem. So the set that is its own only member is identified with the program that prints itself by that commitment, not proved equal. The computational witness rests on Mathlib's recursion theorem, which carries `Classical.choice`; the three-name core needs none.
 
-**Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ ([`addVal_bot`](ZeroParadox/Valuation/FloorWitness.lean)); unbounded surprisal, the state with no finite description ([`t2_diverges`](ZeroParadox/Information/Surprisal.lean)); the categorical bottom of each real Mathlib category, an inverse limit or initial object ([`fD_zero_isInitial`](ZeroParadox/State/HilbFunctor.lean), [`fC_zero_isInitial`](ZeroParadox/Multihomed/InfoFunctor.lean) and [`fB_bottom_is_limit`](ZeroParadox/Valuation/TopFunctor.lean), collected in [`mc1_correspondence`](ZeroParadox/Multihomed/MC1Bridge.lean)); and the case where the coincidence *fails*, ℝ vs ℚ₂ by Ostrowski ([`completions_exhaustive`](ZeroParadox/Valuation/Ostrowski.lean), [`real_not_equiv_padic`](ZeroParadox/Valuation/Ostrowski.lean)). They share a SHAPE (`Statement:` COINCIDENCE, per field's own witness above) - one object carrying both extremal characterisations at once - and a shared shape across distinct structures is a type boundary, never a common theorem. (The order-theoretic form of that shape is [`fork_collapse_iff`](ZeroParadox/Settheory/FixedPointFork.lean), choice-free, but none of these satisfies its hypotheses of a complete lattice and a monotone map, so none is an instance of it.) ε₀ is co-witnessed with the 2-adic limit and the machine snap ([`zpm_triangle`](ZeroParadox/Ordinal/Incompleteness.lean)).
+**Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ ([`padic_addVal_bot`](ZeroParadox/Valuation/ValuationAFA_Padic.lean)); unbounded surprisal, the state with no finite description ([`t2_diverges`](ZeroParadox/Information/Surprisal.lean)); the categorical bottom of each real Mathlib category, an inverse limit or initial object ([`fD_zero_isInitial`](ZeroParadox/State/HilbFunctor.lean), [`fC_zero_isInitial`](ZeroParadox/Multihomed/InfoFunctor.lean) and [`fB_bottom_is_limit`](ZeroParadox/Valuation/TopFunctor.lean), collected in [`mc1_correspondence`](ZeroParadox/Multihomed/MC1Bridge.lean)); and the case where the coincidence *fails*, ℝ vs ℚ₂ by Ostrowski ([`completions_exhaustive`](ZeroParadox/Valuation/Ostrowski.lean), [`real_not_equiv_padic`](ZeroParadox/Valuation/Ostrowski.lean)). They share a SHAPE (`Statement:` COINCIDENCE, per field's own witness above) - one object carrying both extremal characterisations at once - and a shared shape across distinct structures is a type boundary, never a common theorem. (The order-theoretic form of that shape is [`fork_collapse_iff`](ZeroParadox/Settheory/FixedPointFork.lean), choice-free, but none of these satisfies its hypotheses of a complete lattice and a monotone map, so none is an instance of it.) ε₀ is co-witnessed with the 2-adic limit and the machine snap ([`zpm_triangle`](ZeroParadox/Ordinal/Incompleteness.lean)).
 
 **Mostly proved - a narrow residue argued.** The framework's set-theoretic *commitment* is not *AFA specifically* but a fragment it assumes of its host theory: a unique Quine atom ⊥ = {⊥}. That fragment is a checkable object, the [`QuineHost`](ZeroParadox/Settheory/QuineHost.lean) typeclass. Foundation-freeness is *forced* by the Quine atom ([`quineHost_not_wellFounded`](ZeroParadox/Settheory/QuineHost.lean), axiom-free - a self-loop cannot live in a well-founded world); ordinary set theory (Foundation) is excluded in-kernel about the real theory ([`zfSet_no_quine_bottom`](ZeroParadox/Settheory/QuineHost.lean) - no set is self-membered under Foundation); Boffa's axiom is set aside because it admits a proper class of Quine atoms rather than one (Boffa 1968), a gap a toy model makes concrete ([`boffa_fails_unique`](ZeroParadox/Settheory/QuineHost.lean)) rather than an in-kernel fact about Boffa's axiom; and AFA is exhibited as the example meeting all three ([`afaStructure_isQuineHost`](ZeroParadox/Settheory/QuineHost.lean)). What remains argued is only that a Quine atom and its uniqueness are the right two requirements - a Forced Metatheoretic Commitment with a named falsifier, stronger than a free choice and weaker than a theorem. The set-membership face ⊥ ∈ ⊥ stays metatheoretic; the structural fixed point is machine-checked and axiom-free ([`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean)).
 
-**The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is carried by the per-domain witnesses [`fD_zero_isInitial`](ZeroParadox/State/HilbFunctor.lean), [`fC_zero_isInitial`](ZeroParadox/Multihomed/InfoFunctor.lean) and [`fB_bottom_is_limit`](ZeroParadox/Valuation/TopFunctor.lean), collected in [`mc1_correspondence`](ZeroParadox/Multihomed/MC1Bridge.lean)). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are provably **distinct** (the "walls" below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand (the three-name core above; 0 = ∞ under [`rInv`](ZeroParadox/Valuation/RiemannSphere.lean) in ℚ₂).
+**The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is carried by the per-domain witnesses [`fD_zero_isInitial`](ZeroParadox/State/HilbFunctor.lean), [`fC_zero_isInitial`](ZeroParadox/Multihomed/InfoFunctor.lean) and [`fB_bottom_is_limit`](ZeroParadox/Valuation/TopFunctor.lean), collected in [`mc1_correspondence`](ZeroParadox/Multihomed/MC1Bridge.lean)). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are **distinct as structures**, proved pairwise wherever a wall has been built (below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand: the three-name core above ([`t_exec_triple_iff`](ZeroParadox/Settheory/SetTheoryAFA.lean), axiom-free), and in ℚ₂ the equality v₂(0) = ∞ ([`padic_addVal_bot`](ZeroParadox/Valuation/ValuationAFA_Padic.lean)) - an equality of *values* in the value monoid, not of points of ℚ₂. The 2-adic **pole** is a claim of a different kind: 0 and ∞ are provably distinct points of the sphere which inversion *exchanges* (`Statement:` INVERSION, [`point_and_field_at_the_poles`](ZeroParadox/Valuation/PoleCornersBridge.lean)), so calling the two one pole is a chart claim rather than an identity of points.
 
 ---
 
@@ -40,7 +40,7 @@ One self-referential structure - a thing that is its own fixed point - keeps tur
 |---|---|
 | CANT | **cannot-have** - what ⊥ provably is NOT (its exclusions) |
 | NARR | **narrow** - ⊥ is a single, unique point |
-| MEAS | **measure** - some quantity becomes infinite exactly at ⊥ |
+| MEAS | **measure** - some quantity becomes infinite at ⊥, and in ℚ₂ exactly there |
 | INV | **inversion** - the map z↦1/z swaps ⊥ (which is 0) with infinity (the two poles of a Riemann sphere) |
 | CONC | **concurrency** - applying ⊥'s own operation returns ⊥ unchanged (a fixed point: operation and result coincide) |
 | SELF | **self-reference** - ⊥ is defined by referring to itself (a self-reproducing / self-containing object) |
@@ -74,7 +74,7 @@ valuation) come from other layers. The partial numbering is scoped, not missing 
 | μ / ν | least fixed point (μ, built up from the floor) vs greatest fixed point (ν, closed down) |
 | Quine atom / Kleene quine | a self-containing set (x = {x}) / a program that prints itself |
 | the snap | the framework's discrete jump off ⊥ into the first structured state |
-| ε₀ | the fixed point of omega-to-the-power reached from 0 - both min and max at once (epsilon0_min_eq_max): the least such fixed point (the minimum closure, a floor in the fixed-point order) and the supremum of the ascending tower (a ceiling) - never only a ceiling |
+| ε₀ | the fixed point of omega-to-the-power reached from 0 - both min and max at once (`Statement:` COINCIDENCE, [`epsilon0_min_eq_max`](ZeroParadox/Ordinal/Epsilon0MinMax.lean)): the least such fixed point (the minimum closure, a floor in the fixed-point order) and the supremum of the ascending tower (a ceiling) - never only a ceiling |
 | v₂ → ∞ | the 2-adic valuation going to infinity at 0 (0 is infinitely divisible by 2) |
 
 ---
@@ -111,11 +111,11 @@ not.*
 | slot | aspect | characterization of ⊥ | witness (links to Lean source) |
 |---|---|---|---|
 | narrow | noun | the single, unique pinned point | [`q2_unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`fB_bottom_is_limit`](ZeroParadox/Valuation/TopFunctor.lean) |
-| measure | noun | a quantity that becomes infinite exactly at ⊥ | [`t2_diverges`](ZeroParadox/Information/Surprisal.lean), [`addVal_bot`](ZeroParadox/Valuation/FloorWitness.lean) |
-| inversion | verb | the 0 = ∞ pole: the map z↦1/z swaps 0 and infinity | [`rInv_swaps`](ZeroParadox/Valuation/RiemannSphere.lean), [`inversion_reverses_filtration`](ZeroParadox/Valuation/InversionValuation.lean) |
+| measure | noun | a quantity that becomes infinite at ⊥ - in ℚ₂ exactly there and nowhere else | [`t2_diverges`](ZeroParadox/Information/Surprisal.lean), [`padic_addVal_eq_top_iff`](ZeroParadox/Valuation/ValuationAFA_Padic.lean) |
+| inversion | verb | `Statement:` INVERSION - the two poles, named the 0 = ∞ pole: the map z↦1/z EXCHANGES 0 and infinity, which leaves them distinct | [`rInv_swaps`](ZeroParadox/Valuation/RiemannSphere.lean), [`point_and_field_at_the_poles`](ZeroParadox/Valuation/PoleCornersBridge.lean) |
 | concurrency | hinge | the fixed point where least and greatest coincide (operation = result) - `Statement:` COINCIDENCE | [`unique_fp`](ZeroParadox/Computability/SelfApp.lean) *(class field of AbstractSelfApp - assumed by the class, discharged by each instance)*, [`selfApp_bot_is_both_extremal`](ZeroParadox/Multihomed/SelfAppSeam.lean) |
 | self-reference | hinge | the self-reproducing / self-containing fixed point (Quine / Kleene) | [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean), [`quine_period_is_goedel`](ZeroParadox/Computability/Kleene.lean) |
-| generation | verb | the floor generates the ceiling (ε₀ = the closure of 0 under omega-to-the-power) | [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean) |
+| generation | verb | the floor generates the tower above it (ε₀ is the least fixed point of α ↦ ω^α seeded at the base, and equally that tower's supremum) | [`epsilon0_min_eq_max`](ZeroParadox/Ordinal/Epsilon0MinMax.lean), [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean) |
 | dynamics | verb | ⊥'s one-way approach and departure - two sub-senses: **inbound** (↓, orbits converge *to* ⊥ - a sink) and **outbound** (↑, structure departs *from* ⊥ irreversibly - a source); ↕ = both, only at a seam (μ=ν) | [`contraction_orbit_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`t_snap_derived`](ZeroParadox/Order/Snap.lean), [`c3_irreversible`](ZeroParadox/Valuation/Padic.lean), [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean) |
 
 ---
@@ -134,7 +134,7 @@ map cell's own witness, or the reason it has none, is in *Why each cell* below.)
 | Lat ⊥ (ZPA/ZPE) | ✓ | ✓ | ∅ | ∅ | ✓* | ✓* | ∅ | ↑ |
 | p-adic (ℚ₂/ℤ₂) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓* | ∅ | ↓ |
 | Info (ZPC) | ✓* | ∅ | ✓ | ∅ | ∅ | ✓* | ∅ | ↑* |
-| #4 Kleisli (Fin 0) | ✓ | ≝ | ∅ | ≝ | ✗ | ∅ | ✓ | ↑ |
+| #4 Kleisli (Fin 0) | ✓ | ≝ | ∅ | ≝ | ∅ | ∅ | ✓ | ↑ |
 | #5 Hilbert (zero obj/seam) | ✓ | ✓ | ∅ | ✓ | ✓ | ✓ | ∅ | ↕ |
 | #3 TopCat ({0} limit) | ✓ | ≝ | ∅ | ∅ | ∅ | ∅ | ∅ | ↓* |
 | #2 Markov (attractor) | ✓ | ✓* | ∅ | ∅ | ✓ | ∅ | ∅ | ↓ |
@@ -146,14 +146,65 @@ The informative content is in the non-`✓` cells, and splitting them is the poi
 is a settled structural fact (a category error, not a gap), a `✗` is news (a proved obstruction), a `✓*` holds only via a bridge, and a `≝` sends you to that cell's sentence. Two things worth reading off the table:
 (1) **generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
 point-limit) read `∅` there - a ν-object has no μ-property - and the self-coincident fixed points (Kleene,
-selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
+selfApp) carry SELF rather than GEN; the live GEN cells are the ones marked in the column above, and ε₀ is the one this section turns on, where the floor generates the tower above it - and ε₀ is both that tower's supremum and its least fixed point, never only the top.
 (2) The **dynamics** column is single-directional - `↓` for a sink (ν), `↑` for a source (μ) - and `↕` (both)
 appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
 0→ε₀. So ⊥'s dynamics has one direction, fixed by whether ⊥ is a source or a sink.
 
-**The structural reading is in the non-`✓` cells** - the proved obstructions (`✗`), the structural non-applicabilities (`∅`), the `✓*` cells that are conditional, and the `≝` cells, whose witness is named in its own sentence - not the
-filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in
-**[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
+**The structural reading is in the non-`✓` cells** - the proved obstructions (`✗`), the structural non-applicabilities (`∅`), the `✓*` cells that are conditional, and the `≝` cells, whose witness is named in its own sentence - not the filled count. The reason or witness behind *every* mark is below.
+
+### Why the cell vocabulary has states rather than a checkbox
+
+A relationship between a construction and an aspect is a **claim with a status**, not a yes/no box. A blank
+would conflate three different situations - an open question, a settled structural non-applicability, and a
+proved impossibility - so the matrix distinguishes them. These are the states actually in use, with their live
+counts:
+
+- **✓ established** (30) - a sorry-free Lean witness.
+- **∅ n/a, structural** (28) - not a gap: either a category error (a ν-object asked for a μ-property; a bare order asked for a metric), or the property holds only DEGENERATELY and carries no content about this bottom.
+- **✓* conditional** (8) - holds under a modelling commitment or bridge, or is cited from a library.
+- **≝ definitional** (4) - the witness is a `def` whose type is not a proposition, because an initiality witness must CARRY the mediating morphism. ⚠ An established result, never a weaker one.
+
+### The one axis behind two columns: μ and ν
+
+Every fixed point of a construction sits on a fork. **μ** is the *least* fixed point, built **up from** ⊥ -
+the initial-object / colimit / generation side. **ν** is the *greatest*, closed **down to** ⊥ - the
+terminal-object / limit / attractor side. A construction's bottom is a **source** (μ), a **sink** (ν), or,
+where the two coincide, a **seam** (μ = ν). `GEN` and `dynamics` are not independent slots: they are two
+readings of that single polarity.
+
+**GEN is the μ face.** Its precise content is the least-fixed-point-by-iteration schema `lfp F = ⊔ₙ Fⁿ(⊥)` -
+iterate the operator from the floor and take the supremum - which is **Kleene's fixed-point theorem**, the
+founding construction of domain theory. It appears at three levels: order-theoretic, as Mathlib's
+`fixedPoints.lfp_eq_sSup_iterate`, cited rather than rebuilt (⚠ the ω-Scott-continuity hypothesis is the whole
+content and must not be softened to monotonicity - a bundled `F : α →o α` is monotone already, and monotone
+alone gives only Knaster-Tarski's *existence* somewhere, where continuity is what buys the ω-indexed formula,
+that ω steps suffice); ordinal, as `ε₀ = nfp(ω^·)(0) = ⊔ₙ (ω^·)ⁿ(0)`; and categorical, as Adámek's initial
+algebra as the colimit of `0 → F0 → F²0 → …`. The categorical form was not located in Mathlib as of
+2026-08-08, searched along three axes (the proper name; the nouns *initial algebra* / *terminal coalgebra*, both
+polarities; and the verb *transfinite*), so the matrix builds a concrete instance instead: `node4_generates_nat`
+makes ℕ the colimit of the successor chain rooted at the empty type, the initial algebra of `X ↦ X + 1`,
+choice-free.
+
+**So `GEN` is a μ-only column, and its emptiness elsewhere is the fork showing through rather than missing
+work.** The ν-bottoms - the p-adic inverse limit, the Markov attractor, the topological `{0}`-limit - are the
+opposite pole: they are *reached*, they do not *generate*. And the self-coincident fixed points are their own
+fixed point, so there is no distinct level above to generate; they carry `SELF` and `CONC`, the still point.
+
+**Dynamics is single-directional, set by the same polarity.** `↓` inbound means orbits converge *to* ⊥, a
+sink (ν); `↑` outbound means structure departs *from* ⊥ irreversibly, a source (μ); `↕` means both, which
+happens only at a seam. ⚠ **The implication runs one way: a seam gives `↕`, and `↕` does not by itself give a
+seam** - ε₀ shows `↕` for a different reason, because its row *is* the transition arc, spanning a floor and a
+level above rather than sitting at one point.
+
+**The correction that reading forced.** Two constructions, p-adic and Markov, *looked* two-directional because
+two irreversibility theorems sat in the outbound column and do not belong there. `c3_irreversible` says there is
+no continuous path *to* 0 - that is the **arrival** being a discontinuous jump, an inbound fact.
+`fullMix_not_injective` says mixing *toward* the stationary state loses information - again inbound. Re-sorted,
+both are pure sinks, and `↕` becomes a seam diagnostic. The reach-in / cannot-return-out asymmetry is ⊥'s
+one-way irreversibility: you can reach ⊥, and the snap off it does not reverse. (Physics calls one-wayness an
+arrow of time; the framework is inspired by the analogy and claims nothing about physics - the irreversibility
+lemmas are the statements, the analogy is not one.)
 
 <details>
 <summary><b>Why each cell</b> - the reason or witness behind every mark (click to expand)</summary>
@@ -162,10 +213,10 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 - `CANT` ✓ - [`zpa_bot_not_greatest`](ZeroParadox/Category/SeamUniqueness.lean)
 - `NARR` ✓ - [`da2_bottom_characterization`](ZeroParadox/Order/Snap.lean)
 - `MEAS` ∅ - bare [`ZPSemilattice`](ZeroParadox/Order/Lattice.lean) has no metric/valuation scalar to diverge
-- `INV` ∅ - a join-semilattice has no top / complement / involution to swap ⊥ with
+- `INV` ∅ - [`ZPSemilattice`](ZeroParadox/Order/Lattice.lean) states no INVOLUTION and no ∞-counterpart, so there is nothing for z↦1/z to swap ⊥ WITH. ⚠ NOT that no member has a top: `[`trivialZPSemilattice`](ZeroParadox/Valuation/Scale.lean) : [`ZPSemilattice`](ZeroParadox/Order/Lattice.lean) Unit` has ⊥=⊤ - the earlier reason said so and was refuted 2026-08-29 by the corpus's own standing control. ⚠ An earlier draft of THIS text also cited Bool, which is not a `[`ZPSemilattice`](ZeroParadox/Order/Lattice.lean)` member at all
 - `CONC` ✓* - [`selfApp_bot_is_both_extremal`](ZeroParadox/Multihomed/SelfAppSeam.lean)
 - `SELF` ✓* - [`derived_bot_self_mem`](ZeroParadox/Computability/SelfApp.lean)
-- `GEN` ∅ - no infinite joins to form ⊔ₙfⁿ(⊥); ε₀-generation lives in the ordinal row
+- `GEN` ∅ - [`ZPSemilattice`](ZeroParadox/Order/Lattice.lean) STATES no infinite joins, so ⊔ₙfⁿ(⊥) is not expressible from the class alone; ε₀-generation lives in the ordinal row. ⚠ NOT that no member has them: ``CompleteLattice` Unit` exists and `[`trivialZPSemilattice`](ZeroParadox/Valuation/Scale.lean)` is a member - the class/member slip corrected in the INV cell above, swept here 2026-08-29
 - `DYN` ↑ - [`t_snap_derived`](ZeroParadox/Order/Snap.lean) (⊥=c₀ departs to c₁ - source/μ)
 
 **p-adic (ℚ₂/ℤ₂)**
@@ -185,16 +236,16 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 - `INV` ∅ - −log prob↔info is a coordinate change, not a ⊥↔∞ involution
 - `CONC` ∅ - no self-application operation on surprisal / distributions
 - `SELF` ✓* - [`da1_closed_concrete`](ZeroParadox/Computability/Kleene.lean)
-- `GEN` ∅ - unbounded ascent, no distinct ceiling constructed
+- `GEN` ∅ - unbounded ascent, with no distinct level above it constructed - GEN asks the floor to generate the tower over it, and nothing here builds one
 - `DYN` ↑* - [`t_snap_derived`](ZeroParadox/Order/Snap.lean) (snap off the machine null c₀; ZP-E bridge)
 
 **#4 Kleisli (Fin 0)**
 - `CANT` ✓ - [`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean)
 - `NARR` ≝ - [`fC_zero_isInitial`](ZeroParadox/Multihomed/InfoFunctor.lean) *(a `def`, and its type is not a proposition)*
-- `MEAS` ∅ - the empty type supports no PMF - no scalar defined to diverge
+- `MEAS` ∅ - the empty type carries no distribution at all, so no scalar exists to diverge. ⚠ ``IsEmpty` (PMF (Fin 0))` elaborates, so the stronger mark - a proved obstruction (✗) rather than a category error - is AVAILABLE and unbuilt as of 2026-08-29. Upgrading it costs one theorem; the mark stays ∅ until that theorem exists, because a cell may not cite a witness the corpus does not contain
 - `INV` ≝ - `IsInitial.op` *(a `def`, and its type is not a proposition)* (Mathlib)
-- `CONC` ✗ - [`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean)
-- `SELF` ∅ - no self-application / diagonal on the empty probability type
+- `CONC` ∅ - DEGENERATE on an empty carrier - there are no points, so every endomorphism fixes every point vacuously and CONC carries no content here. ⚠ This cell previously cited `[`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean)` as a refutation; that theorem proves the Kleisli bottom is not a ZERO OBJECT (not terminal), which is a mu/nu DIRECTION fact and belongs to DYN. It addresses neither of CONC's two propositions
+- `SELF` ∅ - DEGENERATE, and that is the finding. `Fin 0` is EMPTY, so the Kleisli endomorphism `Fin 0 -> PMF (Fin 0)` is the unique empty map and every diagonal/self-application statement about it holds VACUOUSLY, carrying no content about this bottom. ⚠ Not that no self-map exists - the same correction the `TopCat` cells took 2026-08-29. No ZP witness is cited because none is owed for a degeneracy
 - `GEN` ✓ - [`node4_generates_nat`](ZeroParadox/Category/Node4Generation.lean)
 - `DYN` ↑ - [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean) (initial source; nothing returns to ⊥ - μ)
 
@@ -205,7 +256,7 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 - `INV` ✓ - `hasZeroObject_op` *(an `instance`, and its type is a proposition - so a proof)* (Mathlib)
 - `CONC` ✓ - [`seam_is_mu_nu_coincidence_SeamCoincidence`](ZeroParadox/Category/SeamCoincidence.lean)
 - `SELF` ✓ - [`biprod_diagonal_only_zero`](ZeroParadox/Multihomed/HilbertDiagonal.lean) (self-similarity)
-- `GEN` ∅ - μ=ν self-coincident (seam⊔seam≅seam) - generates no distinct ceiling
+- `GEN` ∅ - μ=ν self-coincident (seam⊔seam≅seam) - it generates no level distinct from itself
 - `DYN` ↕ - [`seam_has_Pin`](ZeroParadox/Category/SeamArrowSignature.lean) (terminal: maps in) ; [`hilbert_bottom_isZero`](ZeroParadox/Category/TreeSeam.lean).isInitial (maps out) - the SEAM (μ=ν)
 
 **#3 TopCat ({0} limit)**
@@ -213,8 +264,8 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 - `NARR` ≝ - [`floorConeIsLimit`](ZeroParadox/Order/PadicLimitCone.lean) *(a `def`, and its type is not a proposition)*
 - `MEAS` ∅ - `TopCat` forgets the scalar; divergence-at-⊥ is the p-adic/info sibling
 - `INV` ∅ - `TopCat` forgets field mult; z↦1/z is the ℚ₂ Riemann sibling
-- `CONC` ∅ - no intrinsic self-map on the topological limit object (×2-fp is ℚ₂ field structure)
-- `SELF` ∅ - no self-application on the topological limit object
+- `CONC` ∅ - DEGENERATE, and that is the finding. The cone apex is a SUBSINGLETON, so ``ContinuousMap`.id` is an intrinsic self-map and EVERY self-map fixes every point - CONC holds VACUOUSLY, carrying no content about this bottom. ⚠ The earlier reason claimed no self-map exists; that was refuted by compilation 2026-08-29. No ZP witness is cited because none is owed for a degeneracy
+- `SELF` ∅ - SELF asks for a DIAGONAL (a self-application whose fixed point is the object), which the limit object does not carry. ⚠ Not that it has no self-map at all - the apex is a subsingleton and ``ContinuousMap`.id` is one; that degeneracy is recorded under CONC
 - `GEN` ∅ - ν-limit ({0} as a topological limit) - carries inbound dynamics, not GEN (μ/ν fork)
 - `DYN` ↓* - [`c3_irreversible`](ZeroParadox/Valuation/Padic.lean) (topological no-return; stated on ambient Q₂) - sink/ν
 
@@ -222,7 +273,7 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 - `CANT` ✓ - [`markov_node_no_universal_property`](ZeroParadox/Computability/MarkovNuUniversal.lean)
 - `NARR` ✓* - [`markov_node_irreducible_rescue`](ZeroParadox/Computability/StationaryUnique.lean)
 - `MEAS` ∅ - a probability distribution - no finite value diverges at it
-- `INV` ∅ - no antipodal involution on a simplex
+- `INV` ∅ - the simplex carries no 0↔∞ POLE for an inversion to swap, which is what INV asks. ⚠ NOT that no involution exists: `PMF.map (Equiv.swap 0 1)` on `PMF (Fin 2)` is one, exchanging the vertices - compiled 2026-08-29, refuting the earlier wording
 - `CONC` ✓ - [`exists_stationary`](ZeroParadox/Reals/PerronFrobenius.lean)
 - `SELF` ∅ - no self-application; its fixed point is CONC, no self-similarity
 - `GEN` ∅ - ν-attractor - carries inbound dynamics, not GEN (μ/ν fork)
@@ -232,10 +283,10 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 - `CANT` ✓ - [`self_halting_undecidable`](ZeroParadox/Computability/Kleene.lean)
 - `NARR` ✓ - [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean)
 - `MEAS` ✓ - [`infinite_quine_family`](ZeroParadox/Computability/Kleene.lean)
-- `INV` ∅ - programs carry no reciprocal / involution or ∞ counterpart to swap with
+- `INV` ∅ - programs carry no ∞-counterpart for an inversion to swap the bottom WITH. ⚠ NOT that no involution exists - `Equiv.swap` on two distinct codes is one, compiled 2026-08-29. Narrowed to the half that stands, matching the Markov INV correction
 - `CONC` ✓ - [`computational_quine_exists`](ZeroParadox/Computability/Kleene.lean)
 - `SELF` ✓ - [`quine_period_is_goedel`](ZeroParadox/Computability/Kleene.lean)
-- `GEN` ∅ - self-coincident fixed point (⊥ = the quine itself) - carries SELF, not floor→ceiling
+- `GEN` ∅ - self-coincident fixed point (⊥ = the quine itself) - carries SELF, not floor-generates-tower
 - `DYN` ↓ - [`quine_encodings_approach_bot`](ZeroParadox/Multihomed/PadicBridge.lean) (encodings approach ⊥; a static point)
 
 **ε₀ (ordinal, ZPL/M)**
@@ -246,7 +297,7 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 - `CONC` ✓ - [`epsilonZero_fixedPoint`](ZeroParadox/Ordinal/Gentzen.lean)
 - `SELF` ✓* - [`both_fixed_points_exist`](ZeroParadox/Ordinal/Incompleteness.lean)
 - `GEN` ✓ - [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean)
-- `DYN` ↕ - [`tower_converges_to_zero`](ZeroParadox/Ordinal/Gentzen.lean) (floor 0) ; [`snap_exactly_at_epsilon_zero`](ZeroParadox/Ordinal/Gentzen.lean) (ceiling ε₀) - the snap-ARC
+- `DYN` ↕ - [`tower_converges_to_zero`](ZeroParadox/Ordinal/Gentzen.lean) (floor 0) ; [`snap_exactly_at_epsilon_zero`](ZeroParadox/Ordinal/Gentzen.lean) (the level above, ε₀) - the snap-ARC
 
 **selfApp (abstract ⊥)**
 - `CANT` ✓ - [`scale_ne_fixed`](ZeroParadox/Valuation/Scale.lean)
@@ -280,8 +331,8 @@ The classical self-reference arguments are not separate theorems that happen to 
 | Quine atom | ν floor | the self-containing set ⊥ = {⊥} - executable self-reference, landing at ⊥ | [`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean) | (none) |
 | Löb | ν floor | provability of (□A → A) yields A - the provability-logic fixed point | [`loeb`](ZeroParadox/Settheory/Loeb.lean) | (none) |
 | Gödel 2nd | ν floor | no consistent system proves its own consistency | [`godel_two`](ZeroParadox/Settheory/Loeb.lean) | (none) |
-| Kleene quine | ν floor | a program that reproduces itself - the recursion theorem fires | [`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean) | `Classical.choice` |
-| Rice | ν floor | the fixed point provably exists, yet its membership is undecidable | [`rice_face_has_bottom`](ZeroParadox/Computability/Rice.lean) | `Classical.choice` |
+| Kleene quine | ν floor | a program that reproduces itself - the recursion theorem fires | [`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean) | `[propext, Classical.choice, Quot.sound]` |
+| Rice | ν floor | the fixed point provably exists, yet its membership is undecidable | [`rice_face_has_bottom`](ZeroParadox/Computability/Rice.lean) | `[propext, Classical.choice, Quot.sound]` |
 
 ---
 

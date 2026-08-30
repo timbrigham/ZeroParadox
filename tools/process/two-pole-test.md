@@ -7,7 +7,9 @@ method-axis failures of 2026-08-07, and the call-out protocol are here.
 
 ## The Two-Pole Test — Hard Rule. Run BOTH readings of ⊥ concurrently, never one.
 
-**⊥ = 0 = ∞ is the framework's own pole identity (`rInv_swaps`). So every face of ⊥ has TWO readings —
+**The pole is the framework's own coincidence of the bottom, zero and infinity — a CHART claim, stated
+and never proved as a point identity; the inversion witness is `rInv_swaps`, which EXCHANGES two
+provably distinct points. So every face of ⊥ has TWO readings —
 the EMPTY one and the INFINITE one — and a face that implements only one is half-built.** Build and check
 both concurrently. Do not sequence them, and do not treat "which first?" as a real question: the poles are
 one object seen from two ends, so picking one builds half and forces a later switch.

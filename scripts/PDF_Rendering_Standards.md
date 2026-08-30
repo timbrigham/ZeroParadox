@@ -3,7 +3,7 @@
 
 This document is the single authoritative source for all PDF rendering rules in this project. Read it before writing a single line of builder code. Every rule here applies to all PDFs — formal layers, companions, and any other document in this repository.
 
-**Diagram coordinate geometry and overflow rules are separate.** See CLAUDE.md § "Companion PDF Diagram Layout Standards".
+**Diagram coordinate geometry and overflow rules are separate.** See CLAUDE.md § `R-DIAGRAM`.
 
 **Session log:**
 - April 2026 (initial): Three failure modes identified — font stack, checkmark glyph, table cell wrapping.

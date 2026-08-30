@@ -456,18 +456,27 @@ def check_routing_enforcement():
     # Behavioural, and deterministic — the hashes are synthetic, so this does not depend on whether
     # the working tree happens to be dirty. Asserting the table alone would be a claim about a
     # constant; this is a claim about the function.
-    real = batch.checker_hashes
+    # ⚠⚠ PATCHES `checker_blobs` AND `rely_reviewed_blobs`, NOT `checker_hashes`. This route
+    # patched `checker_hashes` for months after `check_routing` stopped calling it — the
+    # `checker_hashes`→`checker_blobs` migration left the monkeypatch behind, so the synthetic
+    # data was IGNORED and this "behavioural" control asserted nothing at all. Measured inert by
+    # /rely 2026-08-25. `checker_hashes` still exists (the batch freeze uses it), which is exactly
+    # why the stale patch kept working and kept proving nothing.
+    real_blobs, real_reviewed = batch.checker_blobs, batch.rely_reviewed_blobs
     try:
-        batch.checker_hashes = lambda: {"check_prose.py": "0" * 12,
-                                        "pov_baseline.txt": "0" * 12,
-                                        "tools/process/README.md": "0" * 12}
+        batch.checker_blobs = lambda: {"check_prose.py": "0" * 40,
+                                       "pov_baseline.txt": "0" * 40,
+                                       "tools/process/README.md": "0" * 40}
+        # An EMPTY dict, never None: None means "could not ask the ledger" and takes the
+        # fail-closed branch, which would make every leg fire for the wrong reason.
+        batch.rely_reviewed_blobs = lambda: {}
         emitted = {}
         for _agent, _ran, why, blocking in batch.check_routing({}, None):
             for leg in ("logic", "switch", "docs"):
                 if why.startswith("[%s]" % leg):
                     emitted[leg] = blocking
     finally:
-        batch.checker_hashes = real
+        batch.checker_blobs, batch.rely_reviewed_blobs = real_blobs, real_reviewed
     for leg in ("logic", "switch"):
         got = emitted.get(leg)
         row("check_routing EMITS blocking: %s" % leg, got is True,
@@ -1676,11 +1685,42 @@ def main():
     # checkers and exemption switches whose change could falsify "every route behaves", so a change
     # to any of them must re-earn this verdict. A route misbehaving is not attributable to one file
     # — the property holds OVER the set — so a failure fails the set.
-    _subjects = [os.path.relpath(p, REPO).replace("\\", "/") for p in TOUCHED]
+    # ⚠⚠ SUBJECTS ARE THE CODE THIS VERDICT IS ABOUT — NOT THE FILES IT SCRIBBLES ON.
+    # This used to record `TOUCHED`, which is the RESTORATION-PROOF set: the paths the routes
+    # plant violations in and must put back, named here so `restored (N paths hashed): yes` can
+    # mean anything. Recording them as subjects made the verdict claim to be about the bytes of
+    # `pov_baseline.txt`, when what it actually asserts is *"every route to a guarded property
+    # behaves"* — a claim about ROUTING LOGIC.
+    #
+    # The consequence was worse than a wrong coverage number, and it ran the wrong way round:
+    # editing `batch.py` — the file whose routing this guards — did NOT stale the key, because
+    # `batch.py` was not a subject; editing a baseline it merely scribbles on DID. A guard that
+    # re-arms on its scratch surface and sleeps through a change to the thing it guards is not a
+    # guard. Found by /rely-style coverage analysis 2026-08-26 (`§ 4a-R` R-1), sitting green on a
+    # gating row for both commit and push.
+    #
+    # ⚠ The baselines move to `switches`, which is the mechanism that already exists for exactly
+    # this: an exemption surface whose edit must re-arm the checker. They are still part of the
+    # subject set — `record_if_asked` appends them — so nothing is dropped; the two kinds of
+    # dependency are just no longer confused for each other.
+    _guarded = [
+        "tools/verify/guards.py",      # the routes themselves
+        "tools/verify/batch.py",       # check_routing, prepush_verdict, checker_blobs, cmd_prepush
+        "tools/verify/ship.py",        # the /rely cap
+        "tools/verify/common.py",      # record_if_asked, ledger_subjects
+        "tools/verify/report.py",      # the manifest every entry point announces itself with
+        "tools/verify/agent_gate.py",  # the advisory layer whose invocation is asserted
+    ] + ["tools/verify/%s" % c for c in sorted(
+        {"check_classes.py", "check_figures.py", "check_frozen.py", "check_modal.py",
+         "check_negatives.py", "check_pov.py", "check_prose.py"})]
+    _subjects = [p for p in _guarded if os.path.exists(os.path.join(REPO, *p.split("/")))]
+    _switches = sorted({os.path.relpath(p, REPO).replace("\\", "/") for p in TOUCHED
+                        if os.path.basename(p) != os.path.basename(PROBE_FILE)})
     _rc = common.record_if_asked("guards", _subjects,
                                  set(_subjects) if (bad or not clean) else set(),
                                  "a route to a guarded property misbehaved, or the tree was "
-                                 "not restored")
+                                 "not restored",
+                                 switches=_switches)
     if _rc:
         return _rc
 

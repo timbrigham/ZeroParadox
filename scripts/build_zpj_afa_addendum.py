@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.7 | July 2026
+Version 1.8 | August 2026
+v1.8: FIELD-DISCIPLINE CORRECTION (bedrock). The abstraction-chain prose said "at each step, the fields of the target typeclass are proved as theorems from the source" and "inherits the full AFAStructure as a chain of theorems". False at BOTH steps: a Lean typeclass field is either a LAW you discharge with a proof or DATA you supply, and this chain supplies data at each step - selfApp := scale is an assignment (the box six lines below prints it), and selfMem is supplied by def selfMemDerived (SelfApp.lean:83). TWO of AFAStructure's three fields become theorems, not three. This was the THIRD ZP-J surface carrying the claim; the other two were corrected in ZP-J v2.6 and comp v1.30 and this one was missed because its sentence contains no numeral. Found by editorial round 5 and now covered mechanically by tools/verify/check_fields.py, which tests the Lean binding rather than the wording.
 v1.7: Lean Source Files box now lists SetTheoryAFA.lean (the AFAStructure typeclass home, cited by the def_box); "seven"→"eight" source files; stripped the "as of May 2026" dated qualifier from the endnote.
 v1.6: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.5: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
@@ -19,7 +20,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -137,8 +138,11 @@ def build():
         'AbstractSelfApp extracts the fixed-point structure from ValuationStructure, '
         'replacing scale with an abstract selfApp operation. AFAStructure &#8212; '
         'the three-field typeclass encoding the Quine atom properties &#8212; '
-        'is then derived from AbstractSelfApp. At each step, the fields of the target '
-        'typeclass are proved as theorems from the source. No new axioms are introduced. '
+        'is then derived from AbstractSelfApp. At each step the LAWS of the target typeclass are '
+        'proved as theorems from the source, and the DATA fields are supplied by definition: '
+        'the selfApp field of AbstractSelfApp is assigned (selfApp := scale), and the selfMem '
+        'field of AFAStructure is supplied by def selfMemDerived. TWO of the three AFAStructure '
+        'fields become theorems, not three (SelfApp.lean:113). No new axioms are introduced. '
         'The relationship to Aczel\'s theorem in ZF+AFA is discussed in Remark R-J.A (§V).'))
 
     E.append(def_box(
@@ -192,8 +196,8 @@ def build():
         [
             'ValuationStructure L  &#8658;  AbstractSelfApp L  &#8658;  AFAStructure L',
             'Each arrow is a Lean instance derivation proved without new axioms.',
-            'Any type satisfying ValuationStructure inherits the full AFAStructure '
-            'as a chain of theorems.',
+            'Any type satisfying ValuationStructure inherits the two AFAStructure LAWS as theorems; '
+            'its data field selfMem is supplied by definition, not proved.',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
         ]
     ))

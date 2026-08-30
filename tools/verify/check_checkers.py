@@ -194,6 +194,33 @@ def roster_agrees():
     return sorted(mine - theirs), sorted(theirs - mine)
 
 
+def shadowed_defs(src):
+    """Top-level `def`/`class` names defined MORE THAN ONCE in one module, with their line numbers.
+
+    ⚠⚠ SH-7, "duplicated definition that drifted" — the shape `selfheal.py` has counted 11 times
+    with no class row and no detector. **A shadowed duplicate is valid Python**: the last definition
+    silently wins, so the file imports, the module's own selftest passes, and every gate stays
+    green while a caller elsewhere quietly gets different behaviour.
+
+    Measured 2026-08-26, which is why this exists: a second `_range_tips` was added to `batch.py`
+    without checking whether the name was taken. It was written for `check_signals` and it replaced
+    the one the stale-at-tip leg had been using — a leg that change never intended to touch. Caught
+    by a `grep -n` for the definition while looking for somewhere to insert, not by any control.
+
+    ⚠ TOP LEVEL ONLY, DELIBERATELY. Methods legitimately share names across classes, and a nested
+    helper redefined per branch is a normal idiom; flagging those would make this noisy enough to be
+    muted. The property is: within ONE module's namespace, does any name get bound twice?"""
+    try:
+        tree = ast.parse(src)
+    except SyntaxError:
+        return []
+    seen = {}
+    for node in tree.body:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            seen.setdefault(node.name, []).append(node.lineno)
+    return sorted((n, ls) for n, ls in seen.items() if len(ls) > 1)
+
+
 def audit():
     """(rows, failures). Each row is (checker, property, ok, detail)."""
     rows = []
@@ -207,6 +234,18 @@ def audit():
                  else "audited but not in SELFTESTS: %s; in SELFTESTS but not audited: %s"
                       % (unlisted or "-", phantom or "-")))
 
+    # 5b. SH-7 over the CALLERS as well, and this row is the reason the property is worth having.
+    # ⚠⚠ `checkers()` is `check_*.py` plus `ALSO_AUDITED`; `batch.py` is a CALLER and is in neither.
+    # The measured instance — a second `_range_tips` shadowing the one the stale-at-tip leg used —
+    # was IN `batch.py`, so a per-checker row alone would have missed the case that motivated it.
+    # A detector that does not cover its own instance is decoration.
+    for _c, _src in sorted(caller_text.items()):
+        _dups = shadowed_defs(_src)
+        rows.append((_c, "no shadowed defs", not _dups,
+                     "no top-level name bound twice" if not _dups
+                     else "; ".join("%s at lines %s" % (n, ",".join(str(x) for x in ls))
+                                    for n, ls in _dups[:3])))
+
     for c in checkers():
         src = source(c)
 
@@ -214,6 +253,14 @@ def audit():
         has = "--selftest" in src
         rows.append((c, "has controls", has or c in NO_CONTROL_EXEMPT,
                      "--selftest present" if has else "NO --selftest"))
+
+        # 1b. no shadowed top-level definition (SH-7). See `shadowed_defs` for why nothing else
+        # catches this: the duplicate is valid Python and every other gate stays green.
+        dups = shadowed_defs(src)
+        rows.append((c, "no shadowed defs", not dups,
+                     "no top-level name bound twice" if not dups
+                     else "; ".join("%s at lines %s" % (n, ",".join(str(x) for x in ls))
+                                    for n, ls in dups[:3])))
 
         # 2. controls pass  (the exit code, not the text)
         if has:
@@ -336,7 +383,10 @@ def main(argv):
     print("=" * 52)
     print("  meta-test: the checkers themselves")
     print("  checkers audited : %d" % n)
-    print("  properties       : has controls / controls pass / both halves / is invoked")
+    # ⚠ DERIVED FROM THE ROWS, NOT TYPED. This line was a hardcoded four-item list and went stale
+    # the moment a fifth property was added — a manifest publishing a different set than the run
+    # actually checked (`RLY25-1`, one layer over). Deriving it means the summary cannot drift.
+    print("  properties       : %s" % " / ".join(sorted({p for _c, p, _ok, _d in rows})))
     print("  violations       : %d" % len(failures))
     print("=" * 52)
     if failures:

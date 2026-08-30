@@ -48,23 +48,27 @@ _MODAL_PHRASES	rather than as a necessity
 _MODAL_PHRASES	removable in principle
 
 [check_negatives]
-CLAIM	(?:\bno\s+(?:\w+[\s-]+){0,3}ha(?:s|ve)\s+(?:ever\s+)?been\s+(?:found|located|observed))|(?:\bnone\s+(?:ha(?:s|ve)\s+(?:ever\s+)?been\s+)?(?:found|located|observed)\b)|(?:\bnever\s+been\s+(?:found|located|observed)\b)|(?:\bhas\s+never\s+been\s+(?:found|located|observed)\b)|(?:\bnowhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase))|(?:\bno\s+(?:\w+[\s-]+){0,3}anywhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase))|(?:\bnot\s+in\s+Mathlib\b)|(?:\bthere\s+is\s+no\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework))|(?:\bthe\s+corpus\s+does\s+not\s+have\b)|(?:\bno\s+such\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework))
-EVIDENCE	as\s+of\s+\d{4}|\b20\d\d-\d\d-\d\d\b|located\s+as\s+of|searched\s+as\s+follows|searched\s+\d|searched[,;]?\s+(?:and\s+)?none\s+found|prior[- ]art\s+search|not\s+located\b|retract|used\s+to\s+(?:say|read)|corrected\b|WAS\s+FALSE|this\s+line\s+said
+CLAIM	(?:\bno\s+(?:\w+[\s-]+){0,3}ha(?:s|ve)\s+(?:ever\s+)?been\s+(?:found|located|observed))|(?:\bnone\s+(?:ha(?:s|ve)\s+(?:ever\s+)?been\s+)?(?:found|located|observed)\b)|(?:\bnever\s+been\s+(?:found|located|observed)\b)|(?:\bhas\s+never\s+been\s+(?:found|located|observed)\b)|(?:\bnowhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase))|(?:\bno\s+(?:\w+[\s-]+){0,3}anywhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase))|(?:\bnot\s+in\s+Mathlib\b)|(?:\bthere\s+is\s+no\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework))|(?:\bthe\s+corpus\s+does\s+not\s+have\b)|(?:\bno\s+such\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework))|(?:\b(?:gap|bridge|junction|identity)\s+(?:is|remains)\s+(?:still\s+)?open\b)|(?:\b(?:is|remains)\s+an\s+open\s+(?:gap|bridge|junction)\b)|(?:\b(?:bridge|gap|junction)\b[^.]{0,80}\b(?:it|this|that)\s+(?:is|remains)\s+(?:still\s+)?open\b)|(?:\bwould\s+need\s+an?\s+(?:\w+[\s-]+){0,3}(?:bridge|theorem|lemma|instance|proof|construction)\b)|(?:\bno\s+such\s+(?:\w+[\s-]+){0,3}is\s+claimed\b)
+EVIDENCE	as\s+of\s+\d{4}|\b20\d\d-\d\d-\d\d\b|located\s+as\s+of|searched\s+as\s+follows|searched\s+\d|searched[,;]?\s+(?:and\s+)?none\s+found|prior[- ]art\s+search|not\s+located\b|retract|used\s+to\s+(?:say|read)|corrected\b|WAS\s+FALSE|this\s+line\s+said|CLAIMS\.md|ClaimsMirror|ill-typed|retired\b
 SKIP_NAMES	DEFECT_CLASSES.md
 SKIP_NAMES	check_negatives.py
 SKIP_NAMES	negatives_baseline.txt
-_SENTENCE_END	\.(?=\s|$)
+_N	\b(?:bridge|gap|junction)\b[^.]{0,80}\b(?:it|this|that)\s+(?:is|remains)\s+(?:still\s+)?open\b
+_N	\b(?:gap|bridge|junction|identity)\s+(?:is|remains)\s+(?:still\s+)?open\b
+_N	\b(?:is|remains)\s+an\s+open\s+(?:gap|bridge|junction)\b
 _N	\bhas\s+never\s+been\s+(?:found|located|observed)\b
 _N	\bnever\s+been\s+(?:found|located|observed)\b
 _N	\bno\s+(?:\w+[\s-]+){0,3}anywhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase)
 _N	\bno\s+(?:\w+[\s-]+){0,3}ha(?:s|ve)\s+(?:ever\s+)?been\s+(?:found|located|observed)
 _N	\bno\s+such\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework)
+_N	\bno\s+such\s+(?:\w+[\s-]+){0,3}is\s+claimed\b
 _N	\bnone\s+(?:ha(?:s|ve)\s+(?:ever\s+)?been\s+)?(?:found|located|observed)\b
 _N	\bnot\s+in\s+Mathlib\b
 _N	\bnowhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase)
 _N	\bthe\s+corpus\s+does\s+not\s+have\b
 _N	\bthere\s+is\s+no\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework)
-
+_N	\bwould\s+need\s+an?\s+(?:\w+[\s-]+){0,3}(?:bridge|theorem|lemma|instance|proof|construction)\b
+_SENTENCE_END	\.(?=\s|$)
 [check_figures]
 EVIDENCE	\bas\s+of\b|\b20\d\d-\d\d-\d\d\b|\bmeasured\b|\bmeasure\s+(?:it|on\s+demand)\b|\bnever\s+record\b|\bdo\s+not\s+record\b|\bre-?measure\b|\bcomputed\s+now\b|\bat\s+the\s+time\b|\bwas\s+stale\b|\bwent\s+stale\b|\bstale\s+by\b|\bcorrected\b|\bretract
 FIGURE	\b(\d{2,})\s+(?:files?|declarations?|decls?|sites?|papers?|entries|entry|rows?|checkers?|occurrences?|hits?|violations?|instances?|modules?|scripts?|commits?|baselines?|notes?|defects?)\b
@@ -142,6 +146,7 @@ EXEMPT_FILES	scope_baseline.txt
 GLOB_REF	\.claude-local[/\\](?:check_\w*\*\w*\.py|proposed_pre_\w*\*\w*_hook\.sh|\w*\*\w*_baseline\.txt|build_zp\w*\*\w*\.py)
 MOVED	\.claude-local[\\/]PDF_Rendering_Standards\.md	scripts/PDF_Rendering_Standards.md
 MOVED	\.claude-local[\\/]batch\.py	tools/verify/batch.py
+MOVED	\.claude-local[\\/]build_bottom_matrix\.py	scripts/build_bottom_matrix.py
 MOVED	\.claude-local[\\/]build_dictionary_map\.py	scripts/build_dictionary_map.py
 MOVED	\.claude-local[\\/]build_foreword\.py	scripts/build_foreword.py
 MOVED	\.claude-local[\\/]build_manifest\.py	scripts/build_manifest.py
@@ -213,6 +218,7 @@ MOVED	\.claude-local[\\/]ship\.py	tools/verify/ship.py
 MOVED	\.claude-local[\\/]vendored\.py	tools/verify/vendored.py
 MOVED	\.claude-local[\\/]vendored_files\.txt	tools/verify/vendored_files.txt
 MOVED	\.claude-local[\\/]zp_utils\.py	scripts/zp_utils.py
+_MOVED_BUILDS	build_bottom_matrix.py
 _MOVED_BUILDS	build_dictionary_map.py
 _MOVED_BUILDS	build_foreword.py
 _MOVED_BUILDS	build_manifest.py

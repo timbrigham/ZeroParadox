@@ -436,6 +436,10 @@ def run(checks=None):
         print("  agent gate         skip  ZP_AGENT_GATE is not 1 — interpretation layer NOT run")
         return 0, 0, 0.0
     flagged, diagnosed, cost = 0, 0, 0.0
+    # ⚠ NAMES, NOT JUST COUNTS. A record needs to say WHICH subjects were judged and which failed;
+    # a bare tally cannot answer "was check_moved examined?" months later, which is the whole
+    # question the ledger exists to answer.
+    examined, untrustworthy = [], []
     for c in checks:
         res = run_check(c)
         if res["rc"] != 0:
@@ -471,8 +475,10 @@ def run(checks=None):
             print("  agent gate         WARN  %s: agent response unusable (%ss) — %s"
                   % (c["name"], secs, raw[:120].replace("\n", " ")))
             continue
+        examined.append(c["name"])
         if parsed["verdict"] == "NOT_TRUSTWORTHY":
             flagged += 1
+            untrustworthy.append(c["name"])
             path = write_suggestion(c, res, parsed, secs, votes)
             print("  agent gate         WARN  %s PASSED but its pass is not trustworthy:"
                   % c["name"])
@@ -486,7 +492,51 @@ def run(checks=None):
     # rubber-stamping stays visible. Same move as `check_poles.py`'s suppression counter.
     print("  agent gate         %d pass(es) flagged, %d failure(s) diagnosed. ADVISORY — this layer "
           "never blocks a push." % (flagged, diagnosed))
+    _emit(examined, untrustworthy, flagged, diagnosed, cost)
     return 0, flagged, cost
+
+
+def _emit(examined, untrustworthy, flagged, diagnosed, cost):
+    """Record what this layer judged — ON EVERY RUN, including a clean one.
+
+    ⚠⚠ THE CONTRACT NAMES THIS FILE BY NAME. `verdictLedger.md` §2: *"A step that passes MUST emit
+    a record. Silence is never a pass… `agent_gate.py` spends real time and money per push and
+    writes no file at all when everything passes — its writers fire only on a finding. Afterwards,
+    'judged clean' and 'never ran' are indistinguishable, which is the exact question this server
+    exists to answer. Do not rebuild that."* `write_suggestion` and `write_diagnosis` are those
+    finding-only writers; this is the missing half.
+
+    ⚠ It is the same INVERSION fixed for `/rely` on 2026-08-25 — a record that exists only when
+    something is wrong makes the absence of a record ambiguous between clean and never-ran.
+
+    ⚠ RECORDING IS NOT GATING. `agent_gate` is registered with `actions: []` and a stated reason,
+    so it records honestly and admits nothing; the verdict below is FAIL when passes were flagged,
+    and that still cannot block a push. The registry says what may be RECORDED, the admission set
+    says what GATES, and keeping those apart is what lets a fuzzy layer be honest without being
+    dangerous. **Do not add `agent_gate` to any admission set** — measured variance: byte-identical
+    input returned TRUSTWORTHY twice and NOT_TRUSTWORTHY once.
+
+    ⚠ NEVER RAISES. This layer is wrapped by `batch.py` precisely so it cannot break a push, and an
+    unreachable ledger must not become the first way it does. A failure to record is reported on
+    stdout and swallowed — the key then stays MISSING, which is the honest state."""
+    try:
+        rels = ["tools/verify/%s.py" % n for n in examined]
+        bad = ["tools/verify/%s.py" % n for n in untrustworthy]
+        rels = [r for r in rels if os.path.exists(os.path.join(common.REPO, r))]
+        bad = [b for b in bad if b in rels]
+        if not rels:
+            print("  agent gate         not recorded: nothing was judged (no subjects)")
+            return
+        reason = ("%d pass(es) not trustworthy, %d failure(s) diagnosed, $%.3f. ADVISORY: this "
+                  "records WHICH checks were interpreted, never that the corpus is clean."
+                  % (flagged, diagnosed, cost))
+        rc = common.emit_verdict("agent_gate", ok_rels=[r for r in rels if r not in bad],
+                                 bad_rels=sorted(bad), reason=reason)
+        if rc:
+            print("  agent gate         not recorded (rc=%s) — key stays MISSING, which is honest"
+                  % rc)
+    except Exception as e:                                  # noqa: BLE001 — advisory, never fatal
+        print("  agent gate         not recorded: %r — key stays MISSING" % (e,))
 
 
 # --- controls ---------------------------------------------------------------

@@ -1,6 +1,8 @@
 """
+v3.27: C-DA2 RETRACTION COMPLETED (bedrock). v3.26 downgraded the Corollary to a Conditional Claim and rewrote its section, but the Validation Status table's STATUS cell was never touched - it still shipped "Valid - Derived. Follows directly from DA-2 and ZP-B C3." four pages after the section saying the opposite, on the one page a reader opens specifically to check status. A half-applied fix to a self-consistent error manufactures a self-contradiction; the wording now matches the dependency table, which had it right at :786 all along.
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.25 | July 2026
+Version 3.26 | July 2026
+v3.26: NOVELTY OVERCLAIM RETRACTED (bedrock) - C-DA2 DOWNGRADED FROM COROLLARY TO CONDITIONAL CLAIM. The document published "Corollary C-DA2 - Ontological Novelty of Successive bottom" with a status cell reading "Derived - Corollary of DA-2 and C3" and a written proof whose load-bearing step - "the bottom of I_{n+1} is an element of a distinct topological space" - IS the conclusion, not a consequence of C3. C3 quantifies over paths WITHIN one space; it is silent on whether the next instantiation's space is a different one, so assuming separateness to derive distinctness is circular. The handle C-DA2 is unchanged per R-NAMING; only its STATUS changes. Measured against: snap_arc_z2_loop proves the 2-adic tower starts at 0, every finite stage is nonzero, and it converges back to 0, and tower_image_loops_to_seed states the limit IS the seed - so in that chart novelty does not merely lack a proof, it fails. Also fenced at the TrackedOutput return, the DA-2 connection, the no-back-edges bullet, the DA-2 traceability row and both status tables. v3.25 retracted the OCCURRENCE overclaim and left NOVELTY standing beside it.
 v3.25: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. Four sites: the branching-tree implication, the OQ-E1 row, and two claim-table validity grounds, all of which used occurrence as the ground. OQ-E1 is now 'closed given the occurrence commitment', matching CLAIMS.md and the DA-1 row's existing 'closed given DP-2' form.
 v3.24: R-AFA false premise corrected (bedrock) — struck the invalid "well-founded ⟹ finite ∈-tree / finite ∈-rank ⟹ finitely interpretable" step (false: ω is well-founded and infinite). Foundation-incompatibility now rests on the self-membership of ⊥ = {⊥} (Regularity; no_quine_atom, choice-free), with R3/L-INF demoted from independent proofs to corroboration. Status brought current: forcing + realizability stated as machine-checked (QuineHost — quineHost_not_wellFounded, oneAtom_not_wellFounded, afaStructure_isQuineHost); CC-2 = Forced Metatheoretic Commitment, not Conditional Claim; named falsifier narrowed to the requirements-choice. Also CC-1 "modelling commitment" → "derived via ZP-J cc1_derived" (DA-2); DA-3 cardinality-anomaly link hedged to conjecture (DA-3-C1 / OQ-E2); closing endnote rewritten from editorial-history narration to a description of what the document is.
 v3.23: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
@@ -81,7 +83,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.25'
+VERSION = '3.27'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -229,7 +231,7 @@ def build():
             'It is a machine in state c<sub>1</sub>.',
             'Formal core (Lean): DP-2 (§III) — TrackedOutput separates output value from machine state. '
             'da1_minimal_path proves: one act of instantiation moves c<sub>0</sub> to c<sub>1</sub> regardless '
-            'of output value. The returned ⊥ is a new null — not the prior c<sub>0</sub>. Axiom-free.',
+            'of output value. The returned ⊥ occupies the bottom role again; reading it as a NEW null rather than the prior c<sub>0</sub> is C-DA2, a modelling commitment. The axiom-free result is the role, not the novelty.',
             'Structural grounding: ZP-A CC-2 (⊥ = {⊥}) establishes ⊥ as a Quine atom under ZF + AFA — a set that is '
             'its own singleton, admitting no external interpreter. ZP-A R3 derives the immediate consequence: '
             'a self-containing object cannot be a static description awaiting external instantiation. '
@@ -484,7 +486,7 @@ def build():
         li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Every "fires" below narrates the commitment that instantiation occurs, not a consequence of the theorem.'),
         li('T-SNAP fires wherever P<sub>0</sub> conditions are met. If the terminal state of instantiation I<sub>n</sub> '
            'satisfies P<sub>0</sub> conditions, T-SNAP should apply — but this requires formally connecting that '
-           'terminal state to a new ⊥. DA-2 provides this connection.'),
+           'terminal state to a ⊥ role-occupant, read as a new ⊥ under C-DA2. DA-2 provides this connection.'),
         sp(4),
     ]
 
@@ -495,10 +497,11 @@ def build():
              'instantiation boundary is not a path in Q<sub>2</sub> — it is the generation of a new Q<sub>2</sub> with its own '
              'metric, its own ⊥, its own ε<sub>0</sub>. C3 quantifies only over paths within a single topological space '
              'and has nothing to say about the boundary between spaces.'),
-        body('More precisely: C3 and the irreversibility of the Snap together require that any recurrence of '
-             '⊥ be a structurally distinct ⊥. You cannot return to the original ⊥ even in principle. '
-             'Therefore if the structure recurs, it must instantiate fresh. The topology enforces the '
-             'ontological novelty of each ⊥.'),
+        body('More precisely: C3 rules out a continuous return to 0 WITHIN one Q<sub>2</sub>. It does not '
+             'follow that a recurrence of ⊥ must be a structurally distinct ⊥ — that step needs the '
+             'separateness of the spaces, which is a modelling commitment (C-DA2) and not something the '
+             'topology supplies. The topology does not enforce novelty; it is silent on it, and in the '
+             '2-adic chart the arc reapproaches the same 0 (snap_arc_z2_loop).'),
     ]
 
     E.append(Paragraph('III. Definitional Alignment DA-2 — Instantiation Succession', S['h2']))
@@ -526,21 +529,36 @@ def build():
                 'the scope of CC-1 and A4. ✓'),
     ]
 
-    E.append(Paragraph('IV. Corollary C-DA2 — Ontological Novelty of Successive ⊥', S['h2']))
+    E.append(Paragraph('IV. Conditional Claim C-DA2 — Novelty of Successive ⊥', S['h2']))
     E.append(bridge_box(
-        'Corollary C-DA2 — Ontological Novelty of Successive ⊥',
+        'Conditional Claim C-DA2 — Novelty of Successive ⊥ (a modelling commitment)',
         [
-            'Statement: No two instantiations share a ⊥. The ⊥ of I<sub>n+1</sub> is topologically unreachable '
-            'from within I<sub>n</sub> by C3. Instantiation succession is therefore not a cycle but a chain (or tree) '
-            'of isomorphic structures.',
+            'Commitment: each instantiation carries its OWN topological space, so the ⊥ of '
+            'I<sub>n+1</sub> is not an element of the Q<sub>2</sub> of I<sub>n</sub>. GIVEN that, no two '
+            'instantiations share a ⊥, and succession is a chain (or tree) rather than a cycle.',
+            'Status: CONDITIONAL, not derived. The commitment above is the separateness of the '
+            'spaces; it is assumed, not obtained from C3. Formerly labelled a Corollary and marked '
+            'derived — retracted, see the note below. The handle C-DA2 is unchanged.',
+            'What IS proved: that anything occupying the bottom role IS the bottom of its own '
+            'lattice (t_iz_limit_is_new_null). That is an identity with the bottom already '
+            'present, not the production of a second one.',
         ]
     ))
     E += [
         sp(4),
-        body('Proof: By ZP-B C3, no continuous path exists within Q<sub>2</sub> of I<sub>n</sub> from any x ≠ 0 back to 0. The '
-             '⊥ of I<sub>n+1</sub> is an element of a distinct topological space — not an element of Q<sub>2</sub> of I<sub>n</sub>. No path '
-             'in I<sub>n</sub> can reach it. By DA-2, the identity conditions of each ⊥ are determined independently within '
-             'each instantiation. Therefore no two ⊥ elements are identical across instantiations. ✓'),
+        body('Why this is NOT a proof, stated plainly because it was published as one. The step '
+             '"the ⊥ of I<sub>n+1</sub> is an element of a distinct topological space" is the CONCLUSION, '
+             'not a consequence of C3. C3 quantifies over paths WITHIN a single space — it says no continuous '
+             'path runs from any x ≠ 0 back to 0 inside one Q<sub>2</sub> — and has nothing to say about '
+             'whether the next instantiation\'s space is a different one. Assuming separateness and then '
+             'deriving distinctness from it is circular. DA-2 likewise fixes identity conditions WITHIN an '
+             'instantiation; it does not compare across two.'),
+        body('And the corpus measures against it where the question is concrete: in the 2-adic realization '
+             'the arc returns to the SAME zero. snap_arc_z2_loop proves the tower starts at 0, that every '
+             'finite stage is ≠ 0, and that it converges back to 0; tower_image_loops_to_seed states the '
+             'limit IS the seed value. So in that chart novelty does not merely lack a proof — it fails. '
+             'C-DA2 stands as a modelling commitment about instantiations, and must not be cited as derived, '
+             'nor supported by T-IZ or by t_iz_limit_is_new_null.'),
     ]
 
     E.append(Paragraph('V. The Directed Instantiation Tree', S['h2']))
@@ -557,7 +575,7 @@ def build():
            'The work here is done by the undifferentiated ⊥ of CC-2, not by T-SNAP: given that '
            'instantiation occurs, no direction is privileged, so the structure branches rather than '
            'threading a line. T-SNAP fixes the shape of each step; it does not supply the occurrence.'),
-        li('No back edges: C-DA2 establishes that no instantiation can reach the ⊥ of any ancestor instantiation.'),
+        li('No back edges: C-DA2 COMMITS to no instantiation reaching the ⊥ of any ancestor. This is the commitment, not a theorem - in the 2-adic chart the arc returns to the same 0 (snap_arc_z2_loop).'),
         sp(4),
     ]
     E.append(body(
@@ -700,7 +718,7 @@ def build():
          'Informal corroboration: ZP-A CC-2 + R3 (structural); ZP-C L-INF (informational); AIT incompressibility (Path 3).'],
         ['DA-2: Instantiation Succession',
          'CLOSED — Definitional',
-         'Terminal state of I<sub>n</sub> satisfies A4 role of ⊥ for I<sub>n+1</sub>. C-DA2 establishes ontological novelty of each ⊥.'],
+         'Terminal state of I<sub>n</sub> satisfies A4 role of ⊥ for I<sub>n+1</sub>. C-DA2 COMMITS to the novelty of each ⊥; it does not establish it.'],
         ['DA-3: Perspective-Relative Cardinality',
          'CLOSED (definitional) / CANDIDATE (DA-3-C1)',
          'DA-3-D1 establishes accessible cardinality is position-dependent within the instantiation structure. '
@@ -763,10 +781,10 @@ def build():
          'ZP-A A4, CC-1; ZP-B C3, R1; T-SNAP',
          'None',
          'Definitional Alignment — clarification of CC-1 scope; no new axiom'],
-        ['C-DA2: Novelty of ⊥',
+        ['C-DA2: Novelty of ⊥ (conditional)',
          'DA-2, ZP-B C3',
          'None',
-         'Derived — Corollary of DA-2 and C3 ✓'],
+         'CONDITIONAL — a modelling commitment. NOT derived: the separateness of the spaces is assumed, not obtained from C3, and snap_arc_z2_loop returns to the same 0.'],
         ['DA-3: Perspective-relative cardinality',
          'DA-2, C-DA2, ZP-B R1',
          'None',
@@ -821,8 +839,11 @@ def build():
          'Valid — AX-1 superseded by T-SNAP. No content lost; claim strengthened from assumed to derived.'],
         ['DA-2: Instantiation Succession',
          'Valid — Definitional Alignment. Clarification of CC-1 scope. No new axiom. A4 role of ⊥ extended across instantiation boundaries. ✓'],
-        ['C-DA2: Ontological Novelty of ⊥',
-         'Valid — Derived. Follows directly from DA-2 and ZP-B C3. ✓'],
+        ['C-DA2: Novelty of ⊥ (conditional commitment)',
+         'CONDITIONAL — a modelling commitment. NOT derived: the separateness of the spaces is '
+         'assumed, not obtained from C3, which quantifies only over paths WITHIN one space. '
+         'snap_arc_z2_loop measures against it — the 2-adic arc returns to the same 0. Must not '
+         'be cited as derived.'],
         ['Directed instantiation tree',
          'Valid given the occurrence commitment — structural consequence of T-SNAP + DA-2. Once instantiation is taken to occur, branching follows and is not optional. Forward edges only.'],
         ['Branching tree structure',

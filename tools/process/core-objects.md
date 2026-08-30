@@ -145,6 +145,96 @@ reframe itself (Tim's) is
 
 ---
 
+## The three traps in the CHOICE row, and none of them is visible in a lemma statement
+
+*Migrated from a private memory, 2026-08-28. `R-COREOBJ` routes you to the choice row's three files;
+these are the errors that row exists to prevent, and they were recorded only where no spawned agent
+could read them.*
+
+**1. The EQUIVOCATION.** English "choice" — picking, adopting a point of view, selecting a chart — is
+**not** the axiom. Every *"choice = which way you view the split"* line is a **model**, never the
+axiom. Hit four separate times in one session.
+
+⚠ **Attribution, and an earlier version of this got it wrong and seeded the error into five Lean
+files.** **Diaconescu (1975) proves an EQUIVALENCE** for the restricted shape: choice for inhabited
+subobjects of a two-element object *is* excluded middle. **"Strictly stronger / the converse fails"
+is Cohen (1963), not Diaconescu.** That the fragment still does not follow from excluded middle *in
+Lean* is a fact about Lean's `Prop`/`Type` stratification, and is the framework's own finding rather
+than either citation's.
+
+**2. NO COUNT. Never record or quote a figure for how many declarations carry choice, anywhere.**
+`ChoiceCannotBe.lean` deliberately records none, for three reasons: a total measures **Mathlib's**
+classicality rather than this framework's; it reads as *"most of this is non-constructive"* when the
+load-bearing fact is that T-SNAP is axiom-free; and **the number has already been wrong twice** —
+once quoted-not-measured, once measured-then-stale. Measure on demand with the PowerShell the index
+supplies. Say instead: **the framework is not choice-free, the core is, and every examined footprint
+has been removable.**
+
+**3. THE INSTANCE HAZARD.** Choice enters at the **instance** level, where it is invisible in the
+lemma — `Prop.instBooleanAlgebra` carries it, `Prop.instHeytingAlgebra` does not. **PIN the instance
+or the purity claim is vacuous.** Measure the instance and the tactic, not just the lemma.
+
+---
+
+## Say WHICH bottom: the three levels
+
+*Migrated 2026-08-28. `R-BRIEF` says "never write a bare 'bottom' — say which level"; this is the
+taxonomy that instruction is short for.* Tim, 2026-06-30:
+
+1. **The structureless referent** — the one ⊥ itself: timeless, spaceless, descriptionless,
+   structureless; what everything reduces to. Working term *"actual ⊥"*.
+2. **A specific structured instance, a "face"** — `0 ∈ ℚ₂`, the Quine atom, the Kleisli initial
+   object, ε₀'s generation. Many, and provably **DISTINCT as structures** (the walls). Each a real
+   bottom in its own domain.
+3. **The family** — all instances plus the slot schema (`ZPH_BottomCannotBe` + matrix + catalog). A
+   set, and **NOT itself a bottom**. Working term *"Bottom-Meta"*.
+
+**Why it is a hard rule and not a style note:** the unification claim is **provable at level 3**
+(every instance is a MEMBER of the family) but only a **thesis at level 1** (every instance is an
+INTERPRETATION of the one referent — correspondence derived, numerical identity a commitment). Saying
+"bottom" bare **slides silently between "proved" and "committed"**.
+
+⚠ **The three labels are NOT adopted terminology.** Tim found standardising three names at once a
+headache and deferred it, so present the *distinction*, using a descriptive phrase where needed —
+never these candidate labels as fixed vocabulary.
+
+**The apophatic corollary (Tim, 2026-06-30): do NOT build a canonical representation of ⊥.** It is
+descriptionless, so every positive attempt overclaims — it happened three times in one session (a
+thin tree edge, the Direction-B strawman, the `StrippedBottom` re-skin), each caught only by cold
+audit. Accumulate what ⊥ **cannot be** instead. A negative entry is **inflation-proof in the
+dangerous direction**: it never asserts ⊥ *is* anything. It is also the project's native method —
+Gödel inversion and eliminative logic are apophatic — and it matches the object, which is
+characterised by the boundary of its exclusions and approached but never closed. The only residual
+risk is padding with trivial negatives, so keep the bar at meaningful structural exclusions.
+
+---
+
+## The ε₀-equals-zero literal is an ALARM, and has exactly three faithful homes
+
+*Migrated 2026-08-28. Standing rule, Tim 2026-07-18. `R-BRIEF` carries two of the three contexts;
+the FENCE context was only ever recorded privately.* The literal string is itself the alarm, so it is
+a **checkable invariant**: in tracked or live files it may appear ONLY as —
+
+1. **A guard that names it in order to forbid it** — R-BEDROCK's own line; `Epsilon0CannotBe.lean`'s
+   guard.
+2. **A fence that denies it as ill-typed** — a cross-type identity, a type boundary, "never a Lean
+   `=`", "NOT a proof of it". This is the whole job of the `CnfBridge.lean` docstrings: they name the
+   door in order to slam it.
+3. **A theorem where ε₀ is an ARGUMENT rather than the claim** — ZP-M's `snap_state_zp2_is_zero`,
+   where `snapEmbed` applied *at* ε₀ is the subject and ε₀ is the input.
+
+**Forbidden everywhere else, and forbidden in conversation with Tim at all — even to deny it.**
+Describe the concept without building the equation: *"the cross-type identity Gentzen flagged"*, *"the
+ill-typed cross-carrier identification"*. **Why:** Tim needs every instance accountable — *"if I can
+call it out and describe it it's ok."* Accuracy inside a faithful guard is fine; surprise is not.
+
+**The check:** grep live files (`ZeroParadox/**/*.lean`, root `*.md`/`*.html`, `scripts/build_*.py`)
+for every encoding of the string, including entity forms and `epsilonZero = 0`. Every hit must fall
+in category 1, 2 or 3; one that does not is a real finding. **Canary: ε₀ ≠ 0 (`epsilon0_ne_zero`)** —
+that is the true statement, and every past error in this class tripped it.
+
+---
+
 ## Routed from `CLAUDE.md`, 2026-08-23
 
 ## ⭐⭐ BEFORE YOU EDIT ANY `.lean` FILE: read `ZeroParadox/MANIFEST.md` AND grep the identifiers you are about to touch. Hard Rule. (Tim, 2026-08-15.)

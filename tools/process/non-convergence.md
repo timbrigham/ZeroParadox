@@ -156,3 +156,65 @@ rule is here.
 is how this file grew past the point where its tail fires. A recurrence usually needs a **trigger
 changed**, not a rule added.
 If you are about to add a section, first find the one that already says it and ask why it did not fire.
+
+---
+
+## Never trade falsifier sensitivity for fewer false alarms
+
+*Migrated from a private memory, 2026-08-28.*
+
+When a gate OVER-flags — flagging result identifiers like `T-SNAP`, `MC-1`, `DA-1` as possible
+"coinage" — **do not carve an exemption into the falsifier to stop it.**
+
+**The asymmetry:** a false positive is CHEAP — the human glances and dismisses in seconds (Tim,
+2026-06-26, overruling the adversary's `T-SNAP` "coinage" flag). A false negative is EXPENSIVE — a
+genuine coinage ships and crank-triage fires on a real reader. **A falsifier should err toward
+over-flagging.**
+
+**Why not relax it, in Tim's words:** an exemption ("identifiers are fine / labels are exempt") is
+**the exact hole a real coinage hides behind** — *"we could potentially end up leaking the other
+direction."* Relaxing sensitivity to cut false alarms re-opens the failure mode the gate exists for.
+
+**The division of labour:** the distinction belongs in the **document**, as positive framing (the
+GUIDE's "On vocabulary" note: result IDENTIFIERS, labels for specific results as any formal
+development assigns, are not vocabulary COINAGE for existing structures). **The falsifier stays
+liberal and skeptical, untouched. The human adjudicates each flag.** The adversary flagging and Tim
+dismissing IS the system working, not a bug to engineer away.
+
+⚠⚠ **THIS DOES NOT CONTRADICT THIS FILE'S OTHER RULE ABOUT FALSE POSITIVES, AND THE TWO MUST NOT BE
+CROSS-CITED.** The rule above ("a false positive is the more expensive error") is about an **LLM
+SCREEN standing in for an ENUMERATION**, where a false positive is never adjudicated by anyone and so
+**manufactures coverage that was never earned**. The rule here is about a **REVIEW GATE producing a
+reading list a human adjudicates**, where the same event costs seconds. **The discriminator is
+whether a person is guaranteed to look at each flag.** If yes, over-flag. If the flags are counted
+rather than read, a false positive is the expensive one.
+
+---
+
+## Screen prose with an LLM, not a regex — and verify the detector before believing a zero
+
+*Migrated from a private memory, 2026-08-28.* Tim, 2026-08-02: after a mechanical find-and-replace
+over prose, screen the result with DeepSeek — *"a quick and excellent tool for finding stuff like
+sentence fragments… we could run corpus wide without it costing anything substantial."*
+
+**Why regex structurally cannot do this:** it cannot tell an opening `**` from a closing one, and it
+cannot tell a subject from a verb. Both failures were measured the same day — a whitespace-tidy rule
+matched a *closing-then-opening* `**` pair across a sentence and **corrupted 61 files**, and the
+damage checker written to catch it **had the identical bug**, so it validated broken text. Meanwhile
+the real defects open on `(` or on a lowercase continuation, so a verb-anchored pattern misses every
+one.
+
+**Measured on the first run** (475 changed lines, one 58k-token call): SUBJECTLESS 8/8 real, HOLE 6/6
+real, **DECAPITATED 82 reported and ~0 real** — that category flags legitimate `**Bold — text**` and
+is noise, so ignore it. **All 11 genuine findings had already survived a regex pass over the same
+lines, three gate rounds, and a purpose-built before/after checker.**
+
+Prompts are built by `fragment_screen.py` (`diff <range>` for "what did my pass break", or `files`
+corpus-wide) and looped by `run_fragment_screen.py` against the API directly, so batches never route
+through the calling model's context.
+
+⚠ **VERIFY THE DETECTOR BEFORE BELIEVING A ZERO.** A clean run returned 0 immediately after one that
+returned 96 — a swing not credible on its face. Inject two or three known-broken lines into a **copy**
+of the prompt, never the repo, and confirm they come back: measured 3/3 caught with 0 false positives
+on the clean text, which is what made the 0 trustworthy. This is the standing rule generalised —
+**before acting on an absence, check that the test could have found the thing.**

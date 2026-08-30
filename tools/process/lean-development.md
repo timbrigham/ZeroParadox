@@ -1,7 +1,10 @@
 # Lean development, the session handoff, insight capture, and development mode
 
-**Body for `CLAUDE.md` §§ `R-FRAMEWORK`, `R-HANDOFF`, `R-CAPTURE`, `R-DEVMODE` and
-`R-LEANDEV`.** The rules are there; the framework structure, the four-fingerprint scan
+**Body for `CLAUDE.md` §§ `R-FRAMEWORK`, `R-HANDOFF`, `R-CAPTURE` and `R-LEANDEV`.**
+⛔ **`R-DEVMODE` was RETIRED on 2026-08-27** (Tim: *"it's never fired right"*). The development-mode
+section below is KEPT, because the content was never the problem — the trigger was. It now hangs off
+`R-EDITLEAN` step 3, which calls `where.py` on a concrete action, and off `R-COREOBJ`, which says load
+the subject's whole row rather than one file. The rules are there; the framework structure, the four-fingerprint scan
 log requirement, the communication-quality rubric pointer, the notes-folder layout, the
 stub-first rationale and the full SJV sync sequence are here.
 
@@ -50,11 +53,15 @@ measured failure history.** 2026-08-20: 120 uncommitted entries, 86 of them note
 committed, with 42- and 21-day gaps. An unstarted item vanished from this file for five revisions and
 was recovered only because Tim remembered it existed.
 
-## Development mode — LOAD THE SECTION BEFORE YOU WORK. (Tim, 2026-07-31.)
+## Load the whole subsystem before fresh development. (Tim, 2026-07-31.)
+
+⛔ This was `R-DEVMODE`, **retired 2026-08-27** as a rule because its trigger never fired. Everything
+below stands as GUIDANCE, reached from `R-EDITLEAN` step 3 and `R-COREOBJ`.
 
 **Before fresh mathematical development, read the whole relevant subsystem. Do not start from
 targeted search.** This is scoped to *development*; error-sweeps have their own discipline and a
-different unit (see below).
+different unit — for prose that ships, the sweep unit is the RENDERED PDF text, never the source
+(`R-DEFECTCLASS` carries that now).
 
 ```
 python .claude-local/where.py "<Tim's phrasing, verbatim>"     # -> ranked folders + token cost

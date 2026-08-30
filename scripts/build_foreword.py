@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.14, revised July 2026)
+Zero Paradox — Foreword PDF Builder (v2.16, revised August 2026)
+v2.16: OCCUPANCY OVERCLAIM RETRACTED, and a WALL PRESENTED AS A GAP (bedrock; editorial + adversary round 6). Two sites, neither reached by the ZP-I v1.16-v1.18 arc even though this document is a general reader's first contact. (1) "converges, at its limit, to something that fills the bottom role again" asserted OCCUPANCY as reached. T-IZ proves convergence to 0 in Q2; that the limit is a thing filling the bottom role is a COMMITMENT, and not merely unproved - ZPSemilattice Q_[2] does not synthesize, so the join-identity is not statable of the limit at all. The proved half, that anything filling the role IS the bottom already there, is kept and now stands alone. (2) "whether they are all one object in the deepest sense remains, honestly, an identification we make rather than a theorem we have closed" presented a WALL as an open question. An equality across distinct categories is not a well-formed proposition: CLAIMS.md retires that identity as ill-typed and the members are PROVABLY DISTINCT. The question is retired, not outstanding, and the walls between the family's members are themselves theorems.
 v2.14: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
 v2.13: T-COMP overclaim corrected (bedrock). "a four-way equivalence connecting the Quine atom, bottom, the join-identity element, and Kleene's fixed point" -> a three-way equivalence, with Kleene's fixed point named as an assumption of the KleeneStructure class rather than a fourth clause; "DA-1 is closed concretely ... grounding the framework in the theory of computation" -> da1_closed_concrete proves the structural half only, and the step to self-execution is a commitment, not a consequence.
 v2.12: SYNC TO CLAIMS.md + bedrock false-premise fix (release-prep). (1) Struck the false "a well-founded ⊥ would admit an external interpreter" premise (the finite-interpretability fallacy, same class as ZP-E v3.24 / ZP-A v1.20) from the CC-2 row and Section III; ZFC-incompatibility now rests on ⊥={⊥} self-membership (Regularity, no_quine_atom). (2) AX-B1 corrected from "Directly Verifiable / not a novel commitment" to "the one substantive modeling commitment" (discrete over continuum; only ax_b1_distinct's distinctness is decide-checked; f_snap_impossible). (3) Commitment accounting synced to CLAIMS.md: MC-1 = the bottom family (not a commitment; identity retired as ill-typed), CC-1 derived via ZP-J cc1_derived, CC-2 a Forced Metatheoretic Commitment. Supersedes the v2.8 "argued to be ruled out" softening (which left the premise) and the v1.6 "Directly Verifiable" AX-B1 relabel.
@@ -57,7 +58,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.14'
+VERSION = '2.16'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -304,11 +305,14 @@ def build():
             S['body']),
         Paragraph(
             'The closure layer (ZP-I) proves T-IZ — the Inside Zero theorem: every '
-            'maximal ascending chain in the state space converges to a new null state '
-            'at its limit. This establishes that the framework is not merely an emergence '
-            'theorem but a closed cycle: the Snap produces states, states accumulate, '
-            'and the accumulation eventually produces a new ⊥. '
-            'The framework contains its own recurrence.',
+            'maximal ascending chain in the state space converges, at its limit, to zero. '
+            'Reading that limit as something filling the bottom role again is a commitment '
+            'rather than a consequence; what is proved is the other half, that anything '
+            'filling that role IS the bottom already there. '
+            'Read as a closed cycle, the Snap produces states, states accumulate, and the '
+            'accumulation returns to the bottom. Whether the bottom it returns to is a NEW one, '
+            'rather than the one it began at, is a modelling commitment (C-DA2) and not part of '
+            'what T-IZ proves; in the 2-adic chart the arc comes back to the same zero.',
             S['body']),
         Paragraph(
             'The counterexample layer (ZP-F) establishes the negative boundary: '
@@ -429,9 +433,11 @@ def build():
             'system, in the sentences a theory cannot prove about itself. Here it sits at the '
             'floor. The Zero Paradox locates this diagonal fixed point at the bottom of every '
             'framework. The framework formalises these faces as instances of a single '
-            'self-application structure and proves several of them identical; whether they are '
-            'all one object in the deepest sense remains, honestly, an identification we make '
-            'rather than a theorem we have closed.',
+            'self-application structure and proves membership per domain. Whether they are '
+            'all one object is not an open question but a retired one: an equality across '
+            'distinct categories is not a well-formed proposition, and the members are '
+            'provably distinct. What survives is the family, and the walls between its '
+            'members are themselves theorems.',
             S['body']),
     ]
 

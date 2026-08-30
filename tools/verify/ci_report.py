@@ -123,6 +123,13 @@ CHECKS = [
     ("check_paths.py",      [],          GATE,  "every repo-relative reference resolves"),
     ("check_hashes.py",     [],          GATE,  "build-script bytes match the register.md fingerprints"),
     ("check_poles.py",      [],          COUNT, "pole-equality sites (no baseline; watch the number)"),
+    # ⚠ COUNT, not GATE, and the reason is measured rather than cautious: its `--block` mode
+    # fires on 2 of its own 5 live hits, which are RETIREMENT NOTICES — the phrase present
+    # because the sentence is retiring it. That suppression class must exist before this can
+    # block. Registered as a counter so it is genuinely INVOKED (a checker nothing runs is not
+    # a check) while its promotion stays open with its blocker named. Inherits `POLE-2`: a
+    # count nobody reads manufactures coverage that was never earned.
+    ("check_divergent.py",  [],          COUNT, "phrases a diff RETIRED that survive in the rendered artifact (no baseline; watch the number)"),
 ]
 
 # The controls. A checker suite whose own controls are not run is a suite nobody has verified.
@@ -145,7 +152,15 @@ SELFTESTS = ["check_prose.py", "check_pov.py", "check_modal.py",
              "check_release_ready.py", "common.py", "guards.py", "debaseline.py",
              # ⚠ `VEND-1`: THE definition of the vendored exemption, imported by every gating
              # checker and audited by nothing until 2026-08-16.
-             "vendored.py"]
+             "vendored.py",
+             # ⚠ ADVISORY at the gate, but its CONTROLS run here like everyone else's. The two
+             # rosters must agree — `check_checkers` compares them and fails when they drift,
+             # which is how this line came to exist rather than being remembered.
+             "check_fields.py",
+             # ⚠ Added 2026-08-29 with the CHECKS row above. `check_checkers` compares these
+             # two rosters and fails when they drift, which is how this line came to exist
+             # rather than being remembered — the same mechanism that produced `check_fields`.
+             "check_divergent.py"]
 
 
 def run(script, args):

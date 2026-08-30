@@ -372,7 +372,7 @@ def pre_push(stream):
     # `recorded()` is the follow-up, and until then its verdict leaves no key.
     # ⚠ Its manifest declares 3 PENDING legs on every run. A clear result here is evidence
     # about two legs, never about the shape contract as a whole.
-    if py("check_claude_md.py") != 0:
+    if py("check_claude_md.py", "--record") != 0:
         print("\nPush blocked: CLAUDE.md names a path or a checker that does not exist.")
         print("Fix the pointer. Body: tools/process/claude-md-maintenance.md.")
         return 1

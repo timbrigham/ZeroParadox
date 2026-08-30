@@ -40,3 +40,32 @@ the severity-tiered cap exists. Do not blur the two, and do not imply a clean sh
 - **Fixing an item creates new unreviewed prose** and restarts the review obligation for the text
   changed — fix and re-sign, or push what was certified.
 - Keep the ledger the SINGLE copy. Do not re-list its entries in the handoff; two copies drift.
+
+---
+
+## No release while known defects are outstanding
+
+*Migrated from a private memory, 2026-08-28.* Tim, 2026-08-01: *"I've got no desire to cut 5.0 right
+now… I want to get that to as close to zero as we possibly can before a damn thing goes forward to
+yet another release."*
+
+**Why:** a GitHub Release mints a permanent Zenodo DOI snapshot. **Four existing releases already
+carry latent flaws that cannot be withdrawn**, and each new release freezes the current defect set
+into another citable permanent record. A defect fixed before a release costs one gate round; one
+shipped in a release is forever. **Release pressure must never be why a finding is deferred to
+next-touch debt.**
+
+⚠ **THE DISTINCTION THAT MAKES THIS ACTIONABLE, because half of it is fixable:** deposited **files**
+in a Zenodo snapshot are frozen forever, but **record METADATA** — the `.zenodo.json`-derived
+description — *can* be corrected after publication through the Zenodo web UI. So a flaw inside a
+published PDF is permanent and a wrong claim in a release DESCRIPTION is not. **Verify before telling
+Tim something is unfixable.**
+
+- When the agenda is ambiguous, rank **defect elimination above release readiness**, and say so.
+- Never present cutting a release as the recommended next step while the ledger is non-empty.
+- "As close to zero as possible" is reachable as **zero KNOWN defects**, not zero defects — the gates
+  always find something. State that distinction rather than implying a clean sheet.
+- **Verify each defect AT THE ARTIFACT before recording it open or closed.** Notes self-report status
+  and have been false in both directions; a ledger built from notes inherits their rot.
+- `check_release_ready.py <tag>` stays mandatory, but passing it is **not** evidence the ledger is
+  empty — it checks mechanical preconditions, not open findings.

@@ -19,7 +19,7 @@ layout: null
     --floor:#5fbfd0;   /* nu - self-reference DOES close (a fixed point)*/
     --between:#e6cf7a; /* Godel 1st - the undecidable diagonal sentence */
     --bottom:#6fd3ec;  /* the Quine atom floor = the framework's own bot*/
-    --choice:#7d7266;  /* carries Classical.choice (Mathlib recursion)  */
+    --choice:#7d7266;  /* [propext, Classical.choice, Quot.sound] (Mathlib recursion) */
     --sight:#ff3b3b;
     --serif:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Cambria Math","Segoe UI Symbol","Noto Serif","DejaVu Serif",serif;
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Cascadia Mono","Segoe UI Symbol","DejaVu Sans Mono",monospace;
@@ -113,7 +113,7 @@ layout: null
   <div class="head">
     <div class="eyebrow">Zero Paradox &#183; interactive map</div>
     <h1>The Diagonal Family &#8212; <span class="em">one engine, two fates</span></h1>
-    <p class="thesis">One diagonal fixed point sits behind Cantor, Russell, G&#246;del, Tarski, Turing and the recursion theorem (Lawvere 1969). The same engine forks by a single question &#8212; <em>can self-reference close?</em> On the <em>wall</em> side (&#956;) it cannot: the argument runs as a proof that no fixed point exists. On the <em>floor</em> side (&#957;) it does: the fixed point is produced &#8212; and at &#8869; it is the framework&#8217;s own.</p>
+    <p class="thesis">One diagonal fixed point sits behind Cantor, Russell, G&#246;del, Tarski, Turing and the recursion theorem (Lawvere 1969 for Cantor, Russell, G&#246;del and Tarski; Yanofsky 2003 for Turing and the recursion theorem). The same engine forks by a single question &#8212; <em>can self-reference close?</em> On the <em>wall</em> side (&#956;) it cannot: the argument runs as a proof that no fixed point exists. On the <em>floor</em> side (&#957;) it does: the fixed point is produced &#8212; and at &#8869; it is the framework&#8217;s own.</p>
   </div>
 
   <div class="stage">
@@ -265,11 +265,11 @@ layout: null
     <div class="lg"><span class="sw" style="background:var(--wall)"></span><span class="t">&#956; wall &#8212; cannot close<small>the argument IS a proof that no fixed point exists</small></span></div>
     <div class="lg"><span class="sw" style="background:var(--floor)"></span><span class="t">&#957; floor &#8212; does close<small>the fixed point is genuinely produced</small></span></div>
     <div class="lg"><span class="sw" style="background:var(--bottom)"></span><span class="t">The Quine atom &#8869;<small>the floor face that is the framework&#8217;s own bottom</small></span></div>
-    <div class="lg"><span class="sw dash"></span><span class="t">Carries Classical.choice<small>Kleene, Rice &#8212; inherited from Mathlib recursion theory</small></span></div>
+    <div class="lg"><span class="sw dash"></span><span class="t">Carries <code>Classical.choice</code><small>Kleene, Rice &#8212; full footprint <code>[propext, Classical.choice, Quot.sound]</code>, inherited from Mathlib recursion theory</small></span></div>
     <div class="lg"><span class="sw" style="background:var(--between)"></span><span class="t">G&#246;del&#8217;s first<small>the undecidable diagonal sentence, built by the engine</small></span></div>
   </div>
 
-  <p class="fence"><b>One engine, two fates.</b> Every argument here is the <em>same</em> diagonal fixed point under one question &#8212; can self-reference close on itself? On the <b>&#956; wall</b> side the answer is no, and the classical argument (Cantor, Russell, Turing, Tarski, Curry) <em>is</em> the proof that no fixed point exists. On the <b>&#957; floor</b> side the answer is yes: the fixed point is produced (the Quine atom, the Kleene quine, L&#246;b, G&#246;del&#8217;s second, Rice). G&#246;del&#8217;s first theorem sits between &#8212; the diagonal sentence the engine builds. The &#956; wall faces plus L&#246;b and G&#246;del&#8217;s second are <b>axiom-free</b>; the two computability floor faces (Kleene quine, Rice) carry <code>Classical.choice</code> from Mathlib&#8217;s recursion theory.</p>
+  <p class="fence"><b>One engine, two fates.</b> Every argument here is the <em>same</em> diagonal fixed point under one question &#8212; can self-reference close on itself? On the <b>&#956; wall</b> side the answer is no, and the classical argument (Cantor, Russell, Turing, Tarski, Curry) <em>is</em> the proof that no fixed point exists. On the <b>&#957; floor</b> side the answer is yes: the fixed point is produced (the Quine atom, the Kleene quine, L&#246;b, G&#246;del&#8217;s second, Rice). G&#246;del&#8217;s first theorem sits between &#8212; the diagonal sentence the engine builds. The &#956; wall faces plus L&#246;b and G&#246;del&#8217;s second are <b>axiom-free</b>; the two computability floor faces (Kleene quine, Rice) carry <code>Classical.choice</code> from Mathlib&#8217;s recursion theory &#8212; their full footprint is <code>[propext, Classical.choice, Quot.sound]</code>, which is what <code>#print axioms</code> reports if you run it.</p>
 
   <p class="fence"><b>What is drawn vs. what is claimed.</b> The unification is <b>Lawvere&#8217;s (1969)</b>, restated by <b>Yanofsky (2003)</b> &#8212; the arguments as one scheme is prior art, cited not claimed. This figure is a <em>placement</em> of the framework&#8217;s &#8869; among these recognized arguments, not a new theorem; the cross-face identity stays a type boundary &#8212; the same shape, provably distinct carriers. The one floor face that is the framework&#8217;s own bottom is the Quine atom &#8869;={&#8869;}, the seam the Bottom Family tree grows from.</p>
 
@@ -313,13 +313,13 @@ layout: null
     quine: {t:'the Quine atom &#183; &#8869;', c:'--bottom', why:[
       ['nu floor','&#8869;={&#8869;}: self-reference closes &mdash; executable, landing at &#8869; &mdash; <code>t_exec</code>'],
       ['the framework&#8217;s own','this floor face IS the bottom the whole framework runs on'],
-      ['axioms','none &mdash; axiom-free'],
+      ['axioms','no kernel axioms &mdash; and the self-containment is supplied by the <code>AFAStructure</code> instance, not derived'],
       ['the tie','it is the root seam the Bottom Family tree grows from']],
       chk:'t_exec'},
     kleene: {t:'the Kleene quine', c:'--floor', why:[
       ['nu floor','a program that reproduces itself &mdash; the recursion theorem fires &mdash; <code>computability_face_fixedPoint</code>'],
       ['a genuine instance','the reflexive object (the universal machine) is real here'],
-      ['axioms','carries Classical.choice (Mathlib recursion theory)']],
+      ['axioms','<code>[propext, Classical.choice, Quot.sound]</code> &#8212; the choice is Mathlib&#8217;s recursion theory, not this framework&#8217;s']],
       chk:'computability_face_fixedPoint'},
     loeb: {t:'L&#246;b', c:'--floor', why:[
       ['nu floor','provability of (&#9633;A &#8594; A) yields A &mdash; the provability-logic fixed point &mdash; <code>loeb</code>'],
@@ -334,7 +334,7 @@ layout: null
     rice: {t:'Rice', c:'--floor', why:[
       ['nu floor','the fixed point provably EXISTS, yet its membership is undecidable &mdash; <code>rice_face_has_bottom</code>'],
       ['exists-but-undecidable','the pivot face: produced, but not decidable &mdash; <code>quine_exists_yet_rice</code>'],
-      ['axioms','carries Classical.choice (Mathlib recursion theory)']],
+      ['axioms','<code>[propext, Classical.choice, Quot.sound]</code> &#8212; the choice is Mathlib&#8217;s recursion theory, not this framework&#8217;s']],
       chk:'rice_face_has_bottom'},
     godel1: {t:'G&#246;del&#8217;s first', c:'--between', why:[
       ['between the fates','the undecidable diagonal sentence the engine builds &mdash; <code>lawvere_fixedpoint</code>'],

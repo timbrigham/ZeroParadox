@@ -308,3 +308,35 @@ What each of the three 2026-07-27 findings cost, the `exact?` case that correcte
 not just the line count, the 19 abandoned PDFs, the survey-became-a-theorem case, and the scope rule
 that decides whether a layer triggers at all. **Read it before writing a scout brief or arguing that
 a layer is out of scope.**
+
+---
+
+## Prior art is a CONTINUOUS BASELINE, and the incompleteness is stated openly
+
+*Migrated from a private memory, 2026-08-28.*
+
+For any synthesis, bridge or keystone claim, prior-art search is a **standing practice, not a
+one-time gate** — and the search being ongoing and incomplete is **said out loud, inviting
+correction**. Tim: it *"should honestly be part of our baseline."*
+
+**Why:** ZP's value is its **delta** against prior art, so an uncited closest-prior-art reads as
+*unaware*, which is the crank-triage failure. Confirmed twice in one session (2026-06-22):
+Veltri/FSCD for ZP-P's choice fork, and Yanofsky 2003 / Lawvere 1969 for the diagonal-fixed-point
+keystone. **Both were the exact specialist home for ZP's distinctive claim, and both were uncited.**
+
+1. Per synthesis claim, name precisely what is **the specialist's** and what is **ZP's**, with the
+   credit direction pointing AT the specialist — **ZP is an instance joining their programme, never
+   the umbrella subsuming it.**
+2. Re-run the search when a layer is REVISED, not only at creation.
+3. Bake an explicit *"prior-art search is ongoing; corrections welcome"* line into convergence and
+   keystone surfaces, so the incompleteness is owned rather than hidden.
+4. ⚠ **Independent arrival is a PRIVATE confidence signal, never a public credential.** Cite first,
+   note independence second. Never the reverse.
+
+**Two lessons from the all-layers sweep (2026-06-22).** **Step 0 is grep OUR OWN corpus first** —
+much of the project's prior-art knowledge already lives in it, and a web-first pass "rediscovers"
+material already cited (the sweep false-flagged ZP-B's Bruhat–Tits, cited in
+`ZeroParadox/Valuation/PadicTree.lean`).
+And the trigger is **construction size**, not only cross-field synthesis: a new `.lean` file or a
+large net addition fires it too, which is what catches the ZP-D class whose `T: Q₂ → H` is the
+standard van der Put / Kozyrev ball-indicator orthonormal basis.

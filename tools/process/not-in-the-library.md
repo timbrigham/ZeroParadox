@@ -112,3 +112,84 @@ It also compounds: each false negative was written into a docstring as a *measur
 **And the payoff for checking is real, not just defensive.** Correcting the three negatives above turned
 "one of four hypotheses holds" into "three of four", and put an instance-of claim the corpus had twice
 withheld back within reach. **Searching harder gets you MORE** — the same lesson as Trigger 0.
+
+---
+
+## The OPEN half: a status is a claim, and a retraction is a new one
+
+Added 2026-08-26. Everything below was routed out of `CLAUDE.md` R-NOTINLIB under the §3 **move**
+payment; the routing entry keeps TRIGGER / RULE / COST / READ and this file keeps the argument.
+
+### The register, and why it is the discharge
+
+**`CLAIMS.md` is the canonical register of claim status, exactly as `register.md` is for versions.**
+Read the row before assigning a status, and CITE it rather than restating it — a paraphrase goes
+stale the instant the original moves. `ZeroParadox/ClaimsMirror.lean` is the same answer in Lean.
+
+### A RETRACTION IS ITSELF A NEW CLAIM
+
+It inherits the whole of the rule, and this is the part nothing else covers. **Every other gate in
+this project hunts OVERCLAIMS** — `/adversary-review` triages grandiosity, `/editorial-review`
+checks wording against sources, `/rely` executes. An UNDERCLAIM is invisible to all three:
+
+- it **reads as modest**, so a cold-triage reviewer has nothing to flag;
+- its "source" is an **absence**, so there is nothing to check the wording against;
+- it is **prose**, so it does not run.
+
+So the moment you are removing an overclaim, the entire apparatus is aimed at the opposite failure
+and only this rule is looking.
+
+### The measured miss
+
+A retraction called a cross-carrier identity an open **TYPE BRIDGE** — "no such bridge is claimed
+here", "it is OPEN". `CLAIMS.md:110` had already retired that identity as **ill-typed**: *"`x = y`
+across distinct categories is not a well-formed proposition, so it was never a claim to hold."* The
+prose manufactured debt the project had already closed, inside the fix for an overclaim.
+
+⚠ **A WALL IS NOT A GAP.** The four domain bottoms are MEMBERS of one family (MC-1), membership
+proved per domain, and **the members are provably distinct — the walls are THEOREMS.** Hitting one
+is the result, not a hole in the work. Asking for the identity is asking for a proposition that is
+not well-formed, which is why no amount of building would ever close it.
+
+Found by Tim, from a systems reading rather than a mathematical one. No gate caught it, and the
+detector below would not have existed without that catch.
+
+### The detector, and why it must stay NARROW
+
+`check_negatives` now carries the STATUS vocabulary alongside the EXISTENCE vocabulary it always
+had — the three written phrasings walked past it because every pattern enumerated the latter, and
+the bridge-shaped one cleared `no such <qual> in the corpus` **by one word**. `CLAIMS.md`,
+`ClaimsMirror`, `ill-typed` and `retired` are EVIDENCE forms, so citing the register discharges.
+
+⚠ **The first draft was too broad and fired on NINE standing sites, every one honest** — *"Whether
+the existence half of Aczel's theorem generalises to abstract DecorationUniverses is an open
+question."* **Stating that a QUESTION is open is this project's epistemic honesty; asserting an open
+BRIDGE, GAP or JUNCTION asserts a MISSING CONSTRUCTION.** Only the second is the defect. It
+was narrowed to that, with all nine pinned as MUST_SUPPRESS controls so a future widening cannot
+silently re-break them.
+
+⚠ **`--baseline` is refused by `guards.py` (exit 2), and that refusal forced the correct fix.** A
+strengthening that fires on good prose cannot be absorbed into the baseline; it has to be narrowed
+or abandoned. Recorded as **DC-30** in `DEFECT_CLASSES.md`, and as `UND-1`…`UND-3` in `DEFECTS.md`.
+
+### The probe axes, in full
+
+The routing entry names the four axes; these are what each one means.
+
+- **POLARITY** — how the corpus would say it if it DISAGREED with you. A single-polarity search has
+  a blind half. In the measured miss the corpus's words were **family**, **member** and
+  **ill-typed**, and a gap-shaped search reaches none of them.
+- **PART OF SPEECH** — the verb that builds the thing, not the noun that names it.
+- **VOCABULARY** — the domain's own words, not yours.
+- **DISPLAY** — never conclude absence from TRUNCATED output. Re-run untruncated, or print
+  `file:line` and open the hits.
+
+And the probe hygiene the entry compresses: confirm the name imports and elaborates; re-run with
+universes explicit; ask whether it DECOMPOSES into pieces that are present; remember that
+attribute-generated siblings have **no source line at all**, so `#check` is the authority and grep
+is not.
+
+### The older half, kept
+
+Three recorded negatives were false and had already shipped into docstrings as measured fact.
+Correcting them turned *"one of four hypotheses holds"* into three.

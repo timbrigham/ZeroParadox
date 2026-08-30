@@ -25,7 +25,7 @@ loop, so it enforces the cap. Paste this into the brief verbatim:
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
 **This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
-any file under the repository, with exactly two exceptions: the coverage manifest described in step 7b, and your findings note under
+any file under the repository, with exactly ONE exception: your findings note under
 `.claude-local/notes/`.
 
 **NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
@@ -75,21 +75,34 @@ If the content asserts or relies on a **Forced Metatheoretic Commitment** — or
 
 **7. Recording — the LEDGER. There is no file to write.**
 
-⛔ **DO NOT WRITE `.claude-local/cr_cleared.txt`.** It was RETIRED on 2026-08-24, the last of the `*_cleared.txt` scheme. `check_frozen.py` reads the `claim_review` LEDGER RECORD now — its reader moved in the same change as the writer, which is the order that matters: retiring the file while the reader still opened it would have made a frozen-baseline removal FREE, *"a suppression mechanism losing its price."*
+⛔ **DO NOT WRITE `.claude-local/cr_cleared.txt`.** It was RETIRED on 2026-08-24, in the change that retired the `*_cleared.txt` scheme. `check_frozen.py` reads the `claim_review` LEDGER RECORD now — its reader moved in the same change as the writer, which is the order that matters: retiring the file while the reader still opened it would have made a frozen-baseline removal FREE, *"a suppression mechanism losing its price."*
 
 ⚠ **Your record IS the coverage.** `check_frozen` asks the ledger which paths a **SATISFIED** `claim_review` record covers, and only SATISFIED discharges — STALE means the reviewed bytes moved, MISSING means nothing ran, and neither is a review. **So the subjects you name are exactly the removals you discharge.** Name every file you actually read.
 
-**On FAIL / FAIL-BEDROCK — record it yourself. One agent's finding stands alone** (§ 6a-i: *FAIL alone, PASS by unanimity or signature*):
+**On FAIL / FAIL-BEDROCK — record it yourself. One agent's finding stands alone.** ⚠ Record a PASS too, with `--how delegated` — the older *"FAIL alone, PASS by unanimity or signature"* rule is RETIRED, predating the `delegated` route added 2026-08-25:
 
 ```
 python tools/verify/record.py --step claim_review --verdict fail --tier A \
-    --how agreement --passes 1 --agreed 1 \
-    --run gate-claim-<YYYY-MM-DD> \
+    --how delegated --who claim_review \
+    --evidence .claude/commands/claim-review.md \
+    --run gate-claim_review-<YYYY-MM-DD> \
     --reason-file <path to a file holding one line: which claim, and what is unsupported> \
     --files <every file you reviewed>
 ```
 
-**On PASS — record NOTHING and report the verdict to your caller.** A lone A-tier PASS is absence-of-evidence wearing a clean bill, and `V3` rejects it at the server anyway.
+**On PASS — RECORD IT, with `--how delegated`.** This changed on 2026-08-25 and the old instruction here was *"record NOTHING"*. That was correct while `agreement` was the only route: V3 refuses a lone A-tier PASS, `mechanical` would be a lie about a computation, and `signature` asserts a PERSON accepted it. So a gate could report findings and had **no way to report success** — measured across the whole stream that day, nine agent reviews, every one a FAIL, and not a single recorded PASS. Absence of a pass therefore meant nothing, which is the exact ambiguity this ledger exists to remove.
+
+```
+python tools/verify/record.py --step claim_review --verdict pass --tier A \
+    --how delegated --who claim_review \
+    --evidence .claude/commands/claim-review.md \
+    --run gate-claim_review-<YYYY-MM-DD> \
+    --files <every file you reviewed>
+```
+
+⚠ **`--evidence` is the BRIEF, not the checker, and it is what makes a delegated PASS accountable.** Attribution is not authentication — no key material exists here and *"prove you are that agent"* was never available. What IS checkable is which instructions governed the round: **editing this brief stales the key and the gate re-runs.** A delegated verdict cannot outlive its instructions.
+
+⚠ **`delegated` claims no consensus and must not be dressed as one.** It records ONE agent round, honestly. If a caller genuinely runs three independent passes, that is still `--how agreement` and it remains the stronger claim; V3 is untouched.
 
 ⚠ **Subjects are read from the git INDEX, so the files must be STAGED.** `common.ledger_subjects` fences anything untracked or differing from the index; it fails closed. ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
 keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are

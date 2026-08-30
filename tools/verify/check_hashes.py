@@ -151,7 +151,7 @@ FORMAL_ONLY_SCRIPTS = {
 # this comment made and two gates independently corrected. The register tracked the tracked script
 # correctly through `6c018de` and `c972ff0`, then diverged at `b8537c9` (2026-06-21) and never
 # reconverged: from there it fingerprinted the `.claude-local` copy, which the 2026-08-15
-# consolidation deleted. Exactly the failure CLAUDE.md § `scripts/` predicts — "the PUBLISHED script
+# consolidation deleted. Exactly the failure CLAUDE.md § `R-SCRIPTS` predicts — "the PUBLISHED script
 # sat outside the integrity check entirely" — and the same three-month silent drift as `scan_pdfs.py`.
 #
 # ⚠ The four-step rule was NOT skipped. Script, PDF and register moved together at `01a5dd2`; the
