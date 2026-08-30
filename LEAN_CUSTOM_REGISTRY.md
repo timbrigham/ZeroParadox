@@ -1,11 +1,11 @@
 # Zero Paradox — Lean Custom Definition Registry
 
-This file documents every definition, typeclass, and instance in the Zero Paradox Lean library that diverges from Mathlib's standard formalization. Each entry records what was replaced or extended, and the precise reason the Mathlib version was insufficient.
+This file documents the definitions, typeclasses and instances CARRYING A `[ZP-CUSTOM]` TAG, each recording what was replaced or extended and why the Mathlib version was insufficient. ⚠ It is not a completeness claim over the corpus: as of 2026-08-30 roughly twenty project-local `class` and `structure` declarations are untagged and therefore absent here (`StrippedBottom` in `ZeroParadox/Valuation/StrippedBottom.lean` among them), and the count check below is blind to that by construction — adding an untagged declaration leaves entry count and tag count equal.
 
-Every entry corresponds to a `-- [ZP-CUSTOM]` inline comment in the source. The register is generated from those comments and is always consistent with them. To regenerate:
+Every entry corresponds to a `-- [ZP-CUSTOM]` inline comment in the source. ⚠⚠ **The register is NOT generated and is NOT automatically consistent with those comments.** It is maintained by hand. `tools/verify/check_invariants.py` compares the entry COUNT against the tag COUNT and nothing finer, so WORDING drift between the two copies is mechanically invisible and must be compared by eye — several entries here carry citations, dates or prior-art blocks their tag does not, and this file records one past case where the two contradicted each other outright. To list the tags (this prints them; it does not regenerate anything):
 
-```
-grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
+```powershell
+Select-String -Path ZeroParadox\*.lean -Pattern '\[ZP-CUSTOM\]' -Recurse
 ```
 
 ---
@@ -16,7 +16,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 **Relationship to Mathlib:** Replaces `SemilatticeSup` + `OrderBot`
 
-**Reason:** Mathlib's semilattice hierarchy ties `⊔` to its order typeclass infrastructure (`LE`, `Preorder`) via hundreds of instances; importing it contaminates `#print axioms` with unrelated classical dependencies. `ZPSemilattice` states axioms A1–A4 from scratch so every theorem's axiom footprint is auditable.
+**Reason:** Mathlib's `SemilatticeSup` + `OrderBot` would satisfy the algebra, and using them is cheap — measured 2026-08-30 at the pinned Mathlib, both classes are axiom-free and `bot_sup_eq` and `sup_assoc` cost `[propext]` only. `ZPSemilattice` states A1–A4 as FIELDS anyway, so each theorem's footprint is fixed by the axioms it consumes rather than by whichever hierarchy lemma the elaborator reached for. ⚠⚠ This is an AUDITABILITY choice, not an axiom-avoidance one: an IMPORT never changes a footprint, only USING a proof does. (`ZeroParadox/Order/Lattice.lean` line 1 imports `Mathlib.Tactic` and the class still measures clean — this entry previously claimed the opposite.)
 
 ---
 
@@ -46,9 +46,9 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ### `ValuationStructure` — `ZeroParadox/Valuation/Scale.lean`
 
-**Relationship to Mathlib:** Replaces `Mathlib.RingTheory.Valuation.Valued`
+**Relationship to Mathlib:** Replaces `Valued` (`Mathlib/Topology/Algebra/Valued/ValuationTopology.lean`)
 
-**Reason:** Mathlib's `Valued` typeclass requires ring/field structure (it formalizes algebraic valuations over rings). `ZPSemilattice` has join only — no ring. `ValuationStructure` uses `val : L → ℕ∞` (not a `GroupWithZero` target) and the single axiom `val_scale` (val strictly increases under scale), which is the only machinery needed for the fixed-point uniqueness argument.
+**Reason:** Mathlib's `Valued` typeclass requires ring/field structure (it formalizes algebraic valuations over rings). `ZPSemilattice` has join only — no ring. `ValuationStructure` uses `val : L → ℕ∞` (not a `GroupWithZero` target) and FOUR axioms — `scale_bot`, `val_bot`, `val_unique`, `val_scale` — which together are what the fixed-point uniqueness argument consumes. ⚠ `val_scale` alone does NOT suffice, measured 2026-08-30: on `Bool` with `bot = false`, `scale = id` and `val` everywhere `⊤`, the other three-minus-one hold and `true` is a fixed point of `scale` that is not the bottom. `val_unique` supplies the FINITENESS that makes `val_scale` bite — `n = n + 1` is true at `⊤`, so without it the increment no-ops.
 
 ---
 
@@ -70,7 +70,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ### `ZPCategory` — `ZeroParadox/Category/Category.lean`
 
-**Relationship to Mathlib:** Extends `Mathlib.CategoryTheory.Limits.IsInitial`
+**Relationship to Mathlib:** Extends `CategoryTheory.Limits.IsInitial` (`Mathlib/CategoryTheory/Limits/Shapes/IsTerminal.lean`)
 
 **Reason:** Mathlib has `IsInitial` and `IsTerminal` as separate structures; it has no typeclass bundling them together with AX-G2 (source asymmetry: `hom(X,0) = ∅` for non-isomorphic `X`). `ZPCategory` bundles both ZP-G axioms so they can be assumed uniformly across all ZP-G theorems without threading separate hypotheses.
 
@@ -88,7 +88,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** Mathlib's `ZFSet` (the only set-theory formalization) uses Foundation — `x ∈ x` is forbidden, making it invalid as a decoration target for any APG with a self-loop. `DecorationUniverse` is an abstract type with `ValuationStructure` plus a `collect` operation and two axioms (`collect_singleton`, `collect_val_ge`), providing the minimum structure needed for AFA decoration uniqueness without importing any set-theoretic axiom.
+**Reason:** Mathlib's `ZFSet` (the only set-theory formalization) uses Foundation — `x ∈ x` is forbidden, making it invalid as a decoration target for any APG with a self-loop. `DecorationUniverse` is an abstract type with `ValuationStructure` plus a `collect` operation and two axioms (`collect_singleton`, `collect_val_ge`), providing the structure the decoration-uniqueness proof consumes, without importing `ZFSet` or any axiomatic set theory. ⚠ It is NOT axiom-free: `DecorationUniverse` and `decoration_unique` each measure `[propext, Classical.choice, Quot.sound]`, inherited from the required `[ValuationStructure U]` — see the purity block in `ZeroParadox/Valuation/Scale.lean`, which pins the route to the `ℕ∞` numeral in `val_scale`. ⚠ "Minimum" is also unproved: that file's own NO-GO gauge records the class is inhabited over EVERY `ValuationStructure` carrier.
 
 ---
 
@@ -148,7 +148,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ### `IsKleeneFixedPoint` — `ZeroParadox/Computability/Kleene.lean`
 
-**Relationship to Mathlib:** Replaces `Mathlib.Function.IsFixedPt`
+**Relationship to Mathlib:** Replaces `Function.IsFixedPt` (`Mathlib/Logic/Function/Defs.lean`)
 
 **Reason:** `Function.IsFixedPt` works on total functions `α → α`. Here `f : Code → ℕ →. ℕ` (partial function) and the fixed-point condition is `eval c = f c` — equality of partial functions. No Mathlib predicate covers this; `IsKleeneFixedPoint` is the partial-function analog needed for the computability layer.
 
@@ -183,7 +183,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 ### `machinePhaseZPS` — `ZeroParadox/Order/Snap.lean`
 `ZPSemilattice MachinePhase`
 
-The cross-framework bridge. `MachinePhase` is Surprisal's two-element type; giving it a `ZPSemilattice` instance makes T-SNAP (`bot_join` applied to `MachinePhase`) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for `MachinePhase`.
+The cross-framework bridge. `MachinePhase` is one of two two-element inductives in `ZeroParadox/Information/Surprisal.lean` (the other, `BinaryState`, has its own entry above); giving it a `ZPSemilattice` instance makes T-SNAP (`bot_join` applied to `MachinePhase`) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for `MachinePhase`.
 
 ---
 
@@ -236,7 +236,9 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 ---
 
-*Last updated: 2026-07-19. Regenerate with: `grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"`*
+## Further Entries
+
+⚠ These continue the register; the sections above are not exhaustive. (A closing *"Last updated: 2026-07-19"* footer previously sat here, with fifteen entries after it — several dated later than the footer itself. Removed rather than re-dated: a single date on a hand-edited register is a figure that goes stale silently, and each entry carries its own dates where they matter.)
 
 ### `IsLeastFixedPointFrom` — `ZeroParadox/Order/LeastFixedPoint.lean`
 
@@ -248,7 +250,7 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** Mathlib carries no modal or provability logic — no Loeb, no GL, no derivability conditions, no modal Kripke apparatus (grep-verified). A minimal typeclass carrying just the Hilbert-Bernays-Loeb apparatus, so that Loeb's theorem can be presented as a face of the diagonal family.
+**Reason:** No modal or provability logic was located in the pinned Mathlib as of 2026-08-30 — searched on three axes (Loeb/GL; Kripke and "modal logic"; provability/derivability): `Kripke` and `modal logic` return nothing, every `GL` hit is `GeneralLinearGroup`, and the `provability` hits are first-order material under `ModelTheory/`. A minimal typeclass carrying just the Hilbert-Bernays-Loeb apparatus, so that Loeb's theorem can be presented as a face of the diagonal family.
 
 ### `QuineHost` — `ZeroParadox/Settheory/QuineHost.lean`
 
