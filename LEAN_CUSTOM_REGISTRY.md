@@ -32,7 +32,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** Abstracts the shared fixed-point pattern between AFA set theory (`f x = {x}`, unique fixed point = Quine atom) and 2-adic multiplication (`f x = 2x`, unique fixed point = 0). Mathlib has `Function.IsFixedPt` (a predicate on total functions) but no typeclass for "type with a self-application operation whose unique fixed point is a designated bottom element." Introducing this typeclass allows `AFAStructure`'s three class fields to become derived theorems.
+**Reason:** Abstracts the shared fixed-point pattern between AFA set theory (`f x = {x}`, unique fixed point = Quine atom) and 2-adic multiplication (`f x = 2x`, unique fixed point = 0). Mathlib has `Function.IsFixedPt` (a predicate on total functions) but no typeclass for "type with a self-application operation whose unique fixed point is a designated bottom element." Introducing this typeclass allows `AFAStructure`'s two LAWS (`bot_self_mem`, `quine_unique`) to become derived theorems; its `selfMem` field is DATA, supplied by `def selfMemDerived` rather than proved.
 
 ---
 

@@ -75,7 +75,7 @@ class AbstractSelfApp (L : Type*) [ZPSemilattice L] where
   /-- ⊥ is the ONLY fixed point of selfApp. -/
   unique_fp : ∀ x : L, selfApp x = x → x = bot
 
-/-! ## § II. selfMem, bot_self_mem, quine_unique as Derived Theorems -/
+/-! ## § II. `selfMem` supplied as DATA; `bot_self_mem` and `quine_unique` derived as THEOREMS -/
 
 variable {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 

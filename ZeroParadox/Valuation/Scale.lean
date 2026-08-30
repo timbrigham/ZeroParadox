@@ -161,7 +161,8 @@ instance toAbstractSelfApp : AbstractSelfApp L where
 /-! ## § IV. AFAStructure — Full Derivation Chain
 
     ValuationStructure → AbstractSelfApp → AFAStructure
-    All three fields of AFAStructure are now theorems derived from valuation axioms. -/
+    AFAStructure's two LAWS are now theorems derived from valuation axioms; its `selfMem`
+    field is DATA, supplied by `def selfMemFromVal` below. -/
 
 /-- selfMem derived from ValuationStructure: x is self-containing iff
     it is a fixed point of scale (i.e., scale x = x). -/

@@ -75,8 +75,9 @@ instance instOntSelfApp : AbstractSelfApp OntologicalStates where
 
 /-! ## §III. Derived AFA Content
 
-All three fields of AFAStructure are now theorems, derived from the
-AbstractSelfApp instance above. No AFA axioms are imported. -/
+AFAStructure's two LAWS — `bot_self_mem` and `quine_unique` — are now theorems, derived
+from the AbstractSelfApp instance above. Its `selfMem` field is DATA, supplied by
+`def selfMemDerived`, not proved. No AFA axioms are imported. -/
 
 /-- null is self-containing: the constant-to-null map fixes null. -/
 theorem ont_bot_self_mem : selfMemDerived (bot : OntologicalStates) :=
