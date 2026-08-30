@@ -9,12 +9,19 @@ the declarations, the Engineer's Take and the per-declaration glosses.
 axioms (`scale_bot`, `val_bot`, `val_unique`, `val_scale`) only ever use `bot` — the join `⊔` never
 appears. So `ZPSemilattice` is an over-strong constraint, and no `ValuationStructure` `ℤ_[2]` is
 DEFINED even though all four axioms hold (proved as standalone theorems in
-`ZeroParadox/Valuation/Scale.lean` § V). ⚠ Read "not defined", never "not possible" — and note
-the question is not currently well-formed: `Nonempty (ValuationStructure ℤ_[2])` does not
-elaborate, since no `ZPSemilattice ℤ_[2]` exists to state it over. What `valBridge_nonempty_iff`
-settles is membership in the WEAKER class `ValBridge`, and `ℤ_[2]` is a member of that by
-`instZ2ValBridge`. ⚠⚠ It does not transfer upward: `toValBridge` runs one way, carrying
-obstructions INTO `ValuationStructure` and no membership witness back out.
+`ZeroParadox/Valuation/Scale.lean` § V).
+
+⚠⚠ **Not defined is not the same as not possible, and here the difference decides the answer.**
+`Nonempty (ValuationStructure ℤ_[2])` fails to elaborate only because no `ZPSemilattice ℤ_[2]`
+INSTANCE is registered — a fact about the instance database. Supplied explicitly the proposition
+is TRUE, and `ZeroParadox/Valuation/Scale.lean` now carries the witness: a semilattice with
+bottom 0, over which all four axioms discharge. **The join is free.** The four axioms mention
+only `bot` and never the join, so any associative, commutative, idempotent operation with 0 as
+its identity serves; "the larger under some total order, unless one side is zero" is one.
+What is genuinely absent is a *natural* join arising from the ring structure — an argument about
+naturality, not possibility. ⚠ The witness is choice-dependent (it well-orders the carrier) and
+adds no new axiom: § V's own `q2Val_unique` and `q2Val_scale` already carry `Classical.choice`.
+A choice-free join is not ruled out; none has been built.
 
 This tests the conjecture that the constraint is an **encoding artefact, not a mathematical gap**. It
 defines `ValBridge` — the same four axioms with `bot` a plain field rather than a `ZPSemilattice` bottom
@@ -64,7 +71,7 @@ the checkable branch of exactly this argument. Cite that for the general pattern
 `(0, false)`. `val_scale` buys injectivity *along an orbit*, which is all the argument consumes.
 
 The two-element case is older still: `ZeroParadox/Settheory/OntBridge.lean` records that
-`OntologicalStates` admits no `ValuationStructure`, by `no_valBridge_of_finite`. ⚠ The obstruction
+`OntologicalStates` admits no `ValuationStructure`, by `valuationStructure_forces_infinite` (the obstruction transported across `toValBridge`, which is the direction that transfers). ⚠ The obstruction
 is JOINT: `val_scale` alone holds on two elements (`val` everywhere `⊤`, `scale := id`, since
 `⊤ + 1 = ⊤`), and it is `val_unique` that then fails.
 

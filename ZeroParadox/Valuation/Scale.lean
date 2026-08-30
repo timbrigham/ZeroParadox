@@ -204,16 +204,15 @@ theorem val_selfMem_singleton :
     The formal connection — a ZPSemilattice instance for a concrete type carrying
     a ValuationStructure — is the remaining open gap. -/
 
-/-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE AND THE GAP IS CLOSED.** A concrete type carrying
-    BOTH a `ZPSemilattice` and a `ValuationStructure` exists: ℕ∞, via `instNatInfZPS` and
-    `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which IMPORTS this file. ⚠ §V ALSO
-    says ℤ_[2] "cannot be a formal ValuationStructure instance" — read NOT DEFINED, and note
-    the question is not well-formed: `Nonempty (ValuationStructure ℤ_[2])` does not elaborate,
-    as no `ZPSemilattice ℤ_[2]` exists to state it over. What IS settled is the WEAKER class —
-    `ValBridge ℤ_[2]`, by `instZ2ValBridge`. ⚠⚠ It does NOT transfer: `toValBridge` runs
-    `ValuationStructure ⇒ ValBridge`, carrying obstructions forward and no membership witness
-    back. Both stale sentences stay only because their block is frozen by content hash; the
-    route out is a `/claim-review` debaseline. -/
+/-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE, AND §V's ℤ_[2] SENTENCE IS FALSE.** ℕ∞ carries
+    BOTH structures — `instNatInfZPS` and `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`,
+    which IMPORTS this file. §V also says ℤ_[2] "cannot be a formal ValuationStructure
+    instance"; the example below SUPPLIES a semilattice with bottom 0 and discharges all four
+    axioms over it (end of § V, where its inputs are in scope). No `ZPSemilattice ℤ_[2]`
+    INSTANCE is registered, so the bare expression fails synthesis — a fact about the
+    instance database, never about existence.
+    Both stale sentences stay only because their block is frozen by content hash; the route
+    out is a `/claim-review` debaseline. -/
 
 section PadicParallel
 
@@ -261,6 +260,39 @@ theorem q2Val_scale (x : ℤ_[2]) (hx : x ≠ 0) :
 /-- The unique fixed point of ×2 in ℤ_[2] is 0. -/
 theorem q2Scale_unique_fp (x : ℤ_[2]) (h : 2 * x = x) : x = 0 := by
   linear_combination h
+
+/-- Statement: ℤ_[2] DOES admit a `ValuationStructure`, once a semilattice is supplied. The join
+    is free — the four axioms mention only `bot` and never the join — so any associative,
+    commutative, idempotent operation with 0 as its identity serves. ⚠ Choice-dependent: it
+    well-orders the carrier. That adds NO new axiom, since `q2Val_unique` and `q2Val_scale`
+    below already carry `Classical.choice`. A choice-free join is not ruled out; none is built
+    here. -/
+example : ∃ h : ZPSemilattice ℤ_[2], Nonempty (@ValuationStructure ℤ_[2] h) := by
+  classical
+  letI : LinearOrder ℤ_[2] := IsWellOrder.linearOrder (WellOrderingRel (α := ℤ_[2]))
+  letI SL : ZPSemilattice ℤ_[2] :=
+    { join := fun x y => if x = 0 then y else if y = 0 then x else max x y
+      bot := 0
+      join_assoc := by
+        intro x y z
+        by_cases hx : x = 0 <;> by_cases hy : y = 0 <;> by_cases hz : z = 0 <;> simp_all
+        have hxy : max x y ≠ 0 := by rcases max_choice x y with h | h <;> simp_all
+        have hyz : max y z ≠ 0 := by rcases max_choice y z with h | h <;> simp_all
+        simp [hxy, hyz, max_assoc]
+      join_comm := by
+        intro x y
+        by_cases hx : x = 0 <;> by_cases hy : y = 0 <;> simp_all [max_comm]
+      join_idem := by
+        intro x
+        by_cases hx : x = 0 <;> simp_all
+      bot_join := by intro x; simp }
+  have hbot : (ZPSemilattice.bot : ℤ_[2]) = 0 := rfl
+  exact ⟨SL, ⟨{ scale := (2 * ·)
+              , val := q2Val
+              , scale_bot := by rw [hbot]; exact q2Scale_bot
+              , val_bot := by rw [hbot]; exact q2Val_bot
+              , val_unique := by intro x hx; rw [hbot]; exact q2Val_unique x hx
+              , val_scale := by intro x hx; rw [hbot] at hx; exact q2Val_scale x hx }⟩⟩
 
 end PadicParallel
 

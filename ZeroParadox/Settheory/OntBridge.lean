@@ -20,8 +20,10 @@ names that resolve to nothing at HEAD — they are now `ZeroParadox/Valuation/Sc
 mechanical path sweep rewrote it on 2026-08-02 and was reverted. Only Tim edits a Take, so the pointer
 lives here instead.)*
 
-OntologicalStates — ZPB's {null, exist} — admits no ValuationStructure, and NOT for the reason
-the Take gives: no_valBridge_of_finite proves no finite carrier with two or more points does. ⚠ The
+OntologicalStates — ZPB's {null, exist} — admits no ValuationStructure. The Take's CONCLUSION
+is right and its MECHANISM is not: the axioms JOINTLY force the scale orbit to embed ℕ and so
+force the CARRIER infinite — not because val lacks room, its codomain ℕ∞ being unbounded.
+Proved by valuationStructure_forces_infinite (ZeroParadox/Valuation/ScaleBridge.lean § VI). ⚠ The
 obstruction is JOINT, not val_scale alone — val_scale by itself holds on two elements
 (val everywhere infinity, scale the identity); it is val_unique that then fails. And it can
 be an AbstractSelfApp instance directly. The self-application operation is the
@@ -30,9 +32,7 @@ point — the only element that maps to itself — which is all AbstractSelfApp 
 AFA content follows immediately.
 
 This is the shorter on-ramp. ℕ∞ takes the full ValuationStructure path. OntologicalStates
-takes the direct AbstractSelfApp path. Both end at the same AFA content. The architecture
-is sound because the reasoning is mathematically honest: two elements is not enough for
-val_scale, and saying so is cleaner than pretending otherwise.
+takes the direct AbstractSelfApp path. Both end at the same AFA content.
 
 Result: null is the unique self-containing element of OntologicalStates — formally proved
 in Lean, from ZPB structure alone, without importing any AFA axioms.
