@@ -26,7 +26,8 @@ boundary, whose digit isomorphism that file's Honest fence leaves unformalized (
 about what exists. ⚠ On the separate question of choice-dependence, one reason subsumes all the others and closes
 it: `ZPSemilattice ℤ_[2]` is choice-tainted *as a type*, so no inhabitant can report a
 smaller footprint. `ZPSemilattice ℕ` is axiom-free by contrast, so it is the carrier and not the
-class. The ℤ_[2] witness adds no new axiom: § V's own `q2Val_unique` and `q2Val_scale` already carry `Classical.choice`.
+class. The ℤ_[2] witness adds no new axiom: § V's own `q2Val_unique` and
+`q2Val_scale` already carry `Classical.choice`.
 A choice-free join on this carrier IS ruled out under the `#print axioms` metric — the type is
 already tainted — and that is measured, not assumed. Whether a constructively re-founded 2-adic
 type would change the question is a separate matter, not addressed here.

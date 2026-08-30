@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1687,
+        "declarations": 1691,
         "files": 140
       },
       "entries": [
@@ -1125,6 +1125,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "01c2bd2c-6780-4a8d-aa3d-5d4d2c624c94",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_trivialAboutNat",
+            "short": "_trivialAboutNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_trivialAboutNat",
+            "short": "_trivialAboutNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -7202,6 +7239,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "18f3aacc-3062-4a95-8266-f85200b0b89e",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_trivialAboutZ2",
+            "short": "_trivialAboutZ2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_trivialAboutZ2",
+            "short": "_trivialAboutZ2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -17403,6 +17477,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "44c6b92e-8d03-4051-bf9b-71125b24f15f",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "",
+            "qualified": "_addOne",
+            "short": "_addOne"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_addOne",
+            "short": "_addOne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "44fb9a2b-aff4-4007-b361-b2f8f49369d9",
           "new": {
@@ -25053,6 +25164,43 @@
             ]
           },
           "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "65aeb259-1a52-4a8e-8e20-79a841ef5fea",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "",
+            "qualified": "_addOneCast",
+            "short": "_addOneCast"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_addOneCast",
+            "short": "_addOneCast",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
           "verify": {
             "axioms": null,
             "sorry_free": true

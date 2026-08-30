@@ -262,14 +262,22 @@ open ZeroParadox
 #print axioms nScale_ne_self
 
 -- ⭐ THE NUMERAL CLAIM, EMITTED. The docstring at § I says the ℕ∞ numerals `0` and `1` carry
--- choice and that ≥ 2 do not. These print exactly that, at the level of the claim -- the numerals
--- themselves, not the bundles they resolve through -- plus the two bundles for the routing.
+-- choice and that ≥ 2 do not. These print the three numerals THEMSELVES rather than the bundles
+-- they resolve through. ⚠ Three prints settle three numerals; `≥ 2` beyond the `2` shown follows
+-- from the shared `instOfNatAtLeastTwo` route, not from this list.
 private def _enatZero : ℕ∞ := 0
 private def _enatOne : ℕ∞ := 1
 private def _enatTwo : ℕ∞ := 2
+-- ⚠ The pair below is the LOAD-BEARING premise of `Scale.lean`'s `_VScast` counterfactual: the
+-- addition is clean and only the numeral is not. It was asserted in this file and consumed in
+-- that one, and printed at neither end until now.
+private def _addOne (a : ℕ) : ℕ∞ := (a : ℕ∞) + 1
+private def _addOneCast (a : ℕ) : ℕ∞ := (a : ℕ∞) + ((1 : ℕ) : ℕ∞)
 #print axioms _enatZero
 #print axioms _enatOne
 #print axioms _enatTwo
+#print axioms _addOne
+#print axioms _addOneCast
 #print axioms instAddMonoidWithOneENat
 #print axioms instCommSemiringENat
 

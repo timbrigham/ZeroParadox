@@ -92,8 +92,8 @@ is tainted, through DIFFERENT bundles — `1` via `instAddMonoidWithOneENat`, `0
 `instCommSemiringENat`. This is the documented instance hazard,
 here located exactly — and it has a consequence for the ZP-J layer: because `ValuationStructure.val`
 targets `ℕ∞` and `val_scale` is stated as `val x + 1`, the *statement* of that axiom carries
-`Classical.choice` on **any** carrier, `ℕ` and `ℤ_[2]` alike. So `q2Val_scale` (`ZeroParadox/Valuation/Scale.lean`)
-footprint is not evidence about what the p-adic completion mathematically REQUIRES. This file separates the two contributions: `v2_scale_nat` isolates the choice-free
+`Classical.choice` on **any** carrier, `ℕ` and `ℤ_[2]` alike. So `q2Val_scale`'s footprint (`ZeroParadox/Valuation/Scale.lean`)
+is not evidence about what the p-adic completion mathematically REQUIRES. This file separates the two contributions: `v2_scale_nat` isolates the choice-free
 valuation content, and the numeral accounts for the rest ON ℕ. ⚠ It does NOT carry over to ℤ_[2]:
 `PadicInt` is itself choice-tainted, so nothing there separates. The remaining
 `Classical.choice` in the crossing (`natToZ2`, `crossVal_bot_agrees`) is attributable to the p-adic

@@ -280,9 +280,9 @@ set_option linter.flexible false in
     in it, tainted anyway. ⚠ The class's own
     numeral is a SEPARATE cost, and an ACCIDENTAL one: respelling the successor as a cast from ℕ
     clears the class outright. ⚠ The two counterfactual PAIRS below emit exactly that — carrier,
-    then numeral. ⚠ Several claims here are universals, or facts about how the axiom printer
-    behaves, and are NOT emitted and cannot be: a footprint list settles instances, never
-    universals and never the tool's own semantics. -/
+    then numeral. ⚠ The UNIVERSALS here (any lawful join serves; ruled out for every spelling)
+    are not emitted and cannot be — a footprint list settles instances, never universals. The
+    printer's own type-walk IS emitted, by `_trivialAboutZ2` / `_trivialAboutNat` below. -/
 example : ∃ h : ZPSemilattice ℤ_[2], Nonempty (@ValuationStructure ℤ_[2] h) := by
   classical
   letI : LinearOrder ℤ_[2] := IsWellOrder.linearOrder (WellOrderingRel (α := ℤ_[2]))
@@ -325,6 +325,14 @@ open ZeroParadox
 #print axioms val_bot_self_mem
 #print axioms val_quine_unique
 #print axioms val_selfMem_singleton
+-- ⭐ THE PRINTER'S TYPE-WALK, EMITTED. Both are proved by `rfl` and neither TERM contains any
+-- 2-adic content; the only difference is a binder TYPE. So the choice in the first can have come
+-- from nowhere but the type walk, which is the mechanism this whole block relies on.
+private theorem _trivialAboutZ2 : ∀ _ : ℤ_[2], (0 : ℕ) = 0 := fun _ => rfl
+private theorem _trivialAboutNat : ∀ _ : ℕ, (0 : ℕ) = 0 := fun _ => rfl
+#print axioms _trivialAboutZ2
+#print axioms _trivialAboutNat
+
 -- The CARRIER, and a theorem whose only ZP-specific content is the carrier. `PadicInt` is the
 -- evidence; `q2Scale_bot` is the consequence. Together they are why every ℤ_[2] footprint below
 -- is choice-tainted regardless of join, valuation or numeral.
@@ -336,11 +344,13 @@ open ZeroParadox
 #print axioms q2Val_scale
 -- ⭐ THE COUNTERFACTUALS. Two minimal pairs, each varying exactly one thing, so the attribution
 -- is checkable rather than argued.
--- ⚠ `check_classes` does NOT audit the two classes below: its DECL regex admits only whitespace
--- or an attribute before `class`, so a leading `private` blocks the match, and these are the only
--- `private class` declarations in the corpus. They are purity probes, never requirements classes,
--- and nothing instantiates them -- but that exemption is an accident of a regex, not a decision.
--- Written down here rather than left implicit (R-EXEMPT); ledgered as CLSPRIV-1.
+-- ⚠ `tools/verify/check_classes.py` does NOT audit the two classes below: its `DECL` regex
+-- admits only whitespace or an attribute before `class`, so a leading `private` blocks the match.
+-- Searched 2026-08-30 (`private` followed by `class`/`structure` over `ZeroParadox/**/*.lean`,
+-- and that checker's own regex run over this file): these two are the only such declarations
+-- located. They are purity probes, never requirements classes, and NEITHER IS REGISTERED AS AN
+-- `instance`, so neither can reach instance resolution. ⚠ That exemption is an artifact of a
+-- regex rather than a decision, and the decision belongs to `/rely`, which owns `tools/verify`.
 -- Carrier, not class: same class, two carriers, opposite answers.
 private def _zpsZ2 : Type := ZPSemilattice ℤ_[2]
 private def _zpsN : Type := ZPSemilattice ℕ
@@ -361,17 +371,30 @@ private class _VScast (L : Type*) [ZPSemilattice L] where
   val_bot : val ZPSemilattice.bot = ⊤
   val_unique : ∀ x : L, val x = ⊤ → x = ZPSemilattice.bot
   val_scale : ∀ x : L, x ≠ ZPSemilattice.bot → val (scale x) = val x + ((1 : ℕ) : ℕ∞)
--- ⚠ `_VSlit` transcribes `ValuationStructure`'s six fields (§ I), so the attribution rests on
--- the two agreeing. These make that MACHINE-CHECKED: both directions elaborate only if the
--- field lists match, so adding, dropping or renaming a field breaks the build instead of
--- silently turning the comment into a claim about a different class. Both directions are
--- needed -- one catches a field lost, the other a field gained. Anonymous, so nothing is owed.
+-- ⚠ `_VSlit` and `_VScast` hand-transcribe `ValuationStructure`'s six fields (§ I). The examples
+-- below map each pair BOTH WAYS, so a field added WITHOUT A DEFAULT, dropped, or renamed
+-- anywhere in the three breaks the build. Both directions are needed: one catches a field lost,
+-- the other a field gained. ⚠⚠ TWO THINGS THEY CANNOT CATCH, both measured 2026-08-30:
+--   (1) a field added WITH a default -- build green, both guards silent, footprints unchanged,
+--       and the transcription is then short by one field;
+--   (2) a field RETYPED to something DEFEQ -- respelling the canonical `val_scale` as
+--       `+ ((1 : ℕ) : ℕ∞)` elaborates through every example unchanged, exit 0, while the
+--       footprints flip. Elaboration preserves definitional equality; `#print axioms` does not,
+--       and that difference is precisely what this block measures.
+-- So build-breaks implies the field lists diverged; build-passes does NOT imply they agree.
+-- Anonymous, so nothing is owed.
 example {L : Type*} [ZPSemilattice L] (v : ValuationStructure L) : _VSlit L :=
   { scale := v.scale, val := v.val, scale_bot := v.scale_bot, val_bot := v.val_bot,
     val_unique := v.val_unique, val_scale := v.val_scale }
 example {L : Type*} [ZPSemilattice L] (w : _VSlit L) : ValuationStructure L :=
   { scale := w.scale, val := w.val, scale_bot := w.scale_bot, val_bot := w.val_bot,
     val_unique := w.val_unique, val_scale := w.val_scale }
+example {L : Type*} [ZPSemilattice L] (a : _VSlit L) : _VScast L :=
+  { scale := a.scale, val := a.val, scale_bot := a.scale_bot, val_bot := a.val_bot,
+    val_unique := a.val_unique, val_scale := a.val_scale }
+example {L : Type*} [ZPSemilattice L] (b : _VScast L) : _VSlit L :=
+  { scale := b.scale, val := b.val, scale_bot := b.scale_bot, val_bot := b.val_bot,
+    val_unique := b.val_unique, val_scale := b.val_scale }
 
 #print axioms _zpsZ2
 #print axioms _zpsN
