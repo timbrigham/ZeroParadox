@@ -115,31 +115,71 @@ def git_out(*args):
 
 # ------------------------------------------------------------------ pre-commit
 
-PRE_COMMIT_PLAN = [
-    ("check_pov", "BLOCK", "POV claims declare a KIND; DENIALs never allowed"),
-    ("check_modal", "BLOCK", "modal claims carry a measurement or a reduction"),
-    ("check_classes", "BLOCK", "a new requirements class records a degeneracy verdict"),
-    ("check_prose", "BLOCK", "prose caps: block size, docstring vs decl, gloss labels"),
+# ⚠⚠ ONE TABLE DRIVES BOTH THE MANIFEST AND THE LOOP, AND THAT IS THE WHOLE POINT OF ITS SHAPE.
+# Until 2026-08-30 the printed plan was a hand-written SECOND COPY of the execution list, and
+# `/rely` RLY27-1 measured what that buys: with the entire checker loop DELETED, this hook still
+# printed `plan 11 check(s): 11 BLOCK, 0 advisory`, listed all eleven rows by name, ran nothing,
+# and exited 0 -- and `check_checkers --block` reported `violations: 0` over that neutered gate,
+# because its "is invoked" property is satisfied by the pre-push call site and cannot see a
+# commit-time call disappear. The realistic variant reproduced too: dropping one entry from the
+# tuple while leaving its manifest row gave eleven advertised, ten executed, exit 0.
+# A manifest that CAN disagree with the loop is a claim about the loop, not a description of it.
+#
+# Each row is (label, argv, ok_codes, description). `ok_codes` is the exit codes that are NOT a
+# finding -- see check_paths below for the one entry that needs more than (0,).
+PRE_COMMIT_CHECKS = [
+    ("check_pov", ("check_pov.py",), (0,),
+     "POV claims declare a KIND; DENIALs never allowed"),
+    ("check_modal", ("check_modal.py",), (0,),
+     "modal claims carry a measurement or a reduction"),
+    ("check_classes", ("check_classes.py",), (0,),
+     "a new requirements class records a degeneracy verdict"),
+    ("check_prose", ("check_prose.py",), (0,),
+     "prose caps: block size, docstring vs decl, gloss labels"),
     # ⚠ AT COMMIT, NOT ONLY AT PUSH, AND FOR A REASON THE OTHER FOUR DO NOT SHARE. Double-encoded
     # text is valid UTF-8, so it survives every other check, renders plausibly in a diff, and the
     # window in which the author still knows which write did it is minutes long.
-    ("check_encoding", "BLOCK", "BOM + undecodable BLOCK; suspected double-encoding WARNS"),
+    ("check_encoding", ("check_encoding.py",), (0,),
+     "BOM + undecodable BLOCK; suspected double-encoding WARNS"),
     # ⚠⚠ THE SIX BELOW WERE PUSH-ONLY UNTIL 2026-08-30, AND THAT WAS A HOLE, NOT A SAVING.
-    # gitRobot admits 19 keys for a push; this hook recorded 11. The other six ran only in
-    # `pre_push`, against the TIP -- so a second commit silently invalidated the first, and no
-    # intermediate commit could EVER reach the bar through ordinary work. Measured: a 2-commit
+    # gitRobot admits 20 keys for a push and 18 for a commit; this hook emits 11. The other six ran
+    # only in `pre_push`, against the TIP -- so a second commit silently invalidated the first, and
+    # no intermediate commit could EVER reach the bar through ordinary work. Measured: a 2-commit
     # range read 11/19 with both commits made through the full pipeline, hook green each time.
     # The remedy on offer was `squash`, i.e. rewriting history on every push to satisfy a rule
     # that exists BECAUSE intermediate commits are fetchable, bisectable and citable forever.
     # ⚠ They already BLOCK at push, so this adds NO new failure class -- same argument
     # `pre_commit` makes for the original five, one paragraph down. Cost 16.1s (~5.9s -> ~22s).
-    ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
-    ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
-    ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
-    ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
-    ("check_invariants", "BLOCK", "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
-    ("decls", "BLOCK", "every new declaration has #print axioms + an ssot.json row"),
+    # ⚠ NOT the whole gap: `build`, `check_checkers`, `check_claude_md`, `check_hashes`,
+    # `claim_review`, `guards` and `pdf_coupling` still have no pre-commit producer. Narrowed, not
+    # closed (RLY27-5).
+    #
+    # ⚠⚠ EXIT 3 IS "SKIPPED PART OF MY SCOPE", NOT A FINDING -- `check_paths.EXIT_SKIPPED`, and
+    # `pre_push` has always allowed it (see the File-reference check below). When these six were
+    # added here on 2026-08-30 the loop treated every non-zero as a violation, so in any clone or
+    # worktree WITHOUT a built `.lake` the pinned Mathlib is absent, `check_paths` returns 3, and
+    # every commit was refused naming a defect that does not exist -- with `--no-verify`, which
+    # skips all eleven, as the only escape. Measured by `/rely` RLY27-7 in a fresh worktree.
+    ("check_paths", ("check_paths.py",), (0, 3),
+     "every repo-relative reference in tracked markdown, Lean and scripts/**.py resolves "
+     "(3 = scope skipped for want of a built .lake, not a finding)"),
+    ("check_moved", ("check_moved.py",), (0,),
+     "nothing points at a path that was relocated"),
+    ("check_negatives", ("check_negatives.py",), (0,),
+     "a universal negative carries a date or a search record"),
+    ("check_figures", ("check_figures.py",), (0,),
+     "an artifact count carries a date, or is measured on demand"),
+    ("check_invariants", ("check_invariants.py",), (0,),
+     "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
+    # ⚠ `decls` lives in `batch.py` behind a subcommand rather than being a `check_*.py`, which is
+    #   the only reason its argv has two elements. Same handling in every other respect.
+    ("decls", ("batch.py", "decls"), (0,),
+     "every new declaration has #print axioms + an ssot.json row"),
 ]
+
+# The manifest is GENERATED from the table above. It cannot advertise a check the loop does not
+# run, nor omit one it does, because there is no second list to drift.
+PRE_COMMIT_PLAN = [(label, "BLOCK", desc) for label, _argv, _ok, desc in PRE_COMMIT_CHECKS]
 
 PRE_PUSH_PLAN = [
     ("hooks armed", "BLOCK", "the installed hooks match their tracked sources"),
@@ -220,31 +260,26 @@ def pre_commit():
     #
     # ⚠ INDEX, NOT HEAD. Git has already prepared the index by the time this hook runs, so the
     # staged tree IS the tree the pending commit will carry. HEAD is still the PARENT here.
-    os.environ.setdefault("ZPLEDGER_BASIS", "INDEX")
-    os.environ.setdefault("ZPLEDGER_RUN", "pre-commit")
-    for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py",
-                   "check_encoding.py",
-                   # the six that were push-only until 2026-08-30 — see PRE_COMMIT_PLAN
-                   "check_paths.py", "check_moved.py", "check_negatives.py",
-                   "check_figures.py", "check_invariants.py"):
-        rc = py(script, "--block", "--record")
+    # ⚠⚠ ASSIGNMENT, NOT `setdefault` — changed 2026-08-30, `/rely` RLY27-3. `setdefault` let the
+    # CALLER'S environment win: exporting `ZPLEDGER_RUN=whatever-i-say` and `ZPLEDGER_BASIS=HEAD`
+    # both reached every checker unchanged, which defeats V9's run-id provenance at the commit gate
+    # and, under `HEAD`, makes `ledger_subjects` drop exactly the paths just staged — the ledger
+    # then reports narrowed coverage WITHOUT blocking. `pre_push` has always used assignment, for
+    # the reason stated at its own call site: the environment here could only ever be wrong.
+    os.environ["ZPLEDGER_BASIS"] = "INDEX"
+    os.environ["ZPLEDGER_RUN"] = "pre-commit"
+    for label, argv, ok_codes, _desc in PRE_COMMIT_CHECKS:
+        rc = py(*argv, "--block", "--record")
         # ⚠ EXIT 2 IS "COULD NOT BE RECORDED", NOT "FAILED". A checker that ran and could not reach
         # the ledger produced no key, so the commit must not proceed as though it had — but the
         # reader needs the outage named, not a phantom finding.
+        # ⚠ A checker MISSING FROM DISK also surfaces as 2 today and is reported with the same
+        #   wording, which fails closed but diagnoses wrong (RLY27-6, ledgered, not fixed here).
         if rc == 2:
             failed.append("%s (ran; verdict NOT RECORDED — no key exists for this content)"
-                          % script)
-        elif rc != 0:
-            failed.append(script)
-
-    # ⚠ `decls` is the sixth of the six, and it is driven separately because it lives in
-    #   `batch.py` behind a subcommand rather than being a `check_*.py`. Same exit-2 handling:
-    #   "could not be recorded" is not "failed", and neither may be read as the other.
-    _rc_decls = py("batch.py", "decls", "--block", "--record")
-    if _rc_decls == 2:
-        failed.append("decls (ran; verdict NOT RECORDED — no key exists for this content)")
-    elif _rc_decls != 0:
-        failed.append("decls")
+                          % label)
+        elif rc not in ok_codes:
+            failed.append("%s (exit %d)" % (label, rc))
 
     if failed:
         print("")
@@ -398,11 +433,11 @@ def pre_push(stream):
     print("===========================")
 
     print("\n=== CLAUDE.md shape contract ===")
-    # ⚠ CALLED WITHOUT `--record`, DELIBERATELY, AND THIS IS DEBT rather than a design choice.
-    # The checker has no ledger support yet, and a `--record` flag that accepted the argument
-    # while writing nothing would publish a verdict it never earned — the exact shape this
-    # pipeline exists to refuse. So it BLOCKS locally and is NOT audited; wiring it into
-    # `recorded()` is the follow-up, and until then its verdict leaves no key.
+    # ⚠ THE COMMENT HERE SAID "CALLED WITHOUT `--record`, DELIBERATELY" WHILE THE LINE BELOW PASSED
+    # `--record` AND THE KEY EXISTED IN THE LEDGER. Corrected 2026-08-30, `/rely` RLY27-9: the
+    # ledger support was added and the comment describing its absence was left behind. It IS
+    # recorded and it IS audited. Kept as a warning rather than deleted, because a comment that
+    # outlived its subject is how "wiring it in is the follow-up" reads as still-open work.
     # ⚠ Its manifest declares 3 PENDING legs on every run. A clear result here is evidence
     # about two legs, never about the shape contract as a whole.
     if py("check_claude_md.py", "--record") != 0:

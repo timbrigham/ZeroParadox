@@ -17,6 +17,7 @@ which is not the same question as "did the checks pass?" and has never been aske
 """
 import os
 import shutil
+import subprocess
 import sys
 
 # Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3). SELF is
@@ -40,7 +41,23 @@ HOOKS = {
 
 
 def hook_dir():
-    """Resolve .git/hooks, honouring a worktree (.git is a FILE there, not a directory)."""
+    """Resolve the directory git ACTUALLY runs hooks from.
+
+    ⚠⚠ `core.hooksPath` FIRST, AND IT IS CONFIGURED IN THIS REPO. Until 2026-08-30 this resolved
+    `.git/hooks` unconditionally and never consulted it, which made `--check` a proxy for "are the
+    gates armed" rather than a measurement of it. `/rely` RLY27-2 built the tree: both correct
+    shims in the DEFAULT hook directory, `hooksPath` pointed at an EMPTY directory, and `--check`
+    printed `pre-commit ok / pre-push ok`, exit 0, over a repository where no hook could fire.
+    The reachable fail-open is worse than the demo: point `hooksPath` at a directory holding a
+    correct `pre-push` and no `pre-commit`, and the push gate runs, this row passes, and every
+    commit is ungated. Ask git where it looks; do not assume the default.
+    """
+    out = subprocess.run(['git', 'config', '--get', 'core.hooksPath'], cwd=str(REPO),
+                         capture_output=True, text=True)
+    if out.returncode == 0 and out.stdout.strip():
+        hp = out.stdout.strip()
+        return hp if os.path.isabs(hp) else os.path.normpath(os.path.join(REPO, hp))
+    # No override configured: resolve .git/hooks, honouring a worktree (.git is a FILE there).
     dotgit = os.path.join(REPO, ".git")
     if os.path.isfile(dotgit):
         with open(dotgit, encoding="utf-8") as f:
