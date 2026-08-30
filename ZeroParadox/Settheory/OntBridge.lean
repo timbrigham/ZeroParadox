@@ -20,8 +20,10 @@ names that resolve to nothing at HEAD — they are now `ZeroParadox/Valuation/Sc
 mechanical path sweep rewrote it on 2026-08-02 and was reverted. Only Tim edits a Take, so the pointer
 lives here instead.)*
 
-OntologicalStates — ZPB's {null, exist} — cannot be a ValuationStructure instance for
-exactly this reason. A finite two-element lattice cannot satisfy val_scale. But it can
+OntologicalStates — ZPB's {null, exist} — admits no ValuationStructure, for exactly this
+reason: no_valBridge_of_finite proves no finite carrier with two or more points does. ⚠ The
+obstruction is JOINT, not val_scale alone — val_scale by itself holds on two elements
+(val everywhere infinity, scale the identity); it is val_unique that then fails. And it can
 be an AbstractSelfApp instance directly. The self-application operation is the
 constant-to-null function: every element maps to null. This makes null the unique fixed
 point — the only element that maps to itself — which is all AbstractSelfApp requires.
@@ -63,7 +65,7 @@ selfApp is the constant-to-null function. null maps to itself (fixed_bot).
 exist maps to null and is therefore not a fixed point (unique_fp holds vacuously). -/
 
 /-- OntologicalStates carries an AbstractSelfApp structure via the constant-to-null map. -/
--- [ZP-CUSTOM] instance: AbstractSelfApp OntologicalStates via constant-to-null | reason: OntologicalStates (two elements) cannot satisfy ValuationStructure's val_scale axiom — a finite two-element type has no room for val to strictly increase. Direct AbstractSelfApp instance using the constant-to-null map (every element → null) is the shorter path to AFA content for finite types.
+-- [ZP-CUSTOM] instance: AbstractSelfApp OntologicalStates via constant-to-null | reason: OntologicalStates (two elements) admits no ValuationStructure — no_valBridge_of_finite (ZeroParadox/Valuation/ScaleBridge.lean § VI) proves no finite carrier with two or more points does, because the axioms JOINTLY force the scale orbit to embed ℕ and so force the CARRIER infinite. ⚠ Not because val lacks room: its codomain ℕ∞ is unbounded, and val_scale alone is satisfiable on two elements. Direct AbstractSelfApp instance using the constant-to-null map (every element → null) is the shorter path to AFA content for finite types.
 instance instOntSelfApp : AbstractSelfApp OntologicalStates where
   selfApp   := fun _ => .null
   fixed_bot := rfl

@@ -7,9 +7,11 @@ the declarations, the Engineer's Take and the per-declaration glosses.
 
 `ZeroParadox/Valuation/Scale.lean` defines `ValuationStructure` over `[ZPSemilattice L]`, but the four
 axioms (`scale_bot`, `val_bot`, `val_unique`, `val_scale`) only ever use `bot` — the join `⊔` never
-appears. So `ZPSemilattice` is an over-strong constraint, and `ℤ_[2]` cannot be a formal
-`ValuationStructure` instance despite satisfying all four axioms (proved as standalone theorems in
-`Scale.lean` § V).
+appears. So `ZPSemilattice` is an over-strong constraint, and no `ValuationStructure` `ℤ_[2]` is
+DEFINED even though all four axioms hold (proved as standalone theorems in
+`ZeroParadox/Valuation/Scale.lean` § V). ⚠ "not defined", never "not possible":
+`valBridge_nonempty_iff` settles membership exactly — infinite, or inhabited and trivial — and
+`ℤ_[2]` is infinite.
 
 This tests the conjecture that the constraint is an **encoding artefact, not a mathematical gap**. It
 defines `ValBridge` — the same four axioms with `bot` a plain field rather than a `ZPSemilattice` bottom
@@ -59,8 +61,9 @@ the checkable branch of exactly this argument. Cite that for the general pattern
 `(0, false)`. `val_scale` buys injectivity *along an orbit*, which is all the argument consumes.
 
 The two-element case is older still: `ZeroParadox/Settheory/OntBridge.lean` records that
-`OntologicalStates` cannot satisfy `val_scale` — "a finite two-element type has no room for val to
-strictly increase".
+`OntologicalStates` admits no `ValuationStructure`, by `no_valBridge_of_finite`. ⚠ The obstruction
+is JOINT: `val_scale` alone holds on two elements (`val` everywhere `⊤`, `scale := id`, since
+`⊤ + 1 = ⊤`), and it is `val_unique` that then fails.
 
 **Outside the corpus**, the owning branch is valuation theory, whose statements use multiplicative
 structure this class drops — **F.-V. Kuhlmann, *Valuation Theory*, Ch. 4, Corollary 4.13**: *"The only

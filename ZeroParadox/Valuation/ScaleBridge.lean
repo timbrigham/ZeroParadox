@@ -41,15 +41,14 @@ This is the same chain as ZeroParadox/Valuation/Scale.lean §II–IV, without th
 -/
 
 /-! ⚠⚠ **"CANNOT BE A FORMAL INSTANCE" ABOVE IS TOO STRONG — READ IT AS "IS NOT
-    DEFINED".** The header contradicts itself: if all four axioms hold, the only missing
-    piece is a `ZPSemilattice`, and `ZeroParadox/Order/Lattice.lean`'s NO-GO gauge records
-    that membership there is structure to be EQUIPPED, with **inhabitation the sole
-    obstruction** (`example : IsEmpty (ZPSemilattice Empty)`). ℤ_[2] is inhabited, so one
-    can always be equipped; what is absent is a NATURAL join with 0 as bottom, an argument
-    about naturality, not possibility. Contrast `OntologicalStates`, which cannot satisfy
-    `val_scale` at all — a finite two-element type has no room for `val` to increase. That
-    is a real impossibility; this is not. The sentence stays only because its block is
-    frozen by content hash in the prose baseline. -/
+    DEFINED".** Membership here is settled EXACTLY, by `valBridge_nonempty_iff` (§ VI): a
+    carrier admits a `ValBridge` iff it is INFINITE, or is inhabited and trivial. The
+    dividing line is infinitude, never inhabitation — `Bool` is inhabited and
+    `valBridge_bool_isEmpty` proves it admits none. ℤ_[2] qualifies because it is INFINITE
+    (`nonempty_valBridge_of_infinite`), not by any equipping argument. ⚠ For `ZPSemilattice`
+    ALONE inhabitation is the line, proved both ways in `ZeroParadox/Order/Lattice.lean`;
+    that gauge does NOT transfer to this class. The header sentence stays only because its
+    block is frozen by content hash in the prose baseline. -/
 
 namespace ZeroParadox
 
@@ -111,8 +110,9 @@ theorem selfMem_eq_singleton_free :
     This is the formal instance that ZeroParadox/Valuation/Scale.lean did not build,
     because no ZPSemilattice ℤ_[2] is defined — showing the ZPSemilattice constraint
     was an encoding artefact, not a mathematical requirement. ⚠ "not defined", never
-    "not possible": inhabitation is the sole obstruction (Order/Lattice.lean). -/
--- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is defined — its ring structure supplies no natural join with 0 as bottom — so ℤ_[2] does not satisfy ValuationStructure, which requires one. (A fact about what is DEFINED, never about what is POSSIBLE: ZeroParadox/Order/Lattice.lean's NO-GO gauge records that membership is structure to be EQUIPPED and inhabitation is the sole obstruction, so an inhabited carrier can always be equipped. Being a ring is not the obstruction either, and ZPSemilattice ℕ exists. What is absent is a NATURAL join.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to q2Scale_bot, q2Val_bot, q2Val_unique and q2Val_scale, proved in ZeroParadox/Valuation/Scale.lean.
+    "not possible": ℤ_[2] is INFINITE, so `nonempty_valBridge_of_infinite` (§ VI) gives
+    the instance outright. -/
+-- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is defined — its ring structure supplies no natural join with 0 as bottom — so ℤ_[2] does not satisfy ValuationStructure, which requires one. (A fact about what is DEFINED, never about what is POSSIBLE. ⚠ Inhabitation is the sole obstruction to ZPSemilattice ALONE, not to this class: valBridge_nonempty_iff (§ VI) settles membership exactly — infinite, or inhabited and trivial — and Bool is inhabited yet admits none. ℤ_[2] qualifies by being INFINITE. Being a ring is not the obstruction either, and ZPSemilattice ℕ exists. What is absent is a NATURAL join.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to q2Scale_bot, q2Val_bot, q2Val_unique and q2Val_scale, proved in ZeroParadox/Valuation/Scale.lean.
 noncomputable instance instZ2ValBridge : ValBridge ℤ_[2] where
   bot := 0
   scale := (2 * ·)

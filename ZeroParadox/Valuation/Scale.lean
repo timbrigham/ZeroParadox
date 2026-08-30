@@ -207,9 +207,10 @@ theorem val_selfMem_singleton :
 /-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE AND THE GAP IS CLOSED.** A concrete type
     carrying BOTH a `ZPSemilattice` and a `ValuationStructure` exists: ℕ∞, via
     `instNatInfZPS` and `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which
-    IMPORTS this file; `#synth` resolves both. ⚠ §V ALSO says ℤ_[2] "cannot be a formal
-    ValuationStructure instance" — read that as NOT DEFINED, never not possible: inhabitation
-    is the sole obstruction (Order/Lattice.lean). Both stale sentences stay only because their
+    IMPORTS this file. ⚠ §V ALSO says ℤ_[2] "cannot be a formal ValuationStructure
+    instance" — read that as NOT DEFINED. Membership is settled exactly by
+    `valBridge_nonempty_iff` (`ZeroParadox/Valuation/ScaleBridge.lean` § VI): infinite, or
+    inhabited and trivial; ℤ_[2] is infinite. Both stale sentences stay only because their
     block is frozen by content hash in the prose baseline: editing it re-keys the entry
     and blocks the commit. ⚠ Route out is a `/claim-review` debaseline, NOT
     `move_ridealong.py`, which reaches the module doc and not this mid-file block. -/

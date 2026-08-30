@@ -204,7 +204,7 @@ The cross-framework bridge. `MachinePhase` is Surprisal's two-element type; givi
 ### `instZ2ValBridge` — `ZeroParadox/Valuation/ScaleBridge.lean`
 `ValBridge ℤ_[2]`
 
-No `ZPSemilattice ℤ_[2]` is defined — its ring structure supplies no natural join with 0 as bottom — so it does not satisfy `ValuationStructure`, which requires one. ⚠⚠ That is a fact about what is DEFINED, never about what is POSSIBLE. `ZeroParadox/Order/Lattice.lean`'s own NO-GO gauge records that membership is structure to be EQUIPPED and that **inhabitation is the sole obstruction**, so an inhabited carrier such as `ℤ_[2]` can always be equipped with one; being a ring is not the obstruction either, and `ZPSemilattice ℕ` exists. What is absent is a NATURAL join with 0 as bottom, which is an argument about naturality, not possibility. `ValBridge`'s bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in `Scale` §V (`q2Scale_bot`, `q2Val_bot`, `q2Val_unique`, `q2Val_scale`).
+No `ZPSemilattice ℤ_[2]` is defined — its ring structure supplies no natural join with 0 as bottom — so it does not satisfy `ValuationStructure`, which requires one. ⚠⚠ That is a fact about what is DEFINED, never about what is POSSIBLE. ⚠ Inhabitation is the sole obstruction to `ZPSemilattice` ALONE, not to this class: `valBridge_nonempty_iff` (`ZeroParadox/Valuation/ScaleBridge.lean` § VI) settles membership exactly — infinite, or inhabited and trivial — and `Bool` is inhabited yet admits none. `ℤ_[2]` qualifies by being INFINITE; being a ring is not the obstruction either, and `ZPSemilattice ℕ` exists. What is absent is a NATURAL join with 0 as bottom, which is an argument about naturality, not possibility. `ValBridge`'s bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in `ZeroParadox/Valuation/Scale.lean` §V (`q2Scale_bot`, `q2Val_bot`, `q2Val_unique`, `q2Val_scale`).
 
 ---
 
@@ -232,7 +232,7 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 ### `instOntSelfApp` — `ZeroParadox/Settheory/OntBridge.lean`
 `AbstractSelfApp OntologicalStates` via constant-to-null map
 
-`OntologicalStates` (two elements) cannot satisfy `ValuationStructure`'s `val_scale` axiom — a finite two-element type has no room for `val` to strictly increase. The direct `AbstractSelfApp` instance using the constant-to-null map (every element → null) is the shorter path to AFA content for finite types.
+`OntologicalStates` (two elements) admits no `ValuationStructure` — `no_valBridge_of_finite` (`ZeroParadox/Valuation/ScaleBridge.lean` § VI) proves no finite carrier with two or more points does, because the axioms JOINTLY force the scale orbit to embed ℕ and so force the CARRIER infinite. ⚠ Not because `val` lacks room: its codomain `ℕ∞` is unbounded, and `val_scale` alone is satisfiable on two elements. The direct `AbstractSelfApp` instance using the constant-to-null map (every element → null) is the shorter path to AFA content for finite types.
 
 ---
 

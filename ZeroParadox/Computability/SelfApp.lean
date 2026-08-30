@@ -137,9 +137,9 @@ instance toAFAStructure : AFAStructure L where
     The same abstract fixed-point pattern in ℚ_[2]: multiplication by 2
     has 0 as its unique fixed point, characterised by v₂(0) = +∞.
 
-    Note: no ZPSemilattice ℚ_[2] is DEFINED, so there is no AbstractSelfApp instance
-    for it here — not that none could exist; inhabitation is the sole obstruction
-    (Order/Lattice.lean). This section proves the parallel as standalone theorems,
+    Note: no ZPSemilattice ℚ_[2] is DEFINED, so there is no AbstractSelfApp instance for it
+    here — not that none could exist: the constant-to-bottom map discharges both laws on any
+    inhabited carrier (`trivialSelfApp` below; `instOntSelfApp` in ZeroParadox/Settheory/OntBridge.lean). This section proves the parallel as standalone theorems,
     demonstrating that singleton_from_unique_witness closes both cases with the
     same proof structure. -/
 
