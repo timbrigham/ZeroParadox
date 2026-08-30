@@ -19,12 +19,18 @@ bottom 0, over which all four axioms discharge. **The join is free.** The four a
 only `bot` and never the join, so any associative, commutative, idempotent operation with 0 as
 its identity serves; "the larger under some total order, unless one side is zero" is one.
 What has NOT been located as of 2026-08-30 is a *natural* join arising from the ring operations —
-searched: every registered `ZPSemilattice` instance in this corpus — none on a p-adic carrier — and
+searched: every registered `ZPSemilattice` instance in this corpus — none on `ℤ_[2]` itself, though
+`instZPSemilatticeEnd` (`ZeroParadox/Valuation/PoleCompletion.lean`) equips the 2-adic digit
+boundary, whose identification with `ℤ_[2]` that file leaves unformalized — and
 `ZeroParadox/Valuation/Scale.lean` § V. That is a statement about what has been written down, not
-about what exists. ⚠ The witness is choice-dependent, and by three routes rather than one: the join's well-order,
-`instDecidableEqZ2` (which taints `q2Val` whatever the join is), and the literal `1` in
-`val_scale` (which taints the class type itself). It adds no new axiom: § V's own `q2Val_unique` and `q2Val_scale` already carry `Classical.choice`.
-A choice-free join is not ruled out; none has been built.
+about what exists. ⚠ The witness is choice-dependent, and the reason both subsumes every other and CLOSES the
+question: `ZPSemilattice ℤ_[2]` is choice-tainted *as a type*, so no inhabitant can report a
+smaller footprint. A choice-free join on this carrier is ruled out for every spelling, not merely
+unbuilt. `ZPSemilattice ℕ` is axiom-free by contrast, so it is the carrier and not the class.
+It adds no new axiom: § V's own `q2Val_unique` and `q2Val_scale` already carry `Classical.choice`.
+A choice-free join on this carrier IS ruled out under the `#print axioms` metric — the type is
+already tainted — and that is measured, not assumed. Whether a constructively re-founded 2-adic
+type would change the question is a separate matter, not addressed here.
 
 This tests the conjecture that the constraint is an **encoding artefact, not a mathematical gap**. It
 defines `ValBridge` — the same four axioms with `bot` a plain field rather than a `ZPSemilattice` bottom

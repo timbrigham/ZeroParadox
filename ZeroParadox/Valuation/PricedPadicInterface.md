@@ -66,10 +66,12 @@ these are the numbers it reported, not the numbers that were hoped for).
   and `agree_all_iff` reports `[Quot.sound]` (the `funext`).
 * **One instance-level exception, on the constructive side, reported not hidden.** The ZP-J `val_scale`
   axiom in its literal form `v2_scale : v2 (2n) = v2 n + 1` reports `[propext, Classical.choice,
-  Quot.sound]` — **but the `Classical.choice` is not the carrier's.** It is the ambient `ℕ∞` additive
-  instance: `enat_add_choice` shows that *any* `ℕ∞` sum carries it, while `Nat.cast : ℕ → ℕ∞` is
-  choice-free (`v2` proves it). The content of the axiom is choice-free — `v2_scale_nat` states the same
-  fact with the successor on `ℕ` and comes out `[propext, Quot.sound]`. See "The `ℕ∞`-addition finding".
+  Quot.sound]` — **and on this carrier (ℕ) it is not the carrier's.** It is the ambient `ℕ∞`
+  NUMERAL: `One ℕ∞` carries it, while `Add ℕ∞`, `Nat.cast : ℕ → ℕ∞` and `(a : ℕ∞) + (b : ℕ∞)`
+  are all axiom-free — measured 2026-08-30, and `(2 : ℕ∞)` is clean too, so it is the `0` and `1`
+  numerals specifically. The content of the axiom is choice-free — `v2_scale_nat` states the same
+  fact with the successor on `ℕ` and comes out `[propext, Quot.sound]`. ⚠ None of this carries over
+  to `ℤ_[2]`, where the carrier itself is tainted. See "The `ℕ∞`-numeral finding".
 * **The crossing — `Classical.choice`.** `natToZ2`, `natToZ2_bot`, `natToZ2_scale` and
   `crossVal_bot_agrees` all report `[propext, Classical.choice, Quot.sound]`.
 
@@ -79,10 +81,10 @@ Mathlib's p-adic results are eliminable, and it does **not** show `padicValNat`'
 *in Mathlib* — that would require re-proving Mathlib's valuation API on a different definition, which is
 not attempted here. `#print axioms` reports how a proof was written, never what a theorem requires.
 
-## The `ℕ∞`-addition finding — reported, not explained away
+## The `ℕ∞`-numeral finding — reported, not explained away
 
-The one `Classical.choice` on the constructive side was not predicted. It arrives through Mathlib's
-additive instance on `ℕ∞ = WithTop ℕ`, not through anything about the valuation or the p-adics:
+The one `Classical.choice` on the constructive side was not predicted. On the ℕ side it arrives
+through Mathlib's `ℕ∞` NUMERAL, not the addition and not the valuation — and, on ℕ, not the carrier:
 `enat_add_choice` (`(a : ℕ∞) + (b : ℕ∞) = ↑(a + b)`) reports `[propext, Classical.choice, Quot.sound]`
 — but that is its PROOF TERM, not an instance: the same proposition proved by induction and `rfl`
 reports no axioms at all. Measured 2026-08-30, `ℕ∞` ADDITION is choice-free and the LITERAL `1` is
@@ -92,7 +94,8 @@ targets `ℕ∞` and `val_scale` is stated as `val x + 1`, the *statement* of th
 `Classical.choice` on **any** carrier, `ℕ` and `ℤ_[2]` alike. So `q2Val_scale` (`ZeroParadox/Valuation/Scale.lean`)
 footprint is not evidence that the p-adic completion is doing the classical work; part of it is this
 same `ℕ∞` sum. This file separates the two contributions: `v2_scale_nat` isolates the choice-free
-valuation content, and `enat_add_choice` isolates the instance choice, so the remaining
+valuation content, and the numeral accounts for the rest ON ℕ. ⚠ It does NOT carry over to ℤ_[2]:
+`PadicInt` is itself choice-tainted, so nothing there separates. The remaining
 `Classical.choice` in the crossing (`natToZ2`, `crossVal_bot_agrees`) is attributable to the p-adic
 target alone.
 
@@ -107,7 +110,8 @@ Two faces, matching the two faces of Group A:
   `val_unique` (`v2_unique`); and the fixed-point content `nScale_unique_fp` (the bottom is the unique
   fixed point of doubling) is proved directly. The fourth axiom, `val_scale`, holds choice-free *in
   content* (`v2_scale_nat`) but carries `Classical.choice` *in its literal `ℕ∞`-successor form*
-  (`v2_scale`) — from the ambient `ℕ∞` instance, not the carrier (see "The `ℕ∞`-addition finding").
+  (`v2_scale`) — from the ambient `ℕ∞` NUMERAL, not the addition and, on ℕ, not the carrier
+  (see "The `ℕ∞`-numeral finding").
   This is the choice-free mirror of `q2Val_bot`, `q2Val_unique`, `q2Scale_bot` and `q2Scale_unique_fp`
   (`ZeroParadox/Valuation/Scale.lean`), which prove the same axioms in `ℤ_[2]` via
   `PadicInt.valuation`; the comparison localizes which part of § V's choice is p-adic and which is the

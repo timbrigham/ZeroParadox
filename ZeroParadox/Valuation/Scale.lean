@@ -268,15 +268,15 @@ set_option linter.flexible false in
 /-- Statement: ℤ_[2] DOES admit a `ValuationStructure`, once a semilattice is supplied. The join
     is free — the four axioms mention only `bot` and never the join — so any associative,
     commutative, idempotent operation with 0 as its identity serves. ⚠ It adds NO new axiom:
-    `q2Val_unique` and `q2Val_scale` above already carry `Classical.choice`. ⚠⚠ The join is not
-    the ONLY source — there are THREE, measured 2026-08-30: the well-order this join uses; 
-    `instDecidableEqZ2`, which taints `q2Val` whatever the join is; and the literal `1` in
-    `val_scale`, which resolves through the choice-tainted `AddMonoidWithOne ℕ∞` and so taints
-    the CLASS TYPE (`#print axioms ValuationStructure`). ⚠ NOT the addition: `Add ℕ∞` and
-    `(a : ℕ∞) + (b : ℕ∞)` are axiom-free. The third is ACCIDENTAL — `v2_scale_nat` in
-    `ZeroParadox/Valuation/PricedPadicInterface.lean` states the same fact with the successor
-    cast from ℕ and is choice-free. So a choice-free join alone would not buy a choice-free
-    witness. Whether one exists is not established either way here. -/
+    `q2Val_unique` and `q2Val_scale` above already carry `Classical.choice`. ⚠⚠ **The CARRIER is
+    the source, it subsumes every other, and it CLOSES the question.** `ZPSemilattice ℤ_[2]` is
+    choice-tainted AS A TYPE, so no inhabitant can report a smaller footprint — a choice-free
+    join here is ruled out for every spelling, not merely unbuilt. `ZPSemilattice ℕ` is
+    axiom-free by contrast, so this is the CARRIER and not the class: `PadicInt` itself carries
+    choice, and `q2Scale_bot` shows it, containing no ℕ∞ and no equality test. ⚠ The class's own
+    numeral is a SEPARATE and ACCIDENTAL cost — measured 2026-08-30, this class with `val x + 1`
+    respelled `val x + ((1 : ℕ) : ℕ∞)` is axiom-free (control run, not landed). The purity block
+    below EMITS these rather than asserting them. -/
 example : ∃ h : ZPSemilattice ℤ_[2], Nonempty (@ValuationStructure ℤ_[2] h) := by
   classical
   letI : LinearOrder ℤ_[2] := IsWellOrder.linearOrder (WellOrderingRel (α := ℤ_[2]))
@@ -319,10 +319,19 @@ open ZeroParadox
 #print axioms val_bot_self_mem
 #print axioms val_quine_unique
 #print axioms val_selfMem_singleton
+-- The CARRIER, and a statement that only mentions it. These two are why every ℤ_[2] footprint
+-- below is choice-tainted regardless of join, valuation or numeral.
+#print axioms PadicInt
+#print axioms q2Scale_bot
 #print axioms q2Val
 #print axioms instDecidableEqZ2
 #print axioms q2Val_unique
 #print axioms q2Val_scale
+-- The class TYPE carries choice through the ℕ∞ numeral in `val_scale`. The pair below is the
+-- carrier-free proof of that, and it is ACCIDENTAL: same file, same `Unit`, differing only in
+-- whether the class mentions the numeral.
+#print axioms ValuationStructure
+#print axioms instAddMonoidWithOneENat
 #print axioms q2Scale_unique_fp
 
 -- The degenerate witnesses making the NO-GO gauge's bound sharp for this class.

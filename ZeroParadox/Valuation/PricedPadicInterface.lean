@@ -113,7 +113,9 @@ theorem v2_scale_nat (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = ((v2nat n n + 1 : �
   rw [e, v2nat_succ, if_neg (by omega : ¬ (2 * n) % 2 = 1), if_neg h2n,
       show (2 * n) / 2 = n from by omega, v2nat_stable (2 * n - 1) n (by omega)]
 
-/-- **The `ℕ∞` LITERAL carries `Classical.choice` — the localization instrument, corrected.**
+/-- **The `ℕ∞` numerals `0` and `1` carry `Classical.choice` — the localization instrument,
+corrected twice.** ⚠ Numerals ≥ 2 are CLEAN: `(2 : ℕ∞)` is `[propext]`, resolving through
+`Nat.cast`. Only `0` and `1` project out of the classical bundled semiring.
 ⚠⚠ This docstring previously said ℕ∞ ADDITION is classical "regardless of the summands". That is
 FALSE, measured 2026-08-30: `Add ℕ∞`, `HAdd ℕ∞ ℕ∞ ℕ∞`, `NatCast ℕ∞` and `(a : ℕ∞) + (b : ℕ∞)`
 all report NO axioms. What carries choice is the LITERAL: `One ℕ∞`, `OfNat ℕ∞ 1` and the bundled
@@ -124,15 +126,20 @@ the numeral, not from the operator. ⚠ And this theorem does not witness it: th
 proved by `induction b with | zero => rfl | succ n ih => rfl` reports NO axioms, so the footprint
 below comes from THIS proof term, not from any instance in the statement. An instance's footprint
 must be EMITTED, never inferred from a theorem that mentions it. -/
+-- ⚠ THE NAME RECORDS THE ORIGINAL, MISTAKEN DIAGNOSIS and is kept as a stable handle (R-NAMING:
+-- never rename a formal identifier). The choice is the NUMERAL, not the addition, and this
+-- theorem's own footprint is its proof term's — the same proposition proved by induction and
+-- `rfl` is axiom-free. Same technique, one domain over: ZeroParadox/Ordinal/SyntacticCollapse.lean
+-- pins Mathlib's ℚ instances the same way, by a `rfl` proof that still reports choice.
 theorem enat_add_choice (a b : ℕ) : (a : ℕ∞) + (b : ℕ∞) = ((a + b : ℕ) : ℕ∞) :=
   (Nat.cast_add a b).symm
 
 /-- **ZP-J `val_scale`, literal form — carries the `ℕ∞`-instance choice.** The same fact as
 `v2_scale_nat`, written with the successor in `ℕ∞` exactly as the ZP-J axiom states it (`val x + 1`).
-Its footprint is `[propext, Classical.choice, Quot.sound]`, and the choice is `enat_add_choice`'s — the
-ambient `ℕ∞` additive instance — **not** the carrier's and **not** p-adic. Mirror of `q2Val_scale`, whose
-choice is this same `ℕ∞` sum together with `PadicInt.valuation`; this file separates the two
-contributions. -/
+Its footprint is `[propext, Classical.choice, Quot.sound]`, from the `ℕ∞` numeral (`One ℕ∞`), NOT from
+the addition. ⚠ On THIS carrier (ℕ) that is the whole story. On ℤ_[2] it is not: `PadicInt` itself
+carries `Classical.choice`, so `q2Val_scale` would be tainted even with a choice-free numeral, and
+the two contributions do NOT separate there. -/
 theorem v2_scale (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = v2 n + 1 := by
   rw [v2_scale_nat n hn, v2, if_neg hn, Nat.cast_add_one]
 
@@ -235,8 +242,9 @@ section PurityCheck
 open ZeroParadox
 
 -- Constructive side: the valuation face. `v2_scale_nat` (the content) is choice-free; `v2_scale` (the
--- literal `ℕ∞` axiom form) carries `Classical.choice`, and `enat_add_choice` localizes that choice to
--- the ambient `ℕ∞` additive instance — not the carrier, not p-adic.
+-- literal `ℕ∞` axiom form) carries `Classical.choice`, from the NUMERAL (`One ℕ∞`), not the addition.
+-- ⚠ That localization holds on ℕ only. `PadicInt` is itself choice-tainted, so on ℤ_[2] nothing
+-- separates: every statement mentioning that carrier carries choice whatever the numeral does.
 #print axioms v2nat
 #print axioms v2
 #print axioms v2_bot
