@@ -124,6 +124,21 @@ PRE_COMMIT_PLAN = [
     # text is valid UTF-8, so it survives every other check, renders plausibly in a diff, and the
     # window in which the author still knows which write did it is minutes long.
     ("check_encoding", "BLOCK", "BOM + undecodable BLOCK; suspected double-encoding WARNS"),
+    # ⚠⚠ THE SIX BELOW WERE PUSH-ONLY UNTIL 2026-08-30, AND THAT WAS A HOLE, NOT A SAVING.
+    # gitRobot admits 19 keys for a push; this hook recorded 11. The other six ran only in
+    # `pre_push`, against the TIP -- so a second commit silently invalidated the first, and no
+    # intermediate commit could EVER reach the bar through ordinary work. Measured: a 2-commit
+    # range read 11/19 with both commits made through the full pipeline, hook green each time.
+    # The remedy on offer was `squash`, i.e. rewriting history on every push to satisfy a rule
+    # that exists BECAUSE intermediate commits are fetchable, bisectable and citable forever.
+    # ⚠ They already BLOCK at push, so this adds NO new failure class -- same argument
+    # `pre_commit` makes for the original five, one paragraph down. Cost 16.1s (~5.9s -> ~22s).
+    ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
+    ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
+    ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
+    ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
+    ("check_invariants", "BLOCK", "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
+    ("decls", "BLOCK", "every new declaration has #print axioms + an ssot.json row"),
 ]
 
 PRE_PUSH_PLAN = [
@@ -174,12 +189,18 @@ PRE_PUSH_PLAN = [
 
 
 def pre_commit():
-    """The five checkers BLOCK; nothing here warns.
+    """The eleven checkers BLOCK; nothing here warns.
 
     The stub-first protocol commits `sorry`-stubbed files on purpose, so BUILD state must never
-    gate here — and none of these four reads `sorry`, the build, or completeness. They are
+    gate here — and none of these reads `sorry`, the build, or completeness. They are
     baselined, sit at zero new, and already block at push, so blocking here adds no new failure
-    class; it moves an identical, already-mandatory failure earlier, where the fix is cheap."""
+    class; it moves an identical, already-mandatory failure earlier, where the fix is cheap.
+
+    ⚠⚠ SIX WERE ADDED 2026-08-30 SO THAT EVERY COMMIT EARNS ITS OWN ADMISSION KEYS. Recording
+    them only in `pre_push` meant they were keyed to the TIP, so an intermediate commit could
+    never satisfy the commit bar and `can_push` refused every multi-commit range. The fix is
+    HERE rather than in `batch.py precommit` for the reason the comment below already gives:
+    that command is MANUAL, and the path that fires on every commit is this hook."""
     report.banner("pre-commit pipeline", [
         ("entry", ".git/hooks/pre-commit -> hooks.py pre_commit"),
         ("scope", "the WORKING TREE as it stands (checkers scan the corpus on disk)"),
@@ -202,7 +223,10 @@ def pre_commit():
     os.environ.setdefault("ZPLEDGER_BASIS", "INDEX")
     os.environ.setdefault("ZPLEDGER_RUN", "pre-commit")
     for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py",
-                   "check_encoding.py"):
+                   "check_encoding.py",
+                   # the six that were push-only until 2026-08-30 — see PRE_COMMIT_PLAN
+                   "check_paths.py", "check_moved.py", "check_negatives.py",
+                   "check_figures.py", "check_invariants.py"):
         rc = py(script, "--block", "--record")
         # ⚠ EXIT 2 IS "COULD NOT BE RECORDED", NOT "FAILED". A checker that ran and could not reach
         # the ledger produced no key, so the commit must not proceed as though it had — but the
@@ -212,6 +236,15 @@ def pre_commit():
                           % script)
         elif rc != 0:
             failed.append(script)
+
+    # ⚠ `decls` is the sixth of the six, and it is driven separately because it lives in
+    #   `batch.py` behind a subcommand rather than being a `check_*.py`. Same exit-2 handling:
+    #   "could not be recorded" is not "failed", and neither may be read as the other.
+    _rc_decls = py("batch.py", "decls", "--block", "--record")
+    if _rc_decls == 2:
+        failed.append("decls (ran; verdict NOT RECORDED — no key exists for this content)")
+    elif _rc_decls != 0:
+        failed.append("decls")
 
     if failed:
         print("")
