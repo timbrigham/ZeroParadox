@@ -161,8 +161,12 @@ instance toAbstractSelfApp : AbstractSelfApp L where
 /-! ## § IV. AFAStructure — Full Derivation Chain
 
     ValuationStructure → AbstractSelfApp → AFAStructure
-    AFAStructure's two LAWS are now theorems derived from valuation axioms; its `selfMem`
-    field is DATA, supplied by `def selfMemFromVal` below. -/
+    AFAStructure's two LAWS are now theorems derived from valuation axioms. ⚠ This file
+    declares only the `AbstractSelfApp` instance (:156); the `AFAStructure` itself arrives
+    generically from `ZeroParadox/Computability/SelfApp.lean`'s `toAFAStructure`, whose
+    `selfMem` is DATA supplied by `def selfMemDerived`. `selfMemFromVal` below is this
+    file's own predicate for the valuation-side theorems — definitionally that same
+    predicate under `selfApp := scale`, not a second binding of the field. -/
 
 /-- selfMem derived from ValuationStructure: x is self-containing iff
     it is a fixed point of scale (i.e., scale x = x). -/

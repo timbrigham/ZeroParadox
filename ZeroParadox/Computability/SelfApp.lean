@@ -52,6 +52,15 @@ constraint entirely, and both ℤ_[2] and ZPSemilattice types become instances
 of a common ancestor. The formal gap described here is closed.
 -/
 
+/-! ⚠⚠ **READ §III BEFORE THE OVERVIEW ABOVE.** That overview says all three
+    `AFAStructure` fields become theorems. **TWO do.** `selfMem` is DATA — a predicate —
+    and is SUPPLIED by `def selfMemDerived` (:84), never proved; `bot_self_mem` and
+    `quine_unique` are the LAWS, discharged by theorems. §III (:114) carries the
+    measurement and records how the slip reached ZP-J and its companion.
+    The overview is left uncorrected because its block is frozen by CONTENT HASH in
+    `prose_baseline.txt`: editing it re-keys the entry and `check_prose` blocks the
+    commit. Route is a byte-identical ride-along move first (`PRS-12`). -/
+
 namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
@@ -65,7 +74,7 @@ open ZeroParadox
       Set theory (AFA): f x = {x},  unique fixed point = Quine atom = ⊥
       2-adic integers:  f x = 2 * x, unique fixed point = 0 (v₂ = +∞)
     From these two fields, AFAStructure's two LAWS become theorems; its `selfMem` field is DATA
-    and is supplied by `def selfMemDerived` (:83), not proved. See §III. -/
+    and is supplied by `def selfMemDerived` (:84), not proved. See §III. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Abstracts the shared fixed-point pattern between AFA set theory (f x = {x}, unique fixed point = Quine atom) and 2-adic multiplication (f x = 2x, unique fixed point = 0). Mathlib has Function.IsFixedPt (a predicate) but no typeclass for "type with a self-application operation whose unique fixed point is a designated bottom element." Allows AFAStructure's two LAWS to become theorems; its selfMem field is DATA, supplied by definition.
 class AbstractSelfApp (L : Type*) [ZPSemilattice L] where
   /-- The self-application operation: x ↦ f(x). -/
@@ -113,7 +122,7 @@ theorem selfMem_eq_singleton_bot :
 
     ⚠ TWO of the three fields become theorems, not three. `bot_self_mem` and `quine_unique` are
     LAWS and are discharged by `derived_bot_self_mem` and `derived_quine_unique`. `selfMem` is
-    DATA — a predicate — and is SUPPLIED by `def selfMemDerived` (:83), not proved. The earlier
+    DATA — a predicate — and is SUPPLIED by `def selfMemDerived` (:84), not proved. The earlier
     wording here said all three "are now theorems"; that counted the data field as a law, and the
     slip propagated verbatim into ZP-J and its companion, where it took a gate round to catch.
     See §V below for what carrying this structure does NOT establish. -/
