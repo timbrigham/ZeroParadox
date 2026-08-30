@@ -204,7 +204,7 @@ The cross-framework bridge. `MachinePhase` is Surprisal's two-element type; givi
 ### `instZ2ValBridge` — `ZeroParadox/Valuation/ScaleBridge.lean`
 `ValBridge ℤ_[2]`
 
-`ℤ_[2]` is a ring — it cannot be a `ZPSemilattice` instance and could not satisfy `ValuationStructure`. `ValBridge`'s bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in `Scale` §V (`q2Scale_bot`, `q2Val_bot`, `q2Val_unique`, `q2Val_scale`).
+No `ZPSemilattice ℤ_[2]` is defined — its ring structure supplies no natural join with 0 as bottom — so it cannot satisfy `ValuationStructure`, which requires one. ⚠ Being a ring is not itself the obstruction: no `ZPSemilattice` axiom mentions a ring operation, and `ZPSemilattice ℕ` exists. `ValBridge`'s bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in `Scale` §V (`q2Scale_bot`, `q2Val_bot`, `q2Val_unique`, `q2Val_scale`).
 
 ---
 

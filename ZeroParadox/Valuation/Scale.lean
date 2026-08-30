@@ -204,6 +204,14 @@ theorem val_selfMem_singleton :
     The formal connection — a ZPSemilattice instance for a concrete type carrying
     a ValuationStructure — is the remaining open gap. -/
 
+/-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE AND THE GAP IS CLOSED.** A concrete type
+    carrying BOTH a `ZPSemilattice` and a `ValuationStructure` exists: ℕ∞, via
+    `instNatInfZPS` and `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which
+    IMPORTS this file and says so. This file's own overview agrees — "the formal gap
+    described here is closed". The stale sentence is left in place only because its
+    block is frozen by content hash in the prose baseline; editing it re-keys the entry
+    and blocks the commit. Do not treat it as an open problem. -/
+
 section PadicParallel
 
 noncomputable instance instDecidableEqZ2 : DecidableEq ℤ_[2] := Classical.decEq _
