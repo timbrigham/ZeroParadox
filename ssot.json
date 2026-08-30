@@ -616,8 +616,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1678,
-        "files": 137
+        "declarations": 1682,
+        "files": 139
       },
       "entries": [
         {
@@ -2329,6 +2329,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06623639-1c72-4b97-bab7-c1af54901d01",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_zpsN",
+            "short": "_zpsN"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_zpsN",
+            "short": "_zpsN",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the four axiom-footprint counterfactuals as emitted evidence: two minimal pairs isolating the carrier (ZPSemilattice on ℤ_[2] vs ℕ) and the numeral (ℕ∞ literal 1 vs cast from ℕ).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23348,6 +23383,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5d43ad6c-338c-4963-bdb1-1e358b881f54",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_zpsZ2",
+            "short": "_zpsZ2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_zpsZ2",
+            "short": "_zpsZ2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the four axiom-footprint counterfactuals as emitted evidence: two minimal pairs isolating the carrier (ZPSemilattice on ℤ_[2] vs ℕ) and the numeral (ℕ∞ literal 1 vs cast from ℕ).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5d76cff6-e38f-488d-9727-f687d80c7849",
           "new": {
@@ -24588,6 +24658,41 @@
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6384d47f-5531-4af6-9cae-126c04a46bce",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_enatOne",
+            "short": "_enatOne"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_enatOne",
+            "short": "_enatOne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the four axiom-footprint counterfactuals as emitted evidence: two minimal pairs isolating the carrier (ZPSemilattice on ℤ_[2] vs ℕ) and the numeral (ℕ∞ literal 1 vs cast from ℕ).",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -52314,6 +52419,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "da46451c-8588-4882-a346-91f6c000599e",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_enatOneCast",
+            "short": "_enatOneCast"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_enatOneCast",
+            "short": "_enatOneCast",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the four axiom-footprint counterfactuals as emitted evidence: two minimal pairs isolating the carrier (ZPSemilattice on ℤ_[2] vs ℕ) and the numeral (ℕ∞ literal 1 vs cast from ℕ).",
           "verify": {
             "axioms": null,
             "sorry_free": true

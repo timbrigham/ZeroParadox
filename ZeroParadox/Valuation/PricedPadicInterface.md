@@ -92,8 +92,9 @@ what is tainted (`One ℕ∞`, `AddMonoidWithOne ℕ∞`). This is the documente
 here located exactly — and it has a consequence for the ZP-J layer: because `ValuationStructure.val`
 targets `ℕ∞` and `val_scale` is stated as `val x + 1`, the *statement* of that axiom carries
 `Classical.choice` on **any** carrier, `ℕ` and `ℤ_[2]` alike. So `q2Val_scale` (`ZeroParadox/Valuation/Scale.lean`)
-footprint is not evidence that the p-adic completion is doing the classical work; part of it is this
-same `ℕ∞` sum. This file separates the two contributions: `v2_scale_nat` isolates the choice-free
+footprint is not evidence about what the p-adic completion mathematically REQUIRES — but it is not
+separable either: `PadicInt` reports `Classical.choice`, so on `ℤ_[2]` the carrier alone already
+accounts for it. This file separates the two contributions: `v2_scale_nat` isolates the choice-free
 valuation content, and the numeral accounts for the rest ON ℕ. ⚠ It does NOT carry over to ℤ_[2]:
 `PadicInt` is itself choice-tainted, so nothing there separates. The remaining
 `Classical.choice` in the crossing (`natToZ2`, `crossVal_bot_agrees`) is attributable to the p-adic
@@ -114,8 +115,9 @@ Two faces, matching the two faces of Group A:
   (see "The `ℕ∞`-numeral finding").
   This is the choice-free mirror of `q2Val_bot`, `q2Val_unique`, `q2Scale_bot` and `q2Scale_unique_fp`
   (`ZeroParadox/Valuation/Scale.lean`), which prove the same axioms in `ℤ_[2]` via
-  `PadicInt.valuation`; the comparison localizes which part of § V's choice is p-adic and which is the
-  shared `ℕ∞` sum.
+  `PadicInt.valuation`; the comparison localizes § V's choice on the ℕ side only. ⚠ On `ℤ_[2]`
+  nothing separates: `PadicInt` is itself choice-tainted, so the carrier alone already accounts
+  for it whatever the numeral does.
 * **The ball face — digit streams `Str := ℕ → Fin 2`.** `AgreeTo n x y` ("agree to depth n") is the
   ball relation; `Apart x y := ∃ n, x n ≠ y n` is its positive complement. The ultrametric strong
   triangle (depth form), nested balls, descent to a single point, and total separation all hold

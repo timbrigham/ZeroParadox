@@ -115,11 +115,13 @@ theorem v2_scale_nat (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = ((v2nat n n + 1 : �
 
 /-- **The `ℕ∞` numerals `0` and `1` carry `Classical.choice` — the localization instrument,
 corrected twice.** ⚠ Numerals ≥ 2 are CLEAN: `(2 : ℕ∞)` is `[propext]`, resolving through
-`Nat.cast`. Only `0` and `1` project out of the classical bundled semiring.
+`instOfNatAtLeastTwo` and `Nat.cast`. Only `0` and `1` are tainted, and through DIFFERENT
+bundles: `1` via `AddMonoidWithOne.toOne`, `0` via `instCommSemiringENat`.
 ⚠⚠ This docstring previously said ℕ∞ ADDITION is classical "regardless of the summands". That is
 FALSE, measured 2026-08-30: `Add ℕ∞`, `HAdd ℕ∞ ℕ∞ ℕ∞`, `NatCast ℕ∞` and `(a : ℕ∞) + (b : ℕ∞)`
 all report NO axioms. What carries choice is the LITERAL: `One ℕ∞`, `OfNat ℕ∞ 1` and the bundled
-`AddMonoidWithOne ℕ∞`. Hence `(a : ℕ∞) + 1` carries it and `(a : ℕ∞) + ((1 : ℕ) : ℕ∞)` does not.
+`AddMonoidWithOne ℕ∞` — and `Zero ℕ∞` / `OfNat ℕ∞ 0` likewise. Hence `(a : ℕ∞) + 1` carries it
+and `(a : ℕ∞) + ((1 : ℕ) : ℕ∞)` does not.
 The CONCLUSION stands and is confirmed directly — `#print axioms ValuationStructure` reports
 `Classical.choice`, so `val_scale` as spelled costs choice on every carrier — but it follows from
 the numeral, not from the operator. ⚠ And this theorem does not witness it: the same proposition
@@ -134,7 +136,7 @@ must be EMITTED, never inferred from a theorem that mentions it. -/
 theorem enat_add_choice (a b : ℕ) : (a : ℕ∞) + (b : ℕ∞) = ((a + b : ℕ) : ℕ∞) :=
   (Nat.cast_add a b).symm
 
-/-- **ZP-J `val_scale`, literal form — carries the `ℕ∞`-instance choice.** The same fact as
+/-- **ZP-J `val_scale`, literal form — carries the `ℕ∞`-NUMERAL choice.** The same fact as
 `v2_scale_nat`, written with the successor in `ℕ∞` exactly as the ZP-J axiom states it (`val x + 1`).
 Its footprint is `[propext, Classical.choice, Quot.sound]`, from the `ℕ∞` numeral (`One ℕ∞`), NOT from
 the addition. ⚠ On THIS carrier (ℕ) that is the whole story. On ℤ_[2] it is not: `PadicInt` itself
@@ -243,8 +245,9 @@ open ZeroParadox
 
 -- Constructive side: the valuation face. `v2_scale_nat` (the content) is choice-free; `v2_scale` (the
 -- literal `ℕ∞` axiom form) carries `Classical.choice`, from the NUMERAL (`One ℕ∞`), not the addition.
--- ⚠ That localization holds on ℕ only. `PadicInt` is itself choice-tainted, so on ℤ_[2] nothing
--- separates: every statement mentioning that carrier carries choice whatever the numeral does.
+-- ⚠ That localization holds on ℕ only. On ℤ_[2] nothing separates: the choice is INTRODUCED at
+-- layer 0 (`padicValNat`), below the completion, and `Padic`/`PadicInt` INHERIT rather than add
+-- it — which is why both report it. Every statement mentioning that carrier carries it.
 #print axioms v2nat
 #print axioms v2
 #print axioms v2_bot
