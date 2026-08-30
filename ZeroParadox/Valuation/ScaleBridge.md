@@ -23,8 +23,8 @@ searched: every registered `ZPSemilattice` instance in this corpus — none on `
 `instZPSemilatticeEnd` (`ZeroParadox/Valuation/PoleCompletion.lean`) equips the 2-adic digit
 boundary, whose digit isomorphism that file's Honest fence leaves unformalized (it names ℚ₂) — and
 `ZeroParadox/Valuation/Scale.lean` § V. That is a statement about what has been written down, not
-about what exists. ⚠ The witness is choice-dependent, and one reason subsumes all the others and closes the
-question: `ZPSemilattice ℤ_[2]` is choice-tainted *as a type*, so no inhabitant can report a
+about what exists. ⚠ On the separate question of choice-dependence, one reason subsumes all the others and closes
+it: `ZPSemilattice ℤ_[2]` is choice-tainted *as a type*, so no inhabitant can report a
 smaller footprint. `ZPSemilattice ℕ` is axiom-free by contrast, so it is the carrier and not the
 class. It adds no new axiom: § V's own `q2Val_unique` and `q2Val_scale` already carry `Classical.choice`.
 A choice-free join on this carrier IS ruled out under the `#print axioms` metric — the type is

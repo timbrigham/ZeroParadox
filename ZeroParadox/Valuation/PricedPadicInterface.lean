@@ -116,7 +116,9 @@ theorem v2_scale_nat (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = ((v2nat n n + 1 : �
 /-- **The `ℕ∞` numerals `0` and `1` carry `Classical.choice` — the localization instrument,
 corrected twice.** ⚠ Numerals ≥ 2 are CLEAN: `(2 : ℕ∞)` is `[propext]`, resolving through
 `instOfNatAtLeastTwo` and `Nat.cast`. Only `0` and `1` are tainted, and through DIFFERENT
-bundles: `1` via `AddMonoidWithOne.toOne`, `0` via `instCommSemiringENat`.
+bundles: `1` via `instAddMonoidWithOneENat` (the `AddMonoidWithOne ℕ∞`), `0` via
+`instCommSemiringENat` (the `CommSemiring ℕ∞`). ⚠ Cite the INSTANCES, not their projections:
+`AddMonoidWithOne.toOne` is itself axiom-free.
 ⚠⚠ This docstring previously said ℕ∞ ADDITION is classical "regardless of the summands". That is
 FALSE, measured 2026-08-30: `Add ℕ∞`, `HAdd ℕ∞ ℕ∞ ℕ∞`, `NatCast ℕ∞` and `(a : ℕ∞) + (b : ℕ∞)`
 all report NO axioms. What carries choice is the LITERAL: `One ℕ∞`, `OfNat ℕ∞ 1` and the bundled
@@ -248,6 +250,10 @@ open ZeroParadox
 -- ⚠ That localization holds on ℕ only. On ℤ_[2] nothing separates: the choice is INTRODUCED at
 -- layer 0 (`padicValNat`), below the completion, and `Padic`/`PadicInt` INHERIT rather than add
 -- it — which is why both report it. Every statement mentioning that carrier carries it.
+-- The two numeral bundles the docstring above names. Emitted, per this file's own rule that an
+-- instance's footprint must never be inferred from a theorem that mentions it.
+#print axioms instAddMonoidWithOneENat
+#print axioms instCommSemiringENat
 #print axioms v2nat
 #print axioms v2
 #print axioms v2_bot

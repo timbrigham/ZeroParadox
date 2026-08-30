@@ -87,14 +87,13 @@ The one `Classical.choice` on the constructive side was not predicted. On the �
 through Mathlib's `ℕ∞` NUMERAL, not the addition and not the valuation — and, on ℕ, not the carrier:
 `enat_add_choice` (`(a : ℕ∞) + (b : ℕ∞) = ↑(a + b)`) reports `[propext, Classical.choice, Quot.sound]`
 — but that is its PROOF TERM, not an instance: the same proposition proved by induction and `rfl`
-reports no axioms at all. Measured 2026-08-30, `ℕ∞` ADDITION is choice-free and the LITERAL `1` is
-what is tainted (`One ℕ∞`, `AddMonoidWithOne ℕ∞`). This is the documented instance hazard,
+reports no axioms at all. Measured 2026-08-30, `ℕ∞` ADDITION is choice-free and the LITERAL numerals `0` and `1` are what
+is tainted, through DIFFERENT bundles — `1` via `instAddMonoidWithOneENat`, `0` via
+`instCommSemiringENat`. This is the documented instance hazard,
 here located exactly — and it has a consequence for the ZP-J layer: because `ValuationStructure.val`
 targets `ℕ∞` and `val_scale` is stated as `val x + 1`, the *statement* of that axiom carries
 `Classical.choice` on **any** carrier, `ℕ` and `ℤ_[2]` alike. So `q2Val_scale` (`ZeroParadox/Valuation/Scale.lean`)
-footprint is not evidence about what the p-adic completion mathematically REQUIRES — but it is not
-separable either: `PadicInt` reports `Classical.choice`, so on `ℤ_[2]` the carrier alone already
-accounts for it. This file separates the two contributions: `v2_scale_nat` isolates the choice-free
+footprint is not evidence about what the p-adic completion mathematically REQUIRES. This file separates the two contributions: `v2_scale_nat` isolates the choice-free
 valuation content, and the numeral accounts for the rest ON ℕ. ⚠ It does NOT carry over to ℤ_[2]:
 `PadicInt` is itself choice-tainted, so nothing there separates. The remaining
 `Classical.choice` in the crossing (`natToZ2`, `crossVal_bot_agrees`) is attributable to the p-adic

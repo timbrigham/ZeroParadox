@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1682,
+        "declarations": 1684,
         "files": 139
       },
       "entries": [
@@ -2357,7 +2357,9 @@
             "synthetic": true
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "valuation"
+            ],
             "object": [],
             "role": [
               "scaffolding"
@@ -18097,6 +18099,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "47a891b1-31fb-4378-8831-3bb226595cc0",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_VScast",
+            "short": "_VScast"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_VScast",
+            "short": "_VScast",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 18: the numeral counterfactual moves from bare ℕ∞ values to the class itself, so the emitted footprint and the claim about ValuationStructure are the same statement.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "47a9adfc-e6f4-4928-91b9-da5a974e3f93",
           "new": {
@@ -23401,7 +23440,9 @@
             "synthetic": true
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "valuation"
+            ],
             "object": [],
             "role": [
               "scaffolding"
@@ -24666,7 +24707,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
+          "disposition": "withdrawn",
           "id": "6384d47f-5531-4af6-9cae-126c04a46bce",
           "new": {
             "file": "ZeroParadox/Valuation/Scale.lean",
@@ -24690,7 +24731,7 @@
               "scaffolding"
             ]
           },
-          "reason": "Land the four axiom-footprint counterfactuals as emitted evidence: two minimal pairs isolating the carrier (ZPSemilattice on ℤ_[2] vs ℕ) and the numeral (ℕ∞ literal 1 vs cast from ℕ).",
+          "reason": "Superseded within the same session by _VSlit: the numeral counterfactual belongs at the class, not at a bare ℕ∞ value. Both gates found the value-level pair could not carry the class-level claim it was cited for.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32960,6 +33001,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "878a6b7d-e40b-4f96-8bb7-9279239057db",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_VSlit",
+            "short": "_VSlit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_VSlit",
+            "short": "_VSlit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 18: the numeral counterfactual moves from bare ℕ∞ values to the class itself, so the emitted footprint and the claim about ValuationStructure are the same statement.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -52429,7 +52507,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
+          "disposition": "withdrawn",
           "id": "da46451c-8588-4882-a346-91f6c000599e",
           "new": {
             "file": "ZeroParadox/Valuation/Scale.lean",
@@ -52453,7 +52531,7 @@
               "scaffolding"
             ]
           },
-          "reason": "Land the four axiom-footprint counterfactuals as emitted evidence: two minimal pairs isolating the carrier (ZPSemilattice on ℤ_[2] vs ℕ) and the numeral (ℕ∞ literal 1 vs cast from ℕ).",
+          "reason": "Superseded within the same session by _VScast: the numeral counterfactual belongs at the class, not at a bare ℕ∞ value. Both gates found the value-level pair could not carry the class-level claim it was cited for.",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -279,8 +279,9 @@ set_option linter.flexible false in
     `q2Scale_bot` is the consequence — a theorem with no ℕ∞ and no equality test
     in it, tainted anyway. ⚠ The class's own
     numeral is a SEPARATE cost, and an ACCIDENTAL one: respelling the successor as a cast from ℕ
-    removes it. Every claim in this paragraph is EMITTED by the purity block below, including
-    both counterfactuals — nothing here is asserted from a control run elsewhere. -/
+    clears the class outright. ⚠ The two counterfactual PAIRS below emit exactly that — carrier,
+    then numeral. The universals in this paragraph (any lawful join serves; ruled out for every
+    spelling) are NOT emitted and cannot be: a footprint list settles instances, never universals. -/
 example : ∃ h : ZPSemilattice ℤ_[2], Nonempty (@ValuationStructure ℤ_[2] h) := by
   classical
   letI : LinearOrder ℤ_[2] := IsWellOrder.linearOrder (WellOrderingRel (α := ℤ_[2]))
@@ -332,20 +333,34 @@ open ZeroParadox
 #print axioms instDecidableEqZ2
 #print axioms q2Val_unique
 #print axioms q2Val_scale
--- The class TYPE carries choice, and the route is the ℕ∞ numeral in `val_scale`. Carrier-free:
--- neither line mentions ℤ_[2].
--- ⭐ THE COUNTERFACTUALS, LANDED. Twelve rounds of this arc failed one way: the explanation
--- outran what was emitted. These four make the attribution checkable instead of argued.
+-- ⭐ THE COUNTERFACTUALS. Two minimal pairs, each varying exactly one thing, so the attribution
+-- is checkable rather than argued.
 -- Carrier, not class: same class, two carriers, opposite answers.
 private def _zpsZ2 : Type := ZPSemilattice ℤ_[2]
 private def _zpsN : Type := ZPSemilattice ℕ
--- Numeral, and ACCIDENTAL: same value, two spellings, opposite answers.
-private def _enatOne : ℕ∞ := 1
-private def _enatOneCast : ℕ∞ := ((1 : ℕ) : ℕ∞)
+-- Numeral, and ACCIDENTAL: the SAME CLASS, two spellings of the successor, opposite answers.
+-- Stated at the class rather than at a bare ℕ∞ value, because the claim is about the class.
+private class _VSlit (L : Type*) [ZPSemilattice L] where
+  scale : L → L
+  val : L → ℕ∞
+  scale_bot : scale ZPSemilattice.bot = ZPSemilattice.bot
+  val_bot : val ZPSemilattice.bot = ⊤
+  val_unique : ∀ x : L, val x = ⊤ → x = ZPSemilattice.bot
+  val_scale : ∀ x : L, x ≠ ZPSemilattice.bot → val (scale x) = val x + 1
+private class _VScast (L : Type*) [ZPSemilattice L] where
+  scale : L → L
+  val : L → ℕ∞
+  scale_bot : scale ZPSemilattice.bot = ZPSemilattice.bot
+  val_bot : val ZPSemilattice.bot = ⊤
+  val_unique : ∀ x : L, val x = ⊤ → x = ZPSemilattice.bot
+  val_scale : ∀ x : L, x ≠ ZPSemilattice.bot → val (scale x) = val x + ((1 : ℕ) : ℕ∞)
 #print axioms _zpsZ2
 #print axioms _zpsN
-#print axioms _enatOne
-#print axioms _enatOneCast
+#print axioms _VSlit
+#print axioms _VScast
+-- The class TYPE carries choice, and the numeral in `val_scale` is THE route, not merely one
+-- of several: `_VScast` above respells that numeral and NOTHING else, and comes out clean, so
+-- no other constituent of the class is tainted. Both lines below are carrier-free.
 #print axioms ValuationStructure
 #print axioms instAddMonoidWithOneENat
 #print axioms q2Scale_unique_fp
