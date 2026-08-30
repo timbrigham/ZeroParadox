@@ -204,16 +204,16 @@ theorem val_selfMem_singleton :
     The formal connection — a ZPSemilattice instance for a concrete type carrying
     a ValuationStructure — is the remaining open gap. -/
 
-/-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE AND THE GAP IS CLOSED.** A concrete type
-    carrying BOTH a `ZPSemilattice` and a `ValuationStructure` exists: ℕ∞, via
-    `instNatInfZPS` and `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which
-    IMPORTS this file. ⚠ §V ALSO says ℤ_[2] "cannot be a formal ValuationStructure
-    instance" — read that as NOT DEFINED. Membership is settled exactly by
-    `valBridge_nonempty_iff` (`ZeroParadox/Valuation/ScaleBridge.lean` § VI): infinite, or
-    inhabited and trivial; ℤ_[2] is infinite. Both stale sentences stay only because their
-    block is frozen by content hash in the prose baseline: editing it re-keys the entry
-    and blocks the commit. ⚠ Route out is a `/claim-review` debaseline, NOT
-    `move_ridealong.py`, which reaches the module doc and not this mid-file block. -/
+/-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE AND THE GAP IS CLOSED.** A concrete type carrying
+    BOTH a `ZPSemilattice` and a `ValuationStructure` exists: ℕ∞, via `instNatInfZPS` and
+    `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which IMPORTS this file. ⚠ §V ALSO
+    says ℤ_[2] "cannot be a formal ValuationStructure instance" — read NOT DEFINED, and note
+    the question is not well-formed: `Nonempty (ValuationStructure ℤ_[2])` does not elaborate,
+    as no `ZPSemilattice ℤ_[2]` exists to state it over. What IS settled is the WEAKER class —
+    `ValBridge ℤ_[2]`, by `instZ2ValBridge`. ⚠⚠ It does NOT transfer: `toValBridge` runs
+    `ValuationStructure ⇒ ValBridge`, carrying obstructions forward and no membership witness
+    back. Both stale sentences stay only because their block is frozen by content hash; the
+    route out is a `/claim-review` debaseline. -/
 
 section PadicParallel
 

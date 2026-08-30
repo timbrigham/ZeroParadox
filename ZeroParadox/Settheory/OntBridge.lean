@@ -20,8 +20,8 @@ names that resolve to nothing at HEAD — they are now `ZeroParadox/Valuation/Sc
 mechanical path sweep rewrote it on 2026-08-02 and was reverted. Only Tim edits a Take, so the pointer
 lives here instead.)*
 
-OntologicalStates — ZPB's {null, exist} — admits no ValuationStructure, for exactly this
-reason: no_valBridge_of_finite proves no finite carrier with two or more points does. ⚠ The
+OntologicalStates — ZPB's {null, exist} — admits no ValuationStructure, and NOT for the reason
+the Take gives: no_valBridge_of_finite proves no finite carrier with two or more points does. ⚠ The
 obstruction is JOINT, not val_scale alone — val_scale by itself holds on two elements
 (val everywhere infinity, scale the identity); it is val_unique that then fails. And it can
 be an AbstractSelfApp instance directly. The self-application operation is the

@@ -9,9 +9,12 @@ the declarations, the Engineer's Take and the per-declaration glosses.
 axioms (`scale_bot`, `val_bot`, `val_unique`, `val_scale`) only ever use `bot` — the join `⊔` never
 appears. So `ZPSemilattice` is an over-strong constraint, and no `ValuationStructure` `ℤ_[2]` is
 DEFINED even though all four axioms hold (proved as standalone theorems in
-`ZeroParadox/Valuation/Scale.lean` § V). ⚠ "not defined", never "not possible":
-`valBridge_nonempty_iff` settles membership exactly — infinite, or inhabited and trivial — and
-`ℤ_[2]` is infinite.
+`ZeroParadox/Valuation/Scale.lean` § V). ⚠ Read "not defined", never "not possible" — and note
+the question is not currently well-formed: `Nonempty (ValuationStructure ℤ_[2])` does not
+elaborate, since no `ZPSemilattice ℤ_[2]` exists to state it over. What `valBridge_nonempty_iff`
+settles is membership in the WEAKER class `ValBridge`, and `ℤ_[2]` is a member of that by
+`instZ2ValBridge`. ⚠⚠ It does not transfer upward: `toValBridge` runs one way, carrying
+obstructions INTO `ValuationStructure` and no membership witness back out.
 
 This tests the conjecture that the constraint is an **encoding artefact, not a mathematical gap**. It
 defines `ValBridge` — the same four axioms with `bot` a plain field rather than a `ZPSemilattice` bottom

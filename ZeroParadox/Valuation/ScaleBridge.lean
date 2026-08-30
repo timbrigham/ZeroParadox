@@ -304,6 +304,28 @@ theorem valBridge_nonempty_iff (α : Type*) :
     · haveI := hi; exact nonempty_valBridge_of_infinite α
     · haveI := hn; haveI := hs; exact nonempty_valBridge_of_inhabited_subsingleton α
 
+/-! ### Witnesses for the claims made about this gauge in prose
+
+    Tier 1 (R-TOLEAN): each fails to COMPILE if the sentence citing it is wrong. Anonymous, so
+    they declare nothing and owe no purity entry or SSOT row. Added after five rounds in which
+    every prose correction contained the next defect (R-NOCONV: the check changes SHAPE). -/
+
+-- Statement: ℤ_[2] is a member because it is INFINITE, not by any equipping argument.
+example : Nonempty (ValBridge ℤ_[2]) := nonempty_valBridge_of_infinite _
+
+-- Statement: the two-element carrier is excluded. `Nontrivial` is supplied here rather than
+-- registered, so this example adds no declaration.
+example : IsEmpty (ValBridge OntologicalStates) := by
+  haveI : Nontrivial OntologicalStates := ⟨⟨.null, .exist, by decide⟩⟩
+  exact no_valBridge_of_finite OntologicalStates
+
+-- Statement: the obstruction TRANSFERS to the stronger class, which is the legal direction
+-- across `toValBridge`. This is the on-point form for every prose claim about
+-- `ValuationStructure` membership on a finite carrier.
+example (M : Type) [ZPSemilattice M] [Finite M] [Nontrivial M] :
+    IsEmpty (ValuationStructure M) :=
+  ⟨fun vs => (no_valBridge_of_finite M).elim (@toValBridge M _ vs)⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
