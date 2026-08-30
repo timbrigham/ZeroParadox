@@ -204,15 +204,15 @@ theorem val_selfMem_singleton :
     The formal connection — a ZPSemilattice instance for a concrete type carrying
     a ValuationStructure — is the remaining open gap. -/
 
-/-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE, AND §V's ℤ_[2] SENTENCE IS FALSE.** ℕ∞ carries
-    BOTH structures — `instNatInfZPS` and `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`,
-    which IMPORTS this file. §V also says ℤ_[2] "cannot be a formal ValuationStructure
-    instance"; the example below SUPPLIES a semilattice with bottom 0 and discharges all four
-    axioms over it (end of § V, where its inputs are in scope). No `ZPSemilattice ℤ_[2]`
-    INSTANCE is registered, so the bare expression fails synthesis — a fact about the
-    instance database, never about existence.
-    Both stale sentences stay only because their block is frozen by content hash; the route
-    out is a `/claim-review` debaseline. -/
+/-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE.** ℕ∞ carries BOTH structures — `instNatInfZPS`
+    and `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which IMPORTS this file.
+    ⚠ §V also says ℤ_[2] "cannot be a formal ValuationStructure instance". **Read "is NOT
+    DEFINED", and so read it is still true**: no `ZPSemilattice ℤ_[2]` instance is registered,
+    so the bare expression fails synthesis. Read MODALLY it is false, and the example at the
+    end of § V is the witness — it supplies a semilattice with bottom 0 and discharges all
+    four axioms over it. Two measurements, no more: `#synth` fails, and the existential is
+    provable. Both stale sentences stay only because their block is frozen by content hash;
+    the route out is a `/claim-review` debaseline. -/
 
 section PadicParallel
 
@@ -261,12 +261,19 @@ theorem q2Val_scale (x : ℤ_[2]) (hx : x ≠ 0) :
 theorem q2Scale_unique_fp (x : ℤ_[2]) (h : 2 * x = x) : x = 0 := by
   linear_combination h
 
+-- `linter.flexible` fires on the `simp_all`s in the proof below: a STYLE lint about a tactic
+-- that modifies the goal, not a soundness warning. Suppressed rather than replaced, because the
+-- replacement is a hand-written simp set and a guessed lemma list is how this proof broke once.
+set_option linter.flexible false in
 /-- Statement: ℤ_[2] DOES admit a `ValuationStructure`, once a semilattice is supplied. The join
     is free — the four axioms mention only `bot` and never the join — so any associative,
-    commutative, idempotent operation with 0 as its identity serves. ⚠ Choice-dependent: it
-    well-orders the carrier. That adds NO new axiom, since `q2Val_unique` and `q2Val_scale`
-    below already carry `Classical.choice`. A choice-free join is not ruled out; none is built
-    here. -/
+    commutative, idempotent operation with 0 as its identity serves. ⚠ It adds NO new axiom:
+    `q2Val_unique` and `q2Val_scale` above already carry `Classical.choice`. ⚠⚠ And the choice
+    is NOT the join's. `instDecidableEqZ2` makes `val := q2Val` choice-dependent whatever the
+    join is, and `ZeroParadox/Valuation/PricedPadicInterface.lean` measures the deeper source:
+    ℕ∞ addition is classical at the INSTANCE level, so `val_scale` stated as `val x + 1`
+    carries choice on EVERY carrier. So a choice-free join alone would not buy a choice-free
+    witness. Whether one exists is not established either way here. -/
 example : ∃ h : ZPSemilattice ℤ_[2], Nonempty (@ValuationStructure ℤ_[2] h) := by
   classical
   letI : LinearOrder ℤ_[2] := IsWellOrder.linearOrder (WellOrderingRel (α := ℤ_[2]))
@@ -309,6 +316,7 @@ open ZeroParadox
 #print axioms val_bot_self_mem
 #print axioms val_quine_unique
 #print axioms val_selfMem_singleton
+#print axioms q2Val_unique
 #print axioms q2Val_scale
 #print axioms q2Scale_unique_fp
 

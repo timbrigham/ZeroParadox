@@ -21,9 +21,12 @@ mechanical path sweep rewrote it on 2026-08-02 and was reverted. Only Tim edits 
 lives here instead.)*
 
 OntologicalStates — ZPB's {null, exist} — admits no ValuationStructure. The Take's CONCLUSION
-is right and its MECHANISM is not: the axioms JOINTLY force the scale orbit to embed ℕ and so
-force the CARRIER infinite — not because val lacks room, its codomain ℕ∞ being unbounded.
-Proved by valuationStructure_forces_infinite (ZeroParadox/Valuation/ScaleBridge.lean § VI). ⚠ The
+is right and its MECHANISM is not: ONCE A CARRIER HAS A POINT OTHER THAN bot, the axioms
+JOINTLY force the scale orbit through it to contain a copy of ℕ, and so force the CARRIER
+infinite. The implication runs (instance + a second point) => Infinite, never the reverse: on
+a one-point carrier val_scale's guard is vacuous and trivialValuationStructure is a FINITE
+member. Proved by valuationStructure_forces_infinite (ZeroParadox/Valuation/ScaleBridge.lean
+§ VI), whose [Nontrivial M] hypothesis is that second point. ⚠ The
 obstruction is JOINT, not val_scale alone — val_scale by itself holds on two elements
 (val everywhere infinity, scale the identity); it is val_unique that then fails. And it can
 be an AbstractSelfApp instance directly. The self-application operation is the
