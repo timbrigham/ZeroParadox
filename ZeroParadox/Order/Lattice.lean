@@ -40,7 +40,7 @@ says nothing in particular. The theorems consume the LAWS, not membership, so *"
 
 /-- The ZP-A algebraic structure: a join-semilattice with bottom.
     Corresponds to Axiom Block A (A1–A4) in ZP-A §1.1. -/
--- [ZP-CUSTOM] replaces: Mathlib SemilatticeSup + OrderBot | reason: Mathlib's semilattice hierarchy ties ⊔ to its order typeclass infrastructure (LE, Preorder) via hundreds of instances; importing it contaminates #print axioms with unrelated classical dependencies. ZPSemilattice states A1–A4 axiomatically from scratch so every theorem's axiom footprint is auditable.
+-- [ZP-CUSTOM] replaces: Mathlib SemilatticeSup + OrderBot | reason: Mathlib's SemilatticeSup + OrderBot would satisfy the algebra, and using them is cheap — measured 2026-08-30 at the pin, both classes are axiom-free and bot_sup_eq and sup_assoc cost [propext] only. ZPSemilattice states A1–A4 as FIELDS anyway, so each theorem's footprint is fixed by the axioms it consumes rather than by whichever hierarchy lemma the elaborator reached for. ⚠⚠ An AUDITABILITY choice, not an axiom-avoidance one: an IMPORT never changes a footprint, only USING a proof does — this file's own line 1 imports Mathlib.Tactic and the class measures clean.
 class ZPSemilattice (L : Type*) where
   join : L → L → L
   bot  : L

@@ -5,7 +5,7 @@ This file documents the definitions, typeclasses and instances CARRYING A `[ZP-C
 Every entry corresponds to a `-- [ZP-CUSTOM]` inline comment in the source. ⚠⚠ **The register is NOT generated and is NOT automatically consistent with those comments.** It is maintained by hand. `tools/verify/check_invariants.py` compares the entry COUNT against the tag COUNT and nothing finer, so WORDING drift between the two copies is mechanically invisible and must be compared by eye — several entries here carry citations, dates or prior-art blocks their tag does not, and this file records one past case where the two contradicted each other outright. To list the tags (this prints them; it does not regenerate anything):
 
 ```powershell
-Select-String -Path ZeroParadox\*.lean -Pattern '\[ZP-CUSTOM\]' -Recurse
+Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP-CUSTOM\]'
 ```
 
 ---
@@ -24,7 +24,7 @@ Select-String -Path ZeroParadox\*.lean -Pattern '\[ZP-CUSTOM\]' -Recurse
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** Mathlib's `ZFSet` uses the Axiom of Foundation (`ZFSet.regularity`), which forbids `x ∈ x`. AFA content (self-containing sets, Quine atoms) cannot be encoded using `ZFSet`. `AFAStructure` is the lattice-level encoding of what ZF+AFA provides set-theoretically, with `selfMem` / `quine_unique` / `bot_self_mem` as the three minimal class fields.
+**Reason:** Mathlib's `ZFSet` uses the Axiom of Foundation (`ZFSet.regularity`), which forbids `x ∈ x`. No `ZFSet` element can satisfy `x ∈ x`, so a Quine atom is not directly available as a `ZFSet` — AFA content is still MODELLABLE over a well-founded universe, as Aczel does via decorations of accessible pointed graphs (see the `APG` entry). `AFAStructure` is the lattice-level encoding of what ZF+AFA provides set-theoretically, with `selfMem` / `quine_unique` / `bot_self_mem` as the three minimal class fields.
 
 ---
 
@@ -40,7 +40,7 @@ Select-String -Path ZeroParadox\*.lean -Pattern '\[ZP-CUSTOM\]' -Recurse
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** An interface bundling a carrier with a separation relation and an ℕ-indexed succession whose consecutive terms are always separated. Mathlib has chains and apartness relations separately but no bundled "separated succession" interface. Used as the type bridge between differently-typed framework charts of one succession — the ordinal ε-chain (separation = strict order, `succession_lt_succ`) and the Hilbert state-chain (separation = orthogonality, `t5_strict_orthogonal`) — exhibited as two implementations of one shape rather than forced into an ill-typed cross-universe identity.
+**Reason:** An interface bundling a carrier, a separation relation, an ℕ-indexed succession, the law that consecutive terms are separated, and — the field carrying the content — `sep_irrefl_on_seq`, without which the structure is exactly `Nonempty` (its own gauge says so). Mathlib has chains and apartness relations separately but no bundled "separated succession" interface. Used as the type bridge between differently-typed framework charts of one succession — the ordinal ε-chain (separation = strict order, `succession_lt_succ`) and the Hilbert state-chain (separation = orthogonality, `t5_strict_orthogonal`) — exhibited as two implementations of one shape rather than forced into an ill-typed cross-universe identity.
 
 ---
 
@@ -48,7 +48,7 @@ Select-String -Path ZeroParadox\*.lean -Pattern '\[ZP-CUSTOM\]' -Recurse
 
 **Relationship to Mathlib:** Replaces `Valued` (`Mathlib/Topology/Algebra/Valued/ValuationTopology.lean`)
 
-**Reason:** Mathlib's `Valued` typeclass requires ring/field structure (it formalizes algebraic valuations over rings). `ZPSemilattice` has join only — no ring. `ValuationStructure` uses `val : L → ℕ∞` (not a `GroupWithZero` target) and FOUR axioms — `scale_bot`, `val_bot`, `val_unique`, `val_scale` — which together are what the fixed-point uniqueness argument consumes. ⚠ `val_scale` alone does NOT suffice, measured 2026-08-30: on `Bool` with `bot = false`, `scale = id` and `val` everywhere `⊤`, the other three-minus-one hold and `true` is a fixed point of `scale` that is not the bottom. `val_unique` supplies the FINITENESS that makes `val_scale` bite — `n = n + 1` is true at `⊤`, so without it the increment no-ops.
+**Reason:** Mathlib's `Valued` typeclass requires ring/field structure (it formalizes algebraic valuations over rings). `ZPSemilattice` has join only — no ring. `ValuationStructure` uses `val : L → ℕ∞` (not a `GroupWithZero` target) and four axioms (`ZeroParadox/Valuation/Scale.lean` § I lists them). The fixed-point uniqueness argument consumes TWO of them — `val_unique` and `val_scale`; `scale_bot` and `val_bot` appear in none of the three proof terms on that chain, measured 2026-08-30. ⚠ `val_scale` alone does NOT suffice, measured 2026-08-30: on `Bool` with `bot = false`, `scale = id` and `val` everywhere `⊤`, `scale_bot`, `val_bot` and `val_scale` all hold and `true` is a fixed point of `scale` that is not the bottom. `val_unique` supplies the FINITENESS that makes `val_scale` bite — `n = n + 1` is true at `⊤`, so without it the increment no-ops.
 
 ---
 
@@ -88,7 +88,7 @@ Select-String -Path ZeroParadox\*.lean -Pattern '\[ZP-CUSTOM\]' -Recurse
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** Mathlib's `ZFSet` (the only set-theory formalization) uses Foundation — `x ∈ x` is forbidden, making it invalid as a decoration target for any APG with a self-loop. `DecorationUniverse` is an abstract type with `ValuationStructure` plus a `collect` operation and two axioms (`collect_singleton`, `collect_val_ge`), providing the structure the decoration-uniqueness proof consumes, without importing `ZFSet` or any axiomatic set theory. ⚠ It is NOT axiom-free: `DecorationUniverse` and `decoration_unique` each measure `[propext, Classical.choice, Quot.sound]`, inherited from the required `[ValuationStructure U]` — see the purity block in `ZeroParadox/Valuation/Scale.lean`, which pins the route to the `ℕ∞` numeral in `val_scale`. ⚠ "Minimum" is also unproved: that file's own NO-GO gauge records the class is inhabited over EVERY `ValuationStructure` carrier.
+**Reason:** Mathlib's `ZFSet` (the only set-theory formalization) uses Foundation — `x ∈ x` is forbidden, making it invalid as a decoration target for any APG with a self-loop. `DecorationUniverse` is an abstract type with `ValuationStructure` plus a `collect` operation and two axioms (`collect_singleton`, `collect_val_ge`), providing the structure the decoration-uniqueness proof consumes, without importing `ZFSet` or any axiomatic set theory. ⚠ It is NOT axiom-free: `DecorationUniverse` and `decoration_unique` each measure `[propext, Classical.choice, Quot.sound]`, inherited from the required `[ValuationStructure U]` — see the purity block in `ZeroParadox/Valuation/Scale.lean`, which pins the route to the `ℕ∞` numeral in `val_scale`. ⚠ "Minimum" is also unproved: the NO-GO gauge in `ZeroParadox/Settheory/APG.lean` records the class is inhabited over EVERY `ValuationStructure` carrier.
 
 ---
 
@@ -197,7 +197,7 @@ The cross-framework bridge. `MachinePhase` is one of two two-element inductives 
 ### `machinePhaseKleene` — `ZeroParadox/Computability/Kleene.lean`
 `KleeneStructure MachinePhase` (noncomputable)
 
-`botCode` is chosen via `Classical.choose` — no algorithm can identify which `Code` is the `botCode` (`isComputationalQuine_undecidable`). The `noncomputable` marker is load-bearing, not a proof artifact: the non-constructivity is the formal content of DA-1's computational path. Removing it would misrepresent the result.
+`botCode` is chosen via `Classical.choose`, so it names SOME computational quine and not a distinguished one; `isComputationalQuine_undecidable` says the MEMBERSHIP PREDICATE is not a `ComputablePred`, which is why nothing can pin down which code was chosen — it does not say no algorithm names a witness, and the constant codes are witnesses. The `noncomputable` marker is load-bearing, not a proof artifact: the non-constructivity is the formal content of DA-1's computational path. Removing it would misrepresent the result.
 
 ---
 
@@ -238,7 +238,7 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 ## Further Entries
 
-⚠ These continue the register; the sections above are not exhaustive. (A closing *"Last updated: 2026-07-19"* footer previously sat here, with fifteen entries after it — several dated later than the footer itself. Removed rather than re-dated: a single date on a hand-edited register is a figure that goes stale silently, and each entry carries its own dates where they matter.)
+⚠ These continue the register; the sections above are not exhaustive. (A closing *"Last updated"* footer previously sat here, with further entries after it. Removed rather than re-dated: a single date on a hand-edited register goes stale silently, and each entry carries its own dates where they matter.)
 
 ### `IsLeastFixedPointFrom` — `ZeroParadox/Order/LeastFixedPoint.lean`
 
@@ -250,7 +250,7 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** No modal or provability logic was located in the pinned Mathlib as of 2026-08-30 — searched on three axes (Loeb/GL; Kripke and "modal logic"; provability/derivability): `Kripke` and `modal logic` return nothing, every `GL` hit is `GeneralLinearGroup`, and the `provability` hits are first-order material under `ModelTheory/`. A minimal typeclass carrying just the Hilbert-Bernays-Loeb apparatus, so that Loeb's theorem can be presented as a face of the diagonal family.
+**Reason:** No modal or provability logic was located in the pinned Mathlib as of 2026-08-30 — searched on three axes (Loeb/GL; Kripke and "modal logic"; provability/derivability): `Kripke` and `modal logic` return nothing, every `GL` hit is `GeneralLinearGroup`, and the `provability` hits are first-order material under `ModelTheory/` plus two incidental doc-comments under `Mathlib/Tactic/`. A minimal typeclass carrying just the Hilbert-Bernays-Loeb apparatus, so that Loeb's theorem can be presented as a face of the diagonal family.
 
 ### `QuineHost` — `ZeroParadox/Settheory/QuineHost.lean`
 

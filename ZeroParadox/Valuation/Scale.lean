@@ -64,7 +64,7 @@ open ZeroParadox
 
     In ℚ_[2]: scale = ×2, val = 2-adic valuation. All four hold.
     In ZPSemilattice: abstract encoding of the same structure. -/
--- [ZP-CUSTOM] replaces: Mathlib.RingTheory.Valuation.Valued | reason: Mathlib's Valued typeclass requires ring/field structure (it formalizes algebraic valuations over rings). ZPSemilattice has join only — no ring. ValuationStructure uses val : L → ℕ∞ (not a GroupWithZero target) and FOUR axioms — scale_bot, val_bot, val_unique, val_scale — which together are what the fixed-point uniqueness argument consumes. ⚠ val_scale alone does NOT suffice, measured 2026-08-30: on Bool with bot = false, scale = id and val everywhere ⊤, scale_bot/val_bot/val_scale all hold and true is a fixed point of scale that is not the bottom. val_unique supplies the FINITENESS that makes val_scale bite.
+-- [ZP-CUSTOM] replaces: Valued (Mathlib/Topology/Algebra/Valued/ValuationTopology.lean) | reason: Mathlib's Valued typeclass requires ring/field structure (it formalizes algebraic valuations over rings). ZPSemilattice has join only — no ring. ValuationStructure uses val : L → ℕ∞ (not a GroupWithZero target) and four axioms (§ I lists them). The fixed-point uniqueness argument consumes TWO of them — val_unique and val_scale; scale_bot and val_bot appear in none of the three proof terms on that chain, measured 2026-08-30. ⚠ val_scale alone does NOT suffice, measured 2026-08-30: on Bool with bot = false, scale = id and val everywhere ⊤, scale_bot/val_bot/val_scale all hold and true is a fixed point of scale that is not the bottom. val_unique supplies the FINITENESS that makes val_scale bite.
 class ValuationStructure (L : Type*) [ZPSemilattice L] where
   scale : L → L
   val        : L → ℕ∞

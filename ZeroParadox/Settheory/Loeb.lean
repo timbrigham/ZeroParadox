@@ -28,7 +28,7 @@ namespace ZeroParadox
     under modus ponens (`mp`); and the three Hilbert–Bernays–Löb derivability conditions
     (`nec` = D1 necessitation, `ax_D2` = distribution of `box` over `imp`, `ax_D3`). This is exactly the
     apparatus Löb's theorem needs, and no more. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib has no modal / provability logic (grep: no Löb, GL,
+-- [ZP-CUSTOM] no Mathlib analog | reason: no modal or provability logic was located in the pinned Mathlib as of 2026-08-30, searched on three axes (Löb/GL; Kripke and modal logic;
 -- derivability conditions, or modal-logic Kripke apparatus). Minimal typeclass carrying just the
 -- Hilbert–Bernays–Löb apparatus so Löb's theorem is a face of the diagonal family.
 class ProvabilityLogic (S : Type*) where
