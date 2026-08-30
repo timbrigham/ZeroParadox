@@ -56,7 +56,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 **Relationship to Mathlib:** Replaces `ValuationStructure` (this project)
 
-**Reason:** `ValuationStructure` required `[ZPSemilattice L]` but the join operation `⊔` never appears in any of its four axioms — the constraint was an encoding artefact. `ValBridge` carries the same four axioms with `bot` as a plain field, allowing `ℤ_[2]` (a ring, not a `ZPSemilattice`) to be a formal instance. Unifies both tracks under one common ancestor.
+**Reason:** `ValuationStructure` required `[ZPSemilattice L]` but the join operation `⊔` never appears in any of its four axioms — the constraint was an encoding artefact. `ValBridge` carries the same four axioms with `bot` as a plain field, allowing `ℤ_[2]` (for which no `ZPSemilattice` is defined) to be a formal instance. Unifies both tracks under one common ancestor.
 
 ---
 
@@ -204,7 +204,7 @@ The cross-framework bridge. `MachinePhase` is Surprisal's two-element type; givi
 ### `instZ2ValBridge` — `ZeroParadox/Valuation/ScaleBridge.lean`
 `ValBridge ℤ_[2]`
 
-No `ZPSemilattice ℤ_[2]` is defined — its ring structure supplies no natural join with 0 as bottom — so it cannot satisfy `ValuationStructure`, which requires one. ⚠ Being a ring is not itself the obstruction: no `ZPSemilattice` axiom mentions a ring operation, and `ZPSemilattice ℕ` exists. `ValBridge`'s bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in `Scale` §V (`q2Scale_bot`, `q2Val_bot`, `q2Val_unique`, `q2Val_scale`).
+No `ZPSemilattice ℤ_[2]` is defined — its ring structure supplies no natural join with 0 as bottom — so it does not satisfy `ValuationStructure`, which requires one. ⚠⚠ That is a fact about what is DEFINED, never about what is POSSIBLE. `ZeroParadox/Order/Lattice.lean`'s own NO-GO gauge records that membership is structure to be EQUIPPED and that **inhabitation is the sole obstruction**, so an inhabited carrier such as `ℤ_[2]` can always be equipped with one; being a ring is not the obstruction either, and `ZPSemilattice ℕ` exists. What is absent is a NATURAL join with 0 as bottom, which is an argument about naturality, not possibility. `ValBridge`'s bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in `Scale` §V (`q2Scale_bot`, `q2Val_bot`, `q2Val_unique`, `q2Val_scale`).
 
 ---
 

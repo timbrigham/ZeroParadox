@@ -162,7 +162,7 @@ instance toAbstractSelfApp : AbstractSelfApp L where
 
     ValuationStructure → AbstractSelfApp → AFAStructure
     AFAStructure's two LAWS are now theorems derived from valuation axioms. ⚠ This file
-    declares only the `AbstractSelfApp` instance (:156); the `AFAStructure` itself arrives
+    declares only the `AbstractSelfApp` instance; the `AFAStructure` itself arrives
     generically from `ZeroParadox/Computability/SelfApp.lean`'s `toAFAStructure`, whose
     `selfMem` is DATA supplied by `def selfMemDerived`. `selfMemFromVal` below is this
     file's own predicate for the valuation-side theorems — definitionally that same
@@ -207,10 +207,12 @@ theorem val_selfMem_singleton :
 /-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE AND THE GAP IS CLOSED.** A concrete type
     carrying BOTH a `ZPSemilattice` and a `ValuationStructure` exists: ℕ∞, via
     `instNatInfZPS` and `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which
-    IMPORTS this file and says so. This file's own overview agrees — "the formal gap
-    described here is closed". The stale sentence is left in place only because its
-    block is frozen by content hash in the prose baseline; editing it re-keys the entry
-    and blocks the commit. Do not treat it as an open problem. -/
+    IMPORTS this file; `#synth` resolves both. ⚠ §V ALSO says ℤ_[2] "cannot be a formal
+    ValuationStructure instance" — read that as NOT DEFINED, never not possible: inhabitation
+    is the sole obstruction (Order/Lattice.lean). Both stale sentences stay only because their
+    block is frozen by content hash in the prose baseline: editing it re-keys the entry
+    and blocks the commit. ⚠ Route out is a `/claim-review` debaseline, NOT
+    `move_ridealong.py`, which reaches the module doc and not this mid-file block. -/
 
 section PadicParallel
 

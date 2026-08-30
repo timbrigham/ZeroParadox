@@ -40,6 +40,17 @@ metatheory and is not expressible on this carrier.
 This is the same chain as ZeroParadox/Valuation/Scale.lean §II–IV, without the ZPSemilattice dependency.
 -/
 
+/-! ⚠⚠ **"CANNOT BE A FORMAL INSTANCE" ABOVE IS TOO STRONG — READ IT AS "IS NOT
+    DEFINED".** The header contradicts itself: if all four axioms hold, the only missing
+    piece is a `ZPSemilattice`, and `ZeroParadox/Order/Lattice.lean`'s NO-GO gauge records
+    that membership there is structure to be EQUIPPED, with **inhabitation the sole
+    obstruction** (`example : IsEmpty (ZPSemilattice Empty)`). ℤ_[2] is inhabited, so one
+    can always be equipped; what is absent is a NATURAL join with 0 as bottom, an argument
+    about naturality, not possibility. Contrast `OntologicalStates`, which cannot satisfy
+    `val_scale` at all — a finite two-element type has no room for `val` to increase. That
+    is a real impossibility; this is not. The sentence stays only because its block is
+    frozen by content hash in the prose baseline. -/
+
 namespace ZeroParadox
 
 open ZeroParadox
@@ -48,7 +59,7 @@ open ZeroParadox
 
 /-- Same four axioms as ValuationStructure, but `bot` is a plain field.
     No ZPSemilattice required — the join operation ⊔ never appears in any axiom. -/
--- [ZP-CUSTOM] replaces: ValuationStructure (ZeroParadox/Valuation/Scale.lean) | reason: ValuationStructure required [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms — the constraint was an encoding artefact. ValBridge carries the same four axioms with bot as a plain field, allowing ℤ_[2] (a ring, not a ZPSemilattice) to be a formal instance. Unifies both tracks under one ancestor.
+-- [ZP-CUSTOM] replaces: ValuationStructure (ZeroParadox/Valuation/Scale.lean) | reason: ValuationStructure required [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms — the constraint was an encoding artefact. ValBridge carries the same four axioms with bot as a plain field, allowing ℤ_[2] (for which no ZPSemilattice is defined) to be a formal instance. Unifies both tracks under one ancestor.
 class ValBridge (L : Type*) where
   bot : L
   scale : L → L
@@ -97,10 +108,11 @@ theorem selfMem_eq_singleton_free :
 /-- ℤ_[2] with scale = ×2 and val = v₂ is a ValBridge.
     bot = 0. All four proved as standalone theorems in ZeroParadox/Valuation/Scale.lean: q2Val_bot,
 -- q2Val_unique, q2Scale_bot, q2Scale_unique_fp.
-    This is the formal instance that ZeroParadox/Valuation/Scale.lean could not build because
-    ℤ_[2] is not a ZPSemilattice — showing the ZPSemilattice constraint
-    was an encoding artefact, not a mathematical requirement. -/
--- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is defined — its ring structure supplies no natural join with 0 as bottom — so ℤ_[2] cannot be a ValuationStructure instance, which requires one. (Being a ring is not itself the obstruction: nothing in ZPSemilattice's axioms mentions a ring operation, and ZPSemilattice ℕ exists.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to q2Scale_bot, q2Val_bot, q2Val_unique and q2Val_scale, proved in ZeroParadox/Valuation/Scale.lean.
+    This is the formal instance that ZeroParadox/Valuation/Scale.lean did not build,
+    because no ZPSemilattice ℤ_[2] is defined — showing the ZPSemilattice constraint
+    was an encoding artefact, not a mathematical requirement. ⚠ "not defined", never
+    "not possible": inhabitation is the sole obstruction (Order/Lattice.lean). -/
+-- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is defined — its ring structure supplies no natural join with 0 as bottom — so ℤ_[2] does not satisfy ValuationStructure, which requires one. (A fact about what is DEFINED, never about what is POSSIBLE: ZeroParadox/Order/Lattice.lean's NO-GO gauge records that membership is structure to be EQUIPPED and inhabitation is the sole obstruction, so an inhabited carrier can always be equipped. Being a ring is not the obstruction either, and ZPSemilattice ℕ exists. What is absent is a NATURAL join.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to q2Scale_bot, q2Val_bot, q2Val_unique and q2Val_scale, proved in ZeroParadox/Valuation/Scale.lean.
 noncomputable instance instZ2ValBridge : ValBridge ℤ_[2] where
   bot := 0
   scale := (2 * ·)
