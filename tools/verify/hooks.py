@@ -77,8 +77,49 @@ def run(*cmd):
         return 1
 
 
+# ⚠⚠ WHAT ACTUALLY RAN, IN ORDER. `/rely` R2-1 measured why a generated manifest is not enough:
+# generating the plan from the same TABLE the loop iterates still leaves the LOOP a separate
+# statement, so replacing its iterable with `[]` printed `11 check(s): 11 BLOCK`, named all eleven
+# rows, ran nothing and exited 0. Deriving one hand-written list from another moves the divergence;
+# it does not remove it. The only thing that cannot be faked is an observation of the invocation
+# itself, so every child this process launches appends here and `reconcile()` compares the manifest
+# against THIS, not against the table it was printed from.
+EXECUTED = []
+
+
 def py(script, *args):
+    EXECUTED.append((script,) + tuple(args))
     return run(sys.executable, os.path.join(BASE, script), *args)
+
+
+def _ran(expect):
+    """Did some invocation this run start with `expect`? (argv prefix, so flags may vary.)"""
+    n = len(expect)
+    return any(tuple(inv[:n]) == tuple(expect) for inv in EXECUTED)
+
+
+def reconcile(phase, expected):
+    """Block unless every manifest row that names a child actually launched one.
+
+    `expected` is [(label, argv_prefix_or_None)]; None marks a row handled inline (no child), which
+    this cannot verify and does not pretend to — it is reported as UNCHECKED rather than counted.
+    """
+    missing = [label for label, argv in expected if argv and not _ran(argv)]
+    inline = [label for label, argv in expected if not argv]
+    named = sum(1 for _l, argv in expected if argv)
+    print("")
+    print("  manifest reconciliation: %d of %d advertised check(s) launched a child%s"
+          % (named - len(missing), named,
+             ("; %d row(s) handled inline, not verifiable here: %s"
+              % (len(inline), ", ".join(inline))) if inline else ""))
+    if missing:
+        print("")
+        print("%s BLOCKED — the manifest advertised %d check(s) that never ran: %s"
+              % (phase.upper(), len(missing), ", ".join(missing)))
+        print("This is the gate lying about itself, which is worse than any finding it could")
+        print("report. Do not bypass: fix the wiring so the advertised check executes.")
+        return 1
+    return 0
 
 
 def recorded(script, *args):
@@ -160,9 +201,16 @@ PRE_COMMIT_CHECKS = [
     # worktree WITHOUT a built `.lake` the pinned Mathlib is absent, `check_paths` returns 3, and
     # every commit was refused naming a defect that does not exist -- with `--no-verify`, which
     # skips all eleven, as the only escape. Measured by `/rely` RLY27-7 in a fresh worktree.
+    # ⚠ SCOPE IS MARKDOWN + LEAN, AND SAYING MORE IS THE WORSE ERROR. Round 1 (RLY27-4) found this
+    # row UNDERSTATED its scope; the repair overshot and claimed `scripts/**.py` too, which round 2
+    # (R2-3) measured false: the only `scan()` calls that can set `failed` are markdown and Lean,
+    # `tracked_scripts()` is reached from the selftest pin and `--claim` alone, the build-script
+    # block prints "INFORMATIONAL: does not fail the run", and the ledger subject list is
+    # `tracked_markdown() + tracked_lean()`. Live: 10 hits under `scripts/`, exit 0. An overstated
+    # manifest is worse than an understated one -- it is a claim of coverage nobody has.
     ("check_paths", ("check_paths.py",), (0, 3),
-     "every repo-relative reference in tracked markdown, Lean and scripts/**.py resolves "
-     "(3 = scope skipped for want of a built .lake, not a finding)"),
+     "every repo-relative reference in tracked markdown and Lean resolves "
+     "(3 = scope skipped for want of a built .lake, not a finding; scripts/ scanned INFORMATIONALLY)"),
     ("check_moved", ("check_moved.py",), (0,),
      "nothing points at a path that was relocated"),
     ("check_negatives", ("check_negatives.py",), (0,),
@@ -177,9 +225,18 @@ PRE_COMMIT_CHECKS = [
      "every new declaration has #print axioms + an ssot.json row"),
 ]
 
-# The manifest is GENERATED from the table above. It cannot advertise a check the loop does not
-# run, nor omit one it does, because there is no second list to drift.
-PRE_COMMIT_PLAN = [(label, "BLOCK", desc) for label, _argv, _ok, desc in PRE_COMMIT_CHECKS]
+# ⚠ THE MODE COLUMN IS DERIVED, NOT ASSERTED. `/rely` R2-2: it was the literal "BLOCK" on every
+# row, so widening an entry's `ok_codes` to swallow exit 1 left all eleven rows still advertising
+# BLOCK while nothing could block. A row blocks exactly when the universal failure code is not
+# tolerated, so that is what the column now computes.
+def _mode(ok_codes):
+    return "BLOCK" if 1 not in ok_codes else "WARN"
+
+
+# The manifest is GENERATED from the table above -- but see `reconcile()`: generation alone only
+# moves the divergence from "two lists" to "a list and a loop". The manifest is BINDING because
+# every advertised row is checked against what actually launched.
+PRE_COMMIT_PLAN = [(label, _mode(ok), desc) for label, _argv, ok, desc in PRE_COMMIT_CHECKS]
 
 PRE_PUSH_PLAN = [
     ("hooks armed", "BLOCK", "the installed hooks match their tracked sources"),
@@ -225,6 +282,41 @@ PRE_PUSH_PLAN = [
     # over-states at ONE entry point is the same defect as over-stating at all four.
     ("batch prepush", "BLOCK", "trigger 5, the three review signals, and /rely routing — logic and "
                                "exemption switches BLOCK, routed prose WARNS"),
+]
+
+# ⚠⚠ WHAT EACH PUSH ROW MUST ACTUALLY LAUNCH. `/rely` R2-4: the commit manifest was made binding
+# and this one was left a hand-written second copy -- the same defect fixed at ONE of its TWO
+# sites, which is the recurring shape (`SH-3`) this project keeps paying for. Deleting the
+# `check_hashes` call site, and separately `guards.py`'s, left the manifest printing every row it
+# prints today (measured 2026-08-30) and naming both, exit 0. `guards.py` is the exemption-surface
+# control that runs FIRST precisely
+# because a green checker over a holed surface is a false zero -- so its silent disappearance is
+# the worst single case in the file.
+#
+# `None` marks a row handled INLINE with no child process. `reconcile` reports those as unverifiable
+# rather than counting them as satisfied: an honest gap beats a false tick.
+PRE_PUSH_EXPECT = [
+    ("hooks armed", ("install_hooks.py", "--check")),
+    ("quarantine", None),                       # inline branch-name test; launches nothing
+    ("guards", ("guards.py",)),
+    ("routing control", ("probe_routing_behavioural.py",)),
+    ("check_paths", ("check_paths.py",)),
+    ("check_claude_md", ("check_claude_md.py",)),
+    ("check_moved", ("check_moved.py",)),
+    ("check_negatives", ("check_negatives.py",)),
+    ("check_figures", ("check_figures.py",)),
+    ("check_frozen", ("check_frozen.py",)),
+    ("check_checkers", ("check_checkers.py",)),
+    ("check_invariants", ("check_invariants.py",)),
+    ("check_pov", ("check_pov.py",)),
+    ("check_modal", ("check_modal.py",)),
+    ("check_classes", ("check_classes.py",)),
+    ("check_prose", ("check_prose.py",)),
+    ("check_encoding", ("check_encoding.py",)),
+    ("decls", ("batch.py", "decls")),
+    ("check_hashes", ("check_hashes.py",)),
+    ("scan_pdfs", ("scan_pdfs.py",)),
+    ("batch prepush", ("batch.py", "prepush")),
 ]
 
 
@@ -280,6 +372,13 @@ def pre_commit():
                           % label)
         elif rc not in ok_codes:
             failed.append("%s (exit %d)" % (label, rc))
+
+    # ⚠⚠ THE MANIFEST IS BINDING. Every row above named a child; this is where we confirm each one
+    # actually launched. Run BEFORE the findings report, because "the gate did not run" outranks
+    # "the gate found nothing" -- a neutered loop produces an empty `failed` list, which is exactly
+    # what a clean run produces.
+    if reconcile("commit", [(label, argv) for label, argv, _ok, _d in PRE_COMMIT_CHECKS]):
+        return 1
 
     if failed:
         print("")
@@ -543,6 +642,10 @@ def pre_push(stream):
     # otherwise-green run. It failed CLOSED, which is why it is ordinary rather than bedrock —
     # but an unexplained exit 2 on a green run is precisely the shape that trains the
     # `--no-verify` reflex, which this project has already had fire twice.
+    # ⚠ Recorded by hand because it is launched with `run()` rather than `py()` — it lives in
+    #   `scripts/`, not in this bundle, so it does not go through the BASE-relative helper.
+    #   Without this line `reconcile` would report the row missing on every green push.
+    EXECUTED.append(("scan_pdfs.py",))
     scan_exit = run(sys.executable, os.path.join(REPO, "scripts", "scan_pdfs.py"))
 
     # Routing + review signals, computed from the RANGES BEING PUSHED. This is the one call that
@@ -560,6 +663,13 @@ def pre_push(stream):
         print("⚠ CI re-runs these checkers on `main` (.github/workflows/verify.yml) but")
         print("  REPORT-ONLY — it publishes findings and does not fail the run. This hook is")
         print("  the last check that STOPS a change; bypassing it ships the change unchecked.")
+        return 1
+
+    # ⚠⚠ LAST, AND ONLY ON THE OTHERWISE-GREEN PATH. Every branch above returns 1 before reaching
+    # here, so a short run is a REPORTED failure, not a silent one; reconciling early would report
+    # rows "missing" that were simply never reached. What this catches is the dangerous case: a
+    # green run whose manifest advertised a check that no longer launches.
+    if reconcile("push", PRE_PUSH_EXPECT):
         return 1
 
     return scan_exit
