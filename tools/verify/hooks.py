@@ -366,9 +366,20 @@ def _bind_push_modes(plan, expect):
     row is allowed to CLAIM, so the manifest and the enforcement cannot disagree: there is one
     fact and two readers of it.
     """
-    tol = {label: ok for label, _argv, ok in expect}
+    # ⚠⚠ ONLY ROWS THAT LAUNCH A CHILD GET A DERIVED MODE. Caught in the receipt of the first
+    # preflight after this function landed: `quarantine` printed WARN over a property that is
+    # ENFORCED TWICE — once inline and once by `reconcile`'s independent re-test. Its `ok_codes` is
+    # None because it launches nothing to have an exit code, and None was being read as "tolerates
+    # any failure". Two different facts sharing one encoding, in the function written to stop a row
+    # advertising a mode nothing enforces. An inline row keeps the mode the plan ASSERTS, because
+    # there is no exit code to derive one from and inventing WARN is worse than trusting the author.
+    tol = {label: ok for label, argv, ok in expect if argv}
+    inline = {label for label, argv, _ok in expect if not argv}
     out = []
-    for label, _asserted, desc in plan:
+    for label, asserted, desc in plan:
+        if label in inline:
+            out.append((label, asserted, desc))
+            continue
         ok = tol.get(label, (0,))
         out.append((label, "WARN" if ok is None or 1 in ok else "BLOCK", desc))
     return out
