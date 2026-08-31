@@ -83,7 +83,7 @@ def run(*cmd):
     # (0 children, still 11 of 11 and 20 of 20, rc 0). Both are impossible from here: no
     # `subprocess.call` return, no entry. An OSError returns above without recording, because a
     # child that could not start did not run.
-    EXECUTED.append(_invocation(cmd))
+    EXECUTED.append((_invocation(cmd), rc))
     return rc
 
 
@@ -108,38 +108,87 @@ def _invocation(cmd):
 # against THIS, not against the table it was printed from.
 EXECUTED = []
 
+# Every ref name seen on stdin this run, recorded where they are PARSED rather than where they are
+# judged — see `reconcile`'s independent quarantine re-test (R4-2).
+REFS_SEEN = []
+
 
 def py(script, *args):
     # ⚠ No recording here — `run()` records, and only after the child actually returns (R3-1).
     return run(sys.executable, os.path.join(BASE, script), *args)
 
 
-def _ran(expect):
-    """Did some invocation this run start with `expect`? (argv prefix, so flags may vary.)"""
+def _found(expect):
+    """The (invocation, rc) whose argv starts with `expect`, or None. Prefix, so flags may vary."""
     n = len(expect)
-    return any(tuple(inv[:n]) == tuple(expect) for inv in EXECUTED)
+    for inv, rc in EXECUTED:
+        if tuple(inv[:n]) == tuple(expect):
+            return inv, rc
+    return None
 
 
-def reconcile(phase, expected):
-    """Block unless every manifest row that names a child actually launched one.
+def reconcile(phase, expected, refs=()):
+    """Block unless every advertised check LAUNCHED and its exit code was ACCEPTABLE.
 
-    `expected` is [(label, argv_prefix_or_None)]; None marks a row handled inline (no child), which
-    this cannot verify and does not pretend to — it is reported as UNCHECKED rather than counted.
+    `expected` is [(label, argv_prefix_or_None, ok_codes)]. `ok_codes` of None tolerates any code
+    (a WARN row). A None argv marks a row handled inline; those are re-tested here INDEPENDENTLY
+    where that is possible, and reported as unverified where it is not.
+
+    ⚠⚠ THE SECOND HALF IS THE POINT, AND IT IS WHY THE DECISION LIVES HERE RATHER THAN BESIDE THE
+    LOOP. `/rely` R4-1: `pre_commit` was two statements — launch, then score — and `reconcile`
+    observed only the first. Replacing the scoring block with `if False: pass` and forcing
+    `check_pov` to exit 1 gave: the finding printed, `11 of 11` reconciled, and the commit MADE.
+    Round 2's `_mode` closes a different route (widening `ok_codes`) and cannot see the scoring
+    deleted, because it computes `BLOCK` correctly over a column nothing reads. So the verdict is
+    now DERIVED from the recorded exit codes: delete the scoring and the block still happens,
+    because there is no longer a second place where the decision lives.
     """
-    missing = [label for label, argv in expected if argv and not _ran(argv)]
-    inline = [label for label, argv in expected if not argv]
-    named = sum(1 for _l, argv in expected if argv)
+    missing, bad, inline = [], [], []
+    for label, argv, ok_codes in expected:
+        if not argv:
+            inline.append(label)
+            continue
+        hit = _found(argv)
+        if hit is None:
+            missing.append(label)
+            continue
+        _inv, rc = hit
+        if ok_codes is not None and rc not in ok_codes:
+            bad.append("%s (exit %d)" % (label, rc))
+
+    named = sum(1 for _l, argv, _o in expected if argv)
     print("")
-    print("  manifest reconciliation: %d of %d advertised check(s) launched a child%s"
-          % (named - len(missing), named,
-             ("; %d row(s) handled inline, not verifiable here: %s"
-              % (len(inline), ", ".join(inline))) if inline else ""))
-    if missing:
+    print("  manifest reconciliation: %d of %d advertised check(s) launched; %d bad exit(s)%s"
+          % (named - len(missing), named, len(bad),
+             ("; %d inline row(s): %s" % (len(inline), ", ".join(inline))) if inline else ""))
+
+    # ⚠ R4-2: `quarantine` was the only push row with NO observer — deleting its inline branch let
+    #   a `private/*` ref push green while the manifest printed the row's name. Re-tested here
+    #   INDEPENDENTLY rather than observed, because a second enforcement survives deleting the
+    #   first and an observer of a deleted branch sees nothing.
+    # Both shapes `parse_refs` refuses: a quarantined LOCAL branch, and any REMOTE ref under
+    # a `private/` path. Matching one and not the other would re-open half the hole.
+    leaked = sorted({r for r in refs
+                     if r.startswith("refs/heads/private/") or "/private/" in r})
+    if leaked:
         print("")
-        print("%s BLOCKED — the manifest advertised %d check(s) that never ran: %s"
-              % (phase.upper(), len(missing), ", ".join(missing)))
-        print("This is the gate lying about itself, which is worse than any finding it could")
-        print("report. Do not bypass: fix the wiring so the advertised check executes.")
+        print("%s BLOCKED — a private/* ref reached the push: %s" % (phase.upper(), ", ".join(leaked)))
+        print("These branches never leave this machine. This is the second of two checks on that")
+        print("property; if the first did not fire, that is itself a defect to report.")
+        return 1
+
+    if missing or bad:
+        print("")
+        if missing:
+            print("%s BLOCKED — the manifest advertised %d check(s) that never ran: %s"
+                  % (phase.upper(), len(missing), ", ".join(missing)))
+            print("This is the gate lying about itself, which is worse than any finding it could")
+            print("report. Do not bypass: fix the wiring so the advertised check executes.")
+        if bad:
+            print("%s BLOCKED — %d advertised check(s) exited badly: %s"
+                  % (phase.upper(), len(bad), ", ".join(bad)))
+            print("Derived from the recorded exit codes, not from a second list beside the loop,")
+            print("so deleting the scoring does not delete the block.")
         return 1
     return 0
 
@@ -306,6 +355,24 @@ PRE_PUSH_PLAN = [
                                "exemption switches BLOCK, routed prose WARNS"),
 ]
 
+
+def _bind_push_modes(plan, expect):
+    """Replace each push row's asserted mode with the one its tolerances actually imply.
+
+    ⚠⚠ R3-2, closed here rather than by editing twenty strings. The column was 20 literal
+    "BLOCK"s, so deleting a single `return 1` left a row advertising a block it no longer
+    performed — measured three times, once against the row whose own text reads "its exit code
+    becomes the hook's". Now the same `ok_codes` that `reconcile` enforces also decides what the
+    row is allowed to CLAIM, so the manifest and the enforcement cannot disagree: there is one
+    fact and two readers of it.
+    """
+    tol = {label: ok for label, _argv, ok in expect}
+    out = []
+    for label, _asserted, desc in plan:
+        ok = tol.get(label, (0,))
+        out.append((label, "WARN" if ok is None or 1 in ok else "BLOCK", desc))
+    return out
+
 # ⚠⚠ WHAT EACH PUSH ROW MUST ACTUALLY LAUNCH. `/rely` R2-4: the commit manifest was made binding
 # and this one was left a hand-written second copy -- the same defect fixed at ONE of its TWO
 # sites, which is the recurring shape (`SH-3`) this project keeps paying for. Deleting the
@@ -324,28 +391,39 @@ PRE_PUSH_PLAN = [
 # gives `check_encoding` exit 0 without `--block` and exit 1 with it; a theorem with no
 # `#print axioms` entry gives `batch.py decls` exit 0 without and exit 1 with. The flag IS the
 # enforcement, so an expectation that ignores it is checking the wrong thing.
+# Third element is `ok_codes`: the exit codes that are NOT a finding. `None` means "any code
+# tolerated" and is reserved for the one row the manifest itself declares WARN. Everything else
+# names its tolerances explicitly, so the push verdict is derived from recorded exit codes rather
+# than from twenty hand-written `return 1` statements (R4-1 at the push site; R3-2's real fix).
 PRE_PUSH_EXPECT = [
-    ("hooks armed", ("install_hooks.py", "--check")),
-    ("quarantine", None),                       # inline branch-name test; launches nothing
-    ("guards", ("guards.py", "--record")),
-    ("routing control", ("probe_routing_behavioural.py",)),
-    ("check_paths", ("check_paths.py", "--all", "--warn-private", "--record")),
-    ("check_claude_md", ("check_claude_md.py", "--record")),
-    ("check_moved", ("check_moved.py", "--block", "--record")),
-    ("check_negatives", ("check_negatives.py", "--block", "--record")),
-    ("check_figures", ("check_figures.py", "--block", "--record")),
-    ("check_frozen", ("check_frozen.py", "--record")),
-    ("check_checkers", ("check_checkers.py", "--block", "--record")),
-    ("check_invariants", ("check_invariants.py", "--record")),
-    ("check_pov", ("check_pov.py", "--block", "--record")),
-    ("check_modal", ("check_modal.py", "--block", "--record")),
-    ("check_classes", ("check_classes.py", "--block", "--record")),
-    ("check_prose", ("check_prose.py", "--block", "--record")),
-    ("check_encoding", ("check_encoding.py", "--block", "--record")),
-    ("decls", ("batch.py", "decls", "--block", "--record")),
-    ("check_hashes", ("check_hashes.py", "--record")),
-    ("scan_pdfs", ("scan_pdfs.py",)),
-    ("batch prepush", ("batch.py", "prepush")),
+    ("hooks armed", ("install_hooks.py", "--check"), (0,)),
+    # ⚠ Launches nothing — but NOT unobserved any more: `reconcile` re-tests the property itself
+    #   from `REFS_SEEN`. R4-2 measured the hole: delete the inline branch and a `private/*` ref
+    #   pushed green while the manifest printed this row's name.
+    ("quarantine", None, None),
+    ("guards", ("guards.py", "--record"), (0,)),
+    ("routing control", ("probe_routing_behavioural.py",), (0,)),
+    # ⚠ 3 = scope skipped for want of a built .lake, tolerated at both phases (RLY27-7).
+    ("check_paths", ("check_paths.py", "--all", "--warn-private", "--record"), (0, 3)),
+    ("check_claude_md", ("check_claude_md.py", "--record"), (0,)),
+    ("check_moved", ("check_moved.py", "--block", "--record"), (0,)),
+    ("check_negatives", ("check_negatives.py", "--block", "--record"), (0,)),
+    ("check_figures", ("check_figures.py", "--block", "--record"), (0,)),
+    # ⚠ The manifest says WARN and means it: RETIRED as a gate (dead topology), still runs, still
+    #   records, because `claim_review` rides on its emitter. Any exit is tolerated HERE, and that
+    #   is the one row where `None` is correct rather than lazy.
+    ("check_frozen", ("check_frozen.py", "--record"), None),
+    ("check_checkers", ("check_checkers.py", "--block", "--record"), (0,)),
+    ("check_invariants", ("check_invariants.py", "--record"), (0,)),
+    ("check_pov", ("check_pov.py", "--block", "--record"), (0,)),
+    ("check_modal", ("check_modal.py", "--block", "--record"), (0,)),
+    ("check_classes", ("check_classes.py", "--block", "--record"), (0,)),
+    ("check_prose", ("check_prose.py", "--block", "--record"), (0,)),
+    ("check_encoding", ("check_encoding.py", "--block", "--record"), (0,)),
+    ("decls", ("batch.py", "decls", "--block", "--record"), (0,)),
+    ("check_hashes", ("check_hashes.py", "--record"), (0,)),
+    ("scan_pdfs", ("scan_pdfs.py",), (0,)),
+    ("batch prepush", ("batch.py", "prepush"), (0,)),
 ]
 
 
@@ -409,9 +487,13 @@ def pre_commit():
     # ⚠ The expectation carries `--block --record`, not just the script name (R3-3): those flags
     #   ARE the enforcement, and a name-only match passes a run that launched every child with the
     #   teeth removed.
+    # ⚠ `ok_codes` travels with the row, so the accept/reject decision is made from the RECORDED
+    #   exit code. Exit 2 stays distinguishable: it is not in any row's `ok_codes`, so it blocks
+    #   here too, and the loop above has already named it as a recording failure rather than a
+    #   finding.
     if reconcile("commit",
-                 [(label, tuple(argv) + ("--block", "--record"))
-                  for label, argv, _ok, _d in PRE_COMMIT_CHECKS]):
+                 [(label, tuple(argv) + ("--block", "--record"), ok)
+                  for label, argv, ok, _d in PRE_COMMIT_CHECKS]):
         return 1
 
     if failed:
@@ -444,6 +526,10 @@ def parse_refs(stream):
             malformed.append(line.rstrip())
             continue
         local_ref, local_sha, remote_ref, remote_sha = parts
+        # ⚠ Recorded BEFORE and INDEPENDENTLY of the quarantine test below, so `reconcile`'s
+        #   second check on the same property survives that branch being deleted (R4-2).
+        REFS_SEEN.append(local_ref)
+        REFS_SEEN.append(remote_ref)
         if local_ref.startswith("refs/heads/private/"):
             quarantined.append("BLOCKED: '%s' is a quarantined branch — never push it." % local_ref)
         if "/private/" in remote_ref:
@@ -488,7 +574,7 @@ def pre_push(stream):
                    + " + anything under Vendored/"),
         ("not run", "lake build — CI at the PR owns build state (stub-first pushes stubs)"),
     ])
-    report.plan(PRE_PUSH_PLAN)
+    report.plan(_bind_push_modes(PRE_PUSH_PLAN, PRE_PUSH_EXPECT))
 
     # ⚠ `gatelock` RETIRED 2026-08-23 — deliberately, not dropped. It froze reviewed paths with the
     # read-only bit while a gate round ran. Three reasons it went: the worktree rule makes the
@@ -702,7 +788,7 @@ def pre_push(stream):
     # here, so a short run is a REPORTED failure, not a silent one; reconciling early would report
     # rows "missing" that were simply never reached. What this catches is the dangerous case: a
     # green run whose manifest advertised a check that no longer launches.
-    if reconcile("push", PRE_PUSH_EXPECT):
+    if reconcile("push", PRE_PUSH_EXPECT, refs=REFS_SEEN):
         return 1
 
     return scan_exit
