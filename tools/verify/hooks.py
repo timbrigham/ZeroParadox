@@ -71,10 +71,32 @@ def run(*cmd):
     ⚠ Never captures. The whole point of a gate is that the operator SEES why it fired, and a
     captured-then-reprinted stream loses interleaving with anything else that writes."""
     try:
-        return subprocess.call(list(cmd), cwd=REPO)
+        rc = subprocess.call(list(cmd), cwd=REPO)
     except OSError as e:
         print("  hook: could not run %s (%s)" % (" ".join(cmd), e))
         return 1
+    # ⚠⚠ RECORDED HERE, AFTER THE CHILD HAS ACTUALLY RUN, AND NOWHERE ELSE. `/rely` R3-1: the
+    # previous version appended in `py()` on the line BEFORE the call, which records the INTENT to
+    # launch rather than the launch -- "a receipt vs an invoice, and reconcile audits invoices".
+    # Three one-line mutations went green against it: deleting the `run(... scan_pdfs)` call while
+    # leaving its hand-written append (20 of 20, rc 0), and stubbing this function to `return 0`
+    # (0 children, still 11 of 11 and 20 of 20, rc 0). Both are impossible from here: no
+    # `subprocess.call` return, no entry. An OSError returns above without recording, because a
+    # child that could not start did not run.
+    EXECUTED.append(_invocation(cmd))
+    return rc
+
+
+def _invocation(cmd):
+    """Normalise a launched argv to (script basename, *args) — what the manifest names.
+
+    `cmd` is (python, /abs/path/to/script.py, *args); the manifest speaks in basenames.
+    """
+    parts = list(cmd)
+    for i, p in enumerate(parts):
+        if str(p).endswith(".py") and i > 0:
+            return (os.path.basename(str(p)),) + tuple(str(x) for x in parts[i + 1:])
+    return tuple(str(x) for x in parts)
 
 
 # ⚠⚠ WHAT ACTUALLY RAN, IN ORDER. `/rely` R2-1 measured why a generated manifest is not enough:
@@ -88,7 +110,7 @@ EXECUTED = []
 
 
 def py(script, *args):
-    EXECUTED.append((script,) + tuple(args))
+    # ⚠ No recording here — `run()` records, and only after the child actually returns (R3-1).
     return run(sys.executable, os.path.join(BASE, script), *args)
 
 
@@ -295,26 +317,33 @@ PRE_PUSH_PLAN = [
 #
 # `None` marks a row handled INLINE with no child process. `reconcile` reports those as unverifiable
 # rather than counting them as satisfied: an honest gap beats a false tick.
+# ⚠⚠ THE FLAGS ARE PART OF THE EXPECTATION, NOT DECORATION. `/rely` R3-3: matching on the script
+# name alone let a four-character edit disable the check while reconciliation still reported
+# success -- strip `--block` from the commit loop and eleven children launch, findings print, and
+# the run exits 0. That was measured on real violations, not hypothetically: a BOM in `GUIDE.md`
+# gives `check_encoding` exit 0 without `--block` and exit 1 with it; a theorem with no
+# `#print axioms` entry gives `batch.py decls` exit 0 without and exit 1 with. The flag IS the
+# enforcement, so an expectation that ignores it is checking the wrong thing.
 PRE_PUSH_EXPECT = [
     ("hooks armed", ("install_hooks.py", "--check")),
     ("quarantine", None),                       # inline branch-name test; launches nothing
-    ("guards", ("guards.py",)),
+    ("guards", ("guards.py", "--record")),
     ("routing control", ("probe_routing_behavioural.py",)),
-    ("check_paths", ("check_paths.py",)),
-    ("check_claude_md", ("check_claude_md.py",)),
-    ("check_moved", ("check_moved.py",)),
-    ("check_negatives", ("check_negatives.py",)),
-    ("check_figures", ("check_figures.py",)),
-    ("check_frozen", ("check_frozen.py",)),
-    ("check_checkers", ("check_checkers.py",)),
-    ("check_invariants", ("check_invariants.py",)),
-    ("check_pov", ("check_pov.py",)),
-    ("check_modal", ("check_modal.py",)),
-    ("check_classes", ("check_classes.py",)),
-    ("check_prose", ("check_prose.py",)),
-    ("check_encoding", ("check_encoding.py",)),
-    ("decls", ("batch.py", "decls")),
-    ("check_hashes", ("check_hashes.py",)),
+    ("check_paths", ("check_paths.py", "--all", "--warn-private", "--record")),
+    ("check_claude_md", ("check_claude_md.py", "--record")),
+    ("check_moved", ("check_moved.py", "--block", "--record")),
+    ("check_negatives", ("check_negatives.py", "--block", "--record")),
+    ("check_figures", ("check_figures.py", "--block", "--record")),
+    ("check_frozen", ("check_frozen.py", "--record")),
+    ("check_checkers", ("check_checkers.py", "--block", "--record")),
+    ("check_invariants", ("check_invariants.py", "--record")),
+    ("check_pov", ("check_pov.py", "--block", "--record")),
+    ("check_modal", ("check_modal.py", "--block", "--record")),
+    ("check_classes", ("check_classes.py", "--block", "--record")),
+    ("check_prose", ("check_prose.py", "--block", "--record")),
+    ("check_encoding", ("check_encoding.py", "--block", "--record")),
+    ("decls", ("batch.py", "decls", "--block", "--record")),
+    ("check_hashes", ("check_hashes.py", "--record")),
     ("scan_pdfs", ("scan_pdfs.py",)),
     ("batch prepush", ("batch.py", "prepush")),
 ]
@@ -377,7 +406,12 @@ def pre_commit():
     # actually launched. Run BEFORE the findings report, because "the gate did not run" outranks
     # "the gate found nothing" -- a neutered loop produces an empty `failed` list, which is exactly
     # what a clean run produces.
-    if reconcile("commit", [(label, argv) for label, argv, _ok, _d in PRE_COMMIT_CHECKS]):
+    # ⚠ The expectation carries `--block --record`, not just the script name (R3-3): those flags
+    #   ARE the enforcement, and a name-only match passes a run that launched every child with the
+    #   teeth removed.
+    if reconcile("commit",
+                 [(label, tuple(argv) + ("--block", "--record"))
+                  for label, argv, _ok, _d in PRE_COMMIT_CHECKS]):
         return 1
 
     if failed:
@@ -642,10 +676,9 @@ def pre_push(stream):
     # otherwise-green run. It failed CLOSED, which is why it is ordinary rather than bedrock —
     # but an unexplained exit 2 on a green run is precisely the shape that trains the
     # `--no-verify` reflex, which this project has already had fire twice.
-    # ⚠ Recorded by hand because it is launched with `run()` rather than `py()` — it lives in
-    #   `scripts/`, not in this bundle, so it does not go through the BASE-relative helper.
-    #   Without this line `reconcile` would report the row missing on every green push.
-    EXECUTED.append(("scan_pdfs.py",))
+    # ⚠ No hand-written append: `run()` records it, like every other child. The hand-patch that
+    #   used to sit here was exactly the R3-1 defect -- delete the call below and the append
+    #   claimed the row anyway.
     scan_exit = run(sys.executable, os.path.join(REPO, "scripts", "scan_pdfs.py"))
 
     # Routing + review signals, computed from the RANGES BEING PUSHED. This is the one call that
