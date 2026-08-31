@@ -278,8 +278,14 @@ set_option linter.flexible false in
     itself is clean — it is this carrier, not that class. `PadicInt` is the evidence and
     `q2Scale_bot` is the consequence — a theorem with no ℕ∞ and no equality test
     in it, tainted anyway. ⚠ The class's own
-    numeral is a SEPARATE cost, and an ACCIDENTAL one: respelling the successor as a cast from ℕ
-    clears the class outright. ⚠ The two counterfactual PAIRS below emit exactly that — carrier,
+    numeral is a SEPARATE cost, and an ACCIDENTAL one in the sense
+    `ZeroParadox/Category/ChoiceCannotBe.lean` defines and sources: respelling the successor as a
+    cast from ℕ clears the class outright. ⚠ Two INDEPENDENT reasons to read the numeral half as
+    pin-relative: Brasca and Clemente (arXiv:2603.17457, §2.2) record the same `OfNat` route being
+    tainted and then repaired upstream, and `ZeroParadox/Valuation/PricedPadicInterface.lean` § I
+    dates its own measurements for that reason. The CARRIER half is not pin-relative in the same
+    way — it follows from the printer walking the TYPE, so it holds of any statement mentioning
+    `ℤ_[2]` for as long as `PadicInt` is built with choice. ⚠ The two counterfactual PAIRS below emit exactly that — carrier,
     then numeral. ⚠ The UNIVERSALS here (any lawful join serves; ruled out for every spelling)
     are not emitted and cannot be — a footprint list settles instances, never universals. The
     printer's own type-walk IS emitted, by `_trivialAboutZ2` / `_trivialAboutNat` below. -/

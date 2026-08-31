@@ -114,7 +114,14 @@ theorem v2_scale_nat (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = ((v2nat n n + 1 : �
       show (2 * n) / 2 = n from by omega, v2nat_stable (2 * n - 1) n (by omega)]
 
 /-- **The `ℕ∞` numerals `0` and `1` carry `Classical.choice` — the localization instrument,
-corrected twice.** ⚠ Numerals ≥ 2 are CLEAN: `(2 : ℕ∞)` is `[propext]`, resolving through
+corrected twice.** ⚠⚠ EVERY FOOTPRINT HERE IS PIN-RELATIVE, NOT STRUCTURAL, and this one is known
+to have moved: Brasca and Clemente (*Synthetic Differential Geometry in Lean*, arXiv:2603.17457,
+§2.2) report that writing `(2 : R)` for a ring `R` USED to require choice through this same
+`instOfNatAtLeastTwo` route, and that it was subsequently fixed in Mathlib. Their constraint forces
+the audit ours only benefits from — the Kock–Lawvere axiom is inconsistent with excluded middle, so
+for them a stray `Classical.choice` is a contradiction rather than a blemish. Read every claim below
+as "measured at the pinned Mathlib, 2026-08-30", never as a fact about the library.
+⚠ Numerals ≥ 2 are CLEAN AT THE PIN: `(2 : ℕ∞)` is `[propext]`, resolving through
 `instOfNatAtLeastTwo` and `Nat.cast`. Only `0` and `1` are tainted, and through DIFFERENT
 bundles: `1` via `instAddMonoidWithOneENat` (the `AddMonoidWithOne ℕ∞`), `0` via
 `instCommSemiringENat` (the `CommSemiring ℕ∞`). ⚠ Cite the INSTANCES, not their projections:
