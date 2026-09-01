@@ -463,7 +463,11 @@ def check_registry_router_agreement():
         with io.open(reg_path, encoding="utf-8") as fh:
             reg = _json.load(fh)
         scope = reg["types"]["rely"]["scope"]
-    except (OSError, ValueError, KeyError) as e:
+    # ⚠ TypeError too: a registry that parses to a LIST, or `scope: null`, subscripts wrongly rather
+    #   than raising KeyError. The process still failed closed without it, but through `main`'s
+    #   bare `finally` — so the designed row and its remedy text never printed, which is a checker
+    #   that is right and unreadable. RLY42-3.
+    except (OSError, ValueError, KeyError, TypeError) as e:
         # ⚠ FAILS CLOSED. An unreadable registry must not read as "the two agree".
         row("registry readable", False,
             "*** could not read types.rely.scope from required.v2.json (%s) — this check cannot "

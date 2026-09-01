@@ -1406,16 +1406,21 @@ def check_pdf_coupling(ranges=None):
 
 def changed_lean(ranges=None):
     """The `.lean` files this push touches. Range-aware for the REL-1 reason `check_trigger5` gives."""
+    # ⚠ ACMR: a DELETED file owes nothing. Without the filter a pure deletion is named and a
+    #   verdict is demanded at bytes that no longer exist — unsatisfiable by construction, because
+    #   no review can attribute a file that is gone. Found by /rely (RLY42-2) on a real deletion
+    #   commit while the leg was still latent behind RLY42-1; it goes live the moment that is fixed.
+    #   Added/Copied/Modified/Renamed all owe attribution at their new bytes; Deleted does not.
     seen = set()
     if ranges is not None:
         for r in ranges:
-            rc, out = sh("git", "diff", "--name-only", r, "--", "*.lean")
+            rc, out = sh("git", "diff", "--name-only", "--diff-filter=ACMR", r, "--", "*.lean")
             if rc != 0:
                 die("git could not resolve range %r for the prior-art attribution leg — refusing "
                     "to report a scope it could not read:\n%s" % (r, out))
             seen.update(l.strip() for l in out.splitlines() if l.strip())
     else:
-        rc, out = sh("git", "diff", "--name-only", "HEAD", "--", "*.lean")
+        rc, out = sh("git", "diff", "--name-only", "--diff-filter=ACMR", "HEAD", "--", "*.lean")
         if rc != 0:
             die("git failed listing changed .lean files:\n%s" % out)
         seen.update(l.strip() for l in out.splitlines() if l.strip())
