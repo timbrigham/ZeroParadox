@@ -413,6 +413,81 @@ def check_exemption_completeness():
     return rows, bad
 
 
+def check_registry_router_agreement():
+    """The ledger's `rely` SCOPE and the router's `/rely` PREFIXES must be the same set.
+
+    ⚠⚠ TWO HAND-MAINTAINED LISTS DESCRIBING ONE FACT, WHICH IS THE SHAPE THIS FILE EXISTS FOR.
+    `batch.ROUTING` says which prefixes route to `/rely`; `required.v2.json`'s `types.rely.scope`
+    says which paths that step is ACCOUNTABLE for. An exemption is priced on the replacement gate
+    actually covering the files — `batch.py`: *"That re-route is the entire warrant for the
+    exemption."* — so a prefix in the router and absent from the scope is an exemption nobody pays
+    for, and the ledger reports the gate green over files it never counted.
+
+    ⚠ MEASURED, NOT THEORISED, AND TWICE ON ONE DAY. 2026-09-01: `tools/process/` had been in
+    ROUTING, in `EXEMPT_PREFIXES`, and warranted by `check_exemption_completeness` for eleven days
+    while the registry scope listed `tools/verify/*` alone — so `coverage_gap` for `rely` returned
+    63 paths, none of them the ones the prose gates had excluded on its behalf. The fix for THAT
+    added `tools/process/*` and missed `.github/workflows/*`, the third routed prefix, **in the same
+    commit whose own note warned that a third prefix would inherit the identical hole**. A sentence
+    telling the next person to keep two lists equal was written and broken by its author inside one
+    commit. That is the whole argument for deriving the obligation instead of restating it.
+
+    ⚠ DIRECTION MATTERS AND BOTH ARE REPORTED. Router-not-in-scope is the fail-open (exempt,
+    unpaid). Scope-not-in-router is the reverse: the step is held accountable for files nothing
+    routes to it, which cannot let bad work through but makes the step permanently unsatisfiable.
+    Neither is silent."""
+    import importlib
+    import json as _json
+    import batch
+    importlib.reload(batch)
+
+    rows, bad = [], 0
+
+    def row(label, ok, verdict):
+        nonlocal bad
+        if not ok:
+            bad += 1
+        rows.append((label, ok, verdict))
+
+    # The router's side: every ROUTING pattern whose gate is `/rely`, as a bare prefix.
+    routed = set()
+    for pat, gate, _why in batch.ROUTING:
+        if gate != "/rely":
+            continue
+        p = pat.pattern.lstrip("^").replace("\\.", ".").rstrip("/")
+        routed.add(p.lower())
+
+    # The registry's side: `types.rely.scope`, with the trailing glob removed.
+    reg_path = os.path.join(BASE, "required.v2.json")
+    try:
+        with io.open(reg_path, encoding="utf-8") as fh:
+            reg = _json.load(fh)
+        scope = reg["types"]["rely"]["scope"]
+    except (OSError, ValueError, KeyError) as e:
+        # ⚠ FAILS CLOSED. An unreadable registry must not read as "the two agree".
+        row("registry readable", False,
+            "*** could not read types.rely.scope from required.v2.json (%s) — this check cannot "
+            "pass on an absent input ***" % e)
+        return rows, bad
+    declared = {s[:-2].rstrip("/").lower() if s.endswith("/*") else s.rstrip("/").lower()
+                for s in scope}
+
+    for p in sorted(routed - declared):
+        row("routed, NOT in rely scope: %s" % p, False,
+            "*** ROUTED TO /rely AND OUTSIDE ITS DECLARED SCOPE — the prose gates exempt this "
+            "prefix on the strength of /rely covering it, and the ledger does not count it. Add "
+            "'%s/*' to types.rely.scope in required.v2.json ***" % p)
+    for p in sorted(declared - routed):
+        row("in rely scope, NOT routed: %s" % p, False,
+            "*** DECLARED SCOPE WITH NO ROUTER ENTRY — /rely is held accountable for files nothing "
+            "routes to it, so the step cannot be satisfied. Add it to batch.ROUTING or drop it "
+            "from the scope ***")
+    if not (routed ^ declared):
+        row("router and registry agree", True,
+            "%d prefix(es), same set both sides: %s" % (len(routed), ", ".join(sorted(routed))))
+    return rows, bad
+
+
 def check_routing_enforcement():
     """Does the `/rely` router still BLOCK — the property the exemption is PRICED on?
 
@@ -1656,6 +1731,16 @@ def main():
         # ⚠⚠ AND THAT THE ROUTER IT WARRANTS STILL BLOCKS. The warrant above tests COVERAGE (does the
         # pattern reach the whole prefix) and is blind to ENFORCEMENT — measured 2026-08-21, a probe
         # stopped the router blocking and this file still exited 0.
+        # ⚠⚠ AND THAT THE LEDGER IS ACCOUNTABLE FOR WHAT THE ROUTER SENDS IT. The two rows above
+        # prove the prefix is registered as exempt and that the router still blocks — and BOTH pass
+        # while the step's declared scope omits the prefix entirely, which is exactly what happened
+        # to `tools/process/` for eleven days. Coverage and enforcement were tested; accountability
+        # was not.
+        print("\n  PROPERTY: the registry scope and the router agree")
+        _rows, _bad = check_registry_router_agreement()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
         print("\n  PROPERTY: the router the exemption is priced on still BLOCKS")
         _rows, _bad = check_routing_enforcement()
         for label, ok, verdict in _rows:
