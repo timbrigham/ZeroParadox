@@ -1404,6 +1404,69 @@ def check_pdf_coupling(ranges=None):
                    % (len(unpaired), len(pdfs), ", ".join(unpaired[:3])))
 
 
+def changed_lean(ranges=None):
+    """The `.lean` files this push touches. Range-aware for the REL-1 reason `check_trigger5` gives."""
+    seen = set()
+    if ranges is not None:
+        for r in ranges:
+            rc, out = sh("git", "diff", "--name-only", r, "--", "*.lean")
+            if rc != 0:
+                die("git could not resolve range %r for the prior-art attribution leg — refusing "
+                    "to report a scope it could not read:\n%s" % (r, out))
+            seen.update(l.strip() for l in out.splitlines() if l.strip())
+    else:
+        rc, out = sh("git", "diff", "--name-only", "HEAD", "--", "*.lean")
+        if rc != 0:
+            die("git failed listing changed .lean files:\n%s" % out)
+        seen.update(l.strip() for l in out.splitlines() if l.strip())
+    return sorted(seen)
+
+
+def check_prior_art_attribution(ranges=None):
+    """EVERY `.lean` FILE THIS PUSH EDITS MUST CARRY A PASSING `prior_art` VERDICT AT ITS CURRENT BYTES.
+
+    ⚠⚠ PER FILE, NEVER PER CORPUS, AND THE DIFFERENCE IS THE WHOLE POINT (Tim, 2026-09-01: *"my goal
+    be lean files specifically that whenever a specific file gets edited that that file is properly
+    attributed. the current logic I think hits the entire corpus. and that is impossible to fill at
+    one time."*). The registry's `scope` is a STATIC GLOB, so the strongest thing it can say is "all
+    218 `.lean` files" — which reads as a 215-file backlog nobody can ever clear, and which does not
+    block anyway, because narrowed coverage is REPORTED rather than enforced. Measured 2026-09-01:
+    promoting `prior_art` with `scope: ZeroParadox/*.lean` gave `have 3 / missing 215` and the only
+    thing that actually blocked was an unrelated recorded FAIL. So the glob delivers an impossible
+    number AND no per-file enforcement — backwards on both counts.
+
+    The obligation is CONTAINMENT OF THE CHANGED SET, and it is satisfiable incrementally by
+    construction: you owe attribution for the files you touched and never for the ones you did not.
+    Touch nothing, owe nothing. Touch one file, run one review.
+
+    ⚠ IT LIVES HERE BECAUSE ONLY HERE KNOWS THE RANGE. REL-1: the working tree is empty post-commit,
+    so `prior_art`'s scope cannot be narrowed to "this push" anywhere in the registry. The ledger
+    stays the single source of what was VERDICTED; this intersects that with what changed. When
+    verdictLedger gains a dynamic scope (its R-8/R-9), this leg is what moves into it.
+
+    ⚠ FAILS CLOSED ON AN UNREACHABLE LEDGER. `owing_paths` returns None rather than an empty set,
+    for the reason the whole file repeats: "I could not ask" must never render as "nothing is owed".
+    """
+    touched = changed_lean(ranges)
+    if not touched:
+        return True, "no .lean file changed in this push — no attribution owed"
+    ref = record.read_ref("HEAD")
+    owing = record.owing_paths("prior_art", ref, "push")
+    if owing is None:
+        return False, ("could not ask the ledger which .lean files carry a passing prior_art "
+                       "verdict, so this push's %d edited file(s) cannot be shown attributed. "
+                       "An unreachable ledger is not a clean bill." % len(touched))
+    gap = sorted(set(touched) & set(owing))
+    if not gap:
+        return True, ("all %d edited .lean file(s) carry a passing prior_art verdict at their "
+                      "current bytes" % len(touched))
+    return False, ("%d of %d .lean file(s) edited in this push have NO passing prior_art verdict at "
+                   "their current bytes: %s%s — run `/prior-art-review` over these files and let it "
+                   "record. You owe the files you TOUCHED, never the corpus."
+                   % (len(gap), len(touched), ", ".join(gap[:4]),
+                      "" if len(gap) <= 4 else " (+%d more)" % (len(gap) - 4)))
+
+
 def check_trigger5(ranges=None):
     """Prior-art trigger 5: a new `.lean` file, or >=50 inserted `.lean` lines.
 
@@ -2070,6 +2133,13 @@ def cmd_prepush(ranges=None):
         ("purity", "BLOCK", "every new declaration has a #print axioms entry"),
         ("ssot", "BLOCK", "every new declaration has an ssot.json row"),
         ("pdf coupling", "BLOCK", "a changed PDF arrives with its scripts/ build script"),
+        # ⚠ THE OBLIGATION TRIGGER 5 REPORTS, ACTUALLY ENFORCED — and per FILE, not per corpus.
+        # Trigger 5 has always been a `report` row: it announces that prior art is owed and blocks
+        # nothing, which is why 927 inserted .lean lines shipped 2026-08-31 with the step resolving
+        # NOT_APPLICABLE and check_signals rendering that as ok. This row is the enforcement, and it
+        # is scoped to the files the push EDITED so it can be satisfied one review at a time.
+        ("prior-art attrib", "BLOCK",
+         "every .lean file edited in this push carries a passing prior_art verdict at its current bytes"),
         # ⚠ TWO ROWS, NOT ONE, BECAUSE THE LEGS NOW ENFORCE DIFFERENTLY. A manifest that still said
         # "routing BLOCK" over a leg that warns is `RLY25-1` — a report publishing a stronger
         # property than it checks. The declaration is the whole point of the manifest.
@@ -2114,7 +2184,12 @@ def cmd_prepush(ranges=None):
     # stub-first protocol, which commits and pushes deliberately incomplete proofs.
     decls = added_decls()
     for name, ok, why in [("purity",) + check_purity(decls), ("ssot",) + check_ssot(decls),
-                          ("pdf coupling",) + check_pdf_coupling(ranges)]:
+                          ("pdf coupling",) + check_pdf_coupling(ranges),
+                          # ⚠ BLOCKS, and it is satisfiable one file at a time by construction —
+                          #   see check_prior_art_attribution. Placed with purity and ssot because
+                          #   it is the same shape: a per-declaration obligation the corpus owes,
+                          #   enforced against what THIS push actually changed.
+                          ("prior-art attrib",) + check_prior_art_attribution(ranges)]:
         print("  %-18s %-4s %s" % (name, "ok" if ok else "FAIL", why))
         bad += 0 if ok else 1
 

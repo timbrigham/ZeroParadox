@@ -135,6 +135,47 @@ def step_status(ref, action='commit'):
     return {r.get('step'): r.get('status') for r in out['rows'] if r.get('step')}
 
 
+def owing_paths(step, ref, action='push'):
+    """Paths in `step`'s scope with NO passing verdict at `ref`'s content. None if it cannot ask.
+
+    ⚠⚠ PER-PATH, BECAUSE THE STEP-LEVEL ANSWER CANNOT EXPRESS THE OBLIGATION. `step_status` says
+    whether the STEP is satisfied, and a step is satisfied while most of its scope is unexamined —
+    `check_pov` sits at 298/511 and reads SATISFIED, correctly, because narrowed coverage is
+    REPORTED and does not block. So a caller asking "is this step green" learns nothing about
+    whether THIS FILE was ever attributed, and for `prior_art` that is the entire question: the
+    obligation is owed by the file that was EDITED, never by the corpus.
+
+    ⚠ THE REGISTRY CANNOT EXPRESS IT AND THIS IS NOT A WORKAROUND. `scope` is a static glob, so it
+    can say "all 218 .lean files" but not "the ones in this push" — a shape the registry's own
+    `prior_art` entry names as the reason the gate was narrowed to discipline in the first place.
+    The push RANGE is knowable only here (REL-1: `batch.py` had the working tree, which is empty
+    post-commit), so the containment test belongs at the caller that has the range. The ledger
+    stays the single source of what was VERDICTED; this only intersects that with what changed.
+
+    ⚠ RETURNS None ON ANY FAILURE TO ASK, never an empty set — an unreachable ledger must not read
+    as "nothing is owed", which is the absence-as-success shape this layer exists to remove."""
+    try:
+        out = _call('coverage_gap', {'ref': ref, 'action': action, 'step': step,
+                                     'admission': [step], 'limit': 5000})
+    except (urllib.error.URLError, OSError, TimeoutError):
+        return None
+    if not out or not out.get('ok') or not isinstance(out.get('steps'), list):
+        return None
+    for row in out['steps']:
+        if row.get('step') != step:
+            continue
+        paths = row.get('paths')
+        if not isinstance(paths, list):
+            return None
+        # ⚠ A TRUNCATED LIST IS NOT THE LIST. `limit` caps `paths` and reports the remainder in
+        #   `truncated`; treating a capped list as complete would silently under-report what is
+        #   owed, so refuse rather than answer with part of it.
+        if row.get('truncated'):
+            return None
+        return sorted(str(p) for p in paths)
+    return None
+
+
 def read_ref(ref):
     """The ref to ASK the ledger about, with `INDEX` resolved exactly as WRITING resolves it.
 
