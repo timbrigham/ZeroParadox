@@ -274,10 +274,12 @@
     "rely": {
       "family": "review",
       "_why": "the /rely round signal. Read by batch.py, ship.py AND guards.py; `rely_cleared.txt` was its only representation, so retiring the signal path without this type deletes the coverage rather than migrating it.",
+      "_scope_warrant": "BOTH prefixes, because BOTH are exempt elsewhere on the strength of this step. `tools/process/*` was missing until 2026-09-01 while batch.py's ROUTING carried it, guards.py asserted a warrant for it ('^tools/process/'), and editorial and adversary excluded it via `tools/*.md`. So the registry and the router disagreed about what /rely covers: the router warned that routed documents had drifted while the ledger's scope did not contain them, and `coverage_gap` for this step returned 63 paths, every one under tools/verify/. An exemption is priced on the gate that replaces it ACTUALLY covering the files -- a scope that omits them un-prices it silently. batch.py states the rule: 'That re-route is the entire warrant for the exemption.' KEEP THIS LIST EQUAL TO batch.py's EXEMPT_PREFIXES/ROUTING; a third routed prefix must be added in all three places or it inherits the same hole.",
       "scope": [
-        "tools/verify/*"
+        "tools/verify/*",
+        "tools/process/*"
       ],
-      "reason": "governs the verification tooling. Its own brief FORBIDS running at full breadth -- rely.md step 1: 'SCOPE IT ... Do not run it at full' -- so with no scope the admission set demanded 477 paths from a gate that is not permitted to examine them. It was unsatisfiable by construction, not merely expensive."
+      "reason": "governs the verification tooling AND the routed process prose. Its own brief FORBIDS running at full breadth -- rely.md step 1: 'SCOPE IT ... Do not run it at full' -- so with no scope the admission set demanded 477 paths from a gate that is not permitted to examine them. It was unsatisfiable by construction, not merely expensive."
     },
     "claim_review": {
       "family": "review",
