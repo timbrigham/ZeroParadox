@@ -8,9 +8,9 @@ This folder contains the tooling used to generate the Zero Paradox PDF documents
 
 ## A Note on Reproducibility
 
-These scripts are copied from an active private development folder for the sake of transparency. They are not packaged or hardened for external use. You are welcome to read them and understand how the documents were produced, but be aware:
+These scripts are the working copies; they moved out of the private folder on 2026-08-15 and this is now their only home for the sake of transparency. They are not packaged or hardened for external use. You are welcome to read them and understand how the documents were produced, but be aware:
 
-- Font files are not included (binary files, ~5MB) — you must download them separately (see Setup below)
+- Font files ARE included, in [`fonts/`](fonts/) — tracked since 2026-08-15, with both licences beside them. No download step
 - The scripts were developed and run on Windows 11; path handling may behave differently on other platforms
 - Some scripts reference internal conventions that evolved over the course of the project — earlier scripts in this folder may not reflect the current rendering standards
 - No support or troubleshooting is provided for third-party builds
@@ -22,7 +22,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 ### CI verification reports
 
 Unlike everything else in this folder, these two are **primary and executed** — GitHub
-Actions runs them on every build and publishes their output to the run summary, so they
+Actions runs `corpus_verification_report.py` on every build; `minimal_core_report.py` is `workflow_dispatch` so it can be fired by hand against any branch, **and also runs automatically when `Miniature.lean`, the report script, or the workflow changes**. Both publish their output to the run summary, so they
 are not copies of anything and they are not PDF tooling. Each reads a Lean log plus the
 build's own exit code and reports what the machine actually checked.
 
@@ -36,7 +36,7 @@ build's own exit code and reports what the machine actually checked.
 | File | Purpose |
 |------|---------|
 | [zp_utils.py](zp_utils.py) | Shared utility module imported by all build scripts. Provides font registration, colour constants (including palette enforcement gate), layout constants, style dicts, and all standard component helpers: `sp`, `fix`, `body`, `li`, `derived`, `label_box`, `data_table`, `make_doc`, `callout`, `result_box`, `axiom_box`, `def_box`, `remark_box`, `import_box`. The palette gate runs at import time and aborts the build if a script redefines a protected colour constant without an explicit `# ZP-OVERRIDE:` annotation. |
-| [setup_fonts.py](setup_fonts.py) | Downloads the required font files into `scripts/fonts/` |
+| [setup_fonts.py](setup_fonts.py) | **Effectively retired.** It short-circuits on `All fonts already present.` now that `fonts/` is tracked, and its download list never included the four STIX faces. Kept as a record of where the DejaVu files came from |
 | [scan_pdfs.py](scan_pdfs.py) | Pre-push validation: checks DVS font registrations, STIXTwo-Math glyph coverage, and presence of all expected output PDFs |
 
 ### Formal layer builders
@@ -98,7 +98,8 @@ build's own exit code and reports what the machine actually checked.
 
 | File | Current output |
 |------|---------------|
-| [build_dictionary_map.py](build_dictionary_map.py) | `BOTTOMELEMENT.md` — the ⊥ dictionary-and-map reference at the repo root. Unlike the PDF builders, this emits GitHub-rendered markdown. It resolves every witness name against the Lean corpus at generation time, so a link only appears if the declaration exists in the source; edit the flat data and rerun to update. |
+| [build_dictionary_map.py](build_dictionary_map.py) | `BOTTOMELEMENT.md` — the ⊥ dictionary-and-map reference at the repo root. **Re-runnable from a clone since 2026-08-29**, when its data module `build_bottom_matrix.py` moved here from the private folder; before that it could only exit with an explanation. Unlike the PDF builders, this emits GitHub-rendered markdown. It resolves every witness name against the Lean corpus at generation time, so a link only appears if the declaration exists in the source. The committed `BOTTOMELEMENT.md` is the readable output, and regenerating it from a clone reproduces that file byte for byte. |
+| [build_bottom_matrix.py](build_bottom_matrix.py) | **A data module, not a page builder.** Its `CELLS` dict is the slot-by-construction matrix `build_dictionary_map.py` renders into `BOTTOMELEMENT.md`, so importing it is what that generator does; running it directly writes a working note that stays private, and it degrades to writing beside itself when `.claude-local/` is absent. Moved here from the private folder on 2026-08-29 so a clone can regenerate the page — it had passed R-SCRIPTS' private-only test on a technicality, because it does not *emit* a tracked artifact, it *supplies* one's content. ⚠ The `✓` cells carry witness names the generator resolves against the Lean; the `∅`/`na:` cells are authored NEGATIVE claims with a prose reason and no witness, and the page's own text says the informative content is in those. Treat them as claims, not as computed output. |
 | [build_snap_map.py](build_snap_map.py) | `SNAP.md` — the ⊥ → ε₀ snap dictionary-and-map reference at the repo root, the companion to `BOTTOMELEMENT.md` (that maps the object, this maps the transition). Same pattern: GitHub-rendered markdown, with every witness name resolved against the Lean corpus at generation time so a link only appears if the declaration exists; the is/is-not/proved-vs-open catalogue is hand-curated flat data. Edit the catalogue and rerun to update. |
 | [build_manifest.py](build_manifest.py) | `ZeroParadox/MANIFEST.md` — the Lean-sources manifest. Also GitHub-rendered markdown, not a PDF. Classifies every `ZeroParadox/**/*.lean` file core-vs-experimental by its in-file `-- EXPERIMENTAL` header, groups by domain folder, and titles each from its module docstring; the editorial preamble is fixed, the file listing is generated — rerun after any file add/move/rename. |
 
@@ -110,24 +111,24 @@ build's own exit code and reports what the machine actually checked.
 
 ## Setup
 
-Font files are not tracked in git. Download them before running any builder:
+**No setup step. The fonts ship with the repository** (2026-08-15) — 12 DejaVu and STIX Two TTFs in
+[`fonts/`](fonts/), so a fresh clone can run a builder immediately.
 
-```bash
-python setup_fonts.py
-```
+This section previously told you to fetch them with `setup_fonts.py`, because the font files were
+not tracked. That made `scripts/` readable but not runnable: the code was public and the one thing
+it could not start without was missing. Both families are freely redistributable, so there was
+nothing to gain by withholding them.
 
-Or manually: download the [DejaVu fonts](https://dejavu-fonts.github.io/) TTF release and place the following files in `scripts/fonts/`:
+Both licences ship beside the binaries, which their terms require — the SIL Open Font License says
+copies "provided that each copy contains the above copyright notice and this license":
 
-```
-DejaVuSans.ttf
-DejaVuSans-Bold.ttf
-DejaVuSans-Oblique.ttf
-DejaVuSans-BoldOblique.ttf
-DejaVuSerif.ttf
-DejaVuSerif-Bold.ttf
-DejaVuSerif-Italic.ttf
-DejaVuSerif-BoldItalic.ttf
-```
+- [`fonts/LICENSE-DejaVu.txt`](fonts/LICENSE-DejaVu.txt) — as embedded in the fonts' own
+  metadata (nameID 13). It carries THREE statements, not one: Bitstream Vera, **Arev (© Tavmjong Bah)**, and the DejaVu changes released into the public domain
+- [`fonts/LICENSE-STIXTwo-OFL.txt`](fonts/LICENSE-STIXTwo-OFL.txt) — SIL OFL 1.1, upstream text
+
+⚠ `setup_fonts.py` does NOT work as a refresh path: it returns at `All fonts already present.`
+whenever the DejaVu files exist, which is now always, and the four STIX faces were never in its
+download list. It is kept only as a record of where the DejaVu files came from.
 
 ## Running a Builder
 
@@ -148,3 +149,5 @@ Output PDFs are written to the repo root.
 ## License
 
 CC BY-NC-ND 4.0 — same as the rest of the repository.
+
+⚠ The fonts in `scripts/fonts/` are the exception: they are third-party and remain under their own licences (DejaVu/Bitstream Vera; STIX Two under SIL OFL 1.1), which ship beside them. OFL clause 5 forbids releasing them under any other licence, so they are **not** covered by the terms above.

@@ -15,7 +15,7 @@ PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
 FONT_DIR    = os.path.join(SCRIPT_DIR, 'fonts')
 
 BUILD_SCRIPTS = [
-    'build_foreword.py', 'build_tools.py', 'build_gen2.py',
+    'build_foreword.py', 'build_tools.py',
     'build_zpe.py', 'build_zpf.py', 'build_zpg.py', 'build_zph.py', 'build_zpi.py',
     'build_zpa.py', 'build_zpb.py', 'build_zpc.py', 'build_zpd.py',
     'build_zpj.py', 'build_zpk.py',
@@ -28,7 +28,6 @@ BUILD_SCRIPTS = [
 EXPECTED_PDFS = [
     'Zero_Paradox_Foreword.pdf',
     'ZP_Tools_and_Methods.pdf',
-    'ZP_Gen2_Applications.pdf',
     'ZP_Philosophical_Question.pdf',
     'ZP-A_Lattice_Algebra.pdf',         'ZP-A_Illustrated_Companion.pdf',
     'ZP-B_pAdic_Topology.pdf',          'ZP-B_Illustrated_Companion.pdf',

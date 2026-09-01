@@ -17,7 +17,7 @@ Option A - the proven flat-data + corpus-resolution pattern.
 
 Assumes the output .md lives at the REPO ROOT (relative links point into `ZeroParadox/`).
 
-Run:  python .claude-local/build_snap_map.py   (active copy; also mirrored read-only to scripts/)
+Run:  python scripts/build_snap_map.py   (this folder is its only home since 2026-08-15)
 Out:  SNAP.md at the repo root   (Mermaid + relative links render on GitHub)
 """
 import sys, os, re
@@ -90,7 +90,7 @@ IS_FACES = [
      ["t_snap_derived"]),
     ("verb", "*one-way*: the departure from ⊥ does not reverse. No join can return to a strictly lower state (algebraic form), and the 2-adic and Kleisli faces prove the same irreversibility topologically and categorically",
      ["t_snap_irreversible", "c3_irreversible", "fC_no_return"]),
-    ("verb", "a chart-reading of the LIMIT - `Statement:` INVERSION, `Reading:` INVERSION and conjectural, since no snap transition appears in the statement - valuation face: the same ω-tower's encodings descend to the 2-adic floor 0 = ⊥ (the ascent to ε₀ resolving onto a new bottom ⊥ₙ₊₁) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rise to ∞. The inversion is the passage between the two charts",
+    ("verb", "a chart-reading of the LIMIT - `Statement:` INVERSION, `Reading:` INVERSION and conjectural, since no snap transition appears in the statement - valuation face: the same ω-tower's encodings descend to the 2-adic floor 0 = ⊥ (the ascent to ε₀ resolving back onto the floor - the SAME 0 it started from, `snap_arc_z2_loop`; reading it as a new bottom ⊥ₙ₊₁ is C-DA2, a commitment) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rise to ∞. The inversion is the passage between the two charts",
      ["snap_is_frameflip", "snap_frameflip_tower_tendsto_infty"]),
     ("verb", "a chart-reading of the SEAM (the seam is what the frame-flip FIXES, not a flip, and no snap appears), category face: the categorical seam is an op-self-dual zero object of the module category ModuleCat ℂ - initial and terminal at once, with the op-duality frame-change swapping the two",
      ["catseam_is_frameflip"]),
@@ -182,7 +182,7 @@ The snap is the framework's one theorem - the one-way departure from ⊥ into th
 
 **Proved - the first step from bottom, reached by a choice-free snap from below.** ε₀ is the least fixed point of omega-to-the-power reached from 0 (epsilonZero_eq_nfp); on ordinal notations the snap climbs from below with no choice (exp_lt_term, omegaPow_no_fixedpoint, tower_strictMono, all `propext`-only), and the first step is co-witnessed with the 2-adic limit and the machine snap (zpm_triangle). (That ε₀ *is* the least fixed point - epsilonZero_eq_nfp - uses classical logic; whether that is avoidable at the notation level is the open item below.)
 
-**Proved - a wall: the snap is not one mechanism across categories.** The per-domain frame-flips share a shape, not a single categorical map. In Set (all endofunctions) no nontrivial total type carries a Lawvere fixed-point witness - Cantor forbids it - so the lattice and 2-adic faces are provably not Set-level Lawvere instances (nontrivial_lattice_no_witness, q2_no_witness); their ⊥ is a proved fixed point of its own self-map (q2_unique_fp, selfApp_fp_set_eq_singleton), carrying the diagonal shape but not a genuine Set-level Lawvere instance. The computability face, by contrast, IS a genuine recursion fixed point (computability_face_fixedPoint, Kleene / Rogers) - but it lives in the effective category, where the fixed-point-free diagonal is not computable. Heterogeneous categories, heterogeneous verdicts: what unifies them is the diagonal shape, not one mechanism. The universality that holds is order-theoretic (the fork), not categorical - a proved obstruction.
+**Proved - a wall: the snap is not one mechanism across categories.** The per-domain frame-flips share a shape, not a single categorical map. In Set (all endofunctions) no nontrivial total type carries a Lawvere fixed-point witness - Cantor forbids it - so the lattice and 2-adic faces are provably not Set-level Lawvere instances (nontrivial_lattice_no_witness, q2_no_witness); their ⊥ is a proved fixed point of its own self-map (q2_unique_fp, selfApp_fp_set_eq_singleton), carrying the diagonal shape but not a genuine Set-level Lawvere instance. The computability face, by contrast, IS a genuine recursion fixed point (computability_face_fixedPoint, Kleene / Rogers) - but it lives in the effective category, where the fixed-point-free DIAGONAL CONSTRUCTION is not admissible. `Reading:` CARRIER - the verdict is category-relative, not a property of the object: the same diagonal shape is refuted in Set and available in the effective setting. That is not the claim that no fixed-point-free computable endomap exists - c |-> pair(c, c) is one - and the fixed point it gets is Rogers', up to eval. Heterogeneous categories, heterogeneous verdicts: what unifies them is the diagonal shape, not one mechanism. The universality that holds is order-theoretic (the fork), not categorical - a proved obstruction.
 
 **The family (proved), the identity (retired), choice-free minimality (open).** The domain snaps form one **family** (MC-1): per-domain membership is proved, the reading that they are *numerically one* transition is retired as ill-typed (a type boundary, not a theorem), and the members are provably distinct. Separately, ε₀-as-least-fixed-point is proved classically; whether it can be shown choice-free at the notation level is open: the syntax-to-semantics bridge tower_NF inherits `Classical.choice`.
 
@@ -205,7 +205,7 @@ This is a **reference** for the framework's central transition, the **snap** - t
 
 It is a **beginning, not a resolution.** What is *proved* is that the snap is derived rather than assumed, one-way, takes its first step from below, and that the domain snaps form one **family** (MC-1, membership proved per domain); what is *retired* is the reading that they are numerically one object (ill-typed - the members are provably distinct); and what stays *open* is the choice-freeness of the first step's minimality. The frame-change faces are proved theorems that compose known results, so no new theorem is claimed there; what stays a conjecture is only the abstract cross-domain reading - that they are literally one change of frame (a type boundary) - written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
 
-> **See it - [The Snap Loop](snap-loop.html).** The snap-arc ⊥ → ε₀ as one interactive 2-adic loop: a single discrete step of ε₀ away from bottom, then a return to bottom (a new successor null). Floor and ceiling are both ⊥; ε₀ is the first step from bottom, opening the gap between them - never a bottom and never 0. It maps the trajectory as a whole, not the route between - that runs through internal state with no external description. Hover any point for the checkable Lean witness.
+> **See it - [The Snap Loop](snap-loop.html).** The snap-arc ⊥ → ε₀ as one interactive 2-adic loop: a single discrete step of ε₀ away from bottom, then a return to bottom (to A bottom - that it is a NEW one is a commitment, and in this 2-adic realization the arc returns to the same 0). Floor and ceiling are both ⊥; ε₀ is the first step from bottom, opening the gap between them - never a bottom and never 0. It maps the trajectory as a whole, not the route between - that runs through internal state with no external description. Hover any point for the checkable Lean witness.
 
 ---
 
@@ -245,7 +245,10 @@ def main():
                             ["the snap is not...", "witness (or meta / open)"]),
         boundary_map=render_boundary_map(),
     )
-    with open(OUT, "w", encoding="utf-8") as f:
+    # newline="\n" is REQUIRED, not cosmetic: .gitattributes declares `* text=auto eol=lf`,
+    # and check_invariants blocks a push carrying CRLF in a tracked text file. Its two sibling
+    # generators already had this; running THIS one as documented used to trip the gate.
+    with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write(page)
     print(f"wrote {OUT}")
     print(f"{len(INDEX)} declarations indexed - {len(IS_FACES)} positive faces - {len(IS_NOT)} exclusions - {len(BOUNDARY_MAP)} boundary-map fields")

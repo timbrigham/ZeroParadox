@@ -370,7 +370,7 @@ instance machinePhaseAFA : AFAStructure MachinePhase where
     constant codes also meet (§ VI). Reading it as "the code that IS its own program,
     the computational expression of ⊥ = {⊥}" is the framework's commitment, carried by
     the class, not a property this instance establishes. -/
--- [ZP-CUSTOM] instance: KleeneStructure MachinePhase (noncomputable) | reason: botCode chosen via Classical.choose — no algorithm can identify which Code IS the botCode (isComputationalQuine_undecidable). The noncomputable marker is load-bearing, not a proof artifact: the non-constructivity is the formal content of DA-1's computational path. Stripping it would misrepresent the result.
+-- [ZP-CUSTOM] instance: KleeneStructure MachinePhase (noncomputable) | reason: botCode chosen via Classical.choose — it names SOME computational quine and not a distinguished one. isComputationalQuine_undecidable says the MEMBERSHIP PREDICATE is not a ComputablePred, which is why nothing can pin down which code was chosen — it does NOT say no algorithm names a witness, and the constant codes are witnesses. The noncomputable marker is load-bearing, not a proof artifact: the non-constructivity is the formal content of DA-1's computational path. Stripping it would misrepresent the result.
 noncomputable instance machinePhaseKleene : KleeneStructure MachinePhase where
   botCode               := Classical.choose computational_quine_exists
   botCode_is_quine      := Classical.choose_spec computational_quine_exists

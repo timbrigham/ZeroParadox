@@ -14,40 +14,12 @@ diverge into different branches specifically due to how they treat their respect
 example of how incompatible structures can be built by flipping a single bit of logic — notably, the
 treatment of zero.
 
-## Overview
-
-Completes ZP-F's "Classification Note": the Binary Snap's domain of validity is exactly the
-non-Archimedean completions of ℚ. Unifies three previously separate facts under ONE statement,
-with "snap occurs" formalized topologically as **total disconnectedness** (predicate (a)):
-
-- ℝ (the Archimedean completion): connected, NOT totally disconnected → no snap.
-  (Order-language companion: ZP-F `ZeroParadox.f_snap_impossible`.)
-- ℚ_p (the non-Archimedean completions): totally disconnected → snap.
-  (ZP-B anchor: `ZeroParadox.t5_totallyDisconnected`, itself `inferInstance` from Mathlib.)
-- Ostrowski (ZP-P, `ZeroParadox/Valuation/Ostrowski.lean`): these are the ONLY completions, and they are mutually exclusive.
-
-## Why topological (predicate (a), Tim 2026-06-24)
-The only NON-CIRCULAR choice: "snap := non-Archimedean" just renames Ostrowski. Total disconnectedness
-is a genuinely different property whose coincidence with the Ostrowski class is real content. Both
-witnesses are Mathlib-solid; the dichotomy reuses ZP-P's Ostrowski backbone + ZP-B's topology anchor.
-
-## Symbol map (concept → Lean/Mathlib)
-- "snap occurs"             → `TotallyDisconnectedSpace K`  (K a completion of ℚ)
-- ℝ completion              → `ℝ`; connected via `Real.instPathConnectedSpace`
-- ℚ_p completion            → `ℚ_[p]` = `Padic p` `[Fact p.Prime]`; totally disconnected = inferInstance
-- "no order-atom" (ℝ side)  → `ZeroParadox.f_snap_impossible` (order companion)
-- Ostrowski exhaustiveness  → `ZeroParadox.completions_exhaustive` (`equiv_real_or_padic`)
-- Ostrowski orthogonality   → `ZeroParadox.real_not_equiv_padic` (`not_real_isEquiv_padic`)
-- "ℝ not totally disc."     → ℝ connected + nontrivial → ¬ `TotallyDisconnectedSpace ℝ`   [NEW lemma]
-
-## Scope / honest seam
-v1 states the dichotomy as a faithful BUNDLE over the concrete completions (ℝ, ℚ_p) + the Ostrowski
-classification of abstract absolute values. The implicit seam — "f ≈ real ⇒ completion is ℝ", "f ≈ padic p
-⇒ completion is ℚ_p" — is left to the reader (it is standard); a single biconditional quantifying over the
-abstract completion `UniformSpace.Completion` is the v2 polish (carries the completion-transport plumbing).
-
-STATUS: PROVED (v1 bundle), sorry-free. Reuses ZP-P's Ostrowski backbone + Mathlib's
-ultrametric/connected instances; the only new lemma is `real_no_snap`.
+## Formal Overview
+Completes ZP-F's "Classification Note": **where the Binary Snap is RULED OUT** among the completions of ℚ.
+`Reading:` CARRIER — "snap occurs" is STIPULATED as total disconnectedness (predicate (a)), the only
+non-circular choice, since "snap := non-Archimedean" would merely rename Ostrowski (Tim 2026-06-24). So nothing
+here runs from a carrier property TO the snap, and each declaration below carries its own fence. ⚠ The first
+step is AX-B1, a commitment, never a consequence of the carrier.
 -/
 
 set_option maxHeartbeats 400000
@@ -56,22 +28,27 @@ namespace ZeroParadox
 
 open Rat.AbsoluteValue
 
-/-- The snap (total disconnectedness) holds for every non-Archimedean completion `ℚ_p`. -/
+/-- `Statement:` CARRIER — every non-Archimedean completion `ℚ_p` is totally disconnected, so the topological obstruction is ABSENT there. It is not thereby supplied: see `snap_dichotomy` below. -/
 theorem padic_snaps (p : ℕ) [Fact p.Prime] : TotallyDisconnectedSpace ℚ_[p] := inferInstance
 
-/-- The snap fails for the Archimedean completion `ℝ`: it is connected and nontrivial,
-    hence not totally disconnected. -/
+/-- `Statement:` CARRIER — `ℝ` is connected and nontrivial, hence NOT totally disconnected. Mathlib
+    states the obstruction as a CARDINALITY floor (`subsingleton_of_preconnected_totallyDisconnected`
+    forces `Subsingleton`; `Nontrivial ℝ` forbids it), so the standard form is used, not re-proved.
+    ⚠ TOPOLOGICAL half only — the order half is `ZeroParadox.f_snap_impossible`, obstruction DENSITY. -/
 theorem real_no_snap : ¬ TotallyDisconnectedSpace ℝ := by
   intro h
   haveI := h
-  have hsub : (Set.univ : Set ℝ).Subsingleton :=
-    isTotallyDisconnected_of_totallyDisconnectedSpace Set.univ Set.univ
-      (Set.Subset.refl _) isPreconnected_univ
-  exact zero_ne_one (hsub (Set.mem_univ (0 : ℝ)) (Set.mem_univ (1 : ℝ)))
+  exact not_subsingleton ℝ subsingleton_of_preconnected_totallyDisconnected
 
-/-- **Snap-occurrence dichotomy over ℚ.** Among the completions of ℚ, the snap (total
-disconnectedness) holds exactly for the non-Archimedean ones (the `ℚ_p`) and fails for the unique
-Archimedean one (`ℝ`); by Ostrowski these are the only, mutually-exclusive cases. -/
+/-- **Snap-occurrence dichotomy over ℚ.** `Statement:` CARRIER — a four-way conjunction: every `ℚ_p`
+is totally disconnected, `ℝ` is not, and by Ostrowski (`ZeroParadox.completions_exhaustive`,
+`ZeroParadox.real_not_equiv_padic`) these are the only completions of ℚ and are mutually exclusive.
+⚠ No arrow runs from a carrier property TO the snap, and the word "snap" does not occur in the
+statement at all. (Its third conjunct IS an implication — Ostrowski's `IsNontrivial → …` — so the
+claim is about which arrows are absent, not that the statement is arrow-free.)
+Scope (v1): a faithful BUNDLE over the concrete completions plus Ostrowski's classification of
+abstract absolute values. The seam — "f ≈ real ⇒ the completion is ℝ" — is left to the reader as
+standard; quantifying over the abstract `UniformSpace.Completion` is the v2 polish. -/
 theorem snap_dichotomy :
     (∀ (p : ℕ) [Fact p.Prime], TotallyDisconnectedSpace ℚ_[p]) ∧
     (¬ TotallyDisconnectedSpace ℝ) ∧

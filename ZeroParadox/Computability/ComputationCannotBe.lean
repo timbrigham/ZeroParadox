@@ -60,7 +60,9 @@ section ComputationCannotBeIndex
 -- Statement: `IsComputationalQuine` is not a ComputablePred — no algorithm identifies the quines.
 
 #check @ZeroParadox.no_computable_evalFixedPointFree
--- Statement: no computable fixed-point-free map on codes, so the wall lifts to the effective category.
+-- Statement: no computable map is EVAL-fixed-point-free — `eval (g c) ≠ eval c` cannot hold for
+-- every c. ⚠ LITERAL fixed-point-freeness is a different property and DOES occur on codes:
+-- `fun c => Code.pair c c` fixes nothing. The qualifier is in the declaration's own name.
 
 /-! ### § II. What computation DOES supply — the floors -/
 

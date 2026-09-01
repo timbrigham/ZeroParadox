@@ -40,7 +40,7 @@ says nothing in particular. The theorems consume the LAWS, not membership, so *"
 
 /-- The ZP-A algebraic structure: a join-semilattice with bottom.
     Corresponds to Axiom Block A (A1–A4) in ZP-A §1.1. -/
--- [ZP-CUSTOM] replaces: Mathlib SemilatticeSup + OrderBot | reason: Mathlib's semilattice hierarchy ties ⊔ to its order typeclass infrastructure (LE, Preorder) via hundreds of instances; importing it contaminates #print axioms with unrelated classical dependencies. ZPSemilattice states A1–A4 axiomatically from scratch so every theorem's axiom footprint is auditable.
+-- [ZP-CUSTOM] replaces: Mathlib SemilatticeSup + OrderBot | reason: Mathlib's SemilatticeSup + OrderBot would satisfy the algebra, and using them is cheap — measured 2026-08-30 at the pin, both classes are axiom-free and bot_sup_eq and sup_assoc cost [propext] only. ZPSemilattice states A1–A4 as FIELDS anyway, so each theorem's footprint is fixed by the axioms it consumes rather than by whichever hierarchy lemma the elaborator reached for. ⚠⚠ An AUDITABILITY choice, not an axiom-avoidance one: an IMPORT never changes a footprint, only USING a proof does — this file's own line 1 imports Mathlib.Tactic and the class measures clean.
 class ZPSemilattice (L : Type*) where
   join : L → L → L
   bot  : L
@@ -155,15 +155,22 @@ theorem state_sequence_monotone (S : ℕ → L) (hS : IsStateSequence S) :
   calc S n ⊔ (S n ⊔ α n) = (S n ⊔ S n) ⊔ α n := by rw [join_assoc]
     _ = S n ⊔ α n                               := by rw [join_idem]
 
-/-! ## R1 — No Top Element; Strict State Sequences -/
+/-! ## No Top Element (`HasNoTop`); Strict State Sequences
 
-/-- R1: L has no top element — every state has a strictly greater successor.
-    Algebraic expression of unbounded ascent: the framework never terminates. -/
+⚠ **NOT ZP-A's R1**, which is NO-SUBTRACTION (`scripts/build_zpa.py` Remark R1, exported there as
+"no subtraction / additive ontology"; `t_snap_irreversible` cites it that way). Cite `HasNoTop`
+and this file for the ORDER property. One label over two propositions is a citation nothing can
+check: both readings verify, of different claims.
+
+⚠ **`HasNoTop` is AVAILABILITY; `IsStrictStateSequence` is OCCURRENCE** — a next step existing is
+not a chain taking one. NO-GO gauge: `ZeroParadox/Valuation/SemilatticeInstance.lean` § Ib (DC-32). -/
+
+/-- `HasNoTop`: L has no top element — every state has a strictly greater successor.
+    The order CONDITION for unbounded ascent; it does not assert that any chain ascends. -/
 def HasNoTop (L : Type*) [ZPSemilattice L] : Prop :=
   ∀ x : L, ∃ y : L, le x y ∧ x ≠ y
 
-/-- A strict state sequence: monotone by T3 AND every step is a proper ascent.
-    Models a maximal ascending chain in a no-top lattice (R1 prevents stalling). -/
+/-- A strict state sequence: monotone by T3 AND every step is a proper ascent — the OCCURRENCE. -/
 def IsStrictStateSequence {L : Type*} [ZPSemilattice L] (S : ℕ → L) : Prop :=
   IsStateSequence S ∧ ∀ n, S n ≠ S (n + 1)
 

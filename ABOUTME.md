@@ -8,7 +8,7 @@ The entry point came from complex analysis. On the Riemann sphere — a way of v
 
 If zero and infinity are interchangeable under the simplest possible transformation, then zero is not just an absence. It has a counterpart, a mirror, a structural address. The question was what kind of mathematical rules would make that relationship not just visible but unavoidable — built into the metric rather than drawn on a picture.
 
-That question eventually led to the p-adic framework. But before the formal structure arrived, there was a simpler discomfort: you can add or subtract any number from zero and it remains zero. That symmetry felt too perfect. If zero could absorb arbitrary operations without changing, the number line was hiding something.
+That question eventually led to the p-adic framework. But before the formal structure arrived, there was a simpler discomfort: multiply zero by any number at all and it remains zero. No other number does that. If zero could absorb arbitrary operations without changing, the number line was hiding something.
 
 Most evenings, I would sit on the porch, letting the world quiet down while I worked through the problem. Every time I returned to zero, I found it behaving not as a placeholder but as a mechanism with its own internal logic. Those sessions were where the formal questions began to take shape.
 

@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.23 | August 2026
+Version 1.24 | August 2026
+v1.24: "choice enters only in the analytic realisations" was a universal negative and false: the category-theory face carries the framework's own bare `classical`, and `wem_of_fixedPointFree` - a choice-free taboo reduction - shows THAT dependence essential rather than incidental. Necessity is a SEPARATE axis from provenance: the second reduction, `em_of_wellOrder_comparable`, settles necessity for a dependence that is INHERITED, which is why inherited never meant removable. Same claim corrected in ZP-Q v1.9, the Choice-Free Core endnote v1.6, README, CLAIMS and AxiomProfile in one sweep - the previous round fixed one site and manufactured a self-contradiction, which is the defect this entry exists to not repeat.
 v1.23: two defects in ONE rendered p.4 sentence, both from the v1.22 fix. (1) The carrier phrase
 went in at the wrong POSITION here while all eight Lean sites got the clean order, so the
 publication site read 'no axioms over that M-type' - nearest-head parsing gives the meaningless
@@ -148,7 +149,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -281,7 +282,8 @@ def build():
         '&#8212; propositional extensionality and quotient soundness, the benign kernel axioms '
         'used throughout Mathlib. None depends on the Axiom of Choice. This is consistent with '
         'the choice-free core (see AxiomProfile.lean): the conceptual skeleton needs no choice; '
-        'choice enters only in the analytic realisations (Section II).',
+        'choice enters mostly in the analytic realisations (Section II) &#8212; not only there, since '
+        'the category-theory face carries the framework\'s own.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(6))

@@ -28,7 +28,34 @@ from reportlab.pdfbase.ttfonts import TTFont
 # ── Paths ─────────────────────────────────────────────────────────────────────
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
-FONT_DIR     = os.path.join(SCRIPT_DIR, 'fonts') + os.sep
+
+
+def _font_dir():
+    """The TTFs ship beside these scripts, in `scripts/fonts/`. One location, no fallback.
+
+    Published 2026-08-15 along with the de-mirroring. They were the last thing keeping these
+    scripts from being runnable by anyone who clones the repo: the code was public and the fonts
+    were not, so `scripts/` was source-visible but not usable. Both families are freely
+    redistributable and both licences ship beside them — `LICENSE-DejaVu.txt` (Bitstream Vera,
+    extracted from the font's own `name` table) and `LICENSE-STIXTwo-OFL.txt` (SIL OFL 1.1, the
+    canonical upstream text). The OFL requires the licence to travel with the binaries.
+
+    A brief two-branch fallback to `.claude-local/fonts/` existed between the de-mirroring and the
+    publication; it is gone, because a second location that can hold different bytes is the exact
+    mirror this layout was changed to eliminate.
+
+    Fail LOUDLY here rather than at the first `registerFont`, where the error is a bare IOError
+    naming one .ttf and saying nothing about why it is missing."""
+    cand = os.path.join(SCRIPT_DIR, 'fonts')
+    if os.path.isdir(cand):
+        return cand + os.sep
+    raise SystemExit(
+        "zp_utils: no font directory at %s\n"
+        "  The PDF builds need the DejaVu + STIX Two TTFs, which are tracked in this repo.\n"
+        "  If this is a clone, the checkout is incomplete." % cand)
+
+
+FONT_DIR = _font_dir()
 
 # ── Font registration ─────────────────────────────────────────────────────────
 # DejaVuSans: sans-serif UI elements (headings, table headers, footers, checkmarks)
@@ -545,8 +572,11 @@ def prose_check(text, name=''):
     for v in violations:
         print(v)
     print()
+    # This is the VOCABULARY gate; the line above is its whole remedy. A private-path pointer
+    # was removed here (a runtime error citing a file the reader cannot open is a dead end) and
+    # briefly replaced with the PALETTE gate's remedy, which `# ZP-NOCHECK` parsing cannot act
+    # on. Nothing replaces it: the correct instruction was already printed.
     print('  Fix the term or append  # ZP-NOCHECK: <reason>  to the call site.')
-    print('  See .claude-local/vocabulary_reference.md Section 1.')
     print('!' * 70)
     print()
     raise SystemExit(1)
@@ -807,7 +837,7 @@ def _palette_gate():
             print(v)
         print()
         print('  Each flagged line must end with:  # ZP-OVERRIDE: <reason here>')
-        print('  See .claude-local/PDF_Rendering_Standards.md §Palette Enforcement.')
+        print('  See scripts/PDF_Rendering_Standards.md §Palette Enforcement.')
         print('!' * 70)
         print()
         raise SystemExit(1)

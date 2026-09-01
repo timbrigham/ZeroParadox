@@ -1,7 +1,10 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.7 | July 2026
+Version 1.10 | July 2026
+v1.10: NOVELTY OVERCLAIM RETRACTED (bedrock). Two sites attributed novelty to a NAMED theorem - "resolves onto a new bottom" and "converging to a new bottom, cnf_encode_tower_tendsto_zero" - in the one chart where the corpus proves the opposite. The encodings converge to the floor they started from; snap_arc_z2_loop and tower_image_loops_to_seed both state it.
+v1.9: same universal negative as ZP-P v1.24 - "choice enters only in the analytic realisations" - corrected to "mostly ... not only there", naming the category-theory face as the framework's own. No other claim changed.
 
+v1.8: Section III's computability sentence restated. It said the genuine Lawvere fixed point arises "where the fixed-point-free diagonal is not computable", which invites the reading that no fixed-point-free computable endomap exists - c |-> pair(c, c) is one, total and computable. Now: the diagonal CONSTRUCTION is not admissible, removing the obstruction does not by itself supply the witness, and the fixed point is cited (Rogers, up to eval) rather than derived. No claim changed; the entry is recorded because the bump shipped without one.
 v1.7: VOCABULARY DECISION, recorded rather than deferred (adversary round-5 verification). The word "instance" was doing two jobs: the technical instance-of-a-theorem relation, and ZP-P's inherited tier-2 word for a per-domain realization. After v1.6 answered the universal question in the negative, the title-block note on page 1 and the endnote on page 7 gave opposite answers about the same two objects purely through that collision. DECISION: "instance" is reserved for the instance-of-a-theorem relation; a per-domain realization is a "realization" or a "face". Five rendered sites changed; no claim changed. Recorded here because the reviewer's warning is the real risk - leaving it undecided is how the underlying claim survived four rounds. The Lawvere-instance uses in Section III are the technical sense and stay.
 v1.6: BEDROCK, the v1.5 fix was UNSWEPT (adversary round 5). v1.5 corrected Section I to say NONE of the min=max facts is an instance of fork_collapse_iff, and left Section III and the endnote byte-identical to v1.1, where Section III answered its own headline question - 'one theorem all the instances are cases of?' - in the AFFIRMATIVE for catseam_is_frameflip, the very object Section I rules out by name, and the endnote called it an 'instance' outright. One PDF asserting and denying the same proposition eight pages apart, in the two places a skimmer lands. Section III now answers in the negative and keeps the true half (the theorem is universal over complete lattices; the faces do not satisfy its hypotheses); the endnote says 'face', not 'instance'. Also: the denial framing ('they were never the same map', 'the snap is a separate object') is replaced by the conjectural form per the new POV KIND/STATUS convention - the identification is held OPEN, not settled either way.
 v1.5: BEDROCK, the v1.4 fix was HALF-APPLIED (adversary round 4). v1.4 struck the eps0 half of the fork_collapse_iff instance claim and LEFT the other half: the rendered text still said selfApp_bot_is_both_extremal and the categorical seam are 'genuine instances'. They are not - fork_collapse_iff needs a complete lattice and a monotone map; ZPSemilattice is a bare join-semilattice whose selfApp is not an OrderHom, and the seam is in ModuleCat. So the repo was shipping a PDF asserting what its own four Lean docstrings call false. NONE of them is an instance; they share a shape, which across distinct structures is a type boundary.
@@ -26,7 +29,7 @@ rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.10'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -234,8 +237,9 @@ def build():
         'The frame-flip schema is choice-free. fork_is_frameflip and both duality lemmas depend only '
         'on [propext, Quot.sound] &#8212; propositional extensionality and quotient soundness, the '
         'benign kernel axioms used throughout Mathlib. None depends on the Axiom of Choice. As in '
-        'ZP-P, the conceptual skeleton needs no choice; choice enters only in the analytic '
-        'realisations (Section II). See AxiomProfile.lean.',
+        'ZP-P, the conceptual skeleton needs no choice; choice enters mostly in the analytic '
+        'realisations (Section II) &#8212; not only there, since the category-theory face carries the '
+        'framework&#8217;s own. See AxiomProfile.lean.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(6))
@@ -288,7 +292,7 @@ def build():
         'The valuation realization is the originating figure of the framework: the p-adic Riemann '
         'sphere. Under the tower-rank encoding (P8.lean) the &#969;-tower climbing to '
         '&#949;<sub>0</sub> has stage-encodings that converge to the 2-adic floor 0 = &#8869; &#8212; so in '
-        'that chart the ascent to &#949;<sub>0</sub> resolves onto a new bottom (the encodings converge '
+        'that chart the ascent to &#949;<sub>0</sub> resolves back onto the floor (the encodings converge '
         'to &#8869;; &#949;<sub>0</sub> &#8800; &#8869;). Viewed through the inversion rInv (the one-point '
         'compactification of &#8474;<sub>2</sub>, RiemannSphere.lean), the same encodings diverge to '
         '&#8734;. rInv is the homeomorphism that swaps the poles 0 &#8596; &#8734;.'))
@@ -309,7 +313,8 @@ def build():
         'Theorem: snap_is_frameflip (SnapFrameChange.lean)',
         [
             'The one &#969;-tower&#8217;s encodings have two limits, one per chart: they fall to the '
-            'floor 0 = &#8869; in the encoding chart (converging to a new bottom, '
+            'floor 0 = &#8869; in the encoding chart (converging to the floor itself &#8212; the SAME 0 they '
+            'started from, not a new one, '
             'cnf_encode_tower_tendsto_zero), and rise to the antipode &#8734; in the rInv chart '
             '(snap_frameflip_tower_tendsto_infty), with rInv the frame-change swapping the poles '
             '(rInv_swaps: 0 &#8596; &#8734;). The encodings converge to &#8869;; &#949;<sub>0</sub> &#8800; &#8869;.',
@@ -409,8 +414,11 @@ def build():
             '&#8212; Cantor forbids it (nontrivial_lattice_no_witness, q2_no_witness) &#8212; so '
             'the lattice and 2-adic bottoms share the diagonal <i>shape</i> but are provably NOT '
             'literal Lawvere instances. Only in the <b>effective</b> category is there a genuine '
-            'one, where the fixed-point-free diagonal is not computable '
-            '(computability_face_fixedPoint, Kleene&#8217;s recursion theorem). So the keystone '
+            'one, where the fixed-point-free <i>diagonal construction</i> is not admissible '
+            '&#8212; which is not the claim that no fixed-point-free computable endomap exists, since '
+            'c &#8614; pair(c, c) is one; removing the obstruction does not by itself supply the '
+            'witness, and the fixed point is cited rather than derived '
+            '(computability_face_fixedPoint). So the keystone '
             'unifies a shape, not a single mechanism.',
         ]
     ))

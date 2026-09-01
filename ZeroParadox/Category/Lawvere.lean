@@ -109,43 +109,28 @@ theorem q2_no_witness : ¬ HasLawvereWitness ℚ_[2] :=
 
 /-! ## § V. The computability face — a GENUINE fixed point, in a different category
 
-    Here the verdict flips, and the reason is the **category**. The failure above is in **Set** (raw
-    types, *all* endofunctions): a witness would force every endo to have a fixed point, impossible by
-    Cantor. The computability face lives in the **effective** setting, where "endomap" means *computable*
-    endomap — and the fixed-point-free diagonal (the `g` Cantor builds) is **not computable**, so the
-    obstruction vanishes. Mathlib's `Nat.Partrec.Code.fixed_point` (Rogers / Kleene's recursion theorem)
-    is exactly this: *every computable* self-map on codes has a fixed point. This is ZP-K's face (the
-    Kleene quine), and it is a genuine diagonal-produced fixed point. -/
+    The verdict flips, and the reason is the **category**. § IV's failure is in **Set**; here
+    "endomap" means *computable*, and `Nat.Partrec.Code.fixed_point` gives every such map a fixed
+    point **up to `eval`**.
+    ⚠ The qualifier is load-bearing: the literal claim is FALSE here too, since
+    `fun c => Code.pair c c` is total, computable, and returns its own input for no `c`. The escape
+    restricts which MORPHISMS exist, not which codomain `eval` lands in
+    (`no_computable_evalFixedPointFree`). Argument: `ZeroParadox/Category/Lawvere.md`. -/
 
-/-- **Computability face (genuine instance).** Every *computable* self-map on codes has a fixed point —
-    Rogers' fixed-point / Kleene's recursion theorem (`Nat.Partrec.Code.fixed_point`). The escape from
-    the Cantor obstruction is computability: the fixed-point-free diagonal is not a computable endomap. -/
+/-- `Statement:` a fixed point **up to `eval`**, not a literal one (Rogers / Kleene).
+    ⚠ `fun c => Code.pair c c` is a total computable endomap fixing no `c`; the escape is fewer
+    MORPHISMS, not a different codomain (`no_computable_evalFixedPointFree`, § V). -/
 theorem computability_face_fixedPoint {f : Nat.Partrec.Code → Nat.Partrec.Code} (hf : Computable f) :
     ∃ c, Nat.Partrec.Code.eval (f c) = Nat.Partrec.Code.eval c :=
   Nat.Partrec.Code.fixed_point hf
 
-/-! ## § VI. The completeness verdict (the face table, machine-checked where it can be)
+/-! ## § VI. The completeness verdict — the face table
 
-    | Face                         | self-map        | In **Set** (all endos) | Status                        |
-    |------------------------------|-----------------|------------------------|-------------------------------|
-    | lattice / abstract (selfApp) | `selfApp`       | NO witness — posited   | `nontrivial_lattice_no_witness` ✓ |
-    | set theory (Quine atom)      | x ↦ {x}         | (= lattice; metatheoretic literal) | via the lattice ✓ |
-    | 2-adic (×2 in ℚ₂)            | x ↦ 2x          | NO witness — posited   | `q2_no_witness` ✓             |
-    | computability (Kleene quine) | computable endo | n/a — lives in **effective**, not Set | `computability_face_fixedPoint` ✓ (genuine) |
-
-    **The honest verdict:** the test is *category-relative*. In **Set** (raw types, all endofunctions),
-    **no** face is a Lawvere fixed point — Cantor forbids the witness for every nontrivial total type
-    (lattice and 2-adic proven; set theory is the lattice case, its literal ⊥={⊥} metatheoretic). The
-    computability face is a **genuine** Lawvere/recursion fixed point, but it lives in the **effective**
-    category, where computability removes the fixed-point-free diagonal.
-
-    So the keystone unifies a **shape** (the diagonal), not a single mechanism: the total faces carry a
-    *posited* fixed point that shares the diagonal shape; the computability face carries a fixed point
-    that is *genuinely produced* by the diagonal — in its own category. The cross-face identification is
-    a shared *shape* (the diagonal), confirmed precise; it is **not** a cross-category object identity
-    (that reading is retired as ill-typed — MC-1 names the bottom family, members provably distinct), and
-    **not** a single-mechanism theorem, and the lattice/2-adic faces are *provably not* Set-level Lawvere instances. This is the
-    sharpened, partly-proven replacement for the bare Tier-6 conjecture. -/
+**All four faces fail the Set test identically**: `Code` is a nontrivial total type, so
+`no_witness_of_nontrivial` forbids the witness there exactly as for the lattice and the 2-adics. What
+distinguishes the computability row is the SECOND category it also lives in, never its Set verdict.
+⚠ The keystone unifies a **shape**, not a mechanism, and not a cross-category identity. Table,
+verdict and fences: `ZeroParadox/Category/Lawvere.md`. -/
 
 end ZeroParadox
 

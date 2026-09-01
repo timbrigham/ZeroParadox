@@ -48,11 +48,13 @@ open Order Ordinal
 universe u
 
 /-- **The required attributes of a separated generating succession** (class X): a carrier, a separation
-    relation `sep` (the apartness consecutive instances satisfy), an ℕ-indexed succession `seq`, and the
-    law that consecutive terms are always separated. The ordinal ε-chain and the Hilbert state-chain are
+    relation `sep` (the apartness consecutive instances satisfy), an ℕ-indexed succession `seq`, the
+    law that consecutive terms are always separated, and — the field carrying the content —
+    `sep_irrefl_on_seq`, without which the structure is exactly `Nonempty`. The ordinal ε-chain and the Hilbert state-chain are
     each a known implementation. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: an interface bundling a carrier with a separation relation and
--- an ℕ-indexed succession whose consecutive terms are separated. Mathlib has chains and apartness
+-- an ℕ-indexed succession whose consecutive terms are separated, and sep_irrefl_on_seq — no term
+-- separated from itself — without which the interface is exactly Nonempty. Mathlib has chains and apartness
 -- relations separately but no bundled "separated succession" interface used to bridge differently-typed
 -- framework charts (ordinal strict-order vs Hilbert orthogonality) as implementations of one shape.
 structure SeparatedSuccession where

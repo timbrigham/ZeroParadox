@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.0 | July 2026
+Version 1.1 | July 2026
 v1.0: Initial release. Addendum to ZP-R. The COMPLETE roster of the self-referential / diagonal
 relationship at the bottom element ⊥, organized by the μ/ν fork: wall faces (self-reference cannot
 close — no fixed point) and floor faces (self-reference closes — a fixed point exists). Supersedes the
@@ -12,7 +12,7 @@ cited; the delta is the axiom-free formalization and the tie to ⊥. Follows scr
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -188,7 +188,8 @@ def build():
     E.append(result_box(
         'The Kleene quine (Lawvere.lean) &#8212; the computability floor',
         [
-            'computability_face_fixedPoint: every computable self-map on codes has a fixed point &#8212; '
+            'computability_face_fixedPoint: every computable self-map on codes has a fixed point '
+            '<i>up to eval</i> &#8212; two codes computing the same function, not a literal one &#8212; '
             'Kleene\'s recursion theorem, the reflexive object of the computable category (the crossing '
             'realized in ZP-R). This is the one face where the fixed point is genuinely Lawvere-sourced.',
             'Lean purity: [propext, Classical.choice, Quot.sound] &#8212; Mathlib recursion theory. ✓',

@@ -18,7 +18,7 @@ layout: null
     --self:#e0a94a;   /* wall-shape: self-application (Cantor / Foundation)   */
     --limit:#5fbfd0;  /* wall-shape: limit-from-below (density / notation)    */
     --seam:#b493e0;   /* wall-shape: cross-frame identity (the seam / MC-1)   */
-    --gen:#e6cf7a;    /* generation (epsilon-0, the ceiling the floor builds) */
+    --gen:#e6cf7a;    /* generation (epsilon-0 - the minimum step off the floor; never the floor, never 0) */
     --wither:#7d7266; /* the reals - the branch where the snap fails          */
     --mu:#e58aa8;     /* dynamics (level 1): mu source / build-up             */
     --nu:#6f8fe0;     /* dynamics (level 1): nu sink / limit                  */
@@ -192,7 +192,7 @@ layout: null
       <!-- ================= CROWN : epsilon-0 ================= -->
       <circle cx="500" cy="82" r="7" fill="var(--gen)" filter="url(#nodeglow)"/>
       <circle cx="500" cy="82" r="7" fill="var(--gen)"/>
-      <text class="crown-name" x="500" y="60" text-anchor="middle">&#949;<tspan dy="4" font-size="12">0</tspan><tspan dy="-4"> &#8212; the ceiling</tspan></text>
+      <text class="crown-name" x="500" y="60" text-anchor="middle">&#949;<tspan dy="4" font-size="12">0</tspan><tspan dy="-4"> &#8212; min &#8801; max</tspan></text>
 
       <!-- ================= SEAM : Hilbert zero object (mu = nu, VOID = SELF) ================= -->
       <circle cx="500" cy="152" r="8.5" fill="none" stroke="var(--seamnode)" stroke-width="2.6"/>
@@ -247,7 +247,7 @@ layout: null
       <circle cx="500" cy="558" r="11" fill="none" stroke="var(--seamnode)" stroke-width="2.8"/>
       <circle cx="500" cy="558" r="4.5" fill="var(--seamnode)" filter="url(#nodeglow)"/>
       <circle cx="500" cy="558" r="4.5" fill="var(--seamnode)"/>
-      <text class="seam-name" x="500" y="542" text-anchor="middle" style="font-size:16px">the seam &#183; t_exec</text>
+      <text class="seam-name" x="500" y="542" text-anchor="middle" style="font-size:16px">the seam &#183; t_exec_triple_iff</text>
       <text class="seam-inst" x="500" y="581" text-anchor="middle">Quine atom &#8869;={&#8869;} = order &#8869; = join-identity &#183; axiom-free</text>
       <text class="seam-inst" x="500" y="595" text-anchor="middle" style="fill:var(--seamnode); opacity:.9">&#956; = &#957; &#183; the diagonal fixed point every field instantiates</text>
 
@@ -304,13 +304,13 @@ layout: null
     <div class="lg"><span class="sw" style="background:var(--self)"></span><span class="t">Self-application wall<small>Cantor / Foundation &#8212; the diagonal blocked</small></span></div>
     <div class="lg"><span class="sw" style="background:var(--limit)"></span><span class="t">Limit-from-below wall<small>density / a notation that can't name its own limit</small></span></div>
     <div class="lg"><span class="sw" style="background:var(--seam)"></span><span class="t">Cross-frame identity wall<small>identification BLOCKED (MC-1): Markov, probability</small></span></div>
-    <div class="lg"><span class="sw" style="background:var(--seamnode)"></span><span class="t">The &#956;=&#957; seam<small>where identity HOLDS: root t_exec, upper Hilbert &#8212; not a wall</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--seamnode)"></span><span class="t">The &#956;=&#957; seam<small>where identity HOLDS: root t_exec_triple_iff, upper Hilbert &#8212; not a wall</small></span></div>
     <div class="lg"><span class="sw ring"></span><span class="t">VOID / SELF (local)<small>the Foundation/AFA fork: empty &#8709; vs self-containing &#8869;={&#8869;}</small></span></div>
     <div class="lg"><span class="sw" style="background:linear-gradient(135deg,var(--mu),var(--nu))"></span><span class="t"><span style="color:var(--mu)">&#956; source &#8593;</span> / <span style="color:var(--nu)">&#957; sink &#8595;</span><small>level 1: departs from &#8869; vs settles to &#8869;</small></span></div>
     <div class="lg"><span class="sw dash"></span><span class="t">The withered branch<small>the reals &#8212; where the snap provably fails</small></span></div>
   </div>
 
-  <p class="fence"><b>Three levels, tip to root.</b> <b>Level 1</b> is dynamics: a bottom is a source (&#956;, structure departs from it) or a sink (&#957;, orbits settle into it). <b>Level 2</b> is the shape of its wall &#8212; self-application, limit-from-below, or cross-frame identity. Each wall-shape appears on <em>both</em> the &#956; and &#957; side, which is what makes it a real second axis and not a re-drawing of the first. <b>Level 3</b> is the field itself. VOID and SELF &#8212; empty &#8709; against self-containing &#8869;={&#8869;} &#8212; are the Foundation/AFA fork, a local mark, not a level; they coincide only at the Hilbert seam. At the <b>root</b> sits <b>t_exec</b> &#8212; the axiom-free identity Quine atom = order &#8869; = join-identity, the diagonal fixed point every field instantiates. It is the seam the whole tree grows from, deeper than any single field's zero object; that it is the one seam everything runs on is the interpretation, the axiom-free identity is the proof.</p>
+  <p class="fence"><b>Three levels, tip to root.</b> <b>Level 1</b> is dynamics: a bottom is a source (&#956;, structure departs from it) or a sink (&#957;, orbits settle into it). <b>Level 2</b> is the shape of its wall &#8212; self-application, limit-from-below, or cross-frame identity. Each wall-shape appears on <em>both</em> the &#956; and &#957; side, which is what makes it a real second axis and not a re-drawing of the first. <b>Level 3</b> is the field itself. VOID and SELF &#8212; empty &#8709; against self-containing &#8869;={&#8869;} &#8212; are the Foundation/AFA fork, a local mark, not a level; they coincide only at the Hilbert seam. At the <b>root</b> sits <b>t_exec_triple_iff</b> &#8212; the identity self-containing element = order &#8869; = join-identity, axiom-free in the kernel and holding within a single carrier whose <code>AFAStructure</code> instance supplies the self-containment, the diagonal fixed point every field instantiates. It is the seam the whole tree grows from, deeper than any single field's zero object; that it is the one seam everything runs on is the interpretation, the axiom-free identity is the proof.</p>
 
   <p class="fence"><b>What is drawn vs. what is claimed.</b> Every placement is checkable: the branches are a bottom's dynamics direction and the proved shape of its wall. The trunk &#8212; the infinitude, 0 = &#8734; &#8212; is the interpretation: apophatic, never grasped un-shaped, so it is drawn as light that fades before it resolves. The tree claims one thing past a flat family &#8212; a common root &#8212; and that root lives only here.</p>
 
@@ -324,7 +324,7 @@ layout: null
       ['&#956; source &#8593;','&#8869; departs to the first structured state &mdash; <code>t_snap_derived</code>'],
       ['self-application wall','the lattice has no diagonal self-witness &mdash; <code>nontrivial_lattice_no_witness</code>'],
       ['what it is','the order floor: least element = join-identity'],
-      ['identity','order &#8869; = Quine atom = join-identity, axiom-free &mdash; <code>t_exec</code>']],
+      ['identity','order &#8869; = the self-containing element = join-identity &mdash; <code>t_exec_triple_iff</code>, axiom-free in the kernel, with the self-containment supplied by the <code>AFAStructure</code> instance']],
       chk:'t_snap_derived'},
     information: {t:'information', c:'--limit', why:[
       ['&#956; source &#8593;','snaps off the machine&#8217;s zero state c&#8320; (ZP-E bridge) &mdash; <code>t_snap_derived</code>'],
@@ -357,19 +357,19 @@ layout: null
       ['cross-frame wall','no measure-preserving map onto it from the attractor &mdash; <code>no_mp_attractor_to_markov</code>'],
       ['what it is','the stationary distribution of a random walk &mdash; <code>exists_stationary</code>']],
       chk:'no_mp_attractor_to_markov'},
-    seam: {t:'the seam &#183; t_exec', c:'--seamnode', why:[
-      ['&#956; = &#957; (the root)','source and sink coincide: the diagonal fixed point &mdash; <code>selfApp_fp_set_eq_singleton</code>'],
-      ['axiom-free identity','Quine atom &#8869;={&#8869;} = order &#8869; = join-identity &mdash; <code>t_exec</code> (no axioms)'],
+    seam: {t:'the seam &#183; t_exec_triple_iff', c:'--seamnode', why:[
+      ['&#956; = &#957; (the root)','source and sink coincide: the diagonal fixed point &mdash; <code>selfApp_bot_is_both_extremal</code> (the coincidence itself; <code>selfApp_fp_set_eq_singleton</code> gives uniqueness of the fixed point, which is a different claim)'],
+      ['the identity','the self-containing element = order &#8869; = join-identity &mdash; <code>t_exec_triple_iff</code>, no kernel axioms; the self-containment is a field of the <code>AFAStructure</code> instance, and the literal &#8869;={&#8869;} is proved nowhere'],
       ['why the root','the purest self-reference; everything else is built on it, with more axioms'],
       ['interpretation','&#8220;the one seam everything runs on&#8221; is the diagonal-fixed-point reading, not a proved unification']],
-      chk:'t_exec'},
+      chk:'t_exec_triple_iff'},
     hilbert: {t:'the upper seam &#183; Hilbert', c:'--seamnode', why:[
       ['&#956; = &#957; (concrete)','the zero object: initial and terminal at once &mdash; <code>hilbert_bottom_isZero</code>'],
       ['VOID = SELF','the one place the empty and self-containing faces meet &mdash; <code>biprod_diagonal_only_zero</code>'],
-      ['not the root','one concrete category&#8217;s zero object, an upper rejoining &mdash; not the axiom-free t_exec']],
+      ['not the root','one concrete category&#8217;s zero object, an upper rejoining &mdash; not the axiom-free t_exec_triple_iff']],
       chk:'hilbert_bottom_isZero'},
-    crown: {t:'&#949;&#8320; &#183; the ceiling', c:'--gen', why:[
-      ['generation','the floor generates the ceiling: &#949;&#8320; = closure of 0 under &#969;^&#183; &mdash; <code>epsilonZero_eq_nfp</code>'],
+    crown: {t:'&#949;&#8320; &#183; min &#8801; max', c:'--gen', why:[
+      ['generation','the floor generates the tower above it: &#949;&#8320; is the least fixed point of &#969;^&#183; seeded at the base, and equally that tower&#8217;s supremum &mdash; <code>epsilon0_min_eq_max</code>'],
       ['the snap-arc','0 &#8594; &#949;&#8320;, co-witnessed with the 2-adic limit and the machine snap &mdash; <code>zpm_triangle</code>']],
       chk:'epsilonZero_eq_nfp'},
     reals: {t:'the real numbers', c:'--wither', why:[
@@ -380,13 +380,13 @@ layout: null
       ['dynamics &#8593;','structure departs from &#8869; irreversibly &mdash; a source &mdash; <code>t_snap_derived</code>'],
       ['the build-up side','least fixed point / inductive / well-founded &mdash; where generation starts'],
       ['who lives here','order, information, probability'],
-      ['the dual','&#956; and &#957; are the two poles of the self-dual 0=&#8734;, swapped by inversion z &#8614; 1/z &mdash; <code>rInv_swaps</code> &mdash; and coincide at the seam']],
+      ['the dual','&#956; and &#957; are the two poles of the self-dual 0=&#8734;, exchanged by inversion z &#8614; 1/z (<code>rInv_swaps</code>, which proves the exchange and leaves them distinct); where they meet is the seam']],
       chk:'t_snap_derived'},
     nu: {t:'&#957; &#183; the sink pole', c:'--nu', why:[
       ['dynamics &#8595;','orbits converge to &#8869; &mdash; a sink &mdash; <code>contraction_orbit_tendsto_zero</code>'],
       ['the limit side','greatest fixed point / coinductive / non-well-founded &mdash; the limit reached'],
       ['who lives here','p-adic, topology, Markov, computability'],
-      ['the dual','&#957; and &#956; are the two poles of the self-dual 0=&#8734;, swapped by inversion z &#8614; 1/z &mdash; <code>rInv_swaps</code> &mdash; and coincide at the seam']],
+      ['the dual','&#957; and &#956; are the two poles of the self-dual 0=&#8734;, exchanged by inversion z &#8614; 1/z (<code>rInv_swaps</code>, which proves the exchange and leaves them distinct); where they meet is the seam']],
       chk:'contraction_orbit_tendsto_zero'}
   };
   var title=document.getElementById('wcTitle'),

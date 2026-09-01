@@ -1,0 +1,76 @@
+name: Verification suite
+
+# VERIFICATION_BUILDOUT Phase 3 — publish what the deterministic checkers found.
+#
+# WHY THIS EXISTS. Every checker in tools/verify/ ran only on one machine, at commit and push time.
+# A bypassed local gate is invisible, and that has happened here. CI is the only place a check is
+# evidence rather than assertion — which is the buildout's opening sentence: "run those checks in
+# public CI so nobody takes our word for it."
+#
+# REPORT-ONLY, DELIBERATELY. This job does not block a merge. Phase 4 makes it a required status
+# check via branch protection on `main`, which is a separate GitHub setting from running the
+# workflow.
+#
+# ⚠ THE CODE CHANGE IS NOT JUST ADDING `--block`, AND THIS COMMENT CLAIMED IT WAS UNTIL
+# 2026-08-15. Measured here, with no Mathlib present: `ci_report.py --block` exits 0 while
+# `check_paths.py` is rendered **skipped**, and any checker returning 3 is scored the same way.
+# Flipping the switch today would make a green REQUIRED check out of a gate that never ran.
+# See the prerequisites in tools/verify/ci_report.py's header before attempting Phase 4.
+#
+# ⚠ This workflow could not have existed before 2026-08-15. The checkers lived in gitignored
+# `.claude-local/`, and CI cannot run a file that is not in the repository. Relocating them to
+# tools/verify/ was the prerequisite, which the buildout sequenced AFTER this phase without
+# noticing the dependency.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/verify/**'
+      - 'ZeroParadox/**/*.lean'
+      - 'scripts/**'
+      - '**/*.md'
+      - 'register.md'
+      # Without these the workflow never re-runs when the thing it publishes changes.
+      - '.github/workflows/verify.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tools/verify/**'
+      - 'ZeroParadox/**/*.lean'
+      - 'scripts/**'
+      - '**/*.md'
+      - 'register.md'
+      - '.github/workflows/verify.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run the deterministic checkers and publish the result
+        env:
+          # The report prints corpus prose containing the framework's glyphs. Without this the
+          # runner picks an ASCII codec for a redirected stream and the step dies on a bottom sign
+          # — a crash that looks like a checker failure and says nothing about the corpus.
+          PYTHONIOENCODING: utf-8
+        run: |
+          # No pipe, no tee, no grep. ci_report.py writes GITHUB_STEP_SUMMARY itself and every
+          # verdict inside it is a subprocess exit code. The buildout records three fail-opens in
+          # an earlier CI report that all came from deciding success by reading log text; there is
+          # nothing here to parse.
+          #
+          # This step DOES fail if ci_report.py itself crashes. That is intended: a reporter that
+          # died has not verified anything, and a green tick on a crashed reporter is the exact
+          # false zero this suite exists to prevent. It does NOT fail on a checker finding — that
+          # is Phase 4 — and see this file's header: that flip is NOT just adding `--block`.
+          python tools/verify/ci_report.py

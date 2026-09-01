@@ -8,16 +8,26 @@ as a warning. So the page cannot link a witness the Lean does not contain.
 
 Assumes the output .md lives at the REPO ROOT (relative links point into `ZeroParadox/`).
 
-MAP data (CELLS/SLOTS) is imported from build_bottom_matrix.py, an internal companion generator kept in
-the private working folder and not mirrored to scripts/; this file is the one that emits the public page.
+MAP data (CELLS/SLOTS) is imported from build_bottom_matrix.py, the data module beside this one in
+`scripts/`; this file is the one that emits the public page. Both are tracked, so a clone can
+regenerate BOTTOMELEMENT.md -- which was NOT true before 2026-08-29, when the data module was
+gitignored and this generator could only fail with an explanation.
 
-Run:  python .claude-local/build_dictionary_map.py   (active copy; also mirrored read-only to scripts/)
+Run:  python scripts/build_dictionary_map.py   (this folder is its only home since 2026-08-15)
 Out:  BOTTOMELEMENT.md at the repo root   (Mermaid + relative links render on GitHub)
 """
 import sys, os, re
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, os.path.dirname(__file__))
+# The CELLS data module sits beside this one in `scripts/`, so a clone can regenerate the page.
+# ⚠ IT DID NOT USED TO. Until 2026-08-29 `build_bottom_matrix.py` lived in gitignored
+# `.claude-local/`, which meant a PUBLISHED artifact had a source nobody outside this machine could
+# run, and this import existed only to fail with a polite explanation. That is the shape R-SCRIPTS
+# retired the script mirror over: published output, private source, outside the integrity check,
+# drifting unnoticed. It also slipped R-SCRIPTS' own test for a private-only script -- "emits no
+# tracked artifact" -- because it does not EMIT `BOTTOMELEMENT.md`, it SUPPLIES its content, and
+# those are different verbs.
 from build_bottom_matrix import CELLS, SLOTS, classify, GLYPH, dyn_glyph
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -385,7 +395,7 @@ def render_witnesses(names):
 SLOT_GLOSS = {
     "CANT":  "**cannot-have** - what ⊥ provably is NOT (its exclusions)",
     "NARR":  "**narrow** - ⊥ is a single, unique point",
-    "MEAS":  "**measure** - some quantity becomes infinite exactly at ⊥",
+    "MEAS":  "**measure** - some quantity becomes infinite at ⊥, and in ℚ₂ exactly there",
     "INV":   "**inversion** - the map z↦1/z swaps ⊥ (which is 0) with infinity (the two poles of a Riemann sphere)",
     "CONC":  "**concurrency** - applying ⊥'s own operation returns ⊥ unchanged (a fixed point: operation and result coincide)",
     "SELF":  "**self-reference** - ⊥ is defined by referring to itself (a self-reproducing / self-containing object)",
@@ -413,7 +423,7 @@ TERMS = [
     ("μ / ν", "least fixed point (μ, built up from the floor) vs greatest fixed point (ν, closed down)"),
     ("Quine atom / Kleene quine", "a self-containing set (x = {x}) / a program that prints itself"),
     ("the snap", "the framework's discrete jump off ⊥ into the first structured state"),
-    ("ε₀", "the fixed point of omega-to-the-power reached from 0 - both min and max at once (epsilon0_min_eq_max): the least such fixed point (the minimum closure, a floor in the fixed-point order) and the supremum of the ascending tower (a ceiling) - never only a ceiling"),
+    ("ε₀", "the fixed point of omega-to-the-power reached from 0 - both min and max at once (`Statement:` COINCIDENCE, epsilon0_min_eq_max): the least such fixed point (the minimum closure, a floor in the fixed-point order) and the supremum of the ascending tower (a ceiling) - never only a ceiling"),
     ("v₂ → ∞", "the 2-adic valuation going to infinity at 0 (0 is infinitely divisible by 2)"),
 ]
 
@@ -448,9 +458,16 @@ APOPHATIC = [
 # --- Dictionary: positive handles.  (slot, aspect, characterization, [witness names]) ---
 POSITIVE = [
     ("narrow", "noun", "the single, unique pinned point", ["q2_unique_fp", "fB_bottom_is_limit"]),
-    ("measure", "noun", "a quantity that becomes infinite exactly at ⊥", ["t2_diverges", "addVal_bot"]),
-    ("inversion", "verb", "the 0 = ∞ pole: the map z↦1/z swaps 0 and infinity",
-     ["rInv_swaps", "inversion_reverses_filtration"]),
+    ("measure", "noun", "a quantity that becomes infinite at ⊥ - in ℚ₂ exactly there and nowhere else", ["t2_diverges", "padic_addVal_eq_top_iff"]),
+    # ⚠ `inversion_reverses_filtration` was cited here beside the pole naming until 2026-08-29. It is
+    # ℤ-valued and EXCLUDES zero from both sides, and `BottomCannotBe.lean` says so in terms: it
+    # "carries NO literal 0=∞ content". The authoritative index was right and this derivative was
+    # stale, which is the half-fix class running in its nastiest direction. `rInv_swaps` stays,
+    # cited for the EXCHANGE, which is exactly what it proves; the disequality is in
+    # `point_and_field_at_the_poles`, per that same index.
+    ("inversion", "verb", "`Statement:` INVERSION - the two poles, named the 0 = ∞ pole: the map "
+     "z↦1/z EXCHANGES 0 and infinity, which leaves them distinct",
+     ["rInv_swaps", "point_and_field_at_the_poles"]),
     # `Statement:` COINCIDENCE - `selfApp_bot_is_both_extremal` proves ⊥ is simultaneously the
     # LEAST and the GREATEST fixed point of `selfApp`, i.e. both readings of one object at once
     # (the μ=ν seam). Tag emitted from here because the page is generated: hand-patching the
@@ -460,8 +477,8 @@ POSITIVE = [
      ["unique_fp", "selfApp_bot_is_both_extremal"]),
     ("self-reference", "hinge", "the self-reproducing / self-containing fixed point (Quine / Kleene)",
      ["kleene_quine_is_bot", "quine_period_is_goedel"]),
-    ("generation", "verb", "the floor generates the ceiling (ε₀ = the closure of 0 under omega-to-the-power)",
-     ["epsilonZero_eq_nfp"]),
+    ("generation", "verb", "the floor generates the tower above it (ε₀ is the least fixed point of α ↦ ω^α seeded at the base, and equally that tower's supremum)",
+     ["epsilon0_min_eq_max", "epsilonZero_eq_nfp"]),
     ("dynamics", "verb", "⊥'s one-way approach and departure - two sub-senses: **inbound** (↓, orbits converge *to* ⊥ - a sink) and **outbound** (↑, structure departs *from* ⊥ irreversibly - a source); ↕ = both, only at a seam (μ=ν)",
      ["contraction_orbit_tendsto_zero", "t_snap_derived", "c3_irreversible", "fC_no_return"]),
 ]
@@ -531,7 +548,7 @@ def render_construction_gloss():
     return render_table([[c, g] for c, g in CONSTRUCTION_GLOSS.items()], ["construction (map row)", "what it means"])
 
 def render_terms():
-    return render_table([[t, g] for t, g in TERMS], ["term", "plain meaning"])
+    return link_in_text(render_table([[t, g] for t, g in TERMS], ["term", "plain meaning"]))
 
 def render_map():
     keys = [k for k, _ in SLOTS]
@@ -553,6 +570,63 @@ def link_in_text(text):
             return link_witness(name)      # a MENTION in prose - no kind note; see annotate_witness
         return name
     return _TOKEN.sub(repl, text or "")
+
+def render_state_legend():
+    """The cell-state vocabulary, COMPUTED from the live marks.
+
+    ⚠ THIS IS GENERATED BECAUSE THE HAND-WRITTEN VERSION WENT WRONG AND STAYED WRONG. The retired
+    companion page listed `? open probe` among the states and concluded that the matrix's value lay
+    in "the questions and the news" -- while the live data holds ZERO `?` cells, and omitted `≝`,
+    which four cells use. A legend that enumerates by hand is a count in prose, which R-ADJACENT
+    already bans; computing it means a state with no cells cannot be advertised and a state in use
+    cannot be dropped."""
+    # ⚠ `classify` returns a TUPLE `(status, text)`, not a status string. Keying on the tuple made
+    # every lookup miss and rendered the legend EMPTY on the first attempt, which is the failure a
+    # computed legend is supposed to make impossible -- so it is worth the comment.
+    # ⚠ DYN IS EXCLUDED. Its column uses DIRECTION glyphs (↓ ↑ ↕), a different vocabulary from the
+    # five states, and counting it here would report a direction as though it were a status.
+    # ⚠⚠ COUNT WHAT THE TABLE RENDERS, NOT WHAT THE DATA SAYS. The first version counted
+    # `classify()`, the DATA vocabulary, while the map renders `cell_mark()`, the GLYPH vocabulary --
+    # and `cell_mark` splits `go` into `✓` (a proved theorem) and `≝` (a definitional witness, which
+    # is an established result and NOT a weaker one). So the legend printed "✓ established (34)"
+    # directly above a table showing 30, and dropped `≝` entirely -- the exact omission this
+    # function's docstring cites as its reason for existing. Both round-3 gates caught it
+    # independently. Counting the rendered mark is the only unit that cannot drift from the table.
+    live = {}
+    for d in CELLS.values():
+        for k, _ in SLOTS:
+            if k == "DYN":
+                continue
+            v = d.get(k)
+            if v is None:
+                continue
+            mark = cell_mark(v, k).strip()
+            live[mark] = live.get(mark, 0) + 1
+    # Keyed by the RENDERED glyph, so a mark the table can draw always has a row here.
+    meaning = {
+        "✓":  ("established", "a sorry-free Lean witness"),
+        "≝":  ("definitional", "the witness is a `def` whose type is not a proposition, because an "
+               "initiality witness must CARRY the mediating morphism. ⚠ An established result, never "
+               "a weaker one"),
+        "✓*": ("conditional", "holds under a modelling commitment or bridge, or is cited from a library"),
+        "✗":  ("refuted", "a *proved obstruction* - the aspect provably fails here"),
+        "∅":  ("n/a, structural", "not a gap: either a category error (a ν-object asked for a "
+               "μ-property; a bare order asked for a metric), or the property holds only "
+               "DEGENERATELY and carries no content about this bottom"),
+        "?":  ("open probe", "genuinely unknown, worth pursuing"),
+    }
+    rows, unknown = [], []
+    for key, n in sorted(live.items(), key=lambda kv: -kv[1]):
+        if key not in meaning:
+            unknown.append(key)
+            continue
+        label, gloss = meaning[key]
+        rows.append("- **%s %s** (%d) - %s." % (key, label, n, gloss))
+    if unknown:
+        # Fail LOUD rather than silently dropping a state, which is the defect this replaces.
+        raise SystemExit("render_state_legend: table renders mark(s) with no legend row: %r" % unknown)
+    return "\n".join(rows)
+
 
 def render_cell_details():
     """Collapsible per-cell reasoning: glyph + the reason/witness behind every mark (witnesses auto-linked)."""
@@ -597,13 +671,13 @@ def render_rosetta():
 
 One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each coincidence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
-**Proved, with one commitment - the same element.** In any Kleene-structured ZP lattice, the *Quine atom* (a set that is its own only member, set theory / AFA), the *order-bottom* ⊥, and the *algebraic join-identity* are proved to be the **same element** - the three-name core, **axiom-free** (t_exec). The fourth name, the *Kleene fixed point* (a program that reproduces itself, computability), is *joined* to the other three by an explicit structural commitment: the KleeneStructure typeclass names the computational fixed point as the same role - the motivating commitment, not a derived theorem. So the set that is its own only member is identified with the program that prints itself by that commitment, not proved equal. The computational witness rests on Mathlib's recursion theorem, which carries `Classical.choice`; the three-name core needs none.
+**Proved, with one commitment - the same element.** In any ZP lattice carrying an AFA structure, the *Quine atom* (a set that is its own only member, set theory / AFA), the *order-bottom* ⊥, and the *algebraic join-identity* are proved to be the **same element** - the three-name core, **axiom-free** (t_exec_triple_iff). The fourth name, the *Kleene fixed point* (a program that reproduces itself, computability), is *joined* to the other three by an explicit structural commitment: the KleeneStructure typeclass names the computational fixed point as the same role - the motivating commitment, not a derived theorem. So the set that is its own only member is identified with the program that prints itself by that commitment, not proved equal. The computational witness rests on Mathlib's recursion theorem, which carries `Classical.choice`; the three-name core needs none.
 
-**Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ (addVal_bot); unbounded surprisal, the state with no finite description (t2_diverges); the categorical bottom of each real Mathlib category, an inverse limit or initial object (fD_zero_isInitial, fC_zero_isInitial and fB_bottom_is_limit, collected in mc1_correspondence); and the case where the coincidence *fails*, ℝ vs ℚ₂ by Ostrowski (completions_exhaustive, real_not_equiv_padic). They share a SHAPE (`Statement:` COINCIDENCE, per field's own witness above) - one object carrying both extremal characterisations at once - and a shared shape across distinct structures is a type boundary, never a common theorem. (The order-theoretic form of that shape is fork_collapse_iff, choice-free, but none of these satisfies its hypotheses of a complete lattice and a monotone map, so none is an instance of it.) ε₀ is co-witnessed with the 2-adic limit and the machine snap (zpm_triangle).
+**Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ (padic_addVal_bot); unbounded surprisal, the state with no finite description (t2_diverges); the categorical bottom of each real Mathlib category, an inverse limit or initial object (fD_zero_isInitial, fC_zero_isInitial and fB_bottom_is_limit, collected in mc1_correspondence); and the case where the coincidence *fails*, ℝ vs ℚ₂ by Ostrowski (completions_exhaustive, real_not_equiv_padic). They share a SHAPE (`Statement:` COINCIDENCE, per field's own witness above) - one object carrying both extremal characterisations at once - and a shared shape across distinct structures is a type boundary, never a common theorem. (The order-theoretic form of that shape is fork_collapse_iff, choice-free, but none of these satisfies its hypotheses of a complete lattice and a monotone map, so none is an instance of it.) ε₀ is co-witnessed with the 2-adic limit and the machine snap (zpm_triangle).
 
 **Mostly proved - a narrow residue argued.** The framework's set-theoretic *commitment* is not *AFA specifically* but a fragment it assumes of its host theory: a unique Quine atom ⊥ = {⊥}. That fragment is a checkable object, the QuineHost typeclass. Foundation-freeness is *forced* by the Quine atom (quineHost_not_wellFounded, axiom-free - a self-loop cannot live in a well-founded world); ordinary set theory (Foundation) is excluded in-kernel about the real theory (zfSet_no_quine_bottom - no set is self-membered under Foundation); Boffa's axiom is set aside because it admits a proper class of Quine atoms rather than one (Boffa 1968), a gap a toy model makes concrete (boffa_fails_unique) rather than an in-kernel fact about Boffa's axiom; and AFA is exhibited as the example meeting all three (afaStructure_isQuineHost). What remains argued is only that a Quine atom and its uniqueness are the right two requirements - a Forced Metatheoretic Commitment with a named falsifier, stronger than a free choice and weaker than a theorem. The set-membership face ⊥ ∈ ⊥ stays metatheoretic; the structural fixed point is machine-checked and axiom-free (t_exec).
 
-**The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is carried by the per-domain witnesses fD_zero_isInitial, fC_zero_isInitial and fB_bottom_is_limit, collected in mc1_correspondence). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are provably **distinct** (the "walls" below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand (the three-name core above; 0 = ∞ under rInv in ℚ₂)."""
+**The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is carried by the per-domain witnesses fD_zero_isInitial, fC_zero_isInitial and fB_bottom_is_limit, collected in mc1_correspondence). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are **distinct as structures**, proved pairwise wherever a wall has been built (below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand: the three-name core above (t_exec_triple_iff, axiom-free), and in ℚ₂ the equality v₂(0) = ∞ (padic_addVal_bot) - an equality of *values* in the value monoid, not of points of ℚ₂. The 2-adic **pole** is a claim of a different kind: 0 and ∞ are provably distinct points of the sphere which inversion *exchanges* (`Statement:` INVERSION, point_and_field_at_the_poles), so calling the two one pole is a chart claim rather than an identity of points."""
     return link_in_text(body)
 
 # --- The diagonal family: the self-reference arguments as one fixed point (ZP-R) ---
@@ -621,8 +695,8 @@ DIAGONAL_FAMILY = [
     ("Quine atom",   "ν floor", "the self-containing set ⊥ = {⊥} - executable self-reference, landing at ⊥", "t_exec", "(none)"),
     ("Löb",          "ν floor", "provability of (□A → A) yields A - the provability-logic fixed point", "loeb", "(none)"),
     ("Gödel 2nd",    "ν floor", "no consistent system proves its own consistency", "godel_two", "(none)"),
-    ("Kleene quine", "ν floor", "a program that reproduces itself - the recursion theorem fires", "computability_face_fixedPoint", "`Classical.choice`"),
-    ("Rice",         "ν floor", "the fixed point provably exists, yet its membership is undecidable", "rice_face_has_bottom", "`Classical.choice`"),
+    ("Kleene quine", "ν floor", "a program that reproduces itself - the recursion theorem fires", "computability_face_fixedPoint", "`[propext, Classical.choice, Quot.sound]`"),
+    ("Rice",         "ν floor", "the fixed point provably exists, yet its membership is undecidable", "rice_face_has_bottom", "`[propext, Classical.choice, Quot.sound]`"),
 ]
 
 def render_diagonal_family():
@@ -714,14 +788,62 @@ The informative content is in the non-`✓` cells, and splitting them is the poi
 is a settled structural fact (a category error, not a gap), a `✗` is news (a proved obstruction), a `✓*` holds only via a bridge, and a `≝` sends you to that cell's sentence. Two things worth reading off the table:
 (1) **generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
 point-limit) read `∅` there - a ν-object has no μ-property - and the self-coincident fixed points (Kleene,
-selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
+selfApp) carry SELF rather than GEN; the live GEN cells are the ones marked in the column above, and ε₀ is the one this section turns on, where the floor generates the tower above it - and ε₀ is both that tower's supremum and its least fixed point, never only the top.
 (2) The **dynamics** column is single-directional - `↓` for a sink (ν), `↑` for a source (μ) - and `↕` (both)
 appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
 0→ε₀. So ⊥'s dynamics has one direction, fixed by whether ⊥ is a source or a sink.
 
-**The structural reading is in the non-`✓` cells** - the proved obstructions (`✗`), the structural non-applicabilities (`∅`), the `✓*` cells that are conditional, and the `≝` cells, whose witness is named in its own sentence - not the
-filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in
-**[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
+**The structural reading is in the non-`✓` cells** - the proved obstructions (`✗`), the structural non-applicabilities (`∅`), the `✓*` cells that are conditional, and the `≝` cells, whose witness is named in its own sentence - not the filled count. The reason or witness behind *every* mark is below.
+
+### Why the cell vocabulary has states rather than a checkbox
+
+A relationship between a construction and an aspect is a **claim with a status**, not a yes/no box. A blank
+would conflate three different situations - an open question, a settled structural non-applicability, and a
+proved impossibility - so the matrix distinguishes them. These are the states actually in use, with their live
+counts:
+
+{state_legend}
+
+### The one axis behind two columns: μ and ν
+
+Every fixed point of a construction sits on a fork. **μ** is the *least* fixed point, built **up from** ⊥ -
+the initial-object / colimit / generation side. **ν** is the *greatest*, closed **down to** ⊥ - the
+terminal-object / limit / attractor side. A construction's bottom is a **source** (μ), a **sink** (ν), or,
+where the two coincide, a **seam** (μ = ν). `GEN` and `dynamics` are not independent slots: they are two
+readings of that single polarity.
+
+**GEN is the μ face.** Its precise content is the least-fixed-point-by-iteration schema `lfp F = ⊔ₙ Fⁿ(⊥)` -
+iterate the operator from the floor and take the supremum - which is **Kleene's fixed-point theorem**, the
+founding construction of domain theory. It appears at three levels: order-theoretic, as Mathlib's
+`fixedPoints.lfp_eq_sSup_iterate`, cited rather than rebuilt (⚠ the ω-Scott-continuity hypothesis is the whole
+content and must not be softened to monotonicity - a bundled `F : α →o α` is monotone already, and monotone
+alone gives only Knaster-Tarski's *existence* somewhere, where continuity is what buys the ω-indexed formula,
+that ω steps suffice); ordinal, as `ε₀ = nfp(ω^·)(0) = ⊔ₙ (ω^·)ⁿ(0)`; and categorical, as Adámek's initial
+algebra as the colimit of `0 → F0 → F²0 → …`. The categorical form was not located in Mathlib as of
+2026-08-08, searched along three axes (the proper name; the nouns *initial algebra* / *terminal coalgebra*, both
+polarities; and the verb *transfinite*), so the matrix builds a concrete instance instead: `node4_generates_nat`
+makes ℕ the colimit of the successor chain rooted at the empty type, the initial algebra of `X ↦ X + 1`,
+choice-free.
+
+**So `GEN` is a μ-only column, and its emptiness elsewhere is the fork showing through rather than missing
+work.** The ν-bottoms - the p-adic inverse limit, the Markov attractor, the topological `{{0}}`-limit - are the
+opposite pole: they are *reached*, they do not *generate*. And the self-coincident fixed points are their own
+fixed point, so there is no distinct level above to generate; they carry `SELF` and `CONC`, the still point.
+
+**Dynamics is single-directional, set by the same polarity.** `↓` inbound means orbits converge *to* ⊥, a
+sink (ν); `↑` outbound means structure departs *from* ⊥ irreversibly, a source (μ); `↕` means both, which
+happens only at a seam. ⚠ **The implication runs one way: a seam gives `↕`, and `↕` does not by itself give a
+seam** - ε₀ shows `↕` for a different reason, because its row *is* the transition arc, spanning a floor and a
+level above rather than sitting at one point.
+
+**The correction that reading forced.** Two constructions, p-adic and Markov, *looked* two-directional because
+two irreversibility theorems sat in the outbound column and do not belong there. `c3_irreversible` says there is
+no continuous path *to* 0 - that is the **arrival** being a discontinuous jump, an inbound fact.
+`fullMix_not_injective` says mixing *toward* the stationary state loses information - again inbound. Re-sorted,
+both are pure sinks, and `↕` becomes a seam diagnostic. The reach-in / cannot-return-out asymmetry is ⊥'s
+one-way irreversibility: you can reach ⊥, and the snap off it does not reverse. (Physics calls one-wayness an
+arrow of time; the framework is inspired by the analogy and claims nothing about physics - the irreversibility
+lemmas are the statements, the analogy is not one.)
 
 {cell_details}
 
@@ -749,6 +871,7 @@ def main():
                               ["slot", "aspect", "characterization of ⊥", "witness (links to Lean source)"]),
         map=render_map(),
         cell_details=render_cell_details(),
+        state_legend=render_state_legend(),
         diagonal_family=render_diagonal_family(),
     )
     # ⚠ CHECK BEFORE WRITING. A guard after `f.write(page)` fails closed on the exit code and

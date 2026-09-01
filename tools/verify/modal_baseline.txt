@@ -1,0 +1,43 @@
+# check_modal.py baseline - grandfathered sites, each verified by READING it, not by counting.
+#
+# ZeroParadox/Ordinal/Kruskal.lean (x2) - NOT a defect. The "route artifact" claim is supported the
+# right way: by EXHIBITING the clean proof. The file cites Seisenberger (*Kruskal's Tree Theorem in a
+# Constructive Theory of Inductive Definitions*, Synthese Library 306, 2001), Veldman (Arch. Math.
+# Logic 43(2), 2004), Coquand & Fridlender (1993), and Larchey-Wendling's axiom-free Coq-Kruskal as
+# the constructive routes.
+#   TWO ATTRIBUTION ERRORS WERE MADE IN THIS NOTE, both while correcting attributions:
+#   (a) "Berger (Sternagel-style...)" -- Sternagel takes the same CLASSICAL Nash-Williams route
+#       (Kruskal.lean:40-41), not a constructive one;
+#   (b) then "Berger (almost-full relations, Synthese Library 306, 2001)" -- that volume is
+#       SEISENBERGER's (Kruskal.lean:47-49). Berger is credited in that file only for the residual
+#       dependent choice / open induction.
+#   Both corrected 2026-08-03. Read Kruskal.lean:44-56 before citing any of these again.
+# It locates the choice precisely (Mathlib's
+# exists_min_bad_of_exists_bad / minBadSeqOfBadSeq, a Nat.find/Classical.choose selection), and hedges
+# the transfer honestly ("a choice-free proof exists, in an almost-full framework Mathlib does not
+# currently carry"). It also names the residual as dependent choice / open induction rather than a
+# taboo.
+#
+# Baselined rather than widening EVIDENCE: a pattern broad enough to auto-pass this would also
+# rubber-stamp the identical sentence asserted WITHOUT any citation, which is precisely the defect
+# this gate exists to catch.
+#
+# SHRINK this file as files are touched; never grow it deliberately. Format: <path>|<phrase>
+ZeroParadox/Ordinal/Kruskal.lean|artifact
+
+# .claude/commands/claim-review.md - NOT a defect. The hit is a SECTION HEADING that NAMES the
+# defect class the gate looks for: "3. Eliminable vs. necessary (the method-reach asymmetry)."
+# It does not assert that anything is eliminable; it instructs a reviewer to catch someone who
+# does. This is CLAUDE.md's `Idiom:` case - prose that NAMES a phenomenon rather than USING the
+# claim - and the test it gives applies cleanly: does the sentence USE the claim, or NAME
+# something? It names. Grandfathered rather than reworded: contorting a gate brief's own
+# vocabulary so it stops matching its own subject would make the brief worse to read, and the
+# checker cannot distinguish mention from use.
+#
+# Became visible 2026-08-16 only because check_modal's markdown scope was widened from a
+# root-only glob to `git ls-files`; the file was never scanned before.
+#
+# ⚠ DO NOT REGENERATE THIS FILE WITH `--baseline`. Measured 2026-08-16: it rewrites the file
+# from current state and DISCARDS every comment here - 26 lines to 5 - destroying exactly the
+# per-site reading notes this file's own header requires. Add a site by hand, with its reason.
+.claude/commands/claim-review.md|eliminable

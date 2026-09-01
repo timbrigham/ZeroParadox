@@ -1,5 +1,5 @@
 """
-Build ZP-D Illustrated Companion (v1.10)
+Build ZP-D Illustrated Companion (v1.13)
 v1.11: vocab fix: null state → ⊥.
 v1.10: K-12 vocab fix — "topological isolation" -> "clopen separation" in DP-1 body text.
 v1.9: Strip version number from companion footer.

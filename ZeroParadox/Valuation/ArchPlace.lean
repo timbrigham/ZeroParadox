@@ -79,7 +79,8 @@ theorem node2_place_eq_real_norm (q : ℚ) : real q = |(q : ℝ)| := by
 theorem node3_place_eq_q2_norm (q : ℚ) : padic 2 q = ‖(q : ℚ_[2])‖ := by
   rw [padic_eq_padicNorm, Padic.eq_padicNorm]
 
-/-- The topological signature linking the place classification to the campaign's #2-vs-#3 wall: the
+/-- `Statement:` CARRIER — the topological signature linking the place classification to the
+    campaign's #2-vs-#3 wall, the truth of each half depending which place you are at: the
     archimedean place completes to a **connected** field (ℝ, the base of #2's simplex), the 2-adic place
     to a **totally disconnected** one (`Q₂ = ℚ_[2]`, #3's ambient). This is the genuine in-kernel tie
     between place-type and the topological character that distinguishes the two nodes (the T2 wall),

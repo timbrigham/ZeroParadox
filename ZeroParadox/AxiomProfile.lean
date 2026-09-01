@@ -33,6 +33,8 @@ import ZeroParadox.Multihomed.Boundary
 import ZeroParadox.Multihomed.BoundaryBridge
 import ZeroParadox.Valuation.SnapDichotomy
 import ZeroParadox.Settheory.QuineDichotomy
+import ZeroParadox.Category.LawvereTaboo
+import ZeroParadox.Ordinal.OrdinalChoiceEssential
 
 
 /-!
@@ -46,27 +48,30 @@ required in places... the heart of what we're trying to prove is choice free.
 
 ---
 
-This file is a **checkable artifact**. Build it and read the `#print axioms` output: the Lean kernel
-reports the complete axiom dependency of each result, so the claims below are verifiable, not asserted.
-
-**The core results are free of `Classical.choice`. The central theorem — the Binary Snap (T-SNAP) —
-depends on no axioms at all.** The lattice algebra (ZP-A) and the Quine-atom self-reference keystone
-(ZP-J) are likewise choice-free.
-
-`Classical.choice` appears in the framework only in the layers that *realize* these results inside
-standard analytic structures (p-adic topology, Hilbert space, ordinals, computability, category
-theory), where it is **inherited from Mathlib's classically-built libraries** — shown in Section III
-for honest contrast. Whether that inherited dependence is removable or genuinely necessary is a
-separate open question (see the README Question Register and the `choice-probe` experiment, which
-found it mostly incidental in the one layer classified so far). It is not load-bearing for any ZP
-*claim*: the things the framework asserts are proved above without choice.
-
-Distinction worth keeping: "does not depend on any axioms" (T-SNAP, the lattice, the Quine atom) is
-stronger than "choice-free" — those use not even propositional extensionality. The `[propext,
-Quot.sound]` results are choice-free but use propext and quotient soundness (both Lean 4 standard).
-
-Run:  `lake build ZeroParadox.AxiomProfile`
+A **checkable artifact** (`lake build ZeroParadox.AxiomProfile`): the `#print axioms` output reports
+each result's complete axiom dependency. **The core is choice-free; T-SNAP depends on no axioms at
+all.** Choice appears in the realization layers — mostly inherited from Mathlib, but not only there
+and not everywhere open. Argument and measurements: `ZeroParadox/AxiomProfile.md`.
 -/
+
+/-! ## 0. Choice that is NOT removable — two settled cases
+
+⚠ PROVENANCE and NECESSITY are independent axes, and the first version of this heading conflated
+them. `fixedPointFree_of_nontrivial` spends the framework's OWN `classical`; well-order comparability
+spends MATHLIB's, in `InitialSeg.total` — and both are essential. The two reductions below are
+choice-free, which is what makes them reductions rather than measurements. Full argument:
+`ZeroParadox/AxiomProfile.md`. -/
+section FrameworkOwnChoice
+
+-- PROVENANCE: a bare `classical` written in framework source (Lawvere.lean), not inherited.
+#print axioms ZeroParadox.fixedPointFree_of_nontrivial   -- [propext, Classical.choice, Quot.sound]
+-- NECESSITY: two reductions to taboos, themselves CHOICE-FREE. The first is about the declaration
+-- above; the SECOND is about well-order comparability, whose choice is MATHLIB's — so it witnesses
+-- that an INHERITED dependence can be essential too.
+#print axioms ZeroParadox.wem_of_fixedPointFree          -- [propext, Quot.sound]
+#print axioms ZeroParadox.em_of_wellOrder_comparable     -- [propext, Quot.sound]
+
+end FrameworkOwnChoice
 
 /-! ## I. The choice-free core — T-SNAP, the lattice, the Quine atom
 

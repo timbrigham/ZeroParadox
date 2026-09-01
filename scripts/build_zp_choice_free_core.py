@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.5 | August 2026
+Version 1.9 | August 2026
+v1.9: the page-1 overview said Section III shows it "essential rather than INHERITED" while Section III itself says both cases are essential and one of them IS inherited - the same document, opposite framings, and the overview misdescribing the section it cites. Corrected to "essential rather than INCIDENTAL", which is the axis the sentence is actually on. Found by `check_paths.py --claim`, built this session as DC-24's mechanical half; it printed this site and the matching README one on its first real run.
+v1.8: PROVENANCE AND NECESSITY ARE INDEPENDENT AXES, and v1.5-v1.7 collapsed them. The text said Section III locates two principles "where the choice is the framework's own and provably essential" - false for the second. `wem_of_fixedPointFree` reduces a principle whose choice IS the framework's own (a bare classical in Category/Lawvere.lean); `em_of_wellOrder_comparable` reduces well-order comparability, whose choice is MATHLIB's, spent in InitialSeg.total - and OrdinalChoiceEssential.lean states that Mathlib's use there is forced. So an INHERITED dependence can be essential, which is a STRONGER result than the one the prose was claiming, and it is why "inherited" never meant "removable". Found by the adversary gate keying on the POSITIVE assertion ("the framework's own") - four earlier rounds all keyed on the universal negative ("only ... Mathlib") and no search for that polarity could reach it.
+v1.7: THE v1.6 FIX REACHED THE ENDNOTE AND MISSED THE FRONT MATTER. Section III has named both taboo reductions since v1.5; v1.6 corrected the endnote; the PREAMBLE on page 1 and the Section II opener still said choice appears in "every place ... where the framework builds on Mathlib's libraries" and listed CATEGORY THEORY as one of them - the exact case corrected everywhere else. Both prose gates returned FAIL-BEDROCK, independently, on the two places a skimmer lands FIRST. That is the fourth consecutive version of this document fixing one site of one claim: v1.5 fixed Section III and left the endnote, v1.6 fixed the endnote and left the preamble. Corrected here at all four rendered sites at once. Also struck a claim v1.6 INTRODUCED - that the axiom-free sibling shows the choice is "not forced by the shape of the result" - which is the inversion of what LawvereTaboo section III proves: the cost IS the generality over arbitrary types, and it disappears under [DecidableEq beta].
+v1.6: THE ENDNOTE CONTRADICTED SECTION III. Section III has named both taboo reductions since v1.5 - `wem_of_fixedPointFree` and `em_of_wellOrder_comparable`, each choice-free (`[propext, Quot.sound]`), which is the only shape that can establish necessity. The endnote still said choice "appears only where the framework builds on Mathlib's ... libraries, and whether it is necessary there remains open" - both halves false, in the two places a skimmer lands. Measured: `fixedPointFree_of_nontrivial` carries choice from a bare `classical` in framework source (`Category/Lawvere.lean`), not from Mathlib, while its sibling `no_witness_of_fixedPointFree` is axiom-free - so the dependence is not inherited - the `classical` is the framework's own, and per LawvereTaboo section III the cost IS the generality over arbitrary types (it disappears under [DecidableEq beta]). Found by sweeping the CLAIM after both prose gates returned FAIL-BEDROCK on the same universal in README.
 v1.5: BEDROCK - Section III asserted THE FRAMEWORK HAS NO PROVEN-NECESSITY CASE ANYWHERE, a universal
 negative that is FALSE and was live in the published PDF. Two taboo reductions exist and are named in
 CLAUDE.md: em_of_wellOrder_comparable (comparability of well-orders implies excluded middle; prior art
@@ -18,19 +22,22 @@ v1.1: WheelFrac.* citation updated to ZPJ_WheelFrac.* (Lean namespace standardiz
 v1.0: Initial release. Surfaces the machine-verified fact that the conceptual core of the
       framework is free of the Axiom of Choice. The central theorem T-SNAP (the Binary Snap)
       depends on NO axioms at all; the lattice algebra (ZP-A) and the Quine-atom self-reference
-      (ZP-J) are choice-free. Classical.choice appears only where the framework builds on Mathlib's
-      classically-built analysis/order/computability libraries (the analytic realization layers).
+      (ZP-J) are choice-free. Classical.choice appears mostly where the framework builds on Mathlib's
+      classically-built analysis/order/computability libraries (the analytic realization layers) - but
+      NOT only there: the category-theory face carries the framework's own bare `classical`.
       Anchored on the checkable artifact ZeroParadox/AxiomProfile.lean (a file of #print axioms
       commands). Honest fences throughout: not the whole framework is choice-free; choice is
-      inherited from Mathlib in the analytic layers; whether it is *necessary* there is open (the
-      one layer classified, ZPB_PadicTree, found it mostly incidental/routable).
+      mostly inherited from Mathlib in the analytic layers; whether the REMAINING dependence is
+      *necessary* there is open (the one layer classified, ZPB_PadicTree, found it mostly
+      incidental/routable) - but two taboo reductions already settle it for the principles they
+      cover, and the rendered Section III has named them since v1.5.
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.9'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -86,10 +93,12 @@ def build():
     E.append(body(
         'Two boundaries are stated up front, because the claim is narrow and exact. <b>The framework '
         'as a whole is not choice-free.</b> Most of its theorems do depend on `Classical.choice`. '
-        'But every place it appears is a place where the framework builds on Mathlib\'s '
+        'Most places it appears are places where the framework builds on Mathlib\'s '
         'classically-built analysis, order, and computability libraries &#8212; the layers that '
         '<i>realize</i> the snap inside standard analytic structures (p-adic topology, Hilbert space, '
-        'ordinals, category theory), where the dependence is inherited from those libraries. It is '
+        'ordinals), where the dependence is inherited from those libraries. The category-theory face '
+        'is the exception: its choice is the framework\'s own bare classical, and Section III shows '
+        'it essential rather than <i>incidental</i> &#8212; a separate axis from provenance, and one that Section III also settles for a dependence that IS inherited. It is '
         'not used by the core results above. <b>And dependence is not necessity:</b> that those '
         'realizations <i>use</i> choice as written does not show choice is <i>required</i> there '
         '(Section III).'))
@@ -135,9 +144,9 @@ def build():
     E.append(body(
         'The honest contrast. `Classical.choice` does appear across the framework &#8212; in the '
         'majority of its theorems &#8212; and the same `#print axioms` artifact shows exactly where. '
-        'Every occurrence is in a layer that realizes the snap floor inside a standard analytic '
-        'structure, and inherits choice from the Mathlib library that builds that structure '
-        'classically.'))
+        'Most occurrences are in a layer that realizes the snap floor inside a standard analytic '
+        'structure, inheriting choice from the Mathlib library that builds that structure '
+        'classically. The category-theory face is not one of them &#8212; see Section III.'))
     E.append(result_box(
         'Carries Classical.choice (inherited from Mathlib), e.g.',
         [
@@ -153,7 +162,10 @@ def build():
     E.append(body(
         'The pattern is clean: the core <i>states</i> the result; the analytic layers <i>realize</i> '
         'it inside the standard frameworks, and that is where the library\'s classical foundations '
-        'enter. The choice is in the plumbing, not in the claim.'))
+        'enter. For those layers the choice is in the plumbing, not in the claim &#8212; but not '
+        'for all of it: Section III locates two principles that are provably essential. Their '
+        'provenance differs, and that is the point: one spends the framework\'s own bare classical, '
+        'the other spends Mathlib\'s &#8212; and both are essential. Inherited never meant removable.'))
     E.append(sp(6))
 
     # ── Section III ──────────────────────────────────────────────────────────────
@@ -200,8 +212,12 @@ def build():
             'central results leaned on the Axiom of Choice &#8212; the canonical free, non-constructive '
             'selection. They do not. T-SNAP is axiom-free; the keystone is choice-free. The '
             '"forced, not chosen" thesis is internally consistent at the level of what the framework '
-            'actually asserts. Where choice appears, it is the supporting library\'s classical '
-            'foundation showing through the realizations, not an assumption of the argument.',
+            'actually asserts. Where choice appears it is mostly the supporting library\'s classical '
+            'foundation showing through the realizations rather than an assumption of the argument. '
+            'Section III\'s two cases are the exception on a different axis: they are about '
+            '<i>necessity</i>, not provenance. One of them is the framework\'s own and one is '
+            'Mathlib\'s, and both are essential &#8212; so "inherited" is not a synonym for '
+            '"removable", and neither case is absorbed into the generalization.',
         ]
     ))
     E.append(sp(6))
@@ -239,9 +255,11 @@ def build():
     E.append(Paragraph(
         'Endnote: This is a framework-wide note, machine-verified as of June 2026. The central '
         'theorem T-SNAP depends on no axioms; the conceptual core is free of the Axiom of Choice; '
-        '`Classical.choice` appears only where the framework builds on Mathlib\'s classical analysis, '
-        'order, and computability libraries, and whether it is necessary there remains open. All of '
-        'this is checkable in ZeroParadox/AxiomProfile.lean.',
+        '`Classical.choice` appears mostly where the framework builds on Mathlib\'s classical analysis, '
+        'order, and computability libraries, where whether it is necessary remains open. It is not '
+        'only there, and not everywhere open: the category-theory face carries the framework\'s own '
+        'bare classical, and Section III\'s two reductions settle necessity for the principles they '
+        'cover. All of this is checkable in ZeroParadox/AxiomProfile.lean.',
         S['endnote']))
 
     print(f'[build_zp_choice_free_core] Assembling document ({len(E)} elements)...')

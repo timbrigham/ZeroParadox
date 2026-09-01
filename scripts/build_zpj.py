@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.5 | July 2026
+Version 2.6 | August 2026
+v2.6: PHANTOM AXIOM REMOVED (bedrock). The rendered DecorationUniverse box published THREE laws; APG.lean declares exactly TWO. The middle one, collect_ext ("collect respects set equality"), does not exist anywhere in the corpus, and §X cited it as the MECHANISM for acyclic_induction_step. The real proof shows the two child image sets equal (Set.ext) and rewrites — ordinary congruence, free from equality itself, consuming no class axiom; an interface law would instead be a premise every implementer must supply, so the text billed the proof for a cost it never pays. Also struck the side condition "x != bot" from collect_val_ge, which the Lean statement does not carry (a published axiom with an extra premise is weaker in print than what is proved). The box is now copied verbatim from build_zpj_afa_addendum.py, which already transcribes the Lean literally rather than glossing it.
 v2.5: Rendered Lean citations synced to post-reorg files/namespaces the v2.4 pass missed: ZPJ.lean -> SetTheoryAFA.lean; ZeroParadox.ZPJ.* -> ZeroParadox.* (per-layer namespaces flattened); ZPE.da2_bottom_characterization -> da2_bottom_characterization (now in Snap.lean).
 v2.4: Rendered Lean-file citations synced to post-reorg basenames (ZPJ_AczelConn.lean -> AczelConn.lean, etc.). Docstring changelog above kept as the historical record.
 v2.2: Remaining rendered self-version refs removed — §VII preamble "Version 2.0 extends", v2.0/v1.0 register cells, validation "v2.0:" line (C1 sweep). Fixed null glyphs: scaleᵏ (&#7503; modifier-k → <sup>k</sup>) and a garbled ≤ subscript.
@@ -20,7 +21,7 @@ v1.0: Initial release — Theorem T-EXEC; all ZPJ.lean theorems axiom-free.
 import os
 from zp_utils import *
 
-VERSION = '2.5'
+VERSION = '2.6'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -545,11 +546,11 @@ def build():
         'AFAStructure has three fields: selfMem (a predicate), quine_unique (AFA uniqueness), '
         'and bot_self_mem (the bridge). These appear as structural prerequisites &#8212; '
         'typeclass fields rather than freestanding axioms, but still commitments that any '
-        'instance must discharge. The abstraction chain asks: can these three commitments '
+        'instance must supply &#8212; two to PROVE, and selfMem to DEFINE, since it is data rather than a law. The abstraction chain asks: can these three '
         'themselves be derived from something more primitive?'))
     E.append(body(
         'The answer is yes, in two steps. First, AbstractSelfApp provides a self-application '
-        'operation and proves unique_fp, from which all three AFAStructure fields become '
+        'operation and proves unique_fp, from which the two AFAStructure LAWS become '
         'derived theorems. Then ValuationStructure explains <i>why</i> &#8869; is the unique '
         'fixed point, making even unique_fp a theorem rather than a field.'))
 
@@ -569,7 +570,7 @@ def build():
     ))
     E.append(sp(6))
     E.append(body(
-        'From these two fields, all three AFAStructure fields become derived theorems:'))
+        'From these two fields, the two AFAStructure LAWS become derived theorems, and selfMem is supplied as a definition (selfMemDerived) rather than proved &#8212; it is data:'))
     E.append(result_box(
         'Derived Results from AbstractSelfApp (SelfApp.lean &#167; II&#8211;III)',
         [
@@ -580,7 +581,7 @@ def build():
             'selfMem_eq_singleton_bot: {x | selfMemDerived(x)} = {&#8869;} &#8212; '
             'via singleton_from_unique_witness. DC-free. &#10003;',
             'instance toAFAStructure: any AbstractSelfApp gives an AFAStructure. '
-            'All three fields are theorems, not additional commitments. &#10003;',
+            'The two laws are theorems, not additional commitments; selfMem is a supplied definition. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -627,9 +628,22 @@ def build():
     E.append(callout(
         'ValuationStructure &#8594; AbstractSelfApp &#8594; AFAStructure\n'
         'Four valuation axioms &#8594; Two fixed-point fields &#8594; Three AFA fields\n'
-        'At each step, the fields of the lower typeclass become derived theorems.',
+        'At each step, the LAWS of the lower typeclass become derived theorems; the data fields '
+        'are supplied, not proved.',
         bg=AMBER_LITE, border=AMBER
     ))
+    E.append(sp(6))
+    E.append(body(
+        '<b>What this chain does NOT establish, and the Lean says so explicitly.</b> '
+        'AbstractSelfApp is a STRUCTURE, not a property: it supplies a <i>chosen</i> '
+        'self-application map, and carrying one says nothing about the carrier, because '
+        '<b>every</b> ZPSemilattice carries one. The NO-GO gauge in Computability/SelfApp.lean '
+        '&#167;V records the consequence: because toAFAStructure is an instance, the whole AFA '
+        'layer &#8212; IsQuineAtom, bot_is_quine_atom, T-EXEC &#8212; comes free from a degenerate '
+        'map, so the anti-foundation layer is satisfied by a structure in which nothing refers to '
+        'anything. The chain is therefore a statement about what FOLLOWS from the structure, not '
+        'evidence that any particular carrier has it non-trivially. Membership is not an argument; '
+        'a witness that the framework\'s real instances differ from the degenerate one is.'))
     E.append(sp(6))
     E.append(body(
         'At each level of the chain, the 2-adic parallel holds. At the AbstractSelfApp level: '
@@ -687,7 +701,7 @@ def build():
             '(The unique fixed point of (&#183; + 1) in &#8469;&#8734; is &#8868;.) &#10003;',
             'natInf_selfMem_singleton: {x : &#8469;&#8734; | x + 1 = x} = {&#8868;}. &#10003;',
             'Via toAbstractSelfApp and toAFAStructure, &#8469;&#8734; carries a full AFAStructure '
-            'with all three fields as theorems. &#10003;',
+            'with the two laws as theorems and selfMem supplied as a definition. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -759,15 +773,17 @@ def build():
         'than sets. This avoids ZFSet (which satisfies Foundation, making self-loops impossible) '
         'and places the result in the typeclass framework established above.'))
     E.append(def_box(
-        'DecorationUniverse Typeclass (APG.lean &#167; II)',
+        'Typeclass: DecorationUniverse (APG.lean &#167; II)',
         [
-            'class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] with:',
-            '(1) collect_singleton : collect {x} = scale(x)  '
-            '&#8212; a singleton set decorates to scale of its element.',
-            '(2) collect_ext : collect s&#8321; = collect s&#8322; when s&#8321; = s&#8322;  '
-            '&#8212; collect respects set equality.',
-            '(3) collect_val_ge : val(collect s) &#8805; val(x) + 1 for x &#8712; s and x &#8800; &#8869;  '
-            '&#8212; valuation of a collected set is strictly bounded below.',
+            'class DecorationUniverse (U : Type*) [ZPSemilattice U]',
+            '      [ValuationStructure U] where',
+            '  collect : Set U &#8594; U',
+            '  collect_singleton : &#8704; x : U, collect {x} = scale x',
+            '  collect_val_ge : &#8704; (S : Set U) (x : U), x &#8712; S &#8594;'
+            '                   val (collect S) &#8805; val x + 1',
+            '',
+            'Exactly two laws. They pin the SINGLETON case and a lower bound; they do not '
+            'require collect to assemble a parent value from its children.',
             'A valid decoration d : V &#8594; U satisfies d(v) = collect({d(w) | v &#8594; w}) '
             'at every vertex v.',
         ]
@@ -815,7 +831,8 @@ def build():
         [
             'acyclic_induction_step: if two valid decorations d&#8321;, d&#8322; agree on all '
             'children of an acyclic vertex v, they agree on v. '
-            '(From collect_ext applied to the decoration equations.) &#10003;',
+            '(The two child image sets are equal by Set.ext, then rewrite &#8212; ordinary '
+            'congruence, consuming no class axiom.) &#10003;',
             'decoration_unique [Fintype V]: for any finite APG with root r and any two valid '
             'decorations d&#8321;, d&#8322; into any DecorationUniverse, d&#8321; = d&#8322;. '
             'Proof: strong induction on |{w | Path u w}|; cyclic case by cyclic_decoration_eq_bot; '
@@ -826,7 +843,8 @@ def build():
     E.append(callout(
         'decoration_unique is the ZP version of AFA\'s decoration uniqueness theorem: for any '
         '<b>finite</b> APG, at most one valid decoration exists into any DecorationUniverse. '
-        'The proof uses only the three typeclass axioms and ValuationStructure &#8212; it '
+        'The proof uses only the two typeclass laws, the `collect` data field and '
+        'ValuationStructure &#8212; it '
         'characterises when decoration uniqueness holds. It does not construct a specific AFA '
         'model or derive AFA\'s axioms from ZP\'s.',
         bg=AMBER_LITE, border=AMBER
@@ -872,7 +890,7 @@ def build():
         ['AbstractSelfApp &#8594; AFAStructure',
          'AbstractSelfApp.fixed_bot + unique_fp',
          'None',
-         'Lean: toAFAStructure instance &#8212; all fields as theorems &#10003;'],
+         'Lean: toAFAStructure &#8212; selfMem := selfMemDerived (a definition); bot_self_mem and quine_unique are theorems &#10003;'],
         ['ValuationStructure &#8594; AbstractSelfApp',
          'ValuationStructure.val_scale + val_unique',
          'None',

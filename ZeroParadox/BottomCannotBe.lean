@@ -38,6 +38,7 @@ import ZeroParadox.Category.Category
 import ZeroParadox.Valuation.FloorWitness
 import ZeroParadox.Ordinal.ProofFloorCanonical
 import ZeroParadox.Valuation.RiemannSphere
+import ZeroParadox.Valuation.PoleCornersBridge
 import ZeroParadox.Multihomed.HilbertDiagonal
 import ZeroParadox.Reals.MarkovSpectralGap
 import ZeroParadox.Category.Node4Generation
@@ -160,7 +161,7 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 -- Statement: the swap chain's orbit from `e0vec` converges to no limit.
 #check @ZeroParadox.swap_orbit_not_convergent
 -- Statement: for `x ≠ 0` and balanced `v₀`, the p-adic orbit stays norm-positive and the
--- `step (1/4)` orbit stays balanced — that one chain, not Markov orbits generally.
+-- `markovStep (1/4)` orbit stays balanced — that one chain, not Markov orbits generally.
 #check @ZeroParadox.padic_markov_no_orbit_correspondence
 
 /-! ### the seam and floor cannot be transported or cross-connected -/
@@ -262,6 +263,11 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.doubling_place_dichotomy
 -- Statement: `rInvHomeo` sends `0` to `∞` and `∞` to `0` on `OnePoint ℚ₂`.
 #check @ZeroParadox.rInv_swaps
+-- Statement: a conjunction whose first component is the DISEQUALITY of the floor pole and the
+-- infinity pole; inversion exchanging them follows in the same declaration.
+-- ⚠ `rInv_swaps` directly above states two equations and nothing else, so cite THIS one wherever the
+-- distinctness is what a sentence leans on.
+#check @ZeroParadox.point_and_field_at_the_poles
 -- Statement: that inversion is a homeomorphism of the sphere.
 #check @ZeroParadox.rInvHomeo
 -- Statement: Mathlib's `IsInitial.op` — the opposite of an initial object is terminal.

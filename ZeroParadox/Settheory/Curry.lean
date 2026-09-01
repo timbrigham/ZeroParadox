@@ -12,32 +12,10 @@ everything else in the family.
 
 ---
 
-## Overview (AI-assisted)
-
-Curry's paradox: a self-referential proposition `p ↔ (p → C)` proves `C` — for *any* `C`. This is the
-diagonal family's **explosion face**: where the liar (`negation_no_fixedpoint`, `Wall.lean`) yields a
-contradiction, Curry yields *anything at all*, and it needs no negation — only implication and
-self-reference.
-
-Relation to the engine: the liar is exactly Curry at `C = False` (`Not p` is `p → False`), so
-`curry_paradox` is a strict **generalization** of `negation_no_fixedpoint` — genuinely new content on top
-of the existing engine, not a re-pointing. Via the Lawvere naming (`Wall.lean` `lawvere_fixedpoint` /
-`cantor_via_engine`), a point-surjective internal comprehension proves every `C` — the sharpest statement
-of why unrestricted comprehension / a reflexive object is inconsistent (the type-level cousin is
-`reflexive_object_refuted`).
-
-Placement: Curry is a **wall / μ** face (self-reference that cannot be internalized), the most violent
-form — not "no truth value" but "every value at once." Its floor dual is again the Quine atom (ν): where
-self-reference closes harmlessly instead of exploding.
-
-Honest delta: `curry_paradox` is a real generalization of the repo's engine (arbitrary conclusion `C`);
-`curry_from_naming` routes it through the existing Lawvere naming. Attribution: Curry (1942); the
-diagonal-family framing is Lawvere/Yanofsky (cited in `Wall.lean`). Axiom-free.
-
-## Structure
-- § I.   Curry's paradox: a Curry proposition proves any `C`.
-- § II.  The liar is Curry at `C = False` (the generalization link to the engine).
-- § III. Curry from an internal naming: surjective comprehension proves everything.
+## Formal Overview
+A self-referential `p ↔ (p → C)` proves `C` for **any** `C`, using implication alone — so the liar is
+Curry at `C = False`, and `curry_paradox` strictly generalizes `negation_no_fixedpoint`. Placement,
+relation to the engine and attribution: `ZeroParadox/Settheory/Curry.md`.
 -/
 
 set_option maxHeartbeats 400000

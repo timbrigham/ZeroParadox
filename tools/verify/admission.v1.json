@@ -1,0 +1,33 @@
+{
+  "schema": "zp.admission.v1",
+  "default": "NOT_ADMITTING",
+
+  "_comment": "THE SECOND LIST, AND IT IS NOT A SECOND COPY. `required.v2.json` is the REGISTRY -- what may be recorded, what a step may be named (V8). THIS file is the ADMISSION SET -- what must be green before gitRobot lets an action through. Two different facts, two different lifecycles: registering a type is free and immediate, promoting one to gate a push is a deliberate act.",
+
+  "_why": "Tim, 2026-08-23: 'we could have 20 different experimental gates being written into verdictLedger, but only have 3 of them be required to actually allow the push. two different use cases for the same data.' The one-list model could not express that except by refusing to register the seventeen -- and its correct implementation blocked every push until every registered type had an emitter. A model whose correct implementation bricks the system is describing the wrong system.",
+
+  "_default_is_deliberate": "NOT_ADMITTING is the opposite default from the registry's, on purpose. The registry defaults to required so nobody forgets to require a gate. Admission defaults to off so an experimental gate cannot brick the push path the moment it is registered. The cost -- a finished gate nobody promotes never gates -- is paid by the compensating control below, NOT by a default.",
+
+  "_compensating_control": "MANDATORY. Every inventory, refusal AND allow prints the registered-but-not-admitting types for that action, e.g. 'not gating push: 17 registered type(s) -- check_pov, check_modal, ... (promote in the admission set)'. A rising count is then visible on every run. Silence is what made this defect class expensive; an explicit list without this line reintroduces it.",
+
+  "_seed_note": "SEEDED SMALL ON PURPOSE 2026-08-23. Nothing emits records yet (record.py has zero callers), so admitting more than this would block every push and teach everyone to bypass the gate on day one. GROW THIS AS EMITTERS LAND -- a type belongs here once something actually records it.",
+
+  "admission": {
+    "commit": [],
+
+    "push": [
+      "check_encoding",
+      "check_paths",
+      "guards"
+    ],
+
+    "tag": [
+      "check_encoding",
+      "check_paths",
+      "guards",
+      "editorial",
+      "adversary",
+      "release_ready"
+    ]
+  }
+}

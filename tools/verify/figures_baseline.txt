@@ -1,0 +1,18 @@
+# Undated artifact counts present when this baseline was taken.
+# The honest form is a DATED survey: "70 files as of 2026-08-02".
+# SHRINK this list as files are touched; never grow it.
+# Refresh with:  python tools/verify/check_figures.py --baseline
+scripts/build_dictionary_map.py::73874550e6f8
+scripts/corpus_verification_report.py::088e35914e37
+scripts/corpus_verification_report.py::125e3ad77b64
+tools/verify/batch.py::0c7ede64994e
+tools/verify/batch.py::29ef8270d229
+tools/verify/batch.py::456c84ed1aff
+tools/verify/check_invariants.py::3c9789d47ab1
+tools/verify/check_invariants.py::a3059585204c
+tools/verify/check_modal.py::0b9fac88909a
+tools/verify/check_prose.py::3b9ce5023cc2
+tools/verify/check_prose.py::52c77db35794
+tools/verify/debaseline.py::1fdf46ecdba1
+tools/verify/guards.py::f555fa246f95
+tools/verify/selfheal.py::11cd5792926d

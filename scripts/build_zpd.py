@@ -1,5 +1,5 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.14)
+Build ZP-D: State Layer (Hilbert Space) (v1.15)
 v1.14: R-PA added — prior-art note: T is the standard p-adic ball-indicator ONB (van der Put basis), refined to Kozyrev's p-adic wavelet basis of L2(Q2) (Kozyrev 2002); p-adic-QM / p-adic-qubit context. Prior-art positioning, paired with the CLAIMS Convergence row.
 v1.12: Rendered self-version refs removed — DP-1 title tag and T2 "R3 (v1.6)" ref (C1 sweep).
 v1.11: K-11/K-18 vocab fixes — "topological isolation" -> "clopen separation" throughout DP-1; "first atomic state" -> "minimum nonzero state" in D1.

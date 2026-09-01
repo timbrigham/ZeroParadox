@@ -20,17 +20,22 @@ names that resolve to nothing at HEAD — they are now `ZeroParadox/Valuation/Sc
 mechanical path sweep rewrote it on 2026-08-02 and was reverted. Only Tim edits a Take, so the pointer
 lives here instead.)*
 
-OntologicalStates — ZPB's {null, exist} — cannot be a ValuationStructure instance for
-exactly this reason. A finite two-element lattice cannot satisfy val_scale. But it can
+OntologicalStates — ZPB's {null, exist} — admits no ValuationStructure. The Take's CONCLUSION
+is right and its MECHANISM is not: ONCE A CARRIER HAS A POINT OTHER THAN bot, the axioms
+JOINTLY force the scale orbit through it to contain a copy of ℕ, and so force the CARRIER
+infinite. The implication runs (instance + a second point) => Infinite, never the reverse: on
+a one-point carrier val_scale's guard is vacuous and trivialValuationStructure is a FINITE
+member. Proved by valuationStructure_forces_infinite (ZeroParadox/Valuation/ScaleBridge.lean
+§ VI), whose [Nontrivial M] hypothesis is that second point. ⚠ The
+obstruction is JOINT, not val_scale alone — val_scale by itself holds on two elements
+(val everywhere infinity, scale the identity); it is val_unique that then fails. And it can
 be an AbstractSelfApp instance directly. The self-application operation is the
 constant-to-null function: every element maps to null. This makes null the unique fixed
 point — the only element that maps to itself — which is all AbstractSelfApp requires.
 AFA content follows immediately.
 
 This is the shorter on-ramp. ℕ∞ takes the full ValuationStructure path. OntologicalStates
-takes the direct AbstractSelfApp path. Both end at the same AFA content. The architecture
-is sound because the reasoning is mathematically honest: two elements is not enough for
-val_scale, and saying so is cleaner than pretending otherwise.
+takes the direct AbstractSelfApp path. Both end at the same AFA content.
 
 Result: null is the unique self-containing element of OntologicalStates — formally proved
 in Lean, from ZPB structure alone, without importing any AFA axioms.
@@ -63,7 +68,7 @@ selfApp is the constant-to-null function. null maps to itself (fixed_bot).
 exist maps to null and is therefore not a fixed point (unique_fp holds vacuously). -/
 
 /-- OntologicalStates carries an AbstractSelfApp structure via the constant-to-null map. -/
--- [ZP-CUSTOM] instance: AbstractSelfApp OntologicalStates via constant-to-null | reason: OntologicalStates (two elements) cannot satisfy ValuationStructure's val_scale axiom — a finite two-element type has no room for val to strictly increase. Direct AbstractSelfApp instance using the constant-to-null map (every element → null) is the shorter path to AFA content for finite types.
+-- [ZP-CUSTOM] instance: AbstractSelfApp OntologicalStates via constant-to-null | reason: OntologicalStates (two elements) admits no ValuationStructure — no_valBridge_of_finite (ZeroParadox/Valuation/ScaleBridge.lean § VI) proves no finite carrier with two or more points does, because the axioms JOINTLY force the scale orbit to embed ℕ and so force the CARRIER infinite. ⚠ Not because val lacks room: its codomain ℕ∞ is unbounded, and val_scale alone is satisfiable on two elements. Direct AbstractSelfApp instance using the constant-to-null map (every element → null) is the shorter path to AFA content for finite types.
 instance instOntSelfApp : AbstractSelfApp OntologicalStates where
   selfApp   := fun _ => .null
   fixed_bot := rfl
@@ -75,8 +80,9 @@ instance instOntSelfApp : AbstractSelfApp OntologicalStates where
 
 /-! ## §III. Derived AFA Content
 
-All three fields of AFAStructure are now theorems, derived from the
-AbstractSelfApp instance above. No AFA axioms are imported. -/
+AFAStructure's two LAWS — `bot_self_mem` and `quine_unique` — are now theorems, derived
+from the AbstractSelfApp instance above. Its `selfMem` field is DATA, supplied by
+`def selfMemDerived`, not proved. No AFA axioms are imported. -/
 
 /-- null is self-containing: the constant-to-null map fixes null. -/
 theorem ont_bot_self_mem : selfMemDerived (bot : OntologicalStates) :=

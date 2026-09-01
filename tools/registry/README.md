@@ -26,8 +26,9 @@ validated `export_full` — not by committing this tool's raw output.
 
 The baseline corresponds to a fixed public-production commit (recorded in `tm_registry.py`):
 `origin/main @ 7075d4abfe49b81c0080166d848e08579f1cafb7` (tree `eacbc513a541d465b9937b33a53f923d3e9ea4b6`).
-Re-running the extractor against that tree reproduces the same inventory (currently **1025**
-declarations across 136 declaration-bearing files).
+Re-running the extractor against that tree reproduces that inventory exactly. ⚠ **The count is deliberately not written here.** It changes with every declaration added or renamed, so a figure committed to prose is right on the day it is typed and wrong afterwards.
+
+To obtain **this anchor's** inventory, re-run the extractor against the pinned tree above. ⚠ There is no number to read out of `tm_registry.py`: it *computes* the count at runtime and writes it into `registry.json`'s `counts`. And do not use the live-store command in § *The published SSOT* for this — that measures the CURRENT store, which is a different quantity from the anchor and is the conflation that put two contradictory figures in this file at once.
 
 ## Identifier handling (why the count is what it is)
 
@@ -42,12 +43,30 @@ The registry tracks *Zero Paradox framework* declarations — the things that ge
 restructured. Two categories are excluded by explicit policy, and the excluded counts are printed on
 every run:
 
-1. **Vendored external code** (`EXCLUDE_DIRS` — `ZeroParadox/Vendored/`). These files
-   (`NaturalOps.lean`, `NaturalOpsPow.lean`) are Mathlib / Combinatorial-Game-Theory code
+1. **Vendored external code** (`EXCLUDE_DIRS` — `ZeroParadox/Vendored/`). **One file:
+   `NaturalOps.lean`**, verbatim Mathlib / Combinatorial-Game-Theory code
    (Violeta Hernández, Apache-2.0), vendored because the upstream copy was removed after Mathlib
-   v4.28. They are not Zero Paradox original work, are never cited by name in the framework, and are
-   never restructured — registering them would only add infrastructure noise and misattribute
-   provenance.
+   v4.28. It is not Zero Paradox original work, is never cited by name in the framework, and is
+   never restructured — registering it would only add infrastructure noise and misattribute
+   provenance. **Measured: 0 declarations from `ZeroParadox/Vendored/` are in the store.**
+
+   ⚠ **`ZeroParadox/Ordinal/NaturalOpsPow.lean` IS NOT IN THIS CATEGORY.** It is a **PORT** —
+   Hernández's `CombinatorialGames` proof adapted to the vendored v4.28 API, with port changes marked
+   `-- [ZP]` — rather than a verbatim copy. Neither reason above holds of it: its declarations ARE
+   registered, and `Ordinal/KirbyParis.lean` cites `NaturalOpsPow.nadd_lt_omega0_opow` **by name**.
+
+   Its exemption is a **path line in `vendored_files.txt`**, whose own header scopes it as *exempt
+   from every checker* — not from the prose checkers alone. ⚠ There is no content-based exemption to
+   appeal to: `vendored.py` records that content sniffing was **removed 2026-08-10 as a
+   self-exemption hole** (`RLY2-1`, bedrock), because a file could exempt itself from every checker
+   by naming a licence in its header. Adding a line to the allowlist is a reviewable act; matching a
+   string was not.
+
+   ⚠ **The arrangement is OPEN, not ratified.** The file is exempt like vendored code, registered and
+   cited like framework code, and filed like framework code. Those can be reconciled — a port may
+   legitimately carry upstream prose while proving locally-cited theorems — but the allowlist's own
+   entry criterion asks whether the content is *genuinely upstream's*, and an API adaptation is a
+   fair question against that bar. Do not read this paragraph as settling it.
 
 2. **Source-unnamed anonymous instances** (`INCLUDE_ANON = False`). `instance : Foo` declarations
    whose names Lean generates at compile time have no citable source name and no stable identity to
@@ -74,8 +93,10 @@ the claims-layer work it is a **multi-collection envelope**, not a bare declarat
   "store_version": "2" }
 ```
 
-- **`collections.declarations.entries`** — the ~1012-declaration inventory enriched with an **ontology
+- **`collections.declarations.entries`** — the declaration inventory enriched with an **ontology
   overlay**: per-declaration `object` / `domain` / `role` tags (each a controlled, multi-valued list).
+  The count is not recorded here — measure the live store:
+  `python -c "import json; print(len(json.load(open('ssot.json',encoding='utf-8'))['collections']['declarations']['entries']))"`
 - **`collections.claims.entries`** — the curated **claim graph**: ⊥-face domain nodes, the adjudicated
   inter-domain edges, and the free-standing keystones. Each claim carries a `status`
   (`proved`/`deep`/`corr`/`conj`/`commitment`), and a declaration links back to a claim via its

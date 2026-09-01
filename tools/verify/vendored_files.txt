@@ -1,0 +1,15 @@
+# Files EXEMPT from every checker because they are third-party code we must not edit.
+#
+# Repo-relative paths, one per line. Anything under a `Vendored/` directory is exempt without
+# being listed; this file is for backports that live elsewhere in the tree.
+#
+# ⚠ ADDING A LINE HERE IS THE ONLY WAY A FILE OUTSIDE `Vendored/` BECOMES EXEMPT. It used to be
+# enough for a file to CONTAIN the string "Apache-2.0" or "VENDORED FROM" in its first 30 lines,
+# which meant any file could exempt itself from all four checkers by mentioning a licence in prose.
+# Measured 2026-08-10: one such line at the top of `Order/Snap.lean` turned a POV DENIAL — the class
+# documented as never baselined — from `exit 1, blocked` into `exit 0, commit created`.
+#
+# Exemption means "never fix", so it must be a deliberate, reviewable act. Adding a path here is a
+# claim that the file is genuinely upstream's and that editing it would destroy the diff against
+# upstream, which is the reason for vendoring in the first place.
+ZeroParadox/Ordinal/NaturalOpsPow.lean

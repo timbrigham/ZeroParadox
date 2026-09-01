@@ -1,0 +1,80 @@
+# Grandfathered untagged point-of-view claims. See check_pov.py.
+# Shrink this file as sites are tagged; never grow it deliberately.
+BOTTOMELEMENT.md::47be907b249a	BOTTOMELEMENT.md:116	| concurrency | hinge | the fixed point where least and greatest coincide (operation = result) | [`unique_fp`]
+BOTTOMELEMENT.md::e23930698a85	BOTTOMELEMENT.md:97	| a *zero object* (both initial and terminal) of the Kleisli or p-adic categories | [`kleisli_bottom_not_zero`
+CLAIMS.md::25936f488172	CLAIMS.md:69	| ?? is min ? max (least fixed point ? tower supremum) | ordinal fixed-point theory; the snap ? ? ?? as one Kl
+SNAP.md::2588013446a3	SNAP.md:29	**Proved - a frame-change in each domain, and an order-theoretic universal.** Over any complete lattice the or
+SNAP.md::51da96b4dd81	SNAP.md:65	| *one mechanism across categories*. The per-domain frame-flips share a shape, not a single categorical map. I
+SNAP.md::91ffcc16fa7e	SNAP.md:37	**A note on the frame-change faces.** [`snap_is_frameflip`](ZeroParadox/Multihomed/SnapFrameChange.lean), [`ca
+SNAP.md::df24ead76182	SNAP.md:33	**Proved - a wall: the snap is not one mechanism across categories.** The per-domain frame-flips share a shape
+ZeroParadox/Category/ChoiceCannotBe.lean::7938d9513a22	ZeroParadox/Category/ChoiceCannotBe.lean:40	The ordinary English word "choice" ? an act of picking, adopting a point of view, selecting a chart ?
+ZeroParadox/Category/SeamCoincidence.lean::ae82f6151fef	ZeroParadox/Category/SeamCoincidence.lean:47	is a zero object **iff** it is both initial and terminal, and (since it *is* a zero object, via
+ZeroParadox/Category/SeamFrameChange.lean::035d8c4ad913	ZeroParadox/Category/SeamFrameChange.lean:87	* `catseam_is_frameflip` ? lives in `ModuleCat ?`, a **category**, not a lattice at all.
+ZeroParadox/Category/SeamFrameChange.lean::38a3d1598208	ZeroParadox/Category/SeamFrameChange.lean:57	/-- **The seam is a FIXED POINT of the frame-change (category frame).**
+ZeroParadox/Category/SeamFrameChange.lean::4021f672fa67	ZeroParadox/Category/SeamFrameChange.lean:97	theorem catseam_is_frameflip :
+ZeroParadox/Category/SeamFrameChange.lean::5ea0d7c9964b	ZeroParadox/Category/SeamFrameChange.lean:60	MC-1 convention ? do not rename ? but it OVERCLAIMS: the seam is not a frame flip, it is what the
+ZeroParadox/Category/SeamFrameChange.lean::62ff3c4e192d	ZeroParadox/Category/SeamFrameChange.lean:61	frame flip FIXES.** The docstring already said so ("the fixed point of the frame-change"); the name
+ZeroParadox/Category/SeamFrameChange.lean::7020d4e27155	ZeroParadox/Category/SeamFrameChange.lean:26	The categorical analog of `RiemannSphere.rInv` (which swaps the poles `0 ? ?`) is the **`op`-duality**,
+ZeroParadox/Category/SeamFrameChange.lean::9f2e5f40d4d7	ZeroParadox/Category/SeamFrameChange.lean:64	`Statement:` the seam is **initial AND terminal** (a zero object), and so is its opposite ? four
+ZeroParadox/Category/SeamFrameChange.lean::aa317d15586e	ZeroParadox/Category/SeamFrameChange.lean:59	? **NAME CORRECTION (Tim, 2026-07-30). The handle `catseam_is_frameflip` is retained per the CC-2 /
+ZeroParadox/Category/SeamFrameChange.lean::ab20e9ef7ef2	ZeroParadox/Category/SeamFrameChange.lean:45	**Fences.** Category point-of-view's shape of the frame-change; the abstract cross-domain "snap = frame
+ZeroParadox/Category/SeamFrameChange.lean::bdaa0800a9cc	ZeroParadox/Category/SeamFrameChange.lean:27	which swaps the poles **initial ? terminal**. The zero-object seam `Z = fD_functor.obj 0`
+ZeroParadox/Category/SeamFrameChange.lean::ed3af47a80d2	ZeroParadox/Category/SeamFrameChange.lean:90	SHAPE ? one object carrying both extremal characterizations at once ? and per this project's standing
+ZeroParadox/Category/SeamFrameChange.lean::f2bcd33a7648	ZeroParadox/Category/SeamFrameChange.lean:43	`0` on the sphere ? the frame-change fixes only the bottom.
+ZeroParadox/Category/SeamFrameChange.lean::fe46127583cb	ZeroParadox/Category/SeamFrameChange.lean:29	this file bundles that P1 coincidence with the P2 frame-change: `op` carries the seam's initial-ness to
+ZeroParadox/Category/SeamGeneric.lean::90989daffc06	ZeroParadox/Category/SeamGeneric.lean:83	it is a zero object iff it is both initial and terminal ? and `hilbert_bottom_isZero` discharges
+ZeroParadox/Computability/CodeDataFrameChange.lean::3a27e2a00a4c	ZeroParadox/Computability/CodeDataFrameChange.lean:51	`codedata_is_frameflip`) carry `Classical.choice`, inherited from the Mathlib `Code` / Roger fixed-point
+ZeroParadox/Computability/CodeDataFrameChange.lean::5889467324ce	ZeroParadox/Computability/CodeDataFrameChange.lean:38	the diagonal. `codedata_is_frameflip` bundles the three faces: the frame-change is an involution, its
+ZeroParadox/Computability/CodeDataFrameChange.lean::5ee7ffbe5467	ZeroParadox/Computability/CodeDataFrameChange.lean:54	**Fences.** Computability point-of-view's shape of the frame-change; the abstract cross-domain
+ZeroParadox/Computability/CodeDataFrameChange.lean::76b2ff84adb8	ZeroParadox/Computability/CodeDataFrameChange.lean:60	- ? II The quine on the fixed locus: `selfConfig_on_fixedLocus`, `codedata_is_frameflip`
+ZeroParadox/Computability/CodeDataFrameChange.lean::89929cbd9d74	ZeroParadox/Computability/CodeDataFrameChange.lean:55	"snap = frame-change" stays conjectural (type boundary; see
+ZeroParadox/Computability/CodeDataFrameChange.lean::efaf4bdd1d71	ZeroParadox/Computability/CodeDataFrameChange.lean:27	pair `(program, datum)`, both G?del-numbered as `?`, and the frame-change exchanges the program-role and
+ZeroParadox/Computability/Occurrence.lean::c0eb6826d8e4	ZeroParadox/Computability/Occurrence.lean:496	4. **Both poles at the bottom, across charts** ? zero output, infinite duration
+ZeroParadox/Computability/Occurrence.lean::c8b0d3755d41	ZeroParadox/Computability/Occurrence.lean:34	as `f : ? ? Option ?` (`none` = halted, `some s'` = next configuration), both poles appear.
+ZeroParadox/Miniature.lean::962140044a2a	ZeroParadox/Miniature.lean:275	point ? min ? max);
+ZeroParadox/Miniature.lean::d54d73b10bf3	ZeroParadox/Miniature.lean:237	/-- **Both a limit and a bottom (min ? max, in miniature).** `?` is *simultaneously* the supremum of the
+ZeroParadox/Multihomed/Boundary.lean::ba4b84eb6be3	ZeroParadox/Multihomed/Boundary.lean:119	from below" and "an infinite descent issues from it" are the same fact about ? in the two charts, and
+ZeroParadox/Multihomed/SelfAppSeam.lean::035d8c4ad913	ZeroParadox/Multihomed/SelfAppSeam.lean:96	* `catseam_is_frameflip` ? lives in `ModuleCat ?`, a **category**, not a lattice at all.
+ZeroParadox/Multihomed/SelfAppSeam.lean::73ab699da20a	ZeroParadox/Multihomed/SelfAppSeam.lean:27	*unique* fixed point of `selfApp`. A unique fixed point is trivially both extremal in the fixed-point
+ZeroParadox/Multihomed/SelfAppSeam.lean::7bddca8f1fa2	ZeroParadox/Multihomed/SelfAppSeam.lean:37	- `selfApp_bot_is_both_extremal` ? the conjunction: ? is simultaneously least and greatest fixed
+ZeroParadox/Multihomed/SelfAppSeam.lean::ed3af47a80d2	ZeroParadox/Multihomed/SelfAppSeam.lean:99	SHAPE ? one object carrying both extremal characterizations at once ? and per this project's standing
+ZeroParadox/Multihomed/SeparatedSuccession.lean::3f3f39197864	ZeroParadox/Multihomed/SeparatedSuccession.lean:9	The snap's succession of **targets** ? its **iterative bottoms** ? shows up in two charts of the framework
+ZeroParadox/Multihomed/SnapFrameChange.lean::32ee21526de4	ZeroParadox/Multihomed/SnapFrameChange.lean:43	and the ascent to ? are the *same* tower-encodings under the frame-change.
+ZeroParadox/Multihomed/SnapFrameChange.lean::361e024286a7	ZeroParadox/Multihomed/SnapFrameChange.lean:46	cross-domain claim: the general statement "the snap `? ? ??` IS the change of point of view" remains a
+ZeroParadox/Multihomed/SnapFrameChange.lean::3b24d3e1b6af	ZeroParadox/Multihomed/SnapFrameChange.lean:88	/-- **The two chart-readings of the tower's limit (valuation frame).**
+ZeroParadox/Multihomed/SnapFrameChange.lean::578a1560f33a	ZeroParadox/Multihomed/SnapFrameChange.lean:42	passage between them. `snap_is_frameflip` bundles both limits with the `0 ? ?` swap: the descent to ?
+ZeroParadox/Multihomed/SnapFrameChange.lean::797c332ce001	ZeroParadox/Multihomed/SnapFrameChange.lean:45	**Fences.** This is the **valuation point of view's** shape of the frame-change, not the abstract
+ZeroParadox/Multihomed/SnapFrameChange.lean::8cedc5ae1eca	ZeroParadox/Multihomed/SnapFrameChange.lean:90	? **NAME CORRECTION (Tim, 2026-07-30). The handle `snap_is_frameflip` is retained per the CC-2 /
+ZeroParadox/Multihomed/SnapFrameChange.lean::ce83903e9a30	ZeroParadox/Multihomed/SnapFrameChange.lean:40	through `rInv`, tend to `?`. So one sequence, two charts: it falls to the floor `0` in the encoding
+ZeroParadox/Multihomed/SnapFrameChange.lean::cf463b50d5c8	ZeroParadox/Multihomed/SnapFrameChange.lean:67	theorem snap_frameflip_tower_tendsto_infty :
+ZeroParadox/Order/SeamSchema.lean::a2d3b25edff0	ZeroParadox/Order/SeamSchema.lean:43	`selfApp_fp_set_eq_singleton_bot`), and ? is both least and greatest fixed point
+ZeroParadox/Ordinal/Epsilon0MinMax.lean::035d8c4ad913	ZeroParadox/Ordinal/Epsilon0MinMax.lean:79	* `catseam_is_frameflip` ? lives in `ModuleCat ?`, a **category**, not a lattice at all.
+ZeroParadox/Ordinal/Epsilon0MinMax.lean::36b34e72bffc	ZeroParadox/Ordinal/Epsilon0MinMax.lean:38	- ? II the min ? max capstone (one object, both readings)
+ZeroParadox/Ordinal/Epsilon0MinMax.lean::ed3af47a80d2	ZeroParadox/Ordinal/Epsilon0MinMax.lean:82	SHAPE ? one object carrying both extremal characterizations at once ? and per this project's standing
+ZeroParadox/Settheory/ForkFrameChange.lean::035d8c4ad913	ZeroParadox/Settheory/ForkFrameChange.lean:98	* `catseam_is_frameflip` ? lives in `ModuleCat ?`, a **category**, not a lattice at all.
+ZeroParadox/Settheory/ForkFrameChange.lean::297e44b888bd	ZeroParadox/Settheory/ForkFrameChange.lean:108	theorem fork_is_frameflip :
+ZeroParadox/Settheory/ForkFrameChange.lean::2fe176ec35b9	ZeroParadox/Settheory/ForkFrameChange.lean:27	point). This file adds the P2 face ? the **frame-change** ? in its domain-independent form: the
+ZeroParadox/Settheory/ForkFrameChange.lean::355603ff339b	ZeroParadox/Settheory/ForkFrameChange.lean:71	The domain-independent shape realized concretely by the valuation (`snap_is_frameflip`) and category
+ZeroParadox/Settheory/ForkFrameChange.lean::4064eb339962	ZeroParadox/Settheory/ForkFrameChange.lean:82	the snap *is* the frame change remains this layer's open conjecture, as its file header states.
+ZeroParadox/Settheory/ForkFrameChange.lean::53829ad6f574	ZeroParadox/Settheory/ForkFrameChange.lean:35	(`snap_is_frameflip`) and category (`catseam_is_frameflip`) faces SHARE. Not "instances": neither
+ZeroParadox/Settheory/ForkFrameChange.lean::5572e63ba862	ZeroParadox/Settheory/ForkFrameChange.lean:34	order-theoretic universal `snap_is_frameflip` ? the domain-independent shape that the valuation
+ZeroParadox/Settheory/ForkFrameChange.lean::62380d201a73	ZeroParadox/Settheory/ForkFrameChange.lean:68	/-- **The order-theoretic universal frame-flip.** Over any complete lattice: (i)-(ii) the order-duality
+ZeroParadox/Settheory/ForkFrameChange.lean::91088598bf53	ZeroParadox/Settheory/ForkFrameChange.lean:33	`fork_is_frameflip` bundles both faces: the duality-swap (P2) with `fork_collapse_iff` (P1). This is the
+ZeroParadox/Settheory/ForkFrameChange.lean::9284c97d4cb7	ZeroParadox/Settheory/ForkFrameChange.lean:77	chart-readings (**no snap appears in it**), and `catseam_is_frameflip` proves the seam is a **fixed
+ZeroParadox/Settheory/ForkFrameChange.lean::a532d44fdbaf	ZeroParadox/Settheory/ForkFrameChange.lean:74	**Scope note (2026-07-30).** Of the three `*_is_frameflip` handles this is the only one whose name
+ZeroParadox/Settheory/ForkFrameChange.lean::b7482f0adea6	ZeroParadox/Settheory/ForkFrameChange.lean:72	(`catseam_is_frameflip`) frame-flips. Choice-free.
+ZeroParadox/Settheory/ForkFrameChange.lean::d3fcf3b6e735	ZeroParadox/Settheory/ForkFrameChange.lean:69	frame-change swaps the fork's two closures `lfp ? gfp`, and (iii) the fork collapses to a single
+ZeroParadox/Settheory/ForkFrameChange.lean::ed3af47a80d2	ZeroParadox/Settheory/ForkFrameChange.lean:101	SHAPE ? one object carrying both extremal characterizations at once ? and per this project's standing
+ZeroParadox/Settheory/ForkFrameChange.lean::f66f3e076671	ZeroParadox/Settheory/ForkFrameChange.lean:76	carry corrections in their own docstrings ? `snap_is_frameflip` proves the tower limit's two
+ZeroParadox/Settheory/LawvereBridge.lean::58863659152a	ZeroParadox/Settheory/LawvereBridge.lean:123	is `fork_is_frameflip`; the concrete ? non-well-foundedness of `selfApp` is `floor_not_wellFounded`.) -/
+ZeroParadox/Valuation/InfinitudeFloor.lean::33425ee2c9d4	ZeroParadox/Valuation/InfinitudeFloor.lean:150	infinitude climbing to it*. This is the complexity ? infinitude frame-flip, a sibling of `snap_is_frameflip`
+ZeroParadox/Valuation/InfinitudeFloor.lean::97b914c8cc52	ZeroParadox/Valuation/InfinitudeFloor.lean:151	/ `catseam_is_frameflip`: the same pole, looked at from the valuation chart and the infinitude chart. -/
+ZeroParadox/Valuation/InfinitudeFloor.lean::db530927eae2	ZeroParadox/Valuation/InfinitudeFloor.lean:191	sides of one pole, traversed **one after the other** along the chain. Both poles, both concurrently (at the
+ZeroParadox/Valuation/PoleChartSelection.lean::8ba7b12edd65	ZeroParadox/Valuation/PoleChartSelection.lean:31	- **? II (what it would take).** Selection forces a decision only when the two charts are
+ZeroParadox/Valuation/PoleChartSelection.lean::cf91eb1c0845	ZeroParadox/Valuation/PoleChartSelection.lean:295	**The gap.** Between these sits precisely one thing: the claim that the two charts at ? are internally
+ZeroParadox/Valuation/PoleChartSelection.lean::e657ca950045	ZeroParadox/Valuation/PoleChartSelection.lean:37	under the additional modeling commitment that the two charts are internally indistinguishable. That
+ZeroParadox/Valuation/PoleCorners.lean::4ef46d5afc4c	ZeroParadox/Valuation/PoleCorners.lean:31	* `cornerInfty` ? both poles to `?`  : the **infinity pole**;
+ZeroParadox/Valuation/PoleCorners.lean::c173d1809c4c	ZeroParadox/Valuation/PoleCorners.lean:109	`cornerInfty`) send both poles to one pole: they are **not injective**, the input is forgotten, there is no
+ZeroParadox/Valuation/PoleCorners.lean::c2436225b420	ZeroParadox/Valuation/PoleCorners.lean:30	* `cornerZero`  ? both poles to `0`  : the **zero pole**;
+scripts/build_snap_map.py::8e8339331b29	scripts/build_snap_map.py:177	**Proved - a wall: the snap is not one mechanism across categories.** The per-domain frame-flips share a shape
+scripts/build_snap_map.py::b65217ae935e	scripts/build_snap_map.py:181	**A note on the frame-change faces.** snap_is_frameflip, catseam_is_frameflip, and fork_is_frameflip are prove

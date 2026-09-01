@@ -1,0 +1,5 @@
+# Universal-negative sites present when this baseline was taken.
+# Each is a PROMPT TO READ, not a verdict: a retraction quoting an error looks
+# identical to the error. SHRINK this list as files are touched; never grow it.
+# Refresh with:  python tools/verify/check_negatives.py --baseline
+ZeroParadox/Category/Node4Generation.lean::fb7b2520df04

@@ -616,8 +616,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1676,
-        "files": 136
+        "declarations": 1691,
+        "files": 140
       },
       "entries": [
         {
@@ -1125,6 +1125,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "01c2bd2c-6780-4a8d-aa3d-5d4d2c624c94",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_trivialAboutNat",
+            "short": "_trivialAboutNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_trivialAboutNat",
+            "short": "_trivialAboutNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -2329,6 +2366,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06623639-1c72-4b97-bab7-c1af54901d01",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_zpsN",
+            "short": "_zpsN"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_zpsN",
+            "short": "_zpsN",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the four axiom-footprint counterfactuals as emitted evidence: two minimal pairs isolating the carrier (ZPSemilattice on ℤ_[2] vs ℕ) and the numeral (ℕ∞ literal 1 vs cast from ℕ).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4173,7 +4247,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
+          "disposition": "withdrawn",
           "id": "0d6dd94c-0a97-40a4-9383-024a2abe98bb",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -4182,12 +4256,13 @@
             "short": "nu_hosted_face"
           },
           "old": {
-            "file": null,
+            "file": "ZeroParadox/Settheory/HostVerdict.lean",
             "kind": null,
             "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nu_hosted_face",
+            "short": "nu_hosted_face",
+            "synthetic": true
           },
           "ontology": {
             "domain": [
@@ -4198,7 +4273,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
+          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5114,7 +5189,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
+          "disposition": "withdrawn",
           "id": "10964a75-a91d-43f0-af78-242d67e4ea8a",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleBridge.lean",
@@ -5123,19 +5198,20 @@
             "short": "valBridge_nonempty_iff"
           },
           "old": {
-            "file": null,
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
             "kind": null,
             "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.valBridge_nonempty_iff",
+            "short": "valBridge_nonempty_iff",
+            "synthetic": true
           },
           "ontology": {
             "domain": [],
             "object": [],
             "role": []
           },
-          "reason": "Round-2 gate fixes: the converse is now proved, so the class is characterised exactly",
+          "reason": "Duplicate registration: one declaration at ScaleBridge.lean:281, two live entries added during the ontology revamp. Kept c0005973 (carries the curated ontology - object bottom, domain valuation, role face); this entry is bare. Withdrawn as added-in-error, not dropped: it never had a prior identity.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7163,6 +7239,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "18f3aacc-3062-4a95-8266-f85200b0b89e",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_trivialAboutZ2",
+            "short": "_trivialAboutZ2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_trivialAboutZ2",
+            "short": "_trivialAboutZ2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -13447,7 +13560,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
+          "disposition": "withdrawn",
           "id": "337e0196-a0e1-46bf-9cb6-a8e2230555a9",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -13456,12 +13569,13 @@
             "short": "wf_host_refuses_nu"
           },
           "old": {
-            "file": null,
+            "file": "ZeroParadox/Settheory/HostVerdict.lean",
             "kind": null,
             "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wf_host_refuses_nu",
+            "short": "wf_host_refuses_nu",
+            "synthetic": true
           },
           "ontology": {
             "domain": [
@@ -13472,7 +13586,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
+          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13632,8 +13746,8 @@
           "new": {
             "file": "ZeroParadox/Computability/ComputableCrossing.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.computable_no_fixedpointfree",
-            "short": "computable_no_fixedpointfree"
+            "qualified": "ZeroParadox.computable_fixedpoint_up_to_eval",
+            "short": "computable_fixedpoint_up_to_eval"
           },
           "old": {
             "file": null,
@@ -13655,7 +13769,7 @@
               "go"
             ]
           },
-          "reason": "The hard bridge CROSSED in the computability face — eval is the reflexive object, Roger/Kleene = Lawvere firing (Tim was right, framework expedites it)",
+          "reason": "CC-NAME-1: the old name asserted the false strong form its own docstring refutes and was quoted as a witness in a DOI-bearing PDF.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14531,6 +14645,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "38440604-4596-4f57-baeb-83449e6d3752",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "",
+            "qualified": "_enatZero",
+            "short": "_enatZero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_enatZero",
+            "short": "_enatZero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 20: emit the numeral claim where the claim lives. The docstring says the ℕ∞ numerals 0 and 1 carry choice and ≥2 do not; these print that at the level of the numerals rather than the bundles they resolve through.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "384f5205-d0ed-4e10-b00a-41fe993f34d2",
           "new": {
@@ -14567,7 +14718,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
+          "disposition": "withdrawn",
           "id": "38552ef5-7fed-477c-ae7f-4a8686dc094a",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -14576,12 +14727,13 @@
             "short": "host_verdict_axis"
           },
           "old": {
-            "file": null,
+            "file": "ZeroParadox/Settheory/HostVerdict.lean",
             "kind": null,
             "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.host_verdict_axis",
+            "short": "host_verdict_axis",
+            "synthetic": true
           },
           "ontology": {
             "domain": [
@@ -14592,7 +14744,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
+          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure: its content duplicated mu_nu_branch_exclusion and selfApp_lands_on_nu character-for-character. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17250,7 +17402,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
+          "disposition": "withdrawn",
           "id": "44a2ba45-74f8-4b8e-b8a9-0d4a661deebd",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -17259,12 +17411,13 @@
             "short": "nu_refused_face"
           },
           "old": {
-            "file": null,
+            "file": "ZeroParadox/Settheory/HostVerdict.lean",
             "kind": null,
             "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nu_refused_face",
+            "short": "nu_refused_face",
+            "synthetic": true
           },
           "ontology": {
             "domain": [
@@ -17275,7 +17428,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
+          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17314,6 +17467,43 @@
             ]
           },
           "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "44c6b92e-8d03-4051-bf9b-71125b24f15f",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "",
+            "qualified": "_addOne",
+            "short": "_addOne"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_addOne",
+            "short": "_addOne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18047,6 +18237,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "47a891b1-31fb-4378-8831-3bb226595cc0",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_VScast",
+            "short": "_VScast"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_VScast",
+            "short": "_VScast",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 18: the numeral counterfactual moves from bare ℕ∞ values to the class itself, so the emitted footprint and the claim about ValuationStructure are the same statement.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20720,7 +20947,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
+          "disposition": "withdrawn",
           "id": "52887614-7041-401e-8b21-fab5daedd32d",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -20729,12 +20956,13 @@
             "short": "nu_hosted_forces_non_wf"
           },
           "old": {
-            "file": null,
+            "file": "ZeroParadox/Settheory/HostVerdict.lean",
             "kind": null,
             "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nu_hosted_forces_non_wf",
+            "short": "nu_hosted_forces_non_wf",
+            "synthetic": true
           },
           "ontology": {
             "domain": [
@@ -20745,7 +20973,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
+          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23019,6 +23247,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5bf6ee77-5bd2-4e62-a2b0-43924bbc0de6",
+          "new": {
+            "file": "ZeroParadox/Valuation/LocalFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.one_branch_new",
+            "short": "one_branch_new"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Promote the branch-dependent successor-null theorems from the 2026-07-26 probe into LocalFloor.lean, beside the prose claim they prove.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5c2b96dc-75c5-4a84-b078-35ec5a00b9e8",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -23304,6 +23570,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5d43ad6c-338c-4963-bdb1-1e358b881f54",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_zpsZ2",
+            "short": "_zpsZ2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_zpsZ2",
+            "short": "_zpsZ2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Land the four axiom-footprint counterfactuals as emitted evidence: two minimal pairs isolating the carrier (ZPSemilattice on ℤ_[2] vs ℕ) and the numeral (ℕ∞ literal 1 vs cast from ℕ).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5d76cff6-e38f-488d-9727-f687d80c7849",
           "new": {
@@ -23562,7 +23865,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
+          "disposition": "withdrawn",
           "id": "5e07249b-a078-421a-98b0-692471f17210",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -23571,12 +23874,13 @@
             "short": "engine_blind_to_verdict"
           },
           "old": {
-            "file": null,
+            "file": "ZeroParadox/Settheory/HostVerdict.lean",
             "kind": null,
             "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.engine_blind_to_verdict",
+            "short": "engine_blind_to_verdict",
+            "synthetic": true
           },
           "ontology": {
             "domain": [
@@ -23587,7 +23891,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
+          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24551,6 +24855,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "withdrawn",
+          "id": "6384d47f-5531-4af6-9cae-126c04a46bce",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_enatOne",
+            "short": "_enatOne"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_enatOne",
+            "short": "_enatOne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Superseded within the same session by _VSlit: the numeral counterfactual belongs at the class, not at a bare ℕ∞ value. Both gates found the value-level pair could not carry the class-level claim it was cited for.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "new",
           "id": "640b9ef1-4939-4cd8-af29-f5401b21231e",
           "new": {
@@ -24825,6 +25164,43 @@
             ]
           },
           "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "65aeb259-1a52-4a8e-8e20-79a841ef5fea",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "",
+            "qualified": "_addOneCast",
+            "short": "_addOneCast"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_addOneCast",
+            "short": "_addOneCast",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26538,8 +26914,8 @@
           "new": {
             "file": "ZeroParadox/Order/MarkovContractionDual.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.step",
-            "short": "step"
+            "qualified": "ZeroParadox.markovStep",
+            "short": "markovStep"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC39.lean",
@@ -26558,7 +26934,7 @@
               "scaffolding"
             ]
           },
-          "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "reason": "Name collision: two distinct declarations were both ZeroParadox.step in a flat namespace - this Fin 2 Markov kernel (MarkovContractionDual.lean:74) and Valuation/BottomInvariant.lean:314 (InvariantMarkovKernel). Build was green only because no module imported both. Renamed the scaffolding-tagged Markov one; corpus updated across MarkovContractionDual, NuRateMatch and BottomCannotBe; lake build green, 3978 jobs, 0 errors. Tim's call 2026-08-22.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30384,6 +30760,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7d03c661-b738-42a9-81d4-cf5770c10753",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "",
+            "qualified": "_enatTwo",
+            "short": "_enatTwo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_enatTwo",
+            "short": "_enatTwo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 20: emit the numeral claim where the claim lives. The docstring says the ℕ∞ numerals 0 and 1 carry choice and ≥2 do not; these print that at the level of the numerals rather than the bundles they resolve through.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7d7eedda-a77b-4be8-a066-8a6b3711c013",
           "new": {
@@ -32810,6 +33223,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "878a6b7d-e40b-4f96-8bb7-9279239057db",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_VSlit",
+            "short": "_VSlit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_VSlit",
+            "short": "_VSlit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 18: the numeral counterfactual moves from bare ℕ∞ values to the class itself, so the emitted footprint and the claim about ValuationStructure are the same statement.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35482,6 +35932,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "93ec674f-8f1d-4bc9-a09a-7ab7a1d5a1d2",
+          "new": {
+            "file": "ZeroParadox/Valuation/LocalFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zero_branch_same",
+            "short": "zero_branch_same"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Promote the branch-dependent successor-null theorems from the 2026-07-26 probe into LocalFloor.lean, beside the prose claim they prove.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "93f1fa9b-96ea-4cb6-a54b-89120c738749",
           "new": {
@@ -37402,7 +37890,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
+          "disposition": "withdrawn",
           "id": "9b8e0bed-1e85-4511-b89f-3f21a4fa6eb9",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -37411,12 +37899,13 @@
             "short": "trinary_faces"
           },
           "old": {
-            "file": null,
+            "file": "ZeroParadox/Settheory/HostVerdict.lean",
             "kind": null,
             "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trinary_faces",
+            "short": "trinary_faces",
+            "synthetic": true
           },
           "ontology": {
             "domain": [
@@ -37427,7 +37916,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
+          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40132,6 +40621,43 @@
             ]
           },
           "reason": "Meta helper renamed in source to remove ExtractDeps/Snapshot qualified collision",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a9f8f559-5d40-42b4-8067-95432e447192",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "",
+            "qualified": "_enatOne",
+            "short": "_enatOne"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_enatOne",
+            "short": "_enatOne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Round 20: emit the numeral claim where the claim lives. The docstring says the ℕ∞ numerals 0 and 1 carry choice and ≥2 do not; these print that at the level of the numerals rather than the bundles they resolve through.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -52230,6 +52756,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "withdrawn",
+          "id": "da46451c-8588-4882-a346-91f6c000599e",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "",
+            "qualified": "_enatOneCast",
+            "short": "_enatOneCast"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "",
+            "qualified": "_enatOneCast",
+            "short": "_enatOneCast",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Superseded within the same session by _VScast: the numeral counterfactual belongs at the class, not at a bare ℕ∞ value. Both gates found the value-level pair could not carry the class-level claim it was cited for.",
           "verify": {
             "axioms": null,
             "sorry_free": true

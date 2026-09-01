@@ -1,0 +1,791 @@
+# check_prose.py baseline - prose sites grandfathered at creation.
+# SHRINK as files are touched; never grow deliberately.
+# Regenerate with --baseline ONLY after a real audit.
+ZeroParadox/Algebra/Wheel.lean::block::70ce8d3bae1f::ZPJ — Wheel Theory Formalization: /0 as a First-
+ZeroParadox/Algebra/Wheel.lean::block::71f12a3187f0::The gauge (2026-08-01)
+ZeroParadox/Algebra/Wheel.lean::block::85397ce15fe3::Resolution
+ZeroParadox/Algebra/Wheel.lean::doc::WVSNondegenerate
+ZeroParadox/Algebra/Wheel.lean::doc::ZPWheelElem
+ZeroParadox/Algebra/Wheel.lean::doc::wheelBot
+ZeroParadox/Algebra/Wheel.lean::doc::wheelInf
+ZeroParadox/Algebra/Wheel.lean::doc::wheelValuationStructure_always_inhabited
+ZeroParadox/Algebra/Wheel.lean::doc::zpwVal_inv_zero
+ZeroParadox/Algebra/WheelFrac.lean::block::39596678d992::§ The involutive fork, and why it does NOT unify
+ZeroParadox/Algebra/WheelFrac.lean::doc::InvolutiveFork
+ZeroParadox/Algebra/WheelFrac.lean::doc::fixed_pole_forces_collapse
+ZeroParadox/Category/AxG2Reduce.lean::block::8f090487adea::B4 (pipeline): AX-G2 is derivable from strict-in
+ZeroParadox/Category/BottomUndecidable.lean::block::407cb1fb8b13::Where the keystone's classical cost sits: unreso
+ZeroParadox/Category/BottomUndecidable.lean::doc::selfContaining_decidable
+ZeroParadox/Category/BottomUndecidable.lean::doc::wem_of_decidableEq_glue
+ZeroParadox/Category/CardinalitySplit.lean::block::314bc7ade91e::Axis III generality: is the #4/#5 cardinality sp
+ZeroParadox/Category/CardinalitySplit.lean::doc::initial_carrier_empty_or_subsingleton
+ZeroParadox/Category/CardinalitySplit.lean::doc::type_initial_card0
+ZeroParadox/Category/Category.lean::block::6bf2dd1a217b::ZP-G: Category Theory
+ZeroParadox/Category/Category.lean::doc::ZPCategory
+ZeroParadox/Category/Category.lean::doc::ZPSurprisal
+ZeroParadox/Category/ChoiceCannotBe.lean::bare::idNucleus
+ZeroParadox/Category/ChoiceCannotBe.lean::bare::instBooleanAlgebra
+ZeroParadox/Category/ChoiceCannotBe.lean::bare::mixed_cofix_nonempty
+ZeroParadox/Category/ChoiceCannotBe.lean::bare::no_snap_nucleus
+ZeroParadox/Category/ChoiceCannotBe.lean::bare::snapNucleus_bot_ne_bot
+ZeroParadox/Category/ChoiceCannotBe.lean::bare::synVal_mono
+ZeroParadox/Category/ChoiceCannotBe.lean::block::b8a6867009a2::Machine-checked characterization index of the fr
+ZeroParadox/Category/ChoiceCannotBe.lean::block::bdd02e680ae2::§ IV. The ESSENTIAL cases — where the choice is
+ZeroParadox/Category/ChoiceCannotBe.lean::label::chart_selection_is_freeG
+ZeroParadox/Category/ChoiceCannotBe.lean::label::choiceFragment_of_classical
+ZeroParadox/Category/ChoiceCannotBe.lean::label::comparable_of_classical
+ZeroParadox/Category/ChoiceCannotBe.lean::label::dnegNucleus
+ZeroParadox/Category/ChoiceCannotBe.lean::label::dnegNucleus_isClosed_iff
+ZeroParadox/Category/ChoiceCannotBe.lean::label::dneg_inf_distrib
+ZeroParadox/Category/ChoiceCannotBe.lean::label::em_iff_dnegNucleus_trivial
+ZeroParadox/Category/ChoiceCannotBe.lean::label::em_of_choiceFragment
+ZeroParadox/Category/ChoiceCannotBe.lean::label::em_of_wellOrder_comparable
+ZeroParadox/Category/ChoiceCannotBe.lean::label::fin3_middle_not_closed_point
+ZeroParadox/Category/ChoiceCannotBe.lean::label::fix_isEmpty_constructive
+ZeroParadox/Category/ChoiceCannotBe.lean::label::fixedPointFree_of_nontrivial
+ZeroParadox/Category/ChoiceCannotBe.lean::label::fixedPointFree_of_nontrivial_decidable
+ZeroParadox/Category/ChoiceCannotBe.lean::label::instHeytingAlgebra
+ZeroParadox/Category/ChoiceCannotBe.lean::label::negation_no_fixedpoint
+ZeroParadox/Category/ChoiceCannotBe.lean::label::no_snap_closure
+ZeroParadox/Category/ChoiceCannotBe.lean::label::select_of_decidable
+ZeroParadox/Category/ChoiceCannotBe.lean::label::snapNucleus
+ZeroParadox/Category/ChoiceCannotBe.lean::label::strict_cofix_nonempty
+ZeroParadox/Category/ChoiceCannotBe.lean::label::synCollapse_epsN
+ZeroParadox/Category/ChoiceCannotBe.lean::label::t_snap_derived
+ZeroParadox/Category/ChoiceCannotBe.lean::label::uniformChartSelection_iff_choiceFragment
+ZeroParadox/Category/ChoiceCannotBe.lean::label::uniformChartSelection_of_classical
+ZeroParadox/Category/ChoiceCannotBe.lean::label::wem_of_fixedPointFree
+ZeroParadox/Category/CoalgebraForkPlace.lean::block::414ee8e80141::The ZP-P W/M coalgebra fork places on the μ/ν ro
+ZeroParadox/Category/CoalgebraForkPlace.lean::doc::cofix_corec_commutes
+ZeroParadox/Category/CoalgebraForkPlace.lean::doc::fix_rec_commutes
+ZeroParadox/Category/CoalgebraForkPlace.lean::doc::fork_places_on_root
+ZeroParadox/Category/CrossCategoryArrow.lean::block::4d3dac6420ad::A genuine CROSS-category arrow from the μ-bottom
+ZeroParadox/Category/CrossCategoryArrow.lean::doc::freeFin0IsoSeam
+ZeroParadox/Category/CrossCategoryArrow.lean::doc::kleisli_bottom_carrier_eq
+ZeroParadox/Category/CrossRootEdge.lean::block::f2b42fc80319::The cross-root edge #4 (Kleisli μ-initial/colimi
+ZeroParadox/Category/CrossRootEdge.lean::doc::colimit_limit_cross_root
+ZeroParadox/Category/CrossRootEdge.lean::doc::node3_isLimit
+ZeroParadox/Category/CrossRootEdge.lean::doc::node3_receives_cone
+ZeroParadox/Category/CrossRootEdge.lean::doc::node4_node3_arrow_asymmetry
+ZeroParadox/Category/DiagonalWitness.lean::block::ee16db762366::The minimum requirements to be a diagonal fixed
+ZeroParadox/Category/DiagonalWitness.lean::doc::HasWitnessRel
+ZeroParadox/Category/DiagonalWitness.lean::doc::effective_floor_fixedPoint
+ZeroParadox/Category/DiagonalWitness.lean::doc::witnessSet_isLowerSet
+ZeroParadox/Category/DifferenceGeneratesSystem.lean::bare::_
+ZeroParadox/Category/DifferenceGeneratesSystem.lean::block::7af8671c1e4d::§ The canonical predicated difference — double n
+ZeroParadox/Category/DifferenceGeneratesSystem.lean::block::9856add74096::Nuclei and sublocales — the home of "a predicate
+ZeroParadox/Category/DifferenceGeneratesSystem.lean::doc::<anonymous>
+ZeroParadox/Category/Directed.lean::block::323449c7cc8d::The Kleisli snap floor is not isomorphic to any
+ZeroParadox/Category/DoubleNegationNucleus.lean::block::379e5b5fec5c::The double-negation nucleus: the excluded-middle
+ZeroParadox/Category/DoubleNegationNucleus.lean::doc::dnegNucleus_isClosed_iff
+ZeroParadox/Category/ExcludedMiddleBridge.lean::block::0901114e0b07::The excluded-middle bridge: choice → excluded mi
+ZeroParadox/Category/ExcludedMiddleBridge.lean::doc::ChoiceFragment
+ZeroParadox/Category/ExcludedMiddleBridge.lean::doc::choiceFragment_dnegNucleus_trivial
+ZeroParadox/Category/ExcludedMiddleBridge.lean::doc::em_iff_dnegNucleus_trivial
+ZeroParadox/Category/ExcludedMiddleBridge.lean::doc::fin3_middle_not_regular
+ZeroParadox/Category/ExcludedMiddleBridge.lean::doc::prop_isRegular_iff
+ZeroParadox/Category/GlobalZero.lean::block::e843e0ccf1df::A 3-field structure bundling three objects, plus
+ZeroParadox/Category/Heterogeneous.lean::block::38744c9f458a::F_D's bottom admits a (zero) morphism back; F_C'
+ZeroParadox/Category/Heterogeneous.lean::doc::fD_has_return
+ZeroParadox/Category/KleisliInitialColimit.lean::block::7e12b371c6e5::The Kleisli μ-bottom's `IsInitial` is definition
+ZeroParadox/Category/Lawvere.lean::block::aca8d091e2bc::§ VI. The completeness verdict (the face table,
+ZeroParadox/Category/Lawvere.lean::doc::nontrivial_lattice_no_witness
+ZeroParadox/Category/LawvereDecidable.lean::block::d36ace022b6a::Lawvere's engine, priced: the same theorems over
+ZeroParadox/Category/LawvereDecidable.lean::doc::no_witness_of_nontrivial_decidable
+ZeroParadox/Category/LawvereTaboo.lean::block::b21e9b5f6a36::The diagonal engine's supplier is a constructive
+ZeroParadox/Category/LawvereTaboo.lean::block::dfd5286f905b::§ II — The witness
+ZeroParadox/Category/LawvereTaboo.lean::block::f319b388467f::§ III — The taboo
+ZeroParadox/Category/LawvereTaboo.lean::doc::Glue
+ZeroParadox/Category/LawvereTaboo.lean::doc::WeakExcludedMiddle
+ZeroParadox/Category/LawvereTaboo.lean::doc::decidable_route_unaffected
+ZeroParadox/Category/LawvereTaboo.lean::doc::gx
+ZeroParadox/Category/LawvereTaboo.lean::doc::wem_of_classical_supplier
+ZeroParadox/Category/LinFunctor.lean::block::45e8e3e79e99::Info → Hilbert: the linearization functor (a gen
+ZeroParadox/Category/LinFunctor.lean::doc::L_map_pow
+ZeroParadox/Category/LinFunctor.lean::doc::stationary_transports_to_unit_eigenvector
+ZeroParadox/Category/Linearize.lean::block::b5dca1d53be8::The free ℂ-module on the empty type is initial,
+ZeroParadox/Category/Linearize.lean::doc::linObj
+ZeroParadox/Category/Linearize.lean::doc::lin_carries_bottom
+ZeroParadox/Category/NextTimeCategorical.lean::block::5bf4c0b6da67::The next-time operator, categorically — and the
+ZeroParadox/Category/NextTimeCategorical.lean::block::d4020c437927::Axiom Purity Check
+ZeroParadox/Category/NextTimeCategorical.lean::doc::isWellFoundedCoalgCat_iff
+ZeroParadox/Category/NextTimeCategorical.lean::doc::monoOverPost
+ZeroParadox/Category/NextTimeCategorical.lean::doc::subobjectPost
+ZeroParadox/Category/NoUniformCharacter.lean::block::72ef6d39cd11::A conjunction of three already-proved facts abou
+ZeroParadox/Category/Node4Generation.lean::block::c591fa0a77f2::ZP-H node #4 GENERATION — the floor `Fin 0` gene
+ZeroParadox/Category/Obstruction.lean::block::bfe48f394385::Two Finsupp facts (one ℂ-linearization stand-in
+ZeroParadox/Category/Obstruction.lean::doc::dualized_top_floor_initial
+ZeroParadox/Category/PointednessSharp.lean::block::e3710c0bc208::The pointedness dichotomy SHARPENED (the gap `Ze
+ZeroParadox/Category/RootCutBinary.lean::block::47962c2e7e0e::The root cut is binary in arity, not graded
+ZeroParadox/Category/RootCutBinary.lean::doc::arity_collapse
+ZeroParadox/Category/RootCutBinary.lean::doc::binPF
+ZeroParadox/Category/RootCutDegeneracy.lean::block::ef00ee10b075::The root-cut degeneracy dichotomy
+ZeroParadox/Category/RootCutDegeneracy.lean::doc::constPF
+ZeroParadox/Category/RootCutDegeneracy.lean::doc::root_cut_dichotomy
+ZeroParadox/Category/SeamArrowLevel.lean::block::61d7ec7d026e::Does the seam keystone hold AT THE ARROW LEVEL (
+ZeroParadox/Category/SeamArrowLevel.lean::doc::initial_endo_is_id
+ZeroParadox/Category/SeamArrowLevel.lean::doc::seam_arrow_equality_factors_through_identity
+ZeroParadox/Category/SeamArrowLevel.lean::doc::terminal_endo_is_id
+ZeroParadox/Category/SeamArrowSignature.lean::block::f374495df6d8::The seam's arrow-level signature (zero object vs
+ZeroParadox/Category/SeamArrowSignature.lean::doc::endo_subsingleton_does_not_separate
+ZeroParadox/Category/SeamArrowSignature.lean::doc::hom_into_bot_separates
+ZeroParadox/Category/SeamArrowSignature.lean::doc::seam_has_Pin
+ZeroParadox/Category/SeamBiproductUnit.lean::block::5a0db954e7d4::The seam #5 is the additive UNIT of the biproduc
+ZeroParadox/Category/SeamBiproductUnit.lean::doc::seam
+ZeroParadox/Category/SeamBiproductUnit.lean::doc::seam_biprod_left
+ZeroParadox/Category/SeamBiproductUnit.lean::doc::seam_biprod_right
+ZeroParadox/Category/SeamBiproductUnit.lean::doc::seam_is_biprod_unit
+ZeroParadox/Category/SeamBridge.lean::block::96febe86f826::Is the seam a genuine BRIDGE between the subtree
+ZeroParadox/Category/SeamBridge.lean::doc::seam_is_intra_category
+ZeroParadox/Category/SeamBridge.lean::doc::seam_two_sided
+ZeroParadox/Category/SeamCoincidence.lean::block::fbddb357d9c3::The seam IS the categorical μ=ν coincidence
+ZeroParadox/Category/SeamCoincidence.lean::doc::seam_is_mu_nu_coincidence_SeamCoincidence
+ZeroParadox/Category/SeamComparisonMap.lean::block::69d605e5925a::The canonical μ→ν comparison map at the root sea
+ZeroParadox/Category/SeamComparisonMap.lean::doc::canonicalCmp
+ZeroParadox/Category/SeamComparisonMap.lean::doc::canonicalCmp_unique
+ZeroParadox/Category/SeamFrameChange.lean::block::90708478620e::The frame-change in the category frame: `op`-dua
+ZeroParadox/Category/SeamFrameChange.lean::doc::catseam_is_frameflip
+ZeroParadox/Category/SeamGeneric.lean::block::b9f03545bd32::The seam as a GENERIC theorem (the μ=ν coinciden
+ZeroParadox/Category/SeamGeneric.lean::doc::seam_is_mu_nu_coincidence_SeamGeneric
+ZeroParadox/Category/SeamLimColim.lean::block::5d1d6fb47666::The seam diagram-level coincidence (lim = colim
+ZeroParadox/Category/SeamNotColimit.lean::block::99cc6cc1554a::The seam is NOT a colimit (coproduct) apex over
+ZeroParadox/Category/SeamUniqueness.lean::block::d41de2469f33::Seam uniqueness extended: is any OTHER bottom a
+ZeroParadox/Category/TopNoGo.lean::block::de6df52be32d::In TopCat the empty space is not isomorphic to t
+ZeroParadox/Category/TreeSeam.lean::block::ed7a700d52fb::ZP-H tree — the #5 straddle resolved: the Hilber
+ZeroParadox/Category/WellFoundedCoalgebra.lean::block::389fff7d7e80::§ V. AMM Thm 7.6's hypotheses, VERIFIED for this
+ZeroParadox/Category/WellFoundedCoalgebra.lean::block::8fd5e08f76c1::Axiom Purity Check
+ZeroParadox/Category/WellFoundedCoalgebra.lean::block::efadbb6fb3d4::The next time operator: μ/ν as an INTRINSIC prop
+ZeroParadox/Category/WellFoundedCoalgebra.lean::doc::IsWellFoundedCoalg
+ZeroParadox/Category/WellFoundedCoalgebra.lean::doc::fork_is_intrinsic
+ZeroParadox/Category/WellFoundedCoalgebra.lean::doc::idPF_M_nonempty
+ZeroParadox/Category/WellFoundedCoalgebra.lean::doc::mono_colimit_ι_of_mono
+ZeroParadox/Category/WellFoundedCoalgebra.lean::doc::mtypeFixedPoint
+ZeroParadox/Category/WellFoundedCoalgebra.lean::doc::natPF_wtype_wellFounded_and_inhabited
+ZeroParadox/Category/WellFoundedCoalgebra.lean::doc::nextTime
+ZeroParadox/Category/WellFoundedCoalgebra.lean::doc::smooth_monos_factorizing
+ZeroParadox/Category/WellFoundedCoalgebra.lean::doc::wfPart
+ZeroParadox/Category/WellFoundedCoalgebra.lean::doc::wtypeFixedPoint
+ZeroParadox/ClaimsMirror.lean::block::55e25e0f2687::ZP Claims Mirror — the machine-checked represent
+ZeroParadox/ClaimsMirror.lean::block::8835671af083::§ VI. Claims that are NOT theorems (the faithful
+ZeroParadox/ClaimsMirror.lean::doc::claim_DA1
+ZeroParadox/ClaimsMirror.lean::doc::claim_MC1_correspondence
+ZeroParadox/ClaimsMirror.lean::doc::claim_T_SNAP
+ZeroParadox/ClaimsMirror.lean::doc::claim_node_algebra
+ZeroParadox/ClaimsMirror.lean::doc::claim_node_computability
+ZeroParadox/ClaimsMirror.lean::doc::claim_node_information
+ZeroParadox/ClaimsMirror.lean::doc::claim_node_order
+ZeroParadox/ClaimsMirror.lean::doc::claim_node_ordinal
+ZeroParadox/ClaimsMirror.lean::doc::claim_node_state
+ZeroParadox/ClaimsMirror.lean::doc::claim_node_valuation
+ZeroParadox/Computability/ChoicePurityInvariant.lean::block::b51dc7928b51::Is choice-purity an IN-STATEMENT μ/ν separating
+ZeroParadox/Computability/ChoicePurityInvariant.lean::doc::cofix_nonempty'
+ZeroParadox/Computability/ChoicePurityInvariant.lean::doc::fix_isEmpty_constructive
+ZeroParadox/Computability/ChoicePurityInvariant.lean::doc::root_purity_split
+ZeroParadox/Computability/ChoicePurityInvariant.lean::doc::w_isEmpty
+ZeroParadox/Computability/CodeDataFrameChange.lean::block::7d30c7536cef::The frame-change in the computability frame: the
+ZeroParadox/Computability/CodeDataFrameChange.lean::doc::codeDataSwap
+ZeroParadox/Computability/ComputableCrossing.lean::block::60826fe3b54a::The Lawvere bridge, crossed in the computability
+ZeroParadox/Computability/ComputableCrossing.lean::doc::computable_no_fixedpointfree
+ZeroParadox/Computability/ComputableCrossing.lean::doc::eval_point_surjective
+ZeroParadox/Computability/ComputableCrossing.lean::doc::selfref_fixedpoint_exists_computable
+ZeroParadox/Computability/ComputationCannotBe.lean::bare::abstractSelfApp_always_inhabited
+ZeroParadox/Computability/ComputationCannotBe.lean::bare::flipPoles_involutive
+ZeroParadox/Computability/ComputationCannotBe.lean::bare::head_is_leaf_or_step
+ZeroParadox/Computability/ComputationCannotBe.lean::bare::infinite_quine_family
+ZeroParadox/Computability/ComputationCannotBe.lean::bare::kleene_fixed_point_exists
+ZeroParadox/Computability/ComputationCannotBe.lean::bare::no_self_decider
+ZeroParadox/Computability/ComputationCannotBe.lean::bare::no_unstarted_state
+ZeroParadox/Computability/ComputationCannotBe.lean::bare::rice_face_has_bottom
+ZeroParadox/Computability/ComputationCannotBe.lean::bare::t_comp
+ZeroParadox/Computability/ComputationCannotBe.lean::block::3caac1e6b65c::Machine-checked characterization index of COMPUT
+ZeroParadox/Computability/GroundZero.lean::block::70c161f671e9::Axiom Purity Check
+ZeroParadox/Computability/GroundZero.lean::block::86f9ef7a9d7f::Ground zero — the bottom as a behaviour, not a c
+ZeroParadox/Computability/GroundZero.lean::block::e87c527a96c8::§ V. The well-founded coalgebra IS the halting c
+ZeroParadox/Computability/GroundZero.lean::doc::forcing_needs_the_binary_split
+ZeroParadox/Computability/GroundZero.lean::doc::notEL_unique
+ZeroParadox/Computability/GroundZero.lean::doc::stepRel
+ZeroParadox/Computability/Kleene.lean::block::39da6e352b95::§ VI. Function-Gödel-Number Correspondence
+ZeroParadox/Computability/Kleene.lean::block::6482a4ef5712::ZP-K: Computational Grounding of Self-Reference
+ZeroParadox/Computability/Kleene.lean::doc::da1_closed_concrete
+ZeroParadox/Computability/Kleene.lean::doc::da1_computational
+ZeroParadox/Computability/Kleene.lean::doc::da1_paths_unified
+ZeroParadox/Computability/Kleene.lean::doc::description_instantiation_gap_closed
+ZeroParadox/Computability/Kleene.lean::doc::kleene_fixed_point_exists
+ZeroParadox/Computability/Kleene.lean::doc::kleene_quine_is_bot
+ZeroParadox/Computability/Kleene.lean::doc::quine_goedel_injective
+ZeroParadox/Computability/Kleene.lean::doc::roger_fixed_point_exists
+ZeroParadox/Computability/Kleene.lean::doc::selfApply
+ZeroParadox/Computability/Kleene.lean::doc::t_comp
+ZeroParadox/Computability/MarkovNuUniversal.lean::block::13be85a47f83::Does the Markov node (#2) get a ν (terminal/uniq
+ZeroParadox/Computability/MarkovNuUniversal.lean::doc::IsStationaryPMF
+ZeroParadox/Computability/MarkovNuUniversal.lean::doc::blockKernel
+ZeroParadox/Computability/NatListRegime.lean::block::fc114199340a::The third root-cut regime: the nat/list functor
+ZeroParadox/Computability/NatListRegime.lean::doc::fixToCofix_not_surjective
+ZeroParadox/Computability/NatListRegime.lean::doc::fix_cofix_not_surjective
+ZeroParadox/Computability/NatListRegime.lean::doc::natPF_NatListRegime
+ZeroParadox/Computability/Occurrence.lean::block::0b033bea6559::§ II. The trichotomy — and the third case is the
+ZeroParadox/Computability/Occurrence.lean::block::19cd013f8afc::§ IV-b. The bridge — live/dead has the SHAPE of
+ZeroParadox/Computability/Occurrence.lean::block::2de5f10df55c::Occurrence — what it takes for the bottom to mov
+ZeroParadox/Computability/Occurrence.lean::block::2f54c79ec7c0::The full requirement list, for the record.** Giv
+ZeroParadox/Computability/Occurrence.lean::block::4634cbff807a::§ 0. ADJACENCY — what this file's carrier alread
+ZeroParadox/Computability/Occurrence.lean::block::48b194f514e9::§ IV-c. The pole swap — the inversion, at the le
+ZeroParadox/Computability/Occurrence.lean::block::c243ffbd0859::§ VI-c. STUTTERING — a deterministic case the fu
+ZeroParadox/Computability/Occurrence.lean::block::e217fa94c3c6::§ VII. The capstone — the whole computational sh
+ZeroParadox/Computability/Occurrence.lean::doc::carry_steps_onward_forever_yet_shows_nothing
+ZeroParadox/Computability/Occurrence.lean::doc::dead_yields_live_withholds
+ZeroParadox/Computability/Occurrence.lean::doc::execution_requires_branching
+ZeroParadox/Computability/Occurrence.lean::doc::inversion_is_the_wf_divide
+ZeroParadox/Computability/Occurrence.lean::doc::live_step_not_wellFounded
+ZeroParadox/Computability/Occurrence.lean::doc::loops_not_unique
+ZeroParadox/Computability/Occurrence.lean::doc::machine_snap_impossible
+ZeroParadox/Computability/Occurrence.lean::doc::machine_trichotomy
+ZeroParadox/Computability/Occurrence.lean::doc::selfloop_is_zero_and_infinity
+ZeroParadox/Computability/OutputSeparates.lean::block::90330465ec81::The head decides, the arity does not: two instan
+ZeroParadox/Computability/OutputSeparates.lean::doc::binCofix_subsingleton
+ZeroParadox/Computability/OutputSeparates.lean::doc::head_not_arity_separates
+ZeroParadox/Computability/Periodicity.lean::block::818ad878ee2f::ZP-K metric: the selfApply periodicity invariant
+ZeroParadox/Computability/Rice.lean::block::0e00f5f8ac5f::Rice's theorem — the computability face's UNDECI
+ZeroParadox/Computability/Rice.lean::doc::halting_undecidable
+ZeroParadox/Computability/Rice.lean::doc::rice_face_has_bottom
+ZeroParadox/Computability/RootCutTrichotomy.lean::block::c438ddb67674::The root cut is a TRICHOTOMY (leaf × recursive p
+ZeroParadox/Computability/RootCutTrichotomy.lean::doc::mixed_cofix_nonempty
+ZeroParadox/Computability/SelfApp.lean::block::156e34cb3ce6::ZPJ — Abstract Self-Application Bridge
+ZeroParadox/Computability/SelfApp.lean::block::5a84352f0f8e::§ V. NO-GO gauge — `AbstractSelfApp` is a STRUCT
+ZeroParadox/Computability/SelfApp.lean::doc::abstractSelfApp_always_inhabited
+ZeroParadox/Computability/StationaryUnique.lean::block::0118c6d6a987::Irreducibility forces a unique stationary distri
+ZeroParadox/Computability/StationaryUnique.lean::doc::cycKernel
+ZeroParadox/Computability/StationaryUnique.lean::doc::markov_node_irreducible_rescue
+ZeroParadox/DiagonalFixedPoint.lean::block::10571cd6e033::§ II. Wall faces (μ) — self-reference CANNOT clo
+ZeroParadox/DiagonalFixedPoint.lean::block::d5c5ccfc9acd::Machine-checked characterization index of self-r
+ZeroParadox/DiagonalFixedPoint.lean::label::HasWitnessRel
+ZeroParadox/DiagonalFixedPoint.lean::label::cantor_via_engine
+ZeroParadox/DiagonalFixedPoint.lean::label::curry_no_bottom
+ZeroParadox/DiagonalFixedPoint.lean::label::da1_closed_concrete
+ZeroParadox/DiagonalFixedPoint.lean::label::effective_floor_fixedPoint
+ZeroParadox/DiagonalFixedPoint.lean::label::fixedPoint_of_witnessRel
+ZeroParadox/DiagonalFixedPoint.lean::label::godel_two
+ZeroParadox/DiagonalFixedPoint.lean::label::hasWitnessRel_of_subsingleton
+ZeroParadox/DiagonalFixedPoint.lean::label::kleene_quine_is_bot
+ZeroParadox/DiagonalFixedPoint.lean::label::lawvere_fixedpoint
+ZeroParadox/DiagonalFixedPoint.lean::label::loeb_sentence_is_fixedpoint
+ZeroParadox/DiagonalFixedPoint.lean::label::negation_no_fixedpoint
+ZeroParadox/DiagonalFixedPoint.lean::label::no_computable_evalFixedPointFree
+ZeroParadox/DiagonalFixedPoint.lean::label::no_self_decider
+ZeroParadox/DiagonalFixedPoint.lean::label::no_witnessRel_of_admissible_fpf
+ZeroParadox/DiagonalFixedPoint.lean::label::no_witnessRel_top_of_nontrivial
+ZeroParadox/DiagonalFixedPoint.lean::label::quine_exists_yet_rice
+ZeroParadox/DiagonalFixedPoint.lean::label::rice_face_has_bottom
+ZeroParadox/DiagonalFixedPoint.lean::label::russell_via_engine
+ZeroParadox/DiagonalFixedPoint.lean::label::selfApp_isLeastFixedPointFrom
+ZeroParadox/DiagonalFixedPoint.lean::label::t_comp
+ZeroParadox/DiagonalFixedPoint.lean::label::t_exec
+ZeroParadox/DiagonalFixedPoint.lean::label::tarski_no_internal_truth
+ZeroParadox/DiagonalFixedPoint.lean::label::tarski_no_truth_bottom
+ZeroParadox/DiagonalFixedPoint.lean::label::wf_no_selfloop
+ZeroParadox/DiagonalFixedPoint.lean::label::witnessRel_antitone
+ZeroParadox/DiagonalFixedPoint.lean::label::witnessSet_isLowerSet
+ZeroParadox/Information/BottomMeasure.lean::block::35103b44a301::P6: measure = +∞ at the bottom — per-domain bund
+ZeroParadox/Information/BottomMeasure.lean::doc::info_bottom_diverges
+ZeroParadox/Information/CrossingTrials.lean::block::b7cc3f767eae::Crossing trials: what a probability on the cross
+ZeroParadox/Information/CrossingTrials.lean::doc::crossing_almost_surely
+ZeroParadox/Information/CrossingTrials.lean::doc::trials
+ZeroParadox/Information/PadicSurprisal.lean::block::51a5cfad10d9::B3 (pipeline): information surprisal ≡ 2-adic de
+ZeroParadox/Information/Surprisal.lean::block::00b83aa78096::The converse — the collision is NECESSARY, not d
+ZeroParadox/Information/Surprisal.lean::block::0a8b96a1f2bb::Section VI: The Binary Alphabet is Forced — the
+ZeroParadox/Information/Surprisal.lean::block::5bf128665c43::§ The Archimedean fence — repetition works in ex
+ZeroParadox/Information/Surprisal.lean::block::86f0feffc760::§ The repeated crossing — what repetition does a
+ZeroParadox/Information/Surprisal.lean::block::c9e1c4e695ba::ZP-C: Information Theory
+ZeroParadox/Information/Surprisal.lean::block::ddf394011c68::The two readings run CONCURRENTLY — spread in th
+ZeroParadox/Information/Surprisal.lean::doc::crossing_prob_lt_one_tendsto_one
+ZeroParadox/Information/Surprisal.lean::doc::exists_spread_pmf
+ZeroParadox/Information/Surprisal.lean::doc::infinitesimal_iff_archimedeanClass_pos
+ZeroParadox/Information/Surprisal.lean::doc::l_inf
+ZeroParadox/Information/Surprisal.lean::doc::l_run
+ZeroParadox/Information/Surprisal.lean::doc::nontrivial_admits_non_pure_pmf
+ZeroParadox/Information/Surprisal.lean::doc::surprisal
+ZeroParadox/Information/Surprisal.lean::doc::tq_ih
+ZeroParadox/Meta/ExtractDeps.lean::block::2cba30de1454::Declaration-level dependency extractor (interop
+ZeroParadox/Meta/Snapshot.lean::block::9000fb556764::Golden-master snapshot for refactor verification
+ZeroParadox/Miniature.lean::block::241fe70303ed::The Zero Paradox in miniature — the minimal core
+ZeroParadox/Miniature.lean::doc::pole_cannot_fan
+ZeroParadox/Miniature.lean::doc::shape
+ZeroParadox/Multihomed/Boundary.lean::block::4c69f594067c::§ IV. Rung B — the snap as ONE crossing on a sin
+ZeroParadox/Multihomed/Boundary.lean::block::5f78eb38e4ff::§ I-b. The INFINITE-POLE reading of the same flo
+ZeroParadox/Multihomed/Boundary.lean::block::64f68036b8c1::§ I-c. The descent route, choice-free — and TWO
+ZeroParadox/Multihomed/Boundary.lean::block::ec7ead3cd9f8::§ III-b. Oscillation — excluded on the ascent, M
+ZeroParadox/Multihomed/Boundary.lean::doc::ascent_no_oscillation
+ZeroParadox/Multihomed/Boundary.lean::doc::bot_not_acc
+ZeroParadox/Multihomed/Boundary.lean::doc::floorDescent
+ZeroParadox/Multihomed/Boundary.lean::doc::floor_descent_from_bot
+ZeroParadox/Multihomed/Boundary.lean::doc::floor_has_cycle
+ZeroParadox/Multihomed/Boundary.lean::doc::floor_not_wellFounded_via_descent
+ZeroParadox/Multihomed/Boundary.lean::doc::floor_not_wellFounded_via_descent'
+ZeroParadox/Multihomed/Boundary.lean::doc::not_wf_of_descent
+ZeroParadox/Multihomed/Boundary.lean::doc::oscillation_split
+ZeroParadox/Multihomed/BoundaryBridge.lean::doc::snap_boundary_two_registers
+ZeroParadox/Multihomed/CategoricalBridge.lean::block::0f8fdb7ac609::Appendix — NNRealZPCat: ℝ≥0 as a Concrete ZPCate
+ZeroParadox/Multihomed/CategoricalBridge.lean::block::3bc5e0326529::Section III — Instantiation Functors: Domain Pro
+ZeroParadox/Multihomed/CategoricalBridge.lean::block::5d50cb1f7285::Appendix — Q₂BallCat and fb_functor: Full Functo
+ZeroParadox/Multihomed/CategoricalBridge.lean::block::7ce6551c23df::ZP-H: Categorical Bridge
+ZeroParadox/Multihomed/CategoricalBridge.lean::block::e5e95d97f950::Appendix — InfoDepthCat and fc_functor: Full Fun
+ZeroParadox/Multihomed/CategoricalBridge.lean::block::eca51135753b::Appendix — HilbDimCat and fd_functor: Full Funct
+ZeroParadox/Multihomed/CategoricalBridge.lean::doc::fc_snap_info_grounded
+ZeroParadox/Multihomed/CategoricalBridge.lean::doc::nnreal_initial_grounding
+ZeroParadox/Multihomed/CategoricalBridge.lean::doc::th1_fa
+ZeroParadox/Multihomed/CategoricalBridge.lean::doc::th1_fb
+ZeroParadox/Multihomed/CategoricalBridge.lean::doc::th1_fc
+ZeroParadox/Multihomed/CategoricalBridge.lean::doc::th1_fd
+ZeroParadox/Multihomed/CrossRootCompleteness.lean::block::2adeea15c920::Cross-root completeness: the #1↔#3 and #5↔#3 edg
+ZeroParadox/Multihomed/EigenvectorExists.lean::block::aae4ad5d28ca::Deep cross-domain entry: the transfer operator h
+ZeroParadox/Multihomed/FloorFactsCooccur.lean::block::2023c3421939::Co-occurrence of four ambient bottom-facts (thin
+ZeroParadox/Multihomed/FloorFactsCooccur.lean::doc::floor_facts_cooccur
+ZeroParadox/Multihomed/FloorFactsCooccur.lean::doc::isEmpty_hom_one_to_zero
+ZeroParadox/Multihomed/FloorFactsCooccur.lean::doc::nat_zero_not_terminal
+ZeroParadox/Multihomed/Fork.lean::block::b186d73c22fe::Restating two `IsInitial` and one `IsTerminal` w
+ZeroParadox/Multihomed/HilbertDiagonal.lean::block::225910637cae::ZP-H: ⊥ is the unique finite-dimensional fixed p
+ZeroParadox/Multihomed/InfoFunctor.lean::block::08591dc66f77::ZP-H Info Functor: F_C into the real category `K
+ZeroParadox/Multihomed/InfoFunctor.lean::doc::fC_obj
+ZeroParadox/Multihomed/MC1Bridge.lean::block::36e613b55304::ZP-H MC-1 Correspondence: the snap floor realize
+ZeroParadox/Multihomed/PadicBridge.lean::block::4d60ee76d593::B2 (pipeline): the computational bottom maps to
+ZeroParadox/Multihomed/RootCutObstruction.lean::block::da35a11ce310::The ROOT cut is a strict, non-glueable μ/ν obstr
+ZeroParadox/Multihomed/RootCutObstruction.lean::doc::root_cut_strict_asymmetric
+ZeroParadox/Multihomed/SeamConnectorFail.lean::block::509ea87bfad6::The seam #5 fails as a two-sided connector to th
+ZeroParadox/Multihomed/SeamConnectorFail.lean::doc::seam_role_not_transported
+ZeroParadox/Multihomed/SeamConnectorFail.lean::doc::seam_to_padic_map_unique
+ZeroParadox/Multihomed/SelfAppForkPlace.lean::block::537d3589b60c::ZP-H tree, theory TH11 — placing the ZP-J selfAp
+ZeroParadox/Multihomed/SelfAppForkPlace.lean::doc::bot_is_greatest_fixed_point
+ZeroParadox/Multihomed/SelfAppForkPlace.lean::doc::bot_is_least_fixed_point
+ZeroParadox/Multihomed/SelfAppForkPlace.lean::doc::selfApp_fixed_point_is_seam
+ZeroParadox/Multihomed/SelfAppSeam.lean::block::cce02e262bd1::The selfApp bottom sits at the μ=ν seam, not on
+ZeroParadox/Multihomed/SelfAppSeam.lean::doc::selfApp_bot_is_both_extremal
+ZeroParadox/Multihomed/SelfAppSeam.lean::doc::selfApp_fp_set_eq_singleton_bot
+ZeroParadox/Multihomed/SeparatedSuccession.lean::block::2a7a7189db17::The type bridge: a separated succession as an in
+ZeroParadox/Multihomed/SeparatedSuccession.lean::block::f61e37198921::Faithfulness of the enumeration — an IMPLEMENTAT
+ZeroParadox/Multihomed/SeparatedSuccession.lean::doc::hilbert_labels_not_injective
+ZeroParadox/Multihomed/SeparatedSuccession.lean::doc::hilbert_seq_not_injective
+ZeroParadox/Multihomed/SeparatedSuccession.lean::doc::ordinal_seq_injective
+ZeroParadox/Multihomed/SnapFrameChange.lean::block::e0a732442df3::The tower limit's two chart-readings: ⊥ and ∞ ar
+ZeroParadox/Multihomed/SnapFrameChange.lean::doc::snap_is_frameflip
+ZeroParadox/Multihomed/SpanObstruction.lean::block::7801a7f5593e::The #1↔#3 cross-root obstruction under a SPAN (T
+ZeroParadox/Multihomed/SpanObstruction.lean::doc::apex_iso_padic_ordinal_floor
+ZeroParadox/Multihomed/SpanObstruction.lean::doc::apex_span_no_ambient_strictMono
+ZeroParadox/Multihomed/TreeObstructions.lean::block::727b4216a723::ZP-H: The bottom-diagram tree — machine-checked
+ZeroParadox/Multihomed/TreeT1.lean::block::f26d2af1d4f3::ZP-H tree, edge T1 — the within-μ edge: proof-th
+ZeroParadox/Multihomed/TreeT1.lean::doc::fC_floor_transport
+ZeroParadox/Multihomed/TwoFacesBot.lean::block::b7a00aba69f1::Direction B — the two faces of ⊥ at the seam: VA
+ZeroParadox/Multihomed/WallSpanRobust.lean::block::891a84b8d374::Span-robustness of the well-founded cross-root w
+ZeroParadox/Multihomed/WallSpanRobust.lean::doc::no_faithful_span_to_ordinal_and_descending
+ZeroParadox/Order/Lattice.lean::bare::@HasNoTop
+ZeroParadox/Order/Lattice.lean::bare::@IsStrictStateSequence
+ZeroParadox/Order/Lattice.lean::block::bec040c62c43::ZP-A: Lattice Algebra
+ZeroParadox/Order/LeastFixedPoint.lean::block::41314425b62e::The μ abstraction: least fixed point reached fro
+ZeroParadox/Order/LeastFixedPoint.lean::block::a19b823d8cb6::Axiom Purity Check
+ZeroParadox/Order/LeastFixedPoint.lean::block::c78a2a8eae27::§ IV. The ε₀ face — genuine ascent μ (seed ⊥ ≠ c
+ZeroParadox/Order/LeastFixedPoint.lean::doc::epsilon0_mu_eq_iSup
+ZeroParadox/Order/LeastFixedPoint.lean::doc::kleene_fixed_point_from_exists
+ZeroParadox/Order/MarkovContractionDual.lean::block::dcc42b20d77d::The dual contraction dichotomy on the Markov ν-s
+ZeroParadox/Order/MarkovContractionDual.lean::doc::swap
+ZeroParadox/Order/MarkovPlacement.lean::block::29a8dc456ada::The unplaced node: does the Markov attractor (#2
+ZeroParadox/Order/OrbitDichotomy.lean::block::de51eaa59fd4::The orbit dichotomy — "one or infinitely many",
+ZeroParadox/Order/PadicLimitCone.lean::block::3e921809c947::The p-adic floor `{0}` is a genuine categorical
+ZeroParadox/Order/PadicLimitCone.lean::doc::legVal
+ZeroParadox/Order/PerronCapstone.lean::block::bf0189817e2d::Capstone: Perron–Frobenius for finite stochastic
+ZeroParadox/Order/PowerSet.lean::block::ca34d6d62aae::ZP-H Extension: Power Set Lattice as Structural
+ZeroParadox/Order/ProofFloorHomset.lean::block::49eb1282f622::Axis III over the proof-theory floor #1 (the hom
+ZeroParadox/Order/ProofFloorHomset.lean::doc::floor_has_no_forgetful_carrier
+ZeroParadox/Order/ProofFloorHomset.lean::doc::floor_homset_card_one
+ZeroParadox/Order/ProofFloorHomset.lean::doc::floor_homset_equiv_punit
+ZeroParadox/Order/ProofFloorHomset.lean::doc::nat_floor_initial_singleton_homs
+ZeroParadox/Order/SeamSchema.lean::block::4dc816b8fb31::A shared "seam schema" for the QPF root-seam and
+ZeroParadox/Order/SeamSchema.lean::doc::SeamSchema
+ZeroParadox/Order/SeamSchema.lean::doc::both_satisfy_seam_schema
+ZeroParadox/Order/SeamSchema.lean::doc::latticeSeam
+ZeroParadox/Order/SeamSchema.lean::doc::no_cross_setting_map
+ZeroParadox/Order/SeamSchema.lean::doc::qpf_seam_not_automatic
+ZeroParadox/Order/SeamSchema.lean::doc::seam_schema_is_degenerate_for_lattice
+ZeroParadox/Order/Snap.lean::block::933ebac9573d::NO-GO gauge — T-SNAP constrains the SHAPE of a t
+ZeroParadox/Order/Snap.lean::block::a6ea77c1bc1c::VI. DP-2 — Execution Distinguishability and DA-1
+ZeroParadox/Order/Snap.lean::block::b86f3921ee07::ZP-E: Bridge Document
+ZeroParadox/Order/Snap.lean::block::e94a177d465c::I-DA1. DA-1 — Derived Proposition: Instantiation
+ZeroParadox/Order/Snap.lean::doc::da1_minimal_path
+ZeroParadox/Order/Snap.lean::doc::postInstantiation
+ZeroParadox/Order/Snap.lean::doc::t_snap_derived
+ZeroParadox/Order/Snap.lean::doc::t_snap_irreversible
+ZeroParadox/Order/Snap.lean::doc::t_snap_machine
+ZeroParadox/Order/SnapCannotBe.lean::label::c_da2_novelty
+ZeroParadox/Order/SnapCannotBe.lean::label::da2_bottom_characterization
+ZeroParadox/Order/SnapCannotBe.lean::label::da3_accessibleCardinality
+ZeroParadox/Order/SnapCannotBe.lean::label::dp2_execution_distinguishability
+ZeroParadox/Order/SnapCannotBe.lean::label::snap_arc_z2_loop
+ZeroParadox/Order/SnapCannotBe.lean::label::t_iz_limit_is_new_null
+ZeroParadox/Order/SnapCannotBe.lean::label::t_snap_accessible_proper_subset
+ZeroParadox/Order/SnapCannotBe.lean::label::t_snap_derived
+ZeroParadox/Order/SnapCannotBe.lean::label::t_snap_irreversible
+ZeroParadox/Order/SnapCannotBe.lean::label::t_snap_join
+ZeroParadox/Order/SnapCannotBe.lean::label::t_snap_machine
+ZeroParadox/Order/WellFoundedObstruct.lean::block::166f854766ee::Where the SAME question is asked in the other fo
+ZeroParadox/Order/WellFoundedObstruct.lean::block::8d1a7c3c5370::Well-foundedness obstructs the attractor charact
+ZeroParadox/Order/WellFoundedObstruct.lean::doc::ReachesFloorInFiniteTime
+ZeroParadox/Order/WellFoundedObstruct.lean::doc::descent_with_strict_steps_reaches_floor
+ZeroParadox/Order/WellFoundedObstruct.lean::doc::floor_reach_separates_mu_nu
+ZeroParadox/Order/WellFoundedObstruct.lean::doc::no_infinite_descent
+ZeroParadox/Ordinal/B6_CanonicalCNF.lean::block::8639011d6e23::B6 (pipeline): canonical (CNF / log-ω) ordinal →
+ZeroParadox/Ordinal/B6_CanonicalCNF.lean::doc::cnfLogDepth
+ZeroParadox/Ordinal/CnfBridge.lean::block::02d9f4f88a7d::The CNF/ℤ₂ value bridge, at the construction lev
+ZeroParadox/Ordinal/CnfBridge.lean::doc::snap_arc_z2_loop
+ZeroParadox/Ordinal/ConstructiveOrdinals.lean::block::90290689925b::ZP-N: the ε₀ snap, constructively, on ordinal no
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::bare::c1_epsilon_zero_identification
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::bare::snap_exactly_at_epsilon_zero
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::block::1b12a9982adf::Machine-checked characterization index of ε₀ — w
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::bot_is_not_a_step
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::both_fixed_points_exist
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::cnf_bridge_type_boundary
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilon0_eq_nfp_bot
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilon0_eq_veblen_one_zero
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilon0_isLeastFixedPointFrom
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilon0_is_fixedpoint
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilon0_least_fixedpoint
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilon0_min_eq_max
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilon0_ne_bot
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilon0_ne_zero
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilonZero_eq_iSup
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilonZero_eq_nfp
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::epsilonZero_fixedPoint
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::mu_construction_correspondence
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::nothing_between_is_a_step
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::snap_arc_z2_loop
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::t_iz_limit_is_new_null
+ZeroParadox/Ordinal/Epsilon0CannotBe.lean::label::zpm_triangle
+ZeroParadox/Ordinal/Epsilon0LeastFP.lean::block::47b4e1093474::Batch 2 / G1 (pipeline, T6): ε₀ is the LEAST fix
+ZeroParadox/Ordinal/Epsilon0LeastFP.lean::block::bd45cdca5205::The rungs are the structure — the seed is not lo
+ZeroParadox/Ordinal/Epsilon0LeastFP.lean::doc::epsilon0_eq_veblen_one_zero
+ZeroParadox/Ordinal/Epsilon0LeastFP.lean::doc::epsilon0_least_fixedpoint
+ZeroParadox/Ordinal/Epsilon0LeastFP.lean::doc::epsilon0_ne_bot
+ZeroParadox/Ordinal/Epsilon0MinMax.lean::block::07ea6dcd2ea0::§ I-b. Two fences on the "⊥ the seed" reading (T
+ZeroParadox/Ordinal/Epsilon0MinMax.lean::block::b66e0054d90a::ε₀ is min ≡ max: the snap ⊥ → ε₀ is one Kleene c
+ZeroParadox/Ordinal/Epsilon0MinMax.lean::doc::epsilon0_min_eq_max
+ZeroParadox/Ordinal/Gentzen.lean::block::07987430e5b3::§ III. Ordinal ε₀
+ZeroParadox/Ordinal/Gentzen.lean::block::3db4b2b9d403::ZP-L: Incomputability Convergence
+ZeroParadox/Ordinal/Gentzen.lean::block::7975d11cd933::§ II. Rogers' Fixed-Point Stability
+ZeroParadox/Ordinal/Gentzen.lean::block::99d7fde8241a::§ V. Ordinal Tower Limit and ZPB Pre-image
+ZeroParadox/Ordinal/Gentzen.lean::block::9ff60f201360::§ VII. Canonical Snap Map — Full Closure
+ZeroParadox/Ordinal/Gentzen.lean::block::c3408a8cb8e3::§ VI. Kleene-Ordinal Fixed-Point Bridge
+ZeroParadox/Ordinal/Gentzen.lean::block::dc7929119d39::§ IV. Cantor Normal Form Bridge
+ZeroParadox/Ordinal/Gentzen.lean::block::ef50cc22936a::§ I. Axiom Footprint Convergence
+ZeroParadox/Ordinal/Gentzen.lean::doc::c1_epsilon_zero_identification
+ZeroParadox/Ordinal/Gentzen.lean::doc::cnfToZp2
+ZeroParadox/Ordinal/Gentzen.lean::doc::epsilonZero
+ZeroParadox/Ordinal/Gentzen.lean::doc::epsilonZero_tower_bound
+ZeroParadox/Ordinal/Gentzen.lean::doc::roger_fixed_point_stability
+ZeroParadox/Ordinal/Gentzen.lean::doc::snap_threshold_is_epsilon_zero
+ZeroParadox/Ordinal/Goodstein.lean::block::2edf36d93f2a::Goodstein's theorem (full, hereditary base) — ε₀
+ZeroParadox/Ordinal/Incompleteness.lean::block::018fe183fd55::§I. The snapEmbed Morphism
+ZeroParadox/Ordinal/Incompleteness.lean::block::7d9006d58228::§III. The Kleene–Ordinal Triangle
+ZeroParadox/Ordinal/Incompleteness.lean::block::8239aef5825a::§II. Deriving hfp from ε₀ Initialization
+ZeroParadox/Ordinal/Incompleteness.lean::block::b6be859b8f5f::Remark R-M.1: DA-1 Path 2 and the Limits of the
+ZeroParadox/Ordinal/KirbyParis.lean::block::218466166e04::Kirby–Paris hydra termination (the ε₀ gap) — pro
+ZeroParadox/Ordinal/KirbyParis.lean::doc::Step
+ZeroParadox/Ordinal/Kruskal.lean::block::751f3266a040::Kruskal's Tree Theorem (labeled) — finite rose t
+ZeroParadox/Ordinal/OrdinalChoiceEssential.lean::block::0cd46bcc815a::§ III — Why this is stated about `InitialSeg` an
+ZeroParadox/Ordinal/OrdinalChoiceEssential.lean::block::f5769be87ecd::Comparability of well-orders is a constructive t
+ZeroParadox/Ordinal/OrdinalChoiceEssential.lean::doc::Two
+ZeroParadox/Ordinal/OrdinalChoiceEssential.lean::doc::em_of_wellOrder_comparable
+ZeroParadox/Ordinal/OrdinalChoiceEssential.lean::doc::order_footprint_eq
+ZeroParadox/Ordinal/OrdinalChoiceEssential.lean::doc::order_footprint_le
+ZeroParadox/Ordinal/P8.lean::doc::cnfRank
+ZeroParadox/Ordinal/PricedInterface.lean::block::836f1a633761::A priced interface: a carrier sized to ε₀, a map
+ZeroParadox/Ordinal/PricedInterface.lean::block::f3ff50ba4068::Where the ambiguity ISN'T — both poles are faith
+ZeroParadox/Ordinal/PricedInterface.lean::doc::E0Note
+ZeroParadox/Ordinal/PricedInterface.lean::doc::e0DecidableLE
+ZeroParadox/Ordinal/PricedInterface.lean::doc::e0OmegaPow
+ZeroParadox/Ordinal/PricedInterface.lean::doc::e0Repr
+ZeroParadox/Ordinal/PricedInterface.lean::doc::e0Repr_not_injective
+ZeroParadox/Ordinal/PricedInterface.lean::doc::e0Repr_not_injective_via_confinement
+ZeroParadox/Ordinal/PricedInterface.lean::doc::repr_spread_source_certain_target
+ZeroParadox/Ordinal/ProofFloorCanonical.lean::block::105887589784::Is the proof-theory bottom canonical across the
+ZeroParadox/Ordinal/SnapMetaLattice.lean::block::e45298ccf161::The lattice of systems: adjoining the point at i
+ZeroParadox/Ordinal/SnapMetaLattice.lean::doc::<anonymous>
+ZeroParadox/Ordinal/SnapMetaLattice.lean::doc::snapSublocale
+ZeroParadox/Ordinal/SnapMetaLattice.lean::label::_
+ZeroParadox/Ordinal/SnapNucleus.lean::block::59d202b32d65::The snap is a nucleus: ε₀ is the modality genera
+ZeroParadox/Ordinal/SnapNucleus.lean::block::5aa5b36da3c7::Axiom Purity Check
+ZeroParadox/Ordinal/SnapNucleus.lean::doc::snapNucleus_bot
+ZeroParadox/Ordinal/SnapNucleusConstructive.lean::block::10635d3bc6ed::No snap-shaped closure on the `ONote` carrier: a
+ZeroParadox/Ordinal/SnapNucleusConstructive.lean::block::79475bad573a::Why Mathlib's own order on `ONote` cannot be use
+ZeroParadox/Ordinal/SnapNucleusConstructive.lean::doc::SynONote
+ZeroParadox/Ordinal/SnapNucleusConstructive.lean::doc::no_snap_closure
+ZeroParadox/Ordinal/SnapNucleusConstructive.lean::doc::no_snap_nucleus
+ZeroParadox/Ordinal/SnapNucleusConstructive.lean::doc::tower_cofinal
+ZeroParadox/Ordinal/SnapSuccession.lean::block::c01b7afc80be::The succession as a chain: the ε-numbers are the
+ZeroParadox/Ordinal/SnapSuccession.lean::doc::succession_succ
+ZeroParadox/Ordinal/SyntacticCollapse.lean::block::90149e78c36b::Syntactic surrogate for the 2-adic metric collap
+ZeroParadox/Ordinal/SyntacticCollapse.lean::doc::synCollapse_norm_bound
+ZeroParadox/Ordinal/SyntacticCollapse.lean::doc::synVal
+ZeroParadox/Ordinal/SyntacticCollapse.lean::doc::synVal_mono
+ZeroParadox/Ordinal/WeakGoodstein.lean::block::e0e4b9d5a792::Weak Goodstein termination (second-domain depth
+ZeroParadox/Ordinal/WeakGoodstein.lean::doc::ωeval
+ZeroParadox/Reals/MarkovSpectralGap.lean::block::53ed1977aa82::ZP-H: Spectral-gap irreversibility of the Markov
+ZeroParadox/Reals/MarkovSpectralGap.lean::doc::fullMix_mode_decays
+ZeroParadox/Reals/OrderedField.lean::block::795176ae5401::§ 0. AX-B1 AS AN EXPLICIT COMMITMENT
+ZeroParadox/Reals/OrderedField.lean::block::ba8303a64c9b::Classification Note: Ordered Fields and the Snap
+ZeroParadox/Reals/OrderedField.lean::block::bbb295beb325::ZP-F: The Real Numbers as Counterexample
+ZeroParadox/Reals/OrderedField.lean::doc::HasFirstStep
+ZeroParadox/Reals/OrderedField.lean::doc::axb1_fails_everywhere_iff_dense
+ZeroParadox/Reals/OrderedField.lean::doc::axb1_fails_in_ordered_field
+ZeroParadox/Reals/RateClassInvariant.lean::block::139da057774f::Axis IV: convergence-rate class as a cross-root
+ZeroParadox/Reals/RateClassInvariant.lean::doc::linear_geo_rate_asymmetry
+ZeroParadox/Reals/SpectralRadius.lean::block::349a67431434::Spectral side: the transfer operator is ℓ¹-nonex
+ZeroParadox/Settheory/APG.lean::bare::@acyclic_induction_step
+ZeroParadox/Settheory/APG.lean::bare::@decoration_unique
+ZeroParadox/Settheory/APG.lean::bare::@kCycle_node_eq_bot
+ZeroParadox/Settheory/APG.lean::bare::@pureSelfLoop_decoration_eq_bot
+ZeroParadox/Settheory/APG.lean::bare::@scale_iterate_unique_fp
+ZeroParadox/Settheory/APG.lean::bare::@scale_no_nontrivial_period
+ZeroParadox/Settheory/APG.lean::bare::@val_iterate
+ZeroParadox/Settheory/APG.lean::block::1f3ecb72e664::ZPJ — Accessible Pointed Graphs and AFA Decorati
+ZeroParadox/Settheory/APG.lean::block::e4ae970ccf04::§ VIII. Acyclic Vertex Uniqueness (superseded by
+ZeroParadox/Settheory/APG.lean::doc::kCycle_node_eq_bot
+ZeroParadox/Settheory/AczelConn.lean::doc::J_self
+ZeroParadox/Settheory/AczelConn.lean::doc::J_self_eq_bot
+ZeroParadox/Settheory/Coalgebra.lean::block::2a0352d23b76::ZP-P instance: the categorical parent (initial a
+ZeroParadox/Settheory/Coalgebra.lean::doc::idPF_Coalgebra
+ZeroParadox/Settheory/Curry.lean::block::38c7bc874442::Curry's paradox — the diagonal family's EXPLOSIO
+ZeroParadox/Settheory/Curry.lean::doc::curry_from_naming
+ZeroParadox/Settheory/Curry.lean::doc::curry_no_bottom
+ZeroParadox/Settheory/Curry.lean::doc::curry_paradox
+ZeroParadox/Settheory/Curry.lean::doc::liar_is_curry_at_false
+ZeroParadox/Settheory/FixedPointFork.lean::block::a88864d4695e::ZP-P: The Fixed-Point Fork
+ZeroParadox/Settheory/ForkFrameChange.lean::block::6f8813dc5911::The order-theoretic universal frame-change: dual
+ZeroParadox/Settheory/ForkFrameChange.lean::doc::fork_is_frameflip
+ZeroParadox/Settheory/ForkFrameChange.lean::doc::lfp_dual_eq_gfp
+ZeroParadox/Settheory/LawvereBridge.lean::block::4cfd68b034b7::The Lawvere dereference — selfApp as an instance
+ZeroParadox/Settheory/LawvereBridge.lean::block::60b66fd2e1e9::§ VI. The hard bridge — located, not crossed (th
+ZeroParadox/Settheory/LawvereBridge.lean::doc::lawvere_trigger_refuted
+ZeroParadox/Settheory/LawvereBridge.lean::doc::monotone_regime_derives_pinned
+ZeroParadox/Settheory/LawvereBridge.lean::doc::mu_nu_branch_exclusion
+ZeroParadox/Settheory/LawvereBridge.lean::doc::not_monotone_not
+ZeroParadox/Settheory/LawvereBridge.lean::doc::selfApp_lands_on_nu
+ZeroParadox/Settheory/LawvereBridge.lean::doc::selfApp_pinnable
+ZeroParadox/Settheory/Loeb.lean::block::6404c30317bf::Löb's theorem — the diagonal family's PROVABILIT
+ZeroParadox/Settheory/Loeb.lean::doc::loeb_sentence_is_fixedpoint
+ZeroParadox/Settheory/MetaFork.lean::block::44875de8248e::The meta-level fork — the double dereference (pr
+ZeroParadox/Settheory/MetaFork.lean::doc::f_id_on_fixedPoints
+ZeroParadox/Settheory/MetaFork.lean::doc::gap_is_fork_at_operators
+ZeroParadox/Settheory/MetaFork.lean::doc::instance_always_exists
+ZeroParadox/Settheory/MetaFork.lean::doc::meta_operator_fixedPoints_univ
+ZeroParadox/Settheory/Model.lean::block::230df9aca2e1::ZPJ — Concrete ValuationStructure Instance: (ℕ∞,
+ZeroParadox/Settheory/QuineDichotomy.lean::block::775ad1a101e2::ZPJ — the Quine-atom dichotomy
+ZeroParadox/Settheory/QuineDichotomy.lean::doc::quine_dichotomy
+ZeroParadox/Settheory/QuineHost.lean::block::40496c1cd9e9::Axiom Purity Check
+ZeroParadox/Settheory/QuineHost.lean::block::c5d5511674a2::The Quine-Host Requirements — the AFA fragment t
+ZeroParadox/Settheory/QuineHost.lean::doc::BoffaMem
+ZeroParadox/Settheory/QuineHost.lean::doc::quineHost_not_wellFounded
+ZeroParadox/Settheory/QuineHost.lean::doc::zfSet_no_quine_bottom
+ZeroParadox/Settheory/RequirementsGap.lean::block::4107e354d2c0::§ V. FENCE — the meta-level recursion (open conj
+ZeroParadox/Settheory/RequirementsGap.lean::block::a24f7a27ee1b::The instance-vs-requirements gap as a fork insta
+ZeroParadox/Settheory/RequirementsGap.lean::doc::gap_poles_swap_under_dual
+ZeroParadox/Settheory/RequirementsGap.lean::doc::instance_pinnable_iff_fork_collapse
+ZeroParadox/Settheory/SetTheoryAFA.lean::block::34dffdacbe76::Axiom Purity Check
+ZeroParadox/Settheory/SetTheoryAFA.lean::block::74b2dc97cf49::ZP-J: Executability of Self-Reference
+ZeroParadox/Settheory/SetTheoryAFA.lean::doc::t_exec
+ZeroParadox/Settheory/Tarski.lean::block::6980df8a2d3f::Tarski's undefinability of truth — the diagonal
+ZeroParadox/Settheory/Tarski.lean::doc::liar_no_truth_value
+ZeroParadox/Settheory/Tarski.lean::doc::tarski_Tschema_liar_absurd
+ZeroParadox/Settheory/Tarski.lean::doc::tarski_no_truth_bottom
+ZeroParadox/Settheory/Wall.lean::block::fbbc972e0004::Zero as a Wall — the metatheoretic boundary, as
+ZeroParadox/Settheory/Wall.lean::doc::bool_not_no_fixedpoint
+ZeroParadox/Settheory/Wall.lean::doc::cantor_via_engine
+ZeroParadox/Settheory/Wall.lean::doc::lawvere_fixedpoint
+ZeroParadox/Settheory/Wall.lean::doc::negation_no_fixedpoint
+ZeroParadox/Settheory/Wall.lean::doc::no_membership_cycle
+ZeroParadox/Settheory/Wall.lean::doc::no_quine_atom
+ZeroParadox/Settheory/Wall.lean::doc::no_self_decider
+ZeroParadox/Settheory/Wall.lean::doc::russell_via_engine
+ZeroParadox/Settheory/Wall.lean::doc::wf_no_cycle
+ZeroParadox/Settheory/Wall_OneRoot.lean::block::798d43239c17::Two small facts: self-loops exist without well-f
+ZeroParadox/Settheory/Wall_OneRoot.lean::doc::selfloop_permitted
+ZeroParadox/State/HilbFunctor.lean::block::c7c779527750::ZP-H Hilbert Functor: F_D into the real category
+ZeroParadox/State/ProbeSeparates.lean::block::bf0cd3984f8f::`Fin 0` is empty; the zero ℂ-module on `Fin 0` i
+ZeroParadox/State/ProbeSeparates.lean::doc::hilb_bottom_has_point
+ZeroParadox/State/ProbeSeparates.lean::doc::probe_separates
+ZeroParadox/State/ReversibleSpectrum.lean::block::12c217ddc827::Reversible chains have real spectrum (genuine Hi
+ZeroParadox/State/StateSpace.lean::block::a48c4be8b405::ZP-D: State Layer (Hilbert Space)
+ZeroParadox/State/StateSpace.lean::doc::StateSpace
+ZeroParadox/State/StateSpace.lean::doc::t5_monotone_norms
+ZeroParadox/State/StateSpace.lean::doc::t5_strict_orthogonal
+ZeroParadox/State/ThreeCarrierLeaf.lean::block::ff5f9ef90161::The THREE-carrier ν/seam leaf set is one-point (
+ZeroParadox/State/ThreeCarrierLeaf.lean::doc::hilbert_is_punit
+ZeroParadox/State/ThreeCarrierLeaf.lean::doc::hom_padic_simplex_subsingleton
+ZeroParadox/State/ThreeCarrierLeaf.lean::doc::nu_leaf_glue_three
+ZeroParadox/State/ThreeCarrierLeaf.lean::doc::nu_leaf_homeo
+ZeroParadox/State/ThreeCarrierLeaf.lean::doc::padicFloor_ThreeCarrierLeaf
+ZeroParadox/State/ThreeCarrierLeaf.lean::doc::padic_is_punit
+ZeroParadox/State/ThreeCarrierLeaf.lean::doc::seam_leaf_homeo
+ZeroParadox/Valuation/AdeleGlobal.lean::block::3c7785f653e6::ZP-H Direction A, Cycle A4 (depth b) — the adele
+ZeroParadox/Valuation/AdeleGlobal.lean::doc::adele_global_assembly
+ZeroParadox/Valuation/ArchPlace.lean::block::725838d22d48::ZP-H Direction A, Cycle A1 — #2 (Markov) is the
+ZeroParadox/Valuation/ArchPlace.lean::doc::arch_place_characterization
+ZeroParadox/Valuation/ArchPlace.lean::doc::place_topological_signature
+ZeroParadox/Valuation/AxisSweepProbe.lean::block::dc7ea4ae31da::Experimental probes: the fork is trivially satis
+ZeroParadox/Valuation/BottomInvariant.lean::block::42501b5eeb77::§ X — A NO-GO in one direction: no measure-prese
+ZeroParadox/Valuation/BottomInvariant.lean::block::506c177ea6d0::A first universal: the bottom carries an invaria
+ZeroParadox/Valuation/BottomInvariant.lean::block::7152aa5c2fb3::§ VII — The BOTH-AT-ONCE regime: a unit multipli
+ZeroParadox/Valuation/BottomInvariant.lean::block::ec9f6782f4c8::§ VII — Attracting kernels: convergence to the i
+ZeroParadox/Valuation/BottomInvariant.lean::doc::SameShapeFromAnywhere
+ZeroParadox/Valuation/BottomInvariant.lean::doc::markov_sameShape
+ZeroParadox/Valuation/BottomInvariant.lean::doc::omegaLim
+ZeroParadox/Valuation/BottomInvariant.lean::doc::unitMul_fixes_floor
+ZeroParadox/Valuation/BottomInvariant.lean::doc::unitMul_norm_const
+ZeroParadox/Valuation/BottomInvariant.lean::doc::unitMul_preserving_dirac
+ZeroParadox/Valuation/BoundaryGap.lean::block::5b1c7eafe66c::The boundary embedding: the exact gap to the Bru
+ZeroParadox/Valuation/BoundaryGap.lean::doc::embedsAsRootedSubtree_of_self
+ZeroParadox/Valuation/BranchingRequirement.lean::block::8da21bdf02ef::A further requirement — the branching axis: bran
+ZeroParadox/Valuation/CantorPropertiesProbe.lean::block::537bb1bacad5::Completeness-critic, final pass: homogeneity and
+ZeroParadox/Valuation/CompletenessCriticProbe.lean::block::c15e4b17e8d2::Completeness-critic probe: what property of the
+ZeroParadox/Valuation/ComplexityLadder.lean::block::c5215bc5bfb7::The complexity ladder: the arity is the variable
+ZeroParadox/Valuation/ContractionRate.lean::block::b0349b413bcb::The contraction-rate dichotomy at the p-adic flo
+ZeroParadox/Valuation/ContractionRate.lean::doc::nat_orbit_tendsto_zero_iff_two_dvd
+ZeroParadox/Valuation/ContractionRate.lean::doc::norm_lt_one_iff_two_dvd
+ZeroParadox/Valuation/ContractionRate.lean::doc::pure_orbit_tendsto_zero_iff_norm_lt_one
+ZeroParadox/Valuation/ContractionRate.lean::doc::two_is_contraction
+ZeroParadox/Valuation/FloorWitness.lean::block::528f4833497b::Floor-class witnesses: valuation = ⊤ at the bott
+ZeroParadox/Valuation/ForkPoleProbe.lean::block::8f9f582afd49::Experimental probe: is the μ/ν fork independent
+ZeroParadox/Valuation/IndependenceProbe.lean::block::f8ec2c4c1459::Experimental probe: are the chain axis and the b
+ZeroParadox/Valuation/InfinitudeFloor.lean::block::64570737b23d::§ VIII. NO-GO — what the requirements class does
+ZeroParadox/Valuation/InfinitudeFloor.lean::block::a3f426aa875b::The floor's infinite complexity AS an infinitude
+ZeroParadox/Valuation/InfinitudeFloor.lean::doc::BookkeepingCarrier
+ZeroParadox/Valuation/InfinitudeFloor.lean::doc::infinitudeFloor_forces_infinite
+ZeroParadox/Valuation/InfinitudeFloor.lean::doc::infinitudeFloor_nonempty_iff_infinite
+ZeroParadox/Valuation/InfinitudeFloor.lean::doc::member_injective
+ZeroParadox/Valuation/InfinitudeFloor.lean::doc::pole_inversion
+ZeroParadox/Valuation/InvTowerNorm.lean::block::0cdfc8cd0519::Batch 2 / G3 (pipeline, T6): the 0↔∞ duality on
+ZeroParadox/Valuation/InversionValuation.lean::block::8f5cfe07130e::An elementary fact: 2-adic inversion reverses th
+ZeroParadox/Valuation/IrreversibilityProbe.lean::block::772a6fd7420d::Experimental probe: is irreversibility (the snap
+ZeroParadox/Valuation/IrreversibilityProbe.lean::doc::irreversibility_forced_at_pole_not_beyond
+ZeroParadox/Valuation/LocalFloor.lean::doc::every_node_is_a_floor
+ZeroParadox/Valuation/NuLeafReconcile.lean::block::9e0b0f8cf8e2::The within-ν edge reconciles at the LEAF, not th
+ZeroParadox/Valuation/NuLeafReconcile.lean::doc::nu_leaf_glue_subsingleton
+ZeroParadox/Valuation/NuLeafReconcile.lean::doc::nu_leaf_reconcile
+ZeroParadox/Valuation/NuLeafReconcile.lean::doc::nu_leaf_reconcile_generic
+ZeroParadox/Valuation/NuLeafReconcile.lean::doc::padicFloor_NuLeafReconcile
+ZeroParadox/Valuation/NuLeafReconcile.lean::doc::simplexPoint_NuLeafReconcile
+ZeroParadox/Valuation/NuRateEdge.lean::block::956fa32f35ca::The within-ν edge at the orbit-RATE level (#3 ↔
+ZeroParadox/Valuation/NuRateEdge.lean::doc::markovRate
+ZeroParadox/Valuation/NuRateEdge.lean::doc::no_rate_conjugacy
+ZeroParadox/Valuation/NuRateEdge.lean::doc::padicRate
+ZeroParadox/Valuation/NuRateMatch.lean::block::56830713d61e::Within-ν geometric-rate match: #2 (irreducible M
+ZeroParadox/Valuation/Ostrowski.lean::block::73ed6c20dcbe::ZP-P instance: the number-system fork (ℝ vs ℚ_p)
+ZeroParadox/Valuation/Ostrowski.lean::doc::real_not_equiv_padic
+ZeroParadox/Valuation/Padic.lean::block::176a5400381e::Classification Note: Non-Archimedean Fields and
+ZeroParadox/Valuation/Padic.lean::block::71336a49b7aa::ZP-B: p-Adic Topology
+ZeroParadox/Valuation/Padic.lean::block::855ccd8ce9e1::Why Q₂ Rather Than a Discrete Two-Point Space
+ZeroParadox/Valuation/Padic.lean::block::85ca8714ad79::Corollary C3 — The Snap is Topologically Irrever
+ZeroParadox/Valuation/Padic.lean::doc::ax_b1_distinct
+ZeroParadox/Valuation/Padic.lean::doc::eps0
+ZeroParadox/Valuation/Padic.lean::doc::t0_no_prime_below_two
+ZeroParadox/Valuation/PadicAttractor.lean::block::14dea97935d4::The p-adic floor #3 as a dynamical attractor
+ZeroParadox/Valuation/PadicAttractor.lean::doc::topfloor_singleton
+ZeroParadox/Valuation/PadicBallIndicator.lean::block::6a5b62847af6::The p-adic ball indicator in L²(ℤ_p)
+ZeroParadox/Valuation/PadicCharacter.lean::block::a7819db764cd::p-adic additive characters and their orthogonali
+ZeroParadox/Valuation/PadicErgodic.lean::block::aa1ef83017c9::Ergodicity of the p-adic odometer
+ZeroParadox/Valuation/PadicErgodic.lean::doc::denseRange_odometer_orbit
+ZeroParadox/Valuation/PadicErgodic.lean::doc::ergodic_odometer
+ZeroParadox/Valuation/PadicHaar.lean::block::c055e19a190a::p-adic Haar measure on ℤ_p
+ZeroParadox/Valuation/PadicHaar.lean::doc::<anonymous>
+ZeroParadox/Valuation/PadicHaar.lean::doc::haarZp
+ZeroParadox/Valuation/PadicJointSpectrum.lean::block::d857923fc461::The joint spectrum: Koopman ⋈ Vladimirov share t
+ZeroParadox/Valuation/PadicJointSpectrum.lean::doc::paChar_koopman_eigen
+ZeroParadox/Valuation/PadicKoopman.lean::block::db8c85fd07ec::The Koopman operator on L²(ℤ_p)
+ZeroParadox/Valuation/PadicKoopmanVladimirov.lean::block::921cf7a947d2::Koopman ⋈ Vladimirov: the odometer intertwines w
+ZeroParadox/Valuation/PadicKozyrev.lean::block::80fa2d90d520::A genuine eigenfunction of D^α: the level-1 p-ad
+ZeroParadox/Valuation/PadicPerfect.lean::block::ac41fea038a7::M11 (re-attempt): the 2-adic ball is perfect — C
+ZeroParadox/Valuation/PadicStillPoint.lean::block::f4a7e916b7d6::The still-point: the trivial character is the jo
+ZeroParadox/Valuation/PadicTree.lean::block::db1ec7e186b5::§ II. `tree_isTree`
+ZeroParadox/Valuation/PadicTree.lean::doc::EmbedsAsRootedSubtree
+ZeroParadox/Valuation/PadicTree.lean::doc::Vtx
+ZeroParadox/Valuation/PadicTree.lean::doc::botEnd
+ZeroParadox/Valuation/PadicVladimirov.lean::block::097cc5aa111b::The Taibleson–Vladimirov operator D^α on ℤ_p
+ZeroParadox/Valuation/PadicVladimirov.lean::block::46b7e9325b7f::§ VII — Frequency = inverse-norm of position (th
+ZeroParadox/Valuation/PadicVladimirov.lean::block::c1a94250b102::§ VI — The symbol `|ξ|^α`, read off the connecti
+ZeroParadox/Valuation/PadicVladimirov.lean::doc::shellConst
+ZeroParadox/Valuation/PlaceAllPrimes.lean::block::babae9102a6b::ZP-H Direction A, Cycle A5 (depth c) — the frame
+ZeroParadox/Valuation/PlaceAllPrimes.lean::doc::framework_family_complete
+ZeroParadox/Valuation/PlaceForcing.lean::block::1ff86a7ca008::ZP-H Direction A, Cycle A2 — the archimedean pla
+ZeroParadox/Valuation/PlaceMetric.lean::block::5b8c39031e51::ZP-H Direction A, Cycle A3 — the place is load-b
+ZeroParadox/Valuation/PolarityFlip.lean::block::5478ed4e37fd::2-adic inversion negates the valuation (a cited
+ZeroParadox/Valuation/PoleChartSelection.lean::block::11763f3cdcad::§ I.a — The generic pole: selection is free
+ZeroParadox/Valuation/PoleChartSelection.lean::block::8fef2287c91b::Chart selection at the pole: free on the built s
+ZeroParadox/Valuation/PoleChartSelection.lean::block::a04dead6ee04::Axiom Purity Check
+ZeroParadox/Valuation/PoleChartSelection.lean::block::ec0c910a8201::§ III — The gap, named
+ZeroParadox/Valuation/PoleChartSelection.lean::doc::Chart
+ZeroParadox/Valuation/PoleChartSelection.lean::doc::UniformChartSelection
+ZeroParadox/Valuation/PoleChartSelection.lean::doc::builtChartAdmissible
+ZeroParadox/Valuation/PoleChartSelection.lean::doc::em_of_uniformChartSelection
+ZeroParadox/Valuation/PoleChartSelection.lean::doc::infty_ne_floorG
+ZeroParadox/Valuation/PoleChartSelection.lean::doc::poleAdmissible
+ZeroParadox/Valuation/PoleChartSelection.lean::doc::poleOrbitG
+ZeroParadox/Valuation/PoleChartSelection.lean::doc::poleSelectG
+ZeroParadox/Valuation/PoleChartSelection.lean::doc::uniformChartSelection_of_classical
+ZeroParadox/Valuation/PoleCompletion.lean::block::51f469a47423::The pole completion: the floor is a genuine self
+ZeroParadox/Valuation/PoleCompletion.lean::doc::boundaryDouble
+ZeroParadox/Valuation/PoleCorners.lean::block::0b66ff0e0ee9::The four corners: 0 and ∞ have exactly four repr
+ZeroParadox/Valuation/PoleCornersBridge.lean::block::076c08dfe4e6::Bridge: the four corners are the corners of the
+ZeroParadox/Valuation/PoleCornersBridge.lean::doc::irreversible_direction_is_the_snap
+ZeroParadox/Valuation/PoleCornersBridge.lean::doc::swap_is_rInv
+ZeroParadox/Valuation/PricedPadicInterface.lean::block::ec6c66da2682::A priced p-adic interface: a choice-free carrier
+ZeroParadox/Valuation/PricedPadicInterface.lean::doc::Apart
+ZeroParadox/Valuation/PricedPadicInterface.lean::doc::crossVal_bot_agrees
+ZeroParadox/Valuation/PricedPadicInterface.lean::doc::enat_add_choice
+ZeroParadox/Valuation/PricedPadicInterface.lean::doc::nScale_unique_fp
+ZeroParadox/Valuation/PricedPadicInterface.lean::doc::v2
+ZeroParadox/Valuation/PricedPadicInterface.lean::doc::v2_scale
+ZeroParadox/Valuation/RateTransport.lean::block::71ca28d920bb::within-Axis-I positive rate-transport via the sh
+ZeroParadox/Valuation/RiemannSphere.lean::block::5b4beabe620a::The p-adic Riemann sphere: inversion swaps the f
+ZeroParadox/Valuation/RootAsymmetry.lean::block::4bd5c9d34701::Root-asymmetry test: #1 (μ order-floor) vs #3 (ν
+ZeroParadox/Valuation/RootAsymmetry.lean::doc::q2_norm_eq_zero_iff
+ZeroParadox/Valuation/Scale.lean::block::c7c63bbcf2d1::ZPJ — Valuation Bridge: Deriving AFA Content fro
+ZeroParadox/Valuation/Scale.lean::block::ed150e6420a3::NO-GO gauge for this class — proved in the sibli
+ZeroParadox/Valuation/Scale.lean::block::ff2dc0808191::§ V. The 2-Adic Parallel — ℤ_[2] Satisfies Valua
+ZeroParadox/Valuation/Scale.lean::doc::q2Val
+ZeroParadox/Valuation/ScaleBridge.lean::block::3f513a6e1109::ZPJ — Scale Bridge: AFA Content from Valuation W
+ZeroParadox/Valuation/ScaleBridge.lean::block::b78041d6b1f5::§ VI. NO-GO gauge — what FAILS to be a `ValBridg
+ZeroParadox/Valuation/ScaleBridge.lean::doc::valBridge_bool_isEmpty
+ZeroParadox/Valuation/SemilatticeInstance.lean::block::285198dbd94d::III-C. Depth-Chain Bridge — Closing the R1+T3 →
+ZeroParadox/Valuation/SemilatticeInstance.lean::block::4e8d9a154cd5::Axiom Purity Check
+ZeroParadox/Valuation/SemilatticeInstance.lean::block::91862e6222e3::III-B. T-IZ (Formally Complete) — AFA/Kleene Pat
+ZeroParadox/Valuation/SemilatticeInstance.lean::block::bee21dc6b8e0::ZP-I: Inside Zero
+ZeroParadox/Valuation/SemilatticeInstance.lean::block::d07e6942cbb0::II. Valuation-Complexity Bridge — SUPERSEDED
+ZeroParadox/Valuation/SemilatticeInstance.lean::doc::t_inside_zero
+ZeroParadox/Valuation/SemilatticeInstance.lean::doc::t_iz_valuation_unbounded
+ZeroParadox/Valuation/StrippedBottom.lean::block::fa184177b59b::⊥ by inversion of attribute-classes — the "typec
+ZeroParadox/Valuation/StrippedBottom.lean::doc::extent_single_point
+ZeroParadox/Valuation/StrippedBottom.lean::doc::measure_degenerate
+ZeroParadox/Valuation/StrippedBottom.lean::doc::structure_absorbing
+ZeroParadox/Valuation/TopFunctor.lean::block::34ab865e8537::ZP-H Top Functor: F_B into the real category `To
+ZeroParadox/Valuation/TopFunctor.lean::doc::fB_faithful
+ZeroParadox/Valuation/TowerHeightFloor.lean::block::23678cd250e8::Height meets floor: the ordinal tower IS an Infi
+ZeroParadox/Valuation/TowerHeightFloor.lean::doc::tower_height_floor_reconciliation
+ZeroParadox/Valuation/ValuationAFA.lean::block::a9ce9b01b868::P10: AFA self-containment derived from a bottom-
+ZeroParadox/Valuation/ValuationAFA_Padic.lean::block::40d9cc8eb864::P10 concrete: the bottom-valuation axioms are TH
+
+# ---------------------------------------------------------------------------
+# PRS-1, 2026-08-12 - NEWLY MEASURABLE, NOT NEWLY WRITTEN.
+# These blocks are pre-existing prose that check_prose COULD NOT SEE until the
+# Engineer's-Take latch was fixed: the exemption ran to the end of the block, so a
+# short Take followed by `---` and a long body left the body unmeasured. Fixing the
+# latch made 8 pre-existing bodies visible at once.
+# They are grandfathered on the SAME grounds as the original 775: pre-existing debt,
+# surfaced by a convention (here, a repair) rather than authored. Blocking on eight
+# unread sites is how a gate gets muted, which this file exists to prevent.
+# Each was READ before being added - all are ordinary long file headers, the outlier
+# tail CLAUDE.md already describes; none carries a claim defect.
+# SHRINK these as the files are touched. Burn-down tracked as PRS-3.
+# ---------------------------------------------------------------------------
+ZeroParadox/Algebra/WheelFrac.lean::block::ce6ec6965502::The Wheel of Fractions `⊙_S A` (Carlström 2001:1
+ZeroParadox/AxiomProfile.lean::block::d97ab2c662d2::Axiom Profile — the choice-free core of the Zero
+ZeroParadox/Category/Lawvere.lean::block::c012fbb6a201::ZPJ — The Lawvere bridge (keystone Tier-6 upgrad
+ZeroParadox/Multihomed/Boundary.lean::block::d27d10afca3e::ZPJ — The well-foundedness boundary (keystone sn
+ZeroParadox/Multihomed/BoundaryBridge.lean::block::903849c56ca4::ZPJ — The snap-boundary, QPF bridge (best-effort
+ZeroParadox/Settheory/AczelConn.lean::block::0fcd05ff0208::ZPJ — Aczel Fixed Point Connection
+ZeroParadox/Valuation/LocalFloor.lean::block::1085b4a95ef2::Every node is a floor, literally: a genuine Infi
+ZeroParadox/Valuation/PadicTree.lean::block::6ee5dcf9559c::A rooted 2-adic tree as a `SimpleGraph`

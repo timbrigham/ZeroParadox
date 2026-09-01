@@ -63,7 +63,7 @@ theorem logDepthExists : ∀ o : Ordinal, o < ε₀ →
     ordinal's own CNF structure (leading-exponent descent), with NO reference to the tower.
 
     No `open Classical in` here, deliberately: it was present and measurably did nothing — see the
-    note on `cnfRank` in `ZeroParadox/Ordinal/P8.lean`. `Ordinal.instLinearOrder`'s
+    `cnfRank` in `ZeroParadox/Ordinal/P8.lean`. `Ordinal.instLinearOrder`'s
     `toDecidableLE := Classical.decRel _` already supplies what `Nat.find` needs. -/
 noncomputable def cnfLogDepth (α : {α : Ordinal // α < ε₀}) : ℕ :=
   Nat.find (logDepthExists α.1 α.2)

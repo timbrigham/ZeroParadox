@@ -1,6 +1,27 @@
 # Claude Code session files and local tooling
 .claude-local/
-.claude/
+# ⚠ `.claude/*` and NOT `.claude/`. With a trailing slash git never descends into the directory, so
+# a later negation cannot re-include anything inside it. The glob form is what makes the exception
+# below actually work.
+.claude/*
+# The review-gate definitions are TRACKED. They used to live only in `~/.claude/commands/` with a
+# hand-copied backup in `.claude-local/commands/` — unversioned, invisible to any reader, and 4 of
+# the 8 had silently drifted apart. Claude Code reads project commands from here, so tracking them
+# means exactly one copy, which is also the copy a reviewer can read.
+!.claude/commands/
+# ⚠ THE WHOLE GUARD RECORD IS TRACKED, AND IT HAD TO BE ALL THREE PARTS OR NONE. `settings.json`
+# carries the permissions AND the `hooks` wiring; the scripts that wiring points at are in
+# `tools/verify/claude_hooks/`. A clone therefore inherits the guards rather than an appearance of
+# them. `settings.local.json` stays ignored and is now empty — it holds nothing load-bearing.
+#
+# Why all three: tracking the wiring alone would point at scripts a clone does not have, and a hook
+# whose command is missing fails OPEN — a repo that looks armed and is not, which is strictly worse
+# than one that is visibly bare. Tracking the scripts alone records what the guards ARE and not
+# which are ARMED. Measured 2026-08-23 (`GUARD-1`): the tracked file had held `permissions.allow`
+# only — seven wildcards, no `deny`, no `hooks` — while all 36 deny rules and both hook events sat
+# in the ignored file, so the record of which guards are wired existed in no repository at all,
+# which is exactly what tracking it had been claimed to fix.
+!.claude/settings.json
 
 # Local MCP tooling (standalone repo, not part of the math publication)
 imap-email-mcp/

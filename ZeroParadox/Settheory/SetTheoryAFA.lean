@@ -74,7 +74,7 @@ open ZeroParadox
     This encodes structurally that ⊥ = {⊥}: the bottom of the lattice is the
     unique Quine atom. No separate bridge axiom is needed — T-EXEC follows from
     (1) and (2) by pure logic. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet uses the Axiom of Foundation (ZFSet.regularity), which forbids x ∈ x. AFA content (self-containing sets, Quine atoms) cannot be encoded using ZFSet. AFAStructure is the lattice-level encoding of what ZF+AFA provides set-theoretically, with selfMem/quine_unique/bot_self_mem as the three minimal class fields.
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet uses the Axiom of Foundation (ZFSet.regularity), which forbids x ∈ x. No ZFSet element can satisfy x ∈ x, so a Quine atom is not directly available as a ZFSet; AFA content is still MODELLABLE over a well-founded universe, as Aczel does via decorations of accessible pointed graphs. AFAStructure is the lattice-level encoding of what ZF+AFA provides set-theoretically, with selfMem/quine_unique/bot_self_mem as the three minimal class fields.
 class AFAStructure (L : Type*) [ZPSemilattice L] where
   /-- x is self-containing: x contains itself as a member under AFA. -/
   selfMem : L → Prop

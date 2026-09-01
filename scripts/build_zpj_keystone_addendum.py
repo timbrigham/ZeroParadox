@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.5 | August 2026
+Version 1.7 | August 2026
+v1.7: BEDROCK, the same mechanism defect as ZP-R v1.6 and rendered here too. The escape from the Cantor obstruction was given as eval landing "in the partial functions, not in the codes, so the Set refutation never applied to it". Refuted by elaboration: the partial-function type is nontrivial, so the Set refutation lands on it as well. The escape is that the effective category admits fewer MORPHISMS - no computable self-map on codes is eval-fixed-point-free - so the refuting diagonal has no computable representative. Prior art unchanged; only the stated reason was wrong.
 v1.5: THE v1.4 FIX WAS PARTIAL, AND THAT MADE THINGS WORSE. v1.4 corrected the two sites carrying the literal strings "modeling commitment" and "offered", and missed a THIRD stating the same claim in different words - Section II's closing sentence, "The one-object identification remains the MC-1 commitment." The result was a document saying the identity was retired on page 1 and live on page 2. Before v1.4 it was uniformly stale, i.e. self-consistent; a partial fix to a self-consistent error manufactures a self-contradiction, which is worse than not fixing it. The cause was grepping the three forbidden PHRASES rather than the CLAIM. Section II now states what MC-1 does carry: family membership proved per domain, with the choice of criteria the design commitment. Found independently by both gates at FAIL-BEDROCK. A FOURTH site then turned up - one neither gate flagged - found only by sweeping the rendered text for the CLAIM (any sentence pairing an identity notion with a live-status verb) rather than for the phrases: Section III called MC-1 an "existing identification", and its "bottom/epsilon-zero identification" wording could be read as equating the two endpoints, which epsilon0_ne_bot forbids. Now stated as a role assignment, with the endpoints' distinctness named. Also: the endnote's Lean sources upgraded to full repository paths.
 v1.3: CITATION SCOPE. Section III called the biconditional "the General Recursion Theorem". AMM's Thm 7.2 (p. 27) is the FORWARD direction only; their section 8 is titled "The Converse of the General Recursion Theorem". That converse always asks the ENDOFUNCTOR to preserve inverse images and then takes one of several routes - the CATEGORY having universally smooth monos with the functor carrying a pre-fixed point (Thm 8.1), or the category having a subobject classifier (Thm 8.6, Taylor's), or a third route for functors on vector spaces which have neither (Thm 8.12). The smooth-mono and subobject-classifier conditions are the CATEGORY's; preserving inverse images and carrying a pre-fixed point are the ENDOFUNCTOR's; and the routes are not exhaustive. Cor 8.2 lists five equivalent conditions, including the initial-algebra leg, under Thm 8.1's assumptions specifically. Taylor's necessity result is scoped as he scopes it - IN A TOPOS (Prop 111, p. 6), which he states rather than proves - and his forward half is Thm 36, p. 15. The "one cannot recurse through the bottom" reading is marked as this framework's gloss: Prop 111 names no bottom element. Also: the next-time operator is no longer listed as missing machinery, having been built in ZeroParadox/Category/NextTimeCategorical.lean; the remaining Mathlib absences are dated rather than asserted. All locators read from source.
 v1.4: MC-1 framing brought to the ratified form. THREE rendered sites carried the retired identity; v1.4 fixed two of them and v1.5 the third. They called the cross-category identity a live "modeling commitment" and said it was "offered" - the identity was RETIRED AS ILL-TYPED (an equation across distinct categories is not a well-formed proposition), and CLAIMS.md already says so, so the PDF disagreed with the ledger. Now: family membership proved per domain, criteria a design principle, identity retired, members provably distinct. R2-4 (Taylor cited page-precisely with no year or venue) is NOT fixed here: the on-disk copy carries neither, and inventing them is worse than the gap. It stays open pending a verified bibliographic record.
@@ -19,7 +20,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.7'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -149,11 +150,14 @@ def build():
         'In computability: a genuine instance (Lawvere.lean)',
         [
             'computability_face_fixedPoint &#8212; every <i>computable</i> self-map on codes '
-            'has a fixed point. This wraps Mathlib\'s Nat.Partrec.Code.fixed_point (Rogers / '
-            'Kleene\'s recursion theorem).',
-            'The escape from the Cantor obstruction is computability: the fixed-point-free '
-            'diagonal is not a computable endomap, so the witness can exist in the effective '
-            'category. This is ZP-K\'s face (the Kleene quine).',
+            'has a fixed point <i>up to eval</i>: two codes computing the same function. This wraps '
+            'Mathlib\'s Nat.Partrec.Code.fixed_point (Rogers / Kleene\'s recursion theorem).',
+            'The qualifier is load-bearing. A literal fixed point is not on offer &#8212; c &#8614; '
+            'pair(c, c) is total, computable, and returns its own input for no c. The escape from the '
+            'Cantor obstruction is a restriction on which MAPS exist, not on which type eval lands in: '
+            'no computable self-map on codes is eval-fixed-point-free, so the diagonal that would '
+            'refute the witness has no computable representative and the obstruction cannot fire. '
+            'This is ZP-K\'s face (the Kleene quine).',
             'Footprint: [propext, Classical.choice, Quot.sound], inherited from Mathlib.',
         ]
     ))

@@ -1,1 +1,9 @@
-fonts/
+# `fonts/` was ignored here until 2026-08-15. It is now TRACKED, deliberately (Tim: "it's harmless
+# to publish the fonts if they're open source").
+#
+# The build scripts were public and their fonts were not, so `scripts/` could be read but not run.
+# Both families are freely redistributable and both licences ship beside the binaries in
+# `fonts/` — the SIL OFL requires exactly that. See `zp_utils._font_dir`.
+#
+# Nothing is ignored in this directory any more. The file is kept, rather than deleted, so that the
+# reversal is visible to anyone who remembers the old rule and wonders when it changed.

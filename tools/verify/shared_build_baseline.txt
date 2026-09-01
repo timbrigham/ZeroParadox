@@ -1,0 +1,4 @@
+# Fingerprints of the SHARED build layer - modules imported by the build scripts and
+# therefore invisible to the per-document tokens in register.md. See RLY3-2.
+# Re-seed with: python tools/verify/check_hashes.py --seed-shared
+2c170a08  zp_utils.py

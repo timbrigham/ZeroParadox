@@ -1,0 +1,342 @@
+# Prior art — the measured cases, the three-step check in full, and how the gate runs
+
+**Opens when:** you are about to build something you could state in one sentence of standard
+mathematical English, you are writing a scout brief, or you are asking why the prior-art gate
+blocked a push.
+
+`CLAUDE.md` carries Trigger 0, the five trigger conditions and the papers-library rules. This is the
+evidence behind them.
+
+## 1. Trigger 0 — the measured cases
+
+**2026-07-27, three findings in a single day, every one searchable beforehand:**
+
+| what was built | what already existed | cost of not looking |
+|---|---|---|
+| `notEL_unique` (the non-terminating element of the final coalgebra of `1 + X` is unique) | **Escardó's `not-finite-is-∞'`** (TypeTopology) — proved from function extensionality alone, where ours carries `Classical.choice` | a whole build, and a *purer* proof left on the table |
+| `HasFirstStep` (a first step above the bottom, nothing between) | **Mathlib's `CovBy`**, over a weaker typeclass, plus `CovBy.unique_right` and `not_covBy` | a false `[ZP-CUSTOM]` registry entry, **and we missed `denselyOrdered_iff_forall_not_covBy` — a BICONDITIONAL stronger than the framework's own claim** |
+| the Glauber one-bit probes | **one sentence** of Krapivsky-Redner-Ben-Naim p. 123; the premise of Hajek (1988); five lemmas already in Mathlib as `Real.sigmoid` | 256 lines cut to 162, proof body to 6 lines; three claims retracted |
+
+**The point is not embarrassment-avoidance — searching first gets you MORE.** In those three cases
+it would have handed us a stronger theorem (the density biconditional), a purer proof (Escardó's),
+free derivative/analyticity/continuity lemmas (`Real.sigmoid`), and the standard NAME for a thing
+described longhand ("critical slowing down").
+
+## 2. The three-step check, ~10 minutes
+
+**1. Grep our own corpus.** *The cheapest miss, and it happened three times in one day* —
+`NatListRegime.lean` already had the `1 + X` coalgebra, `Miniature.lean` already had `enat_fp_iff`,
+`State/ReversibleSpectrum.lean` already had `Reversible` (a third definition of detailed balance was
+written anyway). Not literature. A grep.
+
+**2. Grep the pinned Mathlib for the CONCEPT, not the name you would have chosen — and if the claim
+is a Lean statement, RUN `exact?`.**
+
+⚠⚠ **`exact?` beats grep and it is the only step here whose verb is *RUN*.** Grep searches **names**;
+`exact?` searches **statement shape**, so it finds the lemma even when the library's chosen name is
+one you would never have guessed — exactly the case where grepping "the concept" also fails. Same
+authority argument as *"grep is not the authority; `#check` is"*, and it reaches the
+attribute-generated siblings (`@[to_dual]`, `@[simps]`) that have **no source line to grep**.
+
+**Measured 2026-08-12:** a ten-line hand proof was written for the generic
+connected-vs-totally-disconnected wall, having run steps 1 and 2 that same session on a neighbouring
+thread. **`subsingleton_of_preconnected_totallyDisconnected` was already in Mathlib**, found by an
+adversary gate with `exact?` and by no grep. Adopting it cut the proof body from seven lines to one
+**and corrected the mathematics**: the library states the result as `Subsingleton α`, so the
+obstruction is a **cardinality floor** — connected plus totally disconnected forces *at most one
+point*, and `Nontrivial` forbids it — not the topology fact the hand proof's route through
+`connectedComponent` implied. **The standard framing was not merely shorter; it was the honest
+statement of what the theorem obstructs.** Purity was checked before swapping, per the `CovBy`
+precedent: no regression.
+
+**3. One literature search** if the object has a name (Glauber dynamics, coalgebra, covering
+relation). **Run the LADDER in § 2a** — it has four rungs and the last one is not optional.
+
+## 2a. The literature-search LADDER — four rungs, and a citation is not confirmed until rung 4
+
+**Adopted 2026-08-23, after calibrating `theoremsearch` (an MCP theorem-statement search over the
+arXiv-era literature) against cases where this project already knew the answer. The measurements are
+in § 2b; the rungs below are what they license.**
+
+**Rung 1 — `.claude-local/papers/` FIRST.** The downloaded-source library. Cheapest rung, and a scout
+once declared Aczel unobtainable while it sat on disk. **Grep loosely** — scanned books carry OCR'd
+intra-word spaces, so a tight-pattern miss is not evidence of absence.
+
+**Rung 2 — `theoremsearch`.** Claim-shaped rather than file-shaped: it matches on *statement*, which is
+the thing a title search cannot reach. Three standing rules, each measured:
+- **THREE PHRASINGS MINIMUM**, along the four axes in § `R-NOTINLIB` (body:
+  `tools/process/not-in-the-library.md`) — POLARITY, PART OF SPEECH, VOCABULARY, DISPLAY. Measured: the
+  noun form put the right theorem at rank 1 and the **verb** form dropped it out of the top 5 entirely,
+  same claim, same index. **A single-phrasing negative is worthless.**
+- **IGNORE THE SIMILARITY SCORE.** **No threshold keeps the garbage out without discarding the find** —
+  pure noise scored 0.69 while genuine prior art scored 0.61, and an unrelated algebraic-geometry lemma
+  outranked the correct coalgebra theorem at 0.71. ⚠ That is a claim about THRESHOLDS, not that the
+  score runs backwards: exact statements of Lawvere's fixed-point theorem have come back at 0.676-0.686,
+  and other exact hits at 0.834 and 0.777. **Rank by reading; never filter on the number.**
+  This is DC-17's *ignore self-reported confidence* arriving through a new door: the score **is** the
+  API's confidence.
+- **A NULL RESULT IS UNINFORMATIVE.** The index is coverage-bounded and the bound is invisible from the
+  result. Never write "no prior art exists" from a rung-2 null; it does not even license
+  "none located as of &lt;date&gt;" on its own, because rung 3 has not run yet.
+
+**Rung 3 — the open web.** Runs when rung 2 returns no good match, **and also when it returns a
+neighbourhood hit whose actual source needs identifying**. This is where everything pre-arXiv lives —
+Lawvere 1969, Aczel 1988, Ostrowski, Gentzen, Carlström — and `theoremsearch` structurally cannot return
+those as sources, only as things other people cite. Skipping rung 3 on a rung-2 null is how a coverage
+gap becomes a recorded novelty claim.
+
+**Rung 4 — RETRIEVE AND READ THE FULL DOCUMENT.** File it in `papers/` as `author_topic_year[_id].pdf`,
+**validating before filing** (a tiny PDF is an error page, not a paper). **A citation is not confirmed
+until this rung.** Draft-from-source is unchanged by any of the above: existence may be cited freely; a
+source's *content* may not be asserted without the passage in hand.
+
+⚠ **RUNGS 1-3 ARE DISCOVERY. ONLY RUNG 4 IS VERIFICATION.** The ladder makes finding candidates
+cheaper; it does not make any of them citable. See § 2b for the measurement that settles this.
+
+## 2b. Why the ladder is shaped this way — the calibration, 2026-08-23
+
+Seven recorded prior-art cases were re-queried without using the citation's own wording, and two recorded
+*absences* were queried as negative controls. Raw score, not a favourable reading:
+
+**Recall: 1 exact / 3 right-neighbourhood / 3 miss out of 7.** The one exact hit was Fritz
+(arXiv:1908.07021) at rank 1. Adámek–Milius–Moss returned a *sibling* paper with the same content;
+Kraus–Nordvall Forsberg–Xu returned its 2023 successor; Kozyrev returned Khrennikov–Shelkovich with
+content-exact statements. Veltri, Ahrens–Capriotti–Spadotti and Yanofsky were missed outright.
+
+**Coverage is real and provable.** arXiv:2104.02549 is **verifiably absent** from the index while sitting
+in `papers/`. So a gate blocking on "no prior art found" would have returned clear for a claim whose prior
+art this project is physically holding. ⚠ `paper_filter` takes a **TITLE, not an arXiv id** — passing an
+id returns empty, which reads exactly like absence. Verify the filter before believing its zero.
+
+**Precision: one correct abstention, and one control that was itself wrong.** The two-forks universal
+negative (`ZeroParadox/Algebra/WheelFrac.md`) drew only unrelated combinatorics — correct abstention.
+But `ZeroParadox/Category/ChoiceCannotBe.lean` § IV ESSENTIAL CASE 2 (`wem_of_fixedPointFree`), which
+records **no** prior art, drew Booij–Escardó–Lumsdaine–Shulman arXiv:1701.05617 in **2 of 3 phrasings**,
+whose Theorems 3/5/6/8 sit in that exact shape. Not a proven duplicate from the returned bodies alone —
+theirs need naturality-under-equivalence plus an isolated point, and their Thm 3 yields full excluded
+middle where ours yields the weak form — but it is real adjacent work against a claim recording none.
+
+**THE MEASUREMENT THAT SETTLES VERIFICATION.** The tool returned Thm 64 of the successor paper —
+*"inequalities in Ord split, `(X≤Y) → (X=Y) ⊎ (X<Y)`, iff LEM"*. The recorded citation is Thm 38(d) of
+arXiv:2104.02549 — *"≤ is connex, `(X≤Y) ⊎ (X≥Y)`"* ⟹ LEM. **From the returned body alone, Thm 64 reads
+as Thm 38(d) renumbered for the journal version. Opening the PDF on disk shows they are different
+statements** — connexity versus splitting. Trusting the body would have produced a wrong citation.
+
+Three reasons the body is not a passage, all observed: `label` and `link` come back **null**, so there is
+no in-paper locator and numbering shifts between versions of one work; the `slogan` field is an **LLM
+paraphrase** sitting beside the body and is the most quotable thing on the screen; and ambient hypotheses
+are inconsistently present — sometimes in the body (*"If H preserves monomorphisms…"*), sometimes not,
+which is precisely the AMM Thm 8.1 trap this project already records (those conditions are the
+**category's**, not the functor's).
+
+⚠ **WHY THIS IS NOT A GATE, and the reasoning transfers to the next such tool.** A gate must be able to
+fail informatively. Here a null is uninformative (coverage) and a hit is a candidate, not a finding — so
+enforcement would manufacture the appearance of coverage, which is `RLY25-1` exactly. This is the rung-5
+shape from § *WHEN A FAILURE RECURS*: **the screen may replace the ENUMERATION, never the VERDICT.**
+
+⚠ **ITS CONTROLS SHIP WITH IT**, per the `check_checkers.py` move — the control is the deliverable. The
+two standing controls are the WheelFrac two-forks negative (must return nothing usable) and a Lawvere /
+Aczel probe (must return **citers only**, never the sources). **If a later version starts returning those
+sources, the coverage assumption has changed and every negative recorded under this ladder needs
+re-reading.**
+
+## 3. The papers library works in both directions
+
+A **probe or scratch script** goes in the session scratchpad and is deleted. A **fetched SOURCE** is
+the opposite: it goes in `.claude-local/papers/`, named `author_topic_year[_id].pdf`.
+
+**Measured 2026-08-02.** Nothing said this before, so every scout fetched, used and abandoned — and
+the next one re-fetched or wrongly reported the source unobtainable. 19 PDFs were sitting abandoned
+across session scratchpads, **15 of them genuine and absent from the library**: **Diaconescu 1975**
+(cited in five Lean files and the subject of its own ledger entry), **Barwise & Moss *Hypersets***,
+**Paulson's ZF final-coalgebra paper**, **Rutten & Turi**, **Hajek 1988** and
+**Krapivsky-Redner-Ben-Naim ch. 7** (the last two named in the Trigger-0 table above as prior art
+this project had already missed once), and the **Buckingham / Castro-de Boer / Villaverde** sources
+cited by name in `CLAIMS.md`.
+
+**Measured 2026-07-26, the other direction.** A scout spent a full search declaring Aczel's
+*Non-Well-Founded Sets* unobtainable — 404s, dead mirrors, lending-restricted archive.org — while
+`.claude-local/papers/aczel_afa_manuscript.pdf` sat on disk. The cause was a routing omission:
+`CLAUDE.md` listed `external/` and not `papers/`, and the brief inherited the omission. **Carry
+`papers/` into every scout brief explicitly.**
+
+⚠ **VALIDATE BEFORE FILING.** 4 of the 19 were correctly discarded: three unreadable failed fetches
+(a 12KB "Aczel", a 3KB "Glauber", a 2KB "Ramsey" — a tiny PDF is an error page, not a paper) and one
+ZP-E build artifact, which is not a source at all. Open it; check the page count and the first page.
+A library with junk in it lies in the other direction.
+
+⚠ **Never record a file count.** `CLAUDE.md` carried "55 files / 43 PDFs" — itself a 2026-07-30
+correction of an earlier "55 PDFs" that miscounted HTML/txt captures — until the day it went stale
+by 15 at once. Measure: `Get-ChildItem .claude-local\papers -File | Measure-Object`.
+
+⚠ **Grep loosely.** Scanned books here are OCR'd with spurious intra-word spaces ("depend ent
+choice s"). A miss on a tight pattern is not evidence of absence.
+
+## 4. The exception, and the half of it that gets skipped
+
+**If you cannot yet state the claim in one sentence, building is how you find the shape** and
+searching returns noise. Build, then search before promoting. The trigger is nameability, not a
+stopwatch — a rule of "never build first" would be wrong and would stop real work.
+
+⚠ **"Then search before promoting" is the half that gets skipped — measured 2026-08-08.** A
+requirements-class degeneracy audit (a survey, correctly un-searchable in advance) produced a
+**theorem**: the valuation axioms force an infinite carrier. The corpus grep run before the audit
+covered the **class names** (`ValBridge`, `ValuationStructure`) and never the **claim** — *one or
+infinitely many*, *no finite middle*, *orbit*, *periodic point*. `Order/OrbitDichotomy.lean` already
+proved that shape, and its own header **named the framework's scale map as the checkable branch of
+it**; cross-references between the files, in both directions, were zero.
+
+**When a survey turns into a theorem, the prior-art clock restarts.** The search that justified the
+investigation does not cover the mathematics that came out of it. (The delta was real there, so the
+fix was a pointer, not a revert: the trunk assumes `Function.Injective s`, which the class does not
+supply.)
+
+## 5. Standard framing is ADOPTED, not noted and worked around
+
+Tim, 2026-07-27: *"anytime that we have official framing we need to make use of it."* Keep the
+framework's own label as the handle where one exists — the CC-2 / AX-B1 pattern, where
+`HasFirstStep` stayed a name and became `∃ a, bot ⋖ a` — and take the library's lemmas.
+
+⚠ **One caveat, measured the same day: check purity before swapping a proof.** Adopting
+`CovBy.unique_right` pushed `firstStep_unique` from `[propext]` to full choice, so the hand proof
+was kept and the standard name cited instead.
+
+## 6. Scope of the gate, and how it runs
+
+**Synthesis/bridge layers only.** A trigger fires on content that unifies, connects, or identifies a
+structure across more than one field or framework (the diagonal-fixed-point keystone, ZP-P, ZP-G/H).
+It does **not** fire on theorem-backed layers whose central claim is a single named classical
+theorem the framework merely invokes (ZP-B / Ostrowski, ZP-L/M / Gentzen) — those are already
+anchored.
+
+*Caveat, the ZP-D lesson:* a theorem-backed layer can still carry a distinctive **construction** with
+its own prior art the cited theorem does not cover. That is caught by trigger 5, not by
+synthesis-detection.
+
+**Step 0 — grep our own corpus first.** `/prior-art-review` greps the repo plus `.claude-local`
+(notes, `papers/`, `external/`, outreach) before any web search. Much of this project's prior-art
+knowledge already lives there, so this prevents false-positive "gaps" — the Bruhat-Tits tree is
+already cited in `PadicTree.lean`, and a web-first sweep once "rediscovered" it.
+
+**The adversary gate detects, it does not search.** If a distinctive cross-field claim lacks a
+specialist-branch citation — in the content or in the CLAIMS Convergence ledger — and the ledger step
+`prior_art` is not recorded and current for the push, it adds a kill-list item; the adversary gate
+then records a FAIL rather than reporting a PASS, and the push stays blocked.
+
+**The pre-push hook also checks the `prior_art` step directly** on trigger 5 — a new `.lean` file, or
+≥50 net `.lean` lines in the push. This closes the library-duplication leak: a non-synthesis `.lean`
+re-proof of an existing library lemma (a `lawvere_fixedpoint` duplicating Mathlib's
+`Function.exists_fixed_point_of_surjective`) carries no synthesis claim for the adversary to detect,
+so the hook enforces prior art independently of it.
+
+**`/prior-art-review` is the deep gate.** A fresh-agent literature scout states each distinctive
+synthesis claim in the target field's terms, searches for and **reads from source** the specialist
+branch, and either cites it — with the honest delta, credit pointing outward — or records "searched,
+none found". For a new or substantially-expanded `.lean` file the scope also includes a
+**library-duplication check** on the file's central and named results, bounded to those rather than
+every helper lemma. It records its verdict in the verdictLedger under step `prior_art`.
+
+**Same-session self-review does not satisfy this.** The review must be a separate scout context with
+no conversation history.
+
+**The record:** the CLAIMS "Convergence with established work" table is the public ledger of
+identified prior art; `.claude-local/notes/prior_art_*` holds the per-search findings.
+
+---
+
+## Routed from `CLAUDE.md`, 2026-08-23
+
+## Prior-Art Search — Trigger Conditions and Gate
+
+The framework's value is its *delta* against prior art, so an uncited closest-prior-art reads as "unaware" — the crank-triage failure mode. **It BLOCKS at push:** the adversary gate detects synthesis-layer content and records a FAIL rather than reporting a PASS, and the pre-push hook checks the ledger's `prior_art` step directly on trigger 5.
+
+### ⚠ TRIGGER 0 — SEARCH BEFORE YOU BUILD. Hard rule, and it is the cheapest one here.
+
+**If you can state the claim in one sentence of standard mathematical English, search for it BEFORE
+writing Lean.** Not after. The post-hoc gate still runs; this sits in front of it.
+
+**⭐ THE POINT IS NOT EMBARRASSMENT-AVOIDANCE — SEARCHING FIRST GETS YOU MORE.** Measured 2026-07-27
+across three findings in one day, it would have handed us a **stronger** theorem than our own claim
+(a biconditional), a **purer** proof (function extensionality where ours took `Classical.choice`),
+free analyticity lemmas, and the standard NAME for a thing described longhand.
+
+**The three-step check, ~10 minutes:**
+1. **Grep our own corpus.** The cheapest miss, and it happened three times in one day.
+2. **Grep the pinned Mathlib for the CONCEPT, not the name you would have chosen — and ⚠⚠ IF THE
+   CLAIM IS A LEAN STATEMENT, RUN `exact?`.** It beats grep and is the only step here whose verb is
+   **RUN**: grep searches *names*, `exact?` searches *statement shape*, so it finds the lemma whose
+   name you would never have guessed, and it reaches the attribute-generated siblings (`@[to_dual]`,
+   `@[simps]`) that have **no source line to grep**.
+3. **One literature search** if the object has a name — **run the LADDER in order: `.claude-local/papers/`
+   → `theoremsearch` → the open web → RETRIEVE THE FULL DOCUMENT.** Three phrasings minimum at
+   `theoremsearch`; ignore its similarity score; **its null is UNINFORMATIVE** (coverage-bounded).
+   **Rungs 1–3 are DISCOVERY, only rung 4 is VERIFICATION** — a returned body is not a passage in hand.
+   📖 `tools/process/prior-art.md` §§ 2a–2b.
+
+**⚠ AND WHEN YOU FETCH A SOURCE, FILE IT** — `.claude-local/papers/`, named
+`author_topic_year[_id].pdf`. **Validate before filing** (a tiny PDF is an error page, not a paper).
+**Never record a file count** — measure it. **Grep loosely**: scanned books are OCR'd with spurious
+intra-word spaces, so a tight-pattern miss is not evidence of absence. **Carry both halves — check it
+first AND file what you fetch — into every scout brief.**
+
+**The exception, and it is real:** if you *cannot* yet state the claim in one sentence, building is
+how you find the shape and searching returns noise. Build, then **search before promoting** — and
+that second half is the one that gets skipped. **When a survey turns into a theorem, the prior-art
+clock restarts**; the search that justified the investigation does not cover the mathematics that
+came out of it.
+
+**Standard framing, once found, is ADOPTED — not noted and worked around** (Tim, 2026-07-27:
+*"anytime that we have official framing we need to make use of it"*). Keep the framework's own label
+as the handle where one exists; take the library's lemmas. ⚠ **Check purity before swapping a
+proof** — one adoption pushed a `[propext]` theorem to full choice, so the hand proof was kept and
+the standard name cited instead.
+
+**Trigger conditions:**
+1. **A new synthesis/bridge layer is created** — prior-art search before its first push. (Highest yield; every gap found in the 2026-06-22 arc originated at layer creation.)
+2. **A synthesis layer's central/distinctive claim is revised or strengthened** — re-run for that claim.
+3. **A layer is prepared for outreach or arXiv** — prior-art search is part of the pre-flight, beside the adversary pre-flight.
+4. **Reactive:** an external reviewer asks "have you seen X?" — search, then add the result to the CLAIMS "Convergence with established work" table with attribution.
+5. **A new `.lean` file, or a large net addition to one** (≥50 net `.lean` lines) — a substantial original *construction* is in-scope even if it is not a cross-field synthesis claim. This is the mechanical complement to synthesis-detection, and what would have caught ZP-D's `T` (the van der Put / Kozyrev ball-indicator ONB).
+
+**`/prior-art-review` is the deep gate**, a fresh-agent scout — same-session self-review does not
+satisfy it. It records its verdict in the verdictLedger under step `prior_art`. **The record:** the CLAIMS "Convergence
+with established work" table is the public ledger; `.claude-local/notes/prior_art_*` holds the
+per-search findings.
+
+📖 **THE MEASURED CASES, THE THREE STEPS IN FULL, AND HOW THE GATE RUNS — `tools/process/prior-art.md`.**
+What each of the three 2026-07-27 findings cost, the `exact?` case that corrected the mathematics and
+not just the line count, the 19 abandoned PDFs, the survey-became-a-theorem case, and the scope rule
+that decides whether a layer triggers at all. **Read it before writing a scout brief or arguing that
+a layer is out of scope.**
+
+---
+
+## Prior art is a CONTINUOUS BASELINE, and the incompleteness is stated openly
+
+*Migrated from a private memory, 2026-08-28.*
+
+For any synthesis, bridge or keystone claim, prior-art search is a **standing practice, not a
+one-time gate** — and the search being ongoing and incomplete is **said out loud, inviting
+correction**. Tim: it *"should honestly be part of our baseline."*
+
+**Why:** ZP's value is its **delta** against prior art, so an uncited closest-prior-art reads as
+*unaware*, which is the crank-triage failure. Confirmed twice in one session (2026-06-22):
+Veltri/FSCD for ZP-P's choice fork, and Yanofsky 2003 / Lawvere 1969 for the diagonal-fixed-point
+keystone. **Both were the exact specialist home for ZP's distinctive claim, and both were uncited.**
+
+1. Per synthesis claim, name precisely what is **the specialist's** and what is **ZP's**, with the
+   credit direction pointing AT the specialist — **ZP is an instance joining their programme, never
+   the umbrella subsuming it.**
+2. Re-run the search when a layer is REVISED, not only at creation.
+3. Bake an explicit *"prior-art search is ongoing; corrections welcome"* line into convergence and
+   keystone surfaces, so the incompleteness is owned rather than hidden.
+4. ⚠ **Independent arrival is a PRIVATE confidence signal, never a public credential.** Cite first,
+   note independence second. Never the reverse.
+
+**Two lessons from the all-layers sweep (2026-06-22).** **Step 0 is grep OUR OWN corpus first** —
+much of the project's prior-art knowledge already lives in it, and a web-first pass "rediscovers"
+material already cited (the sweep false-flagged ZP-B's Bruhat–Tits, cited in
+`ZeroParadox/Valuation/PadicTree.lean`).
+And the trigger is **construction size**, not only cross-field synthesis: a new `.lean` file or a
+large net addition fires it too, which is what catches the ZP-D class whose `T: Q₂ → H` is the
+standard van der Put / Kozyrev ball-indicator orthonormal basis.

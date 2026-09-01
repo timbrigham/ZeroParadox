@@ -40,6 +40,16 @@ metatheory and is not expressible on this carrier.
 This is the same chain as ZeroParadox/Valuation/Scale.lean §II–IV, without the ZPSemilattice dependency.
 -/
 
+/-! ⚠⚠ **"CANNOT BE A FORMAL INSTANCE" ABOVE IS TOO STRONG — READ IT AS "IS NOT
+    DEFINED".** Membership here is settled EXACTLY, by `valBridge_nonempty_iff` (§ VI): a
+    carrier admits a `ValBridge` iff it is INFINITE, or is inhabited and trivial. The
+    dividing line is infinitude, never inhabitation — `Bool` is inhabited and
+    `valBridge_bool_isEmpty` proves it admits none. ℤ_[2] qualifies because it is INFINITE
+    (`nonempty_valBridge_of_infinite`), not by any equipping argument. ⚠ For `ZPSemilattice`
+    ALONE inhabitation is the line, proved both ways in `ZeroParadox/Order/Lattice.lean`;
+    that gauge does NOT transfer to this class. The header sentence stays only because its
+    block is frozen by content hash in the prose baseline. -/
+
 namespace ZeroParadox
 
 open ZeroParadox
@@ -48,7 +58,7 @@ open ZeroParadox
 
 /-- Same four axioms as ValuationStructure, but `bot` is a plain field.
     No ZPSemilattice required — the join operation ⊔ never appears in any axiom. -/
--- [ZP-CUSTOM] replaces: ValuationStructure (ZeroParadox/Valuation/Scale.lean) | reason: ValuationStructure required [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms — the constraint was an encoding artefact. ValBridge carries the same four axioms with bot as a plain field, allowing ℤ_[2] (a ring, not a ZPSemilattice) to be a formal instance. Unifies both tracks under one ancestor.
+-- [ZP-CUSTOM] replaces: ValuationStructure (ZeroParadox/Valuation/Scale.lean) | reason: ValuationStructure required [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms — the constraint was an encoding artefact. ValBridge carries the same four axioms with bot as a plain field, allowing ℤ_[2] (for which no ZPSemilattice is defined) to be a formal instance. Unifies both tracks under one ancestor.
 class ValBridge (L : Type*) where
   bot : L
   scale : L → L
@@ -95,11 +105,14 @@ theorem selfMem_eq_singleton_free :
 /-! ## § III. ℤ_[2] Instance — The Formal Bridge -/
 
 /-- ℤ_[2] with scale = ×2 and val = v₂ is a ValBridge.
-    bot = 0. All four axioms proved in ZeroParadox/Valuation/Scale.lean §V as standalone theorems.
-    This is the formal instance that ZeroParadox/Valuation/Scale.lean could not build because
-    ℤ_[2] is not a ZPSemilattice — showing the ZPSemilattice constraint
-    was an encoding artefact, not a mathematical requirement. -/
--- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is defined — its ring structure supplies no natural join with 0 as bottom — so ℤ_[2] cannot be a ValuationStructure instance, which requires one. (Being a ring is not itself the obstruction: nothing in ZPSemilattice's axioms mentions a ring operation, and ZPSemilattice ℕ exists.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to theorems proved in ZeroParadox/Valuation/Scale.lean §V (q2Scale_bot, q2Val_bot, q2Val_unique, q2Val_scale).
+    bot = 0. All four proved as standalone theorems in ZeroParadox/Valuation/Scale.lean: q2Val_bot,
+-- q2Val_unique, q2Scale_bot, q2Scale_unique_fp.
+    This is the formal instance that ZeroParadox/Valuation/Scale.lean did not build,
+    because no ZPSemilattice ℤ_[2] is defined — showing the ZPSemilattice constraint
+    was an encoding artefact, not a mathematical requirement. ⚠ "not defined", never
+    "not possible": ℤ_[2] is INFINITE, so `nonempty_valBridge_of_infinite` (§ VI) gives
+    the instance outright. -/
+-- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is defined — its ring structure supplies no natural join with 0 as bottom — so ℤ_[2] does not satisfy ValuationStructure, which requires one. (A fact about what is DEFINED, never about what is POSSIBLE. ⚠ Inhabitation is the sole obstruction to ZPSemilattice ALONE, not to this class: valBridge_nonempty_iff (§ VI) settles membership exactly — infinite, or inhabited and trivial — and Bool is inhabited yet admits none. ℤ_[2] qualifies by being INFINITE. Being a ring is not the obstruction either, and ZPSemilattice ℕ exists. What has NOT been located as of 2026-08-30 is a NATURAL join, searched over every registered ZPSemilattice instance in this corpus.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to q2Scale_bot, q2Val_bot, q2Val_unique and q2Val_scale, proved in ZeroParadox/Valuation/Scale.lean.
 noncomputable instance instZ2ValBridge : ValBridge ℤ_[2] where
   bot := 0
   scale := (2 * ·)
@@ -154,67 +167,10 @@ theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPSemilattice L]
 
 /-! ## § VI. NO-GO gauge — what FAILS to be a `ValBridge`
 
-    A requirements class carries information only where something fails to be a member, so this
-    section records the failure condition instead of leaving it to be rediscovered at a use site.
-
-    **The membership question is settled exactly** (`valBridge_nonempty_iff`):
-
-      `Nonempty (ValBridge α) ↔ Infinite α ∨ (Nonempty α ∧ Subsingleton α)`
-
-    The forcing half is `valBridge_forces_infinite`: from any `x ≠ bot` the scale orbit
-    `scale^[k] x` never reaches `bot` and its valuation climbs by exactly one per step, so
-    `k ↦ scale^[k] x` is injective. The one-point carrier is a member because `val_scale` is guarded
-    by `x ≠ bot` and is vacuous there (`trivialValBridge`). Both converse directions are built:
-    `nonempty_valBridge_of_infinite` places the orbit along an ℕ-embedding, and
-    `nonempty_valBridge_of_inhabited_subsingleton` is the degenerate case.
-
-    So the non-members are the finite carriers with two or more points, and also `Empty` — a
-    subsingleton, but `bot : L` is a field, so a carrier is always inhabited. `valBridge_bool_isEmpty`
-    records the smallest inhabited non-member.
-
-    ⚠ **`[ValBridge L]` therefore constrains cardinality and nothing else.** It does not distinguish
-    `instZ2ValBridge` from arbitrary bookkeeping, because `nonempty_valBridge_of_infinite` equips
-    *any* infinite carrier. The substance of the ℤ_[2] instance is in its chosen `scale` and `val`,
-    never in membership — do not cite membership as evidence that a witness is non-degenerate.
-
-    ### Prior art
-
-    **In this corpus, and it is the general form:** `orbit_dichotomy`
-    (ZeroParadox/Order/OrbitDichotomy.lean), whose file header already names the framework's scale
-    map as the checkable branch of exactly this argument. Cite that for the general pattern.
-    ⚠ **`valBridge_forces_infinite` is NOT an instance of it.** That theorem assumes
-    `Function.Injective s`; `ValBridge` does not supply it — take `L = {bot} ⊎ (ℕ × Bool)` with
-    `val (n, b) = n` and `scale (n, b) = (n+1, false)`, which satisfies all four axioms and collapses
-    `(0, true)` with `(0, false)`. `val_scale` buys injectivity *along an orbit*, which is all the
-    argument consumes.
-
-    The two-element case is older still: ZeroParadox/Settheory/OntBridge.lean records that
-    `OntologicalStates` cannot satisfy `val_scale`, "a finite two-element type has no room for val to
-    strictly increase".
-
-    **Outside the corpus**, the owning branch is valuation theory, whose statements use multiplicative
-    structure this class drops — **F.-V. Kuhlmann, *Valuation Theory*, Ch. 4, Corollary 4.13**: *"The
-    only fields which do not admit non-trivial places are precisely the algebraic extensions of finite
-    fields."* ⚠ The *setting* here is more general; the *results* are incomparable, since `F̄_p` is
-    infinite and this section says nothing about it. Credit points outward.
-
-    For the degenerate half, read the prior-art paragraph of
-    ZeroParadox/Valuation/InfinitudeFloor.lean, which cites Burris & Sankappanavar on why a
-    non-degeneracy condition must be an inequation rather than a further equation. ⚠ Its neighbouring
-    "trivial algebras satisfy any quasi-identity" does **not** apply here: `val_scale`'s antecedent
-    `x ≠ bot` is a negated atom, and a quasi-identity admits only positive ones.
-
-    Standard names, for searching: `(L, scale)` is a **mono-unary algebra** (a **unar**), and the
-    mechanism exhibiting `ℕ ↪ L` is **Dedekind-infinite**.
-
-    `Reading:` **COINCIDENCE** — the characterisation has the same shape as
-    `infinitudeFloor_nonempty_iff_infinite` (ZeroParadox/Valuation/InfinitudeFloor.lean), which pins
-    that class to exactly `Infinite`; the valuation climbing without bound along the orbit and the
-    floor carrying the value ⊤ read as the framework's zero and infinity poles on one carrier. **A
-    reading, carrying no declaration and no import here.** The membership transfer would be witnessed
-    by an arbitrary ℕ-embedding whose `floor` and `cx` are unrelated to `bot` and `val`, so it would
-    not witness the coincidence it names; the canonical witness — `member` the scale orbit, `cx` the
-    valuation — would, and is not built. -/
+**The membership question is settled exactly** (`valBridge_nonempty_iff`):
+`Nonempty (ValBridge α) ↔ Infinite α ∨ (Nonempty α ∧ Subsingleton α)`. ⚠ So `[ValBridge L]`
+constrains **cardinality and nothing else** — do not cite membership as evidence that a witness is
+non-degenerate. The forcing argument, the non-members, and the prior art: `ZeroParadox/Valuation/ScaleBridge.md`. -/
 
 /-- The scale of a non-bottom point is never the bottom: it would force `val x = ⊤`, and
     `val_unique` then puts `x` at the bottom. -/
@@ -347,6 +303,29 @@ theorem valBridge_nonempty_iff (α : Type*) :
   · rintro (hi | ⟨hn, hs⟩)
     · haveI := hi; exact nonempty_valBridge_of_infinite α
     · haveI := hn; haveI := hs; exact nonempty_valBridge_of_inhabited_subsingleton α
+
+/-! ### Witnesses for the claims made about this gauge in prose
+
+    Tier 1 (R-TOLEAN): each fails to COMPILE if the sentence citing it is wrong. Anonymous, so
+    they declare nothing and owe no purity entry or SSOT row. Added after five rounds in which
+    every prose correction contained the next defect (R-NOCONV: the check changes SHAPE). -/
+
+-- Statement: infinitude ALONE suffices — no property of ℤ_[2] beyond its cardinality is used.
+-- (`instZ2ValBridge` above is a separate, sharper witness with the actual 2-adic scale and val.)
+example : Nonempty (ValBridge ℤ_[2]) := nonempty_valBridge_of_infinite _
+
+-- Statement: the two-element carrier is excluded. `Nontrivial` is supplied here rather than
+-- registered, so this example adds no declaration.
+example : IsEmpty (ValBridge OntologicalStates) := by
+  haveI : Nontrivial OntologicalStates := ⟨⟨.null, .exist, by decide⟩⟩
+  exact no_valBridge_of_finite OntologicalStates
+
+-- Statement: the obstruction TRANSFERS to the stronger class, which is the legal direction
+-- across `toValBridge`. This is the on-point form for every prose claim about
+-- `ValuationStructure` membership on a finite carrier.
+example (M : Type*) [ZPSemilattice M] [Finite M] [Nontrivial M] :
+    IsEmpty (ValuationStructure M) :=
+  ⟨fun vs => (no_valBridge_of_finite M).elim (@toValBridge M _ vs)⟩
 
 end ZeroParadox
 

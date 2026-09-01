@@ -49,9 +49,8 @@ theorem tower_monotone : Monotone (fun n : ℕ => (fun a => ω ^ a)^[n] 0) := by
 
     No `open Classical in` here, deliberately: it was present and measurably did nothing. `Nat.find`
     needs a `DecidablePred`, and `Ordinal.instLinearOrder` already supplies it through its
-    `toDecidableLE := Classical.decRel _` field — one of the Mathlib roots recorded in
-    `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` § III. The `open` was a second, cosmetic route
-    to choice this declaration had already taken; removing it changes no footprint. -/
+    `toDecidableLE := Classical.decRel _` field. The `open` was a second, cosmetic route to choice
+    this declaration had already taken; removing it changes no footprint. -/
 noncomputable def cnfRank (α : {α : Ordinal // α < ε₀}) : ℕ :=
   Nat.find (lt_epsilon_zero.mp α.2)
 

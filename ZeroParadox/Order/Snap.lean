@@ -54,7 +54,7 @@ running) satisfies all four ZPA axioms A1–A4. Under this instance:
 - ε₀   = running = c₁  (the First Atomic State)
 This makes T-SNAP type-theoretically grounded: ⊥ ∨ ε₀ = ε₀ is definitional. -/
 
--- [ZP-CUSTOM] instance: ZPSemilattice MachinePhase | reason: The cross-framework bridge. MachinePhase is ZPC's two-element type; giving it a ZPSemilattice instance makes T-SNAP (bot_join applied to MachinePhase) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for MachinePhase.
+-- [ZP-CUSTOM] instance: ZPSemilattice MachinePhase | reason: The cross-framework bridge. MachinePhase is one of two two-element inductives in ZeroParadox/Information/Surprisal.lean (the other is BinaryState); giving it a ZPSemilattice instance makes T-SNAP (bot_join applied to MachinePhase) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for MachinePhase.
 instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join x y := match x, y with
     | .initial, y       => y
@@ -212,11 +212,11 @@ theorem da2_bottom_characterization {L : Type*} [ZPSemilattice L] (S : L) :
     subst h
     exact bot_join
 
-/-- C-DA2 (corollary): In any sequence starting at ⊥ that has advanced,
-    the current state plays the ⊥ role for a distinct successor instantiation.
-    The terminal state satisfies ∀ x, join S x = x in the new semilattice
-    while S ≠ bot in the prior one — the Zero Paradox at the instantiation boundary.
-    Formal consequence: da2_bottom_characterization applied to the successor semilattice. -/
+/-- C-DA2 (Conditional Claim). `Statement:` a non-⊥ state cannot satisfy the join-identity —
+    the contrapositive of the role fact, inside ONE semilattice.
+    `Reading:` taking S to play the ⊥ role for a DISTINCT successor instantiation is the
+    framework's reading, never this statement (SnapCannotBe.lean:41). Nothing here builds a
+    second semilattice or a second bottom, and it is not a novelty witness. -/
 theorem c_da2_novelty {L : Type*} [ZPSemilattice L] (S : L)
     (hS_not_bot : S ≠ bot) :
     ¬(∀ x : L, join S x = x) := by

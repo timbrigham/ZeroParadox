@@ -13,37 +13,10 @@ everything else in the family.
 
 ---
 
-## Overview (AI-assisted)
-
-Rice (1953): every *non-trivial extensional* (semantic) property of partial computable functions is
-undecidable. Rice's theorem is **already in Mathlib** (`ComputablePred.rice`, `ComputablePred.rice₂`,
-`Mathlib/Computability/Halting.lean`), and its proof runs through `fixed_point₂` — Kleene's second
-recursion theorem. This file does not re-prove it; it **cites** Mathlib and connects Rice to the
-framework's computability face.
-
-The connection (the genuine content): the framework's computability face is the one place the diagonal
-fixed point is *genuinely produced*, not walled — `computability_face_fixedPoint`
-(`ZeroParadox/Category/Lawvere.lean`) is **Rogers' fixed-point theorem** (Mathlib
-`Nat.Partrec.Code.fixed_point`; Mathlib reserves *Kleene's second recursion theorem* for
-`fixed_point₂`, which it derives from it), giving the Kleene quine (ν-existence). Rice is the **same**
-recursion-theorem
-fixed point read on the **decidability** axis: the quine *exists*, yet *which* programs have any non-trivial
-semantic property is *undecidable*. That pairing — ∃ but ¬decidable — is exactly the "exists-but-undecidable"
-signature that `Wall.lean`'s failure-mode taxonomy singles out as the computability row (the pivot face).
-
-So on the wall map: the total faces (lattice, 2-adic) *posit* the fixed point and it is *refuted* as a
-Lawvere instance in Set (Cantor); the computability face *has* the fixed point (recursion theorem) but pays
-for it with undecidability (Rice). Rice is the price of the ν-existence.
-
-Honest delta: Rice itself is Mathlib's (Rice 1953; the diagonal-family framing is Lawvere/Yanofsky, cited in
-`Wall.lean`). New here: the framework restatement, a concrete face (the halting problem), and the
-`quine_exists_yet_rice` pairing that states the ν-existence and the undecidability as two faces of one
-recursion-theorem setting.
-
-## Structure
-- § I.   Rice, framework restatement (a non-trivial extensional property is undecidable) — via `rice₂`.
-- § II.  The halting problem as a concrete Rice face — via Mathlib.
-- § III. The pairing: the quine exists (ν) yet Rice undecidability holds — two faces, one fixed point.
+## Formal Overview
+Rice is **Mathlib's** (`ComputablePred.rice₂`) and is cited, not re-proved. The content here is the
+pairing: one recursion-theorem fixed point gives the quine (ν-existence) and Rice undecidability at
+once. Why that is the price of ν-existence: `ZeroParadox/Computability/Rice.md`.
 -/
 
 set_option maxHeartbeats 400000
@@ -79,8 +52,9 @@ theorem halting_undecidable (n : ℕ) : ¬ ComputablePred (fun c => (eval c n).D
 /-! ## § III. The pairing — ν-existence and Rice undecidability, one fixed point -/
 
 /-- **The exists-but-undecidable signature.** In the computability setting the recursion theorem gives
-    *both*: every computable self-map on codes has a fixed point (the Kleene quine exists — ν, via
-    `computability_face_fixedPoint`), *and* every non-trivial extensional property is undecidable (Rice).
+    *both*: every computable self-map on codes has a fixed point **up to `eval`** (the Kleene quine
+    exists — ν, via `computability_face_fixedPoint`; NOT a literal fixed point — `fun c => Code.pair c c`
+    has none), *and* every non-trivial extensional property is undecidable (Rice).
     The quine's existence and its undecidability are two faces of one recursion-theorem fixed point — the
     computability floor stated as a single conjunction. -/
 theorem quine_exists_yet_rice (C : Set Code)
@@ -94,7 +68,7 @@ theorem quine_exists_yet_rice (C : Set Code)
 
 /-- **Rice on the family's μ/ν fork: the computability face HAS a bottom element.** Unlike the truth /
     comprehension walls (Tarski, Curry — μ, no floor), computation reaches a floor: every computable
-    self-map on codes has a fixed point (`computability_face_fixedPoint` — Rogers' fixed-point theorem;
+    self-map on codes has a fixed point **up to `eval`** (`computability_face_fixedPoint` — Rogers';
     while `rice_face`, via `ComputablePred.rice₂`, is the one that genuinely routes through
     Kleene's second recursion theorem, `fixed_point₂`),
     the Kleene quine, a program computing its own code (verb = noun). So on the one-over-infinity-to-bottom

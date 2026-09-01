@@ -335,8 +335,7 @@ stated in Mathlib's standard vocabulary.
 ⚠ **That makes THREE halting notions now reachable from this file, and no bridge between them.**
 `Acc (stepRel f)` here; `Occurs` / `occurs_iff_halts` (Kleene codes) in the imported
 `ZeroParadox/Computability/Occurrence.lean`; and Mathlib's own `(StateTransition.eval f s).Dom`, at
-**this section's exact carrier** — which `Occurrence.lean` § 0 already warns to check before
-hand-rolling anything. Relating them is a **pointer**, not a new declaration, and is next-touch work. -/
+**this section's exact carrier** — check it before hand-rolling anything. Relating them is a **pointer**, not a new declaration, and is next-touch work. -/
 theorem isWellFoundedCoalg_stepCoalg_iff :
     IsWellFoundedCoalg (P := natPF_NatListRegime) (stepCoalg f) ↔ WellFounded (stepRel f) := by
   constructor

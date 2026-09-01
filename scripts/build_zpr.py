@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.0 | July 2026
+Version 1.6 | August 2026
+v1.6: BEDROCK, and the correction is to a MECHANISM rather than to a wording. The rendered text said the escape from the Cantor obstruction is that eval lands in the partial functions "not in the codes, so the Set refutation never applied to it". That is false, and one line refutes it: the partial-function type is itself nontrivial, so no_witness_of_nontrivial forbids the Lawvere witness there exactly as it does on Code - example : not (HasLawvereWitness (Nat ->. Nat)) elaborates. Changing the codomain buys nothing. The real escape is a restriction on which MAPS exist: no computable self-map on codes is eval-fixed-point-free (no_computable_evalFixedPointFree), so the diagonal the Set refutation runs has no computable representative and the obstruction cannot fire. That theorem, with this mechanism spelled out in its own docstring, was already in the corpus - the prose asserted a different reason beside it. Found by the adversary gate at FAIL-BEDROCK, round 3, and confirmed by elaboration before the fix. Corrected at five sites across three surfaces in one sweep rather than at the one named.
 v1.0: Initial release. Synthesis / placement layer. Locates and realizes the framework's
 self-application fixed point as a Lawvere fixed point across three categories (faces): refuted in Set
 (Cantor), obstruction-free but not itself a reflexive object in the monotone/domain regime
@@ -13,7 +14,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.6'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -168,8 +169,13 @@ def build():
     E.append(body(
         'Absence of a fixed-point-free endomap is <i>necessary</i> for a reflexive object &#8212; it '
         'removes Lawvere\'s contradiction &#8212; but not by itself <i>sufficient</i>. Two categories '
-        'are free of the obstruction, for structurally identical reasons, and the framework\'s &#8869; '
-        'lives in both; but only one of them furnishes a genuine reflexive object.'))
+        'are free of the obstruction, and the framework\'s &#8869; lives in both; but only one of '
+        'them furnishes a genuine reflexive object. The reasons are <i>not</i> the same, and the '
+        'difference is the point: the monotone regime is free of it <i>literally</i> &#8212; on a '
+        '<i>complete lattice</i>, Knaster&#8211;Tarski bans a fixed-point-free monotone endomap, and the '
+        'completeness hypothesis is load-bearing, since Nat.succ is a monotone endomap with no fixed '
+        'point at all &#8212; while the computable regime is free of it only '
+        '<i>up to eval</i> &#8212; literally fixed-point-free total computable endomaps do exist.'))
 
     E.append(result_box(
         'R3-pos (monotone / domain) &#8212; obstruction absent, but no reflexive object here',
@@ -193,12 +199,20 @@ def build():
         [
             'The category of numbered sets carries a canonical reflexive object: the universal '
             'machine. The evaluation map eval is point-surjective onto the computable functions &#8212; '
-            'every computable function has an index (Rogers 1967). And there is no fixed-point-free '
-            '<i>total computable</i> endomap.',
-            'So the obstruction is absent, the reflexive object is present, and the self-referential '
+            'every computable function has an index (Rogers 1967). And Rogers\' fixed-point theorem '
+            'gives every total computable endomap of codes a fixed point <i>up to eval</i> &#8212; two '
+            'codes computing the same function.',
+            'That is weaker than "no fixed-point-free endomap", and the strong form is false: '
+            'c &#8614; pair(c, c) is total, computable, and returns its own input for no c. The '
+            'obstruction is absent at the level of <i>eval</i>, which is where the reflexive object '
+            'lives &#8212; and the reason is that the effective category admits fewer <i>maps</i>, '
+            'not that eval lands in a different type: no computable self-map on codes is '
+            'eval-fixed-point-free, so the diagonal the Set refutation runs has no computable '
+            'representative.',
+            'So the reflexive object is present and the self-referential '
             'fixed point exists there &#8212; Kleene\'s second recursion theorem: for a computable map '
             'f, a code c with eval c = f c.',
-            'Witnesses: eval_point_surjective, computable_no_fixedpointfree, '
+            'Witnesses: eval_point_surjective, computable_fixedpoint_up_to_eval, '
             'selfref_fixedpoint_exists_computable (ComputableCrossing.lean). Lean purity: '
             'choice-carrying (Mathlib computability). ✓',
         ]
@@ -206,8 +220,10 @@ def build():
     E.append(sp(6))
 
     E.append(body(
-        'That Kleene\'s recursion theorem is an instance of Lawvere\'s theorem is standard: Lawvere '
-        '(1969) derives the recursion theorem, and Yanofsky (2003) gives the unified treatment; the '
+        'That Kleene\'s recursion theorem is an instance of Lawvere\'s theorem is standard: the '
+        'derivation is Yanofsky (2003) Theorem 5, p. 18, within his unified treatment. Lawvere '
+        '(1969) supplies the engine and raises the recursive case as an open question rather '
+        'than deriving it (his &#167;2, p. 9); the '
         'reflexive structure of the computable category is the subject of the Turing-category / '
         'partial-combinatory-algebra literature (Cockett&#8211;Hofstra 2008; Longley). Collecting the '
         'three faces:'))
@@ -398,7 +414,7 @@ def build():
             ['R3-pos monotone',
              'monotone_regime_derives_pinned (ZeroParadox/Settheory/LawvereBridge.lean)'],
             ['R3-pos computability (the crossing)',
-             'eval_point_surjective, computable_no_fixedpointfree, '
+             'eval_point_surjective, computable_fixedpoint_up_to_eval, '
              'selfref_fixedpoint_exists_computable (ZeroParadox/Computability/ComputableCrossing.lean)'],
             ['R4 (&#956;/&#957; = Lawvere regimes)',
              'mu_nu_branch_exclusion (ZeroParadox/Settheory/LawvereBridge.lean)'],

@@ -52,6 +52,15 @@ constraint entirely, and both ℤ_[2] and ZPSemilattice types become instances
 of a common ancestor. The formal gap described here is closed.
 -/
 
+/-! ⚠⚠ **READ §III BEFORE THE OVERVIEW ABOVE.** That overview says all three
+    `AFAStructure` fields become theorems. **TWO do.** `selfMem` is DATA — a predicate —
+    and is SUPPLIED by `def selfMemDerived`, never proved; `bot_self_mem` and
+    `quine_unique` are the LAWS, discharged by theorems. §III carries the measurement.
+    The overview is left uncorrected because its block is frozen by CONTENT HASH in
+    `prose_baseline.txt`: editing it re-keys the entry and `check_prose` blocks the
+    commit. Route is a byte-identical move to a ride-along first, via
+    `tools/verify/move_ridealong.py`, which dissolves the cap rather than re-keying it. -/
+
 namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
@@ -64,8 +73,9 @@ open ZeroParadox
     Abstracts the shared structure between:
       Set theory (AFA): f x = {x},  unique fixed point = Quine atom = ⊥
       2-adic integers:  f x = 2 * x, unique fixed point = 0 (v₂ = +∞)
-    From these two fields, AFAStructure's three class fields become theorems. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Abstracts the shared fixed-point pattern between AFA set theory (f x = {x}, unique fixed point = Quine atom) and 2-adic multiplication (f x = 2x, unique fixed point = 0). Mathlib has Function.IsFixedPt (a predicate) but no typeclass for "type with a self-application operation whose unique fixed point is a designated bottom element." Allows AFAStructure's three fields to become theorems.
+    From these two fields, AFAStructure's two LAWS become theorems; its `selfMem` field is DATA
+    and is supplied by `def selfMemDerived`, not proved. See §III. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Abstracts the shared fixed-point pattern between AFA set theory (f x = {x}, unique fixed point = Quine atom) and 2-adic multiplication (f x = 2x, unique fixed point = 0). Mathlib has Function.IsFixedPt (a predicate) but no typeclass for "type with a self-application operation whose unique fixed point is a designated bottom element." Allows AFAStructure's two LAWS to become theorems; its selfMem field is DATA, supplied by definition.
 class AbstractSelfApp (L : Type*) [ZPSemilattice L] where
   /-- The self-application operation: x ↦ f(x). -/
   selfApp : L → L
@@ -74,7 +84,7 @@ class AbstractSelfApp (L : Type*) [ZPSemilattice L] where
   /-- ⊥ is the ONLY fixed point of selfApp. -/
   unique_fp : ∀ x : L, selfApp x = x → x = bot
 
-/-! ## § II. selfMem, bot_self_mem, quine_unique as Derived Theorems -/
+/-! ## § II. `selfMem` supplied as DATA; `bot_self_mem` and `quine_unique` derived as THEOREMS -/
 
 variable {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 
@@ -109,7 +119,13 @@ theorem selfMem_eq_singleton_bot :
 /-! ## § III. AFAStructure Instance from AbstractSelfApp
 
     Any AbstractSelfApp structure yields an AFAStructure.
-    selfMem, bot_self_mem, and quine_unique are now theorems, not axioms. -/
+
+    ⚠ TWO of the three fields become theorems, not three. `bot_self_mem` and `quine_unique` are
+    LAWS and are discharged by `derived_bot_self_mem` and `derived_quine_unique`. `selfMem` is
+    DATA — a predicate — and is SUPPLIED by `def selfMemDerived`, not proved. The earlier
+    wording here said all three "are now theorems"; that counted the data field as a law, and the
+    slip propagated verbatim into ZP-J and its companion, where it took a gate round to catch.
+    See §V below for what carrying this structure does NOT establish. -/
 
 instance toAFAStructure : AFAStructure L where
   selfMem      := selfMemDerived
@@ -121,8 +137,9 @@ instance toAFAStructure : AFAStructure L where
     The same abstract fixed-point pattern in ℚ_[2]: multiplication by 2
     has 0 as its unique fixed point, characterised by v₂(0) = +∞.
 
-    Note: ℚ_[2] is a field, not a ZPSemilattice — it cannot be an instance
-    of AbstractSelfApp. This section proves the parallel as standalone theorems,
+    Note: no ZPSemilattice ℚ_[2] is DEFINED, so no AbstractSelfApp instance for it here — not
+    that none could exist, in TWO steps: any inhabited carrier can be equipped with a
+    ZPSemilattice (ZeroParadox/Order/Lattice.lean), then `abstractSelfApp_always_inhabited`. This section proves the parallel as standalone theorems,
     demonstrating that singleton_from_unique_witness closes both cases with the
     same proof structure. -/
 
