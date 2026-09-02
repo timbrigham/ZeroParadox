@@ -86,7 +86,7 @@ Save the complete report to `.claude-local/notes/experiment_review_YYYY-MM-DD.md
 
 ⛔ **DO NOT WRITE `.claude-local/exp_cleared.txt`, and do not run `git rev-parse HEAD`.** Two separate reasons, and both were live defects:
 - **The prose signal files are RETIRED**.
-- ⚠ **This gate was the last one keying a signal to a COMMIT HASH rather than to file content** (§ 6a-v item 3). HEAD-equality stales on every unrelated commit and says nothing about whether the plan itself changed — the exact failure the per-subject scheme was built to end. And direct `git` is denied to agents (`MIG-3`), so that command now returns a refusal rather than a hash, which would have been written as if it were one.
+- ⚠ **This gate was the last one keying a signal to a COMMIT HASH rather than to file content**. HEAD-equality stales on every unrelated commit and says nothing about whether the plan itself changed — the exact failure the per-subject scheme was built to end. And direct `git` is denied to agents (`MIG-3`), so that command now returns a refusal rather than a hash, which would have been written as if it were one.
 
 ⚠⚠ **THERE IS NO LEDGER STEP FOR THIS GATE, SO DO NOT TRY TO RECORD ONE.** `experiment_review` is **not registered**, and the server refuses an unregistered step outright: `V8: step 'experiment_review' is not registered in required.v2.json — an unregistered check cannot record, so it cannot silently not count`. Measured 2026-08-24. Instructing a record here would send every reviewer into an exit-2 loop chasing what looks like an outage.
 

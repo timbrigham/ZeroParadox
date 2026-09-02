@@ -70,7 +70,7 @@ Working directory: use the current project root.
 
 - If ARGUMENTS_VALUE is exactly `crank` (also accept `deep` or `claims`), use **Central-Claim Crank Audit**: a framework-scoped, *substantive* audit of the central mathematical claims for smuggled premises and overclaims — distinct from the opening-vocabulary triage of the other modes. See its protocol below.
 - If ARGUMENTS_VALUE is empty or absent: **STOP AND ERROR. Do not proceed, and do not fall back to a Document Scan.** Report `SCOPE UNKNOWN — refusing to review` and record nothing. ⚠⚠ **This is `MIG-3`, and it was LIVE here until 2026-09-02 — in the one gate whose verdict gates a push.** The Document Scan protocol below already said to refuse; **mode selection dispatches ~150 lines earlier, so the permissive branch fired first and the refusal never ran.** Every check in this brief is universally quantified over the reviewed content, so over a scope the reviewer discovered for itself — or an empty one — they are vacuously satisfied and the only reachable verdict is PASS. **The caller passes the paths**; `mcp__gitRobot__read(op='diff', args=['--staged','--name-only'])` is the CALLER's route, not yours.
-- If ARGUMENTS_VALUE looks like one or more file paths (tokens ending in `.md`, `.txt`, `.rst`, or `.py`, space-separated, no newlines), use **Targeted File Review**: read only those files.
+- If ARGUMENTS_VALUE looks like one or more file paths (tokens ending in `.md`, `.txt`, `.rst`, `.py`, or `.lean`, separated by spaces, commas, or newlines), use **Targeted File Review**: read only those files. ⚠ The separator set is deliberately wide: `tools/verify/ship.py` emits `SHIP_SCOPE` COMMA-joined and callers pass newlines, and a path list that fails to match here does not refuse — it falls through to the permissive prose branch, which is the `MIG-3` shape this brief documents.
 - Otherwise (multi-line prose or a single block of text), use **Single-Draft Review** on that text only.
 
 ---
@@ -215,7 +215,7 @@ Produce a `### [filename]` section for each.
 
 ## Document Scan Protocol
 
-Apply when no argument is provided.
+Apply ONLY when the caller passed an explicit document list for this mode. ⚠⚠ **An empty or absent ARGUMENTS_VALUE does NOT reach here** — mode selection refuses it ~150 lines above. This header used to read *“Apply when no argument is provided”*, which is the branch that was `MIG-3`, and the 2026-09-02 fix corrected the DISPATCHER and left this TRIGGER standing: the half-applied sweep, inside the section whose own changelog documents that shape one polarity earlier.
 
 **Step 1 — Obtain the document list. DO NOT ENUMERATE IT YOURSELF.**
 
