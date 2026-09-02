@@ -130,6 +130,17 @@ CHECKS = [
     # a check) while its promotion stays open with its blocker named. Inherits `POLE-2`: a
     # count nobody reads manufactures coverage that was never earned.
     ("check_divergent.py",  [],          COUNT, "phrases a diff RETIRED that survive in the rendered artifact (no baseline; watch the number)"),
+    # ⚠⚠ COUNT, and DO NOT PROMOTE IT YET — registered so it is genuinely INVOKED, because
+    # a checker nothing runs is not a check and this one sat orphaned in the tree until
+    # `check_checkers` said so on the push that shipped it. Its blockers are open and
+    # MEASURED, not suspected (`RLY47`): the coverage fix that took it from 12 to 94 of 148
+    # parsed box calls is guarded by nothing — narrowing the header gives 14 of 148 with
+    # `--selftest` still PASS; the printed denominator counts BOXES, so it is an upper bound
+    # that says nothing about the 439 of ~1174 ROWS actually reached; and deleting its
+    # `html.unescape` leg takes live findings from 4 to 1 with every control green. Its
+    # bottom-glyph findings are genuine; two of its four live identifier findings are false
+    # positives. **Read `RLY47-1` through `RLY47-3` before believing a number from this row.**
+    ("check_codebox.py",    [],          COUNT, "rendered code-box identifiers that do not resolve in the cited .lean (advisory; promotion blocked, see RLY47)"),
 ]
 
 # The controls. A checker suite whose own controls are not run is a suite nobody has verified.
@@ -149,6 +160,11 @@ SELFTESTS = ["check_prose.py", "check_pov.py", "check_modal.py",
              "check_classes.py", "check_encoding.py", "check_poles.py", "check_moved.py",
              "check_paths.py", "check_invariants.py", "check_hashes.py", "check_negatives.py",
              "check_figures.py", "check_checkers.py", "check_frozen.py", "check_claude_md.py",
+             # ⚠ Added with its CHECKS row, in the same change, deliberately: the two
+             # rosters are hand-maintained and `roster_agrees()` exists because they drift
+             # (`COM-1`, `DEB-1`, `DEB-2`). Registering a checker in one and not the other
+             # is the exact divergence that property was written to catch.
+             "check_codebox.py",
              "check_release_ready.py", "common.py", "guards.py", "debaseline.py",
              # ⚠ `VEND-1`: THE definition of the vendored exemption, imported by every gating
              # checker and audited by nothing until 2026-08-16.
