@@ -256,7 +256,8 @@ def module_evidence(*paths, repo=None):
 
 
 def emit(step, tier, verdict, subjects, basis, reason=None,
-         inputs=(), decided=None, cost=None, revision=0, evidence=(), outstanding=()):
+         inputs=(), decided=None, cost=None, revision=0, evidence=(), outstanding=(),
+         failing=()):
     """Append one record. Returns its id, or None if refused or unreachable.
 
     `subjects` is a list of {"path", "blob"} — WHAT THIS VERDICT IS ABOUT, not
@@ -298,6 +299,27 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
     # landed in either order rather than needing an atomic cutover.
     if evidence:
         record["evidence"] = list(evidence)
+    # ⚠⚠ `subjects` IS COVERAGE; `failing` IS INDICTMENT. They were ONE LIST until 2026-09-02
+    # and that is `LED-10`: resolution is per `(step, path, blob)` with worst-verdict-wins, so a
+    # FAIL naming all of its subjects condemns every file that merely sat BESIDE the bad one.
+    # Measured that day -- `check_checkers` examined 24 files, failed on ONE, and its FAIL took
+    # ownership of the 23 innocent blobs it shared with the passing tip record, condemning a
+    # commit that PREDATED the offending file existing. Unclearable by any re-run, because a
+    # later PASS cannot outrank a FAIL that owns the same content key.
+    #
+    # ⚠ THIS IS THE COVERAGE RULE SIGN-FLIPPED. `ledger_subjects` already refuses to attest to
+    # bytes the checker did not read; condemnation is the same claim with the sign reversed and
+    # had no such fence. `emit`'s own docstring specified the right shape all along -- a PASS
+    # over the thirty-nine and a FAIL over the one -- which `V11` made unrepresentable as two
+    # records. This expresses it as ONE record instead.
+    #
+    # ⚠ OMITTED WHEN EMPTY, for the reason the `evidence` block above gives. The server also
+    # refuses `failing` on a non-FAIL verdict (stored and silently ignored = looks correct,
+    # behaves otherwise) and refuses an EMPTY `failing` (it resolves to PASS at every path --
+    # exoneration wearing a FAIL's costume). Absent `failing` still indicts every subject, so
+    # no record written before this key existed is silently weakened.
+    if failing:
+        record["failing"] = sorted(set(failing))
     # ⚠⚠ V18: FINDINGS RIDE ON THE RECORD, NOT IN A REASON STRING. A gate that reaches its ORDINARY
     # cap under `R-LOOPCAP` is told to STOP AND PUSH — "reviewed, ordinary findings outstanding,
     # cap reached, proceed". That verdict ADMITS, so the findings must travel with it or they

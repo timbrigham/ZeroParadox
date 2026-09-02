@@ -707,9 +707,22 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     and the FAIL came back `V11`.
     ⚠ AND `revision` IS NOT THE ESCAPE. It is the supersede ordinal (a regrade); using it to carry a
     second simultaneous verdict would make a split look like a chain and corrupt tip resolution.
-    So: ONE verdict for the step — FAIL if anything failed — over ALL the subjects it examined.
-    Coverage stays exact because every examined file is still named; what is given up is a per-file
-    verdict, which the admission gate never consumed. It asks whether the STEP passed.
+    So: ONE verdict for the step — FAIL if anything failed — over ALL the subjects it examined,
+    with `failing` naming the subset actually INDICTED.
+
+    ⚠⚠ THAT LAST CLAUSE WAS MISSING UNTIL 2026-09-02 AND THIS PARAGRAPH ARGUED IT AWAY. It read
+    *“coverage stays exact because every examined file is still named; what is given up is a
+    per-file verdict, which the admission gate never consumed.”* Coverage DID stay exact.
+    CONDEMNATION did not. Resolution is per `(step, path, blob)` with worst-verdict-wins, so a
+    FAIL naming all its subjects stamps FAIL on every innocent blob beside the bad one — and the
+    gate consumes that, whatever it asks of the step. Measured (`LED-10`): this function's FAIL
+    for ONE orphan checker took ownership of 23 shared content keys and condemned a commit that
+    predated the offending file, with no re-run able to clear it.
+    ⚠ `failing` is passed UNFENCED, deliberately: `ledger_subjects` drops paths absent from the
+    ref because coverage must not overstate what was read, but an INDICTMENT is a record of what
+    was judged and includes findings that are not files at all — `check_checkers` indicts a
+    `(roster)` pseudo-path. Nothing resolves it to content, so naming it is inert; omitting it
+    would understate the indictment to keep a data structure tidy.
 
     ⚠⚠ **A VERDICT IS ALWAYS A PROPERTY VERIFIED AGAINST A FILE SET** (Tim, 2026-08-23). There is no
     second kind of checker. A scanner's subjects are the files it scanned; a PROPERTY checker's
@@ -767,7 +780,7 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     # inherit the old one's key. The cost is real: editing this file stales EVERY mechanical step at
     # once. That is the honest bill, and it is why this file should change rarely.
     rid = record.emit(step=step, tier=tier, verdict=verdict, subjects=subjects,
-                      basis=ledger_basis(ref), reason=why,
+                      basis=ledger_basis(ref), reason=why, failing=bad,
                       evidence=record.module_evidence(*_producer_modules(module)))
     if rid is None:
         print('UNDECIDED: %s ran but its %s verdict was not recorded' % (step, verdict))
