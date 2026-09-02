@@ -72,18 +72,34 @@ obstruction is this class's ℕ∞ target, a design choice, not the field.
 (`Mathlib/RingTheory/Valuation/PrimeMultiplicity.lean`) discharges all four axioms from stock
 API at the same axiom footprint § V already emits. Its `val_scale` is strictly stronger:
 unguarded, holding at 0 as well, because ⊤ + 1 = ⊤ in ℕ∞ — so `q2Val_scale`'s `x ≠ 0`
-hypothesis is one this class does not need. `AddValuation.top_iff` is the standard name for the
-`val_bot` + `val_unique` pair. The hand-rolled chain is kept for readability; the pointer it
+hypothesis is one this class does not need. ⚠ **`AddValuation.top_iff` does NOT cover the `val_bot` + `val_unique` pair on this
+carrier, and this section claimed it did until 2026-09-01.** `top_iff` is stated over a
+`[DivisionRing K]` (`Mathlib/RingTheory/Valuation/Basic.lean`, and its docstring says "on a
+division ring"); ℤ_[2] is a discrete valuation ring, not a division ring, since 2 is not
+invertible. The stock route to `val_unique` on ℤ_[2] is `emultiplicity_eq_top`
+(`Mathlib/RingTheory/Multiplicity.lean`) with `FiniteMultiplicity.of_prime_left`
+(`Mathlib/RingTheory/UniqueFactorizationDomain/Multiplicity.lean`): x ≠ 0 and 2 prime give
+finite multiplicity, so val x ≠ ⊤. **The rest of the prior-art claim survives** — the type,
+the footprint and the unguarded `val_scale` were all verified — and `top_iff` was standing
+in for the one axiom it could not give. The hand-rolled chain is kept for readability; the pointer it
 owed is now at the site.
 
 **The classical names, both already in this corpus and neither previously cited at § V.**
 `q2Val_unique` — "only 0 has infinite 2-adic valuation" — is SEPARATEDNESS of the 2-adic
-filtration, i.e. Krull's intersection theorem: 2x = x forces x into ⋂ₙ 2ⁿℤ₂ = (0), which is the
-one-line classical proof of `q2Scale_unique_fp`. `q2Scale_unique_fp` is also the uniqueness half
-of an ATTRACTING FIXED POINT in the sense of Benedetto's non-Archimedean dynamics (multiplier 2,
-and |2|₂ = 1/2 < 1, so all of ℤ_[2] lies in the basin) — a definition
-`ZeroParadox/Computability/Occurrence.md` already cites, with the p-adic contraction result
-carried in `ZeroParadox/Valuation/ContractionRate.lean`.
+filtration, i.e. Krull's intersection theorem: an element of every 2ⁿℤ₂ lies in ⋂ₙ 2ⁿℤ₂ = (0).
+⚠ **That name belongs to `q2Val_unique` and NOT to `q2Scale_unique_fp`, and this paragraph
+attached it to the wrong one until 2026-09-01.** `q2Scale_unique_fp` (2x = x → x = 0) is proved
+here by `linear_combination h` — one line of ring algebra that never mentions the valuation, the
+filtration or Krull. The Krull route is a *different* classical argument reaching the same
+statement, not the one the corpus takes, and saying otherwise misdescribes a proof a reader can
+open in ten seconds.
+
+`q2Scale_unique_fp` does carry a second, legitimate **reading**: it is the uniqueness half of an
+ATTRACTING FIXED POINT in the sense of Benedetto's non-Archimedean dynamics (multiplier 2, and
+|2|₂ = 1/2 < 1, so all of ℤ_[2] lies in the basin). That is an interpretation of the STATEMENT,
+never a claim about the proof term — the definition is already cited at
+`ZeroParadox/Computability/Occurrence.md`, with the p-adic contraction result carried in
+`ZeroParadox/Valuation/ContractionRate.lean`.
 
 **Nearest in-corpus neighbour, uncited until 2026-09-01.** `BottomValuation` in
 `ZeroParadox/Valuation/ValuationAFA.lean` carries `v_bot` and `v_top_unique` — the `val_bot` and

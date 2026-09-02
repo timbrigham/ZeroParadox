@@ -259,8 +259,11 @@ working — it fails CLOSED and loudly, with an attributed append-only record, w
 signal files failed silently and let the last writer win. **Do not treat it as an outage and do not
 retry.** Instead: read the recorded record's `reason`, and **report to your caller exactly which of
 your findings are ABSENT from it.** Two passes converging is corroboration; a finding only you found
-is lost unless you say so in your report. `record.py` exposes no `--revision`, so the supersede
-chain is not reachable from here — that is a known gap, not something for you to work around.
+is lost unless you say so in your report. `record.py --revision <n>` supersedes a verdict at this basis; the prior record REMAINS in
+the append-only stream and `inventory` resolves the TIP, so a regrade stays auditable.
+⚠ USE IT ONLY WHEN A VERDICT IS GENUINELY BEING RESTATED, NEVER TO RETRY A REFUSAL — a
+`V11` you did not expect means another pass got there first, and the right move is still to
+read its reason and report which of your findings it omits.
 
 ⚠ **Exit 2 is NOT exit 1.** `record.py` exits 2 when the ledger could not be reached or refused the record — the review may have been fine and simply went unrecorded. Report that as a RECORDING failure, never as a finding about the corpus.
 
