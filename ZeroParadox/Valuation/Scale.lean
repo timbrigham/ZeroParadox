@@ -10,7 +10,7 @@ import Mathlib.Tactic
 A ZP-J valuation-bridge sub-file. See the Engineer's Take in `ZeroParadox/Settheory/SetTheoryAFA.lean`.
 
 ## Formal Overview
-`val_unique` and `val_scale` carry the unique-fixed-point argument; `val_bot` is consumed nowhere
+`val_unique` and `val_scale` carry the unique-fixed-point argument; WITHIN § I `val_bot` is consumed nowhere
 on it (measured 2026-08-30, § I). § V proves all four axioms in ℤ_[2]. Road surface, valuation
 argument, derivation chain, § V's synthesis fence, what ScaleBridge resolved: the ride-along
 `ZeroParadox/Valuation/Scale.md`, beside this file.

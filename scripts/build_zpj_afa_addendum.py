@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.14 | September 2026
+Version 1.15 | September 2026
+v1.15: THE v1.14 FIX OVER-CORRECTED, AND BOTH PROSE GATES CAUGHT IT (editorial FAIL-BEDROCK, adversary concurring as ordinary). Editorial's sentence is the finding: v1.13 made a REMOVABLE cost look UNAVOIDABLE, v1.14 makes an UNMEASURED one look REMOVABLE. Same conflation, opposite sign, and v1.14's was the flattering direction. The class-level measurement was true and both gates reproduced it; what was wrong is the SCOPE, because the box was headed "all results in this document". Measured this round: decoration_unique reports [propext, Classical.choice, Quot.sound]; Set.ncard_lt_ncard and Set.ncard_pos are each independently tainted; and Nonempty.some unfolds to `fun h => Classical.choice h`, so the proof does not inherit choice through packaging, it CALLS it. Fintype is not absent either - this PDF prints [Fintype V] in the decoration_unique box and says decoration_unique requires it, one page before v1.14's line denied it. The box now names three routes, scopes ACCIDENTAL to the class where _VScast exhibits the clean proof, and states the theorem's removability as UNMEASURED - R-REVALIDATE: accidental is earned by exhibiting a clean proof or not at all. The exclusion is now MEASURED rather than asserted, which is the adversary's improvement: Finset and Fintype each report [propext, Quot.sound], so neither has any choice to supply. Also: the Remark's own TITLE still said "Relationship to Aczel's Theorem" three words above its body's "an axiom, not a theorem", and the preamble called the unique-decoration content a theorem - sites five and six of that claim; the decoration_unique box dropped the underscore from (_G : APG V), erasing the signal that accessibility is never consumed; and Scale.lean's "val_bot is consumed nowhere" is true of section I and false three rendered pages later at val_iterate, so it is scoped now. 
 v1.14: TWO BEDROCK ON PAGE 8, BOTH UNTOUCHED BY EVERY ROUND SINCE v1.9 (adversary round 5, FAIL-BEDROCK 2). (1) The axiom-footprint box attributed Classical.choice to "Mathlib Finset and Fintype machinery". Measured with lake env lean: ValuationStructure - a BARE TYPECLASS mentioning neither - reports [propext, Classical.choice, Quot.sound], and so does instAddMonoidWithOneENat, the instance the numeral 1 in val_scale reaches for. Scale.lean's _VSlit/_VScast pair proves that numeral is THE route rather than one of several: respelling it as ((1 : N) : Ninf) and nothing else makes the class report no axioms. This mattered beyond a citation slip because the next line read "No ZP-specific axioms beyond", so naming a library turned a REMOVABLE cost into an UNAVOIDABLE one - the exact conflation AxiomProfile.lean section 0 warns about, PROVENANCE and NECESSITY being independent axes. The corrected text keeps them apart: the tainted INSTANCE is Mathlib's, the SPELLING that reaches for it is this framework's, and the dependence is accidental. (2) Remark R-J.A called AFA "Aczel's decoration theorem ... every APG ... universe of non-well-founded sets". Three errors: it is an AXIOM (ch.1 p.6, the book is in this repository and was opened), over every GRAPH not every APG, into the universe of SETS - the book's own example decorates with 0, {0} and 3, all well-founded. The decoration THEOREM is Mostowski's Collapsing Lemma, for WELL-FOUNDED graphs. CLAIMS.md and APG.lean already said this correctly and this document's preamble calls it an axiom eight pages earlier. The claim was swept, not the site: FOUR sites, and the fourth said "Aczel's theorem" with no "decoration", so a source grep for the longer phrase never reached it - only the rendered check did. Also closes E5-1: the four Lean-statement lines that printed the bottom as a glyph with no global notation now spell it as the Lean does, and tools/verify/check_codebox.py - written this session because R-NOCONV says a loop that will not settle changes SHAPE - reports 0 where it reported 4. Fifth consecutive version to touch this class, and the first whose fix is MEASURED rather than believed. 
 v1.13: BEDROCK, AND THE v1.12 SWEEP MISSED IT BY THREE LINES. The APG box defined Reach(v) = { w : V | Reachable v w }. `Reachable` is NOT LOCATED in APG.lean as of 2026-09-02 - zero occurrences, searched by identifier - and the only resolution located that day, over ZeroParadox/**/*.lean and the tracked build scripts, was SimpleGraph.Reachable, which is SYMMETRIC - and section IV.2's induction terminates ONLY because reachability here runs one way: from an acyclic v to a child w, v is not reachable back, so Reach(w) is a STRICT subset and the cardinality decreases. Under a symmetric relation the two sets are equal, the descent never shrinks, and the proof this document narrates does not terminate. A false definition carrying the main theorem's termination argument. v1.12 changed the `accessible` line directly above it FOR THIS EXACT REASON and left this one - the half-applied sweep at its smallest possible radius, inside the version whose subject was half-applied sweeps. Found by the adversary gate running the rendered BOX as a unit; a source reader sees a diff touching the line the changelog names and reads it as done. Also: two inherited counts in register.md replaced by pointers - "four sites" stood over an enumeration of five, and "all fifteen corrections" was v1.11's numeral carried into v1.12 over six of its own (R-ADJACENT: never enumerate in prose what an artifact defines). 
 v1.12: ROUND 4 — the v1.11 sweep was applied to two code boxes of four, and its own write-up claimed more than it did. Adversary FAIL-BEDROCK (2, both in OTHER ZP-J documents and filed, not touched here) + 5 ordinary; editorial STOP-ORDINARY 0/4; all four v1.11 remediations HELD under both gates, and the AddValuation.top_iff replacement was settled by ELABORATION in both directions - the emultiplicity_eq_top + FiniteMultiplicity.of_prime_left route compiles on Z_[2], and the control AddValuation.top_iff fails to elaborate there, as it must. Corrected in this version: the AbstractSelfApp and AFAStructure boxes still rendered Lean's `bot` as the bottom glyph, and there is no global notation for ZPSemilattice.bot - only a LOCAL one in Lattice.lean - so compiling either box as displayed gave 'failed to synthesize Bot L'; the APG box showed `Reachable root v` where the field is `Nonempty (Quiver.Path root v)`, and Reachable is SimpleGraph's, not a quiver notion; 'Z_[2] is NOT a ValuationStructure instance' shipped bare while three sources changed in the same commit hedge exactly that sentence, so it now says no such instance is REGISTERED, which is the checkable claim; funext was credited to Fintype, where function extensionality needs no finiteness at all and finiteness is consumed earlier by the acyclic descent (DC-32); and the note marker U+22EE, which means elided material, became the house U+2022.
@@ -26,7 +27,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -67,7 +68,7 @@ def build():
     print('[build_zpj_afa_addendum] Building preamble...')
     E.append(body(
         'This document presents the formal consequences of ZP-J\'s valuation framework '
-        'for the central uniqueness theorem of Aczel\'s Anti-Foundation Axiom (AFA). '
+        'for the central uniqueness CLAUSE of Aczel\'s Anti-Foundation Axiom (AFA). '
         'The main result is decoration_unique '
         '(ZeroParadox/Settheory/APG.lean &#167; IX): for any finite '
         'Accessible Pointed Graph, any two valid decorations must agree at every vertex. '
@@ -340,7 +341,7 @@ def build():
     E.append(result_box(
         'Theorem: decoration_unique (ZeroParadox/Settheory/APG.lean §IX)',
         [
-            '&#8704; {V : Type*} [Quiver V] [Fintype V]',
+            '&#8704; {V : Type*} [Quiver V] [Fintype V] (_G : APG V)',
             '  {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]',
             '  (G : APG V) (d&#8321; d&#8322; : V &#8594; U),',
             '  IsDecoration d&#8321; &#8594; IsDecoration d&#8322; &#8594; d&#8321; = d&#8322;',
@@ -550,7 +551,7 @@ def build():
     E.append(sp(4))
 
     E.append(label_box(
-        'Axiom Footprint (all results in this document)',
+        'Axiom Footprint &#8212; measured per declaration, not asserted document-wide',
         [
             '[propext, Classical.choice, Quot.sound]',
             'propext          &#8212; propositional extensionality (standard in Lean 4)',
@@ -569,18 +570,25 @@ def build():
             #   heading conflated them"* — and the corrected text keeps them apart: the tainted
             #   INSTANCE is Mathlib's, the SPELLING that reaches for it is this framework's, and
             #   the dependence is accidental because a respelling clears it.
-            'Classical.choice &#8212; enters through the numeral in val_scale. The `1` in '
-            '`val x + 1` requires Mathlib&#8217;s AddMonoidWithOne &#8469;&#8734; instance, '
-            'which is choice-tainted at the INSTANCE level; ValuationStructure carries the '
-            'axiom as a bare typeclass, before any theorem. NOT from Finset or Fintype, '
-            'neither of which this chain mentions.',
+            'Classical.choice &#8212; AT LEAST THREE ROUTES, and they are not the same '
+            'claim. (a) THE CLASS: the numeral `1` in val_scale needs Mathlib&#8217;s '
+            'AddMonoidWithOne &#8469;&#8734; instance, choice-tainted at the INSTANCE '
+            'level, so ValuationStructure carries the axiom as a bare typeclass before any '
+            'theorem. (b) A DIRECT CALL: decoration_unique&#8217;s proof takes an edge out '
+            'of a Nonempty via hw.some, and Nonempty.some IS Classical.choice &#8212; not '
+            'inherited through packaging, invoked. (c) CARDINALITY: the termination measure '
+            'runs on Set.ncard, and Set.ncard_lt_ncard and Set.ncard_pos are each '
+            'independently choice-tainted. &#8212; And the OLD attribution could not have been right for a reason stronger than absence: Finset and Fintype each report [propext, Quot.sound], so neither has any choice to supply. Fintype IS a hypothesis of decoration_unique, printed in its own box above; what it buys is the termination measure, not the axiom.',
             'Quot.sound       &#8212; quotient soundness (standard in Lean 4)',
-            '&#8226; The dependence is ACCIDENTAL, not structural: Scale.lean&#8217;s '
-            '_VSlit / _VScast pair respells that one numeral as ((1 : &#8469;) : '
-            '&#8469;&#8734;) and nothing else, and the class then reports no axioms at all. '
-            'Choice arriving through Mathlib PACKAGING rather than through the mathematics is '
-            'a shape this corpus has measured before, at ZeroParadox/Ordinal/'
-            'SyntacticCollapse.lean.',
+            '&#8226; ACCIDENTAL FOR THE CLASS, UNMEASURED FOR THE THEOREM &#8212; and the '
+            'difference is the whole claim. Scale.lean&#8217;s _VSlit / _VScast pair '
+            'respells route (a)&#8217;s numeral as ((1 : &#8469;) : &#8469;&#8734;) and '
+            'nothing else, and the class then reports no axioms at all: that EXHIBITS a '
+            'clean proof, which is the only thing that earns the word accidental. No such '
+            'witness exists for decoration_unique, whose routes (b) and (c) are untouched by '
+            'any respelling, and whose STATEMENT mentions ValuationStructure &#8212; so its '
+            'type would carry the axiom even with a pristine proof. Its removability is '
+            'therefore UNMEASURED, not established either way.',
             'No ZP-specific AXIOM is declared anywhere in this chain; the footprint above is '
             'what the Lean reports, not a commitment the framework makes.',
             'No Dependent Choice. No additional set-theoretic assumptions.',
@@ -589,7 +597,7 @@ def build():
     E.append(sp(4))
 
     E.append(remark_box(
-        'Remark R-J.A &#8212; Relationship to Aczel\'s Theorem',
+        'Remark R-J.A &#8212; Relationship to Aczel\'s Anti-Foundation Axiom',
         [
             # ⚠⚠ THREE ERRORS IN ONE SENTENCE, and the corpus disagreed with it in three
             #   places. It read: "Aczel's decoration THEOREM ... states that every APG has a
