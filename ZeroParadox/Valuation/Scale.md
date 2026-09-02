@@ -94,10 +94,11 @@ filtration in it — correct — and then attached it to `q2Val_unique` as thoug
 *did* contain the filtration. It does not: `q2Val_unique` is `split_ifs` on
 `if x = 0 then ⊤ else ↑valuation`, so the infinite value at 0 is stipulated by a branch,
 and `PadicInt.valuation` is ℕ-valued with no top element in it at all. **The separatedness
-reading is about what the STATEMENT means, and neither proof term exhibits it.** Where the
-filtration genuinely does the work is the stock route two paragraphs above —
-`FiniteMultiplicity.of_prime_left` with `emultiplicity_eq_top`, where finiteness of the
-multiplicity is exactly the statement that the intersection is trivial.
+reading is about what the STATEMENT means, and neither proof term exhibits it.** ⚠ Nor does the
+stock route: `FiniteMultiplicity.of_prime_left` runs on a `WfDvdMonoid` and carries no filtration
+in its term either. What that route gives is the same STATEMENT reached from stock API —
+finiteness of the multiplicity is the separatedness assertion, not a construction of it. The
+classical name attaches to what is being said, and to none of the three proofs that say it.
 
 `q2Scale_unique_fp` does carry a second, legitimate **reading**: it is the uniqueness half of an
 ATTRACTING FIXED POINT in the sense of Benedetto's non-Archimedean dynamics (multiplier 2, and

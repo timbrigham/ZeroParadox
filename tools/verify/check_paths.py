@@ -1344,9 +1344,22 @@ def _claim_pattern(phrase):
     carrying an em dash or a smart apostrophe, still could not reach source written with a hyphen.
     Normalising both sides means the direction the caller happens to type in stops mattering.
     Measured as a live gap: "em dash vs hyphen, either direction".
+
+    ⚠⚠ AND IT IS `_soften`, NOT THE TYPOGRAPHIC FOLD ALONE — RLY44-2, 2026-09-02. The corpus side
+    also blanks markdown markers, and the phrase side did not, so **any phrase containing `_ * `
+    | [` could not reach text that contains it**. Measured: `epsilon0_ne_bot closes it` returned
+    ZERO against a file literally containing that string, because the softened corpus reads
+    `epsilon0 ne bot` and the phrase still carried underscores. **Every Lean declaration name is in
+    that class**, and 1,557 of 10,012 tracked-markdown prose lines carry an intra-word underscore.
+
+    ⭐ THE GENERAL STATEMENT, worth more than either fix: this is a MEMBERSHIP TEST RUN UNDER AN
+    EQUIVALENCE, and an equivalence must be applied to BOTH SIDES. Canonicalise one side only and
+    it is no longer an equivalence but a one-way map, whose implication runs in a single direction
+    — a query already in normal form reaches non-normal text, and nothing else. The converse fails,
+    and so does any query carrying a character the normaliser deletes. **Both open directions turn
+    a real hit into a printed zero, and a zero is what a caller writes into a commit message.**
     """
-    folded = phrase.translate(_CLAIM_FOLD)
-    return re.compile(r'\s+'.join(re.escape(w) for w in folded.split()), re.I)
+    return re.compile(r'\s+'.join(re.escape(w) for w in _soften(phrase).split()), re.I)
 
 
 def tracked_pdfs():
@@ -1400,7 +1413,17 @@ def sweep_claim(phrases, files=None, pdfs=False):
             if raw is None:
                 unreadable.append((_rel(path), 'PDF text could not be extracted'))
                 continue
-            flat_pdf = re.sub(r'\s+', ' ', raw)
+            # ⚠⚠ SOFTEN THE PDF TOO — RLY44-1, 2026-09-02, and this branch was the DEFAULT when the
+            #   defect was found. It read `re.sub(r'\s+', ' ', raw)`: whitespace folded, typography
+            #   NOT. The phrase is always folded, so **a phrase copied verbatim out of a deposited
+            #   PDF returned 0 against that same PDF.** Measured on ZP-N_The_Constructive_Snap.pdf:
+            #   a curly-apostrophe phrase gave 0 hits both as rendered and ASCII-typed; an em-dash
+            #   phrase gave 0 both ways. 15 of 40 deposited PDFs carry a curly apostrophe and 38 of
+            #   40 carry a dash — and this is the surface the tool calls AUTHORITATIVE.
+            #   The source branch had it right all along; the render branch is the one that shipped
+            #   half an equivalence. `_soften` is safe here: line numbers are already meaningless
+            #   for a PDF (every hit reports line 0), so its newline invariant costs nothing.
+            flat_pdf = re.sub(r'\s+', ' ', _soften(raw))
             for phrase in phrases:
                 for m in _claim_pattern(phrase).finditer(flat_pdf):
                     lo, hi = max(0, m.start() - 90), min(len(flat_pdf), m.end() + 90)
@@ -1657,6 +1680,89 @@ def selftest_claim():
     ok = len(unreadable) == 1
     bad += 0 if ok else 1
     print('    %-40s %s' % ('absence is not claimed over it', 'ok' if ok else '*** DROPPED ***'))
+
+    # ⚠⚠ THE PDF BRANCH — UNREACHABLE FROM EVERY CONTROL ABOVE, BY CONSTRUCTION (RLY44-3).
+    #   Every case above passes `files=[...]`, and `sweep_claim` only appends `tracked_pdfs()`
+    #   when `files is None`, so no control here has ever executed the render path. A `/rely`
+    #   round mutation-tested that with a harness first PROVEN able to redden — dropping the
+    #   curly fold, breaking newline preservation and dropping emphasis blanking each turned it
+    #   red — and then found ALL of these stayed GREEN: the default reverted to `pdfs=False`; the
+    #   CLI reverted to opt-in; the CLI hard-wired False; PDF sweeping deleted outright;
+    #   `_pdf_text` stubbed to return None; the unreadable report deleted.
+    #   **The branch promoted to DEFAULT this same day had no control at all, which is why the two
+    #   blockers below lived in it.** The loop dispatches on the extension of each target, so
+    #   passing a PDF in `files` reaches the branch — that is all this needed.
+    print('  MUST FIRE  (PDF branch: typography folded on BOTH sides)')
+    pdfs_avail = [p for p in tracked_pdfs() if p.exists()]
+    if not pdfs_avail:
+        print('    %-40s SKIPPED — no tracked PDF on disk' % 'render path')
+    else:
+        # Find a deposited PDF carrying a curly apostrophe or an em dash, then query it in ASCII.
+        # ⚠ ASCII IS THE POINT: the caller types a hyphen and the page carries an em dash, which
+        #   is precisely the direction that returned zero. Derived from the artifact at run time
+        #   rather than hard-coded, so it cannot go stale against a rebuilt document.
+        probe = None
+        for p in pdfs_avail[:12]:
+            raw = _pdf_text(p)
+            if not raw:
+                continue
+            flat = re.sub(r'\s+', ' ', raw)
+            for ch, ascii_ch in (('’', "'"), ('—', '-')):
+                i = flat.find(ch)
+                if i > 60 and i + 60 < len(flat):
+                    seg = flat[i - 45:i + 45].strip()
+                    if len(seg.split()) >= 6:
+                        probe = (p, ' '.join(seg.split()[1:-1]).replace(ch, ascii_ch))
+                        break
+            if probe:
+                break
+        if probe is None:
+            # ⚠⚠ A SKIP HERE IS A FAILURE, NOT A PASS, AND THE FIRST VERSION OF THIS CONTROL GOT
+            #   THAT WRONG. PDFs are on disk; if no phrase can be derived from any of the first
+            #   twelve, `_pdf_text` is returning nothing and the render path is broken — which is
+            #   precisely the state this control exists to detect. Mutation-tested: stubbing
+            #   `_pdf_text` to return None left the control GREEN through the skip branch. A
+            #   control that goes quiet when its subject breaks is the vacuous pass this whole
+            #   layer keeps paying for, committed inside the control written to end it.
+            bad += 1
+            print('    %-40s *** NO TEXT FROM ANY PDF — render path is broken ***'
+                  % 'render path')
+        else:
+            p, phrase = probe
+            hits, _u = sweep_claim([phrase], files=[p])
+            ok = len(hits) >= 1
+            bad += 0 if ok else 1
+            print('    %-40s %s (%s)'
+                  % ('ASCII query reaches rendered typography',
+                     'ok' if ok else '*** ZERO — one-sided fold ***', p.name))
+
+    # ⚠⚠ AND A MARKER-BEARING PHRASE, which is the OTHER half of the same asymmetry (RLY44-2).
+    #   The PDF probe above is plain prose, so it exercises the TYPOGRAPHIC fold and nothing else
+    #   — mutation-tested, and reverting the phrase side to `translate(_CLAIM_FOLD)` left it
+    #   GREEN. The corpus side blanks markdown markers; until 2026-09-02 the phrase side did not,
+    #   so any phrase containing `_ * ` | [` could not reach text containing it. **Every Lean
+    #   declaration name is in that class**, which is most of what anyone sweeps for here.
+    print('  MUST FIRE  (phrase carrying a markdown marker reaches the text)')
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / 'x.md'
+        io.open(p, 'w', encoding='utf-8').write(
+            'The theorem epsilon0_ne_bot closes it, and *emphasis* wraps a `code span`.\n')
+        hits, _u = sweep_claim(['epsilon0_ne_bot closes it'], files=[p])
+    ok = len(hits) == 1
+    bad += 0 if ok else 1
+    print('    %-40s %s' % ('underscored identifier is reachable',
+                            'ok' if ok else '*** ZERO — one-sided soften ***'))
+
+    # The DEFAULT is itself the claim `CLAUDE.md` R-NOTINLIB now leans on, so assert it directly.
+    # Reverting it is a one-token edit and every behavioural control above would stay green.
+    print('  MUST HOLD  (rendered text is swept by DEFAULT)')
+    import inspect as _inspect
+    _dflt = _inspect.signature(cmd_claim).parameters['pdfs'].default
+    ok = _dflt is True
+    bad += 0 if ok else 1
+    print('    %-40s %s (cmd_claim pdfs=%r)'
+          % ('authoritative surface is not opt-in',
+             'ok' if ok else '*** OPT-IN AGAIN ***', _dflt))
 
     print('\n  claim-sweep controls: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return bad

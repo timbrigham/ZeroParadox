@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.12 | September 2026
+Version 1.13 | September 2026
+v1.13: BEDROCK, AND THE v1.12 SWEEP MISSED IT BY THREE LINES. The APG box defined Reach(v) = { w : V | Reachable v w }. `Reachable` is NOT LOCATED in APG.lean as of 2026-09-02 - zero occurrences, searched by identifier - and the only resolution located that day, over ZeroParadox/**/*.lean and the tracked build scripts, was SimpleGraph.Reachable, which is SYMMETRIC - and section IV.2's induction terminates ONLY because reachability here runs one way: from an acyclic v to a child w, v is not reachable back, so Reach(w) is a STRICT subset and the cardinality decreases. Under a symmetric relation the two sets are equal, the descent never shrinks, and the proof this document narrates does not terminate. A false definition carrying the main theorem's termination argument. v1.12 changed the `accessible` line directly above it FOR THIS EXACT REASON and left this one - the half-applied sweep at its smallest possible radius, inside the version whose subject was half-applied sweeps. Found by the adversary gate running the rendered BOX as a unit; a source reader sees a diff touching the line the changelog names and reads it as done. Also: two inherited counts in register.md replaced by pointers - "four sites" stood over an enumeration of five, and "all fifteen corrections" was v1.11's numeral carried into v1.12 over six of its own (R-ADJACENT: never enumerate in prose what an artifact defines). 
 v1.12: ROUND 4 — the v1.11 sweep was applied to two code boxes of four, and its own write-up claimed more than it did. Adversary FAIL-BEDROCK (2, both in OTHER ZP-J documents and filed, not touched here) + 5 ordinary; editorial STOP-ORDINARY 0/4; all four v1.11 remediations HELD under both gates, and the AddValuation.top_iff replacement was settled by ELABORATION in both directions - the emultiplicity_eq_top + FiniteMultiplicity.of_prime_left route compiles on Z_[2], and the control AddValuation.top_iff fails to elaborate there, as it must. Corrected in this version: the AbstractSelfApp and AFAStructure boxes still rendered Lean's `bot` as the bottom glyph, and there is no global notation for ZPSemilattice.bot - only a LOCAL one in Lattice.lean - so compiling either box as displayed gave 'failed to synthesize Bot L'; the APG box showed `Reachable root v` where the field is `Nonempty (Quiver.Path root v)`, and Reachable is SimpleGraph's, not a quiver notion; 'Z_[2] is NOT a ValuationStructure instance' shipped bare while three sources changed in the same commit hedge exactly that sentence, so it now says no such instance is REGISTERED, which is the checkable claim; funext was credited to Fintype, where function extensionality needs no finiteness at all and finiteness is consumed earlier by the acyclic descent (DC-32); and the note marker U+22EE, which means elided material, became the house U+2022.
 v1.11: THE v1.10 REMEDY WAS APPLIED TO ONE BOX AND THE OTHERS KEPT THE DEFECT (adversary FAIL-BEDROCK, 4 bedrock; editorial STOP-ORDINARY concurring on the first). v1.10 established that "a box that paraphrases is prose wearing a code block" and fixed toAFAStructure only. Corrected here: (1) page 1 credited "val_bot and val_scale" with giving finiteness for x != bot - val_finite_of_ne_bot is `fun h => hx (val_unique x h)`, the contrapositive of val_unique ALONE, which Scale.lean's module doc and LEAN_CUSTOM_REGISTRY.md already recorded with a Bool counterexample; "the four axioms are minimal" went with it, since an axiom consumed nowhere on the argument is what minimality would deny. (2) Section IV.1 said the decoration equation iterated k times gives d(v) = scale^k(d(v)); collect reduces to scale only through collect_singleton, i.e. only at single-child vertices, and cyclic_decoration_eq_bot does not do this - it chains collect_val_ge and path_val_chain as INEQUALITIES and never forms scale^[k]. The preamble restated the same overclaim and was swept with it. (3) The source-files box called ScaleBridge.lean "Z2 as ValuationStructure instance"; it declares instZ2ValBridge : ValBridge Z_[2], and that file says twice that Z_[2] is not a ValuationStructure. (4) AddValuation.top_iff was cited as the standard name for the val_bot + val_unique pair beside a sentence about Z_[2]; top_iff is stated over a [DivisionRing K] and Z_[2] is a DVR, so it does not apply - the stock route is emultiplicity_eq_top with FiniteMultiplicity.of_prime_left. Both prose gates found (4) independently and one compiled the failure. Also: the ValuationStructure and DecorationUniverse boxes rendered Lean's top as infinity and restated binders, so they did not typecheck as displayed, and are transcribed literally now; the set image `d '' children v` was encoded as U+201C followed by U+2032 at five sites, invisible as a defect in the source and visibly broken on the page; every box header and four rendered citations moved to full repository paths per R-LEANPDF; and the v1.9 changelog entry here still carried the "both rendered into a deposited PDF" overclaim that register.md corrected the same day.
 v1.10: THE RENDERED BOX PARAPHRASED THE LEAN IT CLAIMED TO SHOW, and the page contradicted its own vocabulary. Found by the adversary gate reading the EXTRACTED PDF rather than the builder source. Three bindings in the toAFAStructure box were paraphrases - selfMem rendered as an anonymous lambda in Lean 3 comma syntax inside a Lean 4 corpus, bot_self_mem as "fixed_bot", quine_unique as "derived from unique_fp" - so a reader could not resolve the def selfMemDerived citation this document had just added against a box that never names it. Transcribed literally now, with each field marked DATA or LAW. Separately: the prose called bot_self_mem "supplied", a word this section reserves for data, two paragraphs after drawing that distinction; bot_self_mem is a law discharged by a theorem and now says so.
@@ -24,7 +25,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -274,8 +275,19 @@ def build():
             '',
             'Every vertex is reachable from root by following directed edges.',
             '',
+            # ⚠⚠ `Reachable` DOES NOT EXIST IN APG.lean — zero occurrences — and the only symbol
+            #   that name could resolve to is `SimpleGraph.Reachable`, which is SYMMETRIC. That is
+            #   not a naming nit: § IV.2's induction terminates ONLY because reachability here runs
+            #   ONE WAY. From an acyclic v to a child w, v is not reachable back from w, so
+            #   Reach(w) is a STRICT subset of Reach(v) and |Reach| decreases. Under a symmetric
+            #   relation the two sets are EQUAL, the descent never shrinks, and the proof this
+            #   document narrates does not terminate. A false definition carrying the main
+            #   theorem's termination argument.
+            #   ⚠ AND IT SURVIVED THE v1.12 SWEEP BY THREE LINES: that round changed `accessible`
+            #   on the line above FOR THIS EXACT REASON and left this one. Same box, same defect,
+            #   one line apart — the half-applied sweep at its smallest possible radius.
             'children(v) = { w : V | v &#8594; w }   (immediate successors)',
-            'Reach(v)    = { w : V | Reachable v w }  (all vertices reachable from v)',
+            'Reach(v)    = { w : V | Nonempty (Quiver.Path v w) }  (reachable from v)',
             '',
             'In a finite APG (Fintype V), every Reach(v) is a finite set. '
             '|Reach(v)| is the cardinality used in the induction of §IV.',
@@ -520,7 +532,7 @@ def build():
             #   so `defined` is false on the modal reading the corpus fences twice.
             'ValBridge &#8484;_[2]. Note no ValuationStructure &#8484;_[2] is REGISTERED, nor '
             'any ZPSemilattice &#8484;_[2] &#8212; which is a fact about what is declared, not '
-            'about what is possible: &#167; V builds one and discharges all four axioms over it. '
+            'about what is possible: ZeroParadox/Valuation/Scale.lean &#167; V builds one and discharges all four axioms over it. '
             'ValBridge is the variant that drops the semilattice requirement while keeping the '
             'same four axioms.',
             'ZeroParadox/Settheory/APG.lean &#8212; APG, DecorationUniverse, val_iterate, '
