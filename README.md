@@ -89,7 +89,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.2 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
 | [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.22 | Inside zero: each maximal chain that strictly ascends at every step, with its 2-adic valuation tracking the depth index, converges to 0 in the 2-adics; reading that limit as an occupant of the ⊥ role, and then as a successor ⊥′, are two further commitments. |
 | [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.6 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
-| [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.13 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
+| [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.14 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
 | [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.3 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
 | [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.7 | The diagonal-fixed-point keystone: the Lawvere face-split (machine-checked) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
 | [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.14 | Computational grounding: the bottom's structural self-containment, with the computational reading carried as a commitment. |
