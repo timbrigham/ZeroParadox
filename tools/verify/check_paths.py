@@ -1391,8 +1391,149 @@ def _claim_targets():
     return out
 
 
-def sweep_claim(phrases, files=None, pdfs=False):
+def _doc_family(path):
+    """The document family a path belongs to, or None — `ZP-J_AFA_Addendum.pdf` -> `ZP-J`.
+
+    The family is the unit a delta review actually wants. Measured 2026-09-02: the repository has
+    40 root PDFs and the ZP-J family has SIX, so sweeping the repo to check one document's claim
+    reads 34 documents that cannot be affected by it.
+    """
+    m = re.match(r'(ZP-[A-Z0-9]+)[_.]', Path(path).name)
+    return m.group(1) if m else None
+
+
+def _claim_domain(files=None, mode='delta', ranges=None):
+    """**PURE. Returns (targets, label). Searches nothing.** The set a sweep will look in.
+
+    ⚠⚠ THIS FUNCTION EXISTS BECAUSE THE DOMAIN WAS THE ONE THING NO CONTROL COULD SEE (`RLY45-1`,
+    2026-09-02). Domain construction was fused into `sweep_claim`, and every control passed
+    `files=[...]`, which suppressed the routing entirely — so **deleting `targets +=
+    tracked_pdfs()` left `--selftest` fully green, `bad=0`, while the header still advertised
+    `+ RENDERED PDF TEXT (authoritative)` and the sweep returned 0 sites for a phrase that
+    provably lived in a deposited PDF.** A membership test is only as good as its domain, and the
+    domain is exactly what nothing tested. Pulling it out as a pure function is the whole fix:
+    a control can now assert WHAT IS IN THE SET without running a search.
+
+    ⭐ TWO MODES, AND THE MODE IS THE HONEST PART (Tim, 2026-09-02: *"there should be both a Delta
+    and a full mode available… with the Delta being used for day to day, and full reserved for
+    dedicated 'full review approved by Tim' tickets."*).
+
+      `delta` — the DEFAULT, and the day-to-day mode. The files changed in `ranges`, each one's
+                counterpart (a `.lean`'s ride-along `.md` and back), the PDF a changed build
+                script emits, and that PDF's DOCUMENT FAMILY. Tight, and it is the blast radius
+                of the change rather than the repository.
+      `full`  — every tracked surface plus every deposited PDF. **A deliberate act**, reserved
+                for an approved full-review ticket, never the default for a delta.
+
+    ⚠⚠ **A ZERO IN `delta` MODE IS NOT EVIDENCE ABOUT THE CORPUS**, and the caller MUST say so.
+    That is the cost of narrowing and it is why the label is returned rather than inferred: this
+    is `R-NOTINLIB`'s own shape — *"an exclusion you typed is not a fact about the corpus, and
+    'not in X' is not 'not anywhere' — say which set you searched."* Narrowing the domain without
+    narrowing the CLAIM is how a delta sweep becomes a false all-clear.
+    """
+    if files is not None:
+        return list(files), 'explicit file list (%d)' % len(files)
+
+    if mode == 'full':
+        t = _claim_targets() + tracked_pdfs()
+        return t, 'FULL — every tracked surface + every deposited PDF (%d)' % len(t)
+
+    changed = [Path(REPO) / c for c in changed_in_range(ranges)]
+    keep, fams = {}, set()
+    for p in changed:
+        keep[str(p)] = p
+        f = _doc_family(p)
+        if f:
+            fams.add(f)
+        # a build script's rendered output, and that document's family
+        m = re.match(r'build_(zp[a-z0-9_]*)\.py$', p.name, re.I)
+        if m:
+            for pdf in tracked_pdfs():
+                if pdf.stem.lower().replace('-', '').replace('_', '') in \
+                        m.group(1).lower().replace('_', '') or \
+                        m.group(1).lower().replace('_', '') in \
+                        pdf.stem.lower().replace('-', '').replace('_', ''):
+                    keep[str(pdf)] = pdf
+                    if _doc_family(pdf):
+                        fams.add(_doc_family(pdf))
+        # a .lean and its ride-along .md travel together
+        for sib in (p.with_suffix('.md'), p.with_suffix('.lean')):
+            if sib != p and sib.exists():
+                keep[str(sib)] = sib
+    for pdf in tracked_pdfs():
+        if _doc_family(pdf) in fams:
+            keep[str(pdf)] = pdf
+    # ⚠⚠ AND THE FAMILY'S BUILDERS, WHICH THE FIRST VERSION OMITTED — measured 2026-09-02, and the
+    #   omission is the interesting half. Delta mode found both `ZPJ-ITER` sites in the deposited
+    #   PDFs and NEITHER of the two build scripts that emit them, so it surfaced the SYMPTOM and
+    #   hid the SITE OF REPAIR. A domain that shows you a defect you cannot then fix is worse than
+    #   one that shows you nothing, because it looks like coverage.
+    # ⚠ IMPORTED, NOT RE-IMPLEMENTED. `check_hashes` already owns the document -> script map and
+    #   is the register's own source of truth for it; deriving a second mapping here would be the
+    #   half-applied duplicate this layer keeps paying for (`check_negatives` records the same
+    #   rule one file over). Keys are family-prefixed — 'ZP-J', 'ZP-J-formal', 'ZP-J AFA
+    #   Addendum' — so a prefix test reaches every script in a family.
+    try:
+        import check_hashes as _ch
+        _maps = (_ch.COMP_SCRIPTS, _ch.FORMAL_SCRIPTS, _ch.FORMAL_ONLY_SCRIPTS,
+                 _ch.STANDALONE_SCRIPTS)
+    except (ImportError, AttributeError):
+        _maps = ()
+    for _m in _maps:
+        for _key, _script in _m.items():
+            if any(_key.startswith(f) for f in fams):
+                _p = Path(REPO) / 'scripts' / _script
+                if _p.exists():
+                    keep[str(_p)] = _p
+    t = list(keep.values())
+
+    # ⚠⚠⚠ A ZERO DELTA IS AN ALARM, NEVER AN ANSWER (Tim, 2026-09-02: *"there should also never be
+    #   a zero delta… that should always trip an alarm"*). An empty domain makes every sweep return
+    #   zero hits, and a zero from an empty domain is BYTE-IDENTICAL to "the claim is absent" —
+    #   which is the sentence a caller then writes into a commit message.
+    #   **This is the EMPTINESS-AS-SUCCESS class, and this layer has now produced it three times:**
+    #   `HOOK-R5-3` (`PRE_COMMIT_CHECKS = []` certifies itself green, because `reconcile` iterates
+    #   the table and an empty table expects nothing), the PDF control that SKIPPED when extraction
+    #   broke and read as a pass, and this. Vacuous truth is the failure mode of every
+    #   "for each expected thing, check it ran" design; the fix is always the same, and it is to
+    #   assert the expectation set is itself non-empty.
+    #   ⚠ REFUSING IS NOT THE SAME AS FINDING NOTHING, and the distinction is the whole point:
+    #   exit 2 says the question could not be asked, exit 0 with zero hits says it was asked and
+    #   answered. Collapsing those two is what a fail-open IS.
+    if not t:
+        raise RuntimeError(
+            'the delta domain is EMPTY (%d changed file(s) in range) — refusing to sweep.\n'
+            '  An empty domain returns zero hits for every phrase, and that zero is\n'
+            '  indistinguishable from "the claim is absent". It is not evidence; it is the\n'
+            '  absence of a question.\n'
+            '  Either name a range that contains the change  --  or use --full, which is a\n'
+            '  deliberate approved-ticket act, not a way around this message.' % len(changed))
+
+    return t, ('DELTA — %d changed file(s), their counterparts, and the %s document famil%s (%d)'
+               % (len(changed), ', '.join(sorted(fams)) or 'no', 'ies' if len(fams) != 1 else 'y',
+                  len(t)))
+
+
+def changed_in_range(ranges=None):
+    """Repo-relative paths changed in `ranges` (default: unpushed on this branch)."""
+    spec = ranges or 'origin/%s..HEAD' % subprocess.run(
+        ['git', 'rev-parse', '--abbrev-ref', 'HEAD'], cwd=REPO,
+        capture_output=True, text=True).stdout.strip()
+    r = subprocess.run(['git', 'diff', '--name-only', '--diff-filter=ACMR', spec],
+                       cwd=REPO, capture_output=True, text=True)
+    if r.returncode != 0:
+        # ⚠ FAIL LOUD, NOT EMPTY. An empty change set would silently make the domain tiny and
+        #   every sweep return zero — the fail-open this whole function exists to remove.
+        raise RuntimeError('cannot resolve range %r: %s' % (spec, r.stderr.strip()[:200]))
+    return [x for x in r.stdout.split('\n') if x.strip()]
+
+
+def sweep_claim(phrases, files=None, pdfs=None, mode='delta', ranges=None):
     """[(rel, line, phrase, context)], [(rel, why)] — pure, prints nothing.
+
+    ⚠ `pdfs` IS RETIRED AS AN AXIS and kept only so an old caller does not break: `pdfs=True`
+    now means `mode='full'`. The axis was never rendered-versus-source — the rendered text is
+    authoritative in BOTH modes — it was always SCOPE, and calling it `pdfs` is what hid that.
 
     ⚠⚠ `pdfs=True` ADDS THE RENDERED TEXT, AND IT IS THE AUTHORITATIVE SURFACE, NOT AN EXTRA.
     `vocabulary_reference.md`'s Update Log records the rule, paid for by a claim that survived FOUR
@@ -1404,9 +1545,9 @@ def sweep_claim(phrases, files=None, pdfs=False):
     Line numbers are meaningless there, so a PDF hit reports page-less line 0 and names the file.
     """
     hits, unreadable = [], []
-    targets = list(files if files is not None else _claim_targets())
-    if pdfs and files is None:
-        targets += tracked_pdfs()
+    if pdfs is True and files is None:
+        mode = 'full'
+    targets, _label = _claim_domain(files=files, mode=mode, ranges=ranges)
     for path in targets:
         if str(path).lower().endswith('.pdf'):
             raw = _pdf_text(path)
@@ -1477,54 +1618,43 @@ def sweep_claim(phrases, files=None, pdfs=False):
     return sorted(hits), unreadable
 
 
-def cmd_claim(phrases, pdfs=True):
-    """⚠⚠ `pdfs` DEFAULTS TO TRUE SINCE 2026-09-02, AND THE OLD DEFAULT WAS A FAIL-OPEN.
+def cmd_claim(phrases, mode='delta', ranges=None):
+    """Print a claim sweep. **Two modes, and the mode is stated on every run.**
 
-    `sweep_claim`'s own docstring calls the rendered text *"THE AUTHORITATIVE SURFACE, NOT AN
-    EXTRA"* and records that it was paid for by a claim surviving FOUR sweeps — and the CLI then
-    read `pdfs='--pdf' in args`, so the authoritative surface was OPT-IN. A tool that documents a
-    surface as authoritative and skips it unless asked is not a tool with a flag; it is a tool
-    whose default answer is narrower than the question, which is the shrunken-claim shape this
-    layer keeps paying for (`CCM-1`, same week, same disease in a different checker).
+    ⭐ `delta` IS THE DEFAULT AND THE DAY-TO-DAY MODE; `full` IS A DELIBERATE ACT reserved for an
+    approved full-review ticket (Tim, 2026-09-02). Measured that day: `full` is **452 surfaces**
+    (412 tracked + 40 deposited PDFs) while the ZP-J family is **six**, so sweeping the repository
+    to check one document's claim reads 34 documents the change cannot reach. The delta window was
+    the design intent all along; it was built into the LEDGER, whose subjects are blob-keyed, and
+    never into the SEARCH — coverage was delta-shaped and sweeping was not.
 
-    ⚠⚠ AND THE COUNTERFACTUAL WAS RUN, WHICH KILLED THE STRONGER CLAIM THIS DOCSTRING FIRST MADE.
-    It said the old default WOULD have missed the 2026-09-02 case. **Measured: it would not.** On
-    the live phrase *"composing the decoration equation around the cycle"*, `--no-pdf` returns
-    **2 of 4** sites — `scripts/build_zpj.py:796` and `scripts/build_zpj_companion.py:535` — and
-    those two are the BUILDERS, which is where the fix goes and is entirely sufficient to find it.
-    With PDFs the same run returns 4, adding `ZP-J_Self_Reference.pdf` and
-    `ZP-J_Illustrated_Companion.pdf`. So the change is worth making and is NOT what would have
-    saved that day.
+    ⚠⚠ **A ZERO IN DELTA MODE IS NOT EVIDENCE ABOUT THE CORPUS.** Narrowing the domain without
+    narrowing the CLAIM is how a delta sweep becomes a false all-clear, and that is exactly
+    `R-NOTINLIB`'s shape: *"an exclusion you typed is not a fact about the corpus, and 'not in X'
+    is not 'not anywhere' — say which set you searched."* So the domain LABEL is printed above the
+    result, and a delta zero prints the sentence a caller may honestly write.
 
-    **What actually failed on 2026-09-02 was that nobody RAN this** — the sweep was done by hand,
-    by grep, scoped to one document, and reported as though it had covered the claim. The tool
-    would have caught it at either default. That makes the real defect a missing TRIGGER, not a
-    missing capability, and the trigger is recorded at `R-DEFECTCLASS`: *when you correct a claim
-    in a rendered document, sweep the DELETED phrasing with this tool before saying it is fixed.*
-
-    What the PDF default genuinely buys is narrower and still worth it: a claim that exists ONLY
-    in a rendered artifact — entity-mangled, split across adjacent literals, or shipped from a
-    builder edited since — is invisible to every source surface, and the deposited PDF is the
-    thing a reader actually holds.
-
-    `--no-pdf` still opts out, for speed. Either way the SURFACES SWEPT are printed on every run,
-    because a narrower sweep that renders identically to a full one is how coverage shrinks
-    unnoticed."""
-    hits, unreadable = sweep_claim(phrases, pdfs=pdfs)
+    ⚠ THE PRINTED SCOPE IS DERIVED FROM THE DOMAIN, NEVER FROM THE FLAG (`RLY45-7`). It used to
+    print `_claim_targets()`'s length in both modes — 412 — while the default swept 452, so **no
+    printed quantity moved when PDF coverage disappeared**, which is what made `RLY45-1` invisible.
+    """
+    try:
+        targets, label = _claim_domain(mode=mode, ranges=ranges)
+    except RuntimeError as exc:
+        print('  cannot build the sweep domain: %s' % exc)
+        print('  A domain that cannot be resolved is NOT an empty domain. Refusing.')
+        return 2
+    hits, unreadable = sweep_claim(phrases, files=targets)
     by_file = {}
     for rel, line, phrase, ctx in hits:
         by_file.setdefault(rel, []).append((line, ctx))
+    n_pdf = sum(1 for t in targets if str(t).lower().endswith('.pdf'))
     print('=' * 78)
-    print('  CLAIM SWEEP — %d phrase(s) over %d tracked surface(s)'
-          % (len(phrases), len(_claim_targets())))
+    print('  CLAIM SWEEP')
     for p in phrases:
         print('    "%s"' % p)
-    # ⚠ PRINT THE SCOPE, ALWAYS. Not a warning on the narrow path — a statement on every path.
-    #   A sweep that examined less renders identically to one that examined everything unless the
-    #   scope itself is on the page, which is the same reason the routing legs print their counts.
-    print('  surfaces   .md + .lean + tracked .py%s'
-          % ('  +  RENDERED PDF TEXT (authoritative)' if pdfs
-             else '   — PDFs NOT swept (--no-pdf)'))
+    print('  domain     %s' % label)
+    print('             %d file(s), of which %d rendered PDF(s)' % (len(targets), n_pdf))
     print('=' * 78)
     for rel in sorted(by_file):
         print('\n  %s' % rel)
@@ -1538,13 +1668,13 @@ def cmd_claim(phrases, pdfs=True):
             print('    %s — %s' % (rel, why))
     print('\n  %d site(s) across %d file(s).' % (len(hits), len(by_file)))
     print('  ⚠ READING LIST, NOT A FINDING LIST — read every hit; never act on the count.')
-    if not pdfs:
-        print('  ⚠⚠ SOURCE ONLY — YOU OPTED OUT OF THE AUTHORITATIVE SURFACE. A zero here is NOT')
-        print('     evidence about a published claim: the rendered text has already resolved')
-        print('     entities, escapes and string joins, and a claim can live in a deposited PDF')
-        print('     with no source site at all. Measured 2026-09-02 on one live phrase: source')
-        print('     2 sites, source+PDF 4. Drop --no-pdf unless you are trading it for speed.')
-    print('  ⚠ Run BOTH POLARITIES. Four gate rounds missed a live site for want of that.')
+    if mode != 'full':
+        print('  ⚠⚠ DELTA MODE. A zero here is NOT evidence about the corpus — only about the')
+        print('     domain named above. The honest sentence is "not located in <domain> as of')
+        print('     <date>"; anything wider needs --full, which is an approved-ticket act.')
+    else:
+        print('  ⚠ FULL MODE — every tracked surface and every deposited PDF. Slow by design.')
+    print('  ⚠ Run BOTH POLARITIES, and grep the wording you DELETED, not the one you wrote.')
     return 0
 
 
@@ -1753,16 +1883,79 @@ def selftest_claim():
     print('    %-40s %s' % ('underscored identifier is reachable',
                             'ok' if ok else '*** ZERO — one-sided soften ***'))
 
+    # ⚠⚠ THE DOMAIN ITSELF — the thing `RLY45-1` proved NO control could see. Domain construction
+    #   was fused into `sweep_claim`, so deleting `targets += tracked_pdfs()` left every control
+    #   green while the sweep returned 0 for a phrase that provably lived in a deposited PDF.
+    #   `_claim_domain` is a PURE function now, so membership is assertable without searching —
+    #   which is the entire reason it was extracted. These are the cheapest controls in the file
+    #   and they cover the failure that survived four rounds.
+    print('  MUST HOLD  (the DOMAIN, asserted without searching)')
+    try:
+        d_delta, lbl_d = _claim_domain(mode='delta')
+        d_full, lbl_f = _claim_domain(mode='full')
+    except RuntimeError as exc:
+        print('    %-40s *** DOMAIN UNRESOLVABLE: %s ***' % ('delta domain builds', exc))
+        bad += 1
+        d_delta, d_full = [], []
+    checks = [
+        ('full contains rendered PDFs',
+         any(str(p).lower().endswith('.pdf') for p in d_full)),
+        ('full covers every deposited PDF',
+         len([p for p in d_full if str(p).lower().endswith('.pdf')]) == len(tracked_pdfs())),
+        ('delta is a strict subset of full',
+         0 < len(d_delta) < len(d_full)),
+        # ⚠ The narrowing must not silently drop the authoritative surface: a delta domain with
+        #   no rendered text would return zeros that read like corpus-wide absence.
+        ('delta still carries rendered text',
+         any(str(p).lower().endswith('.pdf') for p in d_delta) or not tracked_pdfs()),
+        # ⚠⚠ AND IT MUST REACH THE WHOLE FAMILY, NOT JUST THE CHANGED DOCUMENT'S OWN OUTPUT.
+        #   The first version of this control asserted only "delta contains SOME pdf", and a
+        #   mutation dropping the family loop stayed GREEN — because a changed build script's own
+        #   PDF is added by a different branch. **The family siblings are the entire point**: the
+        #   `ZPJ-ITER` sites that a 452-surface sweep found were in SIBLING documents, and delta
+        #   reproduces that only if the family travels. Too-weak control, caught by mutation.
+        ('delta reaches every PDF of an implicated family',
+         all(any(str(q) == str(p) for q in d_delta)
+             for p in tracked_pdfs()
+             if _doc_family(p) and any(_doc_family(p) == _doc_family(x) for x in d_delta
+                                       if str(x).lower().endswith('.pdf')))),
+    ]
+    for name, ok in checks:
+        bad += 0 if ok else 1
+        print('    %-40s %s' % (name, 'ok' if ok else '*** FAIL ***'))
+    print('    %-40s %s' % ('delta / full sizes', '%d / %d' % (len(d_delta), len(d_full))))
+
+    # ⚠⚠ AND THE ALARM ITSELF. A refusal nobody has watched fire is a hypothesis, and this one
+    #   guards the emptiness-as-success class that has already shipped here three times. Drive
+    #   `changed_in_range` to the empty set and require `_claim_domain` to REFUSE rather than
+    #   hand back a domain that answers zero to everything.
+    print('  MUST FIRE  (an EMPTY delta refuses instead of answering)')
+    _real_range = globals().get('changed_in_range')
+    globals()['changed_in_range'] = lambda ranges=None: []
+    try:
+        _dom, _lbl = _claim_domain(mode='delta')
+        fired, why = False, 'returned %d target(s) instead of refusing' % len(_dom)
+    except RuntimeError as exc:
+        fired, why = True, str(exc).split('\n')[0][:60]
+    finally:
+        globals()['changed_in_range'] = _real_range
+    bad += 0 if fired else 1
+    print('    %-40s %s' % ('zero changed files is an ALARM',
+                            'ok' if fired else '*** VACUOUS: %s ***' % why))
+
     # The DEFAULT is itself the claim `CLAUDE.md` R-NOTINLIB now leans on, so assert it directly.
     # Reverting it is a one-token edit and every behavioural control above would stay green.
-    print('  MUST HOLD  (rendered text is swept by DEFAULT)')
+    # ⚠ THE DEFAULT MODE IS ITSELF A DESIGN DECISION AND IS ASSERTED, not left to a reader.
+    #   Tim, 2026-09-02: delta is the day-to-day mode, full is reserved for an approved ticket.
+    #   Reverting either direction is a one-token edit that every behavioural control survives.
+    print('  MUST HOLD  (delta is the DEFAULT; full is a deliberate act)')
     import inspect as _inspect
-    _dflt = _inspect.signature(cmd_claim).parameters['pdfs'].default
-    ok = _dflt is True
+    _dflt = _inspect.signature(cmd_claim).parameters['mode'].default
+    ok = _dflt == 'delta'
     bad += 0 if ok else 1
-    print('    %-40s %s (cmd_claim pdfs=%r)'
-          % ('authoritative surface is not opt-in',
-             'ok' if ok else '*** OPT-IN AGAIN ***', _dflt))
+    print('    %-40s %s (cmd_claim mode=%r)'
+          % ('day-to-day mode is the narrow one',
+             'ok' if ok else '*** DEFAULT MOVED ***', _dflt))
 
     print('\n  claim-sweep controls: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return bad
@@ -1787,7 +1980,10 @@ def main():
         # ⚠ INVERTED 2026-09-02. Was `pdfs='--pdf' in args`, which made the surface this tool's
         #   own docstring calls AUTHORITATIVE into an opt-in. `--pdf` is still accepted so any
         #   existing invocation keeps working and keeps meaning the same thing.
-        return cmd_claim(phrases, pdfs='--no-pdf' not in args)
+        if '--pdf' in args or '--no-pdf' in args:
+            print('  note: --pdf/--no-pdf are RETIRED. The axis is SCOPE, not the\n'
+                  '  render: rendered text is authoritative in both modes. Use --full.')
+        return cmd_claim(phrases, mode='full' if '--full' in args else 'delta')
     do_all = '--all' in args
     warn_private = '--warn-private' in args
 
