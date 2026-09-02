@@ -44,7 +44,7 @@ Substitute `ARGUMENTS_VALUE` with `SHIP_SCOPE` (or the gate's own mode, e.g. `cr
 caller pre-flight: `SHIP_ROUND` and the cap, the permitted verdicts, and the three warnings below.
 
 **Tell Tim which gates are running and their parameters before they start** — command file, scope,
-mode, round, permitted verdicts, signal written, what this round must attack.
+mode, round, permitted verdicts, what gets recorded and by whom, what this round must attack.
 
 **Three warnings every brief must carry:**
 1. **Hash the FILE ON DISK for any signal, never `git show "HEAD:<path>"`** — that means different
@@ -84,9 +84,10 @@ fallback.** If the hook blocks, read it and fix the cause.
 
 ---
 
-**Verdicts.** FAIL-BEDROCK → fix, bump, return to 2 (cap 5). STOP-ORDINARY → the gate writes its
-signal; the correct action is to PUSH, not iterate (cap 2). ⚠ **Editing after a STOP-ORDINARY stales
-every signal and restarts the obligation** — either re-run the gates or push what was certified and
+**Verdicts.** FAIL-BEDROCK → fix, bump, return to 2 (cap 5). STOP-ORDINARY → a PROCEED verdict that is NOT a pass,
+so it goes to the CALLER, who records it (`record.py --outstanding-file`) and carries the
+findings as outstanding; the correct action is to PUSH, not iterate (cap 2). ⚠ **Editing
+after a STOP-ORDINARY stales every RECORD and restarts the obligation** — either re-run the gates or push what was certified and
 ledger the rest. Not both. **Ledger every finding** in `.claude-local/DEFECTS.md`, fixed or not.
 
 **Not wired into the git hook, deliberately.** A gate run is 15-25 minutes; four in a pre-push hook
