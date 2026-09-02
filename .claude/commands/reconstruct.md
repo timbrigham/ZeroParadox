@@ -15,7 +15,7 @@ Measured 2026-08-08:
    19  claims machine-mirrored in ClaimsMirror.lean
 ```
 
-`ClaimsMirror.lean` runs claims → declarations. **Nothing runs declarations → claims.** A theorem that establishes something significant and was never written down is structurally invisible, and there are over thirteen hundred candidates. `CLAUDE.md` names **unstated adjacency** — *"true theorems whose reach nobody recorded"* — as this corpus's characteristic defect, and its own prescribed fix is *"the deliverable is a POINTER, not a new declaration."* This agent finds where those pointers are missing.
+`ClaimsMirror.lean` runs claims → declarations. **Nothing runs declarations → claims.** A theorem that establishes something significant and was never written down is structurally invisible, and there are over thirteen hundred candidates. `tools/process/unstated-adjacency.md` names **unstated adjacency** — *"true theorems whose reach nobody recorded"* — as this corpus's characteristic defect, and its prescribed fix is *"the deliverable is a POINTER, not a new declaration."* (CLAUDE.md carries the rule as R-ADJACENT, wording the object "not a theorem".) This agent finds where those pointers are missing.
 
 **It is GENERATIVE, not a gate.** It writes **no signal file**, returns **no PASS/FAIL**, and **blocks no push**. Its output is a ranked worklist. Do not wire it into `pre-push`.
 
@@ -92,7 +92,7 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 ## What NOT to report
 
 - A result the corpus already points at from a place a reader lands on. Check before reporting: `CLAIMS.md`, the `CannotBe` indexes, `BOTTOMELEMENT.md`, `SNAP.md`, and the declaring file's own header.
-- An elementary instantiation of something already stated. `CLAUDE.md`'s Trigger 0 records that adding those is a recurring failure, not a contribution.
+- An elementary instantiation of something already stated. `tools/process/prior-art.md` § "Trigger 0 — the measured cases" records that adding those is a recurring failure, not a contribution.
 - Anything you cannot name a declaration for. **Every finding must be falsifiable by `#check <name>`.**
 - Prior-art questions. If a result looks like it belongs to a known program, say so in one line and route it to `/prior-art-review`; do not search the literature yourself.
 

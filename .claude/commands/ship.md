@@ -50,7 +50,7 @@ mode, round, permitted verdicts, signal written, what this round must attack.
 1. **Hash the FILE ON DISK for any signal, never `git show "HEAD:<path>"`** — that means different
    things before and after a commit and yields a signal stale the instant the commit lands.
 2. **Never `reset --hard` / `checkout -- .` / `clean` / `stash` the shared tree.** Assume the caller
-   holds uncommitted work. Needs commits? `git worktree add --detach`. A run destroyed the caller's
+   holds uncommitted work. Needs commits? `mcp__gitRobot__worktree(action='add')`. A run destroyed the caller's
    uncommitted file this way and reported success.
 3. **Sources are on disk in `.claude-local/papers/`** — check before calling one unobtainable; never
    record a fetch failure as a fact about a source.
@@ -71,12 +71,14 @@ means safe to commit and push.
 
 Then:
 ```
-git add <named paths>          # NEVER -A; agents may have written to the tree
-git status --short             # every staged path must be one you meant
-git commit -F <message-file>   # BOM-free: [System.IO.File]::WriteAllText(p, s, UTF8Encoding($false))
-git push origin illustrated > <scratchpad>/push.log 2>&1 ; echo $?
-python tools/verify/batch.py close      # if a batch was open
+mcp__gitRobot__stage(paths=[...])                    # NAMED paths; -A is refused outright
+mcp__gitRobot__read(op='status', args=['--short'])   # every staged path must be one you meant
+mcp__gitRobot__commit(message_file='<path>')         # the message comes from a FILE, never argv
+mcp__gitRobot__preflight(reason='<why>')             # then poll preflight_status() until it lands
+mcp__gitRobot__push(branch='illustrated', reason='<why>')
+python tools/verify/batch.py close                   # if a batch was open
 ```
+⚠ **Direct version-control commands are denied to agents** (R-ROBOT; a fail-closed `PreToolUse` hook reads the whole command string). This block used to list four raw ones, so `/ship` dead-ended at the step that commits and pushes — which reads as a broken tool rather than a working control. The mediated calls above are the whole substitute set.
 ⚠ **Never pipe a push through `head`/`grep -q`, and never write a `|| git push --no-verify`
 fallback.** If the hook blocks, read it and fix the cause.
 
