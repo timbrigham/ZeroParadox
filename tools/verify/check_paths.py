@@ -1454,7 +1454,39 @@ def sweep_claim(phrases, files=None, pdfs=False):
     return sorted(hits), unreadable
 
 
-def cmd_claim(phrases, pdfs=False):
+def cmd_claim(phrases, pdfs=True):
+    """⚠⚠ `pdfs` DEFAULTS TO TRUE SINCE 2026-09-02, AND THE OLD DEFAULT WAS A FAIL-OPEN.
+
+    `sweep_claim`'s own docstring calls the rendered text *"THE AUTHORITATIVE SURFACE, NOT AN
+    EXTRA"* and records that it was paid for by a claim surviving FOUR sweeps — and the CLI then
+    read `pdfs='--pdf' in args`, so the authoritative surface was OPT-IN. A tool that documents a
+    surface as authoritative and skips it unless asked is not a tool with a flag; it is a tool
+    whose default answer is narrower than the question, which is the shrunken-claim shape this
+    layer keeps paying for (`CCM-1`, same week, same disease in a different checker).
+
+    ⚠⚠ AND THE COUNTERFACTUAL WAS RUN, WHICH KILLED THE STRONGER CLAIM THIS DOCSTRING FIRST MADE.
+    It said the old default WOULD have missed the 2026-09-02 case. **Measured: it would not.** On
+    the live phrase *"composing the decoration equation around the cycle"*, `--no-pdf` returns
+    **2 of 4** sites — `scripts/build_zpj.py:796` and `scripts/build_zpj_companion.py:535` — and
+    those two are the BUILDERS, which is where the fix goes and is entirely sufficient to find it.
+    With PDFs the same run returns 4, adding `ZP-J_Self_Reference.pdf` and
+    `ZP-J_Illustrated_Companion.pdf`. So the change is worth making and is NOT what would have
+    saved that day.
+
+    **What actually failed on 2026-09-02 was that nobody RAN this** — the sweep was done by hand,
+    by grep, scoped to one document, and reported as though it had covered the claim. The tool
+    would have caught it at either default. That makes the real defect a missing TRIGGER, not a
+    missing capability, and the trigger is recorded at `R-DEFECTCLASS`: *when you correct a claim
+    in a rendered document, sweep the DELETED phrasing with this tool before saying it is fixed.*
+
+    What the PDF default genuinely buys is narrower and still worth it: a claim that exists ONLY
+    in a rendered artifact — entity-mangled, split across adjacent literals, or shipped from a
+    builder edited since — is invisible to every source surface, and the deposited PDF is the
+    thing a reader actually holds.
+
+    `--no-pdf` still opts out, for speed. Either way the SURFACES SWEPT are printed on every run,
+    because a narrower sweep that renders identically to a full one is how coverage shrinks
+    unnoticed."""
     hits, unreadable = sweep_claim(phrases, pdfs=pdfs)
     by_file = {}
     for rel, line, phrase, ctx in hits:
@@ -1464,6 +1496,12 @@ def cmd_claim(phrases, pdfs=False):
           % (len(phrases), len(_claim_targets())))
     for p in phrases:
         print('    "%s"' % p)
+    # ⚠ PRINT THE SCOPE, ALWAYS. Not a warning on the narrow path — a statement on every path.
+    #   A sweep that examined less renders identically to one that examined everything unless the
+    #   scope itself is on the page, which is the same reason the routing legs print their counts.
+    print('  surfaces   .md + .lean + tracked .py%s'
+          % ('  +  RENDERED PDF TEXT (authoritative)' if pdfs
+             else '   — PDFs NOT swept (--no-pdf)'))
     print('=' * 78)
     for rel in sorted(by_file):
         print('\n  %s' % rel)
@@ -1478,8 +1516,11 @@ def cmd_claim(phrases, pdfs=False):
     print('\n  %d site(s) across %d file(s).' % (len(hits), len(by_file)))
     print('  ⚠ READING LIST, NOT A FINDING LIST — read every hit; never act on the count.')
     if not pdfs:
-        print('  ⚠ SOURCE ONLY. Add --pdf for the RENDERED text, which is the authoritative surface')
-        print('    for a published claim: it has already resolved entities, escapes and string joins.')
+        print('  ⚠⚠ SOURCE ONLY — YOU OPTED OUT OF THE AUTHORITATIVE SURFACE. A zero here is NOT')
+        print('     evidence about a published claim: the rendered text has already resolved')
+        print('     entities, escapes and string joins, and a claim can live in a deposited PDF')
+        print('     with no source site at all. Measured 2026-09-02 on one live phrase: source')
+        print('     2 sites, source+PDF 4. Drop --no-pdf unless you are trading it for speed.')
     print('  ⚠ Run BOTH POLARITIES. Four gate rounds missed a live site for want of that.')
     return 0
 
@@ -1637,7 +1678,10 @@ def main():
         if not phrases:
             print('--claim needs at least one phrase — and prefer two: the claim AND its inverse')
             return 2
-        return cmd_claim(phrases, pdfs='--pdf' in args)
+        # ⚠ INVERTED 2026-09-02. Was `pdfs='--pdf' in args`, which made the surface this tool's
+        #   own docstring calls AUTHORITATIVE into an opt-in. `--pdf` is still accepted so any
+        #   existing invocation keeps working and keeps meaning the same thing.
+        return cmd_claim(phrases, pdfs='--no-pdf' not in args)
     do_all = '--all' in args
     warn_private = '--warn-private' in args
 

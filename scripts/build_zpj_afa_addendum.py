@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.11 | September 2026
+Version 1.12 | September 2026
+v1.12: ROUND 4 — the v1.11 sweep was applied to two code boxes of four, and its own write-up claimed more than it did. Adversary FAIL-BEDROCK (2, both in OTHER ZP-J documents and filed, not touched here) + 5 ordinary; editorial STOP-ORDINARY 0/4; all four v1.11 remediations HELD under both gates, and the AddValuation.top_iff replacement was settled by ELABORATION in both directions - the emultiplicity_eq_top + FiniteMultiplicity.of_prime_left route compiles on Z_[2], and the control AddValuation.top_iff fails to elaborate there, as it must. Corrected in this version: the AbstractSelfApp and AFAStructure boxes still rendered Lean's `bot` as the bottom glyph, and there is no global notation for ZPSemilattice.bot - only a LOCAL one in Lattice.lean - so compiling either box as displayed gave 'failed to synthesize Bot L'; the APG box showed `Reachable root v` where the field is `Nonempty (Quiver.Path root v)`, and Reachable is SimpleGraph's, not a quiver notion; 'Z_[2] is NOT a ValuationStructure instance' shipped bare while three sources changed in the same commit hedge exactly that sentence, so it now says no such instance is REGISTERED, which is the checkable claim; funext was credited to Fintype, where function extensionality needs no finiteness at all and finiteness is consumed earlier by the acyclic descent (DC-32); and the note marker U+22EE, which means elided material, became the house U+2022.
 v1.11: THE v1.10 REMEDY WAS APPLIED TO ONE BOX AND THE OTHERS KEPT THE DEFECT (adversary FAIL-BEDROCK, 4 bedrock; editorial STOP-ORDINARY concurring on the first). v1.10 established that "a box that paraphrases is prose wearing a code block" and fixed toAFAStructure only. Corrected here: (1) page 1 credited "val_bot and val_scale" with giving finiteness for x != bot - val_finite_of_ne_bot is `fun h => hx (val_unique x h)`, the contrapositive of val_unique ALONE, which Scale.lean's module doc and LEAN_CUSTOM_REGISTRY.md already recorded with a Bool counterexample; "the four axioms are minimal" went with it, since an axiom consumed nowhere on the argument is what minimality would deny. (2) Section IV.1 said the decoration equation iterated k times gives d(v) = scale^k(d(v)); collect reduces to scale only through collect_singleton, i.e. only at single-child vertices, and cyclic_decoration_eq_bot does not do this - it chains collect_val_ge and path_val_chain as INEQUALITIES and never forms scale^[k]. The preamble restated the same overclaim and was swept with it. (3) The source-files box called ScaleBridge.lean "Z2 as ValuationStructure instance"; it declares instZ2ValBridge : ValBridge Z_[2], and that file says twice that Z_[2] is not a ValuationStructure. (4) AddValuation.top_iff was cited as the standard name for the val_bot + val_unique pair beside a sentence about Z_[2]; top_iff is stated over a [DivisionRing K] and Z_[2] is a DVR, so it does not apply - the stock route is emultiplicity_eq_top with FiniteMultiplicity.of_prime_left. Both prose gates found (4) independently and one compiled the failure. Also: the ValuationStructure and DecorationUniverse boxes rendered Lean's top as infinity and restated binders, so they did not typecheck as displayed, and are transcribed literally now; the set image `d '' children v` was encoded as U+201C followed by U+2032 at five sites, invisible as a defect in the source and visibly broken on the page; every box header and four rendered citations moved to full repository paths per R-LEANPDF; and the v1.9 changelog entry here still carried the "both rendered into a deposited PDF" overclaim that register.md corrected the same day.
 v1.10: THE RENDERED BOX PARAPHRASED THE LEAN IT CLAIMED TO SHOW, and the page contradicted its own vocabulary. Found by the adversary gate reading the EXTRACTED PDF rather than the builder source. Three bindings in the toAFAStructure box were paraphrases - selfMem rendered as an anonymous lambda in Lean 3 comma syntax inside a Lean 4 corpus, bot_self_mem as "fixed_bot", quine_unique as "derived from unique_fp" - so a reader could not resolve the def selfMemDerived citation this document had just added against a box that never names it. Transcribed literally now, with each field marked DATA or LAW. Separately: the prose called bot_self_mem "supplied", a word this section reserves for data, two paragraphs after drawing that distinction; bot_self_mem is a law discharged by a theorem and now says so.
 v1.9: CITE BY DECLARATION, NOT BY LINE. Both Lean citations in this file were line numbers and BOTH had drifted: SelfApp.lean:83 pointed at AbstractSelfApp.fixed_bot and :113 at a proof body, neither at the definition being cited. CORRECTED 2026-09-01: this entry originally added "and both rendered into a deposited PDF". Only :113 did - :83 lived in this module docstring, which reaches no rendered page, since no builder renders its own changelog and the extracted v1.9 text carries none. register.md's copy of this entry was corrected the same day and THIS one was missed, which is the half-applied duplicate (DC-28) the correction was itself about. A line number is a copy of a location, so it goes stale silently while reading as precise - the same defect one level down from the field-discipline claim it was citing. Now cited as ZeroParadox/Computability/SelfApp.lean, def selfMemDerived, which the reader can resolve and which cannot drift with an edit above it.
@@ -23,7 +24,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -172,9 +173,9 @@ def build():
         'Typeclass: AbstractSelfApp (ZeroParadox/Computability/SelfApp.lean)',
         [
             'class AbstractSelfApp (L : Type*) [ZPSemilattice L] where',
-            '  selfApp   : L &#8594; L',
-            '  fixed_bot : selfApp &#8869; = &#8869;',
-            '  unique_fp : &#8704; x : L, selfApp x = x &#8594; x = &#8869;',
+            '  selfApp : L &#8594; L',
+            '  fixed_bot : selfApp bot = bot',
+            '  unique_fp : &#8704; x : L, selfApp x = x &#8594; x = bot',
             '',
             'Instance toAbstractSelfApp (ZeroParadox/Valuation/Scale.lean):',
             '  selfApp   := scale',
@@ -204,9 +205,9 @@ def build():
         'Typeclass: AFAStructure (ZeroParadox/Settheory/SetTheoryAFA.lean)',
         [
             'class AFAStructure (L : Type*) [ZPSemilattice L] where',
-            '  selfMem      : L &#8594; Prop',
+            '  selfMem : L &#8594; Prop',
             '  quine_unique : &#8704; x y : L, selfMem x &#8594; selfMem y &#8594; x = y',
-            '  bot_self_mem : selfMem &#8869;',
+            '  bot_self_mem : selfMem bot',
             '',
             # ⚠ TRANSCRIBED LITERALLY from ZeroParadox/Computability/SelfApp.lean, instance
             #   toAFAStructure. The previous rendering PARAPHRASED all three bindings and wrote
@@ -269,7 +270,7 @@ def build():
         [
             'An APG over vertex type V (a Quiver) is a structure APG V with:',
             '  root       : V',
-            '  accessible : &#8704; v : V, Reachable root v',
+            '  accessible : &#8704; v : V, Nonempty (Quiver.Path root v)',
             '',
             'Every vertex is reachable from root by following directed edges.',
             '',
@@ -299,7 +300,7 @@ def build():
             '',
             'Transcribed from ZeroParadox/Settheory/APG.lean. IsDecoration d means '
             '&#8704; v, d v = collect (d &#39;&#39; apg_children v), where d &#39;&#39; S is '
-            'Lean&#8217;s set image &#8212; { d w | w &#8712; S }. &#8942; The two axioms pin '
+            'Lean&#8217;s set image &#8212; { d w | w &#8712; S }. &#8226; The two axioms pin '
             'only the SINGLETON case and a lower bound; they do not require collect to assemble '
             'a parent&#8217;s value from its children&#8217;s.',
         ]
@@ -364,7 +365,7 @@ def build():
             'Proof: induction on k; val_scale applies at each step because '
             'scale^[n](x) &#8800; &#8869; follows from the induction hypothesis '
             'and finiteness of val(x).',
-            '&#8942; This is a genuine lemma of &#167; III and it drives '
+            '&#8226; This is a genuine lemma of &#167; III and it drives '
             'scale_iterate_unique_fp below. It is NOT what the cyclic case above uses: '
             'cyclic_decoration_eq_bot never forms scale^[k].',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
@@ -438,9 +439,16 @@ def build():
 
     E.append(Paragraph('IV.3 — Combining the Cases', S['h2']))
     E.append(body(
+        # ⚠ "Since V is a Fintype, funext closes..." credited the wrong hypothesis. `funext` is
+        #   function extensionality - pointwise equality gives equality of the functions - and it
+        #   needs nothing about finiteness. Finiteness is what the ACYCLIC case needs, for the
+        #   descent on |Reach(v)|, which this page says two paragraphs earlier. Attaching it to
+        #   funext credits the enabling hypothesis to the step that does not consume it (DC-32).
         'Every vertex in a finite APG is either cyclic or acyclic. The two cases are '
         'exhaustive and jointly establish d&#8321;(v) = d&#8322;(v) for every vertex v. '
-        'Since V is a Fintype, funext closes the global equality d&#8321; = d&#8322;.'))
+        'Function extensionality then closes the global equality d&#8321; = d&#8322; from that '
+        'pointwise agreement; finiteness is consumed earlier, by the acyclic case&#8217;s '
+        'descent on |Reach(v)|, and plays no part in this last step.'))
     E.append(sp(6))
 
     # ── Section V: Scope and Purity ─────────────────────────────────────────────
@@ -505,9 +513,16 @@ def build():
             'ZeroParadox/Settheory/Model.lean &#8212; instNatInfZPS and instNatInfVal, '
             '&#8469;&#8734; as a ValuationStructure instance',
             'ZeroParadox/Valuation/ScaleBridge.lean &#8212; instZ2ValBridge : '
-            'ValBridge &#8484;_[2]. Note &#8484;_[2] is NOT a ValuationStructure instance: '
-            'no ZPSemilattice &#8484;_[2] is defined, and ValBridge is the variant that '
-            'drops that requirement while keeping the same four axioms.',
+            # ⚠ BOTH clauses are modal, and the first fix reached only the first clause. Saying
+            #   "no ZPSemilattice ℤ_[2] is DEFINED" one clause after correcting the sibling to
+            #   REGISTERED is the half-applied sweep inside a single sentence — and § V's closing
+            #   example builds exactly such a semilattice and discharges all four axioms over it,
+            #   so `defined` is false on the modal reading the corpus fences twice.
+            'ValBridge &#8484;_[2]. Note no ValuationStructure &#8484;_[2] is REGISTERED, nor '
+            'any ZPSemilattice &#8484;_[2] &#8212; which is a fact about what is declared, not '
+            'about what is possible: &#167; V builds one and discharges all four axioms over it. '
+            'ValBridge is the variant that drops the semilattice requirement while keeping the '
+            'same four axioms.',
             'ZeroParadox/Settheory/APG.lean &#8212; APG, DecorationUniverse, val_iterate, '
             'scale_iterate_unique_fp, cyclic_decoration_eq_bot, '
             'acyclic_induction_step, decoration_unique',

@@ -387,7 +387,15 @@ READ     tools/process/claim-revalidation.md
 ## R-NOTINLIB  "Not in the library" is a CLAIM. So is "this is OPEN". Probe both.
 TRIGGER  you are about to write that anything is ABSENT or OPEN — in Mathlib OR IN THIS CORPUS:
          "not in Mathlib" · "no instance exists" · "no such X is claimed" · "would need a
-         bridge" · "it is open" · any dated survey negative. A RETRACTION counts.
+         bridge" · "it is open" · any dated survey negative. A RETRACTION counts. ⚠⚠ AND SO DOES
+         A FIX: "swept" · "corrected everywhere" · "no other sites" · "the last one" · any claim
+         that something is NO LONGER PRESENT. **A post-fix completeness claim is an absence claim
+         wearing work clothes**, and this list is a DENYLIST, so it was porous exactly there.
+RUN      before writing any of them about a CLAIM, sweep the wording you DELETED, not the one you
+         wrote: `python tools/verify/check_paths.py --claim "<deleted phrasing>"` — `.md` + `.lean`
+         + tracked `.py` + the RENDERED PDFs in one pass, printing which surfaces it covered. The
+         new phrasing appears only where you put it, so grepping it returns one hit and always
+         reads clean.
 RULE     a failed `#synth` or grep is evidence about YOUR PROBE, never about the library. Read
          the `CLAIMS.md` row before assigning a status, and CITE it; `#check` is the authority.
          Run THREE phrasings varied by AXIS, never synonyms — POLARITY (how the corpus would say
@@ -400,7 +408,15 @@ COST     three false negatives shipped into docstrings as measured fact; and an 
          Measured 2026-08-27: `PROCESS_V2.md does not exist anywhere` reached a commit message,
          from a grep that `grep -v`'d the one directory holding it, then an `ls` of a directory
          that never had it. Both probes were honest; the conclusion added a quantifier neither
-         earned. The cited sections were real too.
+         earned. The cited sections were real too. ⚠⚠ AND AGAIN 2026-09-02, SAME SURFACE, SAME
+         QUANTIFIER, AFTER A FIX: "the sweep is finished" reached a commit message AND a
+         `register.md` row, from a hand-grep scoped to one document. The claim was live in two
+         deposited PDFs, a traceability register and two docstrings. **The rule above was already
+         written and already right — only the trigger list did not name this shape**, which is why
+         the fix is a trigger and not a new entry. Both prose gates hand-searched too and both
+         honestly reported clean, each having chosen its own scope; `--claim` on the deleted
+         wording returns 4 sites in 4 files. A tool that takes the scope out of the searcher's
+         hands is the entire difference.
 READ     tools/process/not-in-the-library.md
 
 ## R-LOOPCAP  Stopping is a decision about SEVERITY, never a wait for silence.

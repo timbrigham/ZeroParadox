@@ -87,12 +87,17 @@ owed is now at the site.
 **The classical names, both already in this corpus and neither previously cited at § V.**
 `q2Val_unique` — "only 0 has infinite 2-adic valuation" — is SEPARATEDNESS of the 2-adic
 filtration, i.e. Krull's intersection theorem: an element of every 2ⁿℤ₂ lies in ⋂ₙ 2ⁿℤ₂ = (0).
-⚠ **That name belongs to `q2Val_unique` and NOT to `q2Scale_unique_fp`, and this paragraph
-attached it to the wrong one until 2026-09-01.** `q2Scale_unique_fp` (2x = x → x = 0) is proved
-here by `linear_combination h` — one line of ring algebra that never mentions the valuation, the
-filtration or Krull. The Krull route is a *different* classical argument reaching the same
-statement, not the one the corpus takes, and saying otherwise misdescribes a proof a reader can
-open in ten seconds.
+⚠ **This is a `Reading:`, not a claim about either proof term, and the 2026-09-01 version of
+this paragraph got that wrong in both directions.** It moved the name off
+`q2Scale_unique_fp` on the grounds that its proof is `linear_combination` with no
+filtration in it — correct — and then attached it to `q2Val_unique` as though that proof
+*did* contain the filtration. It does not: `q2Val_unique` is `split_ifs` on
+`if x = 0 then ⊤ else ↑valuation`, so the infinite value at 0 is stipulated by a branch,
+and `PadicInt.valuation` is ℕ-valued with no top element in it at all. **The separatedness
+reading is about what the STATEMENT means, and neither proof term exhibits it.** Where the
+filtration genuinely does the work is the stock route two paragraphs above —
+`FiniteMultiplicity.of_prime_left` with `emultiplicity_eq_top`, where finiteness of the
+multiplicity is exactly the statement that the intersection is trivial.
 
 `q2Scale_unique_fp` does carry a second, legitimate **reading**: it is the uniqueness half of an
 ATTRACTING FIXED POINT in the sense of Benedetto's non-Archimedean dynamics (multiplier 2, and
