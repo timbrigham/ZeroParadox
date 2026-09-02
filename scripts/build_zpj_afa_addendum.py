@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.9 | September 2026
+Version 1.10 | September 2026
+v1.10: THE RENDERED BOX PARAPHRASED THE LEAN IT CLAIMED TO SHOW, and the page contradicted its own vocabulary. Found by the adversary gate reading the EXTRACTED PDF rather than the builder source. Three bindings in the toAFAStructure box were paraphrases - selfMem rendered as an anonymous lambda in Lean 3 comma syntax inside a Lean 4 corpus, bot_self_mem as "fixed_bot", quine_unique as "derived from unique_fp" - so a reader could not resolve the def selfMemDerived citation this document had just added against a box that never names it. Transcribed literally now, with each field marked DATA or LAW. Separately: the prose called bot_self_mem "supplied", a word this section reserves for data, two paragraphs after drawing that distinction; bot_self_mem is a law discharged by a theorem and now says so.
 v1.9: CITE BY DECLARATION, NOT BY LINE. Both Lean citations in this file were line numbers and BOTH had drifted: :83 pointed at AbstractSelfApp.fixed_bot and :113 at a proof body, neither at the definition being cited, and both rendered into a deposited PDF. A line number is a copy of a location, so it goes stale silently while reading as precise - the same defect one level down from the field-discipline claim it was citing. Now cited as ZeroParadox/Computability/SelfApp.lean, def selfMemDerived, which the reader can resolve and which cannot drift with an edit above it.
 v1.8: FIELD-DISCIPLINE CORRECTION (bedrock). The abstraction-chain prose said "at each step, the fields of the target typeclass are proved as theorems from the source" and "inherits the full AFAStructure as a chain of theorems". False at BOTH steps: a Lean typeclass field is either a LAW you discharge with a proof or DATA you supply, and this chain supplies data at each step - selfApp := scale is an assignment (the box six lines below prints it), and selfMem is supplied by def selfMemDerived. TWO of AFAStructure's three fields become theorems, not three. This was the THIRD ZP-J surface carrying the claim; the other two were corrected in ZP-J v2.6 and comp v1.30 and this one was missed because its sentence contains no numeral. Found by editorial round 5 and now covered mechanically by tools/verify/check_fields.py, which tests the Lean binding rather than the wording.
 v1.7: Lean Source Files box now lists SetTheoryAFA.lean (the AFAStructure typeclass home, cited by the def_box); "seven"→"eight" source files; stripped the "as of May 2026" dated qualifier from the endnote.
@@ -21,7 +22,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -171,10 +172,13 @@ def build():
         'In ZF+AFA, the existence of a self-containing set follows from AFA\'s existence '
         'clause applied to the one-node self-loop graph; uniqueness follows from AFA\'s '
         'uniqueness clause. In the ZP encoding, the existence field '
-        '(<i>bot_self_mem</i>) is supplied directly by <i>fixed_bot</i> from '
-        'AbstractSelfApp. The uniqueness field (<i>quine_unique</i>) is proved as a '
-        'theorem from <i>unique_fp</i> &#8212; no new axioms are introduced at this '
-        'step.'))
+        # ⚠ "supplied" is reserved on this page for DATA. bot_self_mem is a LAW - a Prop-valued
+        #   field discharged by a theorem - so saying it is "supplied" collapses the very
+        #   distinction the section is drawing two paragraphs above.
+        '(<i>bot_self_mem</i>) is a LAW, discharged by a theorem built from <i>fixed_bot</i> '
+        'in AbstractSelfApp. The uniqueness field (<i>quine_unique</i>) is likewise a law, '
+        'proved from <i>unique_fp</i>. Only <i>selfMem</i> is data, and only it is supplied '
+        '&#8212; no new axioms are introduced at this step.'))
 
     E.append(def_box(
         'Typeclass: AFAStructure (SetTheoryAFA.lean)',
@@ -184,11 +188,17 @@ def build():
             '  quine_unique : &#8704; x y : L, selfMem x &#8594; selfMem y &#8594; x = y',
             '  bot_self_mem : selfMem &#8869;',
             '',
-            'Instance toAFAStructure (SelfApp.lean):',
-            '  selfMem      := &#955; x, selfApp x = x   (fixed-point predicate)',
-            '  bot_self_mem := fixed_bot                 (&#8869; is a fixed point)',
-            '  quine_unique := derived from unique_fp    (any fixed point is &#8869;)',
-            'No new axioms.',
+            # ⚠ TRANSCRIBED LITERALLY from ZeroParadox/Computability/SelfApp.lean, instance
+            #   toAFAStructure. The previous rendering PARAPHRASED all three bindings and wrote
+            #   the lambda in Lean 3 comma syntax inside a Lean 4 corpus, so a reader could not
+            #   resolve the `def selfMemDerived` citation against a box that bound selfMem to an
+            #   anonymous function. A box that paraphrases is prose wearing a code block.
+            'Instance toAFAStructure (ZeroParadox/Computability/SelfApp.lean):',
+            '  selfMem      := selfMemDerived          (DATA - supplied, a def)',
+            '  bot_self_mem := derived_bot_self_mem    (LAW - discharged by a theorem)',
+            '  quine_unique := derived_quine_unique    (LAW - discharged by a theorem)',
+            'No new axioms. Two of the three fields are laws and become theorems;',
+            'selfMem is data and is supplied.',
         ]
     ))
     E.append(sp(4))

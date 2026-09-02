@@ -9,12 +9,11 @@ import Mathlib.Tactic
 
 A ZP-J valuation-bridge sub-file. See the Engineer's Take in `ZeroParadox/Settheory/SetTheoryAFA.lean`.
 
----
-
-`ValuationStructure`'s four axioms derive the unique-fixed-point chain without importing AFA, and
-§ V below shows every one of them holds in ℤ_[2] without that carrier being a formal instance. The
-road surface, the valuation argument, the derivation chain and what the ScaleBridge file resolved
-are in `ZeroParadox/Valuation/Scale.md`, beside this file.
+## Formal Overview
+`val_unique` and `val_scale` carry the unique-fixed-point argument; `val_bot` is consumed nowhere
+on it (measured 2026-08-30, § I). § V proves all four axioms in ℤ_[2]. Road surface, valuation
+argument, derivation chain, § V's synthesis fence, what ScaleBridge resolved: the ride-along
+`ZeroParadox/Valuation/Scale.md`, beside this file.
 -/
 
 namespace ZeroParadox
@@ -34,7 +33,7 @@ open ZeroParadox
 
     In ℚ_[2]: scale = ×2, val = 2-adic valuation. All four hold.
     In ZPSemilattice: abstract encoding of the same structure. -/
--- [ZP-CUSTOM] replaces: Valued (Mathlib/Topology/Algebra/Valued/ValuationTopology.lean) | reason: Mathlib's Valued typeclass requires ring/field structure (it formalizes algebraic valuations over rings). ZPSemilattice has join only — no ring. ValuationStructure uses val : L → ℕ∞ (not a GroupWithZero target) and four axioms (§ I lists them). The fixed-point uniqueness argument consumes TWO of them — val_unique and val_scale; scale_bot and val_bot appear in none of the three proof terms on that chain, measured 2026-08-30. ⚠ val_scale alone does NOT suffice, measured 2026-08-30: on Bool with bot = false, scale = id and val everywhere ⊤, scale_bot/val_bot/val_scale all hold and true is a fixed point of scale that is not the bottom. val_unique supplies the FINITENESS that makes val_scale bite.
+-- [ZP-CUSTOM] replaces: Valued (Mathlib/Topology/Algebra/Valued/ValuationTopology.lean) | reason: Mathlib's Valued typeclass requires ring/field structure (it formalizes algebraic valuations over rings). ZPSemilattice has join only — no ring. ValuationStructure uses val : L → ℕ∞ (not a GroupWithZero target) and four axioms (§ I lists them). The fixed-point uniqueness argument consumes TWO of them — val_unique and val_scale; scale_bot and val_bot appear in none of the three proof terms on that chain, measured 2026-08-30. ⚠ val_scale alone does NOT suffice, measured 2026-08-30: on Bool with bot = false, scale = id and val everywhere ⊤, scale_bot/val_bot/val_scale all hold and true is a fixed point of scale that is not the bottom. val_unique supplies the FINITENESS that makes val_scale bite. ⚠ THE NEARER NEIGHBOUR IS `AddValuation`, NOT `Valued`, and this reason answered the wrong one until 2026-09-02: `AddValuation R ℕ∞` targets a `LinearOrderedAddCommMonoidWithTop`, which is exactly this class's target, so "not a `GroupWithZero` target" rebuts `Valuation` and says nothing about it. The real discriminator is the CARRIER: `AddValuation` requires `[Ring R]` and a `ZPSemilattice` has only a join — the same discriminator `ZeroParadox/Algebra/Wheel.lean` recorded for `AddValuation A ℕ∞` on 2026-08-01, which this tag had not picked up. `AddValuation.top_iff` is the standard name for the `val_bot` + `val_unique` pair. ⚠ On a RING carrier there is no gap at all: `multiplicity_addValuation PadicInt.prime_p` discharges all four axioms on ℤ_[2] from stock API with an unguarded `val_scale` — see § V.
 class ValuationStructure (L : Type*) [ZPSemilattice L] where
   scale : L → L
   val        : L → ℕ∞
@@ -161,28 +160,13 @@ theorem val_selfMem_singleton :
 
 /-! ## § V. The 2-Adic Parallel — ℤ_[2] Satisfies ValuationStructure Conditions
 
-    No `ZPSemilattice ℤ_[2]` is defined — its ring structure supplies no natural join with 0 as
-    bottom — so ℤ_[2] cannot be a formal ValuationStructure instance, which requires one. ⚠ Being a
-    ring is not itself the obstruction: no ZPSemilattice axiom mentions a ring operation, and
-    `ZPSemilattice ℕ` exists. These standalone theorems show every ValuationStructure axiom holds in
-    ℤ_[2] with scale = ×2 and val = 2-adic valuation.
-
-    ℤ_[2] is used (not ℚ_[2]) because PadicInt.valuation : ℤ_[2] → ℕ is ℕ-valued,
-    making q2Val_scale provable. In ℚ_[2], valuation : ℚ_[2] → ℤ can be negative,
-    and the .toNat truncation makes the key identity false (e.g. x = 2⁻¹).
-
-    The formal connection — a ZPSemilattice instance for a concrete type carrying
-    a ValuationStructure — is the remaining open gap. -/
-
-/-! ⚠⚠ **THE PARAGRAPH ABOVE IS OUT OF DATE.** ℕ∞ carries BOTH structures — `instNatInfZPS`
-    and `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which IMPORTS this file.
-    ⚠ §V also says ℤ_[2] "cannot be a formal ValuationStructure instance". **§V's own "so"
-    makes that the not-defined reading, and so read it is still true**: no `ZPSemilattice ℤ_[2]` instance is registered,
-    so the bare expression fails synthesis. Read MODALLY it is false, and the example at the
-    end of § V is the witness — it supplies a semilattice with bottom 0 and discharges all
-    four axioms over it. Two measurements, no more: `#synth` fails, and the existential is
-    provable. Both stale sentences stay only because their block is frozen by content hash;
-    the route out is a `/claim-review` debaseline. -/
+    All four axioms hold in ℤ_[2] (scale = ×2, val = the 2-adic valuation), proved below as
+    standalone theorems; the closing example supplies a `ZPSemilattice ℤ_[2]` and discharges
+    every axiom over it. ⭐ PRIOR ART — these theorems DUPLICATE it:
+    `multiplicity_addValuation PadicInt.prime_p : AddValuation ℤ_[2] ℕ∞` discharges all four
+    from stock Mathlib at the same axiom footprint, its `val_scale` STRICTLY STRONGER (unguarded,
+    holding at 0 as well). The ℕ∞-target rationale, the classical names, the neighbour
+    `BottomValuation`, and the synthesis fence are in `ZeroParadox/Valuation/Scale.md` § V. -/
 
 section PadicParallel
 

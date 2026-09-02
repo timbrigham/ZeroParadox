@@ -5,7 +5,7 @@ Moved from `ZeroParadox/Valuation/Scale.lean`. ⚠ **This content was GRANDFATHE
 ## The road surface
 
 ZeroParadox/Computability/SelfApp.lean reduced AFAStructure to AbstractSelfApp (two axioms: fixed_bot, unique_fp).
-This file adds the next layer: a ValuationStructure that explains *why* ⊥ is the unique
+`ZeroParadox/Valuation/Scale.lean` adds the next layer: a ValuationStructure that explains *why* ⊥ is the unique
 fixed point — because scale strictly increases valuation, and ⊥ is the unique element
 with infinite valuation. unique_fp becomes a theorem, not an axiom.
 
@@ -39,6 +39,55 @@ The ZPSemilattice constraint was an encoding artefact: ValuationStructure requir
 [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms.
 ZeroParadox/Valuation/ScaleBridge.lean resolves this by defining ValBridge — the same four axioms
 with bot as a plain field — and builds a formal ℤ_[2] instance using the standalone
-theorems in §V below. A toValBridge instance makes any ZPSemilattice+ValuationStructure
+theorems in `ZeroParadox/Valuation/Scale.lean` § V. A toValBridge instance makes any ZPSemilattice+ValuationStructure
 type also a ValBridge instance, unifying both tracks under a common ancestor.
-The formal gap described here is closed.
+The formal gap described in `ZeroParadox/Valuation/Scale.lean` § V is closed.
+
+## § V — the 2-adic parallel: what holds, what is registered, and the prior art
+
+`ZeroParadox/Valuation/Scale.lean` § V proves every `ValuationStructure` axiom in ℤ_[2] with
+scale = ×2 and val = the 2-adic valuation.
+
+**Two different questions, and § V answers both.** Whether a `ZPSemilattice ℤ_[2]` instance is
+REGISTERED, and whether one EXISTS, are not the same question, and only the first is what
+instance synthesis reports. Both are measured: `#synth` fails, because no such instance is
+declared; and the existential is provable, because § V's closing example supplies a semilattice
+with bottom 0 and discharges all four axioms over it. ⚠ So "ℤ_[2] cannot be a ValuationStructure
+instance" is true only in the not-registered reading and false read modally. The related gap
+once recorded here — "a ZPSemilattice instance for a concrete type carrying a ValuationStructure"
+— is CLOSED in two independent ways: ℕ∞ carries both structures (`instNatInfZPS` and
+`instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which imports Scale.lean), and
+`ZeroParadox/Valuation/ScaleBridge.lean` closes it for ℤ_[2] via `ValBridge`.
+
+**Why ℤ_[2] and not ℚ_[2].** `PadicInt.valuation : ℤ_[2] → ℕ` is ℕ-valued, which is what makes
+`q2Val_scale` provable. In ℚ_[2], `valuation : ℚ_[2] → ℤ` can be negative, and the `.toNat`
+truncation makes the key identity false (take x = 2⁻¹). ⚠ That is a fact about a ℕ∞-TARGETED
+valuation built by truncation — the only kind this class admits — and NOT a fact about ℚ_[2].
+`Padic.addValuation : AddValuation ℚ_[2] (WithTop ℤ)` has no truncation, satisfies the same
+identity, and is already used at `ZeroParadox/Valuation/ValuationAFA_Padic.lean`. The
+obstruction is this class's ℕ∞ target, a design choice, not the field.
+
+**Prior art, found 2026-09-01 and verified by compiling the reconstruction.**
+`multiplicity_addValuation PadicInt.prime_p : AddValuation ℤ_[2] ℕ∞`
+(`Mathlib/RingTheory/Valuation/PrimeMultiplicity.lean`) discharges all four axioms from stock
+API at the same axiom footprint § V already emits. Its `val_scale` is strictly stronger:
+unguarded, holding at 0 as well, because ⊤ + 1 = ⊤ in ℕ∞ — so `q2Val_scale`'s `x ≠ 0`
+hypothesis is one this class does not need. `AddValuation.top_iff` is the standard name for the
+`val_bot` + `val_unique` pair. The hand-rolled chain is kept for readability; the pointer it
+owed is now at the site.
+
+**The classical names, both already in this corpus and neither previously cited at § V.**
+`q2Val_unique` — "only 0 has infinite 2-adic valuation" — is SEPARATEDNESS of the 2-adic
+filtration, i.e. Krull's intersection theorem: 2x = x forces x into ⋂ₙ 2ⁿℤ₂ = (0), which is the
+one-line classical proof of `q2Scale_unique_fp`. `q2Scale_unique_fp` is also the uniqueness half
+of an ATTRACTING FIXED POINT in the sense of Benedetto's non-Archimedean dynamics (multiplier 2,
+and |2|₂ = 1/2 < 1, so all of ℤ_[2] lies in the basin) — a definition
+`ZeroParadox/Computability/Occurrence.md` already cites, with the p-adic contraction result
+carried in `ZeroParadox/Valuation/ContractionRate.lean`.
+
+**Nearest in-corpus neighbour, uncited until 2026-09-01.** `BottomValuation` in
+`ZeroParadox/Valuation/ValuationAFA.lean` carries `v_bot` and `v_top_unique` — the `val_bot` and
+`val_unique` axioms verbatim, on the same ZPSemilattice carrier — and reaches `AFAStructure` by
+a shorter route via `BottomValuation.toAFA`. Three formulations of one axiom pair live in this
+directory (§ V, `BottomValuation`, and ScaleBridge's `ValBridge`); whether they merge is a
+design question, that they point at each other is not.

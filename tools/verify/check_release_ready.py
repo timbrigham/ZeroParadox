@@ -328,17 +328,53 @@ def c_scripts_mirror():
     return True
 
 
+REVIEW_STEPS = ('editorial', 'adversary', 'claim_review', 'prior_art', 'rely')
+
+
 def c_signals(tag):
-    """Report gate-signal freshness vs HEAD (INFO: post-merge HEAD may differ from reviewed commit)."""
-    head = git('rev-parse', 'HEAD').strip()
+    """Review coverage at HEAD, read from the verdictLedger (INFO — see the caution below).
+
+    ⚠⚠ THIS READ `.claude-local/{er,ar,cr,pa}_cleared.txt` UNTIL 2026-09-01, AND THOSE FILES ARE
+    DEAD. The `*_cleared.txt` scheme was RETIRED 2026-08-24; coverage is a ledger RECORD now.
+    Nothing has written those paths since, but `er_cleared.txt` and `ar_cleared.txt` are STILL ON
+    DISK, dated the day of the retirement — so this printed `er: !=HEAD (a1b2c3d4)`, which reads
+    as *a signal exists and is stale* rather than *this mechanism no longer exists*. It sat two
+    lines above the judgment checklist item "Editorial + adversary review ran on all touched
+    prose", which is the exact confirmation a human makes here, and a release mints a permanent
+    DOI. A gauge sourced from a retired mechanism, at the one moment it is read hardest.
+
+    ⚠ `None` FROM `owing_paths` MEANS COULD-NOT-ASK, NEVER ZERO — it refuses on an unreachable
+    ledger AND on a truncated list. It is reported as UNKNOWN and said in words not to be
+    coverage; an unreachable ledger reading as clean is the absence-as-success shape this whole
+    layer exists to remove. NOT-APPLICABLE is a THIRD answer and is kept distinct: a step whose
+    registry `actions` exclude `tag` is a push obligation, and `coverage_gap` returns no row for
+    it, which arrives here as the same `None`. Collapsing the two would report `prior_art` as an
+    unknown at every release when it is simply not a release obligation.
+
+    ⚠ STILL INFO, DELIBERATELY. Making a non-zero count block would change what a release
+    REQUIRES — `rely` reports 87 owing as of 2026-09-01 — and that is Tim's call under R-RELEASE,
+    not a correction to smuggle in beside one. The rows are honest; the policy is unchanged."""
     rows = []
-    for name in ('er', 'ar', 'cr', 'pa'):
-        p = os.path.join(LOCAL, f'{name}_cleared.txt')
-        if not os.path.exists(p):
-            rows.append(f'{name}: (absent)')
+    try:
+        import record  # same directory; sys.path already primed at import time
+    except ImportError as exc:
+        return [f'UNKNOWN - cannot import record.py ({exc}) - this is NOT evidence of coverage']
+    try:
+        reg = json.loads(read(os.path.join(HERE, 'required.v2.json'))).get('types', {})
+    except (OSError, ValueError):
+        reg = {}
+    for step in REVIEW_STEPS:
+        acts = reg.get(step, {}).get('actions')
+        if acts is not None and 'tag' not in acts:
+            rows.append(f'{step}: n/a at tag (registry actions={acts or []}) - a push obligation')
             continue
-        val = read(p).strip()
-        rows.append(f'{name}: {"==HEAD" if val == head else "!=HEAD (" + val[:8] + ")"}')
+        owing = record.owing_paths(step, 'HEAD', action='tag')
+        if owing is None:
+            rows.append(f'{step}: UNKNOWN - could not ask the ledger. NOT evidence of coverage')
+        elif owing:
+            rows.append(f'{step}: {len(owing)} path(s) owing at HEAD (first: {owing[0]})')
+        else:
+            rows.append(f'{step}: covered at HEAD')
     return rows
 
 
