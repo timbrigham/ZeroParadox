@@ -74,7 +74,7 @@ verified at their definition sites 2026-08-11 — a dated survey, not a complete
 | `trivialValBridge` | `ZeroParadox/Valuation/ScaleBridge.lean`, `def trivialValBridge` | `ValBridge` membership |
 | `trivialValuationStructure` | `ZeroParadox/Valuation/Scale.lean`, `def trivialValuationStructure` | `ValuationStructure` membership |
 | the constant map `_ ↦ ⊥`, the always-true relation, a constant sequence | — | self-application, `SeparatedSuccession`, periodicity |
-| **ℝ** — `f_snap_impossible`, `ZeroParadox/Reals/OrderedField.lean` (cited as `ComputationCannotBe.lean:152` until 2026-09-02 — WRONG FILE, and the line number happened to be right, which is why it read as precise) | | any claim that the snap is available in a general ordered carrier |
+| **ℝ** — `f_snap_impossible`, `ZeroParadox/Reals/OrderedField.lean` (cited as `ComputationCannotBe.lean:152` until 2026-09-01 — WRONG FILE, and the line number happened to be right, which is why it read as precise) | | any claim that the snap is available in a general ordered carrier |
 
 ⚠ **`Empty` is a two-sided trap.** *"The finite carriers are exactly the subsingletons"* shipped as a
 bedrock defect because the true statement needed **inhabited** subsingletons. And K1 is the same trap

@@ -31,6 +31,19 @@ which was exactly this case.
 counted in the ratio but NOT capped per block, so a moved prose block's violation dissolves rather
 than moving. No key is re-added.
 
+⚠⚠ BYTE-IDENTICAL IS NOT MEANING-IDENTICAL, AND DEIXIS IS WHERE THE TWO COME APART. A moved block
+keeps its bytes and loses its vantage point: `above`, `below`, `here`, `this file` and `beside this
+file` were resolved against the `.lean`, and in the `.md` they resolve against something else. The
+tool cannot fix this without becoming the rewrite it refuses to be, so it is the CALLER'S
+obligation, and it is a real one — measured twice. 2026-08-30, a deixis anchor failed outright
+because the claim it targeted spanned a line break (`the standalone\ntheorems in § V below`), the
+same hazard the claim-sweep rules name. 2026-09-01, the § V migration out of `Valuation/Scale.lean`
+carried the sentence *"the related gap once recorded HERE"* into `Scale.md`, where `here` had
+silently become the wrong file — the gap was recorded in the `.lean`. **After any move, grep the
+DESTINATION for `above|below|here|this file|beside` and re-anchor every hit to a named path.** A
+pointer that still parses and now points somewhere else is worse than one that breaks, because
+nothing fails.
+
 ⚠ PRS-10, the laundering fence: moving an essay into a file no checker scans would take the block
 under cap, improve every counter, and reduce unverified liability by exactly zero. So this tool
 ASSERTS the destination is in `common.targets()` before it writes anything — the ride-along

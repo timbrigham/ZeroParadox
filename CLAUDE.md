@@ -156,9 +156,16 @@ RULE     (1) read `ZeroParadox/MANIFEST.md`, the by-folder index of the whole co
          the claim, then READ THE HITS. Do BOTH: searching the CLAIM finds paraphrases,
          searching the NAME finds every citing site, and the identifier sweep is the
          mechanical one, so it is the one that cannot be talked past.
-         (3) LOAD THE FOLDER THE FILE LIVES IN — `where.py "<Tim's words, VERBATIM>"` and load
-         what it ranks first. Not the file, not neighbours picked by name: the FOLDER, because
-         the house style lives across it and a manifest line cannot show you a class's SHAPE.
+         (3) LOAD THE FOLDER THE FILE LIVES IN — `python .claude-local/where.py "<Tim's words,
+         VERBATIM>"`. Not the file, not neighbours picked by name: the FOLDER, because the house
+         style lives across it and a manifest line cannot show you a class's SHAPE. ⚠ THE FOLDER
+         IS THE ANSWER, NOT THE RANKING: `where.py` is a shortlist over TERM DISTINCTIVENESS, so
+         it degrades when the request is process-shaped rather than mathematical — measured
+         2026-09-01, Tim's verbatim sentence about "the scale files" ranked `Vendored/` 1.00 and
+         never listed `Valuation/`, where the file lives. Its null is UNINFORMATIVE. When it and
+         the file disagree, load the file's own folder; and when the folder is too big to load
+         whole, extract the PATTERN from its siblings rather than skipping the step — the seven
+         ride-along pairs in `Valuation/` settled a house-style question in one grep.
 COST     measured on a docstring edit made after grepping three theorem names: the wording
          survey found 4 citing sites and `grep -n "l_inf"` returns 9, and the appended
          paragraph re-committed an overclaim that had ALREADY been corrected — in the very
