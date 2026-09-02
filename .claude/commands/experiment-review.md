@@ -21,7 +21,7 @@ Working directory: use the current project root.
 
 - If ARGUMENTS_VALUE looks like a file path (a token ending in `.md`, `.txt`, `.rst`, or `.py`), read that file and review the experiment plan(s) it describes.
 - If ARGUMENTS_VALUE is other non-empty text, treat it as the experiment-plan text and review that.
-- If ARGUMENTS_VALUE is empty or absent: **STOP AND ERROR. Do not proceed, and do not go looking for a plan in the working tree.** Report `SCOPE UNKNOWN — refusing to review` and record nothing. ⚠ **This branch used to name a file not located as of 2026-09-02** — searched by exact name, by a `*postulate*` vocabulary glob, and by a whole-tree content grep whose only hit was that line itself — so it both invented its own scope and pointed at nothing — and a fallback naming a missing file fails only when the fallback is taken, which is the path least often exercised. It was also the one brief of twelve whose empty-argument branch did not refuse. **The caller passes the plan.**
+- If ARGUMENTS_VALUE is empty or absent: **STOP AND ERROR. Do not proceed, and do not go looking for a plan in the working tree.** Report `SCOPE UNKNOWN — refusing to review` and record nothing. ⚠ **This branch used to name a file not located as of 2026-09-02** — searched by exact name, by a `*postulate*` vocabulary glob, and by a whole-tree content grep whose only hit was that line itself — so it both invented its own scope and pointed at nothing — and a fallback naming a missing file fails only when the fallback is taken, which is the path least often exercised. **The caller passes the plan.**
 
 ---
 
