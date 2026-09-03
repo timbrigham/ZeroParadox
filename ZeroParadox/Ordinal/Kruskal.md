@@ -2,8 +2,10 @@
 
 Argument, scope and credit for `ZeroParadox/Ordinal/Kruskal.lean`. The Lean file holds the
 declarations, the Engineer's Take and the per-declaration glosses, and its `PurityCheck` block
-EMITS the axiom footprints this document reasons about — so the locator claim below is checked
-at the site rather than asserted here.
+EMITS the axiom footprints this document reasons about, so no footprint below is asserted here.
+⚠ **What a footprint reports is what a route CONSUMES, never what it REACHES** — so the separate
+question of which routes pass through the minimal bad sequence construction is NOT settled by the
+block, and is settled below by Mathlib's import graph instead.
 
 ## The proof
 
@@ -21,13 +23,17 @@ re-proves):
 - `Set.PartiallyWellOrderedOn.partiallyWellOrderedOn_sublistForall₂` — **Higman's lemma** (lists under
   `List.SublistForall₂` are WQO when the alphabet is).
 
-Kruskal's tree theorem is **not located in the pinned Mathlib as of 2026-09-03**, searched THREE
-ways. **By NAME**, over the whole pinned tree: 33 hits in 6 files, every one Kruskal–Katona —
-`SetFamily/KruskalKatona`, `SetFamily/Shadow`, `SetFamily/LYM`, `SetFamily/Compression/UV` and
-`Combinatorics/Colex` under `Mathlib/`, plus the root import in `Mathlib.lean`. **By statement
-SHAPE**, with `exact?`, which a name grep cannot do: it returns only this file's own declaration.
-**By CONCEPT**, the axis a name search misses entirely: no `tree theorem`, no rose trees, and
-`nash.?williams` in exactly one file, there as the attribution on Higman's lemma. The rose-tree type, the embedding order, and the Nash-Williams assembly
+Kruskal's tree theorem is **not formalized in the pinned Mathlib, and Mathlib records that
+itself**: its machine-readable theorem index lists `Q3527100`, *"Kruskal's tree theorem"*, **with
+no `decl:` field**, while the neighbouring `Q3527102`, *"Kruskal–Katona theorem"*, carries
+`decl: Finset.kruskal_katona` (`docs/1000.yaml`, pinned revision). **A first-party record of
+absence outranks any grep of ours.** Corroborated 2026-09-03 on three axes, each run over
+`Mathlib/**/*.lean` plus `Mathlib.lean` — **the library code, not the whole package**. By NAME:
+33 hits in 6 files, every one Kruskal–Katona. By statement SHAPE, with `exact?`, which a name
+grep cannot do: only this file's own declaration. By CONCEPT: no `tree theorem`, no rose trees,
+and `nash.?williams` in one file — `Mathlib/Order/WellFoundedSet.lean:48`, citing Nash-Williams'
+*On Well-Quasi-Ordering Finite Trees* as a REFERENCE, which is this theorem's own prior art rather
+than a formalization of it. The rose-tree type, the embedding order, and the Nash-Williams assembly
 on top of Mathlib's Higman are the original *formalization* content here; the mathematics is classical
 and credited under Prior art below.
 
@@ -46,14 +52,16 @@ formalizes the labeled tree theorem on Mathlib's WQO machinery. Two threads must
   express REACHABILITY, so it cannot say whether a route passes through the minimal bad sequence
   construction. Measured: `exists_min_bad_of_exists_bad`, `exists_monotone_subseq` and `Nat.sInf_le`
   all report the IDENTICAL `[propext, Classical.choice, Quot.sound]`, and `Classical.choose` differs
-  only by being smaller. What separates them is read from **Mathlib's own source order**, not
-  emitted: `exists_monotone_subseq` is proved at `Mathlib/Order/WellFoundedSet.lean:366`, four
-  hundred lines ABOVE `IsBadSeq` is defined (:768) and `exists_min_bad_of_exists_bad` proved (:795),
-  so it cannot depend on either; `Classical.choose` and `Nat.sInf_le` are general-purpose
-  declarations in unrelated files. **On that basis** — a one-directional bound from declaration
-  order, not a footprint — three of the four routes do not reach the machinery, and a choice-free
-  minimal bad sequence would leave them standing. Sternagel's Isabelle/HOL *Certified Kruskal's
-  Tree Theorem* takes this route.
+  only by being smaller. What separates them is **Mathlib's module graph**, which is read rather
+  than emitted and which SETTLES it, because module imports are acyclic: a declaration can depend
+  only on its own module's earlier lines and on that module's import closure. Measured 2026-09-03
+  over the pinned tree — `Mathlib.Order.WellFoundedSet`, which holds `IsBadSeq` (:768) and
+  `exists_min_bad_of_exists_bad` (:795), is **NOT in the import closure** of `Mathlib.Data.Nat.Lattice`
+  (468 modules, where `Nat.sInf_le` lives) or of `Mathlib.Order.WellQuasiOrder` (483 modules, where
+  the `exists_monotone_subseq` at `:366` delegates), with the target's own closure (492) as the
+  passing control; and `Classical.choose` is core, importing no Mathlib at all. **So three of the
+  four routes provably cannot reach the machinery**, and a choice-free minimal bad sequence would
+  leave them standing. Sternagel's Isabelle/HOL *Certified Kruskal's Tree Theorem* takes this route.
 - **The constructive route, and why its HYPOTHESIS side does not transfer to this statement.**
   Kruskal's theorem and Higman's lemma have choice-free proofs built on the inductively defined
   **almost-full** predicate `af`. Bar induction is not a rival CHARACTERISATION but an
@@ -72,16 +80,18 @@ formalizes the labeled tree theorem on Mathlib's WQO machinery. Two threads must
 
   What Larchey-Wendling's comparison marks as inequivalent is a **definition** — Seisenberger's is
   *"not equiv. to Coquand&Fridlender for undecidable R"* — and the restrictions travel with the
-  developments that assume them. *Coq-Kruskal* is what removes both: a mechanized, **axiom-free**
-  proof of the tree theorem with no decidability assumption, no Brouwer's Thesis, and no
-  restriction to a ground type. Seisenberger's (*On the
+  developments that assume them. *Coq-Kruskal* removes the two CCC2017 names: it is a mechanized,
+  **axiom-free** proof of the tree theorem with no decidability assumption and no Brouwer's Thesis.
+  Seisenberger's (*On the
   Constructive Content of Proofs*, PhD thesis, Munich 2003) requires decidable quasiorders
   (Remark 4.1(3)) — an earlier paper covering the same material is *Kruskal's Tree Theorem in a
   Constructive Theory of Inductive Definitions*, Synthese Library 306, 2001, a DIFFERENT work
   rather than a different date; Goubault-Larrecq's *A Constructive Proof of the Topological Kruskal
   Theorem* (MFCS 2013, LNCS 8087, 22–41), the peer CCC2017 names beside it, is likewise over a
-  decidable wqo; and Veldman's uses Brouwer's Thesis AND works for a relation over ℕ rather than
-  over arbitrary types — cited second-hand via Larchey-Wendling and not held here.
+  decidable wqo; and the Veldman line carries two restrictions that Larchey-Wendling attaches to the
+  *stumps* formulation of Veldman & Bezem 1993 — a relation over ℕ rather than over arbitrary
+  types, and Brouwer's Thesis — with the Kruskal proof on it being Veldman 2004. That line is cited
+  second-hand via Larchey-Wendling throughout and not held here.
 
   ⚠⚠ **It proves a DIFFERENT statement, and only ONE SIDE transports.** Coq-Kruskal establishes
   `af R → af (embed_tree_homeo R)` for the inductively defined predicate; this file proves the

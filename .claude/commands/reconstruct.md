@@ -29,11 +29,19 @@ Measured 2026-08-08:
 lake env lean <path>.lean 2>&1 | Out-File -FilePath <scratch>\<name>.sig.txt -Encoding utf8
 ```
 
-**Any DECLARATION** not `#check`ed emits nothing useful, so generate a probe that imports the module and `#check`s **every declaration in it**. ⚠ The unit is the DECLARATION, not the file: a module carrying one `#check` and eighteen bare declarations does not trigger a per-file test, and those eighteen are exactly the general lemmas this agent exists to find. ⚠⚠ `#print axioms` output from `build.log` is a **SUPPLEMENT, never a substitute** — it carries a name and a footprint and **no type at all**, and phase 1 clusters by TYPE, so a scope fed only from `build.log` reads as fully populated while containing nothing this agent can read. **Tell the agent which files you generated and where — AND tell it `D`, the number of declarations
-each module actually holds.** ⚠⚠ `D` has no source the agent can reach: it is told not to read the
-prose, and counting declarations means opening the `.lean`, which is the priming this design exists
-to prevent. So **an uncounted `D` is not a small omission, it is the sparse-sample fence disarmed**
-— without it the agent can only compare `N` against itself and every delivery reads as complete.
+**Any DECLARATION** not `#check`ed emits nothing useful, so generate a probe that imports the module and `#check`s **every declaration in it**. ⚠ The unit is the DECLARATION, not the file: a module carrying one `#check` and eighteen bare declarations does not trigger a per-file test, and those eighteen are exactly the general lemmas this agent exists to find. ⚠⚠ `#print axioms` output from `build.log` is a **SUPPLEMENT, never a substitute** — it carries a name and a footprint and **no type at all**, and phase 1 clusters by TYPE, so a scope fed only from `build.log` reads as fully populated while containing nothing this agent can read. **Tell the agent which files you generated and where — AND hand it `D`, the declaration count per
+module, PRODUCED BY A SEPARATE PASS FROM THE PROBE.** ⚠⚠ **`N` and `D` must not come from one
+enumeration.** If you write the probe by hand and then report `D` as the number of `#check`s you
+wrote, `D = N` by construction, the sparse fence can never fire, and it is the fence's own
+construction that makes the failing sample unreachable. Count from the module instead:
+
+```
+rg -c "^\s*(theorem|lemma|def|noncomputable def|instance|abbrev|structure|class)\b" <module>.lean
+```
+
+**A count is not priming** — it yields an integer and never an identifier, a docstring or a claim,
+so the agent MAY run this itself to check the number you gave it, and should when the two disagree.
+An uncounted `D` leaves the sparse-sample fence disarmed.
 
 **3. Do NOT hand it the docstrings, CLAIMS.md, the README, or the PDFs at the start.** It reads those only in phase 3, to compute the diff. Handing them over early makes it confirmatory again, which is the one thing this agent exists not to be.
 
@@ -59,9 +67,10 @@ Working directory: use the current project root. Scope: **ARGUMENTS_VALUE**.
 ⚠⚠ **BEFORE ANYTHING ELSE, CHECK YOUR SAMPLE.** Your output is a NEGATIVE — *nothing here is unclaimed* — and **a negative is quantified over its SAMPLE, never over the scope you were asked about.** Two states stop you before you begin, and they have different remedies:
 
 - **Nothing reached you.** No signature files, or empty ones. **STOP AND ERROR**: report
-  `NO SIGNATURES DELIVERED — refusing to reconstruct`, claim nothing, **record nothing, save
-  nothing**, and ask the caller to re-run pre-flight and name the files. An empty scope is not an
-  empty corpus.
+  `NO SIGNATURES DELIVERED — refusing to reconstruct`, claim nothing, **write no note and save
+  nothing**, and ask the caller to re-run pre-flight and name the files. (This agent records no
+  verdict in any state, so the note is the only artifact there is to withhold.) An empty scope is
+  not an empty corpus.
 - **They reached you and carry no TYPES.** `#print axioms` output is a name and a footprint and
   no type; phase 1 clusters by type. **STOP AND ERROR**: report
   `SIGNATURES CARRY NO TYPES — refusing to reconstruct`, **record nothing, save nothing**, and
@@ -120,6 +129,7 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 ## Reconstruction — YYYY-MM-DD
 ### Scope: [what was in scope]
 ### Coverage: [N of D declarations carried a signature, across M of K modules in scope]
+### D came from: [caller-supplied / recomputed by me / **UNKNOWN, coverage unverified**]
 ### Contributed nothing: [the K−M modules that emitted no signature — name them]
 ### Unprimed: [held / broken, and what you read early]
 
@@ -147,7 +157,7 @@ Save to `.claude-local/notes/reconstruction_YYYY-MM-DD_<scope>.md`. State the fi
 - **`N < D` — YOU DID NOT SEE THE MODULE, ONLY PART OF IT.** ⚠⚠ **THIS IS THE LEG THAT BINDS, AND IT FIRES WHEN EVERY MODULE CONTRIBUTED.** The measured case is one module, 19 declarations, 1 signature — there `M = K = 1`, every module reported in, `Contributed nothing:` is honestly empty, and a module-level check sees a complete delivery. **Compare `N` against `D`, the count the caller handed you, never against itself.** If `D` was not supplied, say so and treat the coverage as UNKNOWN — an unsupplied denominator is not a full one.
 - **`M < K` — WHOLE MODULES ARE MISSING.** NAME them.
 
-Under either leg the rule is the same: **never write "in this scope"**; write "in the `N` declarations I received", and name what you did not see. **A confident negative over a 1-in-19 sample is the same defect as one over an empty sample, one step weaker** — and it is the LIKELIER one, because `N` reads large while `D` — `N` does too.
+Under either leg the rule is the same: **never write "in this scope"**; write "in the `N` declarations I received", and name what you did not see. **A confident negative over a 1-in-19 sample is the same defect as one over an empty sample, one step weaker** — and it is the LIKELIER one, because `N` reads large while `D` − `N` does too.
 
 This agent gates nothing and writes no signal, so the harm is not a bypassed check: it is a confident negative that sends the next person to scope elsewhere.
 
