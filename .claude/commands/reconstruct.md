@@ -29,7 +29,11 @@ Measured 2026-08-08:
 lake env lean <path>.lean 2>&1 | Out-File -FilePath <scratch>\<name>.sig.txt -Encoding utf8
 ```
 
-**Any DECLARATION** not `#check`ed emits nothing useful, so generate a probe that imports the module and `#check`s **every declaration in it**. ⚠ The unit is the DECLARATION, not the file: a module carrying one `#check` and eighteen bare declarations does not trigger a per-file test, and those eighteen are exactly the general lemmas this agent exists to find. ⚠⚠ `#print axioms` output from `build.log` is a **SUPPLEMENT, never a substitute** — it carries a name and a footprint and **no type at all**, and phase 1 clusters by TYPE, so a scope fed only from `build.log` reads as fully populated while containing nothing this agent can read. **Tell the agent which files you generated and where.**
+**Any DECLARATION** not `#check`ed emits nothing useful, so generate a probe that imports the module and `#check`s **every declaration in it**. ⚠ The unit is the DECLARATION, not the file: a module carrying one `#check` and eighteen bare declarations does not trigger a per-file test, and those eighteen are exactly the general lemmas this agent exists to find. ⚠⚠ `#print axioms` output from `build.log` is a **SUPPLEMENT, never a substitute** — it carries a name and a footprint and **no type at all**, and phase 1 clusters by TYPE, so a scope fed only from `build.log` reads as fully populated while containing nothing this agent can read. **Tell the agent which files you generated and where — AND tell it `D`, the number of declarations
+each module actually holds.** ⚠⚠ `D` has no source the agent can reach: it is told not to read the
+prose, and counting declarations means opening the `.lean`, which is the priming this design exists
+to prevent. So **an uncounted `D` is not a small omission, it is the sparse-sample fence disarmed**
+— without it the agent can only compare `N` against itself and every delivery reads as complete.
 
 **3. Do NOT hand it the docstrings, CLAIMS.md, the README, or the PDFs at the start.** It reads those only in phase 3, to compute the diff. Handing them over early makes it confirmatory again, which is the one thing this agent exists not to be.
 
@@ -56,7 +60,8 @@ Working directory: use the current project root. Scope: **ARGUMENTS_VALUE**.
 
 - **Nothing reached you.** No signature files, or empty ones. **STOP AND ERROR**: report
   `NO SIGNATURES DELIVERED — refusing to reconstruct`, claim nothing, **record nothing, save
-  nothing**. An empty scope is not an empty corpus.
+  nothing**, and ask the caller to re-run pre-flight and name the files. An empty scope is not an
+  empty corpus.
 - **They reached you and carry no TYPES.** `#print axioms` output is a name and a footprint and
   no type; phase 1 clusters by type. **STOP AND ERROR**: report
   `SIGNATURES CARRY NO TYPES — refusing to reconstruct`, **record nothing, save nothing**, and
@@ -114,7 +119,7 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 ```
 ## Reconstruction — YYYY-MM-DD
 ### Scope: [what was in scope]
-### Coverage: [N signatures / D declarations, across M of K modules in scope]
+### Coverage: [N of D declarations carried a signature, across M of K modules in scope]
 ### Contributed nothing: [the K−M modules that emitted no signature — name them]
 ### Unprimed: [held / broken, and what you read early]
 
@@ -137,9 +142,12 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 
 Save to `.claude-local/notes/reconstruction_YYYY-MM-DD_<scope>.md`. State the filename at the end — **unless you stopped at one of the two refusals above, in which case save nothing.**
 
-⚠⚠ **THE SAMPLE FENCE, RESTATED HERE BECAUSE THIS IS WHERE YOU WRITE THE SENTENCE IT GOVERNS.** It is stated in full at the top, and the two STOP-AND-ERROR states were settled before you began. What is left is the SPARSE case, which no counter catches:
+⚠⚠ **THE SPARSE CASE, WHICH IS THE HALF THE TOP OF THIS FILE DOES NOT SETTLE.** The two STOP-AND-ERROR states were decided before you began; neither of them fires here. This is where you write the sentence, so this is where the rest of the fence lives — **two legs, and the FIRST is the one a module-level count misses entirely:**
 
-- **`M < K` — THE NEGATIVE IS SCOPED TO WHAT YOU RECEIVED.** Never write "in this scope"; write "in the `N` declarations I received", and NAME the modules that contributed nothing. **A confident negative over a 1-in-19 sample is the same defect as one over an empty sample, one step weaker** — and it is the LIKELIER one, because `N` reads large while `K` − `M` does too.
+- **`N < D` — YOU DID NOT SEE THE MODULE, ONLY PART OF IT.** ⚠⚠ **THIS IS THE LEG THAT BINDS, AND IT FIRES WHEN EVERY MODULE CONTRIBUTED.** The measured case is one module, 19 declarations, 1 signature — there `M = K = 1`, every module reported in, `Contributed nothing:` is honestly empty, and a module-level check sees a complete delivery. **Compare `N` against `D`, the count the caller handed you, never against itself.** If `D` was not supplied, say so and treat the coverage as UNKNOWN — an unsupplied denominator is not a full one.
+- **`M < K` — WHOLE MODULES ARE MISSING.** NAME them.
+
+Under either leg the rule is the same: **never write "in this scope"**; write "in the `N` declarations I received", and name what you did not see. **A confident negative over a 1-in-19 sample is the same defect as one over an empty sample, one step weaker** — and it is the LIKELIER one, because `N` reads large while `D` — `N` does too.
 
 This agent gates nothing and writes no signal, so the harm is not a bypassed check: it is a confident negative that sends the next person to scope elsewhere.
 

@@ -248,14 +248,24 @@ open ZeroParadox
 
 #print axioms partiallyWellOrderedOn_treeEmbeds
 
--- ⚠ THE CHOICE ROUTES, EMITTED RATHER THAN DESCRIBED. Prior art above says the footprint arrives
--- by several independent routes and that a choice-free minimal bad sequence would not clear it.
--- Checked here instead of asserted there. The first is Mathlib's Nash-Williams machinery; the rest
--- never touch it, and two are written in this file — the `choose` at the head of the proof and the
--- infimum over indices beneath it.
+-- ⚠ THE CHOICE ROUTES. All four report choice; the footprint does NOT say which of them reach
+-- Mathlib's Nash-Williams machinery, because `#print axioms` reports what a term CONSUMES and has
+-- no way to express reachability. Three of these print the identical triple. What separates them is
+-- Mathlib's source ORDER, read not emitted: `exists_monotone_subseq` is proved at
+-- `Mathlib/Order/WellFoundedSet.lean:366`, above `IsBadSeq` (:768) and `exists_min_bad_of_exists_bad`
+-- (:795), so it cannot depend on them; `choose` and `sInf_le` are general-purpose and unrelated. Two
+-- of the four are written in this file — the `choose` at the head of the proof and the infimum
+-- over indices beneath it.
 #print axioms Set.PartiallyWellOrderedOn.exists_min_bad_of_exists_bad
 #print axioms Classical.choose
 #print axioms Nat.sInf_le
 #print axioms Set.PartiallyWellOrderedOn.exists_monotone_subseq
+
+-- ⚠ THE BRIDGE THE RIDE-ALONG POINTS AT, PRICED. `PartiallyWellOrderedOn` is a pure interface and
+-- reports NO axioms, which is why the choice question here is open rather than foreclosed. The `iff`
+-- that carries `WellQuasiOrdered` across is not free, so the rewrite moves the statement without
+-- moving the footprint. Emitted so the ride-along does not have to be believed.
+#print axioms Set.PartiallyWellOrderedOn
+#print axioms Set.partiallyWellOrderedOn_univ_iff
 
 end PurityCheck
