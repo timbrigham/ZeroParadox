@@ -6,54 +6,11 @@ set_option maxHeartbeats 1000000
 /-!
 # Kruskal's Tree Theorem (labeled) — finite rose trees are well-quasi-ordered
 
-**Kruskal (1960):** the finite trees, ordered by homeomorphic (inf-preserving) embedding, form a
-well-quasi-order (WQO): every infinite sequence of trees has `i < j` with `Tᵢ` embedding into `Tⱼ`.
-Here we prove the **labeled** version — trees whose nodes carry labels from a WQO `(α, r)` — which is
-the general theorem (the unlabeled case is `α = Unit`).
+**Kruskal (1960):** finite trees under homeomorphic (inf-preserving) embedding form a
+well-quasi-order; this file proves the **labeled** version, which is the general theorem.
 
-The proof is the Nash-Williams **minimal bad sequence** argument: a minimal bad sequence of trees has
-WQO immediate-subtrees (by minimality), so Higman's lemma makes the *lists of subtrees* WQO, and the
-labels are WQO by hypothesis — contradicting badness at the roots.
-
-## What is reused vs. built
-Mathlib supplies the heavy reusable engine, on which this file builds (and which it cites, not
-re-proves):
-- `Set.PartiallyWellOrderedOn` — the WQO predicate (`Mathlib.Order.WellFoundedSet`).
-- `Set.PartiallyWellOrderedOn.IsBadSeq` / `exists_min_bad_of_exists_bad` — the Nash-Williams minimal
-  bad sequence construction.
-- `Set.PartiallyWellOrderedOn.partiallyWellOrderedOn_sublistForall₂` — **Higman's lemma** (lists under
-  `List.SublistForall₂` are WQO when the alphabet is).
-
-Mathlib does **not** contain Kruskal's tree theorem (its `Kruskal*` lemmas are Kruskal-Katona, an
-unrelated set-family result). The rose-tree type, the embedding order, and the Nash-Williams assembly
-on top of Mathlib's Higman are the original *formalization* content here; the mathematics is classical
-and credited under Prior art below.
-
-## Prior art — the theorem is classical, and the `Classical.choice` here is a route artifact
-
-Kruskal's tree theorem (Kruskal 1960) and Higman's lemma (Higman 1952) are classical results; this file
-formalizes the labeled tree theorem on Mathlib's WQO machinery. Two threads must be credited:
-
-- **The Nash-Williams route this file takes.** The minimal bad sequence argument is Nash-Williams
-  (1963). Mathlib's `exists_min_bad_of_exists_bad` / `minBadSeqOfBadSeq` is that argument, and it is
-  where `Classical.choice` enters — a `Nat.find` / `Classical.choose` selection over infinite bad
-  sequences, iterated by `Nat.rec`. Sternagel's Isabelle/HOL *Certified Kruskal's Tree Theorem* takes
-  the same classical route.
-- **The constructive route, which shows the choice is not required by the theorem.** Kruskal's theorem
-  and Higman's lemma both have choice-free constructive proofs by a different technique — almost-full
-  relations (Coquand) and bar induction (Fridlender) — that avoid the minimal bad sequence argument
-  entirely. Larchey-Wendling's *Coq-Kruskal* is a mechanized, **axiom-free**, unrestricted proof of the
-  tree theorem on that technique, with no decidability assumption on the ground relation and no Brouwer's
-  Thesis. It removes the restrictions of the two earlier intuitionistic proofs: Seisenberger's, via an
-  inductive characterization of well-quasi-orders (*Kruskal's Tree Theorem in a Constructive Theory of
-  Inductive Definitions*, Synthese Library 306, 2001), which assumes decidability of the ground relation;
-  and Veldman's (*An intuitionistic proof of Kruskal's theorem*, Arch. Math. Logic 43(2), 2004,
-  pp. 215-264), which uses Brouwer's Thesis. Coquand & Fridlender (1993) give the constructive Higman's
-  lemma. So the `Classical.choice` this file inherits through Mathlib's route is a **route
-  artifact**, not a requirement of the theorem — a choice-free proof exists, in an almost-full framework
-  Mathlib does not currently carry. This file does not build that route; it uses Mathlib's. The residual
-  content of the minimal bad sequence argument is dependent choice / open induction (Berger), a choice
-  principle, not a logical taboo.
+Proof, reused Mathlib engine, prior art, and why the `Classical.choice` here is NOT shown
+removable: `ZeroParadox/Ordinal/Kruskal.md`. The `PurityCheck` block below EMITS its footprints.
 
 ## Engineer's Take
 This file is one of a series of iterative attempts on this branch to build a map of how the various
@@ -290,5 +247,15 @@ section PurityCheck
 open ZeroParadox
 
 #print axioms partiallyWellOrderedOn_treeEmbeds
+
+-- ⚠ THE CHOICE ROUTES, EMITTED RATHER THAN DESCRIBED. Prior art above says the footprint arrives
+-- by several independent routes and that a choice-free minimal bad sequence would not clear it.
+-- Checked here instead of asserted there. The first is Mathlib's Nash-Williams machinery; the rest
+-- never touch it, and two are written in this file — the `choose` at the head of the proof and the
+-- infimum over indices beneath it.
+#print axioms Set.PartiallyWellOrderedOn.exists_min_bad_of_exists_bad
+#print axioms Classical.choose
+#print axioms Nat.sInf_le
+#print axioms Set.PartiallyWellOrderedOn.exists_monotone_subseq
 
 end PurityCheck

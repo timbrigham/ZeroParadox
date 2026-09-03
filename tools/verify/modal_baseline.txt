@@ -1,22 +1,15 @@
 # check_modal.py baseline - grandfathered sites, each verified by READING it, not by counting.
 #
-# ZeroParadox/Ordinal/Kruskal.lean (x2) - NOT a defect. The "route artifact" claim is supported the
-# right way: by EXHIBITING the clean proof. The file cites Seisenberger (*Kruskal's Tree Theorem in a
-# Constructive Theory of Inductive Definitions*, Synthese Library 306, 2001), Veldman (Arch. Math.
-# Logic 43(2), 2004), Coquand & Fridlender (1993), and Larchey-Wendling's axiom-free Coq-Kruskal as
-# the constructive routes.
-#   TWO ATTRIBUTION ERRORS WERE MADE IN THIS NOTE, both while correcting attributions:
-#   (a) "Berger (Sternagel-style...)" -- Sternagel takes the same CLASSICAL Nash-Williams route
-#       (Kruskal.lean:40-41), not a constructive one;
-#   (b) then "Berger (almost-full relations, Synthese Library 306, 2001)" -- that volume is
-#       SEISENBERGER's (Kruskal.lean:47-49). Berger is credited in that file only for the residual
-#       dependent choice / open induction.
-#   Both corrected 2026-08-03. Read Kruskal.lean:44-56 before citing any of these again.
-# It locates the choice precisely (Mathlib's
-# exists_min_bad_of_exists_bad / minBadSeqOfBadSeq, a Nat.find/Classical.choose selection), and hedges
-# the transfer honestly ("a choice-free proof exists, in an almost-full framework Mathlib does not
-# currently carry"). It also names the residual as dependent choice / open induction rather than a
-# taboo.
+# ZeroParadox/Ordinal/Kruskal.lean (x2) - the `artifact` sites are GONE as of 2026-09-03 and the
+# entry below is INERT. Kept rather than removed: removing a baseline entry owes a /claim-review,
+# because no checker can tell content GONE from content MOVED.
+#   ⚠⚠ THIS NOTE SAID "NOT a defect" AND THAT WAS THE DEFECT (KRU-1, fixed 2026-09-03). It held
+#   the eliminability claim supported "by EXHIBITING the clean proof". None was exhibited:
+#   Coq-Kruskal proves the almost-full formulation, Kruskal.lean proves the SEQUENCE form, and
+#   transport needs a direction CCC2017 records as intuitionistically invalid. Now UNMEASURED.
+#   It also called the choice located "precisely" at Mathlib's minimal bad sequence machinery;
+#   three further routes carry it, two of them written in that file, and its PurityCheck block
+#   now EMITS all four rather than describing them. Read the file, not this note.
 #
 # Baselined rather than widening EVIDENCE: a pattern broad enough to auto-pass this would also
 # rubber-stamp the identical sentence asserted WITHOUT any citation, which is precisely the defect
