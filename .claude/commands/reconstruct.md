@@ -21,7 +21,7 @@ Measured 2026-08-08:
 
 ## CALLER PRE-FLIGHT — do this BEFORE spawning; it is your job, not the agent's
 
-**1. SCOPE IT. Never run this at `full` on a first outing.** 1,338 theorems will produce noise proportional to the ask. Pass a directory (`ZeroParadox/Valuation`), a file list, or a single `.lean` file. `python .claude-local/where.py "<topic>"` ranks folders by relevance and reports their token cost.
+**1. SCOPE IT. Never run this at `full` on a first outing.** 1,338 theorems will produce noise proportional to the ask. Pass a directory (`ZeroParadox/Valuation`), a file list, or a single `.lean` file. `python tools/verify/where.py "<topic>"` ranks folders by relevance and reports their token cost.
 
 **2. GENERATE THE ELABORATED INPUT YOURSELF AND HAND IT OVER.** This is the load-bearing step and it is what makes the agent unprimed *structurally* rather than by instruction. For each module in scope:
 

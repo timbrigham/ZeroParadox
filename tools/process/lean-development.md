@@ -64,9 +64,9 @@ different unit — for prose that ships, the sweep unit is the RENDERED PDF text
 (`R-DEFECTCLASS` carries that now).
 
 ```
-python .claude-local/where.py "<Tim's phrasing, verbatim>"     # -> ranked folders + token cost
-python .claude-local/where.py --files "<phrase>"               # + the file list
-python .claude-local/where.py --spine                          # what the always-load spine costs
+python tools/verify/where.py "<Tim's phrasing, verbatim>"      # -> ranked folders + token cost
+python tools/verify/where.py --files "<phrase>"                # + the file list
+python tools/verify/where.py --spine                           # what the always-load spine costs
 ```
 
 Then load: **the ~50k spine** (the five `#check`-only indexes — `BottomCannotBe`, `SnapCannotBe`,

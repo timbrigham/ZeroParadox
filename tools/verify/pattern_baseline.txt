@@ -218,6 +218,7 @@ MOVED	\.claude-local[\\/]selfheal\.py	tools/verify/selfheal.py
 MOVED	\.claude-local[\\/]ship\.py	tools/verify/ship.py
 MOVED	\.claude-local[\\/]vendored\.py	tools/verify/vendored.py
 MOVED	\.claude-local[\\/]vendored_files\.txt	tools/verify/vendored_files.txt
+MOVED	\.claude-local[\\/]where\.py	tools/verify/where.py
 MOVED	\.claude-local[\\/]zp_utils\.py	scripts/zp_utils.py
 _MOVED_BUILDS	build_bottom_matrix.py
 _MOVED_BUILDS	build_dictionary_map.py
@@ -286,6 +287,7 @@ _VERIFY	report
 _VERIFY	selfheal
 _VERIFY	ship
 _VERIFY	vendored
+_VERIFY	where
 
 [check_paths]
 BARE_LEAN	(?<![\w/.-])((?:ZP[A-Z]?[A-Za-z0-9_]*)\.lean)

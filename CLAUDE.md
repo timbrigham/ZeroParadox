@@ -156,7 +156,7 @@ RULE     (1) read `ZeroParadox/MANIFEST.md`, the by-folder index of the whole co
          the claim, then READ THE HITS. Do BOTH: searching the CLAIM finds paraphrases,
          searching the NAME finds every citing site, and the identifier sweep is the
          mechanical one, so it is the one that cannot be talked past.
-         (3) LOAD THE FOLDER THE FILE LIVES IN — `python .claude-local/where.py "<Tim's words,
+         (3) LOAD THE FOLDER THE FILE LIVES IN — `python tools/verify/where.py "<Tim's words,
          VERBATIM>"`. Not the file, not neighbours picked by name: the FOLDER, because the house
          style lives across it and a manifest line cannot show you a class's SHAPE. ⚠ THE FOLDER
          IS THE ANSWER, NOT THE RANKING: `where.py` is a shortlist over TERM DISTINCTIVENESS, so
