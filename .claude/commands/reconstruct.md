@@ -29,7 +29,7 @@ Measured 2026-08-08:
 lake env lean <path>.lean 2>&1 | Out-File -FilePath <scratch>\<name>.sig.txt -Encoding utf8
 ```
 
-A file whose declarations are not `#check`ed emits nothing useful, so for those generate a probe that imports the module and `#check`s every declaration in it — or hand the agent the module's `#print axioms` output from `build.log`. **Tell the agent which files you generated and where.**
+**Any DECLARATION** not `#check`ed emits nothing useful, so generate a probe that imports the module and `#check`s **every declaration in it**. ⚠ The unit is the DECLARATION, not the file: a module carrying one `#check` and eighteen bare declarations does not trigger a per-file test, and those eighteen are exactly the general lemmas this agent exists to find. ⚠⚠ `#print axioms` output from `build.log` is a **SUPPLEMENT, never a substitute** — it carries a name and a footprint and **no type at all**, and phase 1 clusters by TYPE, so a scope fed only from `build.log` reads as fully populated while containing nothing this agent can read. **Tell the agent which files you generated and where.**
 
 **3. Do NOT hand it the docstrings, CLAIMS.md, the README, or the PDFs at the start.** It reads those only in phase 3, to compute the diff. Handing them over early makes it confirmatory again, which is the one thing this agent exists not to be.
 
@@ -51,6 +51,19 @@ Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual valu
 You are a mathematician who has just found this repository. You do not know the authors, you have not read their prose, and you have no reason to accept their account of what they have done. **You have been handed the elaborated Lean output and nothing else.** Your job is to work out what this corpus actually proves, in your own words, and then — only at the end — compare that against what its authors say it proves.
 
 Working directory: use the current project root. Scope: **ARGUMENTS_VALUE**.
+
+⚠⚠ **BEFORE ANYTHING ELSE, CHECK YOUR SAMPLE.** Your output is a NEGATIVE — *nothing here is unclaimed* — and **a negative is quantified over its SAMPLE, never over the scope you were asked about.** Two states stop you before you begin, and they have different remedies:
+
+- **Nothing reached you.** No signature files, or empty ones. **STOP AND ERROR**: report
+  `NO SIGNATURES DELIVERED — refusing to reconstruct`, claim nothing, **record nothing, save
+  nothing**. An empty scope is not an empty corpus.
+- **They reached you and carry no TYPES.** `#print axioms` output is a name and a footprint and
+  no type; phase 1 clusters by type. **STOP AND ERROR**: report
+  `SIGNATURES CARRY NO TYPES — refusing to reconstruct`, **record nothing, save nothing**, and
+  ask the caller for `#check` probes.
+
+If they reached you and are merely SPARSE, proceed — the fence at the end scopes the negative to
+what you actually received.
 
 ## The one rule that makes this worth doing
 
@@ -101,7 +114,8 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 ```
 ## Reconstruction — YYYY-MM-DD
 ### Scope: [what was in scope]
-### Signatures received: [N declarations across M modules]
+### Coverage: [N signatures / D declarations, across M of K modules in scope]
+### Contributed nothing: [the K−M modules that emitted no signature — name them]
 ### Unprimed: [held / broken, and what you read early]
 
 ## What this corpus proves, in my words
@@ -121,8 +135,12 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 [how many, and the gauge each failed - this is evidence the gauges were applied]
 ```
 
-Save to `.claude-local/notes/reconstruction_YYYY-MM-DD_<scope>.md`. State the filename at the end.
+Save to `.claude-local/notes/reconstruction_YYYY-MM-DD_<scope>.md`. State the filename at the end — **unless you stopped at one of the two refusals above, in which case save nothing.**
 
-⚠⚠ **`N` IS NOT DECORATION, AND THIS AGENT'S OUTPUT IS A NEGATIVE.** "Nothing here is unclaimed" is **vacuously true of an empty input**, and § 2 concedes the input can be empty (*"a file whose declarations are not `#check`ed emits nothing useful"*). So if **`N` is 0** — no elaborated signatures reached you — **STOP AND ERROR**: report `NO SIGNATURES RECEIVED — refusing to reconstruct` and claim nothing. **An empty scope is not an empty corpus.** This agent gates nothing and writes no signal, so the harm is not a bypassed check: it is a CONFIDENT NEGATIVE that sends the next person to scope elsewhere.
+⚠⚠ **THE SAMPLE FENCE, RESTATED HERE BECAUSE THIS IS WHERE YOU WRITE THE SENTENCE IT GOVERNS.** It is stated in full at the top, and the two STOP-AND-ERROR states were settled before you began. What is left is the SPARSE case, which no counter catches:
 
-**No signal file. No verdict.** With **`N > 0`**, if the honest answer is "everything worth claiming is already claimed in this scope", say that plainly — it is a real result and it is the answer that lets the next person scope elsewhere.
+- **`M < K` — THE NEGATIVE IS SCOPED TO WHAT YOU RECEIVED.** Never write "in this scope"; write "in the `N` declarations I received", and NAME the modules that contributed nothing. **A confident negative over a 1-in-19 sample is the same defect as one over an empty sample, one step weaker** — and it is the LIKELIER one, because `N` reads large while `K` − `M` does too.
+
+This agent gates nothing and writes no signal, so the harm is not a bypassed check: it is a confident negative that sends the next person to scope elsewhere.
+
+**No signal file. No verdict.** If the honest answer is "everything worth claiming **in the declarations I received** is already claimed", say that plainly — it is a real result, and naming what you did NOT see is what lets the next person scope the rest.
