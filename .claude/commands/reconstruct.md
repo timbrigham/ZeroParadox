@@ -101,6 +101,7 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 ```
 ## Reconstruction — YYYY-MM-DD
 ### Scope: [what was in scope]
+### Signatures received: [N declarations across M modules]
 ### Unprimed: [held / broken, and what you read early]
 
 ## What this corpus proves, in my words
@@ -122,4 +123,6 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 
 Save to `.claude-local/notes/reconstruction_YYYY-MM-DD_<scope>.md`. State the filename at the end.
 
-**No signal file. No verdict.** If the honest answer is "everything worth claiming is already claimed in this scope", say that plainly — it is a real result and it is the answer that lets the next person scope elsewhere.
+⚠⚠ **`N` IS NOT DECORATION, AND THIS AGENT'S OUTPUT IS A NEGATIVE.** "Nothing here is unclaimed" is **vacuously true of an empty input**, and § 2 concedes the input can be empty (*"a file whose declarations are not `#check`ed emits nothing useful"*). So if **`N` is 0** — no elaborated signatures reached you — **STOP AND ERROR**: report `NO SIGNATURES RECEIVED — refusing to reconstruct` and claim nothing. **An empty scope is not an empty corpus.** This agent gates nothing and writes no signal, so the harm is not a bypassed check: it is a CONFIDENT NEGATIVE that sends the next person to scope elsewhere.
+
+**No signal file. No verdict.** With **`N > 0`**, if the honest answer is "everything worth claiming is already claimed in this scope", say that plainly — it is a real result and it is the answer that lets the next person scope elsewhere.
