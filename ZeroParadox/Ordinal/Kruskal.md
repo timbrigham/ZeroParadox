@@ -31,9 +31,9 @@ absence outranks any grep of ours.** Corroborated 2026-09-03 on three axes, each
 `Mathlib/**/*.lean` plus `Mathlib.lean` — **the library code, not the whole package**. By NAME:
 33 hits in 6 files, every one Kruskal–Katona. By statement SHAPE, with `exact?`, which a name
 grep cannot do: only this file's own declaration. By CONCEPT: no `tree theorem`, no rose trees,
-and `nash.?williams` in one file — `Mathlib/Order/WellFoundedSet.lean:48`, citing Nash-Williams'
-*On Well-Quasi-Ordering Finite Trees* as a REFERENCE, which is this theorem's own prior art rather
-than a formalization of it. The rose-tree type, the embedding order, and the Nash-Williams assembly
+and `nash.?williams` twice, both in `Mathlib/Order/WellFoundedSet.lean` — once naming the proof
+technique and once at `:48`, under that file's `## References`, citing Nash-Williams' *On
+Well-Quasi-Ordering Finite Trees*. That is this theorem's own prior art, not a formalization of it. The rose-tree type, the embedding order, and the Nash-Williams assembly
 on top of Mathlib's Higman are the original *formalization* content here; the mathematics is classical
 and credited under Prior art below.
 
@@ -52,16 +52,28 @@ formalizes the labeled tree theorem on Mathlib's WQO machinery. Two threads must
   express REACHABILITY, so it cannot say whether a route passes through the minimal bad sequence
   construction. Measured: `exists_min_bad_of_exists_bad`, `exists_monotone_subseq` and `Nat.sInf_le`
   all report the IDENTICAL `[propext, Classical.choice, Quot.sound]`, and `Classical.choose` differs
-  only by being smaller. What separates them is **Mathlib's module graph**, which is read rather
-  than emitted and which SETTLES it, because module imports are acyclic: a declaration can depend
-  only on its own module's earlier lines and on that module's import closure. Measured 2026-09-03
-  over the pinned tree — `Mathlib.Order.WellFoundedSet`, which holds `IsBadSeq` (:768) and
-  `exists_min_bad_of_exists_bad` (:795), is **NOT in the import closure** of `Mathlib.Data.Nat.Lattice`
-  (468 modules, where `Nat.sInf_le` lives) or of `Mathlib.Order.WellQuasiOrder` (483 modules, where
-  the `exists_monotone_subseq` at `:366` delegates), with the target's own closure (492) as the
-  passing control; and `Classical.choose` is core, importing no Mathlib at all. **So three of the
-  four routes provably cannot reach the machinery**, and a choice-free minimal bad sequence would
-  leave them standing. Sternagel's Isabelle/HOL *Certified Kruskal's Tree Theorem* takes this route.
+  only by being smaller. What separates them is **where each route is DECLARED**, which is read
+  rather than emitted. Lean gives two independent bounds and **the three routes need both** — a
+  declaration can reach only its own module's earlier lines, plus that module's import closure.
+
+  ⚠ **Two of the three are settled by the IMPORT CLOSURE.** `Nat.sInf_le` is declared in
+  `Mathlib.Data.Nat.Lattice` and `Classical.choose` in core's `Init.Classical`; measured over the
+  pinned tree with the elaborator's own module table (`Environment.header.moduleNames` under
+  `lake env lean`, never a parse of `import` lines — a source parse reports a phantom cycle, from
+  an `import` at column 0 inside a docstring in `Mathlib/Tactic/ExtractGoal.lean`), neither closure
+  contains `Mathlib.Order.WellFoundedSet`, and `exists_min_bad_of_exists_bad` and `IsBadSeq` are
+  not in those environments at all.
+
+  ⚠⚠ **THE THIRD IS SETTLED BY DECLARATION ORDER, NOT BY THE IMPORT GRAPH, AND THE DIFFERENCE
+  IS NOT COSMETIC.** `Set.PartiallyWellOrderedOn.exists_monotone_subseq` is declared **in
+  `Mathlib.Order.WellFoundedSet` itself**, at `:366` — the same module that holds `IsBadSeq` (:768)
+  and `exists_min_bad_of_exists_bad` (:795). Its own module therefore contains the machinery and the
+  import closure excludes nothing for it. What excludes it is that Lean has **no forward references
+  within a file**: `:366` is proved four hundred lines before either exists. (Its body delegates
+  into `Mathlib.Order.WellQuasiOrder`, which is upstream — but a delegate's closure bounds the
+  delegate, never the caller.) **On both legs together, three of the four routes cannot reach the
+  machinery**, and a choice-free minimal bad sequence would leave them standing. Sternagel's
+  Isabelle/HOL *Certified Kruskal's Tree Theorem* takes this route.
 - **The constructive route, and why its HYPOTHESIS side does not transfer to this statement.**
   Kruskal's theorem and Higman's lemma have choice-free proofs built on the inductively defined
   **almost-full** predicate `af`. Bar induction is not a rival CHARACTERISATION but an
@@ -80,8 +92,10 @@ formalizes the labeled tree theorem on Mathlib's WQO machinery. Two threads must
 
   What Larchey-Wendling's comparison marks as inequivalent is a **definition** — Seisenberger's is
   *"not equiv. to Coquand&Fridlender for undecidable R"* — and the restrictions travel with the
-  developments that assume them. *Coq-Kruskal* removes the two CCC2017 names: it is a mechanized,
-  **axiom-free** proof of the tree theorem with no decidability assumption and no Brouwer's Thesis.
+  developments that assume them. Larchey-Wendling's mechanization — *Coq-Kruskal* is the project's
+  own name for it, which appears on its page rather than in any paper held here — removes the two
+  restrictions CCC2017 names: it is **axiom-free**, with no decidability assumption and no
+  Brouwer's Thesis.
   Seisenberger's (*On the
   Constructive Content of Proofs*, PhD thesis, Munich 2003) requires decidable quasiorders
   (Remark 4.1(3)) — an earlier paper covering the same material is *Kruskal's Tree Theorem in a

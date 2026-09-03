@@ -251,11 +251,14 @@ open ZeroParadox
 -- ⚠ THE CHOICE ROUTES. All four report choice; the footprint does NOT say which of them reach
 -- Mathlib's Nash-Williams machinery, because `#print axioms` reports what a term CONSUMES and has
 -- no way to express reachability. Three of these print the identical triple. What separates them is
--- Mathlib's source ORDER, read not emitted: `exists_monotone_subseq` is proved at
--- `Mathlib/Order/WellFoundedSet.lean:366`, above `IsBadSeq` (:768) and `exists_min_bad_of_exists_bad`
--- (:795), so it cannot depend on them; `choose` and `sInf_le` are general-purpose and unrelated. Two
--- of the four are written in this file — the `choose` at the head of the proof and the infimum
--- over indices beneath it.
+-- WHERE each route is DECLARED, read not emitted, and it takes TWO bounds rather than one.
+-- `exists_monotone_subseq` is declared in `Mathlib/Order/WellFoundedSet.lean` ITSELF, at :366 — the
+-- same module as `IsBadSeq` (:768) and `exists_min_bad_of_exists_bad` (:795) — so the import closure
+-- excludes nothing for it and what does is that Lean has no forward references within a file. The
+-- other two are excluded by the closure instead: `sInf_le` is in `Mathlib.Data.Nat.Lattice` and
+-- `choose` in core, and neither closure contains `Order.WellFoundedSet`. Two of the four are written
+-- in this file — the `choose` at the head of the proof and the infimum over indices beneath it.
+-- The ride-along states both legs; do not let one drift from the other.
 #print axioms Set.PartiallyWellOrderedOn.exists_min_bad_of_exists_bad
 #print axioms Classical.choose
 #print axioms Nat.sInf_le

@@ -35,13 +35,29 @@ enumeration.** If you write the probe by hand and then report `D` as the number 
 wrote, `D = N` by construction, the sparse fence can never fire, and it is the fence's own
 construction that makes the failing sample unreachable. Count from the module instead:
 
-```
-rg -c "^\s*(theorem|lemma|def|noncomputable def|instance|abbrev|structure|class)\b" <module>.lean
+```powershell
+$pat = '^\s*(@\[[^\]]*\]\s*)*(private |protected |noncomputable |partial |unsafe |scoped |local |nonrec )*(theorem|lemma|def|instance|abbrev|structure|class|inductive|axiom|opaque)\b'
+(Select-String -Path <module>.lean -Pattern $pat -AllMatches | Measure-Object).Count
 ```
 
+⚠ `rg` is **not on PATH** in this environment, so use the above or the `Grep` tool, which is
+ripgrep. Verified against two modules whose declaration counts were established by hand:
+`ZeroParadox/Ordinal/Kruskal.lean` returns **17** and `ZeroParadox/Ordinal/Goodstein.lean`
+returns **23**. Note `example` is deliberately absent from the alternation — an `example`
+declares nothing, which is why this corpus prefers it, so it is not part of `D`.
+
+⚠⚠ **A REGEX COUNT IS A LOWER BOUND, AND THE BRIEF SAYS SO BECAUSE THE PATTERN WILL BE WRONG
+AGAIN.** The previous version of this command omitted `inductive` and broke on an inline `@[simp]`,
+returning **12 for a module holding 17** — and **under-counting is the one direction this fence
+cannot survive**, because it makes `N < D` unable to fire. So the reading is asymmetric and you must
+hold to it: **`N < D` firing is SOUND — you definitely did not see the module. `N ≥ D` establishes
+NOTHING**, because the instrument under-counts by construction. Never write "full coverage"; the
+most `D` can license is *no shortfall detected by a lower-bound count*.
+
 **A count is not priming** — it yields an integer and never an identifier, a docstring or a claim,
-so the agent MAY run this itself to check the number you gave it, and should when the two disagree.
-An uncounted `D` leaves the sparse-sample fence disarmed.
+so the agent SHOULD run it itself rather than only when the numbers differ (disagreement is
+observable only after running, so "check when they disagree" is circular). An uncounted `D` leaves
+the sparse-sample fence disarmed.
 
 **3. Do NOT hand it the docstrings, CLAIMS.md, the README, or the PDFs at the start.** It reads those only in phase 3, to compute the diff. Handing them over early makes it confirmatory again, which is the one thing this agent exists not to be.
 
@@ -73,8 +89,9 @@ Working directory: use the current project root. Scope: **ARGUMENTS_VALUE**.
   not an empty corpus.
 - **They reached you and carry no TYPES.** `#print axioms` output is a name and a footprint and
   no type; phase 1 clusters by type. **STOP AND ERROR**: report
-  `SIGNATURES CARRY NO TYPES — refusing to reconstruct`, **record nothing, save nothing**, and
-  ask the caller for `#check` probes.
+  `SIGNATURES CARRY NO TYPES — refusing to reconstruct`, **write no note and save nothing** (as
+  above, the note is the only artifact this agent has to withhold), and ask the caller for `#check`
+  probes.
 
 If they reached you and are merely SPARSE, proceed — the fence at the end scopes the negative to
 what you actually received.
