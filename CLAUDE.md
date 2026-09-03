@@ -427,11 +427,20 @@ RULE     ask only: did this round find anything BEDROCK? BEDROCK — a violated 
          hedging, wording — gets 2, then STOP and push normally. Run `gate_round.py show` for
          the live caps; never maintain a prose copy of them. A STOP-ORDINARY reviewer WRITES
          its signal, so nothing is bypassed. EDIT AFTER A STOP ⇒ RE-SIGN; do not want another
-         round ⇒ do not edit. Prose about PREVIOUS STATES is redundant — apply the strip test,
-         state the live rule positively, and let the commit message narrate.
+         round ⇒ do not edit. AN ARC ENDS WHEN ITS GATES ARE DISCHARGED, NOT WHEN ITS CONTENT
+         MERGES: a failed gate advances the ROUND, and never starts a new arc — so a commit
+         landing mid-arc resets nothing, and the counter is the arc's, not the commit's.
+         Prose about PREVIOUS STATES is redundant — apply the strip test, state the live rule
+         positively, and let the commit message narrate.
 COST     the cap's licence assumes findings stay outstanding; acting on them creates NEW
          unreviewed prose — four of one round's six findings landed in the one file no gate
          had seen, which existed only because it was edited after the gates finished.
+         ⚠ MEASURED 2026-09-03 ON THE KRU-1 ARC, AND IT IS THE SHARPEST EVIDENCE THIS CAP
+         HAS: across five rounds, THREE OF THE LAST FOUR BEDROCK FINDINGS WERE INTRODUCED BY
+         THE PREVIOUS ROUND'S FIX and were absent from the original — an arrow direction, an
+         import-closure leg that did not cover the route it was written for, and a
+         declaration counter that then failed in the opposite direction. Iterating is not
+         free convergence; each round writes the next round's defect.
 READ     tools/process/review-loop-cap.md
 
 ## R-TRUNC  Never truncate a hook-running command; never write a `--no-verify` fallback.

@@ -29,35 +29,20 @@ Measured 2026-08-08:
 lake env lean <path>.lean 2>&1 | Out-File -FilePath <scratch>\<name>.sig.txt -Encoding utf8
 ```
 
-**Any DECLARATION** not `#check`ed emits nothing useful, so generate a probe that imports the module and `#check`s **every declaration in it**. ⚠ The unit is the DECLARATION, not the file: a module carrying one `#check` and eighteen bare declarations does not trigger a per-file test, and those eighteen are exactly the general lemmas this agent exists to find. ⚠⚠ `#print axioms` output from `build.log` is a **SUPPLEMENT, never a substitute** — it carries a name and a footprint and **no type at all**, and phase 1 clusters by TYPE, so a scope fed only from `build.log` reads as fully populated while containing nothing this agent can read. **Tell the agent which files you generated and where — AND hand it `D`, the declaration count per
-module, PRODUCED BY A SEPARATE PASS FROM THE PROBE.** ⚠⚠ **`N` and `D` must not come from one
-enumeration.** If you write the probe by hand and then report `D` as the number of `#check`s you
-wrote, `D = N` by construction, the sparse fence can never fire, and it is the fence's own
-construction that makes the failing sample unreachable. Count from the module instead:
+**Any DECLARATION** not `#check`ed emits nothing useful, so generate a probe that imports the module and `#check`s **every declaration in it**. ⚠ The unit is the DECLARATION, not the file: a module carrying one `#check` and eighteen bare declarations does not trigger a per-file test, and those eighteen are exactly the general lemmas this agent exists to find. ⚠⚠ `#print axioms` output from `build.log` is a **SUPPLEMENT, never a substitute** — it carries a name and a footprint and **no type at all**, and phase 1 clusters by TYPE, so a scope fed only from `build.log` reads as fully populated while containing nothing this agent can read. **Tell the agent which files you generated and where — AND hand it the LIST OF DECLARATION
+NAMES you enumerated, never a count.**
 
-```powershell
-$pat = '^\s*(@\[[^\]]*\]\s*)*(private |protected |noncomputable |partial |unsafe |scoped |local |nonrec )*(theorem|lemma|def|instance|abbrev|structure|class|inductive|axiom|opaque)\b'
-(Select-String -Path <module>.lean -Pattern $pat -AllMatches | Measure-Object).Count
-```
+⚠⚠ **A COUNT IS THE WRONG INSTRUMENT, MEASURED: three of them have failed here, each in a
+different direction.** A module-level comparison was blind to a module delivered one declaration
+deep. A denominator drawn from the same enumeration as the numerator could never differ from it. And
+a regex denominator matched ordinary ENGLISH at the head of wrapped docstring lines — `theorem`,
+`lemma`, `instance` and `axiom` are all English words — returning **12 for a module holding 9** and
+**2 for a module holding none**, so a caller who delivered every declaration could trip a guard that
+then announced the sample was incomplete.
 
-⚠ `rg` is **not on PATH** in this environment, so use the above or the `Grep` tool, which is
-ripgrep. Verified against two modules whose declaration counts were established by hand:
-`ZeroParadox/Ordinal/Kruskal.lean` returns **17** and `ZeroParadox/Ordinal/Goodstein.lean`
-returns **23**. Note `example` is deliberately absent from the alternation — an `example`
-declares nothing, which is why this corpus prefers it, so it is not part of `D`.
-
-⚠⚠ **A REGEX COUNT IS A LOWER BOUND, AND THE BRIEF SAYS SO BECAUSE THE PATTERN WILL BE WRONG
-AGAIN.** The previous version of this command omitted `inductive` and broke on an inline `@[simp]`,
-returning **12 for a module holding 17** — and **under-counting is the one direction this fence
-cannot survive**, because it makes `N < D` unable to fire. So the reading is asymmetric and you must
-hold to it: **`N < D` firing is SOUND — you definitely did not see the module. `N ≥ D` establishes
-NOTHING**, because the instrument under-counts by construction. Never write "full coverage"; the
-most `D` can license is *no shortfall detected by a lower-bound count*.
-
-**A count is not priming** — it yields an integer and never an identifier, a docstring or a claim,
-so the agent SHOULD run it itself rather than only when the numbers differ (disagreement is
-observable only after running, so "check when they disagree" is circular). An uncounted `D` leaves
-the sparse-sample fence disarmed.
+**A NAME cannot do any of that.** A prose false positive shows up as a garbage string a reader can
+see is not an identifier; in a count it is an invisible +1. If you did not enumerate by name, **say
+so plainly** — the agent's job is then to scope its answer, not to guess a denominator.
 
 **3. Do NOT hand it the docstrings, CLAIMS.md, the README, or the PDFs at the start.** It reads those only in phase 3, to compute the diff. Handing them over early makes it confirmatory again, which is the one thing this agent exists not to be.
 
@@ -145,9 +130,10 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 ```
 ## Reconstruction — YYYY-MM-DD
 ### Scope: [what was in scope]
-### Coverage: [N of D declarations carried a signature, across M of K modules in scope]
-### D came from: [caller-supplied / recomputed by me / **UNKNOWN, coverage unverified**]
-### Contributed nothing: [the K−M modules that emitted no signature — name them]
+### Received: [N declarations across M modules — every one NAMED under "What reached me"]
+### Sample provenance: [the caller's own words for how the probe was enumerated, or "not stated"]
+### Not received: [the set difference, if a declaration NAME LIST was supplied; else
+                   "no name list supplied, so what is missing is unknown"]
 ### Unprimed: [held / broken, and what you read early]
 
 ## What this corpus proves, in my words
@@ -165,17 +151,22 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 
 ## Rejected candidates
 [how many, and the gauge each failed - this is evidence the gauges were applied]
+
+## What reached me
+[every declaration name you received a signature for, grouped by module. This is the
+ evidence for the scoping sentence above, and it is not optional.]
 ```
 
 Save to `.claude-local/notes/reconstruction_YYYY-MM-DD_<scope>.md`. State the filename at the end — **unless you stopped at one of the two refusals above, in which case save nothing.**
 
-⚠⚠ **THE SPARSE CASE, WHICH IS THE HALF THE TOP OF THIS FILE DOES NOT SETTLE.** The two STOP-AND-ERROR states were decided before you began; neither of them fires here. This is where you write the sentence, so this is where the rest of the fence lives — **two legs, and the FIRST is the one a module-level count misses entirely:**
+⚠⚠ **YOUR ANSWER IS A NEGATIVE, AND IT IS SCOPED TO WHAT YOU RECEIVED — ALWAYS, WITH NO THRESHOLD.** There is no count to compare and no fence to trip. Every numeric version of this guard failed: twice by staying silent when it should have fired, once by firing on a COMPLETE delivery and calling that a certainty. **So the obligation is unconditional, and it is about wording:**
 
-- **`N < D` — YOU DID NOT SEE THE MODULE, ONLY PART OF IT.** ⚠⚠ **THIS IS THE LEG THAT BINDS, AND IT FIRES WHEN EVERY MODULE CONTRIBUTED.** The measured case is one module, 19 declarations, 1 signature — there `M = K = 1`, every module reported in, `Contributed nothing:` is honestly empty, and a module-level check sees a complete delivery. **Compare `N` against `D`, the count the caller handed you, never against itself.** If `D` was not supplied, say so and treat the coverage as UNKNOWN — an unsupplied denominator is not a full one.
-- **`M < K` — WHOLE MODULES ARE MISSING.** NAME them.
+- **NEVER write "in this scope", "nothing here is unclaimed", or "full coverage".** Write **"in the `N` declarations I received"** — and **LIST THEM BY NAME**. You hold the signatures, so the list is free and exact. **It is the one quantity in your report that cannot be miscounted**, because it is not a measurement of anything: it is the thing itself.
+- **State where the sample came from**, in the caller's own words, or write *"the caller did not state how the probe was enumerated"*. That is not an apology — it is the reader's only handle on what the negative is worth.
+- **If you were handed a declaration NAME LIST, print the SET DIFFERENCE**: received, and not received. A name diff cannot over- or under-count. ⚠ It is still not a licence to write "complete" — a list you were handed is the caller's claim, not your measurement.
 
-Under either leg the rule is the same: **never write "in this scope"**; write "in the `N` declarations I received", and name what you did not see. **A confident negative over a 1-in-19 sample is the same defect as one over an empty sample, one step weaker** — and it is the LIKELIER one, because `N` reads large while `D` − `N` does too.
+**A negative over a small sample is not a defect; an UNSCOPED negative is.** *"Everything worth claiming in the `N` declarations I received, named below, is already claimed"* is a real result and a useful one. *"Everything worth claiming here is already claimed"* is the same sentence with the evidence deleted.
 
-This agent gates nothing and writes no signal, so the harm is not a bypassed check: it is a confident negative that sends the next person to scope elsewhere.
+This agent gates nothing and writes no signal, so nothing is bypassed. The harm is a confident negative that sends the next person to scope elsewhere — and a negative scoped to a named list cannot do that, whatever its size.
 
 **No signal file. No verdict.** If the honest answer is "everything worth claiming **in the declarations I received** is already claimed", say that plainly — it is a real result, and naming what you did NOT see is what lets the next person scope the rest.
