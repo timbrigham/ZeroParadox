@@ -1,4 +1,4 @@
-# Kruskal's tree theorem: the reused engine, the prior art, and an open question about choice
+# Where the choice comes from, and why the axiom-free proof does not transfer
 
 Argument, scope and credit for `ZeroParadox/Ordinal/Kruskal.lean`. The Lean file holds the
 declarations, the Engineer's Take and the per-declaration glosses, and its `PurityCheck` block
