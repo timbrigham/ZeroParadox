@@ -926,7 +926,11 @@ def write_text_lf(path, text):
 
     ⚠ **THE PARENT DIRECTORY IS CREATED IF ABSENT, and that is not a convenience — it is the fix for
     three crashes in a PUBLIC CLONE.** `.claude-local/` is gitignored, so it does not exist in any
-    clone that is not the author's, and every piece of per-push state lives there. Measured
+    clone that is not the author's, and per-push state lived there. ⚠ `gate_round.json` MOVED
+    OUT on 2026-09-03 — to the repo ROOT, tracked at `round: 0`, so a worktree gets its own by
+    checkout (a worktree IS an arc) — so the `gate_round.py` half of the measurement below is
+    now HISTORY rather than a live hazard. `batch_state.json` and the rest still depend on this.
+    Measured
     2026-08-16 in a worktree with the private folder absent: `gate_round.py bump`, `gate_round.py
     reset` and `batch.py start` each died with a raw `FileNotFoundError` traceback rather than a
     verdict — **the three commands a remediation cycle needs FIRST.** `gate_round.py show` succeeds

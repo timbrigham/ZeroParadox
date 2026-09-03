@@ -59,10 +59,19 @@ from common import REPO  # noqa: E402
 # standalone argument was about STDOUT and is satisfied by a layer-0 module that imports nothing.
 common.utf8_stdout()
 
-# Round state is per-arc PRIVATE state, not part of the published bundle: it records what THIS
-# working session is mid-way through reviewing. It stays in `.claude-local/` while the tool itself
-# is tracked, which is the split the 2026-08-15 move exists to make.
-STATE = common.PRIV / 'gate_round.json'
+# Round state is per-ARC state, and A WORKTREE IS AN ARC (Tim, 2026-09-02): one worktree = one
+# line of work = one review arc = one counter. Two worktrees on one arc cannot happen (that is
+# two arcs); one worktree spanning two arcs cannot either (the second gets its own). So the
+# counter lives at the repo ROOT and is TRACKED at `round: 0` — a fresh worktree then opens at a
+# KNOWN value delivered by checkout, instead of at an ABSENCE a reader has to interpret.
+# ⚠⚠ TRACKED, with `--skip-worktree` set per worktree so a bump never stages. That does NOT close
+# local tampering and must never be described as closing it — `batch.py`'s note stands: a counter
+# needs TAMPER-EVIDENCE, not a content hash. What the move DOES close is absence-ambiguity,
+# cross-arc contamination, and a committed non-zero round poisoning every later arc.
+# ⚠ The residual, stated because it is easy to miss: once the file is tracked a reader's model
+# becomes “a tracked file shows dirty when I change it”, and `--skip-worktree` silently violates
+# that inside a worktree. The EXPECTATION strengthens while the GUARANTEE does not.
+STATE = common.REPO / 'gate_round.json'
 SELF = common.self_rel(__file__)
 
 BEDROCK_CAP = 5
@@ -108,8 +117,13 @@ REVALIDATION_PROTOCOL = """
 
 
 def head():
+    # ⚠⚠ `common.REPO`, NOT `STATE.parent.parent`. That derivation was correct only while STATE
+    # sat one level down inside `.claude-local/`. With the file at the repo ROOT it resolves to
+    # the repo's PARENT, so this runs OUTSIDE the tree, `arc_base` is silently wrong, and the
+    # staleness tripwire it feeds stops working while reporting nothing. Same class as the
+    # `__file__`-derived root that keeps `where.py` from being callable across checkouts.
     return subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True, text=True,
-                          cwd=STATE.parent.parent).stdout.strip()
+                          cwd=common.REPO).stdout.strip()
 
 
 def load():
@@ -146,9 +160,10 @@ def load():
 
 
 def save(d):
-    # ⚠ Via the shared writer, which creates `.claude-local/` if it is absent. It IS absent in every
-    # clone that is not the author's, and `bump` used to die there with a raw FileNotFoundError —
-    # on the one command CLAUDE.md requires the CALLER to run before spawning any review round.
+    # ⚠ Via the shared writer. The parent is now the repo ROOT, which always exists, so the
+    # FileNotFoundError this comment used to record is structurally GONE rather than handled: it
+    # came from `.claude-local/` being absent in every clone that is not the author's, and `bump`
+    # died there — on the one command CLAUDE.md requires before spawning any review round.
     common.write_text_lf(STATE, json.dumps(d, indent=2) + '\n')
 
 

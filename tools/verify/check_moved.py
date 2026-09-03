@@ -71,6 +71,11 @@ _MOVED_BUILDS = sorted(
 ) if os.path.isdir(os.path.join(REPO, "scripts")) else []
 MOVED += [(r"\.claude-local" + SEP + re.escape(f), "scripts/" + f) for f in _MOVED_BUILDS]
 MOVED += [(r"\.claude-local" + SEP + "commands" + SEP, ".claude/commands/")]
+# ⚠ 2026-09-03: round state moved to the repo ROOT, tracked at `round: 0`, so each worktree gets
+# its own by checkout — a worktree IS an arc. It was listed below as private-and-never-moved,
+# which is now FALSE; it belongs here, or the one checker whose job is catching stale paths goes
+# blind to exactly the stale paths this migration creates.
+MOVED += [(r"\.claude-local" + SEP + re.escape("gate_round.json"), "gate_round.json")]
 
 RULES = [(re.compile(pat), dest) for pat, dest in MOVED]
 
@@ -98,13 +103,15 @@ RULES = [(re.compile(pat), dest) for pat, dest in MOVED]
 #
 # So: only the families that ACTUALLY RELOCATED, each spelled out. Same principle as `_MOVED_BUILDS`
 # above, applied to the globbed half. What stayed private and must not fire: `*_cleared.txt`,
-# `gate_round.json`, `batch_state.json`, and every subdirectory (`notes/`, `papers/`, `feedback/`,
-# `outreach/`, `deepseek/`).
+# `batch_state.json`, and every subdirectory (`notes/`, `papers/`, `feedback/`, `outreach/`,
+# `deepseek/`). ⚠ `gate_round.json` WAS on that list until 2026-09-03 and is not any more: it
+# moved to the repo root, so a reference to the private path is now genuinely stale.
 _MOVED_FAMILIES = (
     r"check_\w*\*\w*\.py",                       # the checkers -> tools/verify/
     r"proposed_pre_\w*\*\w*_hook\.sh",           # the hook sources -> tools/verify/
     r"\w*\*\w*_baseline\.txt",                   # the baselines -> tools/verify/
     r"build_zp\w*\*\w*\.py",                     # the formal builders -> scripts/
+    r"gate_round\w*\*\w*\.json",                 # round state -> the repo root (2026-09-03)
 )
 GLOB_REF = re.compile(r"\.claude-local[/\\](?:" + "|".join(_MOVED_FAMILIES) + ")")
 
@@ -197,6 +204,13 @@ def selftest():
         # sent a reviewer to two files that no longer exist.
         ("backslash: a moved doc",    r"read .claude-local\PDF_Rendering_Standards.md first"),
         ("backslash: a moved script", r"the build script in .claude-local\build_zpa.py"),
+        # ⚠⚠ INVERTED 2026-09-03, and it is the coupling most likely to be missed. This exact
+        # string sat in `suppress` below as one of the two the comment there calls FALSE
+        # POSITIVES of the first broad `GLOB_REF`. The file moved, so the reference is now a
+        # genuinely stale pointer and the control changes SIGN with it. A migration that leaves
+        # its own stale-path checker asserting the path never moved has disarmed the one thing
+        # that would catch it.
+        ("private state DID move",   "round state lives in .claude-local/gate_round*.json"),
         # ⚠ GLOB-SHAPED, and MIG-2's ledger row demands these specifically: the 14 original controls
         # all planted CONCRETE paths, so the blind half was never probed and `--block` exited 0 over
         # two real stale references. Both shapes below are verbatim from where they were found.
@@ -224,7 +238,6 @@ def selftest():
         # ⚠ Both of these were FALSE POSITIVES of the first, broad version of GLOB_REF.
         ("markdown bold, not a wildcard", "the private folder `.claude-local/` **is gitignored**"),
         ("signals never moved",       "the hook validates .claude-local/*_cleared.txt"),
-        ("private state never moved", "round state lives in .claude-local/gate_round*.json"),
     ]
 
     bad = 0

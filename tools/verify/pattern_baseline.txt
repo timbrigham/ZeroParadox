@@ -143,7 +143,7 @@ EXEMPT_FILES	nb.txt
 EXEMPT_FILES	phase2_file_list.txt
 EXEMPT_FILES	register.md
 EXEMPT_FILES	scope_baseline.txt
-GLOB_REF	\.claude-local[/\\](?:check_\w*\*\w*\.py|proposed_pre_\w*\*\w*_hook\.sh|\w*\*\w*_baseline\.txt|build_zp\w*\*\w*\.py)
+GLOB_REF	\.claude-local[/\\](?:check_\w*\*\w*\.py|proposed_pre_\w*\*\w*_hook\.sh|\w*\*\w*_baseline\.txt|build_zp\w*\*\w*\.py|gate_round\w*\*\w*\.json)
 MOVED	\.claude-local[\\/]PDF_Rendering_Standards\.md	scripts/PDF_Rendering_Standards.md
 MOVED	\.claude-local[\\/]batch\.py	tools/verify/batch.py
 MOVED	\.claude-local[\\/]build_bottom_matrix\.py	scripts/build_bottom_matrix.py
@@ -203,6 +203,7 @@ MOVED	\.claude-local[\\/]class_baseline\.txt	tools/verify/class_baseline.txt
 MOVED	\.claude-local[\\/]commands[\\/]	.claude/commands/
 MOVED	\.claude-local[\\/]debaseline\.py	tools/verify/debaseline.py
 MOVED	\.claude-local[\\/]decl_baseline\.txt	tools/verify/decl_baseline.txt
+MOVED	\.claude-local[\\/]gate_round\.json	gate_round.json
 MOVED	\.claude-local[\\/]gate_round\.py	tools/verify/gate_round.py
 MOVED	\.claude-local[\\/]guards\.py	tools/verify/guards.py
 MOVED	\.claude-local[\\/]hooks\.py	tools/verify/hooks.py
@@ -265,6 +266,7 @@ _MOVED_BUILDS	build_zpr_addendum.py
 _MOVED_FAMILIES	\w*\*\w*_baseline\.txt
 _MOVED_FAMILIES	build_zp\w*\*\w*\.py
 _MOVED_FAMILIES	check_\w*\*\w*\.py
+_MOVED_FAMILIES	gate_round\w*\*\w*\.json
 _MOVED_FAMILIES	proposed_pre_\w*\*\w*_hook\.sh
 _VERIFY	batch
 _VERIFY	check_classes

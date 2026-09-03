@@ -68,7 +68,7 @@ import report                                          # noqa: E402
 PROBE_FILE = os.path.join(REPO, "ZeroParadox", "Order", "Snap.lean")
 # A POV DENIAL: the class documented as never baselineable, so a suppression here is always a bug.
 DENIAL = "\n-- This is NOT the snap, per `t_snap_derived`.\n"
-ROUND_STATE = os.path.join(PRIV, "gate_round.json")
+ROUND_STATE = os.path.join(REPO, "gate_round.json")   # moved out of PRIV 2026-09-03
 
 
 def sh(*args):
