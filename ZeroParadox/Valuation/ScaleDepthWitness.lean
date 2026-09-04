@@ -28,7 +28,15 @@ namespace ZeroParadox
 
 open ZPSemilattice
 
-/-! ## § I. The family -/
+/-! ## § I. The family
+
+⚠ **The choice-free counterpart already exists and is not this.**
+`ZeroParadox/Valuation/PricedPadicInterface.lean` proves the same valuation shift on ℕ
+(`v2_scale_nat`, `[propext, Quot.sound]`), with `v2_bot`, `nScale_bot` and `nScale_unique_fp` around
+it. Everything here carries `Classical.choice` instead, and not from anything below: it enters at
+`padicValNat`, beneath the completion, so every statement over this carrier inherits it. What this
+family adds is the SECOND POLE — ℕ has one distinguished point, the sphere has two — and whether
+that survives onto the free carrier is open. -/
 
 /-- The powers of two, as a `Q₂` sequence. -/
 noncomputable def scaleChain : ℕ → Q₂ := fun n => (2 : Q₂) ^ n

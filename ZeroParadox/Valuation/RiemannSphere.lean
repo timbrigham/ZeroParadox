@@ -214,7 +214,10 @@ stated here is that it holds of the map on THIS sphere, beside the inversion tha
 points. -/
 
 /-- **The scaling shifts the valuation by exactly `n`.** This is what makes `n` a coordinate: it is
-    read off the carrier, not attached to the map. -/
+    read off the carrier, not attached to the map. ⚠ The PRICED twin of `v2_scale_nat`
+    (`ZeroParadox/Valuation/PricedPadicInterface.lean`, `[propext, Quot.sound]`), which proves the
+    same shift on a choice-free carrier; this one cannot be free, because the choice enters at
+    `padicValNat` BELOW the completion and every statement over `ℚ_[2]` inherits it. -/
 theorem rScale_valuation (n : ℤ) {x : ℚ_[2]} (hx : x ≠ 0) :
     ((2 : ℚ_[2]) ^ n * x).valuation = n + x.valuation := by
   have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
