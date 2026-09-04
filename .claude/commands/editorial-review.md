@@ -246,6 +246,27 @@ python tools/verify/record.py --step editorial --verdict pass --tier A \
     --files <every file you reviewed>
 ```
 
+**On STOP-ORDINARY — DO NOT record, and DO NOT leave the caller to reconstruct it.** `R-ER`/`R-AR`
+make this the one verdict the CALLER records, because it is a PROCEED that is not a pass and the
+decision to proceed is not yours. But the ledger has had the shape since 2026-08-26 and you are the
+only one holding the findings, so **hand it over ready to use**: write a JSON list of your ordinary
+findings to the scratchpad — one object per finding, each with at least `note` and
+`severity: "ordinary"` — and end your report with the exact command the caller should run:
+
+```
+python tools/verify/record.py --step editorial --verdict pass --tier A     --how delegated --who editorial     --evidence .claude/commands/editorial-review.md     --run gate-editorial-<YYYY-MM-DD>     --outstanding-file <the JSON file you wrote>     --files <every file you reviewed>
+```
+
+⚠ **`severity` MUST be `ordinary` on every finding.** The server refuses `bedrock` on a PASS (V18),
+and that split is the entire safety of this route — it is not a way to ship one. A capped pass and a
+clean pass are different facts, and `outstanding` is the only place a reader can still tell them
+apart; omitting the key is what a genuinely clean pass looks like.
+
+⚠ **Measured 2026-09-04, and it is why this paragraph exists.** An editorial round returned
+STOP-ORDINARY with eight findings and recorded NOTHING — correctly, per the rule — and the caller did
+not record either. **A gate that found eight ordinaries and a gate that found nothing produced the
+same ledger state**, and the findings survived only in prose.
+
 ⚠ **`--evidence` is the BRIEF, not the checker, and it is what makes a delegated PASS accountable.** Attribution is not authentication — no key material exists here and *"prove you are that agent"* was never available. What IS checkable is which instructions governed the round: **editing this brief stales the key and the gate re-runs.** A delegated verdict cannot outlive its instructions.
 
 ⚠ **`delegated` claims no consensus and must not be dressed as one.** It records ONE agent round, honestly. If a caller genuinely runs three independent passes, that is still `--how agreement` and it remains the stronger claim; V3 is untouched.
