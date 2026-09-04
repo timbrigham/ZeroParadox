@@ -180,10 +180,9 @@ theorem rScale_fixes_poles (n : ℤ) :
   ⟨by simp, rfl⟩
 
 /-- `Statement:` scaling by ANY nonzero `u` fixes `0` and `∞` pointwise, not just by a power of `2`.
-    `Reading:` **INVARIANT** — the NO-GO gauge for § V. Fixing the pole-pair does NOT characterise the
-    scalings: the pointwise stabiliser is the whole diagonal torus `ℚ₂ˣ`, and `rScale` is one cyclic
-    subgroup inside it. Anything reading `rScale_fixes_poles` as "these are the pole-fixing maps" is
-    stopped here. -/
+    `Reading:` **INVARIANT** — the NO-GO gauge for § V: a whole `ℚ₂ˣ`-indexed family of pole-fixing
+    maps, of which `rScale` is one cyclic subgroup. ⚠ An INCLUSION, not an identification — that the
+    stabiliser IS the diagonal torus is not proved here. -/
 theorem stabiliser_is_bigger (u : ℚ_[2]) (hu : u ≠ 0) :
     (Homeomorph.onePointCongr (Homeomorph.mulLeft₀ u hu)) (OnePoint.some (0 : ℚ_[2]))
         = OnePoint.some (0 : ℚ_[2]) ∧

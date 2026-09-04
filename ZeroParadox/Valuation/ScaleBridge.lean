@@ -200,15 +200,14 @@ theorem orbit_ne_bot_and_val_free (x : L) (hx : x ≠ ValBridge.bot) (k : ℕ) :
       push_cast
       ring
 
-/-! ### The motion is ONE-WAY, and that is forced rather than missing
+/-! ### The motion is ONE-WAY on any carrier that HAS a valuation-`0` point
 
-The scale orbit climbs the valuation (`orbit_ne_bot_and_val_free`). The two results below say it can
-never climb back down to the `0` layer, so `scale` is not surjective and the family it generates is a
-MONOID that provably cannot be a group. ⚠ **DIRECTION, and `BOTTOMELEMENT.md` records this exact
-mis-sort as a correction already made once.** `val bot = ⊤`, so climbing valuation is motion TOWARD
-the floor: this is the INBOUND (ν) face, the algebraic sibling of `c3_irreversible` (no continuous
-path *to* `0` — the arrival is a jump). It is NOT `t_snap_irreversible`, which is the OUTBOUND (μ)
-face, that no join returns to `⊥`. Both are one-way; they are different arrows. -/
+The scale orbit climbs the valuation. The two results below say it never climbs back to the `0`
+layer — ⚠⚠ **GIVEN a point at valuation `0`, a HYPOTHESIS of both and not a property of the class**;
+`unit_scale_is_bijective` (§ VI) is the carrier where it fails.
+⚠ **DIRECTION, and `BOTTOMELEMENT.md` records this mis-sort as a correction already made once.**
+`val bot = ⊤`, so climbing valuation is motion TOWARD the floor: the INBOUND (ν) face, sibling of
+`c3_irreversible`. NOT `t_snap_irreversible`, the OUTBOUND (μ) face. Different arrows. -/
 
 /-- **The valuation-`0` layer is not in the image of `scale`.** A point of valuation `0` has no
     scale-predecessor: `bot` maps to itself and carries `⊤`, and any other predecessor would force
@@ -226,9 +225,10 @@ theorem no_scale_predecessor_at_val_zero (x : L) (hx : ValBridge.val x = 0) :
     exact absurd hv.symm (by simp)
 
 /-- `Statement:` given any point of valuation `0`, `scale` is not surjective.
-    `Reading:` **INVARIANT** — the one-wayness, at the valuation layer. A surjective `scale` would be
-    invertible on its orbit, which is exactly the reversibility the framework denies, so the monoid
-    structure is REQUIRED and not a limitation of the axioms. -/
+    `Reading:` **INVARIANT** — the one-wayness at the valuation layer, CONDITIONAL on that
+    hypothesis. A surjective `scale` would be invertible along its orbit, which is the reversibility
+    the framework denies. ⚠ Where the hypothesis fails so does the conclusion —
+    `unit_scale_is_bijective`. -/
 theorem scale_not_surjective (x : L) (hx : ValBridge.val x = 0) :
     ¬ Function.Surjective (ValBridge.scale (L := L)) := by
   intro hsurj
@@ -270,6 +270,13 @@ theorem valBridge_bool_isEmpty : IsEmpty (ValBridge Bool) := no_valBridge_of_fin
   val_bot := rfl
   val_unique := fun x _ => Subsingleton.elim x ()
   val_scale := fun x hx => absurd (Subsingleton.elim x ()) hx
+
+/-- `Statement:` on `trivialValBridge`, `scale` IS bijective.
+    `Reading:` **INVARIANT** — the no-go above: `val ≡ ⊤` leaves no valuation-`0` point, so the
+    hypothesis is unsatisfiable and `scale = id`. -/
+theorem unit_scale_is_bijective :
+    Function.Bijective (@ValBridge.scale Unit trivialValBridge) :=
+  Function.bijective_id
 
 /-- The same gauge for `ValuationStructure`, through the `toValBridge` instance of § V — the
     ZPSemilattice-constrained class inherits it with no separate argument. -/
@@ -386,6 +393,7 @@ open ZeroParadox
 #print axioms no_valBridge_of_finite
 #print axioms valBridge_bool_isEmpty
 #print axioms trivialValBridge
+#print axioms unit_scale_is_bijective
 #print axioms valuationStructure_forces_infinite
 #print axioms nonempty_valBridge_of_infinite
 #print axioms nonempty_valBridge_of_inhabited_subsingleton

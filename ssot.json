@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1731,
+        "declarations": 1732,
         "files": 144
       },
       "entries": [
@@ -1706,7 +1706,7 @@
               "face"
             ]
           },
-          "reason": "The one-wayness as an algebraic fact: the valuation-0 layer has no scale-predecessor, so scale is not surjective and the abstract family provably cannot be a group. Inbound (nu) face, sibling of c3_irreversible.",
+          "reason": "The one-wayness as an algebraic fact, CONDITIONAL on a valuation-0 point existing: that layer has no scale-predecessor, so scale is not surjective there. Not a class-level property — unit_scale_is_bijective is the carrier where the hypothesis is unsatisfiable and scale is a bijection. Inbound (nu) face, sibling of c3_irreversible.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13333,6 +13333,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3063c04d-97d4-4834-94b1-f9a0cf8c3c55",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unit_scale_is_bijective",
+            "short": "unit_scale_is_bijective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unit_scale_is_bijective",
+            "short": "unit_scale_is_bijective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "The no-go gauge for scale_not_surjective: on trivialValBridge the valuation is constantly top, so no valuation-0 point exists, that theorem's hypothesis is unsatisfiable, and scale = id is a bijection. One-wayness is a property of carriers having a valuation-0 point, never of the class.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "30a39b8c-933c-44dd-a020-64b70d5f69d5",
           "new": {
@@ -17267,7 +17306,7 @@
               "face"
             ]
           },
-          "reason": "The one-wayness as an algebraic fact: the valuation-0 layer has no scale-predecessor, so scale is not surjective and the abstract family provably cannot be a group. Inbound (nu) face, sibling of c3_irreversible.",
+          "reason": "Given a point at valuation 0, nothing maps onto it under scale: bot is a fixed point carrying top, and any other predecessor would force 0 = val y + 1, which the extended naturals refuse. The hypothesis is load-bearing.",
           "verify": {
             "axioms": null,
             "sorry_free": true

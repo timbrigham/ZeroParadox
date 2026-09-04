@@ -192,10 +192,10 @@ theorem banks_are_independent {L : Type*} [ValBridge L] (x : L) (hxb : x ≠ Val
 `ValBridge.scale` iterates forward only; `RiemannSphere.rScale` is defined for every `n : ℤ` and
 composes additively, so it is a GROUP. The realization carries the first into the second.
 
-⭐ The backward direction is not unsupplied but REFUSED: `ScaleBridge.scale_not_surjective` proves
-the valuation-`0` layer has no scale-predecessor, so the abstract family cannot be a group. That is
-the one-wayness as an algebraic fact. Which arrow, and why it is the INBOUND one, is in
-`ScaleRealization.md`. -/
+⭐ On a carrier with a valuation-`0` point the backward direction is REFUSED rather than unsupplied:
+`ScaleBridge.scale_not_surjective` proves that layer has no scale-predecessor. ⚠ That is CONDITIONAL
+— `ScaleBridge.unit_scale_is_bijective` is the carrier where it fails. Which arrow, and why it is
+the INBOUND one, is in `ScaleRealization.md`. -/
 
 /-- **The embedding.** The realized `n`-step orbit is the sphere's `rScale n` orbit of the base
     point, so the abstract step and the sphere's ℤ-action agree wherever both are defined. -/

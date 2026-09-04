@@ -55,9 +55,10 @@ tracks, and that is untouched here. -/
 theorem scaleChain_isDepthChain : IsDepthChain scaleChain (fun n => n) :=
   fun n => two_pow_valuation n
 
-/-- **The gauge for § II.** Being a depth chain is EXACTLY having non-negative valuations: the
-    forward direction reads the index off the chain. So `IsDepthChain` alone excludes only the
-    chains that pass below the floor. -/
+/-- **The gauge for § II.** Being a depth chain is EXACTLY having non-negative valuations. The
+    REVERSE direction is the one that reads the index off the chain — its witness is
+    `fun n => (S n).valuation.toNat`. So `IsDepthChain` alone excludes only the chains that pass
+    below the floor. -/
 theorem depthchain_iff_nonneg (S : ℕ → Q₂) :
     (∃ depths : ℕ → ℕ, IsDepthChain S depths) ↔ ∀ n, 0 ≤ (S n).valuation := by
   constructor

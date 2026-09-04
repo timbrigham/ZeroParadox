@@ -16,8 +16,9 @@ assertion that lattice motion and 2-adic valuation are the same motion.
 
 Two things were measured about it on 2026-09-04, both at the artifact.
 
-**It is strictly stronger than what its consumers use.** There are exactly two, found by tracing
-every occurrence, and they want different things.
+**It is strictly stronger than what its consumers use.** Four declarations bind it, and they make
+exactly TWO distinct uses of it, which want different things. (An earlier revision of this file said
+"exactly two consumers"; two USES, four BINDERS.)
 
 `h_strict_from_r1_t3` rewrites with the equality twice and transports strictness, producing
 `∀ n, (S n).valuation < (S (n+1)).valuation` — a pure *difference* condition. `t_iz_r1_t3_geometric_bound`
@@ -75,7 +76,9 @@ not defined at all.
 ⭐ **Across general value monoids the welded form is not even statable.** `ValuationStructure.val`
 (`Valuation/Scale.lean`) lands in `ℕ∞`; `Padic.addValuation` lands in `WithTop ℤ`. These are different
 types, and `withTopInt_has_negative` exhibits the obstruction to identifying them — `WithTop ℤ` has
-elements strictly below `0` and `ℕ∞` does not, so no order isomorphism exists. Writing an equation
+elements strictly below `0` and `ℕ∞` does not. ⚠ That alone does not settle it — an order isomorphism
+need not fix `0`, and `WithBot ℕ ≃o ℕ` is the counterexample to the inference pattern. What does settle
+it: `ℕ∞` has a LEAST element and `WithTop ℤ` has none, and least-ness is order-invariant. Writing an equation
 between the two valuations would need a coercion that is not one. ZP-I avoids this only by using the
 ℤ-valued `Padic.valuation`, which in turn has no value at the floor — the same reason
 `rScale_valuation` carries an `x ≠ 0` guard that `Padic.addValuation` does not need.
@@ -137,12 +140,19 @@ exactly `RiemannSphere.rScale`'s orbit of the base point, so the abstract step a
 `ℤ`-action agree wherever both are defined. **The abstract side is a monoid and the sphere side is a
 group; the realization is the embedding of the first in the second.**
 
-⭐ **And the missing half is not missing — it is refused, which reframes this whole item.**
-`ScaleBridge.scale_not_surjective` proves that given any point of valuation `0`, `scale` is not
+⭐ **And on a carrier with somewhere to fall from, the missing half is refused rather than unsupplied.**
+`ScaleBridge.scale_not_surjective` proves that GIVEN a point of valuation `0`, `scale` is not
 surjective: that layer has no scale-predecessor, because `bot` maps to itself and carries `⊤`, and any
-other predecessor would force `0 = val y + 1`, which `ℕ∞` refuses. So the abstract family **cannot** be
-a group. A surjective `scale` would be invertible along its orbit, and invertible motion is exactly
-what this framework denies.
+other predecessor would force `0 = val y + 1`, which `ℕ∞` refuses. A surjective `scale` would be
+invertible along its orbit, and invertible motion is what this framework denies.
+
+⚠⚠ **THAT IS CONDITIONAL, AND AN EARLIER REVISION OF THIS FILE STATED IT AS A UNIVERSAL** — *"the
+abstract family cannot be a group"*, with the valuation-`0` hypothesis dropped. It is false in that
+form, and the corpus ships the refutation: `ScaleBridge.unit_scale_is_bijective` on `trivialValBridge`,
+where `val ≡ ⊤`, so no valuation-`0` point exists, the hypothesis is unsatisfiable, and `scale = id` is
+a bijection. **One-wayness is a property of carriers that HAVE a valuation-`0` point — `ℤ_[2]` among
+them, where `1` sits there — never of the class.** The degenerate one-point carrier is exactly where it
+fails, which is unsurprising: nothing moves there at all.
 
 ⚠ **Which arrow, stated carefully, because `BOTTOMELEMENT.md` records this mis-sort as a correction
 already made once.** `val bot = ⊤`, so climbing the valuation is motion TOWARD the floor. This is the
@@ -151,8 +161,9 @@ path *to* `0` and that the arrival is a jump. It is **not** `t_snap_irreversible
 face, which says no join returns to `⊥`. Both are one-way; they are different arrows, and conflating
 them is the error that once put two irreversibility theorems in the wrong column.
 
-**No lattice content is used.** None of the theorems mention a join, and none needs `[ZPSemilattice L]`
-— `L` is a bare type. That is a finding rather than an omission: `ScaleBridge`'s `ValBridge` already
+**No lattice content is used.** None of the theorems mention a join, and none needs `[ZPSemilattice L]`.
+⚠ `L` is a bare type in §§ I–V only; §§ VI–VIII bind `[ValBridge L]`, which carries a `bot` and a
+valuation and still no join. That is a finding rather than an omission: `ScaleBridge`'s `ValBridge` already
 records that the join appears in none of the four valuation axioms, and ZP-I's own no-go gauge records
 that `HasNoTop` appears in no binder of `h_strict_from_r1_t3`. The lattice structure is not load-bearing
 anywhere on this path, and stating the realization over a bare type makes that visible instead of

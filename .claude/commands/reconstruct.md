@@ -43,12 +43,24 @@ then announced the sample was incomplete.
 **A NAME cannot do any of that.** A prose false positive shows up as a string a reader can see is not
 an identifier; in a count it is an invisible +1. ⚠ **That defence is partial, so do not lean on it:**
 `ZeroParadox.towerNONote._proof_2` is a well-formed, `#check`able identifier carrying nothing
-claimable, so "the reader will see the garbage" filters PROSE noise and not GENERATED noise. The
-enumeration below drops the generated kind at the source, which is the actual fix.
+claimable, so "the reader will see the garbage" filters PROSE noise and not GENERATED noise — and the
+enumeration below **does not** remove the generated kind either. What it removes is the guesswork
+about where the names came from.
 
 **THE ENUMERATION METHOD — run this, do not hand-roll a regex.** Twelve lines, no source parse, and
-it returns names AND types in one pass. Verified 2026-09-04 (`Epsilon0MinMax` → 2, matching the
-independent measurement):
+it returns names AND types in one pass.
+
+⚠⚠ **IT COMPUTES THE `NON_INTERNAL` COLUMN, NOT THE AUTHORED ONE.** Measured 2026-09-04 by running
+it: `Kruskal` → **57**, `Gentzen` → **32** — the middle column below, not the authored 28 / 30.
+`isInternalDetail` drops what Lean marks as an internal detail and **does not** drop the
+auto-generated siblings: the `Gentzen` name list it prints still contains `NONote.oadd.congr_simp`
+and `ZeroParadox.towerNONote.eq_def`. Reaching the authored column needs a further filter on those
+suffixes, which this probe does not implement. **Hand over the non-internal reading and SAY SO.**
+
+⚠ **CONTROL — run it on `Kruskal` and expect 57.** An earlier revision cited `Epsilon0MinMax → 2` as
+its check; all three populations equal 2 there, so that control could never separate them and would
+have passed whichever column the probe computed. Use a module where the columns differ, or you are
+not testing the thing the label claims.
 
 ```lean
 import <the module>            -- and Mathlib.Tactic
@@ -70,9 +82,9 @@ run_cmd do
 
 ⚠⚠ **STATE WHICH POPULATION YOU HANDED OVER, because the defensible readings differ by up to 2.6x.**
 Every-constant / non-internal / authored gave `Gentzen` 65 · 32 · 30 and `Kruskal` 74 · 57 · 28, with
-nobody making an error. The probe above is the **authored** reading — `isInternalDetail` drops what
-Lean calls an internal detail, so `.eq_1`, `._proof_2`, `.match_1` and friends do not reach the agent.
-Dropping `!n.isInternalDetail` gives every-constant instead. Whichever you run, **name it**.
+nobody making an error. The probe above is the **non-internal** reading; dropping `!n.isInternalDetail`
+gives every-constant (74 / 65). Whichever you run, **name it** — the label is the whole point of this
+paragraph, and getting it wrong mislabels the sample by a factor of two.
 
 If you did not enumerate by name, **say so plainly** — the agent's job is then to scope its answer,
 not to guess a denominator.
