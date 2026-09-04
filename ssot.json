@@ -616,8 +616,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1711,
-        "files": 142
+        "declarations": 1720,
+        "files": 143
       },
       "entries": [
         {
@@ -909,6 +909,45 @@
             ]
           },
           "reason": "reorg reconcile TEST (deps-unreferenced decl): Op A flatten + Op B whole-file move",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "00d2df29-337b-4f31-be75-980e7bbcfa92",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trivial_realization_is_semiconj_and_static",
+            "short": "trivial_realization_is_semiconj_and_static"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trivial_realization_is_semiconj_and_static",
+            "short": "trivial_realization_is_semiconj_and_static",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5399,6 +5438,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "116da14d-8fc0-4a74-a867-31f0d5a65b13",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopInt_has_negative",
+            "short": "withTopInt_has_negative"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopInt_has_negative",
+            "short": "withTopInt_has_negative",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -11703,6 +11781,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2ac51fc9-b725-469e-86b8-96d15083ad1a",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_strict",
+            "short": "realized_strict"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_strict",
+            "short": "realized_strict",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24607,6 +24724,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "60fddaac-6118-46de-aec2-505388729afb",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit_ne_zero",
+            "short": "realized_orbit_ne_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit_ne_zero",
+            "short": "realized_orbit_ne_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6103c85d-95f3-4cbf-886b-6520330b6202",
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
@@ -24747,6 +24903,45 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "61df0987-115f-4d8d-91ee-fc1e300ce414",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit",
+            "short": "realized_orbit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit",
+            "short": "realized_orbit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33215,6 +33410,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "863e530f-0bc5-4edb-bda4-78ee9070595a",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_valuation_step",
+            "short": "realized_valuation_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_valuation_step",
+            "short": "realized_valuation_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8660820c-fe2b-4ac9-aad2-5beb2245a757",
           "new": {
             "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
@@ -37100,6 +37334,45 @@
             ]
           },
           "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "968b763b-44bf-420a-a3fb-09f0845ad5ac",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_tendsto_zero",
+            "short": "realized_tendsto_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_tendsto_zero",
+            "short": "realized_tendsto_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43625,6 +43898,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b280007b-f968-4c71-9ce2-8ef7b5d01146",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_valuation_orbit",
+            "short": "realized_valuation_orbit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_valuation_orbit",
+            "short": "realized_valuation_orbit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b2d9f2bf-9113-4e1e-af1a-2c63e8c4a251",
           "new": {
@@ -47403,6 +47715,45 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c274edfe-41ed-4a83-9314-43ae36fddec0",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.succ_realized_by_doubling",
+            "short": "succ_realized_by_doubling"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.succ_realized_by_doubling",
+            "short": "succ_realized_by_doubling",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
           "verify": {
             "axioms": null,
             "sorry_free": true
