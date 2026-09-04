@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1697,
+        "declarations": 1702,
         "files": 141
       },
       "entries": [
@@ -6805,6 +6805,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "16a7c95c-2605-4bac-b518-61cfa99c99cb",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScaleHomeo_apply",
+            "short": "rScaleHomeo_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScaleHomeo_apply",
+            "short": "rScaleHomeo_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "16d35726-8df6-4f12-ad47-b88fb83f1742",
           "new": {
             "file": "ZeroParadox/Valuation/PadicHaar.lean",
@@ -10024,6 +10061,45 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "252fc442-401e-4aad-b039-e9c019836ea3",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_valuation",
+            "short": "rScale_valuation"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_valuation",
+            "short": "rScale_valuation",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17949,6 +18025,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "469af0be-ce7c-4075-81bd-7bde481e81e0",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScaleHomeo",
+            "short": "rScaleHomeo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScaleHomeo",
+            "short": "rScaleHomeo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47688,6 +47801,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c5491db3-4640-4c99-9ca1-91e6b03483a8",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_zero",
+            "short": "rScale_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_zero",
+            "short": "rScale_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c566ffb2-d5ef-45f2-a879-3c99967d4928",
           "new": {
             "file": "ZeroParadox/Category/BottomUndecidable.lean",
@@ -57607,6 +57757,43 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ec76926f-aa47-46fd-b6e3-636a4b493008",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_rScale",
+            "short": "continuous_rScale"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_rScale",
+            "short": "continuous_rScale",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
           "verify": {
             "axioms": null,
             "sorry_free": true

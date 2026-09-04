@@ -202,6 +202,47 @@ theorem rInv_conj_rScale (n : ℤ) (z : Sphere) :
         rw [rInv_coe_ne hx, rScale_coe, rInv_coe_ne hz, rScale_coe, mul_inv, inv_inv,
           ← zpow_neg]
 
+/-! ### § VI. The parameter is a COORDINATE, and the scalings are a group action
+
+`rScale_add` makes the parameter additive under composition. This section is why that parameter is a
+*coordinate on the carrier* rather than a label on the maps: it moves the 2-adic valuation one for
+one. `Padic.valuation` is the logarithm of the norm, so this is the ordinary relationship a
+logarithm has to a scaling — the multiplicative action read additively.
+
+Mathlib supplies the arithmetic (`Padic.valuation_mul`, `valuation_zpow`, `valuation_p`); what is
+stated here is that it holds of the map on THIS sphere, beside the inversion that swaps the same two
+points. -/
+
+/-- **The scaling shifts the valuation by exactly `n`.** This is what makes `n` a coordinate: it is
+    read off the carrier, not attached to the map. -/
+theorem rScale_valuation (n : ℤ) {x : ℚ_[2]} (hx : x ≠ 0) :
+    ((2 : ℚ_[2]) ^ n * x).valuation = n + x.valuation := by
+  have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
+  rw [Padic.valuation_mul (zpow_ne_zero _ h2) hx, Padic.valuation_zpow]
+  norm_num
+
+/-- `rScale 0` is the identity. With `rScale_add` this makes the scalings a genuine `ℤ`-indexed
+    group action on the sphere rather than a mere family of maps. -/
+theorem rScale_zero : rScale 0 = id := by
+  funext z
+  induction z using OnePoint.rec with
+  | infty => rfl
+  | coe x => simp
+
+/-- The scaling as a homeomorphism, mirroring `rInvHomeo`. Continuity is inherited through
+    `onePointCongr`; unlike `rInv` no work is needed at `∞`, which it never receives a finite point at. -/
+noncomputable def rScaleHomeo (n : ℤ) : Sphere ≃ₜ Sphere :=
+  Homeomorph.onePointCongr (Homeomorph.mulLeft₀ ((2 : ℚ_[2]) ^ n) (zpow_ne_zero _ (by norm_num)))
+
+theorem rScaleHomeo_apply (n : ℤ) (z : Sphere) : rScaleHomeo n z = rScale n z := by
+  induction z using OnePoint.rec with
+  | infty => rfl
+  | coe x => rfl
+
+theorem continuous_rScale (n : ℤ) : Continuous (rScale n) := by
+  have h : ⇑(rScaleHomeo n) = rScale n := funext (rScaleHomeo_apply n)
+  exact h ▸ (rScaleHomeo n).continuous
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check (enable per theorem once proved) -/
@@ -218,4 +259,10 @@ open ZeroParadox
 #print axioms rScale_fixes_poles
 #print axioms rScale_add
 #print axioms rInv_conj_rScale
+-- § VI: the parameter as a COORDINATE, and the action packaged.
+#print axioms rScale_valuation
+#print axioms rScale_zero
+#print axioms rScaleHomeo
+#print axioms rScaleHomeo_apply
+#print axioms continuous_rScale
 end PurityCheck
