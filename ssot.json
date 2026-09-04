@@ -616,8 +616,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1702,
-        "files": 141
+        "declarations": 1710,
+        "files": 142
       },
       "entries": [
         {
@@ -8117,6 +8117,43 @@
             ]
           },
           "reason": "Round 3: the no-go becomes a characterisation - Nonempty (InfinitudeFloor a) iff Infinite a",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1c7bf445-4af1-4f9b-9165-d2949939c657",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_ne_zero",
+            "short": "scaleChain_ne_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_ne_zero",
+            "short": "scaleChain_ne_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15799,6 +15836,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3c173d44-7a47-468e-bca7-4a9abfb8cd27",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_eq_orbit",
+            "short": "scaleChain_eq_orbit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_eq_orbit",
+            "short": "scaleChain_eq_orbit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30174,6 +30250,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7a89c1aa-1fc7-4660-bbc5-39179dedb43d",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_tendsto_zero",
+            "short": "scaleChain_tendsto_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_tendsto_zero",
+            "short": "scaleChain_tendsto_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7ab401de-4c48-4f28-b978-4c8cf21d6bfa",
           "new": {
             "file": "ZeroParadox/Order/OrbitDichotomy.lean",
@@ -39473,6 +39588,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a03f2a7f-2a24-4250-b2b2-b12f68f051f5",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_valuation",
+            "short": "scaleChain_valuation"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_valuation",
+            "short": "scaleChain_valuation",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a07b4fcc-7a17-4f50-a98b-5a064745ec77",
           "new": {
             "file": "ZeroParadox/Settheory/QuineHost.lean",
@@ -39988,6 +40140,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a3c9996d-e631-4dc3-bc07-676e0e766e9a",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.constChain_isDepthChain_not_strict",
+            "short": "constChain_isDepthChain_not_strict"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.constChain_isDepthChain_not_strict",
+            "short": "constChain_isDepthChain_not_strict",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a3cf8298-de64-4d91-b6c5-217ed8661617",
           "new": {
             "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
@@ -40305,6 +40496,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a656410f-f09f-4521-b599-9246e178a572",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain",
+            "short": "scaleChain"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain",
+            "short": "scaleChain",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -49282,6 +49510,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cb09af6d-b2d0-498d-a6aa-2b5e775068c8",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.depthId_isStrictStateSequence",
+            "short": "depthId_isStrictStateSequence"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.depthId_isStrictStateSequence",
+            "short": "depthId_isStrictStateSequence",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -60446,6 +60711,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f74243cd-d3c2-431c-8904-437935521943",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_isDepthChain",
+            "short": "scaleChain_isDepthChain"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_isDepthChain",
+            "short": "scaleChain_isDepthChain",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
           "verify": {
             "axioms": null,
             "sorry_free": true
