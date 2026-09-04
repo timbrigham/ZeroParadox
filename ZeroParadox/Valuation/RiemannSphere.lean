@@ -150,6 +150,58 @@ theorem rInv_swaps :
     rInvHomeo (OnePoint.some (0 : ℚ_[2])) = ∞ ∧ rInvHomeo ∞ = OnePoint.some (0 : ℚ_[2]) :=
   ⟨rInv_zero, rInv_infty⟩
 
+/-! ### § V. The maps that FIX the pole-pair, and why that makes it an AXIS
+
+`rInv` **exchanges** `0` and `∞`. The maps that hold both of them still are the scalings
+`x ↦ 2 ^ n * x`, and they are what makes the pole-pair an *axis* rather than merely a pair: `rScale`
+translates along it, additively in `n`.
+
+**Prior art, and nothing here is claimed to be new about it.** This is the standard fractional-linear
+action of `PGL(2, K)` on `P¹(K)`, whose diagonal elements fix `{0, ∞}` over every field `K`; the
+additivity below is that the diagonal subgroup is one-parameter. What is stated here is only that it
+holds on the sphere *this file builds*, next to the inversion that swaps the same two points. -/
+
+/-- Scaling by `2 ^ n` on the sphere: `∞ ↦ ∞` and `x ↦ 2 ^ n * x`. -/
+noncomputable def rScale (n : ℤ) : Sphere → Sphere
+  | (∞ : Sphere) => (∞ : Sphere)
+  | OnePoint.some x => OnePoint.some ((2 : ℚ_[2]) ^ n * x)
+
+@[simp] theorem rScale_infty (n : ℤ) : rScale n ∞ = ∞ := rfl
+
+@[simp] theorem rScale_coe (n : ℤ) (x : ℚ_[2]) :
+    rScale n (OnePoint.some x) = OnePoint.some ((2 : ℚ_[2]) ^ n * x) := rfl
+
+/-- `Statement:` every `rScale n` sends `0` to `0` and `∞` to `∞`.
+    `Reading:` **INVARIANT** — the pole-pair is fixed POINTWISE, not merely setwise, which is what
+    separates an axis from the bare pair that `rInv_swaps` exchanges. -/
+theorem rScale_fixes_poles (n : ℤ) :
+    rScale n (OnePoint.some (0 : ℚ_[2])) = OnePoint.some (0 : ℚ_[2]) ∧ rScale n ∞ = ∞ :=
+  ⟨by simp, rfl⟩
+
+/-- **The parameter is additive.** The scalings compose by adding `n`, so `n` is a translation
+    coordinate along the `0`–`∞` axis rather than a label attached to it. -/
+theorem rScale_add (m n : ℤ) (z : Sphere) : rScale m (rScale n z) = rScale (m + n) z := by
+  have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
+  induction z using OnePoint.rec with
+  | infty => rfl
+  | coe x => simp [zpow_add₀ h2, mul_assoc]
+
+/-- **The swap reverses the translation:** conjugating a scaling by the pole-exchanging inversion
+    negates its parameter. This is the one statement that needs BOTH maps, and it is why they belong
+    in one file: `rInv` is not merely another self-map of the sphere, it acts on the translations. -/
+theorem rInv_conj_rScale (n : ℤ) (z : Sphere) :
+    rInv (rScale n (rInv z)) = rScale (-n) z := by
+  have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
+  induction z using OnePoint.rec with
+  | infty => simp
+  | coe x =>
+      by_cases hx : x = 0
+      · subst hx; simp
+      · have hz : (2 : ℚ_[2]) ^ n * x⁻¹ ≠ 0 :=
+          mul_ne_zero (zpow_ne_zero _ h2) (inv_ne_zero hx)
+        rw [rInv_coe_ne hx, rScale_coe, rInv_coe_ne hz, rScale_coe, mul_inv, inv_inv,
+          ← zpow_neg]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check (enable per theorem once proved) -/
@@ -158,4 +210,12 @@ open ZeroParadox
 #print axioms rInv_involutive
 #print axioms continuous_rInv
 #print axioms rInv_swaps
+-- § V: the pole-FIXING maps. `rScale_add` is the one-parameter property; `rInv_conj_rScale` is the
+-- only statement here that consumes both maps at once.
+#print axioms rScale
+#print axioms rScale_infty
+#print axioms rScale_coe
+#print axioms rScale_fixes_poles
+#print axioms rScale_add
+#print axioms rInv_conj_rScale
 end PurityCheck
