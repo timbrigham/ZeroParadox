@@ -3,6 +3,8 @@
 import ZeroParadox.Valuation.InfinitudeFloor
 import ZeroParadox.Valuation.PadicAttractor
 import ZeroParadox.Valuation.Scale
+import ZeroParadox.Valuation.ScaleBridge
+import ZeroParadox.Valuation.RiemannSphere
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -154,6 +156,52 @@ theorem succ_realized_by_doubling :
 theorem withTopInt_has_negative : ∃ z : WithTop ℤ, z < 0 :=
   ⟨((-1 : ℤ) : WithTop ℤ), by exact_mod_cast (by norm_num : (-1 : ℤ) < 0)⟩
 
+/-! ## § VI. BOTH BANKS — two valuations, independently supplied, advancing together
+
+The residue `ScaleDepthWitness.depthchain_iff_nonneg` exposed is that a depth index can be read back
+off the chain. `ValBridge.val` cannot: it is a CLASS FIELD, fixed when the instance is built, before
+anyone chooses a realization. So the two sides below are genuinely separate structures, and the
+theorem is that the realization makes them advance in lockstep. -/
+
+/-- **The bridge, with a bank on each side.** The abstract valuation climbs by `n` from its own
+    origin (`ScaleBridge.orbit_ne_bot_and_val_free`, no realization anywhere in it), and the metric
+    valuation climbs by `n` from ITS own origin (equivariance). Two independent citations; neither
+    conjunct is derived from the other. The origins differ and are never identified — they do not
+    even share a value monoid (`withTopInt_has_negative`). -/
+theorem realization_bridges_both_valuations {L : Type*} [ValBridge L] (ρ : L → Q₂)
+    (hsemi : Function.Semiconj ρ ValBridge.scale (fun q => 2 * q))
+    (x : L) (hxb : x ≠ ValBridge.bot) (hx : ρ x ≠ 0) (n : ℕ) :
+    ValBridge.val (ValBridge.scale^[n] x) = ValBridge.val x + n ∧
+    (ρ (ValBridge.scale^[n] x)).valuation = (ρ x).valuation + n :=
+  ⟨(orbit_ne_bot_and_val_free x hxb n).2,
+   realized_valuation_orbit ρ ValBridge.scale hsemi x hx n⟩
+
+/-- `Statement:` the abstract bank holds while the metric bank fails, for the constant realization
+    at `1`.
+    `Reading:` **INVARIANT** — this is what "independently supplied" MEANS. One side needs no `ρ` at
+    all, so it cannot have been read off the chain, and the coupling is what the realization buys. -/
+theorem banks_are_independent {L : Type*} [ValBridge L] (x : L) (hxb : x ≠ ValBridge.bot) :
+    ValBridge.val (ValBridge.scale^[1] x) = ValBridge.val x + 1 ∧
+    ¬ ((fun _ : L => (1 : Q₂)) (ValBridge.scale^[1] x)).valuation
+        = ((fun _ : L => (1 : Q₂)) x).valuation + 1 := by
+  refine ⟨by simpa using (orbit_ne_bot_and_val_free x hxb 1).2, ?_⟩
+  simp
+
+/-! ## § VII. The abstract MONOID orbit embeds in the sphere's ℤ-action
+
+`ValBridge.scale` iterates forward only — the orbit is indexed by `ℕ`. `RiemannSphere.rScale` is
+defined for every `n : ℤ` and composes additively, so it is a GROUP. The realization carries the
+first into the second. ⚠ The backward direction has no abstract counterpart here: `val` only ever
+climbs (§ VI), while `rScale_valuation` at a negative parameter lowers the valuation. -/
+
+/-- **The embedding.** The realized `n`-step orbit is the sphere's `rScale n` orbit of the base
+    point, so the abstract step and the sphere's ℤ-action agree wherever both are defined. -/
+theorem realized_orbit_is_rScale_orbit {L : Type*} (ρ : L → Q₂) (scale : L → L)
+    (hsemi : Function.Semiconj ρ scale (fun q => 2 * q)) (x : L) (n : ℕ) :
+    rScale (n : ℤ) (OnePoint.some (ρ x)) = OnePoint.some (ρ (scale^[n] x)) := by
+  rw [realized_orbit ρ scale hsemi x n]
+  simp [rScale, zpow_natCast]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -168,4 +216,7 @@ open ZeroParadox
 #print axioms trivial_realization_is_semiconj_and_static
 #print axioms withTopInt_has_negative
 #print axioms succ_realized_by_doubling
+#print axioms realization_bridges_both_valuations
+#print axioms banks_are_independent
+#print axioms realized_orbit_is_rScale_orbit
 end PurityCheck

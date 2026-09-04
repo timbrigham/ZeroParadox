@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1725,
+        "declarations": 1728,
         "files": 144
       },
       "entries": [
@@ -43360,6 +43360,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "af840759-c43d-4931-bdfb-a7727c907c7f",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit_is_rScale_orbit",
+            "short": "realized_orbit_is_rScale_orbit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit_is_rScale_orbit",
+            "short": "realized_orbit_is_rScale_orbit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Closing the self-supply residue: the abstract valuation is a ValBridge class field, so it cannot be read off the chain. The bridge conjoins two independently-cited halves, banks_are_independent is the control, and realized_orbit_is_rScale_orbit embeds the abstract monoid orbit in the sphere's Z-action.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "afe9628c-487d-4b04-b336-f3150a658e49",
           "new": {
@@ -43974,6 +44013,45 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b25c0f8f-dabf-466c-a384-70c8e10a25f6",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.banks_are_independent",
+            "short": "banks_are_independent"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.banks_are_independent",
+            "short": "banks_are_independent",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Closing the self-supply residue: the abstract valuation is a ValBridge class field, so it cannot be read off the chain. The bridge conjoins two independently-cited halves, banks_are_independent is the control, and realized_orbit_is_rScale_orbit embeds the abstract monoid orbit in the sphere's Z-action.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -50095,6 +50173,45 @@
             ]
           },
           "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cb4a9025-28a9-41ee-b93d-eec91f68c260",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realization_bridges_both_valuations",
+            "short": "realization_bridges_both_valuations"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realization_bridges_both_valuations",
+            "short": "realization_bridges_both_valuations",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Closing the self-supply residue: the abstract valuation is a ValBridge class field, so it cannot be read off the chain. The bridge conjoins two independently-cited halves, banks_are_independent is the control, and realized_orbit_is_rScale_orbit embeds the abstract monoid orbit in the sphere's Z-action.",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -253,7 +253,9 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
   - ride-along docs: `ZeroParadox/Valuation/PoleCornersBridge.md` - Assembling a correspondence without asserting an identity
 - `ZeroParadox/Valuation/RateTransport.lean` - within-Axis-I positive rate-transport via the shared geometric rate `2^(-n)`
 - `ZeroParadox/Valuation/RootAsymmetry.lean` - Root-asymmetry test: #1 (μ order-floor) vs #3 (ν p-adic limit)
-- `ZeroParadox/Valuation/ScaleDepthWitness.lean` - A witness for ZP-I's depth-chain seam: the powers of two make `IsDepthChain` a theorem, and the gauge shows it still buys no motion
+- `ZeroParadox/Valuation/ScaleDepthWitness.lean` - A concrete family satisfying ZP-I's `IsDepthChain`, and the gauge pricing what that satisfaction is worth
+- `ZeroParadox/Valuation/ScaleRealization.lean` - Realizing an abstract scale step as 2-adic doubling: the ZP-I commitment as equivariance, with the valuation law derived and both valuations bridged
+  - ride-along docs: `ZeroParadox/Valuation/ScaleRealization.md` - Why the welded form is not statable, the falsifiers, and how the self-supply residue is closed
 - `ZeroParadox/Valuation/StrippedBottom.lean` - ⊥ by inversion of attribute-classes — the "typecast" stand-in (Tim, 2026-06-30)
 - `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the ordinal tower IS an InfinitudeFloor, order-reversed — ε₀ ≠ ⊥ preserved
 

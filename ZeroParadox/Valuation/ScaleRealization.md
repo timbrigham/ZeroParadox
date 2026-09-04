@@ -99,15 +99,46 @@ and they stop compiling if either fence ever fails.
 abstract step is the successor, and `ρ n = 2 ^ n`. That map is `ScaleDepthWitness.scaleChain`, so the
 witness built the day before is the instance this file needed.
 
+## Both banks — how the self-supply residue is closed
+
+`ScaleDepthWitness.depthchain_iff_nonneg` showed the weakness of `IsDepthChain`: a depth index can be
+read back off the chain, so a witness can satisfy the interface by supplying both sides itself.
+`SemilatticeInstance.TracksDepth` does not fix that, and `tracksDepth_is_self_supplied` says so in the
+file.
+
+§ VI closes it, and the mechanism is worth stating precisely. **`ValBridge.val` is a class field.** It
+is fixed when the instance is built, before anyone chooses a realization, so it cannot be manufactured
+from the chain the way a free `depths` parameter can.
+
+`realization_bridges_both_valuations` is then a conjunction of two facts with **two independent
+citations**:
+
+- the abstract valuation climbs by `n` from its own origin — `ScaleBridge.orbit_ne_bot_and_val_free`,
+  which mentions no realization at all;
+- the metric valuation climbs by `n` from *its* own origin — `realized_valuation_orbit`, from
+  equivariance.
+
+Neither conjunct is derived from the other, and that is visible in the proof term. The two origins are
+never identified; they do not even share a value monoid.
+
+`banks_are_independent` is the control that makes "independently supplied" mean something: it exhibits
+a realization — the constant map to `1` — for which the **abstract** half still holds and the
+**metric** half is false. One side needs no realization at all, so it demonstrably was not read off the
+chain, and the coupling is exactly what equivariance buys.
+
 ## What this does NOT settle
 
 **The scope is one distinguished endomap.** `scale` is a single function and the orbit is its
-iteration. ZP-I quantifies over arbitrary state sequences in a lattice, and this file does not reach
-that. The residue is the one
-`.claude-local/notes/zp_has_no_dynamics_generator_2026-06-01.md` named: the framework's motion is
-iteration of one map rather than a group acting on the carrier.
-`RiemannSphere.rScale` is a ℤ-action defined at every point and is the first thing built that
-addresses it; connecting the two is not done here.
+iteration; ZP-I quantifies over arbitrary state sequences in a lattice, and this file does not reach
+that. The framework's motion here is iteration of one map rather than a group acting on the carrier.
+
+§ VII narrows that gap without closing it. `realized_orbit_is_rScale_orbit` proves the abstract
+`ℕ`-indexed orbit is exactly `RiemannSphere.rScale`'s orbit of the base point, so the abstract step and
+the sphere's `ℤ`-action agree wherever both are defined. What does not transfer is the backward
+direction: `val` only ever climbs (§ VI), while `rScale_valuation` at a negative parameter lowers the
+valuation, so the group's inverse half has no abstract counterpart in a `ValBridge`. **The abstract
+side is a monoid and the sphere side is a group; the realization is the embedding of the first in the
+second.**
 
 **No lattice content is used.** None of the theorems mention a join, and none needs `[ZPSemilattice L]`
 — `L` is a bare type. That is a finding rather than an omission: `ScaleBridge`'s `ValBridge` already
