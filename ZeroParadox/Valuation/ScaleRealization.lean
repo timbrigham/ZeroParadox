@@ -189,10 +189,13 @@ theorem banks_are_independent {L : Type*} [ValBridge L] (x : L) (hxb : x ≠ Val
 
 /-! ## § VII. The abstract MONOID orbit embeds in the sphere's ℤ-action
 
-`ValBridge.scale` iterates forward only — the orbit is indexed by `ℕ`. `RiemannSphere.rScale` is
-defined for every `n : ℤ` and composes additively, so it is a GROUP. The realization carries the
-first into the second. ⚠ The backward direction has no abstract counterpart here: `val` only ever
-climbs (§ VI), while `rScale_valuation` at a negative parameter lowers the valuation. -/
+`ValBridge.scale` iterates forward only; `RiemannSphere.rScale` is defined for every `n : ℤ` and
+composes additively, so it is a GROUP. The realization carries the first into the second.
+
+⭐ The backward direction is not unsupplied but REFUSED: `ScaleBridge.scale_not_surjective` proves
+the valuation-`0` layer has no scale-predecessor, so the abstract family cannot be a group. That is
+the one-wayness as an algebraic fact. Which arrow, and why it is the INBOUND one, is in
+`ScaleRealization.md`. -/
 
 /-- **The embedding.** The realized `n`-step orbit is the sphere's `rScale n` orbit of the base
     point, so the abstract step and the sphere's ℤ-action agree wherever both are defined. -/

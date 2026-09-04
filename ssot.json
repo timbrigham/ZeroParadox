@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1728,
+        "declarations": 1730,
         "files": 144
       },
       "entries": [
@@ -1668,6 +1668,45 @@
             ]
           },
           "reason": "OutputSeparates.lean: one-step unfolding of the constant stream, from Cofix.dest_corec. RETRACTED FRAMING: an earlier reason said 'emission, not arity, separates' - see binCofix_subsingleton's reason.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "034d42a0-fce6-49e3-858b-735591504ede",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scale_not_surjective",
+            "short": "scale_not_surjective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scale_not_surjective",
+            "short": "scale_not_surjective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "The one-wayness as an algebraic fact: the valuation-0 layer has no scale-predecessor, so scale is not surjective and the abstract family provably cannot be a group. Inbound (nu) face, sibling of c3_irreversible.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17190,6 +17229,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "42fb6f71-fff5-4373-8d33-13075e2a3fd0",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_scale_predecessor_at_val_zero",
+            "short": "no_scale_predecessor_at_val_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_scale_predecessor_at_val_zero",
+            "short": "no_scale_predecessor_at_val_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "The one-wayness as an algebraic fact: the valuation-0 layer has no scale-predecessor, so scale is not surjective and the abstract family provably cannot be a group. Inbound (nu) face, sibling of c3_irreversible.",
           "verify": {
             "axioms": null,
             "sorry_free": true

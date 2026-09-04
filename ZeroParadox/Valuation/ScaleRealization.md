@@ -132,13 +132,24 @@ chain, and the coupling is exactly what equivariance buys.
 iteration; ZP-I quantifies over arbitrary state sequences in a lattice, and this file does not reach
 that. The framework's motion here is iteration of one map rather than a group acting on the carrier.
 
-§ VII narrows that gap without closing it. `realized_orbit_is_rScale_orbit` proves the abstract
-`ℕ`-indexed orbit is exactly `RiemannSphere.rScale`'s orbit of the base point, so the abstract step and
-the sphere's `ℤ`-action agree wherever both are defined. What does not transfer is the backward
-direction: `val` only ever climbs (§ VI), while `rScale_valuation` at a negative parameter lowers the
-valuation, so the group's inverse half has no abstract counterpart in a `ValBridge`. **The abstract
-side is a monoid and the sphere side is a group; the realization is the embedding of the first in the
-second.**
+§ VII narrows that gap. `realized_orbit_is_rScale_orbit` proves the abstract `ℕ`-indexed orbit is
+exactly `RiemannSphere.rScale`'s orbit of the base point, so the abstract step and the sphere's
+`ℤ`-action agree wherever both are defined. **The abstract side is a monoid and the sphere side is a
+group; the realization is the embedding of the first in the second.**
+
+⭐ **And the missing half is not missing — it is refused, which reframes this whole item.**
+`ScaleBridge.scale_not_surjective` proves that given any point of valuation `0`, `scale` is not
+surjective: that layer has no scale-predecessor, because `bot` maps to itself and carries `⊤`, and any
+other predecessor would force `0 = val y + 1`, which `ℕ∞` refuses. So the abstract family **cannot** be
+a group. A surjective `scale` would be invertible along its orbit, and invertible motion is exactly
+what this framework denies.
+
+⚠ **Which arrow, stated carefully, because `BOTTOMELEMENT.md` records this mis-sort as a correction
+already made once.** `val bot = ⊤`, so climbing the valuation is motion TOWARD the floor. This is the
+**inbound (ν)** face — the algebraic sibling of `c3_irreversible`, which says there is no continuous
+path *to* `0` and that the arrival is a jump. It is **not** `t_snap_irreversible`, the **outbound (μ)**
+face, which says no join returns to `⊥`. Both are one-way; they are different arrows, and conflating
+them is the error that once put two irreversibility theorems in the wrong column.
 
 **No lattice content is used.** None of the theorems mention a join, and none needs `[ZPSemilattice L]`
 — `L` is a bare type. That is a finding rather than an omission: `ScaleBridge`'s `ValBridge` already

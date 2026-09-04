@@ -200,6 +200,41 @@ theorem orbit_ne_bot_and_val_free (x : L) (hx : x ≠ ValBridge.bot) (k : ℕ) :
       push_cast
       ring
 
+/-! ### The motion is ONE-WAY, and that is forced rather than missing
+
+The scale orbit climbs the valuation (`orbit_ne_bot_and_val_free`). The two results below say it can
+never climb back down to the `0` layer, so `scale` is not surjective and the family it generates is a
+MONOID that provably cannot be a group. ⚠ **DIRECTION, and `BOTTOMELEMENT.md` records this exact
+mis-sort as a correction already made once.** `val bot = ⊤`, so climbing valuation is motion TOWARD
+the floor: this is the INBOUND (ν) face, the algebraic sibling of `c3_irreversible` (no continuous
+path *to* `0` — the arrival is a jump). It is NOT `t_snap_irreversible`, which is the OUTBOUND (μ)
+face, that no join returns to `⊥`. Both are one-way; they are different arrows. -/
+
+/-- **The valuation-`0` layer is not in the image of `scale`.** A point of valuation `0` has no
+    scale-predecessor: `bot` maps to itself and carries `⊤`, and any other predecessor would force
+    `0 = val y + 1`, which `ℕ∞` refuses. -/
+theorem no_scale_predecessor_at_val_zero (x : L) (hx : ValBridge.val x = 0) :
+    ∀ y : L, ValBridge.scale y ≠ x := by
+  intro y hy
+  by_cases hyb : y = ValBridge.bot
+  · subst hyb
+    rw [ValBridge.scale_bot] at hy
+    rw [← hy, ValBridge.val_bot] at hx
+    exact absurd hx (by simp)
+  · have hv := ValBridge.val_scale y hyb
+    rw [hy, hx] at hv
+    exact absurd hv.symm (by simp)
+
+/-- `Statement:` given any point of valuation `0`, `scale` is not surjective.
+    `Reading:` **INVARIANT** — the one-wayness, at the valuation layer. A surjective `scale` would be
+    invertible on its orbit, which is exactly the reversibility the framework denies, so the monoid
+    structure is REQUIRED and not a limitation of the axioms. -/
+theorem scale_not_surjective (x : L) (hx : ValBridge.val x = 0) :
+    ¬ Function.Surjective (ValBridge.scale (L := L)) := by
+  intro hsurj
+  obtain ⟨y, hy⟩ := hsurj x
+  exact no_scale_predecessor_at_val_zero x hx y hy
+
 /-- **The gauge.** A `ValBridge` carrier holding any point other than `bot` is infinite: the scale
     orbit of that point embeds ℕ. -/
 theorem valBridge_forces_infinite [Nontrivial L] : Infinite L := by
@@ -345,6 +380,8 @@ open ZeroParadox
 -- § VI, the NO-GO gauge.
 #print axioms scale_ne_bot_free
 #print axioms orbit_ne_bot_and_val_free
+#print axioms no_scale_predecessor_at_val_zero
+#print axioms scale_not_surjective
 #print axioms valBridge_forces_infinite
 #print axioms no_valBridge_of_finite
 #print axioms valBridge_bool_isEmpty
