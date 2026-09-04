@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1710,
+        "declarations": 1711,
         "files": 142
       },
       "entries": [
@@ -26652,6 +26652,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6abf2527-fff8-495b-a3a6-1d10992b60e1",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stabiliser_is_bigger",
+            "short": "stabiliser_is_bigger"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stabiliser_is_bigger",
+            "short": "stabiliser_is_bigger",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Round-2 gate fix: two NO-GO gauges added. depthchain_iff_nonneg measures what ZP-I's IsDepthChain actually buys (exactly non-negativity of the valuation). stabiliser_is_bigger shows the pointwise pole stabiliser is the whole diagonal torus, not the 2^Z scalings.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6aea0c81-78a7-49da-89f7-f5e93e400c05",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -34513,7 +34552,7 @@
               "face"
             ]
           },
-          "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
+          "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its infinite-cyclic additivity, and its conjugation by the pole-swapping inversion",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39588,43 +39627,6 @@
             "witness_of": []
           },
           "disposition": "new",
-          "id": "a03f2a7f-2a24-4250-b2b2-b12f68f051f5",
-          "new": {
-            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
-            "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.scaleChain_valuation",
-            "short": "scaleChain_valuation"
-          },
-          "old": {
-            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
-            "kind": null,
-            "line": null,
-            "prefix": "ZeroParadox",
-            "qualified": "ZeroParadox.scaleChain_valuation",
-            "short": "scaleChain_valuation",
-            "synthetic": true
-          },
-          "ontology": {
-            "domain": [
-              "valuation"
-            ],
-            "object": [],
-            "role": [
-              "scaffolding"
-            ]
-          },
-          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
-          "verify": {
-            "axioms": null,
-            "sorry_free": true
-          }
-        },
-        {
-          "claims": {
-            "citations": [],
-            "witness_of": []
-          },
-          "disposition": "new",
           "id": "a07b4fcc-7a17-4f50-a98b-5a064745ec77",
           "new": {
             "file": "ZeroParadox/Settheory/QuineHost.lean",
@@ -40167,7 +40169,7 @@
               "face"
             ]
           },
-          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
+          "reason": "A witness family SATISFYING ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48816,6 +48818,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c7d052d9-8eaf-4bd9-94fd-d0113549cecb",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.depthchain_iff_nonneg",
+            "short": "depthchain_iff_nonneg"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.depthchain_iff_nonneg",
+            "short": "depthchain_iff_nonneg",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Round-2 gate fix: two NO-GO gauges added. depthchain_iff_nonneg measures what ZP-I's IsDepthChain actually buys (exactly non-negativity of the valuation). stabiliser_is_bigger shows the pointwise pole stabiliser is the whole diagonal torus, not the 2^Z scalings.",
           "verify": {
             "axioms": null,
             "sorry_free": true

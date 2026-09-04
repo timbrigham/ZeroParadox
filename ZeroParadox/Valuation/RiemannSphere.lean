@@ -1,4 +1,5 @@
 import Mathlib.Topology.Compactification.OnePoint.Basic
+import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
 import Mathlib.NumberTheory.Padics.ProperSpace
 import Mathlib.Tactic
 
@@ -152,14 +153,14 @@ theorem rInv_swaps :
 
 /-! ### § V. The maps that FIX the pole-pair, and why that makes it an AXIS
 
-`rInv` **exchanges** `0` and `∞`. The maps that hold both of them still are the scalings
-`x ↦ 2 ^ n * x`, and they are what makes the pole-pair an *axis* rather than merely a pair: `rScale`
-translates along it, additively in `n`.
+`rInv` **exchanges** `0` and `∞`. The scalings `x ↦ 2 ^ n * x` hold both still and translate along the
+pole-pair additively in `n`, which is what makes it an *axis* rather than a bare pair.
 
-**Prior art, and nothing here is claimed to be new about it.** This is the standard fractional-linear
-action of `PGL(2, K)` on `P¹(K)`, whose diagonal elements fix `{0, ∞}` over every field `K`; the
-additivity below is that the diagonal subgroup is one-parameter. What is stated here is only that it
-holds on the sphere *this file builds*, next to the inversion that swaps the same two points. -/
+⭐ **PRIOR ART — these declarations INSTANTIATE `OnePoint.instGLAction`, they do not extend it.** The
+two `example`s closing this section are the identification, elaborated rather than asserted. What is
+ours is the TOPOLOGY, not the algebra. Prior art, the loxodromic vocabulary and the stabiliser fence
+are in `ZeroParadox/Valuation/RiemannSphere.md`, beside this file. -/
+
 
 /-- Scaling by `2 ^ n` on the sphere: `∞ ↦ ∞` and `x ↦ 2 ^ n * x`. -/
 noncomputable def rScale (n : ℤ) : Sphere → Sphere
@@ -178,8 +179,22 @@ theorem rScale_fixes_poles (n : ℤ) :
     rScale n (OnePoint.some (0 : ℚ_[2])) = OnePoint.some (0 : ℚ_[2]) ∧ rScale n ∞ = ∞ :=
   ⟨by simp, rfl⟩
 
+/-- `Statement:` scaling by ANY nonzero `u` fixes `0` and `∞` pointwise, not just by a power of `2`.
+    `Reading:` **INVARIANT** — the NO-GO gauge for § V. Fixing the pole-pair does NOT characterise the
+    scalings: the pointwise stabiliser is the whole diagonal torus `ℚ₂ˣ`, and `rScale` is one cyclic
+    subgroup inside it. Anything reading `rScale_fixes_poles` as "these are the pole-fixing maps" is
+    stopped here. -/
+theorem stabiliser_is_bigger (u : ℚ_[2]) (hu : u ≠ 0) :
+    (Homeomorph.onePointCongr (Homeomorph.mulLeft₀ u hu)) (OnePoint.some (0 : ℚ_[2]))
+        = OnePoint.some (0 : ℚ_[2]) ∧
+    (Homeomorph.onePointCongr (Homeomorph.mulLeft₀ u hu)) (∞ : Sphere) = ∞ :=
+  ⟨by simp, rfl⟩
+
 /-- **The parameter is additive.** The scalings compose by adding `n`, so `n` is a translation
-    coordinate along the `0`–`∞` axis rather than a label attached to it. -/
+    coordinate along the `0`–`∞` axis rather than a label attached to it. ⚠ The content is
+    `2 ^ (m + n) = 2 ^ m * 2 ^ n` — that `n ↦ 2 ^ n` is a homomorphism `ℤ → ℚ₂ˣ`, so the family is
+    the INFINITE CYCLIC `2 ^ ℤ`. It is not a "one-parameter subgroup": that is archimedean-Lie
+    vocabulary and `ℚ₂ˣ` is totally disconnected. -/
 theorem rScale_add (m n : ℤ) (z : Sphere) : rScale m (rScale n z) = rScale (m + n) z := by
   have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
   induction z using OnePoint.rec with
@@ -202,22 +217,49 @@ theorem rInv_conj_rScale (n : ℤ) (z : Sphere) :
         rw [rInv_coe_ne hx, rScale_coe, rInv_coe_ne hz, rScale_coe, mul_inv, inv_inv,
           ← zpow_neg]
 
+/-- `rScale` IS the Mathlib action of `diag(2 ^ n, 1)`. Anonymous: it declares nothing and owes no
+    purity entry, and it stops compiling if the identification ever fails. -/
+example (n : ℤ) (z : Sphere) :
+    (Matrix.GeneralLinearGroup.mkOfDetNeZero !![(2 : ℚ_[2]) ^ n, 0; 0, 1]
+      (by simp only [Matrix.det_fin_two_of, mul_one, mul_zero, sub_zero, ne_eq]
+          exact zpow_ne_zero _ (by norm_num))) • z = rScale n z := by
+  induction z using OnePoint.rec with
+  | infty =>
+      rw [OnePoint.smul_infty_eq_ite]
+      simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, rScale]
+  | coe x =>
+      rw [OnePoint.smul_some_eq_ite]
+      simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, rScale]
+
+/-- `rInv` IS the Mathlib action of the Weyl element, `0 ↦ ∞` branch included. -/
+example (z : Sphere) :
+    (Matrix.GeneralLinearGroup.mkOfDetNeZero !![(0 : ℚ_[2]), 1; 1, 0]
+      (by simp [Matrix.det_fin_two_of])) • z = rInv z := by
+  induction z using OnePoint.rec with
+  | infty =>
+      rw [OnePoint.smul_infty_eq_ite]
+      simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, rInv]
+  | coe x =>
+      rw [OnePoint.smul_some_eq_ite]
+      by_cases hx : x = 0
+      · subst hx; simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, rInv]
+      · rw [rInv_coe_ne hx]
+        simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, hx, one_div]
+
 /-! ### § VI. The parameter is a COORDINATE, and the scalings are a group action
 
 `rScale_add` makes the parameter additive under composition. This section is why that parameter is a
 *coordinate on the carrier* rather than a label on the maps: it moves the 2-adic valuation one for
-one. `Padic.valuation` is the logarithm of the norm, so this is the ordinary relationship a
-logarithm has to a scaling — the multiplicative action read additively.
+one. ⚠ `Padic.valuation` is the NEGATIVE logarithm of the norm (`Padic.norm_eq_zpow_neg_valuation`:
+`‖x‖ = p ^ (-x.valuation)`), so valuation rises exactly as the norm falls.
 
-Mathlib supplies the arithmetic (`Padic.valuation_mul`, `valuation_zpow`, `valuation_p`); what is
-stated here is that it holds of the map on THIS sphere, beside the inversion that swaps the same two
-points. -/
+Mathlib supplies the arithmetic; the axiom-footprint fence is in
+`ZeroParadox/Valuation/RiemannSphere.md`. -/
 
-/-- **The scaling shifts the valuation by exactly `n`.** This is what makes `n` a coordinate: it is
-    read off the carrier, not attached to the map. ⚠ The PRICED twin of `v2_scale_nat`
-    (`ZeroParadox/Valuation/PricedPadicInterface.lean`, `[propext, Quot.sound]`), which proves the
-    same shift on a choice-free carrier; this one cannot be free, because the choice enters at
-    `padicValNat` BELOW the completion and every statement over `ℚ_[2]` inherits it. -/
+/-- **The scaling shifts the valuation by exactly `n`** — what makes `n` a coordinate read off the
+    carrier rather than a label on the map. The choice-free twin on ℕ is `v2_scale_nat`
+    (`ZeroParadox/Valuation/PricedPadicInterface.lean`); the axiom-footprint fence and the unguarded
+    `Padic.addValuation` variant are in `ZeroParadox/Valuation/RiemannSphere.md`. -/
 theorem rScale_valuation (n : ℤ) {x : ℚ_[2]} (hx : x ≠ 0) :
     ((2 : ℚ_[2]) ^ n * x).valuation = n + x.valuation := by
   have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
@@ -254,12 +296,13 @@ open ZeroParadox
 #print axioms rInv_involutive
 #print axioms continuous_rInv
 #print axioms rInv_swaps
--- § V: the pole-FIXING maps. `rScale_add` is the one-parameter property; `rInv_conj_rScale` is the
--- only statement here that consumes both maps at once.
+-- § V: the pole-FIXING maps. `rScale_add` is the infinite-cyclic property; `rInv_conj_rScale` is the
+-- only statement here that consumes both maps at once; `stabiliser_is_bigger` is the NO-GO gauge.
 #print axioms rScale
 #print axioms rScale_infty
 #print axioms rScale_coe
 #print axioms rScale_fixes_poles
+#print axioms stabiliser_is_bigger
 #print axioms rScale_add
 #print axioms rInv_conj_rScale
 -- § VI: the parameter as a COORDINATE, and the action packaged.
