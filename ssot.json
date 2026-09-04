@@ -616,8 +616,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1720,
-        "files": 143
+        "declarations": 1725,
+        "files": 144
       },
       "entries": [
         {
@@ -19765,6 +19765,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4cd4bbfb-0d98-4d07-b1d5-13fa1108ea04",
+          "new": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tracksDepth_is_self_supplied",
+            "short": "tracksDepth_is_self_supplied"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tracksDepth_is_self_supplied",
+            "short": "tracksDepth_is_self_supplied",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4d17817c-3b0a-41d8-baf4-049ef237f16c",
           "new": {
             "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
@@ -29130,6 +29169,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "746c4425-904f-47c0-a7a8-88d60062ae0e",
+          "new": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tracksDepth_not_isDepthChain",
+            "short": "tracksDepth_not_isDepthChain"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tracksDepth_not_isDepthChain",
+            "short": "tracksDepth_not_isDepthChain",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7476e485-143f-403e-ae54-1e1327291e14",
           "new": {
@@ -36146,6 +36224,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "92801b7e-1031-4f56-90b5-d45a7c0527d7",
+          "new": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.TracksDepth",
+            "short": "TracksDepth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.TracksDepth",
+            "short": "TracksDepth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "92b7e7c2-355d-42c9-a892-d033efce9c95",
           "new": {
@@ -40222,6 +40339,45 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a28a32e1-7161-484e-8230-50c187239dd4",
+          "new": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isDepthChain_tracksDepth",
+            "short": "isDepthChain_tracksDepth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isDepthChain_tracksDepth",
+            "short": "isDepthChain_tracksDepth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56627,6 +56783,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e51f15e5-149e-4f77-a082-20d3888abf38",
+          "new": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.h_strict_of_tracksDepth",
+            "short": "h_strict_of_tracksDepth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.h_strict_of_tracksDepth",
+            "short": "h_strict_of_tracksDepth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
           "verify": {
             "axioms": null,
             "sorry_free": true

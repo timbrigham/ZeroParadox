@@ -16,11 +16,25 @@ assertion that lattice motion and 2-adic valuation are the same motion.
 
 Two things were measured about it on 2026-09-04, both at the artifact.
 
-**It is strictly stronger than its only consumer.** `h_strict_from_r1_t3` is the sole use, and its
-whole proof body rewrites with the equality twice and then transports strictness. What it produces is
-`∀ n, (S n).valuation < (S (n+1)).valuation` — a pure *difference* condition. Downstream stays that
-way: the helper lemma is `v 0 + n ≤ v n` and the bound is `‖Sₙ‖ ≤ ‖S₀‖ · (½)ⁿ`, both stated relative
-to the starting term. **Nothing on the path consumes the absolute valuation.**
+**It is strictly stronger than what its consumers use.** There are exactly two, found by tracing
+every occurrence, and they want different things.
+
+`h_strict_from_r1_t3` rewrites with the equality twice and transports strictness, producing
+`∀ n, (S n).valuation < (S (n+1)).valuation` — a pure *difference* condition. `t_iz_r1_t3_geometric_bound`
+then keeps it that way: its helper is `v 0 + n ≤ v n` and its conclusion is `‖Sₙ‖ ≤ ‖S₀‖ · (½)ⁿ`, both
+relative to the starting term.
+
+`t_iz_h_bound_from_depth_chain` uses it a **second** time, at `h_depth 0`, and this one is not a
+difference: because `depths 0` is a natural number, the equality gives `0 ≤ (S 0).valuation`, hence
+`‖S₀‖ ≤ 1`, which absorbs the `‖S₀‖` factor and turns the relative bound into the absolute
+`‖Sₙ‖ ≤ (½)ⁿ`.
+
+⚠ **An earlier revision of this file said "nothing on the path consumes the absolute valuation." That
+was false** — it was written after tracing one consumer and generalising to all of them, and the
+second use is exactly an absolute fact. What is true is narrower and is the useful statement: **neither
+use needs the EQUALITY.** Strictness needs order-correspondence; the base bound needs one inequality.
+That is what `SemilatticeInstance.TracksDepth` asks for, and `tracksDepth_not_isDepthChain` shows the
+weakening is real rather than a rename.
 
 **And the existential form is nearly empty.** `ScaleDepthWitness.depthchain_iff_nonneg` proves a chain
 admits *some* depth index exactly when its valuations are non-negative — the index can be read back
@@ -102,9 +116,11 @@ that `HasNoTop` appears in no binder of `h_strict_from_r1_t3`. The lattice struc
 anywhere on this path, and stating the realization over a bare type makes that visible instead of
 implied.
 
-**This does not retire `IsDepthChain`.** Nothing here edits ZP-I. What it shows is that ZP-I's
-downstream conclusion is reachable from a hypothesis that is not self-satisfiable, which is an argument
-for rewiring and not a rewiring.
+**This does not retire `IsDepthChain`.** What it shows is that ZP-I's downstream conclusion is
+reachable from a hypothesis that is not self-satisfiable. The companion rewiring — `TracksDepth` and
+its two derived consumers, added to `SemilatticeInstance.lean` in the same change — is additive: every
+existing declaration is untouched, and `isDepthChain_tracksDepth` carries the old form into the new one
+so nothing citing `IsDepthChain` loses anything.
 
 ## Prior art
 
