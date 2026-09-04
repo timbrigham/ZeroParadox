@@ -40,9 +40,42 @@ a regex denominator matched ordinary ENGLISH at the head of wrapped docstring li
 **2 for a module holding none**, so a caller who delivered every declaration could trip a guard that
 then announced the sample was incomplete.
 
-**A NAME cannot do any of that.** A prose false positive shows up as a garbage string a reader can
-see is not an identifier; in a count it is an invisible +1. If you did not enumerate by name, **say
-so plainly** — the agent's job is then to scope its answer, not to guess a denominator.
+**A NAME cannot do any of that.** A prose false positive shows up as a string a reader can see is not
+an identifier; in a count it is an invisible +1. ⚠ **That defence is partial, so do not lean on it:**
+`ZeroParadox.towerNONote._proof_2` is a well-formed, `#check`able identifier carrying nothing
+claimable, so "the reader will see the garbage" filters PROSE noise and not GENERATED noise. The
+enumeration below drops the generated kind at the source, which is the actual fix.
+
+**THE ENUMERATION METHOD — run this, do not hand-roll a regex.** Twelve lines, no source parse, and
+it returns names AND types in one pass. Verified 2026-09-04 (`Epsilon0MinMax` → 2, matching the
+independent measurement):
+
+```lean
+import <the module>            -- and Mathlib.Tactic
+open Lean Elab Command
+
+run_cmd do
+  let env ← getEnv
+  let modName : Name := `<the module>
+  let mut names : Array Name := #[]
+  for (n, _) in env.constants.toList do
+    if env.getModuleFor? n == some modName && !n.isInternalDetail then
+      names := names.push n
+  logInfo m!"AUTHORED in {modName}: {names.size}"
+  for n in names do
+    match env.find? n with
+    | some ci => logInfo m!"{n} : {ci.type}"
+    | none    => pure ()
+```
+
+⚠⚠ **STATE WHICH POPULATION YOU HANDED OVER, because the defensible readings differ by up to 2.6x.**
+Every-constant / non-internal / authored gave `Gentzen` 65 · 32 · 30 and `Kruskal` 74 · 57 · 28, with
+nobody making an error. The probe above is the **authored** reading — `isInternalDetail` drops what
+Lean calls an internal detail, so `.eq_1`, `._proof_2`, `.match_1` and friends do not reach the agent.
+Dropping `!n.isInternalDetail` gives every-constant instead. Whichever you run, **name it**.
+
+If you did not enumerate by name, **say so plainly** — the agent's job is then to scope its answer,
+not to guess a denominator.
 
 **3. Do NOT hand it the docstrings, CLAIMS.md, the README, or the PDFs at the start.** It reads those only in phase 3, to compute the diff. Handing them over early makes it confirmatory again, which is the one thing this agent exists not to be.
 
@@ -65,7 +98,7 @@ You are a mathematician who has just found this repository. You do not know the 
 
 Working directory: use the current project root. Scope: **ARGUMENTS_VALUE**.
 
-⚠⚠ **BEFORE ANYTHING ELSE, CHECK YOUR SAMPLE.** Your output is a NEGATIVE — *nothing here is unclaimed* — and **a negative is quantified over its SAMPLE, never over the scope you were asked about.** Two states stop you before you begin, and they have different remedies:
+⚠⚠ **BEFORE ANYTHING ELSE, CHECK YOUR SAMPLE.** Your output is a NEGATIVE — a report that some set of declarations holds nothing further worth claiming — and **a negative is quantified over its SAMPLE, never over the scope you were asked about.** (The unscoped phrasings of that sentence are denylisted at the end of this brief; this one is written the way you are required to write yours.) Two states stop you before you begin, and they have different remedies:
 
 - **Nothing reached you.** No signature files, or empty ones. **STOP AND ERROR**: report
   `NO SIGNATURES DELIVERED — refusing to reconstruct`, claim nothing, **write no note and save
@@ -78,8 +111,8 @@ Working directory: use the current project root. Scope: **ARGUMENTS_VALUE**.
   above, the note is the only artifact this agent has to withhold), and ask the caller for `#check`
   probes.
 
-If they reached you and are merely SPARSE, proceed — the fence at the end scopes the negative to
-what you actually received.
+If they reached you and are merely SPARSE, proceed — the closing obligation of this brief is what
+scopes the negative to what you actually received. It is unconditional wording, not a threshold.
 
 ## The one rule that makes this worth doing
 
@@ -131,9 +164,13 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 ## Reconstruction — YYYY-MM-DD
 ### Scope: [what was in scope]
 ### Received: [N declarations across M modules — every one NAMED under "What reached me"]
+### Population: [which enumeration you were handed — every-constant / non-internal / authored,
+                 or "not stated"]
 ### Sample provenance: [the caller's own words for how the probe was enumerated, or "not stated"]
 ### Not received: [the set difference, if a declaration NAME LIST was supplied; else
                    "no name list supplied, so what is missing is unknown"]
+### Modules in scope that sent nothing: [glob the scope, subtract the modules you received a
+                 signature from, NAME the remainder; or "none — every module in scope reported"]
 ### Unprimed: [held / broken, and what you read early]
 
 ## What this corpus proves, in my words
@@ -161,12 +198,13 @@ Save to `.claude-local/notes/reconstruction_YYYY-MM-DD_<scope>.md`. State the fi
 
 ⚠⚠ **YOUR ANSWER IS A NEGATIVE, AND IT IS SCOPED TO WHAT YOU RECEIVED — ALWAYS, WITH NO THRESHOLD.** There is no count to compare and no fence to trip. Every numeric version of this guard failed: twice by staying silent when it should have fired, once by firing on a COMPLETE delivery and calling that a certainty. **So the obligation is unconditional, and it is about wording:**
 
-- **NEVER write "in this scope", "nothing here is unclaimed", or "full coverage".** Write **"in the `N` declarations I received"** — and **LIST THEM BY NAME**. You hold the signatures, so the list is free and exact. **It is the one quantity in your report that cannot be miscounted**, because it is not a measurement of anything: it is the thing itself.
-- **State where the sample came from**, in the caller's own words, or write *"the caller did not state how the probe was enumerated"*. That is not an apology — it is the reader's only handle on what the negative is worth.
-- **If you were handed a declaration NAME LIST, print the SET DIFFERENCE**: received, and not received. A name diff cannot over- or under-count. ⚠ It is still not a licence to write "complete" — a list you were handed is the caller's claim, not your measurement.
+- **NEVER write "in this scope", "nothing here is unclaimed", or "full coverage".** Write **"in the `N` declarations I received"** — and **LIST THEM BY NAME**. You hold the signatures, so the list is free and exact. ⚠ **What cannot be miscounted is the LIST, not `N`.** `N` is the size of whatever population the caller enumerated, and the defensible populations differ: measured over four modules, every-constant / non-internal / authored give `Gentzen` 65 · 32 · 30 and `Kruskal` 74 · 57 · 28, a factor of 2.6, with nobody making an error. **So state which population you received** (§2 names one), and let the names carry the scoping rather than the number.
+- **Print the MODULE leg too.** *Modules in scope that sent nothing:* glob the scope, subtract the modules you received a signature from, and NAME the remainder. Like the declaration list this one is free and exact, it needs no denominator, no threshold and no caller cooperation — and it is the only thing that scopes the negative to the SCOPE rather than to the declarations you happened to be handed.
+- **State where the sample came from**, in the caller's own words, or write *"not stated"*. That is not an apology — it is the reader's only handle on what the negative is worth.
+- **If you were handed a declaration NAME LIST, print the SET DIFFERENCE**: received, and not received. A name diff cannot over- or under-count. ⚠ It is still not a licence to write "complete" — a list you were handed is the caller's claim, not your measurement. ⚠⚠ **A name that is not a well-formed identifier is a defect in the LIST, not a missing declaration — say so rather than reporting it as not received.** And a well-formed identifier is not automatically claimable content: `ZeroParadox.towerNONote._proof_2` `#check`s cleanly and carries nothing worth claiming, so "a reader can see it is garbage" is not a filter you may rely on.
 
 **A negative over a small sample is not a defect; an UNSCOPED negative is.** *"Everything worth claiming in the `N` declarations I received, named below, is already claimed"* is a real result and a useful one. *"Everything worth claiming here is already claimed"* is the same sentence with the evidence deleted.
 
-This agent gates nothing and writes no signal, so nothing is bypassed. The harm is a confident negative that sends the next person to scope elsewhere — and a negative scoped to a named list cannot do that, whatever its size.
+This agent gates nothing and writes no signal, so nothing is bypassed. The harm is a confident negative that sends the next person to scope elsewhere. ⚠ **Naming the declarations does not by itself prevent that**, and an earlier revision claimed it did: naming them pins the INNER coordinate — *scoped to these declarations* — while the `Scope:` header re-asserts the OUTER one at full width. The implication runs one way and the converse needs the MODULE set, which is why the module leg above is not optional.
 
-**No signal file. No verdict.** If the honest answer is "everything worth claiming **in the declarations I received** is already claimed", say that plainly — it is a real result, and naming what you did NOT see is what lets the next person scope the rest.
+**No signal file. No verdict.** If the honest answer is *"everything worth claiming in the `N` declarations I received, named below, is already claimed"*, say that plainly — with the `N` and with the names, exactly as modelled above — it is a real result, and naming what you did NOT see is what lets the next person scope the rest.
