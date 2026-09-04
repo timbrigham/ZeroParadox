@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1730,
+        "declarations": 1731,
         "files": 144
       },
       "entries": [
@@ -52865,6 +52865,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d5d2c643-35c9-44e1-88be-d6f0b1be6349",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_realizes_into_q2",
+            "short": "z2_realizes_into_q2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_realizes_into_q2",
+            "short": "z2_realizes_into_q2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Non-vacuity witness for ScaleRealization sections VI-VII: the coercion from the 2-adic integers into the 2-adic numbers realizes instZ2ValBridge's scale as doubling, at a point that is neither the bottom nor sent to zero. Without it those sections could hold empty.",
           "verify": {
             "axioms": null,
             "sorry_free": true

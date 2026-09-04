@@ -205,6 +205,38 @@ theorem realized_orbit_is_rScale_orbit {L : Type*} (ρ : L → Q₂) (scale : L 
   rw [realized_orbit ρ scale hsemi x n]
   simp [rScale, zpow_natCast]
 
+/-! ## § VIII. NON-VACUITY for §§ VI–VII
+
+§ V witnesses §§ I–V, where `scale` is a bare parameter. §§ VI–VII additionally need a `ValBridge`
+AND a realization of it, so they need their own witness or they hold empty. -/
+
+/-- `Statement:` the coercion `ℤ_[2] → ℚ_[2]` realizes `instZ2ValBridge`'s scale as doubling, at a
+    point that is neither the bottom nor sent to `0`.
+    `Reading:` **INVARIANT** — non-vacuity for §§ VI–VII, on the corpus's own 2-adic carrier. -/
+theorem z2_realizes_into_q2 :
+    Function.Semiconj (fun z : ℤ_[2] => (z : Q₂)) ValBridge.scale (fun q => 2 * q) ∧
+    (1 : ℤ_[2]) ≠ ValBridge.bot ∧ ((1 : ℤ_[2]) : Q₂) ≠ 0 := by
+  have h2c : ((2 : ℤ_[2]) : Q₂) = 2 := by norm_cast
+  refine ⟨fun z => ?_, ?_, ?_⟩
+  · show ((2 * z : ℤ_[2]) : Q₂) = 2 * (z : Q₂)
+    rw [PadicInt.coe_mul, h2c]
+  · show (1 : ℤ_[2]) ≠ (0 : ℤ_[2])
+    exact one_ne_zero
+  · push_cast
+    exact one_ne_zero
+
+/-- The bridge fires on it — both banks, on `ℤ_[2]`. -/
+example (n : ℕ) :
+    ValBridge.val (ValBridge.scale^[n] (1 : ℤ_[2])) = ValBridge.val (1 : ℤ_[2]) + n ∧
+    (((ValBridge.scale^[n] (1 : ℤ_[2])) : ℤ_[2]) : Q₂).valuation
+      = (((1 : ℤ_[2]) : Q₂)).valuation + n :=
+  realization_bridges_both_valuations (fun z : ℤ_[2] => (z : Q₂))
+    z2_realizes_into_q2.1 1 z2_realizes_into_q2.2.1 z2_realizes_into_q2.2.2 n
+
+/-- And the one-wayness is non-vacuous there: `1` has valuation `0`, so `scale` misses it. -/
+example : ¬ Function.Surjective (ValBridge.scale (L := ℤ_[2])) :=
+  scale_not_surjective (1 : ℤ_[2]) (by show q2Val (1 : ℤ_[2]) = 0; simp [q2Val])
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -222,4 +254,5 @@ open ZeroParadox
 #print axioms realization_bridges_both_valuations
 #print axioms banks_are_independent
 #print axioms realized_orbit_is_rScale_orbit
+#print axioms z2_realizes_into_q2
 end PurityCheck
