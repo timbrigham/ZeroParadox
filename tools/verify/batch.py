@@ -1704,7 +1704,40 @@ def signal_verdict(name):
     return (first[:150] + "…") if len(first) > 150 else first
 
 
-REVIEW_STEPS = ("editorial", "adversary", "prior_art")
+# ⚠⚠ `prior_art` WAS REMOVED FROM THIS TUPLE 2026-09-05, AND WHAT STILL BLOCKS IS NAMED HERE
+# BECAUSE `R-NOCONV` REQUIRES IT: "the guard asserting what still BLOCKS lands in the same change,
+# or the exemption that block paid for is given up with it."
+#
+# WHAT STILL BLOCKS: `check_prior_art_attribution` (this file), which enforces the SAME obligation
+# PER FILE over the touched set and is a BLOCK leg of the prepush plan. It is strictly stronger for
+# the files a push actually carries, and it is satisfiable incrementally — "you owe the files you
+# TOUCHED, never the corpus". Verified by RUNNING rather than asserted: with a touched `.lean` file
+# lacking a passing verdict it reports `N of M ... have NO passing prior_art verdict` and fails.
+#
+# WHY THE LEG WENT: `check_signals` asks whether the STEP is current, and the step's registry scope
+# is every `.lean` file. Measured 2026-09-05 on the ZP-I push — `coverage_gap(step='prior_art')`:
+# `applies_to 220 / have 11 / missing 209`, while the push TOUCHED SIX and covered six of six. The
+# leg therefore blocked on 209 files the push never opened, in every state, so it discriminated
+# nothing. Tim, the same day: "the entire premise here is iterative fixing... we didn't touch 220
+# files. that right there is the false premise."
+#
+# ⚠ IT REMOVES NO LEDGER GATE. `prior_art` is absent from BOTH push admission sets — gitRobot's
+# `config/admission.v1.json` and this repo's (itself dead: `RLY31-12`). The registry entry says so
+# outright: "deliberately ABSENT from admission... blocks nothing at the ledger". So `check_signals`
+# was the only consumer, reading a row the ledger itself does not gate on.
+#
+# ⚠ THE RELEASE GATE KEEPS IT ON PURPOSE. `check_release_ready.py`'s own `REVIEW_STEPS` still lists
+# `prior_art`, and that is correct rather than an oversight: a release mints a permanent DOI, so
+# corpus-wide is the right question THERE and the wrong one for an incremental push. Do not
+# "harmonise" the two lists — they price different acts.
+#
+# ⭐ THIS IS THE INTERIM, NOT THE REPAIR. The repair is CHANGE-SCOPING the step so its denominator
+# is the touched set, which belongs in the ledger (dynamic scope) and not here. The criterion that
+# makes that legitimate rather than gaming, and it is checkable: CAN THE SCOPE BE DERIVED WITHOUT
+# LOOKING AT THE COVERAGE? A touched-set scope falls out of the diff before any verdict is read;
+# a scope chosen so `applies_to` lands on `have` is picked to fit the numerator. The first is
+# routing, the second manufactures green by shrinking the denominator.
+REVIEW_STEPS = ("editorial", "adversary")
 
 
 def _numstat(ranges=None):
