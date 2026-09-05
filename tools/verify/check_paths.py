@@ -1897,6 +1897,34 @@ def selftest_claim():
         print('    %-40s *** DOMAIN UNRESOLVABLE: %s ***' % ('delta domain builds', exc))
         bad += 1
         d_delta, d_full = [], []
+    # ⚠ The narrowing must not silently drop the authoritative surface: a delta domain with no
+    #   rendered text would return zeros that read like corpus-wide absence. THAT PROPERTY IS A
+    #   CAPABILITY, AND THE FIRST VERSION TESTED TODAY'S DIFF INSTEAD (`PATHCTL-1`, 2026-09-04):
+    #   `any(pdf in d_delta)` over the LIVE delta, which legitimately holds no PDF whenever the
+    #   push touches no document — most pushes. It therefore sat red in the HEALTHY state, which
+    #   is how a reader learns to skip a block; and this is the block `RLY45-1` proved nothing
+    #   else can see. So drive the domain the way the MUST FIRE control below does — with a
+    #   CONSTRUCTED document-implicating change — and assert the PDF surface travels with it.
+    # ⚠⚠ THE PROBE INPUT IS DERIVED, NEVER A HARDCODED BUILDER. Measured 2026-09-04: feeding the
+    #   alphabetically first `build_zp*.py` (`scripts/archive/build_zp_pdfs.py`) yields 1 target
+    #   and 0 PDFs, because that archived aggregate's stem matches no deposited PDF. Picking "the
+    #   first builder" would ship a control that is green for the wrong reason.
+    _fam_pdf = next((p for p in tracked_pdfs() if _doc_family(p)), None)
+    if _fam_pdf is None:
+        _carries, _cap_why = True, 'vacuous - no tracked PDF carries a document family'
+    else:
+        _probe = '%s_capability_probe.md' % _doc_family(_fam_pdf)
+        _real_cr = globals().get('changed_in_range')
+        globals()['changed_in_range'] = lambda ranges=None: [_probe]
+        try:
+            _dom, _ = _claim_domain(mode='delta')
+            _dom_pdfs = [p for p in _dom if str(p).lower().endswith('.pdf')]
+            _carries = bool(_dom_pdfs)
+            _cap_why = '%s -> %d target(s), %d pdf(s)' % (_probe, len(_dom), len(_dom_pdfs))
+        except RuntimeError as exc:
+            _carries, _cap_why = False, 'domain refused: %s' % str(exc).split('\n')[0][:48]
+        finally:
+            globals()['changed_in_range'] = _real_cr
     checks = [
         ('full contains rendered PDFs',
          any(str(p).lower().endswith('.pdf') for p in d_full)),
@@ -1904,10 +1932,7 @@ def selftest_claim():
          len([p for p in d_full if str(p).lower().endswith('.pdf')]) == len(tracked_pdfs())),
         ('delta is a strict subset of full',
          0 < len(d_delta) < len(d_full)),
-        # ⚠ The narrowing must not silently drop the authoritative surface: a delta domain with
-        #   no rendered text would return zeros that read like corpus-wide absence.
-        ('delta still carries rendered text',
-         any(str(p).lower().endswith('.pdf') for p in d_delta) or not tracked_pdfs()),
+        ('implicating delta carries rendered text', _carries),
         # ⚠⚠ AND IT MUST REACH THE WHOLE FAMILY, NOT JUST THE CHANGED DOCUMENT'S OWN OUTPUT.
         #   The first version of this control asserted only "delta contains SOME pdf", and a
         #   mutation dropping the family loop stayed GREEN — because a changed build script's own
@@ -1924,6 +1949,7 @@ def selftest_claim():
         bad += 0 if ok else 1
         print('    %-40s %s' % (name, 'ok' if ok else '*** FAIL ***'))
     print('    %-40s %s' % ('delta / full sizes', '%d / %d' % (len(d_delta), len(d_full))))
+    print('    %-40s %s' % ('capability probe', _cap_why))
 
     # ⚠⚠ AND THE ALARM ITSELF. A refusal nobody has watched fire is a hypothesis, and this one
     #   guards the emptiness-as-success class that has already shipped here three times. Drive
