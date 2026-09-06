@@ -29,6 +29,7 @@ import json
 import os
 import sys
 import time
+import uuid
 import urllib.error
 import urllib.request
 
@@ -63,24 +64,84 @@ def _parse(body):
     return json.loads(body) if body.strip() else None
 
 
+# ⚠⚠ HOW OFTEN THE DEFENSIVE PARSE BELOW ACTUALLY FIRED. Not decoration — see `_call`.
+# A fallback nobody can see fire is a hypothesis, exactly like a control nobody has seen fail.
+BRACE_FALLBACKS = []
+
+
 def _call(tool: str, arguments: dict):
     """One MCP round trip. Returns the parsed tool payload, or None."""
-    sid, body = _post({"jsonrpc": "2.0", "id": 1, "method": "initialize",
+    # ⚠⚠ A UUID, NOT A CONSTANT, AND IT IS THE JOIN KEY FOR TWO-SIDED LOGGING (2026-09-06).
+    # JSON-RPC lets the CALLER choose `id`; it passes through the MCP layer untouched and needs no
+    # header negotiation. The server logs it verbatim as `rpc_id`, so our record of what we SENT and
+    # its record of what ARRIVED become joinable — the disagreement check applied to the transport.
+    # This used to send `1` and `2`, and constant ids join nothing.
+    # ⚠ `(tool, timestamp, byte count)` was the alternative and it very nearly works — one host, one
+    # clock. It fails exactly where it is needed: a RETRY LOOP emits an identical tool name and an
+    # identical byte count inside the same second, and retries against a refusal are the single most
+    # interesting thing this log exists to catch. A key that goes ambiguous on the only question it
+    # was built for is not a key.
+    # ⚠ `notifications/initialized` carries no id BY SPEC and must not be given one; those rows join
+    # on the session alone, which is correct — there is no response to compare either.
+    init_id, call_id = str(uuid.uuid4()), str(uuid.uuid4())
+    sid, body = _post({"jsonrpc": "2.0", "id": init_id, "method": "initialize",
                        "params": {"protocolVersion": "2025-06-18", "capabilities": {},
                                   "clientInfo": {"name": "zp-record", "version": "1"}}})
     _post({"jsonrpc": "2.0", "method": "notifications/initialized"}, session=sid)
-    _, body = _post({"jsonrpc": "2.0", "id": 2, "method": "tools/call",
+    _, body = _post({"jsonrpc": "2.0", "id": call_id, "method": "tools/call",
                      "params": {"name": tool, "arguments": arguments}}, session=sid)
     res = _parse(body)
     if not res or "result" not in res:
         return None
-    content = res["result"].get("content") or []
+    result = res["result"]
+    content = result.get("content") or []
     if not content:
         return None
+    text = content[0].get("text", "") if isinstance(content[0], dict) else ""
+
+    # ⚠⚠ `isError` IS READ, AND TRUE IS TERMINAL — NEVER RETRIED. Today every refusal, success and
+    # validation rejection returns `isError: false` and the distinction survives only inside the
+    # payload; that is absence-rendering-as-success at the transport, one layer below where
+    # `errors.py` looks for it. When the servers flip it, a `true` here means the server DECIDED to
+    # refuse, and re-sending cannot change a validation verdict — only mask it as an outage.
+    is_error = bool(result.get("isError"))
+
     try:
-        return json.loads(content[0].get("text", ""))
+        payload = json.loads(text)
     except (ValueError, AttributeError):
-        return None
+        # ⚠⚠ THE BELT, AND IT IS DELIBERATELY A BELT RATHER THAN THE CONTRACT. Raising `ToolError`
+        # is the only route to `isError: true` under FastMCP, and the low-level server REWRITES the
+        # content to `Error executing tool <name>: {json}` — which is not valid JSON, so a strict
+        # parse collapses the whole structured refusal to None and we would silently lose
+        # `error_type` and the `errors` list. That is precisely the information distinguishing a
+        # validation refusal from an outage.
+        # ⛔ DEPENDING ON THAT PREFIX IS PROSE-COUPLING at the transport, on the commit path — the
+        # defect class this project spent two days filing (`DC-45`, `R-ZERONULL`). It is accepted
+        # ONLY as an interim, and ONLY because it is instrumented: the destination is the server
+        # dropping to the low-level tool API so `content[0].text` stays pure JSON, at which point
+        # this branch becomes dead code. **A NON-ZERO COUNT AFTER THAT LANDS IS A DEFECT, NOT NOISE.**
+        payload = None
+        if isinstance(text, str):
+            i, j = text.find("{"), text.rfind("}")
+            if 0 <= i < j:
+                try:
+                    payload = json.loads(text[i:j + 1])
+                    BRACE_FALLBACKS.append(tool)
+                    print("  NOTE: structured payload recovered by brace-slice for %r (fallback #%d)"
+                          " — the server prefixed its error body. This path is INTERIM; if it is "
+                          "still firing after the low-level API change, that is a defect."
+                          % (tool, len(BRACE_FALLBACKS)))
+                except ValueError:
+                    payload = None
+        if payload is None:
+            return None
+
+    # ⚠ THE `None` FLOOR IS UNCHANGED AND STAYS. `emit` returning None makes the caller BLOCK and
+    # exit 2; that is correct and it is the floor under everything above.
+    if is_error and isinstance(payload, dict):
+        payload.setdefault("ok", False)
+        payload["_transport_is_error"] = True
+    return payload
 
 
 def stale_or_missing(ref, action='commit'):
@@ -451,6 +512,28 @@ def _cli(argv):
                          "reached its ORDINARY cap and R-LOOPCAP says stop-and-push: the verdict "
                          "admits, and these ride with it so they do not evaporate. Only severity "
                          "'ordinary' may accompany a PASS.")
+    # ⚠⚠ `subjects` IS COVERAGE; `failing` IS INDICTMENT — AND UNTIL 2026-09-06 THIS CLI COULD ONLY
+    # EXPRESS THE FIRST. `emit()` has taken `failing` since 2026-09-02 and `common.emit_verdict`
+    # passes it, so every MECHANICAL step has named its indicted subset since 09-03. The review
+    # gates never could: there was no flag. Measured on the live stream, and the number is the
+    # tell — **118 of 118 tier-A blocking records carry no `failing`, and not one ever has.**
+    # A gap that is CATEGORICAL rather than partial is almost never discipline; it is a missing
+    # affordance, and this is the affordance.
+    #
+    # ⚠ WHY IT MATTERS, in one measured row: a `check_prose` FAIL from 2026-09-02 carries 218
+    # subjects and a reason reading "1 failing subject(s)". The record KNOWS it indicts one file,
+    # says so in prose, and condemns 218 — because absent `failing` means "indicts every subject".
+    # The machine-readable half said all; the human-readable half said one; every consumer reads
+    # the first.
+    #
+    # ⚠ A FILE, NOT ARGV, and for the same reason `--reason-file` exists one flag down: a list of
+    # repo paths is exactly the payload that breaks on Windows argv length, on quoting, and on the
+    # PreToolUse hook that denies any command containing a word-boundary denied token.
+    ap.add_argument("--failing-file", default=None,
+                    help="JSON file holding a non-empty list of repo-relative paths this verdict "
+                         "actually INDICTS, a subset of --files. Required in spirit on any "
+                         "blocking verdict: absent `failing` indicts EVERY subject, so omitting it "
+                         "on a FAIL over 40 files condemns 39 that passed.")
     ap.add_argument("--passes", type=int, default=1,
                     help="how many independent passes ran (agreement only)")
     ap.add_argument("--agreed", type=int, default=1,
@@ -610,6 +693,44 @@ def _cli(argv):
                          "R-LOOPCAP's stop-and-push at the ORDINARY cap and must NEVER become a "
                          "way to ship a bedrock or blocking finding — BEDROCK gets 5 rounds and "
                          "must not ship. Record the FAIL instead." % f.get("severity"))
+    # ⚠⚠ VALIDATED AGAINST THE POST-FENCE `subjects`, NEVER AGAINST `--files`. `ledger_subjects`
+    # DROPS paths absent from the ref or differing from the index, so `--files` is what the caller
+    # asked for and `subjects` is what is actually being recorded. Indicting a path that was fenced
+    # out would name something the record does not cover — coverage and indictment would disagree
+    # inside one record, which is worse than either being wrong alone.
+    failing = ()
+    if a.failing_file:
+        failing = json.loads(io.open(a.failing_file, encoding="utf-8").read())
+        if not isinstance(failing, list) or not failing or \
+                not all(isinstance(p, str) and p.strip() for p in failing):
+            ap.error("--failing-file must hold a non-empty JSON list of repo-relative path "
+                     "strings. ⚠ An EMPTY list is not 'nothing failed' — the server refuses it, "
+                     "because it resolves to PASS at every path and is exoneration wearing a "
+                     "FAIL's costume. Omit the flag entirely to indict every subject.")
+        if a.verdict == "pass":
+            ap.error("--failing-file is refused on a PASS: `failing` is an INDICTMENT and a PASS "
+                     "indicts nothing. Stored on a PASS it would be silently ignored — looks "
+                     "correct, behaves otherwise. Use --outstanding-file to carry findings on a "
+                     "verdict that admits.")
+        failing = sorted({p.strip().replace("\\", "/") for p in failing})
+        covered = {s["path"] for s in subjects}
+        stray = [p for p in failing if p not in covered]
+        if stray:
+            ap.error("--failing-file names %d path(s) that are NOT among the recorded subjects: "
+                     "%s. You cannot indict what this record does not claim to have examined. "
+                     "Either add them to --files, or check whether they were fenced out above "
+                     "(`not recorded:` lines name every drop and why)."
+                     % (len(stray), ", ".join(stray[:5])))
+    elif a.verdict == "fail":
+        # ⚠ A WARNING, NOT A REFUSAL, AND DELIBERATELY SO WHILE THE BRIEFS CATCH UP. The server does
+        # not yet require `failing`; when it does, this becomes the usage error. Printing it now
+        # means the sweep is visible per-run rather than discovered by a stream tally later.
+        print("  WARNING: FAIL recorded with no --failing-file, so this record INDICTS ALL %d "
+              "subject(s)." % len(subjects))
+        print("           If the finding is narrower than that, say so — an unnarrowed FAIL over")
+        print("           N files condemns the N-1 that passed, and nothing downstream can tell")
+        print("           'the gate meant all of them' from 'the gate could not say'.")
+
     ev = module_evidence(*a.evidence) if a.evidence else ()
     if a.evidence and len(ev) != len(set(a.evidence)):
         print("  WARNING: %d brief path(s) given, %d resolved — a brief that is absent or "
@@ -617,7 +738,7 @@ def _cli(argv):
               "than accept an unpinned one." % (len(set(a.evidence)), len(ev)))
     rid = emit(step=a.step, tier=a.tier, verdict=a.verdict.upper(), subjects=subjects,
                basis=common.ledger_basis(a.ref), reason=a.reason, evidence=ev,
-               outstanding=outstanding, revision=a.revision,
+               outstanding=outstanding, revision=a.revision, failing=failing,
                decided={"how": a.how, "passes": a.passes, "agreed": a.agreed, "who": a.who})
     if rid is None:
         return 2
