@@ -43,6 +43,14 @@ LEGS = [
 ]
 BLOCKING = [n for n, m, _ in LEGS if m == 'BLOCK']
 
+# ⚠ LINE-INITIAL, NOT A SUBSTRING. `ship.md` QUOTES this phrase to tell the caller where to
+# paste from — `pass the prompt verbatim from after the "Spawn the Agent with this prompt"
+# marker` — and a substring match read that as ship spawning an agent with no constraints
+# block. It spawns nothing itself; it points at other briefs' markers. Found by opening the
+# file rather than by trusting the count, which is the only way this class is ever found.
+SPAWN_RE = re.compile(r'^Spawn the Agent with this prompt', re.M)
+# The literal the regex anchors on. Used ONLY to build selftest fixtures, so a control never
+# hardcodes a phrase the checker no longer looks for.
 SPAWN = 'Spawn the Agent with this prompt'
 HARD = 'HARD CONSTRAINTS'
 RECORD_CMD = re.compile(r'record\.py[^\n`]*(?:\\\n[^\n`]*)*')
@@ -104,7 +112,8 @@ def audit(text, flags, steps):
         if '*' not in q and not os.path.exists(os.path.join(ROOT, q)):
             f['paths'].append(q)
 
-    m, h = text.find(SPAWN), text.find(HARD)
+    _sm = SPAWN_RE.search(text)
+    m, h = (_sm.start() if _sm else -1), text.find(HARD)
     if m >= 0 and h < 0:
         f['marker'].append('spawns an agent and has no HARD CONSTRAINTS block at all')
     elif m >= 0 and h < m:
@@ -143,6 +152,8 @@ def selftest():
          '%s:\n## %s' % (SPAWN, HARD), 'marker', False),
         ('marker clean   never spawns an agent',
          'this brief spawns nothing at all', 'marker', False),
+        ('marker clean   QUOTES the marker, does not spawn',
+         'paste verbatim from after the "Spawn the Agent with this prompt" marker', 'marker', False),
         ('names  fires   records with no step',
          'Record your verdict via record.py when done.', 'names', True),
         ('names  clean   records and names the step',

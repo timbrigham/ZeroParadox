@@ -64,8 +64,18 @@ def _parse(body):
     return json.loads(body) if body.strip() else None
 
 
-# ⚠⚠ HOW OFTEN THE DEFENSIVE PARSE BELOW ACTUALLY FIRED. Not decoration — see `_call`.
-# A fallback nobody can see fire is a hypothesis, exactly like a control nobody has seen fail.
+# ⚠⚠ A PER-PROCESS TRIPWIRE, NOT A CUMULATIVE COUNT — and the difference is not pedantry.
+# `record.py` is a CLI that runs once and exits, so this list starts EMPTY in every process and
+# can never total anything. It makes a firing IMPOSSIBLE TO MISS within a run (the NOTE in `_call`
+# names the tool and prints), which is what stops the fallback becoming silently load-bearing.
+# **It is NOT the measurement that the far side stopped prefixing.**
+#
+# ⛔ AN EARLIER COMMENT HERE CLAIMED IT WAS — "the count going to zero is the measurement that
+# step 3 worked." FALSE, and self-flatteringly so: the count is zero at process start whether the
+# world is healthy or on fire, so a zero proves nothing at all. Corrected 2026-09-06 after the
+# peer's server-side tally (87 calls, 0 prefixed bodies) turned out to be the only thing actually
+# measuring the property. **THE AUTHORITATIVE COUNT IS SERVER-SIDE**; when this repo's own call
+# log lands, a durable count belongs there and this stays the loud local tripwire.
 BRACE_FALLBACKS = []
 
 
@@ -99,11 +109,17 @@ def _call(tool: str, arguments: dict):
         return None
     text = content[0].get("text", "") if isinstance(content[0], dict) else ""
 
-    # ⚠⚠ `isError` IS READ, AND TRUE IS TERMINAL — NEVER RETRIED. Today every refusal, success and
-    # validation rejection returns `isError: false` and the distinction survives only inside the
-    # payload; that is absence-rendering-as-success at the transport, one layer below where
-    # `errors.py` looks for it. When the servers flip it, a `true` here means the server DECIDED to
-    # refuse, and re-sending cannot change a validation verdict — only mask it as an outage.
+    # ⚠⚠ `isError` IS READ, AND TRUE IS TERMINAL — NEVER RETRIED. A `true` here means the server
+    # DECIDED to refuse; re-sending cannot change a validation verdict, only mask it as an outage.
+    #
+    # ⚠ THIS COMMENT USED TO DESCRIBE THE SERVER'S CURRENT STATE AND WENT STALE IN TWENTY MINUTES.
+    # It read "today every refusal, success and validation rejection returns `isError: false`" —
+    # true when written, false by the time the flip landed the same afternoon (2026-09-06), in a
+    # file on the recording path describing a system this repo cannot see. Caught by the peer that
+    # changed it, not by us. **DESCRIBE WHAT THIS CODE DOES AND WHY, NEVER WHAT THE FAR SIDE
+    # CURRENTLY DOES** — the far side's state is not ours to assert, and a comment that pins it
+    # decays the moment they ship. The mechanism below is correct under either behaviour, which is
+    # the property that actually matters and the reason nothing broke.
     is_error = bool(result.get("isError"))
 
     try:
