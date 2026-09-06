@@ -705,10 +705,36 @@ def _cli(argv):
     # ⚠ THREE EXIT CODES, MATCHING THIS MODULE'S DOCTRINE: 0 the ledger would accept it · 1 it would
     # refuse, and every reason is printed · 2 the ledger could not be asked. Reading 2 as 1 turns an
     # outage into "your record is bad", which sends a gate off editing a record that was fine.
+    # ⚠ DECLARED so it appears in `--help` and in `_actions` like any other flag, and handled
+    # below before `parse_args`, which would otherwise demand a full record to answer it.
+    ap.add_argument("--list-flags", action="store_true",
+                    help="print one option string per line and exit — the PARSER's own list, for "
+                         "a checker that needs to know what this program accepts without reading "
+                         "its help prose.")
     ap.add_argument("--dry-run", action="store_true",
                     help="VALIDATE the record against the ledger and print what it would say, "
                          "WITHOUT appending. Use this to check a command — never the live stream. "
                          "Exit 0 = would be accepted, 1 = would be refused, 2 = ledger unreachable.")
+    # ⚠⚠ THE PARSER'S OWN TRUTH, BECAUSE `--help` IS PROSE AND PROSE IS NOT AN INTERFACE.
+    # `check_briefs` asks this program which flags exist, and it used to ask by scraping `--help`
+    # for anything shaped like a flag. That reads DESCRIPTIONS as well as options, so a flag named
+    # only inside a help string becomes ground truth and every brief may then cite a flag that does
+    # not exist. Latent on 2026-09-06 — the two sets agreed exactly, 18 and 18 — and armed by one
+    # prose edit. `B3`.
+    #
+    # ⚠ `_actions` IS PRIVATE AND IT IS STILL THE RIGHT SOURCE. argparse exposes no public accessor
+    # for "what does this parser accept", and every public alternative is formatted text: usage
+    # wraps, help interleaves descriptions. A private attribute that IS the answer beats a public
+    # one that has to be parsed back out of English.
+    #
+    # ⚠ HANDLED BEFORE `parse_args`, because the required flags are required. Asking a program to
+    # describe itself must not require a valid record first.
+    if "--list-flags" in argv:
+        for act in ap._actions:
+            for opt in act.option_strings:
+                if opt.startswith("--"):
+                    print(opt)
+        return 0
     a = ap.parse_args(argv)
 
     if a.reason_file:
