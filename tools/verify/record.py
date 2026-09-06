@@ -260,7 +260,7 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
          failing=()):
     """Append one record. Returns its id, or None if refused or unreachable.
 
-    `subjects` is a list of {"path", "blob"} — WHAT THIS VERDICT IS ABOUT, not
+    `subjects` is a list of {"path", "git_blob_id"} — WHAT THIS VERDICT IS ABOUT, not
     everything the step glanced at. A step that examined forty files and failed on
     one emits a PASS over the thirty-nine and a FAIL over the one; that is what
     keeps coverage exact and makes repeat-subject a lookup rather than a grep over

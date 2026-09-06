@@ -373,12 +373,64 @@ _VERDICT = {}
 
 # Steps that MUST report before a verdict means anything. A step that never ran leaves no row, and
 # absence-of-evidence is exactly what this project keeps mistaking for success — so it is an error.
-_EXPECTED = ("routing",)
+#
+# ⚠⚠ `B4`, 2026-09-05 — THIS TUPLE HELD ONE NAME WHILE SIX LEGS GATED THE PUSH, AND THAT GAP WAS
+# THE WHOLE DEFECT. `routing` recorded itself here; `purity`, `ssot`, `pdf_coupling`,
+# `prior_art_attrib` and the review-signal legs all accumulated into a LOCAL `bad` in `cmd_prepush`
+# which was then handed to `enforce_prepush_verdict`. One integer, six independent properties — so
+# `enforce_prepush_verdict(bad * 0)` switched off all six at once, and only `routing` survived.
+#
+# ⚠ THE CONTROL SAID SO IN ITS OWN WORDS AND WAS STILL GREEN. `probe_routing_behavioural.py`'s
+# `RLY28-1b` case runs exactly that mutation and requires it to keep BLOCKING, with the comment
+# "annihilating the caller's own count cannot hide a ROUTING failure, because that count comes from
+# the registry". Precisely scoped, entirely true, and it tested the one leg that was already safe.
+# That is `B5`'s shape — a green control layer over a switched-off gate — inside the file that
+# documents the defect.
+_EXPECTED = ("routing", "purity", "ssot", "pdf_coupling", "prior_art_attrib")
+
+
+# ⚠⚠ THE SECOND MEASUREMENT — `RLYB4-1`. What each leg DISPLAYED, tallied separately from what it
+# RECORDED, so the two can be required to agree.
+#
+# WHY IT EXISTS: `B4` moved the annihilation out of the caller's argument and into the producer's,
+# and stopped there. `verdict_record(key, (0 if ok else 1) * 0)` on the shared loop line silences
+# FOUR legs in one token; the same edit on the signals line takes two more. `_EXPECTED` cannot see
+# it — the ROW IS PRESENT, it simply holds a zero the leg did not earn. Presence was checked and
+# value was not.
+#
+# ⭐ THE PRINCIPLE, and it is not local to this file: WHERE A NUMBER CROSSES BETWEEN TWO PARTIES,
+# BOTH MEASURE, AND THE DISAGREEMENT IS THE SIGNAL. A leg's outcome crosses from the producer to the
+# registry; tallying what reached the SCREEN gives a second, independently-written count of the same
+# fact. Annihilating the recorded value now leaves `FAIL` printed and `0` recorded, and they
+# disagree. Deleting the tally call leaves `1` recorded and nothing displayed, and they disagree the
+# other way. It fails CLOSED in both directions.
+#
+# ⚠ WHAT THIS DOES NOT BUY, STATED SO NOBODY READS IT AS MORE: it is not tamper-proof. What it
+# removes is the ONE-TOKEN edit that silences a leg while the evidence of the failure is still on
+# screen — which is the shape that actually occurred, twice, in this file.
+#
+# ⛔ AND THE FIRST VERSION OF THIS CAVEAT WAS WRONG IN BOTH DIRECTIONS, measured by /rely round 2 the
+# same day. It said *"editing `ok` itself, or the helper below, moves both halves together and they
+# still agree."*
+#   · THE HELPER HALF IS FALSE — a single edit to `display_fail` REFUSES, and editing both it and the
+#     record turns three `guards.py` rows red. The caveat conceded a hole that is not there.
+#   · THE `ok` HALF WAS TRUE AND UNDERSTATED — it was reachable by swapping two identifiers in a
+#     `for` target, which is a plausible refactor rather than a deliberate neuter. That is `RLYB4-5`
+#     and it is now closed by an explicit bool guard at both leg sites.
+# ⭐ AN HONEST-SOUNDING CAVEAT IS STILL A CLAIM, and this one shipped un-measured beside a mechanism
+# that had been. Do not write the limits of a control from the armchair; construct them and run them.
+_DISPLAYED_FAILS = []
+
+
+def display_fail(key):
+    """Tally a leg that PRINTED `FAIL`. Called at the print site, never by the enforcement."""
+    _DISPLAYED_FAILS.append(key)
 
 
 def verdict_reset():
     """Start a push judgement. Called ONCE, at the top of the run that will be judged."""
     _VERDICT.clear()
+    del _DISPLAYED_FAILS[:]
 
 
 def verdict_record(step, failures):
@@ -399,7 +451,7 @@ def prepush_verdict():
     return sum(_VERDICT.values()), missing
 
 
-def enforce_prepush_verdict(other_bad=0):
+def enforce_prepush_verdict():
     """DECIDE AND ACT IN ONE UNIT. Returns None on success; otherwise it does not return at all.
 
     ⚠⚠ ATTEMPT SIX, AND THE FIRST FIVE ALL DIED THE SAME DEATH. Every previous repair left the
@@ -415,15 +467,43 @@ def enforce_prepush_verdict(other_bad=0):
     individually true and the artifact as a whole was worthless — because the controls call the
     query in their own frame, where the property really does still hold.
 
-    **So the value is gone.** There is no number to zero, no tuple to rebind: this function reads the
-    registry and DIES. `other_bad` covers only the inline checks, so annihilating it (`* 0`) cannot
-    touch a routing failure — that count comes from the registry, written by its own producer.
+    **So the CALLER'S value is gone**: this function reads the registry and DIES, and there is no
+    parameter for `cmd_prepush` to zero.
 
-    ⚠ THE REMAINING SURFACE IS DELETION, AND IT IS DELIBERATELY THE ONLY ONE. Removing the call, or
-    wrapping it to swallow `SystemExit`, is loud: `guards.py` asserts the name is read inside
-    `cmd_prepush`, and `probe_routing_behavioural.py` runs `batch.py prepush` end to end and requires
-    a NON-ZERO EXIT — an observable no source-level trick can fake, which is what the first five
-    controls lacked."""
+    ⚠⚠ AND SINCE `B4` (2026-09-05) IT TAKES NO ARGUMENT AT ALL. It used to accept `other_bad`, the
+    caller's running total over the inline legs — purity, ssot, pdf coupling, prior-art attribution
+    and the review signals — so `enforce_prepush_verdict(bad * 0)` annihilated SIX gating legs while
+    leaving `routing` untouched.
+
+    ⛔⛔ **RETRACTED THE SAME DAY, BY THE `/rely` ROUND ON THIS VERY CHANGE (`RLYB4-1`).** This
+    docstring said *"there is no number to zero, no tuple to rebind"*. **THAT IS FALSE AND IT WAS
+    FALSE WHEN WRITTEN.** The annihilation was RELOCATED, not removed — out of the consumer's
+    argument and into the PRODUCER's, where `verdict_record(key, (0 if ok else 1) * 0)` on the shared
+    loop line silences FOUR legs in one token, and the same edit on the signals line takes the other
+    two. Measured, not argued: `purity FAIL SYNTHETIC` printed directly above `prepush PASS`, with
+    `guards.py` green on all six `push verdict registry:` rows throughout. **That is the 2026-08-23
+    photograph reproduced against the fix written for it.**
+
+    ⚠ WHAT `B4` ACTUALLY BOUGHT, stated at its true size: the completeness check verifies every
+    leg's PRESENCE and only `routing`'s VALUE. So `B4` widened the presence check from one leg to
+    seven and left the value check at one. Deletion of a `verdict_record` fails CLOSED; an unearned
+    ZERO written in its place does not. The value half is `RLYB4-1` and is what
+    `_printed_fail_rows` below now cross-checks — two independent measurements of one count, where
+    the disagreement is the finding.
+
+    ⚠ Removing the call, or wrapping it to swallow `SystemExit`, is loud: `guards.py` asserts the
+    name is read inside `cmd_prepush`, and `probe_routing_behavioural.py` runs `batch.py prepush` end
+    to end and requires a NON-ZERO EXIT.
+
+    ⛔ TWO SENTENCES WERE RETRACTED HERE 2026-09-05 BY `/rely` ROUND 2, AND BOTH WERE MINE:
+      · *"THE REMAINING SURFACE IS DELETION, AND IT IS DELIBERATELY THE ONLY ONE"* — FALSE.
+        `RLYB4-5` silenced all four inline legs by swapping two identifiers in a `for` target, with
+        nothing deleted and every control green.
+      · *"an observable no source-level trick can fake"* — TRUE OF `routing` ONLY. The probe's
+        constructed baseline turns only the routing legs red, so the six other legs are `ok` in it
+        and the end-to-end exit code says nothing about them.
+    ⚠ THE ENFORCEMENT ITSELF HELD UNDER EIGHTEEN CONSTRUCTED REGISTRY STATES and none of that is in
+    doubt. What is in doubt is whether anything would TELL YOU if it stopped — see `RLYB4-C1..C3`."""
     total, missing = prepush_verdict()
     if missing:
         # ⚠ A STEP THAT NEVER REPORTED IS NOT A PASS. An empty registry reads as "nothing ran",
@@ -431,10 +511,33 @@ def enforce_prepush_verdict(other_bad=0):
         die("push verdict incomplete — %s never reported. A step that did not run cannot have "
             "passed; this is a fail-CLOSED refusal, not a finding about the corpus."
             % ", ".join(missing))
-    if total + other_bad:
-        # ⚠ `RLY27-7`: routing failures are not "signals missing". Name what actually failed.
-        die("%d push check(s) failed — %d routing, %d other. Read the FAIL rows above."
-            % (total + other_bad, total, other_bad))
+    # ⚠⚠ THE TWO MEASUREMENTS MUST AGREE — `RLYB4-1`. `routing` is excluded because it prints its own
+    # rows through `check_routing` rather than through a leg site, so it has no `display_fail` tally;
+    # its value half is covered by `probe_routing_behavioural.py` end to end instead.
+    _legs = sum(v for k, v in _VERDICT.items() if k != "routing")
+    if _legs != len(_DISPLAYED_FAILS):
+        die("push verdict INCONSISTENT — %d leg failure(s) RECORDED but %d FAIL row(s) DISPLAYED "
+            "(%s). One of the two was tampered with or dropped; a count that disagrees with the "
+            "screen cannot be acted on either way, so this refuses rather than picking one."
+            % (_legs, len(_DISPLAYED_FAILS), ", ".join(_DISPLAYED_FAILS) or "none displayed"))
+    # ⚠ `any`, NEVER `if total:` — `RLYB4-3`. `total` is a SUM, so a negative in one leg cancels a
+    # positive in another and the push proceeds with a real failure recorded. No producer writes a
+    # negative today, which is why this was a walk-past route rather than a live hole — but `B4`
+    # took the number of producers from one to seven, and "no leg is non-zero" is the property
+    # actually wanted. A sum was never it.
+    if any(_VERDICT.values()):
+        #
+        # ⚠⚠ THE `%d routing, %d other` SHAPE IS LOAD-BEARING OUTPUT, NOT PROSE — DO NOT REFLOW IT.
+        # `probe_routing_behavioural.py:_prepush_exit` parses the routing count straight out of this
+        # sentence (`push check\(s\) failed\s*[—-]\s*(\d+)\s+routing`) and REFUSES to fall back to
+        # the exit code, which is over-determined. Rewording this line to a named-leg list breaks
+        # that observable and the probe raises rather than reading — caught while writing `B4`.
+        # So the breakdown is APPENDED on its own line instead of replacing the counts.
+        _routing = _VERDICT.get("routing", 0)
+        die("%d push check(s) failed — %d routing, %d other. Read the FAIL rows above.\n"
+            "  legs: %s"
+            % (total, _routing, total - _routing,
+               ", ".join("%s=%d" % (k, v) for k, v in sorted(_VERDICT.items()))))
 
 
 def rely_record():
@@ -1017,7 +1120,18 @@ def check_ssot(decls):
         return False, "NO DECLARATION BASELINE — run `batch.py decls --baseline` (failing closed)"
     p = os.path.join(REPO, "ssot.json")
     if not os.path.exists(p):
-        return True, "no ssot.json in tree"
+        # ⚠⚠ FAILS CLOSED — `RLYB4-4`, AND THIS RETURNED `True, "no ssot.json in tree"` UNTIL
+        # 2026-09-05. That is the 0-versus-null defect in one line: the SSOT being ABSENT and every
+        # declaration being COVERED produced the identical verdict, a recorded zero, and the more
+        # complete the coverage looked the less had actually been read. `ssot.json` is the canonical
+        # registry at the repo root, ~2.2 MB, exported by SJV — it is not an optional file, so its
+        # absence means "I could not read what I judge", never "nothing is owed".
+        # ⭐ Its sibling `check_purity` two functions up already got this right for a missing
+        # baseline, in the same shape, with the words "(failing closed)" in the message.
+        return False, ("ssot.json is MISSING from the tree — the SSOT could not be read, so no "
+                       "declaration can be shown covered. This is a read failure, not a finding "
+                       "about the corpus; it fails CLOSED. Run the SJV `export_full` to an "
+                       "ABSOLUTE path to regenerate it.")
     blob = io.open(p, encoding="utf-8").read()
     # ⚠ EXACT names, not a substring test. `"t_snap" in blob` is true because `t_snap_derived` is in
     # there, so a brand-new `theorem t_snap` with no SSOT row passed (RLY2-8). Parse the identifiers
@@ -1739,6 +1853,13 @@ def signal_verdict(name):
 # routing, the second manufactures green by shrinking the denominator.
 REVIEW_STEPS = ("editorial", "adversary")
 
+# ⚠⚠ THE REVIEW-SIGNAL LEGS MUST REPORT TOO — `B4`. They gate the push exactly as the four inline
+# legs do, and before this they rode the same annihilable accumulator. DERIVED FROM `REVIEW_STEPS`,
+# NEVER MIRRORED: writing the names out again would be a second list to drift, and this file has
+# already removed one step from that tuple (`prior_art`, above). Deriving means a removal cannot
+# leave `_EXPECTED` demanding a leg that no longer runs, and an addition cannot ride in unexpected.
+_EXPECTED += tuple("signal:%s" % s for s in REVIEW_STEPS)
+
 
 def _numstat(ranges=None):
     """`{path: (added, deleted)}` over the pushed ranges, or the working tree when none.
@@ -2211,7 +2332,12 @@ def cmd_prepush(ranges=None):
     fires, ins, newfile = check_trigger5(ranges)
     print("trigger 5: %s (%d insertions, new .lean file: %s)"
           % ("FIRES — prior-art review REQUIRED" if fires else "does not fire", ins, newfile))
-    bad = 0
+    # ⚠⚠ THERE IS NO `bad` ACCUMULATOR HERE ANY MORE, AND ITS ABSENCE IS THE POINT (`B4`). Every
+    # gating leg below writes its own row via `verdict_record` at the moment it computes; nothing in
+    # this frame holds a failure count, so nothing in this frame can discard one. If you find
+    # yourself re-introducing a local total to hand to the enforcement call, you are rebuilding the
+    # exact defect this removed — read `_EXPECTED` and `enforce_prepush_verdict` first.
+    #
     # ⚠ ONE judgement per run. Without this a second `cmd_prepush` in the same process would
     # inherit the first run's rows, and a step that failed to run would look like it had reported.
     verdict_reset()
@@ -2221,15 +2347,40 @@ def cmd_prepush(ranges=None):
     # a way `build` is not: neither has anything to do with `sorry`, so neither conflicts with the
     # stub-first protocol, which commits and pushes deliberately incomplete proofs.
     decls = added_decls()
-    for name, ok, why in [("purity",) + check_purity(decls), ("ssot",) + check_ssot(decls),
-                          ("pdf coupling",) + check_pdf_coupling(ranges),
-                          # ⚠ BLOCKS, and it is satisfiable one file at a time by construction —
-                          #   see check_prior_art_attribution. Placed with purity and ssot because
-                          #   it is the same shape: a per-declaration obligation the corpus owes,
-                          #   enforced against what THIS push actually changed.
-                          ("prior-art attrib",) + check_prior_art_attribution(ranges)]:
+    # ⚠⚠ EACH LEG RECORDS ITS OWN COUNT — THERE IS NO ACCUMULATOR TO ANNIHILATE (`B4`). These four
+    # incremented a local `bad` that was handed to `enforce_prepush_verdict`, so `bad * 0` silenced
+    # all four (plus the two signal legs below) in one edit. The first element of each row is now a
+    # REGISTRY KEY, stable and identifier-shaped, distinct from the display name beside it.
+    for key, name, ok, why in [("purity", "purity") + check_purity(decls),
+                               ("ssot", "ssot") + check_ssot(decls),
+                               ("pdf_coupling", "pdf coupling") + check_pdf_coupling(ranges),
+                               # ⚠ BLOCKS, and it is satisfiable one file at a time by construction
+                               #   — see check_prior_art_attribution. Placed with purity and ssot
+                               #   because it is the same shape: a per-declaration obligation the
+                               #   corpus owes, enforced against what THIS push actually changed.
+                               ("prior_art_attrib", "prior-art attrib")
+                               + check_prior_art_attribution(ranges)]:
+        # ⚠⚠ `RLYB4-5` — `ok` MUST BE A BOOL, AND THIS IS `DC-45` INSIDE THE LOOP THAT ENFORCES IT.
+        #   Measured by /rely round 2: swapping two identifiers in the `for` target above —
+        #   `for key, name, ok, why` -> `for key, name, why, ok` — makes each leg's non-empty `why`
+        #   STRING the truthy `ok`. Every leg then reads as passing, BOTH halves move together so
+        #   the agreement check has nothing to disagree about, `guards.py` stays at exit 0 and the
+        #   probe is blind because the routing count never moves. Result: `ssot ok False` printed
+        #   above `prepush PASS`, exit 0. **A truthy string and `True` are indistinguishable to
+        #   `if not ok` and carry entirely different meanings** — so the fix is to make the VALUE
+        #   carry the difference rather than to trust the unpacking order.
+        if not isinstance(ok, bool):
+            die("push verdict leg %r reported a non-boolean outcome (%s: %r). A leg's verdict must "
+                "be True or False; a truthy string reads as PASS at every site that tests it. This "
+                "is a wiring error in cmd_prepush, not a finding about the corpus — it fails CLOSED."
+                % (key, type(ok).__name__, ok))
         print("  %-18s %-4s %s" % (name, "ok" if ok else "FAIL", why))
-        bad += 0 if ok else 1
+        # ⚠ TWO SEPARATE STATEMENTS, DELIBERATELY (`RLYB4-1`). The tally counts what reached the
+        #   SCREEN; the registry holds what was RECORDED. `enforce_prepush_verdict` requires them to
+        #   agree, so annihilating either one alone now refuses instead of passing.
+        if not ok:
+            display_fail(key)
+        verdict_record(key, 0 if ok else 1)
 
     # ⚠ ADVISORY, and `bad` is deliberately NOT incremented — see `prose_shrank_unpaired`. Only a
     # human can tell a verified duplicate from a loss. The count PRINTS on every run, clean or not,
@@ -2299,17 +2450,32 @@ def cmd_prepush(ranges=None):
         print("      purpose  %s" % purpose)
         print("      fires on %s" % when)
         print("      ledger   step `%s` — %s" % (name, why))
-        bad += 0 if ok else 1
+        # ⚠ `B4`: the signal legs record themselves too. The key is prefixed so a failing review
+        #   signal is distinguishable from a mechanical leg in the refusal message, and so a step
+        #   name can never collide with one of the four inline keys above.
+        # ⚠ And the same two-statement split as the loop above (`RLYB4-1`) — this line was the
+        #   SECOND one-token site, covering both signal legs at once. Same bool guard, same reason
+        #   (`RLYB4-5`): `ok` is computed as `valid or not need` and must stay a bool.
+        if not isinstance(ok, bool):
+            die("push verdict leg 'signal:%s' reported a non-boolean outcome (%s: %r). It fails "
+                "CLOSED — see the identical guard on the inline legs above."
+                % (name, type(ok).__name__, ok))
+        if not ok:
+            display_fail("signal:%s" % name)
+        verdict_record("signal:%s" % name, 0 if ok else 1)
     # ⚠ BEFORE the `die`, not after the PASS. On the success path only it would print just when the
     # push was already clear — and a recurrence count matters MOST while something is failing. That
     # placement would have re-created the original defect (surfacing at the rarest moment) in a new
     # location, which is the shape this whole change exists to correct.
     _recurrence_note()
-    # ⚠⚠ ONE CALL, NO RETURN VALUE, NOTHING TO DISCARD. `enforce_prepush_verdict` reads the registry
-    # and DIES on a failure; it does not hand this frame a number to rebind, zero out or ignore.
-    # That is `RLY28-1` attempt six, and the five before it all failed at exactly this line by
-    # leaving a value here for the caller to throw away.
-    enforce_prepush_verdict(bad)
+    # ⚠⚠ ONE CALL, NO ARGUMENT, NO RETURN VALUE, NOTHING TO DISCARD. `enforce_prepush_verdict` reads
+    # the registry and DIES on a failure; it does not hand this frame a number to rebind, zero out
+    # or ignore. That is `RLY28-1` attempt six, and the five before it all failed at exactly this
+    # line by leaving a value here for the caller to throw away.
+    # ⚠ `B4` TOOK THE LAST ONE AWAY. Until 2026-09-05 this read `enforce_prepush_verdict(bad)`, and
+    # `bad` carried six gating legs, so `(bad * 0)` was a live one-token neuter for all six. There is
+    # no argument now — every leg writes its own registry row where it computes it.
+    enforce_prepush_verdict()
     if state:
         state["stages"]["prepush"] = {"ok": True, "tool": self_hash()}
         save(state)

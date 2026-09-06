@@ -313,9 +313,13 @@ PRE_PUSH_PLAN = [
     ("hooks armed", "BLOCK", "the installed hooks match their tracked sources"),
     ("quarantine", "BLOCK", "private/* branches never reach a remote"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
-    ("routing control", "BLOCK", "the behavioural mutation probe: 9 neuters of the routing routes, "
-                                 "each required to turn its named ROW red (~225s; fails CLOSED on a "
-                                 "moved anchor). Does NOT yet cover RLY28-1 — a tenth mutation is owed"),
+    ("routing control", "BLOCK", "the behavioural mutation probe: 17 mutations of the routing and "
+                                 "enforcement routes, each required to turn its named ROW red or to "
+                                 "move the prepush EXIT CODE (~225s; fails CLOSED on a moved anchor). "
+                                 "RLY28-1 IS covered — the debt this line used to record was paid, "
+                                 "and the line said otherwise for as long as it took a /rely round "
+                                 "to read it. It does NOT cover the recorded VALUE of the six "
+                                 "non-routing legs (RLYB4-1)"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_claude_md", "BLOCK", "CLAUDE.md shape contract: rooted paths resolve, named checkers exist "
                                  "(3 legs still PENDING — it says so on every run)"),

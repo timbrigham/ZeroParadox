@@ -419,6 +419,30 @@ COST     three false negatives shipped into docstrings as measured fact; and an 
          hands is the entire difference.
 READ     tools/process/not-in-the-library.md
 
+## R-ZERONULL  Zero and null are different answers. Make the VALUE carry the difference.
+TRIGGER  you are about to RETURN, RECORD or BRANCH ON an empty, zero, missing or unreadable
+         result — an early `return True` / `return 0` / `return []` on absent input, or a
+         consumer testing one. Not "when something is ambiguous": that is a category and it
+         leaks. The action is an empty value crossing a boundary.
+RULE     ask ONE question — does the empty branch return a value that DIFFERS from the
+         satisfied branch, or only a different MESSAGE? **If only the prose differs it is a
+         defect**, because consumers branch on the value and nobody reads the string. Fix it
+         with a distinct sentinel, a second element, or a distinct status — never a comment.
+         `owing_paths` returns `None` not an empty set; `prepush_verdict` returns
+         `(total, missing)`; the ledger keeps six statuses and lets none collapse. ⛔ FENCE
+         (Tim): this binds only where the empty answer is LOAD-BEARING FOR A DECISION. An
+         advisory input whose absence changes nothing is exempt — forcing a distinction there
+         is noise. ⚠ Then ask what the CONSUMER defaults to: an honest `0` summed by a caller
+         testing non-zero is still "nothing wrong". CONSTRUCT the unreadable state and RUN it.
+COST     four sites solved this independently and four more still carry it. `check_ssot`
+         returned `True, "no ssot.json in tree"` for months — the more complete the coverage
+         looked, the less had been read — sitting two functions below `check_purity`, which
+         had the identical case right with "(failing closed)" in its message. Found by
+         executing, after being read past repeatedly. ⚠ NOT `R-NOTINLIB` (that is the PROSE
+         form) and NOT `DC-44` (one value, wrong object — its detector agrees perfectly here,
+         because both computations return the same bytes).
+READ     .claude-local/DEFECT_CLASSES.md
+
 ## R-LOOPCAP  Stopping is a decision about SEVERITY, never a wait for silence.
 TRIGGER  a review gate has returned findings and you are deciding whether to iterate again.
 RULE     ask only: did this round find anything BEDROCK? BEDROCK — a violated core invariant,

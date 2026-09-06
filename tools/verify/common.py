@@ -562,7 +562,7 @@ def ledger_basis(ref='HEAD'):
 
 
 def ledger_subjects(rels, ref='HEAD'):
-    """`([{path, blob}], skipped)` — subjects safe to record, and the paths deliberately left out.
+    """`([{path, git_blob_id}], skipped)` — subjects safe to record, and the paths left out.
 
     ⚠⚠ FAIL CLOSED, AND REPORT THE SKIPS. A path absent from `ref`, or differing from it in the
     worktree or the index, is DROPPED rather than recorded — because recording it would attest to

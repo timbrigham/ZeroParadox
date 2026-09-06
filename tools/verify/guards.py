@@ -711,18 +711,52 @@ def check_routing_enforcement():
         finally:
             sys.stdout = _real_stdout
         _tot, _miss = batch.prepush_verdict()
-        _r_cases.append(("the producer records its own count", _tot == 1 and not _miss,
-                         "registry reports %d, missing %r" % (_tot, _miss)))
+        # ⚠ `B4`: ASSERT ABOUT `routing`, NOT ABOUT EMPTINESS. This read `not _miss`, which was right
+        # while `_EXPECTED` held one name. It now holds seven, and this frame deliberately exercises
+        # ONLY the routing producer — so the other six are absent for the correct reason, and
+        # demanding an empty `missing` here would fail a healthy registry. The property under test is
+        # "the producer wrote its own row", which is exactly `routing not in missing`.
+        _r_cases.append(("the producer records its own count",
+                         _tot == 1 and "routing" not in _miss,
+                         "registry reports %d, routing recorded (other legs not exercised in this "
+                         "frame: %r)" % (_tot, _miss)))
 
         batch.verdict_reset()
         _tot0, _miss0 = batch.prepush_verdict()
-        _r_cases.append(("an unreported step is MISSING, not zero", _miss0 == ("routing",),
-                         "empty registry reports missing=%r" % (_miss0,)))
+        # ⚠⚠ `B4`, AND THE DUPLICATION BELOW IS DELIBERATE — IT IS THE CONTROL, NOT A MIRROR DEFECT.
+        # This used to assert `_miss0 == ("routing",)`, which was correct while `_EXPECTED` held one
+        # name and six other gating legs rode an annihilable local total in `cmd_prepush`. Comparing
+        # against `batch._EXPECTED` alone would be TAUTOLOGICAL: `prepush_verdict` computes `missing`
+        # BY ITERATING `_EXPECTED`, so an empty registry always reports exactly it — the assertion
+        # would still pass if someone emptied the tuple. So the expected set is written out
+        # INDEPENDENTLY here and required to agree. Two statements of one list, and the disagreement
+        # is the signal; that is the only shape that catches a bar being quietly lowered.
+        # ⚠⚠ EVERY ENTRY IS A LITERAL — `RLYB4-2`, AND THE FIRST VERSION OF THIS LINE GOT IT HALF
+        # RIGHT, WHICH WAS WORSE THAN OBVIOUS. It read `... + tuple("signal:%%s" %% _s for _s in
+        # batch.REVIEW_STEPS)`, deriving the signal half from THE SAME SOURCE `_EXPECTED` derives it
+        # from — so for exactly the two entries `B4` added it was tautological and asserted nothing.
+        # Measured: `REVIEW_STEPS = ()` drops two gating legs, `_EXPECTED` goes 7 -> 5, and this row
+        # reported "empty registry reports all 5 expected step(s) missing" and called it **ok**.
+        # Not a hypothetical edit — `prior_art` was removed from that tuple earlier the same day.
+        #
+        # ⭐ THE DUPLICATION IS THE CONTROL. A second, independently-written statement of the
+        # expected set is the only thing that can disagree with the first; a derived copy agrees by
+        # construction and therefore checks nothing. If a legitimate change to `REVIEW_STEPS` turns
+        # this row red, THAT IS THE ROW WORKING — update it deliberately, in the same commit, and do
+        # not re-derive it to make the red go away.
+        _need = ("routing", "purity", "ssot", "pdf_coupling", "prior_art_attrib",
+                 "signal:editorial", "signal:adversary")
+        _r_cases.append(("an unreported step is MISSING, not zero",
+                         _miss0 == tuple(batch._EXPECTED) and set(_need) == set(_miss0),
+                         "empty registry reports all %d expected step(s) missing: %r"
+                         % (len(_miss0), _miss0)))
 
         batch.verdict_reset()
         _ = batch.routing_verdict({}, None) * 0          # the RLY28-1 neuter, verbatim
         _tot2, _miss2 = batch.prepush_verdict()
-        _r_cases.append(("discarding the return value is INERT", _tot2 == 1 and not _miss2,
+        # ⚠ Same `B4` correction as the first case: `routing` is the leg this frame exercises.
+        _r_cases.append(("discarding the return value is INERT",
+                         _tot2 == 1 and "routing" not in _miss2,
                          "registry still reports %d after the caller annihilated it" % (_tot2,)))
     except Exception as _e:                                   # noqa: BLE001
         _r_cases.append(("the verdict registry is reachable", False, "raised %r" % (_e,)))
