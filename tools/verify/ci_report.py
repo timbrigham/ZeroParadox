@@ -156,7 +156,7 @@ CHECKS = [
 # false green on their first execution (a route invoking a flag its checker does not have, inert for
 # its whole life, scoring `ok` because the attack never happened). A registry of routes that cannot
 # detect a dead route is the fail-open shape it exists to prevent, one level up.
-SELFTESTS = ["check_prose.py", "check_pov.py", "check_modal.py",
+SELFTESTS = ["check_briefs.py", "check_prose.py", "check_pov.py", "check_modal.py",
              "check_classes.py", "check_encoding.py", "check_poles.py", "check_moved.py",
              "check_paths.py", "check_invariants.py", "check_hashes.py", "check_negatives.py",
              "check_figures.py", "check_checkers.py", "check_frozen.py", "check_claude_md.py",

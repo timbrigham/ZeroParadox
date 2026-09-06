@@ -323,6 +323,9 @@ PRE_PUSH_PLAN = [
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_claude_md", "BLOCK", "CLAUDE.md shape contract: rooted paths resolve, named checkers exist "
                                  "(3 legs still PENDING — it says so on every run)"),
+    ("check_briefs", "BLOCK", "a gate brief instructs a command that WORKS: every --flag exists, "
+                              "every --step is REGISTERED in the ledger, every cited path resolves. "
+                              "2 WARN legs print their count every run"),
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
     ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
     ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
@@ -421,6 +424,7 @@ PRE_PUSH_EXPECT = [
     # ⚠ 3 = scope skipped for want of a built .lake, tolerated at both phases (RLY27-7).
     ("check_paths", ("check_paths.py", "--all", "--warn-private", "--record"), (0, 3)),
     ("check_claude_md", ("check_claude_md.py", "--record"), (0,)),
+    ("check_briefs", ("check_briefs.py", "--record"), (0,)),
     ("check_moved", ("check_moved.py", "--block", "--record"), (0,)),
     ("check_negatives", ("check_negatives.py", "--block", "--record"), (0,)),
     ("check_figures", ("check_figures.py", "--block", "--record"), (0,)),
@@ -677,6 +681,26 @@ def pre_push(stream):
     if py("check_claude_md.py", "--record") != 0:
         print("\nPush blocked: CLAUDE.md names a path or a checker that does not exist.")
         print("Fix the pointer. Body: tools/process/claude-md-maintenance.md.")
+        return 1
+    # ⚠ EXIT 2 IS NOT EXIT 1 HERE AND MUST NOT BE FOLDED IN. check_briefs returns 2 when it
+    # could not ASK — record.py --help failed, the ledger was unreachable, or the glob matched
+    # nothing. That is a read failure, never a finding about the briefs, and treating it as a
+    # pass is exactly the shape `DC-45` names, which this checker exists to catch one layer
+    # down. ⚠ Keep a class id away from a following noun: `check_figures` reads a number next
+    # to a countable word as an undated artifact count, and blocked this commit twice — the
+    # second time on the comment written to explain the first. Writing ABOUT a pattern trips
+    # it, exactly as `R-TRUNC` records for its own matcher.
+    _cb = py("check_briefs.py", "--record")
+    if _cb == 2:
+        print("")
+        print("Push blocked: check_briefs COULD NOT ASK (ledger or record.py unreachable).")
+        print("This is a read failure, not a finding about the briefs. Fix the reachability.")
+        return 1
+    if _cb != 0:
+        print("")
+        print("Push blocked: a gate brief names a flag, step or path that does not exist.")
+        print("A brief instructing a command that does not work is found by a confused agent")
+        print("mid-round, which is the most expensive place to find it.")
         return 1
     print("================================")
 
