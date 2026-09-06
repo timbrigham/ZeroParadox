@@ -1398,7 +1398,113 @@ def r_pov_baseline_handedit():
 r_pov_baseline_handedit.attacks = os.path.join(BASE, "pov_baseline.txt")
 
 
+# ═══ PROPERTY — a gate brief cannot name a `record.py` flag the parser does not accept ═══
+#
+# ⚠⚠ THIS ROW EXISTS BECAUSE `check_briefs.py` HAD NO ENTRY HERE AT ALL, and its `LEGS` table
+# was built with `mode` as DATA *specifically* so a control could read the enforcement decision.
+# Nothing read it (`RLYB4-C3`). The checker was written, shipped, reported "0 findings over 14
+# briefs", and `/rely` then found the zeros were mostly SILENCE — 4 of 10 flags, 6 of 14 briefs,
+# 15 of ~65 citations. A checker with no guard row is a gate whose enforcement nobody re-tests.
+#
+# ⚠ THE ROUTES ARE TODAY'S FIXES, LOCKED IN. `B1`-`B3` closed 2026-09-06; each route below is the
+# exact shape that walked through the leg BEFORE that change, so a revert turns this row red
+# rather than silently restoring the hole.
+BRIEF_PROBE = os.path.join(REPO, ".claude", "commands", "tag-review.md")
+RECORD_PY = os.path.join(HERE, "record.py")
+BRIEFS_PY = os.path.join(HERE, "check_briefs.py")
+
+# ⚠ A FLAG THE PARSER GENUINELY DOES NOT HAVE. Verified against `record.py --list-flags`, which is
+# the parser's own list — never against `--help`, which is prose and is the defect this guards.
+BRIEF_BAD_FLAG = (chr(10) + "```" + chr(10)
+                  + "python tools/verify/record.py --step rely --verdict fail --nonesuch x"
+                  + chr(10) + "```" + chr(10))
+
+
+def briefs_block():
+    """(does check_briefs BLOCK, its output). Exit 1 is a finding; 2 is could-not-ask, NOT a block.
+
+    ⚠ RUN WITHOUT `--record`. A guard run must not append to the live verdict stream — the whole
+    point of this file is that it plants violations, and a planted violation must never become a
+    recorded verdict about the corpus.
+
+    ⚠ AND `rc == 1`, NEVER `rc != 0`. Measured on this file's own history (/rely pass 6): a
+    detector written `rc != 0` scored a DELETED checker as blocking, because a missing script
+    exits 2. `check_briefs` exits 2 when it could not ASK, which is the opposite of a finding."""
+    rc, out = sh(sys.executable, BRIEFS_PY)
+    return rc == 1, out
+
+
+def r_brief_continuation():
+    """ROUTE `B1` — move the bad flag onto a backslash CONTINUATION line.
+
+    The `flags` leg read only the FIRST line until 2026-09-06: the greedy class ate the trailing
+    backslash, the continuation group then matched ZERO times, and a zero-width match still yields
+    a successful overall match — so the engine never backtracked. Measured on the real briefs,
+    where three of them hid six flags each this way."""
+    def produce(orig):
+        return orig.replace(
+            b"--verdict fail --nonesuch x",
+            ("--verdict fail " + chr(92) + chr(10) + "    --nonesuch x").encode())
+    return _rewrite(BRIEF_PROBE, produce)
+r_brief_continuation.attacks = BRIEF_PROBE
+
+
+def r_help_prose_flag():
+    """ROUTE `B3` — name the flag in `record.py`'s HELP PROSE without adding an argument.
+
+    ⚠⚠ THIS IS THE ROUTE THAT CATCHES A REVERT OF `real_flags()`, and it is why this row was worth
+    writing. `real_flags` scraped `--help` until 2026-09-06, which reads DESCRIPTIONS as well as
+    options — so a flag mentioned only inside a help string became ground truth, and any brief
+    could then cite it. It is wired to `--list-flags`, the parser's own option strings, now.
+
+    ⚠ The two readers agreed EXACTLY on the day of the fix, 18 flags and 18, so NOTHING
+    distinguished them by observation. Only this mutation does: with `--list-flags` the prose is
+    ignored and the block survives; rewire to `--help` and this route starts BYPASSING and the row
+    goes red. **A latent defect with no control is indistinguishable from a fixed one."""
+    def produce(orig):
+        return orig.replace(
+            b'help="one line, recorded on a FAIL")',
+            b'help="one line, recorded on a FAIL; see --nonesuch")')
+    return _rewrite(RECORD_PY, produce)
+r_help_prose_flag.attacks = RECORD_PY
+
+
+def r_flags_leg_warn():
+    """ROUTE — downgrade the `flags` leg from BLOCK to WARN in the `LEGS` table.
+
+    ⚠ THIS ONE IS **PERMITTED** AND MUST BE **VISIBLE**, which is the whole reason `mode` is DATA.
+    `R-NOCONV` allows an enumeration leg to be downgraded and requires the downgraded gate to print
+    its count on every run — a warning nobody counts manufactures coverage that was never earned.
+    So this is `may_suppress=True` plus a predicate that the count is still on the page."""
+    def produce(orig):
+        return orig.replace(b"('flags',  'BLOCK',", b"('flags',  'WARN', ")
+    return _rewrite(BRIEFS_PY, produce)
+r_flags_leg_warn.attacks = BRIEFS_PY
+
+
+def flags_count_printed(ctx):
+    """The downgraded leg still prints its count — `R-NOCONV`'s visibility bar, read from output.
+
+    ⚠ Parsed by FIELDS rather than by regex on purpose: the row is `name mode count finding(s)`,
+    and matching the shape beats matching a phrase that a formatting change would silently break."""
+    for line in (ctx.get("output") or "").splitlines():
+        f = line.split()
+        if len(f) >= 3 and f[0] == "flags" and f[1] == "WARN" and f[2].isdigit():
+            return True
+    return False
+
+
 PROPERTIES = [
+    {
+        "name": "a gate brief cannot name a record.py flag the parser does not accept",
+        "violate": lambda: _append(BRIEF_PROBE, BRIEF_BAD_FLAG),
+        "detect": briefs_block,
+        "routes": [
+            ("the bad flag moves to a continuation line", r_brief_continuation, False, None),
+            ("the flag is named in record.py's HELP PROSE only", r_help_prose_flag, False, None),
+            ("the `flags` leg is downgraded to WARN", r_flags_leg_warn, True, flags_count_printed),
+        ],
+    },
     {
         "name": "a block both over cap and latching appears in BOTH reports",
         "violate": lambda: _append(PROBE_FILE, PROBE_BOTH_BLOCK),
@@ -1600,6 +1706,13 @@ TOUCHED = [
     os.path.join(BASE, "prose_baseline.txt"),
     ROUND_STATE,
     os.path.join(REPO, "ZeroParadox", "Order", "Vendored", "Probe.lean"),
+    # ⚠ ADDED WITH THE check_briefs PROPERTY. Its three routes write these three paths, and the
+    # rule stated above is that ANY new route names every path it writes HERE, in the same change
+    # — a restoration proof that does not cover a mutated path is a false green, which is this
+    # registry's own recorded failure mode.
+    BRIEF_PROBE,
+    RECORD_PY,
+    BRIEFS_PY,
 ]
 
 
