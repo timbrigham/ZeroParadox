@@ -332,10 +332,17 @@ def module_evidence(*paths, repo=None):
     return out
 
 
-def emit(step, tier, verdict, subjects, basis, reason=None,
-         inputs=(), decided=None, cost=None, revision=0, evidence=(), outstanding=(),
-         failing=()):
-    """Append one record. Returns its id, or None if refused or unreachable.
+def build_record(step, tier, verdict, subjects, basis, reason=None,
+                 inputs=(), decided=None, cost=None, revision=0, evidence=(), outstanding=(),
+                 failing=()):
+    """The record dict, built once so `emit` and `check` post IDENTICAL bytes.
+
+    ⚠⚠ ONE CONSTRUCTOR, BECAUSE A DRY RUN THAT BUILDS DIFFERENT BYTES CHECKS NOTHING.
+    `--dry-run` answers "would the ledger take this record", and it can only answer that if what
+    it validates is what `emit` would append — including the three keys OMITTED WHEN EMPTY
+    (`evidence`, `failing`, `outstanding`), which is precisely where a second constructor would
+    drift. This is the mirror defect the module docstring refuses at the RULES layer, applied to
+    the PAYLOAD: there is no second implementation to disagree.
 
     `subjects` is a list of {"path", "git_blob_id"} — WHAT THIS VERDICT IS ABOUT, not
     everything the step glanced at. A step that examined forty files and failed on
@@ -391,10 +398,16 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
     # records. This expresses it as ONE record instead.
     #
     # ⚠ OMITTED WHEN EMPTY, for the reason the `evidence` block above gives. The server also
-    # refuses `failing` on a non-FAIL verdict (stored and silently ignored = looks correct,
+    # refuses `failing` on a NON-BLOCKING verdict (stored and silently ignored = looks correct,
     # behaves otherwise) and refuses an EMPTY `failing` (it resolves to PASS at every path --
-    # exoneration wearing a FAIL's costume). Absent `failing` still indicts every subject, so
-    # no record written before this key existed is silently weakened.
+    # exoneration wearing a blocking verdict's costume). Absent `failing` still indicts every
+    # subject, so no record written before this key existed is silently weakened.
+    #
+    # ⚠⚠ "NON-BLOCKING" IS THE SERVER'S WORD AND IT IS NOT A SYNONYM FOR "NON-FAIL". This comment
+    # said `non-FAIL` until 2026-09-06 and that was measurably wrong: `failing` validates on
+    # UNDECIDED and is refused only on PASS. The set that BLOCKS is {FAIL, UNDECIDED}; the set that
+    # ADMITS is {PASS}. Reading the first as "FAIL alone" is how a third verdict gets treated as an
+    # abstention that lets work through.
     if failing:
         record["failing"] = sorted(set(failing))
     # ⚠⚠ V18: FINDINGS RIDE ON THE RECORD, NOT IN A REASON STRING. A gate that reaches its ORDINARY
@@ -413,6 +426,49 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
     # severity split is the entire safety of this route and must never become a way to ship one.
     if outstanding:
         record["outstanding"] = list(outstanding)
+    return record
+
+
+def check(**kw):
+    """VALIDATE a record without writing it. Returns `(ok, errors)`, or `None` if unreachable.
+
+    ⚠⚠ THE THREE ANSWERS ARE THREE DIFFERENT VALUES, NOT THREE DIFFERENT MESSAGES (`R-ZERONULL`).
+    `(True, [])` the ledger would accept it · `(False, [errors...])` it would refuse, and EVERY
+    violation is named rather than only the first · `None` the ledger could not be ASKED.
+    Collapsing the third into `(False, [])` is the exact shape this layer exists to remove: an
+    outage would read as a refusal with nothing wrong in it, and a caller testing `errors` would
+    find none and conclude the record was fine.
+
+    ⚠ NO RETRY AND NO LOCAL FALLBACK. `validate` is pure server-side, so a refusal is terminal
+    exactly as it is on `append`; a transport failure returns `None` and the caller must not
+    proceed as though the record were good. There is deliberately no local copy of the rules to
+    fall back to — that is the mirror defect, and it would be worst here, where the entire purpose
+    is to ask the authority instead of guessing.
+    """
+    record = build_record(**kw)
+    try:
+        out = _call("validate", {"record": record})
+    except (urllib.error.URLError, OSError, TimeoutError) as exc:
+        print(f"UNDECIDED: verdictLedger unreachable at {URL} ({exc})")
+        return None
+    if not isinstance(out, dict) or "ok" not in out:
+        print("UNDECIDED: verdictLedger returned no usable payload for validate")
+        return None
+    return bool(out.get("ok")), list(out.get("errors") or [])
+
+
+def emit(step, tier, verdict, subjects, basis, reason=None,
+         inputs=(), decided=None, cost=None, revision=0, evidence=(), outstanding=(),
+         failing=()):
+    """Append one record. Returns its id, or None if refused or unreachable.
+
+    ⚠ The record is built by `build_record`; this function is the WRITE. The split is what lets
+    `check` interrogate the identical payload without performing one.
+    """
+    record = build_record(step=step, tier=tier, verdict=verdict, subjects=subjects, basis=basis,
+                          reason=reason, inputs=inputs, decided=decided, cost=cost,
+                          revision=revision, evidence=evidence, outstanding=outstanding,
+                          failing=failing)
 
     last_error = None
     for attempt in range(_TRANSPORT_TRIES):
@@ -477,8 +533,28 @@ def _cli(argv):
                     "common.record_if_asked instead).")
     ap.add_argument("--step", required=True,
                     help="the registered step, e.g. editorial / adversary / prior_art / rely")
-    ap.add_argument("--verdict", required=True, choices=["pass", "fail"],
-                    help="the gate's verdict over the files it reviewed")
+    # ⚠⚠ `undecided` IS A THIRD VERDICT AND IT BLOCKS — IT IS NOT A SOFTER FAIL, AND THE BRIEFS
+    # ASKED FOR IT BEFORE THE CLI COULD EMIT IT. `copy-editor.md` instructs recording UNDECIDED when
+    # a round cannot decide, and until 2026-09-06 `choices` held two values, so the command the brief
+    # printed was a usage error. A brief instructing an impossible command is a gate with no way to
+    # record at all — the `check_briefs` defect class, pointed at the recorder itself (`B5`).
+    #
+    # ⚠ THE WIRE VALUE IS UPPERCASE AND THE SERVER MATCHES IT EXACTLY: the enum is
+    # ('PASS', 'FAIL', 'UNDECIDED') and `'undecided'` is refused by name. `.upper()` at the `emit`
+    # call below is the whole mechanism. ⚠ The OPPOSITE rule holds one call away — `find()` IS
+    # case-insensitive and advertises it. Two entry points, two rules; do not generalise either.
+    #
+    # ⚠⚠ UNDECIDED BLOCKS, AND THAT IS MEASURED RATHER THAN ASSUMED. Against the running server
+    # 2026-09-06: `failing` is ACCEPTED on FAIL and on UNDECIDED and REFUSED on PASS, with the
+    # server's own message naming "a verdict that BLOCKS — FAIL or UNDECIDED"; and
+    # `stale_or_missing` above already counts UNDECIDED among the steps needing a re-run. So an
+    # UNDECIDED record satisfies nothing and admits nothing. **It says "this round produced no
+    # decision", which is the one thing a two-valued enum forced a gate to lie about** — the
+    # absence-rendering-as-something-else shape this whole ledger exists to remove.
+    ap.add_argument("--verdict", required=True, choices=["pass", "fail", "undecided"],
+                    help="the gate's verdict over the files it reviewed. `undecided` BLOCKS exactly "
+                         "as `fail` does: use it when the round could not decide, NEVER to soften a "
+                         "finding it did reach.")
     ap.add_argument("--files", required=True, nargs="+",
                     help="repo-relative paths the review actually covered — its subjects")
     # ⚠ THE ENUMS ARE THE SERVER'S, MIRRORED HERE ONLY AS FAIL-FAST. The ledger refuses a bad value
@@ -581,6 +657,28 @@ def _cli(argv):
     ap.add_argument("--run", default=None,
                     help="run id for this gate invocation (V9). Required when ZPLEDGER_RUN is "
                          "unset. Use gate-<step>-<YYYY-MM-DD>.")
+    # ⚠⚠ THE LEDGER HAS ALWAYS EXPOSED `validate` — PURE, NO WRITE, EVERY VIOLATION AT ONCE — AND
+    # THIS CLI MENTIONED IT ZERO TIMES. So the only way to ask "does this command work" was to run
+    # it, and running it APPENDS. That is not a hypothetical cost: a `/rely` agent probing
+    # `--failing-file` put a FAIL reading "probe reason - do not use" into the live stream, where it
+    # is append-only, correctly keyed, about real content, and blocks a tag today. **The record is
+    # not wrong; it should never have been produced**, and nothing existed to produce it any other
+    # way. Same shape as `--failing-file` itself: the capability was there and no caller could
+    # express it (`LED-2` — a refusal naming a remedy the tool cannot perform).
+    #
+    # ⚠ IT EXERCISES THE WHOLE CLIENT PATH, WHICH IS WHY IT IS A FLAG AND NOT A SEPARATE SCRIPT.
+    # Every argparse guard, `ledger_subjects` fencing, `ledger_basis` resolution, `module_evidence`
+    # hashing and `build_record`'s omit-when-empty keys all run exactly as they would on a real
+    # record; only the final verb changes from `append` to `validate`. A dry run that skipped any of
+    # that would be checking a different command from the one the brief prints.
+    #
+    # ⚠ THREE EXIT CODES, MATCHING THIS MODULE'S DOCTRINE: 0 the ledger would accept it · 1 it would
+    # refuse, and every reason is printed · 2 the ledger could not be asked. Reading 2 as 1 turns an
+    # outage into "your record is bad", which sends a gate off editing a record that was fine.
+    ap.add_argument("--dry-run", action="store_true",
+                    help="VALIDATE the record against the ledger and print what it would say, "
+                         "WITHOUT appending. Use this to check a command — never the live stream. "
+                         "Exit 0 = would be accepted, 1 = would be refused, 2 = ledger unreachable.")
     a = ap.parse_args(argv)
 
     if a.reason_file:
@@ -737,13 +835,19 @@ def _cli(argv):
                      "Either add them to --files, or check whether they were fenced out above "
                      "(`not recorded:` lines name every drop and why)."
                      % (len(stray), ", ".join(stray[:5])))
-    elif a.verdict == "fail":
+    elif a.verdict in ("fail", "undecided"):
         # ⚠ A WARNING, NOT A REFUSAL, AND DELIBERATELY SO WHILE THE BRIEFS CATCH UP. The server does
         # not yet require `failing`; when it does, this becomes the usage error. Printing it now
         # means the sweep is visible per-run rather than discovered by a stream tally later.
-        print("  WARNING: FAIL recorded with no --failing-file, so this record INDICTS ALL %d "
-              "subject(s)." % len(subjects))
-        print("           If the finding is narrower than that, say so — an unnarrowed FAIL over")
+        #
+        # ⚠⚠ KEYED ON **BLOCKS**, NOT ON THE WORD "FAIL". An UNDECIDED indicts every subject for the
+        # same reason a FAIL does — absent `failing` means "all of them" server-side, and the server
+        # accepts `failing` on both — so a narrow UNDECIDED that omits it condemns the files it never
+        # doubted. Writing this branch as `== "fail"` would have made the new verdict silently the
+        # widest one available, which is the opposite of why it was added.
+        print("  WARNING: %s recorded with no --failing-file, so this record INDICTS ALL %d "
+              "subject(s)." % (a.verdict.upper(), len(subjects)))
+        print("           If the finding is narrower than that, say so — an unnarrowed block over")
         print("           N files condemns the N-1 that passed, and nothing downstream can tell")
         print("           'the gate meant all of them' from 'the gate could not say'.")
 
@@ -752,10 +856,33 @@ def _cli(argv):
         print("  WARNING: %d brief path(s) given, %d resolved — a brief that is absent or "
               "untracked contributes NO evidence, and the ledger will refuse the PASS rather "
               "than accept an unpinned one." % (len(set(a.evidence)), len(ev)))
-    rid = emit(step=a.step, tier=a.tier, verdict=a.verdict.upper(), subjects=subjects,
-               basis=common.ledger_basis(a.ref), reason=a.reason, evidence=ev,
-               outstanding=outstanding, revision=a.revision, failing=failing,
-               decided={"how": a.how, "passes": a.passes, "agreed": a.agreed, "who": a.who})
+    # ⚠ ONE KWARGS DICT FEEDS BOTH VERBS. `check` and `emit` must be asked about the SAME record or
+    # a dry run certifies a command nobody ran; building the arguments twice is where that drifts.
+    kw = dict(step=a.step, tier=a.tier, verdict=a.verdict.upper(), subjects=subjects,
+              basis=common.ledger_basis(a.ref), reason=a.reason, evidence=ev,
+              outstanding=outstanding, revision=a.revision, failing=failing,
+              decided={"how": a.how, "passes": a.passes, "agreed": a.agreed, "who": a.who})
+
+    if a.dry_run:
+        verdict = check(**kw)
+        # ⚠⚠ `None` IS NOT `(False, [])`. Unreachable is exit 2 and prints nothing about the record's
+        # quality, because nothing was learned about it. `check` already printed the outage line.
+        if verdict is None:
+            return 2
+        ok, errors = verdict
+        print("  DRY RUN — nothing was appended. %s %4d subject(s) at %s"
+              % (a.verdict.upper(), len(subjects), a.ref))
+        if ok:
+            print("  the ledger WOULD ACCEPT this record.")
+            return 0
+        # ⚠ EVERY violation, not the first. That is the whole reason `validate` returns a list:
+        # one rule per round trip is how a caller gives up and works around the thing.
+        print("  the ledger WOULD REFUSE this record (%d violation(s)):" % len(errors))
+        for e in errors:
+            print("  - %s" % e)
+        return 1
+
+    rid = emit(**kw)
     if rid is None:
         return 2
     print("  recorded %-4s %4d subject(s)  %s" % (a.verdict.upper(), len(subjects), rid))
