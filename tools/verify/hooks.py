@@ -682,15 +682,25 @@ def pre_push(stream):
         print("\nPush blocked: CLAUDE.md names a path or a checker that does not exist.")
         print("Fix the pointer. Body: tools/process/claude-md-maintenance.md.")
         return 1
-    # ⚠ EXIT 2 IS NOT EXIT 1 HERE AND MUST NOT BE FOLDED IN. check_briefs returns 2 when it
-    # could not ASK — record.py --help failed, the ledger was unreachable, or the glob matched
-    # nothing. That is a read failure, never a finding about the briefs, and treating it as a
-    # pass is exactly the shape `DC-45` names, which this checker exists to catch one layer
-    # down. ⚠ Keep a class id away from a following noun: `check_figures` reads a number next
+    # ⚠ Keep a class id away from a following noun: `check_figures` reads a number next
     # to a countable word as an undated artifact count, and blocked this commit twice — the
     # second time on the comment written to explain the first. Writing ABOUT a pattern trips
     # it, exactly as `R-TRUNC` records for its own matcher.
     _cb = py("check_briefs.py", "--record")
+    # ⚠⚠ THREE CODES, BECAUSE THERE ARE THREE FACTS -- AND UNTIL 2026-09-06 TWO OF THEM SHARED A
+    # LINE. `record.emit` returns None for a ledger REFUSAL and for an OUTAGE alike, so both
+    # arrived here as exit 2 and this printed "unreachable" for both. Measured that day (`B4`):
+    # the step was not registered, the ledger ANSWERED naming exactly that rule, and the operator
+    # was told the ledger was down. **A decision rendered as an absence** -- the one collapse the
+    # exit-2 design exists to prevent, arriving inside the checker built to catch it one layer
+    # down. `check_briefs.classify_record_failure` now splits them and the remedies differ.
+    if _cb == 3:
+        print("")
+        print("Push blocked: the ledger REACHED and REFUSED check_briefs' record.")
+        print("That is a DECISION, not an outage. The rule it named is in the output above --")
+        print("an unregistered step, a conflicting revision at this basis, a malformed subject.")
+        print("Do not retry it: a validation refusal is terminal and re-sending only masks it.")
+        return 1
     if _cb == 2:
         print("")
         print("Push blocked: check_briefs COULD NOT ASK (ledger or record.py unreachable).")

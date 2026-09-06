@@ -332,6 +332,36 @@ def module_evidence(*paths, repo=None):
     return out
 
 
+def reachable():
+    """Does the ledger ANSWER right now? True or False — never a message, never None.
+
+    ⚠⚠ THIS EXISTS TO SPLIT ONE EXIT CODE IN TWO, AND THAT IS ITS WHOLE JOB. `emit` returns `None`
+    for two different facts — the ledger REFUSED the record, and the ledger could not be REACHED —
+    and every caller downstream sees one value. So a `V8` refusal (the step is not registered) and
+    an outage arrive at `hooks.py` as the same exit 2, and it printed "unreachable" for both.
+    Measured 2026-09-06 (`B4`): `check_briefs` was unregistered, the ledger reached it and said so
+    precisely, and the operator was told the ledger was down. **The exit-2 design exists to keep
+    "could not decide" apart from "decided no"; collapsing refusal into outage re-creates the very
+    conflation one layer up.**
+
+    ⚠ IT ASKS, IT DOES NOT INFER. A refusal is only distinguishable by observing that the server
+    answered something else a moment earlier, so this makes a real round trip rather than reading a
+    cached flag. The residual is a genuine race — the ledger could fall over between the refused
+    append and this call — which misreports a refusal as an outage. That direction is the safe one:
+    both still BLOCK, and an outage is the diagnosis that gets re-run and discovers itself, where a
+    false refusal would send someone editing a record that was fine.
+
+    ⚠ `False` ON ANY FAILURE TO ASK, INCLUDING A MALFORMED ANSWER. "I could not tell" belongs with
+    "unreachable" here, because the only claim this function is allowed to make is the positive one:
+    the server spoke, so a refusal it issued was a decision.
+    """
+    try:
+        out = _call("status", {})
+    except (urllib.error.URLError, OSError, TimeoutError):
+        return False
+    return isinstance(out, dict) and bool(out.get("ok"))
+
+
 def build_record(step, tier, verdict, subjects, basis, reason=None,
                  inputs=(), decided=None, cost=None, revision=0, evidence=(), outstanding=(),
                  failing=()):

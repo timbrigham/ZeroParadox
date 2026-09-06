@@ -91,6 +91,33 @@ def registered_steps():
     return set(out['types'].keys())
 
 
+def classify_record_failure(rc, ledger_answers):
+    """Turn `record_if_asked`'s single failure code into the two facts it is hiding.
+
+    `rc` is what `common.record_if_asked` returned; `ledger_answers` is `record.reachable()`.
+    Returns 2 when the ledger could not be ASKED, and **3 when it was asked and REFUSED**.
+
+    ⚠⚠ THIS IS THE `DC-45` SHAPE ONE LAYER UP, AND IT WAS FOUND INSIDE THE CHECKER BUILT TO
+    CATCH IT. `record.emit` returns `None` for a refusal and for an outage alike, `emit_verdict`
+    maps both to 2, and `hooks.py` printed "ledger or record.py unreachable" for both. On
+    2026-09-06 this step was not registered, the ledger ANSWERED with the rule naming exactly
+    that, and the push reported the ledger was down -- **a decision rendered as an absence**,
+    which is the one distinction the exit-2 design exists to keep.
+
+    ⚠ A DIFFERENT VALUE, NOT A DIFFERENT MESSAGE (`R-ZERONULL`). Both states already had their
+    own prose string and nothing branched on either, because consumers branch on the CODE. So
+    the code is what had to move: **2 could-not-ask · 3 asked-and-refused**. The remedies are
+    genuinely different -- one is "fix the reachability", the other is "read the rule the
+    server named" -- and a caller handed one code cannot choose between them.
+
+    ⚠ PURE ON PURPOSE, so both halves are testable with no network at all. The single call that
+    must touch the wire is `record.reachable()`, and it is passed IN rather than made here.
+    """
+    if rc == 2 and ledger_answers:
+        return 3
+    return rc
+
+
 def audit(text, flags, steps):
     """Every leg, over one brief. Returns {leg: [finding, ...]}.
 
@@ -159,12 +186,17 @@ def selftest():
         ('names  clean   records and names the step',
          'Record your verdict: `record.py --step rely --verdict fail`', 'names', False),
     ]
-    bad = 0
+    # ⚠ COUNTED, NOT COMPUTED. This line read `len(cases) + 1` and went WRONG the same hour the
+    # classifier controls were added below -- it reported 14/14 while 18 controls ran. A summary
+    # whose denominator is arithmetic over ONE of its control lists silently stops covering the
+    # others, which is the reach-versus-report defect this whole checker exists to name.
+    bad = ran = 0
     fired = clean = 0
     for label, text, leg, must_fire in cases:
         got = bool(audit(text, FLAGS, STEPS)[leg])
         ok = (got == must_fire)
         bad += 0 if ok else 1
+        ran += 1
         fired += 1 if must_fire else 0
         clean += 0 if must_fire else 1
         print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label,
@@ -174,11 +206,25 @@ def selftest():
     none_case = audit('record.py --step never_registered --verdict fail', None, None)
     ok = not none_case['steps'] and not none_case['flags']
     bad += 0 if ok else 1
+    ran += 1
     print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL',
                                'unasked  ledger/flags unavailable -> no finding',
                                'silent' if ok else 'FIRED - would blame the corpus'))
+    # ⚠ THE REFUSAL/UNREACHABLE SPLIT IS A CONTROL TOO, AND IT IS THE ONE `B4` COST US. Both
+    # halves, pure: the classifier is HANDED the reachability answer rather than measuring it, so
+    # this control cannot pass merely because the ledger happened to be up when it ran.
+    for rc_in, answers, want, label in (
+            (2, True,  3, 'refusal   ledger answered -> 3, a decision'),
+            (2, False, 2, 'outage    ledger silent   -> 2, could not ask'),
+            (1, True,  1, 'finding   a real finding is never reclassified'),
+            (0, False, 0, 'clean     a clean record stays clean')):
+        got = classify_record_failure(rc_in, answers)
+        ok = (got == want)
+        bad += 0 if ok else 1
+        ran += 1
+        print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label, 'exit %d' % got))
     print('\nselftest: %s (%d/%d) - FIRES on %d planted defect(s), SUPPRESSES on %d clean case(s)'
-          % ('PASS' if not bad else 'FAIL', len(cases) + 1 - bad, len(cases) + 1, fired, clean))
+          % ('PASS' if not bad else 'FAIL', ran - bad, ran, fired, clean))
     return 1 if bad else 0
 
 
@@ -252,6 +298,14 @@ def main():
         'a gate brief names a flag, step or path that does not exist',
         module='tools/verify/check_briefs.py')
     if _rc:
+        # ⚠ ASKED ONLY ON THE FAILING PATH. A reachability probe on every clean run would be a
+        # round trip that buys nothing; here the record has already failed and the only open
+        # question is WHICH of the two failures it was.
+        import record as _record
+        _rc = classify_record_failure(_rc, _record.reachable())
+        if _rc == 3:
+            print('\nREFUSED: the ledger was REACHED and REJECTED this record. That is a')
+            print('         decision, not an outage -- the rule it named is printed above.')
         return _rc
     if bad:
         print('\nBLOCKED: %d blocking finding(s). A brief instructing a command that does not '
