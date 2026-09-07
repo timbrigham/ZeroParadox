@@ -57,7 +57,15 @@ HARD = 'HARD CONSTRAINTS'
 # The continuation character, named so the extractor never carries a bare escape.
 BACKSLASH = chr(92)
 
-FLAG = re.compile(r'(--[a-z][a-z0-9-]+)')
+# ⚠⚠ THE WHOLE TOKEN, INCLUDING THE CHARACTERS THAT MAKE IT INVALID. `(--[a-z][a-z0-9-]+)`
+# stopped at the first character it did not accept, so `--files_bogus` captured `--files` and
+# `--reason-fileX` captured `--reason-file` -- both KNOWN flags, both reported clean, neither
+# ever written in the brief. `--Nonesuch` matched nothing at all and was likewise silent.
+# ⚠ THIS IS `B2`'s DEFECT IN THE SIBLING REGEX, SEVEN LINES DOWN, unfixed for a day while the
+# diagnosis sat in the file: a pattern that silently truncates its capture does not fail to
+# match, it matches something else and answers about THAT. `RLY51-2`, the SECOND occurrence,
+# which is why `DC-46` now carries the class and its detector.
+FLAG = re.compile(r'(--[A-Za-z][\w-]*)')
 # ⚠⚠ `[=\s]` AND A FULL TOKEN, BECAUSE BOTH NARROWER FORMS WALKED THROUGH THE BLOCK LEG.
 # This required whitespace, so `--step=totally_unregistered` was never seen at all; and it
 # captured `[a-z_]+`, so `--step rely2` stopped at the digit, returned the REGISTERED prefix
@@ -123,6 +131,39 @@ def record_commands(text):
             buf.append(nxt if t < 0 else nxt[:t])
         out.append(' '.join(b.strip().rstrip(BACKSLASH).strip() for b in buf))
         i += 1
+    return out
+
+
+def flag_fragments(text):
+    """Fenced blocks that CONTINUE a command without repeating `record.py`.
+
+    ⚠⚠ `RLY51-1` — THE `flags` LEG COULD NOT SEE THESE AT ALL. `record_commands` scans only
+    lines containing the literal `record.py`, and `rely.md` documents `--failing-file` in a
+    fenced block four lines below the command it belongs to, with no such line. Measured on
+    shipped bytes: a typo planted in the ORPHAN block exited 0 with `flags ok, 0 findings`,
+    while the identical typo inside the `record.py` block exited 1. Two blocks, four lines
+    apart, one of them invisible.
+
+    ⚠ THE FRAGMENT TEST IS THE FIRST NON-BLANK LINE, AND IT IS WHAT PRICES THE WIDENING. A
+    block belongs to a command only when it OPENS with a flag; anything else is a different
+    program. Without that test every `lake build --verbose` in every brief becomes a finding
+    against `record.py`'s flag list, which is the over-fire direction -- and a leg that cries
+    wolf on ordinary shell examples gets downgraded, which is how the fail-open comes back.
+    That case ships as the SUPPRESS half of this control rather than as a comment.
+    """
+    out, cur, inside = [], [], False
+    for line in text.split(chr(10)):
+        if line.lstrip().startswith('```'):
+            if inside:
+                body = [b for b in cur if b.strip()]
+                if body and body[0].lstrip().startswith('--'):
+                    out.append(' '.join(cur))
+                cur, inside = [], False
+            else:
+                inside = True
+            continue
+        if inside:
+            cur.append(line)
     return out
 
 
@@ -220,7 +261,7 @@ def audit(text, flags, steps):
     f = {n: [] for n, _, _ in LEGS}
 
     used = set()
-    for blk in record_commands(text):
+    for blk in record_commands(text) + flag_fragments(text):
         used |= set(FLAG.findall(blk))
     if flags is not None:
         f['flags'] = sorted(used - flags)
@@ -278,6 +319,26 @@ def selftest():
          'run `record.py --step rely --verdict fail --nonesuch x`', 'flags', True),
         ('flags  clean   known flags only',
          'run `record.py --step rely --verdict fail --failing-file f`', 'flags', False),
+        # ⚠⚠ `RLY51-2` — A TYPO THAT TRUNCATES ONTO A VALID PREFIX. This is `B2`'s defect in the
+        # SIBLING regex, seven lines from the comment describing it, unfixed for a day. The
+        # capture class stopped at the first character it did not accept and returned the KNOWN
+        # prefix, so the audit compared a flag the brief never wrote against the real list and
+        # found it present. A pattern that truncates does not fail to match -- it answers about
+        # a different string, which is why `flags ok` was the reported result.
+        ('flags  fires   typo truncates onto a valid prefix',
+         'run `record.py --step rely --files_bogus x`', 'flags', True),
+        ('flags  fires   an uppercase flag was invisible',
+         'run `record.py --step rely --Nonesuch x`', 'flags', True),
+        # ⚠⚠ `RLY51-1` — THE LEG COULD NOT SEE A FENCED BLOCK WITH NO `record.py` LINE, and
+        # `rely.md` documents `--failing-file` in exactly one. Measured on shipped bytes: a typo
+        # in the orphan block exited 0 while the identical typo four lines up exited 1.
+        ('flags  fires   orphan continuation block',
+         '```' + chr(10) + '    --nonesuch <value>' + chr(10) + '```', 'flags', True),
+        # ⚠ THE SUPPRESS HALF OF THE SAME WIDENING, AND IT IS THE ONE THAT PRICES IT. A fenced
+        # block is a fragment only when its first non-blank line STARTS a flag; otherwise every
+        # `lake build --verbose` in every brief becomes a finding against record.py's flag list.
+        ('flags  clean   a fenced block that is not a fragment',
+         '```' + chr(10) + '    lake build --verbose' + chr(10) + '```', 'flags', False),
         ('steps  fires   unregistered step',
          'record.py --step copy_editor --verdict fail', 'steps', True),
         ('steps  clean   registered step',
@@ -335,8 +396,16 @@ def selftest():
     # classifier controls were added below -- it reported 14/14 while 18 controls ran. A summary
     # whose denominator is arithmetic over ONE of its control lists silently stops covering the
     # others, which is the reach-versus-report defect this whole checker exists to name.
+    # ⚠⚠ `RLY51-5` — AND THIS IS THE SECOND TIME THIS SUMMARY WAS WRONG IN ONE FILE. `ran` was
+    # fixed on 2026-09-06 (it read `len(cases) + 1`); `fired` and `clean` were left incrementing
+    # only inside the `cases` loop, so the line printed `PASS (32/32) - FIRES on 11 ... on 13`
+    # and 11 + 13 = 24. Two numbers that look like a partition of a third, and are not.
+    # ⚠ SO THE PARTITION IS NOW ASSERTED RATHER THAN IMPLIED: `other` counts the controls that
+    # are neither a planted defect nor a clean case, and a row below FAILS if the three do not
+    # sum to `ran`. A summary that can drift silently is the reach-versus-report defect this
+    # checker exists to name, committed by the checker itself, twice.
     bad = ran = 0
-    fired = clean = 0
+    fired = clean = other = 0
     for label, text, leg, must_fire in cases:
         got = bool(audit(text, FLAGS, STEPS)[leg])
         ok = (got == must_fire)
@@ -352,6 +421,7 @@ def selftest():
     ok = not none_case['steps'] and not none_case['flags']
     bad += 0 if ok else 1
     ran += 1
+    other += 1
     print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL',
                                'unasked  ledger/flags unavailable -> no finding',
                                'silent' if ok else 'FIRED - would blame the corpus'))
@@ -373,6 +443,7 @@ def selftest():
         ok = (got == want)
         bad += 0 if ok else 1
         ran += 1
+        other += 1
         print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label, got))
     # ⚠ THE REFUSAL/UNREACHABLE SPLIT IS A CONTROL TOO, AND IT IS THE ONE `B4` COST US. Both
     # halves, pure: the classifier is HANDED the reachability answer rather than measuring it, so
@@ -386,9 +457,22 @@ def selftest():
         ok = (got == want)
         bad += 0 if ok else 1
         ran += 1
+        other += 1
         print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label, 'exit %d' % got))
-    print('\nselftest: %s (%d/%d) - FIRES on %d planted defect(s), SUPPRESSES on %d clean case(s)'
-          % ('PASS' if not bad else 'FAIL', ran - bad, ran, fired, clean))
+    # ⚠⚠ THE PARTITION IS A CONTROL, NOT A COMMENT. If these three stop summing to
+    # `ran`, a control list has been added that the summary does not describe -- which is
+    # exactly how this line went wrong twice. It fails LOUD rather than quietly printing a
+    # smaller denominator, because a miscount nobody sees reads as coverage.
+    _part_ok = (fired + clean + other == ran)
+    bad += 0 if _part_ok else 1
+    ran += 1
+    other += 1
+    print('  %-4s %-42s %s' % ('ok' if _part_ok else 'FAIL',
+                               'summary  fired+clean+other == ran',
+                               '%d+%d+%d vs %d' % (fired, clean, other, ran)))
+    print('\nselftest: %s (%d/%d) - FIRES on %d planted defect(s), SUPPRESSES on %d'
+          ' clean case(s), and %d further control(s) that are neither'
+          % ('PASS' if not bad else 'FAIL', ran - bad, ran, fired, clean, other))
     return 1 if bad else 0
 
 
@@ -414,8 +498,14 @@ def main():
 
     flags, steps = real_flags(), registered_steps()
     if flags is None:
-        print('\nCANNOT ASK: record.py --help did not exit 0, so the `flags` leg has no')
-        print('ground truth. This is a read failure, not a finding about the briefs.')
+        # ⚠ `RLY51-6` — THIS NAMED THE WRONG PROBE AND THE WRONG EXIT. `real_flags()` was
+        # rewired to `record.py --list-flags` on 2026-09-06 and this message still said
+        # `--help`; two of the four measured degradations exited 0, so "did not exit 0" was
+        # false about them as well. The degradations all fail CLOSED, which is correct and is
+        # exactly why the wording mattered: the only thing a reader gets is this sentence, and
+        # it sent them to a flag the program no longer runs.
+        print('\nCANNOT ASK: `record.py --list-flags` did not yield a usable flag list, so the')
+        print('`flags` leg has no ground truth. A read failure, not a finding about the briefs.')
         return 2
     if steps is None:
         print('\nCANNOT ASK: the ledger could not be reached, so the `steps` leg cannot be')
