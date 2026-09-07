@@ -897,12 +897,48 @@ def _cli(argv):
         failing = sorted({p.strip().replace("\\", "/") for p in failing})
         covered = {s["path"] for s in subjects}
         stray = [p for p in failing if p not in covered]
-        if stray:
+        # ⛔⛔ THE PROPERTY IS *DOES THIS ELEMENT CLAIM TO BE ABOUT BYTES*, NOT *DOES IT LOOK LIKE A
+        # PATH*. An element purporting to name CONTENT must name content this verdict EXAMINED —
+        # that is the content-keying rule with the sign flipped: **condemnation needs the same proof
+        # as coverage.** An element naming something that is NOT content cannot be keyed to bytes at
+        # all, which is precisely why it cannot gate, so refusing it buys nothing and costs the one
+        # honest case.
+        #
+        # ⚠⚠ THE TEST BELOW IS A **PROXY** FOR THAT PROPERTY AND IS DECLARED AS ONE. Do not extend
+        # the extension list thinking you are tightening the rule — you are only widening the proxy.
+        # `check_checkers` row 5 is `(roster)`, a property of a PAIR of files with no single path to
+        # hang on; until 2026-09-07 this refusal blocked the exact indictment this bundle's own
+        # checker emits, while `validate()` accepted it. Measured, CLI exit 2 against server ok.
+        #
+        # ⚠ TWO KNOWN MISFIRES, WRITTEN DOWN BECAUSE THE PROXY WILL HIT THEM:
+        #   * a between-files finding spelled `tools/verify/batch.py <-> ship.py` contains a slash
+        #     and `.py`, so it is REFUSED — the legitimate case this exception exists to permit.
+        #   * a typo'd label `(rosetr)` is parenthesised and PERMITTED, warned but not caught.
+        # The proxy catches typos in the path class and misses them in the label class. That is a
+        # cost of the shape test, not an argument against it — the alternative is refusing the
+        # honest case to catch a misspelling nothing acts on.
+        PATHISH = (".py", ".md", ".lean", ".json", ".txt", ".ps1", ".toml", ".yml", ".yaml")
+        claims_content = [p for p in stray if "/" in p or p.endswith(PATHISH)]
+        label_only = [p for p in stray if p not in claims_content]
+        if claims_content:
             ap.error("--failing-file names %d path(s) that are NOT among the recorded subjects: "
-                     "%s. You cannot indict what this record does not claim to have examined. "
-                     "Either add them to --files, or check whether they were fenced out above "
-                     "(`not recorded:` lines name every drop and why)."
-                     % (len(stray), ", ".join(stray[:5])))
+                     "%s. You cannot indict content this record does not claim to have examined — "
+                     "condemnation needs the same proof as coverage. ⚠ A typo and a real-but-"
+                     "unexamined path are different errors with the same remedy: either add them to "
+                     "--files, or check whether they were fenced out above (`not recorded:` lines "
+                     "name every drop and why)."
+                     % (len(claims_content), ", ".join(claims_content[:5])))
+        if label_only:
+            # ⚠ PERMITTED AND DISCLOSED, never permitted silently. `inventory.py` builds `indicted`
+            # by walking SUBJECTS, so an element that is not one is never iterated: it contributes
+            # no entry, cannot block a commit, and cannot prevent `tip_green` forgiveness. Measured
+            # by mcpdev 2026-09-07. Naming it keeps the finding in the record; the warning stops
+            # anyone reading its presence as enforcement.
+            print("  WARNING: --failing-file names %d element(s) that are not among the subjects "
+                  "and do not name content: %s." % (len(label_only), ", ".join(label_only[:5])))
+            print("           These are RECORDED but INERT — the gate builds its indictment by")
+            print("           walking subjects, so a non-subject contributes nothing and will not")
+            print("           block a commit or prevent tip_green forgiveness. Honest, not enforced.")
     elif a.verdict == "fail":
         # ⚠⚠ NOW A REFUSAL. This branch shipped 2026-09-06 as a WARNING with its own expiry written
         # into it — *"the server does not yet require `failing`; when it does, this becomes the usage
