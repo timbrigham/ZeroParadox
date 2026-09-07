@@ -903,7 +903,7 @@ def _cli(argv):
                      "Either add them to --files, or check whether they were fenced out above "
                      "(`not recorded:` lines name every drop and why)."
                      % (len(stray), ", ".join(stray[:5])))
-    elif a.verdict in ("fail", "undecided"):
+    elif a.verdict == "fail":
         # ⚠⚠ NOW A REFUSAL. This branch shipped 2026-09-06 as a WARNING with its own expiry written
         # into it — *"the server does not yet require `failing`; when it does, this becomes the usage
         # error"* — and that condition is being met: verdictLedger's V-rule requiring a non-empty
@@ -922,11 +922,22 @@ def _cli(argv):
         # verdict with NO indictment is the same error inverted — it indicts EVERYTHING, silently.
         # One rule, written half at a time.
         #
-        # ⚠⚠ KEYED ON **BLOCKS**, NOT ON THE WORD "FAIL". An UNDECIDED indicts every subject for the
-        # same reason a FAIL does — absent `failing` means "all of them" server-side, and the server
-        # accepts `failing` on both — so a narrow UNDECIDED that omits it condemns the files it never
-        # doubted. Writing this branch as `== "fail"` would have made the new verdict silently the
-        # widest one available, which is the opposite of why it was added.
+        # ⛔⛔ FAIL ONLY — AND THIS REVERSES THE PARAGRAPH THAT STOOD HERE FOR TWENTY MINUTES, WHICH
+        # ARGUED THE OPPOSITE AND WAS RIGHT ABOUT A WARNING AND WRONG ABOUT A REFUSAL.
+        # It said: keyed on BLOCKS, not on the word "FAIL", because an UNDECIDED that omits `failing`
+        # condemns files it never doubted. **That reasoning is still true and it is no longer
+        # sufficient**, because a REFUSAL has a cost a warning does not: it stops the record being
+        # written at all.
+        # ⚠⚠ MEASURED ON THE SERVER SIDE, by verdictLedger's `test_v16b_does_not_stop_a_dying_checker
+        # _recording_that_it_died`, which went RED against a V19 draft covering both verdicts:
+        # **a crashed checker CANNOT name a subset.** Requiring one would stop it recording that it
+        # died, and the step then renders MISSING rather than UNDECIDED — absence rendering as
+        # NOTHING instead of as UNKNOWN, which is strictly worse and the exact inversion of what this
+        # rule is for.
+        # ⭐ THE LINE IS CAPABILITY, NOT SAFETY DIRECTION. A wide FAIL and a wide UNDECIDED are both
+        # fail-CLOSED. The difference is that a FAIL always COULD have named its subset and withheld
+        # it — `check_checkers` had `_bad` in a local variable — and a dead checker could not.
+        # UNDECIDED keeps the WARNING below, which costs it nothing and still makes the width visible.
         ap.error(
             "--failing-file is REQUIRED for --verdict %s: absent, this record INDICTS ALL %d "
             "subject(s), and an unnarrowed block over N files condemns the N-1 that passed. "
@@ -938,6 +949,19 @@ def _cli(argv):
             "SUBSET that actually failed, or pass the full --files list to state that you mean "
             "every one of them. Absence is not the second — it is the second happening silently."
             % (a.verdict, len(subjects)))
+
+    elif a.verdict == "undecided":
+        # ⚠ A WARNING, AND IT STAYS ONE. The width is real — absent `failing` indicts every subject
+        # here exactly as it does on a FAIL — but the caller may be a checker that could not finish,
+        # and refusing it would convert "I could not decide" into no record at all. Printing keeps
+        # the width visible at zero cost to the case the exemption exists for. V19 draws the same
+        # line server-side; `V16b` continues to govern this verdict.
+        print("  WARNING: UNDECIDED recorded with no --failing-file, so this record INDICTS ALL %d "
+              "subject(s)." % len(subjects))
+        print("           If you were specific enough to name which files defeated you, name them —")
+        print("           the exemption here is for a checker that could NOT, not for one that")
+        print("           did not bother. An unnarrowed block over N files condemns the N-1 that")
+        print("           passed, and nothing downstream can tell 'all of them' from 'could not say'.")
 
     ev = module_evidence(*a.evidence) if a.evidence else ()
     if a.evidence and len(ev) != len(set(a.evidence)):
