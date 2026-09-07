@@ -36,5 +36,17 @@
   },
   "genesis": {
     "_comment": "THE FLOOR IS NOT SET HERE. It lives in the stream as a `genesis` RECORD, seeded with `zpledger genesis <sha>`, because it is a claim about when RECORDING began and belongs somewhere append-only, validated and attributable -- not in a file anyone can edit without a trace. An earlier version of this block told readers to set `commit` here and nothing consumed it. It is a fact about when recording began, NEVER a claim that earlier work was verified."
+  },
+  "push": {
+    "_comment": "⚠ WRITTEN OUT AFTER RUNNING AS AN INVISIBLE BUILT-IN. `push.bar` was absent here for days while `can_push` reported `push_bar: \"tip_green\"` with `push_bar_source: \"default\"`. It was found TWICE, because the first fix went into the ledger's own bundled policy file, which only its tests and its last-resort location read -- not this file, which is the one the live server loads via ZPLEDGER_CONFIG. THIS RECORDS THE BAR THAT WAS ALREADY IN FORCE: all records to date were judged under it, so writing it changes NOTHING about what may be published. ⛔ THE LOADER'S DEFAULTS ARE INVERTED, which is why writing it down matters: a TYPO falls back to the stricter `every_commit`, while a MISSING key fell back to the looser `tip_green` -- the more likely mistake got the more permissive treatment. ⚠ `tip_green` is a FORGIVENESS, not a scope reduction: it forgives a FAIL or UNDECIDED whose indicted blobs are ABSENT at the tip, and it never forgives STALE, which blocks at every commit regardless of bar. Choosing `every_commit` instead would be a POLICY CHANGE and is a separate decision.",
+    "bar": "tip_green"
+  },
+  "coverage": {
+    "_comment": "⚠ WRITTEN OUT AS THE VALUE ALREADY IN FORCE, AND IT WILL LOOK WRONG. `false` means a step may report SATISFIED while never having examined most of its declared scope -- measured 2026-08-25, `guards` read SATISFIED over 4 of 504 tracked paths, and `status()` carries that measurement on every call. SETTING IT `true` IS A REAL POLICY CHANGE, not a clearing: it would likely block everything until a full sweep has genuinely run, and it is a separate decision nobody has made. Writing `false` here asserts only what was already true, so the permissiveness stops being invisible. `subjects_unexamined` is on every row meanwhile.",
+    "require_complete": false
+  },
+  "migration": {
+    "_comment": "⚠ WRITTEN OUT AS THE VALUE ALREADY IN FORCE. `true` is the STRICT direction and the only one of these three defaults that was not permissive: a mechanical PASS is refused unless its `evidence` names the checker that produced it (V16). Recorded here so that all three invisible built-ins become visible together -- a clearing is only complete if it covers the safe defaults too, since the next reader cannot tell an unwritten strict default from an unwritten loose one without asking the server.",
+    "v16_evidence_required": true
   }
 }
