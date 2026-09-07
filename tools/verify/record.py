@@ -33,6 +33,18 @@ import uuid
 import urllib.error
 import urllib.request
 
+# ⚠⚠ THE REFUSAL EXPLANATION IS THE ONE OUTPUT THAT MUST SURVIVE A REDIRECT, AND IT DID NOT.
+# `common.py:90` and `check_briefs.py:29` both reconfigure; this module — the only one that prints
+# the SERVER's violation text — did not. Measured 2026-09-07: a dry run whose record the ledger
+# refused died at `print("  - %s" % e)` with `UnicodeEncodeError: '⚠'`, because V-rule messages
+# carry ⚠ and a redirected stdout is cp1252 on this platform. The caller saw a traceback and exit 1
+# where the reason was already in hand and one print away.
+# ⚠ `CLAUDE.md` R-TRUNC MANDATES REDIRECTION for every checker run, so the crashing configuration is
+# the SANCTIONED one — the defect could only ever fire on the path the project tells you to use.
+# `DC-21`, whose recorded instance is this failure in `check_paths.py` printing the same glyph.
+# `errors='replace'` matches `check_briefs`: a mangled glyph is a legible message, a traceback is not.
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 URL = os.environ.get("ZPLEDGER_URL", "http://127.0.0.1:8011/mcp")
 TIMEOUT = float(os.environ.get("ZPLEDGER_TIMEOUT", "45"))
 
@@ -892,20 +904,40 @@ def _cli(argv):
                      "(`not recorded:` lines name every drop and why)."
                      % (len(stray), ", ".join(stray[:5])))
     elif a.verdict in ("fail", "undecided"):
-        # ⚠ A WARNING, NOT A REFUSAL, AND DELIBERATELY SO WHILE THE BRIEFS CATCH UP. The server does
-        # not yet require `failing`; when it does, this becomes the usage error. Printing it now
-        # means the sweep is visible per-run rather than discovered by a stream tally later.
+        # ⚠⚠ NOW A REFUSAL. This branch shipped 2026-09-06 as a WARNING with its own expiry written
+        # into it — *"the server does not yet require `failing`; when it does, this becomes the usage
+        # error"* — and that condition is being met: verdictLedger's V-rule requiring a non-empty
+        # `failing` on a blocking verdict lands after this change. CLIENT FIRST, deliberately and in
+        # that order: shipping the server rule while this still defaulted to `()` would refuse every
+        # delegated agent verdict on its next FAIL, with no local message explaining why. Same
+        # sequencing `isError` used, for the same reason.
+        #
+        # ⚠ WHY THE CLIENT RULE IS NOT SUFFICIENT ON ITS OWN, so nobody deletes the server half as
+        # redundant: `LED-6` is open because a rule whose ONLY enforcing copy is a client is a rule
+        # with no enforcement — an agent reaching `append` directly never passes through here. The
+        # two halves are one rule and neither is decoration.
+        #
+        # ⚠ THE OTHER HALF OF THIS ASYMMETRY HAS BEEN ALONE SINCE THE FIELD LANDED: `--failing-file`
+        # is already refused on a PASS, forty lines up, because "a PASS indicts nothing". A blocking
+        # verdict with NO indictment is the same error inverted — it indicts EVERYTHING, silently.
+        # One rule, written half at a time.
         #
         # ⚠⚠ KEYED ON **BLOCKS**, NOT ON THE WORD "FAIL". An UNDECIDED indicts every subject for the
         # same reason a FAIL does — absent `failing` means "all of them" server-side, and the server
         # accepts `failing` on both — so a narrow UNDECIDED that omits it condemns the files it never
         # doubted. Writing this branch as `== "fail"` would have made the new verdict silently the
         # widest one available, which is the opposite of why it was added.
-        print("  WARNING: %s recorded with no --failing-file, so this record INDICTS ALL %d "
-              "subject(s)." % (a.verdict.upper(), len(subjects)))
-        print("           If the finding is narrower than that, say so — an unnarrowed block over")
-        print("           N files condemns the N-1 that passed, and nothing downstream can tell")
-        print("           'the gate meant all of them' from 'the gate could not say'.")
+        ap.error(
+            "--failing-file is REQUIRED for --verdict %s: absent, this record INDICTS ALL %d "
+            "subject(s), and an unnarrowed block over N files condemns the N-1 that passed. "
+            "Nothing downstream can tell 'the gate meant all of them' from 'the gate could not "
+            "say'. ⚠ MEASURED (LED-10): a FAIL naming one bad file among 24 took ownership of 23 "
+            "innocent content keys and condemned a commit that predated the offending file, with "
+            "no re-run able to clear it — and the narrow set was sitting in a local variable at "
+            "the call site. TWO WAYS TO SATISFY THIS, and they are different claims: give the "
+            "SUBSET that actually failed, or pass the full --files list to state that you mean "
+            "every one of them. Absence is not the second — it is the second happening silently."
+            % (a.verdict, len(subjects)))
 
     ev = module_evidence(*a.evidence) if a.evidence else ()
     if a.evidence and len(ev) != len(set(a.evidence)):
