@@ -32,14 +32,20 @@
         "*.ttf"
       ],
       "reason": "its property is tracked TEXT files; a BOM test on a font or a published PDF is meaningless. Stated as an exclusion rather than an extension allow-list on purpose: a new text extension must NOT silently fall out of scope, which is the direction an allow-list fails in",
-      "module": "tools/verify/check_encoding.py"
+      "module": "tools/verify/check_encoding.py",
+      "approved_modules": [
+        "f5cb6a6b620e98c5f24c65325a5d62fe12903cce"
+      ]
     },
     "check_paths": {
       "family": "mechanical",
       "switches": [
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_paths.py"
+      "module": "tools/verify/check_paths.py",
+      "approved_modules": [
+        "194cb554bc6063afabcbcde276de87a7e9b7bf8a"
+      ]
     },
     "check_frozen": {
       "family": "mechanical",
@@ -70,6 +76,9 @@
         "tools/verify/vendored_files.txt"
       ],
       "module": "tools/verify/check_prose.py",
+      "approved_modules": [
+        "6857f14f6ab5c6eefdd89f10aae37d5c95e375cd"
+      ],
       "scope": [
         "ZeroParadox/*.lean"
       ],
@@ -81,7 +90,10 @@
         "tools/verify/pov_baseline.txt",
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_pov.py"
+      "module": "tools/verify/check_pov.py",
+      "approved_modules": [
+        "8de53c1dcfa06056eccaff436492972d9476c8c5"
+      ]
     },
     "check_modal": {
       "family": "mechanical",
@@ -89,7 +101,10 @@
         "tools/verify/modal_baseline.txt",
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_modal.py"
+      "module": "tools/verify/check_modal.py",
+      "approved_modules": [
+        "fce373afa7025ee67dbf3ecf7c29bff4d5ba3b5a"
+      ]
     },
     "check_classes": {
       "family": "mechanical",
@@ -98,6 +113,9 @@
         "tools/verify/vendored_files.txt"
       ],
       "module": "tools/verify/check_classes.py",
+      "approved_modules": [
+        "a7dd7f2b7f814c902ce2dc09a830a8871341990f"
+      ],
       "scope": [
         "ZeroParadox/*.lean"
       ],
@@ -106,6 +124,9 @@
     "check_invariants": {
       "family": "mechanical",
       "module": "tools/verify/check_invariants.py",
+      "approved_modules": [
+        "6713cdb58d1515f76de50cfe744f7b43b8a2c8bb"
+      ],
       "scope": [
         "ZeroParadox/*.lean",
         "LEAN_CUSTOM_REGISTRY.md"
@@ -129,14 +150,20 @@
       "switches": [
         "tools/verify/shared_build_baseline.txt"
       ],
-      "module": "tools/verify/check_hashes.py"
+      "module": "tools/verify/check_hashes.py",
+      "approved_modules": [
+        "1fd14e21adbca2712e8a47398f57821e4e59ab33"
+      ]
     },
     "check_moved": {
       "family": "mechanical",
       "switches": [
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_moved.py"
+      "module": "tools/verify/check_moved.py",
+      "approved_modules": [
+        "27dd4db640a3f3660e1ea5077d47df8bd713df02"
+      ]
     },
     "check_negatives": {
       "family": "mechanical",
@@ -144,7 +171,10 @@
         "tools/verify/negatives_baseline.txt",
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_negatives.py"
+      "module": "tools/verify/check_negatives.py",
+      "approved_modules": [
+        "c65a993c57750b44ff199d6a484b110e546d50a4"
+      ]
     },
     "check_figures": {
       "family": "mechanical",
@@ -152,7 +182,10 @@
         "tools/verify/figures_baseline.txt",
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_figures.py"
+      "module": "tools/verify/check_figures.py",
+      "approved_modules": [
+        "316658f0ae4b8e610700e409d2466804e3822c45"
+      ]
     },
     "check_checkers": {
       "family": "mechanical",
@@ -167,7 +200,10 @@
       "switches": [
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_checkers.py"
+      "module": "tools/verify/check_checkers.py",
+      "approved_modules": [
+        "5175d3203af4f0c47ee2b2ace76ac25e03c2d97e"
+      ]
     },
     "guards": {
       "family": "mechanical",
@@ -175,6 +211,9 @@
         "tools/verify/vendored_files.txt"
       ],
       "module": "tools/verify/guards.py",
+      "approved_modules": [
+        "83d61c0db22cabe0d1808ee66406c2d48fb6f5ed"
+      ],
       "scope": [
         "tools/verify/guards.py",
         "tools/verify/batch.py",
@@ -202,6 +241,9 @@
     "decls": {
       "family": "mechanical",
       "module": "tools/verify/batch.py",
+      "approved_modules": [
+        "824fcb3cf8d183d3aeeb2e1403a9a25ecf71b678"
+      ],
       "scope": [
         "ZeroParadox/*.lean",
         "ssot.json",
@@ -303,7 +345,10 @@
         "tools/verify/prose_baseline.txt"
       ],
       "reason": "a removal is a removal FROM those baselines",
-      "module": "tools/verify/check_frozen.py"
+      "module": "tools/verify/check_frozen.py",
+      "approved_modules": [
+        "ad0345a1494da35e4d94ed1b1537100fdeb5695a"
+      ]
     },
     "agent_gate": {
       "family": "mechanical",
@@ -326,6 +371,9 @@
       "family": "mechanical",
       "when": "CLAUDE.md",
       "module": "tools/verify/check_claude_md.py",
+      "approved_modules": [
+        "409c72fb50b86cbe37814acb820d7f394a09fbe6"
+      ],
       "scope": [
         "CLAUDE.md"
       ],
@@ -344,6 +392,12 @@
     },
     "check_briefs": {
       "family": "mechanical",
+      "actions": [
+        "commit",
+        "push",
+        "tag"
+      ],
+      "_actions_stated_not_defaulted": "⚠ WRITTEN OUT DELIBERATELY, though it equals the default. An ABSENT `actions` key and a key naming every action are the same behaviour and different CLAIMS - one says \"nobody narrowed this\", the other says \"all three were considered\". `rely` is the measured instance: it has no key, defaults to everything, and reads a month later as a stale registry rather than a decision. DC-45 in a config file - absent and deliberate rendering identically, with the safe-looking reading being the one nobody revisits.",
       "scope": [
         ".claude/commands/*.md"
       ],
@@ -352,5 +406,6 @@
     }
   },
   "_switches_v15": "A subject set is everything the verdict DEPENDS ON, not merely everything the checker read. Found by ZeroParadox 2026-08-23: check_pov recorded 291 subjects and NOT pov_baseline.txt, so grandfathering a violation into that baseline left the record reading SATISFIED -- every file it named was unchanged. V15 refuses a record that omits a declared switch, which turns a convention into a contract: with the switch as a subject, editing a baseline moves a blob the record names, the key goes STALE, and the checker re-runs. Declaring switches is NOT a narrowing and costs no reason -- it makes a type stricter.",
-  "_vendored_allowlist_2026_08_23": "vendored_files.txt switched ELEVEN checkers off and was named by none of them. Found by ZeroParadox's /rely trial: a planted DENIAL made check_pov exit 1, one appended allowlist line made it exit 0, AND NO SUBJECT MOVED. Stronger than the baseline hole of REQ-10, because an allowlist removes files from SCOPE entirely rather than grandfathering sites -- the record does not merely go unstale, the thing it covered stops existing. The count reached eleven in two passes: seven whose records already named it, then four more that had not re-recorded because none is in the pre-commit hook -- the second time that cause has hidden a set."
+  "_vendored_allowlist_2026_08_23": "vendored_files.txt switched ELEVEN checkers off and was named by none of them. Found by ZeroParadox's /rely trial: a planted DENIAL made check_pov exit 1, one appended allowlist line made it exit 0, AND NO SUBJECT MOVED. Stronger than the baseline hole of REQ-10, because an allowlist removes files from SCOPE entirely rather than grandfathering sites -- the record does not merely go unstale, the thing it covered stops existing. The count reached eleven in two passes: seven whose records already named it, then four more that had not re-recorded because none is in the pre-commit hook -- the second time that cause has hidden a set.",
+  "_approved_modules": "⛔⛔ WHICH BUILD MAY RECORD, not merely which file. `module` pins the PATH, so an EDITED checker records exactly as readily as a reviewed one. `approved_modules` lists the blob ids this step accepts, and verdictLedger's V16c REFUSES a record whose `evidence` names an unapproved build. Pinned for PUSH-GATING steps ONLY -- advisory and commit-only steps stay unpinned, so the friction is paid where publication is decided and nowhere else. ⛔⛔ WHEN A CHECKER GETS A NEW BUILD, **REPLACE** THE HASH -- DO NOT ADD TO THE LIST. `[\"<new>\"]` is correct; `[\"<old>\", \"<new>\"]` is wrong absent a stated expiry. ⚠⚠ AN ACCUMULATING LIST STOPS BEING A PIN: approve v1, v2, v3, v4 and eventually every build ever written is approved -- still LOOKING pinned while constraining nothing. That is `RLY31-6`'s exact shape, where a control decayed into permissiveness while appearing to hold and nothing was positioned to notice; this is the same trap in a different field. The history is already versioned, so every past approved set is recoverable from this file's own log -- a list inside the field duplicates that, and the duplicate is the copy that rots. Old records need no entry either: nothing re-validates the stored stream (`validate` runs only at append), so a record made under v1 stays exactly as valid as the day it landed. THE ONLY LEGITIMATE PAIR IS A ROLLOUT WINDOW -- v2 shipping while a run is in flight on v1 -- and it needs a STATED EXPIRY the way `copy_editor`'s `_why_not_admitted_yet` does, or the transitional pair quietly becomes permanent. ⭐ THE TWO-STEP COST IS SMALLER THAN IT LOOKS, and this was measured in the server's `inventory.py` rather than assumed: EDITING A CHECKER ALREADY STALES EVERY ROW IT PRODUCED, pinned or not -- `ev_stale` compares each record's `evidence` against current content and reports that the producer changed. So a new build means re-running that step regardless of `approved_modules`, and approving the new blob is ONE LINE IN THE SAME COMMIT THAT SHIPS THE CODE, inside a re-run you already owe. Tim's ruling on the trade: \"the 'silently can't record' is the problem. fail loudly.\" V16c refuses naming BOTH the rejected blob and this field, and approving is a REVIEWABLE EDIT in the same history as the tool change -- the point of pinning rather than an obstacle to it. ⚠ A step with NO `approved_modules` still records; `policy()` reports `unpinned_modules`, so an unpinned step is DISCLOSED rather than silently permitted. ⚠⚠ EVERY BLOB BELOW WAS RE-DERIVED IN THIS TREE with `record.module_evidence`, the same function that computes evidence at record time, and NOT pasted from the message that proposed them. Pinning a stale blob refuses the very next run of that checker, so a copied list is the one thing this field must never contain. ⚠ THE STEP NAME IS NOT THE FILE NAME: `claim_review` pins `check_frozen.py` and `decls` pins `batch.py`. This entry's own `module` is the authority for that mapping. ⚠ IF YOU ADD A REGISTRY KEY AND IT SEEMS IGNORED: the server's `Config.requirements()` rebuilds each spec key by key from a whitelist rather than passing the entry through, so a key absent from that whitelist is invisible to every rule downstream no matter what this file says."
 }
