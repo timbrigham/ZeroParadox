@@ -790,6 +790,20 @@ def _cli(argv):
         # fail-open; demanding the brief's blob from an agent that could not read the brief would
         # stop it reporting the finding at all. A PASS is what lets work through, so a PASS is what
         # must be pinned to the instructions that authorised it.
+        #
+        # ⛔⛔ BUT "A FAIL NEEDS NO EVIDENCE" IS FALSE ABOUT THE SERVER, AND THIS COMMENT ASSERTED IT
+        # FOR DAYS (RLYB-3). Measured 2026-09-08: `--how delegated --verdict fail` with no
+        # `--evidence` reaches the ledger and is REFUSED by V21, *"this verdict names no blob"* —
+        # V21 exempts only `signature` and `override`. So the record is UNEMITTABLE, and on a real
+        # emit the refusal returns exit 2, which every gate brief tells the agent to read as a
+        # LEDGER OUTAGE rather than as a usage error. A true FAIL can be lost that way.
+        # ⚠ THE PERMISSIVENESS BELOW IS STILL RIGHT and is deliberately not changed: a client guard
+        # must never be the thing that stops a real FAIL from landing. **Only the comment was
+        # wrong.** All five gate-brief templates already pass `--evidence` on FAIL, so nothing in
+        # this repo takes the broken path today. The durable fix is the same shape as the
+        # `agreement` branch one `elif` below — require it and say why — and it is deliberately
+        # NOT taken tonight, because widening a refusal on the FAIL path is exactly the change that
+        # could swallow a finding. Left as a stated bill, not a silent one.
         if a.verdict == "pass" and not a.evidence:
             ap.error("--evidence is required for a delegated PASS: give the path to the BRIEF this "
                      "round ran under (e.g. .claude/commands/adversary-review.md). A PASS is what "
@@ -1047,13 +1061,27 @@ def _cli(argv):
     #
     # ⚠ THIS MAKES THE CLIENT STRICTER THAN THE SERVER, WHICH IS THE DIRECTION THAT HIDES THINGS —
     # a refusal here never reaches the ledger's call log. Accepted deliberately and NARROWLY: the
-    # server's own staleness model requires a watchable blob, so nothing legitimate is refused, and
-    # every real brief pins to a tracked file. The durable fix is server-side (V21 requiring the
+    # server's own staleness model requires a watchable blob, so a refusal here names a record the
+    # ledger would keep but could never expire. The durable fix is server-side (V21 requiring the
     # blob be TRACKED, not merely present) and is reported to the verdictLedger session; this is the
     # fail-fast half, not a substitute for it.
+    #
+    # ⚠⚠ FENCE THE RESOLVED PATHS, NEVER `a.evidence`. The first version of this guard tested the
+    # raw argv strings and was BYPASSABLE (RLYB-1r): `module_evidence` does `os.path.abspath` against
+    # the PROCESS CWD and then relativises against a root derived from `__file__`, while
+    # `ledger_subjects` is CWD-independent — TWO RESOLUTIONS OF ONE INPUT, and the guard checked the
+    # one that is not recorded. Measured from a shifted CWD with a decoy `.claude/commands/rely.md`
+    # in a scratchpad: guard silent, exit 0, and the blob recorded was the decoy's rather than the
+    # brief's. `DC-44` — a true value read against the WRONG OBJECT; the check was right and its
+    # subject was wrong. ⚠ `R-BRIEF` routes commit-needing agents into `worktree(action='add')`,
+    # which is exactly a non-root CWD, so this was reachable and not hypothetical.
+    #
+    # ⭐ AND FENCING THE RESOLVED PATH IS ALSO WHAT ADMITS THE LEGITIMATE SPELLINGS. The argv version
+    # REFUSED an absolute in-repo path, a `./`-prefixed path and a `..`-containing path to the same
+    # staged brief, because `ledger_subjects` normalises backslashes and nothing else — a false
+    # "not staged" on four correct inputs (RLYB-6). One object, one fence, nine cases measured green.
     if a.evidence:
-        _ev_named = sorted(set(a.evidence))
-        _ev_kept, _ev_fenced = common.ledger_subjects(_ev_named, a.ref)
+        _ev_kept, _ev_fenced = common.ledger_subjects([e["path"] for e in ev], a.ref)
         if _ev_fenced:
             ap.error("--evidence must name a TRACKED file at %s, and %d did not:\n%s\n"
                      "Evidence is what makes this verdict go stale when its producer changes — the "
