@@ -372,10 +372,35 @@ implementing someone else's finding from a note.** `D3` names the same failure a
 *"a carrier that paraphrases has rebuilt the translation step `D1` and `D3` exist to delete."*
 
 ⚠⚠ **ORDER MATTERS AND IT IS NOT THE OBVIOUS ONE: RECORD FIRST (Step 6), THEN FIX.** A verdict binds
-to `(step, path, git_blob_id)` — the CONTENT. `ledger_subjects` reads the INDEX of whatever tree you
-run in, so if you commit a fix in your worktree and record afterwards, **your verdict binds to the
-bytes you repaired rather than the bytes you reviewed** — a record asserting a finding about content
-that no longer contains it. Record, then remediate.
+to `(step, path, git_blob_id)` — the CONTENT. `ledger_subjects` DERIVES that blob from the INDEX at
+record time, so if you stage a fix and record afterwards, **your verdict binds to the bytes you
+repaired rather than the bytes you reviewed** — a record asserting a finding about content that no
+longer contains it.
+
+⛔⛔ **AND THE REASON THIS IS A RULE RATHER THAN A PREFERENCE: NOTHING WOULD TELL YOU.** From
+`ledger_subjects`' own docstring, measured 2026-08-25:
+
+> *"agent reads blob X → the file changes to Y AND IS STAGED → at record time worktree == index == Y
+> → NO FENCE FIRES → the record names Y. The record then certifies content nobody examined, and
+> nothing reports it."*
+
+The staleness fences catch drift-and-REVERT and drift-to-UNSTAGED. **They cannot catch
+drift-and-STAY, because at record time both sides agree on the new bytes.** It is invisible by
+construction, not by oversight.
+
+⚠⚠⚠ **AND `D1` MAKES DRIFT-AND-STAY THE NORMAL PATH.** Before remediation moved here, a reviewer had
+no reason to change bytes between reading and recording. Now it reads, mutates, stages and records
+in one session — that exact sequence. **Record-first is the only thing standing between this
+workflow and the measured silent case.** ⛔ DO NOT "correct" this ordering because it reads
+backwards. It reads backwards and it is right, and the next person to find it sensible-looking and
+swap it will produce records that certify content nobody examined, with every gate green.
+
+⭐ **THE DURABLE FIX EXISTS AND IS NOT YET USED, so treat this ordering as an interim guard rather
+than the design.** `gitRobot.ledger_subjects` takes `observed` — path → the blob the gate ACTUALLY
+READ — as a MANDATORY input and VERIFIES instead of deriving, turning a mismatch into a `skipped`
+entry carrying both ids. `record.py` uses the deriving `common` one. **When that moves, the ordering
+becomes moot instead of load-bearing** — a defect that cannot be represented beats a rule someone
+has to follow, and that is this project's whole measured history.
 
 ### The route, and every step is a tool call
 
