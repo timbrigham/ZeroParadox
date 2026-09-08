@@ -1,3 +1,6 @@
 {
-  "round": 0
+  "round": 0,
+  "arc_base": "09129065f280a0a8765d5cfb1a28663feb911fe2",
+  "targets": {},
+  "reset_from": 5
 }
