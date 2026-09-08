@@ -54,18 +54,32 @@ A control nobody has watched go red is a **hypothesis**. You are not finished wh
 
 **If you cannot construct a state where it goes red — that is the finding.** Say so plainly, name what you tried, and stop. **A non-answer reported as a non-answer is worth more than a control nobody has seen fail**, because the second one enters service and the first one does not.
 
-## THE FOUR STATES, AND THEY MUST NOT COLLAPSE
+## THE FOUR STATES, AND THEY MUST NOT COLLAPSE — THREE ARE EXITS, THE FOURTH IS A RECORD
 
-This is the house convention and it is already in force — stated at `tools/verify/check_paths.py:1501`: *"exit 2 says the question could not be asked, exit 0 with zero hits says it was asked."*
+The `0`/`2` split is the house convention and it is in force, stated in `tools/verify/check_paths.py` at the guard above `if not t:` — *"exit 2 says the question could not be asked, exit 0 with zero hits says it was asked and answered. Collapsing those two is what a fail-open IS."*
 
-| exit | meaning | the sentence it makes | ledger |
+⚠⚠ **THAT CITATION COVERS TWO ROWS, AND THIS BLOCK SPENT IT ON FOUR.** Until 2026-09-08 the table gave *answer contested* **exit 3** under the preface *"this is the house convention and it is already in force"*, and neither half held. The cited comment names `0` and `2` and no third code. And **exit 3 is already taken, three incompatible ways, in the one namespace this table governs — a checker's own process exit.** Measured by importing the consumers and running their scoring predicates rather than reading them:
+
+    check_paths    EXIT_SKIPPED = 3, "the scope could not be determined"
+    ci_report      rc == 3 renders `**skipped**` and does NOT increment `failed`
+    check_briefs   classify_record_failure(2, reachable) -> 3, the ledger REACHED and REFUSED,
+                   returned as the checker's own exit and blocked on by `hooks.py`
+    batch.py       special-cases `rc == 2` only, so 3 lands in the generic non-zero bucket
+
+**So a control exiting 3 for a contested panel is scored by the CI reporter as *skipped* — exit 3 collapsing into exit 2, "I could not look".** That is this file's own cardinal rule inverted by the form the rule is printed on, one turn further round than the last time this file recorded that shape.
+
+| state | exit | the sentence it makes | ledger |
 |---|---|---|---|
-| **0** | asked, and the property HOLDS | "I looked, and it is fine." | `PASS` record |
-| **1** | asked, and the property is VIOLATED | "I looked, and here is what is wrong." | `FAIL` record, `failing` naming the indicted subset |
-| **2** | **COULD NOT ASK** — input absent, unreadable, dependency unreachable | "I could not look." **Never a finding about the subject.** | **NO RECORD AT ALL** + a typed `error_type` |
-| **3** | **ASKED, RAN TO COMPLETION, ANSWER CONTESTED** | "I looked, and we do not agree." | `UNDECIDED` record, `failing` narrowing it |
+| **PASS** | **0** | "I looked, and it is fine." | `PASS` record |
+| **FAIL** | **1** | "I looked, and here is what is wrong." | `FAIL` record, `failing` naming the indicted subset |
+| **ABSENT** | **2** — input absent, unreadable, dependency unreachable | "I could not look." **Never a finding about the subject.** | **NO RECORD AT ALL** + a typed `error_type` |
+| **CONTESTED** | **1**, and it must SAY SO | "I looked, and we do not agree." | `UNDECIDED` record, `failing` narrowing it |
 
-⚠⚠ **EXIT 3 IS NOT EXIT 2, AND COLLAPSING THEM IS THE SAME DEFECT ONE LEVEL DOWN.** A panel that ran perfectly and split 2-1 has **answered**; it simply did not answer with one voice. Spelling that as *"could not ask"* throws away the fact that the work was done — and sends someone to fix infrastructure that is fine. This distinction was supplied by the verdictLedger session on 2026-09-05 against an earlier draft of this brief that had only three exits: *"UNDECIDED is a FOURTH state your three exits cannot express... If `/control` ever runs a panel rather than a single check, it needs its own exit, or the panel split will get spelled as could-not-ask."*
+⭐ **THE FOURTH STATE IS REAL; WHAT CARRIES IT IS THE VERDICT, NOT THE EXIT.** A panel that ran perfectly and split 2-1 has **answered** — it simply did not answer with one voice, and spelling that as *"could not ask"* throws away the fact that the work was done. The distinction was supplied by the verdictLedger session on 2026-09-05: *"UNDECIDED is a FOURTH state your three exits cannot express."* **That was right about the state, and this file drew the wrong conclusion from it.** A fourth integer does not express it either, because **nothing branches on one.** `R-ZERONULL` asks whether the extra branch returns a value a CONSUMER acts on — and in the ledger it does: `record.py --verdict undecided` exists, `schema.VERDICTS` admits it, `can_push` blocks on it, and `stale_or_missing` counts it among the steps owing a re-run. **The exit channel carries answerability; the ledger carries the verdict. Put the contest where something reads it.**
+
+⛔ **SO A CONTESTED CONTROL EXITS 1, AND IS NOT PERMITTED TO BE QUIET ABOUT IT.** Exit 1 is fail-CLOSED, which is the safe direction and the only one of the four integers that is: `0` would be a fail-open, `2` is the forbidden collapse, `3` is read three ways by three consumers on the push path. **Exit 1 ALONE under-reports** — it reads as a plain violation — so a contested run owes BOTH, or the distinction is lost exactly where it was lost before: **a line on stdout that only the contested path can emit** (the delivery contract below already requires one), **and an `UNDECIDED` record narrowed by `failing`.**
+
+⚠ **MINTING A FOURTH CHECKER EXIT IS NOT AN AGENT'S DECISION, AND IT IS THE DURABLE FIX.** A sweep of `sys.exit(N)` and `EXIT_* = N` under `tools/` on 2026-09-08 located no code above 3 — evidence about that probe, not a guarantee an integer is free. **The blocker is not the integer, it is that `ci_report`, `batch` and `hooks` would each have to be taught to read it.** When one of them is, the state moves back into the exit channel and this row changes with it; until then it lives in the verdict, and this is an interim guard rather than the design. Tim decides which.
 
 ⚠ **`UNDECIDED` BLOCKS ADMISSION, RANKS BETWEEN FAIL AND PASS, AND HAS NEVER ONCE BEEN RECORDED.** ⭐ **THE ZERO IS THE CLAIM; THE DENOMINATOR IS NOT** — it was 2,170 when this line was written, 2,267 on 2026-09-06, and 2,503 on 2026-09-08. **The stream grows and the zero has not moved.** Re-derive it with `find(verdict='undecided')` rather than trusting any figure here; a frozen denominator beside a live numerator is `DC-6` and this line carried one for two days (AR8-4). It is storable today — `schema.VERDICTS` is `{FAIL, PASS, UNDECIDED}`, the validator admits it, the resolver reads it, `can_push` blocks on it, and `pytest -k undecided` passes 15. **Its downstream has never executed on production data**, so the first real one is a first on the data, not a first through the code. Say so if you emit one.
 
@@ -85,7 +99,7 @@ This is the house convention and it is already in force — stated at `tools/ver
 
 **(1) THE CONTROL ITSELF**, committed in your worktree. Not pasted into a report — committed, so it survives your context.
 
-**(2) THE MUTATED FORMS THAT PROVE EACH EXIT**, and **at least TWO genuinely different variations per state**. ⚠ **Which states apply depends on the control.** A single check owes exits 0, 1 and 2 — six mutations minimum. **A control that runs a PANEL owes exit 3 as well** — eight minimum — and must demonstrate a genuine split, not a simulated one. Two variations because one mutation proves the control noticed *that edit*; two proves it is watching the *property*. ⚠ **Make them different in KIND, not in spelling.** Deleting a call and renaming the same call are one variation. Deleting a call and making it return a plausible wrong value are two.
+**(2) THE MUTATED FORMS THAT PROVE EACH STATE**, and **at least TWO genuinely different variations per state**. ⚠ **Which states apply depends on the control.** A single check owes PASS, FAIL and ABSENT — six mutations minimum. **A control that runs a PANEL owes CONTESTED as well** — eight minimum — and must demonstrate a genuine split, not a simulated one. ⚠ CONTESTED is not proved by an exit code, because it shares one with FAIL: prove it with the contested-only line and the `UNDECIDED` record. Two variations because one mutation proves the control noticed *that edit*; two proves it is watching the *property*. ⚠ **Make them different in KIND, not in spelling.** Deleting a call and renaming the same call are one variation. Deleting a call and making it return a plausible wrong value are two.
 
 For each of them — **six, or eight if your control runs a panel** — give the caller what they need
 to re-run it themselves:
@@ -97,12 +111,17 @@ EXIT:     <the code>
 OUTPUT:   <the line(s) that make this exit attributable to the property, quoted verbatim>
 ```
 
-⚠⚠ **FOUR TOKENS, BECAUSE THERE ARE FOUR EXITS.** `absent` is exit 2 (could not ask), `pass` is 0,
-`fail` is 1, and **`undecided` is exit 3 — asked, ran to completion, answer contested.** This
-template carried three tokens against the four-state table above until 2026-09-08, so an agent with
-a genuine 2-1 split had to spell it `absent`, literally *"I could not look."* **That is the exact
-collapse this file's own cardinal rule forbids, manufactured by the form the rule is printed on** —
-the remedy being the defect, which `copy-editor.md` names as the mark of a bedrock finding.
+⚠⚠ **FOUR TOKENS AND THREE EXITS — THE COUNTS DIFFER, AND THAT IS THE POINT.** `absent` is exit 2
+(could not ask), `pass` is 0, `fail` is 1, and **`undecided` is asked-ran-to-completion-answer-
+contested, which ALSO exits 1.** So on an `undecided` row the `EXIT:` field does not discriminate
+and the `OUTPUT:` field is the whole evidence — quote the contested-only line, and name the
+`UNDECIDED` record you emitted.
+
+⚠ **THIS TEMPLATE CARRIED THREE TOKENS UNTIL 2026-09-08 AND THEN FOUR MAPPED TO A FOURTH EXIT, AND
+BOTH WERE WRONG IN THE SAME DIRECTION.** With three, an agent holding a genuine 2-1 split had to
+spell it `absent`, literally *"I could not look."* With `undecided` mapped to exit 3, the CI reporter
+scored it `**skipped**` — the same sentence, arrived at by a longer route. **The remedy being the
+defect twice over**, which `copy-editor.md` names as the mark of a bedrock finding.
 
 ⭐ `undecided` is the ledger's word for the same state, not a coincidence and not a synonym: a
 contested panel records `UNDECIDED` with `failing` narrowing it to the contested subset. **One
