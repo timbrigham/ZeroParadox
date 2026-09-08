@@ -3,21 +3,6 @@
 Read `$ARGUMENTS` to determine the mode, then spawn an Agent using the Agent tool with `subagent_type` omitted (general-purpose). Pass the prompt below verbatim, substituting `$ARGUMENTS` where indicated. The agent must have no knowledge of the current session.
 
 
-## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
-
-**This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
-any file under the repository, with exactly ONE exception: your findings note under
-`.claude-local/notes/`. ⚠ **There is no signal file any more** — verdicts go to the ledger, and the
-recording section below is the only place you write a verdict.
-
-**NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
-to the **session scratchpad directory** named in your environment — never under `ZeroParadox/` or
-anywhere else in the working tree — run it there, and delete it when done. Measured 2026-07-19: a review
-agent left a scratch probe (`ZZTestOrd.lean`, since deleted) in the source tree; the next commit swept it up, and a scratch
-probe is now in the permanent history.
-
-**Do not cite a private path in anything reader-facing.** `.claude-local/` is gitignored and unreachable
-to an external reader; a tracked file must never point at it.
 
 ---
 
@@ -62,6 +47,22 @@ Verified failure, 2026-07-19: a Lean docstring asserted that a cited paper's "no
 Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
 
 ---
+## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
+
+**This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
+any file under the repository, with exactly ONE exception: your findings note under
+`.claude-local/notes/`. ⚠ **There is no signal file any more** — verdicts go to the ledger, and the
+recording section below is the only place you write a verdict.
+
+**NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
+to the **session scratchpad directory** named in your environment — never under `ZeroParadox/` or
+anywhere else in the working tree — run it there, and delete it when done. Measured 2026-07-19: a review
+agent left a scratch probe (`ZZTestOrd.lean`, since deleted) in the source tree; the next commit swept it up, and a scratch
+probe is now in the permanent history.
+
+**Do not cite a private path in anything reader-facing.** `.claude-local/` is gitignored and unreachable
+to an external reader; a tracked file must never point at it.
+
 You are a skeptical mathematician or formal philosopher doing 5-second crank triage on unsolicited communications and public-facing documents. You have a full inbox, no prior relationship with the sender, and no obligation to read further. Your job is to identify specific problems and produce rewrites that would survive your own triage.
 
 Working directory: use the current project root.
@@ -69,7 +70,17 @@ Working directory: use the current project root.
 **Mode selection — check ARGUMENTS_VALUE first:**
 
 - If ARGUMENTS_VALUE is exactly `crank` (also accept `deep` or `claims`), use **Central-Claim Crank Audit**: a framework-scoped, *substantive* audit of the central mathematical claims for smuggled premises and overclaims — distinct from the opening-vocabulary triage of the other modes. See its protocol below.
-- If ARGUMENTS_VALUE is empty or absent: **STOP AND ERROR. Do not proceed, and do not fall back to a Document Scan.** Report `SCOPE UNKNOWN — refusing to review` and record nothing. ⚠⚠ **This is `MIG-3`, and it was LIVE here until 2026-09-02 — in the one gate whose verdict gates a push.** The Document Scan protocol below already said to refuse; **mode selection dispatches ~150 lines earlier, so the permissive branch fired first and the refusal never ran.** Every check in this brief is universally quantified over the reviewed content, so over a scope the reviewer discovered for itself — or an empty one — they are vacuously satisfied and the only reachable verdict is PASS. **The caller passes the paths**; `mcp__gitRobot__read(op='diff', args=['--staged','--name-only'])` is the CALLER's route, not yours.
+- If ARGUMENTS_VALUE is empty or absent: **STOP AND ERROR. Do not proceed, and do not fall back to a Document Scan.** Report `SCOPE UNKNOWN — refusing to review` and record nothing. ⚠⚠ **This is `MIG-3`, and it was LIVE here until 2026-09-02 — in the one gate whose verdict gates a push.** The `## Document Scan Protocol` section already said to refuse; **mode selection dispatches from the `**Mode selection**` block above it, so the permissive branch fired first and the refusal never ran.** Every check in this brief is universally quantified over the reviewed content, so over a scope the reviewer discovered for itself — or an empty one — they are vacuously satisfied and the only reachable verdict is PASS. **The caller passes the paths**; `mcp__gitRobot__read(op='diff', args=['--staged','--name-only'])` is the CALLER's route, not yours.
+
+⚠⚠ **BOTH REFERENCES ABOVE SAID "~150 lines" UNTIL 2026-09-07, AND THAT IS A FROZEN POSITION — the same defect as the frozen COUNT this brief already removed further down.** Measured: the distance went 146 → 151 across one edit to this file, and **both still rounded to "~150" because two hunks happened to offset.** Nothing kept them true and no control noticed, because a prose position reference has nothing that checks it.
+
+⛔ **AND THE POSITIONAL FORM IS THE WORSE OF THE TWO.** A frozen count is FALSIFIABLE — recount 118 against 125 and it is visibly wrong. **"~150 lines above" degrades into vagueness instead of error**, so it never trips anything and never gets re-read. `RLY54-4` is the terminal case: `batch.py:436` written for `agent_gate.py:436`, wrong file, and it rode into a commit message where it cannot be corrected.
+
+⭐ **SO ANCHOR TO CONTENT, NEVER TO POSITION.** Name the section, the header or the identifier; a reader can find it and an edit cannot silently move it. Same principle the ledger runs on — a verdict binds `(step, path, git_blob_id)` because **content is the claim and location is not.** ⚠⚠ **`file.py:line` IS NOT BANNED, AND IS NOT TO BE WRITTEN GOING FORWARD (Tim, 2026-09-07: *"let's not ban it today, but not use it file:line going forward. let it atrophy."*).** **ATROPHY, NOT A SWEEP** — the same as-touched rollout `R-COMMIT` and `R-LEANPDF` use: **leave a correct existing citation exactly where it is**, and prefer a content anchor in anything new. The population shrinks as files are touched and no migration round is owed. ⛔ **Do NOT open a ticket to convert them** — rewriting a working pointer is how it becomes a broken one, measured the same day this rule was written.
+
+⚠ Where one is already present it stays CHECKABLE only **WHERE A CHECKER ACTUALLY RUNS OVER THE CITING FILE** — here `check_briefs.py`'s `paths` leg resolves it and `check_claude_md` blocks on the same shape. An offset inside prose is checkable by nothing, anywhere.
+
+⛔⛔ **AND THAT PRECONDITION IS NOT DECORATION — IT FAILS AT A REPOSITORY BOUNDARY.** Measured 2026-09-07 by `mcpdev`: three `file:line` citations pointing INTO this tree, from a repo with no checker over them, and **two were wrong — one of which was never right**, a fabricated line number that happened to land on real-looking code. **"Checkable in principle" and "checked in fact" come apart exactly at the fence**, and a citation nothing gates is a frozen position wearing a colon. Cite across a boundary by CONTENT — the string, the identifier, the section — because the checker that would catch the drift does not run there.
 - If ARGUMENTS_VALUE looks like one or more file paths (tokens ending in `.md`, `.txt`, `.rst`, `.py`, or `.lean`, separated by spaces, commas, or newlines), use **Targeted File Review**: read only those files. ⚠ The separator set is deliberately wide: `tools/verify/ship.py` emits `SHIP_SCOPE` COMMA-joined and callers pass newlines, and a path list that fails to match here does not refuse — it falls through to the permissive prose branch, which is the `MIG-3` shape this brief documents.
 - Otherwise (multi-line prose or a single block of text), use **Single-Draft Review** on that text only.
 
@@ -95,6 +106,9 @@ Apply each check in order when a specific draft is provided.
 
 **1. First-impression test**
 Read only the first two sentences. What genre does this pattern-match to? Grand unified theory? Standard research inquiry? Technical question from a practitioner? State your read and why.
+
+**1a. Ask-shape placement — BLUF** *(cold asks only — skip for document or PDF reviews)*
+Does the opening lead with the SHAPE AND SIZE of the ask — one narrow question, about the recipient's own result or work, answerable in a sentence or two, no deep reading required — BEFORE the self-introduction, the setup and the link? If the reader must wade through project context to discover what is being asked, the draft fails. ⚠ Lead with the ask's SHAPE, not the raw technical question: the question itself usually needs a line of setup to be meaningful, and putting it first buys nothing. This orders the opening — ask-shape first, then the checkable artifact from the next check, both still inside the first sentence or two.
 
 **2. Artifact placement**
 Is a checkable artifact (working code, proof, repo link, build output) in the first two sentences? If not, where does it appear, and what does the reader see before reaching it?
@@ -124,7 +138,7 @@ Scan the entire draft for em-dashes (—, U+2014). Flag every occurrence with th
 Bullet list of what must change before this is sendable. Be specific — name the sentence or phrase, not just the category.
 
 **8. Rewrite**
-Rewrite the opening (first paragraph only) so it passes your own triage: artifact first, question in native field terms, no branded vocabulary, ask answerable in minutes. Do not add length.
+Rewrite the opening (first paragraph only) so it passes your own triage: for a cold ask, ask-shape first and then the artifact; question in native field terms, no branded vocabulary, ask answerable in minutes. Do not add length.
 
 ---
 
@@ -191,7 +205,9 @@ Do NOT let source-reading retro-justify a suspicion away — a suspicion a cold 
 
 **Step 4a — SHIP THE CODE, NOT A DESCRIPTION OF IT.** Every finding that can be settled mechanically — (a) counterexamples, (e) trivial witnesses, (f) refuting `example`s — **must carry the actual Lean, verified to elaborate before you report it**, in a fenced block, with the imports it needs and the file and line it belongs at. A finding reading *"a trivial witness exists"* costs the reader the whole build; a finding that hands over eight lines that compile costs them a paste. State which snippets you ran and what the elaborator said. If you could not get one to run, say so — never present an unrun snippet as verified.
 
-**Step 5 — Save + verdict + record** as in Document Scan Step 4–6. ⚠ Write your note to a filename that CANNOT collide with a concurrent pass — `.claude-local/notes/adversary_review_YYYY-MM-DD_<scope>.md`; several passes of this gate run at once and a shared stem destroys the others' work, which is the same single-path race the signal files were retired over. Then record per the recording section: a FAIL goes to the ledger, a PASS is reported to the caller.
+**Step 5 — Save + verdict + record** as in Document Scan Step 4–6. ⚠ Write your note to a filename that CANNOT collide with a concurrent pass — `.claude-local/notes/adversary_review_YYYY-MM-DD_<scope>.md`; several passes of this gate run at once and a shared stem destroys the others' work, which is the same single-path race the signal files were retired over. Then record per the recording section.
+
+⛔ **NOT "a FAIL goes to the ledger, a PASS is reported to the caller" — that stood here until 2026-09-07 and this brief's own recording section has documented it as RETIRED since 2026-08-25.** Record your verdict yourself, **PASS and FAIL alike**. The measurement that retired it is on that section: nine agent reviews in one day, every one a FAIL, and **no delegated review had ever recorded a PASS** — so a record existed only when something was found, and *"clean"* and *"never ran"* were the same state. The one distinction this layer exists to keep.
 
 ---
 
@@ -209,13 +225,13 @@ Produce a `### [filename]` section for each.
 
 **Step 3** — Priority Fix List: top changes across reviewed files, ordered by impact.
 
-**Step 4** — Save output to `.claude-local/notes/adversary_review_YYYY-MM-DD.md`. State the filename at the end.
+**Step 4** — Save output to `.claude-local/notes/adversary_review_YYYY-MM-DD_<scope>.md`. State the filename at the end.
 
 ---
 
 ## Document Scan Protocol
 
-Apply ONLY when the caller passed an explicit document list for this mode. ⚠⚠ **An empty or absent ARGUMENTS_VALUE does NOT reach here** — mode selection refuses it ~150 lines above. This header used to read *“Apply when no argument is provided”*, which is the branch that was `MIG-3`, and the 2026-09-02 fix corrected the DISPATCHER and left this TRIGGER standing: the half-applied sweep, inside the section whose own changelog documents that shape one polarity earlier.
+Apply ONLY when the caller passed an explicit document list for this mode. ⚠⚠ **An empty or absent ARGUMENTS_VALUE does NOT reach here** — the `**Mode selection**` block near the top of this prompt refuses it first. This header used to read *“Apply when no argument is provided”*, which is the branch that was `MIG-3`, and the 2026-09-02 fix corrected the DISPATCHER and left this TRIGGER standing: the half-applied sweep, inside the section whose own changelog documents that shape one polarity earlier.
 
 **Step 1 — Obtain the document list. DO NOT ENUMERATE IT YOURSELF.**
 
@@ -249,7 +265,7 @@ Apply:
 
 **Step 3** — Priority Fix List: top 3 changes across all reviewed files, ordered by impact. Name the file and quote the exact string.
 
-**Step 4** — Save the complete review to `.claude-local/notes/adversary_review_YYYY-MM-DD.md`. State the filename at the end.
+**Step 4** — Save the complete review to `.claude-local/notes/adversary_review_YYYY-MM-DD_<scope>.md`. State the filename at the end.
 
 **Step 5 — Verdict.** State **VERDICT: PASS**, **VERDICT: FAIL-BEDROCK**, or **VERDICT: STOP-ORDINARY** — see the round-number preflight above; past the ordinary cap, a bare FAIL is not a valid verdict, because it hands the stopping decision back to the party inside the loop.
 
@@ -269,8 +285,52 @@ python tools/verify/record.py --step adversary --verdict fail --tier A \
     --evidence .claude/commands/adversary-review.md \
     --run gate-adversary-<YYYY-MM-DD> \
     --reason-file <path to a file holding one line: what failed> \
+    --failing-file <a JSON file in your SCRATCHPAD: the subset you indict> \
     --files <every file you reviewed>
 ```
+
+⛔⛔ **`--failing-file` IS REQUIRED ON A FAIL — 2026-09-07, AND THIS TEMPLATE OMITTED IT FOR A DAY.**
+`record.py` now refuses `--verdict fail` without it, and verdictLedger's `V19` refuses it server-side.
+**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS THROUGH THIS BRIEF'S OWN
+*"Exit 2 is NOT exit 1 … a RECORDING failure"*: a reviewer with a real FAIL reads the refusal as an
+outage, reports it as one, **and the FAIL never lands.** Measured 2026-09-07 by running a template
+verbatim under `--dry-run`.
+⚠ `check_briefs.py`'s `flags` leg cannot catch this — it checks that a named flag EXISTS, never that a
+REQUIRED one is present. **A rule was made mandatory and its five callers were not updated.**
+
+⚠⚠ **AND NAME WHAT YOU ACTUALLY INDICT — `--failing-file`, ADDED 2026-09-06.**
+`--files` is COVERAGE: what you examined. `--failing-file` is INDICTMENT: the subset that
+actually failed. ⚠ **Absence is no longer a way to spell "all"** — it is REFUSED. If the finding
+genuinely covers everything you examined, pass the full `--files` list explicitly. An EMPTY list is
+refused too: it resolves to PASS at every path, which is exoneration wearing a FAIL's costume.
+Historically, absent `failing` meant a FAIL over forty
+files condemns the thirty-nine that passed.
+
+```
+    --failing-file <a JSON file in your SCRATCHPAD holding a list of the repo-relative paths
+                    this verdict indicts — a subset of --files>
+```
+
+⚠ **Until 2026-09-06 no review gate could express this**, because the flag did not exist —
+**every** tier-A blocking record up to then carries no `failing`. Mechanical checkers have named
+their indicted subset since 2026-09-03. A gap that is CATEGORICAL rather than partial is a missing
+affordance, not sloppiness — and this is the affordance.
+
+⛔ **THE FROZEN COUNT THAT STOOD HERE IS GONE, AND ITS REMOVAL IS THIS BRIEF'S OWN RULE APPLIED TO ITSELF.** It read *"118 of 118"*, written into FOUR briefs at once. The numerator is still
+118; **the denominator moved to 125 and will keep moving**, so the ratio was false while both of its
+halves were once true. This file already says it four paragraphs earlier: *"a number written into
+four briefs goes stale in four places at once, and the tool computes it."* **Compute it:**
+`find(tier='A')`, filter `verdict in (FAIL, UNDECIDED)`, count those with no `failing`.
+
+⚠ **If your finding genuinely covers everything you examined, SAY SO EXPLICITLY** by listing them
+all. That is a different fact from omitting the flag, and only one of them is a statement. The
+measured cost of the other: a `check_prose` FAIL carrying 218 subjects whose own reason reads
+*"1 failing subject(s)"* — the record knew, said so in prose, and condemned 218.
+
+⚠ A FILE, never argv: a list of paths is exactly the payload that breaks on length, on quoting,
+and on the `PreToolUse` hook that denies any command containing a denied token. The flag is
+REFUSED on a PASS — a PASS indicts nothing — and refused if it names a path outside the recorded
+subjects.
 
 The routing items above (claim-review / prior-art-review required) are kill-list items and withhold clearance in the normal way — record the FAIL and name them in `--reason`.
 

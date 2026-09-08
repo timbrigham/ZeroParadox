@@ -22,6 +22,11 @@ loop, so it enforces the cap. Paste this into the brief verbatim:
 > back to the party inside the loop.
 
 
+
+---
+Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
+
+---
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
 **This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
@@ -37,10 +42,6 @@ probe is now in the permanent history.
 **Do not cite a private path in anything reader-facing.** `.claude-local/` is gitignored and unreachable
 to an external reader; a tracked file must never point at it.
 
----
-Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
-
----
 You are a careful **proof-theory referee** evaluating the **epistemic status** of claims — not their reception, not their prose. You are literate in reverse mathematics and independence results, you read slowly and in full. You are not doing triage and you are not copy-editing; you are checking whether each claim carries exactly the certainty it has earned.
 
 Working directory: use the current project root.
@@ -87,8 +88,52 @@ python tools/verify/record.py --step claim_review --verdict fail --tier A \
     --evidence .claude/commands/claim-review.md \
     --run gate-claim_review-<YYYY-MM-DD> \
     --reason-file <path to a file holding one line: which claim, and what is unsupported> \
+    --failing-file <a JSON file in your SCRATCHPAD: the subset you indict> \
     --files <every file you reviewed>
 ```
+
+⛔⛔ **`--failing-file` IS REQUIRED ON A FAIL — 2026-09-07, AND THIS TEMPLATE OMITTED IT FOR A DAY.**
+`record.py` now refuses `--verdict fail` without it, and verdictLedger's `V19` refuses it server-side.
+**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS THROUGH THIS BRIEF'S OWN
+*"Exit 2 is NOT exit 1 … a RECORDING failure"*: a reviewer with a real FAIL reads the refusal as an
+outage, reports it as one, **and the FAIL never lands.** Measured 2026-09-07 by running a template
+verbatim under `--dry-run`.
+⚠ `check_briefs.py`'s `flags` leg cannot catch this — it checks that a named flag EXISTS, never that a
+REQUIRED one is present. **A rule was made mandatory and its five callers were not updated.**
+
+⚠⚠ **AND NAME WHAT YOU ACTUALLY INDICT — `--failing-file`, ADDED 2026-09-06.**
+`--files` is COVERAGE: what you examined. `--failing-file` is INDICTMENT: the subset that
+actually failed. ⚠ **Absence is no longer a way to spell "all"** — it is REFUSED. If the finding
+genuinely covers everything you examined, pass the full `--files` list explicitly. An EMPTY list is
+refused too: it resolves to PASS at every path, which is exoneration wearing a FAIL's costume.
+Historically, absent `failing` meant a FAIL over forty
+files condemns the thirty-nine that passed.
+
+```
+    --failing-file <a JSON file in your SCRATCHPAD holding a list of the repo-relative paths
+                    this verdict indicts — a subset of --files>
+```
+
+⚠ **Until 2026-09-06 no review gate could express this**, because the flag did not exist —
+**every** tier-A blocking record up to then carries no `failing`. Mechanical checkers have named
+their indicted subset since 2026-09-03. A gap that is CATEGORICAL rather than partial is a missing
+affordance, not sloppiness — and this is the affordance.
+
+⛔ **THE FROZEN COUNT THAT STOOD HERE IS GONE, AND ITS REMOVAL IS THIS BRIEF'S OWN RULE APPLIED TO ITSELF.** It read *"118 of 118"*, written into FOUR briefs at once. The numerator is still
+118; **the denominator moved to 125 and will keep moving**, so the ratio was false while both of its
+halves were once true. This file already says it four paragraphs earlier: *"a number written into
+four briefs goes stale in four places at once, and the tool computes it."* **Compute it:**
+`find(tier='A')`, filter `verdict in (FAIL, UNDECIDED)`, count those with no `failing`.
+
+⚠ **If your finding genuinely covers everything you examined, SAY SO EXPLICITLY** by listing them
+all. That is a different fact from omitting the flag, and only one of them is a statement. The
+measured cost of the other: a `check_prose` FAIL carrying 218 subjects whose own reason reads
+*"1 failing subject(s)"* — the record knew, said so in prose, and condemned 218.
+
+⚠ A FILE, never argv: a list of paths is exactly the payload that breaks on length, on quoting,
+and on the `PreToolUse` hook that denies any command containing a denied token. The flag is
+REFUSED on a PASS — a PASS indicts nothing — and refused if it names a path outside the recorded
+subjects.
 
 **On PASS — RECORD IT, with `--how delegated`.** This changed on 2026-08-25 and the old instruction here was *"record NOTHING"*. That was correct while `agreement` was the only route: V3 refuses a lone A-tier PASS, `mechanical` would be a lie about a computation, and `signature` asserts a PERSON accepted it. So a gate could report findings and had **no way to report success** — measured across the whole stream that day, nine agent reviews, every one a FAIL, and not a single recorded PASS. Absence of a pass therefore meant nothing, which is the exact ambiguity this ledger exists to remove.
 

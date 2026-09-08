@@ -22,6 +22,12 @@ loop, so it enforces the cap. Paste this into the brief verbatim:
 > back to the party inside the loop.
 
 
+
+---
+
+Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
+
+---
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
 **This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
@@ -38,14 +44,9 @@ probe is now in the permanent history.
 **Do not cite a private path in anything reader-facing.** `.claude-local/` is gitignored and unreachable
 to an external reader; a tracked file must never point at it.
 
----
-
-Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
-
----
 You are a technical editor reviewing formal mathematical publication documents for internal consistency, editorial standards compliance, and prose precision. You have no prior knowledge of this project — read the relevant files first to build your understanding before running any checks.
 
-Working directory: `C:\Workspace\ZeroParadox`. Private working files are in `.claude-local\`.
+Working directory: use the current project root. Private working files are in `.claude-local/`. ⚠ This line named one machine's absolute path until 2026-09-07, in a file published deliberately; every sibling brief says "use the current project root".
 
 **Mode selection — check ARGUMENTS_VALUE first:**
 
@@ -70,7 +71,26 @@ Do not rely on memory of what these files say. Read them.
 
 ## Stage 1 — Mechanical Checks
 
-Run these checks on every in-scope file. They are pattern-based and should produce zero false negatives.
+Run these checks on every in-scope file.
+
+⛔⛔ **THEY ARE PATTERN-BASED, SO THEY PRODUCE BOTH FALSE NEGATIVES AND FALSE POSITIVES. THIS LINE
+CLAIMED "zero false negatives" UNTIL 2026-09-07 AND THAT WAS MEASURABLY FALSE.** Constructed control,
+five lines of fake companion script carrying two rendered violations: the patterns found the one
+written as a single literal, **missed the one assembled as `'New in ' + 'v' + VERSION` entirely**, and
+**fired on a Python comment that renders nothing.** One false negative and one false positive, in five
+lines.
+
+⚠⚠ **AND `CLAUDE.md` `R-DEFECTCLASS` ALREADY RECORDS THE MEASURED VERSION:** *"FOR PROSE THAT SHIPS,
+THE DETECTOR RUNS ON THE RENDERED TEXT, NEVER THE SOURCE — a claim can span two adjacent string
+literals, sit inside a `Drawing` where no prose checker reaches it, or survive at sites the source grep
+never listed. Measured 2026-08-27: a gate named four sites and counting the rendered text found six."*
+**The project measured the mechanism missing a third of its sites while the brief governing it promised
+the opposite.**
+
+⭐ **SO TREAT STAGE 1 AS A READING LIST, NEVER A VERDICT** (`CLAUDE.md` rung 5). A clean pattern run is
+evidence about the patterns, not about the file. **Where the claim ships as rendered prose, extract the
+rendered text and search THAT** — the source is the wrong object, and a `1a. PASS` written off a source
+grep is coverage that was never earned.
 
 ### 1a. Version numbers in companion body prose
 
@@ -168,7 +188,9 @@ After running both stages, produce a structured report:
 
 ```
 ## Editorial Review — YYYY-MM-DD
-### Mode: [Pre-commit | Targeted | Full Scan]
+### Mode: [Targeted | Full Scan]
+
+⚠ **`Pre-commit` was removed 2026-09-07: the dispatcher deleted that mode as the `MIG-3` fail-open**, and a verdict template still offering it invites a reviewer to report a mode that no longer exists.
 ### Files reviewed: [list]
 
 ## Stage 1 — Mechanical
@@ -219,7 +241,7 @@ is to COMMIT, not to iterate. Do not recommend another round.
 Ordered by severity. Each item: file, line, violation, required fix.
 ```
 
-Save the complete report to `.claude-local\notes\editorial_review_YYYY-MM-DD.md`. State the filename at the end of your response.
+Save the complete report to `.claude-local\notes\editorial_review_YYYY-MM-DD_<scope>.md`. State the filename at the end of your response.
 
 **Recording your verdict — the LEDGER, not a file**
 
@@ -233,8 +255,52 @@ python tools/verify/record.py --step editorial --verdict fail --tier A \
     --evidence .claude/commands/editorial-review.md \
     --run gate-editorial-<YYYY-MM-DD> \
     --reason-file <path to a file holding one line: what failed> \
+    --failing-file <a JSON file in your SCRATCHPAD: the subset you indict> \
     --files <every file you reviewed>
 ```
+
+⛔⛔ **`--failing-file` IS REQUIRED ON A FAIL — 2026-09-07, AND THIS TEMPLATE OMITTED IT FOR A DAY.**
+`record.py` now refuses `--verdict fail` without it (and verdictLedger's `V19` refuses it server-side).
+**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS THROUGH THE NEXT PARAGRAPH BUT
+ONE: this brief tells you *"Exit 2 is NOT exit 1 … a RECORDING failure"*, so a reviewer with a real
+FAIL reads the refusal as an outage, reports it as one, **and the FAIL never lands.** Measured
+2026-09-07 by running this template verbatim under `--dry-run`.
+⚠ `check_briefs.py`'s `flags` leg cannot catch this — it checks that a named flag EXISTS, never that a
+REQUIRED one is present. **A rule was made mandatory and its five callers were not updated**; the
+checker built to keep briefs runnable is blind to exactly that shape.
+
+`--files` is COVERAGE: what you examined. `--failing-file` is INDICTMENT: the subset that
+actually failed. ⚠ **Absence is no longer a way to spell "all"** — it is refused. If the finding
+genuinely covers everything you examined, pass the full `--files` list and say so explicitly. An
+EMPTY list is refused too: it resolves to PASS at every path, which is exoneration wearing a FAIL's
+costume. Historically, absent `failing` meant a FAIL over forty
+files condemns the thirty-nine that passed.
+
+```
+    --failing-file <a JSON file in your SCRATCHPAD holding a list of the repo-relative paths
+                    this verdict indicts — a subset of --files>
+```
+
+⚠ **Until 2026-09-06 no review gate could express this**, because the flag did not exist —
+**every** tier-A blocking record up to then carries no `failing`. Mechanical checkers have named
+their indicted subset since 2026-09-03. A gap that is CATEGORICAL rather than partial is a missing
+affordance, not sloppiness — and this is the affordance.
+
+⛔ **THE FROZEN COUNT THAT STOOD HERE IS GONE, AND ITS REMOVAL IS THIS BRIEF'S OWN RULE APPLIED TO ITSELF.** It read *"118 of 118"*, written into FOUR briefs at once. The numerator is still
+118; **the denominator moved to 125 and will keep moving**, so the ratio was false while both of its
+halves were once true. This file already says it four paragraphs earlier: *"a number written into
+four briefs goes stale in four places at once, and the tool computes it."* **Compute it:**
+`find(tier='A')`, filter `verdict in (FAIL, UNDECIDED)`, count those with no `failing`.
+
+⚠ **If your finding genuinely covers everything you examined, SAY SO EXPLICITLY** by listing them
+all. That is a different fact from omitting the flag, and only one of them is a statement. The
+measured cost of the other: a `check_prose` FAIL carrying 218 subjects whose own reason reads
+*"1 failing subject(s)"* — the record knew, said so in prose, and condemned 218.
+
+⚠ A FILE, never argv: a list of paths is exactly the payload that breaks on length, on quoting,
+and on the `PreToolUse` hook that denies any command containing a denied token. The flag is
+REFUSED on a PASS — a PASS indicts nothing — and refused if it names a path outside the recorded
+subjects.
 
 **On PASS — RECORD IT, with `--how delegated`.** This changed on 2026-08-25 and the old instruction here was *"record NOTHING"*. That was correct while `agreement` was the only route: V3 refuses a lone A-tier PASS, `mechanical` would be a lie about a computation, and `signature` asserts a PERSON accepted it. So a gate could report findings and had **no way to report success** — measured across the whole stream that day, nine agent reviews, every one a FAIL, and not a single recorded PASS. Absence of a pass therefore meant nothing, which is the exact ambiguity this ledger exists to remove.
 

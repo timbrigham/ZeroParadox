@@ -50,6 +50,12 @@ Pass 6's reviewer reported that reading the code found nothing the code did not 
 
 **3. Give it the scratchpad path and confirm `lake` works** — it will be elaborating a lot.
 
+
+---
+
+Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
+
+---
 ## HARD CONSTRAINTS
 
 **READ-ONLY on the working tree.** Do NOT modify, create, or delete any repo file, with exactly ONE exception: the findings note under `.claude-local/notes/`. ⚠ **There is no signal file any more** — your verdict goes to the ledger, and the recording section at the end is the only place you write one.
@@ -62,11 +68,6 @@ Pass 6's reviewer reported that reading the code found nothing the code did not 
 
 ⚠ **Tool traps, all measured:** `Select-String -Path "<dir>\**\*.lean"` silently under-matches deep trees — use ripgrep. A Mathlib declaration may be attribute-generated with **no source line at all**, so `#check` is the authority over grep. `python -c` in the Bash tool eats backticks. `| Select-Object -First N` breaks the pipe and reports a wrong exit code. A failed `#synth` has at least five innocent causes — not imported, unresolved universes, a different name, decomposed into parts, attribute-generated — so **re-probe before recording an absence.**
 
----
-
-Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
-
----
 You are an engineer who wants to **build on** this corpus. You are not reviewing it and you are not being paid to find fault. You have a real use in mind and you are going to try to satisfy it. Everything you report is something that happened when you ran something.
 
 Working directory: use the current project root. Scope: **ARGUMENTS_VALUE**.
@@ -188,8 +189,40 @@ python tools/verify/record.py --step rely --verdict fail --tier A \
     --evidence .claude/commands/rely.md \
     --run gate-rely-<YYYY-MM-DD> \
     --reason-file <path to a file holding: BLOCKING:<n> — the highest-severity fail-open, one line> \
+    --failing-file <a JSON file in your SCRATCHPAD: the subset you indict> \
     --files <every file in tools/verify/ you actually examined>
 ```
+
+⛔⛔ **`--failing-file` IS REQUIRED ON A FAIL — 2026-09-07, AND THIS TEMPLATE OMITTED IT FOR A DAY.**
+`record.py` now refuses `--verdict fail` without it, and verdictLedger's `V19` refuses it server-side.
+**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS THROUGH THIS BRIEF'S OWN
+*"Exit 2 is NOT exit 1 … a RECORDING failure"*: a reviewer with a real FAIL reads the refusal as an
+outage, reports it as one, **and the FAIL never lands.** Measured 2026-09-07 by running a template
+verbatim under `--dry-run`.
+⚠ `check_briefs.py`'s `flags` leg cannot catch this — it checks that a named flag EXISTS, never that a
+REQUIRED one is present. **A rule was made mandatory and its five callers were not updated.**
+
+⚠⚠ **AND NAME WHAT YOU ACTUALLY INDICT — `--failing-file`, ADDED 2026-09-06.** `--files` is
+COVERAGE: the blobs you examined, and the routing legs discharge on it. `--failing-file` is
+INDICTMENT: the subset that actually failed. ⚠ **Absence is no longer a way to spell "all"** — it
+is REFUSED, and so is an EMPTY list. To indict everything, pass the full `--files` list explicitly.
+
+```
+    --failing-file <a JSON file in your SCRATCHPAD holding a list of the repo-relative paths
+                    this verdict indicts — a subset of --files>
+```
+
+⚠ **THE TWO ARE NOT THE SAME LIST AND FOR THIS GATE THAT MATTERS MOST.** Your subjects must stay
+WIDE — a file you do not name counts as UNREVIEWED and the routing leg reads a short list as a
+smaller claim. Your indictment should be NARROW. Recording six BLOCKING findings against
+`batch.py` while having examined four files means `--files` has four entries and
+`--failing-file` has one.
+
+⚠ If the finding genuinely covers everything you examined, list them all explicitly. That is a
+different fact from omitting the flag, and only one of them is a statement.
+
+⚠ A FILE, never argv — same reason `--reason-file` exists. REFUSED on a PASS, and refused if it
+names a path outside the recorded subjects.
 
 **With `BLOCKING:0`, RECORD YOUR OWN PASS with `--how delegated`:**
 

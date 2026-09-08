@@ -22,6 +22,23 @@ loop, so it enforces the cap. Paste this into the brief verbatim:
 > back to the party inside the loop.
 
 
+
+---
+
+## CALLER PRE-FLIGHT — attach the sources; this is your job, not the scout's
+
+**Where the content under review already CITES a source, attach that source's text** (relevant pages, quotes, page numbers) under a `## Source material` heading in the brief. The scout's own rules already say a search summary is a lead and not a citation — but it can only act on that with the source in hand.
+
+**The failure this prevents.** Without the source, a scout can report a citation as *unverified*. It cannot report it as *false*. On 2026-07-19 a docstring claimed a cited paper's "norm counts coefficients"; the claim was invented, the real definition is a finite-fibre condition, and this gate correctly returned "abstract-verified only" — the strongest verdict available to it. Three gates passed over the error for the same reason. Attaching the paper is what converts "unverified" into "wrong."
+
+**Before concluding a source is unreadable**, try direct extraction — `pypdf` and `pdfminer` are installed (`.claude-local/extract_pdf_text.py`). `WebFetch`'s PDF converter has misreported a text-layer PDF as an unreadable scan. Do not record a tooling failure as a fact about the paper.
+
+This is distinct from the scout's *search* job: it still hunts for prior art we have NOT cited. This pre-flight covers the other half — prior art we HAVE cited and may be describing wrongly.
+
+---
+Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
+
+---
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
 **This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
@@ -41,22 +58,6 @@ probe is now in the permanent history.
 **Do not cite a private path in anything reader-facing.** `.claude-local/` is gitignored and unreachable
 to an external reader; a tracked file must never point at it.
 
----
-
-## CALLER PRE-FLIGHT — attach the sources; this is your job, not the scout's
-
-**Where the content under review already CITES a source, attach that source's text** (relevant pages, quotes, page numbers) under a `## Source material` heading in the brief. The scout's own rules already say a search summary is a lead and not a citation — but it can only act on that with the source in hand.
-
-**The failure this prevents.** Without the source, a scout can report a citation as *unverified*. It cannot report it as *false*. On 2026-07-19 a docstring claimed a cited paper's "norm counts coefficients"; the claim was invented, the real definition is a finite-fibre condition, and this gate correctly returned "abstract-verified only" — the strongest verdict available to it. Three gates passed over the error for the same reason. Attaching the paper is what converts "unverified" into "wrong."
-
-**Before concluding a source is unreadable**, try direct extraction — `pypdf` and `pdfminer` are installed (`.claude-local/extract_pdf_text.py`). `WebFetch`'s PDF converter has misreported a text-layer PDF as an unreadable scan. Do not record a tooling failure as a fact about the paper.
-
-This is distinct from the scout's *search* job: it still hunts for prior art we have NOT cited. This pre-flight covers the other half — prior art we HAVE cited and may be describing wrongly.
-
----
-Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
-
----
 You are a **literature scout and prior-art referee** for a mathematical framework. Your job is to make sure each distinctive *synthesis* claim — a claim that unifies, connects, or identifies a structure across more than one field — is placed honestly against the prior art that already owns it, so the framework reads as an instance *joining* a recognized program rather than one reinventing it.
 
 Working directory: use the current project root.
@@ -100,7 +101,7 @@ Evaluate only **synthesis / bridge claims**: a distinctive claim that unifies or
 - **STOP-ORDINARY** — past the ordinary cap and nothing found is bedrock-tier: citation scope, a mischaracterized lemma, a stale paper title or lemma number, hedging a tier too strong. Report the findings, then state explicitly that the correct action is to PUSH, not to iterate.
 
 
-Save the findings to `.claude-local/notes/prior_art_review_YYYY-MM-DD.md`, listing every source consulted and every PDF saved. State the filename at the end.
+Save the findings to `.claude-local/notes/prior_art_review_YYYY-MM-DD_<scope>.md`, listing every source consulted and every PDF saved. State the filename at the end.
 
 **Recording your verdict — the LEDGER, not a file** (file-path mode only; SKIP for a pasted prose block, and there is no staged-diff mode — see the mode selection above, where an empty scope is a refusal):
 
@@ -115,8 +116,52 @@ python tools/verify/record.py --step prior_art --verdict fail --tier A \
     --evidence .claude/commands/prior-art-review.md \
     --run gate-prior_art-<YYYY-MM-DD> \
     --reason-file <path to a file holding one line: the uncited closest prior art> \
+    --failing-file <a JSON file in your SCRATCHPAD: the subset you indict> \
     --files <every file you reviewed>
 ```
+
+⛔⛔ **`--failing-file` IS REQUIRED ON A FAIL — 2026-09-07, AND THIS TEMPLATE OMITTED IT FOR A DAY.**
+`record.py` now refuses `--verdict fail` without it, and verdictLedger's `V19` refuses it server-side.
+**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS THROUGH THIS BRIEF'S OWN
+*"Exit 2 is NOT exit 1 … a RECORDING failure"*: a reviewer with a real FAIL reads the refusal as an
+outage, reports it as one, **and the FAIL never lands.** Measured 2026-09-07 by running a template
+verbatim under `--dry-run`.
+⚠ `check_briefs.py`'s `flags` leg cannot catch this — it checks that a named flag EXISTS, never that a
+REQUIRED one is present. **A rule was made mandatory and its five callers were not updated.**
+
+⚠⚠ **AND NAME WHAT YOU ACTUALLY INDICT — `--failing-file`, ADDED 2026-09-06.**
+`--files` is COVERAGE: what you examined. `--failing-file` is INDICTMENT: the subset that
+actually failed. ⚠ **Absence is no longer a way to spell "all"** — it is REFUSED. If the finding
+genuinely covers everything you examined, pass the full `--files` list explicitly. An EMPTY list is
+refused too: it resolves to PASS at every path, which is exoneration wearing a FAIL's costume.
+Historically, absent `failing` meant a FAIL over forty
+files condemns the thirty-nine that passed.
+
+```
+    --failing-file <a JSON file in your SCRATCHPAD holding a list of the repo-relative paths
+                    this verdict indicts — a subset of --files>
+```
+
+⚠ **Until 2026-09-06 no review gate could express this**, because the flag did not exist —
+**every** tier-A blocking record up to then carries no `failing`. Mechanical checkers have named
+their indicted subset since 2026-09-03. A gap that is CATEGORICAL rather than partial is a missing
+affordance, not sloppiness — and this is the affordance.
+
+⛔ **THE FROZEN COUNT THAT STOOD HERE IS GONE, AND ITS REMOVAL IS THIS BRIEF'S OWN RULE APPLIED TO ITSELF.** It read *"118 of 118"*, written into FOUR briefs at once. The numerator is still
+118; **the denominator moved to 125 and will keep moving**, so the ratio was false while both of its
+halves were once true. This file already says it four paragraphs earlier: *"a number written into
+four briefs goes stale in four places at once, and the tool computes it."* **Compute it:**
+`find(tier='A')`, filter `verdict in (FAIL, UNDECIDED)`, count those with no `failing`.
+
+⚠ **If your finding genuinely covers everything you examined, SAY SO EXPLICITLY** by listing them
+all. That is a different fact from omitting the flag, and only one of them is a statement. The
+measured cost of the other: a `check_prose` FAIL carrying 218 subjects whose own reason reads
+*"1 failing subject(s)"* — the record knew, said so in prose, and condemned 218.
+
+⚠ A FILE, never argv: a list of paths is exactly the payload that breaks on length, on quoting,
+and on the `PreToolUse` hook that denies any command containing a denied token. The flag is
+REFUSED on a PASS — a PASS indicts nothing — and refused if it names a path outside the recorded
+subjects.
 
 **On PASS — RECORD IT, with `--how delegated`.** This changed on 2026-08-25 and the old instruction here was *"record NOTHING"*. That was correct while `agreement` was the only route: V3 refuses a lone A-tier PASS, `mechanical` would be a lie about a computation, and `signature` asserts a PERSON accepted it. So a gate could report findings and had **no way to report success** — measured across the whole stream that day, nine agent reviews, every one a FAIL, and not a single recorded PASS. Absence of a pass therefore meant nothing, which is the exact ambiguity this ledger exists to remove.
 
