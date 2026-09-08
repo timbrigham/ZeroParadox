@@ -30,10 +30,23 @@ Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual valu
 ---
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
-**This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
-any file under the repository, with exactly ONE exception: your findings note under
-`.claude-local/notes/`. ⚠ **There is no signal file any more** — verdicts go to the ledger, and the
-recording section below is the only place you write a verdict.
+**READ-ONLY ON THE CALLER'S CHECKOUT.** Read, measure, report. Never modify, create or delete a file
+in the shared working tree, with exactly ONE exception: your findings note under
+`.claude-local/notes/`. It may hold uncommitted work you cannot see. ⚠ **There is no signal file any
+more** — verdicts go to the ledger, and the recording section below is the only place you write a
+verdict.
+
+⛔ **AND YOU DO NOT AUTHOR FIXES — THIS BRIEF IS NAMED IN THE RULE.** `D1` gives remediation to the
+ADVERSARY, in its own worktree, and `copy-editor.md` states the division: *"The adversary writes
+fixes (`D1`); you do not, and neither does editorial's reviewer."* ⚠ `D6` gives EDITORIAL its own
+branch for its own prose changes — that is a different act from remediating a reviewer's finding,
+and it is not authorised here. You return findings.
+
+⚠⚠ **THIS USED TO READ "do NOT modify any file under the repository", WRITTEN BEFORE WORKTREES
+EXISTED.** Read literally it also banned authoring in a PRIVATE worktree — the one place `R-BRIEF`
+explicitly permits it. **The property protected was always the CALLER'S uncommitted work**, never
+your ability to write: a review agent once hard-reset three times, destroyed an uncommitted edit,
+then correctly verified the tree was clean, which *was* the destruction.
 
 **NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
 to the **session scratchpad directory** named in your environment — never under `ZeroParadox/` or

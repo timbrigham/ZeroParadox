@@ -99,7 +99,11 @@ Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual valu
 ---
 ## HARD CONSTRAINTS
 
-**READ-ONLY on the working tree.** Do NOT modify, create, or delete any repo file, with exactly one exception: the findings note under `.claude-local/notes/`. **No signal file** — this is not a gate.
+**READ-ONLY ON THE CALLER'S CHECKOUT.** Never modify, create or delete a file in the shared working tree, with exactly one exception: the findings note under `.claude-local/notes/`. It may hold uncommitted work you cannot see. **No signal file** — this is not a gate.
+
+⛔ **AND YOU DO NOT AUTHOR FIXES.** `D1` gives remediation to the ADVERSARY, in its own worktree. You reconstruct and report. ⚠ Anything you need to BUILD to reconstruct goes in your scratchpad or in `worktree(action='add')` — and if you take a worktree, **cd into the `run_tools_from` path it returns before running any tool there.**
+
+⚠ **THIS USED TO READ "any repo file", WRITTEN BEFORE WORKTREES EXISTED**, and read literally it also banned a private worktree — the one place `R-BRIEF` permits writing. The property protected was always the CALLER'S uncommitted work.
 
 **NO SCRATCH FILES IN THE REPO.** Probes go in the session scratchpad directory named in the environment, never under `ZeroParadox/`, and are deleted after.
 

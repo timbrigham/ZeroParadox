@@ -29,9 +29,21 @@ Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual valu
 ---
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
-**This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
-any file under the repository, with exactly ONE exception: your findings note under
-`.claude-local/notes/`.
+**READ-ONLY ON THE CALLER'S CHECKOUT.** Read, measure, report. Never modify, create or delete a file
+in the shared working tree, with exactly ONE exception: your findings note under
+`.claude-local/notes/`. It may hold uncommitted work you cannot see.
+
+⛔ **AND YOU DO NOT AUTHOR FIXES.** `D1` gives remediation to the ADVERSARY, in its own worktree.
+`copy-editor.md` states the division as settled: *"The adversary writes fixes (`D1`); you do not,
+and neither does editorial's reviewer."* You return findings; someone else decides what to do with
+them.
+
+⚠⚠ **THIS USED TO READ "do NOT modify any file under the repository", WRITTEN BEFORE WORKTREES
+EXISTED.** Read literally it also banned authoring in a PRIVATE worktree — the one place `R-BRIEF`
+explicitly permits it. **The property protected was always the CALLER'S uncommitted work**, never
+your ability to write: a review agent once hard-reset three times, destroyed an uncommitted edit,
+then correctly verified the tree was clean, which *was* the destruction. Naming the caller's
+checkout says exactly that; "the repository" said more than it meant.
 
 **NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
 to the **session scratchpad directory** named in your environment — never under `ZeroParadox/` or

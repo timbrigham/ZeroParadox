@@ -41,9 +41,19 @@ Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual valu
 ---
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
-**This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
-any file under the repository, with exactly two exceptions: your findings note under
+**READ-ONLY ON THE CALLER'S CHECKOUT.** Read, measure, report. Never modify, create or delete a file
+in the shared working tree, with exactly two exceptions: your findings note under
 `.claude-local/notes/`, and **any source PDF you retrieve at rung D, filed into `.claude-local/papers/`**.
+It may hold uncommitted work you cannot see.
+
+⛔ **AND YOU DO NOT AUTHOR FIXES.** `D1` gives remediation to the ADVERSARY, in its own worktree.
+You return findings and filed sources.
+
+⚠⚠ **THIS USED TO READ "do NOT modify any file under the repository", WRITTEN BEFORE WORKTREES
+EXISTED**, and read literally it also banned authoring in a PRIVATE worktree — the one place
+`R-BRIEF` explicitly permits it. **The property protected was always the CALLER'S uncommitted
+work**: a review agent once hard-reset three times, destroyed an uncommitted edit, then correctly
+verified the tree was clean, which *was* the destruction.
 ⚠ **The second is not a loophole, it is what makes rung A work.** Both live under `.claude-local/`,
 which is gitignored — so none of them touches the tracked tree, and the read-only property this section
 is protecting is unaffected. A scout that reads a source and files nothing leaves the library exactly as

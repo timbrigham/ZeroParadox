@@ -29,6 +29,38 @@ loop, so it enforces the cap. Paste this into the brief verbatim:
 
 **If the content under review cites external literature (a paper, book, or library), attach the actual source text to the brief.** Add a `## Source material` section containing the relevant pages, quotes, and page numbers, and instruct the reviewer: *"Verify every claim against the Source material below before flagging or clearing it."*
 
+---
+
+### ⛔⛔ YOU AUTHOR NOTHING. ON A BEDROCK FINDING THE REVIEWER WRITES THE FIX (`D1`) AND YOU CARRY IT (`D3`).
+
+**Do not apply the reviewer's findings by hand.** That was the standing practice until 2026-09-08
+and it is the measured cause of this gate's non-convergence: across three rounds in one day, **every
+hand-applied fix wrote the next round's bedrock finding**, because the carrier was reconstructing
+someone else's intent from a note. `D3`'s stated risk is TRANSPORT WITHOUT TRANSFORMATION — *"hand
+over the worktree and the diff, never a summary of them."*
+
+The reviewer returns a worktree **PATH** and a **SHA**. Your three jobs, in order:
+
+    1.  merge(branch='<the reviewer's sha>', reason='<why this fix is being carried>')
+          ⚠ THE PARAMETER IS NAMED `branch` AND TAKES ANY COMMIT-ISH. A bare sha is correct here:
+            a worktree from `add` is DETACHED, so there is no branch name and looking for one is
+            the wrong question. Verified by execution 2026-09-08. ⚠ REFUSED while your tree is
+            dirty — commit or park your own edits FIRST.
+    2.  worktree(action='remove', name='<the reviewer's path>')
+          ⛔ NOT OPTIONAL. Nothing reaps these automatically — measured 2026-09-08, three orphaned
+            worktrees were registered from dead sessions and probe runs, and `action='prune'` does
+            NOT clear them (it only drops entries whose directory is already gone). Under `D1` a
+            worktree is created EVERY bedrock round, so the leak rate goes from incidental to
+            one-per-round. **You are the right holder: you already own the handoff and you are the
+            one party guaranteed to outlive the reviewer.**
+    3.  spawn a FRESH reviewer against the merged result. Never the same instance — the point of
+        the loop is that the checker of a fix has not seen the argument for it.
+
+⭐ **AND THE VERDICT IS ALREADY RECORDED BEFORE ANY OF THIS.** The reviewer records at Step 6 and
+remediates at Step 7, in that order, so its record binds to the bytes it REVIEWED rather than the
+bytes it repaired. Do not ask it to re-record after the fix; the fresh reviewer's run is what
+speaks to the fixed content.
+
 **Why this is not optional.** A reviewer given only a description compares it against plausible-sounding prior knowledge instead of against the source. It can then report a claim as *unverified* — but it can **never** report it as *false*. That distinction is the entire value of attaching the source.
 
 Verified failure, 2026-07-19: a Lean docstring asserted that a cited paper's "norm counts coefficients." It was invented. Their norm is a finite-fibre condition. A prior-art review, an editorial review, and a claim review all passed over it; each could only say "unverified," because none had the paper. It was caught only when Tim supplied the PDF.
@@ -49,10 +81,27 @@ Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual valu
 ---
 ## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
 
-**This review is READ-ONLY on the working tree.** Read, measure, report. Do NOT modify, create, or delete
-any file under the repository, with exactly ONE exception: your findings note under
-`.claude-local/notes/`. ⚠ **There is no signal file any more** — verdicts go to the ledger, and the
-recording section below is the only place you write a verdict.
+**READ-ONLY ON THE CALLER'S CHECKOUT — AND THAT IS NOT THE SAME AS "WRITE NOTHING".** Never modify,
+create or delete a file in the shared working tree, with exactly ONE exception: your findings note
+under `.claude-local/notes/`. It may hold uncommitted work you cannot see. ⚠ **There is no signal
+file any more** — verdicts go to the ledger, and the recording section below is the only place you
+write a verdict.
+
+⭐⭐ **BUT YOU AUTHOR FIXES FOR BEDROCK FINDINGS, IN YOUR OWN WORKTREE. SEE § REMEDIATION.** That is
+`D1`, and `copy-editor.md` already states it as settled division of labour: *"The adversary writes
+fixes (`D1`); you do not, and neither does editorial's reviewer."*
+
+⚠⚠ **THIS SENTENCE USED TO SAY "do NOT modify any file under the repository", AND THAT FORBADE `D1`
+OUTRIGHT** — a worktree is a checkout of the repository, so read literally it banned the workflow
+this gate is supposed to run. **It was not wrong when written; it was written before worktrees
+existed**, when "the working tree" named the only tree there was and the blanket ban cost nothing.
+`control.md`, written after, already draws the line correctly (*"never mutate the caller's
+checkout"*), and `R-BRIEF` already grants the permission (*"an agent needing commits works in
+`worktree(action='add')`, never the shared checkout"*). **The property being protected was always
+the CALLER'S uncommitted work, never your ability to write** — a review agent once hard-reset three
+times, destroyed an uncommitted edit, then correctly verified the tree was clean, which *was* the
+destruction. A private worktree cannot do that: it is outside the repository directory with its own
+HEAD, index and working tree.
 
 **NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
 to the **session scratchpad directory** named in your environment — never under `ZeroParadox/` or
@@ -305,6 +354,78 @@ genuinely covers everything you examined, pass the full `--files` list explicitl
 refused too: it resolves to PASS at every path, which is exoneration wearing a FAIL's costume.
 Historically, absent `failing` meant a FAIL over forty
 files condemns the thirty-nine that passed.
+
+---
+
+## Step 7 — REMEDIATION: on FAIL-BEDROCK, YOU WRITE THE FIX, IN YOUR OWN WORKTREE (`D1`)
+
+⛔ **BEDROCK ONLY.** ORDINARY findings stay findings — you report them and someone else decides.
+`D1` is scoped to the defects that must not ship, and widening it is not yours to do.
+
+⭐⭐ **WHY YOU AND NOT THE CALLER — THIS IS THE WHOLE POINT OF `D1`, AND IT IS MEASURED.** *"The
+party that found the defect writes the correction, instead of handing a note to someone who must
+reconstruct the intent from it."* Measured 2026-09-08 across three rounds of this gate: **every
+round's hand-applied fix wrote the next round's bedrock finding** — a fourth token added and its
+arithmetic left saying six; a FAIL route opened and its headcount inverted; a fence written against
+the argv string instead of the resolved path. Three defects, one cause: **the carrier was
+implementing someone else's finding from a note.** `D3` names the same failure at the other end —
+*"a carrier that paraphrases has rebuilt the translation step `D1` and `D3` exist to delete."*
+
+⚠⚠ **ORDER MATTERS AND IT IS NOT THE OBVIOUS ONE: RECORD FIRST (Step 6), THEN FIX.** A verdict binds
+to `(step, path, git_blob_id)` — the CONTENT. `ledger_subjects` reads the INDEX of whatever tree you
+run in, so if you commit a fix in your worktree and record afterwards, **your verdict binds to the
+bytes you repaired rather than the bytes you reviewed** — a record asserting a finding about content
+that no longer contains it. Record, then remediate.
+
+### The route, and every step is a tool call
+
+    1.  worktree(action='add', name='adversary-<scope>')
+          -> returns `path`, and `run_tools_from`, and `linked: ['.lake']` so it can build
+    2.  cd INTO `run_tools_from`. THIS IS A STEP, NOT A DETAIL.
+    3.  author the fix there — ordinary Edit/Write against files in THAT directory
+    4.  stage(paths=['<the files you changed>'], worktree='<path>')
+    5.  commit(message_file='<a file in your SCRATCHPAD>', worktree='<path>')
+    6.  return the worktree PATH and the resulting SHA to the caller. Not a diff, not a description.
+
+⛔⛔ **STEP 2 IS LOAD-BEARING AND IT HAS ALREADY COST US.** `worktree.add` says it in terms: *"cd
+into this directory before running any checker. A checker invoked with cwd elsewhere resolves ROOT
+to the wrong tree and records evidence paths full of `../..`; V16 is where that surfaces, and it
+reads as a config problem rather than a cwd one."* **There are nine such records in the stream
+already**, all from one run on 2026-09-02. `record.py` now REFUSES an `--evidence` path that
+resolves outside the repo or to an untracked file — but that fence is the backstop, not the
+instruction. **Run your tools from the worktree.**
+
+⚠ `commit(worktree=...)` runs the FULL pre-commit gate **in the tree being committed**, not in the
+caller's. A worktree whose pipeline fails is refused even where the main checkout would pass. That
+is the design — verifying one tree while committing another is the mistake this project keeps
+finding — so expect to satisfy the gate where you stand.
+
+⚠ **Nothing you do in there can reach the caller's files.** The worktree is outside the repository
+directory with its own HEAD, index and working tree. That is what makes authoring safe here and
+unsafe in the shared checkout.
+
+⭐ **AND RECORDING FROM THE WORKTREE IS CORRECT, NOT A LEAK.** `worktree.add` returns
+`recording_here_is_real`: *"Verdicts are content-keyed on (step, path, git_blob_id), so recording
+from a worktree is SUPPORTED and binds to the content you looked at, not to where you stood."* ⚠ An
+earlier draft of that contract called it a hazard, which would have made a virtue read as a defect.
+It is not one. **What a worktree isolates is FILES, never the ledger** — there is one stream, so a
+PROBE record from in there is a real record. Use `validate` for a dry run, never a throwaway append.
+
+### What the CALLER does with what you return — state it, do not do it
+
+The carrier merges your SHA and tears the worktree down. **You do neither.** Named here only so you
+know what your two return values are for:
+
+    merge(branch='<your sha>', reason='...')     <- the parameter is called `branch` and takes ANY
+                                                    COMMIT-ISH. A bare sha works; verified by
+                                                    execution 2026-09-08. Your worktree is DETACHED,
+                                                    so there is no branch name to pass and looking
+                                                    for one is the wrong question.
+    worktree(action='remove', name='<your path>')
+
+⚠ **`merge` is REFUSED while the caller's tree is dirty.** If you hand back a SHA the caller cannot
+merge, the fix stalls — so say plainly in your report that the merge is owed, and let the carrier
+sequence it.
 
 ```
     --failing-file <a JSON file in your SCRATCHPAD holding a list of the repo-relative paths

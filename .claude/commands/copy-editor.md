@@ -221,9 +221,22 @@ python tools/verify/record.py --step copy_editor --verdict <pass|fail|undecided>
 BEDROCK defect (AR8-1, 2026-09-08): it left **no route to `FAIL`**, so the gate built to catch a
 meaning-change could not say it had caught one.
 
-    agreed == 3   ALL THREE say the meaning survived        -> --verdict pass
-    agreed 1 or 2 THE PANEL DISAGREES                       -> --verdict undecided   (contested)
-    agreed == 0   ALL THREE say the mathematics MOVED       -> --verdict fail        (unanimous)
+    ALL THREE say the meaning SURVIVED   -> --verdict pass       --passes 3 --agreed 3
+    THE PANEL SPLITS (2-1 either way)    -> --verdict undecided  --passes 3 --agreed 2
+    ALL THREE say the mathematics MOVED  -> --verdict fail       --passes 3 --agreed 3
+
+⛔⛔ **`--agreed` COUNTS CONCURRENCE WITH THE VERDICT YOU ARE RECORDING — NOT VOTES FOR "SURVIVED".**
+`record.py --help` defines it as *"how many of them concurred"*, which is why V3's arithmetic is
+`agreed == passes` for a PASS. An earlier version of this table read `agreed` as a survival tally
+and mapped a unanimous FAIL to `--agreed 0` (AR9-2, 2026-09-08). **The ledger cannot tell those
+apart** — measured, `--verdict fail --passes 3 --agreed 0` and `--agreed 3` BOTH dry-run exit 0 —
+so the mistake is silent, and it stores this gate's strongest possible finding as *three ran, none
+concurred*: an unsupported verdict rather than a unanimous one.
+
+⭐ **THE RULE IN ONE LINE: `agreed` is the size of the bloc that agreed with the verdict on the
+record.** Unanimity (3) is what licenses a DECIDED verdict in either direction — `pass` or `fail`.
+Anything less is `undecided`, and there `agreed` is the size of the majority bloc, so `3 ran, 2
+concurred` reads as the 2-1 split it was.
 
 ⚠ **`UNDECIDED` MEANS *"asked, ran to completion, ANSWER CONTESTED"* — this file's own words.
 Three-of-three agreement is the opposite of contested.** A unanimous divergence is the strongest
