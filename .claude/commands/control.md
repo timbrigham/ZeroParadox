@@ -97,19 +97,43 @@ out in full would make this file fail the very checker that guards it. `experime
 its own refusal the same way, for the same reason.
 
 ⛔ **THERE IS NO `control` STEP, SO THIS GATE CANNOT RECORD ITS OWN VERDICT, AND YOU MUST NOT TRY.**
-Neither can a control built over an unregistered subject — `hooks` is refused by name the same way,
-and the worked question at the top of this file (`enforce_prepush_verdict`) lives in exactly that
-class. **Do not reach for a neighbouring step to make the command run**: `batch.py` is the declared
-module of `decls` and `pdf_coupling`, so a control over it *would* be accepted under either, and
-filing a contest about one property under a step that asserts a different one is a false record that
-every downstream reader will believe.
+The V8 above settles that. **It does NOT settle your SUBJECT**, and the two answers there read alike
+in a report and are different facts. Decide it by RUNNING the command for your own subject, never by
+reading this file:
 
-⭐ **SO STATE THE CONTEST IN YOUR REPORT AND HAND IT UP.** When no step exists, the contested-only
-stdout line plus your report ARE the carrier, and saying that plainly is the honest result. This is
-not a gap to paper over: `experiment-review.md` reached the same wall on 2026-08-24 and settled it
-the same way — *"a record that cannot land is worse than none, because its exit 2 reads as an outage
-rather than as a design decision"* — and it also names the ORDER, which is the part that binds here:
-**registering the step comes FIRST, and the recording block comes with it.**
+    NO STEP      no registered step declares your subject's file as its `module`.
+                 `tools/verify/hooks.py` is nobody's module, so a control over it is REFUSED by
+                 name with a printed V8, exactly as `control` is. There is nothing to borrow.
+    WRONG STEP   a registered step DOES declare it, and asserts a different property.
+                 `tools/verify/batch.py` is the declared module of `decls` AND `pdf_coupling`, so a
+                 control over anything defined in that file WOULD be accepted under either.
+                 Measured 2026-09-08: naming `pdf_coupling` with `--verdict undecided` over
+                 `tools/verify/batch.py` under `--dry-run` returned exit 0, *"the ledger WOULD
+                 ACCEPT this record."*
+
+⛔ **DO NOT REACH FOR A NEIGHBOURING STEP TO MAKE THE COMMAND RUN.** Filing a contest about one
+property under a step that asserts a different one is a false record every downstream reader will
+believe, and **nothing refuses it** — which is why WRONG STEP is the more dangerous of the two.
+**NO STEP fails closed and loudly. WRONG STEP fails open and silently.**
+
+⚠⚠ **AND THE WORKED QUESTION AT THE TOP OF THIS FILE IS THE SECOND ONE, NOT THE FIRST.**
+`enforce_prepush_verdict` is defined in `tools/verify/batch.py`, so it is WRONG STEP. This file said
+it was NO STEP, one clause before naming `batch.py`'s two steps — both could not be true (AR11-1,
+2026-09-08). The false half was written by consulting the registry and never invoking `record.py`
+for the example, which is the previous round's defect one turn on: that round mandated a record
+without running its command, and this one denied a record was possible without running its command.
+**The registry tells you what is REGISTERED. Only the ledger tells you what it would ACCEPT.**
+
+⭐ **SO STATE THE CONTEST IN YOUR REPORT AND HAND IT UP — AND SAY WHICH OF THE TWO STATES YOU WERE
+IN.** In both, the contested-only stdout line plus your report ARE the carrier, and saying so
+plainly is the honest result. This is not a gap to paper over: `experiment-review.md` reached the
+**NO STEP** wall on 2026-08-24 — `experiment_review` is unregistered *and* its subject is nobody's
+module — and settled it the same way, *"a record that cannot land is worse than none, because its
+exit 2 reads as an outage rather than as a design decision"*. ⚠ **That precedent covers NO STEP and
+NOT WRONG STEP**, where the record can land and must not, and where what is missing is a step
+asserting YOUR PROPERTY rather than a step named for this gate. Those are different requests and
+must not reach Tim as one. The precedent also names the ORDER, which binds in both: **registering
+the step comes FIRST, and the recording block comes with it.**
 
 ⚠ **REGISTERING ONE IS TIM'S DECISION, NOT AN AGENT'S, AND THE COST IS WHY.** `required.v2.json`
 declares `"default": "REQUIRED_FOR_ALL_ACTIONS"` — *"A registered type binds on EVERY action unless
@@ -187,4 +211,17 @@ part that has a precondition.
 
 The question as you understood it · the control's path in your worktree · the run table (six, or eight for a panel) · the real-data cross-reference · anything you could not construct · your first unjustified step. **State plainly which exits the control has been observed producing, and which apply to it at all.** If it has not, the answer is "not yet", and that is a legitimate result.
 
-⚠ **AND IF YOUR CONTROL HAS A CONTESTED STATE, SAY WHICH WAY THE RECORD WENT** — the record id you emitted, or the step name the ledger refused and the refusal it printed. **Do not report a record you did not land, and do not report the refusal as an outage**: `record.py` returns exit 2 for an unregistered step and for a dead server alike, and this file's own rule is that those are different answers.
+⚠ **AND IF YOUR CONTROL HAS A CONTESTED STATE, SAY WHICH WAY THE RECORD WENT.** There are THREE
+answers and exactly one of them is yours:
+
+    RECORDED     the record id you emitted.
+    NO STEP      the step name the ledger REFUSED, and the refusal it printed.
+    WRONG STEP   the registered step you DECLINED to borrow, and the property it actually asserts.
+                 ⛔ Nothing was refused here, so do not report a refusal — you never ran the
+                 command. Saying "there was no step" in this state is false and this file's own
+                 NO STEP / WRONG STEP block contradicts it.
+
+**Do not report a record you did not land, and do not report a refusal as an outage**: `record.py`
+returns exit 2 for an unregistered step and for a dead server alike, and this file's own rule is
+that those are different answers. ⚠ The exit code collapses them; the OUTPUT does not — a refusal
+names the V-rule and an outage names the transport. **Quote the line, not the code.**
