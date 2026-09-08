@@ -36,7 +36,7 @@ Read `$ARGUMENTS` to determine the two states and the references, then spawn thr
 - **Findings: take the UNION.** A lone reader who catches a meaning shift the other two missed **must not be outvoted** — measured this week, the reviewer who found seven sites saw four the others did not. Majority decides *"may this proceed"*; it never decides *"did anyone find something"*. Same rule as `outstanding`, which unions across every covering record.
 - **Verdict: 2 of 3 must agree the meaning survived.**
 
-**On a split, or when any copy editor reports the mathematics moved: record `UNDECIDED`, which BLOCKS, and escalate.** ⚠ **Escalation goes to YOU, and you carry it to the author (`D4`). Gates never report to the author directly** — one channel up, and the carrier holds it. **A split IS the signal**, and it is the first natural producer of a verdict that is fully wired and has never once been used.
+**On a split — 1 or 2 of 3 saying the meaning survived — record `UNDECIDED` and escalate.** ⚠ **When ALL THREE say the mathematics moved, that is `FAIL`, not `UNDECIDED`** (AR8-1): unanimity is not a contested answer, and filing the panel's strongest finding as a disagreement misdescribes it. Both block; only one is true. ⚠ **And "which BLOCKS" is true of the VERDICT CLASS and NOT YET of this gate** — `copy_editor` is in no admission set today, `inventory(tag)` renders it NOT_APPLICABLE, and there are 0 records ever, so the fence exists downstream and is not wired here. Do not describe this gate as fail-closed (AR8-2). ⚠ **Escalation goes to YOU, and you carry it to the author (`D4`). Gates never report to the author directly** — one channel up, and the carrier holds it. **A split IS the signal**, and it is the first natural producer of a verdict that is fully wired and has never once been used.
 
 ⛔⛔ **AND YOU EMIT THE RECORD — ONE, FOR THE PANEL. THE COPY EDITORS DO NOT RECORD.** Changed
 2026-09-08. The command and the full reasoning are in **§ Recording** below; read it before you
@@ -213,8 +213,26 @@ was correctly refusing three records that each claimed to be the whole verdict a
 carrier — who already unions the findings and tallies the verdict — emits exactly one:
 
 ```
-python tools/verify/record.py --step copy_editor --verdict <pass|undecided> --tier A     --how agreement --passes 3 --agreed <how many of the three said the meaning SURVIVED>     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --files <the union of every file the three actually read>     --failing-file <a JSON file naming the sites the panel INDICTS, on a blocking verdict>
+python tools/verify/record.py --step copy_editor --verdict <pass|fail|undecided> --tier A     --how agreement --passes 3 --agreed <how many of the three said the meaning SURVIVED>     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --files <the union of every file the three actually read>     --failing-file <a JSON file naming the sites the panel INDICTS, on a blocking verdict>
 ```
+
+⛔⛔ **THREE VERDICTS, AND `agreed` PICKS WHICH — DO NOT COLLAPSE UNANIMOUS DIVERGENCE INTO
+`UNDECIDED`.** An earlier version of this block offered `<pass|undecided>` only, and that was a
+BEDROCK defect (AR8-1, 2026-09-08): it left **no route to `FAIL`**, so the gate built to catch a
+meaning-change could not say it had caught one.
+
+    agreed == 3   ALL THREE say the meaning survived        -> --verdict pass
+    agreed 1 or 2 THE PANEL DISAGREES                       -> --verdict undecided   (contested)
+    agreed == 0   ALL THREE say the mathematics MOVED       -> --verdict fail        (unanimous)
+
+⚠ **`UNDECIDED` MEANS *"asked, ran to completion, ANSWER CONTESTED"* — this file's own words.
+Three-of-three agreement is the opposite of contested.** A unanimous divergence is the strongest
+finding this gate can produce and it must not be filed as a disagreement. Measured: `--verdict fail
+--how agreement --passes 3 --agreed 0` returns exit 0, *"the ledger WOULD ACCEPT this record"*. The
+restriction was never the server's.
+
+⚠ `{FAIL, UNDECIDED}` block identically, so this is not a fail-open — it is a false statement about
+what the panel found, which is the invariant that matters here.
 
 ⚠ **`--evidence` ON `--how agreement` ONLY BECAME POSSIBLE ON 2026-09-08, AND UNTIL THAT AFTERNOON
 THIS ROUTE WAS UNEMITTABLE.** `record.py` refused the flag on every non-delegated route while the
@@ -244,8 +262,24 @@ among `min_passes` readers. These are different thresholds and both are delibera
 follows the LEDGER (a 2-1 split records UNDECIDED); the carrier's escalation decision follows THIS
 BRIEF (2 of 3 may still proceed).** They are different questions — what the panel found, and what
 the carrier does about it — and keeping them apart is what lets a contested record exist without
-freezing the work. If that split is wrong, it is Tim's call, and `copy_editor` is admitted by
-nothing today so nothing is gated on the answer either way.
+freezing the work. The project already runs one of these: `STOP-ORDINARY` is *"a PROCEED verdict
+that is NOT a pass"*.
+
+⛔⛔ **BUT IT IS COHERENT ONLY WHILE THIS RECORD GATES NOTHING, AND THAT IS A FACT ABOUT TODAY'S
+WIRING RATHER THAN ABOUT THE DESIGN** (AR8-3, 2026-09-08). Read straight through, this brief says
+(a) the record BLOCKS and (b) proceed anyway on 2 of 3 — **an instruction to walk past a block**,
+harmless only because (a) is currently false: `copy_editor` is in no admission set and has 0 records
+ever.
+
+⚠⚠ **SO THE GUARD BELONGS IN THE SAME CHANGE AS THE ADMISSION ENTRY, NOT AFTERWARDS.** This file
+documents the plan *"Register, watch one panel, then admit"*, and **nothing makes the 2-of-3
+escalation rule change at the moment admission lands** — which is exactly when the composition
+stops being harmless and becomes a real bypass. Whoever adds `copy_editor` to
+`admission.v1.json` must, in that commit, either raise the escalation rule to unanimity or state
+in writing why proceeding past a blocking record is still correct. **A carve that becomes live
+because a DIFFERENT file changed is the shape this project keeps paying for** — see the
+`admission.v1.json` note on `RLY31-6`, where a downgrade's compensating control was withdrawn the
+next day and nobody revisited the row.
 
 ⚠ **`--verdict undecided` EXISTS AS OF 2026-09-06, AND UNTIL THAT MORNING THIS BRIEF INSTRUCTED AN
 IMPOSSIBLE COMMAND.** The flag took `pass` and `fail` only, so the split verdict this gate is built

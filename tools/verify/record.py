@@ -1029,6 +1029,40 @@ def _cli(argv):
         print("           passed, and nothing downstream can tell 'all of them' from 'could not say'.")
 
     ev = module_evidence(*a.evidence) if a.evidence else ()
+    # ⚠⚠ EVIDENCE IS FENCED THE SAME WAY SUBJECTS ARE, AND IT WAS NOT UNTIL 2026-09-08 (RLYB-1).
+    # `ledger_subjects` "fences the paths that are not safe to record (untracked, outside the repo,
+    # differing from the index)" — this file says so at the top — but `module_evidence` hashes
+    # WORKING-TREE bytes of anything readable, so `--evidence` accepted an untracked file, and an
+    # absolute path OUTSIDE THE REPOSITORY, silently at exit 0. Measured: a brief written to the
+    # session scratchpad was accepted and emitted as `../../Users/.../brief.md`.
+    #
+    # ⛔ WHY THAT IS NOT COSMETIC: every review brief rests on the sentence "editing the brief
+    # stales the key and the gate re-runs". Staleness is computed by watching a NAMED BLOB MOVE, so
+    # pinning to a blob git never tracks defeats it — the key never goes stale and the gate never
+    # re-runs. A gate could pin to a file nobody will ever edit and be permanently green.
+    #
+    # ⚠ THE OLD GUARD BELOW CAUGHT ONLY NON-EXISTENCE (that case does fail closed: no entry, then
+    # V21). An untracked file that EXISTS resolves fine, so the count matched and the warning was
+    # dead prose — R-ZERONULL: the two states returned the same value and only the message differed.
+    #
+    # ⚠ THIS MAKES THE CLIENT STRICTER THAN THE SERVER, WHICH IS THE DIRECTION THAT HIDES THINGS —
+    # a refusal here never reaches the ledger's call log. Accepted deliberately and NARROWLY: the
+    # server's own staleness model requires a watchable blob, so nothing legitimate is refused, and
+    # every real brief pins to a tracked file. The durable fix is server-side (V21 requiring the
+    # blob be TRACKED, not merely present) and is reported to the verdictLedger session; this is the
+    # fail-fast half, not a substitute for it.
+    if a.evidence:
+        _ev_named = sorted(set(a.evidence))
+        _ev_kept, _ev_fenced = common.ledger_subjects(_ev_named, a.ref)
+        if _ev_fenced:
+            ap.error("--evidence must name a TRACKED file at %s, and %d did not:\n%s\n"
+                     "Evidence is what makes this verdict go stale when its producer changes — the "
+                     "ledger watches that blob move. A path git does not track has no blob to "
+                     "watch, so the key would never expire and the gate would never re-run. Pin to "
+                     "the BRIEF (a review round) or the CHECKER (a mechanical one), staged."
+                     % (a.ref,
+                        len(_ev_fenced),
+                        "\n".join("    %-52s %s" % (rel, why) for rel, why in _ev_fenced)))
     if a.evidence and len(ev) != len(set(a.evidence)):
         print("  WARNING: %d brief path(s) given, %d resolved — a brief that is absent or "
               "untracked contributes NO evidence, and the ledger will refuse the PASS rather "

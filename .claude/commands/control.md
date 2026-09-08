@@ -67,7 +67,7 @@ This is the house convention and it is already in force — stated at `tools/ver
 
 ⚠⚠ **EXIT 3 IS NOT EXIT 2, AND COLLAPSING THEM IS THE SAME DEFECT ONE LEVEL DOWN.** A panel that ran perfectly and split 2-1 has **answered**; it simply did not answer with one voice. Spelling that as *"could not ask"* throws away the fact that the work was done — and sends someone to fix infrastructure that is fine. This distinction was supplied by the verdictLedger session on 2026-09-05 against an earlier draft of this brief that had only three exits: *"UNDECIDED is a FOURTH state your three exits cannot express... If `/control` ever runs a panel rather than a single check, it needs its own exit, or the panel split will get spelled as could-not-ask."*
 
-⚠ **`UNDECIDED` BLOCKS ADMISSION, RANKS BETWEEN FAIL AND PASS, AND HAS 0 RECORDS OF 2,170.** It is storable today — `schema.VERDICTS` is `{FAIL, PASS, UNDECIDED}`, the validator admits it, the resolver reads it, `can_push` blocks on it, and `pytest -k undecided` passes 15. **Its downstream has never executed on production data**, so the first real one is a first on the data, not a first through the code. Say so if you emit one.
+⚠ **`UNDECIDED` BLOCKS ADMISSION, RANKS BETWEEN FAIL AND PASS, AND HAS NEVER ONCE BEEN RECORDED.** ⭐ **THE ZERO IS THE CLAIM; THE DENOMINATOR IS NOT** — it was 2,170 when this line was written, 2,267 on 2026-09-06, and 2,503 on 2026-09-08. **The stream grows and the zero has not moved.** Re-derive it with `find(verdict='undecided')` rather than trusting any figure here; a frozen denominator beside a live numerator is `DC-6` and this line carried one for two days (AR8-4). It is storable today — `schema.VERDICTS` is `{FAIL, PASS, UNDECIDED}`, the validator admits it, the resolver reads it, `can_push` blocks on it, and `pytest -k undecided` passes 15. **Its downstream has never executed on production data**, so the first real one is a first on the data, not a first through the code. Say so if you emit one.
 
 ⭐ **AND `failing` IS WHAT KEEPS A NARROW DISPUTE NARROW.** It is admitted on `FAIL` and `UNDECIDED` and refused on `PASS`. **A 2-1 split over forty files is UNDECIDED about the one line they disagree on and perfectly decided about the other thirty-nine** — so name the contested subset rather than indicting the scope. Rows carry `narrowed_from` and the push path prints `⚠ NARROWED INDICTMENT`.
 
@@ -79,7 +79,7 @@ This is the house convention and it is already in force — stated at `tools/ver
 
 ⚠ **A CRASH IS NOT A STATUS.** An uncaught traceback exits 1 and is indistinguishable from an honest violation. Measured: `gate_round.py` returned 1 on a `UnicodeEncodeError` where 2 meant "past the bedrock cap", **and every caller read the crash as an ordinary failure.** Your control must make a crash distinguishable — catch it and exit 2, or emit a line only the real path can produce.
 
-## THE DELIVERY CONTRACT — six runs minimum, and the transcript is half the deliverable
+## THE DELIVERY CONTRACT — six runs minimum, EIGHT for a panel, and the transcript is half the deliverable
 
 **Ship BOTH:**
 
@@ -87,7 +87,8 @@ This is the house convention and it is already in force — stated at `tools/ver
 
 **(2) THE MUTATED FORMS THAT PROVE EACH EXIT**, and **at least TWO genuinely different variations per state**. ⚠ **Which states apply depends on the control.** A single check owes exits 0, 1 and 2 — six mutations minimum. **A control that runs a PANEL owes exit 3 as well** — eight minimum — and must demonstrate a genuine split, not a simulated one. Two variations because one mutation proves the control noticed *that edit*; two proves it is watching the *property*. ⚠ **Make them different in KIND, not in spelling.** Deleting a call and renaming the same call are one variation. Deleting a call and making it return a plausible wrong value are two.
 
-For each of the six, give the caller what they need to re-run it themselves:
+For each of them — **six, or eight if your control runs a panel** — give the caller what they need
+to re-run it themselves:
 
 ```
 STATE: <absent | pass | fail | undecided>   VARIATION: <what was changed, and why it is a different KIND>
@@ -116,10 +117,10 @@ cannot drift.
 
 ## Before you finish
 
-- **Did any two of your six runs produce byte-identical output?** If so those two prove one thing, not two — and if a mutation's output matches the unmutated baseline, **that case proves nothing at all.** Say so rather than counting it.
+- **Did any two of your runs — six, or eight for a panel — produce byte-identical output?** If so those two prove one thing, not two — and if a mutation's output matches the unmutated baseline, **that case proves nothing at all.** Say so rather than counting it.
 - **What instance of this shape can your own construction never produce?** Build it if you can; name it if you cannot.
 - **Name your FIRST UNJUSTIFIED STEP** — the first inference in your own reasoning you took without warrant. The answer is never "none".
 
 ## Report back
 
-The question as you understood it · the control's path in your worktree · the six-run table · the real-data cross-reference · anything you could not construct · your first unjustified step. **State plainly which exits the control has been observed producing, and which apply to it at all.** If it has not, the answer is "not yet", and that is a legitimate result.
+The question as you understood it · the control's path in your worktree · the run table (six, or eight for a panel) · the real-data cross-reference · anything you could not construct · your first unjustified step. **State plainly which exits the control has been observed producing, and which apply to it at all.** If it has not, the answer is "not yet", and that is a legitimate result.
