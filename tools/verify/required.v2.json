@@ -254,7 +254,9 @@
     "pdf_coupling": {
       "family": "mechanical",
       "when": "*.pdf",
-      "reason": "only meaningful when a PDF changed"
+      "reason": "only meaningful when a PDF changed",
+      "module": "tools/verify/batch.py",
+      "_module_why": "V20, 2026-09-08. `record_pdf_coupling()` in batch.py passes module=\"tools/verify/batch.py\" explicitly at the call site, so this declaration records what the emitter already claims rather than choosing between candidates. There is no pdf_coupling.py. ⚠ NOT common.py, although 113 of 113 records name it in evidence: `record_if_asked`/`emit_verdict` live there and every one of the 22 call sites routes through them, so a common.py pin would be satisfied by every step in the registry -- a pin every step satisfies pins nothing. The 113/104 split that made this look ambiguous was never two producers: 104 name tools/verify/batch.py and 9 name the SAME FILE under an escaped path from one heal run on 2026-09-02 (PDFEV-1)."
     },
     "editorial": {
       "family": "review",
@@ -276,7 +278,9 @@
         "tools/*.md",
         ".github/*.md",
         "_layouts/*"
-      ]
+      ],
+      "module": ".claude/commands/editorial-review.md",
+      "_module_why": "V20, 2026-09-08. A review step's producer is its BRIEF -- the file that reaches the verdict -- and 50 of 55 editorial records already name this path in evidence, ⚠⚠ BUT DO NOT READ THAT AS V16 ENFORCEMENT -- measured by /rely RLY46-1, 2026-09-08: V16 keys on the VERDICT BEING MECHANICAL, not on the step, so a `delegated` review record never triggers it and the agreement above is an emitter CONVENTION rather than a server rule. What the declaration actually buys a REVIEW step is V20 satisfiability (watched red-then-green the same day) plus a declared producer for staleness. V16 does fire for `pdf_coupling`, which is mechanical: a record naming only common.py is refused. ⚠ THIS STEP IS DELIBERATELY NOT CARVED from grading its own brief, unlike `adversary`: it returned a capped PASS while adversary failed nine rounds of ten, so it is the CONTROL for whether cross-review alone suffices without a carve (DC-47). Its subject set therefore still intersects its producer set, knowingly. Do not carve it to tidy the register -- that would destroy the comparison, and circular-gate custody is the harness's, not this file's."
     },
     "adversary": {
       "family": "review",
@@ -298,10 +302,14 @@
         "tools/*.md",
         ".github/*.md",
         "_layouts/*"
-      ]
+      ],
+      "module": ".claude/commands/adversary-review.md",
+      "_module_why": "V20, 2026-09-08. A review step's producer is its BRIEF, and 62 of 66 adversary records already name this path in evidence, ⚠⚠ BUT DO NOT READ THAT AS V16 ENFORCEMENT -- measured by /rely RLY46-1, 2026-09-08: V16 keys on the VERDICT BEING MECHANICAL, not on the step, so a `delegated` review record never triggers it and the agreement above is an emitter CONVENTION rather than a server rule. What the declaration actually buys a REVIEW step is V20 satisfiability (watched red-then-green the same day) plus a declared producer for staleness. V16 does fire for `pdf_coupling`, which is mechanical: a record naming only common.py is refused. ⚠ THE ORDERING WAS LOAD-BEARING: declaring a producer that is also a subject would harden DC-47's intersection into this file. The carve landed FIRST, and it is NOT here -- circular-gate management is a harness-owned register in the verdictLedger repo (Tim, 2026-09-08), resolved from __file__ so no env var can aim it at this checkout. ⛔ DO NOT add `.claude/commands/adversary-review.md` to scope_exclude above: that would be a second, divergent copy of a decision that has an owner elsewhere."
     },
     "prior_art": {
       "family": "review",
+      "module": ".claude/commands/prior-art-review.md",
+      "_module_why": "V20, 2026-09-08. 13 of 13 prior_art records already name this path in evidence, ⚠⚠ BUT DO NOT READ THAT AS V16 ENFORCEMENT -- measured by /rely RLY46-1, 2026-09-08: V16 keys on the VERDICT BEING MECHANICAL, not on the step, so a `delegated` review record never triggers it and the agreement above is an emitter CONVENTION rather than a server rule. What the declaration actually buys a REVIEW step is V20 satisfiability (watched red-then-green the same day) plus a declared producer for staleness. V16 does fire for `pdf_coupling`, which is mechanical: a record naming only common.py is refused. Declared for the same reason as `rely`: `prior_art` is not in gitRobot's admission set, but `batch.py`'s prior-art attribution leg BLOCKS a push and is discharged by a RECORD. Admitted-at-nothing does not mean records-at-nothing.",
       "actions": [
         "push"
       ],
@@ -330,7 +338,9 @@
         "tools/process/*",
         ".github/workflows/*"
       ],
-      "reason": "governs the verification tooling AND the routed process prose. Its own brief FORBIDS running at full breadth -- rely.md step 1: 'SCOPE IT ... Do not run it at full' -- so with no scope the admission set demanded 477 paths from a gate that is not permitted to examine them. It was unsatisfiable by construction, not merely expensive."
+      "reason": "governs the verification tooling AND the routed process prose. Its own brief FORBIDS running at full breadth -- rely.md step 1: 'SCOPE IT ... Do not run it at full' -- so with no scope the admission set demanded 477 paths from a gate that is not permitted to examine them. It was unsatisfiable by construction, not merely expensive.",
+      "module": ".claude/commands/rely.md",
+      "_module_why": "V20, 2026-09-08, and this one is LOAD-BEARING FOR THE PUSH rather than tidy-up. 35 of 41 rely records already name this path in evidence. ⚠⚠ IT WAS ALMOST MISSED: the proposal that reached this file had been narrowed to 'steps that actually RECORD at commit or push', and `rely` is admitted at neither -- but `batch.py`'s ROUTING leg blocks a push until /rely has signed every changed checker, hook and exemption switch at its current hashes. That leg is satisfied by a RECORD, not by admission. With `module` null, V20 refused the append and the routing obligation became UNDISCHARGEABLE: the gate could still run and could never land its verdict. Found by the 2026-09-08 adversary round, which RAN the brief's own template and watched it refused, with `claim_review` and `editorial` as the discriminating controls returning WOULD ACCEPT. **Admitted-at-nothing does not mean records-at-nothing.**"
     },
     "claim_review": {
       "family": "review",
@@ -381,6 +391,7 @@
     },
     "copy_editor": {
       "family": "review",
+      "_module_DELIBERATELY_ABSENT": "V20, 2026-09-08. `module` is NOT declared here, and that is a decision rather than an omission -- ⛔ do not 'complete the set' by adding it. `rely`, `prior_art` and `adversary`/`editorial`/`pdf_coupling` were declared today because each is needed to discharge a leg that BLOCKS: rely and prior_art are demanded by batch.py's routing and attribution legs, the other three record at commit or push. `copy_editor` is demanded by nothing -- absent from gitRobot's admission set, zero records in 2,472, no batch.py leg reads it -- so leaving it undeclared blocks NOTHING. ⚠⚠ AND DECLARING IT WOULD ACTIVATE A KNOWN FAIL-OPEN: `copy-editor.md` mandates THREE parallel agents recording `--step copy_editor` at one basis, and is the only recording brief carrying no V11 or `--revision` guidance. V11 keys (step, basis, revision) uniquely -- confirmed by execution 2026-09-08 -- so a dissenting DIVERGENT arriving second is REFUSED while a first-arriving PASS stands, defeating the panel union at the one point it matters. The 2026-09-08 adversary round graded that ORDINARY only because V20 currently makes the second-writer path unreachable, and said in terms: it becomes BEDROCK the moment this key lands. ⚠⚠ THIS NON-DECLARATION IS NOT PRICED ON V20 AND MUST NOT BE -- /rely RLY46-2 (2026-09-08) correctly refused an earlier wording that called V20's refusal 'the compensating control', because V20 lives in the verdictLedger repo and NOTHING IN THIS CHECKOUT ASSERTS IT STILL REFUSES. An exemption resting on an unguarded control is the shape R-EXEMPT names. **The two load-bearing reasons are both verifiable HERE and neither mentions V20:** (1) no consumer -- absent from gitRobot's admission set, zero records in 2,472, and no batch.py/ship.py/guards.py leg reads it (verified: only a check_briefs.py fixture string and a record.py comment mention it), so declaring buys nothing; (2) the V11 panel race is live in copy-editor.md's own bytes (`grep -c V11` returns 0) and is a defect whether or not any server refuses. PRICE OF DECLARING LATER: land V11/`--revision` guidance in copy-editor.md in the SAME change. If V20 is relaxed upstream tomorrow, reasons (1) and (2) are untouched.",
       "actions": [
         "push"
       ],
