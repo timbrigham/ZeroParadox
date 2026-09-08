@@ -202,7 +202,7 @@
       ],
       "module": "tools/verify/check_checkers.py",
       "approved_modules": [
-        "5175d3203af4f0c47ee2b2ace76ac25e03c2d97e"
+        "30efcb77951e8ae4b99fc9331f125e5f1cdcfd8c"
       ]
     },
     "guards": {
@@ -242,7 +242,7 @@
       "family": "mechanical",
       "module": "tools/verify/batch.py",
       "approved_modules": [
-        "824fcb3cf8d183d3aeeb2e1403a9a25ecf71b678"
+        "3f11ba688949ddd16d7f03fc67b44488e5b9063b"
       ],
       "scope": [
         "ZeroParadox/*.lean",

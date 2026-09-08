@@ -2007,6 +2007,25 @@ def check_signals(ranges=None):
             # examined, and the reason is the ledger's to state.
             out.append((s, True, "NOT_APPLICABLE — the ledger declares this step does not gate "
                                  "here. Nothing was examined; this is not a clean bill."))
+        elif st == "REFUSED":
+            # ⛔⛔ REFUSED IS NOT FAIL, AND THE REMEDY IS THE WHOLE POINT OF THIS BRANCH. It already
+            # BLOCKED without it — the generic `else` fails closed — but it printed "run the gate and
+            # let it record its own verdict", which is the one instruction that cannot work: the gate
+            # DID run, the ledger declined its record, and re-running reproduces the same refusal.
+            # A control measured that verbatim before this branch existed. `RLY41-2`'s shape: a true
+            # blocking answer wearing a remedy for a different failure.
+            #
+            # ⚠⚠ AND IT CONDEMNS NOTHING. A FAIL indicts subjects; a REFUSED establishes NOTHING —
+            # the ledger never accepted a claim about those bytes, so there is no finding about the
+            # corpus here and a reader must not go looking for one. Treating it as a FAIL would stamp
+            # condemnation on blobs nothing judged, which is `LED-10` arriving through a new door.
+            # ⚠ It blocks for the ONLY honest reason: absence of an established verdict.
+            out.append((s, False,
+                        "REFUSED — the ledger declined this step's record; NOTHING has been "
+                        "established about these subjects. This is a defect in the RECORD, not a "
+                        "finding about the corpus: do not read it as a failure of the mathematics, "
+                        "and do not simply re-run the gate — it will be refused again. Read the "
+                        "rule the ledger named and fix the emitter, then record."))
         else:
             out.append((s, False, "%s — run the gate and let it record its own verdict "
                                   "(`record.py --step %s`)" % (st, s)))
@@ -2702,6 +2721,25 @@ def selftest():
         ok = all(not r[1] for r in rows)
         print("  %-46s %s" % ("unreachable at ANY tip fails CLOSED", "ok" if ok else "*** WRONG ***"))
         bad += 0 if ok else 1
+
+        # ⚠⚠ `REFUSED` BLOCKED BEFORE THIS BRANCH EXISTED — the generic `else` fails closed — so a
+        # control that only asserted BLOCKING would have been green against the defect. The defect
+        # was the REMEDY: it printed "run the gate and let it record its own verdict", the one
+        # instruction that cannot work when the ledger has declined the record. Measured verbatim
+        # before the fix. So this control asserts all THREE properties, and the middle one is the
+        # only one that was ever wrong.
+        _step = REVIEW_STEPS[0]
+        record.step_status = lambda ref, action="commit": {
+            s: ("REFUSED" if s == _step else "SATISFIED") for s in REVIEW_STEPS}
+        _why = [r for r in check_signals(["o/m..A"]) if r[0] == _step][0]
+        for label, ok in [
+                ("REFUSED blocks", not _why[1]),
+                ("REFUSED does NOT say to re-run the gate",
+                 "run the gate and let it record its own verdict" not in _why[2]),
+                ("REFUSED names the RECORD, not the corpus",
+                 "NOTHING has been established" in _why[2])]:
+            print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
+            bad += 0 if ok else 1
     finally:
         record.step_status = _real
         globals()["reviewable_changed"] = _real_changed
