@@ -111,9 +111,34 @@ def _prepush_exit(wt):
     check(s) failed — %d routing, %d other" — so the number that answers the question is right
     there in the output the enforcement itself emits. A router that stops enforcing drives it to
     zero; nothing else does."""
+    # ⭐⭐ THE NESTED RUNS DO NOT PAY THE ADVISORY INTERPRETATION LAYER. Measured 2026-09-07 in a
+    # seeded worktree, in the invocation this function actually uses:
+    #     prepush --ranges HEAD~1..HEAD, agent gate ON  : 119 s
+    #     prepush --ranges HEAD~1..HEAD, agent gate OFF :   1 s
+    # 118 of 119 seconds, across the 9 nested runs this probe makes — ~1084 s of an 1800 s pre-push
+    # budget the run was exceeding at exit 124.
+    #
+    # ⚠ IT IS SAFE BECAUSE THE LAYER CANNOT MOVE A VERDICT, AND THAT WAS MEASURED RATHER THAN READ:
+    # `agent_gate.run()` always returns 0 and `batch.py` deliberately does not increment `bad`, so
+    # skipping it cannot touch the exit code half of `_prepush_blocks`'s conjunction. The whole probe
+    # was then run with the gate off and returned **17 of 17 behaved as required**, zero point still
+    # `routing=0 exit=0`, with the four EXIT_NEEDLE rows — the ones whose environment this changes —
+    # among the passes.
+    #
+    # ⚠⚠ AND THE JUDGEMENT WAS NOT MEANINGLESS, IT WAS INVARIANT — the sharper reason and not the
+    # one first written here. This probe mutates the ROUTER (`ship.py`, `batch.py`), never the
+    # corpus, so `check_encoding`, `check_moved` and `check_figures` read a corpus the mutations do
+    # not touch and legitimately answer "earned" every time. **We are declining to re-derive a
+    # constant nine times, not discarding a verdict.**
+    #
+    # ⛔ SCOPED TO THE NESTED RUNS ONLY. The TOP-LEVEL layer still runs once per pre-push, where its
+    # judgement is novel. ⚠ The 17-of-17 run had the gate off EVERYWHERE — a strictly MORE aggressive
+    # configuration than this — so it bounds this change from above and is not a measurement of it.
+    # ⚠ The skip is DISCLOSED: `batch.py:436` prints `agent gate skip — interpretation layer NOT run`.
     p = subprocess.run([sys.executable, os.path.join(wt, "tools", "verify", "batch.py"),
                         "prepush", "--ranges", "HEAD~1..HEAD"],
-                       capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=wt)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=wt,
+                       env={**os.environ, "ZP_AGENT_GATE": "0"})
     out = p.stdout + p.stderr
     _assert_reached(out)
     m = re.search(r"push check\(s\) failed\s*[—-]\s*(\d+)\s+routing", out)
