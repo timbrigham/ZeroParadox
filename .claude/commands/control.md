@@ -90,11 +90,23 @@ This is the house convention and it is already in force — stated at `tools/ver
 For each of the six, give the caller what they need to re-run it themselves:
 
 ```
-STATE: <absent | pass | fail>   VARIATION: <what was changed, and why it is a different KIND>
+STATE: <absent | pass | fail | undecided>   VARIATION: <what was changed, and why it is a different KIND>
 COMMAND:  <the exact command, runnable as written>
 EXIT:     <the code>
 OUTPUT:   <the line(s) that make this exit attributable to the property, quoted verbatim>
 ```
+
+⚠⚠ **FOUR TOKENS, BECAUSE THERE ARE FOUR EXITS.** `absent` is exit 2 (could not ask), `pass` is 0,
+`fail` is 1, and **`undecided` is exit 3 — asked, ran to completion, answer contested.** This
+template carried three tokens against the four-state table above until 2026-09-08, so an agent with
+a genuine 2-1 split had to spell it `absent`, literally *"I could not look."* **That is the exact
+collapse this file's own cardinal rule forbids, manufactured by the form the rule is printed on** —
+the remedy being the defect, which `copy-editor.md` names as the mark of a bedrock finding.
+
+⭐ `undecided` is the ledger's word for the same state, not a coincidence and not a synonym: a
+contested panel records `UNDECIDED` with `failing` narrowing it to the contested subset. **One
+missing word, in the prose layer and the recording layer.** Use the ledger's token here so the two
+cannot drift.
 
 ⚠ **THE OUTPUT LINE MUST NAME THE PROPERTY, NOT JUST THE OUTCOME.** An exit code is over-determined — a crash, an unrelated failure and a real violation all exit non-zero. Quote the line that only the code under test can emit.
 

@@ -6,7 +6,24 @@
 #   ⚠⚠ THIS NOTE SAID "NOT a defect" AND THAT WAS THE DEFECT (KRU-1, fixed 2026-09-03). It held
 #   the eliminability claim supported "by EXHIBITING the clean proof". None was exhibited:
 #   Coq-Kruskal proves the almost-full formulation, Kruskal.lean proves the SEQUENCE form, and
-#   transport needs a direction CCC2017 records as intuitionistically invalid. Now UNMEASURED.
+#   the transport therefore needs `WellQuasiOrdered r -> af r` on the HYPOTHESIS side, which the
+#   corpus has not established. Now UNMEASURED.
+#   ⚠⚠ AND THE SENTENCE ABOVE IS ITSELF A SECOND CORRECTION (CR-B1, /claim-review 2026-09-08).
+#   The 2026-09-03 fix wrote "a direction CCC2017 records as intuitionistically INVALID". Retrieved
+#   and read at the source - papers/larchey_wendling_computational_content_constructive_kruskal_
+#   tree_theorem_ccc2017.pdf, two pages, both read - the paper says: "the several classically
+#   equivalent definitions of the notion of WQO are (for most of them) NOT INTUITIONISTICALLY
+#   EQUIVALENT". It never writes "invalid" and never names a direction. Three strengthenings in one
+#   clause: non-equivalence -> invalidity, the hedge "(for most of them)" dropped, and the verdict
+#   attributed to the source. ⛔ THE DIRECTION ARGUMENT IS THE CORPUS'S OWN and stands on its own
+#   feet: `af` is constructively STRONGER, so `af R -> sequential R` goes through and the converse
+#   does not; hypothesis positions are contravariant, so a stronger precondition proved elsewhere
+#   does not weaken ours. CCC2017 supplies only the background non-interchangeability. **KRU-1 is
+#   OPEN, NOT REFUTED** - calling it invalid converted OPEN into CLOSED, which is the one polarity
+#   KRU-1 insists on keeping.
+#   ⚠ TWO FIXES, TWO OVERCLAIMS, ONE SENTENCE, SAME SOURCE, SAME SITE. R-REVALIDATE's threshold is
+#   reached: the deliverable here is the MEASUREMENT above (what the paper actually says, quoted)
+#   or deletion - never a third redraft. Do not restate this from memory; re-open the PDF.
 #   It also called the choice located "precisely" at Mathlib's minimal bad sequence machinery;
 #   three further routes carry it, two of them written in that file, and its PurityCheck block
 #   now EMITS all four rather than describing them. Read the file, not this note.

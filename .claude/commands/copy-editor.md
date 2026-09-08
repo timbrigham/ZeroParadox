@@ -38,6 +38,14 @@ Read `$ARGUMENTS` to determine the two states and the references, then spawn thr
 
 **On a split, or when any copy editor reports the mathematics moved: record `UNDECIDED`, which BLOCKS, and escalate.** ⚠ **Escalation goes to YOU, and you carry it to the author (`D4`). Gates never report to the author directly** — one channel up, and the carrier holds it. **A split IS the signal**, and it is the first natural producer of a verdict that is fully wired and has never once been used.
 
+⛔⛔ **AND YOU EMIT THE RECORD — ONE, FOR THE PANEL. THE COPY EDITORS DO NOT RECORD.** Changed
+2026-09-08. The command and the full reasoning are in **§ Recording** below; read it before you
+tally, because the shape constrains what you can say. In one line: **`--how agreement --passes 3
+--agreed <how many said the meaning survived>`**, and V3 refuses a non-unanimous PASS, so a 2-1
+split is recorded as `UNDECIDED` with `--agreed 2` and `--failing-file` naming the contested sites.
+⚠ That is the RECORD. Your ESCALATION decision still follows the 2-of-3 rule above — what the panel
+found and what you do about it are different questions, and the split between them is deliberate.
+
 ---
 
 Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
@@ -183,11 +191,61 @@ Tag every finding **VERIFIED** (you re-ran it — name what you ran and quote wh
 
 ## Recording — the step is `copy_editor`, and what it does NOT yet do
 
-Record your verdict, PASS and DIVERGENT alike, with **`--step copy_editor`**:
+⛔⛔ **YOU — THE COPY EDITOR — DO NOT RECORD. THE CARRIER RECORDS ONCE, FOR THE PANEL.** Hand your
+verdict and your findings to the carrier and stop. This reversed on 2026-09-08 and the reason is
+measured, not stylistic.
+
+**WHY, AND IT WAS BROKEN BEFORE, NOT MERELY UNTIDY.** This brief used to tell all three of you to
+run `--step copy_editor --how delegated --who copy-editor-<1|2|3>` at the same basis. Reproduced
+against a throwaway stream:
+
+    A: PASS  revision 0   -> APPENDED
+    B: FAIL  revision 0   -> REFUSED   "V11: revision 0 already exists for step ... at this basis"
+    C: FAIL  revision 0   -> REFUSED
+
+**First writer wins and the two dissents are silently refused** — the exact opposite of `D10`, in
+the gate `D10` exists to protect. ⚠ And `--revision 1` is NOT the escape: a revision SUPERSEDES,
+so a dissenter using it would REPLACE the panel's PASS with its own FAIL and three agents would
+race to be LAST instead of first. **Supersession is not concurrence.** V11 was never the defect; it
+was correctly refusing three records that each claimed to be the whole verdict at one basis.
+
+⭐ **THE LEDGER ALREADY MODELS A PANEL, AND IT IS ONE RECORD CARRYING ITS OWN HEADCOUNT.** So the
+carrier — who already unions the findings and tallies the verdict — emits exactly one:
 
 ```
-python tools/verify/record.py --step copy_editor --verdict <pass|fail|undecided> --tier A     --how delegated --who copy-editor-<1|2|3>     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --files <every file you actually read>     --failing-file <a JSON file naming the sites you INDICT, on a blocking verdict>
+python tools/verify/record.py --step copy_editor --verdict <pass|undecided> --tier A     --how agreement --passes 3 --agreed <how many of the three said the meaning SURVIVED>     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --files <the union of every file the three actually read>     --failing-file <a JSON file naming the sites the panel INDICTS, on a blocking verdict>
 ```
+
+⚠ **`--evidence` ON `--how agreement` ONLY BECAME POSSIBLE ON 2026-09-08, AND UNTIL THAT AFTERNOON
+THIS ROUTE WAS UNEMITTABLE.** `record.py` refused the flag on every non-delegated route while the
+server's V21 refuses any verdict naming no blob, exempting only `signature` and `override` — client
+forbids the field, server requires it, so the record could not be built at all. Fixed in
+`record.py`; the premise that was wrong is worth keeping: **three agents following ONE brief have
+ONE producer.** The brief is the artifact that produced the verdict, exactly as for a delegated
+round. What differs is how many agents read it, which is `passes`/`agreed` — headcount, not
+provenance.
+
+⛔⛔ **V3 REFUSES A NON-UNANIMOUS PASS, AND THIS COLLIDES WITH THE 2-OF-3 RULE ABOVE.** Measured
+against this repo's own `policy.v1.json` (`agreement.min_passes = 3`):
+
+    --how agreement --verdict pass --passes 3 --agreed 3   ->  VALID
+    --how agreement --verdict pass --passes 3 --agreed 2   ->  REFUSED
+        "a PASS under --how agreement needs --passes >= 3 with --agreed equal to it"
+    --how agreement --verdict undecided --passes 3 --agreed 1  ->  VALID
+
+**So a 2-1 split cannot be recorded as a PASS.** Record it as `--verdict undecided` with `--agreed 2`
+and `--failing-file` narrowing it to the contested sites. That is not a downgrade of the panel's
+judgement — it is the ledger's own vocabulary for exit 3, *asked, ran to completion, answer
+contested*, and it is the same word `control.md` uses for the same state.
+
+⚠⚠ **THE THRESHOLD TENSION IS REAL AND IS NOT MINE TO RESOLVE — DO NOT SILENTLY PICK A SIDE.** The
+tally rule above says *"2 of 3 must agree the meaning survived"*; V3 says an agreement is unanimous
+among `min_passes` readers. These are different thresholds and both are deliberate. **The recording
+follows the LEDGER (a 2-1 split records UNDECIDED); the carrier's escalation decision follows THIS
+BRIEF (2 of 3 may still proceed).** They are different questions — what the panel found, and what
+the carrier does about it — and keeping them apart is what lets a contested record exist without
+freezing the work. If that split is wrong, it is Tim's call, and `copy_editor` is admitted by
+nothing today so nothing is gated on the answer either way.
 
 ⚠ **`--verdict undecided` EXISTS AS OF 2026-09-06, AND UNTIL THAT MORNING THIS BRIEF INSTRUCTED AN
 IMPOSSIBLE COMMAND.** The flag took `pass` and `fail` only, so the split verdict this gate is built
@@ -227,9 +285,13 @@ stream: still zero, out of 2,267 — **because no client could emit the value.**
 evidence about the CLI, never about how often panels split. It is emittable now, so the next zero
 will mean something different from this one.
 
-**So on `DIVERGENT`: record it, AND hand it to the carrier in full** with both claim-statements from
-Stage 2b. Until admission lands, the carrier is what makes escalation happen — do not describe it as
-fail-closed, because it is not yet.
+**So on `DIVERGENT`: hand it to the carrier in full** with both claim-statements from Stage 2b.
+⚠ **You do not record it yourself — that changed 2026-09-08 and the reason is above:** three
+records at one basis meant first-writer-wins and your dissent would have been REFUSED, silently.
+The carrier emits one agreement-shaped record carrying `passes`/`agreed`, so a 2-1 split is
+preserved as a contested record rather than lost to whichever agent finished first. Until admission
+lands, the carrier is what makes escalation happen — do not describe it as fail-closed, because it
+is not yet.
 
 ## Before you finish — your controls, and the step you could not justify
 

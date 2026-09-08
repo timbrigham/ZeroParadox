@@ -796,9 +796,38 @@ def _cli(argv):
                      "lets work through, so it is pinned to the instructions that authorised it — "
                      "edit the brief and this key goes stale, and the gate re-runs. A FAIL needs "
                      "no evidence: it blocks, so it cannot fail-open.")
+    elif a.how == "agreement":
+        # ⚠⚠ AGREEMENT CARRIES EVIDENCE, AND REFUSING IT HERE CLOSED THE ROUTE ENTIRELY.
+        # Measured 2026-09-08, both halves: this client refused `--evidence` on `--how agreement`,
+        # while the server's V21 refuses any verdict naming no blob and exempts only
+        # signature/override. Client forbids the field, server requires the field, so an
+        # agreement record was UNEMITTABLE — a documented route nobody could take. Neither half
+        # was wrong alone; the route closed only in the conjunction, and neither owner was
+        # looking at it. Verified by posting an agreement record WITH evidence straight to
+        # `validate`, bypassing this file: V11 alone came back (a basis collision), no V21 and
+        # no objection to the field.
+        #
+        # ⭐ THE PREMISE THE OLD MESSAGE GOT WRONG, and it is a real distinction rather than a
+        # carve: THREE AGENTS FOLLOWING ONE BRIEF HAVE ONE PRODUCER. The brief is the artifact
+        # that produced the verdict, exactly as for a delegated round; what differs is how many
+        # agents read it, which is `passes`/`agreed` — headcount, not provenance. `signature`
+        # and `override` are genuinely different in KIND: a human accept and a regrade have no
+        # producing file at all. So the old sentence was true of those two and false of this one.
+        #
+        # REQUIRED rather than merely permitted, because V21 will refuse it downstream anyway and
+        # a local refusal names the remedy; a server round trip spends a call to say the same thing.
+        if not a.evidence:
+            ap.error("--evidence is required for --how agreement: give the path to the BRIEF the "
+                     "panel ran under. Three agents following one brief have ONE producer, so the "
+                     "record is pinned to it exactly as a delegated round is — V21 refuses any "
+                     "verdict that names no blob, because staleness is computed by watching a "
+                     "named blob move. Only --how signature and --how override are exempt, and "
+                     "they are exempt because a human decision has no producing file at all.")
     elif a.evidence:
-        ap.error("--evidence belongs to --how delegated. The other routes record a human decision "
-                 "or a genuine multi-pass agreement, neither of which is pinned to one brief.")
+        ap.error("--evidence belongs to --how delegated or --how agreement — both are produced by "
+                 "a BRIEF, and a panel of three reading one brief still has one producer. "
+                 "--how signature (a human accept) and --how override (a regrade) have no "
+                 "producing file at all, which is a difference in KIND rather than headcount.")
 
     # ⚠ V3 IS MIRRORED HERE ONLY TO FAIL FAST, AND THE DEFAULT IS THE TRAP IT CLOSES. A PASS under
     # `agreement` needs `agreed == passes` AND `passes >= policy.agreement.min_passes` (3). The
