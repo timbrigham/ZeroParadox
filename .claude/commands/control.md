@@ -39,11 +39,12 @@ Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual valu
 ## HARD CONSTRAINTS — read before doing anything
 
 - **READ-ONLY on the shared working tree.** Build everything in `worktree(action='add')` or your scratchpad. **Never mutate the caller's checkout** — it may hold uncommitted work, and a review agent once hard-reset three times, destroyed an uncommitted edit, then correctly verified the tree was clean, which *was* the destruction.
+- ⚠⚠ **AND BEING ISSUED A WORKTREE DOES NOT GIVE YOU THAT. WHERE YOU STAND DOES.** This command's whole deliverable is MUTATING the subject six to eight times, so the question of which copy you are editing is the safety property, not a detail of it. `worktree(action='add')` hands back a `run_tools_from` path and a `note` about it: **obey what it returns rather than what you remember.** Every mutation happens to the copies under that path and every run of your control happens with that path as the working directory. **Edit a repo-root path and you have edited the caller's file, whichever worktree you were issued.**
 - **NEVER `reset --hard`, `checkout -- .`, `clean`, or `stash`.**
 - **NO SCRATCH FILES IN THE REPO.** Scratchpad or worktree only.
 - **Direct `git` and `gh` are BLOCKED.** A `PreToolUse` hook matches the whole command string — bare, `cd`-chained, `&&`-chained, `-C`, absolute path, shelled out of Python — and FAILS CLOSED. Use `mcp__gitRobot__*`.
 - ⚠ **Never pipe anything that runs a `tools/verify` script through `head`, `tail`, `grep`, `Select-Object -First/-Last` or any early-exiting consumer.** SIGPIPE severs the exit status and a blocked gate reads as green. **Redirect to a file and read the file.** A hook enforces this.
-- **This is Windows.** PowerShell, not Bash-with-Unix-commands. Glob, never `find`. Never prepend `cd`. External processes get `timeout: 300000`.
+- **This is Windows.** PowerShell, not Bash-with-Unix-commands. Glob, never `find`. External processes get `timeout: 300000`. Never prepend `cd` **to reach the repo root** — it is already the working directory and prepending one only costs a permission prompt. ⚠ **The worktree is the exception, and it is a STEP rather than a detail:** stand in `run_tools_from`, and stand there again in every call, because the working directory resets between them.
 - **Never describe a source you have not opened.**
 
 ---
@@ -143,7 +144,7 @@ contested subset rather than indicting the scope.
 
 **Ship BOTH:**
 
-**(1) THE CONTROL ITSELF**, committed in your worktree. Not pasted into a report — committed, so it survives your context.
+**(1) THE CONTROL ITSELF**, committed in your worktree. Not pasted into a report — committed, so it survives your context. ⚠ **`stage` and `commit` each take a `worktree` parameter and you owe it on every call** — omit it and they act on the caller's index, which is the mutation the first constraint forbids. `commit` runs the FULL pre-commit gate **in the tree being committed**, so expect to satisfy it where you stand. **Hand your caller the worktree PATH and the resulting SHA; merging it and tearing the worktree down are theirs, not yours.**
 
 **(2) THE MUTATED FORMS THAT PROVE EACH STATE**, and **at least TWO genuinely different variations per state**. ⚠ **Which states apply depends on the control.** A single check owes PASS, FAIL and ABSENT — six mutations minimum. **A control that runs a PANEL owes the `undecided` state as well** — eight minimum — and must demonstrate a genuine split, not a simulated one. Two variations because one mutation proves the control noticed *that edit*; two proves it is watching the *property*. ⚠ **Make them different in KIND, not in spelling.** Deleting a call and renaming the same call are one variation. Deleting a call and making it return a plausible wrong value are two.
 
