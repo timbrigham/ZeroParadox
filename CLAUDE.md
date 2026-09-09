@@ -60,6 +60,18 @@ COST     Tim is this project's mathematician of record by decision, not by train
          caught what the gates did not. This governs REPORTS, never the corpus — it is not
          licence to add prose to `.lean` files.
 
+## R-LEDGER  The verdict ledger is a STATE ENGINE. Query it BEFORE you act.
+TRIGGER  you are about to commit, push, merge, tag, run a review gate, or re-run any checker.
+RULE     ask what is OWED, then do only that: `gitRobot admission(action=...)` for the required
+         set, then `verdictLedger progress(action=..., ref=..., admission=[...])`, which names
+         every unsatisfied step, its remedy, and what is already green. A verdict binds
+         `(step, path, git_blob_id)` — a fact about BYTES — so a step already PASSING for the
+         content in hand is ANSWERED, and re-running it is not diligence. Never learn what is owed
+         from a refusal that a query would have stated.
+COST     a merge re-derived 17 recorded passing verdicts and blocked on the one it could not
+         re-append; the 4KB query naming the two real gaps was never run.
+READ     tools/process/pipeline.md
+
 ## R-PRECOMMIT  `batch.py precommit` before every commit. `/batch` for anything multi-site.
 TRIGGER  you are about to commit, push, or start multi-site work.
 RULE     `python tools/verify/batch.py precommit` before EVERY commit — it runs the four
@@ -405,18 +417,10 @@ RULE     a failed `#synth` or grep is evidence about YOUR PROBE, never about the
          corpus, and "not in X" is not "not anywhere" — say which set you searched.
 COST     three false negatives shipped into docstrings as measured fact; and an UNDERCLAIM is
          invisible to every other gate, so a retraction is where this fires and nothing else does.
-         Measured 2026-08-27: `PROCESS_V2.md does not exist anywhere` reached a commit message,
-         from a grep that `grep -v`'d the one directory holding it, then an `ls` of a directory
-         that never had it. Both probes were honest; the conclusion added a quantifier neither
-         earned. The cited sections were real too. ⚠⚠ AND AGAIN 2026-09-02, SAME SURFACE, SAME
-         QUANTIFIER, AFTER A FIX: "the sweep is finished" reached a commit message AND a
-         `register.md` row, from a hand-grep scoped to one document. The claim was live in two
-         deposited PDFs, a traceability register and two docstrings. **The rule above was already
-         written and already right — only the trigger list did not name this shape**, which is why
-         the fix is a trigger and not a new entry. Both prose gates hand-searched too and both
-         honestly reported clean, each having chosen its own scope; `--claim` on the deleted
-         wording returns 4 sites in 4 files. A tool that takes the scope out of the searcher's
-         hands is the entire difference.
+         Twice, a quantifier neither probe earned reached a commit message — the second time AFTER
+         A FIX, with both prose gates hand-searching and each honestly reporting clean over a scope
+         it had chosen itself. A tool that takes the scope out of the searcher's hands is the
+         entire difference.
 READ     tools/process/not-in-the-library.md
 
 ## R-ZERONULL  Zero and null are different answers. Make the VALUE carry the difference.

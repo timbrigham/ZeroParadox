@@ -96,3 +96,76 @@ and fix them in their own batch. (Violated by the author of the rule on the day 
 ⚠ **If a stage BLOCKS, fix the cause.** Do not delete `batch_state.json`, do not `--no-verify`, do
 not push a subset to dodge a signal. This project has **two recorded bypass incidents and both began
 by treating a block as an obstacle** — see `tools/process/push-gate-bypass.md`.
+
+---
+
+## Ask the ledger first: it is a state engine, not an archive (Tim, 2026-09-09)
+
+**Tim, verbatim:** *"the verdict ledger is supposed to be more or less a state engine.. you should be
+checking it before you do a damn thing.. this was one specific example, but checking first needs to
+be the default."*
+
+And the instance that prompted it: *"if we already have a passing verdict for this blob, why are you
+even reattempting anything here?? once it's passed it's passed. sounds like a workflow problem to me.
+not a data problem."*
+
+### The control flow this replaces
+
+The habit is **ACT → GET REFUSED → READ THE REFUSAL → ADJUST**. The refusals on this project are
+good: they name the sanctioned alternative, so acting-then-reading converges. It is still the
+expensive path, and it manufactures work that then fails.
+
+The rule is **ASK → DO ONLY WHAT IS OWED.**
+
+### Why it is not merely cheaper — a verdict is about BYTES
+
+A verdict binds `(step, path, git_blob_id)`. It is a fact about content, not about occasions. So
+"this step already PASSES for the bytes in hand" is a **complete answer**, and re-deriving it is not
+diligence — it is work with no question behind it. Every gate re-run over unchanged content is
+either wasted or, worse, actively harmful: the second append collides with the first.
+
+### The measurement, 2026-09-09
+
+A `D1` remediation merge was blocked. Diagnosing it by ACTING took roughly an hour: a refused
+commit, a refused merge, a checker source read, two ledger lookups and a parent/tree walk.
+
+One call answers it in about 4 KB:
+
+    progress(action='push', ref='<the fix commit>', admission=[...])
+
+      17/19 satisfied
+      adversary  STALE  covered 73/74  owes_a_pass 1  remedy: run the step and record
+      editorial  STALE  covered 74/75  owes_a_pass 1  remedy: run the step and record
+      green: check_encoding, check_paths, check_pov, check_prose, decls, guards, ... (17)
+
+**`check_encoding` was already green at that tree.** The merge's pipeline re-derived seventeen
+recorded, passing verdicts and then blocked on the one it could not re-append. The block was
+manufactured entirely by work that had no reason to happen, and the real remaining work was never
+mechanical at all — two review records over one path each.
+
+### ⚠ The contract already said this, which is why it is a rule and not a feature request
+
+    gitRobot        "START HERE: admission(action='push') - ~665 bytes, and it is what
+                     verdictLedger's progress(), coverage_gap() and can_push() refuse without."
+    verdictLedger   "START HERE: status() ... then progress(...) which answers 'can I proceed'
+                     in ~4KB."
+    admission()     "measured over one night, progress 6 calls against 60 for inventory and status"
+
+The tools were built for this flow and published with it. The 6-against-60 is the server author's
+own measurement of exactly this failure. **The gap is behavioural, not technical.**
+
+### The order
+
+1. `gitRobot admission(action=...)` — the set of steps that must be green. ~665 bytes.
+2. `verdictLedger progress(action=..., ref=..., admission=[...])` — what is unsatisfied, the remedy
+   per step, and what is already green. ~4 KB.
+3. Do only what step 2 named. Run no gate whose verdict is already recorded and passing for the
+   content in hand.
+
+⚠ `status().would_block_push` is TIP-SCOPED and is not the range answer; `can_push(rev_range=...)`
+is. Reading the tip field as the push answer is a recorded trap.
+
+⛔ The narrow half of this is mechanizable and is filed as `D1M-1`: the append path should consult
+the basis before appending. **The hazard is the narrowing** — "already recorded" must mean *this
+step, this basis, verdict PASS* and nothing wider, or the fix turns every genuine `V`-rule rejection
+green on the push path.
