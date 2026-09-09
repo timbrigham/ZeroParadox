@@ -54,107 +54,90 @@ A control nobody has watched go red is a **hypothesis**. You are not finished wh
 
 **If you cannot construct a state where it goes red — that is the finding.** Say so plainly, name what you tried, and stop. **A non-answer reported as a non-answer is worth more than a control nobody has seen fail**, because the second one enters service and the first one does not.
 
-## THE FOUR STATES, AND THEY MUST NOT COLLAPSE — THREE ARE EXITS, THE FOURTH IS A RECORD
+## THE STATES MUST NOT COLLAPSE — AND THIS FILE NO LONGER TELLS YOU WHAT THEY MEAN
 
-The `0`/`2` split is the house convention and it is in force, stated in `tools/verify/check_paths.py` at the guard above `if not t:` — *"exit 2 says the question could not be asked, exit 0 with zero hits says it was asked and answered. Collapsing those two is what a fail-open IS."*
+⭐⭐ **DO NOT SUPPLY A MEANING FOR ANY OF THESE TOKENS YOURSELF.** `exit_code`, `row_status`,
+`decision` and `error_type` each have a served definition — every value with its meaning, rendered
+from the constants the servers import. **The rule you act on holds whatever those values turn out to
+be: KEEP THE STATES APART.** Never fold an undetermined result into a pass or a fail, never fold a
+crash into either, and for every state you report use the token that the thing you actually RAN
+emitted, quoted. If a meaning is not visible in what you ran, report that you could not see it —
+never reconstruct one from memory or from this file.
 
-⚠⚠ **THAT CITATION COVERS TWO ROWS, AND THIS BLOCK SPENT IT ON FOUR.** Until 2026-09-08 the table gave *answer contested* **exit 3** under the preface *"this is the house convention and it is already in force"*, and neither half held. The cited comment names `0` and `2` and no third code. And **exit 3 is already taken, three incompatible ways, in the one namespace this table governs — a checker's own process exit.** Measured by importing the consumers and running their scoring predicates rather than reading them:
+*(Provenance, for whoever audits this brief rather than executes it: `docs://gitrobot/vocabulary`.
+Fetching it is not a step of this brief; the rule above is.)*
 
-    check_paths    EXIT_SKIPPED = 3, "the scope could not be determined"
-    ci_report      rc == 3 renders `**skipped**` and does NOT increment `failed`
-    check_briefs   classify_record_failure(2, reachable) -> 3, the ledger REACHED and REFUSED,
-                   returned as the checker's own exit and blocked on by `hooks.py`
-    batch.py       special-cases `rc == 2` only, so 3 lands in the generic non-zero bucket
+⛔ **DO NOT RESTATE THOSE DEFINITIONS HERE, IN YOUR REPORT, OR IN ANY OTHER BRIEF.** The resource
+says why, and it is this file's own history in one line: *"If a document restates any of this, the
+document is the copy that will be wrong."*
 
-**So a control exiting 3 for a contested panel is scored by the CI reporter as *skipped* — exit 3 collapsing into exit 2, "I could not look".** That is this file's own cardinal rule inverted by the form the rule is printed on, one turn further round than the last time this file recorded that shape.
+⚠ **WHAT USED TO STAND IN THIS SECTION, AND WHY IT IS GONE.** Twenty-seven exit-code assertions, a
+four-state table, and a NO-STEP / WRONG-STEP table keyed on a check that does not exist. **Five
+BEDROCK findings came out of that material in a single day; zero came out of the rest of this file.**
+The last of them inverted a precondition — a rule about the STEP-NAME argument written up as a rule
+about the SUBJECT argument — inside the same table where the previous round had already fixed the
+identical mistake. Every assertion was true when written. **Correct was never the property that
+mattered; not-being-a-copy is.**
 
-| state | exit | the sentence it makes | ledger |
-|---|---|---|---|
-| **PASS** | **0** | "I looked, and it is fine." | `PASS` record |
-| **FAIL** | **1** | "I looked, and here is what is wrong." | `FAIL` record, `failing` naming the indicted subset |
-| **ABSENT** | **2** — input absent, unreadable, dependency unreachable | "I could not look." **Never a finding about the subject.** | **NO RECORD AT ALL** + a typed `error_type` |
-| **CONTESTED** | **1**, and it must SAY SO | "I looked, and we do not agree." | `UNDECIDED` record, `failing` narrowing it — **only if the subject already has a REGISTERED step; check before you promise one** |
+⚠ **A retry note, measured 2026-09-08:** immediately after a server restart a call can come back
+*"Connection closed"* against a surface that is plainly still being served. That is the transport,
+not the surface, and one retry cleared it on both servers. **A named refusal is a fact about what is
+served; "Connection closed" is a fact about the connection.** Do not report the second as the first.
 
-⭐ **THE FOURTH STATE IS REAL; WHAT CARRIES IT IS THE VERDICT, NOT THE EXIT.** A panel that ran perfectly and split 2-1 has **answered** — it simply did not answer with one voice, and spelling that as *"could not ask"* throws away the fact that the work was done. The distinction was supplied by the verdictLedger session on 2026-09-05: *"UNDECIDED is a FOURTH state your three exits cannot express."* **That was right about the state, and this file drew the wrong conclusion from it.** A fourth integer does not express it either, because **nothing branches on one.** `R-ZERONULL` asks whether the extra branch returns a value a CONSUMER acts on — and in the ledger it does: `record.py --verdict undecided` exists, `schema.VERDICTS` admits it, `can_push` blocks on it, and `stale_or_missing` counts it among the steps owing a re-run. **The exit channel carries answerability; the ledger carries the verdict. Put the contest where something reads it.** ⚠⚠ **AND THAT IS TRUE OF THE LEDGER WITHOUT BEING TRUE OF EVERY GATE — THE NEXT-BUT-ONE BLOCK IS THE FENCE, AND IT IS NOT OPTIONAL READING.** Those four consumers all exist and all branch; whether *your* control can reach them depends on whether its subject has a registered step, and for this gate's own subject it does not.
+### What this file still asserts, because it is about YOUR CONDUCT and not about a tool
 
-⛔ **SO A CONTESTED CONTROL EXITS 1, AND IS NOT PERMITTED TO BE QUIET ABOUT IT.** Exit 1 is fail-CLOSED, which is the safe direction and the only one of the four integers that is: `0` would be a fail-open, `2` is the forbidden collapse, `3` is read three ways by three consumers on the push path. **Exit 1 ALONE under-reports** — it reads as a plain violation — so the distinction has to be carried somewhere else or it is lost exactly where it was lost before. **The carrier that is ALWAYS available is a line on stdout that only the contested path can emit** (the delivery contract below already requires one, and requires it to name the PROPERTY rather than the outcome). **The `UNDECIDED` record narrowed by `failing` is the stronger carrier and it is CONDITIONAL** — read the next block before you promise one.
+⛔ **THE EXIT CHANNEL CARRIES ANSWERABILITY; THE LEDGER CARRIES THE VERDICT.** A panel that ran
+perfectly and split 2-1 has **answered** — it simply did not answer with one voice, and spelling that
+as *"could not ask"* throws away the fact that the work was done. Put the contest where something
+reads it. **The exit channel alone cannot be that place: an integer names no property and no subset,
+so it cannot say WHICH line the panel split over.**
 
-⛔⛔ **AND THE RECORD IS NOT ALWAYS AVAILABLE. CHECK BEFORE YOU PROMISE ONE — MEASURED 2026-09-08.**
-A verdict can only be recorded under a step that is REGISTERED in `tools/verify/required.v2.json`,
-which today holds 29 of them. Under a registered step the fourth verdict lands cleanly; under
-anything else the server refuses it outright, and `record.py` returns **exit 2** — *"UNDECIDED:
-ledger unavailable or record rejected"* — which reads as an OUTAGE rather than as a design decision.
-Both halves were run under `--dry-run`. Naming a REGISTERED step returned exit 0, *"the ledger WOULD
-ACCEPT this record."* Naming this gate returned exit 1 and the server's own rule:
+⛔ **A CONTESTED CONTROL IS NOT PERMITTED TO BE QUIET ABOUT IT.** Fail CLOSED, and carry the
+distinction somewhere that survives the exit code: **a line on stdout that only the contested path
+can emit**, naming the PROPERTY rather than the outcome. An exit code is over-determined — a crash,
+an unrelated failure and a real violation are not distinguishable by it.
 
-    V8: step 'control' is not registered in required.v2.json — an unregistered check
-        cannot record, so it cannot silently not count
+⚠ **A CRASH IS NOT A STATUS.** An uncaught traceback is indistinguishable from an honest violation.
+Measured 2026-09: a checker returned a failure code on a `UnicodeEncodeError` where that code meant
+something specific, **and every caller read the crash as an ordinary failure.** Your control must
+make a crash distinguishable — catch it, or emit a line only the real path can produce.
 
-⚠ **THAT REFUSAL IS QUOTED IN THE LEDGER'S WORDS AND NOT AS A COMMAND LINE, DELIBERATELY.**
-`check_briefs.py`'s `steps` leg BLOCKS on the flag form wherever it appears in a brief — it scans the
-whole file, so it cannot tell an instruction from a counter-example. Writing the refused invocation
-out in full would make this file fail the very checker that guards it. `experiment-review.md` quotes
-its own refusal the same way, for the same reason.
+⛔⛔ **THE COLLAPSE THIS WHOLE COMMAND EXISTS TO PREVENT** (`DC-45`, `CLAUDE.md` `R-ZERONULL`):
+*"nothing wrong"* and *"nothing ran"* are different answers, and a consumer branching on the value
+cannot tell them apart. Measured in this corpus: `check_ssot` returned `True, "no ssot.json in tree"`
+for months — **the more complete the coverage looked, the less had actually been read.** The mirror
+error is as bad in the other direction: a recording failure read as a finding sends someone to fix a
+corpus that is fine.
+
+### Whether you can record a verdict at all — RUN IT, do not read it
 
 ⛔ **THERE IS NO `control` STEP, SO THIS GATE CANNOT RECORD ITS OWN VERDICT, AND YOU MUST NOT TRY.**
-The V8 above settles that. **It does NOT settle your SUBJECT**, and the two answers there read alike
-in a report and are different facts. Decide it by RUNNING the command for your own subject, never by
-reading this file:
 
-    NO STEP      no registered step declares your subject's file as its `module`.
-                 `tools/verify/hooks.py` is nobody's module, so a control over it is REFUSED by
-                 name with a printed V8, exactly as `control` is. There is nothing to borrow.
-    WRONG STEP   a registered step DOES declare it, and asserts a different property.
-                 `tools/verify/batch.py` is the declared module of `decls` AND `pdf_coupling`, so a
-                 control over anything defined in that file WOULD be accepted under either.
-                 Measured 2026-09-08: naming `pdf_coupling` with `--verdict undecided` over
-                 `tools/verify/batch.py` under `--dry-run` returned exit 0, *"the ledger WOULD
-                 ACCEPT this record."*
+**Your SUBJECT is a separate question and this file does not answer it.** It once carried a table
+predicting the answer; the table was wrong, in the fail-open direction, and that is the defect that
+retired it. **Ask the ledger under `--dry-run` and believe what it says.** The registry tells you
+what is REGISTERED; only the ledger tells you what it would ACCEPT.
 
 ⛔ **DO NOT REACH FOR A NEIGHBOURING STEP TO MAKE THE COMMAND RUN.** Filing a contest about one
 property under a step that asserts a different one is a false record every downstream reader will
-believe, and **nothing refuses it** — which is why WRONG STEP is the more dangerous of the two.
-**NO STEP fails closed and loudly. WRONG STEP fails open and silently.**
+believe, and **nothing refuses it.** If the honest step does not exist, the honest answer is that it
+does not exist.
 
-⚠⚠ **AND THE WORKED QUESTION AT THE TOP OF THIS FILE IS THE SECOND ONE, NOT THE FIRST.**
-`enforce_prepush_verdict` is defined in `tools/verify/batch.py`, so it is WRONG STEP. This file said
-it was NO STEP, one clause before naming `batch.py`'s two steps — both could not be true (AR11-1,
-2026-09-08). The false half was written by consulting the registry and never invoking `record.py`
-for the example, which is the previous round's defect one turn on: that round mandated a record
-without running its command, and this one denied a record was possible without running its command.
-**The registry tells you what is REGISTERED. Only the ledger tells you what it would ACCEPT.**
+⚠ **AND WHEN YOU REPORT A REFUSAL, GIVE IT IN THE LEDGER'S WORDS AND NEVER AS A COMMAND LINE.**
+`tools/verify/check_briefs.py`'s `steps` leg BLOCKS on the flag form wherever it appears in a brief —
+it scans the whole file, so it cannot tell an instruction from a counter-example. Writing the refused
+invocation out in full would make this file fail the very checker that guards it.
+`.claude/commands/experiment-review.md` quotes its own refusal in the ledger's words, for this
+reason. **Verified by execution 2026-09-08**, and it is the one tool-behaviour claim kept here on
+purpose: deleting it invites the next author to trip the checker it warns about.
 
-⭐ **SO STATE THE CONTEST IN YOUR REPORT AND HAND IT UP — AND SAY WHICH OF THE TWO STATES YOU WERE
-IN.** In both, the contested-only stdout line plus your report ARE the carrier, and saying so
-plainly is the honest result. This is not a gap to paper over: `experiment-review.md` reached the
-**NO STEP** wall on 2026-08-24 — `experiment_review` is unregistered *and* its subject is nobody's
-module — and settled it the same way, *"a record that cannot land is worse than none, because its
-exit 2 reads as an outage rather than as a design decision"*. ⚠ **That precedent covers NO STEP and
-NOT WRONG STEP**, where the record can land and must not, and where what is missing is a step
-asserting YOUR PROPERTY rather than a step named for this gate. Those are different requests and
-must not reach Tim as one. The precedent also names the ORDER, which binds in both: **registering
-the step comes FIRST, and the recording block comes with it.**
+⚠ **REGISTERING A STEP IS TIM'S DECISION, NOT AN AGENT'S.** It is free to write and expensive to
+live with — **the blocker is never the token, it is everything downstream that has to be taught to
+read it.** Report the need; do not satisfy it.
 
-⚠ **REGISTERING ONE IS TIM'S DECISION, NOT AN AGENT'S, AND THE COST IS WHY.** `required.v2.json`
-declares `"default": "REQUIRED_FOR_ALL_ACTIONS"` — *"A registered type binds on EVERY action unless
-an entry says otherwise, and saying otherwise costs a stated `reason`."* A bare new entry therefore
-blocks every commit, push and tag until a record exists for it. **Inclusion is free to write and
-expensive to live with**, which is the same shape as minting a fourth exit integer below: the
-blocker is never the token, it is everything downstream that has to be taught to read it.
-
-⚠ **MINTING A FOURTH CHECKER EXIT IS NOT AN AGENT'S DECISION, AND IT IS THE DURABLE FIX.** A sweep of `sys.exit(N)` and `EXIT_* = N` under `tools/` on 2026-09-08 located no code above 3 — evidence about that probe, not a guarantee an integer is free. **The blocker is not the integer, it is that `ci_report`, `batch` and `hooks` would each have to be taught to read it.** When one of them is, the state moves back into the exit channel and this row changes with it; until then it lives in the verdict, and this is an interim guard rather than the design. Tim decides which.
-
-⚠ **`UNDECIDED` BLOCKS ADMISSION, RANKS BETWEEN FAIL AND PASS, AND HAS NEVER ONCE BEEN RECORDED.** ⭐ **THE ZERO IS THE CLAIM; THE DENOMINATOR IS NOT** — it was 2,170 when this line was written, 2,267 on 2026-09-06, and 2,503 on 2026-09-08. **The stream grows and the zero has not moved.** Re-derive it with `find(verdict='undecided')` rather than trusting any figure here; a frozen denominator beside a live numerator is `DC-6` and this line carried one for two days (AR8-4). It is storable today — `schema.VERDICTS` is `{FAIL, PASS, UNDECIDED}`, the validator admits it, the resolver reads it, `can_push` blocks on it, and `pytest -k undecided` passes 15. **Its downstream has never executed on production data**, so the first real one is a first on the data, not a first through the code. Say so if you emit one — **and say so just as plainly if you could not, naming the step that was refused.** A gate that could not record is a fact the next reader needs; it is not the same fact as a gate that found nothing.
-
-⭐ **AND `failing` IS WHAT KEEPS A NARROW DISPUTE NARROW.** It is admitted on `FAIL` and `UNDECIDED` and refused on `PASS`. **A 2-1 split over forty files is UNDECIDED about the one line they disagree on and perfectly decided about the other thirty-nine** — so name the contested subset rather than indicting the scope. Rows carry `narrowed_from` and the push path prints `⚠ NARROWED INDICTMENT`.
-
-⛔ **THE VERDICT AND THE ANSWERABILITY ARE DIFFERENT PLANES.** `verdict` answers the question; `error_type` says whether a question was answerable at all. They are orthogonal by construction, which is why exit 2 produces **no record** rather than a record saying "unknown" — you cannot record that the recorder was unreachable. From `verdictLedger/core/errors.py`: *"If 'the ledger could not take it' and 'the ledger rejected it' look alike, a caller under pressure retries its way past a validation rule."*
-
-⛔⛔ **COLLAPSING 2 INTO 0 IS THE DEFECT THIS WHOLE COMMAND EXISTS TO PREVENT** (`DC-45`, `CLAUDE.md` `R-ZERONULL`). *"Nothing wrong"* and *"nothing ran"* are different answers and a consumer branching on the value cannot tell them apart. Measured in this corpus: `check_ssot` returned `True, "no ssot.json in tree"` for months — **the more complete the coverage looked, the less had actually been read.**
-
-⚠ **AND COLLAPSING 2 INTO 1 IS ALSO WRONG**, in the expensive direction: a recording failure read as a finding sends someone to fix a corpus that is fine. `record.py` says it outright — *"Exit 2 is NOT exit 1."*
-
-⚠ **A CRASH IS NOT A STATUS.** An uncaught traceback exits 1 and is indistinguishable from an honest violation. Measured: `gate_round.py` returned 1 on a `UnicodeEncodeError` where 2 meant "past the bedrock cap", **and every caller read the crash as an ordinary failure.** Your control must make a crash distinguishable — catch it and exit 2, or emit a line only the real path can produce.
+⭐ **AND NARROWING IS WHAT KEEPS A NARROW DISPUTE NARROW.** A 2-1 split over forty files is contested
+about the one line they disagree on and perfectly decided about the other thirty-nine — so name the
+contested subset rather than indicting the scope.
 
 ## THE DELIVERY CONTRACT — six runs minimum, EIGHT for a panel, and the transcript is half the deliverable
 
@@ -162,7 +145,7 @@ blocker is never the token, it is everything downstream that has to be taught to
 
 **(1) THE CONTROL ITSELF**, committed in your worktree. Not pasted into a report — committed, so it survives your context.
 
-**(2) THE MUTATED FORMS THAT PROVE EACH STATE**, and **at least TWO genuinely different variations per state**. ⚠ **Which states apply depends on the control.** A single check owes PASS, FAIL and ABSENT — six mutations minimum. **A control that runs a PANEL owes CONTESTED as well** — eight minimum — and must demonstrate a genuine split, not a simulated one. ⚠ CONTESTED is not proved by an exit code, because it shares one with FAIL: prove it with the contested-only line, and with the `UNDECIDED` record where the subject has a registered step to carry one. Two variations because one mutation proves the control noticed *that edit*; two proves it is watching the *property*. ⚠ **Make them different in KIND, not in spelling.** Deleting a call and renaming the same call are one variation. Deleting a call and making it return a plausible wrong value are two.
+**(2) THE MUTATED FORMS THAT PROVE EACH STATE**, and **at least TWO genuinely different variations per state**. ⚠ **Which states apply depends on the control.** A single check owes PASS, FAIL and ABSENT — six mutations minimum. **A control that runs a PANEL owes the `undecided` state as well** — eight minimum — and must demonstrate a genuine split, not a simulated one. Two variations because one mutation proves the control noticed *that edit*; two proves it is watching the *property*. ⚠ **Make them different in KIND, not in spelling.** Deleting a call and renaming the same call are one variation. Deleting a call and making it return a plausible wrong value are two.
 
 For each of them — **six, or eight if your control runs a panel** — give the caller what they need
 to re-run it themselves:
@@ -174,28 +157,26 @@ EXIT:     <the code>
 OUTPUT:   <the line(s) that make this exit attributable to the property, quoted verbatim>
 ```
 
-⚠⚠ **FOUR TOKENS AND THREE EXITS — THE COUNTS DIFFER, AND THAT IS THE POINT.** `absent` is exit 2
-(could not ask), `pass` is 0, `fail` is 1, and **`undecided` is asked-ran-to-completion-answer-
-contested, which ALSO exits 1.** So on an `undecided` row the `EXIT:` field does not discriminate
-and the `OUTPUT:` field is the whole evidence — quote the contested-only line, and name the
-`UNDECIDED` record you emitted **or the step whose absence stopped you emitting one.** ⚠ **THE
-OUTPUT LINE IS THE HALF YOU ALWAYS OWE**; the record is the half you owe when the subject has a
-registered step, and "there was none" is a reportable answer rather than a missing deliverable.
+⚠⚠ **FOUR TOKENS, AND THEY DO NOT MAP ONE-TO-ONE ONTO EXITS.** Do not read a mapping off this file
+and do not reconstruct one: record the exit you OBSERVED beside the output line that produced it, and
+leave the mapping to the reader. **Whatever that mapping turns out to be, never rest a contested row
+on its `EXIT:` field — quote the contested-only `OUTPUT:` line as the evidence, every time.** And
+name the record you emitted **or the step whose absence stopped you emitting one.** The output line
+is the half you always owe; the record is the half you owe when the subject has a step to carry it,
+and *"there was none"* is a reportable answer rather than a missing deliverable.
 
-⚠ **THIS TEMPLATE CARRIED THREE TOKENS UNTIL 2026-09-08 AND THEN FOUR MAPPED TO A FOURTH EXIT, AND
-BOTH WERE WRONG IN THE SAME DIRECTION.** With three, an agent holding a genuine 2-1 split had to
-spell it `absent`, literally *"I could not look."* With `undecided` mapped to exit 3, the CI reporter
-scored it `**skipped**` — the same sentence, arrived at by a longer route. **The remedy being the
-defect twice over**, which `copy-editor.md` names as the mark of a bedrock finding.
+⚠ **THIS TEMPLATE HAS BEEN WRONG TWICE, IN THE SAME DIRECTION.** With three tokens, an agent holding
+a genuine 2-1 split had to spell it *"I could not look."* With four tokens mapped to a fourth exit,
+a downstream reporter scored it *skipped* — the same sentence by a longer route. **The remedy being
+the defect twice over**, which `.claude/commands/copy-editor.md` names as the mark of a bedrock
+finding. That is the reason the mapping now lives in one served place and not in this file.
 
-⭐ `undecided` is the ledger's word for the same state, not a coincidence and not a synonym: a
-contested panel records `UNDECIDED` with `failing` narrowing it to the contested subset, wherever a
-registered step exists to carry it. **One missing word, in the prose layer and the recording
-layer.** Use the ledger's token here so the two cannot drift — **and note that the word is available
-to you in the run table even when the record is not.** Naming the state is free; recording it is the
-part that has a precondition.
+⭐ `undecided` is the ledger's word for the contested state, not a coincidence and not a synonym. Use
+the ledger's token wherever you name the state so the two cannot drift — **and note that the word is
+available to you in the run table even when the record is not.** Naming the state is free; recording
+it is the part that has a precondition.
 
-⚠ **THE OUTPUT LINE MUST NAME THE PROPERTY, NOT JUST THE OUTCOME.** An exit code is over-determined — a crash, an unrelated failure and a real violation all exit non-zero. Quote the line that only the code under test can emit.
+⚠ **THE OUTPUT LINE MUST NAME THE PROPERTY, NOT JUST THE OUTCOME.** Quote the line that only the code under test can emit.
 
 **(3) THE REAL-DATA CROSS-REFERENCE.** For each constructed state, say what real input it corresponds to and how you know the shape matches. *"`ssot.json` moved aside"* is real. *"a stubbed function returning None"* may not be — if nothing can produce that input in service, the control has never been tested against anything.
 
@@ -211,17 +192,8 @@ part that has a precondition.
 
 The question as you understood it · the control's path in your worktree · the run table (six, or eight for a panel) · the real-data cross-reference · anything you could not construct · your first unjustified step. **State plainly which exits the control has been observed producing, and which apply to it at all.** If it has not, the answer is "not yet", and that is a legitimate result.
 
-⚠ **AND IF YOUR CONTROL HAS A CONTESTED STATE, SAY WHICH WAY THE RECORD WENT.** There are THREE
-answers and exactly one of them is yours:
-
-    RECORDED     the record id you emitted.
-    NO STEP      the step name the ledger REFUSED, and the refusal it printed.
-    WRONG STEP   the registered step you DECLINED to borrow, and the property it actually asserts.
-                 ⛔ Nothing was refused here, so do not report a refusal — you never ran the
-                 command. Saying "there was no step" in this state is false and this file's own
-                 NO STEP / WRONG STEP block contradicts it.
-
-**Do not report a record you did not land, and do not report a refusal as an outage**: `record.py`
-returns exit 2 for an unregistered step and for a dead server alike, and this file's own rule is
-that those are different answers. ⚠ The exit code collapses them; the OUTPUT does not — a refusal
-names the V-rule and an outage names the transport. **Quote the line, not the code.**
+⚠ **AND IF YOUR CONTROL HAS A CONTESTED STATE, SAY WHAT THE LEDGER ACTUALLY ANSWERED** — the record
+id you emitted, or the refusal it printed, quoted. **Report only what you ran.** Do not report a
+refusal you never triggered, do not report a record you did not land, and do not report a refusal as
+an outage: the exit code collapses those two and the OUTPUT does not — a refusal names the rule and
+an outage names the transport. **Quote the line, not the code.**
