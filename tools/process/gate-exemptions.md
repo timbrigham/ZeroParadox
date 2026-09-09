@@ -82,7 +82,7 @@ section as the hole being closed.
 
 📖 **What is denied, why, and what would REOPEN each item — `.claude-local/notes/access_controls_2026-08-22.md`.**
 Several are provisional. **The server's own definition, including the tier model and the
-absent-by-design parameters, is `C:\temp\gitRobot.md`.**
+absent-by-design parameters, is served by the server itself at `docs://gitrobot/readme`.**
 
 ## ⭐⭐ WHERE THINGS LIVE. Three tiers, and the boundary is PUBLISHABILITY, not convenience. (2026-08-15.)
 

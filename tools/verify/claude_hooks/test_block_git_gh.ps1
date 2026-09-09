@@ -54,8 +54,8 @@ $cases = @(
     @{ want = 'DENY';  why = 'case-insensitive';        cmd = 'echo C:\WORKSPACE\MCP-MAYHEM\gitRobot' }
 
     # --- MUST ALLOW: the approved two-hop interaction path -------------------
-    @{ want = 'ALLOW'; why = 'C:\temp spec read';       cmd = 'Get-Content C:\temp\verdictLedger.md' }
-    @{ want = 'ALLOW'; why = 'C:\temp spec write';      cmd = 'Set-Content C:\temp\notes.md "x"' }
+    @{ want = 'ALLOW'; why = 'ordinary file read';      cmd = 'Get-Content C:\scratch\notes.md' }
+    @{ want = 'ALLOW'; why = 'ordinary file write';     cmd = 'Set-Content C:\scratch\notes.md "x"' }
 )
 
 $fails = 0
