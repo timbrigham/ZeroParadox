@@ -106,10 +106,11 @@ python tools/verify/record.py --step claim_review --verdict fail --tier A \
 
 ⛔⛔ **`--failing-file` IS REQUIRED ON A FAIL — 2026-09-07, AND THIS TEMPLATE OMITTED IT FOR A DAY.**
 `record.py` now refuses `--verdict fail` without it, and verdictLedger's `V19` refuses it server-side.
-**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS THROUGH THIS BRIEF'S OWN
-*"Exit 2 is NOT exit 1 … a RECORDING failure"*: a reviewer with a real FAIL reads the refusal as an
-outage, reports it as one, **and the FAIL never lands.** Measured 2026-09-07 by running a template
-verbatim under `--dry-run`.
+**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS BECAUSE A LEDGER OUTAGE EXITS
+2 TOO: a reviewer with a real FAIL reads this usage refusal as an outage, reports it as one, **and
+the FAIL never lands.** Measured 2026-09-07 by running a template verbatim under `--dry-run`.
+⭐ **This paragraph is why the correction below exists** — see *EXIT 2 MEANS THE RECORD DID NOT LAND — DISPATCH ON THE MESSAGE*; until 2026-09-09 this brief stated only the ledger cause, and so armed the trap described
+right here.
 ⚠ `check_briefs.py`'s `flags` leg cannot catch this — it checks that a named flag EXISTS, never that a
 REQUIRED one is present. **A rule was made mandatory and its five callers were not updated.**
 
@@ -132,8 +133,11 @@ their indicted subset since 2026-09-03. A gap that is CATEGORICAL rather than pa
 affordance, not sloppiness — and this is the affordance.
 
 ⛔ **THE FROZEN COUNT THAT STOOD HERE IS GONE, AND ITS REMOVAL IS THIS BRIEF'S OWN RULE APPLIED TO ITSELF.** It read *"118 of 118"*, written into FOUR briefs at once. The numerator is still
-118; **the denominator moved to 125 and will keep moving**, so the ratio was false while both of its
-halves were once true. This file already says it four paragraphs earlier: *"a number written into
+118 and the denominator moves, so the ratio was false while both of its halves were once true.
+⚠⚠ **AND THIS PARAGRAPH NAMED A DENOMINATOR UNTIL 2026-09-09, AND THAT NUMBER WENT STALE TOO** — it
+said 125; measured today it is past that again. **In four briefs at once, which is precisely the failure
+the sentence above describes.** Removed rather than updated: updating it would re-arm the same trap on a later date. **Compute it.** This file already says it in the `CALLER PRE-FLIGHT` blockquote at the top:
+*"a number written into
 four briefs goes stale in four places at once, and the tool computes it."* **Compute it:**
 `find(tier='A')`, filter `verdict in (FAIL, UNDECIDED)`, count those with no `failing`.
 
@@ -157,11 +161,111 @@ python tools/verify/record.py --step claim_review --verdict pass --tier A \
     --files <every file you reviewed>
 ```
 
+### ⭐⭐ `--outstanding-file` IS BOUND TO HOLDING FINDINGS, NOT TO BEING PAST THE CAP
+
+**These are two independent axes.** The verdict answers *how severe is what I found*; `outstanding`
+answers *am I carrying findings that do not block*. **A round at round 0 that found only ordinary
+things is a PASS, and it carries them.** You do not need to be past the cap to use the flag, and you
+must not reach for STOP-ORDINARY in order to earn it. Write a JSON list of your ordinary findings to
+the SCRATCHPAD — one object per finding, each with at least `note` and `severity: "ordinary"`:
+
+```
+python tools/verify/record.py --step claim_review --verdict pass --tier A \
+    --how delegated --who claim_review \
+    --evidence .claude/commands/claim-review.md \
+    --run gate-claim_review-<YYYY-MM-DD> \
+    --outstanding-file <the JSON file you wrote> \
+    --files <every file you reviewed>
+```
+
+⚠ **`severity` MUST be `ordinary` on every finding.** The server refuses `bedrock` on a PASS (V18),
+and that split is the entire safety of this route — it is not a way to ship one. A pass carrying
+findings and a clean pass are different facts, and `outstanding` is the only place a reader can still
+tell them apart; **omitting the key is what a genuinely clean pass looks like.**
+
+⚠ **Do not confuse this flag with `--failing-file` above.** They have OPPOSITE polarity:
+`--failing-file` NARROWS an indictment and is REFUSED on a PASS — *a PASS indicts nothing*;
+`--outstanding-file` carries non-blocking findings and is ACCEPTED on a PASS.
+
+⛔⛔ **ON THIS GATE THE STAKES ARE HIGHER THAN DOCUMENTATION, AND THIS IS THE ONE PLACE THAT IS TRUE.**
+`check_frozen.py` discharges a frozen-baseline removal on a **SATISFIED** `claim_review` record — and
+only SATISFIED discharges (`discharges()` returns `status == 'SATISFIED'` and nothing else;
+`NOT_APPLICABLE` does not discharge). **A STOP-ORDINARY here is not recorded by YOU, so unless the
+caller records it the removal stays owed — with no verdict THE REVIEWER CAN EMIT.** That is a
+BLOCKED DISCHARGE PATH, not a gap in prose. Recording a PASS that carries its ordinary findings
+satisfies the step, discharges the removal, and keeps the findings visible.
+
+⚠ **DATED, because the present tense above overstates what is live.** As of **2026-09-09**
+`check_frozen` is `registered_not_admitted` at `commit`, `push` AND `tag` — verified by running
+`gitRobot admission` for each — so the path described gates **nothing today**. It is written as a
+standing property because admission is a config line that can change without touching this brief,
+and because the discharge is still the mechanism `check_frozen` implements. **Do not read it as a
+live blocker; re-check `admission` before relying on it either way.**
+
+⚠ **SCOPED DELIBERATELY, because the unscoped version of that sentence is FALSE and was corrected
+here on 2026-09-09.** An earlier draft said *"no emittable verdict"* flat. A pass-with-outstanding is
+SATISFIED and discharges, and it was **already reachable before this change** — measured, not
+inferred: `claim_review@ec3a9cab…#1` is a tier-A `delegated` PASS carrying two `ordinary` outstanding
+findings on this very step, recorded **2026-08-30**. What this change fixed is the ROUTING to it,
+which was undocumented; crediting a documentation fix with creating a mechanism that already existed
+would be its own overclaim.
+
+⚠ **SCOPE OF THAT DATE, because the obvious stronger sentence is not earned.** The **CLIENT** half has
+carried the flag since **2026-08-29** — `-Soutstanding` over `record.py` returns `62b5b61` as the
+first hit. **That probe sees the client only**, and this is a two-route system: when the SERVER began
+accepting `outstanding` is not established here. **The earliest END-TO-END evidence is the record
+above, 2026-08-30.** ⚠ Two earlier drafts of this passage overshot — one said the capability *"was
+never absent"* (an unbounded universal), the next dated it from a one-file probe as though that dated
+the system. **State the probe, then state what it covers.**
+
+⚠ **An earlier draft of the sentence above said the capability *"was never absent"*, and that was an
+unbounded universal the probe had not earned** — the flag has a birthday, and `-Soutstanding` over
+`record.py` prints it in one call. Corrected 2026-09-09. **Date it, do not universalise it**: this is
+the same defect as the *"no emittable verdict"* overclaim two sentences up, committed while fixing it.
+
+⚠ **Why it was worth writing down at all:** while `--outstanding-file` appeared only under
+STOP-ORDINARY, a reviewer holding ordinary-only findings under the cap had three bad options and no
+good one — **PASS** dropped the findings, **FAIL** blocked over things that do not block, and
+**STOP-ORDINARY** misdescribed the round. Both records validate identically, so a
+pass-with-findings rendered as a clean pass. ***A gate whose only expressible non-clean verdict
+continues the loop will continue the loop.***
+
+**On STOP-ORDINARY — DO NOT record, and DO NOT leave the caller to reconstruct it.** `R-ER`/`R-AR`
+make this the one verdict the CALLER records, because it is a PROCEED that is not a pass and the
+decision to proceed is not yours. **The flag above is not what makes this verdict different — the
+CAP is.** You are the only one holding the findings, so **hand it over ready to use**: write the same
+findings JSON specified above, and end your report with the exact command the caller should run:
+
+```
+python tools/verify/record.py --step claim_review --verdict pass --tier A \
+    --how delegated --who claim_review \
+    --evidence .claude/commands/claim-review.md \
+    --run gate-claim_review-<YYYY-MM-DD> \
+    --outstanding-file <the JSON file you wrote> \
+    --files <every file you reviewed>
+```
+
+⚠ **Measured 2026-09-04, and it is why this block exists.** An editorial round returned STOP-ORDINARY
+with eight findings and recorded NOTHING — correctly, per the rule — and the caller did not record
+either. **A gate that found eight ordinaries and a gate that found nothing produced the same ledger
+state**, and the findings survived only in prose. ⛔ **On THIS gate that harm is worse than
+elsewhere**, because an unrecorded round also leaves the frozen-baseline removal undischarged.
+
+⚠⚠ **STAGE THE FILES BEFORE YOU RECORD — AND THE CALLER OWNS THAT STEP.** Subjects are read from the
+git INDEX, so a review of a modified-but-unstaged tree records NOTHING: `common.ledger_subjects`
+fences every path that differs from the index, and when NOTHING survives the fence `record.py` exits
+2 — *"nothing recordable for &lt;step&gt; at &lt;ref&gt; — the review certified no recordable file"*.
+⚠ **All-or-nothing is the wrong model, and the middle case is the dangerous one:** on a PARTIAL fence
+`record.py` prints the skip lines and **records a NARROWED subject set at exit 0**. A green exit does
+not mean everything you reviewed was recorded — read the skip lines and say which paths did not make
+it. ⛔ On THIS gate a narrowed set silently narrows the frozen-baseline removals you discharge. **You are read-only and cannot fix it**, so if it fences your paths, SAY SO and hand the
+command back. ⛔ Do not reach for `--ref` to route around it.
+
 ⚠ **`--evidence` is the BRIEF, not the checker, and it is what makes a delegated PASS accountable.** Attribution is not authentication — no key material exists here and *"prove you are that agent"* was never available. What IS checkable is which instructions governed the round: **editing this brief stales the key and the gate re-runs.** A delegated verdict cannot outlive its instructions.
 
 ⚠ **`delegated` claims no consensus and must not be dressed as one.** It records ONE agent round, honestly. If a caller genuinely runs three independent passes, that is still `--how agreement` and it remains the stronger claim; V3 is untouched.
 
-⚠ **Subjects are read from the git INDEX, so the files must be STAGED.** `common.ledger_subjects` fences anything untracked or differing from the index; it fails closed. ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
+⚠ **Subjects are read from the git INDEX, so the files must be STAGED.** `common.ledger_subjects` fences anything untracked or differing from the index. ⚠ **It fails closed ONLY when NOTHING survives the fence — on a PARTIAL fence it records a NARROWED subject set at exit 0**, and on THIS gate a narrowed set silently narrows the frozen-baseline removals you discharge. See *STAGE THE FILES BEFORE YOU RECORD*: read the skip lines and say which paths did not make it. ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
 keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
 refused with *"revision 0 already exists for step '<step>' at this basis"*. That is the design
 working — it fails CLOSED and loudly, with an attributed append-only record, where the retired
@@ -174,7 +278,27 @@ the append-only stream and `inventory` resolves the TIP, so a regrade stays audi
 `V11` you did not expect means another pass got there first, and the right move is still to
 read its reason and report which of your findings it omits.
 
-⚠ **Exit 2 is NOT exit 1** — it means the ledger was unreachable or refused the record, a RECORDING failure rather than a finding about the corpus.
+⚠⚠ **EXIT 2 MEANS THE RECORD DID NOT LAND. IT DOES NOT TELL YOU WHY, AND THE REMEDIES DIFFER.**
+⛔ **THE BINDING RULE: DISPATCH ON THE MESSAGE, NEVER ON THE EXIT CODE.** Never report exit 2 as a
+ledger outage unless the message says the ledger was reached and refused, or could not be reached.
+
+**Dated survey — every exit-2 site in `record.py`, read FROM SOURCE on 2026-09-09.** A dated survey
+is legitimate; a completeness claim is not (`R-ADJACENT`). ⚠ Two earlier versions of this block
+asserted a fixed number of causes — one said ONE, the next said TWO — and each was falsified within a
+day by a site nobody had opened the file to count. **The count is not the thing to memorise; the
+message is.**
+
+| what the message shows | what happened | what YOU do |
+|---|---|---|
+| an argparse `usage:` banner | your invocation is wrong — `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset | **YOURS to fix.** Correct the flags and re-run. |
+| `nothing recordable for <step> at <ref>` | the subject fence emptied your set. **The ledger was never contacted** | You are READ-ONLY and cannot fix it — see *STAGE THE FILES BEFORE YOU RECORD*. Say so and hand the command back. |
+| `UNDECIDED: ledger unavailable or record rejected`, or an outage line printed by the dry-run check | the ledger was reached and refused, or could not be reached | **Report it. Do NOT retry.** The review may have been fine and simply went unrecorded. |
+
+⛔ **If the message matches none of the three, it is a site added since the survey date — not one of
+these wearing a different coat.** The binding rule still governs: report what the message actually
+said, and do not translate it into the nearest familiar case. ⚠ **Translating an unfamiliar exit 2
+into "the ledger" is the exact harm named earlier in this brief** — a reviewer with a real FAIL
+reports an outage, and the FAIL never lands.
 
 ⚠ **Never claim PASS when the verdict was STOP-ORDINARY.** Both are proceed verdicts and they are not the same fact; that is why the caller, not you, decides what reaches the ledger.
 

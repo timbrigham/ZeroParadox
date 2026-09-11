@@ -339,7 +339,7 @@ COST     `IO.println` of hand-written English is tier 3 wearing tier 2's clothes
 READ     tools/process/prose-to-lean.md
 
 ## R-ADJACENT  When the answer is already proved, the deliverable is a POINTER, not a theorem.
-TRIGGER  a question arose and you are about to write a new declaration to answer it.
+TRIGGER  you are about to answer a question with a new declaration, or with a NEW TRACKED `.md`.
 RULE     ask in order: is it proved in this corpus already? is it in Mathlib? is the only
          gap that nobody wrote it where the question gets asked? If the last, write it
          THERE — ONE LINE of consequence at the site, plus a pointer to the canonical home.
@@ -507,8 +507,8 @@ RULE     `stage(paths=['a.lean','b.md'])` — the specific paths you edited. The
          `.claude-local` is exempt and bulk staging is its documented flow.
 COST     background agents write to this checkout concurrently, so the tree is not a stable
          snapshot — a review agent's scratch probe was swept into a commit that way and is in
-         the permanent history. `gitRobot.stage` now refuses `-A` outright, so there is nothing
-         left to remember.
+         the permanent history. `gitRobot.stage` refuses `-A` on the MAIN repo — that half is
+         enforced, not remembered; the `.claude-local` exemption in the RULE above still is.
 READ     tools/process/staging.md
 
 ## R-ER  Editorial review completes BEFORE the commit that touches document prose.
@@ -757,8 +757,7 @@ COST     overwriting is safe only because `.claude-local` is a repo, and that is
          and an unstarted item that vanished for five revisions.
 
 ## R-CAPTURE  Capture a high-value insight immediately; the POINTER is the deliverable.
-TRIGGER  a structural connection, a cross-domain identification, a derivability conjecture, a
-         purity result, or anything that partially closes an open question surfaces.
+TRIGGER  you are about to write a note, or you have written one and nothing points at it yet.
 RULE     write `.claude-local/notes/<topic>_YYYY-MM-DD.md` now, without being asked: the
          insight in plain language, the precise claim, what is formal versus conjectural, the
          status, and links to related notes. THEN WIRE IT to the artifact — a line in the
@@ -792,8 +791,8 @@ TRIGGER  you are starting a session, or about to make your first edit.
 RULE     all Lean and PDF work happens on `illustrated`; `main` is production/public;
          `lake_testing` is RETIRED — never switch to it or push to it. At session start
          `fetch()` then `merge(branch='origin/main', ...)` before making any change, so you
-         never edit against a stale base. `merge` is REFUSED while the tree is dirty — that is
-         deliberate, and the answer is to commit first or take a worktree, never to force it.
+         never edit against a stale base. `merge` CARRIES a dirty tree forward and names it in
+         `carried_forward`; a STAGED change is refused by GIT. `switch`/`rebase`/`squash` refuse.
          After ANY merge, `read(op='diff', args=['--check'])` to confirm no conflict markers
          survive. Both `.lean` files and PDF build scripts are first-class here.
 COST     a file with unresolved conflict markers commits SILENTLY and corrupts the document.

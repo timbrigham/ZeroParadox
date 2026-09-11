@@ -199,10 +199,11 @@ python tools/verify/record.py --step rely --verdict fail --tier A \
 
 ⛔⛔ **`--failing-file` IS REQUIRED ON A FAIL — 2026-09-07, AND THIS TEMPLATE OMITTED IT FOR A DAY.**
 `record.py` now refuses `--verdict fail` without it, and verdictLedger's `V19` refuses it server-side.
-**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS THROUGH THIS BRIEF'S OWN
-*"Exit 2 is NOT exit 1 … a RECORDING failure"*: a reviewer with a real FAIL reads the refusal as an
-outage, reports it as one, **and the FAIL never lands.** Measured 2026-09-07 by running a template
-verbatim under `--dry-run`.
+**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS BECAUSE A LEDGER OUTAGE EXITS
+2 TOO: a reviewer with a real FAIL reads this usage refusal as an outage, reports it as one, **and
+the FAIL never lands.** Measured 2026-09-07 by running a template verbatim under `--dry-run`.
+⭐ **This paragraph is why the correction below exists** — see *EXIT 2 MEANS THE RECORD DID NOT LAND — DISPATCH ON THE MESSAGE*; until 2026-09-09 this brief stated only the ledger cause, and so armed the trap described
+right here.
 ⚠ `check_briefs.py`'s `flags` leg cannot catch this — it checks that a named flag EXISTS, never that a
 REQUIRED one is present. **A rule was made mandatory and its five callers were not updated.**
 
@@ -256,7 +257,20 @@ records `--how agreement`, and that remains the stronger claim. **The accountabi
 and the gate re-runs. A delegated verdict cannot outlive its instructions.
 
 ⚠ **Subjects come from the git INDEX: the files must be STAGED.** `common.ledger_subjects` fences
-anything untracked or differing from the index. It fails closed; do not work around it.
+anything untracked or differing from the index; do not work around it.
+
+⛔⛔ **IT DOES NOT FAIL CLOSED, AND ON THIS GATE THAT CONTRADICTS THE ROUTING CONTRACT ABOVE.**
+Corrected 2026-09-09; this line said *"it fails closed"* flat, and it is false as stated. **It fails
+closed ONLY when NOTHING survives the fence** (`record.py` returns 2 and prints
+`nothing recordable for <step> at <ref>`). **On a PARTIAL fence it records a NARROWED subject set at
+exit 0** — the skip lines are printed, and nothing else marks the difference.
+
+⚠⚠ **Read that against this brief's own rule that a file you do not name counts as UNREVIEWED and
+there is no partial credit.** A silently narrowed set is exactly a file you did not name, arriving
+without you deciding to omit it — and because the routing legs block a push until a `rely` record
+covers the current blob of every verification-layer file, a narrowed record reports coverage the
+round did not have. **Exit 0 is not "all of them". Read the skip lines, and NAME in your report every
+path that did not make it.**
 
 ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
 keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
@@ -271,8 +285,27 @@ the append-only stream and `inventory` resolves the TIP, so a regrade stays audi
 `V11` you did not expect means another pass got there first, and the right move is still to
 read its reason and report which of your findings it omits.
 
-⚠ **Exit 2 is NOT exit 1** — it means the ledger was unreachable or refused the record, which is a
-RECORDING failure, not a finding about the layer.
+⚠⚠ **EXIT 2 MEANS THE RECORD DID NOT LAND. IT DOES NOT TELL YOU WHY, AND THE REMEDIES DIFFER.**
+⛔ **THE BINDING RULE: DISPATCH ON THE MESSAGE, NEVER ON THE EXIT CODE.** Never report exit 2 as a
+ledger outage unless the message says the ledger was reached and refused, or could not be reached.
+
+**Dated survey — every exit-2 site in `record.py`, read FROM SOURCE on 2026-09-09.** A dated survey
+is legitimate; a completeness claim is not (`R-ADJACENT`). ⚠ Two earlier versions of this block
+asserted a fixed number of causes — one said ONE, the next said TWO — and each was falsified within a
+day by a site nobody had opened the file to count. **The count is not the thing to memorise; the
+message is.**
+
+| what the message shows | what happened | what YOU do |
+|---|---|---|
+| an argparse `usage:` banner | your invocation is wrong — `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset | **YOURS to fix.** Correct the flags and re-run. |
+| `nothing recordable for <step> at <ref>` | the subject fence emptied your set. **The ledger was never contacted** | You are READ-ONLY and cannot fix it — see *STAGE THE FILES BEFORE YOU RECORD*. Say so and hand the command back. |
+| `UNDECIDED: ledger unavailable or record rejected`, or an outage line printed by the dry-run check | the ledger was reached and refused, or could not be reached | **Report it. Do NOT retry.** The review may have been fine and simply went unrecorded. |
+
+⛔ **If the message matches none of the three, it is a site added since the survey date — not one of
+these wearing a different coat.** The binding rule still governs: report what the message actually
+said, and do not translate it into the nearest familiar case. ⚠ **Translating an unfamiliar exit 2
+into "the ledger" is the exact harm named earlier in this brief** — a reviewer with a real FAIL
+reports an outage, and the FAIL never lands.
 
 ### Severity, and the cap
 

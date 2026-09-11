@@ -116,7 +116,7 @@ Save the findings to `.claude-local/notes/prior_art_review_YYYY-MM-DD_<scope>.md
 **Recording your verdict — the LEDGER, not a file** (file-path mode only; SKIP for a pasted prose block, and there is no staged-diff mode — see the mode selection above, where an empty scope is a refusal):
 
 
-⛔ **DO NOT WRITE `.claude-local/pa_cleared.txt`. The prose signal files are RETIRED.** Nothing GATES on that path any more — `batch.py`'s review check asks the ledger, and `hooks.py` and `guards.py` never opened it. ⚠ One reader remains and it is informational only: `check_release_ready.py` prints whether the file is present and never blocks on it, so its absence costs a line of output, not a refusal. It could be written by any process, recorded **no author**, and held one verdict for N passes; measured 2026-08-24, three concurrent passes of a sibling gate raced on one such path and the survivor was decided by scheduling. A ledger record is authored, append-only and keyed per subject, so none of that is expressible.
+⛔ **DO NOT WRITE `.claude-local/pa_cleared.txt`. The prose signal files are RETIRED.** Nothing GATES on that path any more — `batch.py`'s review check asks the ledger, and `hooks.py` and `guards.py` never opened it. ⚠ **ZERO readers remain, as of 2026-09-01 — corrected here 2026-09-09.** This line used to say *"one reader remains … `check_release_ready.py` prints whether the file is present"*. That was true until `c_signals()` was re-pointed at the ledger; its own docstring now records the change (*"THIS READ … UNTIL 2026-09-01, AND THOSE FILES ARE DEAD"*). So the file's absence costs **nothing at all** — not a refusal, and no longer even a line of output. ⚠ The conclusion is unchanged and in fact stronger, which is why this was ordinary rather than bedrock: a false premise that carried a surviving conclusion. It could be written by any process, recorded **no author**, and held one verdict for N passes; measured 2026-08-24, three concurrent passes of a sibling gate raced on one such path and the survivor was decided by scheduling. A ledger record is authored, append-only and keyed per subject, so none of that is expressible.
 
 **On FAIL / FAIL-BEDROCK — record it yourself. One agent's finding stands alone.** ⚠ Record a PASS too, with `--how delegated` — the older *"FAIL alone, PASS by unanimity or signature"* rule is RETIRED, predating the `delegated` route added 2026-08-25:
 
@@ -132,10 +132,11 @@ python tools/verify/record.py --step prior_art --verdict fail --tier A \
 
 ⛔⛔ **`--failing-file` IS REQUIRED ON A FAIL — 2026-09-07, AND THIS TEMPLATE OMITTED IT FOR A DAY.**
 `record.py` now refuses `--verdict fail` without it, and verdictLedger's `V19` refuses it server-side.
-**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS THROUGH THIS BRIEF'S OWN
-*"Exit 2 is NOT exit 1 … a RECORDING failure"*: a reviewer with a real FAIL reads the refusal as an
-outage, reports it as one, **and the FAIL never lands.** Measured 2026-09-07 by running a template
-verbatim under `--dry-run`.
+**Run the old template and you get exit 2.** ⚠⚠ AND THE HARM COMPOUNDS BECAUSE A LEDGER OUTAGE EXITS
+2 TOO: a reviewer with a real FAIL reads this usage refusal as an outage, reports it as one, **and
+the FAIL never lands.** Measured 2026-09-07 by running a template verbatim under `--dry-run`.
+⭐ **This paragraph is why the correction below exists** — see *EXIT 2 MEANS THE RECORD DID NOT LAND — DISPATCH ON THE MESSAGE*; until 2026-09-09 this brief stated only the ledger cause, and so armed the trap
+described right here.
 ⚠ `check_briefs.py`'s `flags` leg cannot catch this — it checks that a named flag EXISTS, never that a
 REQUIRED one is present. **A rule was made mandatory and its five callers were not updated.**
 
@@ -158,8 +159,11 @@ their indicted subset since 2026-09-03. A gap that is CATEGORICAL rather than pa
 affordance, not sloppiness — and this is the affordance.
 
 ⛔ **THE FROZEN COUNT THAT STOOD HERE IS GONE, AND ITS REMOVAL IS THIS BRIEF'S OWN RULE APPLIED TO ITSELF.** It read *"118 of 118"*, written into FOUR briefs at once. The numerator is still
-118; **the denominator moved to 125 and will keep moving**, so the ratio was false while both of its
-halves were once true. This file already says it four paragraphs earlier: *"a number written into
+118 and the denominator moves, so the ratio was false while both of its halves were once true.
+⚠⚠ **AND THIS PARAGRAPH NAMED A DENOMINATOR UNTIL 2026-09-09, AND THAT NUMBER WENT STALE TOO** — it
+said 125; measured today it is past that again. **In four briefs at once, which is precisely the failure
+the sentence above describes.** Removed rather than updated: updating it would re-arm the same trap on a later date. **Compute it.** This file already says it in the `CALLER PRE-FLIGHT` blockquote at the top:
+*"a number written into
 four briefs goes stale in four places at once, and the tool computes it."* **Compute it:**
 `find(tier='A')`, filter `verdict in (FAIL, UNDECIDED)`, count those with no `failing`.
 
@@ -183,13 +187,101 @@ python tools/verify/record.py --step prior_art --verdict pass --tier A \
     --files <every file you reviewed>
 ```
 
+### ⭐⭐ `--outstanding-file` IS BOUND TO HOLDING FINDINGS, NOT TO BEING PAST THE CAP
+
+**These are two independent axes.** The verdict answers *how severe is what I found*; `outstanding`
+answers *am I carrying findings that do not block*. **A round at round 0 that found only ordinary
+things is a PASS, and it carries them.** You do not need to be past the cap to use the flag, and you
+must not reach for STOP-ORDINARY in order to earn it. Write a JSON list of your ordinary findings to
+the SCRATCHPAD — one object per finding, each with at least `note` and `severity: "ordinary"`:
+
+```
+python tools/verify/record.py --step prior_art --verdict pass --tier A \
+    --how delegated --who prior_art \
+    --evidence .claude/commands/prior-art-review.md \
+    --run gate-prior_art-<YYYY-MM-DD> \
+    --outstanding-file <the JSON file you wrote> \
+    --files <every file you reviewed>
+```
+
+⚠ **`severity` MUST be `ordinary` on every finding.** The server refuses `bedrock` on a PASS (V18),
+and that split is the entire safety of this route — it is not a way to ship one. A pass carrying
+findings and a clean pass are different facts, and `outstanding` is the only place a reader can still
+tell them apart; **omitting the key is what a genuinely clean pass looks like.**
+
+⚠ **This gate's ordinary findings are exactly the ones that used to evaporate.** A dated survey
+negative, a closest-prior-art citation that is adjacent rather than governing, a standard name found
+for something described longhand — none of those block a push, and all of them are worth more later
+than the round that found them. While `--outstanding-file` appeared only under STOP-ORDINARY, a
+reviewer holding ordinary-only findings under the cap had three bad options and no good one:
+**PASS** dropped them, **FAIL** blocked over things that do not block, and **STOP-ORDINARY**
+misdescribed the round. Both records validate identically, so a pass-with-findings rendered as a
+clean pass. ***A gate whose only expressible non-clean verdict continues the loop will continue the
+loop.***
+
+⚠ **Do not confuse this flag with `--failing-file` above.** They have opposite polarity:
+`--failing-file` NARROWS an indictment and is REFUSED on a PASS — *a PASS indicts nothing*;
+`--outstanding-file` carries non-blocking findings and is ACCEPTED on a PASS.
+
+⚠⚠ **EXIT 2 MEANS THE RECORD DID NOT LAND. IT DOES NOT TELL YOU WHY, AND THE REMEDIES DIFFER.**
+⛔ **THE BINDING RULE: DISPATCH ON THE MESSAGE, NEVER ON THE EXIT CODE.** Never report exit 2 as a
+ledger outage unless the message says the ledger was reached and refused, or could not be reached.
+
+**Dated survey — every exit-2 site in `record.py`, read FROM SOURCE on 2026-09-09.** A dated survey
+is legitimate; a completeness claim is not (`R-ADJACENT`). ⚠ Two earlier versions of this block
+asserted a fixed number of causes — one said ONE, the next said TWO — and each was falsified within a
+day by a site nobody had opened the file to count. **The count is not the thing to memorise; the
+message is.**
+
+| what the message shows | what happened | what YOU do |
+|---|---|---|
+| an argparse `usage:` banner | your invocation is wrong — `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset | **YOURS to fix.** Correct the flags and re-run. |
+| `nothing recordable for <step> at <ref>` | the subject fence emptied your set. **The ledger was never contacted** | You are READ-ONLY and cannot fix it — see *STAGE THE FILES BEFORE YOU RECORD*. Say so and hand the command back. |
+| `UNDECIDED: ledger unavailable or record rejected`, or an outage line printed by the dry-run check | the ledger was reached and refused, or could not be reached | **Report it. Do NOT retry.** The review may have been fine and simply went unrecorded. |
+
+⛔ **If the message matches none of the three, it is a site added since the survey date — not one of
+these wearing a different coat.** The binding rule still governs: report what the message actually
+said, and do not translate it into the nearest familiar case. ⚠ **Translating an unfamiliar exit 2
+into "the ledger" is the exact harm named earlier in this brief** — a reviewer with a real FAIL
+reports an outage, and the FAIL never lands.
+
+**On STOP-ORDINARY — DO NOT record, and DO NOT leave the caller to reconstruct it.** `R-ER`/`R-AR`
+make this the one verdict the CALLER records, because it is a PROCEED that is not a pass and the
+decision to proceed is not yours. **The flag above is not what makes this verdict different — the
+CAP is.** You are the only one holding the findings, so **hand it over ready to use**: write the same
+findings JSON specified above, and end your report with the exact command the caller should run:
+
+```
+python tools/verify/record.py --step prior_art --verdict pass --tier A \
+    --how delegated --who prior_art \
+    --evidence .claude/commands/prior-art-review.md \
+    --run gate-prior_art-<YYYY-MM-DD> \
+    --outstanding-file <the JSON file you wrote> \
+    --files <every file you reviewed>
+```
+
+⚠ **Measured 2026-09-04, and it is why this block exists.** An editorial round returned STOP-ORDINARY
+with eight findings and recorded NOTHING — correctly, per the rule — and the caller did not record
+either. **A gate that found eight ordinaries and a gate that found nothing produced the same ledger
+state**, and the findings survived only in prose.
+
+⚠⚠ **STAGE THE FILES BEFORE YOU RECORD — AND THE CALLER OWNS THAT STEP.** Subjects are read from the
+git INDEX, so a review of a modified-but-unstaged tree records NOTHING: `common.ledger_subjects`
+fences every path that differs from the index, and when NOTHING survives the fence `record.py` exits
+2 — *"nothing recordable for &lt;step&gt; at &lt;ref&gt; — the review certified no recordable file"*.
+⚠ **All-or-nothing is the wrong model, and the middle case is the dangerous one:** on a PARTIAL fence
+`record.py` prints the skip lines and **records a NARROWED subject set at exit 0**. A green exit does
+not mean everything you reviewed was recorded — read the skip lines and say which paths did not make
+it. **You are read-only and cannot fix it**, so if it fences your paths, SAY SO and hand the
+command back. ⛔ Do not reach for `--ref` to route around it.
+
 ⚠ **`--evidence` is the BRIEF, not the checker, and it is what makes a delegated PASS accountable.** Attribution is not authentication — no key material exists here and *"prove you are that agent"* was never available. What IS checkable is which instructions governed the round: **editing this brief stales the key and the gate re-runs.** A delegated verdict cannot outlive its instructions.
 
 ⚠ **`delegated` claims no consensus and must not be dressed as one.** It records ONE agent round, honestly. If a caller genuinely runs three independent passes, that is still `--how agreement` and it remains the stronger claim; V3 is untouched.
 
 ⚠ **`--run` is REQUIRED, and `--reason-file` is not optional politeness.** `V9` refuses a record with no run id, and a spawned gate has no pipeline to inherit one from. The reason goes in a FILE because the PreToolUse hook denies any command containing the denied version-control token — arguments included — so an honest reason describing a scope-discovery defect blocks the very command that reports it. Measured three times on 2026-08-24, by three separate review agents.
 
-⚠ **Subjects are read from the INDEX, so the files must be STAGED**, and `--ref` defaults to `INDEX` for exactly that reason. `common.ledger_subjects` fences anything untracked or differing from the index; it fails closed. ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
+⚠ **Subjects are read from the INDEX, so the files must be STAGED**, and `--ref` defaults to `INDEX` for exactly that reason. `common.ledger_subjects` fences anything untracked or differing from the index. ⚠ **It fails closed ONLY when NOTHING survives the fence — on a PARTIAL fence it records a NARROWED subject set at exit 0.** See *STAGE THE FILES BEFORE YOU RECORD*: read the skip lines and say which paths did not make it. ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
 keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
 refused with *"revision 0 already exists for step '<step>' at this basis"*. That is the design
 working — it fails CLOSED and loudly, with an attributed append-only record, where the retired
@@ -202,7 +294,11 @@ the append-only stream and `inventory` resolves the TIP, so a regrade stays audi
 `V11` you did not expect means another pass got there first, and the right move is still to
 read its reason and report which of your findings it omits.
 
-⚠ **Exit 2 is NOT exit 1** — it means the ledger was unreachable or refused the record, a RECORDING failure rather than a finding about the corpus.
+⚠⚠ **EXIT 2 MEANS THE RECORD DID NOT LAND — DISPATCH ON THE MESSAGE, NEVER ON THE
+EXIT CODE.** The dated survey of every exit-2 site, with the three message shapes and what each
+one asks of you, is stated in full above. ⛔ **Pointer, not a second copy** (`R-ADJACENT`):
+restating it here is how the two halves drift apart, and this brief has already paid for that
+once.
 
 
 

@@ -20,6 +20,12 @@ surface BLOCKS; an enumeration of accumulated debt WARNS and prints its count on
 asks the ledger. If the ledger cannot be reached the question was not answered -- that is
 NOT "the briefs are fine" and NOT "the briefs are broken". `DC-45`: absent and clean are
 different states, and only one of them is a finding about the subject.
+
+EXIT CODES THIS EMITS: 0 clean · 1 a finding about the briefs · 2 COULD NOT ASK, the ledger
+was never reached, RETRYABLE · 4 ASKED AND REFUSED, the ledger decided and said no, TERMINAL
+-- never retry it, read the rule it named. ⚠ NOT 3: that is UNDETERMINED in the fleet
+vocabulary and is also `ci_report.SKIPPED_RC`, which renders **skipped**, a non-failure.
+The authority is the server, not this docstring: `vocabulary(name='exit_code')`.
 """
 import io, os, re, sys, glob, argparse, subprocess
 
@@ -230,7 +236,7 @@ def classify_record_failure(rc, ledger_answers):
     """Turn `record_if_asked`'s single failure code into the two facts it is hiding.
 
     `rc` is what `common.record_if_asked` returned; `ledger_answers` is `record.reachable()`.
-    Returns 2 when the ledger could not be ASKED, and **3 when it was asked and REFUSED**.
+    Returns 2 when the ledger could not be ASKED, and **4 when it was asked and REFUSED**.
 
     ⚠⚠ THIS IS THE `DC-45` SHAPE ONE LAYER UP, AND IT WAS FOUND INSIDE THE CHECKER BUILT TO
     CATCH IT. `record.emit` returns `None` for a refusal and for an outage alike, `emit_verdict`
@@ -241,15 +247,22 @@ def classify_record_failure(rc, ledger_answers):
 
     ⚠ A DIFFERENT VALUE, NOT A DIFFERENT MESSAGE (`R-ZERONULL`). Both states already had their
     own prose string and nothing branched on either, because consumers branch on the CODE. So
-    the code is what had to move: **2 could-not-ask · 3 asked-and-refused**. The remedies are
+    the code is what had to move: **2 could-not-ask · 4 asked-and-refused**. The remedies are
     genuinely different -- one is "fix the reachability", the other is "read the rule the
     server named" -- and a caller handed one code cannot choose between them.
+
+    ⚠ 4 RATHER THAN 3, AND THE REASON IS A COLLISION. 3 already means UNDETERMINED in the fleet
+    vocabulary -- a verdict about the CONTENT that could not resolve -- and `ci_report.SKIPPED_RC`
+    is also 3, rendered **skipped** and scored a NON-FAILURE. A 3 minted for a terminal ledger
+    refusal therefore sits one promotion away from reading as "this gate did not run". Latent
+    today only because `check_briefs.py` is in `ci_report.SELFTESTS`, which scores on `rc != 0`,
+    and not in `CHECKS`, where the skip treatment applies.
 
     ⚠ PURE ON PURPOSE, so both halves are testable with no network at all. The single call that
     must touch the wire is `record.reachable()`, and it is passed IN rather than made here.
     """
     if rc == 2 and ledger_answers:
-        return 3
+        return 4
     return rc
 
 
@@ -449,7 +462,7 @@ def selftest():
     # halves, pure: the classifier is HANDED the reachability answer rather than measuring it, so
     # this control cannot pass merely because the ledger happened to be up when it ran.
     for rc_in, answers, want, label in (
-            (2, True,  3, 'refusal   ledger answered -> 3, a decision'),
+            (2, True,  4, 'refusal   ledger answered -> 4, a decision'),
             (2, False, 2, 'outage    ledger silent   -> 2, could not ask'),
             (1, True,  1, 'finding   a real finding is never reclassified'),
             (0, False, 0, 'clean     a clean record stays clean')):
@@ -569,9 +582,10 @@ def main():
         # question is WHICH of the two failures it was.
         import record as _record
         _rc = classify_record_failure(_rc, _record.reachable())
-        if _rc == 3:
+        if _rc == 4:
             print('\nREFUSED: the ledger was REACHED and REJECTED this record. That is a')
             print('         decision, not an outage -- the rule it named is printed above.')
+            print('         TERMINAL: do not retry it. The same call will be refused again.')
         return _rc
     if bad:
         print('\nBLOCKED: %d blocking finding(s). A brief instructing a command that does not '

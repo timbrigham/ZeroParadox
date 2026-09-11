@@ -506,6 +506,39 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
 
     ⚠ The record is built by `build_record`; this function is the WRITE. The split is what lets
     `check` interrogate the identical payload without performing one.
+
+    ⚠⚠ THIS SIGNATURE IS FROZEN AND IT CANNOT TELL A REFUSAL FROM AN OUTAGE. Every existing
+    caller keeps working unchanged. Call `emit_ex` when you need to CHOOSE AN EXIT CODE — which
+    is every caller that gates on the result — because 2 and 4 are not the same event.
+    """
+    return emit_ex(step, tier, verdict, subjects, basis, reason=reason, inputs=inputs,
+                   decided=decided, cost=cost, revision=revision, evidence=evidence,
+                   outstanding=outstanding, failing=failing)[0]
+
+
+def emit_ex(step, tier, verdict, subjects, basis, reason=None,
+            inputs=(), decided=None, cost=None, revision=0, evidence=(), outstanding=(),
+            failing=()):
+    """Append one record. Returns `(record_id, failure)`.
+
+    `failure` is None on success, `"refused"` when the ledger DECIDED and said no, and
+    `"unreachable"` when it was never asked. ⛔ THE TWO MAP ONTO EXIT 4 AND EXIT 2 AND MUST NEVER
+    BE MERGED: a refusal is a RULE being applied, so the same call will be refused again, and
+    retrying it is how a caller under pressure gets past a rule it should have obeyed. An outage
+    decided nothing, so retrying it is the correct next move. Recommended caller shape:
+
+        rid, failure = record.emit_ex(...)
+        if failure == "refused":
+            sys.exit(4)          # asked and REFUSED — terminal
+        if failure:
+            sys.exit(2)          # could not ask — retryable
+
+    ⚠ WHY THIS EXISTS. `emit` ALREADY KNEW which failure it had — the refusal branch below has
+    carried "A refusal is TERMINAL. Do not retry it." all along — and then returned the same
+    `None` as a timeout. The information existed and was destroyed at the return, which is why
+    `reachable()` (a SECOND network call) had to exist to recover a distinction the first call
+    had already made. ⚠ `reachable()` and `check_briefs.classify_record_failure` are NOT retired
+    here; retiring them touches callers and is a separate, deliberate step.
     """
     record = build_record(step=step, tier=tier, verdict=verdict, subjects=subjects, basis=basis,
                           reason=reason, inputs=inputs, decided=decided, cost=cost,
@@ -522,20 +555,20 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
                 time.sleep(_BACKOFF * (attempt + 1))
                 continue
             print(f"UNDECIDED: verdictLedger unreachable at {URL} ({exc})")
-            return None
+            return None, "unreachable"
         if out is None:
             print("UNDECIDED: verdictLedger returned no usable payload")
-            return None
+            return None, "unreachable"
         if out.get("ok"):
-            return out.get("id")
+            return out.get("id"), None
         # A refusal is TERMINAL. Do not retry it.
         errs = out.get("errors") or [out.get("error", "unknown")]
         print("UNDECIDED: record refused by verdictLedger:")
         for e in errs:
             print(f"  - {e}")
-        return None
+        return None, "refused"
     print(f"UNDECIDED: verdictLedger unreachable ({last_error})")
-    return None
+    return None, "unreachable"
 
 
 # --------------------------------------------------------------------- the review-gate CLI
