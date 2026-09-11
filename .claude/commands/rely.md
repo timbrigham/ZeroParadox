@@ -205,7 +205,7 @@ the FAIL never lands.** Measured 2026-09-07 by running a template verbatim under
 ⭐ **This paragraph is why the correction below exists** — see *EXIT 2 MEANS THE RECORD DID NOT LAND — DISPATCH ON THE MESSAGE*; until 2026-09-09 this brief stated only the ledger cause, and so armed the trap described
 right here.
 ⚠ `check_briefs.py`'s `flags` leg cannot catch this — it checks that a named flag EXISTS, never that a
-REQUIRED one is present. **A rule was made mandatory and its five callers were not updated.**
+REQUIRED one is present. **A rule was made mandatory and its callers were not updated.**
 
 ⚠⚠ **AND NAME WHAT YOU ACTUALLY INDICT — `--failing-file`, ADDED 2026-09-06.** `--files` is
 COVERAGE: the blobs you examined, and the routing legs discharge on it. `--failing-file` is
@@ -297,9 +297,9 @@ message is.**
 
 | what the message shows | what happened | what YOU do |
 |---|---|---|
-| an argparse `usage:` banner | your invocation is wrong — `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset | **YOURS to fix.** Correct the flags and re-run. |
-| `nothing recordable for <step> at <ref>` | the subject fence emptied your set. **The ledger was never contacted** | You are READ-ONLY and cannot fix it — see *STAGE THE FILES BEFORE YOU RECORD*. Say so and hand the command back. |
-| `UNDECIDED: ledger unavailable or record rejected`, or an outage line printed by the dry-run check | the ledger was reached and refused, or could not be reached | **Report it. Do NOT retry.** The review may have been fine and simply went unrecorded. |
+| an argparse `usage:` banner | your invocation is wrong — among others `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset | **YOURS to fix.** Correct the flags and re-run. |
+| `nothing recordable for <step> at <ref>` | the subject fence emptied your set. **The ledger was never contacted** | You are READ-ONLY and cannot fix it — the CALLER must stage the files before you record. Say so and hand the command back. |
+| any line beginning `UNDECIDED: verdictLedger ` — unreachable, refused, or no usable payload — or an outage line printed by the dry-run check | the ledger was reached and refused, or could not be reached. **The message says WHICH**: `record refused by verdictLedger:` is a rule being applied; `unreachable` decided nothing | **Report it.** Do NOT retry a refusal — the same call is refused again. An outage decided nothing and may be retried once the ledger is up. Either way the review may have been fine and simply went unrecorded. |
 
 ⛔ **If the message matches none of the three, it is a site added since the survey date — not one of
 these wearing a different coat.** The binding rule still governs: report what the message actually
