@@ -960,6 +960,27 @@ def r_reset_command():
 r_reset_command.attacks = ROUND_STATE
 
 
+def r_reset_twice():
+    """RELY-B2, and it is the SANCTIONED route being quiet on its second use.
+
+    `reset` #1 from a walked cap writes `reset_from` and `show` announces it. `reset` #2 used to
+    overwrite that with 0 — `was` reads the round the FIRST reset had already zeroed — and the
+    announcement stopped. `bump` preserves it, so the erasure was specific to a second `reset`, a
+    routine action the tool's own usage line documents as "new arc / after a clean push".
+
+    ⚠ THIS ROUTE MUST BE WATCHED RED, not merely seen green: revert the `records_its_own` branch in
+    `gate_round.py` and it must go RED, or it is testing nothing. Measured both ways when added.
+    """
+    def apply():
+        sh(sys.executable, os.path.join(BASE, "gate_round.py"), "reset")
+        sh(sys.executable, os.path.join(BASE, "gate_round.py"), "reset")
+
+    def undo():
+        pass                                    # the property's violate/undo rewrites the file
+    return apply, undo
+r_reset_twice.attacks = ROUND_STATE
+
+
 def r_missing_round_key():
     """Valid JSON with no `round` key — `.get('round', 0)` silently restarted the count."""
     return _rewrite(ROUND_STATE, lambda _o: json.dumps(
@@ -1564,6 +1585,11 @@ PROPERTIES = [
             ("state file deleted", r_delete_state, True, announces_fresh),
             ("state file corrupted", r_corrupt_state, False, None),
             ("`gate_round.py reset`", r_reset_command, True, announces_reset),
+            # RELY-B2. The sanctioned escape run TWICE: permitted, and it must stay VISIBLE on the
+            # second use exactly as on the first. Registered here because the erasure was found by
+            # `guards.run_property` on a route `guards.py` did not carry — the registry cannot
+            # report a route nobody listed, which is REL8-4 restated.
+            ("`gate_round.py reset` run TWICE", r_reset_twice, True, announces_reset),
             ("valid JSON, no `round` key", r_missing_round_key, False, None),
             # ⚠ Routes 8 and 9 were CLOSED in `gate_round.py` and never REGISTERED here — by the
             # author of the rule that closing a route means adding it to this file, in the same

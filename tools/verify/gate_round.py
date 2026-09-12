@@ -230,7 +230,18 @@ def main():
         # A permitted route must still be visible — the same requirement the vendored allowlist
         # carries. `show` now announces a reset that walked a cap.
         was = d.get('round', 0) if not d.get('corrupt') else None
-        d = {'round': 0, 'arc_base': head(), 'targets': {}, 'reset_from': was}
+        # ⚠ RELY-B2: a SECOND `reset` overwrote `reset_from` with 0 and the cap-walk announcement
+        # STOPPED. `reset` is documented as routine ("new arc / after a clean push"), so the erasure
+        # sat on the SANCTIONED path — honest on its first use, silent on its second. A reset from
+        # round 0 has nothing of its own to record, so it must not erase what the last one recorded;
+        # a reset from a real round supersedes it.
+        # ⚠ Deliberately NOT a permanent high-water mark. `max(was, prior)` would keep announcing a
+        # walked cap for every arc that followed it, which is the cry-wolf shape `check_moved.py`
+        # already refuses — an alarm that never clears stops being read.
+        prior = d.get('reset_from')
+        records_its_own = isinstance(was, int) and not isinstance(was, bool) and was > 0
+        d = {'round': 0, 'arc_base': head(), 'targets': {},
+             'reset_from': was if records_its_own else prior}
         save(d)
         print('gate round reset to 0 (targets cleared; was round %s)' % was)
         return 0
