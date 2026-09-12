@@ -229,19 +229,19 @@ def main():
         # a SILENT one: round 6 (exit 2) became round 0 (exit 0) with no later output mentioning it.
         # A permitted route must still be visible — the same requirement the vendored allowlist
         # carries. `show` now announces a reset that walked a cap.
+        # ⛔ `reset_from` WAS DELETED 2026-09-11 (Tim's call), AND THE DELETION IS THE FIX.
+        # It existed so a LATER `show` could announce that a cap had been walked. It could not hold:
+        # `RELY-B2` erased it with a second `reset`, and the `records_its_own` fix for THAT erased it
+        # with `reset,bump,reset` — a reset from round 1 or 2 superseded a 6, and the announcement
+        # fires only above ORDINARY_CAP. ⚠ The polarity is why it was abandoned rather than patched a
+        # third time: **the record survived only when the arc that FOLLOWED also walked the cap.**
+        # `max(was, prior)` fails too — `reset,reset,reset` keeps the old value indefinitely.
+        # Two rounds, two narrowings, one sentence: `R-REVALIDATE` names DELETION as the outcome.
+        # ⭐ THE WALK IS STILL VISIBLE, and at the moment it happens rather than later — the print
+        # below names the round being left. What is gone is the DURABLE record, and this file was
+        # never the right container for one (`.claude-local/DEFECTS.md` `ARC-1c`, closing paragraph).
         was = d.get('round', 0) if not d.get('corrupt') else None
-        # ⚠ RELY-B2: a SECOND `reset` overwrote `reset_from` with 0 and the cap-walk announcement
-        # STOPPED. `reset` is documented as routine ("new arc / after a clean push"), so the erasure
-        # sat on the SANCTIONED path — honest on its first use, silent on its second. A reset from
-        # round 0 has nothing of its own to record, so it must not erase what the last one recorded;
-        # a reset from a real round supersedes it.
-        # ⚠ Deliberately NOT a permanent high-water mark. `max(was, prior)` would keep announcing a
-        # walked cap for every arc that followed it, which is the cry-wolf shape `check_moved.py`
-        # already refuses — an alarm that never clears stops being read.
-        prior = d.get('reset_from')
-        records_its_own = isinstance(was, int) and not isinstance(was, bool) and was > 0
-        d = {'round': 0, 'arc_base': head(), 'targets': {},
-             'reset_from': was if records_its_own else prior}
+        d = {'round': 0, 'arc_base': head(), 'targets': {}}
         save(d)
         print('gate round reset to 0 (targets cleared; was round %s)' % was)
         return 0
@@ -257,11 +257,11 @@ def main():
         save(d)
 
     n = d.get('round', 0)
-    rf = d.get('reset_from')
-    if isinstance(rf, int) and rf > ORDINARY_CAP:
-        print('  ** counter was RESET from round %d — a cap was walked by resetting it. **\n'
-              '  Legitimate for genuinely new work; if this is the same arc, the count is lost.'
-              % rf)
+    # ⛔ THE `reset_from` ANNOUNCEMENT WAS DELETED HERE 2026-09-11 with the field it read. A stale
+    # key left in an existing state file is inert — nothing reads it, and the next `reset` drops it.
+    # Do not reinstate a deferred cap-walk announcement in this file without reading `ARC-1c` first:
+    # the durable record belongs somewhere append-only, and two attempts to keep it here both failed
+    # in the same direction.
     if d.get('fresh'):
         # Deleting the file is otherwise an unlogged `reset`. Say so, so a restart is never quiet.
         print('  (no state file — treating this as a FRESH ARC at round 0)')

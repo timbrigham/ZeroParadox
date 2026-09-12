@@ -950,35 +950,30 @@ r_corrupt_state.attacks = ROUND_STATE
 
 
 def r_reset_command():
-    """`gate_round.py reset` is the sanctioned escape — it must not be a QUIET one."""
+    """`gate_round.py reset` is the sanctioned escape — it must not be a QUIET one.
+
+    ⚠ RE-POINTED 2026-09-11 WITH `reset_from`'S DELETION, and the property MOVED rather than
+    weakened. It used to be checked against a LATER `show`, which announced the walk from a stored
+    field; that field could not be kept honest (two rounds, two narrowings — `DEFECTS.md` `ARC-1e`)
+    and was deleted. Visibility is now IMMEDIATE, so this returns the reset's own output and
+    `announces_reset` reads THAT. ⛔ Deleting the field without moving the check would have scored
+    this route `suppresses (permitted) but does so SILENTLY` — there is no permitted-and-silent
+    verdict in `run_property`, so the alternative to moving it was abandoning the property.
+    """
     def apply():
-        sh(sys.executable, os.path.join(BASE, "gate_round.py"), "reset")
+        _rc, out = sh(sys.executable, os.path.join(BASE, "gate_round.py"), "reset")
+        return out
 
     def undo():
         pass                                    # the property's violate/undo rewrites the file
     return apply, undo
 r_reset_command.attacks = ROUND_STATE
 
-
-def r_reset_twice():
-    """RELY-B2, and it is the SANCTIONED route being quiet on its second use.
-
-    `reset` #1 from a walked cap writes `reset_from` and `show` announces it. `reset` #2 used to
-    overwrite that with 0 — `was` reads the round the FIRST reset had already zeroed — and the
-    announcement stopped. `bump` preserves it, so the erasure was specific to a second `reset`, a
-    routine action the tool's own usage line documents as "new arc / after a clean push".
-
-    ⚠ THIS ROUTE MUST BE WATCHED RED, not merely seen green: revert the `records_its_own` branch in
-    `gate_round.py` and it must go RED, or it is testing nothing. Measured both ways when added.
-    """
-    def apply():
-        sh(sys.executable, os.path.join(BASE, "gate_round.py"), "reset")
-        sh(sys.executable, os.path.join(BASE, "gate_round.py"), "reset")
-
-    def undo():
-        pass                                    # the property's violate/undo rewrites the file
-    return apply, undo
-r_reset_twice.attacks = ROUND_STATE
+# ⛔ `r_reset_twice` WAS REMOVED 2026-09-11, WITH THE FIELD IT TESTED. It caught a second `reset`
+# erasing `reset_from`; with no `reset_from` there is nothing to erase, and both resets print their
+# own line, so the route would be trivially green — an inert route scoring `ok`, which is `GRD-1`
+# exactly and the failure this registry exists to prevent. **Do not re-add it as a passing row.**
+# If a durable cap-walk record ever gets a real home, the route belongs beside THAT, not here.
 
 
 def r_missing_round_key():
@@ -989,7 +984,13 @@ r_missing_round_key.attacks = ROUND_STATE
 
 
 def announces_reset(ctx):
-    return "reset" in (ctx["output"] or "").lower()
+    """⚠ O-1, `/rely` 2026-09-11: this was `"reset" in ctx["output"].lower()` and that was a PROXY.
+    A route hand-writing a stale `arc_base` with NO reset executed scored `ok ... VISIBLE`, because
+    `guidance()` prints "run `gate_round.py reset` first" on a stale base — the word appears in
+    output that is not an announcement. The predicate was honest only by accident of its callers.
+    It now matches the line `reset` ITSELF emits, in the ROUTE's output rather than a later run's.
+    """
+    return "gate round reset to 0" in (ctx.get("route_output") or "").lower()
 
 
 def r_bool_round():
@@ -1585,11 +1586,6 @@ PROPERTIES = [
             ("state file deleted", r_delete_state, True, announces_fresh),
             ("state file corrupted", r_corrupt_state, False, None),
             ("`gate_round.py reset`", r_reset_command, True, announces_reset),
-            # RELY-B2. The sanctioned escape run TWICE: permitted, and it must stay VISIBLE on the
-            # second use exactly as on the first. Registered here because the erasure was found by
-            # `guards.run_property` on a route `guards.py` did not carry — the registry cannot
-            # report a route nobody listed, which is REL8-4 restated.
-            ("`gate_round.py reset` run TWICE", r_reset_twice, True, announces_reset),
             ("valid JSON, no `round` key", r_missing_round_key, False, None),
             # ⚠ Routes 8 and 9 were CLOSED in `gate_round.py` and never REGISTERED here — by the
             # author of the rule that closing a route means adding it to this file, in the same
@@ -1682,7 +1678,7 @@ def run_property(prop):
             state_before = state_probe() if state_probe is not None else None
             fs_before = snapshot()
             try:
-                r_apply()
+                emitted = r_apply()             # routes that announce something RETURN it; see ctx below
                 moved = [p for p in TOUCHED if snapshot()[p] != fs_before[p]]
                 if state_probe is not None and state_probe() == state_before:
                     results.append((label, "ROUTE INERT — its declared in-process state did not "
@@ -1700,7 +1696,14 @@ def run_property(prop):
                                            % len(TOUCHED), False))
                     continue
                 still, out = prop["detect"]()
-                ctx = {"route_before": before, "route_after": routing_hash(), "output": out}
+                # ⚠ `output` IS THE DETECTOR'S, NOT THE ROUTE'S, and the distinction became
+                # load-bearing 2026-09-11. A visibility predicate reading `output` asks "does a LATER
+                # run reveal this?"; one reading `route_output` asks "did the ACT announce itself?".
+                # Those are different properties and `reset_from`'s deletion moved the round-cap
+                # route from the first to the second. Routes that emit nothing return None and get
+                # "", so every existing predicate is unaffected.
+                ctx = {"route_before": before, "route_after": routing_hash(), "output": out,
+                       "route_output": emitted or ""}
                 if still:
                     verdict, ok = "does NOT bypass", True
                 elif not may_suppress:
