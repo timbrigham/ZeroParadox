@@ -94,8 +94,17 @@ open ZeroParadox
 -- § I. Wheel Typeclass
 -- ============================================================
 
-/-- A wheel (Carlström 2001:11): a set with +, ·, and a total involution /,
-    making /0 a defined first-class element (∞) and 0·/0 an absorbing element (⊥ₗ).
+/-- A wheel: a set with +, ·, and a total involution /, making /0 a defined first-class element (∞)
+    and 0·/0 an absorbing element (⊥ₗ).
+
+    **Lineage — the name and the construction are Setzer's; Carlström is the generalizer.**
+    Carlström 2001:11 p. 3 records it: Edalat and Potts adjoined `∞ = 1/0` and `⊥ = 0/0` to the
+    reals; Martin-Löf proposed building them into the construction of the rationals from the
+    integers; *"Such structures were called `wheels' … by Setzer [Set97], who showed how to modify
+    the construction of fields of fractions from integral domains so that wheels are obtained
+    instead of fields"*; and *"In this paper, we generalize Setzer's construction, so that it
+    applies not only to integral domains, but to any commutative semiring."* This file follows
+    Carlström's Definition 1.1, which is the general one.
 
     The axiom fields below are exactly Carlström's eight Definition 1.1 axioms, with his two
     "commutative monoid" axioms unbundled into their separate equational laws:
@@ -111,9 +120,10 @@ open ZeroParadox
     Axiom W14: x + 0/0 = 0/0                                    [Carlström (8)]
 
     Key consequence: /0 (= wheelInf) and 0·/0 (= wheelBot) are well-defined.
-    A field is a wheel where wheelInf = wheelBot (the two collapse). So what a wheel carries and a
-    field does not is a second, *absorbing* zero: `wheelBot` annihilates addition exactly as `0`
-    annihilates multiplication. Separation on this carrier: `zpw_zero_ne_bot` (§V). -/
+    ⚠ **They must stay DISTINCT, and so must 0 and 1.** If any two of `0`, `1`, `/0`, `0·/0`
+    coincide the wheel is trivial — one element (Carlström 2001:11, Prop. 4.4). `inf_ne_bot`
+    (`Algebra/WheelFrac.lean`, given `0 ∉ S`) is what buys non-triviality; on this carrier,
+    `zpw_inf_ne_bot` and `zpw_zero_ne_bot` (§V). -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib has no Wheel typeclass.
 -- Extending AddCommMonoid + CommMonoid would inherit full semiring distributivity
 -- (which wheels deliberately weaken). Defined from scratch for axiom auditability,
@@ -199,6 +209,12 @@ end WheelBasic
 
 /-- The ZP wheel carrier: rationals extended with ∞ (= /0) and ⊥ₗ (= 0·/0).
     This is the minimal type witnessing that the ZP porthole structure forms a wheel.
+
+    ⚠ **Not new, and it is the ORIGINAL example rather than a general one.** `ℚ ∪ {∞, ⊥}` is
+    Carlström 2001:11's own first example, and it is `S₀A` for `A = ℤ` — *"A wheel in Setzer's sense
+    will be recognized as what we denote by `S₀A`, where A is an integral domain, S₀ the subset
+    A \ {0}"* (p. 3). So this carrier is a wheel in **Setzer's** narrower sense; what is contributed
+    here is the machine-checked encoding and the ZP reading below, never the object.
 
     - `bot`:    0 · /0 — the absorbing undefined element (ZP: the porthole; the algebraic counterpart
                 of the Quine-atom role, not an identity with it — different types)
@@ -570,7 +586,11 @@ theorem nondegenerate_iff_unit_ne_top (L : Type*) [W : WheelValuationStructure L
     value **group** cancellation would finish it and `map_one` would be a theorem, which is why the
     textbook statement is an identity rather than a dichotomy. Over `ℕ∞` cancellation fails at
     exactly one point, so idempotence yields `0` **or** `⊤` — and that dichotomy is what turns
-    `map_one` into a biconditional with nondegeneracy rather than a consequence of it. -/
+    `map_one` into a biconditional with nondegeneracy rather than a consequence of it.
+
+    Prior art, searched 2026-09-12, none closer located: the group-valued half is standard (Aitken,
+    arXiv:2102.11725, Lemma 1); where the codomain absorbs, `map_one` is an axiom not a theorem
+    (Gunn, arXiv:2211.06480v2, Prop. 2.26). No located source states the dichotomy; no novelty claimed. -/
 theorem nondegenerate_iff_map_one (L : Type*) [W : WheelValuationStructure L] :
     WVSNondegenerate L ↔ W.wvs_val 1 = 0 := by
   rw [nondegenerate_iff_unit_ne_top]
