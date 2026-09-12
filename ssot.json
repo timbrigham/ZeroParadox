@@ -616,8 +616,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1732,
-        "files": 144
+        "declarations": 1736,
+        "files": 145
       },
       "entries": [
         {
@@ -20900,6 +20900,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "509370cb-df55-448c-a15f-2339dc1f4ea6",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nondegenerate_iff_map_one",
+            "short": "nondegenerate_iff_map_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nondegenerate_iff_map_one",
+            "short": "nondegenerate_iff_map_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "WHEEL-1..3: ring-preserving gauge, the unit-collapse theorem, and the two nondegeneracy characterizations (map_one)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "50c4a5e5-6b76-431e-971a-64f1bda59c9c",
           "new": {
@@ -32274,6 +32313,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "806c2d4a-7738-494f-bb01-f9d6f7fe836c",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nondegenerate_iff_unit_ne_top",
+            "short": "nondegenerate_iff_unit_ne_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nondegenerate_iff_unit_ne_top",
+            "short": "nondegenerate_iff_unit_ne_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "WHEEL-1..3: ring-preserving gauge, the unit-collapse theorem, and the two nondegeneracy characterizations (map_one)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -59987,6 +60065,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f27a34dc-67cb-46cd-b36b-0c5f201d1221",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gauge_strong",
+            "short": "gauge_strong"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gauge_strong",
+            "short": "gauge_strong",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "WHEEL-1..3: ring-preserving gauge, the unit-collapse theorem, and the two nondegeneracy characterizations (map_one)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f2b687fa-ee46-4a57-9a5d-eb53653ace86",
           "new": {
@@ -63143,6 +63260,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fd35114e-6d5e-4ef4-a42d-76a33e9fb405",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.collapse_from_unit",
+            "short": "collapse_from_unit"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.collapse_from_unit",
+            "short": "collapse_from_unit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "WHEEL-1..3: ring-preserving gauge, the unit-collapse theorem, and the two nondegeneracy characterizations (map_one)",
           "verify": {
             "axioms": null,
             "sorry_free": true
