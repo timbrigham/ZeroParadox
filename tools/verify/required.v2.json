@@ -212,10 +212,9 @@
       ],
       "module": "tools/verify/guards.py",
       "approved_modules": [
-        "6702b3b5550bc2a52621eda315411a788a4ce7b7",
-        "2775fcf6045d6b93751938cd310edc9a7b3e1b22"
+        "6702b3b5550bc2a52621eda315411a788a4ce7b7"
       ],
-      "_approved_why_2775fcf6": "Tim, 2026-09-13, asked and answered: approve the PRE-REPIN guards.py (fa59c6c7 changed it, beab3dbf repinned it) so the 9 intermediates of origin/illustrated..e61bad9c that owe guards can record it from a worktree at their own commit. A checker reads the tree it lives in, so without this no commit before beab3dbf could ever satisfy V16c for guards.",
+      "_unpinned_2775fcf6": "2026-09-13: the pre-repin guards.py 2775fcf6 was approved in 36ab71c6 for ONE push window so 9 intermediates could heal by script, then REMOVED here once they were pushed (Tim: push, then unpin). /rely RLY-PIN-1 measured why it must not stay: approved globally with no expiry, it certifies a tip the current guards.py blocks, and a revert of guards.py would clear V16c silently.",
       "scope": [
         "tools/verify/guards.py",
         "tools/verify/batch.py",
