@@ -1,6 +1,14 @@
 """
 Zero Paradox — ZP-J Wheel Addendum: The Wheel of Fractions is a Wheel
-Version 1.3 | July 2026
+Version 1.4 | July 2026
+v1.4: wheel/meadow claim corrected (bedrock, prior-art gate). Struck "a wheel in which ∞ = ⊥ is
+      exactly a meadow" and "a wheel collapses to a meadow": identifying the two forces the
+      ONE-ELEMENT wheel (Carlström 2001:11 Prop. 4.4, p. 25), and a meadow (Bergstra & Tucker)
+      adjoins no new element at all — it totalizes inverse by 0⁻¹ = 0, while a COMMON meadow
+      adjoins one absorbing element and is non-involutive, so it fails W7. Bergstra & Ponse
+      record that no structural connection between the two constructions is known.
+      Credit corrected: the name and construction are Setzer's; Carlström generalizes them to
+      any commutative SEMIRING.
 v1.3: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: WheelFrac.* citations updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Presents the formal construction of the wheel of fractions
@@ -16,7 +24,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.4'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -69,16 +77,18 @@ def build():
         'reciprocal /x, so /0 becomes a defined first-class element rather than an error. '
         'The two elements this produces &#8212; &#8734; = /0 (the reciprocal of zero) and '
         '&#8869; = 0&#183;/0 (an absorbing "undefined" element) &#8212; are what distinguish '
-        'a wheel from a field. ZP-J Self-Reference left open which structure the Zero Paradox '
-        'porthole gives rise to: a wheel, in which &#8734; and &#8869; are distinct, or a '
-        'meadow, in which they collapse. This addendum settles that question.'))
+        'a wheel from a field. ZP-J Self-Reference left open which of the two standard ways '
+        'of totalising division the Zero Paradox porthole gives rise to: a <b>wheel</b>, which '
+        'adjoins &#8734; and &#8869; as two distinct new elements, or a <b>meadow</b> (Bergstra '
+        '&amp; Tucker), which adjoins nothing at all and instead declares 0<sup>&#8722;1</sup> = 0, '
+        'staying inside the original number system. This addendum settles that question.'))
     E.append(body(
         'The main result is WheelFrac.instWheel (WheelFrac.lean): for any commutative '
         'ring A and any multiplicative submonoid S, the wheel of fractions '
         '&#8857;<sub>S</sub> A = (A &#215; A)/&#8801;<sub>S</sub> satisfies every axiom of '
         'Carlström\'s Definition 1.1. The companion result WheelFrac.inf_ne_bot shows that, '
         'whenever 0 &#8713; S, the two special elements stay distinct (&#8734; &#8800; '
-        '&#8869;) &#8212; so the construction is a wheel, not a meadow. The construction '
+        '&#8869;) &#8212; so the construction is a <i>non-trivial</i> wheel. The construction '
         'is Carlström\'s; the contribution here is a faithful, machine-verified encoding '
         'of it that is also free of the axiom of choice (footprint [propext, Quot.sound]), '
         'situated as the algebraic form of the ZP porthole.'))
@@ -121,9 +131,14 @@ def build():
     E.append(body(
         'The last group of axioms is what makes division total. W7 and W8 make / an '
         'involution that distributes over multiplication; W9&#8211;W14 govern how the two '
-        'derived elements &#8734; = /0 and &#8869; = 0&#183;/0 interact with + and &#183;. A '
-        'wheel in which &#8734; = &#8869; is exactly a meadow: the distinction between the '
-        'two is the whole content of "wheel, not meadow."'))
+        'derived elements &#8734; = /0 and &#8869; = 0&#183;/0 interact with + and &#183;. '
+        'Keeping those two apart is not a stylistic preference over some rival algebra: by '
+        'Carlström\'s Proposition 4.4 (p. 25), if <i>any</i> two of 0, 1, /0 and 0/0 are equal '
+        'in a wheel, the wheel is trivial &#8212; it has exactly one element. So &#8734; '
+        '&#8800; &#8869; is the condition for the structure to have more than one element at '
+        'all. The same statement is machine-checked over the Wheel typeclass in '
+        'ZeroParadox/Algebra/Wheel.lean §V: identifying &#8734; with &#8869; proves '
+        '&#8704; x y, x = y.'))
     E.append(sp(6))
 
     # ── Section II: The wheel of fractions construction ────────────────────────
@@ -197,7 +212,7 @@ def build():
     ))
     E.append(sp(6))
 
-    # ── Section IV: The porthole — wheel, not meadow ───────────────────────────
+    # ── Section IV: The porthole — a non-trivial wheel, and not a meadow ───────
     print('[build_zpj_wheel_addendum] Building Section IV...')
     E += [
         hr(),
@@ -205,11 +220,12 @@ def build():
         hr(),
     ]
     E.append(body(
-        'A wheel collapses to a meadow precisely when its two special elements coincide. '
-        'For the wheel of fractions this collapse happens exactly when 0 &#8712; S: if S '
-        'contains a zero divisor witness for 0, the fraction [1,0] and the fraction [0,0] '
-        'become identified. The natural hypothesis 0 &#8713; S (which holds whenever S is '
-        'the complement of a prime ideal, the usual case) keeps them apart.'))
+        'A wheel whose two special elements coincide is the one-element wheel '
+        '(Carlström, Proposition 4.4). For the wheel of fractions that degeneracy happens '
+        'exactly when 0 &#8712; S: if S contains a zero divisor witness for 0, the fraction '
+        '[1,0] and the fraction [0,0] become identified, and every other pair with them. The '
+        'natural hypothesis 0 &#8713; S (which holds whenever S is the complement of a prime '
+        'ideal, the usual case) keeps them apart.'))
     E.append(result_box(
         'Theorem: WheelFrac.inf_ne_bot (WheelFrac.lean)',
         [
@@ -217,12 +233,41 @@ def build():
             '  (0 : A) &#8713; S  &#8594;  &#8734; &#8800; &#8869;     in &#8857;<sub>S</sub> A',
             '',
             'When 0 &#8713; S, the reciprocal of zero (&#8734; = /0) and the absorbing '
-            'element (&#8869; = 0&#183;/0) are distinct. The construction is a genuine '
-            'wheel, not a meadow.',
+            'element (&#8869; = 0&#183;/0) are distinct. The construction is therefore a '
+            'non-trivial wheel.',
             'Proof: &#8734; = &#8869; would yield witnesses s, s&#8242; &#8712; S with '
             's&#183;1 = s&#8242;&#183;0, forcing s = 0 and hence 0 &#8712; S &#8212; '
             'contradicting the hypothesis.',
             'Sorry-free. Lean purity: [propext, Quot.sound] &#8212; Classical.choice-free.',
+        ]
+    ))
+    E.append(sp(4))
+    E.append(remark_box(
+        'Remark &#8212; What a meadow actually is, and why it is not this',
+        [
+            'A <b>meadow</b> answers the same question a different way, and it adjoins no '
+            'element at all: Bergstra, Hirshfeld and Tucker define one as "a commutative ring '
+            'with a total inverse operator satisfying two equations which imply '
+            '0<sup>&#8722;1</sup> = 0." The carrier is unchanged, so there is no pair of new '
+            'elements available to identify. Bergstra and Ponse fix the default: "by default a '
+            '\'meadow\' is assumed to be an involutive meadow", the involutive ones being '
+            'exactly those with 0<sup>&#8722;1</sup> = 0.',
+            'A <b>common meadow</b> does adjoin one element &#8212; an absorbing element, '
+            'written <i>a</i>, serving as the inverse of zero &#8212; but it pays for it by '
+            'giving up the involution: "the inverse function of a common meadow is not an '
+            'involution because (0<sup>&#8722;1</sup>)<sup>&#8722;1</sup> = <i>a</i>." That is '
+            'exactly W7 failing, so a common meadow is '
+            'not a wheel. Their own comparison puts it exactly there: "wheels are involutive '
+            'whereas common meadows are non-involutive."',
+            'So neither kind of meadow is a wheel with &#8734; = &#8869;, and neither arises by '
+            'collapsing one. The originators say as much: "we have not yet found a structural '
+            'connection between both constructions." Any equivalence would be new mathematics, '
+            'and none is claimed here.',
+            'Sources: J. A. Bergstra, Y. Hirshfeld and J. V. Tucker, "Meadows and the '
+            'equational specification of division", arXiv:0901.0823 (abstract); J. A. Bergstra '
+            'and A. Ponse, "Division by Zero in Common Meadows", arXiv:1406.6878v4, §1 (p. 2) '
+            'and §4 (p. 14). The concept originates with J. A. Bergstra and J. V. Tucker, '
+            '"The rational numbers as an abstract data type", JACM 54(2), 2007.',
         ]
     ))
     E.append(sp(4))
@@ -289,14 +334,26 @@ def build():
     E.append(remark_box(
         'Remark R-J.W &#8212; Relationship to Carlström\'s Theorem',
         [
-            'Carlström introduced wheels in Wheels &#8212; On Division by Zero (Research '
+            'The name and the original construction are <b>Setzer\'s</b>, not Carlström\'s. '
+            'Carlström records the lineage on his own p. 3: Edalat and Potts adjoined '
+            '&#8734; = 1/0 and &#8869; = 0/0 to the reals; Martin-Löf proposed building them '
+            'into the construction of the rationals from the integers; "such structures were '
+            'called \'wheels\' (the term inspired by the topological picture &#8857; of the '
+            'projective line together with an extra point 0/0) by Setzer [Set97], who showed '
+            'how to modify the construction of fields of fractions from integral domains so '
+            'that wheels are obtained instead of fields."',
+            'Carlström is the <b>generalizer</b>: "in this paper, we generalize Setzer\'s '
+            'construction, so that it applies not only to integral domains, but to any '
+            'commutative semiring." That is Wheels &#8212; On Division by Zero (Research '
             'Reports in Mathematics No. 11, Department of Mathematics, Stockholm '
             'University, 2001; a Licentiate thesis), where Definition 1.1 (p. 5) gives the '
             'eight wheel axioms and the wheel of fractions is constructed (§1.2, §4.2). '
             'The work was later published as Wheels &#8212; on division by zero, '
             'Mathematical Structures in Computer Science 14(1):143&#8211;184, 2004. '
-            'Carlström proved there that the wheel of fractions of a commutative ring is a '
-            'wheel. The result here is that theorem, encoded in Lean 4 against a typeclass '
+            'His theorem covers commutative <i>semirings</i>; the Lean encoding below is '
+            'stated for commutative <i>rings</i>, so it is the narrower case of his result, '
+            'not the same generality. The result here is that theorem, encoded in Lean 4 '
+            'against a typeclass '
             'that reproduces his Definition 1.1 field for field, and discharged without '
             'the axiom of choice. The encoding is what is new: a third party can read the '
             '14 fields against Carlström\'s eight axioms and confirm the correspondence, '
@@ -312,7 +369,7 @@ def build():
         'Endnote: This document is an addendum to ZP-J Self-Reference and reads after it. '
         'ZP-J established the porthole (val(&#8869;) = &#8734;, &#8869; = {&#8869;}); this '
         'document gives its algebraic form, the wheel of fractions, and the machine-verified '
-        'proof that the construction is a wheel rather than a meadow. All results sorry-free '
+        'proof that the construction is a wheel and a non-trivial one. All results sorry-free '
         'in Lean 4 as of June 2026, footprint [propext, Quot.sound].',
         S['endnote']))
 

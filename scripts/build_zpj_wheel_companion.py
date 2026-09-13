@@ -1,6 +1,13 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.3 | July 2026
+Version 1.4 | July 2026
+v1.4: wheel/meadow claim corrected (bedrock, prior-art gate). The right-hand diagram panel
+      labelled MEADOW pictured one new node ∞ = ⊥, which is no meadow: a meadow adjoins no
+      element and sets 0⁻¹ = 0 (Bergstra, Hirshfeld & Tucker). The diagram is now three panels
+      — wheel, meadow, and the collapse — because identifying ∞ with ⊥ gives the ONE-ELEMENT
+      wheel (Carlström 2001:11 Prop. 4.4), not a second interesting algebra. "Both answers give
+      a consistent algebra" struck. Etymology corrected: the name is Setzer's, after the
+      topological picture ⊙, not after the smallest example.
 v1.3: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: WheelFrac.* citations updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Plain-language companion to the ZP-J Wheel Addendum
@@ -14,19 +21,25 @@ v1.0: Initial release. Plain-language companion to the ZP-J Wheel Addendum
 
 import os
 from zp_utils import *
-from reportlab.graphics.shapes import Drawing, Line, String, Circle
+from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.3'
+VERSION = '1.4'
 FIRST_RELEASED = 'June 2026'
 
 
-def wheel_vs_meadow_diagram():
-    """Wheel: ∞ and ⊥ are two distinct new elements. Meadow: they collapse to one."""
+def wheel_meadow_collapse_diagram():
+    """Three answers to 1/0, drawn as the elements each one has.
+
+    WHEEL    — two distinct new elements adjoined, ∞ = /0 and ⊥ = 0·/0.
+    MEADOW   — no new element at all; the ring's own 0 is declared its own inverse.
+    COLLAPSE — identifying ∞ with ⊥ leaves one element (Carlström Prop. 4.4).
+    Every panel shows ELEMENTS, never relations, so the three are directly comparable.
+    """
     dw, dh = TW, 2.2 * inch  # 158 pts; content top ~144, bottom ~14
     d = Drawing(dw, dh)
 
-    # LEFT panel — WHEEL: two distinct elements
-    lx = dw * 0.27
+    # LEFT panel — WHEEL: two distinct new elements
+    lx = dw * 0.17
     d.add(String(lx, 134, 'WHEEL', fontSize=10, fontName='DV-B',
                  fillColor=INDIGO, textAnchor='middle'))
     d.add(Circle(lx, 104, 16, fillColor=INDIGO_LITE, strokeColor=INDIGO, strokeWidth=1.3))
@@ -35,23 +48,44 @@ def wheel_vs_meadow_diagram():
     d.add(Circle(lx, 56, 16, fillColor=INDIGO, strokeColor=INDIGO, strokeWidth=0))
     d.add(String(lx, 51, '⊥', fontSize=14, fontName='DV-B',
                  fillColor=WHITE, textAnchor='middle'))
-    d.add(String(lx, 18, '∞ ≠ ⊥   (two elements)', fontSize=8,
+    d.add(String(lx, 30, '∞ ≠ ⊥', fontSize=8,
+                 fontName='DV-I', fillColor=GREY_TEXT, textAnchor='middle'))
+    d.add(String(lx, 18, 'two new elements', fontSize=8,
                  fontName='DV-I', fillColor=GREY_TEXT, textAnchor='middle'))
 
-    # divider
-    d.add(Line(dw*0.5, 24, dw*0.5, 128, strokeColor=colors.HexColor('#CCCCCC'),
+    # dividers
+    d.add(Line(dw*0.345, 24, dw*0.345, 128, strokeColor=colors.HexColor('#CCCCCC'),
+               strokeWidth=0.8))
+    d.add(Line(dw*0.655, 24, dw*0.655, 128, strokeColor=colors.HexColor('#CCCCCC'),
                strokeWidth=0.8))
 
-    # RIGHT panel — MEADOW: they collapse
-    rx = dw * 0.73
-    d.add(String(rx, 134, 'MEADOW', fontSize=10, fontName='DV-B',
+    # MIDDLE panel — MEADOW: nothing is adjoined; 0 is its own inverse
+    mx = dw * 0.5
+    d.add(String(mx, 134, 'MEADOW', fontSize=10, fontName='DV-B',
                  fillColor=GREY_TEXT, textAnchor='middle'))
-    d.add(Circle(rx, 80, 17, fillColor=INDIGO_LITE, strokeColor=INDIGO, strokeWidth=1.3))
-    d.add(String(rx, 75, '∞=⊥', fontSize=11, fontName='DV-B',
-                 fillColor=INDIGO, textAnchor='middle'))
-    d.add(String(rx, 18, '∞ = ⊥   (they collapse)', fontSize=8,
+    d.add(Circle(mx, 80, 16, fillColor=WHITE, strokeColor=GREY_TEXT, strokeWidth=1.3))
+    d.add(String(mx, 75, '0', fontSize=14, fontName='DV-B',
+                 fillColor=GREY_TEXT, textAnchor='middle'))
+    d.add(String(mx, 30, '/0 = 0', fontSize=8,
                  fontName='DV-I', fillColor=GREY_TEXT, textAnchor='middle'))
-    return d
+    d.add(String(mx, 18, 'no new element', fontSize=8,
+                 fontName='DV-I', fillColor=GREY_TEXT, textAnchor='middle'))
+
+    # RIGHT panel — COLLAPSE: identifying them leaves exactly one element
+    rx = dw * 0.83
+    d.add(String(rx, 134, 'COLLAPSE', fontSize=10, fontName='DV-B',
+                 fillColor=GREY_TEXT, textAnchor='middle'))
+    # one wide node, not a circle: the label must sit INSIDE it (the bounds gate
+    # cannot see internal collisions, so this width is set against the 8pt label)
+    d.add(Ellipse(rx, 80, 36, 17, fillColor=GREY_LITE, strokeColor=GREY_TEXT,
+                  strokeWidth=1.3))
+    d.add(String(rx, 76, '0 = 1 = ∞ = ⊥', fontSize=8, fontName='DV-B',
+                 fillColor=GREY_TEXT, textAnchor='middle'))
+    d.add(String(rx, 30, 'trivial wheel', fontSize=8,
+                 fontName='DV-I', fillColor=GREY_TEXT, textAnchor='middle'))
+    d.add(String(rx, 18, 'exactly one element', fontSize=8,
+                 fontName='DV-I', fillColor=GREY_TEXT, textAnchor='middle'))
+    return validate_drawing(d, dh, 'wheel_meadow_collapse_diagram')
 
 
 def build():
@@ -106,8 +140,9 @@ def build():
         'including 0, gets a reciprocal /x, so /0 becomes a first-class member of the '
         'system rather than an error. The trick is not to force /0 to be an ordinary '
         'number - it is to add new elements and adjust the laws so that nothing breaks. '
-        'The name comes from the shape of the smallest example: a circle of values with '
-        'the two new elements sitting on it.'))
+        'The name is Setzer\'s, and Carlstr&#246;m records where it came from: the term was '
+        '"inspired by the topological picture &#8857; of the projective line together with an '
+        'extra point 0/0" - a circle for the line, and the dot for the extra element.'))
     E.append(sp(4))
 
     # ── The Two New Elements ─────────────────────────────────────────────────
@@ -137,17 +172,29 @@ def build():
     ]))
     E.append(sp(4))
 
-    # ── Wheel vs Meadow ──────────────────────────────────────────────────────
+    # ── Wheel, meadow, collapse ──────────────────────────────────────────────
     E.append(Paragraph('Wheel or Meadow? The Key Question', CS['h1']))
     E.append(cbody(
-        'There is one decisive question about any such structure: are &#8734; and &#8869; '
-        'two different elements, or do they turn out to be the same? Both answers give a '
-        'consistent algebra, and they have different names:'))
-    E.append(wheel_vs_meadow_diagram())
+        'There are two established ways to make division by zero total, and they differ in '
+        'what they add. A <b>wheel</b> adds the two new elements above and keeps them apart. '
+        'A <b>meadow</b> adds nothing at all: it stays inside the number system you started '
+        'with and simply declares /0 = 0. Bergstra, Hirshfeld and Tucker define a meadow as '
+        '"a commutative ring with a total inverse operator satisfying two equations which '
+        'imply 0<sup>&#8722;1</sup> = 0", so there is no second new element in a meadow for '
+        '&#8734; to be equal to.'))
+    E.append(cbody(
+        'That leaves the obvious follow-up: what if you took a wheel and identified its two '
+        'new elements anyway? The answer is that you do not get a third structure - you get '
+        'the trivial one. By Carlstr&#246;m\'s Proposition 4.4, if any two of 0, 1, /0 and '
+        '0&#183;/0 are equal in a wheel, then every element equals every other element and '
+        'the wheel has exactly one element. So &#8734; &#8800; &#8869; is not a preference; '
+        'it is the price of having anything to compute with.'))
+    E.append(wheel_meadow_collapse_diagram())
     E.append(ccaption(
-        'A wheel keeps the reciprocal of zero (&#8734;) and the absorbing undefined element '
-        '(&#8869;) distinct. A meadow is the variant in which they collapse into a single '
-        'element. The whole content of "wheel, not meadow" is that these two stay apart.'))
+        'Three answers to 1/0, compared by the elements each one has. The wheel adjoins two '
+        'and keeps them distinct. The meadow adjoins none, declaring zero its own reciprocal. '
+        'Identifying the wheel\'s two elements is not a third algebra: it collapses everything '
+        'into a single element (Carlstr&#246;m, Proposition 4.4).'))
     E.append(sp(4))
 
     # ── Building the Wheel of Fractions ──────────────────────────────────────
@@ -192,23 +239,24 @@ def build():
         '([propext, Quot.sound]), both standard in Lean 4.'))
     E.append(sp(4))
 
-    # ── Wheel, Not Meadow ────────────────────────────────────────────────────
-    E.append(Paragraph('Wheel, Not Meadow', CS['h1']))
+    # ── Not the trivial wheel ────────────────────────────────────────────────
+    E.append(Paragraph('And Not the Trivial Wheel', CS['h1']))
     E.append(cbody(
         'Being a wheel is only half the story. The other half is that this construction is '
-        'a <i>genuine</i> wheel - the one where &#8734; and &#8869; stay distinct - and not '
-        'a meadow in disguise. The addendum proves exactly when that holds: as long as 0 is '
-        'not one of the allowed denominators (0 &#8713; S), the reciprocal of zero and the '
-        'absorbing element are different.'))
+        'a <i>non-trivial</i> wheel - the one where &#8734; and &#8869; stay distinct - and '
+        'not the one-element collapse. The addendum proves exactly when that holds: as long '
+        'as 0 is not one of the allowed denominators (0 &#8713; S), the reciprocal of zero '
+        'and the absorbing element are different.'))
     E.append(cbody(
         'That condition is the normal situation: any sensible set of denominators excludes '
         '0. The nonzero elements of an integral domain, or the complement of a prime ideal '
         '(the usual choice when building fractions), all avoid 0 - so the two elements stay '
-        'apart. You only collapse to a meadow if you deliberately allow 0 as a denominator.'))
+        'apart. Deliberately allowing 0 as a denominator is what collapses the whole thing '
+        'to a single element.'))
     E.append(key_result_box(
         'WheelFrac.inf_ne_bot  (machine-verified, Lean 4)',
         'If 0 &#8713; S, then &#8734; &#8800; &#8869; in &#8857;<sub>S</sub> A. The '
-        'construction is a genuine wheel, not a meadow. (If &#8734; and &#8869; were equal, '
+        'construction is therefore a non-trivial wheel. (If &#8734; and &#8869; were equal, '
         'the witnessing elements of S would force 0 itself into S, contradicting the '
         'hypothesis.) Also sorry-free and choice-free: [propext, Quot.sound].'))
     E.append(sp(4))
