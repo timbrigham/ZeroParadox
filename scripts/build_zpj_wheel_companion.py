@@ -1,6 +1,18 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.4 | July 2026
+Version 1.5 | September 2026
+v1.5: THE BICONDITIONAL THE ADDENDUM STRUCK AT v1.5 WAS STILL LIVE HERE, and register.md
+      asserted the opposite ("Companion unchanged at v1.4: it carries none of these").
+      "The addendum proves exactly when that holds" claims a biconditional this corpus does not
+      prove: only `inf_ne_bot (h0 : (0 : A) ∉ S)` is a declaration here, and no `0 ∈ S → trivial`
+      theorem exists anywhere in the corpus. The converse is Carlström's own observation (printed
+      p. 5, "then ≡_S is improper and ⊙_S A is trivial") and is now cited to him rather than
+      asserted flatly. Found by reading the RENDERED companion against the RENDERED addendum: a
+      source grep of the struck phrasing over the addendum returns only docstring hits and reads
+      clean, and check_paths.py --claim returned 0 sites over a domain that INCLUDED this file,
+      because this file says it in different words.
+      Also: "porthole" is glossed at first use — it was used once, cold, in a plain-language
+      document; docstring month corrected to match the rendered title block.
 v1.4: wheel/meadow claim corrected (bedrock, prior-art gate). The right-hand diagram panel
       labelled MEADOW pictured one new node ∞ = ⊥, which is no meadow: a meadow adjoins no
       element and sets 0⁻¹ = 0 (Bergstra, Hirshfeld & Tucker). The diagram is now three panels
@@ -23,7 +35,7 @@ import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -244,15 +256,16 @@ def build():
     E.append(cbody(
         'Being a wheel is only half the story. The other half is that this construction is '
         'a <i>non-trivial</i> wheel - the one where &#8734; and &#8869; stay distinct - and '
-        'not the one-element collapse. The addendum proves exactly when that holds: as long '
+        'not the one-element collapse. The addendum proves one direction of that: as long '
         'as 0 is not one of the allowed denominators (0 &#8713; S), the reciprocal of zero '
         'and the absorbing element are different.'))
     E.append(cbody(
         'That condition is the normal situation: any sensible set of denominators excludes '
         '0. The nonzero elements of an integral domain, or the complement of a prime ideal '
         '(the usual choice when building fractions), all avoid 0 - so the two elements stay '
-        'apart. Deliberately allowing 0 as a denominator is what collapses the whole thing '
-        'to a single element.'))
+        'apart. That deliberately allowing 0 as a denominator collapses the whole thing to a '
+        'single element is Carlstr&#246;m\'s own observation (printed p. 5), not a result of '
+        'this corpus.'))
     E.append(key_result_box(
         'WheelFrac.inf_ne_bot  (machine-verified, Lean 4)',
         'If 0 &#8713; S, then &#8734; &#8800; &#8869; in &#8857;<sub>S</sub> A. The '
@@ -272,7 +285,8 @@ def build():
         'wheel says "the bottom is where division by zero lives" - and it shows that this '
         'point is a defined, well-behaved element (&#8734; = /0), distinct - in the standard '
         'case where 0 &#8713; S - from the absorbing &#8869;. Same location, different '
-        'vocabulary.'))
+        'vocabulary. The Zero Paradox\'s shorthand for that meeting point is the '
+        '<i>porthole</i>.'))
     E.append(cbody(
         'One honest limitation. The wheel is built <i>on top of</i> a ring you supply - the '
         'ring structure is an input, not something derived from the Zero Paradox\'s own '

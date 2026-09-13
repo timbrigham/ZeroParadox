@@ -738,6 +738,7 @@ section PurityCheck
 #print axioms zpw_zero_ne_bot
 #print axioms zpwVal_zero_eq_top
 #print axioms zpwVal_inv_zero
+#print axioms zpw_top_val_iff_inv_is_inf
 -- § VII-b NO-GO gauge. The footprint block there asserts nothing; it is checked here.
 -- Six axiom-free, and `nondegenerate_iff_map_one` is the one that is not — read the two
 -- `nondegenerate_iff_*` lines together, they are the measurement that block describes.
