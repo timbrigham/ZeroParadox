@@ -104,6 +104,125 @@ thing to surface, not the verdict.
 
 **Tell:** if a gate brief is being composed in the message rather than read from a file, it is wrong.
 
+### ⭐⭐ THE CARRIER MODEL — orchestration, worktrees as the RETURN CHANNEL, and why the gates parallelise
+
+*Recorded 2026-09-12. Tim: **"your job should be orchestration much more than anything else for a
+review like this"**, and — on the flow below being restated independently — **"this is the exact flow
+that we've been trying to migrate towards for a while."** It lived in nobody's documentation until
+then, which is the same defect the preamble to this section describes.*
+
+**You are the CARRIER (`D3`), not the author.** `.claude/commands/copy-editor.md` already names the
+role: *"You move work between agents and you write no content here."* The panel judges; you union,
+you tally, you escalate.
+
+⛔⛔ **AND ON A BEDROCK FINDING THE REVIEWER WRITES THE FIX — NOT YOU.** `adversary-review.md` settled
+this on 2026-09-08 and states the cost: *"Do not apply the reviewer's findings by hand. That was the
+standing practice until 2026-09-08 and it is the measured cause of this gate's non-convergence: across
+three rounds in one day, **every hand-applied fix wrote the next round's bedrock finding**, because the
+carrier was reconstructing someone else's intent from a note."* **The reviewer returns a worktree PATH
+and a SHA; the carrier merges it.** ⚠ Remediation is the ADVERSARY's, in its own worktree — the
+prior-art scout does not author fixes either (*"`D1` gives remediation to the ADVERSARY… You return
+findings and filed sources"*). So a prior-art FAIL-BEDROCK routes: scout reports → carrier spawns an
+adversary to author the fix in its own worktree → carrier merges the SHA → re-run the gate.
+
+⚠⚠ **VIOLATED 2026-09-12, four days after it was written, and the near-miss is the lesson.** A
+prior-art round returned FAIL-BEDROCK on `Algebra/Wheel.lean`; the carrier authored the fix by hand
+from the reviewer's note, graded the severities itself, and carried the findings to Tim as prose.
+Round 2 happened to PASS, so nothing bad landed — **which is exactly how a retired practice survives
+retirement.** `R-LOOPCAP`'s cost line (*three of the last four bedrock findings were introduced by the
+previous round's fix*) is the SAME measurement, and `D1`/`D3` is its fix. Quoting the cost while
+skipping the remedy is the shape to watch for.
+
+#### The `D`-scheme, and ⚠ it is defined NOWHERE as a set
+
+Cited across **7 command files** (`adversary-review`, `copy-editor`, `editorial-review`,
+`claim-review`, `prior-art-review`, `reconstruct`, `rely`) with in-situ glosses only; `pipeline.md`
+mentions `D1` once in passing. **There is no definition list**, so a reader meeting `D5` mid-brief
+cannot look it up. Assembled 2026-09-12 from the citations themselves — a dated survey, not a
+completeness claim:
+
+| id | stated as | stated in |
+|---|---|---|
+| `D1` | the REVIEWER (adversary) writes the fix, in its own worktree | `adversary-review.md`, `prior-art-review.md` |
+| `D3` | the CARRIER moves work and authors nothing; risk is transport WITHOUT transformation | `copy-editor.md`, `adversary-review.md` |
+| `D4` | escalation goes to the carrier, who carries it to the author; gates never report to the author directly | `copy-editor.md`, `adversary-review.md` |
+| `D5` | the bedrock-clean state is a STATE, not a run — do not re-run to "confirm" it | `copy-editor.md` |
+| `D6` | editorial gets its own branch, cut from that state | `copy-editor.md` |
+| `D8` | the prior-art references that will be PUBLISHED (the expensive half) | `copy-editor.md` |
+| `D9` | three copy editors, 2-of-3 to proceed | `copy-editor.md` |
+| `D10` | findings UNION, only the verdict is VOTED | `copy-editor.md`, `adversary-review.md` |
+
+⛔ **`D2` and `D7` were NOT LOCATED** — searched 2026-09-12 across `.claude/commands/*.md` and
+`tools/process/`; `D7` appears once as a bare citation (`adversary-review.md`, beside `D4`) with no
+gloss anywhere, and `D2` returns nothing at all. Do not invent them. Whoever knows the scheme owes
+either the two rows or a correction to the citations.
+
+⛔ **`D3`'s RISK IS TRANSPORT WITHOUT TRANSFORMATION.** *"Hand over the worktree and the diff, never a
+summary of them… A carrier that paraphrases has rebuilt the translation step `D1` and `D3` exist to
+delete."* Measured twice in one day: a claim gained confidence and changed units at each hop between
+two agents while both cited their sources correctly. ⚠ **And measured again 2026-09-12 in the
+caller**: two prior-art rounds were paraphrased to Tim in prose, their severities re-graded by the
+carrier, and every fix authored by the carrier. All three of those are the author's job or the gate's.
+
+#### The topology
+
+    carrier ──worktree(action='add')──▶  wt₁ … wtₙ    each agent, in its OWN tree:
+                                                       read · correct · build · run its gate ·
+                                                       record its own verdict · COMMIT
+            ◀────── commit SHA ───────   the return channel
+            ──merge(branch=<sha>)──▶     fan-in, --no-ff, gated like any commit
+
+**The worktree is a DATA CHANNEL, not a fence.** Write isolation is a side effect (Tim, 2026-09-12:
+*"You are wrong about write contention. That's a side effect"*). What it is FOR is giving an agent a
+place to do complete work and hand back a commit-ish. `merge` takes any commit-ish despite the
+parameter being called `branch`; a worktree from `add` is DETACHED and has no branch name, so the SHA
+is the handle.
+
+#### Why the gates can run simultaneously — and why the fan-in does not destroy their verdicts
+
+Two facts, both read from source rather than assumed, and they are what make this composable:
+
+1. **A basis is a TREE.** `common.ledger_basis(INDEX)` runs `git write-tree` with `cwd` set to the
+   repo it is invoked in, and `V11` keys a record `(step, basis, revision)`. ⚠ **So the question is
+   not where the agent stands, it is what its index HOLDS.** Sibling worktrees sitting at the same
+   commit share a tree and would collide; sibling worktrees that have each done their work and
+   committed have **different trees, hence different bases, hence no collision.** The trees are
+   honestly different rather than artificially separated, which is why this is not `ARC-1d`.
+   ⛔ **The reasoning trap, committed 2026-09-12 and corrected by Tim:** reasoning about the worktree
+   at CREATION time, when its tree is identical to HEAD, and concluding parallel gates must collide.
+   A worktree is a workspace whose tree diverges; the basis is computed at RECORD time.
+2. **A verdict binds `(step, path, git_blob_id)` — content, never position.** gitRobot states it:
+   *"recording from a worktree is SUPPORTED and correct… where the agent stood when it looked is not
+   part of the claim."* So the blob an agent's fix produced is the blob its verdict names, the merge
+   carries that blob into trunk unchanged, and **the verdict still resolves after fan-in.**
+   Content-keying is not merely an audit nicety — it is the property that makes parallel gate
+   execution safe to merge at all.
+
+#### The tally rules, which generalise from the panel to the fleet
+
+- **Findings UNION. Only the VERDICT is voted** (`D10`). A lone reader who catches a meaning shift
+  must not be outvoted; majority decides *"may this proceed"*, never *"did anyone find something"*.
+- **DO NOT bump `gate_round.py` for parallel readers.** The counter counts LOOP iterations. `R-LOOPCAP`
+  bounds SEQUENTIAL iteration because each fix writes the next round's defect; **parallel readers fix
+  nothing and build on nothing, so there is no compounding to bound.** One worktree = one arc = one
+  counter (Tim, 2026-09-02).
+- Escalation goes to the CARRIER, who carries it to the author. Gates never report to the author
+  directly.
+
+#### ⚠ UNVERIFIED — settle with ONE worktree before running a fleet
+
+Neither of these was executed as of 2026-09-12; both are reasoned, and reasoning is what the item
+above got wrong.
+
+- **That N parallel worktree gate runs genuinely do not collide.** The argument is sound and untested.
+- **Where an agent's FINDINGS NOTE lands.** `.claude-local/` is gitignored and sits beside the MAIN
+  checkout, so a worktree gets its own — `PUB-1` records the state writers dying with
+  `FileNotFoundError` in a private-folder-free worktree until `write_text_lf` was taught to create the
+  parent. A note written to `.claude-local/notes/` from inside a worktree therefore lands somewhere
+  nothing commits. **The tracked return channel (the commit) is solid; the findings channel is not
+  established.** Prove the loop once — one file, review-and-fix, own verdict, SHA returned, merged —
+  before paying for it N times.
+
 ### Report which reviews are running, and their parameters
 
 Name them as they launch, not only when verdicts return. Per review: the **command file** it came
