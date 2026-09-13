@@ -211,10 +211,11 @@ end WheelBasic
     This is the minimal type witnessing that the ZP porthole structure forms a wheel.
 
     ⚠ **Not new, and it is the ORIGINAL example rather than a general one.** `ℚ ∪ {∞, ⊥}` is
-    Carlström 2001:11's own first example, and it is `S₀A` for `A = ℤ` — *"A wheel in Setzer's sense
-    will be recognized as what we denote by `S₀A`, where A is an integral domain, S₀ the subset
-    A \ {0}"* (p. 3). So this carrier is a wheel in **Setzer's** narrower sense; what is contributed
-    here is the machine-checked encoding and the ZP reading below, never the object.
+    Carlström 2001:11's own first listed example — *"`⊙_{ℤ\{0}}ℤ = ℚ ∪ {/0, 0/0}`"* (printed p. 6,
+    example 1) — and so a wheel in **Setzer's** narrower sense: *"A wheel in Setzer's sense will be
+    recognized as what we denote by `⊙_{S₀}A`, where A is an integral domain, S₀ the subset
+    A \ {0}"* (printed p. 3). What is contributed here is the machine-checked encoding and the ZP
+    reading below, never the object.
 
     - `bot`:    0 · /0 — the absorbing undefined element (ZP: the porthole; the algebraic counterpart
                 of the Quine-atom role, not an identity with it — different types)
@@ -388,8 +389,11 @@ example {W : Type*} [Wheel W] (h : (wheelInf : W) = wheelBot) : ∀ x y : W, x =
 /-- **The reverse leg.** `Statement:` assuming `/0 = 0` — the involutive-meadow totalisation, since
     *"a meadow is a commutative ring with a total inverse operator satisfying two equations which
     imply `0⁻¹ = 0`"* (Bergstra, Hirshfeld & Tucker, arXiv:0901.0823, abstract) — every element of a
-    wheel is equal. W11 sends `wheelBot = 0·/0` to `0`; W14's absorption with W3 then flattens every
-    `x` onto it. Axiom-free, and it does not route through the example above.
+    wheel is equal. **This is Carlström 2001:11, Prop. 4.4, case `0 = /0` (printed p. 25), and the
+    block below is his route for it**: the meadow's defining equation is one of the coinciding pairs
+    that proposition already covers, which is why no wheel adopts it and stays non-trivial.
+    ⚠ The Lean term does not invoke the example above; the mathematics is not independent of it.
+    Carlström's `0 = /0` case defers to his `0 = 0/0` case, and that is the one that flattens.
 
     Together with that example: a wheel is not also a NON-TRIVIAL involutive meadow, in either
     direction. The implication runs meadow-equation ⇒ trivial, never the reverse — a one-element
@@ -417,11 +421,11 @@ example : Wheel.winv (Wheel.wzero : ZPWheelElem) ≠ Wheel.wzero := by
 example : ¬ (∀ x y : ZPWheelElem, x = y) := fun h => zpw_inf_ne_bot (h .inf .bot)
 
 /-- **Full distributivity fails, and exactly at `∞ ≠ ⊥ₗ`.** `Statement:` the unweakened law
-    `(x+y)·z = x·z + y·z` is false on `ZPWheelElem`; instantiated at `(1, 0, ∞)` its single residual
-    obligation is `∞ = ⊥ₗ`, discharged by `zpw_inf_ne_bot`. So W9's `0·z` correction term is
-    load-bearing, this carrier is not a ring, and § I's custom-declaration tag — *"wheels
-    deliberately weaken"* distributivity — is checked here rather than asserted in a comment. A
-    meadow keeps the ring and pays at the inverse instead; no carrier takes both trades.
+    `(x+y)·z = x·z + y·z` is false on `ZPWheelElem`; at `(1, 0, ∞)` its single residual obligation
+    is `∞ = ⊥ₗ`, discharged by `zpw_inf_ne_bot`. So W9's `0·z` correction term is load-bearing and
+    this carrier is not a ring — checked here rather than asserted in § I's tag. Prior art, not a
+    duplicate: Carlström has the sufficient direction — (3) *"reduces to the usual rule when
+    `0z = 0`"* (printed p. 6); this is the necessity witness at `0z ≠ 0`, here `0·∞ = ⊥ₗ`.
     ⚠ Do not write that tag's literal bracketed token in prose: `check_invariants` counts
     occurrences, so a sentence ABOUT a tag is indistinguishable from a tag. -/
 example : ¬ (∀ x y z : ZPWheelElem,

@@ -58,11 +58,14 @@ nearly tautological. Carlström takes the same antecedent to a substantive concl
 degenerates.** So this is not a weaker form of one implication; it is a different, and much smaller,
 statement off a shared hypothesis. Do not present the collapse as a framework finding.
 
-His remark that *"0 can't be inverted unless 0 ∈ S, but if that is the case … S⊙A is trivial"* (PDF
-p. 6, printed p. 4) motivates `wheelFrac_fork_open`'s `0 ∉ S` hypothesis. Two points on that quotation:
-it is stated there of the *ordinary* ring of fractions `A×S/≈_S`, with the corresponding **wheel**
-statement a separate sentence on printed p. 5; and Carlström writes the wheel of fractions **`S⊙A`**,
-not `A⊙S`. The substance — `0 ∈ S` trivializes, so exclude it — is his.
+His remark that *"Clearly, 0 can't be inverted unless 0 ∈ S, but if that is the case, then ∼_S is the
+improper relation, so that `A × S/ ∼_S` is trivial"* (PDF p. 6, printed p. 4) motivates
+`wheelFrac_fork_open`'s `0 ∉ S` hypothesis. Two points on that quotation. It is stated there of the
+*ordinary* ring of fractions `A × S/∼_S` — the object named inside the quote — with the corresponding
+**wheel** statement a separate sentence on printed p. 5: *"unless 0 ∈ S, but then S is improper and
+`⊙_S A` is trivial"*. And the wheel of fractions is Carlström's **`⊙_S A`**: a PREFIX operator with the
+submonoid SUBSCRIPTED, as in his `⊙_∅(ℤ/2ℤ)` and `⊙_{S₀}A`, which is the form this corpus uses.
+The substance — `0 ∈ S` trivializes, so exclude it — is his.
 
 ## Standard names for what is written by hand
 
