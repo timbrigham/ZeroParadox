@@ -1,6 +1,30 @@
 """
 Zero Paradox — ZP-J Wheel Addendum: The Wheel of Fractions is a Wheel
-Version 1.4 | July 2026
+Version 1.5 | July 2026
+v1.5: the v1.4 correction over-corrected, and its universal negative is false at every point of
+      its domain. It read "So neither kind of meadow is a wheel with ∞ = ⊥, and neither arises by
+      collapsing one." By Prop. 4.4 the ONLY wheel with ∞ = ⊥ is the one-element one, and that
+      algebra IS a meadow of both kinds: the meadow axioms are purely equational, and Bergstra &
+      Ponse state it in terms (1406.6878, §1 p. 2) — "we do not require a meadow to satisfy the
+      separation axiom 0 ≠ 1." So the forward direction is VACUOUS, not false. Wheel.lean §V
+      already carried the right qualifier ("NON-TRIVIAL involutive meadow") and the rendered prose
+      had dropped it. Now quantified over non-trivial meadows, with the degenerate overlap stated
+      rather than denied. "The originators say as much" also went: not-yet-found is not not-there,
+      and the quote is Bergstra & Ponse's, who originated COMMON meadows, not meadows.
+      Three more, folded in under the same bump:
+      (1) THE ENDNOTE GENERALISED A SCOPED FOOTPRINT. It said "All results sorry-free in Lean 4
+          as of June 2026, footprint [propext, Quot.sound]" while the Axiom Footprint box one page
+          earlier already scopes that footprint to the headline results. Re-measured here:
+          instWheel and inf_ne_bot are [propext, Quot.sound]; zpw_inf_ne_bot is [propext]; and
+          zpw_inv_zero_eq_inf, zpw_zero_mul_inf_eq_bot and zpw_top_val_iff_inv_is_inf each carry
+          Classical.choice — the last of them named one page earlier as "proved directly". The
+          endnote now carries the box's scope and the measured exceptions.
+      (2) "if S contains a zero divisor witness for 0" was garbled, and on its natural reading
+          false: in Z/6, S = {1,2,4} is a submonoid of zero divisors with 0 ∉ S, so inf_ne_bot
+          gives ∞ ≠ ⊥. The condition is 0 ∈ S, and the witnesses are now named (s = 0, s′ = 1).
+      (3) "that degeneracy happens exactly when 0 ∈ S" implied a biconditional this corpus does
+          not prove. Only 0 ∉ S → ∞ ≠ ⊥ is a declaration here; the converse is Carlström's own
+          (p. 5) and is now cited to him rather than implied to be ours.
 v1.4: wheel/meadow claim corrected (bedrock, prior-art gate). Struck "a wheel in which ∞ = ⊥ is
       exactly a meadow" and "a wheel collapses to a meadow": identifying the two forces the
       ONE-ELEMENT wheel (Carlström 2001:11 Prop. 4.4, p. 25), and a meadow (Bergstra & Tucker)
@@ -24,7 +48,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -221,11 +245,13 @@ def build():
     ]
     E.append(body(
         'A wheel whose two special elements coincide is the one-element wheel '
-        '(Carlström, Proposition 4.4). For the wheel of fractions that degeneracy happens '
-        'exactly when 0 &#8712; S: if S contains a zero divisor witness for 0, the fraction '
-        '[1,0] and the fraction [0,0] become identified, and every other pair with them. The '
-        'natural hypothesis 0 &#8713; S (which holds whenever S is the complement of a prime '
-        'ideal, the usual case) keeps them apart.'))
+        '(Carlström, Proposition 4.4). For the wheel of fractions the trigger is exactly '
+        '0 &#8712; S: taking s = 0 and s&#8242; = 1 as the witnesses identifies the fraction '
+        '[1,0] with the fraction [0,0], and every other pair with them. What is proved below '
+        'is one direction &#8212; 0 &#8713; S keeps them apart. The converse is Carlström\'s '
+        'own observation that if 0 &#8712; S then the relation is improper and '
+        '&#8857;<sub>S</sub> A is trivial (p. 5). The natural hypothesis 0 &#8713; S holds '
+        'whenever S is the complement of a prime ideal, the usual case.'))
     E.append(result_box(
         'Theorem: WheelFrac.inf_ne_bot (WheelFrac.lean)',
         [
@@ -256,11 +282,17 @@ def build():
             'written <i>a</i>, serving as the inverse of zero &#8212; but it pays for it by '
             'giving up the involution: "the inverse function of a common meadow is not an '
             'involution because (0<sup>&#8722;1</sup>)<sup>&#8722;1</sup> = <i>a</i>." That is '
-            'exactly W7 failing, so a common meadow is '
-            'not a wheel. Their own comparison puts it exactly there: "wheels are involutive '
+            'exactly W7 failing, so no non-trivial common meadow is '
+            'a wheel. Their own comparison puts it exactly there: "wheels are involutive '
             'whereas common meadows are non-involutive."',
-            'So neither kind of meadow is a wheel with &#8734; = &#8869;, and neither arises by '
-            'collapsing one. The originators say as much: "we have not yet found a structural '
+            'So no <b>non-trivial</b> meadow of either kind is a wheel with &#8734; = &#8869;. '
+            'The one overlap is degenerate, and is worth stating exactly rather than denying: by '
+            'Proposition 4.4 the only wheel with &#8734; = &#8869; is the one-element one, and '
+            'that single algebra satisfies the meadow equations as well, since those are purely '
+            'equational and "we do not require a meadow to satisfy the separation axiom '
+            '0 &#8800; 1." The implication runs meadow-equation to triviality, never the '
+            'reverse. Beyond that degenerate point no structural connection is known, and '
+            'Bergstra and Ponse say so themselves: "we have not yet found a structural '
             'connection between both constructions." Any equivalence would be new mathematics, '
             'and none is claimed here.',
             'Sources: J. A. Bergstra, Y. Hirshfeld and J. V. Tucker, "Meadows and the '
@@ -328,6 +360,10 @@ def build():
             'Quot.sound &#8212; quotient soundness (standard in Lean 4; the construction '
             'is a quotient, so this is expected and unavoidable)',
             'No Classical.choice. No Dependent Choice. No set-theoretic assumptions.',
+            'This scope is the headline results, not the whole document. Measured against '
+            'the corpus, the concrete-carrier theorems zpw_inv_zero_eq_inf, '
+            'zpw_zero_mul_inf_eq_bot and zpw_top_val_iff_inv_is_inf each carry '
+            'Classical.choice; zpw_inf_ne_bot is [propext].',
         ]
     ))
     E.append(sp(4))
@@ -370,7 +406,9 @@ def build():
         'ZP-J established the porthole (val(&#8869;) = &#8734;, &#8869; = {&#8869;}); this '
         'document gives its algebraic form, the wheel of fractions, and the machine-verified '
         'proof that the construction is a wheel and a non-trivial one. All results sorry-free '
-        'in Lean 4 as of June 2026, footprint [propext, Quot.sound].',
+        'in Lean 4 as of June 2026. Footprints are per result, and [propext, Quot.sound] is '
+        'the headline results\'; the Axiom Footprint box above gives the scope and the '
+        'measured exceptions.',
         S['endnote']))
 
     print(f'[build_zpj_wheel_addendum] Assembling document ({len(E)} elements)...')
