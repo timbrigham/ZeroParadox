@@ -168,6 +168,18 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # ⚠ Deduplication CONCENTRATES risk even as it removes drift — that is
                               # the trade, and this line is the half that pays for it.
                               "common.py",
+                              # ⚠⚠ AND `session_state.txt` (2026-09-13, ADDED IN THE SAME CHANGE
+                              # THAT CREATED IT — the omission was caught before the first push, but
+                              # it WAS the omission). It is a SUPPRESSION SWITCH with exactly the
+                              # power of the four baselines above and a wider reach than any of
+                              # them: every path listed is dropped from the subject set of EVERY
+                              # recording checker, unconditionally, so one added line stops every
+                              # gate from ever attesting to that file again — with no verdict
+                              # turning red and nothing in any checker's output changing except a
+                              # skip line nobody diffs. `RLY17-2`'s shape (routed to /rely, absent
+                              # from CHECKERS) and the same argument the encoding whitelist carries:
+                              # better curated is not an exemption from being hashed.
+                              "session_state.txt",
                               # ⚠ AND ITS BASELINE. `scope_baseline.txt` pins the reviewed scan
                               # scope, so editing it is exactly as powerful as editing `SKIP_DIRS` —
                               # delete a line and the file it names can silently leave every
