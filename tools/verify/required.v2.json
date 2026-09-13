@@ -212,8 +212,10 @@
       ],
       "module": "tools/verify/guards.py",
       "approved_modules": [
-        "6702b3b5550bc2a52621eda315411a788a4ce7b7"
+        "6702b3b5550bc2a52621eda315411a788a4ce7b7",
+        "2775fcf6045d6b93751938cd310edc9a7b3e1b22"
       ],
+      "_approved_why_2775fcf6": "Tim, 2026-09-13, asked and answered: approve the PRE-REPIN guards.py (fa59c6c7 changed it, beab3dbf repinned it) so the 9 intermediates of origin/illustrated..e61bad9c that owe guards can record it from a worktree at their own commit. A checker reads the tree it lives in, so without this no commit before beab3dbf could ever satisfy V16c for guards.",
       "scope": [
         "tools/verify/guards.py",
         "tools/verify/batch.py",
@@ -256,6 +258,11 @@
       "when": "*.pdf",
       "reason": "only meaningful when a PDF changed",
       "module": "tools/verify/batch.py",
+      "approved_modules": [
+        "1fffe94461ff819f39d373fc03eaf872b08ecf60",
+        "3f11ba688949ddd16d7f03fc67b44488e5b9063b"
+      ],
+      "_approved_why": "Tim, 2026-09-13, asked and answered. 1fffe944 is batch.py at e61bad9c (same blob decls pins); 3f11ba68 is batch.py at fa99005f and earlier, whose records cover all 40 PDFs at 929a9f89's bytes. Under mcp-mayhem 636e6cb an approved build freshens only subjects a record citing it actually judged, and the two wheel PDFs at 929a9f89 were never judged by 1fffe944 -- so the tip build alone cannot heal that commit (simulated by mcpdev). ⚠ Every future batch.py edit now needs a repin here before pdf_coupling can record.",
       "_module_why": "V20, 2026-09-08. `record_pdf_coupling()` in batch.py passes module=\"tools/verify/batch.py\" explicitly at the call site, so this declaration records what the emitter already claims rather than choosing between candidates. There is no pdf_coupling.py. ⚠ NOT common.py, although 113 of 113 records name it in evidence: `record_if_asked`/`emit_verdict` live there and every one of the 22 call sites routes through them, so a common.py pin would be satisfied by every step in the registry -- a pin every step satisfies pins nothing. The 113/104 split that made this look ambiguous was never two producers: 104 name tools/verify/batch.py and 9 name the SAME FILE under an escaped path from one heal run on 2026-09-02 (PDFEV-1)."
     },
     "editorial": {
