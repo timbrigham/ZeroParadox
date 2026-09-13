@@ -361,10 +361,29 @@ theorem zpw_inf_mul_zero_eq_bot : zpwMul .inf (.fin 0) = .bot := by
 theorem zpw_inv_inf_eq_zero : zpwInv .inf = .fin 0 := by
   simp [zpwInv]
 
-/-- ∞ ≠ ⊥ₗ: the two portal elements are distinct.
-    This is what makes the wheel extension non-trivial — a field would collapse them. -/
+/-- ∞ ≠ ⊥ₗ: the two portal elements stay distinct — wheel behaviour, not meadow collapse.
+    Identifying them would force triviality (Carlström 2001:11, Prop. 4.4). -/
 theorem zpw_inf_ne_bot : ZPWheelElem.inf ≠ .bot := by
   simp
+
+-- Carlström Prop. 4.4 for this pair, abstract in any `Wheel`: identifying `/0` with `0·/0`
+-- forces every element equal — so `1 = 0`, which no field admits.
+example {W : Type*} [Wheel W] (h : (wheelInf : W) = wheelBot) : ∀ x y : W, x = y := by
+  have hb : Wheel.winv (wheelBot (W := W)) = wheelBot := by
+    show Wheel.winv (Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero))
+        = Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero)
+    rw [Wheel.winv_wmul, Wheel.winv_winv, Wheel.wmul_comm]
+  have h0 : (Wheel.wzero : W) = wheelBot := by
+    have hc := congrArg Wheel.winv h
+    rw [hb, winv_wheelInf] at hc
+    exact hc
+  have hz : ∀ x : W, x = Wheel.wzero := by
+    intro x
+    have h14 : Wheel.wadd x (wheelBot (W := W)) = wheelBot := Wheel.wadd_zeroinv_absorb x
+    rw [← h0, Wheel.wadd_zero] at h14
+    exact h14
+  intro x y
+  rw [hz x, hz y]
 
 /-- fin(0) ≠ ⊥ₗ: the semilattice ⊥ is distinct from the wheel's absorbing element.
     Algebraically: the porthole contact point (fin 0 ↔ inf) is not confusion with ⊥ₗ. -/
