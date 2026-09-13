@@ -385,6 +385,54 @@ example {W : Type*} [Wheel W] (h : (wheelInf : W) = wheelBot) : ∀ x y : W, x =
   intro x y
   rw [hz x, hz y]
 
+/-- **The reverse leg.** `Statement:` assuming `/0 = 0` — the involutive-meadow totalisation, since
+    *"a meadow is a commutative ring with a total inverse operator satisfying two equations which
+    imply `0⁻¹ = 0`"* (Bergstra, Hirshfeld & Tucker, arXiv:0901.0823, abstract) — every element of a
+    wheel is equal. W11 sends `wheelBot = 0·/0` to `0`; W14's absorption with W3 then flattens every
+    `x` onto it. Axiom-free, and it does not route through the example above.
+
+    Together with that example: a wheel is not also a NON-TRIVIAL involutive meadow, in either
+    direction. The implication runs meadow-equation ⇒ trivial, never the reverse — a one-element
+    wheel need not have arisen this way. -/
+example {W : Type*} [Wheel W] (hm : Wheel.winv (Wheel.wzero : W) = Wheel.wzero) :
+    ∀ x y : W, x = y := by
+  have hbot : (wheelBot : W) = Wheel.wzero := by
+    show Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero) = Wheel.wzero
+    rw [hm, Wheel.wzero_mul_wzero]
+  have hz : ∀ x : W, x = Wheel.wzero := by
+    intro x
+    have h14 : Wheel.wadd x (wheelBot (W := W)) = wheelBot := Wheel.wadd_zeroinv_absorb x
+    rw [hbot, Wheel.wadd_zero] at h14
+    exact h14
+  intro x y
+  rw [hz x, hz y]
+
+-- Controls on the two examples above: both hypotheses are load-bearing, not vacuous. On this
+-- carrier the meadow equation FAILS, and the carrier is not trivial.
+example : Wheel.winv (Wheel.wzero : ZPWheelElem) ≠ Wheel.wzero := by
+  show zpwInv (ZPWheelElem.fin 0) ≠ ZPWheelElem.fin 0
+  rw [zpw_inv_zero_eq_inf]
+  simp
+
+example : ¬ (∀ x y : ZPWheelElem, x = y) := fun h => zpw_inf_ne_bot (h .inf .bot)
+
+/-- **Full distributivity fails, and exactly at `∞ ≠ ⊥ₗ`.** `Statement:` the unweakened law
+    `(x+y)·z = x·z + y·z` is false on `ZPWheelElem`; instantiated at `(1, 0, ∞)` its single residual
+    obligation is `∞ = ⊥ₗ`, discharged by `zpw_inf_ne_bot`. So W9's `0·z` correction term is
+    load-bearing, this carrier is not a ring, and § I's custom-declaration tag — *"wheels
+    deliberately weaken"* distributivity — is checked here rather than asserted in a comment. A
+    meadow keeps the ring and pays at the inverse instead; no carrier takes both trades.
+    ⚠ Do not write that tag's literal bracketed token in prose: `check_invariants` counts
+    occurrences, so a sentence ABOUT a tag is indistinguishable from a tag. -/
+example : ¬ (∀ x y z : ZPWheelElem,
+    Wheel.wmul (Wheel.wadd x y) z = Wheel.wadd (Wheel.wmul x z) (Wheel.wmul y z)) := by
+  intro h
+  have hx : zpwMul (zpwAdd (ZPWheelElem.fin 1) (.fin 0)) .inf
+      = zpwAdd (zpwMul (ZPWheelElem.fin 1) .inf) (zpwMul (.fin 0) .inf) :=
+    h (.fin 1) (.fin 0) .inf
+  norm_num [zpwAdd, zpwMul] at hx
+  exact zpw_inf_ne_bot hx
+
 /-- fin(0) ≠ ⊥ₗ: the semilattice ⊥ is distinct from the wheel's absorbing element.
     Algebraically: the porthole contact point (fin 0 ↔ inf) is not confusion with ⊥ₗ. -/
 theorem zpw_zero_ne_bot : ZPWheelElem.fin 0 ≠ .bot := by
