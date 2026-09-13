@@ -1530,25 +1530,50 @@ def check_pdf_coupling(ranges=None):
                    % (len(unpaired), len(pdfs), ", ".join(unpaired[:3])))
 
 
-def changed_lean(ranges=None):
-    """The `.lean` files this push touches. Range-aware for the REL-1 reason `check_trigger5` gives."""
+# ⚠⚠ THE PATHSPEC AND `prior_art`'s REGISTRY `scope` MUST AGREE, AND NEITHER ALONE DOES ANYTHING.
+# The leg blocks on `touched ∩ owing`: this function supplies `touched`, and `owing` comes from
+# `coverage_gap`, which only ever returns paths inside the step's registry `scope`. Widen one and the
+# intersection stays empty — the obligation silently does not exist. If you add an extension here,
+# add the matching glob to `prior_art.scope` in `required.v2.json` in the SAME change.
+ATTRIBUTABLE = ("*.lean", "scripts/build_*.py")
+
+
+def changed_attributable(ranges=None):
+    """The files this push touches that OWE prior-art attribution. Range-aware, per REL-1.
+
+    ⚠⚠ `scripts/build_*.py` JOINED 2026-09-13 (Tim: *"adjust the scope so the build scripts are also
+    in scope (when edited, just like anything else)"*), and the measured reason is that a build
+    script is the ONLY surface where a false claim about someone else's work reaches a DOI. A
+    prior-art round that night found a wheel/meadow mischaracterisation live in two published PDFs;
+    `prior_art` had never covered `scripts/` at all, and the round only saw them because the agent
+    swept `--full` on its own initiative. The prose gates DO read these files — they are in
+    `adversary` and `editorial` scope — but neither gate's job is *is this claim about an external
+    structure placed against the work that owns it*. That is this one's, and it was not asked.
+
+    ⚠ The containment property is unchanged and is the whole design (Tim, 2026-09-01): *"whenever a
+    specific file gets edited that that file is properly attributed … the current logic I think hits
+    the entire corpus. and that is impossible to fill at one time."* You owe attribution for what you
+    TOUCHED and never for the corpus — widening the set of attributable EXTENSIONS does not widen the
+    set of files any one push owes.
+    """
     # ⚠ ACMR: a DELETED file owes nothing. Without the filter a pure deletion is named and a
     #   verdict is demanded at bytes that no longer exist — unsatisfiable by construction, because
     #   no review can attribute a file that is gone. Found by /rely (RLY42-2) on a real deletion
     #   commit while the leg was still latent behind RLY42-1; it goes live the moment that is fixed.
     #   Added/Copied/Modified/Renamed all owe attribution at their new bytes; Deleted does not.
     seen = set()
+    targets = ["--"] + list(ATTRIBUTABLE)
     if ranges is not None:
         for r in ranges:
-            rc, out = sh("git", "diff", "--name-only", "--diff-filter=ACMR", r, "--", "*.lean")
+            rc, out = sh("git", "diff", "--name-only", "--diff-filter=ACMR", r, *targets)
             if rc != 0:
                 die("git could not resolve range %r for the prior-art attribution leg — refusing "
                     "to report a scope it could not read:\n%s" % (r, out))
             seen.update(l.strip() for l in out.splitlines() if l.strip())
     else:
-        rc, out = sh("git", "diff", "--name-only", "--diff-filter=ACMR", "HEAD", "--", "*.lean")
+        rc, out = sh("git", "diff", "--name-only", "--diff-filter=ACMR", "HEAD", *targets)
         if rc != 0:
-            die("git failed listing changed .lean files:\n%s" % out)
+            die("git failed listing changed attributable files:\n%s" % out)
         seen.update(l.strip() for l in out.splitlines() if l.strip())
     return sorted(seen)
 
@@ -1578,20 +1603,20 @@ def check_prior_art_attribution(ranges=None):
     ⚠ FAILS CLOSED ON AN UNREACHABLE LEDGER. `owing_paths` returns None rather than an empty set,
     for the reason the whole file repeats: "I could not ask" must never render as "nothing is owed".
     """
-    touched = changed_lean(ranges)
+    touched = changed_attributable(ranges)
     if not touched:
-        return True, "no .lean file changed in this push — no attribution owed"
+        return True, "no attributable file changed in this push — no attribution owed"
     ref = record.read_ref("HEAD")
     owing = record.owing_paths("prior_art", ref, "push")
     if owing is None:
-        return False, ("could not ask the ledger which .lean files carry a passing prior_art "
+        return False, ("could not ask the ledger which attributable files carry a passing prior_art "
                        "verdict, so this push's %d edited file(s) cannot be shown attributed. "
                        "An unreachable ledger is not a clean bill." % len(touched))
     gap = sorted(set(touched) & set(owing))
     if not gap:
-        return True, ("all %d edited .lean file(s) carry a passing prior_art verdict at their "
-                      "current bytes" % len(touched))
-    return False, ("%d of %d .lean file(s) edited in this push have NO passing prior_art verdict at "
+        return True, ("all %d edited attributable file(s) carry a passing prior_art verdict at "
+                      "their current bytes" % len(touched))
+    return False, ("%d of %d attributable file(s) edited in this push have NO passing prior_art verdict at "
                    "their current bytes: %s%s — run `/prior-art-review` over these files and let it "
                    "record. You owe the files you TOUCHED, never the corpus."
                    % (len(gap), len(touched), ", ".join(gap[:4]),
