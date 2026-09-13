@@ -368,9 +368,20 @@ COST     this was re-derived four separate ways in one session; and "nothing els
 READ     tools/process/determinism.md
 
 ## R-TWOPOLE  Every face of the bottom has TWO readings. Build both, concurrently.
-TRIGGER  you are starting fresh development, a face is stuck, or a claim needs an extra
+TRIGGER  (a) you are about to EDIT a `.lean` file, or WRITE a sentence (build script, docstring,
+         note, report) saying what a Lean declaration proves — main session; (b) you are about to
+         DELETE, NEGATE or FLIP a sentence about a direction, a pole, min/max, least/greatest,
+         source/sink, stronger/weaker — INCLUDING acting on a review finding that says one is
+         backwards; (c) starting fresh development, a face is stuck, or a claim needs an extra
          assumption to close.
-RULE     run both, never in sequence: Q1 — where is the zero that runs to infinity? Q2 —
+RULE     on (a), FIRST load the five `*CannotBe.lean` indexes whole — `ZeroParadox/BottomCannotBe.lean`
+         `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` `ZeroParadox/Order/SnapCannotBe.lean`
+         `ZeroParadox/Category/ChoiceCannotBe.lean` `ZeroParadox/Computability/ComputationCannotBe.lean`
+         — once per session and again after compaction. On (b),
+         write the claim in the OTHER chart before touching it: if it holds there too, the defect is
+         a MISSING CHART and the fix ADDS that chart — a flip or a delete writes the opposite
+         one-chart sentence, which is the next round's finding.
+         Then run both, never in sequence: Q1 — where is the zero that runs to infinity? Q2 —
          what is the one-way arrow, and what does it look like run BACKWARDS? If either has
          no answer, the piece is not part of the framework yet; record that as a finding.
          Run it on METHOD too: state the claim from the other side, and ask what words the
@@ -379,6 +390,11 @@ RULE     run both, never in sequence: Q1 — where is the zero that runs to infi
          rather than forcing a second pole. Call out where Tim's read is load-bearing.
 COST     a missing pole shows up as a bridge you cannot formalize — ZP-K implemented only the
          EMPTY reading, so the step to forced execution stayed a commitment rather than a theorem.
+         ⚠ RE-KEYED 2026-09-13 (Tim) after ≥8 recorded one-face collapses, most written BY A FIX: ε₀'s
+         "minimum step" struck in both directions; ZP-J rounds 3→4 ("a lattice can fail the class" →
+         "an instance carries it informatively"); § X.III deleted for "⊥'s valuation is ∞, not zero";
+         and round 5 found "each layer requires less" where the lower class is strictly STRONGER and
+         its laws-become-theorems reading is also true. Trigger (c) alone never fired at the FIX.
 READ     tools/process/two-pole-test.md
 
 ## R-REVALIDATE  A sentence fixed three times is a CLAIM defect. Measure it; do not redraft.
