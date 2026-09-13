@@ -561,6 +561,44 @@ def ledger_basis(ref='HEAD'):
     return {'kind': 'ref', 'resolved_from': 'explicit', 'value': sha}
 
 
+_SESSION_STATE_CACHE = None
+
+
+def session_state():
+    """Repo-relative paths that are SESSION STATE and are never recorded as a verdict subject.
+
+    EXACT MATCH ONLY — no prefixes, no globs, no directories. `vendored.is_vendored` once matched
+    `/Vendored/` at ANY depth, which let a file exempt itself from all four checkers by living in a
+    directory of that name; a loosely-matching path list is a self-exemption route wearing a fix.
+
+    ⚠⚠ A MISSING FILE WARNS RATHER THAN RETURNING A QUIET EMPTY, and that is a DELIBERATE departure
+    from `vendored._allowlist`, which returns `set()` silently. The consequences are opposite. A
+    missing vendored allowlist exempts FEWER files, so the checkers get stricter and the failure is
+    safe. A missing session-state declaration excludes NOTHING, which silently restores the subject-
+    set divergence that blocked two `D1` merges (`ARC-2b`) — the failure is invisible and it is the
+    bug coming back. Same code shape, opposite direction, so it does not get the same handling.
+    ⛔ It is not FATAL either: `common` is imported by every checker, and a hard failure here would
+    take the whole verification layer down over a declaration file. Loud and non-fatal is the tier
+    that matches "the operator must know, and the checkers must still run"."""
+    global _SESSION_STATE_CACHE
+    if _SESSION_STATE_CACHE is None:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'session_state.txt')
+        if not os.path.exists(path):
+            sys.stderr.write(
+                'WARNING: tools/verify/session_state.txt is MISSING. No path is being excluded from\n'
+                '  verdict subjects, so a file that is dirty in one checkout and clean in another will\n'
+                '  again produce two different subject sets for one content (ARC-2b). Restore it.\n')
+            _SESSION_STATE_CACHE = set()
+        else:
+            out = set()
+            for line in io.open(path, encoding='utf-8-sig').read().splitlines():
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    out.add(line.replace('\\', '/').lstrip('./'))
+            _SESSION_STATE_CACHE = out
+    return _SESSION_STATE_CACHE
+
+
 def ledger_subjects(rels, ref='HEAD'):
     """`([{path, git_blob_id}], skipped)` — subjects safe to record, and the paths left out.
 
@@ -571,6 +609,24 @@ def ledger_subjects(rels, ref='HEAD'):
     subjects than the checker examined is a coverage gap, and a silent one is the defect this whole
     layer exists to end."""
     rels = [r.replace('\\', '/') for r in rels]
+    # ⚠⚠ SESSION STATE IS DROPPED BEFORE THE FENCE, AND UNCONDITIONALLY — dirty or clean. A path
+    # that is legitimately modified in one checkout and pristine in another otherwise produces TWO
+    # subject sets for one content: the carrier's tree fences `gate_round.json` as "modified" and an
+    # authoring worktree includes it, so the same checker records 471 subjects in one place and 472
+    # in the other. `V11` then refuses the second as a DIFFERING payload rather than deduping it as
+    # an identical one, the refusal becomes the checker's exit code, and a `D1` merge is blocked
+    # over a tree with nothing wrong in it. `ARC-2b`; it blocked `D1M-1` the same way on 2026-09-09
+    # and went unread for four days because that row named the wrong mechanism (`DC-39`).
+    # ⛔ "Exempt it when dirty" is NOT the fix and is the tempting one: it leaves the two checkouts
+    # disagreeing exactly as before. The property is that the subject set does not depend on which
+    # checkout you are standing in.
+    # ⚠ These files are still CHECKED — only never recorded ABOUT. A verdict binds
+    # `(step, path, git_blob_id)`, and the blob of a round counter is an accident of when someone
+    # last ran it, so it is not a fact any verdict should be keyed to.
+    _session = session_state()
+    session_skipped = [(r, 'session state, never a verdict subject (tools/verify/session_state.txt)')
+                       for r in sorted(set(rels)) if r in _session]
+    rels = [r for r in rels if r not in _session]
     # ⚠⚠ INDEX MODE IS WHAT MAKES PRE-COMMIT RECORDING POSSIBLE, and the reason is not obvious.
     # At pre-commit time HEAD is the PARENT — the commit being made does not exist yet — so a record
     # keyed to HEAD would cover the wrong content entirely. But the staged blobs ARE the new
@@ -606,7 +662,14 @@ def ledger_subjects(rels, ref='HEAD'):
             skipped.append((rel, 'not staged' if ref == INDEX else 'not present at %s' % ref))
         else:
             subjects.append({'path': rel, 'git_blob_id': blobs[rel]})
-    return subjects, skipped
+    # ⚠ Session-state paths ride in `skipped` so the caller still PRINTS them — nothing is silently
+    # dropped. Their reason names the declaration file rather than a fence, because they are not a
+    # coverage GAP: a fenced path is one the checker read and cannot attest to, which is debt; this
+    # one is simply not a subject. ⚠ `R-ZERONULL` debt, stated rather than hidden: today the two
+    # cases differ only in the REASON STRING, and nothing branches on it. If a consumer ever needs
+    # to tell "unattestable" from "not a subject", that wants a third return value, not a substring
+    # test on prose.
+    return subjects, skipped + session_skipped
 
 
 def _producer_modules(module=None):
