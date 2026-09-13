@@ -1,6 +1,7 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.5 | September 2026
+Version 1.6 | September 2026
+v1.6: TERM-LEVEL IDENTIFICATION RESTORED (two-pole audit, 2026-09-13, Tim's call). "There is no second new element in a meadow for infinity to be equal to" is true of elements and dropped the other chart: 1/0 and 0*(1/0) both evaluate to 0 in a meadow, so it identifies the two expressions a wheel keeps apart, which no wheel with more than one element can do (Carlstrom Prop. 4.4). Companion bumped with the addendum at v1.7.
 v1.5: THE BICONDITIONAL THE ADDENDUM STRUCK AT v1.5 WAS STILL LIVE HERE, and register.md
       asserted the opposite ("Companion unchanged at v1.4: it carries none of these").
       "The addendum proves exactly when that holds" claims a biconditional this corpus does not
@@ -35,7 +36,7 @@ import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle, Ellipse
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -193,7 +194,9 @@ def build():
         'with and simply declares /0 = 0. Bergstra, Hirshfeld and Tucker define a meadow as '
         '"a commutative ring with a total inverse operator satisfying two equations which '
         'imply 0<sup>&#8722;1</sup> = 0", so there is no second new element in a meadow for '
-        '&#8734; to be equal to.'))
+        '&#8734; to be equal to. Its expressions still meet: 1/0 and 0&#183;(1/0) both come out as the '
+        'ordinary 0, so a meadow identifies the two expressions a wheel keeps apart, which no wheel '
+        'with more than one element can do (Carlstr&#246;m, Proposition 4.4).'))
     E.append(cbody(
         'That leaves the obvious follow-up: what if you took a wheel and identified its two '
         'new elements anyway? The answer is that you do not get a third structure - you get '

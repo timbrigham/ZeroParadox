@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Wheel Addendum: The Wheel of Fractions is a Wheel
-Version 1.6 | September 2026
+Version 1.7 | September 2026
+v1.7: THE DEGENERATE OVERLAP IS RESTORED, AND THE TERM-LEVEL IDENTIFICATION WITH IT (two-pole audit, 2026-09-13, Tim's call). v1.6 deleted the sentence "the one overlap is degenerate, and is worth stating exactly rather than denying" together with the false "never the reverse", although 43116ba had recorded the decision that the overlap is stated rather than denied. Both charts are now on the page: beyond one element no carrier is a wheel whose /0 is 0 (Wheel.lean section V, by its binders), and the one-element algebra is both a wheel with infinity = bottom and a model of the meadow equations (a new rfl example in the same section, with Ref and Ril checked at arXiv:0901.0823 p. 2; the separation-axiom quote is the one v1.5 already used, 1406.6878 section 1 p. 2). The remark's "no pair of new elements available to identify" was element-level only; at the level of terms 0^-1 and 0*0^-1 both evaluate to 0, so the meadow does equate the two terms a wheel keeps apart.
 v1.6: THE MEADOW REMARK'S IMPLICATION IS DELETED, NOT RESTATED. Five successive versions tried
       to state a SCOPED implication in unscoped prose and all five failed: v1.0-1.3 "a wheel in
       which ∞ = ⊥ is exactly a meadow" (false); v1.4 "neither kind of meadow is a wheel with
@@ -72,7 +73,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.6'
+VERSION = '1.7'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -299,7 +300,9 @@ def build():
             'element at all: Bergstra, Hirshfeld and Tucker define one as "a commutative ring '
             'with a total inverse operator satisfying two equations which imply '
             '0<sup>&#8722;1</sup> = 0." The carrier is unchanged, so there is no pair of new '
-            'elements available to identify. Bergstra and Ponse fix the default: "by default a '
+            'elements available to identify. At the level of terms the identification still happens: '
+            '0<sup>&#8722;1</sup> and 0&#183;0<sup>&#8722;1</sup> both evaluate to the existing 0, so a '
+            'meadow equates the two terms a wheel keeps apart. Bergstra and Ponse fix the default: "by default a '
             '\'meadow\' is assumed to be an involutive meadow", the involutive ones being '
             'exactly those with 0<sup>&#8722;1</sup> = 0.',
             'A <b>common meadow</b> is the other variant: it adjoins one element &#8212; an '
@@ -313,7 +316,11 @@ def build():
             'meadow are carried as machine-checked <i>example</i>s in '
             'ZeroParadox/Algebra/Wheel.lean §V, with controls showing both hypotheses are '
             'load-bearing. The statements are scoped there by their binders, which is why they '
-            'are cited rather than restated here. Searched 2026-09-13 over the sources listed '
+            'are cited rather than restated here. The one overlap is degenerate, and it is stated '
+            'rather than denied: the one-element algebra is a wheel in which &#8734; = &#8869; and also '
+            'satisfies the meadow equations; Bergstra and Ponse "do not require a meadow to satisfy the '
+            'separation axiom 0 &#8800; 1" (arXiv:1406.6878, &#167;1, p. 2). Both facts are examples in the '
+            'same section. Searched 2026-09-13 over the sources listed '
             'below: no structural connection between the two constructions located; Bergstra '
             'and Ponse report not having found one for <b>common</b> meadows.',
             'Sources: J. A. Bergstra, Y. Hirshfeld and J. V. Tucker, "Meadows and the '

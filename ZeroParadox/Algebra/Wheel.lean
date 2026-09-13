@@ -420,6 +420,25 @@ example : Wheel.winv (Wheel.wzero : ZPWheelElem) ≠ Wheel.wzero := by
 
 example : ¬ (∀ x y : ZPWheelElem, x = y) := fun h => zpw_inf_ne_bot (h .inf .bot)
 
+-- Statement: the degenerate overlap, stated rather than denied. The one-element carrier is a wheel in
+-- which ∞ = ⊥ₗ and /0 = 0 both hold, so the two examples above are not vacuous at their conclusion.
+example : ∃ W : Wheel PUnit, @wheelInf PUnit W = @wheelBot PUnit W ∧
+    @Wheel.winv PUnit W (@Wheel.wzero PUnit W) = @Wheel.wzero PUnit W :=
+  ⟨{ wadd := fun _ _ => PUnit.unit, wmul := fun _ _ => PUnit.unit, winv := fun _ => PUnit.unit,
+     wzero := PUnit.unit, wone := PUnit.unit,
+     wadd_assoc := fun _ _ _ => rfl, wadd_comm := fun _ _ => rfl, wadd_zero := fun _ => rfl,
+     wmul_assoc := fun _ _ _ => rfl, wmul_comm := fun _ _ => rfl, wmul_one := fun _ => rfl,
+     winv_winv := fun _ => rfl, winv_wmul := fun _ _ => rfl, weak_distrib := fun _ _ _ => rfl,
+     wheel_id := fun _ _ _ => rfl, wzero_mul_wzero := rfl, wadd_zeromul_mul := fun _ _ _ => rfl,
+     winv_add_zeromul := fun _ _ => rfl, wadd_zeroinv_absorb := fun _ => rfl }, rfl, rfl⟩
+
+-- Statement: and the same carrier, as a commutative ring with the identity as inverse, meets the
+-- meadow equations Ref `(x⁻¹)⁻¹ = x` and Ril `x·(x·x⁻¹) = x` (Bergstra, Hirshfeld & Tucker,
+-- arXiv:0901.0823 §1), with `0⁻¹ = 0`. Beyond it, the reverse-leg example above leaves no
+-- non-trivial wheel whose `/0` is `0`.
+example : ∀ x : PUnit, id (id x) = x ∧ x * (x * id x) = x ∧ id (0 : PUnit) = 0 :=
+  fun _ => ⟨rfl, rfl, rfl⟩
+
 /-- **Full distributivity fails, and exactly at `∞ ≠ ⊥ₗ`.** `Statement:` the unweakened law
     `(x+y)·z = x·z + y·z` is false on `ZPWheelElem`; at `(1, 0, ∞)` its single residual obligation
     is `∞ = ⊥ₗ`, discharged by `zpw_inf_ne_bot`. So W9's `0·z` correction term is load-bearing and

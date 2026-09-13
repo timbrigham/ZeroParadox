@@ -76,7 +76,9 @@ open ZeroParadox
     (1) and (2) by pure logic. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet uses the Axiom of Foundation (ZFSet.regularity), which forbids x ∈ x. No ZFSet element can satisfy x ∈ x, so a Quine atom is not directly available as a ZFSet; AFA content is still MODELLABLE over a well-founded universe, as Aczel does via decorations of accessible pointed graphs. AFAStructure is the lattice-level encoding of what ZF+AFA provides set-theoretically, with selfMem/quine_unique/bot_self_mem as the three minimal class fields.
 class AFAStructure (L : Type*) [ZPSemilattice L] where
-  /-- x is self-containing: x contains itself as a member under AFA. -/
+  /-- x plays the self-containment role; read in ZF+AFA, x = {x} (its own sole member). Not bare
+      x ∈ x: under AFA, 0* = {∅, 0*} is self-membered and is not Ω (Aczel 1988, Example 1.5),
+      so `quine_unique` would fail for membership. -/
   selfMem : L → Prop
   /-- Quine uniqueness: any two self-containing elements are equal.
       In ZF+AFA this follows directly from AFA's own statement ("every graph has a unique
