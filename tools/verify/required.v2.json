@@ -212,7 +212,7 @@
       ],
       "module": "tools/verify/guards.py",
       "approved_modules": [
-        "2775fcf6045d6b93751938cd310edc9a7b3e1b22"
+        "6702b3b5550bc2a52621eda315411a788a4ce7b7"
       ],
       "scope": [
         "tools/verify/guards.py",
