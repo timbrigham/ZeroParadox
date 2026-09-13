@@ -1604,22 +1604,29 @@ def check_prior_art_attribution(ranges=None):
     for the reason the whole file repeats: "I could not ask" must never render as "nothing is owed".
     """
     touched = changed_attributable(ranges)
+    # ⚠⚠ NAME THE SET THAT WAS MEASURED, NEVER "this push". With `ranges` this reads the
+    # PUSHED RANGE and the phrase is true; without them it reads the WORKING TREE, and the same
+    # phrase then described a nine-commit push owing four attributed files as owing none
+    # (measured 2026-09-12). Every count below was true; the referent was not. `cmd_prepush`
+    # now refuses the manual case that made this reachable — see `unjudgeable_scope` — so this
+    # is the second line of defence rather than the first, and it says which set it read.
+    basis = "the pushed range(s)" if ranges is not None else "the WORKING TREE (manual run)"
     if not touched:
-        return True, "no attributable file changed in this push — no attribution owed"
+        return True, ("no attributable file in %s — no attribution owed" % basis)
     ref = record.read_ref("HEAD")
     owing = record.owing_paths("prior_art", ref, "push")
     if owing is None:
         return False, ("could not ask the ledger which attributable files carry a passing prior_art "
-                       "verdict, so this push's %d edited file(s) cannot be shown attributed. "
-                       "An unreachable ledger is not a clean bill." % len(touched))
+                       "verdict, so the %d edited file(s) in %s cannot be shown attributed. "
+                       "An unreachable ledger is not a clean bill." % (len(touched), basis))
     gap = sorted(set(touched) & set(owing))
     if not gap:
-        return True, ("all %d edited attributable file(s) carry a passing prior_art verdict at "
-                      "their current bytes" % len(touched))
-    return False, ("%d of %d attributable file(s) edited in this push have NO passing prior_art verdict at "
-                   "their current bytes: %s%s — run `/prior-art-review` over these files and let it "
-                   "record. You owe the files you TOUCHED, never the corpus."
-                   % (len(gap), len(touched), ", ".join(gap[:4]),
+        return True, ("all %d attributable file(s) edited in %s carry a passing prior_art "
+                      "verdict at their current bytes" % (len(touched), basis))
+    return False, ("%d of %d attributable file(s) edited in %s have NO passing prior_art "
+                   "verdict at their current bytes: %s%s — run `/prior-art-review` over these "
+                   "files and let it record. You owe the files you TOUCHED, never the corpus."
+                   % (len(gap), len(touched), basis, ", ".join(gap[:4]),
                       "" if len(gap) <= 4 else " (+%d more)" % (len(gap) - 4)))
 
 
@@ -2306,6 +2313,53 @@ def run_field_discipline():
         print("  field discipline    WARN  ran, but its verdict was NOT RECORDED (exit 2)")
 
 
+# ⚠⚠ THE REFUSAL IS A FUNCTION SO A CONTROL CAN CALL IT, exactly as `routing_bad` is. As the
+# literal `if ranges is None and not changed_files(None)` this decision was unreachable by any
+# check — and that unreachability is precisely how it stayed WRONG for weeks with every control
+# green. `guards.py` now carries a row per case; see `check_prepush_scope_refusal`.
+def unjudgeable_scope(ranges, tree=None):
+    """`None` when this run may judge the push scope; otherwise ONE LINE saying why it may not.
+
+    ⚠⚠ `None` VERSUS A STRING — THE VALUE CARRIES THE DECISION AND THE STRING ONLY EXPLAINS IT
+    (`R-ZERONULL`). Two distinct unjudgeable states share one exit but not one message, because
+    naming the set that was actually measured is the half that misled a reader.
+
+    ⛔⛔ `not changed_files(None)` ALONE WAS NEVER RIGHT, AND IT WAS MEASURED DEAD RATHER THAN
+    ARGUED DEAD. It fires only on a WHOLLY clean tree, so any dirty path at all disarms it. Since
+    `34bd217` (2026-09-03) `gate_round.json` is TRACKED and deliberately kept modified — *static
+    initializer tracked, INSTANCE in the working copy* — so during a gate arc past round 0 the
+    tree is never clean and this guard never fired. The manual run then judged the range-scoped
+    legs against a working tree holding no attributable file at all, and printed `no attributable
+    file changed in this push` at a moment the pushed range owed FOUR.
+
+    ⚠ AND THE FIRST DIAGNOSIS NAMED THE WRONG CAUSE, WHICH IS `DC-39`. It blamed `f377e325` for
+    making the two halves of the bundle disagree about whether `gate_round.json` is content.
+    Measured 2026-09-12: that commit never touched this file — `f377e325^:tools/verify/batch.py`
+    and `f377e325:tools/verify/batch.py` are the SAME blob `3f11ba68…` — and `changed_files` is
+    session-state-aware in neither version. Executing `f377e325^`'s own `changed_files(None)`
+    against the live tree returns `['gate_round.json']`, so the guard was already silent before
+    that commit existed. A wrong mechanism on a right symptom terminates the search.
+
+    ⭐ THE PROPERTY: a tree whose only changes are SESSION STATE is indistinguishable from a clean
+    one for this purpose, and neither is a scope this command may judge. `common.session_state()`
+    is the ONE declaration of that set (`tools/verify/session_state.txt`), so this arm cannot
+    drift from what `ledger_subjects` excludes — which is the drift that produced the divergence.
+
+    ⚠ `tree` IS AN INJECTION POINT FOR CONTROLS ONLY. Production callers pass nothing and get the
+    real working tree; `guards.py` passes constructed trees so the decision can be exercised
+    without a dirty checkout.
+    """
+    if ranges is not None:
+        return None
+    tree = changed_files(None) if tree is None else list(tree)
+    if not tree:
+        return "the working tree is CLEAN"
+    if set(tree) <= common.session_state():
+        return ("the working tree's only change(s) are SESSION STATE, which carries no reviewable "
+                "content: %s" % ", ".join(sorted(tree)))
+    return None
+
+
 def cmd_prepush(ranges=None):
     """The mechanical gate before ANY push — batch or not.
 
@@ -2373,13 +2427,13 @@ def cmd_prepush(ranges=None):
     else:
         require(state, "prepush")
 
-    # ⚠ FAIL CLOSED when asked to judge a push whose scope we cannot see (F3, /rely 2026-08-10).
-    # Run manually on a CLEAN tree this printed `prepush PASS, exit 0` for the very state where the
-    # hook — which passes the real ranges — reported trigger 5 firing and all three signals failing
-    # to cover 154 files. The working tree simply does not know what a push contains once the work
-    # is committed, so saying PASS is a claim the command is not entitled to make.
-    if ranges is None and not changed_files(None):
-        print("\nCANNOT JUDGE: no --ranges given and the working tree is clean, so the scope of the")
+    # ⚠⚠ FAIL CLOSED when asked to judge a push whose scope we cannot see (F3, /rely 2026-08-10),
+    # and the predicate is a NAMED FUNCTION so a control can call it — see `unjudgeable_scope`,
+    # which carries the measurement showing the old literal had stopped firing entirely.
+    _unjudgeable = unjudgeable_scope(ranges)
+    if _unjudgeable is not None:
+        print("\nCANNOT JUDGE: no --ranges given and %s, so the scope of the"
+              % _unjudgeable)
         print("push is unknown. This command is only meaningful BEFORE committing; afterwards the")
         print("hook supplies the pushed ranges. Run `git push` and let the hook decide, or pass")
         print("--ranges <base>..<tip>.")
@@ -2486,9 +2540,16 @@ def cmd_prepush(ranges=None):
     # their parameters). A signal is only as good as what it certified, so the recorded verdict line
     # is echoed here: "cleared" must never be read as "clean".
     scope = reviewable_changed(ranges)
+    # ⚠ SAME REFERENT FIX AS `check_prior_art_attribution`. "scope: 1 reviewable file(s)" over a
+    # WORKING TREE whose only change was `gate_round.json` read as a one-file push and nearly
+    # cleared a nine-commit one (measured 2026-09-12). A count with no named set is a true
+    # number about an unstated object.
+    _scope_basis = ("the PUSHED RANGE(S)" if ranges is not None
+                    else "the WORKING TREE (manual run)")
     print("\n=== Reviews required for this push ===")
-    print("  scope: %d reviewable file(s)%s"
-          % (len(scope), (" — e.g. " + ", ".join(scope[:3])) if scope else " (none)"))
+    print("  scope: %d reviewable file(s) in %s%s"
+          % (len(scope), _scope_basis,
+             (" — e.g. " + ", ".join(scope[:3])) if scope else " (none)"))
     meta = {
         "editorial": ("/editorial-review", "internal consistency + prose precision",
                       "any reviewable prose in the push"),
