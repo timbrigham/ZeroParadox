@@ -1322,6 +1322,125 @@ FROZEN_WRITERS = [
 ]
 
 
+def check_prepush_scope_refusal():
+    """`cmd_prepush` must REFUSE to judge a scope it cannot see — and a tree of only SESSION STATE
+    is such a scope.
+
+    ⚠⚠ THIS SECTION EXISTS BECAUSE THE PREDICATE IT TESTS WAS DEAD AND NOTHING COULD SAY SO. The
+    refusal was the literal `if ranges is None and not changed_files(None)`, which fires only on a
+    WHOLLY clean tree. From `34bd217` (2026-09-03), when `gate_round.json` became a tracked file
+    this project deliberately keeps modified, the tree is never clean during a gate arc — so the
+    refusal never fired, `batch.py prepush` judged the range-scoped legs against a working tree
+    holding no attributable file, and printed `no attributable file changed in this push` at a
+    moment the pushed range owed FOUR. Measured 2026-09-12 by /rely; unreachable by every control
+    in this file, because a decision written as a literal at a call site has no name to call.
+
+    ⚠ SO THE ROWS CALL THE DECISION DIRECTLY, WITH CONSTRUCTED TREES. That is `routing_bad`'s
+    precedent and the same reason: a refusal inferred from an exit code cannot be distinguished
+    from a crash, and cannot be exercised at all without a dirty checkout.
+
+    ⚠ THE LAST TWO ROWS ARE NOT DERIVED FROM THE CODE THEY TEST. `guards.py` has already measured
+    that a control re-deriving its expectation from the producer's own source agrees by
+    construction and asserts nothing (see the `_need` tuple in `check_routing_enforcement`). So
+    the declared session-state set is compared against an INDEPENDENTLY WRITTEN literal. If a
+    legitimate change to `session_state.txt` turns that row red, the row is working: update it
+    deliberately, in the same commit, rather than re-deriving it to clear the red."""
+    import ast as _ast
+    import inspect
+    import textwrap
+    import batch
+
+    rows, bad = [], 0
+
+    def row(label, ok, why):
+        nonlocal bad
+        if not ok:
+            bad += 1
+        rows.append((label, ok, why))
+
+    f = getattr(batch, "unjudgeable_scope", None)
+    if f is None:
+        row("the refusal has a NAME", False,
+            "*** batch.unjudgeable_scope is GONE — the scope refusal is back to a literal at the "
+            "call site, where no control can reach it. That unreachability is the entire reason "
+            "this predicate stayed wrong for weeks; deleting the name restores it ***")
+        return rows, bad
+
+    _declared = sorted(common.session_state())
+
+    # ⚠ A TREE OF ONLY SESSION STATE AND A CLEAN TREE ARE THE SAME DECISION, and a tree carrying
+    #   one real file is NOT — that pair is the whole property. The mixed case is listed because
+    #   `set(tree) <= session` is the easy thing to write as `set(tree) & session`, which would
+    #   refuse every push that happens to have touched the round counter.
+    for label, tree, want in [
+            ("refuses a CLEAN tree", [], True),
+            ("refuses a session-state-only tree", list(_declared), True),
+            ("JUDGES a tree with real content", ["ZeroParadox/BottomCannotBe.lean"], False),
+            ("JUDGES session state PLUS content", list(_declared) + ["README.md"], False)]:
+        got = f(None, tree=tree)
+        row("prepush scope: %s" % label, (got is not None) == want,
+            ("refused: %s" % got) if got is not None else "judged, no refusal" if not want else
+            "*** judged a scope it cannot see ***")
+
+    # ⚠ AND IT MUST NEVER REFUSE WHEN RANGES ARE GIVEN. The hook always supplies them; a refusal
+    #   there would block every real push, which is the shape that teaches the `--no-verify` reflex.
+    row("prepush scope: never refuses with ranges", f(["a..b"], tree=[]) is None,
+        "ranges supplied -> judgeable, whatever the tree holds")
+
+    # ⚠ THE CALL SITE, NOT ONLY THE FUNCTION (`RLY28-1`). A named decision nobody calls is the same
+    #   as no decision at all.
+    try:
+        _src = inspect.getsource(batch.cmd_prepush)
+    except (OSError, TypeError):
+        _src = ""
+    _wired = False
+    if _src:
+        try:
+            for _n in _ast.walk(_ast.parse(textwrap.dedent(_src))):
+                if isinstance(_n, _ast.Name) and _n.id == "unjudgeable_scope" and \
+                        isinstance(_n.ctx, _ast.Load):
+                    _wired = True
+        except SyntaxError:
+            _wired = False
+    row("prepush scope: cmd_prepush reads it", _wired,
+        "`unjudgeable_scope` is read in cmd_prepush" if _wired else
+        "*** cmd_prepush never mentions unjudgeable_scope — the refusal is computed nowhere and "
+        "the command will judge any scope handed to it ***")
+
+    # ⚠ AND IT MUST STILL CONSULT THE REAL TREE. `tree=` exists for these rows; a production call
+    #   that stopped reading `changed_files` would pass every row above and refuse nothing live.
+    try:
+        _fsrc = inspect.getsource(f)
+    except (OSError, TypeError):
+        _fsrc = ""
+    _reads_tree = False
+    if _fsrc:
+        try:
+            for _n in _ast.walk(_ast.parse(textwrap.dedent(_fsrc))):
+                if isinstance(_n, _ast.Name) and _n.id == "changed_files" and \
+                        isinstance(_n.ctx, _ast.Load):
+                    _reads_tree = True
+        except SyntaxError:
+            _reads_tree = False
+    row("prepush scope: reads the real tree", _reads_tree,
+        "`changed_files` is read in unjudgeable_scope" if _reads_tree else
+        "*** unjudgeable_scope never reads changed_files — the `tree=` control affordance is now "
+        "the only input, so the live decision is made about nothing ***")
+
+    # ⚠⚠ INDEPENDENTLY WRITTEN, NOT DERIVED. See the docstring: a control that re-derives its
+    #   expectation from the producer agrees by construction. An EMPTY declaration would silently
+    #   collapse the session-state arm into the clean-tree arm and every row above would still pass.
+    _expected = {"gate_round.json"}
+    row("prepush scope: the declared set is non-empty and known",
+        bool(_declared) and _expected <= set(_declared),
+        "%d declared session-state path(s): %s" % (len(_declared), ", ".join(_declared))
+        if _declared else
+        "*** common.session_state() is EMPTY — session_state.txt is missing or unreadable, so the "
+        "session-state arm cannot fire and the refusal silently narrows back to clean-tree-only, "
+        "which is the exact state measured dead on 2026-09-12 ***")
+    return rows, bad
+
+
 def check_baseline_freeze():
     """`--baseline` must REFUSE, and must not write. Two assertions, deliberately separate.
 
@@ -1930,6 +2049,15 @@ def main():
         # the other half — that the `--baseline` path is refused AND writes nothing. Both halves are
         # needed: the routes would still pass if `--baseline` quietly started working again, because
         # they no longer use it.
+        # ⚠⚠ AND THE ONE REFUSAL NOTHING HERE COULD REACH. `cmd_prepush` declines to judge a
+        # push whose scope it cannot see; that predicate was a literal at the call site, was
+        # measured DEAD from 2026-09-03 to 2026-09-12, and no row in this file could have
+        # noticed, because a literal has no name to call.
+        print("\n  PROPERTY: prepush refuses a scope it cannot see")
+        _rows, _bad = check_prepush_scope_refusal()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
         print("\n  PROPERTY: a frozen baseline cannot be regenerated")
         _rows, _bad = check_baseline_freeze()
         for label, ok, verdict in _rows:
@@ -1979,8 +2107,16 @@ def main():
         {"check_classes.py", "check_figures.py", "check_frozen.py", "check_modal.py",
          "check_negatives.py", "check_pov.py", "check_prose.py"})]
     _subjects = [p for p in _guarded if os.path.exists(os.path.join(REPO, *p.split("/")))]
+    # ⚠⚠ `session_state.txt` IS A SWITCH THIS VERDICT NOW DEPENDS ON, and it is added
+    # EXPLICITLY because the derivation above cannot reach it: `TOUCHED` is the set the routes
+    # PLANT violations in, and `check_prepush_scope_refusal` only READS this one. Emptying it
+    # collapses the session-state arm of the prepush refusal back into clean-tree-only — the
+    # state measured dead on 2026-09-12 — and without this line that edit would not re-arm
+    # this guard. Same rule as every other switch: a subject set is everything the verdict
+    # DEPENDS ON, not merely everything it scribbled on (`§ 4a-R` R-1).
     _switches = sorted({os.path.relpath(p, REPO).replace("\\", "/") for p in TOUCHED
-                        if os.path.basename(p) != os.path.basename(PROBE_FILE)})
+                        if os.path.basename(p) != os.path.basename(PROBE_FILE)}
+                       | {"tools/verify/session_state.txt"})
     _rc = common.record_if_asked("guards", _subjects,
                                  set(_subjects) if (bad or not clean) else set(),
                                  "a route to a guarded property misbehaved, or the tree was "

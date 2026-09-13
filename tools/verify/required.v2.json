@@ -242,7 +242,7 @@
       "family": "mechanical",
       "module": "tools/verify/batch.py",
       "approved_modules": [
-        "2a61ce8c27b9c04394cdb297a925cd6308958f4c"
+        "1fffe94461ff819f39d373fc03eaf872b08ecf60"
       ],
       "scope": [
         "ZeroParadox/*.lean",
