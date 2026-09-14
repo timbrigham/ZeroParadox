@@ -368,19 +368,21 @@ COST     this was re-derived four separate ways in one session; and "nothing els
 READ     tools/process/determinism.md
 
 ## R-TWOPOLE  Every face of the bottom has TWO readings. Build both, concurrently.
-TRIGGER  (a) you are about to EDIT a `.lean` file, or WRITE a sentence (build script, docstring,
-         note, report) saying what a Lean declaration proves — main session; (b) you are about to
-         DELETE, NEGATE or FLIP a sentence about a direction, a pole, min/max, least/greatest,
-         source/sink, stronger/weaker — INCLUDING acting on a review finding that says one is
-         backwards; (c) starting fresh development, a face is stuck, or a claim needs an extra
-         assumption to close.
-RULE     on (a), FIRST load the five `*CannotBe.lean` indexes whole — `ZeroParadox/BottomCannotBe.lean`
+TRIGGER  ANY work on a public-facing surface, READING INCLUDED (Tim, 2026-09-14: "something that we
+         always need to apply"): a `.lean` file, a PDF build script or its rendered PDF, README /
+         GUIDE / CLAIMS / register / any root `.md` — and anything written ABOUT one: a report, a
+         question option put to Tim, an agent brief, a commit message. NO TOPIC LIST: the old
+         trigger named directions, poles, min/max, and a "retired" → "never retired" flip passed
+         straight through it; a list of topics is a category, and categories leak.
+RULE     FIRST load the five `*CannotBe.lean` indexes whole — `ZeroParadox/BottomCannotBe.lean`
          `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` `ZeroParadox/Order/SnapCannotBe.lean`
          `ZeroParadox/Category/ChoiceCannotBe.lean` `ZeroParadox/Computability/ComputationCannotBe.lean`
-         — once per session and again after compaction. On (b),
-         write the claim in the OTHER chart before touching it: if it holds there too, the defect is
-         a MISSING CHART and the fix ADDS that chart — a flip or a delete writes the opposite
-         one-chart sentence, which is the next round's finding.
+         — once per session and again after compaction. Before you write, delete, negate or reverse
+         ANY claim — acting on a review finding and restating a ruling included — write it in the
+         OTHER chart: if it holds there too, the defect is a MISSING CHART and the fix ADDS that
+         chart — a flip or a delete writes the opposite one-chart sentence, the next round's finding.
+         Before ONE sentence is applied at more than one site, sweep the corpus for its negation
+         (`python tools/verify/check_paths.py --full --claim`) and show Tim the exact sentence.
          Then run both, never in sequence: Q1 — where is the zero that runs to infinity? Q2 —
          what is the one-way arrow, and what does it look like run BACKWARDS? If either has
          no answer, the piece is not part of the framework yet; record that as a finding.
@@ -395,6 +397,10 @@ COST     a missing pole shows up as a bridge you cannot formalize — ZP-K imple
          "an instance carries it informatively"); § X.III deleted for "⊥'s valuation is ∞, not zero";
          and round 5 found "each layer requires less" where the lower class is strictly STRONGER and
          its laws-become-theorems reading is also true. Trigger (c) alone never fired at the FIX.
+         ⚠ RE-KEYED AGAIN 2026-09-14 (Tim): Tim's "split AX-1" was paraphrased into a question
+         option as "the occurrence half was NEVER retired" (the corpus always said retired, with
+         occurrence stated separately) and two agents applied it at ~26 sites. It sat outside
+         BOTH the topic list and the "edit a sentence" action, so the trigger is now the surface.
 READ     tools/process/two-pole-test.md
 
 ## R-REVALIDATE  A sentence fixed three times is a CLAIM defect. Measure it; do not redraft.
