@@ -1,5 +1,6 @@
 """
-Build ZP-C: Information Theory (v1.22)
+Build ZP-C: Information Theory (v1.23)
+v1.23: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). Remark R5's body carries the canonical AX-1 sentence, and the Open Items AX-1 row and validation rows R1 and R5 say 'the snap occurs given the occurrence commitment and DA-1'. Tense residue: R5's 'Remaining work: DA-1 (Definitional Alignment) must formally tie instantiation of P0 to an execution event' now says DA-1 is ZP-E's Derived Proposition, closed given DP-2, and bears on whether the Snap occurs, not on its shape; TQ-IH's 'AX-1 derivability pathway now open' now says TQ-IH is one of the results ZP-E derives the Snap's shape from. 'Binary Snap Causality' names the retired AX-1 in this document, so T-SNAP's name gloss is not placed here.
 v1.22: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). Remark R5's status label ("Closed in ZP-E DA-1 insert") and the Open Items AX-1 row ("Closed as T-SNAP in ZP-E DA-1 insert") closed AX-1 whole; both now close the shape half and name the occurrence half as a commitment. ZP-C's own Candidate Theorem label is unchanged. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): Remark R5's body, its status label, the Open Items AX-1 status cell and validation rows R1 and R5 gave "Candidate Theorem" as AX-1's CURRENT status beside its retirement. Each now says AX-1 was a Candidate Theorem in ZP-C and is now retired, with the shape proved as T-SNAP and occurrence stated separately as the occurrence commitment. T-BUF's own Candidate Theorem label is untouched.
 v1.21:Self-containment note names the ZP-A cross-layer dependency — T-BUF (Section V) invokes ZP-A D2 (state-transition, f(x)=x∨α; Lean: Order/Lattice.lean) to identify ⊥∨ε₀ as the Binary Snap, closure deferred to ZP-E DA-1.
 v1.20: Rendered Lean citations synced to post-reorg files/namespaces (SSOT-driven).
@@ -30,7 +31,7 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -223,7 +224,7 @@ def build():
         'Step 3 — Therefore the execution trace &#964;(p) = (c<sub>0</sub>, c<sub>1</sub>, &#8230;) contains c<sub>1</sub>, which is a non-null configuration state, regardless of what appears on the output tape at termination.',
         'Step 4 — The output of p being &#8869; does not imply that all configurations in &#964;(p) are &#8869;. Output state and configuration state are distinct (R4).',
         'Conclusion: No program can produce &#8869; as output without passing through a non-null intermediate configuration state. TQ-IH answered negatively. <font name="DV">&#10003;</font>',
-        'Status: DERIVED from L-RUN, D7, and R4. No Kolmogorov machinery required. AX-1 derivability pathway now open.',
+        'Status: DERIVED from L-RUN, D7, and R4. No Kolmogorov machinery required. TQ-IH is one of the results from which ZP-E derives the shape of the Snap as Theorem T-SNAP.',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R-TQ — External Confirmation of TQ-IH (April 2026)', [
@@ -245,8 +246,8 @@ def build():
     E.append(sp(4))
     E.append(label_box('Remark R5 — Updated Status of AX-1', [
         'AX-1 (Binary Snap Causality) was previously labeled Axiomatic in ZP-C.',
-        'AX-1 was a Candidate Theorem in ZP-C; it is now retired: its shape is proved as T-SNAP (ZP-E), and that the Snap occurs is stated separately, as the occurrence commitment. The derivation pathway ZP-C gave it: P<sub>0</sub> (D1) identifies the threshold. L-RUN establishes that execution at the threshold constitutes a nonzero state change. TQ-IH establishes that no program avoids this. ZP-A D2 establishes that a nonzero state change from &#8869; is the Binary Snap.',
-        'Remaining work: DA-1 (Definitional Alignment) must formally tie instantiation of P<sub>0</sub> to an execution event. This is owned by ZP-E.',
+        'AX-1 was a Candidate Theorem in ZP-C; it is now retired: its shape is proved as T-SNAP (ZP-E), and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). The derivation pathway ZP-C gave it: P<sub>0</sub> (D1) identifies the threshold. L-RUN establishes that execution at the threshold constitutes a nonzero state change. TQ-IH establishes that no program avoids this. ZP-A D2 establishes that a nonzero state change from &#8869; is the Binary Snap.',
+        'DA-1 (ZP-E, a Derived Proposition closed given DP-2) is the step that ties a configuration at P<sub>0</sub> to an execution event. It bears on whether the Snap occurs, not on its shape.',
         'Status label: RETIRED in the ZP-E DA-1 insert, as stated above. AX-1 was a Candidate Theorem in ZP-C, with its gap identified and named (DA-1).',
     ]))
 
@@ -263,7 +264,7 @@ def build():
          ['L-RUN: Hardware Lemma', 'Derived — Lemma', 'Execution is a nonzero state change. Derived from AX-B1 and D7.'],
          ['TQ-IH: Test Question', 'Closed — Confirmed', 'No program can output &#8869; without a non-null intermediate configuration state. Proven by L-RUN. Externally confirmed April 2026 (R-TQ): domain-independent, requires no Turing-specific or Kolmogorov machinery.'],
          ['T-BUF: Buffer Overflow Theorem', 'Candidate Theorem', 'Incompressibility forces non-null execution state. DA-1 bridge in ZP-E closes this fully.'],
-         ['AX-1: Binary Snap Causality', 'Retired (was a Candidate Theorem)', 'Derivation pathway formalized. AX-1 retired in the ZP-E DA-1 insert: shape proved as T-SNAP; occurrence stated separately as the occurrence commitment.']],
+         ['AX-1: Binary Snap Causality', 'Retired (was a Candidate Theorem)', 'Derivation pathway formalized. AX-1 retired in the ZP-E DA-1 insert: shape proved as T-SNAP; the snap occurs given the occurrence commitment and DA-1.']],
         [1.6*inch, 1.5*inch, 3.4*inch]
     ))
 
@@ -271,7 +272,7 @@ def build():
     E.append(data_table(
         ['Component', 'Status / Notes'],
         [['K(x|n) and P<sub>0</sub> (D1)', 'Valid — standard algorithmic IT'],
-         ['R1: Scope of P<sub>0</sub>', 'Valid — updated: AX-1 was a Candidate Theorem, not a bare axiom; it is now retired (shape proved as T-SNAP; occurrence stated separately, as the occurrence commitment)'],
+         ['R1: Scope of P<sub>0</sub>', 'Valid — updated: AX-1 was a Candidate Theorem, not a bare axiom; it is now retired (shape proved as T-SNAP; the snap occurs given the occurrence commitment and DA-1)'],
          ['RP-1: Representation Principle', 'Valid — Principle; explicit bridge; resolves reviewer gap in T1'],
          ['T1: Distributions from AX-B1 + RP-1', 'Valid — Derived; reviewer gap closed'],
          ['D2: JSD definition', 'Valid — standard'],
@@ -290,7 +291,7 @@ def build():
          ['R4: Configuration vs. output independence', 'Valid — load-bearing distinction for TQ-IH and T-BUF'],
          ['TQ-IH: Test question answered', 'Valid — Derived by L-RUN; no Kolmogorov machinery required'],
          ['T-BUF: Candidate Theorem', 'Candidate — structurally complete in ZP-C; DA-1 bridge in ZP-E closes fully'],
-         ['R5: AX-1 status updated', 'Valid — AX-1 was a Candidate Theorem in ZP-C (prior Axiomatic status corrected); it is now retired: shape proved as T-SNAP (ZP-E), occurrence stated separately, as the occurrence commitment'],
+         ['R5: AX-1 status updated', 'Valid — AX-1 was a Candidate Theorem in ZP-C (prior Axiomatic status corrected); it is now retired: shape proved as T-SNAP (ZP-E); the snap occurs given the occurrence commitment and DA-1'],
          ['R-BRIDGE: K vs. 2-adic surprisal', 'Valid — Remark; states relationship explicitly: distinct measures converging at P<sub>0</sub>; independence of L-INF and K paths preserved; cross-reference to ZP-E R-AFA for structural convergence argument']],
         [2.5*inch, 4.0*inch]
     ))

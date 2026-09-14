@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.18, revised September 2026)
+Zero Paradox — Foreword PDF Builder (v2.19, revised September 2026)
+v2.19: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The commitments-table AX-1 row carries that sentence in place of 'stated separately, as the occurrence commitment, which ZP-E's DA-1 argues for', its status cell reads 'the snap occurs given the occurrence commitment and DA-1', and 'with no axioms' is 'with no Lean kernel axioms'. The ZP-E layer paragraph said the closing result is that 'the Binary Snap is a theorem, not an axiom', with the split only in the table; it now says the shape is a theorem and the Snap occurring follows from the occurrence commitment together with DA-1. 'Binary Snap Causality' names the retired AX-1 in this document, so T-SNAP's name gloss is not placed here.
 v2.18: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The commitments table row read "Retired axiom -> Theorem T-SNAP ... Previously an axiom; now derived as Theorem T-SNAP", which retired the whole of AX-1; its type cell and statement now carry both halves. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the AX-1 row credited the shape to 'the L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
 v2.17:CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. The commitments table row, the ZP-J summary and both commitment paragraphs; the ZP-J summary also follows the CC-2 role convention (whatever fills the Quine-atom role is bottom), not 'the Quine atom Q = {Q} is provably identical to bottom' in a lattice with 'AFA grounding'. ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). The ZP-J summary now says 'not forced' with that reason. GATE ROUND 2 (ordinary, carried): the 'not forced' reason needs its scope - on a ONE-point lattice every sequence starts at bottom, so the countermodel is stated for a lattice with a second point, and the OntBridge.lean example now also shows the start is not a Quine atom.
 v2.16: OCCUPANCY OVERCLAIM RETRACTED, and a WALL PRESENTED AS A GAP (bedrock; editorial + adversary round 6). Two sites, neither reached by the ZP-I v1.16-v1.18 arc even though this document is a general reader's first contact. (1) "converges, at its limit, to something that fills the bottom role again" asserted OCCUPANCY as reached. T-IZ proves convergence to 0 in Q2; that the limit is a thing filling the bottom role is a COMMITMENT, and not merely unproved - ZPSemilattice Q_[2] does not synthesize, so the join-identity is not statable of the limit at all. The proved half, that anything filling the role IS the bottom already there, is kept and now stands alone. (2) "whether they are all one object in the deepest sense remains, honestly, an identification we make rather than a theorem we have closed" presented a WALL as an open question. An equality across distinct categories is not a well-formed proposition: CLAIMS.md retires that identity as ill-typed and the members are PROVABLY DISTINCT. The question is retired, not outstanding, and the walls between the family's members are themselves theorems.
@@ -60,7 +61,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.18'
+VERSION = '2.19'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -128,10 +129,10 @@ def commitments_table():
         ('DP-1',  'Design Commitment',
          'Orthogonality. Clopen separation in Q₂ is represented by orthogonality '
          'in H. Chosen, not derived. Stated explicitly.'),
-        ('AX-1',  'Retired: shape → Theorem T-SNAP; occurrence stated separately',
+        ('AX-1',  'Retired: shape → Theorem T-SNAP; the snap occurs given the occurrence commitment and DA-1',
          'Binary Snap Causality. Previously an axiom, now retired. Its content was split in two: the shape of the Snap '
-         'is proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no axioms), and that the Snap occurs '
-         'is stated separately, as the occurrence commitment, which ZP-E\'s DA-1 argues for. '
+         'is proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean kernel axioms), and that the Snap occurs '
+         'is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
          '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.)'),
         ('MC-1',  'The bottom family (not a commitment)',
          'The four domain bottoms (ZP-A semilattice, ZP-B p-adic topology, ZP-C information theory, '
@@ -288,7 +289,7 @@ def build():
         Paragraph(
             'The bridge layer (ZP-E) is written last. It connects all prior frameworks, traces '
             'every cross-framework claim to specific theorems, and arrives at the closing result: '
-            'the Binary Snap is a theorem, not an axiom.',
+            'the shape of the Binary Snap is a theorem, not an axiom, and that the Snap occurs follows from the occurrence commitment together with DA-1.',
             S['body']),
         Paragraph(
             'The category-theoretic layer (ZP-G) recasts the entire framework within category '

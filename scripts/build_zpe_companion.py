@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.14 | September 2026
+Version 1.15 | September 2026
+v1.15: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14), companion sync with ZP-E v3.30: the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The Central Advance paragraph carries the canonical AX-1 sentence; the chain caption no longer says the Snap occurring 'is that commitment'; the axioms-list paragraph glosses the occurrence commitment as instantiation occurs, not as 'that the Snap happens'. The Four Descriptions paragraph identified 'the first state (eps0)' with Peano Arithmetic's proof-theoretic ordinal and named only its least-fixed-point face; it now keeps two charts: in the ordinal chart eps0 is least fixed point AND tower supremum and the snap nucleus closes bottom to it in one step (snapNucleus_bot), in the discrete state chart eps0 names the first state above bottom, and ZP-E Remark R-eps0 claims no embedding. The name 'Binary Snap causality' here names the retired AX-1 only, so T-SNAP's name gloss is not placed in this companion.
 v1.14: T-SNAP PREMISES POINT AT LEAN, companion sync with ZP-E v3.29. The p2 paragraph said the formal ZP-E 'states these premises once'; it now names Premises of T-SNAP and the Lean t_snap_given, which takes the start at bottom and the step being taken as hypotheses. The derivation-chain caption said 'six steps' against the formal seven and left the occurrence commitment out of what the Snap occurring rests on; both fixed. The legal-case box said AX-1 'is now proven (T-SNAP)'; it now scopes that to the shape of the Snap and names occurrence as a commitment. The meta line hard-coded 'April 2026'; it now uses version_line with FIRST_RELEASED = April 2026 (first commit of the companion, 2026-04-17), and the footer no longer carries a date. ROUND 1 GATES (FAIL-BEDROCK, D1) + TIM'S AX-1 SPLIT (Tim, 2026-09-14: 'Both: split it'): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a commitment. The heading, the p2 AX-1 gloss (kept as history, now saying which half T-SNAP proves), the chain diagram string ('derived, not assumed'), the caption ('AX-1 (amber) is now a theorem'), the legal-case box (whose 'the assumption becomes a proven fact' inverted for the half that stays assumed) and the axioms-list paragraph now carry the split. t_snap_given takes TWO of the premises, the start at bottom and the FIRST step being taken. The caption no longer says 'with the definition of a Turing machine', which no box in the diagram shows. FOUR-FRAMEWORK DIAGRAM (ZPE-COMP-FOURFRAME-OVERFLOW): its internal caption string ran past the right page edge and duplicated the caption set directly beneath the diagram, so it is dropped; the framework boxes are widened from 1.35in to 1.6in, since 'ZP-C: Info Theory' measured wider than its box and was clipped; cy is fixed at 115 rather than derived from dh, dh goes from 3.4in to 3.2in, and the diagram now calls validate_drawing. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the page-1 title said 'the main causality axiom becomes a theorem', which put AX-1 whole, occurrence included, on the theorem side; it is now Tim's text, 'the causality axiom is retired, and the shape of the snap becomes a theorem'. 'The DA-1 insert changes this.' had lost its referent ('Because AX-1 says so') to the inserted split sentences and read as DA-1 overturning the occurrence commitment; it now says the insert puts an argument where 'Because AX-1 says so' stood and the occurrence commitment stays in place. The chain diagram's internal title string duplicated the caption and is dropped (R-DIAGRAM).
 v1.13: T-SNAP PREMISES SYNC with ZP-E v3.28 (Tim, 2026-09-13: fold ZPE-TSNAP-PREMISES into the CC-1 arc). The chain caption said T-SNAP needs 'no axioms beyond AX-B1', and the DA-1 insert ended 'The Snap is derived - not assumed'; the informal argument also uses CC-1 (S0 = bottom) for its starting point, so both now say derived given the commitments AX-B1 and CC-1. The DA-1 paragraph said DA-1 'follows from ZP-A CC-2' and the commitment 'has become a derivation', dropping that CC-2 is itself a Forced Metatheoretic Commitment (argued, not proved); it now says the derivation is from that commitment. The Lean t_snap_derived is unaffected: no hypotheses, no axioms. ADVERSARY ROUND 3 (FAIL-BEDROCK, D1): 'What the Framework Still Assumes' still said the framework 'rests on exactly three commitments - none of them novel starting assumptions' (AX-B1, AX-G1, AX-G2), contradicting this version's own p.2 (the Snap derived given CC-1, the starting point) and p.3 (CC-2 a commitment); the formal ZP-E twin row already adds CC-1. It now says three named axioms, and names CC-1 and CC-2 as further commitments stated where they are used. CLAIM-REVIEW ROUND 3 (FAIL-BEDROCK, D1): 'The Snap is derived, given two commitments: AX-B1 and CC-1' and the caption's 'given the commitments AX-B1 and CC-1' were each one short - the chain starts at DA-1, closed only given DP-2, and occurrence is a commitment (tsnap_holds_but_nothing_moves satisfies both and never moves). Both now name the split: the Lean proof fixes the shape with no assumptions; the argument uses commitments among them AX-B1 and CC-1, and that the step happens rests further on DA-1 and the occurrence commitment; the formal ZP-E states the premises once (Premises of T-SNAP). The AX-B1 gloss 'two distinct states exist' (the decidable half) is now 'existence is binary'.
 v1.12: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. The car-crash analogy described 'the forced first transition in any join-semilattice' - refuted by the gauge itself, whose MachinePhase IS a join-semilattice in which nothing moves.
@@ -180,7 +181,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -235,17 +236,20 @@ def build():
     # Four Descriptions
     E.append(Paragraph('The Four Descriptions of the Same Event', CS['h1']))
     E.append(cbody(
-        'The Binary Snap — the transition from nothing (⊥) to the first state (ε₀) — looks '
+        'The Binary Snap — the transition from nothing (⊥) to the first state above it (ε₀, in the discrete state chart) — looks '
         'different depending on which mathematical language you use. ZP-E\'s central result is '
         'that all four descriptions are consistent: one event, four angles.'))
     E.append(cbody(
-        'ε₀ is the proof-theoretic ordinal of Peano Arithmetic, the minimum ordinal whose '
+        'The symbol ε₀ has two charts, and they are not merged. In the ordinal chart, ε₀ is the '
+        'proof-theoretic ordinal of Peano Arithmetic, the minimum ordinal whose '
         'well-ordering PA cannot prove. Goodstein\'s theorem is the standard witness: every '
         'Goodstein sequence eventually terminates, but PA cannot prove this; the proof requires '
-        'transfinite induction up to ε₀. The same object has a second characterization as the '
-        'minimum fixed point of the map α ↦ ω^α. The Binary Snap arrives at ε₀ via this '
-        'fixed-point route, reaching the same object that the PA strength analysis identifies '
-        'from the proof-theoretic side.'))
+        'transfinite induction up to ε₀. That ordinal is at once the least fixed point of the map '
+        'α ↦ ω^α and the supremum of the tower ω, ω^ω, ω^(ω^ω), …, and neither face replaces the other. '
+        'In that chart the snap does land on it: closing ⊥ under α ↦ ω^α gives ε₀ in one step. '
+        'In the discrete state chart, ε₀ names the first state above ⊥, with nothing in between, while '
+        'infinitely many ordinals lie between 0 and the ordinal ε₀. The formal ZP-E treats the shared '
+        'symbol as an analogy (Remark R-ε₀) and claims no embedding of one chart into the other.'))
     E.append(four_framework_diagram())
     E.append(ccaption(
         'The Binary Snap (amber center) described simultaneously in all four frameworks. '
@@ -272,7 +276,7 @@ def build():
         'foundational assumption that could not be derived. The claim was: when P₀ is reached, '
         'the Snap happens. Why? Because AX-1 says so. That claim bundled two things: the shape of '
         'the Snap (what a step off ⊥ looks like) and its occurrence (that the step is taken). '
-        'AX-1 is now retired, and its content was split in two: T-SNAP proves the shape, and that the Snap occurs is stated separately, as the occurrence commitment.'))
+        'AX-1 is now retired, and its content was split in two: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).'))
     E.append(cbody(
         'The DA-1 insert puts an argument where "Because AX-1 says so" stood, and the occurrence '
         'commitment stays in place. The argument is now complete: reaching P₀ means a '
@@ -334,7 +338,7 @@ def build():
         'The T-SNAP derivation chain. The chain uses commitments, '
         'among them AX-B1 and CC-1 (S₀ = ⊥), and fixes the shape of the Snap; that the Snap occurs rests further on '
         'DA-1 (closed given DP-2) and on the commitment that instantiation occurs. AX-1 is retired: its shape is now a '
-        'theorem (T-SNAP, amber), and that the Snap occurs is that commitment, stated separately.'))
+        'theorem (T-SNAP, amber), and that the Snap occurs is stated separately, following from that commitment together with DA-1.'))
     E.append(sp(4))
     E.append(example_box('Real-world example — A legal case proved in part', [
         'A charge can bundle two claims: "the defendant was at the scene" and "the defendant acted." '
@@ -353,7 +357,7 @@ def build():
     E.append(sp(6))
     E.append(cbody(
         'AX-1 is not on this list: it is retired, and its shape is Theorem T-SNAP. Further commitments are not axioms and are stated where they are used, '
-        'among them the occurrence commitment (that the Snap happens), CC-1 (S₀ = ⊥, a ZP-A Conditional Claim), the choice of starting point that T-SNAP is derived given, '
+        'among them the occurrence commitment (that instantiation occurs; together with DA-1 it gives that the Snap happens), CC-1 (S₀ = ⊥, a ZP-A Conditional Claim), the choice of starting point that T-SNAP is derived given, '
         'and CC-2 (⊥ = {⊥}, a ZP-A Forced Metatheoretic Commitment), which DA-1 follows from. '
         'The framework makes no stronger claim than it has to.'))
     E.append(sp(8))

@@ -165,7 +165,7 @@ T-SNAP (Binary Snap Causality) is a derived theorem inherited from ZP-E v2.0. -/
 
 /-- T-H3: The Binary Snap is described consistently under all four functors.
     Assembled from independently proved domain theorems; no bridge axioms used.
-    - Under F_A (ZPA/ZPE): join c₀ c₁ = c₁. T-SNAP derived (the shape; AX-1 retired); occurrence the occurrence commitment.
+    - Under F_A (ZPA/ZPE): join c₀ c₁ = c₁. T-SNAP derived (the shape; AX-1 retired); the snap occurs given the occurrence commitment and DA-1.
     - Under F_B (ZPB): no continuous path ε₀ → 0 in Q₂. Topologically irreversible (C3).
     - Under F_C (ZPC): JSD(P, Q) = log 2 (1 bit). Informational cost of the Snap (T1b).
     - Under F_D (ZPD): ⟪T(0), T(ε₀)⟫_ℂ = 0. Snap produces orthogonal shift (T4).

@@ -21,8 +21,8 @@ Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 ## T-SNAP, and the retirement of AX-1
 
 AX-1 (Binary Snap Causality) is retired. Its content was split in two: the SHAPE of the snap is proved,
-as Theorem T-SNAP, and that the snap OCCURS is stated separately, as the occurrence commitment
-(`tsnap_holds_but_nothing_moves` shows T-SNAP does not carry it). Here the Binary Snap is ⊥ → ε₀ with ε₀
+as Theorem T-SNAP, and that the snap OCCURS is stated separately: it follows from the occurrence commitment
+(instantiation occurs) together with DA-1 (closed given DP-2). `tsnap_holds_but_nothing_moves` shows T-SNAP does not carry it. Here the Binary Snap is ⊥ → ε₀ with ε₀
 the running phase c₁ of MachinePhase, the first state above ⊥ in the discrete-state chart. The cross-framework link is
 established by giving `MachinePhase` (`ZeroParadox/Information/Surprisal.lean`) a `ZPSemilattice`
 instance, which makes the join conjunct of T-SNAP a direct consequence of the semilattice bottom law
