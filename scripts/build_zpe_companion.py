@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.13 | September 2026
+Version 1.14 | September 2026
+v1.14: T-SNAP PREMISES POINT AT LEAN, companion sync with ZP-E v3.29. The p2 paragraph said the formal ZP-E 'states these premises once'; it now names Premises of T-SNAP and the Lean t_snap_given, which takes the start at bottom and the step being taken as hypotheses. The derivation-chain caption said 'six steps' against the formal seven and left the occurrence commitment out of what the Snap occurring rests on; both fixed. The legal-case box said AX-1 'is now proven (T-SNAP)'; it now scopes that to the shape of the Snap and names occurrence as a commitment. The meta line hard-coded 'April 2026'; it now uses version_line with FIRST_RELEASED = April 2026 (first commit of the companion, 2026-04-17), and the footer no longer carries a date.
 v1.13: T-SNAP PREMISES SYNC with ZP-E v3.28 (Tim, 2026-09-13: fold ZPE-TSNAP-PREMISES into the CC-1 arc). The chain caption said T-SNAP needs 'no axioms beyond AX-B1', and the DA-1 insert ended 'The Snap is derived - not assumed'; the informal argument also uses CC-1 (S0 = bottom) for its starting point, so both now say derived given the commitments AX-B1 and CC-1. The DA-1 paragraph said DA-1 'follows from ZP-A CC-2' and the commitment 'has become a derivation', dropping that CC-2 is itself a Forced Metatheoretic Commitment (argued, not proved); it now says the derivation is from that commitment. The Lean t_snap_derived is unaffected: no hypotheses, no axioms. ADVERSARY ROUND 3 (FAIL-BEDROCK, D1): 'What the Framework Still Assumes' still said the framework 'rests on exactly three commitments - none of them novel starting assumptions' (AX-B1, AX-G1, AX-G2), contradicting this version's own p.2 (the Snap derived given CC-1, the starting point) and p.3 (CC-2 a commitment); the formal ZP-E twin row already adds CC-1. It now says three named axioms, and names CC-1 and CC-2 as further commitments stated where they are used. CLAIM-REVIEW ROUND 3 (FAIL-BEDROCK, D1): 'The Snap is derived, given two commitments: AX-B1 and CC-1' and the caption's 'given the commitments AX-B1 and CC-1' were each one short - the chain starts at DA-1, closed only given DP-2, and occurrence is a commitment (tsnap_holds_but_nothing_moves satisfies both and never moves). Both now name the split: the Lean proof fixes the shape with no assumptions; the argument uses commitments among them AX-B1 and CC-1, and that the step happens rests further on DA-1 and the occurrence commitment; the formal ZP-E states the premises once (Premises of T-SNAP). The AX-B1 gloss 'two distinct states exist' (the decidable half) is now 'existence is binary'.
 v1.12: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. The car-crash analogy described 'the forced first transition in any join-semilattice' - refuted by the gauge itself, whose MachinePhase IS a join-semilattice in which nothing moves.
 v1.11: Add Goodstein/proof-theoretic context for ε₀ in Four Descriptions section.
@@ -179,7 +180,8 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.13'
+VERSION = '1.14'
+FIRST_RELEASED = 'April 2026'
 
 
 def build():
@@ -190,7 +192,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-E Companion  |  Bridge Document  |  April 2026')
+            'Zero Paradox ZP-E Companion  |  Bridge Document')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -211,7 +213,7 @@ def build():
           Paragraph('Four frameworks, one event —\nand the main causality axiom becomes a theorem',
                     CS['title']),
           Paragraph('Bridge Document | DA-1 / T-SNAP Update', CS['subtitle']),
-          Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
+          Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
               'examples. It is not the formal document — every claim here restates a result '
@@ -279,7 +281,8 @@ def build():
         'sequence uses commitments, among them AX-B1 (existence is binary: a state exists or it does not) and '
         'CC-1 (the sequence starts at ⊥); that the step actually happens rests further on DA-1, which is closed '
         'only given DP-2, and on the framework&#8217;s commitment that instantiation occurs. The formal ZP-E '
-        'states these premises once, under Premises of T-SNAP.'))
+        'states these premises under Premises of T-SNAP, and the Lean t_snap_given takes the start at ⊥ and the step '
+        'being taken as its hypotheses.'))
     E.append(cbody(
         'DA-1 is now a Derived Proposition rather than a freestanding Design Principle. '
         'Previously DA-1 was an honest but freestanding commitment: "a configuration at P₀ '
@@ -325,15 +328,16 @@ def build():
         'The formal grounding of DA-1 is therefore: DP-2 plus two Lean-verified structural paths.'))
     E.append(tsnap_chain_diagram())
     E.append(ccaption(
-        'The T-SNAP derivation chain: six steps and the definition of a Turing machine. The chain uses commitments, '
+        'The T-SNAP derivation chain, with the definition of a Turing machine. The chain uses commitments, '
         'among them AX-B1 and CC-1 (S₀ = ⊥), and fixes the shape of the Snap; that the Snap occurs rests further on '
-        'DA-1 (closed given DP-2). AX-1 (amber) is now a theorem.'))
+        'DA-1 (closed given DP-2) and on the commitment that instantiation occurs. AX-1 (amber) is now a theorem.'))
     E.append(sp(4))
     E.append(example_box('Real-world example — A legal case that becomes undeniable', [
         'A court case starts with an assumption: "the defendant was at the scene." Then '
         'surveillance footage, phone records, and witness testimony all confirm it. The '
         'assumption becomes a proven fact. T-SNAP is the mathematical equivalent: what was '
-        'assumed (AX-1) is now proven (T-SNAP) by an independent chain of evidence.',
+        'assumed (AX-1) is now proved (T-SNAP) by an independent chain of evidence, for the shape of the Snap; '
+        'that the Snap happens remains a commitment.',
     ]))
     E.append(sp(8))
 

@@ -28,7 +28,7 @@ The framework's load-bearing claims. The Lean kernel reports no axiom dependency
 
 | Claim | Readable name | Lean witness | Axioms |
 |-------|---------------|--------------|--------|
-| T-SNAP | The Binary Snap (⊥ → ε₀) — the central theorem | `t_snap_derived`, `t_snap_machine`, `t_snap_join`, `t_snap_irreversible` | (none) |
+| T-SNAP | The Binary Snap (⊥ → ε₀) — the central theorem. `t_snap_given` states its premises as hypotheses (start at ⊥, step taken); `t_snap_derived` is its MachinePhase instance | `t_snap_derived`, `t_snap_given`, `t_snap_machine`, `t_snap_join`, `t_snap_irreversible` | (none) |
 | DA-1 (given DP-2) | Instantiation alignment, minimal path — *closed conditional on DP-2 (Tier 5)* | `da1_minimal_path` | (none) |
 | DP-2 (formalized) | Execution distinguishability lemma — *the proved lemma; the modeling commitment it encodes is Tier 5* | `dp2_execution_distinguishability` | (none) |
 | ⊥ = minimum | Lattice bottom is the least element (ZP-A) | `ZPSemilattice.bot_le` | (none) |
@@ -102,7 +102,7 @@ Explicit, motivated commitments. Listed so the open register holds only genuinel
 | DP-2 (execution distinguishability) | The commitment DA-1 rests on; motivated by ZP-C D7, not freely chosen | *Listed in two tiers by design:* the formalized lemma is proved and axiom-free (`dp2_execution_distinguishability`, Tier 1); the modeling choice that lemma encodes is the commitment, recorded here |
 | BA-1 (temperature T) | A universe-contingent scale parameter; specific value irrelevant to structure | Not formalized - the framework's only bridge to physical units, via Landauer's `E = kT ln2` (referenced in ZP-C/E/H). The information-thermodynamics of the snap is an open direction, not a claim. |
 
-A commitment marked "not a novel commitment" in the layers means its content is formally grounded in prior layers and derivable there; it is stated as a local axiom only for the self-containment of that layer — the same pattern by which AX-1 was stated as an axiom before being derived as T-SNAP. **AX-1 (Binary Snap Causality) is no longer an axiom:** it is Theorem T-SNAP, derived in ZP-E from A4, the standard bottom-element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant — any join-semilattice with bottom already has this property.
+A commitment marked "not a novel commitment" in the layers means its content is formally grounded in prior layers and derivable there; it is stated as a local axiom only for the self-containment of that layer — the same pattern by which AX-1 was stated as an axiom before being derived as T-SNAP. **AX-1 (Binary Snap Causality) is no longer an axiom:** it is Theorem T-SNAP, derived in ZP-E. A4, the standard bottom-element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x), gives the join; AX-B1 supplies the atom; `t_snap_given` takes the start at ⊥ and the step being taken as hypotheses. AX-1 was redundant as an axiom — any join-semilattice with bottom already has the join property.
 
 <details markdown="1">
 <summary><b>The bottom family (MC-1) — in full</b> - click to expand</summary>

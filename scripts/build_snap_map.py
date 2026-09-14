@@ -114,8 +114,8 @@ IS_NOT = [
      []),
     ("*a physical, temporal, or causal event*. The framework is silent on physics. The snap is an order and derivation transition, not a process unfolding in time; which specific state emerges first is outside its scope",
      []),
-    ("*dependent on a snap-specific axiom*. T-SNAP is derived from the bottom axiom A4 (the join identity ∀ x, ⊥ ∨ x = x) and the framework's computational commitments. No snap axiom appears anywhere in the development",
-     ["t_snap_derived"]),
+    ("*dependent on a snap-specific axiom*. T-SNAP is derived from the bottom axiom A4 (the join identity ∀ x, ⊥ ∨ x = x) and the framework's commitments; `t_snap_given` states the start at ⊥ and the step being taken as its hypotheses. No snap axiom appears anywhere in the development",
+     ["t_snap_derived", "t_snap_given"]),
     ("*proved to be a choice-free minimal first step*. ε₀ is the least fixed point of ω^· - that minimality is proved classically. What remains open is only its *choice-free* form at the ordinal-notation level: the from-below ascent on notations is choice-free, but ε₀-as-least-fixed-point currently routes through the syntax-to-semantics bridge (`tower_NF`), which inherits `Classical.choice`",
      ["epsilonZero_eq_nfp"]),
 ]

@@ -54,7 +54,7 @@ The snap is also **irreversible**: the p-adic topology layer (ZP-B) establishes,
 → **L-RUN** (execution is a nonzero state change, ZP-C)  
 → **TQ-IH** (no program outputs ⊥ without a nonzero intermediate state, ZP-C)  
 → **ZP-A D2** (a nonzero state change from ⊥ is a join - the Binary Snap)  
-→ **T-SNAP** (Binary Snap follows from A4, the standard bottom element axiom; AX-1 was redundant)
+→ **T-SNAP** (Binary Snap derived: A4, the standard bottom element axiom, gives its join, AX-B1 supplies the atom, and `t_snap_given` takes the start at ⊥ and the step being taken as hypotheses; AX-1 was redundant)
 
 </details>
 
@@ -82,7 +82,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.14 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.21 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.15 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
-| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.28 | The bridge: the snap assembled as a derived theorem across the layers. |
+| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.29 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.6 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.15 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.20 | The categorical bridge: the snap holding under all four domain functors. |
@@ -127,7 +127,7 @@ Each spoke is the same three beats: your field, then the bridge that carries it 
 
 ## Axiomatic Commitments
 
-This framework adds no axioms specific to the result: the central theorem follows from the standard bottom-element axiom of join-semilattice theory alone, and **AX-1 (Binary Snap Causality) is no longer an axiom** - it is Theorem T-SNAP, derived in ZP-E.
+This framework adds no axioms specific to the result: the central theorem takes its join from the standard bottom-element axiom of join-semilattice theory and its atom from AX-B1, with its start at ⊥ and the step being taken stated as hypotheses (`t_snap_given`), and **AX-1 (Binary Snap Causality) is no longer an axiom** - it is Theorem T-SNAP, derived in ZP-E.
 
 Of the remaining commitments, most are restatements of structure established in earlier layers (AX-G1 and AX-G2 are grounded in ZP-A's bottom element and ZP-A antisymmetry with ZP-B C3). **One is substantive and is not reducible to computation: AX-B1**, that existence is discrete rather than a continuum of partial states. The `decide` proof (`ax_b1_distinct`) checks that the two states are distinct *given* a two-element type; choosing a discrete alphabet over a continuum is the commitment itself, and is not what `decide` verifies. See the [Claims Ledger](CLAIMS.md) for the full statement.
 
