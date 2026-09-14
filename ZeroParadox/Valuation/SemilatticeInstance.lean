@@ -365,7 +365,7 @@ theorem t_inside_zero
     is the bottom element of its semilattice — the structural role of ⊥.
     ⚠ The role property is the HYPOTHESIS, never the conclusion, and this says nothing
     about Q₂: `ZPSemilattice ℚ_[2]` does not synthesize, so the join-identity is not
-    statable of `0 : ℚ₂`. Nor is novelty (SnapCannotBe.lean:43). See CLAIMS.md's T-IZ row. -/
+    statable of `0 : ℚ₂`. Nor is novelty (this theorem's gloss in SnapCannotBe.lean). See CLAIMS.md's T-IZ row. -/
 theorem t_iz_limit_is_new_null
     {L : Type*} [ZPSemilattice L]
     (terminal : L)

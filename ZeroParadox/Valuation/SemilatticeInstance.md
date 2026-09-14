@@ -13,7 +13,7 @@ Every maximal ascending chain in the Zero Paradox framework is a Cauchy sequence
    unproved. `ZPSemilattice ℚ_[2]` does not synthesize, so the join-identity is **not statable**
    of the limit: a type error, not a missing lemma.
 2. **Novelty** — reading that occupant as the chain's own *successor* null. This is C-DA2, and
-   `Order/SnapCannotBe.lean:43` forbids citing `t_iz_limit_is_new_null` as its witness.
+   the `t_iz_limit_is_new_null` gloss in `Order/SnapCannotBe.lean` forbids citing that theorem as its witness.
 
 So there are three tiers, and `CLAIMS.md`'s T-IZ row is the ratified statement of them:
 **convergence PROVED · role-recognition PROVED as an implication · occupancy a COMMITMENT ·

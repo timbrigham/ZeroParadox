@@ -20,9 +20,9 @@ DA-1 is addressed in ZPJ and ZPK. DA-2 is addressed in ZPI.
 ---
 
 ## Formal Overview
-AX-1 is retired: the SHAPE of the snap is proved (`t_snap_derived`, `t_snap_given`), and that the snap
-OCCURS is the occurrence commitment (`tsnap_holds_but_nothing_moves`). The inserts DA-1, DA-2, DA-3 and
-the cross-framework link: `ZeroParadox/Order/Snap.md`.
+AX-1 is retired: the SHAPE of the snap is proved (`t_snap_derived`, `t_snap_given`), and that the snap OCCURS follows
+from the occurrence commitment (instantiation occurs) together with DA-1, not from T-SNAP (`tsnap_holds_but_nothing_moves`).
+The inserts DA-1, DA-2, DA-3 and the cross-framework link: `ZeroParadox/Order/Snap.md`.
 -/
 
 namespace ZeroParadox
@@ -39,7 +39,7 @@ running) satisfies all four ZPA axioms A1–A4. Under this instance:
 - ε₀   = running = c₁  (the First Atomic State)
 This makes T-SNAP type-theoretically grounded: ⊥ ∨ ε₀ = ε₀ is definitional. -/
 
--- [ZP-CUSTOM] instance: ZPSemilattice MachinePhase | reason: The cross-framework bridge. MachinePhase is one of two two-element inductives in ZeroParadox/Information/Surprisal.lean (the other is BinaryState); giving it a ZPSemilattice instance makes T-SNAP (bot_join applied to MachinePhase) a direct consequence of ZP-A's A4. AX-1 is retired: its shape is proved as T-SNAP, and that the snap occurs is stated separately, as the occurrence commitment. No Mathlib lattice instance exists for MachinePhase.
+-- [ZP-CUSTOM] instance: ZPSemilattice MachinePhase | reason: The cross-framework bridge. MachinePhase is one of two two-element inductives in ZeroParadox/Information/Surprisal.lean (the other is BinaryState); giving it a ZPSemilattice instance makes T-SNAP (bot_join applied to MachinePhase) a direct consequence of ZP-A's A4. AX-1 is retired: its shape is proved as T-SNAP, and that the snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). No Mathlib lattice instance exists for MachinePhase.
 instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join x y := match x, y with
     | .initial, y       => y
@@ -110,7 +110,8 @@ theorem t_snap_machine : join c₀ c₁ = c₁ := rfl
     (1) c₀ ≠ c₁  — ZPC L-RUN: execution is a non-null state change.
     (2) c₁ ≠ c₀  — ZPC TQ-IH: no execution avoids a non-null configuration.
     (3) join c₀ c₁ = c₁  — the snap is a valid join transition (A4/bot_join).
-    Conclusion: the Binary Snap's shape is derived; that it occurs is the occurrence commitment. -/
+    Conclusion: the Binary Snap's shape is derived; that it occurs follows from the occurrence
+    commitment together with DA-1. -/
 theorem t_snap_derived :
     c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   ⟨l_run, tq_ih, rfl⟩
