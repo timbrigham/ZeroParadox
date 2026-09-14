@@ -105,7 +105,7 @@ So DA-1 is closed given its commitments, not closed outright; ZP-K supplies the
 witnesses and names the commitment, and ZP-K § III states exactly which parts are
 proved. -/
 
-/-! ## II. T-SNAP — Binary Snap Causality (AX-1 Retired)
+/-! ## II. T-SNAP — Binary Snap Causality (AX-1's Shape Half)
 
 Status: DERIVED — cross-framework.
 Dependencies: l_run, tq_ih, ZPA A4 (bot_join), ZPB C3 (cited below). -/
@@ -125,7 +125,7 @@ theorem t_snap_machine : join c₀ c₁ = c₁ := rfl
     (1) c₀ ≠ c₁  — ZPC L-RUN: execution is a non-null state change.
     (2) c₁ ≠ c₀  — ZPC TQ-IH: no execution avoids a non-null configuration.
     (3) join c₀ c₁ = c₁  — the snap is a valid join transition (A4/bot_join).
-    Conclusion: the Binary Snap is a derived consequence. AX-1 is no longer an axiom. -/
+    Conclusion: the Binary Snap's shape is derived; AX-1's occurrence half stays a commitment. -/
 theorem t_snap_derived :
     c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   ⟨l_run, tq_ih, rfl⟩
@@ -152,8 +152,9 @@ theorem tsnap_holds_but_nothing_moves :
     (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) ∧ (∀ p : MachinePhase, stuckPhase p = p) :=
   ⟨t_snap_derived, fun _ => rfl⟩
 
-/-- T-SNAP with its commitments as hypotheses, over any ZPSemilattice: CC-1 (`hcc1`, the sequence
-    starts at ⊥) and occurrence (`hocc`, the first step is taken). -/
+/-- T-SNAP with two of its commitments as hypotheses, over any ZPSemilattice: CC-1 (`hcc1`, the
+    sequence starts at ⊥) and occurrence at the first step (`hocc`, the step at index 1 is taken).
+    The two inequalities restate `hocc`; only the join conjunct is derived, from A4 (`bot_join`). -/
 theorem t_snap_given {L : Type*} [ZPSemilattice L] (S : ℕ → L)
     (hcc1 : S 0 = bot) (hocc : S 1 ≠ S 0) :
     S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1 :=
@@ -179,7 +180,7 @@ example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hS : IsStateSequence S) (
     (hocc : S (n + 1) ≠ S n) : S n ≠ S (n + 1) ∧ join (S n) (S (n + 1)) = S (n + 1) :=
   ⟨fun h => hocc h.symm, state_sequence_monotone S hS n⟩
 
--- Statement: `hocc` forces a second point (AX-B1's two states); AX-B1's discreteness is not in this signature.
+-- Statement: `hocc` forces at least two points in the carrier (`Nontrivial L`).
 example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hocc : S 1 ≠ S 0) : Nontrivial L :=
   ⟨⟨S 1, S 0, hocc⟩⟩
 
