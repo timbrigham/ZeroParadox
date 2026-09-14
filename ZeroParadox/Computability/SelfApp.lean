@@ -59,7 +59,9 @@ of a common ancestor. The formal gap described here is closed.
     The overview is left uncorrected because its block is frozen by CONTENT HASH in
     `prose_baseline.txt`: editing it re-keys the entry and `check_prose` blocks the
     commit. Route is a byte-identical move to a ride-along first, via
-    `tools/verify/move_ridealong.py`, which dissolves the cap rather than re-keying it. -/
+    `tools/verify/move_ridealong.py`, which dissolves the cap rather than re-keying it.
+    Its "Neither requires DC" is withdrawn as a claim about Aczel's proof, which neither case touches; in
+    Lean the lattice case is choice-free (`selfMem_eq_singleton_bot`) and the ℚ_[2] case is not. -/
 
 namespace ZeroParadox
 
@@ -105,9 +107,8 @@ theorem derived_quine_unique (x y : L)
   have hybot : y = bot := AbstractSelfApp.unique_fp y hy
   rw [hxbot, hybot]
 
-/-- The set of self-containing elements equals {⊥} — DC-free.
-    Uses singleton_from_unique_witness: uniqueness collapses construction
-    to identification with no Dependent Choice required. -/
+/-- The set of self-containing elements equals {⊥}, with no Classical.choice.
+    Uses singleton_from_unique_witness: a unique witness determines its set. -/
 theorem selfMem_eq_singleton_bot :
     {x : L | selfMemDerived x} = ({bot} : Set L) :=
   singleton_from_unique_witness
@@ -161,9 +162,8 @@ theorem q2_unique_fp (x : ℚ_[2]) (h : q2SelfMem x) : x = 0 := by
   unfold q2SelfMem q2SelfApp at h
   linear_combination h
 
-/-- The fixed-point set of ×2 in ℚ_[2] is {0} — DC-free.
-    Formally parallel to selfMem_eq_singleton_bot: the same
-    singleton_from_unique_witness closes both cases. -/
+/-- The fixed-point set of ×2 in ℚ_[2] is {0}, by the same singleton_from_unique_witness.
+    Carries Classical.choice through the carrier: a trivial statement over ℚ_[2] already does. -/
 theorem q2_selfMem_singleton :
     {x : ℚ_[2] | q2SelfMem x} = ({0} : Set ℚ_[2]) :=
   singleton_from_unique_witness q2SelfMem 0 q2_zero_is_fixed q2_unique_fp

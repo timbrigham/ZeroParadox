@@ -151,7 +151,8 @@ theorem val_quine_unique (x y : L)
     (hx : selfMemFromVal x) (hy : selfMemFromVal y) : x = y := by
   rw [scale_unique_fp x hx, scale_unique_fp y hy]
 
-/-- {x | selfMemFromVal x} = {⊥} — DC-free. -/
+/-- {x | selfMemFromVal x} = {⊥}. Carries Classical.choice; the `[ValuationStructure L]` assumption
+    alone suffices for that, since a trivial statement under it already carries choice. -/
 theorem val_selfMem_singleton :
     {x : L | selfMemFromVal x} = ({bot} : Set L) :=
   singleton_from_unique_witness
