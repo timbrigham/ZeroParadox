@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.31 | September 2026
+Version 1.32 | September 2026
+v1.32: CC-1 STATUS SYNC with ZP-J v2.8. The abstraction-chain table cell 'T-EXEC, J1, CC-1 as proved theorems' collapsed CC-1 to its proved half; it now reads 'CC-1 in conditional form'. cc1_derived proves the conditional (a Quine-atom start is a bottom start) and t_exec_iff the converse; the starting-point choice is restated, not forced, since a valid state sequence can start above bottom. GATE ROUND 2 (ordinary, carried): the 'not forced' reason needs its scope - on a ONE-point lattice every sequence starts at bottom, so the countermodel is stated for a lattice with a second point, and the OntBridge.lean example now also shows the start is not a Quine atom. Editorial O1: p1 said CC-2 is 'no longer a freestanding modelling assumption'; it remains ZP-A's Forced Metatheoretic Commitment, read at the lattice level as the role. Key Results: T-EXEC proves whatever fills the role is bottom (t_exec), not 'only occupant'.
 v1.31: COMPANION SYNC WITH ZP-J v2.7 (ZPJ-ITER, ZPJ-AFA-THM). "Graphs That Decorate Themselves" said composing the decoration equation around a cycle gives d(v) = scale^k(d(v)); cyclic_decoration_eq_bot never forms that equation, and it holds only at single-child vertices. The cyclic paragraph now gives the depth BOUND in plain language. AFA was called a theorem at four sites ("the unique decoration theorem", "AFA proves", "AFA's central uniqueness theorem", "AFA's decoration theorem"); Aczel ch. 1 p. 6 states it as an axiom over every graph, and each site now says so. Also, measured 2026-09-13: the Z_[2] model's Classical.choice was attributed to Mathlib alone at two sites; Mathlib's 2-adic structures carry it already in the statements (a type probe over Mathlib's multiplication reports it), and the valuation q2Val adds its own route through instDecidableEqZ2 := Classical.decEq, so both sites name both routes. And the opening said ZP-J proves T-EXEC "using the valuation structure of Q2 and the AFA uniqueness result"; t_exec is (hq.2 bot AFAStructure.bot_self_mem).symm and uses no valuation, which enters later as the explanation of uniqueness. EDITORIAL ROUND 1, Tim's call on the claim ("match the Lean"): the section formerly headed "Two Assumptions That Became Theorems" ran an implication BACKWARDS - it said the ZP-A axioms "force the bottom element to be self-containing", but bot_self_mem is a class FIELD that t_exec consumes; CC-2 now reads as an input plus an argued commitment and CC-1 as cc1_derived actually binds it (a state sequence starting at a Quine atom). Also: the T-EXEC box cited the one-direction t_exec for an iff and equated q = {q} with q in q; the Z_[2] model was presented as the full AFA route when it runs through ValBridge and reaches only the fixed-point shadow; and "these three fields can be derived" now names the two laws. EDITORIAL ROUND 2 (FAIL-BEDROCK): round 1 corrected the CC-2 section only, so four other sites still said the reverse ("a derived consequence of T-EXEC at the structural level", "T-EXEC proves the structural self-containment fixed point", "ZP-J makes that argument formal" after "which forces bottom = {bottom}", and "T-EXEC makes this explicit" under the set-membership row) - a half-applied fix turning a consistent error into a self-contradiction. Tim: "Bot is a role not a fixed value... I thought we had this worked out long ago?" It was: SetTheoryAFA.lean's NO-GO gauge says the class encodes the ROLE. Every CC-2 site now says that T-EXEC identifies the occupant of the Quine-atom role and the literal set fact is the ZF+AFA commitment. Also: T-EXEC was credited to the quine_unique field it does not use (it uses bot_self_mem and the uniqueness half of its own hypothesis); "bottom in bottom, i.e. bottom = {bottom}" reversed to the true direction; CC-1's hypothesis restored; decoration uniqueness scoped to DecorationUniverses; "the uniqueness half of what AFA asserts" is now an analogue. EDITORIAL ROUND 3 (FAIL-BEDROCK): the disclaimer and the opening still said bottom = {bottom} is "provably the unique bottom element" and "a derived theorem" two sentences before the corrected paragraph denied it. Restated to Wheel.lean's CC-2 convention: the set identity is stated only of AFA set theory, where it is well-typed, and the lattice-level statement is the role and its occupant. The Remember box and Key Results no longer call bottom both the role and the occupant; "the self-containing set is {bottom}" now says the SET OF self-containing elements is {bottom}; the Quine-atom diagram caption says the picture is of the AFA set. ADVERSARY ROUND 4 (FAIL-BEDROCK, D1): the section headed "Aczel's DC Question - Closed for Self-Membership" said "ZP-J answers this question for the self-membership case: DC is not essential". The Lean identifies the set of self-containing elements in a lattice with no Classical.choice; it defines no set-continuous operator and never meets the step of Aczel's proof that uses DC, so it answers nothing about that proof. This is the recurrence of the v1.20/v1.22 AR fixes, which had removed the Aczel-specific claim. Retitled and restated; the intro and Key Results no longer say "no Dependent Choice". TIM'S CALL ON ROUND 4 (carrier): CC-1 restated as an equivalence - given AFAStructure, starting at a Quine atom and starting at bottom are the same condition (cc1_derived, and t_exec_iff for the converse), so CC-1 is restated through the role, not forced; the opening, the Two Assumptions section and Key Results say so, and that section no longer says the claims "became theorems". ROUND-4 ORDINARY RESIDUE: the T-EXEC box no longer places a Lean theorem "in the ZF+AFA setting" and says ZP-A semilattice, not "any type"; the Remember box no longer says "properly grounded under AFA" (a condition no bottom fails); the abstraction-chain paragraph now says every ZP-A semilattice supplies the class trivially; CC-2 is ZP-A's argued metatheoretic commitment, not "previously a modelling commitment". ADVERSARY ROUND 5 (FAIL-BEDROCK, D1): the abstraction-chain section ran the implication BACKWARDS - "AbstractSelfApp requires less", "ValuationStructure requires even less", "Each layer of the chain removes one more thing you have to assume" - one sentence after saying every ZP-A semilattice carries AFAStructure trivially. toAbstractSelfApp and toAFAStructure are instances, so ValuationStructure is the STRONGEST assumption: every lattice carries AbstractSelfApp and AFAStructure, and valuationStructure_forces_infinite makes any nontrivial ValuationStructure carrier infinite, which is why OntologicalStates has none. The section now reads the table top-down with the stronger rows on top, says the stronger rows buy an explanation rather than fewer assumptions, and is retitled from "Peeling Back the Layers"; ValBridge (weaker than ValuationStructure, and not a route to AFAStructure) now sits "beside the chain" rather than "one more layer underneath"; the opening, the "four directions" summary, the valuation-argument lead-in and Key Results no longer say the chain reduces the commitments. TWO-POLE AUDIT RESTORATIONS (Tim: restore all): (L2) CC-2 is ZP-A's Forced Metatheoretic Commitment with a proved half (Foundation-freeness) and an argued half; (L3) the opening, Two Assumptions and Key Results no longer say the set equation is "not derived" - in AFA set theory Q = {Q} is a theorem with exactly one solution (Aczel Ex. 1.3) and the commitment is that the framework's bottom is that set; (L5) the Z_[2] remember box keeps that Scale.lean section V proves Z_[2] admits the full chain as an existence statement; (L8) the APG section keeps that "every APG pictures a unique set" follows from AFA and that Mostowski gives the well-founded case without it. Also the Quine atom is "its own sole member" rather than "self-containing" (0* = {empty, 0*} is self-membered and not the Quine atom, Aczel Ex. 1.5); the opening's "in that setting" for a Lean equivalence; and "a simpler input, fixed_bot" (pre-round-5 polarity; the structure carrying fixed_bot is the stronger one).
 v1.30: FIELD-COUNT SLIP CORRECTED (companion sync with ZP-J v2.6). "AFAStructure has three typeclass fields - three things you must prove" counted the DATA field as an obligation: SetTheoryAFA.lean:80 declares `selfMem : L -> Prop`, a predicate you SUPPLY, alongside two laws you prove. Same slip the formal document carried for DecorationUniverse, where counting `collect` as a law is what made two laws read as three.
 v1.29: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
@@ -176,7 +177,7 @@ def abstraction_chain_table():
          'bot_self_mem and quine_unique as theorems; selfMem supplied as a definition (data)'],
         ['AFAStructure',
          'selfMem, bot_self_mem, quine_unique directly as typeclass fields',
-         'T-EXEC, J1, CC-1 as proved theorems'],
+         'T-EXEC, J1, and CC-1 in conditional form as proved theorems'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['tbl_cell']),
                      Paragraph(fix(r[1]), CS['tbl_cell']),
@@ -195,7 +196,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.31'
+VERSION = '1.32'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -257,13 +258,14 @@ def build():
         'element  - is the bottom element &#8869;; its later sections add a valuation argument, '
         'also machine-checked for the 2-adic integers, that derives the typeclass laws in '
         'carriers that have a depth measure. '
-        'CC-2 (&#8869; = {&#8869;}) is no longer a freestanding modelling assumption: its structural '
-        'content is that role, and T-EXEC identifies its occupant. In AFA set theory the set '
+        'CC-2 (&#8869; = {&#8869;}) remains a commitment (ZP-A calls it a Forced Metatheoretic '
+        'Commitment); at the lattice level it is read as that role, and T-EXEC identifies the role\'s occupant. In AFA set theory the set '
         'Q = {Q} exists and is unique, a consequence of the axiom (Aczel 1988, Example 1.3); that the '
         'framework\'s &#8869; is that set is the commitment, argued rather than chosen freely, and not a '
         'Lean theorem. CC-1 (S&#8320; = &#8869;) is restated, not forced: in any lattice carrying the '
-        'typeclass, a state sequence starts at a Quine atom exactly when it starts at &#8869;, so the choice of '
-        'starting point is expressed through the role rather than removed.'))
+        'typeclass, a state sequence starts at a Quine atom exactly when it starts at &#8869;, and on a '
+        'lattice with a second point a valid sequence can start above &#8869;, at a point that is not a '
+        'Quine atom, so the choice of starting point is expressed through the role rather than removed.'))
     E.append(cbody(
         'ZP-J extends the T-EXEC result in four directions: it identifies the set of '
         'self-containing elements as {&#8869;} without the axiom of choice; it derives the '
@@ -392,7 +394,8 @@ def build():
         'state sequence starts at a Quine atom, it starts at &#8869;, because T-EXEC identifies '
         'the Quine atom with &#8869;. The converse holds too (t_exec_iff), so the two starting '
         'conditions are the same. What is proved is that equivalence; the choice to start there '
-        'is restated, not forced.'))
+        'is restated, not forced, since on a lattice with a second point a valid sequence can start '
+        'above &#8869;.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: the Quine atom here is a role, not a fixed value, and placing ⊥ in it is an '
@@ -597,8 +600,8 @@ def build():
         'The Quine atom, the order minimum, and the join identity are the same element. '
         'CC-1 (S&#8320; = &#8869;): a state sequence starts at a Quine atom exactly when it starts '
         'at &#8869; (cc1_derived with t_exec_iff)  - axiom-free in Lean 4; the starting point is '
-        'restated through the role, not forced. '
-        'CC-2 (&#8869; = {&#8869;}): its structural content is a role, the Quine-atom role that AFAStructure encodes, and T-EXEC proves &#8869; is that role\'s only occupant (axiom-free); in AFA set theory Q = {Q} has exactly one solution, a theorem of that theory, and that the framework\'s &#8869; is that set is the commitment, not a Lean theorem. '
+        'restated through the role, not forced (on a lattice with a second point a valid sequence can start above &#8869;). '
+        'CC-2 (&#8869; = {&#8869;}): its structural content is a role, the Quine-atom role that AFAStructure encodes, and T-EXEC proves whatever fills that role is &#8869; (axiom-free); in AFA set theory Q = {Q} has exactly one solution, a theorem of that theory, and that the framework\'s &#8869; is that set is the commitment, not a Lean theorem. '
         'Choice-free: the set of self-containing elements, {&#8869;}, is identified in one step '
         'with no axiom of choice; this does not address Aczel\'s question about Dependent Choice. '
         'Abstraction chain: ValuationStructure &#8594; AbstractSelfApp &#8594; AFAStructure  - '

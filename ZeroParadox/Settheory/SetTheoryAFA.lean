@@ -19,44 +19,10 @@ such bottom elements across instantiations is addressed in ZPI.
 
 ---
 
-## Formal Overview (AI-assisted)
-
-Establishes T-EXEC: in any ZP-A lattice with AFA set-theoretic grounding, the
-unique Quine atom Q (satisfying Q = {Q} under AFA) is provably the bottom element
-⊥ — deriving CC-1 from ZP-A rather than committing to it.
-
-## Structure
-
-- § I   AFA machinery: self-membership, Quine atom, bot_self_mem
-- § II  T-EXEC: main theorem — Q = ⊥, derived from structure alone
-- § III AX-J1 as a derived theorem (was an axiom in the stub)
-- § IV  CC-1 as a theorem
-- § V   Full biconditional: IsQuineAtom q ↔ q = bot
-- § VI  Uniqueness
-
-## What is new here
-
-ZP-A CC-1 states: "the initial state S₀ = ⊥" as a modelling commitment (A4 does
-not force which element of L plays the ⊥ role in any given instantiation). ZP-J
-provides the missing derivation: the Quine atom — the unique self-containing element
-under AFA — is the element that must play the ⊥ role.
-
-The key is `AFAStructure.bot_self_mem`: encoding structurally that the bottom element
-IS the self-containing element. With this, T-EXEC falls out immediately from Quine
-uniqueness alone — no bridge axiom required. The commitment dissolves into the
-structural definition of what it means for a lattice to have AFA grounding.
-
-## Axiom footprint
-
-T-EXEC depends only on:
-- `AFAStructure.quine_unique` (AFA uniqueness — class field; follows directly from AFA's "every graph has a unique decoration" clause in ZF+AFA; Aczel 1988 ch. 1)
-- `AFAStructure.bot_self_mem` (bottom is self-containing — class field)
-- No freestanding axioms. No kernel axioms beyond propext.
-
-## Dependencies
-
-ZP-E (full synthesis: ZP-A through ZP-D, T-SNAP, DA-2).
-No new Mathlib imports beyond those already present in ZP-E.
+`Statement:` in a ZP-A lattice with `AFAStructure`, any Quine atom (self-containing, and the only such) is ⊥ (`t_exec`,
+from `bot_self_mem`; no axioms), and CC-1 is restated: `cc1_derived` with `t_exec_iff` makes a Quine-atom start and a ⊥
+start one condition. On a carrier with a second point it is not forced (`ZeroParadox/Settheory/OntBridge.lean`).
+`Reading:` the role encodes the ZF+AFA set Q = {Q}; that ⊥ is that set is CC-2's commitment. (NO-GO gauge below.)
 -/
 
 namespace ZeroParadox
@@ -71,9 +37,8 @@ open ZeroParadox
     (1) Quine uniqueness — at most one element is self-containing;
     (2) bot_self_mem — the bottom element IS the self-containing element.
 
-    This encodes structurally that ⊥ = {⊥}: the bottom of the lattice is the
-    unique Quine atom. No separate bridge axiom is needed — T-EXEC follows from
-    (1) and (2) by pure logic. -/
+    Field (2) places ⊥ in the Quine-atom role (the lattice encoding of the ZF+AFA set Q = {Q}).
+    T-EXEC follows from field (2) and its own hypothesis; field (1) is used by the converse. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet uses the Axiom of Foundation (ZFSet.regularity), which forbids x ∈ x. No ZFSet element can satisfy x ∈ x, so a Quine atom is not directly available as a ZFSet; AFA content is still MODELLABLE over a well-founded universe, as Aczel does via decorations of accessible pointed graphs. AFAStructure is the lattice-level encoding of what ZF+AFA provides set-theoretically, with selfMem/quine_unique/bot_self_mem as the three minimal class fields.
 class AFAStructure (L : Type*) [ZPSemilattice L] where
   /-- x plays the self-containment role; read in ZF+AFA, x = {x} (its own sole member). Not bare
@@ -91,9 +56,8 @@ class AFAStructure (L : Type*) [ZPSemilattice L] where
       clause its content.
       Source: Aczel, Non-Well-Founded Sets (CSLI 1988), ch. 1. -/
   quine_unique : ∀ x y : L, selfMem x → selfMem y → x = y
-  /-- The bottom element is self-containing: ⊥ = {⊥}.
-      This is the structural encoding of the AFA identification — ⊥ is the Quine atom.
-      Any ZP-A lattice with AFA grounding must exhibit this property. -/
+  /-- The bottom element is self-containing: this field places ⊥ in the Quine-atom role (the
+      lattice encoding of the ZF+AFA set Q = {Q}). Every ZP-A lattice can supply it (NO-GO gauge). -/
   bot_self_mem : selfMem bot
 
 /-! ### NO-GO gauge — nothing fails, and that is EXPECTED (Tim, 2026-08-09).
@@ -133,7 +97,7 @@ theorem quine_atom_unique {L : Type*} [ZPSemilattice L] [AFAStructure L]
     - bot_self_mem says: bot is self-containing
     - Therefore: bot = q, i.e. q = bot
 
-    No bridge axiom. No freestanding commitment. Pure structural derivation. -/
+    No bridge axiom: the field bot_self_mem is the input, and quine_unique is not used. -/
 theorem t_exec {L : Type*} [ZPSemilattice L] [AFAStructure L]
     (q : L) (hq : IsQuineAtom q) : q = bot :=
   (hq.2 bot AFAStructure.bot_self_mem).symm
@@ -149,10 +113,10 @@ theorem j1_quine_join_identity {L : Type*} [ZPSemilattice L] [AFAStructure L]
   rw [t_exec q hq]
   exact bot_join
 
-/-! ## § IV. CC-1 as a Theorem -/
+/-! ## § IV. CC-1, Conditional Form -/
 
-/-- CC-1 (Derived): If the initial state S₀ is the Quine atom, then S₀ = ⊥.
-    A theorem, not a conditional claim. -/
+/-- CC-1, conditional form: if the initial state S₀ is a Quine atom, then S₀ = ⊥. With `t_exec_iff`
+    the converse holds, so the two starting conditions are one; neither is forced on a carrier with a second point. -/
 theorem cc1_derived {L : Type*} [ZPSemilattice L] [AFAStructure L]
     (q : L) (hq : IsQuineAtom q)
     (S : ℕ → L) (_ : IsStateSequence S) (hS0 : S 0 = q) :
@@ -186,15 +150,8 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-Expected footprint:
-- t_exec:               does not depend on any axioms
-- j1_quine_join_identity: does not depend on any axioms
-- cc1_derived:          does not depend on any axioms
-- bot_unique:           does not depend on any axioms
-- quine_atom_unique:    does not depend on any axioms
-
-All results are derived from the ZPSemilattice and AFAStructure class fields alone.
-No freestanding axioms. The full chain ⊥ = {⊥} → Q = ⊥ is structurally enforced. -/
+Expected footprint: no axioms for every declaration printed below (the lines are the measurement).
+All results take the ZPSemilattice and AFAStructure class fields as hypotheses; none adds an axiom. -/
 
 section PurityCheck
 open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
@@ -205,5 +162,7 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms bot_unique
 #print axioms quine_atom_unique
 #print axioms bot_is_quine_atom
+#print axioms t_exec_iff
+#print axioms t_exec_triple_iff
 
 end PurityCheck

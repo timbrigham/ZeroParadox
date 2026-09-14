@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.19 | June 2026
+Version 1.20 | September 2026
+v1.20: CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. The AX-G2 verification note no longer places a Lean result 'within the ZF+AFA setting'. ADVERSARY ROUND 1 (FAIL-BEDROCK, D1): that note's 'It remains a stated commitment, not a freestanding one' kept the retracted reading ('freestanding' is CLAIMS.md's word for a free modelling choice, which CC-1 is); it now says the check holds given CC-1.
 v1.19: AX-B1 OVERCLAIM RETRACTED (bedrock). The closing line read "No novel axioms: AX-B1 decidable, AX-G1 and AX-G2 grounded in prior layers". AX-B1 is the framework's ONE substantive modelling commitment - discrete Boolean existence rather than a continuum of partial states - and the `decide` proof only checks the two states are distinct GIVEN the two-element type; it does not verify the commitment. The Foreword retracted this exact wording at v2.12; ZP-H was the surviving twin.
 v1.18: FORCING OVERCLAIM RETRACTED (Remark R-FORCING). F_B was said to "force an irreversible jump at 0"; Valuation/Padic.lean retracts exactly that - the 2-adic topology proves irreversibility and a clopen gap, never a first step, and no metric result could. The closing "structurally forced across all four" now reads as the SHAPE being constrained; occurrence stays a framework commitment.
 v1.16: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
@@ -31,7 +32,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -229,7 +230,7 @@ def build():
             'AX-G2 respected: No join operation in L can return to &#8869; from a strictly larger state (ZP-A T3, '
             'monotonicity). Therefore F<sub>A</sub> sends no non-initial morphism to a map terminating at &#8869;. '
             'Note: this verification depends on CC-1 / DA-2 to identify L\'s &#8869; with C\'s initial object 0. '
-            'CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4) within the ZF+AFA setting — no longer a freestanding modelling commitment. <font name="DV">&#10003;</font>',
+            'CC-1 is restated in ZP-J, not forced: given AFAStructure, starting at a Quine atom and starting at &#8869; are the same condition (cc1_derived, t_exec_iff, Lean 4). The choice of starting point remains a ZP-A modelling commitment, so this check holds given CC-1. <font name="DV">&#10003;</font>',
         ]
     ))
     E.append(sp(6))

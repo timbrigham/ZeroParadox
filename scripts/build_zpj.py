@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.7 | September 2026
+Version 2.8 | September 2026
+v2.8: CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. Here: the Open Items row 'ZP-A CC-1 cross-check' is RESOLVED (ZP-A v1.22 matches), and the result box is titled 'Theorem CC-1, Conditional Form' rather than 'Theorem CC-1 (Derived)'. ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). Also 'T-EXEC, J1, CC-1: proved axiom-free' collapsed CC-1 to its proved half and now reads 'CC-1 in conditional form'; the traceability row reads 'CC-1, conditional form'; the result box is a Corollary (a one-step rewrite of T-EXEC, R-NAMING), not a Theorem. GATE ROUND 2 (ordinary, carried): the 'not forced' reason needs its scope - on a ONE-point lattice every sequence starts at bottom, so the countermodel is stated for a lattice with a second point, and the OntBridge.lean example now also shows the start is not a Quine atom. The p1, section I and callout reasons now state that scope.
 v2.7: THREE BEDROCK REMEDIATED IN ONE ROUND (ZPJ-ITER, ZPJ-AXFREE, ZPJ-AFA-THM) - closure is the gates' verdict, not this entry's. (1) Section X.II said composing the decoration equation around a cycle gives d(v) = scale^k(d(v)); collect reduces to scale only through collect_singleton, i.e. only at single-child vertices, and cyclic_decoration_eq_bot never forms scale^[k] - it chains collect_val_ge and path_val_chain as INEQUALITIES (read off the elaborated proof term, which also consumes val_finite_of_ne_bot and neither val_iterate nor scale_iterate_unique_fp). The traceability register grounded it in exactly those two unused lemmas; both now name what the proof consumes, wording copied from ZP-J AFA Addendum IV.1. kCycle_node_eq_bot is marked as taking its cycle equation as a hypothesis. Section X.III's "the valuation argument closes the equation" (Tim's approved minimal fix) now says the valuation bound forces the bottom. (2) Six traceability cells said "axiom-free" and each was measured false with lake env lean on 2026-09-13: scale_unique_fp, toAbstractSelfApp, instNatInfZPS, instNatInfVal and cyclic_decoration_eq_bot report [propext, Classical.choice, Quot.sound], and singleton_from_unique_witness reports [propext, Quot.sound] - the last sat beside its own "Set extensionality (propext)" grounding. The other axiom-free cells were re-measured and hold (t_exec, j1_quine_join_identity, cc1_derived, bot_is_quine_atom, t_exec_iff, bot_unique, instOntSelfApp). (3) AFA was called a theorem about APGs. Aczel ch. 1 p. 6 (opened): "The Anti-Foundation Axiom, AFA: Every graph has a unique decoration", with "every apg is a picture of a unique set" listed as a consequence. Section II and Section X.I now state the axiom; the Section VI chain summary and the Section X preamble, which both said this document proves "the full AFA decoration uniqueness theorem" and were found by reading the RENDERED text after the first rebuild, now say it proves the uniqueness clause over abstract DecorationUniverses; and the Section X callout calls decoration_unique the analogue of that clause. EDITORIAL ROUND 1 (FAIL-BEDROCK, 1 bedrock + ordinaries) folded into the same version: B-1, "ZP-J's version of this theorem" survived one sentence after the rewrite and now named either AFA or Mostowski as a theorem ZP-J restates - it names ZP-J's uniqueness result; Mostowski's Collapsing Lemma is cited at p. 4 in Aczel's own wording, not as "the decoration theorem"; "only when every vertex has exactly one child" (this version's own overstatement) is now the sufficient condition - a singleton child image; the callout named collect_singleton, which decoration_unique never consumes, and said "characterises" where only sufficiency is proved; "Z_[2] cannot be a formal instance because it is a ring" is refuted by Scale.lean section V's elaborated existence proof and now says no instance is REGISTERED, with the Open Items row restated to match; field counting in Section VIII names the two laws; X.II introduces p and marks path_val_chain private. EDITORIAL ROUND 2 (FAIL-BEDROCK in the companion; ordinaries here): "the uniqueness clause of AFA" at Sections VI and X identified ZP-J's result with AFA's own clause and is now an analogue; Remark R-J.1 and the T-EXEC traceability row credited quine_unique, which t_exec does not use - it uses bot_self_mem and the uniqueness half of IsQuineAtom q; "bottom in bottom, i.e. bottom = {bottom}" reversed to the true direction; decoration uniqueness scoped to DecorationUniverses in the page-1 summary and the endnote. EDITORIAL ROUND 3 (FAIL-BEDROCK, claim-revalidation round): Sections III.II, III.III and VI argued that AFAStructure is an obligation a lattice might fail - "if it cannot, it is not genuinely AFA-grounded", "concrete lattices must earn their AFA status", the content of bottom = {bottom} "now lives in bot_self_mem". Measured false: every ZPSemilattice carries AFAStructure (trivialSelfApp via abstractSelfApp_always_inhabited, then toAFAStructure; the reviewer also built selfMem := (. = bot) directly, axiom-free). Restated to the corpus's CC-2 convention (Wheel.lean, 2026-08-02; Tim: "bot is a role not a fixed value"): the literal set identity is a ZF+AFA statement and is never asserted of a carrier, because on a carrier it is a cross-type equality; the Lean carries the ROLE, as a hypothesis, and T-EXEC identifies its occupant. The true half of III.III is kept - a class field adds nothing to the purity report where a freestanding axiom would. Also CC-1's starting-point hypothesis restored at the abstract, Section I, V.II and the Open Items rows. ADVERSARY ROUND 4 (FAIL-BEDROCK, fix authored by the adversary, D1): (A-1) the abstract, Section VII and the Open Items row said ZP-J shows Aczel's use of Dependent Choice is unnecessary "for the self-membership case" and marked the question CLOSED. Measured false as a premise: J_self is defined by comprehension on selfMem, no set-continuous operator is defined, and J_self_is_largest is the instance of S subset {x | P x} for an arbitrary predicate, elaborated axiom-free with no uniqueness; Aczel's DC step (printed pp. 76-77, proof of 6.5(2)) passes from a class to a set and has no counterpart in the encoding. Section VII now states what the Lean measures (no Classical.choice) and that it does not reach Aczel's question; the Open Items status is NOT ADDRESSED; the "DC-free" labels on Lean results now say "no Classical.choice". Aczel's Theorem 6.5 is quoted as stated (largest fixed point; part (2) for classes X subset PhiX), and the Phi/Sigma glyph mix is gone. (B-1, corroborating editorial round 4) Section III.II located an instance's content in "a witness that its selfMem differs from equality with bottom"; in every AFAStructure selfMem x iff x = bot, axiom-free, so it now points to selfMem_determines_singleton and to the map selfMem is defined from. TIM'S CALLS ON ROUND 4 (carrier): (1) A-1 retraction accepted as authored. (2) CC-1 restated as an equivalence (editorial O-4, adversary routing): given AFAStructure, "a state sequence starts at a Quine atom" and "it starts at bottom" are the same condition - cc1_derived one way, t_exec_iff the other, the adversary measured the biconditional axiom-free - so CC-1's starting point is restated through the role, not forced; "CLOSED" became "RESTATED - not forced" at the abstract, Section I and its callout, Section V, VI.III, the traceability row, the Open Items rows and the endnote. Also the Section IV.III box now cites t_exec_triple_iff for the three-way statement (both reviewers). ROUND-4 ORDINARY RESIDUE FOLDED IN BEFORE THE LAST BEDROCK ROUND (same CC-2 role class the gates graded bedrock twice): Section II.III no longer says a lattice "grounded in ZF+AFA" satisfies the fields - every ZPSemilattice does; R-J.0 no longer says CIC lacks membership - the statement is ill-typed on a carrier and Mathlib's ZFSet satisfies Foundation (ZFSet.mem_irrefl); R-J.1 "purely order-theoretic" -> uses neither order nor join (t_exec is (hq.2 bot bot_self_mem).symm); the Quine-atom condition is "the self-containment role", not "set-theoretic"; Section VI.II names ZP-A's CC-2 box rather than "a narrative comment"; full path for SelfApp.lean in Section VIII; the Section X.III zero-side/infinity-side reading DELETED (unmeasured, and cyclic vertices receive bottom, whose valuation is top, so it pointed the opposite way). ADVERSARY ROUND 5 (FAIL-BEDROCK, D1): Sections VI.III and VIII said the abstraction chain "reduces the axiom load of AFAStructure" and asked for "something more primitive". The arrows run the other way: toAbstractSelfApp and toAFAStructure are instances, so ValuationStructure is the STRONGEST hypothesis in the chain; every ZPSemilattice carries AbstractSelfApp and AFAStructure, while valuationStructure_forces_infinite makes any nontrivial ValuationStructure carrier infinite (a scratchpad probe also proved no ValuationStructure on OntologicalStates). Both sites now say the chain derives the laws from stronger structures, VIII.I no longer says AbstractSelfApp "proves" its own unique_fp field, VIII.IV states the direction with the theorem, and IX no longer attributes the two-element obstruction to val_scale alone (OntBridge.lean: the obstruction is joint). TWO-POLE AUDIT RESTORATIONS (fresh read-only auditor after R-TWOPOLE was re-keyed; Tim: restore all): eight fixes in this arc and the wheel arc had kept one chart of a two-chart reading. Here: (L1) the Section X.III sentence from Tim's APG.lean Engineer's Take is back as a coincidence of two charts - a cyclic vertex receives the order-theoretic zero bottom AND its valuation is top (cyclic_decoration_eq_bot with val_bot, now also an example in APG.lean) - one-way, and fenced from AFA sets by Aczel Ex. 1.5; round 4's deletion reason read bottom in the valuation chart only. (L2) CC-2 is ZP-A's FORCED Metatheoretic Commitment with its proved half (quineHost_not_wellFounded, zfSet_no_quine_bottom) and its argued half, not just "argued". (L3) Section VI.II no longer merges the ZF+AFA theorem Q = {Q} (Aczel Ex. 1.3) into the commitment that the framework's bottom is that set (Wheel.lean's "do not retire the equation"). (L4) the Section IV.III three-language box keeps the set-theory chart. Also: the AFAStructure box glossed selfMem as "contains itself as a member"; under AFA 0* = {empty, 0*} is self-membered and is not Q (Aczel Ex. 1.5), so the set-level reading is x = {x}; R-J.0's "never" (a Membership L L instance can be declared) is now "none in scope"; the kCycle_node_eq_bot row carries k >= 1.
 v2.6: PHANTOM AXIOM REMOVED (bedrock). The rendered DecorationUniverse box published THREE laws; APG.lean declares exactly TWO. The middle one, collect_ext ("collect respects set equality"), does not exist anywhere in the corpus, and §X cited it as the MECHANISM for acyclic_induction_step. The real proof shows the two child image sets equal (Set.ext) and rewrites — ordinary congruence, free from equality itself, consuming no class axiom; an interface law would instead be a premise every implementer must supply, so the text billed the proof for a cost it never pays. Also struck the side condition "x != bot" from collect_val_ge, which the Lean statement does not carry (a published axiom with an extra premise is weaker in print than what is proved). The box is now copied verbatim from build_zpj_afa_addendum.py, which already transcribes the Lean literally rather than glossing it.
 v2.5: Rendered Lean citations synced to post-reorg files/namespaces the v2.4 pass missed: ZPJ.lean -> SetTheoryAFA.lean; ZeroParadox.ZPJ.* -> ZeroParadox.* (per-layer namespaces flattened); ZPE.da2_bottom_characterization -> da2_bottom_characterization (now in Snap.lean).
@@ -22,7 +23,7 @@ v1.0: Initial release — Theorem T-EXEC; all ZPJ.lean theorems axiom-free.
 import os
 from zp_utils import *
 
-VERSION = '2.7'
+VERSION = '2.8'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -52,8 +53,9 @@ def build():
         'Axiom) &#8212; is provably the bottom element &#8869;. This bridges the set-theoretic and '
         'order-theoretic layers of the framework at the level of that role; the set identity '
         'itself stays in ZF+AFA. CC-1 from ZP-A, which stated "S&#8320; = &#8869;" as a modelling '
-        'commitment, is restated rather than forced: given the typeclass, starting at a Quine atom '
-        'and starting at &#8869; are the same condition.'))
+        'commitment, is restated: given the typeclass, starting at a Quine atom and starting at &#8869; '
+        'are the same condition. It is not forced: on a carrier with a second point a valid state '
+        'sequence can start elsewhere (ZeroParadox/Settheory/OntBridge.lean).'))
     E.append(body(
         'This layer extends the core T-EXEC result in four directions: it identifies the set of '
         'self-containing elements as {&#8869;} with no Classical.choice, and states why that does not '
@@ -87,9 +89,10 @@ def build():
     E.append(body(
         'The question ZP-J investigates: is this choice forced? Is there a structural reason &#8212; '
         'derivable from the framework\'s foundational commitments &#8212; that any well-grounded '
-        'instantiation of ZP-A must begin at &#8869;? The answer is that the choice is restated, '
-        'not forced: if the lattice carries AFAStructure, a sequence starts at a Quine atom exactly '
-        'when it starts at &#8869; (Section V). The commitment to start there remains; it is now '
+        'instantiation of ZP-A must begin at &#8869;? The answer is that the choice is restated: if the '
+        'lattice carries AFAStructure, a sequence starts at a Quine atom exactly when it starts at &#8869; '
+        '(Section V). It is not forced: on a carrier with a second point a valid state sequence starts '
+        'above &#8869;, at a point that is not a Quine atom (ZeroParadox/Settheory/OntBridge.lean). The commitment to start there remains; it is now '
         'expressed through the Quine-atom role rather than as a bare choice of element.'))
 
     E.append(Paragraph('II. The Implicit Identification', S['h2']))
@@ -108,9 +111,9 @@ def build():
         'Open question entering ZP-J: Is CC-1 (S&#8320; = &#8869;) forced by the framework\'s '
         'foundational structure, or is it an independent modelling choice? '
         'If forced, what is the structural reason? '
-        'Answer (ZP-J T-EXEC): not forced, restated. Given an AFAStructure, "starts at a Quine '
+        'Answer: restated (ZP-J t_exec_iff), and not forced (a countermodel). Given an AFAStructure, "starts at a Quine '
         'atom" and "starts at &#8869;" are equivalent (t_exec_iff), so the starting point is named '
-        'by its role; the choice to start there remains. The AFA identification &#8869; = {&#8869;} is the ZF+AFA reading of the '
+        'by its role; the choice to start there remains, since on a carrier with a second point a valid sequence starts elsewhere. The AFA identification &#8869; = {&#8869;} is the ZF+AFA reading of the '
         'Quine-atom role the typeclass encodes; the Lean states the role, not the set identity.',
         bg=AMBER_LITE, border=AMBER
     ))
@@ -392,7 +395,7 @@ def build():
         'CC-1\'s choice of starting point is restated in terms of the Quine-atom role, not '
         'eliminated.'))
     E.append(result_box(
-        'Theorem CC-1 (Derived) &#8212; cc1_derived',
+        'Corollary CC-1, Conditional Form &#8212; cc1_derived',
         [
             'Let L be an AFAStructure lattice. Let S : &#8469; &#8594; L be a state sequence '
             '(ZP-A D3) and Q : L a Quine atom. If S(0) = Q, then S(0) = &#8869;.',
@@ -475,7 +478,7 @@ def build():
         li('ZP-D: state layer, orthogonality (proved from ZP-A and ZP-B).'),
         li('ZP-E: T-SNAP, DA-1, DA-2 (T-SNAP and DA-2 proved axiom-free; DA-1 Path 3 outside Lean scope).'),
         li('ZP-J: AFAStructure fields (selfMem, quine_unique, bot_self_mem). '
-           'T-EXEC, J1, CC-1: proved axiom-free. '
+           'T-EXEC, J1, and CC-1 in conditional form: proved axiom-free. '
            'Sections VII&#8211;X (Aczel connection, abstraction chain, concrete instances, '
            'decoration uniqueness): all sorry-free. &#10003;'),
         sp(4),
@@ -933,7 +936,7 @@ def build():
          'T-EXEC + ZP-A A4 (bot_join)',
          'None',
          'Lean: j1_quine_join_identity &#8212; axiom-free &#10003; (was axiom ax_j1 in stub)'],
-        ['CC-1 (Derived): S&#8320; = Q &#8658; S&#8320; = &#8869;',
+        ['CC-1, conditional form: S&#8320; = Q &#8658; S&#8320; = &#8869;',
          'T-EXEC',
          'None',
          'Lean: cc1_derived &#8212; axiom-free &#10003; (restates ZP-A\'s conditional claim; converse by t_exec_iff)'],
@@ -1024,9 +1027,9 @@ def build():
          '&#8212; showing the ZP types literally satisfy the ZF+AFA axioms &#8212; '
          'remains outside Lean scope.'],
         ['ZP-A CC-1 cross-check',
-         'OPEN &#8212; editorial',
-         'ZP-A\'s CC-1 box should match this document: cc1_derived gives an equivalence of '
-         'starting conditions, not a forcing of the starting point.'],
+         'RESOLVED',
+         'ZP-A\'s CC-1 box now matches this document: a Conditional Claim at ZP-A scope, which '
+         'cc1_derived and t_exec_iff restate as an equivalence of starting conditions, not a forcing of the starting point.'],
         ['Formal ZPSemilattice instance for a ValuationStructure type',
          'PARTIAL &#8212; one registered',
          'Model.lean registers both instances on &#8469;&#8734;. '

@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.12 | May 2026
+Version 1.13 | September 2026
+v1.13: T-SNAP PREMISES SYNC with ZP-E v3.28 (Tim, 2026-09-13: fold ZPE-TSNAP-PREMISES into the CC-1 arc). The chain caption said T-SNAP needs 'no axioms beyond AX-B1', and the DA-1 insert ended 'The Snap is derived - not assumed'; the informal argument also uses CC-1 (S0 = bottom) for its starting point, so both now say derived given the commitments AX-B1 and CC-1. The DA-1 paragraph said DA-1 'follows from ZP-A CC-2' and the commitment 'has become a derivation', dropping that CC-2 is itself a Forced Metatheoretic Commitment (argued, not proved); it now says the derivation is from that commitment. The Lean t_snap_derived is unaffected: no hypotheses, no axioms. ADVERSARY ROUND 3 (FAIL-BEDROCK, D1): 'What the Framework Still Assumes' still said the framework 'rests on exactly three commitments - none of them novel starting assumptions' (AX-B1, AX-G1, AX-G2), contradicting this version's own p.2 (the Snap derived given CC-1, the starting point) and p.3 (CC-2 a commitment); the formal ZP-E twin row already adds CC-1. It now says three named axioms, and names CC-1 and CC-2 as further commitments stated where they are used. CLAIM-REVIEW ROUND 3 (FAIL-BEDROCK, D1): 'The Snap is derived, given two commitments: AX-B1 and CC-1' and the caption's 'given the commitments AX-B1 and CC-1' were each one short - the chain starts at DA-1, closed only given DP-2, and occurrence is a commitment (tsnap_holds_but_nothing_moves satisfies both and never moves). Both now name the split: the Lean proof fixes the shape with no assumptions; the argument uses commitments among them AX-B1 and CC-1, and that the step happens rests further on DA-1 and the occurrence commitment; the formal ZP-E states the premises once (Premises of T-SNAP). The AX-B1 gloss 'two distinct states exist' (the decidable half) is now 'existence is binary'.
 v1.12: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. The car-crash analogy described 'the forced first transition in any join-semilattice' - refuted by the gauge itself, whose MachinePhase IS a join-semilattice in which nothing moves.
 v1.11: Add Goodstein/proof-theoretic context for ε₀ in Four Descriptions section.
 v1.10: Strip version number from companion footer.
@@ -178,7 +179,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.12'
+VERSION = '1.13'
 
 
 def build():
@@ -272,15 +273,22 @@ def build():
         'The DA-1 insert changes this. The argument is now complete: reaching P₀ means a '
         'live machine configuration exists (DA-1). Any live configuration passes through c₁ '
         '(definition). c₁ is not ⊥ (L-RUN). No program avoids this (TQ-IH). A state change from '
-        '⊥ to any state other than ⊥ is the Binary Snap (ZP-A D2). The Snap is derived — not assumed.'))
+        '⊥ to any state other than ⊥ is the Binary Snap (ZP-A D2). The Snap is derived, and that sentence has '
+        'two true readings. The Lean proof is a fact about a fixed two-state machine type and takes no assumptions: '
+        'it fixes the shape of the step, not that the step happens. The argument about the framework&#8217;s own '
+        'sequence uses commitments, among them AX-B1 (existence is binary: a state exists or it does not) and '
+        'CC-1 (the sequence starts at ⊥); that the step actually happens rests further on DA-1, which is closed '
+        'only given DP-2, and on the framework&#8217;s commitment that instantiation occurs. The formal ZP-E '
+        'states these premises once, under Premises of T-SNAP.'))
     E.append(cbody(
         'DA-1 is now a Derived Proposition rather than a freestanding Design Principle. '
         'Previously DA-1 was an honest but freestanding commitment: "a configuration at P₀ '
-        'is necessarily executing." Now it follows from ZP-A CC-2: ⊥ = {⊥}. The bottom element ⊥ '
+        'is necessarily executing." Now it follows from ZP-A CC-2, ⊥ = {⊥}, which is itself a commitment '
+        '(argued, not proved). The bottom element ⊥ '
         'is a Quine atom — a self-containing object with no external position from which it '
         'could be interpreted as a static description. A thing that interprets itself cannot '
         'be waiting for an external interpreter. So ⊥ at P₀ is necessarily executing. '
-        'The design commitment has become a derivation.'))
+        'The design commitment has become a derivation from that commitment.'))
     E.append(cbody(
         '<b>The two-layer structure of DA-1:</b> DA-1 rests on two explicit layers. '
         'The first is the formal conditional: DP-2 (Execution Distinguishability) establishes '
@@ -317,8 +325,9 @@ def build():
         'The formal grounding of DA-1 is therefore: DP-2 plus two Lean-verified structural paths.'))
     E.append(tsnap_chain_diagram())
     E.append(ccaption(
-        'The T-SNAP derivation chain: six steps, no axioms beyond AX-B1 and the definition '
-        'of a Turing machine. AX-1 (amber) is now a theorem.'))
+        'The T-SNAP derivation chain: six steps and the definition of a Turing machine. The chain uses commitments, '
+        'among them AX-B1 and CC-1 (S₀ = ⊥), and fixes the shape of the Snap; that the Snap occurs rests further on '
+        'DA-1 (closed given DP-2). AX-1 (amber) is now a theorem.'))
     E.append(sp(4))
     E.append(example_box('Real-world example — A legal case that becomes undeniable', [
         'A court case starts with an assumption: "the defendant was at the scene." Then '
@@ -331,12 +340,14 @@ def build():
     # Remaining Commitments
     E.append(Paragraph('What the Framework Still Assumes', CS['h1']))
     E.append(cbody(
-        'After T-SNAP, the framework rests on exactly three commitments — '
-        'none of them novel starting assumptions:'))
+        'After T-SNAP, the framework states three named axioms:'))
     E.append(axioms_table())
     E.append(sp(6))
     E.append(cbody(
-        'AX-1 is no longer on this list. The framework makes no stronger claim than it has to.'))
+        'AX-1 is no longer on this list. Further commitments are not axioms and are stated where they are used, '
+        'among them CC-1 (S₀ = ⊥, a ZP-A Conditional Claim), the choice of starting point that T-SNAP is derived given, '
+        'and CC-2 (⊥ = {⊥}, a ZP-A Forced Metatheoretic Commitment), which DA-1 follows from. '
+        'The framework makes no stronger claim than it has to.'))
     E.append(sp(8))
     E.append(remember_box(
         'Remember: The structural results — monotonicity, clopen separation, '
