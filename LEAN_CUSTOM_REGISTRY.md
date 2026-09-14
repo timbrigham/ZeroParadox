@@ -183,7 +183,7 @@ Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP
 ### `machinePhaseZPS` — `ZeroParadox/Order/Snap.lean`
 `ZPSemilattice MachinePhase`
 
-`MachinePhase` is one of two two-element inductives in `ZeroParadox/Information/Surprisal.lean` (the other, `BinaryState`, has its own entry above); giving it a `ZPSemilattice` instance makes T-SNAP (`bot_join` applied to `MachinePhase`) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for `MachinePhase`.
+`MachinePhase` is one of two two-element inductives in `ZeroParadox/Information/Surprisal.lean` (the other, `BinaryState`, has its own entry above); giving it a `ZPSemilattice` instance makes T-SNAP (`bot_join` applied to `MachinePhase`) a direct consequence of ZP-A's A4, retiring AX-1's shape half as an axiom (its occurrence half is a commitment). No Mathlib lattice instance exists for `MachinePhase`.
 
 ---
 

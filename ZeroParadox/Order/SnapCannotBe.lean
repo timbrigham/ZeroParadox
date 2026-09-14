@@ -11,7 +11,7 @@ The snap leg of the trio with `ZeroParadox/BottomCannotBe.lean` and
 `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`. Every line `#check`s an already-proven **declaration**.
 ⚠ The `#check`s cannot overclaim; the glosses can, and §§ I-IV predate § V's label convention.
 
-Bedrock: **derived**, not an axiom (`t_snap_derived`); **one-way** (`t_snap_irreversible`); returns to
+Bedrock: shape **derived**, not an axiom (`t_snap_derived`; AX-1's occurrence half is a commitment); **one-way** (`t_snap_irreversible`); returns to
 a ⊥ read as a successor null, where **the novelty is a commitment** — the § IV glosses carry the fence.
 
 ## Engineer's Take
@@ -23,15 +23,22 @@ by the proof assistant during development.
 section SnapCannotBeIndex
 
 /-! ### § I. What the snap IS NOT — not an axiom, not reversible, not a return to the same ⊥ -/
-#check @ZeroParadox.t_snap_derived                    -- DERIVED (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) — AX-1's shape half; its occurrence half is a commitment
-#check @ZeroParadox.t_snap_irreversible               -- NOT reversible: no join from ε₀ returns to ⊥
+#check @ZeroParadox.t_snap_derived                    -- DERIVED (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) — AX-1's shape half; its occurrence half is a commitment, and the next line is why
+#check @ZeroParadox.tsnap_holds_but_nothing_moves     -- Statement: T-SNAP's statement holds together with a dynamics `stuckPhase` in which every phase is fixed, so T-SNAP is not an occurrence claim
+#check @ZeroParadox.t_snap_irreversible              -- NOT reversible: no join from ε₀ returns to ⊥
 #check @ZeroParadox.dp2_execution_distinguishability  -- the post-snap null ≠ the pre-snap null (distinct instances)
 #check @ZeroParadox.da1_minimal_path                  -- Statement: the two configurations are DISTINCT while sharing an output value. It does NOT carry that the step is taken, and irrecoverability is not in it — see the fence in its home docstring
 
-/-! ### § II. What the snap IS — the forced join transition ⊥ → ε₀ -/
+/-! ### § II. What the snap IS — the SHAPE of the join transition ⊥ → ε₀; that it occurs is a commitment -/
 #check @ZeroParadox.t_snap_join                       -- the algebraic core: ⊥ ∨ ε₀ = ε₀ (from A4/bot_join)
 #check @ZeroParadox.t_snap_machine                    -- concrete: c₀ ∨ c₁ = c₁ (initial → running)
 #check @ZeroParadox.t_snap_given                      -- Statement: over any ZPSemilattice, `S 0 = bot` (CC-1) and `S 1 ≠ S 0` (occurrence at the first step) give `t_snap_derived`'s shape at S 0, S 1; the inequalities restate `hocc`, and only the join comes from A4. No binder makes `S 1` an atom above `S 0`, and the step is assumed (`hocc`), not forced. Two commitments are the binders; `t_snap_derived` is its MachinePhase instance at a sequence chosen to move, and `MachinePhase` does not discharge `hocc`
+-- Reading: CARRIER. "⊥ → ε₀" in this index is the discrete-state chart, where ε₀ names the first state
+--   above ⊥ (c₁ in `MachinePhase`), and "atom above ⊥" is a claim in that chart only, never about the
+--   ordinal. The ordinal ε₀ is indexed in `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`: the operator
+--   α ↦ ω^α seeded at the base ⊥ (`epsilon0_eq_nfp_bot`), least fixed point AND tower supremum at once
+--   (`epsilon0_min_eq_max`), the minimum in the FIXED-POINT order (`nothing_between_is_a_step`,
+--   `bot_is_not_a_step`), never ⊥ (`epsilon0_ne_bot`), while ⊥ ⋖ ε₀ is FALSE in the ordinal order.
 
 /-! ### § III. What the snap DOES — it narrows reachability, permanently -/
 #check @ZeroParadox.t_snap_accessible_proper_subset   -- from ε₀ only a proper subset is reachable; ⊥ is foreclosed

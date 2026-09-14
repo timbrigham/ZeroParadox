@@ -1,7 +1,7 @@
 """
 Build ZP-E Illustrated Companion
 Version 1.14 | September 2026
-v1.14: T-SNAP PREMISES POINT AT LEAN, companion sync with ZP-E v3.29. The p2 paragraph said the formal ZP-E 'states these premises once'; it now names Premises of T-SNAP and the Lean t_snap_given, which takes the start at bottom and the step being taken as hypotheses. The derivation-chain caption said 'six steps' against the formal seven and left the occurrence commitment out of what the Snap occurring rests on; both fixed. The legal-case box said AX-1 'is now proven (T-SNAP)'; it now scopes that to the shape of the Snap and names occurrence as a commitment. The meta line hard-coded 'April 2026'; it now uses version_line with FIRST_RELEASED = April 2026 (first commit of the companion, 2026-04-17), and the footer no longer carries a date. ROUND 1 GATES (FAIL-BEDROCK, D1) + TIM'S AX-1 SPLIT (Tim, 2026-09-14: 'Both: split it'): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a commitment. The heading, the p2 AX-1 gloss (kept as history, now saying which half T-SNAP proves), the chain diagram string ('derived, not assumed'), the caption ('AX-1 (amber) is now a theorem'), the legal-case box (whose 'the assumption becomes a proven fact' inverted for the half that stays assumed) and the axioms-list paragraph now carry the split. t_snap_given takes TWO of the premises, the start at bottom and the FIRST step being taken. The caption no longer says 'with the definition of a Turing machine', which no box in the diagram shows.
+v1.14: T-SNAP PREMISES POINT AT LEAN, companion sync with ZP-E v3.29. The p2 paragraph said the formal ZP-E 'states these premises once'; it now names Premises of T-SNAP and the Lean t_snap_given, which takes the start at bottom and the step being taken as hypotheses. The derivation-chain caption said 'six steps' against the formal seven and left the occurrence commitment out of what the Snap occurring rests on; both fixed. The legal-case box said AX-1 'is now proven (T-SNAP)'; it now scopes that to the shape of the Snap and names occurrence as a commitment. The meta line hard-coded 'April 2026'; it now uses version_line with FIRST_RELEASED = April 2026 (first commit of the companion, 2026-04-17), and the footer no longer carries a date. ROUND 1 GATES (FAIL-BEDROCK, D1) + TIM'S AX-1 SPLIT (Tim, 2026-09-14: 'Both: split it'): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a commitment. The heading, the p2 AX-1 gloss (kept as history, now saying which half T-SNAP proves), the chain diagram string ('derived, not assumed'), the caption ('AX-1 (amber) is now a theorem'), the legal-case box (whose 'the assumption becomes a proven fact' inverted for the half that stays assumed) and the axioms-list paragraph now carry the split. t_snap_given takes TWO of the premises, the start at bottom and the FIRST step being taken. The caption no longer says 'with the definition of a Turing machine', which no box in the diagram shows. FOUR-FRAMEWORK DIAGRAM (ZPE-COMP-FOURFRAME-OVERFLOW): its internal caption string ran past the right page edge and duplicated the caption set directly beneath the diagram, so it is dropped; the framework boxes are widened from 1.35in to 1.6in, since 'ZP-C: Info Theory' measured wider than its box and was clipped; cy is fixed at 115 rather than derived from dh, dh goes from 3.4in to 3.2in, and the diagram now calls validate_drawing.
 v1.13: T-SNAP PREMISES SYNC with ZP-E v3.28 (Tim, 2026-09-13: fold ZPE-TSNAP-PREMISES into the CC-1 arc). The chain caption said T-SNAP needs 'no axioms beyond AX-B1', and the DA-1 insert ended 'The Snap is derived - not assumed'; the informal argument also uses CC-1 (S0 = bottom) for its starting point, so both now say derived given the commitments AX-B1 and CC-1. The DA-1 paragraph said DA-1 'follows from ZP-A CC-2' and the commitment 'has become a derivation', dropping that CC-2 is itself a Forced Metatheoretic Commitment (argued, not proved); it now says the derivation is from that commitment. The Lean t_snap_derived is unaffected: no hypotheses, no axioms. ADVERSARY ROUND 3 (FAIL-BEDROCK, D1): 'What the Framework Still Assumes' still said the framework 'rests on exactly three commitments - none of them novel starting assumptions' (AX-B1, AX-G1, AX-G2), contradicting this version's own p.2 (the Snap derived given CC-1, the starting point) and p.3 (CC-2 a commitment); the formal ZP-E twin row already adds CC-1. It now says three named axioms, and names CC-1 and CC-2 as further commitments stated where they are used. CLAIM-REVIEW ROUND 3 (FAIL-BEDROCK, D1): 'The Snap is derived, given two commitments: AX-B1 and CC-1' and the caption's 'given the commitments AX-B1 and CC-1' were each one short - the chain starts at DA-1, closed only given DP-2, and occurrence is a commitment (tsnap_holds_but_nothing_moves satisfies both and never moves). Both now name the split: the Lean proof fixes the shape with no assumptions; the argument uses commitments among them AX-B1 and CC-1, and that the step happens rests further on DA-1 and the occurrence commitment; the formal ZP-E states the premises once (Premises of T-SNAP). The AX-B1 gloss 'two distinct states exist' (the decidable half) is now 'existence is binary'.
 v1.12: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. The car-crash analogy described 'the forced first transition in any join-semilattice' - refuted by the gauge itself, whose MachinePhase IS a join-semilattice in which nothing moves.
 v1.11: Add Goodstein/proof-theoretic context for ε₀ in Four Descriptions section.
@@ -30,10 +30,13 @@ from reportlab.graphics import renderPDF
 
 def four_framework_diagram():
     """Central 'Binary Snap' circle with four framework boxes pointing inward."""
-    dw, dh = TW, 3.4 * inch
+    # 3.2 * 72 = 230.4 pts; content top = ZP-A box top at cy+cr+14+bh = 215.6,
+    # bottom = ZP-C box bottom at cy-cr-14-bh = 14.4 (bh = 0.62in = 44.6)
+    dw, dh = TW, 3.2 * inch
     d = Drawing(dw, dh)
 
-    cx, cy = dw / 2, dh / 2
+    cx = dw / 2
+    cy = 115  # fixed — do not derive from dh; top 215.6 < dh-10 = 220.4, bottom 14.4 > 5
 
     # Central amber circle
     cr = 42
@@ -67,7 +70,9 @@ def four_framework_diagram():
                        ax2 - hs*ux - hs*0.5*px, ay2 - hs*uy - hs*0.5*py,
                        strokeColor=COMP_BLUE, strokeWidth=1.8))
 
-    bw, bh = 1.35*inch, 0.62*inch
+    # 1.6in = 115.2 pts: the widest title, 'ZP-C: Info Theory' at 9.5pt DV-B, measures 93.2 pts
+    # plus the 8 pt left inset; at 1.35in it ran past the right edge of its box.
+    bw, bh = 1.6*inch, 0.62*inch
 
     # Top: ZP-A (above)
     bx = cx - bw/2; by = cy + cr + 14
@@ -93,11 +98,8 @@ def four_framework_diagram():
                   'ZP-D: Hilbert', 'T(0) = e₀', 'Orthogonal shift',
                   bxr, cy, cx + cr + 2, cy)
 
-    d.add(String(14, 10,
-                 'The Binary Snap (amber) described simultaneously in all four frameworks. '
-                 'Each arrow is an independent mathematical description of the same event.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
-    return d
+    # No internal caption string: the ccaption below the diagram carries it.
+    return validate_drawing(d, dh, 'four_framework_diagram')
 
 def tsnap_chain_diagram():
     """P₀ → DA-1 → L-RUN → TQ-IH → ZP-A D2 → T-SNAP derivation chain."""
