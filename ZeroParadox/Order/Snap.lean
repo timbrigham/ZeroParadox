@@ -159,9 +159,13 @@ theorem t_snap_given {L : Type*} [ZPSemilattice L] (S : ℕ → L)
     S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1 :=
   ⟨fun h => hocc h.symm, hocc, by rw [hcc1]; exact bot_join _⟩
 
--- Statement: `t_snap_derived` is the instance whose two commitments are discharged inside `MachinePhase`.
+-- Statement: `t_snap_derived` is the instance at the sequence `c₀, c₁, c₁, …`, chosen to move: `hcc1` is `rfl` and `hocc` is `c₁ ≠ c₀`.
 example : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   t_snap_given (fun n => if n = 0 then c₀ else c₁) rfl (by decide)
+
+-- Statement: `MachinePhase` does not discharge `hocc`: a state sequence in it starts at ⊥ and never steps.
+example : ∃ S : ℕ → MachinePhase, S 0 = bot ∧ IsStateSequence S ∧ S 1 = S 0 :=
+  ⟨fun _ => bot, rfl, ⟨fun _ => bot, fun _ => (bot_join bot).symm⟩, rfl⟩
 
 -- Statement: without `hocc` the conclusion fails; the sequence that stays at ⊥ refutes it.
 example : ¬ ∀ S : ℕ → MachinePhase, S 0 = bot → S 0 ≠ S 1 := fun h => h (fun _ => bot) rfl rfl
