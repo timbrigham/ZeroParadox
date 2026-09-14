@@ -1,6 +1,6 @@
 """
 Build ZP-C Illustrated Companion (v2.8)
-v2.8: AX-1 SPLIT (Tim, 2026-09-14), companion sync with ZP-C v1.22: AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The key result box ended "The Binary Snap is no longer assumed — it is derived.", which denied the assumption that remains; it now says the shape is derived and that the Snap happening is still a commitment.
+v2.8: AX-1 SPLIT (Tim, 2026-09-14), companion sync with ZP-C v1.22: AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The key result box ended "The Binary Snap is no longer assumed — it is derived.", which denied the assumption that remains; it now says the shape is derived and that the Snap happening is still a commitment. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error.
 v2.6:vocab fix: null state → ⊥.
 v2.5: "First Atomic State Q = (0,1)" → "minimum nonzero state ε₀, Q = (0,1)" in JSD section body prose.
 v2.4: K-20 continued — "Lemma L-INF (Informational Extremity of ⊥)" → "Lemma L-INF (Unbounded Surprisal of ⊥)" in body prose (missed by K-20 diagram-only fix).

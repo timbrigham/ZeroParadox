@@ -11,7 +11,7 @@ The snap leg of the trio with `ZeroParadox/BottomCannotBe.lean` and
 `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`. Every line `#check`s an already-proven **declaration**.
 ⚠ The `#check`s cannot overclaim; the glosses can, and §§ I-IV predate § V's label convention.
 
-Bedrock: shape **derived**, not an axiom (`t_snap_derived`; AX-1's occurrence half is a commitment); **one-way** (`t_snap_irreversible`); returns to
+Bedrock: shape **derived**, not an axiom (`t_snap_derived`; AX-1 is retired, occurrence is the occurrence commitment); **one-way** (`t_snap_irreversible`); returns to
 a ⊥ read as a successor null, where **the novelty is a commitment** — the § IV glosses carry the fence.
 
 ## Engineer's Take
@@ -23,7 +23,7 @@ by the proof assistant during development.
 section SnapCannotBeIndex
 
 /-! ### § I. What the snap IS NOT — not an axiom, not reversible, not a return to the same ⊥ -/
-#check @ZeroParadox.t_snap_derived                    -- DERIVED (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) — AX-1's shape half; its occurrence half is a commitment, and the next line is why
+#check @ZeroParadox.t_snap_derived                    -- DERIVED (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) — the shape (AX-1 is retired); occurrence is the separate occurrence commitment, and the next line is why
 #check @ZeroParadox.tsnap_holds_but_nothing_moves     -- Statement: T-SNAP's statement holds together with a dynamics `stuckPhase` in which every phase is fixed, so T-SNAP is not an occurrence claim
 #check @ZeroParadox.t_snap_irreversible              -- NOT reversible: no join from ε₀ returns to ⊥
 #check @ZeroParadox.dp2_execution_distinguishability  -- the post-snap null ≠ the pre-snap null (distinct instances)

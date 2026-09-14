@@ -39,7 +39,7 @@ running) satisfies all four ZPA axioms A1–A4. Under this instance:
 - ε₀   = running = c₁  (the First Atomic State)
 This makes T-SNAP type-theoretically grounded: ⊥ ∨ ε₀ = ε₀ is definitional. -/
 
--- [ZP-CUSTOM] instance: ZPSemilattice MachinePhase | reason: The cross-framework bridge. MachinePhase is one of two two-element inductives in ZeroParadox/Information/Surprisal.lean (the other is BinaryState); giving it a ZPSemilattice instance makes T-SNAP (bot_join applied to MachinePhase) a direct consequence of ZP-A's A4, retiring AX-1's shape half as an axiom (its occurrence half is a commitment). No Mathlib lattice instance exists for MachinePhase.
+-- [ZP-CUSTOM] instance: ZPSemilattice MachinePhase | reason: The cross-framework bridge. MachinePhase is one of two two-element inductives in ZeroParadox/Information/Surprisal.lean (the other is BinaryState); giving it a ZPSemilattice instance makes T-SNAP (bot_join applied to MachinePhase) a direct consequence of ZP-A's A4. AX-1 is retired: its shape is proved as T-SNAP, and that the snap occurs is stated separately, as the occurrence commitment. No Mathlib lattice instance exists for MachinePhase.
 instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join x y := match x, y with
     | .initial, y       => y
@@ -90,7 +90,7 @@ So DA-1 is closed given its commitments, not closed outright; ZP-K supplies the
 witnesses and names the commitment, and ZP-K § III states exactly which parts are
 proved. -/
 
-/-! ## II. T-SNAP — Binary Snap Causality (AX-1's Shape Half)
+/-! ## II. T-SNAP — the Shape of the Binary Snap (AX-1 is retired)
 
 Status: DERIVED — cross-framework.
 Dependencies: l_run, tq_ih, ZPA A4 (bot_join), ZPB C3 (cited below). -/
@@ -110,7 +110,7 @@ theorem t_snap_machine : join c₀ c₁ = c₁ := rfl
     (1) c₀ ≠ c₁  — ZPC L-RUN: execution is a non-null state change.
     (2) c₁ ≠ c₀  — ZPC TQ-IH: no execution avoids a non-null configuration.
     (3) join c₀ c₁ = c₁  — the snap is a valid join transition (A4/bot_join).
-    Conclusion: the Binary Snap's shape is derived; AX-1's occurrence half stays a commitment. -/
+    Conclusion: the Binary Snap's shape is derived; that it occurs is the occurrence commitment. -/
 theorem t_snap_derived :
     c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   ⟨l_run, tq_ih, rfl⟩
