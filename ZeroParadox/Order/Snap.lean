@@ -152,6 +152,33 @@ theorem tsnap_holds_but_nothing_moves :
     (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) ∧ (∀ p : MachinePhase, stuckPhase p = p) :=
   ⟨t_snap_derived, fun _ => rfl⟩
 
+/-- T-SNAP with its commitments as hypotheses, over any ZPSemilattice: CC-1 (`hcc1`, the sequence
+    starts at ⊥) and occurrence (`hocc`, the first step is taken). -/
+theorem t_snap_given {L : Type*} [ZPSemilattice L] (S : ℕ → L)
+    (hcc1 : S 0 = bot) (hocc : S 1 ≠ S 0) :
+    S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1 :=
+  ⟨fun h => hocc h.symm, hocc, by rw [hcc1]; exact bot_join _⟩
+
+-- Statement: `t_snap_derived` is the instance whose two commitments are discharged inside `MachinePhase`.
+example : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
+  t_snap_given (fun n => if n = 0 then c₀ else c₁) rfl (by decide)
+
+-- Statement: without `hocc` the conclusion fails; the sequence that stays at ⊥ refutes it.
+example : ¬ ∀ S : ℕ → MachinePhase, S 0 = bot → S 0 ≠ S 1 := fun h => h (fun _ => bot) rfl rfl
+
+-- Statement: without `hcc1` (and with no dynamics) the join conjunct fails.
+example : ¬ ∀ S : ℕ → MachinePhase, S 1 ≠ S 0 → join (S 0) (S 1) = S 1 := fun h =>
+  absurd (h (fun n => if n = 0 then c₁ else c₀) (by decide)) (by decide)
+
+-- Statement: given the dynamics instead of CC-1, the shape holds at any step that is taken.
+example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hS : IsStateSequence S) (n : ℕ)
+    (hocc : S (n + 1) ≠ S n) : S n ≠ S (n + 1) ∧ join (S n) (S (n + 1)) = S (n + 1) :=
+  ⟨fun h => hocc h.symm, state_sequence_monotone S hS n⟩
+
+-- Statement: `hocc` forces a second point (AX-B1's two states); AX-B1's discreteness is not in this signature.
+example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hocc : S 1 ≠ S 0) : Nontrivial L :=
+  ⟨⟨S 1, S 0, hocc⟩⟩
+
 /-- T-SNAP (irreversibility): Algebraic form of ZP-A R1 (no subtraction operator).
     If x ≼ y and x ≠ y, no join from y can return to x.
     Complements c3_irreversible (topological irreversibility in Q₂).
@@ -331,6 +358,7 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms t_snap_join
 #print axioms t_snap_machine
 #print axioms t_snap_derived
+#print axioms t_snap_given
 #print axioms t_snap_irreversible
 #print axioms da2_bottom_characterization
 #print axioms c_da2_novelty

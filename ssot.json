@@ -616,8 +616,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1736,
-        "files": 145
+        "declarations": 1737,
+        "files": 146
       },
       "entries": [
         {
@@ -59329,6 +59329,45 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ee4a6df7-1bfa-44a3-a64d-880389f443ae",
+          "new": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_given",
+            "short": "t_snap_given"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_given",
+            "short": "t_snap_given",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "2026-09-14 T-SNAP hypothesis-form arc: companion explicit-hypothesis theorem (CC-1 and occurrence as binders); t_snap_derived is its MachinePhase instance",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -31,6 +31,7 @@ section SnapCannotBeIndex
 /-! ### § II. What the snap IS — the forced join transition ⊥ → ε₀ -/
 #check @ZeroParadox.t_snap_join                       -- the algebraic core: ⊥ ∨ ε₀ = ε₀ (from A4/bot_join)
 #check @ZeroParadox.t_snap_machine                    -- concrete: c₀ ∨ c₁ = c₁ (initial → running)
+#check @ZeroParadox.t_snap_given                      -- Statement: over any ZPSemilattice, `S 0 = bot` (CC-1) and `S 1 ≠ S 0` (occurrence) give `t_snap_derived`'s shape at S 0, S 1. The commitments are the binders; `t_snap_derived` is its MachinePhase instance
 
 /-! ### § III. What the snap DOES — it narrows reachability, permanently -/
 #check @ZeroParadox.t_snap_accessible_proper_subset   -- from ε₀ only a proper subset is reachable; ⊥ is foreclosed
