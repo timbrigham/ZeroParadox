@@ -19,25 +19,10 @@ DA-1 is addressed in ZPJ and ZPK. DA-2 is addressed in ZPI.
 
 ---
 
-## Formal Overview (AI-assisted)
-
-Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
-
-- DA-1 (Instantiation as Execution): Paths 1 and 3 are in Lean scope via ZP-K.
-  machinePhaseKleene gives MachinePhase a KleeneStructure instance; da1_closed_concrete
-  proves IsQuineAtom (bot : MachinePhase) — the initial state is self-containing, and it is
-  the only such state. The further reading "self-executing, not a static description" is
-  DA-1's claim, carried by the KleeneStructure commitment rather than by that theorem
-  (which mentions no Code and no execution). Path 2 (informational bridge, L-INF) remains
-  outside Lean scope. See § I-DA1 for the full argument and ZP-K for what is and is not proved.
-- DA-2 (Instantiation Succession): algebraic characterisation of the ⊥ role across instantiations
-- DA-3 (Perspective-Relative Cardinality): DA-3-D1 as a definition; DA-3-C1 is a
-  candidate claim and is not formalised here
-
-Key result: T-SNAP — the Binary Snap ⊥ → ε₀ is a derived theorem, not an axiom.
-AX-1 is retired. The cross-framework link is established by giving `MachinePhase`
-(`ZeroParadox/Information/Surprisal.lean`) a `ZPSemilattice` instance, making T-SNAP a direct
-consequence of the semilattice bottom law `bot_join` (`ZeroParadox/Order/Lattice.lean`).
+## Formal Overview
+AX-1 is retired: the SHAPE of the snap is proved (`t_snap_derived`, `t_snap_given`), and that the snap
+OCCURS is the occurrence commitment (`tsnap_holds_but_nothing_moves`). The inserts DA-1, DA-2, DA-3 and
+the cross-framework link: `ZeroParadox/Order/Snap.md`.
 -/
 
 namespace ZeroParadox

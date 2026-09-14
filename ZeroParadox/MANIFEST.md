@@ -31,6 +31,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Order/PerronCapstone.lean` - Capstone: Perron–Frobenius for finite stochastic operators
 - `ZeroParadox/Order/PowerSet.lean` - ZP-H Extension: Power Set Lattice as Structural Floor Witness
 - `ZeroParadox/Order/Snap.lean` - ZP-E: Bridge Document
+  - ride-along docs: `ZeroParadox/Order/Snap.md` - The ZP-E formal inserts, and the retirement of AX-1 into T-SNAP (shape) and the occurrence commitment
 - `ZeroParadox/Order/SnapCannotBe.lean` - Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
 
 ### Valuation / number theory (ZP-B, ZP-F)

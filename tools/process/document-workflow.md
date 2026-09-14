@@ -135,7 +135,7 @@ without agreement.
 - [ ] All linked files exist (`Glob`, pattern `*.pdf`)
 - [ ] No file extensions and no version numbers in display text
 - [ ] No em dashes
-- [ ] README: Axiomatic Commitments current (AX-1 is T-SNAP, **not** an axiom); Question Register
+- [ ] README: Axiomatic Commitments current (AX-1 is retired: its shape is T-SNAP, **not** an axiom; its occurrence is the occurrence commitment); Question Register
       reflects actual status
 - [ ] GUIDE: "What This Is Not" section present; Reading Path **targets resolve** (do **not** check
       version numbers — see § 1)

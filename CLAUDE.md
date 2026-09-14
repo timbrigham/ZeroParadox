@@ -722,8 +722,8 @@ RULE     ask: is this the CENTRAL claim of its section, or infrastructure for so
          Readable names are ADDITIVE, never eliminative: CC-2 is "the Quine atom (CC-2)",
          glossed once as the self-containing bottom; MC-1 is "the bottom family" and gets NO
          new readable name, because its object already has one — the diagonal fixed point.
-         Keep every formal handle; never rename or remove an identifier. AX-1 is Theorem
-         T-SNAP — never call it an axiom.
+         Keep every formal handle; never rename or remove an identifier. AX-1 is retired:
+         its SHAPE is Theorem T-SNAP (never an axiom); its OCCURRENCE is a separate commitment.
 COST     the prefixes go stale as status changes and the label then misdescribes what is
          proved: CC-2's "Conditional Claim" outlived its own upgrade, and MC-1's numerical
          identity is RETIRED as ill-typed — `x = y` across distinct categories was never a
@@ -754,7 +754,8 @@ RULE     dependency order: **ZP-A** (lattice) → **ZP-B** (p-adic) → **ZP-C**
          not novel. **AX-B1 is the framework's ONE substantive modelling commitment** —
          discrete Boolean existence, not a continuum of partial states — so never call it
          "directly verifiable" or "not a novel commitment"; the `decide` proof only checks
-         the two states are distinct GIVEN the two-element type. AX-1 is Theorem T-SNAP.
+         the two states are distinct GIVEN the two-element type. AX-1 is retired (Tim,
+         2026-09-14): its shape is Theorem T-SNAP, its occurrence the occurrence commitment.
 COST     the ZP-C forcing lemmas discharge the no-half-state worry but force only the
          >=2-outcome lower bound; the residual commitment is DISCRETENESS, which they do not
          eliminate and which the reals lack — the snap fails there (`f_snap_impossible`).
