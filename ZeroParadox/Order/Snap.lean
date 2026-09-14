@@ -149,9 +149,9 @@ theorem t_snap_given {L : Type*} [ZPSemilattice L] (S : ℕ → L)
 example : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   t_snap_given (fun n => if n = 0 then c₀ else c₁) rfl (by decide)
 
--- Statement: `MachinePhase` does not discharge `hocc`: a state sequence in it starts at ⊥ and never steps.
-example : ∃ S : ℕ → MachinePhase, S 0 = bot ∧ IsStateSequence S ∧ S 1 = S 0 :=
-  ⟨fun _ => bot, rfl, ⟨fun _ => bot, fun _ => (bot_join bot).symm⟩, rfl⟩
+-- Statement: `MachinePhase` does not discharge `hocc`: a state sequence in it starts at ⊥ and never steps. Generic form: over any ZPSemilattice the constant sequence is a state sequence and not a strict one, the no-top NO-GO gauge in `ZeroParadox/Valuation/SemilatticeInstance.lean`.
+example : ∃ S : ℕ → MachinePhase, S 0 = bot ∧ IsStateSequence S ∧ ∀ n, S (n + 1) = S n :=
+  ⟨fun _ => bot, rfl, ⟨fun _ => bot, fun _ => (bot_join bot).symm⟩, fun _ => rfl⟩
 
 -- Statement: without `hocc` the conclusion fails; the sequence that stays at ⊥ refutes it.
 example : ¬ ∀ S : ℕ → MachinePhase, S 0 = bot → S 0 ≠ S 1 := fun h => h (fun _ => bot) rfl rfl
@@ -231,9 +231,9 @@ theorem da2_bottom_characterization {L : Type*} [ZPSemilattice L] (S : L) :
 
 /-- C-DA2 (Conditional Claim). `Statement:` a non-⊥ state cannot satisfy the join-identity —
     the contrapositive of the role fact, inside ONE semilattice.
-    `Reading:` taking S to play the ⊥ role for a DISTINCT successor instantiation is the
-    framework's reading, never this statement (SnapCannotBe.lean:41). Nothing here builds a
-    second semilattice or a second bottom, and it is not a novelty witness. -/
+    `Reading:` taking S to play the ⊥ role for a DISTINCT successor instantiation is the framework's
+    reading, never this statement (`c_da2_novelty` in `ZeroParadox/Order/SnapCannotBe.lean`).
+    Nothing here builds a second semilattice or a second bottom, and it is not a novelty witness. -/
 theorem c_da2_novelty {L : Type*} [ZPSemilattice L] (S : L)
     (hS_not_bot : S ≠ bot) :
     ¬(∀ x : L, join S x = x) := by
