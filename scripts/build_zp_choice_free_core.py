@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.9 | August 2026
+Version 1.10 | September 2026
+v1.10: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the page-1 overview said T-SNAP's occurrence 'stays a framework commitment'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
 v1.9: the page-1 overview said Section III shows it "essential rather than INHERITED" while Section III itself says both cases are essential and one of them IS inherited - the same document, opposite framings, and the overview misdescribing the section it cites. Corrected to "essential rather than INCIDENTAL", which is the axis the sentence is actually on. Found by `check_paths.py --claim`, built this session as DC-24's mechanical half; it printed this site and the matching README one on its first real run.
 v1.8: PROVENANCE AND NECESSITY ARE INDEPENDENT AXES, and v1.5-v1.7 collapsed them. The text said Section III locates two principles "where the choice is the framework's own and provably essential" - false for the second. `wem_of_fixedPointFree` reduces a principle whose choice IS the framework's own (a bare classical in Category/Lawvere.lean); `em_of_wellOrder_comparable` reduces well-order comparability, whose choice is MATHLIB's, spent in InitialSeg.total - and OrdinalChoiceEssential.lean states that Mathlib's use there is forced. So an INHERITED dependence can be essential, which is a STRONGER result than the one the prose was claiming, and it is why "inherited" never meant "removable". Found by the adversary gate keying on the POSITIVE assertion ("the framework's own") - four earlier rounds all keyed on the universal negative ("only ... Mathlib") and no search for that polarity could reach it.
 v1.7: THE v1.6 FIX REACHED THE ENDNOTE AND MISSED THE FRONT MATTER. Section III has named both taboo reductions since v1.5; v1.6 corrected the endnote; the PREAMBLE on page 1 and the Section II opener still said choice appears in "every place ... where the framework builds on Mathlib's libraries" and listed CATEGORY THEORY as one of them - the exact case corrected everywhere else. Both prose gates returned FAIL-BEDROCK, independently, on the two places a skimmer lands FIRST. That is the fourth consecutive version of this document fixing one site of one claim: v1.5 fixed Section III and left the endnote, v1.6 fixed the endnote and left the preamble. Corrected here at all four rendered sites at once. Also struck a claim v1.6 INTRODUCED - that the axiom-free sibling shows the choice is "not forced by the shape of the result" - which is the inversion of what LawvereTaboo section III proves: the cost IS the generality over arbitrary types, and it disappears under [DecidableEq beta].
@@ -37,7 +38,7 @@ Framework-wide note; reads after the Foreword.
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -84,7 +85,7 @@ def build():
     E.append(body(
         'Build the file ZeroParadox/AxiomProfile.lean and read the Lean kernel\'s output. It reports '
         'that the central theorem of this framework &#8212; the Binary Snap, T-SNAP, whose SHAPE is '
-        'derived while its occurrence stays a framework commitment, the '
+        'derived while its occurrence follows from the occurrence commitment together with DA-1 (closed given DP-2), the '
         'transition &#8869; &#8594; &#949;<sub>0</sub> &#8212; depends on <b>no axioms at all</b>: not '
         'the Axiom of Choice, not even propositional extensionality. The lattice algebra (ZP-A) and '
         'the Quine-atom self-reference that is the framework\'s keystone (ZP-J) are likewise '

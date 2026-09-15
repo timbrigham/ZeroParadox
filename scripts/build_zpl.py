@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.6 | July 2026
+Version 1.7 | September 2026
+v1.7: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the surreals note said 'occurrence is a framework commitment'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
 v1.6: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
 v1.5: axiom-footprint list label corrected - t_comp described as a four-way equivalence; it proves three, the computational face being an assumption rather than a clause. Footprint figures themselves unchanged (measured, not quoted).
 v1.4: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers) — Section II heading and prose.
@@ -15,7 +16,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.7'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -256,7 +257,7 @@ def build():
             'ZP-F (The Counterexamples) proves that the Binary Snap &#8212; the transition from &#8869; to the first non-null ordinal threshold (&#949;&#8320;, '
             'established in §V&#8211;§VII above) &#8212; cannot occur in any linearly ordered '
             'field. This result applies directly to No considered as a linearly ordered field. '
-            'Note the scope: what is derived is the transition&#8217;s SHAPE and its impossibility in an ordered field, never that the transition is taken - occurrence is a framework commitment.',
+            'Note the scope: what is derived is the transition&#8217;s SHAPE and its impossibility in an ordered field, never that the transition is taken - that follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).',
             'The surreals therefore contain &#949;&#8320; as an ordinal while simultaneously '
             'satisfying the density condition that blocks the Binary Snap in their ordered '
             'field structure. Both structures coexist in No: &#949;&#8320; is present as an '

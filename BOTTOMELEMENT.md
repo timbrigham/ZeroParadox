@@ -13,8 +13,7 @@ For the formal framework index and Lean verification, see [README](README.md). F
 This is a **reference** for the framework's bottom element ⊥: a **dictionary** (what ⊥ is and is not) and a
 **map** (where each characterization is established). It is a **beginning, not a resolution.** What is
 *proved* is that each construction's bottom belongs to the family and that the slot structure recurs; the
-reading that the various bottoms are *one object* is retired as ill-typed - they are provably distinct as
-structures (the "walls"). It closes a standing gap: a framework built on ⊥ that had not yet characterized ⊥ itself.
+reading that the various bottoms are *one object* is retired as ill-typed (neither x = y nor x ≠ y is well-formed across categories); the members differ by property, each in its own category (`seam_unique_among_named`). It closes a standing gap: a framework built on ⊥ that had not yet characterized ⊥ itself.
 
 ---
 

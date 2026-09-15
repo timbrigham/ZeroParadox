@@ -14,8 +14,8 @@ First, re-read the canonical sources for full context:
    measurementless / structureless / infinite. What every other bottom reduces to / is an interpretation
    *of*. One. (Working term only: "actual ⊥".)
 2. **A specific structured instance** — a "face": `0 ∈ ℚ₂`, the Quine atom, the Kleisli initial object,
-   the Hilbert zero-object seam, ε₀'s generation, the Markov attractor, etc. **Many, and provably DISTINCT
-   as structures** (the walls). Each is a real bottom *in its own domain*. (Working term: "a face" / "a
+   the Hilbert zero-object seam, ε₀'s generation, the Markov attractor, etc. **Many.** The reading that they are one object is
+   retired as ill-typed (neither x = y nor x ≠ y is well-formed across categories); the members differ by property, each in its own category (`seam_unique_among_named`). Each is a real bottom *in its own domain*. (Working term: "a face" / "a
    bottom (instance)".)
 3. **The family/collection** of all instances + the slot schema characterizing them — the metalevel object
    (`ZeroParadox/BottomCannotBe.lean` + the slot×construction matrix + the harvest catalog). A SET, **not
@@ -26,7 +26,8 @@ First, re-read the canonical sources for full context:
   principle; membership against them is proved.
 - The **correspondence half is formally realized** — each domain bottom is the categorical bottom (limit
   or initial object) of its own real Mathlib category, bundled as `mc1_correspondence`.
-- Instances are **DISTINCT** from one another as structures — the walls (proved).
+- Instances differ by property, each in its own category (`seam_unique_among_named`); neither x = y nor
+  x ≠ y is well-formed across categories.
 - The **cross-category IDENTITY half is RETIRED as ill-typed** (2026-07-15). `x = y` across distinct
   categories is not a well-formed proposition, so it was never a claim the framework held and it is not
   "unproved" — it is not statable. The only oneness is the shared *shape* (the diagonal fixed point),

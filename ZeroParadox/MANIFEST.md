@@ -15,8 +15,9 @@ cites; it is a curated map of what is established, not a source of new claims.
 
 **On the central claim (read this first).** The organizing thesis is that the bottom element recurs in the
 same structural role across several domains. What is **proved** is the *membership* and the *recurrence of
-the slot structure*. What is **not** proved, and is stated only as a conjecture/program, is that the various
-bottoms are *one object*: they are provably distinct as structures (the "walls" results in the campaign).
+the slot structure*. The reading that the various bottoms are *one object* is retired as ill-typed (neither
+x = y nor x ≠ y is well-formed across categories); the members differ by property, each in its own category
+(seam_unique_among_named).
 The index above is where the precise line between proved and conjectural is kept.
 
 ## Core (finalized results - read these)
@@ -52,11 +53,13 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Valuation/PricedPadicInterface.lean` - A priced p-adic interface: a choice-free carrier for ZP-B/ZP-J Group A, a map into `ℤ_[2]`, and both sides' axiom footprints
   - ride-along docs: `ZeroParadox/Valuation/PricedPadicInterface.md` - Pricing the crossing: where choice enters a 2-adic interface, and where it does not
 - `ZeroParadox/Valuation/RiemannSphere.lean` - The p-adic Riemann sphere: inversion swaps the floor 0 and its antipode ∞
-  - ride-along docs: `ZeroParadox/Valuation/RiemannSphere.md` - Prior art for the sphere's group action, the loxodromic vocabulary, and the stabiliser fence
+  - ride-along docs: `ZeroParadox/Valuation/RiemannSphere.md` - RiemannSphere — ride-along documentation
 - `ZeroParadox/Valuation/Scale.lean` - ZPJ — Valuation Bridge: Deriving AFA Content from Scale Structure
+  - ride-along docs: `ZeroParadox/Valuation/Scale.md` - Scale — ride-along documentation
 - `ZeroParadox/Valuation/ScaleBridge.lean` - ZPJ — Scale Bridge: AFA Content from Valuation Without ZPSemilattice
   - ride-along docs: `ZeroParadox/Valuation/ScaleBridge.md` - Dropping the join, and a membership question settled exactly
 - `ZeroParadox/Valuation/SemilatticeInstance.lean` - ZP-I: Inside Zero
+  - ride-along docs: `ZeroParadox/Valuation/SemilatticeInstance.md` - SemilatticeInstance — ZP-I: Inside Zero
 - `ZeroParadox/Valuation/SnapDichotomy.lean` - ZPF — the snap-occurrence dichotomy over ℚ
 - `ZeroParadox/Valuation/TopFunctor.lean` - ZP-H Top Functor: F_B into the real category `TopCat` (MC-1 remediation)
 - `ZeroParadox/Valuation/ValuationAFA.lean` - P10: AFA self-containment derived from a bottom-valuation (the theorem-anchor)
@@ -174,6 +177,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` - No snap-shaped closure on the `ONote` carrier: a proved obstruction
   - ride-along docs: `ZeroParadox/Ordinal/SnapNucleusConstructive.md` - Cantor normal form, the ε₀ ceiling, and the choice question
 - `ZeroParadox/Ordinal/SnapSuccession.lean` - The succession as a chain: the ε-numbers are the snap's successive targets, strictly climbing
+  - ride-along docs: `ZeroParadox/Ordinal/SnapSuccession.md` - SnapSuccession — the ε-numbers as the snap's successive targets
 - `ZeroParadox/Ordinal/SyntacticCollapse.lean` - Syntactic surrogate for the 2-adic metric collapse (choice-free)
 - `ZeroParadox/Ordinal/WeakGoodstein.lean` - Weak Goodstein termination (second-domain depth test: ordinals / proof theory)
 
@@ -186,6 +190,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 ### Root
 
 - `ZeroParadox/AxiomProfile.lean` - Axiom Profile — the choice-free core of the Zero Paradox
+  - ride-along docs: `ZeroParadox/AxiomProfile.md` - Axiom Profile — what the choice footprint actually says
 - `ZeroParadox/BottomCannotBe.lean` - Index of declarations characterizing ⊥
 - `ZeroParadox/ClaimsMirror.lean` - ZP Claims Mirror — the machine-checked representation of the claim graph
 - `ZeroParadox/DiagonalFixedPoint.lean` - Machine-checked characterization index of self-reference — the diagonal fixed point
@@ -256,10 +261,10 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
   - ride-along docs: `ZeroParadox/Valuation/PoleCornersBridge.md` - Assembling a correspondence without asserting an identity
 - `ZeroParadox/Valuation/RateTransport.lean` - within-Axis-I positive rate-transport via the shared geometric rate `2^(-n)`
 - `ZeroParadox/Valuation/RootAsymmetry.lean` - Root-asymmetry test: #1 (μ order-floor) vs #3 (ν p-adic limit)
-- `ZeroParadox/Valuation/ScaleDepthWitness.lean` - A concrete family satisfying ZP-I's `IsDepthChain`, and the gauge pricing what that satisfaction is worth
-  - ride-along docs: `ZeroParadox/Valuation/ScaleDepthWitness.md` - What satisfying the depth-chain seam is worth, and what it is not
-- `ZeroParadox/Valuation/ScaleRealization.lean` - Realizing an abstract scale step as 2-adic doubling: the ZP-I commitment as equivariance, with the valuation law derived and both valuations bridged
-  - ride-along docs: `ZeroParadox/Valuation/ScaleRealization.md` - Why the welded form is not statable, the falsifiers, and how the self-supply residue is closed
+- `ZeroParadox/Valuation/ScaleDepthWitness.lean` - A witness for the depth-chain seam: the powers of two
+  - ride-along docs: `ZeroParadox/Valuation/ScaleDepthWitness.md` - ScaleDepthWitness — ride-along documentation
+- `ZeroParadox/Valuation/ScaleRealization.lean` - Realizing an abstract scale step as 2-adic doubling
+  - ride-along docs: `ZeroParadox/Valuation/ScaleRealization.md` - ScaleRealization — ride-along documentation
 - `ZeroParadox/Valuation/StrippedBottom.lean` - ⊥ by inversion of attribute-classes — the "typecast" stand-in (Tim, 2026-06-30)
 - `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the ordinal tower IS an InfinitudeFloor, order-reversed — ε₀ ≠ ⊥ preserved
 
@@ -288,6 +293,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
   - ride-along docs: `ZeroParadox/Category/NextTimeCategorical.md` - Locators for AMM, the credit chain past them, and why the obvious descent fails
 - `ZeroParadox/Category/NoUniformCharacter.lean` - A conjunction of three already-proved facts about the three domain bottoms
 - `ZeroParadox/Category/Node4Generation.lean` - ZP-H node #4 GENERATION — the floor `Fin 0` generates the ceiling `ℕ` by iteration (an Adámek instance)
+  - ride-along docs: `ZeroParadox/Category/Node4Generation.md` - Node4Generation — ride-along documentation
 - `ZeroParadox/Category/Obstruction.lean` - Two Finsupp facts (one ℂ-linearization stand-in pair, one opposite-category initiality)
 - `ZeroParadox/Category/PointednessSharp.lean` - The pointedness dichotomy SHARPENED (the gap `ZeroParadox/Category/CardinalitySplit.lean` left open)
 - `ZeroParadox/Category/RootCutBinary.lean` - The root cut is binary in arity, not graded
@@ -317,6 +323,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/SelfAppForkPlace.lean` - ZP-H tree, theory TH11 — placing the ZP-J selfApp fixed point on the μ/ν fork
 - `ZeroParadox/Multihomed/SelfAppSeam.lean` - The selfApp bottom sits at the μ=ν seam, not on either branch
 - `ZeroParadox/Multihomed/SnapFrameChange.lean` - The tower limit's two chart-readings: ⊥ and ∞ are two charts, swapped by `rInv`
+  - ride-along docs: `ZeroParadox/Multihomed/SnapFrameChange.md` - SnapFrameChange — the tower limit's two chart-readings
 - `ZeroParadox/Multihomed/SpanObstruction.lean` - The #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
 - `ZeroParadox/Multihomed/TreeObstructions.lean` - ZP-H: The bottom-diagram tree — machine-checked obstruction core (E4 + SPLIT, rebuilt)
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms
@@ -351,4 +358,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (114 core, 104 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (114 core, 106 experimental.)*

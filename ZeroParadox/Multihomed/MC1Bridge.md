@@ -51,8 +51,9 @@ category's categorical bottom, agreeing on the snap.
 
 `mc1_correspondence` bundles these into one witness. It is the **correspondence** half only. It is *not* claimed that
 the four bottoms are one object, which is retired as ill-typed; the claim is only that each is the categorical bottom of
-its own real category and that they agree on the snap. This is the same discipline the framework applies elsewhere:
+its own real category and that they agree on the snap. This is the same discipline the framework applies elsewhere, with one difference kept visible:
 
 - AX-1 is retired. Its shape is proved as T-SNAP, and that the snap occurs follows from the occurrence commitment
-  together with DA-1.
+  together with DA-1 (closed given DP-2); that commitment remains. The identity reading leaves nothing to commit to:
+  it was never a well-formed proposition.
 - CC-2 and the diagonal fixed point are fenced the same way.

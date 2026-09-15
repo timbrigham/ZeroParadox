@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.7 | August 2026
+Version 1.8 | September 2026
+v1.8: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): two sites said the MC-1 members are 'provably distinct'; now the MC-1 identity retired as ill-typed (neither x = y nor x != y is well-formed across categories); the members differ by property, each in its own category (seam_unique_among_named).
 v1.7: BEDROCK, the same mechanism defect as ZP-R v1.6 and rendered here too. The escape from the Cantor obstruction was given as eval landing "in the partial functions, not in the codes, so the Set refutation never applied to it". Refuted by elaboration: the partial-function type is nontrivial, so the Set refutation lands on it as well. The escape is that the effective category admits fewer MORPHISMS - no computable self-map on codes is eval-fixed-point-free - so the refuting diagonal has no computable representative. Prior art unchanged; only the stated reason was wrong.
 v1.5: THE v1.4 FIX WAS PARTIAL, AND THAT MADE THINGS WORSE. v1.4 corrected the two sites carrying the literal strings "modeling commitment" and "offered", and missed a THIRD stating the same claim in different words - Section II's closing sentence, "The one-object identification remains the MC-1 commitment." The result was a document saying the identity was retired on page 1 and live on page 2. Before v1.4 it was uniformly stale, i.e. self-consistent; a partial fix to a self-consistent error manufactures a self-contradiction, which is worse than not fixing it. The cause was grepping the three forbidden PHRASES rather than the CLAIM. Section II now states what MC-1 does carry: family membership proved per domain, with the choice of criteria the design commitment. Found independently by both gates at FAIL-BEDROCK. A FOURTH site then turned up - one neither gate flagged - found only by sweeping the rendered text for the CLAIM (any sentence pairing an identity notion with a live-status verb) rather than for the phrases: Section III called MC-1 an "existing identification", and its "bottom/epsilon-zero identification" wording could be read as equating the two endpoints, which epsilon0_ne_bot forbids. Now stated as a role assignment, with the endpoints' distinctness named. Also: the endnote's Lean sources upgraded to full repository paths.
 v1.3: CITATION SCOPE. Section III called the biconditional "the General Recursion Theorem". AMM's Thm 7.2 (p. 27) is the FORWARD direction only; their section 8 is titled "The Converse of the General Recursion Theorem". That converse always asks the ENDOFUNCTOR to preserve inverse images and then takes one of several routes - the CATEGORY having universally smooth monos with the functor carrying a pre-fixed point (Thm 8.1), or the category having a subobject classifier (Thm 8.6, Taylor's), or a third route for functors on vector spaces which have neither (Thm 8.12). The smooth-mono and subobject-classifier conditions are the CATEGORY's; preserving inverse images and carrying a pre-fixed point are the ENDOFUNCTOR's; and the routes are not exhaustive. Cor 8.2 lists five equivalent conditions, including the initial-algebra leg, under Thm 8.1's assumptions specifically. Taylor's necessity result is scoped as he scopes it - IN A TOPOS (Prop 111, p. 6), which he states rather than proves - and his forward half is Thm 36, p. 15. The "one cannot recurse through the bottom" reading is marked as this framework's gloss: Prop 111 names no bottom element. Also: the next-time operator is no longer listed as missing machinery, having been built in ZeroParadox/Category/NextTimeCategorical.lean; the remaining Mathlib absences are dated rather than asserted. All locators read from source.
@@ -20,7 +21,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -72,8 +73,8 @@ def build():
         'valuation, and the initial object in category theory. Their shared membership in that '
         'family (MC-1) is proved per domain; the choice of criteria is a design principle; and '
         'the claim that the faces are <i>numerically one object</i> is <b>retired as '
-        'ill-typed</b> &#8212; an equation across distinct categories is not a well-formed '
-        'proposition, and the members are provably distinct. This addendum is a thin, '
+        'ill-typed</b> (neither x = y nor x &#8800; y is well-formed across categories); the members '
+        'differ by property, each in its own category (seam_unique_among_named). This addendum is a thin, '
         'honest record of two machine-checked investigations into the structure of that '
         'keystone &#8212; both probe-level, both fenced as to exactly what they prove.'))
     E.append(body(
@@ -108,10 +109,10 @@ def build():
             'each with a machine-checked axiom footprint; and the <i>location</i> claim, that '
             'the fixed point sits at the floor &#8869; (the G&#246;del inversion), a framing.',
             'Does not add: the unification itself (Lawvere/Yanofsky), nor any identification of '
-            'the four faces as one object &#8212; that identity is <b>retired as ill-typed</b>, '
-            'since an equation across distinct categories is not a well-formed proposition. What '
-            'MC-1 carries is family membership, proved per domain, with the members provably '
-            'distinct.',
+            'the four faces as one object &#8212; that identity is <b>retired as ill-typed</b> '
+            '(neither x = y nor x &#8800; y is well-formed across categories). What '
+            'MC-1 carries is family membership, proved per domain; the members differ by property, '
+            'each in its own category (seam_unique_among_named).',
         ]
     ))
     E.append(sp(6))
