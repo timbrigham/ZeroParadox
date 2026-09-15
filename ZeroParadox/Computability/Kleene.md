@@ -57,7 +57,9 @@ Three formal results capture this structure:
       to be the least one)
   (2) self_halting_undecidable and isComputationalQuine_undecidable — the boundary
       between computation and self-reference is genuinely non-computable, not merely
-      unimplemented; Classical.choose in machinePhaseKleene reflects this
+      unimplemented; machinePhaseKleene's Classical.choose is this instance's choice of botCode; a
+      computable instance with a constant code also satisfies the class (the example after
+      machinePhaseKleene)
   (3) infinite_quine_family — the quine family is infinite: unboundedly many distinct
       (function, index) pairs exist. Its witnesses are the constant codes, so it bounds
       the family from below without showing those members are instantiation bottoms

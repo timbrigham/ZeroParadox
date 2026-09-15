@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.11 | September 2026
+Version 1.12 | September 2026
+v1.12: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim ruling, 2026-09-15): the 'What the Zero Paradox adds' box still said 'What MC-1 carries is family membership, proved per domain'; it now names the proved faces as the preamble and Section II do (Quine atom, 2-adic and categorical; the Kleene face carried as a requirement).
 v1.11: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the preamble said the faces' shared membership in MC-1 'is proved per domain', including the Kleene quine; the Kleene face is carried as a KleeneStructure requirement, its witness computability_face_fixedPoint a fixed point of a computable map not tied to bottom, so the preamble and Section II's verdict now name which faces are proved. The preamble's missing space after 'framework:' is restored.
 v1.10: DECISION BATCH REMEDIATION AFTER GATE ROUND 3, SECOND PASS (Tim ruling, 2026-09-15): the preamble said bottom 'is the same self-referential (diagonal) fixed point in every framework', a cross-framework identity the same paragraph retires as ill-typed; it now says bottom 'plays the same self-referential (diagonal) fixed-point role in every framework'. The rest of the sentence is unchanged.
 v1.9: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): both MC-1 sites now say the identity is retired as ill-typed because object equality across categories does not typecheck and is not invariant under equivalence. The property clause citing seam_unique_among_named is dropped here: its named bottoms are not this addendum's faces (Quine atom, Kleene quine, v2(0), initial object).
@@ -24,7 +25,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -116,7 +117,8 @@ def build():
             'Does not add: the unification itself (Lawvere/Yanofsky), nor any identification of '
             'the four faces as one object &#8212; that identity is <b>retired as ill-typed</b> '
             '(object equality across categories does not typecheck and is not invariant under '
-            'equivalence). What MC-1 carries is family membership, proved per domain.',
+            'equivalence). What MC-1 carries is family membership, proved per domain for the Quine '
+            'atom, 2-adic and categorical faces (the Kleene face carried as a requirement).',
         ]
     ))
     E.append(sp(6))

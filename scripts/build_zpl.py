@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.9 | September 2026
+Version 1.10 | September 2026
+v1.10: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim rulings, 2026-09-15): Section II's body still equated Rogers' fixed-point theorem with Kleene's second recursion theorem and dropped 'total'; it now names Mathlib fixed_point, inter-derivable with fixed_point2, for any total computable transformation. The verification box said Classical.choice is load-bearing; in the computability layer the choice belongs to ZP-K's instance (its choice of botCode), and a computable instance with a constant code also exists.
 v1.9: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the overview equated Rogers' fixed-point theorem with Kleene's second recursion theorem; it now names Rogers' theorem as Mathlib fixed_point, for a total computable transformation, inter-derivable with Kleene's second recursion theorem (fixed_point2), as Gentzen.lean section II already records. Remark 'Why K is Absent' said the AFA/Kleene route is 'a provable path'; its Kleene step is a KleeneStructure requirement, and it now says so.
 v1.8: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15): the surreals note (Remark R-L.2) sits in the ordered-field setting, where the snap is proved impossible (f_snap_impossible); the clause saying what occurrence follows from is removed there, and the sentence says only what is derived: the shape and its impossibility in an ordered field.
 v1.7: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the surreals note said 'occurrence is a framework commitment'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
@@ -18,7 +19,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -121,8 +122,9 @@ def build():
     ]
 
     E.append(body(
-        'Rogers\' fixed-point theorem (also known as Kleene\'s second recursion theorem) '
-        'states that any computable transformation of a code has a behavioral fixed point: '
+        'Rogers\' fixed-point theorem (Mathlib fixed_point; inter-derivable with Kleene\'s second '
+        'recursion theorem, fixed_point&#8322;) states that any total computable transformation of a '
+        'code has a behavioral fixed point: '
         'a code c such that running f(c) and running c produce the same partial function. '
         'For any computable transformation, at least one fixed-point code exists.'))
 
@@ -638,9 +640,10 @@ def build():
             'All 23 theorems carry axiom footprint: [propext, Classical.choice, Quot.sound].',
             'These are standard Mathlib infrastructure axioms (ordinal theory, p-adic '
             'analysis, computability). They are not ZP-L commitments.',
-            'Classical.choice is load-bearing: it is the formal non-constructivity '
-            'appearing at the diagonal step in each ZP layer (§I). Its presence is '
-            'expected and documented, not incidental.',
+            'Classical.choice is the formal non-constructivity appearing at the diagonal '
+            'step in each ZP layer (§I). In the computability layer the choice belongs to '
+            'ZP-K\'s instance (its choice of botCode); a computable instance with a constant '
+            'code also exists. Its presence is expected and documented, not incidental.',
             'Zero sorry in Gentzen.lean. Verified: lake build, May 2026.',
         ]
     ))

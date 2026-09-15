@@ -119,7 +119,8 @@ theorem padic_bottom_not_zero :
 /-! ## Capstone: among the named bottoms, #5 is the only zero object -/
 
 /-- **Seam uniqueness among the named bottoms.** Of the five framework bottoms, only #5 (the Hilbert
-    bottom) is a zero object; #3, #4, the ZP-G initial, and the ZP-A bottom each provably fail.
+    bottom) is a zero object; #3, #4, the ZP-G initial, and the ZP-A bottom each provably fail, the
+    ZP-A bottom under the premise `HasNoTop L` (it is least but not greatest when `L` has no top).
 
     This refutes the pre-registered GO conjecture ("another zero-object bottom exists") and
     establishes the pre-registered NO-GO obstruction ("#5 is the only zero-object bottom among those

@@ -61,22 +61,7 @@ open Ordinal
 
 /-! ## § I. Axiom Footprint Convergence
 
-Non-constructibility appears in four formal languages across the ZP framework.
-Each proved theorem in each layer, as currently written, depends on Classical.choice at the
-diagonal step. Whether that dependence is necessary (forced by ZP geometry rather than incidental)
-is the open Classical.choice inversion conjecture (cf. ZPM §II): #print axioms shows dependence,
-not necessity.
-
-| Layer | Formal Language | Expression of non-constructibility |
-|-------|----------------|--------------------------------------|
-| ZPB   | Topology        | C3: no continuous path ⊥ → x ≠ ⊥   |
-| ZPC   | Information     | L-INF: infinite surprisal at ⊥       |
-| ZPJ/K | Set + Compute  | bot_self_mem (AFA); botCode (Kleene) |
-| ZPI   | Algorithmic IT  | K(Sₙ|n)/|Sₙ| → 1; K uncomputable    |
-
-The reason K is absent from Lean: its existence requires Classical.choice —
-exactly the axiom Nat.Partrec.Code.fixed_point₂ already uses in ZPK. The
-AFA/Kleene route reaches the same fixed-point structure via a provable path. -/
+Argument, layer table and the reason K is absent from Lean: `ZeroParadox/Ordinal/Gentzen.md`. -/
 
 -- Axiom footprint evidence: all load-bearing ZPK theorems share this footprint.
 -- The Classical.choice entry is the computational expression of the diagonal.
