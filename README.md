@@ -78,15 +78,15 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 
 | File | Document | Version | Focus |
 |------|----------|---------|-------|
-| [Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.27 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
+| [Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.28 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
 | [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.16 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.24 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.15 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
-| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.34 | The bridge: the snap assembled as a derived theorem across the layers. |
+| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.35 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.8 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.15 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.23 | The categorical bridge: the snap holding under all four domain functors. |
-| [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.4 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
+| [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.5 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
 | [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.24 | Inside zero: each maximal chain that strictly ascends at every step, with its 2-adic valuation tracking the depth index, converges to 0 in the 2-adics; reading that limit as an occupant of the ⊥ role, and then as a successor ⊥′, are two further commitments. |
 | [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.8 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
 | [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.16 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
