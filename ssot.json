@@ -73,7 +73,15 @@
             "bottom"
           ],
           "reason": null,
-          "statement": "⊥ is the Quine atom realized in the computation layer (DA-1, closed concretely in ZP-K).",
+          "restatements": [
+            {
+              "by": "Tim",
+              "date": "2026-09-15",
+              "prior_statement": "⊥ is the Quine atom realized in the computation layer (DA-1, closed concretely in ZP-K).",
+              "reason": "Decision-batch arc, round-4 ruling: the prior statement credited ZP-K with closing DA-1 concretely; DA-1 is closed given DP-2 (da1_minimal_path) and da1_closed_concrete is only its Path 1 witness. ClaimsMirror.lean claim_DA1 now backed by da1_minimal_path."
+            }
+          ],
+          "statement": "DA-1 (instantiation is execution) is closed given DP-2 (da1_minimal_path); ZP-K witnesses its Path 1: ⊥ is the unique Quine atom of the machine-phase semilattice (da1_closed_concrete).",
           "status": "proved",
           "to": null
         },
@@ -434,7 +442,15 @@
             "bottom"
           ],
           "reason": null,
-          "statement": "In computability, ⊥ is realized as the Kleene quine, the self-reproducing program and diagonal fixed point of the computation layer.",
+          "restatements": [
+            {
+              "by": "Tim",
+              "date": "2026-09-15",
+              "prior_statement": "In computability, ⊥ is realized as the Kleene quine, the self-reproducing program and diagonal fixed point of the computation layer.",
+              "reason": "Decision-batch arc, round-4 ruling: the prior statement asserted ⊥ is realized as the Kleene quine as proved; kleene_quine_is_bot mentions no computational fixed point, and the quine is the KleeneStructure botCode requirement, so the identification is a reading."
+            }
+          ],
+          "statement": "In computability, ⊥ is read as the Kleene quine: in any KleeneStructure lattice every Quine-atom element equals ⊥ (kleene_quine_is_bot), and the quine itself is the structure's botCode requirement.",
           "status": "proved",
           "to": null
         },
