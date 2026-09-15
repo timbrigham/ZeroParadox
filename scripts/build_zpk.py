@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.14 | May 2026
+Version 1.16 | September 2026
+v1.16: DA-1 PATH 3, SECOND PASS (Tim rulings, 2026-09-15): the Section V heading 'DA-1 Formally Closed', subsection 'II. DA-1 Closed' and the box title 'Theorem da1_closed_concrete - DA-1 Formally Closed' credited the Path 1 witness with closing DA-1, which is closed given DP-2; they are now 'DA-1: what Lean witnesses' and 'the Path 1 witness'. The description_instantiation_gap_closed box said bottom 'IS the executor ... identified structurally with the Kleene fixed point and the AFA Quine atom'; it now says bottom is read as the executor, Lean witnesses it as the AFA Quine atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a KleeneStructure requirement (botCode_is_quine), and that these are one structural fact is the framework's reading.
+v1.15: DA-1 PATH 3, INTERNAL CONTRADICTION (pre-existing bedrock, editorial gate round 3 B1, 2026-09-15): 'What Changed for DA-1' opened 'ZP-K resolves Paths 1 and 3' and two sentences later said 'Path 3 (computational) is NOT resolved here'; the Path 2 paragraph and its Open Items row still said 'Paths 1 and 3 are formally closed / closed', and section I said 'Paths 1 and 3 are projections of one structural identity'. Each now carries the CLAIMS.md DA-1 row: Path 1 is witnessed by da1_closed_concrete, which proves IsQuineAtom (bottom : MachinePhase) and nothing computational; Path 3's witness is the machinePhaseKleene botCode_is_quine field, a KleeneStructure requirement, not a second independent proof. 'DA-1 does not depend on Path 2' is kept.
 v1.14: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
 v1.13: BEDROCK - the 2026-07-26 class-field-as-theorem root cause propagated, six sites. botCode described as "the code witnessing bottom's computational self-reference" and botCode_is_quine as "botCode IS its own program" now name it as a CLASS FIELD carrying a periodicity condition that constant codes also satisfy; the preamble no longer says Kleene's theorem "provides the formal witness"; the machinePhaseKleene def-box no longer says "a program that IS its own program". Section III heading and the verification table said "four-way equivalence" while t_comp proves THREE. R-K.0 gains the type-level statement of the gap: (1)-(3) are properties of an element of L, (4) is a property of a Code, and there is NO function or equivalence between Code and L anywhere in the development - the fourth condition is bundled by the class, not connected by a mapping.
 v1.12: witness audit (mechanical corrections). bot_self_mem_from_kleene described as "the Kleene side implies the AFA side" - it is a RESTATEMENT of the inherited AFAStructure field, adding no content, per Kleene.lean's own note. And "required together because they are the same structural fact" now names both as class FIELDS and the sameness as the framework's reading, which is the motivation for the class rather than something derived within it.
@@ -41,7 +43,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.16'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -276,9 +278,10 @@ def build():
     E.append(body(
         'DA-1\'s three informal paths (Path 1: AFA structural, Path 2: informational, '
         'Path 3: Kolmogorov/computational) were previously understood as three separate '
-        'corroborations converging on the same conclusion. ZP-K shows they are not '
-        'independent: Paths 1 and 3 are projections of one structural identity onto two '
-        'different formal systems.'))
+        'corroborations converging on the same conclusion. In ZP-K, Path 1 is witnessed by '
+        'da1_closed_concrete, which proves IsQuineAtom (⊥ : MachinePhase) and nothing '
+        'computational; Path 3\'s witness is the machinePhaseKleene instance\'s botCode_is_quine '
+        'field, a KleeneStructure requirement, not a second independent proof.'))
     E.append(body(
         'Path 1 says: nothing external to ⊥ can execute ⊥, so ⊥ must execute itself — '
         '⊥ = {⊥}. Path 3 says: no shorter external program generates ⊥ — ⊥ is its own '
@@ -322,9 +325,11 @@ def build():
             'In any KleeneStructure lattice:',
             'IsQuineAtom ⊥  ∧  ∀ q : L, IsQuineAtom q → q = ⊥',
             'The static-description alternative is structurally eliminated, not argued away. '
-            '⊥ is not a description that could await an external interpreter. ⊥ IS the '
-            'executor — the universal Turing machine in ground state, identified structurally '
-            'with the Kleene fixed point and the AFA Quine atom.',
+            '⊥ is not a description that could await an external interpreter. ⊥ is read as the '
+            'executor, the universal machine in its ground state. Lean witnesses ⊥ as the AFA Quine '
+            'atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a '
+            'KleeneStructure requirement (botCode_is_quine); that these are one structural fact is '
+            'the framework\'s reading.',
             'Lean: ZeroParadox.description_instantiation_gap_closed. '
             'Purity: standard foundational axioms only. ✓',
         ]
@@ -365,7 +370,7 @@ def build():
     print('[build_zpk] Building Section V...')
     E += [
         hr(),
-        Paragraph('Section V: MachinePhase Instance — DA-1 Formally Closed', S['h1']),
+        Paragraph('Section V: MachinePhase Instance — DA-1: what Lean witnesses', S['h1']),
         hr(),
     ]
 
@@ -414,14 +419,14 @@ def build():
     ))
     E.append(sp(6))
 
-    E.append(Paragraph('II. DA-1 Closed', S['h2']))
+    E.append(Paragraph('II. DA-1: what Lean witnesses', S['h2']))
     E.append(body(
         'With the MachinePhase KleeneStructure instance in place, the abstract theorem '
         'da1_computational (which holds for any KleeneStructure lattice) applies '
         'directly to ZP-E\'s machine. The result is concrete.'))
 
     E.append(result_box(
-        'Theorem da1_closed_concrete — DA-1 Formally Closed (Kleene.lean § V)',
+        'Theorem da1_closed_concrete — the Path 1 witness (Kleene.lean § V)',
         [
             'da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase)',
             '',
@@ -446,8 +451,9 @@ def build():
         'Path 3 requires Kolmogorov complexity (uncomputable, absent from Mathlib); Path 2 '
         'requires an ontological bridge not formalizable in type theory.'))
     E.append(body(
-        'ZP-K resolves Paths 1 and 3. Path 1 (AFA structural) is resolved by the AFAStructure '
-        'typeclass: selfMem encodes ⊥ = {⊥} in CIC-compatible form, and the proof obligation '
+        'Path 1 (AFA structural) is witnessed by da1_closed_concrete, which proves '
+        'IsQuineAtom (⊥ : MachinePhase) and nothing computational: in the AFAStructure '
+        'typeclass, selfMem encodes ⊥ = {⊥} in CIC-compatible form, and the proof obligation '
         'is discharged by the MachinePhase instance. Path 3 (computational) is NOT resolved '
         'here. Its witness, botCode_is_quine, is a KleeneStructure class field — an assumption '
         'supplied at instantiation, not a second independent proof — and the condition it '
@@ -466,8 +472,8 @@ def build():
         '(b) a connection to Chalmers\' notion of implementation; '
         '(c) the dissolution argument in The Philosophical Question That Started This — the description-instantiation gap assumes a '
         'separability that the universality of the framework dissolves. '
-        'Importantly, DA-1 does not depend on Path 2: Paths 1 and 3 are formally closed, '
-        'and the formal spine (DP-2 + da1_minimal_path) is proved axiom-free. '
+        'Importantly, DA-1 does not depend on Path 2: '
+        'the formal spine (DP-2 + da1_minimal_path) is proved axiom-free. '
         'Path 2 is motivational context; its forward resolution is in The Philosophical Question That Started This.'))
 
     E.append(callout(
@@ -546,7 +552,7 @@ def build():
          'is a missing principle, not a missing proof. The gap between \'system at P₀\' and '
          '\'system is running\' cannot be closed by any computability library. '
          'Forward paths: new axiom, Chalmers\' implementation notion, or The Philosophical Question That Started This. '
-         'DA-1 does not depend on Path 2 — Paths 1 and 3 are closed.'],
+         'DA-1 does not depend on Path 2.'],
         ['selfApply uniqueness',
          'CLOSED — not attempted (correct)',
          'Computational quines are not unique in general. Uniqueness flows from ZP-J T-EXEC '

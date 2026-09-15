@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.17 | September 2026
+Version 1.18 | September 2026
+v1.18: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (2026-09-15), companion sync with ZP-E v3.36, DA-1 PATH 3 (pre-existing bedrock since v1.3, editorial round 3 B1): the ZP-K paragraph said ZP-K 'proves that this Quine and the AFA self-containment argument are the same structural fact', that two paths are machine-checked and IN LEAN SCOPE, and that DA-1's formal grounding is 'DP-2 plus two Lean-verified structural paths'. da1_paths_unified is a conjunction, and botCode_is_quine is a class field met by constant codes. The paragraph now carries the CLAIMS.md DA-1 row (Path 1 witnessed by da1_closed_concrete, nothing computational; Path 3's witness a KleeneStructure requirement, not a second independent proof; the one-fact reading is the framework's), and DA-1's formal grounding is DP-2, through da1_minimal_path.
 v1.17: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15), companion sync with ZP-E v3.33: the T-SNAP chain diagram drew DA-1 on the shape chain while its caption puts DA-1 on the occurrence side; it now has two rows, Shape (L-RUN, TQ-IH, ZP-A D2, T-SNAP) and Occurrence (P0, DA-1, the Snap occurs with the occurrence commitment), with fixed row positions and validate_drawing.
 v1.16: DECISION BATCH REMEDIATION (Tim, 2026-09-15): companion sync with ZP-E v3.31: the legal-case box says the Snap happening follows from the occurrence commitment together with DA-1 (closed given DP-2), not that it 'remains a commitment'; the T-SNAP chain diagram and its caption are kept together (the caption was orphaned onto the next page).
 v1.15: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14), companion sync with ZP-E v3.30: the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The Central Advance paragraph carries the canonical AX-1 sentence; the chain caption no longer says the Snap occurring 'is that commitment'; the axioms-list paragraph glosses the occurrence commitment as instantiation occurs, not as 'that the Snap happens'. The Four Descriptions paragraph identified 'the first state (eps0)' with Peano Arithmetic's proof-theoretic ordinal and named only its least-fixed-point face; it now keeps two charts: in the ordinal chart eps0 is least fixed point AND tower supremum and the snap nucleus closes bottom to it in one step (snapNucleus_bot), in the discrete state chart eps0 names the first state above bottom, and ZP-E Remark R-eps0 claims no embedding. The name 'Binary Snap causality' here names the retired AX-1 only, so T-SNAP's name gloss is not placed in this companion.
@@ -189,7 +190,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -330,17 +331,15 @@ def build():
         'All three share D7\'s static/executing dichotomy as background and none is circular '
         'with DP-2.'))
     E.append(cbody(
-        '<b>Lean 4 formal closure (ZP-K):</b> The three paths are not only conceptually '
-        'convincing — two of them are now machine-checked. ZP-K adds a KleeneStructure instance '
-        'for MachinePhase: it provides a concrete computational Quine (a code that is its own '
-        'program, via Kleene\'s second recursion theorem), and proves that this Quine and the '
-        'AFA self-containment argument are the same structural fact in two different languages. '
-        'The result is <i>da1_closed_concrete</i>: in Lean 4, '
-        'IsQuineAtom(&#8869; : MachinePhase) is a proved theorem. '
-        'Path 1 (AFA self-execution) and Path 3 (computational Kleene fixed point) are now '
-        'formally IN LEAN SCOPE. Path 2 (informational bridge — unbounded surprisal → necessarily '
+        '<b>What Lean witnesses (ZP-K):</b> ZP-K adds a KleeneStructure instance for MachinePhase '
+        '(machinePhaseKleene). Path 1 (AFA self-containment) is witnessed by <i>da1_closed_concrete</i>, '
+        'which proves IsQuineAtom(&#8869; : MachinePhase) and nothing computational; Path 3&#8217;s witness '
+        'is the machinePhaseKleene instance&#8217;s botCode_is_quine field, a KleeneStructure requirement, '
+        'not a second independent proof. The two are carried together by da1_paths_unified as a '
+        'conjunction of witnesses; that they name one structural fact is the framework&#8217;s reading. '
+        'Path 2 (informational bridge — unbounded surprisal → necessarily '
         'executing) remains a structural claim outside current Lean formalization. '
-        'The formal grounding of DA-1 is therefore: DP-2 plus two Lean-verified structural paths.'))
+        'The formal grounding of DA-1 is therefore DP-2, through da1_minimal_path.'))
     # The caption is kept on the same page as its diagram (it was orphaned onto the next page).
     E.append(KeepTogether([tsnap_chain_diagram(), ccaption(
         'The T-SNAP derivation chain. The chain uses commitments, '

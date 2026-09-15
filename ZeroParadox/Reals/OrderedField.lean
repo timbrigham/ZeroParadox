@@ -106,7 +106,8 @@ example {α : Type*} [PartialOrder α] (a : α) :
   exact ⟨fun ⟨⟨b, hb⟩, h⟩ => ⟨b, (key b hb).1 h⟩, fun ⟨b, h⟩ => ⟨⟨b, h.le⟩, (key b h.le).2 h⟩⟩
 
 -- `Statement:` AX-B1's scope, conditional form — every state with anything above it has a first step —
--- holds on the two states `Bool` (the top owes no step) and on `ℕ`, and fails on `ℝ`.
+-- holds on the two states `Bool` (the top owes no step) and on `ℕ`, and fails on `ℝ`. A standard
+-- sufficient condition is a successor order: `Order.covBy_succ_of_not_isMax`.
 example : ∀ a : Bool, (∃ b, a < b) → HasFirstStep a := by
   intro a ⟨b, hab⟩
   cases a <;> cases b

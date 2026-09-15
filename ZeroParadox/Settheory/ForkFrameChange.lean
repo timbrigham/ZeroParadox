@@ -9,7 +9,7 @@ set_option maxHeartbeats 400000
 
 Experimental probe in the bottom-diagram mapping campaign — not a finalized layer. Curated results
 are indexed in ZeroParadox/MANIFEST.md. Order-duality swaps the fork's two closures, and the fork collapses
-exactly at a unique fixed point; the overview and its fences: `ZeroParadox/Settheory/ForkFrameChange.md`.
+exactly when the map has a unique fixed point; the overview and its fences: `ZeroParadox/Settheory/ForkFrameChange.md`.
 
 ## Engineer's Take
 

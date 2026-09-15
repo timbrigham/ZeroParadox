@@ -74,9 +74,9 @@ example : (⟨0, Or.inl rfl⟩ : {o : Ordinal | o = 0 ∨ Ordinal.omega0 ^ o = o
 
 Reading: CARRIER. These lines BOUND the snap; none supplies it. ZP-F rules it out in every ordered
 field; ZP-B removes the topological obstruction in ℚ_p without replacing it. The first step is AX-B1,
-a modelling commitment, never a carrier property. AX-B1 holds at the bottom and at every iterative
-bottom: every state with anything above it has a first distinct state above it, with nothing strictly
-between. A state with nothing above it owes no step. -/
+a modelling commitment, never a carrier property. AX-B1 holds at every state with anything above it,
+the bottom included: each has a first distinct state above it, with nothing strictly between. A state
+with nothing above it owes no step. -/
 #check @ZeroParadox.HasFirstStep                      -- Statement: an ORDER predicate — `∃ a, bot ⋖ a`, Mathlib's covering relation. ⚠ `LT ℚ_[p]` does not synthesize, so this is not statable of ℚ_p; the p-adic line below fences NORM values, a different predicate
 #check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, every positive ε₀ admits a smaller positive δ
 #check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element. No Archimedean hypothesis appears in the binders

@@ -7,7 +7,11 @@ the per-declaration commentary; the results are described at each declaration, n
 
 Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 
-- DA-1 (Instantiation as Execution): Paths 1 and 3 are in Lean scope via ZP-K.
+- DA-1 (Instantiation as Execution): Path 1 is witnessed by da1_closed_concrete (ZP-K),
+  which proves IsQuineAtom (bot : MachinePhase) and nothing computational; Path 3's witness is
+  the machinePhaseKleene instance's botCode_is_quine field, a KleeneStructure requirement, not a
+  second independent proof. The two are carried together by da1_paths_unified as a conjunction of
+  witnesses; that they name one structural fact is the framework's reading.
   machinePhaseKleene gives MachinePhase a KleeneStructure instance; da1_closed_concrete
   proves IsQuineAtom (bot : MachinePhase) — the initial state is self-containing, and it is
   the only such state. The further reading "self-executing, not a static description" is
