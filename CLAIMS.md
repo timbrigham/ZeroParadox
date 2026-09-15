@@ -153,7 +153,7 @@ Open questions are also discussed publicly in the [GitHub Discussions Open Quest
 
 | Item | Status |
 |------|--------|
-| OQ-A1: Increment selection | OQ-A1b CLOSED by A1–A4; OQ-A1a: no reason to restrict to join-irreducibles (well-founded carriers); placement in the ordinal tower conditional on OQ-E2. ZP-E T5 (DA-1 insert § VI): no step is guaranteed, and on an arbitrary lattice no step is selected |
+| OQ-A1: Increment selection | OQ-A1b CLOSED by A1–A4; OQ-A1a: no reason to restrict to join-irreducibles (well-founded carriers); placement in the ordinal tower conditional on the alignment hypothesis hε₀. ZP-E T5 (DA-1 insert § VI): no step is guaranteed, and on an arbitrary lattice no step is selected |
 | OQ-B1: p = 2 justification | Closed - ZP-B T0 (derived from AX-B1 + MP-1) |
 | S1: Distribution stipulation | Closed - ZP-C T1 (derived from AX-B1 + RP-1) |
 | OQ-C1: Non-conservatism of DF | Closed - ZP-C T2 (rebuilt within extended D6) |

@@ -733,7 +733,7 @@ RULE     ask: is this the CENTRAL claim of its section, or infrastructure for so
 COST     the prefixes go stale as status changes and the label then misdescribes what is
          proved: CC-2's "Conditional Claim" outlived its own upgrade, and MC-1's numerical
          identity is RETIRED as ill-typed — `x = y` across distinct categories was never a
-         well-formed proposition, so it was never a commitment either.
+         well-formed proposition in the typed language, so it was never a commitment either.
 READ     tools/process/naming-and-labels.md
 
 ## R-ISSUES  Public issues are transparency, not a request for validation.
