@@ -53,7 +53,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Valuation/PricedPadicInterface.lean` - A priced p-adic interface: a choice-free carrier for ZP-B/ZP-J Group A, a map into `ℤ_[2]`, and both sides' axiom footprints
   - ride-along docs: `ZeroParadox/Valuation/PricedPadicInterface.md` - Pricing the crossing: where choice enters a 2-adic interface, and where it does not
 - `ZeroParadox/Valuation/RiemannSphere.lean` - The p-adic Riemann sphere: inversion swaps the floor 0 and its antipode ∞
-  - ride-along docs: `ZeroParadox/Valuation/RiemannSphere.md` - RiemannSphere — ride-along documentation
+  - ride-along docs: `ZeroParadox/Valuation/RiemannSphere.md` - Prior art for the sphere's group action, the loxodromic vocabulary, and the stabiliser fence
 - `ZeroParadox/Valuation/Scale.lean` - ZPJ — Valuation Bridge: Deriving AFA Content from Scale Structure
   - ride-along docs: `ZeroParadox/Valuation/Scale.md` - Scale — ride-along documentation
 - `ZeroParadox/Valuation/ScaleBridge.lean` - ZPJ — Scale Bridge: AFA Content from Valuation Without ZPSemilattice
@@ -108,6 +108,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Multihomed/Boundary.md` - Two poles of the floor, two sources of choice, and what the toy carrier models
 - `ZeroParadox/Multihomed/BoundaryBridge.lean` - ZPJ — The snap-boundary, QPF bridge (best-effort; Rung C-QPF)
 - `ZeroParadox/Multihomed/CategoricalBridge.lean` - ZP-H: Categorical Bridge
+  - ride-along docs: `ZeroParadox/Multihomed/CategoricalBridge.md` - The categorical bridge: key results, functor witnesses and the OQ-G3 status
 - `ZeroParadox/Multihomed/EigenvectorExists.lean` - Deep cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
 - `ZeroParadox/Multihomed/HilbertDiagonal.lean` - ZP-H: ⊥ is the unique finite-dimensional fixed point of the biproduct-diagonal
 - `ZeroParadox/Multihomed/InfoFunctor.lean` - ZP-H Info Functor: F_C into the real category `KleisliCat PMF` (MC-1 remediation)
@@ -162,6 +163,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/Epsilon0MinMax.lean` - ε₀ is min ≡ max: the snap ⊥ → ε₀ is one Kleene chain (seed → closure)
   - ride-along docs: `ZeroParadox/Ordinal/Epsilon0MinMax.md` - Least fixed point as a signature, and two fences on the seed
 - `ZeroParadox/Ordinal/Gentzen.lean` - ZP-L: Incomputability Convergence
+  - ride-along docs: `ZeroParadox/Ordinal/Gentzen.md` - The Kleene-ordinal bridge: where the value changes, and why that is not occurrence
 - `ZeroParadox/Ordinal/Goodstein.lean` - Goodstein's theorem (full, hereditary base) — ε₀ ordinal descent
 - `ZeroParadox/Ordinal/Incompleteness.lean` - ZP-M: Kleene–Ordinal Bridge Layer
 - `ZeroParadox/Ordinal/KirbyParis.lean` - Kirby–Paris hydra termination (the ε₀ gap) — proved
@@ -193,6 +195,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/AxiomProfile.md` - Axiom Profile — what the choice footprint actually says
 - `ZeroParadox/BottomCannotBe.lean` - Index of declarations characterizing ⊥
 - `ZeroParadox/ClaimsMirror.lean` - ZP Claims Mirror — the machine-checked representation of the claim graph
+  - ride-along docs: `ZeroParadox/ClaimsMirror.md` - Claims that are not theorems: the faithful non-representation
 - `ZeroParadox/DiagonalFixedPoint.lean` - Machine-checked characterization index of self-reference — the diagonal fixed point
   - ride-along docs: `ZeroParadox/DiagonalFixedPoint.md` - The μ/ν split, the host verdict, and what this index does not claim
 - `ZeroParadox/Miniature.lean` - The Zero Paradox in miniature — the minimal core
@@ -261,10 +264,10 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
   - ride-along docs: `ZeroParadox/Valuation/PoleCornersBridge.md` - Assembling a correspondence without asserting an identity
 - `ZeroParadox/Valuation/RateTransport.lean` - within-Axis-I positive rate-transport via the shared geometric rate `2^(-n)`
 - `ZeroParadox/Valuation/RootAsymmetry.lean` - Root-asymmetry test: #1 (μ order-floor) vs #3 (ν p-adic limit)
-- `ZeroParadox/Valuation/ScaleDepthWitness.lean` - A witness for the depth-chain seam: the powers of two
-  - ride-along docs: `ZeroParadox/Valuation/ScaleDepthWitness.md` - ScaleDepthWitness — ride-along documentation
-- `ZeroParadox/Valuation/ScaleRealization.lean` - Realizing an abstract scale step as 2-adic doubling
-  - ride-along docs: `ZeroParadox/Valuation/ScaleRealization.md` - ScaleRealization — ride-along documentation
+- `ZeroParadox/Valuation/ScaleDepthWitness.lean` - A concrete family satisfying ZP-I's `IsDepthChain`, and the gauge pricing what that satisfaction is worth
+  - ride-along docs: `ZeroParadox/Valuation/ScaleDepthWitness.md` - What satisfying the depth-chain seam is worth, and what it is not
+- `ZeroParadox/Valuation/ScaleRealization.lean` - Realizing an abstract scale step as 2-adic doubling: the ZP-I commitment as equivariance, with the valuation law derived and both valuations bridged
+  - ride-along docs: `ZeroParadox/Valuation/ScaleRealization.md` - Why the welded form is not statable, the falsifiers, and how the self-supply residue is closed
 - `ZeroParadox/Valuation/StrippedBottom.lean` - ⊥ by inversion of attribute-classes — the "typecast" stand-in (Tim, 2026-06-30)
 - `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the ordinal tower IS an InfinitudeFloor, order-reversed — ε₀ ≠ ⊥ preserved
 
