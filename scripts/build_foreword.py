@@ -1,5 +1,7 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.20, revised September 2026)
+Zero Paradox — Foreword PDF Builder (v2.22, revised September 2026)
+v2.22: DECISION BATCH REMEDIATION AFTER GATE ROUND 2, SECOND PASS (Tim ruling, 2026-09-15): section IV said the framework 'proves several of those faces literally identical', a cross-category identity the next paragraph retires; it now says the framework proves each face in its own domain, and that they are one object is the reading the next paragraph retires.
+v2.21: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): MC-1: 'neither x = y nor x != y is well-formed across categories' is replaced by: object equality across categories does not typecheck and is not invariant under equivalence. The commitments-table MC-1 row keeps a property clause scoped to the named bottoms of seam_unique_among_named; the section IV paragraph, whose faces (Quine atom, Kleene quine, v2(0), initial object) are not that named list, keeps only the retirement.
 v2.20: DECISION BATCH REMEDIATION (Tim, 2026-09-15): MC-1 walls (Tim's confirmed text): the commitments-table MC-1 row and the self-reference paragraph said the members are 'provably distinct (the walls)' and 'the walls between its members are themselves theorems'; the identity and its negation are both retired as ill-typed (neither x = y nor x != y is well-formed across categories), and the members differ by property, each in its own category (seam_unique_among_named).
 v2.19: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The commitments-table AX-1 row carries that sentence in place of 'stated separately, as the occurrence commitment, which ZP-E's DA-1 argues for', its status cell reads 'the snap occurs given the occurrence commitment and DA-1', and 'with no axioms' is 'with no Lean kernel axioms'. The ZP-E layer paragraph said the closing result is that 'the Binary Snap is a theorem, not an axiom', with the split only in the table; it now says the shape is a theorem and the Snap occurring follows from the occurrence commitment together with DA-1. 'Binary Snap Causality' names the retired AX-1 in this document, so T-SNAP's name gloss is not placed here.
 v2.18: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The commitments table row read "Retired axiom -> Theorem T-SNAP ... Previously an axiom; now derived as Theorem T-SNAP", which retired the whole of AX-1; its type cell and statement now carry both halves. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the AX-1 row credited the shape to 'the L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
@@ -62,7 +64,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.20'
+VERSION = '2.22'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -140,9 +142,9 @@ def commitments_table():
          'ZP-D Hilbert space) form one family, each a member characterized by shared criteria and the '
          'same diagonal fixed-point shape. Membership is proved per domain — the categorical '
          'correspondence is realized in Lean (mc1_correspondence, the four functors in ZP-H). The former '
-         'numerical identity — that the four are one object — is retired as ill-typed (neither x = y nor x ≠ y '
-         'is well-formed across categories); the members differ by property, each in its own category '
-         '(seam_unique_among_named, ZeroParadox/Category/SeamUniqueness.lean).'),
+         'numerical identity — that the four are one object — is retired as ill-typed (object equality across '
+         'categories does not typecheck and is not invariant under equivalence); what separates the members is '
+         'proved property by property (seam_unique_among_named, ZeroParadox/Category/SeamUniqueness.lean, for the named bottoms).'),
         ('CC-1',  'Conditional Claim (restated in ZP-J, not forced)',
          'S₀ = ⊥. The initial state equals the null state. T2 establishes ⊥ ≤ S₀ unconditionally; '
          'the strengthening to equality is a modelling commitment. ZP-J restates it: in any AFAStructure '
@@ -426,8 +428,8 @@ def build():
             'In category theory it is the initial object, the source from which every arrow '
             'departs and to which none return. These are not loose analogies. The framework '
             'reads them as faces of one object: a self-referential fixed point. It proves '
-            'several of those faces literally identical; how far that identity extends is '
-            'the question the next paragraph returns to.',
+            'each face in its own domain; that they are one object is the reading the next '
+            'paragraph retires.',
             S['body']),
         Paragraph(
             'Mathematics already has a name for this shape, and a theorem that unifies it: '
@@ -443,8 +445,8 @@ def build():
             'framework. The framework formalises these faces as instances of a single '
             'self-application structure and proves membership per domain. Whether they are '
             'all one object is not an open question but a retired one: it is retired as ill-typed '
-            '(neither x = y nor x ≠ y is well-formed across categories); the members differ by '
-            'property, each in its own category (seam_unique_among_named). What survives is the family.',
+            '(object equality across categories does not typecheck and is not invariant under '
+            'equivalence). What survives is the family.',
             S['body']),
     ]
 

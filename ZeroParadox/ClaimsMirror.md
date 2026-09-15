@@ -17,6 +17,6 @@ fact about the claim's status.
   Cantor obstruction), so this edge stays unbuilt. A theorem asserting it would be false; hence none.
 
 - `MC-1-identity` (retired): "the four domain bottoms are numerically one object." Retired 2026-07-15 as
-  ill-typed (neither `x = y` nor `x ≠ y` is well-formed across categories), so it cannot be stated
-  in Lean at all. The non-representability *is* the finding: the members differ by property, each in its
-  own category (`seam_unique_among_named`); only the shared diagonal shape survives, apophatically. No theorem here, by type.
+  ill-typed (object equality across categories does not typecheck and is not invariant under equivalence), so it
+  cannot be stated in Lean at all. The non-representability *is* the finding: what separates the members is proved
+  property by property (`seam_unique_among_named`, for the named bottoms); only the shared diagonal shape survives, apophatically. No theorem here, by type.

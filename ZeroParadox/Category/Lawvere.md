@@ -75,9 +75,9 @@ produced* by the diagonal, in its own category.
 
 The cross-face identification is a shared **shape**, confirmed precise. It is:
 
-- **NOT** a cross-category object identity — that reading is retired as ill-typed (neither x = y nor x ≠ y
-  is well-formed across categories). MC-1 names the bottom family; its members differ by property, each in its
-  own category (`seam_unique_among_named`).
+- **NOT** a cross-category object identity — that reading is retired as ill-typed (object equality across
+  categories does not typecheck and is not invariant under equivalence). MC-1 names the bottom family; what separates
+  its members is proved property by property (`seam_unique_among_named`, for the named bottoms).
 - **NOT** a single-mechanism theorem.
 - and the lattice / 2-adic faces are **provably not** Set-level Lawvere instances.
 

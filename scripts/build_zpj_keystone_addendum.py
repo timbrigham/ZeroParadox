@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.8 | September 2026
+Version 1.9 | September 2026
+v1.9: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): both MC-1 sites now say the identity is retired as ill-typed because object equality across categories does not typecheck and is not invariant under equivalence. The property clause citing seam_unique_among_named is dropped here: its named bottoms are not this addendum's faces (Quine atom, Kleene quine, v2(0), initial object).
 v1.8: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): two sites said the MC-1 members are 'provably distinct'; now the MC-1 identity retired as ill-typed (neither x = y nor x != y is well-formed across categories); the members differ by property, each in its own category (seam_unique_among_named).
 v1.7: BEDROCK, the same mechanism defect as ZP-R v1.6 and rendered here too. The escape from the Cantor obstruction was given as eval landing "in the partial functions, not in the codes, so the Set refutation never applied to it". Refuted by elaboration: the partial-function type is nontrivial, so the Set refutation lands on it as well. The escape is that the effective category admits fewer MORPHISMS - no computable self-map on codes is eval-fixed-point-free - so the refuting diagonal has no computable representative. Prior art unchanged; only the stated reason was wrong.
 v1.5: THE v1.4 FIX WAS PARTIAL, AND THAT MADE THINGS WORSE. v1.4 corrected the two sites carrying the literal strings "modeling commitment" and "offered", and missed a THIRD stating the same claim in different words - Section II's closing sentence, "The one-object identification remains the MC-1 commitment." The result was a document saying the identity was retired on page 1 and live on page 2. Before v1.4 it was uniformly stale, i.e. self-consistent; a partial fix to a self-consistent error manufactures a self-contradiction, which is worse than not fixing it. The cause was grepping the three forbidden PHRASES rather than the CLAIM. Section II now states what MC-1 does carry: family membership proved per domain, with the choice of criteria the design commitment. Found independently by both gates at FAIL-BEDROCK. A FOURTH site then turned up - one neither gate flagged - found only by sweeping the rendered text for the CLAIM (any sentence pairing an identity notion with a live-status verb) rather than for the phrases: Section III called MC-1 an "existing identification", and its "bottom/epsilon-zero identification" wording could be read as equating the two endpoints, which epsilon0_ne_bot forbids. Now stated as a role assignment, with the endpoints' distinctness named. Also: the endnote's Lean sources upgraded to full repository paths.
@@ -21,7 +22,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -73,8 +74,8 @@ def build():
         'valuation, and the initial object in category theory. Their shared membership in that '
         'family (MC-1) is proved per domain; the choice of criteria is a design principle; and '
         'the claim that the faces are <i>numerically one object</i> is <b>retired as '
-        'ill-typed</b> (neither x = y nor x &#8800; y is well-formed across categories); the members '
-        'differ by property, each in its own category (seam_unique_among_named). This addendum is a thin, '
+        'ill-typed</b> (object equality across categories does not typecheck and is not invariant under '
+        'equivalence). This addendum is a thin, '
         'honest record of two machine-checked investigations into the structure of that '
         'keystone &#8212; both probe-level, both fenced as to exactly what they prove.'))
     E.append(body(
@@ -110,9 +111,8 @@ def build():
             'the fixed point sits at the floor &#8869; (the G&#246;del inversion), a framing.',
             'Does not add: the unification itself (Lawvere/Yanofsky), nor any identification of '
             'the four faces as one object &#8212; that identity is <b>retired as ill-typed</b> '
-            '(neither x = y nor x &#8800; y is well-formed across categories). What '
-            'MC-1 carries is family membership, proved per domain; the members differ by property, '
-            'each in its own category (seam_unique_among_named).',
+            '(object equality across categories does not typecheck and is not invariant under '
+            'equivalence). What MC-1 carries is family membership, proved per domain.',
         ]
     ))
     E.append(sp(6))

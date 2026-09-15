@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.16 | September 2026
+Version 1.17 | September 2026
+v1.17: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15), companion sync with ZP-E v3.33: the T-SNAP chain diagram drew DA-1 on the shape chain while its caption puts DA-1 on the occurrence side; it now has two rows, Shape (L-RUN, TQ-IH, ZP-A D2, T-SNAP) and Occurrence (P0, DA-1, the Snap occurs with the occurrence commitment), with fixed row positions and validate_drawing.
 v1.16: DECISION BATCH REMEDIATION (Tim, 2026-09-15): companion sync with ZP-E v3.31: the legal-case box says the Snap happening follows from the occurrence commitment together with DA-1 (closed given DP-2), not that it 'remains a commitment'; the T-SNAP chain diagram and its caption are kept together (the caption was orphaned onto the next page).
 v1.15: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14), companion sync with ZP-E v3.30: the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The Central Advance paragraph carries the canonical AX-1 sentence; the chain caption no longer says the Snap occurring 'is that commitment'; the axioms-list paragraph glosses the occurrence commitment as instantiation occurs, not as 'that the Snap happens'. The Four Descriptions paragraph identified 'the first state (eps0)' with Peano Arithmetic's proof-theoretic ordinal and named only its least-fixed-point face; it now keeps two charts: in the ordinal chart eps0 is least fixed point AND tower supremum and the snap nucleus closes bottom to it in one step (snapNucleus_bot), in the discrete state chart eps0 names the first state above bottom, and ZP-E Remark R-eps0 claims no embedding. The name 'Binary Snap causality' here names the retired AX-1 only, so T-SNAP's name gloss is not placed in this companion.
 v1.14: T-SNAP PREMISES POINT AT LEAN, companion sync with ZP-E v3.29. The p2 paragraph said the formal ZP-E 'states these premises once'; it now names Premises of T-SNAP and the Lean t_snap_given, which takes the start at bottom and the step being taken as hypotheses. The derivation-chain caption said 'six steps' against the formal seven and left the occurrence commitment out of what the Snap occurring rests on; both fixed. The legal-case box said AX-1 'is now proven (T-SNAP)'; it now scopes that to the shape of the Snap and names occurrence as a commitment. The meta line hard-coded 'April 2026'; it now uses version_line with FIRST_RELEASED = April 2026 (first commit of the companion, 2026-04-17), and the footer no longer carries a date. ROUND 1 GATES (FAIL-BEDROCK, D1) + TIM'S AX-1 SPLIT (Tim, 2026-09-14: 'Both: split it'): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a commitment. The heading, the p2 AX-1 gloss (kept as history, now saying which half T-SNAP proves), the chain diagram string ('derived, not assumed'), the caption ('AX-1 (amber) is now a theorem'), the legal-case box (whose 'the assumption becomes a proven fact' inverted for the half that stays assumed) and the axioms-list paragraph now carry the split. t_snap_given takes TWO of the premises, the start at bottom and the FIRST step being taken. The caption no longer says 'with the definition of a Turing machine', which no box in the diagram shows. FOUR-FRAMEWORK DIAGRAM (ZPE-COMP-FOURFRAME-OVERFLOW): its internal caption string ran past the right page edge and duplicated the caption set directly beneath the diagram, so it is dropped; the framework boxes are widened from 1.35in to 1.6in, since 'ZP-C: Info Theory' measured wider than its box and was clipped; cy is fixed at 115 rather than derived from dh, dh goes from 3.4in to 3.2in, and the diagram now calls validate_drawing. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the page-1 title said 'the main causality axiom becomes a theorem', which put AX-1 whole, occurrence included, on the theorem side; it is now Tim's text, 'the causality axiom is retired, and the shape of the snap becomes a theorem'. 'The DA-1 insert changes this.' had lost its referent ('Because AX-1 says so') to the inserted split sentences and read as DA-1 overturning the occurrence commitment; it now says the insert puts an argument where 'Because AX-1 says so' stood and the occurrence commitment stays in place. The chain diagram's internal title string duplicated the caption and is dropped (R-DIAGRAM).
@@ -105,52 +106,57 @@ def four_framework_diagram():
     return validate_drawing(d, dh, 'four_framework_diagram')
 
 def tsnap_chain_diagram():
-    """P₀ → DA-1 → L-RUN → TQ-IH → ZP-A D2 → T-SNAP derivation chain."""
-    dw, dh = TW, 1.6 * inch
+    """Two rows. Shape: L-RUN -> TQ-IH -> ZP-A D2 -> T-SNAP. Occurrence: P0 -> DA-1 -> the Snap occurs.
+
+    DA-1 sits on the occurrence row, matching the caption: that the Snap occurs follows from the
+    occurrence commitment together with DA-1 (closed given DP-2); T-SNAP fixes the shape.
+    Content: top of row-1 boxes at 134pt, lowest sub-label baseline at 14pt; dh = 2.1in (151pt).
+    """
+    dw, dh = TW, 2.1 * inch   # content spans 12pt .. 134pt
     d = Drawing(dw, dh)
 
-    steps = [
-        ('P₀',      'Incomp.\nthreshold'),
-        ('DA-1',    '⊥={⊥}: no\nextl. interp.'),
-        ('L-RUN',   'Exec =\nnon-null'),
-        ('TQ-IH',   'No null-only\ntrace'),
-        ('ZP-A D2', 'State change\n= Snap'),
-        ('T-SNAP',  'Derived\ntheorem'),
+    label_col = 62
+    gap = 14
+    bw = (dw - label_col - 10 - 3 * gap) / 4
+    bh = 28
+    rows = [
+        (106, 'Shape', [
+            ('L-RUN',   ('Exec =', 'non-null'), COMP_BLUE),
+            ('TQ-IH',   ('No null-only', 'trace'), COMP_BLUE),
+            ('ZP-A D2', ('State change', '= Snap'), COMP_BLUE),
+            ('T-SNAP',  ('Derived', 'theorem'), COMP_AMBER),
+        ]),
+        (38, 'Occurrence', [
+            ('P₀',          ('Incomp.', 'threshold'), COMP_BLUE),
+            ('DA-1',        ('⊥={⊥}: no', 'extl. interp.'), COMP_BLUE),
+            ('Snap occurs', ('with the occurrence', 'commitment'), COMP_SLATE),
+        ]),
     ]
-    n = len(steps)
-    bw = (dw - 0.3*inch) / n - 6
-    bh = 0.52 * inch
-    by = dh * 0.52
-    gap = 6
-    x0 = 10
-
-    for i, (label, sub) in enumerate(steps):
-        bx = x0 + i * (bw + gap)
-        fill = COMP_AMBER if i == n-1 else COMP_BLUE
-        d.add(Rect(bx, by, bw, bh, fillColor=fill, strokeColor=COMP_BLUE,
-                   strokeWidth=0.8, rx=3, ry=3))
-        lw = len(label) * 6.2
-        d.add(String(bx + bw/2 - lw/2, by + bh - 16, label,
-                     fontSize=9, fontName='DV-B', fillColor=WHITE))
-        # Sub-label lines
-        sub_lines = sub.split('\n')
-        sub_y = by - 14
-        for sl in sub_lines:
-            sw = len(sl) * 5.2
-            d.add(String(bx + bw/2 - sw/2, sub_y, sl,
-                         fontSize=7, fontName='DV-I', fillColor=GREY_TEXT))
-            sub_y -= 10
-
-        if i < n-1:
-            nx = bx + bw + gap
-            ax1, ax2 = bx + bw + 1, nx - 1
-            amid = by + bh/2
-            d.add(Line(ax1, amid, ax2, amid, strokeColor=COMP_BLUE, strokeWidth=1.5))
-            d.add(Line(ax2-5, amid-3, ax2, amid, strokeColor=COMP_BLUE, strokeWidth=1.5))
-            d.add(Line(ax2-5, amid+3, ax2, amid, strokeColor=COMP_BLUE, strokeWidth=1.5))
+    for by, row_label, steps in rows:
+        d.add(String(4, by + bh / 2 - 3, row_label, fontSize=8, fontName='DV-B', fillColor=GREY_TEXT))
+        n = len(steps)
+        for i, (label, sub, fill) in enumerate(steps):
+            bx = label_col + i * (bw + gap)
+            d.add(Rect(bx, by, bw, bh, fillColor=fill, strokeColor=COMP_BLUE,
+                       strokeWidth=0.8, rx=3, ry=3))
+            lw = len(label) * 6.2
+            d.add(String(bx + bw/2 - lw/2, by + bh/2 - 3, label,
+                         fontSize=9, fontName='DV-B', fillColor=WHITE))
+            sub_y = by - 12
+            for sl in sub:
+                sw = len(sl) * 4.6
+                d.add(String(bx + bw/2 - sw/2, sub_y, sl,
+                             fontSize=7, fontName='DV-I', fillColor=GREY_TEXT))
+                sub_y -= 10
+            if i < n - 1:
+                ax1, ax2 = bx + bw + 1, bx + bw + gap - 1
+                amid = by + bh/2
+                d.add(Line(ax1, amid, ax2, amid, strokeColor=COMP_BLUE, strokeWidth=1.5))
+                d.add(Line(ax2-4, amid-3, ax2, amid, strokeColor=COMP_BLUE, strokeWidth=1.5))
+                d.add(Line(ax2-4, amid+3, ax2, amid, strokeColor=COMP_BLUE, strokeWidth=1.5))
 
     # No internal title string: the ccaption below the diagram carries it.
-    return d
+    return validate_drawing(d, dh, 'tsnap_chain_diagram')
 
 def axioms_table():
     """AX-B1 / AX-G1 / AX-G2 table."""
@@ -183,7 +189,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 
