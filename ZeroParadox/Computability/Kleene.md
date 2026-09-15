@@ -65,5 +65,5 @@ Three formal results capture this structure:
       the family from below without showing those members are instantiation bottoms
 
 The noncomputable marker comes from this instance's choice of botCode; a computable
-instance with a constant code also satisfies the class, so non-constructivity belongs
+instance with a constant code also satisfies the class, so the noncomputable marker belongs
 to the instance, not to DA-1's computational path.
