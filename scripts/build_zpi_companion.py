@@ -1,6 +1,7 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.31 | August 2026
+Version 1.32 | September 2026
+v1.32: DA-1 CREDIT (Tim rulings, 2026-09-15), companion sync with ZP-I v1.25: the step table's step 3 row, the Lean status entry for da1_computational and the ZP-I Summary credited DA-1 at the successor bottom to the computational fixed-point argument and said the Kleene path closes Steps 2-4. da1_computational proves only that the bottom of a KleeneStructure lattice is its Quine atom. The row now says that, given the KleeneStructure instance, and that DA-1 is closed given DP-2 (ZP-E); the Summary says DA-1 is closed given DP-2, with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.
 v1.31: THE CLAIM IS DELETED, NOT REDRAFTED (companion sync with ZP-I v1.22; adversary FAIL-BEDROCK). Three findings landed in this file, one of them the worst kind. (1) The step table's SOURCE cell for step 1 read "R1 + ZP-B completeness ... (t_iz_cauchy)". t_iz_cauchy binds the chain and the norm bound and NO LATTICE AT ALL; it is pure p-adic analysis. Restated to what it consumes. (2) The Lean status box gave t_iz_r1_t3_geometric_bound the binders of its NEIGHBOUR h_strict_from_r1_t3 - IsDepthChain and IsStrictStateSequence, listed correctly one entry above - and dropped the nonvanishing hypothesis the named lemma actually requires. A status box stating a theorem that is not the theorem. (3) Door 1 still credited R1 with leaving the chain somewhere to go, one paragraph from the text reserving R1 for no-subtraction; deleted, see the formal document's v1.22 entry for the counter-model that settles it. Also: "T3 drives ascent" at :294 and :599 - T3 is monotonicity, and the corpus's own compiled gauge shows it permits stalling in any ZPSemilattice - and the dead file name ZPI.lean in the header, which has been ZeroParadox/Valuation/SemilatticeInstance.lean since the reorg. ROUND 3 (adversary FAIL-BEDROCK): the cycle diagram's fourth node was labelled 'eps_(omega-1)' with the sublabel 'last state'. That ordinal DOES NOT EXIST - omega is a limit and has no predecessor - and the paired formal document denies the sublabel four pages earlier at Remark R-I.1, "a countable sequence with NO last element in L". Together they made the limit read as a successor step, the exact misreading this document exists to block. Second Drawing-borne defect in three rounds, after 'T3 (R1 drives)' at comp v1.29: a String inside a Drawing is invisible to every prose checker in this repository, so the only detector is a reviewer reading the drawing code. Also: the arrow labels gave the climb to T3 alone, and T3 is monotonicity, which the corpus's own gauge shows permits stalling; and the step-1 source cell, repaired earlier this round, still led with ZP-B completeness, which t_iz_cauchy does not consume. ROUND 4 (editorial FAIL-BEDROCK, ordinary here): the summary still read "T-IZ is derived from ZP-A through ZP-E and ZP-K" - the five-document range attribution the formal document deleted at v1.22. A range of documents is not a derivation. ROUND 3, SECOND GATE (editorial FAIL-BEDROCK): the section III-C status box made the same "pure ZP-A lattice conditions" claim TWICE in one entry and dropped the nonvanishing hypothesis again - the exact omission the v1.31 entry above records as fixed one entry earlier at the geometric-bound lemma. Third half-applied fix in this arc. Corrected to the three hypotheses the signature actually binds, with only IsStrictStateSequence named as a lattice condition.
 v1.30: ATTRIBUTION CORRECTED (companion sync with ZP-I v1.21; claim-review FAIL-BEDROCK). The comp v1.29 name fix left the false attribution in place. HasNoTop appears in no binder of any declaration in SemilatticeInstance.lean; what h_strict_from_r1_t3 consumes is IsDepthChain and IsStrictStateSequence. Two LEAN STATUS BOXES carried "from R1 + T3" - a status box is the surface a general reader treats as the verified summary, which makes it the worst place for a premise nothing binds.
 v1.29: NAME COLLISION RESOLVED, AND THE OUTSIDE-L CLAIM RETRACTED (companion sync with ZP-I v1.20). R1 named two propositions - ZP-A's is NO-SUBTRACTION, and the order property is HasNoTop in ZeroParadox/Order/Lattice.lean. This companion used both, one paragraph apart from Door 1 which correctly reads "R1 (No subtraction)". Per Tim, the order property is now named HasNoTop and "ZP-A R1" is reserved for no-subtraction. Retracted with it, and introduced by the v1.28 fix: that no-top "puts the limit OUTSIDE L so the succession has somewhere to go" - refuted by a compiled counterexample in the ordinals under max, whose ascending chain has its least upper bound inside the carrier. Also swept: the diagram arrow label 'T3 (R1 drives)', which sits inside a Drawing and is invisible to every prose checker in this repository - found only because a reviewer read the drawing code.
@@ -301,7 +302,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.31'
+VERSION = '1.32'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -487,9 +488,9 @@ def build():
          'ZP-E DA-2  - proved in Lean (t_iz_limit_is_new_null, axiom-free). '
          '✓ (the role only, given the hypothesis; not the novelty)'],
         ['3. DA-1 fires',
-         'The successor semilattice carries a KleeneStructure (ZP-K). '
-         'DA-1 applies at ⊥′ via the computational fixed-point argument.',
-         'ZP-K KleeneStructure  - proved in Lean (da1_computational). ✓'],
+         'Given a KleeneStructure on the successor semilattice (ZP-K), ⊥′ is its Quine atom '
+         '(da1_computational); DA-1 is closed given DP-2 (ZP-E).',
+         'da1_computational - proved in Lean, given the KleeneStructure instance ✓'],
         ['4. T-SNAP fires, on the reading that the limit fills the ⊥ role',
          'On that reading, at the computational fixed point T-SNAP fires: '
          'join ⊥ ε₀′ = ε₀′. Reading the 2-adic limit as the occupant is one commitment; '
@@ -649,8 +650,7 @@ def build():
         'that the Cauchy limit satisfies it is not established here and is not statable '
         'in Q₂. Reading that occupant as ⊥′ is C-DA2, a further commitment. '
         'Proved directly from da2_bottom_characterization. ✓ (axiom-free)',
-        'da1_computational (ZP-K KleeneStructure)  - DA-1 fires at ⊥′ via the '
-        'computational fixed-point argument. ✓',
+        'da1_computational - proved in Lean, given the KleeneStructure instance ✓',
         't_iz_complete (§III-B)  - carries all four steps in one theorem: convergence, '
         '⊥-role identification, DA-1, T-SNAP. All formal, no Kolmogorov complexity needed. ✓ '
         '(a conjunction, not a chain: the convergence step is about Q₂ and the role step about a '
@@ -672,8 +672,9 @@ def build():
         'T-IZ requires no new axioms. '
         'All four steps are carried in Lean 4 (ZeroParadox/Valuation/SemilatticeInstance.lean, '
         't_iz_complete) as a conjunction, with the role step\'s property taken as a hypothesis. '
-        'The Kolmogorov complexity route is superseded: the AFA/Kleene path via '
-        'ZP-K KleeneStructure closes Steps 2–4 without Kolmogorov complexity. '
+        'The Kolmogorov complexity route is superseded: DA-1 is closed given DP-2 (ZP-E), '
+        'with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement, '
+        'so Steps 2–4 need no Kolmogorov complexity. '
         'The derivation is self-contained: T-SNAP opens each branch; '
         'T-IZ closes it at a limit READ as filling the bottom role; DA-2 licenses reading that '
         'occupant as the next branch\'s foundation. Emergence and return are derived as far as '

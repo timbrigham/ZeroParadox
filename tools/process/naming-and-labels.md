@@ -68,7 +68,7 @@ When assigning a label, ask: "Is this result the central claim of its section, o
 ### The keystone concept — "the diagonal fixed point" (confirmed name)
 
 **Standing rule (Tim, 2026-06-10).** The Quine atom (CC-2) is only the *set-theoretic face* of the
-framework's actual keystone: **⊥ is the same self-referential fixed point in every framework, and the
+framework's actual keystone: **⊥ plays the same self-referential fixed-point role in every framework, and the
 floor of each structure is its point of self-reference** (the Gödel inversion — self-reference located
 at the floor, not the ceiling). The confirmed readable name for this keystone is **"the diagonal fixed
 point."** This language has recurred across many sessions; it is the real central concept.

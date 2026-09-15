@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.16 | September 2026
+Version 1.17 | September 2026
+v1.17: DA-1 READING FENCED, THIRD PASS (Tim rulings, 2026-09-15): three sentences stated the executor reading as established. The description_instantiation_gap_closed box now says that on the framework's reading bottom is not a description awaiting an external interpreter, and that Lean proves only the Quine-atom statement above it. The da1_closed_concrete box's Interpretation is labelled the framework's reading, not a Lean theorem, with c0 read as the executor. Section II's body says bottom in the computational instantiation is read as the universal Turing machine in its ground state; the general sentences about U are unchanged.
 v1.16: DA-1 PATH 3, SECOND PASS (Tim rulings, 2026-09-15): the Section V heading 'DA-1 Formally Closed', subsection 'II. DA-1 Closed' and the box title 'Theorem da1_closed_concrete - DA-1 Formally Closed' credited the Path 1 witness with closing DA-1, which is closed given DP-2; they are now 'DA-1: what Lean witnesses' and 'the Path 1 witness'. The description_instantiation_gap_closed box said bottom 'IS the executor ... identified structurally with the Kleene fixed point and the AFA Quine atom'; it now says bottom is read as the executor, Lean witnesses it as the AFA Quine atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a KleeneStructure requirement (botCode_is_quine), and that these are one structural fact is the framework's reading.
 v1.15: DA-1 PATH 3, INTERNAL CONTRADICTION (pre-existing bedrock, editorial gate round 3 B1, 2026-09-15): 'What Changed for DA-1' opened 'ZP-K resolves Paths 1 and 3' and two sentences later said 'Path 3 (computational) is NOT resolved here'; the Path 2 paragraph and its Open Items row still said 'Paths 1 and 3 are formally closed / closed', and section I said 'Paths 1 and 3 are projections of one structural identity'. Each now carries the CLAIMS.md DA-1 row: Path 1 is witnessed by da1_closed_concrete, which proves IsQuineAtom (bottom : MachinePhase) and nothing computational; Path 3's witness is the machinePhaseKleene botCode_is_quine field, a KleeneStructure requirement, not a second independent proof. 'DA-1 does not depend on Path 2' is kept.
 v1.14: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
@@ -43,7 +44,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -313,7 +314,7 @@ def build():
         'gap": why does mathematical self-reference imply computational execution? The '
         'gap assumed the two were different things connected by a philosophical bridge.'))
     E.append(body(
-        'They are not different things. ⊥ in the computational instantiation IS the universal '
+        'They are not different things. ⊥ in the computational instantiation is read as the universal '
         'Turing machine in its ground state. The universal Turing machine is not a description '
         'awaiting an external executor — it IS the executor. The question "why does this '
         'description execute?" is incoherent when applied to U, because U is not a description. '
@@ -324,8 +325,8 @@ def build():
         [
             'In any KleeneStructure lattice:',
             'IsQuineAtom ⊥  ∧  ∀ q : L, IsQuineAtom q → q = ⊥',
-            'The static-description alternative is structurally eliminated, not argued away. '
-            '⊥ is not a description that could await an external interpreter. ⊥ is read as the '
+            'On the framework\'s reading, ⊥ is not a description awaiting an external interpreter; '
+            'Lean proves only the Quine-atom statement above. ⊥ is read as the '
             'executor, the universal machine in its ground state. Lean witnesses ⊥ as the AFA Quine '
             'atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a '
             'KleeneStructure requirement (botCode_is_quine); that these are one structural fact is '
@@ -433,10 +434,9 @@ def build():
             'The initial machine state c₀ is a Quine atom: it is self-containing and is the '
             'unique self-containing element of the MachinePhase lattice.',
             '',
-            'Interpretation: c₀ is not a static description awaiting an external interpreter. '
-            'c₀ IS the executor — the universal Turing machine in its ground state, for which '
-            'no external executor exists by structural definition. The description-instantiation '
-            'gap is dissolved: "description awaiting execution" is not a coherent state for c₀.',
+            'Interpretation (the framework\'s reading, not a Lean theorem): c₀ is read as the '
+            'executor, the universal Turing machine in its ground state, needing no external '
+            'executor; on that reading "description awaiting execution" is not a coherent state for c₀.',
             '',
             'Lean: ZeroParadox.da1_closed_concrete. '
             'Purity: standard foundational axioms only. ✓',
