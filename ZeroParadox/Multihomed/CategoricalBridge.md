@@ -25,8 +25,8 @@ Key results:
   ℕ ⥤ ModuleCat ℂ (ZeroParadox/State/HilbFunctor.lean), fC_functor : ℕ ⥤ KleisliCat PMF (ZeroParadox/Multihomed/InfoFunctor.lean), bundled
   as mc1_correspondence (ZeroParadox/Multihomed/MC1Bridge.lean). Those supersede the ℕ-shaped depth proxies in this file.
   MC-1's correspondence half is thereby formal; the literal cross-category identity is retired as
-  ill-typed (neither x = y nor x ≠ y is well-formed across categories); the members differ by property,
-  each in its own category (seam_unique_among_named).
+  ill-typed (object equality across categories does not typecheck and is not invariant under equivalence); what
+  separates the members is proved property by property (seam_unique_among_named, for the named bottoms).
 - T-H2: Categorical singularity (domain-absent) and ZPC singularity (divergent
   accumulation) are compatible — jointly derivable (OQ-G4 closed).
 - T-H3: Binary Snap described consistently under all four functors. Fully proved

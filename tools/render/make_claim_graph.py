@@ -87,7 +87,7 @@ def main():
              f'stroke="#9a9ab0" stroke-width="2" stroke-dasharray="2 7"/>')
     S.append(f'<text x="{CX}" y="{CY-R-90}" text-anchor="middle" font-size="12.5" fill="#7a7a92" '
              f'font-style="italic">MC-1: the shared diagonal shape; "these bottoms are one object" is '
-             f'retired as ill-typed — members differ by property, seam_unique_among_named (not an edge)</text>')
+             f'retired as ill-typed; what separates the members is proved property by property (seam_unique_among_named, for the named bottoms; not an edge)</text>')
 
     # spokes: each domain node is a face of ⊥ at the floor
     for d, (x, y) in dom_pos.items():

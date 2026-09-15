@@ -15,9 +15,9 @@ cites; it is a curated map of what is established, not a source of new claims.
 
 **On the central claim (read this first).** The organizing thesis is that the bottom element recurs in the
 same structural role across several domains. What is **proved** is the *membership* and the *recurrence of
-the slot structure*. The reading that the various bottoms are *one object* is retired as ill-typed (neither
-x = y nor x ≠ y is well-formed across categories); the members differ by property, each in its own category
-(seam_unique_among_named).
+the slot structure*. The reading that the various bottoms are *one object* is retired as ill-typed (object
+equality across categories does not typecheck and is not invariant under equivalence); what separates the members
+is proved property by property (seam_unique_among_named, for the named bottoms).
 The index above is where the precise line between proved and conjectural is kept.
 
 ## Core (finalized results - read these)
@@ -55,7 +55,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Valuation/RiemannSphere.lean` - The p-adic Riemann sphere: inversion swaps the floor 0 and its antipode ∞
   - ride-along docs: `ZeroParadox/Valuation/RiemannSphere.md` - Prior art for the sphere's group action, the loxodromic vocabulary, and the stabiliser fence
 - `ZeroParadox/Valuation/Scale.lean` - ZPJ — Valuation Bridge: Deriving AFA Content from Scale Structure
-  - ride-along docs: `ZeroParadox/Valuation/Scale.md` - Scale — ride-along documentation
+  - ride-along docs: `ZeroParadox/Valuation/Scale.md` - From scale to AFA content: the valuation argument, the 2-adic parallel, and its prior art
 - `ZeroParadox/Valuation/ScaleBridge.lean` - ZPJ — Scale Bridge: AFA Content from Valuation Without ZPSemilattice
   - ride-along docs: `ZeroParadox/Valuation/ScaleBridge.md` - Dropping the join, and a membership question settled exactly
 - `ZeroParadox/Valuation/SemilatticeInstance.lean` - ZP-I: Inside Zero
@@ -296,7 +296,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
   - ride-along docs: `ZeroParadox/Category/NextTimeCategorical.md` - Locators for AMM, the credit chain past them, and why the obvious descent fails
 - `ZeroParadox/Category/NoUniformCharacter.lean` - A conjunction of three already-proved facts about the three domain bottoms
 - `ZeroParadox/Category/Node4Generation.lean` - ZP-H node #4 GENERATION — the floor `Fin 0` generates the ceiling `ℕ` by iteration (an Adámek instance)
-  - ride-along docs: `ZeroParadox/Category/Node4Generation.md` - Node4Generation — ride-along documentation
+  - ride-along docs: `ZeroParadox/Category/Node4Generation.md` - Generation by iteration: the successor chain from the empty floor `Fin 0` to its colimit `ℕ`
 - `ZeroParadox/Category/Obstruction.lean` - Two Finsupp facts (one ℂ-linearization stand-in pair, one opposite-category initiality)
 - `ZeroParadox/Category/PointednessSharp.lean` - The pointedness dichotomy SHARPENED (the gap `ZeroParadox/Category/CardinalitySplit.lean` left open)
 - `ZeroParadox/Category/RootCutBinary.lean` - The root cut is binary in arity, not graded

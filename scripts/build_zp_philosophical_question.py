@@ -1,5 +1,6 @@
 """
-Build: The Philosophical Question That Started This (v1.20)
+Build: The Philosophical Question That Started This (v1.21)
+v1.21: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15): three sites (the second paragraph, the section closing 'Those fix what the transition is', and the closing subtitle) said that the Snap is taken is a commitment alone; each now says it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), matching the opening.
 v1.20: DECISION BATCH REMEDIATION (Tim, 2026-09-15): the opening said the snap occurring 'is a commitment of this framework, not one of its theorems'; it now says it follows from the occurrence commitment together with DA-1 (closed given DP-2).
 v1.19: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The layer summary carries that sentence in place of 'stated separately, as the occurrence commitment, which ZP-E's DA-1 argues for', and 'with no axioms' is 'with no Lean kernel axioms'. The opening said T-SNAP's shape is fixed 'specifically, by the bottom element axiom', contradicting README and CLAIMS: A4 gives the join, AX-B1 the atom, and the two states being distinct is, in t_snap_given, the hypothesis hocc that the first step is taken.
 v1.18: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The layer summary said ZP-E's T-SNAP closed "what had been the framework's one axiom (AX-1)", which retired AX-1 whole and also called it the one axiom, while AX-B1, AX-G1 and AX-G2 are the framework's named axioms. It now says T-SNAP closes AX-1's shape half and the occurrence half remains a commitment, matching the paragraph after it. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the layer summary said ZP-E derives the shape 'through DA-1'; DA-1 argues for occurrence, not the shape, so the summary now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
@@ -46,7 +47,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -238,7 +239,7 @@ def build():
         '(⊥ → ε₀, the first transition from nothing to something) has its SHAPE fixed by '
         'the framework\'s minimal axiomatic commitments — where it goes and that it does '
         'not reverse are derived rather than assumed. That the transition is taken at all '
-        'is a further commitment, and the framework makes it rather than proving it.'))
+        'follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).'))
     E.append(body(
         'Many formal layers later, the picture is more nuanced '
         'than "yes, fully proved" or "no, still assumed." What the framework found is a '
@@ -484,7 +485,7 @@ def build():
         'T-SNAP: ⊥ ∨ ε₀ = ε₀. '
         'No subtraction (R1). No continuous return (C3). No categorical reversal (AX-G2). '
         'Those fix what the transition is, not that it is taken: that it is taken '
-        'remains this framework\'s commitment. The Snap is the structure of the '
+        'follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). The Snap is the structure of the '
         'transition. It does not dissolve.'
     ))
     E.append(sp(8))
@@ -577,7 +578,7 @@ def build():
         '⊥ → ε₀', S['snap']))
     E.append(Paragraph(
         'The Snap\'s shape is not a starting assumption; it is what the structure fixes. '
-        'That the Snap is taken remains the framework\'s commitment.',
+        'That the Snap is taken follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).',
         S['subtitle']))
 
     E += [

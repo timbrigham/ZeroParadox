@@ -95,7 +95,7 @@ section AxB1
     (which would state the ordered-field side directly) **is not in this Mathlib pin**. -/
 def HasFirstStep {α : Type*} [LT α] (bot : α) : Prop := ∃ a, bot ⋖ a
 
--- `Statement:` AX-B1 at the iterative bottom `a` (the bottom of its up-set `Set.Ici a`) is AX-B1 at `a`.
+-- `Statement:` AX-B1 at a state `a` is AX-B1 at the bottom of its up-set `Set.Ici a`.
 -- Mathlib's `covBy_iff_atom_Ici` (`Mathlib/Order/Atoms.lean`) is the standard framing: a cover of `a`
 -- is an atom of `Set.Ici a`.
 example {α : Type*} [PartialOrder α] (a : α) :
@@ -104,6 +104,27 @@ example {α : Type*} [PartialOrder α] (a : α) :
     ⟨fun ⟨hlt, hno⟩ => ⟨hlt, fun c hac hcb => hno (c := ⟨c, hac.le⟩) hac hcb⟩,
      fun ⟨hlt, hno⟩ => ⟨hlt, fun c hac hcb => hno (c := c.1) hac hcb⟩⟩
   exact ⟨fun ⟨⟨b, hb⟩, h⟩ => ⟨b, (key b hb).1 h⟩, fun ⟨b, h⟩ => ⟨⟨b, h.le⟩, (key b h.le).2 h⟩⟩
+
+-- `Statement:` AX-B1's scope, conditional form — every state with anything above it has a first step —
+-- holds on the two states `Bool` (the top owes no step) and on `ℕ`, and fails on `ℝ`.
+example : ∀ a : Bool, (∃ b, a < b) → HasFirstStep a := by
+  intro a ⟨b, hab⟩
+  cases a <;> cases b
+  · exact absurd hab (by decide)
+  · exact ⟨true, by decide, fun c h1 h2 => by cases c <;> simp_all⟩
+  · exact absurd hab (by decide)
+  · exact absurd hab (by decide)
+example : ∀ a : ℕ, (∃ b, a < b) → HasFirstStep a := fun a _ =>
+  ⟨a + 1, Nat.lt_succ_self a, fun c h1 h2 => by omega⟩
+example : ¬ ∀ a : ℝ, (∃ b, a < b) → HasFirstStep a := by
+  intro h
+  obtain ⟨c, hc⟩ := h 0 ⟨1, one_pos⟩
+  exact hc.2 (c := c / 2) (half_pos hc.1) (half_lt_self hc.1)
+-- `Statement:` the universal form — every state has a first step — fails on two states, at the top.
+example : ¬ ∀ a : Bool, HasFirstStep a := by
+  intro h
+  obtain ⟨c, hc⟩ := h true
+  exact absurd hc.1 (by cases c <;> decide)
 
 /-- **The first step is unique.** This is Mathlib's `CovBy.unique_right`, and it is cited as
     such — proved here by hand only to keep the footprint at `[propext]`. Mathlib's version

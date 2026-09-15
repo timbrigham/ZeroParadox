@@ -33,10 +33,10 @@ parameter, not from Prop-ness: two of its four fields are `IsInitial` **data**, 
 `MC1Correspondence : Type 1` and `mc1_correspondence` is a `def`, the one inhabitant.
 
 ⚠ **The reading it must not license.** Bundling the three bottoms into one term does **not** make
-them one object — that identity is **retired as ill-typed** (neither `x = y` nor `x ≠ y` is well-formed
-across categories); the members differ by property, each in its own category (`seam_unique_among_named`).
-The bundle establishes the **correspondence** half: each domain bottom is the categorical bottom of its
-own real Mathlib category. Cite the fields, never the bundle's existence. -/
+them one object — that identity is **retired as ill-typed** (object equality across categories does not typecheck
+and is not invariant under equivalence); what separates the members is proved property by property
+(`seam_unique_among_named`, for the named bottoms). The bundle establishes the **correspondence** half: each
+domain bottom is the categorical bottom of its own real Mathlib category. Cite the fields, never the bundle's existence. -/
 
 /-- The MC-1 correspondence over the real domain categories: the snap floor is the categorical
     bottom (initial object / inverse limit) of each domain's genuine Mathlib category, and the

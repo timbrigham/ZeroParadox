@@ -1,4 +1,5 @@
 """
+v3.33: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim rulings, 2026-09-15): T5 selection restated to what snap_unconditional proves: the placement at epsilon-0 is the hypothesis h-eps0 (the ordinal-lattice alignment, open as OQ-E2) and only minimality is derived, carried by both faces of epsilon-0 (supremum of the stages, fundamentalSeq_cofinal; least fixed point, epsilon0_min_eq_max). No rung is ⊥, cited for every rung (Ordinal.epsilon_pos). Iteration: the finite-step sentence is scoped short of a top. Reading gets an antecedent. T5 gloss: Forcing names the shape of each step taken. OQ-A1 short cell two-part; traceability row matches; SnapSuccession cited by full path; join written as vee.
 v3.32: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the OQ-E1 Open Items row called instantiation occurring 'a framework commitment'; it is the occurrence commitment.
 v3.31: DECISION BATCH REMEDIATION (Tim, 2026-09-15): T5 box: the selection half ('if the step is taken it is the minimum viable one, alpha_n = eps(S_n), a Conditional Claim given AX-B1's discreteness at every state') is replaced by Tim's confirmed text (ordinal chart: succession_succ, SnapSuccession section I, snap_exactly_at_epsilon_zero, epsilon0_ne_bot; on an arbitrary lattice no step is selected), and the iteration half ('the occurrence commitment applied at each step') by 'No step is guaranteed' (T3, R1, t_snap_irreversible, tsnap_holds_but_nothing_moves) with its epsilon0_min_eq_max reading; the HasFirstStep-at-a-state bullet is removed. R-DA1 points at the box. The Open Items OQ-A1 row reads 'OQ-A1b CLOSED by A1-A4; OQ-A1a answered by crossing charts'; the T5 traceability row and the validation row are synced; 'restated in section VI' is 'DA-1 insert section VI'. The branching-tree implication says the Snap occurring follows from the occurrence commitment together with DA-1 (closed given DP-2).
 v3.30: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is ONE commitment, instantiation occurs (a machine configuration reaches P0); DA-1 (closed given DP-2) says a configuration at P0 is executing; together they give that the Snap occurs, and T-SNAP fixes its shape. The canonical AX-1 sentence now reads 'that the snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2)' at the abstract, the Conclusion, R-DA1, the Open Items AX-1 row, the AX-1 traceability and validation rows; premises (ii) names the commitment and DA-1 separately, and hocc is the first-step form of the Snap occurring given CC-1, never of instantiation occurring. The abstract no longer routes the shape through DA-1 ('With DA-1 in place, AX-1 is retired'), and the Binary Snap causality and T-SNAP traceability rows put DA-1 on the occurrence side. T5 (Iterative Forcing Theorem), recovered from ZP-E v1.4, is restated in section VI split the way AX-1 was: selection (if the step from Sn is taken it is the minimum viable one, alpha_n = eps(Sn)) is a Conditional Claim given AX-B1's discreteness at every state, and iteration is the occurrence commitment applied at each step; OQ-A1 is 'closed given AX-B1 and the occurrence commitment', and the T5 traceability row matches. The validation row 'All other ZP-E theorems (T1-T7, T2-C) - Unaffected in content' was false (this document states none of them; T2-C appears nowhere else in it) and now says T1-T4, T6, T7 were stated in ZP-E v1.4 and are not restated here. T-SNAP's box glosses its readable name once: 'Causality' refers to the shape of the step, not to its occurrence. Open Items: 'with no axioms' is 'with no Lean kernel axioms'. The Note on Lean scope was re-checked against Snap.lean and Surprisal.lean and is unchanged. TIM PREVIEW (2026-09-14): the T1-T4, T6, T7 validation row cites an earlier version of this document without naming its version number.
@@ -88,7 +89,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.32'
+VERSION = '3.33'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -514,19 +515,24 @@ def build():
             'T5 (Iterative Forcing Theorem) — restated',
             [
                 'T5 (restated). Selection. In the ordinal chart the next rung is the snap re-seeded one step past the current one '
-                '(succession_succ), and the &#949;-numbers are exactly the landings of &#945; &#8614; &#969;<super>&#945;</super> '
-                '(SnapSuccession &#167; I), so none lies between two consecutive rungs. Carried into the lattice by a monotone map, the first '
-                'step lands at &#949;<sub>0</sub> and at no ordinal below it (snap_exactly_at_epsilon_zero); that it occurs is a hypothesis '
-                'there. The rungs are the iterative bottoms; none of them is &#8869; (epsilon0_ne_bot). On an arbitrary lattice no step is '
+                '(succession_succ), and none lies between two consecutive rungs (ZeroParadox/Ordinal/SnapSuccession.lean &#167; I). '
+                'Carried into the two-state lattice by a monotone map that sends the tower&#8217;s stages to c<sub>0</sub> and '
+                '&#949;<sub>0</sub> to c<sub>1</sub>, no ordinal below &#949;<sub>0</sub> is sent to c<sub>1</sub> (snap_unconditional). '
+                'Both faces of &#949;<sub>0</sub> carry this: as the supremum of the stages, every ordinal below &#949;<sub>0</sub> lies '
+                'under one of them (fundamentalSeq_cofinal), and as the least fixed point of &#945; &#8614; &#969;<super>&#945;</super> '
+                'it lies below every other (epsilon0_min_eq_max). The placement at &#949;<sub>0</sub> is a hypothesis there '
+                '(h&#949;<sub>0</sub>), the ordinal&#8211;lattice alignment that is open as OQ-E2. The rungs are the iterative bottoms; '
+                'none of them is &#8869; (epsilon0_ne_bot; for every rung, Ordinal.epsilon_pos). On an arbitrary lattice no step is '
                 'selected: 0, 2, 4, &#8230; on the natural numbers satisfies A1&#8211;A4 and AX-B1.',
                 'Iteration. No step is guaranteed. A state sequence moves only upward (T3) and never returns (R1, t_snap_irreversible). '
-                'Where the next increment is already absorbed (S<sub>n</sub> &#8852; &#945;<sub>n</sub> = S<sub>n</sub>), the state stays '
+                'Where the next increment is already absorbed (S<sub>n</sub> &#8744; &#945;<sub>n</sub> = S<sub>n</sub>), the state stays '
                 'the same, which T-SNAP permits (tsnap_holds_but_nothing_moves); different runs need not reach the same height. If from '
                 'some step x on every new increment is already absorbed, then S<sub>x</sub> is the supremum of the run: the value that run '
-                'reaches in the limit. Reaching it cannot be confirmed at any finite step.',
-                'Reading: &#949;<sub>0</sub> is this pair for the ordinal tower, the least fixed point of &#945; &#8614; '
+                'reaches in the limit. Short of a top, reaching it cannot be confirmed at any finite step; a run that reaches a top state '
+                '(c<sub>1</sub> on the two-state carrier) is known there to stay.',
+                'Reading: &#949;<sub>0</sub> is both at once for the ordinal tower: the least fixed point of &#945; &#8614; '
                 '&#969;<super>&#945;</super> and the supremum of its stages (epsilon0_min_eq_max).',
-                'The handle T5 is kept.',
+                'The handle T5 is kept. &#8220;Forcing&#8221; names the shape of each step taken, not that any step is taken.',
             ]
         ),
     ]
@@ -794,7 +800,7 @@ def build():
          'DA-3-C1 (candidate): no position within an instantiation can replicate the outside view. '
          'Whether this connects formally to specific set-theoretic independence results is deferred to OQ-E2.'],
         ['OQ-A1: Increment selection',
-         'OQ-A1b CLOSED by A1&#8211;A4; OQ-A1a answered by crossing charts (snap_exactly_at_epsilon_zero)',
+         'OQ-A1b CLOSED by A1&#8211;A4; OQ-A1a: no reason to restrict to join-irreducibles (well-founded carriers); placement in the ordinal tower conditional on OQ-E2',
          'T5 (Iterative Forcing Theorem), restated in DA-1 insert &#167; VI. No step is guaranteed. On an arbitrary lattice no step is '
          'selected: 0, 2, 4, &#8230; on the natural numbers satisfies A1&#8211;A4 and AX-B1.'],
         ['OQ-B1: p = 2',
@@ -868,7 +874,7 @@ def build():
          'N/A',
          'AX-1 is retired: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2)'],
         ['Iterative Forcing T5 (restated)',
-         'Selection: succession_succ, SnapSuccession &#167; I, snap_exactly_at_epsilon_zero. Iteration: T3, R1, t_snap_irreversible, tsnap_holds_but_nothing_moves',
+         'Selection: succession_succ, ZeroParadox/Ordinal/SnapSuccession.lean &#167; I; given the alignment h&#949;<sub>0</sub> (OQ-E2), nothing below &#949;<sub>0</sub> fires (snap_unconditional). Iteration: T3, R1, t_snap_irreversible, tsnap_holds_but_nothing_moves',
          'None',
          'On an arbitrary lattice no step is selected. No step is guaranteed.'],
         ['Multiverse — structural implication',
