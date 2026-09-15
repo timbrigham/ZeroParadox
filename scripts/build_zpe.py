@@ -1,4 +1,5 @@
 """
+v3.35: ADVERSARY GATE ROUND 3 (bedrock, D1): the T5 traceability row said 'given the alignment hypothesis h-eps0, nothing below epsilon-0 fires', dropping two of snap_unconditional's three hypotheses (monotonicity, and the tower stages sent to c0); a monotone map with h-eps0 can fire at 1. The row now names the monotone map sending the tower's stages to c0, as the T5 box already did.
 v3.34: DECISION BATCH REMEDIATION AFTER GATE ROUND 2, SECOND PASS (Tim ruling, 2026-09-15): the pointer for h-eps0 named OQ-E2, which in this document is the cardinality-semilattice correspondence, the wrong object. The T5 Selection text, the traceability row and the Open Items OQ-A1 cell now point at what ZeroParadox/Ordinal/Incompleteness.lean says: h-eps0 is the alignment hypothesis, and deriving it is open as the Classical.choice inversion conjecture. OQ-E2's own rows are unchanged.
 v3.33: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim rulings, 2026-09-15): T5 selection restated to what snap_unconditional proves: the placement at epsilon-0 is the hypothesis h-eps0 (the ordinal-lattice alignment, open as OQ-E2) and only minimality is derived, carried by both faces of epsilon-0 (supremum of the stages, fundamentalSeq_cofinal; least fixed point, epsilon0_min_eq_max). No rung is ⊥, cited for every rung (Ordinal.epsilon_pos). Iteration: the finite-step sentence is scoped short of a top. Reading gets an antecedent. T5 gloss: Forcing names the shape of each step taken. OQ-A1 short cell two-part; traceability row matches; SnapSuccession cited by full path; join written as vee.
 v3.32: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the OQ-E1 Open Items row called instantiation occurring 'a framework commitment'; it is the occurrence commitment.
@@ -90,7 +91,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.34'
+VERSION = '3.35'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -876,7 +877,7 @@ def build():
          'N/A',
          'AX-1 is retired: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2)'],
         ['Iterative Forcing T5 (restated)',
-         'Selection: succession_succ, ZeroParadox/Ordinal/SnapSuccession.lean &#167; I; given the alignment hypothesis h&#949;<sub>0</sub>, nothing below &#949;<sub>0</sub> fires (snap_unconditional). Iteration: T3, R1, t_snap_irreversible, tsnap_holds_but_nothing_moves',
+         'Selection: succession_succ, ZeroParadox/Ordinal/SnapSuccession.lean &#167; I; for a monotone map sending the tower&#8217;s stages to c<sub>0</sub>, given the alignment hypothesis h&#949;<sub>0</sub>, nothing below &#949;<sub>0</sub> fires (snap_unconditional). Iteration: T3, R1, t_snap_irreversible, tsnap_holds_but_nothing_moves',
          'None',
          'On an arbitrary lattice no step is selected. No step is guaranteed.'],
         ['Multiverse — structural implication',

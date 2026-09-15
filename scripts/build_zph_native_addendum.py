@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.4 | September 2026
+Version 1.5 | September 2026
+v1.5: ADVERSARY GATE ROUND 3 (bedrock, D1): the MC-1 section body still said the four bottoms being numerically one object 'is a modeling commitment' and 'an interpretive commitment', contradicting the retirement stated on page 1; it now states the same retirement, with the property clause for the named bottoms.
 v1.4: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): MC-1's retired identity is stated as: object equality across categories does not typecheck and is not invariant under equivalence; what separates the members is proved property by property (seam_unique_among_named, for the named bottoms). It replaces 'neither x = y nor x != y is well-formed across categories; the members differ by property'.
 v1.3: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the honesty-boundaries paragraph said the four bottoms being numerically one object 'remains a modeling commitment, not a theorem'; now the MC-1 identity retired as ill-typed (neither x = y nor x != y is well-formed across categories); the members differ by property, each in its own category (seam_unique_among_named).
 v1.2: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
@@ -23,7 +24,7 @@ Reads after ZP-H Categorical Bridge.
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -257,13 +258,11 @@ def build():
     E.append(body(
         'This settles the <b>correspondence</b> half of MC-1: across the native categories, '
         'the snap floor is each category\'s own categorical bottom, and the four agree on '
-        'the snap. It does not settle the <b>identity</b> half. That the algebraic &#8869;, '
-        'the 2-adic 0, the zero module, and the empty type are numerically one object is a '
-        'modeling commitment &#8212; a choice to read four categorical bottoms as a single '
-        'thing &#8212; not a theorem proved here. The same fence stands as for the diagonal '
-        'fixed point: the framework reads these as faces of one object; it proves each the '
-        'categorical bottom of its own category, and leaves their literal identity as an '
-        'interpretive commitment.'))
+        'the snap. The <b>identity</b> half, that the algebraic &#8869;, the 2-adic 0, the '
+        'zero module, and the empty type are numerically one object, is retired as ill-typed '
+        '(object equality across categories does not typecheck and is not invariant under '
+        'equivalence); what separates the members is proved property by property '
+        '(seam_unique_among_named, for the named bottoms).'))
     E.append(label_box(
         'Scope and Purity',
         [
