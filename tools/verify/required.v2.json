@@ -32,14 +32,20 @@
         "*.ttf"
       ],
       "reason": "its property is tracked TEXT files; a BOM test on a font or a published PDF is meaningless. Stated as an exclusion rather than an extension allow-list on purpose: a new text extension must NOT silently fall out of scope, which is the direction an allow-list fails in",
-      "module": "tools/verify/check_encoding.py"
+      "module": "tools/verify/check_encoding.py",
+      "approved_modules": [
+        "f5cb6a6b620e98c5f24c65325a5d62fe12903cce"
+      ]
     },
     "check_paths": {
       "family": "mechanical",
       "switches": [
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_paths.py"
+      "module": "tools/verify/check_paths.py",
+      "approved_modules": [
+        "194cb554bc6063afabcbcde276de87a7e9b7bf8a"
+      ]
     },
     "check_frozen": {
       "family": "mechanical",
@@ -70,6 +76,9 @@
         "tools/verify/vendored_files.txt"
       ],
       "module": "tools/verify/check_prose.py",
+      "approved_modules": [
+        "6857f14f6ab5c6eefdd89f10aae37d5c95e375cd"
+      ],
       "scope": [
         "ZeroParadox/*.lean"
       ],
@@ -81,7 +90,10 @@
         "tools/verify/pov_baseline.txt",
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_pov.py"
+      "module": "tools/verify/check_pov.py",
+      "approved_modules": [
+        "8de53c1dcfa06056eccaff436492972d9476c8c5"
+      ]
     },
     "check_modal": {
       "family": "mechanical",
@@ -89,7 +101,10 @@
         "tools/verify/modal_baseline.txt",
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_modal.py"
+      "module": "tools/verify/check_modal.py",
+      "approved_modules": [
+        "fce373afa7025ee67dbf3ecf7c29bff4d5ba3b5a"
+      ]
     },
     "check_classes": {
       "family": "mechanical",
@@ -98,6 +113,9 @@
         "tools/verify/vendored_files.txt"
       ],
       "module": "tools/verify/check_classes.py",
+      "approved_modules": [
+        "a7dd7f2b7f814c902ce2dc09a830a8871341990f"
+      ],
       "scope": [
         "ZeroParadox/*.lean"
       ],
@@ -106,6 +124,9 @@
     "check_invariants": {
       "family": "mechanical",
       "module": "tools/verify/check_invariants.py",
+      "approved_modules": [
+        "6713cdb58d1515f76de50cfe744f7b43b8a2c8bb"
+      ],
       "scope": [
         "ZeroParadox/*.lean",
         "LEAN_CUSTOM_REGISTRY.md"
@@ -129,14 +150,20 @@
       "switches": [
         "tools/verify/shared_build_baseline.txt"
       ],
-      "module": "tools/verify/check_hashes.py"
+      "module": "tools/verify/check_hashes.py",
+      "approved_modules": [
+        "1fd14e21adbca2712e8a47398f57821e4e59ab33"
+      ]
     },
     "check_moved": {
       "family": "mechanical",
       "switches": [
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_moved.py"
+      "module": "tools/verify/check_moved.py",
+      "approved_modules": [
+        "27dd4db640a3f3660e1ea5077d47df8bd713df02"
+      ]
     },
     "check_negatives": {
       "family": "mechanical",
@@ -144,7 +171,10 @@
         "tools/verify/negatives_baseline.txt",
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_negatives.py"
+      "module": "tools/verify/check_negatives.py",
+      "approved_modules": [
+        "c65a993c57750b44ff199d6a484b110e546d50a4"
+      ]
     },
     "check_figures": {
       "family": "mechanical",
@@ -152,7 +182,10 @@
         "tools/verify/figures_baseline.txt",
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_figures.py"
+      "module": "tools/verify/check_figures.py",
+      "approved_modules": [
+        "316658f0ae4b8e610700e409d2466804e3822c45"
+      ]
     },
     "check_checkers": {
       "family": "mechanical",
@@ -167,7 +200,10 @@
       "switches": [
         "tools/verify/vendored_files.txt"
       ],
-      "module": "tools/verify/check_checkers.py"
+      "module": "tools/verify/check_checkers.py",
+      "approved_modules": [
+        "30efcb77951e8ae4b99fc9331f125e5f1cdcfd8c"
+      ]
     },
     "guards": {
       "family": "mechanical",
@@ -175,6 +211,10 @@
         "tools/verify/vendored_files.txt"
       ],
       "module": "tools/verify/guards.py",
+      "approved_modules": [
+        "6702b3b5550bc2a52621eda315411a788a4ce7b7"
+      ],
+      "_unpinned_2775fcf6": "2026-09-13: the pre-repin guards.py 2775fcf6 was approved in 36ab71c6 for ONE push window so 9 intermediates could heal by script, then REMOVED here once they were pushed (Tim: push, then unpin). /rely RLY-PIN-1 measured why it must not stay: approved globally with no expiry, it certifies a tip the current guards.py blocks, and a revert of guards.py would clear V16c silently.",
       "scope": [
         "tools/verify/guards.py",
         "tools/verify/batch.py",
@@ -202,6 +242,9 @@
     "decls": {
       "family": "mechanical",
       "module": "tools/verify/batch.py",
+      "approved_modules": [
+        "1fffe94461ff819f39d373fc03eaf872b08ecf60"
+      ],
       "scope": [
         "ZeroParadox/*.lean",
         "ssot.json",
@@ -212,7 +255,14 @@
     "pdf_coupling": {
       "family": "mechanical",
       "when": "*.pdf",
-      "reason": "only meaningful when a PDF changed"
+      "reason": "only meaningful when a PDF changed",
+      "module": "tools/verify/batch.py",
+      "approved_modules": [
+        "1fffe94461ff819f39d373fc03eaf872b08ecf60",
+        "3f11ba688949ddd16d7f03fc67b44488e5b9063b"
+      ],
+      "_approved_why": "Tim, 2026-09-13, asked and answered. 1fffe944 is batch.py at e61bad9c (same blob decls pins); 3f11ba68 is batch.py at fa99005f and earlier, whose records cover all 40 PDFs at 929a9f89's bytes. Under mcp-mayhem 636e6cb an approved build freshens only subjects a record citing it actually judged, and the two wheel PDFs at 929a9f89 were never judged by 1fffe944 -- so the tip build alone cannot heal that commit (simulated by mcpdev). ⚠ Every future batch.py edit now needs a repin here before pdf_coupling can record.",
+      "_module_why": "V20, 2026-09-08. `record_pdf_coupling()` in batch.py passes module=\"tools/verify/batch.py\" explicitly at the call site, so this declaration records what the emitter already claims rather than choosing between candidates. There is no pdf_coupling.py. ⚠ NOT common.py, although 113 of 113 records name it in evidence: `record_if_asked`/`emit_verdict` live there and every one of the 22 call sites routes through them, so a common.py pin would be satisfied by every step in the registry -- a pin every step satisfies pins nothing. The 113/104 split that made this look ambiguous was never two producers: 104 name tools/verify/batch.py and 9 name the SAME FILE under an escaped path from one heal run on 2026-09-02 (PDFEV-1)."
     },
     "editorial": {
       "family": "review",
@@ -234,7 +284,9 @@
         "tools/*.md",
         ".github/*.md",
         "_layouts/*"
-      ]
+      ],
+      "module": ".claude/commands/editorial-review.md",
+      "_module_why": "V20, 2026-09-08. A review step's producer is its BRIEF -- the file that reaches the verdict -- and 50 of 55 editorial records already name this path in evidence, ⚠⚠ BUT DO NOT READ THAT AS V16 ENFORCEMENT -- measured by /rely RLY46-1, 2026-09-08: V16 keys on the VERDICT BEING MECHANICAL, not on the step, so a `delegated` review record never triggers it and the agreement above is an emitter CONVENTION rather than a server rule. What the declaration actually buys a REVIEW step is V20 satisfiability (watched red-then-green the same day) plus a declared producer for staleness. V16 does fire for `pdf_coupling`, which is mechanical: a record naming only common.py is refused. ⚠ THIS STEP IS DELIBERATELY NOT CARVED from grading its own brief, unlike `adversary`: it returned a capped PASS while adversary failed nine rounds of ten, so it is the CONTROL for whether cross-review alone suffices without a carve (DC-47). Its subject set therefore still intersects its producer set, knowingly. Do not carve it to tidy the register -- that would destroy the comparison, and circular-gate custody is the harness's, not this file's."
     },
     "adversary": {
       "family": "review",
@@ -256,11 +308,25 @@
         "tools/*.md",
         ".github/*.md",
         "_layouts/*"
-      ]
+      ],
+      "module": ".claude/commands/adversary-review.md",
+      "_module_why": "V20, 2026-09-08. A review step's producer is its BRIEF, and 62 of 66 adversary records already name this path in evidence, ⚠⚠ BUT DO NOT READ THAT AS V16 ENFORCEMENT -- measured by /rely RLY46-1, 2026-09-08: V16 keys on the VERDICT BEING MECHANICAL, not on the step, so a `delegated` review record never triggers it and the agreement above is an emitter CONVENTION rather than a server rule. What the declaration actually buys a REVIEW step is V20 satisfiability (watched red-then-green the same day) plus a declared producer for staleness. V16 does fire for `pdf_coupling`, which is mechanical: a record naming only common.py is refused. ⚠ THE ORDERING WAS LOAD-BEARING: declaring a producer that is also a subject would harden DC-47's intersection into this file. The carve landed FIRST, and it is NOT here -- circular-gate management is a harness-owned register in the verdictLedger repo (Tim, 2026-09-08), resolved from __file__ so no env var can aim it at this checkout. ⛔ DO NOT add `.claude/commands/adversary-review.md` to scope_exclude above: that would be a second, divergent copy of a decision that has an owner elsewhere."
     },
     "prior_art": {
       "family": "review",
-      "actions": [],
+      "module": ".claude/commands/prior-art-review.md",
+      "_module_why": "V20, 2026-09-08. 13 of 13 prior_art records already name this path in evidence, ⚠⚠ BUT DO NOT READ THAT AS V16 ENFORCEMENT -- measured by /rely RLY46-1, 2026-09-08: V16 keys on the VERDICT BEING MECHANICAL, not on the step, so a `delegated` review record never triggers it and the agreement above is an emitter CONVENTION rather than a server rule. What the declaration actually buys a REVIEW step is V20 satisfiability (watched red-then-green the same day) plus a declared producer for staleness. V16 does fire for `pdf_coupling`, which is mechanical: a record naming only common.py is refused. Declared for the same reason as `rely`: `prior_art` is not in gitRobot's admission set, but `batch.py`'s prior-art attribution leg BLOCKS a push and is discharged by a RECORD. Admitted-at-nothing does not mean records-at-nothing.",
+      "actions": [
+        "push"
+      ],
+      "scope": [
+        "ZeroParadox/*.lean",
+        "scripts/build_*.py"
+      ],
+      "_scripts_joined_2026_09_13": "⚠⚠ `scripts/build_*.py` ADDED, and it MUST be changed together with `batch.ATTRIBUTABLE` or it does nothing. The push leg blocks on `touched ∩ owing`: `changed_attributable` supplies `touched` from a git pathspec, `coverage_gap` supplies `owing` and only ever returns paths inside THIS scope. Widen one and the intersection stays empty, so the obligation silently does not exist -- the same composition trap the entry above records from 2026-09-01, where every layer behaved correctly and the composition did not. Tim, 2026-09-13: 'adjust the scope so the build scripts are also in scope (when edited, just like anything else).' ⭐ THE MEASURED REASON: a build script is the only surface where a false claim about someone else's work reaches a DOI. A prior-art round that night found a wheel/meadow mischaracterisation live in two published PDFs; `prior_art` had never covered `scripts/`, and the round saw them only because the agent swept `--full` unprompted. These files ARE read by `adversary` and `editorial` -- but neither gate's job is 'is this claim about an external structure placed against the work that owns it', and that question was never asked of them. ⚠ COST, stated rather than discovered: `coverage_gap` now reports 44 more paths as missing. That number does NOT block -- narrowed coverage is reported, never enforced -- and the containment property is unchanged: you owe attribution for what you TOUCHED, never for the corpus.",
+      "_registered_is_not_admitted": "⚠⚠ `actions: [\"push\"]` HERE DOES NOT GATE A PUSH, AND THAT SPLIT IS THE WHOLE REASON THIS IS SAFE. This file is the REGISTRY -- what may be recorded and what a step is ABOUT. `admission.v1.json` is the ADMISSION SET -- what gitRobot requires green before it lets an action through, defaulting to NOT_ADMITTING. `prior_art` is registered for push and is deliberately ABSENT from admission, so it renders in the 'registered but not gating' line every run and blocks nothing at the ledger. ⚠ MEASURED 2026-09-01, twice, because the first fix was wrong: `coverage_gap` returns `steps: []` for a step that does not apply to the ACTION, and adding `scope` alone did NOT change that -- verified by calling it. A step must apply to the action before the ledger will emit a row for it, and the row is what `batch.check_prior_art_attribution` reads. So `actions` is required for the row to EXIST and `admission.v1.json` is what decides whether it BLOCKS; those were conflated in the revert of the corpus-wide promotion, which removed both and left the push leg unable to ask.",
+      "_scope_and_actions_are_different_jobs": "`scope` says WHICH PATHS the step is about and keeps its records file-keyed. `actions` says WHICH ACTIONS it is evaluated for. The corpus-wide promotion of 2026-09-01 set both, was measured backwards (see `_reengaged` below), and was reverted by removing both -- which also removed the input `batch.check_prior_art_attribution` reads. Measured by /rely the same day: with no scope the leg gets `None` from `owing_paths`, correctly fails closed, and blocks EVERY push editing any `.lean` file, naming the wrong cause. Every layer behaved correctly and the composition did not. So: scope YES (the ledger must emit the row and keep the records file-keyed), actions NO (the ledger must not gate on a corpus-wide backlog). The per-file enforcement is the push leg, and it INTERSECTS this scope with the changed set, so the 215-file backlog `coverage_gap` reports is never demanded by anything.",
+      "_reengaged_2026_09_01": "RE-ENGAGED under the first clause of `reason` below -- 're-engaged when .lean files are next touched' -- by Tim's decision. ⚠⚠ ENFORCED, BUT NOT FROM HERE, SO `actions: []` NO LONGER MEANS 'DISCIPLINE'. The obligation is now a BLOCKING push leg: `batch.check_prior_art_attribution` requires every `.lean` file a push EDITS to carry a passing `prior_art` verdict at its current bytes. Tim, 2026-09-01: 'whenever a specific file gets edited that that file is properly attributed. the current logic I think hits the entire corpus. and that is impossible to fill at one time.' ⚠ MEASURED WHY IT IS NOT A `scope` HERE: promoting this entry with `scope: ZeroParadox/*.lean` was tried the same day and is backwards on both counts -- it reports `have 3 / missing 215`, an impossible-looking backlog that does NOT block (narrowed coverage is reported, never enforced), while the only thing that DID block was an unrelated recorded FAIL, so a tooling push with no `.lean` in it was refused for a corpus finding. Per-file containment cannot be written as a static glob, and the push RANGE is knowable only in `batch.py` (REL-1). ⚠ THE ENDPOINT IS STILL verdictLedger R-8/R-9 (dynamic scope, then prior_art as a per-push obligation); when those land, that leg moves into the ledger and this entry gains a real scope. Until then the type stays registered so records remain valid and file-keyed, which is what the leg reads.",
       "reason": "scoped to synthesis and bridge CLAIMS, not to files. Its trigger surface (ZeroParadox/*.lean, 218 files) is not its review surface, so no glob expresses what a run actually covers and a file-keyed record would overclaim. Narrowed 2026-08-23 by Tim's decision as ACKNOWLEDGED DEBT, not as a solved problem: re-engaged when .lean files are next touched, or as a dedicated batch. The gate is NOT retired and the type is NOT removed -- records remain valid and the type stays registered, so promoting it later costs one line.",
       "_debt_not_closure_2026_08_23": "TWO FENCES, because a narrowing is a weakening and this one must not travel. (1) It does NOT retire trigger 5: a new .lean file or >=50 inserted .lean lines still owes a prior-art search under CLAUDE.md. What changed is that the obligation stops being enforced by a per-push key it cannot express -- DISCIPLINE where it was briefly a gate, and this project's own record is that discipline leaks. (2) It is NOT precedent for rely / editorial / adversary, which are file-shaped, now scoped to 56/59/59, and stay blocking. The distinguishing test is CAN A GLOB EXPRESS WHAT THE REVIEWER READ -- yes for those three, no for this one. That is a property of the gate, not a shortage of effort."
     },
@@ -274,10 +340,15 @@
     "rely": {
       "family": "review",
       "_why": "the /rely round signal. Read by batch.py, ship.py AND guards.py; `rely_cleared.txt` was its only representation, so retiring the signal path without this type deletes the coverage rather than migrating it.",
+      "_scope_warrant": "ALL THREE PREFIXES batch.py's ROUTING sends to /rely, and this list is now MECHANICALLY ENFORCED equal to it -- guards.py, PROPERTY 'the registry scope and the router agree'. Do not hand-edit one side. History, because it is the argument for the check: `tools/process/*` was missing until 2026-09-01 while ROUTING carried it, guards asserted a warrant for it, and editorial and adversary excluded it via `tools/*.md` -- so a directory was exempt from both prose gates ON THE STRENGTH OF THIS STEP while this step's scope contained none of its files. An exemption is priced on the replacement gate actually being accountable; a scope that omits the files un-prices it silently. batch.py states the rule: 'That re-route is the entire warrant for the exemption.' ⚠ THE FIRST FIX OF THAT ADDED ONLY `tools/process/*` AND MISSED `.github/workflows/*`, THE THIRD ROUTED PREFIX -- in the same commit whose own note warned that a third prefix would inherit the identical hole. That is why this is a checker and no longer a sentence: the sentence was written and then broken by its own author, immediately.",
       "scope": [
-        "tools/verify/*"
+        "tools/verify/*",
+        "tools/process/*",
+        ".github/workflows/*"
       ],
-      "reason": "governs the verification tooling. Its own brief FORBIDS running at full breadth -- rely.md step 1: 'SCOPE IT ... Do not run it at full' -- so with no scope the admission set demanded 477 paths from a gate that is not permitted to examine them. It was unsatisfiable by construction, not merely expensive."
+      "reason": "governs the verification tooling AND the routed process prose. Its own brief FORBIDS running at full breadth -- rely.md step 1: 'SCOPE IT ... Do not run it at full' -- so with no scope the admission set demanded 477 paths from a gate that is not permitted to examine them. It was unsatisfiable by construction, not merely expensive.",
+      "module": ".claude/commands/rely.md",
+      "_module_why": "V20, 2026-09-08, and this one is LOAD-BEARING FOR THE PUSH rather than tidy-up. 35 of 41 rely records already name this path in evidence. ⚠⚠ IT WAS ALMOST MISSED: the proposal that reached this file had been narrowed to 'steps that actually RECORD at commit or push', and `rely` is admitted at neither -- but `batch.py`'s ROUTING leg blocks a push until /rely has signed every changed checker, hook and exemption switch at its current hashes. That leg is satisfied by a RECORD, not by admission. With `module` null, V20 refused the append and the routing obligation became UNDISCHARGEABLE: the gate could still run and could never land its verdict. Found by the 2026-09-08 adversary round, which RAN the brief's own template and watched it refused, with `claim_review` and `editorial` as the discriminating controls returning WOULD ACCEPT. **Admitted-at-nothing does not mean records-at-nothing.**"
     },
     "claim_review": {
       "family": "review",
@@ -292,7 +363,10 @@
         "tools/verify/prose_baseline.txt"
       ],
       "reason": "a removal is a removal FROM those baselines",
-      "module": "tools/verify/check_frozen.py"
+      "module": "tools/verify/check_frozen.py",
+      "approved_modules": [
+        "ad0345a1494da35e4d94ed1b1537100fdeb5695a"
+      ]
     },
     "agent_gate": {
       "family": "mechanical",
@@ -315,12 +389,43 @@
       "family": "mechanical",
       "when": "CLAUDE.md",
       "module": "tools/verify/check_claude_md.py",
+      "approved_modules": [
+        "409c72fb50b86cbe37814acb820d7f394a09fbe6"
+      ],
       "scope": [
         "CLAUDE.md"
       ],
       "reason": "the shape contract for CLAUDE.md itself, and it gates ONLY when that file is in the change -- Tim, 2026-08-26: a full re-analysis of it on every commit 'is nuts'. `when` is what makes that precise rather than a discipline: NOT_APPLICABLE on every commit that does not touch the file, REQUIRED and starting MISSING on one that does, so it fails CLOSED with nothing remembered. Registered after a measured miss -- unregistered meant V8 refused every append, the checker could never leave a key, and `inventory` never listed it, so R-NOTINLIB reached 36 lines against a 12-line cap as the largest entry in the file while '16 of 18 admission keys' read as near-complete. Same class as check_fields/RLY35-3, closed the same day. PUSH-TIME IS THE RIGHT MOMENT and that is a fact about readers, not a concession: the agent editing CLAUDE.md already holds the desired state in context, so the file's only real consumer is the NEXT session and a push is when it reaches one. NB a recorded PASS claims the two BLOCKING legs only -- rooted paths resolve, named checkers exist -- because the cap and history legs are WARN and three legs are declared PENDING and are NOT passing."
+    },
+    "copy_editor": {
+      "family": "review",
+      "module": ".claude/commands/copy-editor.md",
+      "_module_why": "V20, 2026-09-08. A review step's producer is its brief. ⚠ THIS KEY WAS DELIBERATELY WITHHELD FOR SEVERAL HOURS AND THE REASON IS WORTH KEEPING, because it is the price that had to be paid before declaring was safe: `copy-editor.md` mandated THREE parallel agents recording `--step copy_editor` at one basis while carrying no V11 guidance, and V11 keys (step, basis, revision) uniquely -- reproduced against a throwaway stream, first writer APPENDED and both dissents REFUSED. Declaring the module alone would have made that broken shape appendable, which the 2026-09-08 adversary round said in terms would turn an ORDINARY finding BEDROCK the moment the key landed. ⭐ SO BOTH HALVES LANDED TOGETHER, which is what the earlier note demanded: the brief now has the CARRIER emit ONE agreement-shaped record (`--how agreement --passes 3 --agreed N`) instead of three delegated ones, so a 2-1 split is preserved as a contested UNDECIDED rather than lost to whichever agent finished first. ⚠ That route was itself unemittable until the same afternoon -- `record.py` refused `--evidence` on non-delegated routes while V21 requires a blob, so client and server closed it between them; fixed in record.py, verified by dry run returning WOULD ACCEPT. ⚠ NOTE THE RESIDUAL TENSION, unresolved on purpose: the brief's tally rule is 2-of-3 and V3 requires unanimity for a PASS under `agreement`, so the RECORD of a 2-1 split is UNDECIDED while the carrier's ESCALATION decision still follows 2-of-3. Different questions, deliberately split; if that is wrong it is Tim's call, and `copy_editor` is admitted by nothing so nothing is gated on the answer.",
+      "actions": [
+        "push"
+      ],
+      "scope": null,
+      "_scope_is_null_deliberately": "⚠⚠ NULL WITH A REASON, NEVER A GLOB. This step's subject is a DISAGREEMENT between two states -- the adversary-passed tree and editorial's branch cut from it -- not a file set. A static path glob would rebuild exactly what made `prior_art` unsatisfiable: a TRIGGER surface that is not the REVIEW surface, so no glob expresses what a run actually covered and a file-keyed record would overclaim. PREFER NO SCOPE WITH A STATED REASON OVER A SCOPE THAT OVERCLAIMS.",
+      "_registered_is_not_admitted": "⚠⚠ `actions: [\"push\"]` HERE DOES NOT GATE A PUSH, and that split is why registering now is safe. This file is the REGISTRY -- what may be RECORDED. `admission.v1.json` (gitRobot's, not ours) is the ADMISSION SET -- what must be GREEN. `copy_editor` is deliberately ABSENT from admission, so it renders in the 'registered but not gating' line and blocks nothing yet. Same shape as `prior_art` and `agent_gate`.",
+      "_why_not_admitted_yet": "⛔ ADMISSION IS WHAT MAKES AN `UNDECIDED` BLOCK, AND THIS BRIEF HAS NEVER RUN. `UNDECIDED` is fully wired, ranks between FAIL and PASS, and has 0 records in 2,170 -- a three-editor split would be its first real use anywhere. Admitting on registration would let the first exercise of a gate nobody has watched work refuse a push. REGISTER, WATCH ONE PANEL, THEN ADMIT. The verdictLedger session owns `admission.v1.json` and will add it on request after the first run.",
+      "reason": "the D9 copy-editor panel: THREE agents read the adversary-passed state, editorial's branch and the published prior-art references, independently, and judge whether the MEANING survived editorial's prose changes. Findings UNION across all three so a lone reader who catches a meaning shift is never outvoted; only the VERDICT is voted, 2-of-3. A split records UNDECIDED and escalates. Brief: `.claude/commands/copy-editor.md`. ⚠ `failing` is admitted on UNDECIDED precisely for this: a 2-1 split over forty files is undecided about the ONE line they disagree on and decided about the other thirty-nine, so the dispute is recorded NARROW rather than indicting the scope."
+    },
+    "check_briefs": {
+      "family": "mechanical",
+      "actions": [
+        "commit",
+        "push",
+        "tag"
+      ],
+      "_actions_stated_not_defaulted": "⚠ WRITTEN OUT DELIBERATELY, though it equals the default. An ABSENT `actions` key and a key naming every action are the same behaviour and different CLAIMS - one says \"nobody narrowed this\", the other says \"all three were considered\". `rely` is the measured instance: it has no key, defaults to everything, and reads a month later as a stale registry rather than a decision. DC-45 in a config file - absent and deliberate rendering identically, with the safe-looking reading being the one nobody revisits.",
+      "scope": [
+        ".claude/commands/*.md"
+      ],
+      "module": "tools/verify/check_briefs.py",
+      "reason": "the gate-brief contract: every --flag named in a record.py command line exists, every --step is REGISTERED here, every cited repo path resolves. Registered 2026-09-06 after /rely found the checker could never leave a key -- V8 refused every --record with 'step not registered', exit 2, and hooks.py rendered that refusal as 'ledger unreachable'. A checker that runs, costs time and can never record is the 'silence is never a pass' defect one layer over, same class as check_fields/RLY35-3 and check_claude_md. ⚠ A GREEN ROW CLAIMS THE THREE BLOCKING LEGS ONLY (flags, steps, paths) and their REACH IS NARROW: measured 2026-09-06, the flags leg saw 4 of 10 command flags in three briefs, steps 6 of 14 briefs, paths 15 of ~65 citations -- with 14 dead pointers in the 50 it never examined. queue/tooling-check-briefs-legs-are-narrow.md. Do not read a PASS here as 'the briefs are correct'; read it as 'nothing the legs can see is broken'."
     }
   },
   "_switches_v15": "A subject set is everything the verdict DEPENDS ON, not merely everything the checker read. Found by ZeroParadox 2026-08-23: check_pov recorded 291 subjects and NOT pov_baseline.txt, so grandfathering a violation into that baseline left the record reading SATISFIED -- every file it named was unchanged. V15 refuses a record that omits a declared switch, which turns a convention into a contract: with the switch as a subject, editing a baseline moves a blob the record names, the key goes STALE, and the checker re-runs. Declaring switches is NOT a narrowing and costs no reason -- it makes a type stricter.",
-  "_vendored_allowlist_2026_08_23": "vendored_files.txt switched ELEVEN checkers off and was named by none of them. Found by ZeroParadox's /rely trial: a planted DENIAL made check_pov exit 1, one appended allowlist line made it exit 0, AND NO SUBJECT MOVED. Stronger than the baseline hole of REQ-10, because an allowlist removes files from SCOPE entirely rather than grandfathering sites -- the record does not merely go unstale, the thing it covered stops existing. The count reached eleven in two passes: seven whose records already named it, then four more that had not re-recorded because none is in the pre-commit hook -- the second time that cause has hidden a set."
+  "_vendored_allowlist_2026_08_23": "vendored_files.txt switched ELEVEN checkers off and was named by none of them. Found by ZeroParadox's /rely trial: a planted DENIAL made check_pov exit 1, one appended allowlist line made it exit 0, AND NO SUBJECT MOVED. Stronger than the baseline hole of REQ-10, because an allowlist removes files from SCOPE entirely rather than grandfathering sites -- the record does not merely go unstale, the thing it covered stops existing. The count reached eleven in two passes: seven whose records already named it, then four more that had not re-recorded because none is in the pre-commit hook -- the second time that cause has hidden a set.",
+  "_approved_modules": "⛔⛔ WHICH BUILD MAY RECORD, not merely which file. `module` pins the PATH, so an EDITED checker records exactly as readily as a reviewed one. `approved_modules` lists the blob ids this step accepts, and verdictLedger's V16c REFUSES a record whose `evidence` names an unapproved build. Pinned for PUSH-GATING steps ONLY -- advisory and commit-only steps stay unpinned, so the friction is paid where publication is decided and nowhere else. ⛔⛔ WHEN A CHECKER GETS A NEW BUILD, **REPLACE** THE HASH -- DO NOT ADD TO THE LIST. `[\"<new>\"]` is correct; `[\"<old>\", \"<new>\"]` is wrong absent a stated expiry. ⚠⚠ AN ACCUMULATING LIST STOPS BEING A PIN: approve v1, v2, v3, v4 and eventually every build ever written is approved -- still LOOKING pinned while constraining nothing. That is `RLY31-6`'s exact shape, where a control decayed into permissiveness while appearing to hold and nothing was positioned to notice; this is the same trap in a different field. The history is already versioned, so every past approved set is recoverable from this file's own log -- a list inside the field duplicates that, and the duplicate is the copy that rots. Old records need no entry either: nothing re-validates the stored stream (`validate` runs only at append), so a record made under v1 stays exactly as valid as the day it landed. THE ONLY LEGITIMATE PAIR IS A ROLLOUT WINDOW -- v2 shipping while a run is in flight on v1 -- and it needs a STATED EXPIRY the way `copy_editor`'s `_why_not_admitted_yet` does, or the transitional pair quietly becomes permanent. ⭐ THE TWO-STEP COST IS SMALLER THAN IT LOOKS, and this was measured in the server's `inventory.py` rather than assumed: EDITING A CHECKER ALREADY STALES EVERY ROW IT PRODUCED, pinned or not -- `ev_stale` compares each record's `evidence` against current content and reports that the producer changed. So a new build means re-running that step regardless of `approved_modules`, and approving the new blob is ONE LINE IN THE SAME COMMIT THAT SHIPS THE CODE, inside a re-run you already owe. Tim's ruling on the trade: \"the 'silently can't record' is the problem. fail loudly.\" V16c refuses naming BOTH the rejected blob and this field, and approving is a REVIEWABLE EDIT in the same history as the tool change -- the point of pinning rather than an obstacle to it. ⚠ A step with NO `approved_modules` still records; `policy()` reports `unpinned_modules`, so an unpinned step is DISCLOSED rather than silently permitted. ⚠⚠ EVERY BLOB BELOW WAS RE-DERIVED IN THIS TREE with `record.module_evidence`, the same function that computes evidence at record time, and NOT pasted from the message that proposed them. Pinning a stale blob refuses the very next run of that checker, so a copied list is the one thing this field must never contain. ⚠ THE STEP NAME IS NOT THE FILE NAME: `claim_review` pins `check_frozen.py` and `decls` pins `batch.py`. This entry's own `module` is the authority for that mapping. ⚠ IF YOU ADD A REGISTRY KEY AND IT SEEMS IGNORED: the server's `Config.requirements()` rebuilds each spec key by key from a whitelist rather than passing the entry through, so a key absent from that whitelist is invisible to every rule downstream no matter what this file says."
 }

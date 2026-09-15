@@ -86,7 +86,7 @@ def link_in_text(text):
 # The snap is fundamentally a VERB - the action off the floor - so most faces are verbs; the endpoints
 # (what departs, what is reached) are the nouns.
 IS_FACES = [
-    ("theorem", "the *derived* (not assumed) transition off ⊥ into the minimum non-⊥ state - derived, which is a claim about its provenance and not that it is taken: the join c₀ ∨ c₁ = c₁ is a valid transition, and c₀, c₁ are provably distinct in both directions. AX-1 (the Binary Snap) is no longer an axiom, it is derived",
+    ("theorem", "the *derived* (not assumed) transition off ⊥ into the minimum non-⊥ state - derived, which is a claim about its provenance and not that it is taken: the join c₀ ∨ c₁ = c₁ is a valid transition, and c₀, c₁ are provably distinct in both directions. AX-1 (the Binary Snap) is retired: its shape is proved, as Theorem T-SNAP, and that the snap occurs is stated separately, as the occurrence commitment",
      ["t_snap_derived"]),
     ("verb", "*one-way*: the departure from ⊥ does not reverse. No join can return to a strictly lower state (algebraic form), and the 2-adic and Kleisli faces prove the same irreversibility topologically and categorically",
      ["t_snap_irreversible", "c3_irreversible", "fC_no_return"]),
@@ -114,8 +114,8 @@ IS_NOT = [
      []),
     ("*a physical, temporal, or causal event*. The framework is silent on physics. The snap is an order and derivation transition, not a process unfolding in time; which specific state emerges first is outside its scope",
      []),
-    ("*dependent on a snap-specific axiom*. T-SNAP is derived from the bottom axiom A4 (the join identity ∀ x, ⊥ ∨ x = x) and the framework's computational commitments. No snap axiom appears anywhere in the development",
-     ["t_snap_derived"]),
+    ("*dependent on a snap-specific axiom*. T-SNAP is derived from the bottom axiom A4 (the join identity ∀ x, ⊥ ∨ x = x) and the framework's commitments; `t_snap_given` states two of them, the start at ⊥ and occurrence at the first step, as its hypotheses. No snap axiom appears anywhere in the development: AX-1 is retired, and that the snap occurs is the occurrence commitment, not an axiom",
+     ["t_snap_derived", "t_snap_given"]),
     ("*proved to be a choice-free minimal first step*. ε₀ is the least fixed point of ω^· - that minimality is proved classically. What remains open is only its *choice-free* form at the ordinal-notation level: the from-below ascent on notations is choice-free, but ε₀-as-least-fixed-point currently routes through the syntax-to-semantics bridge (`tower_NF`), which inherits `Classical.choice`",
      ["epsilonZero_eq_nfp"]),
 ]
@@ -174,7 +174,7 @@ def render_rosetta():
 
 The snap is the framework's one theorem - the one-way departure from ⊥ into the first structured state ε₀ - and its central *action*. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
-**Proved - the snap is DERIVED rather than assumed, and adds no axiom.** T-SNAP (t_snap_derived): the transition ⊥ → ε₀ (the minimum non-⊥ state) is a derived consequence of the bottom axiom A4 and the framework's computational commitments, not an assumption. **"Derived" is a claim about where the transition comes from, not that it is taken:** T-SNAP constrains the SHAPE of the transition and the same file's tsnap_holds_but_nothing_moves proves it holds where nothing moves. Occurrence is a commitment. The Binary Snap that earlier layers posited as AX-1 is a theorem; no snap-specific axiom appears anywhere.
+**Proved - the snap is DERIVED rather than assumed, and adds no axiom.** T-SNAP (t_snap_derived): the transition ⊥ → ε₀ (the minimum non-⊥ state) is a derived consequence of the bottom axiom A4 and the framework's computational commitments, not an assumption. **"Derived" is a claim about where the transition comes from, not that it is taken:** T-SNAP constrains the SHAPE of the transition and the same file's tsnap_holds_but_nothing_moves proves it holds where nothing moves. Occurrence is a commitment. Earlier layers posited the Binary Snap as AX-1. AX-1 is retired: its content was split in two, the shape proved as Theorem T-SNAP and occurrence stated separately as that commitment, and no snap-specific axiom appears anywhere.
 
 **Proved - the snap is one-way.** It does not reverse: no join returns to a strictly lower state (t_snap_irreversible, algebraic), and the same irreversibility is proved topologically in the 2-adics (c3_irreversible) and categorically in the probability functor (fC_no_return). ⊥ is a source, not a round trip.
 
@@ -203,7 +203,7 @@ For the framework's *object*, the bottom element ⊥, see its companion referenc
 
 This is a **reference** for the framework's central transition, the **snap** - the one-way move off the bottom element ⊥ into the first structured state, ε₀. It is the companion to [The Bottom Element](BOTTOMELEMENT.md): that page maps the *object* ⊥ (the noun); this page maps the *transition* off it (the verb). Where the bottom dictionary is mostly nouns, this one is mostly verbs - the snap is an action.
 
-It is a **beginning, not a resolution.** What is *proved* is that the snap is derived rather than assumed, one-way, takes its first step from below, and that the domain snaps form one **family** (MC-1, membership proved per domain); what is *retired* is the reading that they are numerically one object (ill-typed - the members are provably distinct); and what stays *open* is the choice-freeness of the first step's minimality. The frame-change faces are proved theorems that compose known results, so no new theorem is claimed there; what stays a conjecture is only the abstract cross-domain reading - that they are literally one change of frame (a type boundary) - written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
+It is a **beginning, not a resolution.** What is *proved* is that the snap's shape is derived rather than assumed (that it occurs is a commitment), one-way, takes its first step from below, and that the domain snaps form one **family** (MC-1, membership proved per domain); what is *retired* is the reading that they are numerically one object (ill-typed - the members are provably distinct); and what stays *open* is the choice-freeness of the first step's minimality. The frame-change faces are proved theorems that compose known results, so no new theorem is claimed there; what stays a conjecture is only the abstract cross-domain reading - that they are literally one change of frame (a type boundary) - written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
 
 > **See it - [The Snap Loop](snap-loop.html).** The snap-arc ⊥ → ε₀ as one interactive 2-adic loop: a single discrete step of ε₀ away from bottom, then a return to bottom (to A bottom - that it is a NEW one is a commitment, and in this 2-adic realization the arc returns to the same 0). Floor and ceiling are both ⊥; ε₀ is the first step from bottom, opening the gap between them - never a bottom and never 0. It maps the trajectory as a whole, not the route between - that runs through internal state with no external description. Hover any point for the checkable Lean witness.
 

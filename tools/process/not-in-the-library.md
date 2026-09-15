@@ -193,3 +193,34 @@ is not.
 
 Three recorded negatives were false and had already shipped into docstrings as measured fact.
 Correcting them turned *"one of four hypotheses holds"* into three.
+
+---
+
+## The two measured incidents, moved out of `CLAUDE.md` (2026-09-09)
+
+Both lived in `R-NOTINLIB`'s COST clause and are incident narrative rather than rule, so they are
+here under the shape contract. **The rule and its denylist trigger stay inline; only the argument
+moved.**
+
+### 2026-08-27 — a quantifier neither probe earned
+
+*"`PROCESS_V2.md` does not exist anywhere"* reached a commit message. It came from a grep that
+`grep -v`'d the one directory holding the file, and then an `ls` of a directory that never had it.
+**Both probes were honest and both were correctly read.** The conclusion added a universal quantifier
+that neither of them established. The sections cited alongside it were real too, which is what made
+the whole passage read as checked.
+
+### 2026-09-02 — the same surface, the same quantifier, this time after a FIX
+
+*"The sweep is finished"* reached a commit message **and** a `register.md` row, from a hand-grep
+scoped to a single document. The claim was live in two deposited PDFs, a traceability register and
+two docstrings.
+
+⭐ **The rule was already written and already right — only the trigger list did not name this
+shape**, which is why the remedy was a trigger and not a new entry. A post-fix completeness claim is
+an absence claim wearing work clothes.
+
+⚠ **Both prose gates hand-searched as well, and both honestly reported clean**, each having chosen
+its own scope. `check_paths.py --claim` run against the DELETED wording returns 4 sites in 4 files.
+**A tool that takes the scope out of the searcher's hands is the entire difference** — not more
+care, and not a wider denylist.

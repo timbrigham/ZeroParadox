@@ -616,8 +616,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1691,
-        "files": 140
+        "declarations": 1737,
+        "files": 146
       },
       "entries": [
         {
@@ -909,6 +909,45 @@
             ]
           },
           "reason": "reorg reconcile TEST (deps-unreferenced decl): Op A flatten + Op B whole-file move",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "00d2df29-337b-4f31-be75-980e7bbcfa92",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trivial_realization_is_semiconj_and_static",
+            "short": "trivial_realization_is_semiconj_and_static"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.trivial_realization_is_semiconj_and_static",
+            "short": "trivial_realization_is_semiconj_and_static",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -1629,6 +1668,45 @@
             ]
           },
           "reason": "OutputSeparates.lean: one-step unfolding of the constant stream, from Cofix.dest_corec. RETRACTED FRAMING: an earlier reason said 'emission, not arity, separates' - see binCofix_subsingleton's reason.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "034d42a0-fce6-49e3-858b-735591504ede",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scale_not_surjective",
+            "short": "scale_not_surjective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scale_not_surjective",
+            "short": "scale_not_surjective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "The one-wayness as an algebraic fact, CONDITIONAL on a valuation-0 point existing: that layer has no scale-predecessor, so scale is not surjective there. Not a class-level property — unit_scale_is_bijective is the carrier where the hypothesis is unsatisfiable and scale is a bijection. Inbound (nu) face, sibling of c3_irreversible.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5409,6 +5487,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "116da14d-8fc0-4a74-a867-31f0d5a65b13",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopInt_has_negative",
+            "short": "withTopInt_has_negative"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withTopInt_has_negative",
+            "short": "withTopInt_has_negative",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1184d9b5-22c1-4958-af9d-543f76800962",
           "new": {
@@ -6805,6 +6922,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "16a7c95c-2605-4bac-b518-61cfa99c99cb",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScaleHomeo_apply",
+            "short": "rScaleHomeo_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScaleHomeo_apply",
+            "short": "rScaleHomeo_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "16d35726-8df6-4f12-ad47-b88fb83f1742",
           "new": {
             "file": "ZeroParadox/Valuation/PadicHaar.lean",
@@ -7198,6 +7352,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1894e695-84ec-4a2b-b349-0ad41984d74c",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_coe",
+            "short": "rScale_coe"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_coe",
+            "short": "rScale_coe",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -8043,6 +8234,43 @@
             ]
           },
           "reason": "Round 3: the no-go becomes a characterisation - Nonempty (InfinitudeFloor a) iff Infinite a",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1c7bf445-4af1-4f9b-9165-d2949939c657",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_ne_zero",
+            "short": "scaleChain_ne_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_ne_zero",
+            "short": "scaleChain_ne_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9997,6 +10225,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "252fc442-401e-4aad-b039-e9c019836ea3",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_valuation",
+            "short": "rScale_valuation"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_valuation",
+            "short": "rScale_valuation",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2542a435-97d2-4a1b-9f94-92a709a3d8a8",
           "new": {
@@ -10023,6 +10290,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "254ee0e0-c0ca-44d5-8505-f066196c35d6",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale",
+            "short": "rScale"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale",
+            "short": "rScale",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -11527,6 +11831,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2ac51fc9-b725-469e-86b8-96d15083ad1a",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_strict",
+            "short": "realized_strict"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_strict",
+            "short": "realized_strict",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2aff96ab-65ca-4853-bc8f-3290d15790fa",
           "new": {
             "file": "ZeroParadox/Algebra/WheelFrac.lean",
@@ -12980,6 +13323,45 @@
             "role": []
           },
           "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3063c04d-97d4-4834-94b1-f9a0cf8c3c55",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unit_scale_is_bijective",
+            "short": "unit_scale_is_bijective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unit_scale_is_bijective",
+            "short": "unit_scale_is_bijective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "The no-go gauge for scale_not_surjective: on trivialValBridge the valuation is constantly top, so no valuation-0 point exists, that theorem's hypothesis is unsatisfiable, and scale = id is a bijection. One-wayness is a property of carriers having a valuation-0 point, never of the class.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15659,6 +16041,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3c173d44-7a47-468e-bca7-4a9abfb8cd27",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_eq_orbit",
+            "short": "scaleChain_eq_orbit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_eq_orbit",
+            "short": "scaleChain_eq_orbit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3c7f6539-0acd-4948-ad41-9762e8d01b77",
           "new": {
@@ -16857,6 +17278,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "42fb6f71-fff5-4373-8d33-13075e2a3fd0",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_scale_predecessor_at_val_zero",
+            "short": "no_scale_predecessor_at_val_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_scale_predecessor_at_val_zero",
+            "short": "no_scale_predecessor_at_val_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Given a point at valuation 0, nothing maps onto it under scale: bot is a fixed point carrying top, and any other predecessor would force 0 = val y + 1, which the extended naturals refuse. The hypothesis is load-bearing.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4304117e-a3ca-4982-912f-90bd85ec2e73",
           "new": {
@@ -17875,6 +18335,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "469af0be-ce7c-4075-81bd-7bde481e81e0",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScaleHomeo",
+            "short": "rScaleHomeo"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScaleHomeo",
+            "short": "rScaleHomeo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -19385,6 +19882,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4cd4bbfb-0d98-4d07-b1d5-13fa1108ea04",
+          "new": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tracksDepth_is_self_supplied",
+            "short": "tracksDepth_is_self_supplied"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tracksDepth_is_self_supplied",
+            "short": "tracksDepth_is_self_supplied",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4d17817c-3b0a-41d8-baf4-049ef237f16c",
           "new": {
             "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
@@ -20354,6 +20890,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "509370cb-df55-448c-a15f-2339dc1f4ea6",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nondegenerate_iff_map_one",
+            "short": "nondegenerate_iff_map_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nondegenerate_iff_map_one",
+            "short": "nondegenerate_iff_map_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "WHEEL-1..3: ring-preserving gauge, the unit-collapse theorem, and the two nondegeneracy characterizations (map_one)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24344,6 +24919,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "60fddaac-6118-46de-aec2-505388729afb",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit_ne_zero",
+            "short": "realized_orbit_ne_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit_ne_zero",
+            "short": "realized_orbit_ne_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6103c85d-95f3-4cbf-886b-6520330b6202",
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
@@ -24484,6 +25098,45 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "61df0987-115f-4d8d-91ee-fc1e300ce414",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit",
+            "short": "realized_orbit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit",
+            "short": "realized_orbit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26378,6 +27031,45 @@
             ]
           },
           "reason": "The survival recurrence for repeated crossings closes to a power. Independence is an explicit hypothesis, not a definition.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6abf2527-fff8-495b-a3a6-1d10992b60e1",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stabiliser_is_bigger",
+            "short": "stabiliser_is_bigger"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stabiliser_is_bigger",
+            "short": "stabiliser_is_bigger",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Round-2 gate fix: two NO-GO gauges added. depthchain_iff_nonneg measures what ZP-I's IsDepthChain actually buys (exactly non-negativity of the valuation). stabiliser_is_bigger shows the pointwise pole stabiliser is the whole diagonal torus, not the 2^Z scalings.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28633,6 +29325,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "746c4425-904f-47c0-a7a8-88d60062ae0e",
+          "new": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tracksDepth_not_isDepthChain",
+            "short": "tracksDepth_not_isDepthChain"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tracksDepth_not_isDepthChain",
+            "short": "tracksDepth_not_isDepthChain",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7476e485-143f-403e-ae54-1e1327291e14",
           "new": {
@@ -29976,6 +30707,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7a89c1aa-1fc7-4660-bbc5-39179dedb43d",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_tendsto_zero",
+            "short": "scaleChain_tendsto_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_tendsto_zero",
+            "short": "scaleChain_tendsto_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31554,6 +32324,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "806c2d4a-7738-494f-bb01-f9d6f7fe836c",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nondegenerate_iff_unit_ne_top",
+            "short": "nondegenerate_iff_unit_ne_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nondegenerate_iff_unit_ne_top",
+            "short": "nondegenerate_iff_unit_ne_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "WHEEL-1..3: ring-preserving gauge, the unit-collapse theorem, and the two nondegeneracy characterizations (map_one)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8073c011-37d0-40c5-8bf5-d0557cb6b37a",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -32874,6 +33683,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "863e530f-0bc5-4edb-bda4-78ee9070595a",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_valuation_step",
+            "short": "realized_valuation_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_valuation_step",
+            "short": "realized_valuation_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8660820c-fe2b-4ac9-aad2-5beb2245a757",
           "new": {
             "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
@@ -34173,6 +35021,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8dd2c506-22de-46a7-a52c-dcf9004c63f3",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_fixes_poles",
+            "short": "rScale_fixes_poles"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_fixes_poles",
+            "short": "rScale_fixes_poles",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its infinite-cyclic additivity, and its conjugation by the pole-swapping inversion",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35532,6 +36419,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "92801b7e-1031-4f56-90b5-d45a7c0527d7",
+          "new": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.TracksDepth",
+            "short": "TracksDepth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.TracksDepth",
+            "short": "TracksDepth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "92b7e7c2-355d-42c9-a892-d033efce9c95",
           "new": {
@@ -36681,6 +37607,84 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "96820261-a380-4166-8655-b8ede479c861",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_conj_rScale",
+            "short": "rInv_conj_rScale"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_conj_rScale",
+            "short": "rInv_conj_rScale",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "968b763b-44bf-420a-a3fb-09f0845ad5ac",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_tendsto_zero",
+            "short": "realized_tendsto_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_tendsto_zero",
+            "short": "realized_tendsto_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38621,6 +39625,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9e05ae43-06f0-45c1-9aef-422363a7880d",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_add",
+            "short": "rScale_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_add",
+            "short": "rScale_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9e078a39-8f6f-4b81-87d8-5833dc75a5f8",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -39501,6 +40544,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a28a32e1-7161-484e-8230-50c187239dd4",
+          "new": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isDepthChain_tracksDepth",
+            "short": "isDepthChain_tracksDepth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isDepthChain_tracksDepth",
+            "short": "isDepthChain_tracksDepth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a31c222b-43e5-4cfc-af37-191360eff855",
           "new": {
@@ -39673,6 +40755,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a3c9996d-e631-4dc3-bc07-676e0e766e9a",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.constChain_isDepthChain_not_strict",
+            "short": "constChain_isDepthChain_not_strict"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.constChain_isDepthChain_not_strict",
+            "short": "constChain_isDepthChain_not_strict",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "A witness family SATISFYING ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40001,6 +41122,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a656410f-f09f-4521-b599-9246e178a572",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain",
+            "short": "scaleChain"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain",
+            "short": "scaleChain",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42397,6 +43555,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "af840759-c43d-4931-bdfb-a7727c907c7f",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit_is_rScale_orbit",
+            "short": "realized_orbit_is_rScale_orbit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_orbit_is_rScale_orbit",
+            "short": "realized_orbit_is_rScale_orbit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Closing the self-supply residue: the abstract valuation is a ValBridge class field, so it cannot be read off the chain. The bridge conjoins two independently-cited halves, banks_are_independent is the control, and realized_orbit_is_rScale_orbit embeds the abstract monoid orbit in the sphere's Z-action.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "afe9628c-487d-4b04-b336-f3150a658e49",
           "new": {
@@ -43019,6 +44216,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b25c0f8f-dabf-466c-a384-70c8e10a25f6",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.banks_are_independent",
+            "short": "banks_are_independent"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.banks_are_independent",
+            "short": "banks_are_independent",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Closing the self-supply residue: the abstract valuation is a ValBridge class field, so it cannot be read off the chain. The bridge conjoins two independently-cited halves, banks_are_independent is the control, and realized_orbit_is_rScale_orbit embeds the abstract monoid orbit in the sphere's Z-action.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b266cd50-bd24-4670-9134-3e6c287d36c5",
           "new": {
@@ -43081,6 +44317,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b280007b-f968-4c71-9ce2-8ef7b5d01146",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_valuation_orbit",
+            "short": "realized_valuation_orbit"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realized_valuation_orbit",
+            "short": "realized_valuation_orbit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46879,6 +48154,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c274edfe-41ed-4a83-9314-43ae36fddec0",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.succ_realized_by_doubling",
+            "short": "succ_realized_by_doubling"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.succ_realized_by_doubling",
+            "short": "succ_realized_by_doubling",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ScaleRealization.lean: the realization map carrying an abstract scale step to 2-adic doubling (Function.Semiconj), with the valuation law derived rather than asserted, two refutation-grade falsifiers, and a non-vacuity witness.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c283b9a0-bc70-422c-844a-b23af62619c5",
           "new": {
@@ -47486,6 +48800,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c5491db3-4640-4c99-9ca1-91e6b03483a8",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_zero",
+            "short": "rScale_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_zero",
+            "short": "rScale_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48257,6 +49608,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c7d052d9-8eaf-4bd9-94fd-d0113549cecb",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.depthchain_iff_nonneg",
+            "short": "depthchain_iff_nonneg"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.depthchain_iff_nonneg",
+            "short": "depthchain_iff_nonneg",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Round-2 gate fix: two NO-GO gauges added. depthchain_iff_nonneg measures what ZP-I's IsDepthChain actually buys (exactly non-negativity of the valuation). stabiliser_is_bigger shows the pointwise pole stabiliser is the whole diagonal torus, not the 2^Z scalings.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c7d646dd-3499-41e0-9571-bb3541b7575e",
           "new": {
@@ -48941,6 +50331,82 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cb09af6d-b2d0-498d-a6aa-2b5e775068c8",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.depthId_isStrictStateSequence",
+            "short": "depthId_isStrictStateSequence"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.depthId_isStrictStateSequence",
+            "short": "depthId_isStrictStateSequence",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cb4a9025-28a9-41ee-b93d-eec91f68c260",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.realization_bridges_both_valuations",
+            "short": "realization_bridges_both_valuations"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.realization_bridges_both_valuations",
+            "short": "realization_bridges_both_valuations",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Closing the self-supply residue: the abstract valuation is a ValBridge class field, so it cannot be read off the chain. The bridge conjoins two independently-cited halves, banks_are_independent is the control, and realized_orbit_is_rScale_orbit embeds the abstract monoid orbit in the sphere's Z-action.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -51527,6 +52993,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d5d2c643-35c9-44e1-88be-d6f0b1be6349",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_realizes_into_q2",
+            "short": "z2_realizes_into_q2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleRealization.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.z2_realizes_into_q2",
+            "short": "z2_realizes_into_q2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Non-vacuity witness for ScaleRealization sections VI-VII: the coercion from the 2-adic integers into the 2-adic numbers realizes instZ2ValBridge's scale as doubling, at a point that is neither the bottom nor sent to zero. Without it those sections could hold empty.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d5d8f5d3-03bb-4958-bbd4-be89e84f04f8",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -53716,6 +55221,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "dede082a-2da1-4808-abea-125c5a65009b",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_infty",
+            "short": "rScale_infty"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rScale_infty",
+            "short": "rScale_infty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "df173c25-9e1f-4559-b8b1-d6ea105e3303",
           "new": {
@@ -55602,6 +57144,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e51f15e5-149e-4f77-a082-20d3888abf38",
+          "new": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.h_strict_of_tracksDepth",
+            "short": "h_strict_of_tracksDepth"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/SemilatticeInstance.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.h_strict_of_tracksDepth",
+            "short": "h_strict_of_tracksDepth",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e524d378-06ef-4ce4-9fda-cb6f40c47f1e",
           "new": {
@@ -57389,6 +58970,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ec76926f-aa47-46fd-b6e3-636a4b493008",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_rScale",
+            "short": "continuous_rScale"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.continuous_rScale",
+            "short": "continuous_rScale",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ed074e46-d77e-4a64-b398-9d32059181c3",
           "new": {
@@ -57711,6 +59329,45 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ee4a6df7-1bfa-44a3-a64d-880389f443ae",
+          "new": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_given",
+            "short": "t_snap_given"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_given",
+            "short": "t_snap_given",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "2026-09-14 T-SNAP hypothesis-form arc: companion explicit-hypothesis theorem (CC-1 and occurrence as binders); t_snap_derived is its MachinePhase instance",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -58437,6 +60094,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f27a34dc-67cb-46cd-b36b-0c5f201d1221",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gauge_strong",
+            "short": "gauge_strong"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.gauge_strong",
+            "short": "gauge_strong",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "WHEEL-1..3: ring-preserving gauge, the unit-collapse theorem, and the two nondegeneracy characterizations (map_one)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -60042,6 +61738,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f74243cd-d3c2-431c-8904-437935521943",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_isDepthChain",
+            "short": "scaleChain_isDepthChain"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.scaleChain_isDepthChain",
+            "short": "scaleChain_isDepthChain",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f74fc6c8-44be-491c-ac63-3011b15b9dca",
           "new": {
             "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
@@ -61564,6 +63299,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fd35114e-6d5e-4ef4-a42d-76a33e9fb405",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.collapse_from_unit",
+            "short": "collapse_from_unit"
+          },
+          "old": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.collapse_from_unit",
+            "short": "collapse_from_unit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "WHEEL-1..3: ring-preserving gauge, the unit-collapse theorem, and the two nondegeneracy characterizations (map_one)",
           "verify": {
             "axioms": null,
             "sorry_free": true

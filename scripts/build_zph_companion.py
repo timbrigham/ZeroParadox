@@ -1,5 +1,6 @@
 """
-Build ZP-H Illustrated Companion (v1.14)
+Build ZP-H Illustrated Companion (v1.15)
+v1.15: CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. Four sites; the key-result box no longer calls CC-1 'not a free commitment' (ZP-A calls it a modelling choice). ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). Also CC-1 is 'the modelling commitment CC-1', not 'the structural identification CC-1', at three sites.
 v1.13: Scope "any state change" to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix.
 v1.12: T-SNAP endpoint circles — open (white fill, colored stroke) with colored text for legibility.
 v1.11: subtitle/footer 'Categorical Bridge' → 'Functor Coherence'; footer date April → May 2026.
@@ -141,7 +142,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -208,7 +209,7 @@ def build():
         'realizations of the same abstract structure. They are not four separate arguments '
         'for the same conclusion — they are four different windows looking at one thing. '
         'This agreement is coherence: all four frameworks are built on the same structural '
-        'axioms (A1-A4, AX-B1) and the structural identification CC-1 (S₀ = ⊥, derived in ZP-J), '
+        'axioms (A1-A4, AX-B1) and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced), '
         'so the Binary Snap appearing in all of them '
         'reflects a shared foundation, not independent confirmation from unrelated starting points.'))
     E.append(four_functor_diagram())
@@ -256,7 +257,7 @@ def build():
         'is that the same property appears in four analytic settings — topology, algebra, '
         'information theory, Hilbert space — each with its own structural reason for why the '
         'bottom cannot be approached. These settings are not independent: they share the '
-        'axioms (A1-A4, AX-B1) and the structural identification CC-1 (S₀ = ⊥, derived in ZP-J) '
+        'axioms (A1-A4, AX-B1) and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced) '
         'that produce this behavior in all four. '
         'ZP-H verifies that these four reasons are consistent.'))
     E.append(sp(6))
@@ -385,7 +386,7 @@ def build():
     E.append(remember_box(
         'The agreement across four frameworks reflects coherence, not independent confirmation. '
         'All four share the same axioms — A1-A4 (lattice axioms), AX-B1 (binary existence) '
-        '— and the structural identification CC-1 (S₀ = ⊥, derived in ZP-J). The Binary '
+        '— and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced). The Binary '
         'Snap appears in all four because those foundations are built into each framework, '
         'not because four separate arguments from unrelated starting points happened to agree.'))
     E.append(sp(6))
@@ -398,7 +399,8 @@ def build():
         'commitments (A1-A4, AX-B1, CC-1), not independent replication. '
         'T-SNAP is a derived theorem inherited here from ZP-E. '
         'The only additional design premise is DP-1 (ZP-D). '
-        'CC-1 (S₀ = ⊥) is derived in ZP-J, not a free commitment.'))
+        'CC-1 (S₀ = ⊥) is a modelling commitment: ZP-J restates it as an equivalence with starting at '
+        'a Quine atom, which expresses the choice through a role without forcing it.'))
     E.append(sp(8))
 
     E.append(cbody(

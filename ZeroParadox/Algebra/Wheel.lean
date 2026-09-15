@@ -94,8 +94,17 @@ open ZeroParadox
 -- § I. Wheel Typeclass
 -- ============================================================
 
-/-- A wheel (Carlström 2001:11): a set with +, ·, and a total involution /,
-    making /0 a defined first-class element (∞) and 0·/0 an absorbing element (⊥ₗ).
+/-- A wheel: a set with +, ·, and a total involution /, making /0 a defined first-class element (∞)
+    and 0·/0 an absorbing element (⊥ₗ).
+
+    **Lineage — the name and the construction are Setzer's; Carlström is the generalizer.**
+    Carlström 2001:11 p. 3 records it: Edalat and Potts adjoined `∞ = 1/0` and `⊥ = 0/0` to the
+    reals; Martin-Löf proposed building them into the construction of the rationals from the
+    integers; *"Such structures were called `wheels' … by Setzer [Set97], who showed how to modify
+    the construction of fields of fractions from integral domains so that wheels are obtained
+    instead of fields"*; and *"In this paper, we generalize Setzer's construction, so that it
+    applies not only to integral domains, but to any commutative semiring."* This file follows
+    Carlström's Definition 1.1, which is the general one.
 
     The axiom fields below are exactly Carlström's eight Definition 1.1 axioms, with his two
     "commutative monoid" axioms unbundled into their separate equational laws:
@@ -111,7 +120,10 @@ open ZeroParadox
     Axiom W14: x + 0/0 = 0/0                                    [Carlström (8)]
 
     Key consequence: /0 (= wheelInf) and 0·/0 (= wheelBot) are well-defined.
-    A field is a wheel where wheelInf = wheelBot (the two collapse). -/
+    ⚠ **They must stay DISTINCT, and so must 0 and 1.** If any two of `0`, `1`, `/0`, `0·/0`
+    coincide the wheel is trivial — one element (Carlström 2001:11, Prop. 4.4). `inf_ne_bot`
+    (`Algebra/WheelFrac.lean`, given `0 ∉ S`) is what buys non-triviality; on this carrier,
+    `zpw_inf_ne_bot` and `zpw_zero_ne_bot` (§V). -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib has no Wheel typeclass.
 -- Extending AddCommMonoid + CommMonoid would inherit full semiring distributivity
 -- (which wheels deliberately weaken). Defined from scratch for axiom auditability,
@@ -197,6 +209,13 @@ end WheelBasic
 
 /-- The ZP wheel carrier: rationals extended with ∞ (= /0) and ⊥ₗ (= 0·/0).
     This is the minimal type witnessing that the ZP porthole structure forms a wheel.
+
+    ⚠ **Not new, and it is the ORIGINAL example rather than a general one.** `ℚ ∪ {∞, ⊥}` is
+    Carlström 2001:11's own first listed example — *"`⊙_{ℤ\{0}}ℤ = ℚ ∪ {/0, 0/0}`"* (printed p. 6,
+    example 1) — and so a wheel in **Setzer's** narrower sense: *"A wheel in Setzer's sense will be
+    recognized as what we denote by `⊙_{S₀}A`, where A is an integral domain, S₀ the subset
+    A \ {0}"* (printed p. 3). What is contributed here is the machine-checked encoding and the ZP
+    reading below, never the object.
 
     - `bot`:    0 · /0 — the absorbing undefined element (ZP: the porthole; the algebraic counterpart
                 of the Quine-atom role, not an identity with it — different types)
@@ -343,10 +362,99 @@ theorem zpw_inf_mul_zero_eq_bot : zpwMul .inf (.fin 0) = .bot := by
 theorem zpw_inv_inf_eq_zero : zpwInv .inf = .fin 0 := by
   simp [zpwInv]
 
-/-- ∞ ≠ ⊥ₗ: the two portal elements are distinct.
-    This is what makes the wheel extension non-trivial — a field would collapse them. -/
+/-- ∞ ≠ ⊥ₗ: the two portal elements stay distinct — wheel behaviour, not meadow collapse.
+    Identifying them would force triviality (Carlström 2001:11, Prop. 4.4). -/
 theorem zpw_inf_ne_bot : ZPWheelElem.inf ≠ .bot := by
   simp
+
+-- Carlström Prop. 4.4 for this pair, abstract in any `Wheel`: identifying `/0` with `0·/0`
+-- forces every element equal — so `1 = 0`, which no field admits.
+example {W : Type*} [Wheel W] (h : (wheelInf : W) = wheelBot) : ∀ x y : W, x = y := by
+  have hb : Wheel.winv (wheelBot (W := W)) = wheelBot := by
+    show Wheel.winv (Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero))
+        = Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero)
+    rw [Wheel.winv_wmul, Wheel.winv_winv, Wheel.wmul_comm]
+  have h0 : (Wheel.wzero : W) = wheelBot := by
+    have hc := congrArg Wheel.winv h
+    rw [hb, winv_wheelInf] at hc
+    exact hc
+  have hz : ∀ x : W, x = Wheel.wzero := by
+    intro x
+    have h14 : Wheel.wadd x (wheelBot (W := W)) = wheelBot := Wheel.wadd_zeroinv_absorb x
+    rw [← h0, Wheel.wadd_zero] at h14
+    exact h14
+  intro x y
+  rw [hz x, hz y]
+
+/-- **The reverse leg.** `Statement:` assuming `/0 = 0` — the involutive-meadow totalisation, since
+    *"a meadow is a commutative ring with a total inverse operator satisfying two equations which
+    imply `0⁻¹ = 0`"* (Bergstra, Hirshfeld & Tucker, arXiv:0901.0823, abstract) — every element of a
+    wheel is equal. **This is Carlström 2001:11, Prop. 4.4, case `0 = /0` (printed p. 25), and the
+    block below is his route for it**: the meadow's defining equation is one of the coinciding pairs
+    that proposition already covers, which is why no wheel adopts it and stays non-trivial.
+    ⚠ The Lean term does not invoke the example above; the mathematics is not independent of it.
+    Carlström's `0 = /0` case defers to his `0 = 0/0` case, and that is the one that flattens.
+
+    Together with that example: a wheel is not also a NON-TRIVIAL involutive meadow, in either
+    direction. The implication runs meadow-equation ⇒ trivial, never the reverse — a one-element
+    wheel need not have arisen this way. -/
+example {W : Type*} [Wheel W] (hm : Wheel.winv (Wheel.wzero : W) = Wheel.wzero) :
+    ∀ x y : W, x = y := by
+  have hbot : (wheelBot : W) = Wheel.wzero := by
+    show Wheel.wmul (Wheel.wzero : W) (Wheel.winv Wheel.wzero) = Wheel.wzero
+    rw [hm, Wheel.wzero_mul_wzero]
+  have hz : ∀ x : W, x = Wheel.wzero := by
+    intro x
+    have h14 : Wheel.wadd x (wheelBot (W := W)) = wheelBot := Wheel.wadd_zeroinv_absorb x
+    rw [hbot, Wheel.wadd_zero] at h14
+    exact h14
+  intro x y
+  rw [hz x, hz y]
+
+-- Controls on the two examples above: both hypotheses are load-bearing, not vacuous. On this
+-- carrier the meadow equation FAILS, and the carrier is not trivial.
+example : Wheel.winv (Wheel.wzero : ZPWheelElem) ≠ Wheel.wzero := by
+  show zpwInv (ZPWheelElem.fin 0) ≠ ZPWheelElem.fin 0
+  rw [zpw_inv_zero_eq_inf]
+  simp
+
+example : ¬ (∀ x y : ZPWheelElem, x = y) := fun h => zpw_inf_ne_bot (h .inf .bot)
+
+-- Statement: the degenerate overlap, stated rather than denied. The one-element carrier is a wheel in
+-- which ∞ = ⊥ₗ and /0 = 0 both hold, so the two examples above are not vacuous at their conclusion.
+example : ∃ W : Wheel PUnit, @wheelInf PUnit W = @wheelBot PUnit W ∧
+    @Wheel.winv PUnit W (@Wheel.wzero PUnit W) = @Wheel.wzero PUnit W :=
+  ⟨{ wadd := fun _ _ => PUnit.unit, wmul := fun _ _ => PUnit.unit, winv := fun _ => PUnit.unit,
+     wzero := PUnit.unit, wone := PUnit.unit,
+     wadd_assoc := fun _ _ _ => rfl, wadd_comm := fun _ _ => rfl, wadd_zero := fun _ => rfl,
+     wmul_assoc := fun _ _ _ => rfl, wmul_comm := fun _ _ => rfl, wmul_one := fun _ => rfl,
+     winv_winv := fun _ => rfl, winv_wmul := fun _ _ => rfl, weak_distrib := fun _ _ _ => rfl,
+     wheel_id := fun _ _ _ => rfl, wzero_mul_wzero := rfl, wadd_zeromul_mul := fun _ _ _ => rfl,
+     winv_add_zeromul := fun _ _ => rfl, wadd_zeroinv_absorb := fun _ => rfl }, rfl, rfl⟩
+
+-- Statement: and the same carrier, as a commutative ring with the identity as inverse, meets the
+-- meadow equations Ref `(x⁻¹)⁻¹ = x` and Ril `x·(x·x⁻¹) = x` (Bergstra, Hirshfeld & Tucker,
+-- arXiv:0901.0823 §1), with `0⁻¹ = 0`. Beyond it, the reverse-leg example above leaves no
+-- non-trivial wheel whose `/0` is `0`.
+example : ∀ x : PUnit, id (id x) = x ∧ x * (x * id x) = x ∧ id (0 : PUnit) = 0 :=
+  fun _ => ⟨rfl, rfl, rfl⟩
+
+/-- **Full distributivity fails, and exactly at `∞ ≠ ⊥ₗ`.** `Statement:` the unweakened law
+    `(x+y)·z = x·z + y·z` is false on `ZPWheelElem`; at `(1, 0, ∞)` its single residual obligation
+    is `∞ = ⊥ₗ`, discharged by `zpw_inf_ne_bot`. So W9's `0·z` correction term is load-bearing and
+    this carrier is not a ring — checked here rather than asserted in § I's tag. Prior art, not a
+    duplicate: Carlström has the sufficient direction — (3) *"reduces to the usual rule when
+    `0z = 0`"* (printed p. 6); this is the necessity witness at `0z ≠ 0`, here `0·∞ = ⊥ₗ`.
+    ⚠ Do not write that tag's literal bracketed token in prose: `check_invariants` counts
+    occurrences, so a sentence ABOUT a tag is indistinguishable from a tag. -/
+example : ¬ (∀ x y z : ZPWheelElem,
+    Wheel.wmul (Wheel.wadd x y) z = Wheel.wadd (Wheel.wmul x z) (Wheel.wmul y z)) := by
+  intro h
+  have hx : zpwMul (zpwAdd (ZPWheelElem.fin 1) (.fin 0)) .inf
+      = zpwAdd (zpwMul (ZPWheelElem.fin 1) .inf) (zpwMul (.fin 0) .inf) :=
+    h (.fin 1) (.fin 0) .inf
+  norm_num [zpwAdd, zpwMul] at hx
+  exact zpw_inf_ne_bot hx
 
 /-- fin(0) ≠ ⊥ₗ: the semilattice ⊥ is distinct from the wheel's absorbing element.
     Algebraically: the porthole contact point (fin 0 ↔ inf) is not confusion with ⊥ₗ. -/
@@ -419,6 +527,8 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     do different work:
     * `map_one : v 1 = 0` is what admits § VII-b's degenerate instance — the constant-`⊤` map
       violates it, and every `AddValuation A ℕ∞` satisfies `WVSNondegenerate` with witness `1`.
+      The converse holds too, so the omission is exactly recoverable: `nondegenerate_iff_map_one`
+      (§ VII-b).
     * the **ultrametric** axiom is a genuine strengthening this class does not require. Witness:
       `v n = v₂ n + v₃ n` on `ℤ` is multiplicative, sends `0 ↦ ⊤` and `1 ↦ 0`, and is nondegenerate,
       yet `min (v 2) (v 3) = 1 ≰ 0 = v 5`. So this class does **not** imply `AddValuation`, and it is
@@ -491,48 +601,41 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
 -- § VII-b. NO-GO GAUGE — the class is degenerately inhabited
 -- ============================================================
 
-/-! ### The gauge (2026-08-01)
+/-! ### The gauge
 
-**No mathematical result depends on this class** — outside the gauge below, no theorem takes
-`[WheelValuationStructure L]` and no instance is registered — and the results that carry the wheel
-(`Algebra/WheelFrac.lean`'s `instWheel`) are built on `[CommRing A]` plus a multiplicative submonoid,
-never on this class. (`WVSNondegenerate` below does take the class; it is part of the gauge, and it
-asserts nothing about a carrier on its own.) That
-is what keeps the defect below **preventive** rather than propagating. The published documents were
-already honest about it: the ZP-J addendum states *"Ring structure is an input, not a conclusion"*
-and says this class's porthole condition *"is an assumed axiom, motivated by the ZP argument rather
-than type-checked as necessary."* *(Quotation corrected 2026-08-01: an earlier revision rendered the
-tail as "… **not** type-checked as necessary", putting a word inside the quotation marks that the
-source — `scripts/build_zpj_wheel_addendum.py` (the public mirror; the active script is gitignored),
-    the paragraph ending "…motivated by the ZP argument rather than type-checked as necessary." — does not contain.)*
+**Nothing depends on this class.** Outside this gauge no theorem takes `[WheelValuationStructure L]`
+and no instance is registered; the wheel is carried by `Algebra/WheelFrac.lean`'s `instWheel` over
+`[CommRing A]` plus a submonoid. So the defect below is preventive, not propagating, and the
+published ZP-J addendum already says so — *"Ring structure is an input, not a conclusion"*,
+`scripts/build_zpj_wheel_addendum.py:264`, the tracked script `register.md` fingerprints.
+Mirrors `Computability/SelfApp.lean`'s `trivialSelfApp`: a warning comment is not checkable,
+an inhabiting term is. -/
 
-The gauge exists so the trap cannot be sprung later. It mirrors
-`Computability/SelfApp.lean`'s `trivialSelfApp` gauge, and it exists because a warning comment is
-not checkable while an inhabiting term is. -/
-
-/-- **The degenerate instance.** The constant-`⊤` valuation satisfies **every** field on **any**
-    commutative ring: `⊤ = ⊤ + ⊤` discharges multiplicativity and `⊤ = ⊤` discharges the porthole
-    condition. Note the carrier is unrestricted — `ℤ` carries this, so the degeneracy is not an
-    artifact of a trivial ring. -/
+/-- **The degenerate instance.** The constant-`⊤` valuation satisfies every field on any commutative
+    ring — `⊤ = ⊤ + ⊤`, `⊤ = ⊤` — and `ℤ` carries it, so this is no artifact of a trivial ring.
+    ⚠ `@[reducible] def`, deliberately NOT an `instance`, and the absent keyword is load-bearing:
+    registering it would resolve every downstream `[WheelValuationStructure A]` to the constant-`⊤`
+    one, turning the gauge into the disease it measures. -/
 @[reducible] def degenerateWVS (A : Type*) [inst : CommRing A] : WheelValuationStructure A where
   toCommRing := inst
   wvs_val := fun _ => ⊤
   wvs_val_mul := fun _ _ => rfl
   wvs_val_zero := rfl
 
-/-- **The gauge.** Every commutative ring carries a `WheelValuationStructure`. Therefore **nothing
-    BEYOND the commutative-ring structure already assumed** follows from adding the bare hypothesis
-    `[WheelValuationStructure A]` — any argument of the form "A carries `WheelValuationStructure`,
-    therefore [something not already true of every `CommRing`]" is **vacuous**, and any future
-    construction over this class must carry `WVSNondegenerate` as an explicit hypothesis.
-
-    *(Scoped 2026-08-01. This read "no property of `A` follows from the bare hypothesis", which is
-    over-broad: `A` carries `CommRing` throughout, so ring-derived properties do follow and a reader
-    was being told to discard legitimate results. What the theorem below shows is that the class adds
-    no discriminating power, not that `A` has no properties.)* -/
+/-- **The gauge, weak form.** Every commutative ring carries a `WheelValuationStructure`, so the bare
+    hypothesis adds no discriminating power and a construction needing one must assume
+    `WVSNondegenerate`. ⚠ `Nonempty` forgets the ring structure, so this does not by itself license
+    transferring a conclusion back to `inst` — `gauge_strong` is the form that does. -/
 theorem wheelValuationStructure_always_inhabited (A : Type*) [CommRing A] :
     Nonempty (WheelValuationStructure A) :=
   ⟨degenerateWVS A⟩
+
+/-- **The gauge, strong form.** `Statement:` every commutative ring carries a
+    `WheelValuationStructure` **on the ring structure it already has** — which is what licenses the
+    transfer. Witness `degenerateWVS A`, kept a separate `def` so the gauge stays nameable. -/
+theorem gauge_strong (A : Type*) [inst : CommRing A] :
+    ∃ W : WheelValuationStructure A, W.toCommRing = inst :=
+  ⟨degenerateWVS A, rfl⟩
 
 /-- Nondegeneracy — the content the class does **not** carry. Per the commitments-in-hypotheses rule
     this is a **predicate to be assumed where needed**, deliberately NOT a class field: a carrier may
@@ -540,16 +643,93 @@ theorem wheelValuationStructure_always_inhabited (A : Type*) [CommRing A] :
 def WVSNondegenerate (L : Type*) [W : WheelValuationStructure L] : Prop :=
   ∃ x : L, W.wvs_val x ≠ ⊤
 
-/-- The degenerate instance fails nondegeneracy — so the predicate is not itself vacuous, and it is
-    exactly what separates a real porthole valuation from the constant-`⊤` one. -/
+/-- The degenerate instance fails nondegeneracy, so the predicate is not vacuous. ⚠ It separates the
+    constant-`⊤` map and nothing more: nondegeneracy is `map_one` (`nondegenerate_iff_map_one`), not
+    `⊤`-exactly-at-`0`. The parity witness below is nondegenerate with `wvs_val 2 = ⊤` and `2 ≠ 0`. -/
 theorem degenerateWVS_not_nondegenerate (A : Type*) [CommRing A] :
     ¬ @WVSNondegenerate A (degenerateWVS A) := by
   rintro ⟨x, hx⟩
   exact hx rfl
 
-/-! **Axiom footprint: `degenerateWVS`, `wheelValuationStructure_always_inhabited` and
-`degenerateWVS_not_nondegenerate` are AXIOM-FREE**, checked by the `#print axioms` block in § IX
-rather than asserted here. (`WVSNondegenerate` is a `def`, so it carries no footprint of its own.) -/
+/-- **The unit decides the whole map.** `Statement:` `wvs_val 1 = ⊤` forces `wvs_val` constantly `⊤`,
+    since `wvs_val x = wvs_val (x * 1) = wvs_val x + ⊤`. So § VII-b's degeneracy is not one bad member
+    among many — it is reached from a single field value. -/
+theorem collapse_from_unit {L : Type*} [W : WheelValuationStructure L]
+    (h1 : W.wvs_val 1 = ⊤) (x : L) : W.wvs_val x = ⊤ := by
+  have h := W.wvs_val_mul x 1
+  rw [mul_one, h1] at h
+  exact h.trans (WithTop.add_top _)
+
+/-- `Statement:` `WVSNondegenerate L ↔ wvs_val 1 ≠ ⊤` — nondegeneracy is a fact about the unit alone.
+    ⚠ Use this form, not `nondegenerate_iff_map_one`, in anything that must stay axiom-free: same
+    content, and only this one avoids the `ℕ∞` numeral. -/
+theorem nondegenerate_iff_unit_ne_top (L : Type*) [W : WheelValuationStructure L] :
+    WVSNondegenerate L ↔ W.wvs_val 1 ≠ ⊤ :=
+  ⟨fun ⟨x, hx⟩ h1 => hx (collapse_from_unit h1 x), fun h => ⟨1, h⟩⟩
+
+/-- **The predicate IS the omitted axiom.** `Statement:` `WVSNondegenerate L ↔ wvs_val 1 = 0` — the
+    nondegeneracy this class states by hand is exactly `map_one`, the `AddValuation.of` axiom the
+    PRIOR ART block above records this class as dropping. § VII:420 carried the one-way half
+    informally; this is the biconditional.
+
+    The step is `wvs_val 1 = wvs_val 1 + wvs_val 1`, so `wvs_val 1` is `+`-idempotent. In an ordered
+    value **group** cancellation would finish it and `map_one` would be a theorem, which is why the
+    textbook statement is an identity rather than a dichotomy. Over `ℕ∞` cancellation fails at
+    exactly one point, so idempotence yields `0` **or** `⊤` — and that dichotomy is what turns
+    `map_one` into a biconditional with nondegeneracy rather than a consequence of it.
+
+    Prior art, searched 2026-09-12, none closer located: the group-valued half is standard (Aitken,
+    arXiv:2102.11725, Lemma 1); where the codomain absorbs, `map_one` is an axiom not a theorem
+    (Gunn, arXiv:2211.06480v2, Prop. 2.26). No located source states the dichotomy; no novelty claimed. -/
+theorem nondegenerate_iff_map_one (L : Type*) [W : WheelValuationStructure L] :
+    WVSNondegenerate L ↔ W.wvs_val 1 = 0 := by
+  rw [nondegenerate_iff_unit_ne_top]
+  refine ⟨fun h => ?_, fun h => by rw [h]; simp⟩
+  have hidem : W.wvs_val 1 + W.wvs_val 1 = W.wvs_val 1 := by
+    have h2 := W.wvs_val_mul 1 1
+    rw [mul_one] at h2
+    exact h2.symm
+  generalize hv : W.wvs_val 1 = a at h hidem
+  induction a using ENat.recTopCoe with
+  | top => exact absurd rfl h
+  | coe n =>
+    have hn : n + n = n := ENat.coe_inj.mp hidem
+    have h0 : n = 0 := by omega
+    rw [h0]; rfl
+
+/-- **The control on the paragraph above: nondegeneracy does not buy `⊤`-exactly-at-`0`.** The
+    parity valuation on `ℤ` — `⊤` on the evens, `0` on the odds — satisfies every field of the class,
+    is nondegenerate, and still sends `2 ↦ ⊤` with `2 ≠ 0`.
+
+    So a nondegenerate `WheelValuationStructure` is **not** an `AddValuation`: nondegeneracy restores
+    `map_one` and leaves the ultrametric axiom absent, and a porthole valuation in the intended sense
+    is strictly stronger than both. Anonymous, so it declares nothing and owes no registry row. -/
+example : ∃ W : WheelValuationStructure ℤ,
+    @WVSNondegenerate ℤ W ∧ ∃ x : ℤ, x ≠ 0 ∧ W.wvs_val x = ⊤ := by
+  refine ⟨{ toCommRing := inferInstance
+            wvs_val := fun n => if n % 2 = 0 then ⊤ else 0
+            wvs_val_mul := ?_
+            wvs_val_zero := ?_ }, ⟨1, ?_⟩, 2, by norm_num, ?_⟩
+  · intro x y
+    have h : (x * y) % 2 = (x % 2) * (y % 2) % 2 := Int.mul_emod x y 2
+    rcases Int.emod_two_eq_zero_or_one x with hx | hx <;>
+      rcases Int.emod_two_eq_zero_or_one y with hy | hy <;>
+      rw [hx, hy] at h <;> norm_num at h <;> simp [h, hx, hy]
+  · norm_num
+  · show ¬ (if (1 : ℤ) % 2 = 0 then (⊤ : ℕ∞) else 0) = ⊤
+    norm_num
+  · show (if (2 : ℤ) % 2 = 0 then (⊤ : ℕ∞) else 0) = ⊤
+    norm_num
+
+/-! **Axiom footprint**, checked by § IX rather than asserted here. Six of the seven gauge
+declarations are axiom-free; `nondegenerate_iff_map_one` reports `[propext, Classical.choice,
+Quot.sound]` — and that footprint is carried by the STATEMENT, not the proof.
+⚠ The two `nondegenerate_iff_*` theorems are the measurement: same fact, same file, same style, only
+the second writing the `ℕ∞` numeral `0`. Measured 2026-09-12 in this pinned Mathlib — at `ℕ∞`,
+`(⊤ : ℕ∞) = ⊤`, `((n : ℕ) : ℕ∞) = n` and `a + b = a + b` are each axiom-free by `rfl`, while
+`(0 : ℕ∞) = 0` and `(1 : ℕ∞) = 1` by `rfl` each report the same triple. Scope: those five `rfl`s; no
+claim about which instance declaration carries it. `ZeroParadox/Ordinal/SyntacticCollapse.lean`
+records the same shape on `ℚ`. -/
 
 -- ============================================================
 -- § VIII. The Main Conjecture (Resolved)
@@ -557,57 +737,14 @@ rather than asserted here. (`WVSNondegenerate` is a `def`, so it carries no foot
 
 /-! ### Resolution
 
-This section is a documentation anchor only — there is no theorem object here. The conjecture
-that the ZP porthole forces the wheel axioms is now a theorem, formalized in `ZeroParadox/Algebra/WheelFrac.lean`
-(which cannot be imported here without an import cycle, hence the prose pointer rather than a
-re-export).
+A documentation anchor; no theorem object. The conjecture — that the ZP porthole forces the wheel
+axioms — is proved in `ZeroParadox/Algebra/WheelFrac.lean` (`instWheel`, `inf_ne_bot`), not
+importable here without a cycle; concretely for this carrier, `zpw_top_val_iff_inv_is_inf` (§VI).
 
-**What is proved (§V–VI):** For ZPWheelElem, the porthole condition and the wheel
-condition coincide — proved by `zpw_top_val_iff_inv_is_inf`:
-  val(x) = ⊤  ↔  winv(x) = ∞
-This is the core of the conjecture, concretely formalized.
-
-**The "infinitudes of zero" insight:** val(0) = ⊤ is not a free hypothesis in
-ZP — it is **motivated** by the self-referential structure ⊥ = {⊥} (the Quine atom, in the ZF+AFA
-metatheory). *(Not "forced": nothing in the Lean derives `wvs_val 0 = ⊤` from anything — it is an
-assumed class field, as § VII says and as the ZP-J addendum quoted there states. Corrected
-2026-08-02; the scope note at the head of this file says every `⊥ = {⊥}` here is metatheoretic. That
-correction recorded "forced" as **the one** carrier-level occurrence, which was itself wrong: § VII's
-overview said the equation "structurally requires" val(⊥) = ∞ — the same modality, left standing by
-the same pass. Corrected 2026-08-03. All nine occurrences re-read individually that day; the other
-seven are metatheory-scoped or hedged as conjectural and are correct as written.)*
-The ring's zero is simultaneously the lattice floor *and* the point where the
-valuation hits infinity. This structural motivation identifies *which* element
-plays the porthole role (wzero), but it does not construct the binary operation
-wmul. The "infinitudes of zero" argument closes the identification gap; it cannot
-close the construction gap.
-
-**Why the abstract statement is blocked:** ValuationStructure supplies
-`scale : L → L` (unary — "multiply by p"). `wmul : W → W → W` is binary.
-Arbitrary binary multiplication cannot be recovered from a single unary endomorphism
-without knowing what operation you are iterating. Ring structure is the missing
-hypothesis; the suggested path (WithTop L, wmul from selfApp) does not close.
-
-**The intended bridge:** `WheelValuationStructure` (§VII) — a commutative ring with
-multiplicative valuation satisfying wvs_val(0) = ⊤. From this, the wheel of
-fractions construction Wh(L) = (L × L)/~ yields a Wheel instance, and the porthole
-condition pins wzero. Wheel axioms follow from ring axioms + valuation axioms.
-**Read § VII-b before building on it:** the class as stated is **degenerately inhabited**
-(`wheelValuationStructure_always_inhabited`), so it adds **no constraint beyond the `CommRing`
-already assumed**, and anything built over the bare hypothesis that is not already true of every
-commutative ring is vacuous. The working results below take `[CommRing A]` and a
-multiplicative submonoid instead, and do not route through this class. A construction that
-genuinely needs a porthole valuation must assume `WVSNondegenerate` explicitly.
-
-**The construction, formalized:** see `ZeroParadox/Algebra/WheelFrac.lean`.
-`instWheel` proves that the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel`
-for any commutative ring `A` and multiplicative submonoid `S` — sorry-free and
-`Classical.choice`-free (`[propext, Quot.sound]`). The porthole `∞ ≠ ⊥` is
-`inf_ne_bot` (given `0 ∉ S`). The ZP `Wheel` typeclass is a faithful encoding of
-Carlström's Definition 1.1 (all eight axioms, with his two commutative-monoid axioms unbundled
-into 14 equational fields), so this is Carlström's wheel-of-fractions theorem, machine-verified —
-the Tier 3 universality result previously scoped as a substantial, non-near-term target.
--/
+Two gaps, and only one closes. "Infinitudes of zero" closes the IDENTIFICATION gap — which element
+plays the porthole role — leaving `wvs_val 0 = ⊤` an assumed class field, motivated and not forced
+(§VII). It does not close the CONSTRUCTION gap: `scale` is unary and `wmul` binary, so ring structure
+is the missing hypothesis (the `WithTop L` + `selfApp` route does not close). Read § VII-b first. -/
 
 -- ============================================================
 -- § IX. Purity Check
@@ -620,11 +757,17 @@ section PurityCheck
 #print axioms zpw_zero_ne_bot
 #print axioms zpwVal_zero_eq_top
 #print axioms zpwVal_inv_zero
--- § VII-b NO-GO gauge. All three are axiom-free; the § VII-b footprint block's claim is checked here
--- rather than asserted, which is the whole point of the correction recorded there.
+#print axioms zpw_top_val_iff_inv_is_inf
+-- § VII-b NO-GO gauge. The footprint block there asserts nothing; it is checked here.
+-- Six axiom-free, and `nondegenerate_iff_map_one` is the one that is not — read the two
+-- `nondegenerate_iff_*` lines together, they are the measurement that block describes.
 #print axioms degenerateWVS
 #print axioms wheelValuationStructure_always_inhabited
+#print axioms gauge_strong
 #print axioms degenerateWVS_not_nondegenerate
+#print axioms collapse_from_unit
+#print axioms nondegenerate_iff_unit_ne_top
+#print axioms nondegenerate_iff_map_one
 end PurityCheck
 
 end ZeroParadox

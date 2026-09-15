@@ -35,7 +35,8 @@ First, re-read the canonical sources for full context:
 **Do NOT say** the identity is "a modeling commitment," "offered," "one object we commit to," "partly
 committed," or "not proved." All of those present an ill-typed non-claim as a proposition awaiting a
 proof. This command previously carried exactly that framing and was corrected on 2026-07-19; if you find
-it again anywhere, it is stale. Authoritative statement: `CLAUDE.md` § "MC-1 status convention" and the
+it again anywhere, it is stale. Authoritative statement: `tools/process/naming-and-labels.md` § "MC-1 status convention"
+(CLAUDE.md carries the rule as R-NAMING, which has no section of that name) and the
 opening of `BOTTOMELEMENT.md`.
 
 **The standing rule (this is why the command exists):** never reference "bottom" with the bare word when

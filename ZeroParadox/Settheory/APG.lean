@@ -74,6 +74,11 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 - Mathlib.Combinatorics.Quiver.Path: directed graph paths
 -/
 
+/-! ⚠ Corrections to the header above, which `check_prose` freezes by content hash (2026-09-13):
+`decoration_unique` consumes `collect_val_ge` and never `collect_singleton`, and it gives a
+SUFFICIENT condition for uniqueness, not a characterization (no converse is proved). § IV settles
+periodic points of `scale`, not an APG cycle — the cyclic case is `cyclic_decoration_eq_bot` (§ VII'). -/
+
 namespace ZeroParadox
 
 open ZeroParadox ZeroParadox ZeroParadox ZPSemilattice
@@ -152,17 +157,18 @@ end APGBasics
 
 /-- A decoration universe: a type with ValuationStructure and a collect operation.
 
-    ValuationStructure provides scale, val, and the key axiom val_scale — which
-    is what closes both the k=1 and k>1 SCC cases. collect assembles a parent
-    vertex's value from the set of its children's values.
+    ValuationStructure provides scale and val with laws scale_bot, val_bot, val_unique, val_scale. ⚠ The cyclic case
+    `decoration_unique` uses (`cyclic_decoration_eq_bot`) consumes `val_unique` and
+    `collect_val_ge`, not `val_scale`; `val_scale` enters only through the scale^k lemmas
+    of § III–§ VII. collect assembles a parent vertex's value from the set of its children's values.
 
     Key constraints:
     - collect_singleton: collect {x} = scale x (links collect to the valuation structure)
 
     ZFSet is NOT a valid instance: Foundation forbids x ∈ x, which any cyclic APG requires.
-    OntologicalStates (ZeroParadox/Settheory/OntBridge.lean) has AbstractSelfApp but not ValuationStructure —
-    decoration of cyclic APGs specifically requires val_scale for the k>1 argument. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet (the only set-theory formalization) uses Foundation — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation and two axioms (collect_singleton, collect_val_ge), providing the structure the decoration-uniqueness proof consumes, without importing ZFSet or any axiomatic set theory. ⚠ NOT axiom-free: DecorationUniverse and decoration_unique each measure [propext, Classical.choice, Quot.sound], inherited from the required [ValuationStructure U] — the route is the ℕ∞ numeral in val_scale, pinned by the _VSlit/_VScast pair in ZeroParadox/Valuation/Scale.lean. ⚠ "Minimum" is unproved: the NO-GO gauge below shows this class is inhabited over EVERY ValuationStructure carrier.
+    OntologicalStates (ZeroParadox/Settheory/OntBridge.lean) has AbstractSelfApp but not ValuationStructure,
+    which this class takes as a binder. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet (the only set-theory formalization) uses Foundation — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation and two axioms (collect_singleton, collect_val_ge), providing the structure the decoration-uniqueness proof consumes, without importing ZFSet or any axiomatic set theory. ⚠ NOT axiom-free, and every attribution here was isolated by changing ONE constituent: DecorationUniverse reaches Classical.choice by TWO INDEPENDENT routes — its OWN ℕ∞ numeral, the + 1 in collect_val_ge, and the inherited [ValuationStructure U], whose own route is the numeral in val_scale (pinned by the _VSlit/_VScast pair in ZeroParadox/Valuation/Scale.lean). Neither alone accounts for it: with [ValuationStructure U] DELETED and val/scale passed as plain data the class still reports [propext, Classical.choice, Quot.sound]; respelling only its own numeral as ((1 : ℕ) : ℕ∞) makes it report no axioms; respelling only that numeral with the real binders kept leaves it tainted. decoration_unique carries the same three IN ITS STATEMENT — forall {U} [ZPSemilattice U] [ValuationStructure U], True already reports them while the same with [ZPSemilattice U] alone reports none — so the [ValuationStructure U] binder suffices by itself and the cost is NOT REMOVABLE BY ANY PROOF of that theorem. Its proof additionally CALLS Nonempty.some (fun h => Classical.choice h) and reaches choice via Set.ncard_pos and Set.ncard_lt_ncard, further routes to a cost the TYPE already incurred. Provenance and necessity are independent axes (ZeroParadox/AxiomProfile.lean § 0), and #print axioms follows the STATEMENT rather than the proof. ⚠ "Minimum" is unproved: the NO-GO gauge below shows this class is inhabited over EVERY ValuationStructure carrier.
 class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] where
   /-- A map `Set U → U`. ⚠ The two axioms below pin only the SINGLETON case and a lower bound; they
       do not require it to assemble a parent's value from its children's. -/
@@ -189,9 +195,9 @@ branch of `collect_val_ge` needs `val_scale` (plus `scale_bot` when `x = bot`), 
 /-! ## § III. val_iterate — The Key Lemma
 
     For any x ≠ ⊥ and k : ℕ, applying scale k times increases the valuation by k.
-    This is the iterated version of val_scale and is what makes ALL k-cycle cases
-    reduce to the same impossibility argument: a fixed-point equation would require
-    val x = val x + k, which is impossible for finite val. -/
+    This is the iterated version of val_scale, consumed by `scale_iterate_unique_fp` (§ IV):
+    a fixed point of scale^k would require val x = val x + k, impossible for finite val.
+    ⚠ Not the APG cyclic case — `cyclic_decoration_eq_bot` (§ VII') never forms scale^[k]. -/
 
 section ValIterate
 
@@ -228,7 +234,7 @@ theorem val_iterate (x : U) (hx : x ≠ bot) :
 
 end ValIterate
 
-/-! ## § IV. scale_iterate_unique_fp — k-Cycle Case Resolved -/
+/-! ## § IV. scale_iterate_unique_fp — Periodic Points of scale -/
 
 section ScaleIterate
 
@@ -237,9 +243,10 @@ variable {U : Type*} [ZPSemilattice U] [ValuationStructure U]
 /-- For any k ≥ 1: if scale^k(x) = x then x = ⊥.
     Proof: if x ≠ ⊥, then val(scale^k x) = val x + k > val x (by val_iterate).
     But scale^k x = x implies val(scale^k x) = val x — contradiction.
-    This resolves ALL k-cycle cases in APG decoration uniqueness:
-    composing k decoration equations around a k-cycle gives d(v) = scale^k(d(v)),
-    and this theorem immediately forces d(v) = ⊥. -/
+    ⚠ It settles an APG cycle only where d(v) = scale^k(d(v)) is already in hand. The class laws
+    relate `collect` to `scale` only through `collect_singleton`, so composing decoration equations
+    yields that when each child image on the cycle is a singleton (e.g. one child per vertex). The
+    general cyclic case is `cyclic_decoration_eq_bot` (§ VII'), which bounds with inequalities. -/
 theorem scale_iterate_unique_fp (k : ℕ) (hk : 0 < k) (x : U)
     (hfp : ValuationStructure.scale^[k] x = x) : x = bot := by
   by_contra hx
@@ -307,12 +314,13 @@ theorem pureSelfLoop_decoration_unique
 /-! ## § VII. k-Cycle Node Uniqueness -/
 
 /-- If a valid decoration satisfies d(v) = scale^k(d(v)) for some k ≥ 1, then d(v) = ⊥.
-    This is the SCC case: composing decoration equations around a k-cycle in the APG
-    gives exactly this hypothesis. The proof is an immediate corollary of
-    scale_iterate_unique_fp — no additional structure needed.
+    ⚠ `hcycle` is TAKEN, not derived, and `_hd` is unused. Through `collect_singleton`, composing
+    decoration equations produces it when each child image on the cycle is a singleton (e.g. one
+    child per vertex); for an arbitrary cycle use `cyclic_decoration_eq_bot` (§ VII'). The proof is an immediate
+    corollary of scale_iterate_unique_fp.
 
     The valuation argument in full:
-      d(v) = scale^k(d(v))                     [from composing k decoration equations]
+      d(v) = scale^k(d(v))                     [hypothesis hcycle]
       val(scale^k(d(v))) = val(d(v)) + k        [val_iterate, if d(v) ≠ ⊥]
       val(d(v)) + k = val(d(v))                 [from d(v) = scale^k(d(v))]
       impossible for finite val                  [k ≥ 1]
@@ -412,6 +420,14 @@ theorem cyclic_decoration_eq_bot
       have h1 : m ≥ k + 1 := by exact_mod_cast hge1
       have h2 : k ≥ m + p.length := by exact_mod_cast hge2
       omega
+
+-- Statement: a cyclic vertex receives the order bottom ⊥ AND its valuation is ⊤ — both charts of
+-- one vertex (finite period, infinite depth). One-way: nothing here fixes an acyclic vertex's value.
+example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure U]
+    [DecorationUniverse U] (d : V → U) (hd : IsDecoration d) (v : V) (hcyc : HasSelfCycle v) :
+    d v = bot ∧ ValuationStructure.val (d v) = ⊤ := by
+  have h := cyclic_decoration_eq_bot d hd v hcyc
+  exact ⟨h, by rw [h]; exact ValuationStructure.val_bot⟩
 
 /-! ## § VIII. Acyclic Vertex Uniqueness (superseded by § IX)
 

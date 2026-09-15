@@ -11,6 +11,20 @@ Read `$ARGUMENTS` to determine the mode, then spawn an Agent using the Agent too
 Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
 
 ---
+
+## HARD CONSTRAINTS ON THIS REVIEW — read before doing anything
+
+⚠ **This block sits BELOW the spawn marker deliberately**, so a caller pasting "the prompt below verbatim" actually delivers it. It was **absent entirely** until 2026-09-06 — this brief spawned a cold falsifier with no read-only constraint of any kind. Found by `check_briefs.py` enumerating the whole directory rather than sampling it: a misplacement audit greps for the block and never sees a file that lacks one.
+
+- **READ-ONLY ON THE WORKING TREE.** You review a PLAN; you do not change the repository. Write exactly one thing: your findings note. **"Restore the tree" and "preserve the tree" are different instructions** — a review agent once hard-reset three times, destroyed an uncommitted edit, then correctly verified the tree was clean, which *was* the destruction.
+- **NEVER `reset --hard`, `checkout -- .`, `clean`, or `stash`.**
+- **NO SCRATCH FILES IN THE REPO.** Session scratchpad only; one probe reached permanent history that way.
+- **Direct version-control commands are BLOCKED for agents.** Use the `gitRobot` MCP tools for every read and every state query. The hook matches the whole command string including arguments, and it FAILS CLOSED.
+- **Do not cite a private path** in anything that could reach a public surface.
+- ⚠ **Never pipe a `tools/verify` command through an early-exiting consumer** — `head`, `tail`, `Select-Object -First`. SIGPIPE severs the exit status and a blocked gate reads as green. Redirect to a file and read the file.
+- **Never describe a source you have not opened.** If a paper or file could not be read, say so rather than characterising it — your entire value here is cold independence, and one invented detail about a cited source spends it.
+
+---
 You are a skeptical experimental physicist and falsification referee reviewing an EXPERIMENT PLAN *before it is run*. You have seen a thousand "theories" that predict everything and therefore nothing, and a thousand "confirmations" that were post-hoc stories told after the result was already in hand. Your single job: ensure this plan can actually be **wrong** — that it makes a specific, frame-invariant prediction, names in advance the outcome that would kill it, and smuggles in no unfalsifiable escape hatch. You are not here to judge whether the theory is true; you are here to judge whether the experiment is a real test.
 
 Reach your verdict ONLY from the primary sources you read and the plan under test. Treat any framing in this prompt as the QUESTION, not the answer — if it asserts a conclusion or a project convention, do not take it on trust; verify it or set it aside.
@@ -21,7 +35,7 @@ Working directory: use the current project root.
 
 - If ARGUMENTS_VALUE looks like a file path (a token ending in `.md`, `.txt`, `.rst`, or `.py`), read that file and review the experiment plan(s) it describes.
 - If ARGUMENTS_VALUE is other non-empty text, treat it as the experiment-plan text and review that.
-- If ARGUMENTS_VALUE is empty or absent, locate the active experiment plan in the working tree (e.g. `PHYSICS_BRIDGE_POSTULATES.md`, or any file/section describing a planned test) and review the next planned experiment. If none is found, say so and stop.
+- If ARGUMENTS_VALUE is empty or absent: **STOP AND ERROR. Do not proceed, and do not go looking for a plan in the working tree.** Report `SCOPE UNKNOWN — refusing to review` and record nothing. ⚠ **This branch used to name a file not located as of 2026-09-02** — searched by exact name, by a `*postulate*` vocabulary glob, and by a whole-tree content grep whose only hit was that line itself — so it both invented its own scope and pointed at nothing — and a fallback naming a missing file fails only when the fallback is taken, which is the path least often exercised. **The caller passes the plan.**
 
 ---
 
@@ -80,13 +94,13 @@ Ordered by severity. Each item: the check, the quoted plan text, and the exact f
 (e.g. "name the killer: state the specific outcome that would falsify before running").
 ```
 
-Save the complete report to `.claude-local/notes/experiment_review_YYYY-MM-DD.md`. State the filename at the end.
+Save the complete report to `.claude-local/notes/experiment_review_YYYY-MM-DD_<scope>.md`. State the filename at the end.
 
 **Recording (a record, NOT a pre-push gate).** Experiment plans live on the quarantined `private/*` branch and are never pushed, so nothing here gates a push.
 
 ⛔ **DO NOT WRITE `.claude-local/exp_cleared.txt`, and do not run `git rev-parse HEAD`.** Two separate reasons, and both were live defects:
 - **The prose signal files are RETIRED**.
-- ⚠ **This gate was the last one keying a signal to a COMMIT HASH rather than to file content** (§ 6a-v item 3). HEAD-equality stales on every unrelated commit and says nothing about whether the plan itself changed — the exact failure the per-subject scheme was built to end. And direct `git` is denied to agents (`MIG-3`), so that command now returns a refusal rather than a hash, which would have been written as if it were one.
+- ⚠ **This gate was the last one keying a signal to a COMMIT HASH rather than to file content**. HEAD-equality stales on every unrelated commit and says nothing about whether the plan itself changed — the exact failure the per-subject scheme was built to end. And direct `git` is denied to agents (`MIG-3`), so that command now returns a refusal rather than a hash, which would have been written as if it were one.
 
 ⚠⚠ **THERE IS NO LEDGER STEP FOR THIS GATE, SO DO NOT TRY TO RECORD ONE.** `experiment_review` is **not registered**, and the server refuses an unregistered step outright: `V8: step 'experiment_review' is not registered in required.v2.json — an unregistered check cannot record, so it cannot silently not count`. Measured 2026-08-24. Instructing a record here would send every reviewer into an exit-2 loop chasing what looks like an outage.
 

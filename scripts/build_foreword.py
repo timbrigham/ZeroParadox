@@ -1,5 +1,7 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.16, revised August 2026)
+Zero Paradox — Foreword PDF Builder (v2.18, revised September 2026)
+v2.18: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The commitments table row read "Retired axiom -> Theorem T-SNAP ... Previously an axiom; now derived as Theorem T-SNAP", which retired the whole of AX-1; its type cell and statement now carry both halves. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the AX-1 row credited the shape to 'the L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
+v2.17:CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. The commitments table row, the ZP-J summary and both commitment paragraphs; the ZP-J summary also follows the CC-2 role convention (whatever fills the Quine-atom role is bottom), not 'the Quine atom Q = {Q} is provably identical to bottom' in a lattice with 'AFA grounding'. ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). The ZP-J summary now says 'not forced' with that reason. GATE ROUND 2 (ordinary, carried): the 'not forced' reason needs its scope - on a ONE-point lattice every sequence starts at bottom, so the countermodel is stated for a lattice with a second point, and the OntBridge.lean example now also shows the start is not a Quine atom.
 v2.16: OCCUPANCY OVERCLAIM RETRACTED, and a WALL PRESENTED AS A GAP (bedrock; editorial + adversary round 6). Two sites, neither reached by the ZP-I v1.16-v1.18 arc even though this document is a general reader's first contact. (1) "converges, at its limit, to something that fills the bottom role again" asserted OCCUPANCY as reached. T-IZ proves convergence to 0 in Q2; that the limit is a thing filling the bottom role is a COMMITMENT, and not merely unproved - ZPSemilattice Q_[2] does not synthesize, so the join-identity is not statable of the limit at all. The proved half, that anything filling the role IS the bottom already there, is kept and now stands alone. (2) "whether they are all one object in the deepest sense remains, honestly, an identification we make rather than a theorem we have closed" presented a WALL as an open question. An equality across distinct categories is not a well-formed proposition: CLAIMS.md retires that identity as ill-typed and the members are PROVABLY DISTINCT. The question is retired, not outstanding, and the walls between the family's members are themselves theorems.
 v2.14: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
 v2.13: T-COMP overclaim corrected (bedrock). "a four-way equivalence connecting the Quine atom, bottom, the join-identity element, and Kleene's fixed point" -> a three-way equivalence, with Kleene's fixed point named as an assumption of the KleeneStructure class rather than a fourth clause; "DA-1 is closed concretely ... grounding the framework in the theory of computation" -> da1_closed_concrete proves the structural half only, and the step to self-execution is a commitment, not a consequence.
@@ -58,7 +60,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.16'
+VERSION = '2.18'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -126,9 +128,11 @@ def commitments_table():
         ('DP-1',  'Design Commitment',
          'Orthogonality. Clopen separation in Q₂ is represented by orthogonality '
          'in H. Chosen, not derived. Stated explicitly.'),
-        ('AX-1',  'Retired axiom → Theorem T-SNAP',
-         'Binary Snap Causality. Previously an axiom; now derived as Theorem T-SNAP via '
-         'the L-RUN / TQ-IH / DA-1 chain in ZP-C and ZP-E.'),
+        ('AX-1',  'Retired: shape → Theorem T-SNAP; occurrence stated separately',
+         'Binary Snap Causality. Previously an axiom, now retired. Its content was split in two: the shape of the Snap '
+         'is proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no axioms), and that the Snap occurs '
+         'is stated separately, as the occurrence commitment, which ZP-E\'s DA-1 argues for. '
+         '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.)'),
         ('MC-1',  'The bottom family (not a commitment)',
          'The four domain bottoms (ZP-A semilattice, ZP-B p-adic topology, ZP-C information theory, '
          'ZP-D Hilbert space) form one family, each a member characterized by shared criteria and the '
@@ -136,10 +140,11 @@ def commitments_table():
          'correspondence is realized in Lean (mc1_correspondence, the four functors in ZP-H). The former '
          'numerical identity — that the four are one object — is retired as ill-typed (x = y across '
          'distinct categories is not a well-formed proposition); the members are provably distinct (the walls).'),
-        ('CC-1',  'Derived (was a Conditional Claim)',
+        ('CC-1',  'Conditional Claim (restated in ZP-J, not forced)',
          'S₀ = ⊥. The initial state equals the null state. T2 establishes ⊥ ≤ S₀ unconditionally; '
-         'the strengthening to equality is now derived, not stipulated — closed via ZP-J cc1_derived '
-         '(axiom-free, Lean) in any AFAStructure lattice.'),
+         'the strengthening to equality is a modelling commitment. ZP-J restates it: in any AFAStructure '
+         'lattice a sequence starts at a Quine atom exactly when it starts at ⊥ (cc1_derived, t_exec_iff; '
+         'axiom-free, Lean), so the choice of starting point is expressed through the Quine-atom role, not removed.'),
         ('CC-2',  'Forced Metatheoretic Commitment',
          '⊥ = {⊥}. The null state is self-containing — a Quine atom under ZF+AFA. '
          'The metatheoretic choice of AFA over Foundation is not free: ⊥ = {⊥} is a member of itself, '
@@ -323,9 +328,9 @@ def build():
             'is structurally necessary by showing precisely where snap-geometry fails.',
             S['body']),
         Paragraph(
-            'The self-reference layer (ZP-J) proves T-EXEC: in any ZP-A lattice with '
-            'AFA grounding, the Quine atom Q = {Q} is provably identical to ⊥, axiom-free. '
-            'CC-1 (S₀ = ⊥) follows as a derived theorem given that S₀ is identified with the Quine atom. The layer also formalises the '
+            'The self-reference layer (ZP-J) proves T-EXEC: in any ZP-A lattice carrying the '
+            'AFAStructure typeclass, whatever fills the Quine-atom role (the lattice encoding of the set Q = {Q}) is ⊥, axiom-free. '
+            'CC-1 (S₀ = ⊥) is restated as an equivalence, not forced: a sequence starts at a Quine atom exactly when it starts at ⊥, and on any lattice with a second point a valid sequence can start above ⊥. The layer also formalises the '
             'ZF+Foundation / ZF+AFA relationship and proves APG decoration uniqueness — every '
             'finite self-referential graph has at most one consistent decoration into the lattice.',
             S['body']),
@@ -359,7 +364,7 @@ def build():
             'framework is unusually explicit about its own. As of the current version, this '
             'framework introduces no novel axioms. Stated explicitly: one substantive modeling '
             'commitment (AX-B1), two structural commitments grounded in prior layers (AX-G1, AX-G2), '
-            'two methodological principles, and one design commitment. CC-1 is now derived (ZP-J), CC-2 '
+            'two methodological principles, and one design commitment. CC-1 is a Conditional Claim that ZP-J restates rather than forces, CC-2 '
             'is a Forced Metatheoretic Commitment, and MC-1 names the bottom family rather than a commitment:',
             S['body']),
         Paragraph(
@@ -499,7 +504,7 @@ def build():
         Paragraph(
             'The open commitments are honest. No novel axioms are introduced. '
             'One substantive modeling commitment (AX-B1), two structural commitments, two principles, '
-            'and one design commitment are stated; CC-1 is derived, CC-2 is a Forced Metatheoretic '
+            'and one design commitment are stated; CC-1 is a Conditional Claim restated in ZP-J, CC-2 is a Forced Metatheoretic '
             'Commitment, and MC-1 is the bottom family. The framework does not launder their status. '
             'AX-B1 — binary existence — is the framework&#8217;s one substantive modeling commitment: '
             'that existence is discrete rather than a continuum of partial states. The decide proof '

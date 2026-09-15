@@ -200,6 +200,41 @@ theorem orbit_ne_bot_and_val_free (x : L) (hx : x ≠ ValBridge.bot) (k : ℕ) :
       push_cast
       ring
 
+/-! ### The motion is ONE-WAY on any carrier that HAS a valuation-`0` point
+
+The scale orbit climbs the valuation. The two results below say it never climbs back to the `0`
+layer — ⚠⚠ **GIVEN a point at valuation `0`, a HYPOTHESIS of both and not a property of the class**;
+`unit_scale_is_bijective` (§ VI) is the carrier where it fails.
+⚠ **DIRECTION, and `BOTTOMELEMENT.md` records this mis-sort as a correction already made once.**
+`val bot = ⊤`, so climbing valuation is motion TOWARD the floor: the INBOUND (ν) face, sibling of
+`c3_irreversible`. NOT `t_snap_irreversible`, the OUTBOUND (μ) face. Different arrows. -/
+
+/-- **The valuation-`0` layer is not in the image of `scale`.** A point of valuation `0` has no
+    scale-predecessor: `bot` maps to itself and carries `⊤`, and any other predecessor would force
+    `0 = val y + 1`, which `ℕ∞` refuses. -/
+theorem no_scale_predecessor_at_val_zero (x : L) (hx : ValBridge.val x = 0) :
+    ∀ y : L, ValBridge.scale y ≠ x := by
+  intro y hy
+  by_cases hyb : y = ValBridge.bot
+  · subst hyb
+    rw [ValBridge.scale_bot] at hy
+    rw [← hy, ValBridge.val_bot] at hx
+    exact absurd hx (by simp)
+  · have hv := ValBridge.val_scale y hyb
+    rw [hy, hx] at hv
+    exact absurd hv.symm (by simp)
+
+/-- `Statement:` given any point of valuation `0`, `scale` is not surjective.
+    `Reading:` **INVARIANT** — the one-wayness at the valuation layer, CONDITIONAL on that
+    hypothesis. A surjective `scale` would be invertible along its orbit, which is the reversibility
+    the framework denies. ⚠ Where the hypothesis fails so does the conclusion —
+    `unit_scale_is_bijective`. -/
+theorem scale_not_surjective (x : L) (hx : ValBridge.val x = 0) :
+    ¬ Function.Surjective (ValBridge.scale (L := L)) := by
+  intro hsurj
+  obtain ⟨y, hy⟩ := hsurj x
+  exact no_scale_predecessor_at_val_zero x hx y hy
+
 /-- **The gauge.** A `ValBridge` carrier holding any point other than `bot` is infinite: the scale
     orbit of that point embeds ℕ. -/
 theorem valBridge_forces_infinite [Nontrivial L] : Infinite L := by
@@ -235,6 +270,13 @@ theorem valBridge_bool_isEmpty : IsEmpty (ValBridge Bool) := no_valBridge_of_fin
   val_bot := rfl
   val_unique := fun x _ => Subsingleton.elim x ()
   val_scale := fun x hx => absurd (Subsingleton.elim x ()) hx
+
+/-- `Statement:` on `trivialValBridge`, `scale` IS bijective.
+    `Reading:` **INVARIANT** — the no-go above: `val ≡ ⊤` leaves no valuation-`0` point, so the
+    hypothesis is unsatisfiable and `scale = id`. -/
+theorem unit_scale_is_bijective :
+    Function.Bijective (@ValBridge.scale Unit trivialValBridge) :=
+  Function.bijective_id
 
 /-- The same gauge for `ValuationStructure`, through the `toValBridge` instance of § V — the
     ZPSemilattice-constrained class inherits it with no separate argument. -/
@@ -345,10 +387,13 @@ open ZeroParadox
 -- § VI, the NO-GO gauge.
 #print axioms scale_ne_bot_free
 #print axioms orbit_ne_bot_and_val_free
+#print axioms no_scale_predecessor_at_val_zero
+#print axioms scale_not_surjective
 #print axioms valBridge_forces_infinite
 #print axioms no_valBridge_of_finite
 #print axioms valBridge_bool_isEmpty
 #print axioms trivialValBridge
+#print axioms unit_scale_is_bijective
 #print axioms valuationStructure_forces_infinite
 #print axioms nonempty_valBridge_of_infinite
 #print axioms nonempty_valBridge_of_inhabited_subsingleton

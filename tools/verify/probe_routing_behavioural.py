@@ -111,9 +111,34 @@ def _prepush_exit(wt):
     check(s) failed — %d routing, %d other" — so the number that answers the question is right
     there in the output the enforcement itself emits. A router that stops enforcing drives it to
     zero; nothing else does."""
+    # ⭐⭐ THE NESTED RUNS DO NOT PAY THE ADVISORY INTERPRETATION LAYER. Measured 2026-09-07 in a
+    # seeded worktree, in the invocation this function actually uses:
+    #     prepush --ranges HEAD~1..HEAD, agent gate ON  : 119 s
+    #     prepush --ranges HEAD~1..HEAD, agent gate OFF :   1 s
+    # 118 of 119 seconds, across the 9 nested runs this probe makes — ~1084 s of an 1800 s pre-push
+    # budget the run was exceeding at exit 124.
+    #
+    # ⚠ IT IS SAFE BECAUSE THE LAYER CANNOT MOVE A VERDICT, AND THAT WAS MEASURED RATHER THAN READ:
+    # `agent_gate.run()` always returns 0 and `batch.py` deliberately does not increment `bad`, so
+    # skipping it cannot touch the exit code half of `_prepush_blocks`'s conjunction. The whole probe
+    # was then run with the gate off and returned **17 of 17 behaved as required**, zero point still
+    # `routing=0 exit=0`, with the four EXIT_NEEDLE rows — the ones whose environment this changes —
+    # among the passes.
+    #
+    # ⚠⚠ AND THE JUDGEMENT WAS NOT MEANINGLESS, IT WAS INVARIANT — the sharper reason and not the
+    # one first written here. This probe mutates the ROUTER (`ship.py`, `batch.py`), never the
+    # corpus, so `check_encoding`, `check_moved` and `check_figures` read a corpus the mutations do
+    # not touch and legitimately answer "earned" every time. **We are declining to re-derive a
+    # constant nine times, not discarding a verdict.**
+    #
+    # ⛔ SCOPED TO THE NESTED RUNS ONLY. The TOP-LEVEL layer still runs once per pre-push, where its
+    # judgement is novel. ⚠ The 17-of-17 run had the gate off EVERYWHERE — a strictly MORE aggressive
+    # configuration than this — so it bounds this change from above and is not a measurement of it.
+    # ⚠ The skip is DISCLOSED: `batch.py:436` prints `agent gate skip — interpretation layer NOT run`.
     p = subprocess.run([sys.executable, os.path.join(wt, "tools", "verify", "batch.py"),
                         "prepush", "--ranges", "HEAD~1..HEAD"],
-                       capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=wt)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=wt,
+                       env={**os.environ, "ZP_AGENT_GATE": "0"})
     out = p.stdout + p.stderr
     _assert_reached(out)
     m = re.search(r"push check\(s\) failed\s*[—-]\s*(\d+)\s+routing", out)
@@ -166,7 +191,16 @@ def _prepush_blocks(wt):
 # ⚠⚠ THE OBSERVABLE MUST NAME THE ENFORCEMENT ITSELF. These are `enforce_prepush_verdict`'s own
 # `die()` strings and `cmd_prepush`'s success line — the only outputs that exist BECAUSE the
 # enforcement ran. Anything printed earlier proves nothing about it.
-_ENFORCE_DIE = ("push check(s) failed", "push verdict incomplete")
+# ⚠⚠ `RLYB4-C2`: THE THIRD STRING WAS MISSING FOR AS LONG AS IT TOOK A `/rely` ROUND TO NOTICE.
+# `enforce_prepush_verdict` gained `push verdict INCONSISTENT` on 2026-09-05 (the display-vs-record
+# agreement check) and this tuple was not updated with it. Consequence, measured: in any state where
+# the agreement check is the thing that fires, `_assert_reached` saw none of its needles and raised
+# *"probe baseline produced NO output that only enforce_prepush_verdict can emit"* — so every
+# mutation case that needed a failing NON-routing leg was unsatisfiable by construction. The author
+# who added the message also added two mutation cases for it and ran neither.
+# ⭐ WHEN YOU ADD A `die()` TO THE ENFORCEMENT, ADD ITS STRING HERE IN THE SAME EDIT. This tuple is
+# the probe's only evidence that the code under test was reached at all.
+_ENFORCE_DIE = ("push check(s) failed", "push verdict incomplete", "push verdict INCONSISTENT")
 # ⚠ `prepush PASS` IS *NOT* ENFORCEMENT-EXCLUSIVE, and saying so would be the same mistake this
 # check exists to catch. Measured by /rely 2026-08-25: it is printed four lines AFTER
 # `enforce_prepush_verdict` returns, so with the enforcement call deleted `_assert_reached` does
@@ -181,7 +215,7 @@ def _assert_reached(out):
     ⚠⚠ THE FIRST VERSION OF THIS CHECK WAS ITSELF DEFEATED, WHICH IS THE WHOLE LESSON. It looked
     for `"routing:"` / `"/rely"` — both printed by `report.plan()` BEFORE any routing happens — so
     it could only ever fire on an import crash. Measured by /rely 2026-08-25: with
-    `enforce_prepush_verdict(bad)` DELETED FROM THE PROGRAM, `_prepush_exit` still reported BLOCKS
+    `enforce_prepush_verdict()` DELETED FROM THE PROGRAM, `_prepush_exit` still reported BLOCKS
     and the probe still printed `13 of 13`, because an unguarded `reviewed.get` raised
     `AttributeError` and the traceback exited 1 — the SAME code the enforcement exits.
 
@@ -528,19 +562,50 @@ def mutations(ship, batch):
         # answer. Measured 2026-08-24: the mutation below took prepush to exit 0 / "prepush PASS"
         # under live FAIL rows while guards printed 81/81 ok and this probe printed 11 of 11.
         # Both REQUIRE `BLOCKS`: the enforcement must survive the caller trying to drop it.
-        # MUST STAY BLOCKING: annihilating the caller's own count cannot hide a ROUTING failure,
-        # because that count comes from the registry and never passes through this argument. This is
-        # the property attempt six actually buys, stated so it can be measured rather than asserted.
-        ("RLY28-1b caller annihilates the inline count", batch,
-         lambda s: s.replace("    enforce_prepush_verdict(bad)",
-                             "    enforce_prepush_verdict(bad * 0)"),
+        #
+        # ⚠⚠ `RLY28-1b` WAS RETIRED HERE BY `B4`, AND RETIRING IT IS THE EVIDENCE, NOT A GAP.
+        # It mutated `enforce_prepush_verdict(bad)` to `(bad * 0)` and required BLOCKS, with the
+        # comment "annihilating the caller's own count cannot hide a ROUTING failure". Every word
+        # of that was true and it tested the ONE leg that was already safe: `bad` also carried
+        # purity, ssot, pdf coupling, prior-art attribution and both review signals, and `* 0`
+        # silenced all six. The case is now UNEXPRESSIBLE because the function takes no argument
+        # and no accumulator exists to annihilate — re-adding it would only raise `NameError` and
+        # "block" on a crash, which is a control passing for the wrong reason.
+        #
+        # ⭐ WHAT REPLACES IT ATTACKS THE NEW SURFACE. With every leg recording itself, the way to
+        # re-open the hole is no longer to zero a number — it is to quietly shrink the set of steps
+        # that MUST report, so a deleted write stops failing closed. That is one token, it looks
+        # like tidying, and `guards.py`'s independently-written expected set is what refuses it.
+        # MUST GO RED.
+        ("B4       `_EXPECTED` quietly loses a gating leg", batch,
+         lambda s: s.replace(
+             '_EXPECTED = ("routing", "purity", "ssot", "pdf_coupling", "prior_art_attrib")',
+             '_EXPECTED = ("routing", "purity", "ssot", "pdf_coupling")'),
+         "push verdict registry", "FAIL"),
+        # ⚠⚠ `RLYB4-1` — THE VALUE HALF, AND IT IS HERE BECAUSE A `/rely` ROUND BROKE `B4` WITH IT
+        # ON THE DAY `B4` LANDED. `_EXPECTED` checks that every leg is PRESENT and checks only
+        # `routing`'s VALUE, so annihilating a leg's recorded count leaves the row present holding a
+        # zero it did not earn. Measured: this exact mutation printed `purity FAIL SYNTHETIC`
+        # directly above `prepush PASS`, with `guards.py` green on all six registry rows — the
+        # 2026-08-23 photograph reproduced against the fix written for it.
+        # MUST STAY BLOCKING: `display_fail` tallies what reached the SCREEN, so a recorded zero now
+        # disagrees with a displayed FAIL and `enforce_prepush_verdict` refuses on the mismatch.
+        ("RLYB4-1  producer annihilates its own recorded count", batch,
+         lambda s: s.replace("        verdict_record(key, 0 if ok else 1)",
+                             "        verdict_record(key, (0 if ok else 1) * 0)"),
+         EXIT_NEEDLE, "BLOCKS"),
+        # The other half of the same property: drop the DISPLAY tally instead of the record. It must
+        # fail closed in this direction too, or the agreement check is a one-way ratchet that a
+        # single deletion walks past.
+        ("RLYB4-1b the display tally is dropped", batch,
+         lambda s: s.replace("        if not ok:\n            display_fail(key)\n", "        pass\n"),
          EXIT_NEEDLE, "BLOCKS"),
         # MUST GO RED: deleting the enforcement outright is the one consumer-side move left, and the
         # AST row is what makes it loud. ⚠ Judged on the guards ROW, not the exit code — a deleted
         # enforcement genuinely does let prepush exit 0, so "still blocks" is not achievable here and
         # demanding it would be a control that can never pass.
         ("NEUTER   cmd_prepush discards the enforcement call", batch,
-         lambda s: s.replace("    enforce_prepush_verdict(bad)", "    pass"),
+         lambda s: s.replace("    enforce_prepush_verdict()", "    pass"),
          "prepush enforces the verdict", "FAIL"),
 
         # ⚠⚠ RLY36-1, AND THESE TWO ARE THE REASON `_prepush_blocks` IS A CONJUNCTION. Both break
@@ -563,9 +628,9 @@ def mutations(ship, batch):
         # the brief. The unit of that check is a name; the unit of the claim is whether the push is
         # refused.
         ("RLY36-1a consumer swallows the refusal (try/except SystemExit)", batch,
-         lambda s: s.replace("    enforce_prepush_verdict(bad)",
+         lambda s: s.replace("    enforce_prepush_verdict()",
                              "    try:\n"
-                             "        enforce_prepush_verdict(bad)\n"
+                             "        enforce_prepush_verdict()\n"
                              "    except SystemExit:\n"
                              "        pass"),
          EXIT_NEEDLE, "PASSES"),

@@ -1,0 +1,36 @@
+# Paths that are SESSION STATE, not content. Never recorded as a verdict SUBJECT.
+#
+# Repo-relative paths, one per line, EXACT MATCH ONLY. No prefixes, no globs, no directories.
+#
+# ⚠⚠ WHY THIS EXISTS — `ARC-2b` / `D1M-1`, and it blocked two `D1` remediations before anyone
+# looked at the subject set. A file that is legitimately DIRTY in one checkout and CLEAN in another
+# makes the same checker, over the same content, record two different subject sets:
+#
+#     carrier's main repo   gate_round.json fenced as "modified"   471 subjects
+#     authoring worktree    gate_round.json clean, so included     472 subjects
+#
+# Two records at one basis with different payloads, so `V11` refuses instead of deduping, the
+# refusal becomes a checker exit code, and a merge is blocked over a tree with nothing wrong in it.
+# Excluding the path UNCONDITIONALLY — dirty or clean — makes both checkouts agree, which is the
+# whole fix. It is NOT "exempt when dirty"; that would leave the divergence exactly as it was.
+#
+# ⚠ EXACT MATCH IS LOAD-BEARING. `vendored.is_vendored` once matched `/Vendored/` at ANY depth, so
+# creating `ZeroParadox/Order/Vendored/Probe.lean` exempted a file from all four checkers. A path
+# list that matches loosely is a self-exemption route wearing a fix. One line, one file, no
+# substring test.
+#
+# ⛔ THIS IS NOT AN EXEMPTION FROM BEING CHECKED. The checkers still READ these files — encoding,
+# prose and the rest all apply, and a BOM in `gate_round.json` still blocks. What is excluded is
+# recording a VERDICT SUBJECT about them, because a verdict binds `(step, path, git_blob_id)` and
+# the blob of a session-state file is an accident of when someone last ran a counter.
+#
+# ⚠⚠ CONSOLIDATION OWED — this is the FOURTH declaration of one fact and is offered as the place
+# the other three collapse ONTO, not as a fifth copy. gitRobot declares the same set three times:
+#   engine.py `_ARC_STATE`            the commit guard's `_require_clean` carve-out
+#   engine.py `_EXPECTED_LOCAL`       `carried_forward` classification
+#   worktree_reaper.v1.json           `session_state`, the 48h reaping horizon
+# Until they read this file, a path added here must be added there too, and that is exactly the
+# "requires someone to be religious about it" shape this project has measured failing. Raised with
+# mcpdev2 2026-09-13; the consolidation spans both repos and is Tim's call.
+
+gate_round.json

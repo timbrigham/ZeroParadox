@@ -18,7 +18,7 @@ The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap 
 
 **ZP-G** (category theory) → **ZP-H** (categorical bridge) — self-contained; depends on ZP-E conceptually but not formally.
 
-Each formal document has a paired illustrated companion for general readers. AX-G1 and AX-G2 are the two structural commitments of ZP-G's categorical layer. Neither is a novel commitment: AX-G1 is grounded in ZP-A's bottom element ⊥; AX-G2 follows from ZP-A antisymmetry and ZP-B C3 (topological irreversibility). ZP-G is self-contained by design and states them explicitly within that layer. AX-B1 (binary/discrete existence) is the framework's **one substantive modeling commitment** (discrete Boolean existence, not a continuum of partial states) — do NOT call it "directly verifiable / not a novel commitment" (reclassified 2026-07-15): the `decide` proof (`ax_b1_distinct`) only checks the two states are distinct *given* the two-element type, not the choice of a discrete alphabet over a continuum. The ZP-C forcing lemmas (`pmf_subsingleton_isPure` / `binaryState_exhaustive`, `Information/Surprisal.lean`) discharge the no-half-state worry (leaving ⊥ needs a second outcome) but force only the ≥2-outcome lower bound; the residual substantive commitment is that the outcome space is DISCRETE, not a continuum - which those lemmas do not eliminate and which the reals lack (the snap fails there, `f_snap_impossible`). See the CLAIMS AX-B1 row. AX-1 (Binary Snap Causality) is now Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom.
+Each formal document has a paired illustrated companion for general readers. AX-G1 and AX-G2 are the two structural commitments of ZP-G's categorical layer. Neither is a novel commitment: AX-G1 is grounded in ZP-A's bottom element ⊥; AX-G2 follows from ZP-A antisymmetry and ZP-B C3 (topological irreversibility). ZP-G is self-contained by design and states them explicitly within that layer. AX-B1 (binary/discrete existence) is the framework's **one substantive modeling commitment** (discrete Boolean existence, not a continuum of partial states) — do NOT call it "directly verifiable / not a novel commitment" (reclassified 2026-07-15): the `decide` proof (`ax_b1_distinct`) only checks the two states are distinct *given* the two-element type, not the choice of a discrete alphabet over a continuum. The ZP-C forcing lemmas (`pmf_subsingleton_isPure` / `binaryState_exhaustive`, `Information/Surprisal.lean`) discharge the no-half-state worry (leaving ⊥ needs a second outcome) but force only the ≥2-outcome lower bound; the residual substantive commitment is that the outcome space is DISCRETE, not a continuum - which those lemmas do not eliminate and which the reals lack (the snap fails there, `f_snap_impossible`). See the CLAIMS AX-B1 row. AX-1 (Binary Snap Causality) is retired (Tim, 2026-09-14). Its content was split in two: the shape of the snap is proved, as Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom — and that the snap occurs is stated separately, as the occurrence commitment (`tsnap_holds_but_nothing_moves`).
 
 ## Four-Fingerprint Scan — Decision Log Requirement
 
@@ -36,7 +36,7 @@ This log is the authoritative record of what has been reviewed and why. Future s
 
 ## Communication Quality Feedback
 
-During working sessions, apply the Communication Quality Rubric to evaluate Tim's statements about the framework in real time. Flag anything scoring **7 or below** on the composite scale (35% terminological accuracy, 35% structural accuracy, 15% consistency, 15% clarity). The full rubric with scoring tables and calibration notes lives at `.claude-local/communication_quality_rubric.md`. Key terms requiring extra care: ⊥ (three-way identification), T-SNAP (theorem, not axiom), DA-1 (derived proposition, conditional on DP-2), DP-2 (grounded in D7 — not freely chosen), CC-1/CC-2 (both now derived via ZP-J, not freestanding commitments).
+During working sessions, apply the Communication Quality Rubric to evaluate Tim's statements about the framework in real time. Flag anything scoring **7 or below** on the composite scale (35% terminological accuracy, 35% structural accuracy, 15% consistency, 15% clarity). The full rubric with scoring tables and calibration notes lives at `.claude-local/communication_quality_rubric.md`. Key terms requiring extra care: ⊥ (three-way identification), T-SNAP (theorem, not axiom), DA-1 (derived proposition, conditional on DP-2), DP-2 (grounded in D7 — not freely chosen), CC-1 (a Conditional Claim, restated in ZP-J as an equivalence, not forced) and CC-2 (a Forced Metatheoretic Commitment whose Quine-atom role T-EXEC shows only ⊥ fills).
 
 ## Session Handoff File
 
@@ -64,9 +64,9 @@ different unit — for prose that ships, the sweep unit is the RENDERED PDF text
 (`R-DEFECTCLASS` carries that now).
 
 ```
-python .claude-local/where.py "<Tim's phrasing, verbatim>"     # -> ranked folders + token cost
-python .claude-local/where.py --files "<phrase>"               # + the file list
-python .claude-local/where.py --spine                          # what the always-load spine costs
+python tools/verify/where.py "<Tim's phrasing, verbatim>"      # -> ranked folders + token cost
+python tools/verify/where.py --files "<phrase>"                # + the file list
+python tools/verify/where.py --spine                           # what the always-load spine costs
 ```
 
 Then load: **the ~50k spine** (the five `#check`-only indexes — `BottomCannotBe`, `SnapCannotBe`,

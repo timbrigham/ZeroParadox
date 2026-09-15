@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.19 | June 2026
+Version 1.21 | September 2026
+v1.21: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). These sites said AX-1 whole was derived or no longer an axiom: the ZP-E import line, the Open Items AX-1 row ("Derived as Theorem T-SNAP ... No longer an axiom"), the IR-ZP and IR-2 validation rows, and the AX-1 validation row. Each now scopes the derivation to the shape half and names the occurrence half as a commitment. T-H3's own row, which says T-SNAP is inherited as a derived theorem, is unchanged: T-SNAP is the shape theorem. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the Open Items AX-1 row credited the shape to 'the P0 / L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
+v1.20:CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. The AX-G2 verification note no longer places a Lean result 'within the ZF+AFA setting'. ADVERSARY ROUND 1 (FAIL-BEDROCK, D1): that note's 'It remains a stated commitment, not a freestanding one' kept the retracted reading ('freestanding' is CLAIMS.md's word for a free modelling choice, which CC-1 is); it now says the check holds given CC-1.
 v1.19: AX-B1 OVERCLAIM RETRACTED (bedrock). The closing line read "No novel axioms: AX-B1 decidable, AX-G1 and AX-G2 grounded in prior layers". AX-B1 is the framework's ONE substantive modelling commitment - discrete Boolean existence rather than a continuum of partial states - and the `decide` proof only checks the two states are distinct GIVEN the two-element type; it does not verify the commitment. The Foreword retracted this exact wording at v2.12; ZP-H was the surviving twin.
 v1.18: FORCING OVERCLAIM RETRACTED (Remark R-FORCING). F_B was said to "force an irreversible jump at 0"; Valuation/Padic.lean retracts exactly that - the 2-adic topology proves irreversibility and a clopen gap, never a first step, and no metric result could. The closing "structurally forced across all four" now reads as the SHAPE being constrained; occurrence stays a framework commitment.
 v1.16: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
@@ -31,7 +33,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -154,7 +156,7 @@ def build():
             'From ZP-E: Universal constituent cross-framework (T1). Hamming/JSD consistency (T2). '
             'Landauer bridge BA-1. Processing bounds T3. Unified Snap description T4. '
             'Iterative forcing T5. State representations T6. Zero Paradox T7. '
-            'T-SNAP: Binary Snap is a derived theorem — AX-1 is not an axiom.',
+            'T-SNAP: the shape of the Binary Snap is a derived theorem — AX-1 is retired, and that the Snap occurs is stated separately, as the occurrence commitment.',
         ]
     ))
     E.append(sp(8))
@@ -229,7 +231,7 @@ def build():
             'AX-G2 respected: No join operation in L can return to &#8869; from a strictly larger state (ZP-A T3, '
             'monotonicity). Therefore F<sub>A</sub> sends no non-initial morphism to a map terminating at &#8869;. '
             'Note: this verification depends on CC-1 / DA-2 to identify L\'s &#8869; with C\'s initial object 0. '
-            'CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4) within the ZF+AFA setting — no longer a freestanding modelling commitment. <font name="DV">&#10003;</font>',
+            'CC-1 is restated in ZP-J, not forced: given AFAStructure, starting at a Quine atom and starting at &#8869; are the same condition (cc1_derived, t_exec_iff, Lean 4). The choice of starting point remains a ZP-A modelling commitment, so this check holds given CC-1. <font name="DV">&#10003;</font>',
         ]
     ))
     E.append(sp(6))
@@ -492,10 +494,11 @@ def build():
          'singularity characterizations. Resolved in Section V. The two characterizations '
          'are shown to be the same obstruction described from different vantage points.'],
         ['AX-1',
-         'Derived —\nT-SNAP\n(ZP-E v2.0)',
-         'Binary Snap Causality. Derived as Theorem T-SNAP in ZP-E v2.0 via the '
-         'P₀ / L-RUN / TQ-IH / DA-1 chain. No longer an axiom. T-H3 inherits '
-         'T-SNAP as a derived result. Not a gap.'],
+         'Retired —\nshape: T-SNAP\n(ZP-E v2.0);\noccurrence: stated\nseparately',
+         'Binary Snap Causality. AX-1 is retired. Its content was split in two: the shape of the Snap is '
+         'proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no axioms), and that the Snap '
+         'occurs is stated separately, as the occurrence commitment, which ZP-E\'s DA-1 argues for. '
+         '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.) T-H3 inherits T-SNAP as a derived result. Not a gap.'],
         ['AX-G1',
          'Axiom —\nnot novel',
          'Asymmetry: initial object 0, no terminal object. Inherited from ZP-G. '
@@ -536,10 +539,10 @@ def build():
          'BA-G1 demoted to R-BA; I-KC noted as named dependency.'],
         ['IR-ZP: ZP-A through ZP-E imported',
          'Valid — all closed results received from ZP-A through ZP-E; labels preserved. '
-         'T-SNAP (ZP-E v2.0) noted: AX-1 is derived, not axiomatic.'],
+         'T-SNAP (ZP-E v2.0) noted: AX-1 is retired; its shape is derived, not axiomatic, and occurrence is the occurrence commitment.'],
         ['IR-2: Inherited labels preserved',
          'Valid — OQ-G1 closed in ZP-G v1.1; OQ-G2, OQ-G3, OQ-G4 resolved here; '
-         'BA-G1 updated to R-BA; AX-1 updated to T-SNAP (Derived).'],
+         'BA-G1 updated to R-BA; AX-1 updated to retired, its shape to T-SNAP (Derived) and occurrence to the occurrence commitment.'],
         ['D-H1: Morphisms of C',
          'Design Commitment — explicitly stated; required for functor construction'],
         ['C-H1: F<sub>A</sub>: C &#8594; SLat',
@@ -563,8 +566,9 @@ def build():
         ['OQ-G1: Native surprisal derivation',
          'Closed in ZP-G v1.1 via D7\' and I-KC. No bridge axiom remains as a theorem premise.'],
         ['AX-1 (Binary Snap Causality)',
-         'Derived — T-SNAP in ZP-E v2.0. No longer an axiom. '
-         'T-H3 and all downstream results inherit the derived status.'],
+         'Retired — the shape is derived as T-SNAP in ZP-E v2.0 and is no longer an axiom; '
+         'T-H3 and all downstream results inherit the derived status for the shape. '
+         'That the Snap occurs is stated separately, as the occurrence commitment.'],
         ['AX-G1, AX-G2',
          'Not novel commitments — grounded in prior layers (ZP-A and ZP-B). Stated as local axioms in ZP-G for self-containment. Not gaps.'],
         ['R-BA, D-H1, DP-1',

@@ -1,6 +1,62 @@
 """
 Zero Paradox — ZP-J Wheel Addendum: The Wheel of Fractions is a Wheel
-Version 1.3 | July 2026
+Version 1.7 | September 2026
+v1.7: THE DEGENERATE OVERLAP IS RESTORED, AND THE TERM-LEVEL IDENTIFICATION WITH IT (two-pole audit, 2026-09-13, Tim's call). v1.6 deleted the sentence "the one overlap is degenerate, and is worth stating exactly rather than denying" together with the false "never the reverse", although 43116ba had recorded the decision that the overlap is stated rather than denied. Both charts are now on the page: beyond one element no carrier is a wheel whose /0 is 0 (Wheel.lean section V, by its binders), and the one-element algebra is both a wheel with infinity = bottom and a model of the meadow equations (a new rfl example in the same section, with Ref and Ril checked at arXiv:0901.0823 p. 2; the separation-axiom quote is the one v1.5 already used, 1406.6878 section 1 p. 2). The remark's "no pair of new elements available to identify" was element-level only; at the level of terms 0^-1 and 0*0^-1 both evaluate to 0, so the meadow does equate the two terms a wheel keeps apart.
+v1.6: THE MEADOW REMARK'S IMPLICATION IS DELETED, NOT RESTATED. Five successive versions tried
+      to state a SCOPED implication in unscoped prose and all five failed: v1.0-1.3 "a wheel in
+      which ∞ = ⊥ is exactly a meadow" (false); v1.4 "neither kind of meadow is a wheel with
+      ∞ = ⊥" (vacuous); v1.5 "no NON-TRIVIAL meadow of either kind is..." (vacuous again,
+      independently); and v1.5's replacement "the implication runs meadow-equation to triviality,
+      never the reverse" (FALSE — it dropped the binder). The Lean states it correctly because it
+      HAS binders: `example {W : Type*} [Wheel W] (hm : winv 0 = 0) : ∀ x y : W, x = y` scopes the
+      hypothesis to a wheel. Strip `[Wheel W]` and the sentence becomes a claim about meadows in
+      general — false for ℚ and for every field, and contradicted by the Bergstra, Hirshfeld &
+      Tucker definition quoted in the same box. The second clause was worse: "never the reverse"
+      denied the sentence immediately before it, which had just asserted that the one-element wheel
+      satisfies the meadow equations. (The Wheel.lean gloss it was truncated from reads "never the
+      reverse — a one-element wheel need not have arisen this way", which makes it a claim about
+      PROVENANCE; the PDF kept only the first half.) So no implication arrow about meadows survives
+      in the rendered prose at all. Both directions are cited to the machine-checked examples in
+      ZeroParadox/Algebra/Wheel.lean §V, where the binders carry the scope. The absence claim is
+      now DATED and scoped to a named search set, and the Bergstra & Ponse null is attributed to
+      COMMON meadows only, which is all they say.
+      Also: inf_ne_bot relabelled Proposition (page 1 calls it "the companion result", and
+      R-NAMING reserves Theorem for the primary result); `#print axioms` added for
+      zpw_top_val_iff_inv_is_inf so the Axiom Footprint box's claim is reproducible from the file
+      it cites; the endnote's sorry-free survey re-dated; docstring month corrected to match the
+      rendered title block, which zp_utils.version_line() derives automatically.
+v1.5: the v1.4 correction over-corrected, and its universal negative is false at every point of
+      its domain. It read "So neither kind of meadow is a wheel with ∞ = ⊥, and neither arises by
+      collapsing one." By Prop. 4.4 the ONLY wheel with ∞ = ⊥ is the one-element one, and that
+      algebra IS a meadow of both kinds: the meadow axioms are purely equational, and Bergstra &
+      Ponse state it in terms (1406.6878, §1 p. 2) — "we do not require a meadow to satisfy the
+      separation axiom 0 ≠ 1." So the forward direction is VACUOUS, not false. Wheel.lean §V
+      already carried the right qualifier ("NON-TRIVIAL involutive meadow") and the rendered prose
+      had dropped it. Now quantified over non-trivial meadows, with the degenerate overlap stated
+      rather than denied. "The originators say as much" also went: not-yet-found is not not-there,
+      and the quote is Bergstra & Ponse's, who originated COMMON meadows, not meadows.
+      Three more, folded in under the same bump:
+      (1) THE ENDNOTE GENERALISED A SCOPED FOOTPRINT. It said "All results sorry-free in Lean 4
+          as of June 2026, footprint [propext, Quot.sound]" while the Axiom Footprint box one page
+          earlier already scopes that footprint to the headline results. Re-measured here:
+          instWheel and inf_ne_bot are [propext, Quot.sound]; zpw_inf_ne_bot is [propext]; and
+          zpw_inv_zero_eq_inf, zpw_zero_mul_inf_eq_bot and zpw_top_val_iff_inv_is_inf each carry
+          Classical.choice — the last of them named one page earlier as "proved directly". The
+          endnote now carries the box's scope and the measured exceptions.
+      (2) "if S contains a zero divisor witness for 0" was garbled, and on its natural reading
+          false: in Z/6, S = {1,2,4} is a submonoid of zero divisors with 0 ∉ S, so inf_ne_bot
+          gives ∞ ≠ ⊥. The condition is 0 ∈ S, and the witnesses are now named (s = 0, s′ = 1).
+      (3) "that degeneracy happens exactly when 0 ∈ S" implied a biconditional this corpus does
+          not prove. Only 0 ∉ S → ∞ ≠ ⊥ is a declaration here; the converse is Carlström's own
+          (p. 5) and is now cited to him rather than implied to be ours.
+v1.4: wheel/meadow claim corrected (bedrock, prior-art gate). Struck "a wheel in which ∞ = ⊥ is
+      exactly a meadow" and "a wheel collapses to a meadow": identifying the two forces the
+      ONE-ELEMENT wheel (Carlström 2001:11 Prop. 4.4, p. 25), and a meadow (Bergstra & Tucker)
+      adjoins no new element at all — it totalizes inverse by 0⁻¹ = 0, while a COMMON meadow
+      adjoins one absorbing element and is non-involutive, so it fails W7. Bergstra & Ponse
+      record that no structural connection between the two constructions is known.
+      Credit corrected: the name and construction are Setzer's; Carlström generalizes them to
+      any commutative SEMIRING.
 v1.3: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: WheelFrac.* citations updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Presents the formal construction of the wheel of fractions
@@ -15,8 +71,9 @@ Reads after ZP-J Self-Reference.
 
 import os
 from zp_utils import *
+from reportlab.platypus import KeepTogether
 
-VERSION = '1.3'
+VERSION = '1.7'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -69,16 +126,18 @@ def build():
         'reciprocal /x, so /0 becomes a defined first-class element rather than an error. '
         'The two elements this produces &#8212; &#8734; = /0 (the reciprocal of zero) and '
         '&#8869; = 0&#183;/0 (an absorbing "undefined" element) &#8212; are what distinguish '
-        'a wheel from a field. ZP-J Self-Reference left open which structure the Zero Paradox '
-        'porthole gives rise to: a wheel, in which &#8734; and &#8869; are distinct, or a '
-        'meadow, in which they collapse. This addendum settles that question.'))
+        'a wheel from a field. ZP-J Self-Reference left open which of the two standard ways '
+        'of totalising division the Zero Paradox porthole gives rise to: a <b>wheel</b>, which '
+        'adjoins &#8734; and &#8869; as two distinct new elements, or a <b>meadow</b> (Bergstra '
+        '&amp; Tucker), which adjoins nothing at all and instead declares 0<sup>&#8722;1</sup> = 0, '
+        'staying inside the original number system. This addendum settles that question.'))
     E.append(body(
         'The main result is WheelFrac.instWheel (WheelFrac.lean): for any commutative '
         'ring A and any multiplicative submonoid S, the wheel of fractions '
         '&#8857;<sub>S</sub> A = (A &#215; A)/&#8801;<sub>S</sub> satisfies every axiom of '
         'Carlström\'s Definition 1.1. The companion result WheelFrac.inf_ne_bot shows that, '
         'whenever 0 &#8713; S, the two special elements stay distinct (&#8734; &#8800; '
-        '&#8869;) &#8212; so the construction is a wheel, not a meadow. The construction '
+        '&#8869;) &#8212; so the construction is a <i>non-trivial</i> wheel. The construction '
         'is Carlström\'s; the contribution here is a faithful, machine-verified encoding '
         'of it that is also free of the axiom of choice (footprint [propext, Quot.sound]), '
         'situated as the algebraic form of the ZP porthole.'))
@@ -121,9 +180,14 @@ def build():
     E.append(body(
         'The last group of axioms is what makes division total. W7 and W8 make / an '
         'involution that distributes over multiplication; W9&#8211;W14 govern how the two '
-        'derived elements &#8734; = /0 and &#8869; = 0&#183;/0 interact with + and &#183;. A '
-        'wheel in which &#8734; = &#8869; is exactly a meadow: the distinction between the '
-        'two is the whole content of "wheel, not meadow."'))
+        'derived elements &#8734; = /0 and &#8869; = 0&#183;/0 interact with + and &#183;. '
+        'Keeping those two apart is not a stylistic preference over some rival algebra: by '
+        'Carlström\'s Proposition 4.4 (p. 25), if <i>any</i> two of 0, 1, /0 and 0/0 are equal '
+        'in a wheel, the wheel is trivial &#8212; it has exactly one element. So &#8734; '
+        '&#8800; &#8869; is the condition for the structure to have more than one element at '
+        'all. The same statement is machine-checked over the Wheel typeclass in '
+        'ZeroParadox/Algebra/Wheel.lean §V: identifying &#8734; with &#8869; proves '
+        '&#8704; x y, x = y.'))
     E.append(sp(6))
 
     # ── Section II: The wheel of fractions construction ────────────────────────
@@ -197,7 +261,7 @@ def build():
     ))
     E.append(sp(6))
 
-    # ── Section IV: The porthole — wheel, not meadow ───────────────────────────
+    # ── Section IV: The porthole — a non-trivial wheel, and not a meadow ───────
     print('[build_zpj_wheel_addendum] Building Section IV...')
     E += [
         hr(),
@@ -205,24 +269,65 @@ def build():
         hr(),
     ]
     E.append(body(
-        'A wheel collapses to a meadow precisely when its two special elements coincide. '
-        'For the wheel of fractions this collapse happens exactly when 0 &#8712; S: if S '
-        'contains a zero divisor witness for 0, the fraction [1,0] and the fraction [0,0] '
-        'become identified. The natural hypothesis 0 &#8713; S (which holds whenever S is '
-        'the complement of a prime ideal, the usual case) keeps them apart.'))
+        'A wheel whose two special elements coincide is the one-element wheel '
+        '(Carlström, Proposition 4.4). For the wheel of fractions the trigger is exactly '
+        '0 &#8712; S: taking s = 0 and s&#8242; = 1 as the witnesses identifies the fraction '
+        '[1,0] with the fraction [0,0], and every other pair with them. What is proved below '
+        'is one direction &#8212; 0 &#8713; S keeps them apart. The converse is Carlström\'s '
+        'own observation that if 0 &#8712; S then the relation is improper and '
+        '&#8857;<sub>S</sub> A is trivial (p. 5). The natural hypothesis 0 &#8713; S holds '
+        'whenever S is the complement of a prime ideal, the usual case.'))
     E.append(result_box(
-        'Theorem: WheelFrac.inf_ne_bot (WheelFrac.lean)',
+        'Proposition: WheelFrac.inf_ne_bot (WheelFrac.lean)',
         [
             '&#8704; {A : Type*} [CommRing A] (S : Submonoid A),',
             '  (0 : A) &#8713; S  &#8594;  &#8734; &#8800; &#8869;     in &#8857;<sub>S</sub> A',
             '',
             'When 0 &#8713; S, the reciprocal of zero (&#8734; = /0) and the absorbing '
-            'element (&#8869; = 0&#183;/0) are distinct. The construction is a genuine '
-            'wheel, not a meadow.',
+            'element (&#8869; = 0&#183;/0) are distinct. The construction is therefore a '
+            'non-trivial wheel.',
             'Proof: &#8734; = &#8869; would yield witnesses s, s&#8242; &#8712; S with '
             's&#183;1 = s&#8242;&#183;0, forcing s = 0 and hence 0 &#8712; S &#8212; '
             'contradicting the hypothesis.',
             'Sorry-free. Lean purity: [propext, Quot.sound] &#8212; Classical.choice-free.',
+        ]
+    ))
+    E.append(sp(4))
+    E.append(remark_box(
+        'Remark &#8212; What a meadow actually is',
+        [
+            'A <b>meadow</b> answers the same question a different way, and it adjoins no '
+            'element at all: Bergstra, Hirshfeld and Tucker define one as "a commutative ring '
+            'with a total inverse operator satisfying two equations which imply '
+            '0<sup>&#8722;1</sup> = 0." The carrier is unchanged, so there is no pair of new '
+            'elements available to identify. At the level of terms the identification still happens: '
+            '0<sup>&#8722;1</sup> and 0&#183;0<sup>&#8722;1</sup> both evaluate to the existing 0, so a '
+            'meadow equates the two terms a wheel keeps apart. Bergstra and Ponse fix the default: "by default a '
+            '\'meadow\' is assumed to be an involutive meadow", the involutive ones being '
+            'exactly those with 0<sup>&#8722;1</sup> = 0.',
+            'A <b>common meadow</b> is the other variant: it adjoins one element &#8212; an '
+            'absorbing element, written <i>a</i>, serving as the inverse of zero. Bergstra and '
+            'Ponse record what that costs the inverse operation: "the inverse function of a '
+            'common meadow is not an involution because '
+            '(0<sup>&#8722;1</sup>)<sup>&#8722;1</sup> = <i>a</i>," and, setting the two '
+            'constructions side by side, "wheels are involutive whereas common meadows are '
+            'non-involutive."',
+            'Both directions of why no carrier is at once a non-trivial wheel and an involutive '
+            'meadow are carried as machine-checked <i>example</i>s in '
+            'ZeroParadox/Algebra/Wheel.lean §V, with controls showing both hypotheses are '
+            'load-bearing. The statements are scoped there by their binders, which is why they '
+            'are cited rather than restated here. The one overlap is degenerate, and it is stated '
+            'rather than denied: the one-element algebra is a wheel in which &#8734; = &#8869; and also '
+            'satisfies the meadow equations; Bergstra and Ponse "do not require a meadow to satisfy the '
+            'separation axiom 0 &#8800; 1" (arXiv:1406.6878, &#167;1, p. 2). Both facts are examples in the '
+            'same section. Searched 2026-09-13 over the sources listed '
+            'below: no structural connection between the two constructions located; Bergstra '
+            'and Ponse report not having found one for <b>common</b> meadows.',
+            'Sources: J. A. Bergstra, Y. Hirshfeld and J. V. Tucker, "Meadows and the '
+            'equational specification of division", arXiv:0901.0823 (abstract); J. A. Bergstra '
+            'and A. Ponse, "Division by Zero in Common Meadows", arXiv:1406.6878v4, §1 (p. 2) '
+            'and §4 (p. 14). The concept originates with J. A. Bergstra and J. V. Tucker, '
+            '"The rational numbers as an abstract data type", JACM 54(2), 2007.',
         ]
     ))
     E.append(sp(4))
@@ -283,20 +388,37 @@ def build():
             'Quot.sound &#8212; quotient soundness (standard in Lean 4; the construction '
             'is a quotient, so this is expected and unavoidable)',
             'No Classical.choice. No Dependent Choice. No set-theoretic assumptions.',
+            'This scope is the headline results, not the whole document. Measured against '
+            'the corpus, the concrete-carrier theorems zpw_inv_zero_eq_inf, '
+            'zpw_zero_mul_inf_eq_bot and zpw_top_val_iff_inv_is_inf each carry '
+            'Classical.choice; zpw_inf_ne_bot is [propext].',
         ]
     ))
     E.append(sp(4))
     E.append(remark_box(
         'Remark R-J.W &#8212; Relationship to Carlström\'s Theorem',
         [
-            'Carlström introduced wheels in Wheels &#8212; On Division by Zero (Research '
+            'The name and the original construction are <b>Setzer\'s</b>, not Carlström\'s. '
+            'Carlström records the lineage on his own p. 3: Edalat and Potts adjoined '
+            '&#8734; = 1/0 and &#8869; = 0/0 to the reals; Martin-Löf proposed building them '
+            'into the construction of the rationals from the integers; "such structures were '
+            'called \'wheels\' (the term inspired by the topological picture &#8857; of the '
+            'projective line together with an extra point 0/0) by Setzer [Set97], who showed '
+            'how to modify the construction of fields of fractions from integral domains so '
+            'that wheels are obtained instead of fields."',
+            'Carlström is the <b>generalizer</b>: "in this paper, we generalize Setzer\'s '
+            'construction, so that it applies not only to integral domains, but to any '
+            'commutative semiring." That is Wheels &#8212; On Division by Zero (Research '
             'Reports in Mathematics No. 11, Department of Mathematics, Stockholm '
             'University, 2001; a Licentiate thesis), where Definition 1.1 (p. 5) gives the '
             'eight wheel axioms and the wheel of fractions is constructed (§1.2, §4.2). '
             'The work was later published as Wheels &#8212; on division by zero, '
             'Mathematical Structures in Computer Science 14(1):143&#8211;184, 2004. '
-            'Carlström proved there that the wheel of fractions of a commutative ring is a '
-            'wheel. The result here is that theorem, encoded in Lean 4 against a typeclass '
+            'His theorem covers commutative <i>semirings</i>; the Lean encoding in '
+            'ZeroParadox/Algebra/WheelFrac.lean is stated for commutative <i>rings</i>, so it '
+            'is the narrower case of his result, '
+            'not the same generality. The result here is that theorem, encoded in Lean 4 '
+            'against a typeclass '
             'that reproduces his Definition 1.1 field for field, and discharged without '
             'the axiom of choice. The encoding is what is new: a third party can read the '
             '14 fields against Carlström\'s eight axioms and confirm the correspondence, '
@@ -308,13 +430,19 @@ def build():
     ))
     E.append(sp(6))
 
-    E.append(Paragraph(
+    # PIN: the endnote must never split across a page boundary. At v1.5 it broke mid-sentence
+    # and orphaned three continuation lines, which is what took the document from five pages to
+    # six. KeepTogether binds that to the CONTENT, so it holds whether the endnote grows or
+    # shrinks; a hard PageBreak would instead force a sixth page even once the text fits on five.
+    E.append(KeepTogether(Paragraph(
         'Endnote: This document is an addendum to ZP-J Self-Reference and reads after it. '
         'ZP-J established the porthole (val(&#8869;) = &#8734;, &#8869; = {&#8869;}); this '
         'document gives its algebraic form, the wheel of fractions, and the machine-verified '
-        'proof that the construction is a wheel rather than a meadow. All results sorry-free '
-        'in Lean 4 as of June 2026, footprint [propext, Quot.sound].',
-        S['endnote']))
+        'proof that the construction is a wheel and a non-trivial one. All results sorry-free '
+        'in Lean 4 as of September 2026. Footprints are per result, and [propext, Quot.sound] is '
+        'the headline results\'; the Axiom Footprint box above gives the scope and the '
+        'measured exceptions.',
+        S['endnote'])))
 
     print(f'[build_zpj_wheel_addendum] Assembling document ({len(E)} elements)...')
     doc.build(E)

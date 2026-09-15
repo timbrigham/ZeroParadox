@@ -31,6 +31,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Order/PerronCapstone.lean` - Capstone: Perron–Frobenius for finite stochastic operators
 - `ZeroParadox/Order/PowerSet.lean` - ZP-H Extension: Power Set Lattice as Structural Floor Witness
 - `ZeroParadox/Order/Snap.lean` - ZP-E: Bridge Document
+  - ride-along docs: `ZeroParadox/Order/Snap.md` - The ZP-E formal inserts, and the retirement of AX-1 into T-SNAP (shape) and the occurrence commitment
 - `ZeroParadox/Order/SnapCannotBe.lean` - Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
 
 ### Valuation / number theory (ZP-B, ZP-F)
@@ -51,6 +52,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Valuation/PricedPadicInterface.lean` - A priced p-adic interface: a choice-free carrier for ZP-B/ZP-J Group A, a map into `ℤ_[2]`, and both sides' axiom footprints
   - ride-along docs: `ZeroParadox/Valuation/PricedPadicInterface.md` - Pricing the crossing: where choice enters a 2-adic interface, and where it does not
 - `ZeroParadox/Valuation/RiemannSphere.lean` - The p-adic Riemann sphere: inversion swaps the floor 0 and its antipode ∞
+  - ride-along docs: `ZeroParadox/Valuation/RiemannSphere.md` - Prior art for the sphere's group action, the loxodromic vocabulary, and the stabiliser fence
 - `ZeroParadox/Valuation/Scale.lean` - ZPJ — Valuation Bridge: Deriving AFA Content from Scale Structure
 - `ZeroParadox/Valuation/ScaleBridge.lean` - ZPJ — Scale Bridge: AFA Content from Valuation Without ZPSemilattice
   - ride-along docs: `ZeroParadox/Valuation/ScaleBridge.md` - Dropping the join, and a membership question settled exactly
@@ -160,6 +162,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/Incompleteness.lean` - ZP-M: Kleene–Ordinal Bridge Layer
 - `ZeroParadox/Ordinal/KirbyParis.lean` - Kirby–Paris hydra termination (the ε₀ gap) — proved
 - `ZeroParadox/Ordinal/Kruskal.lean` - Kruskal's Tree Theorem (labeled) — finite rose trees are well-quasi-ordered
+  - ride-along docs: `ZeroParadox/Ordinal/Kruskal.md` - Where the choice comes from, and which half of the axiom-free proof transfers
 - `ZeroParadox/Ordinal/NaturalOpsPow.lean` - Natural sum on powers of ω — the deferred CNF characterization (ported)
 - `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` - Comparability of well-orders is a constructive taboo
 - `ZeroParadox/Ordinal/P8.lean` - P8 re-attempt: ε₀ → 0 in ℤ₂ via a tower-rank 2-adic encoding
@@ -252,6 +255,10 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
   - ride-along docs: `ZeroParadox/Valuation/PoleCornersBridge.md` - Assembling a correspondence without asserting an identity
 - `ZeroParadox/Valuation/RateTransport.lean` - within-Axis-I positive rate-transport via the shared geometric rate `2^(-n)`
 - `ZeroParadox/Valuation/RootAsymmetry.lean` - Root-asymmetry test: #1 (μ order-floor) vs #3 (ν p-adic limit)
+- `ZeroParadox/Valuation/ScaleDepthWitness.lean` - A concrete family satisfying ZP-I's `IsDepthChain`, and the gauge pricing what that satisfaction is worth
+  - ride-along docs: `ZeroParadox/Valuation/ScaleDepthWitness.md` - What satisfying the depth-chain seam is worth, and what it is not
+- `ZeroParadox/Valuation/ScaleRealization.lean` - Realizing an abstract scale step as 2-adic doubling: the ZP-I commitment as equivariance, with the valuation law derived and both valuations bridged
+  - ride-along docs: `ZeroParadox/Valuation/ScaleRealization.md` - Why the welded form is not statable, the falsifiers, and how the self-supply residue is closed
 - `ZeroParadox/Valuation/StrippedBottom.lean` - ⊥ by inversion of attribute-classes — the "typecast" stand-in (Tim, 2026-06-30)
 - `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the ordinal tower IS an InfinitudeFloor, order-reversed — ε₀ ≠ ⊥ preserved
 

@@ -98,6 +98,13 @@ theorem ont_selfMem_singleton :
     {x : OntologicalStates | selfMemDerived x} = ({bot} : Set OntologicalStates) :=
   selfMem_eq_singleton_bot
 
+-- Statement: a valid state sequence can start above ⊥, at a point that is not a Quine atom. So on a carrier
+-- with a second point, A1–A4 and D3 do not force CC-1's S₀ = ⊥ (on a one-point carrier they do).
+example : ∃ S : ℕ → OntologicalStates, IsStateSequence S ∧ S 0 ≠ bot ∧ ¬ IsQuineAtom (S 0) := by
+  refine ⟨fun _ => .exist, ⟨fun _ => .exist, fun _ => rfl⟩, by decide, ?_⟩
+  intro h
+  exact absurd (t_exec _ h) (by decide)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/

@@ -19,25 +19,10 @@ DA-1 is addressed in ZPJ and ZPK. DA-2 is addressed in ZPI.
 
 ---
 
-## Formal Overview (AI-assisted)
-
-Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
-
-- DA-1 (Instantiation as Execution): Paths 1 and 3 are in Lean scope via ZP-K.
-  machinePhaseKleene gives MachinePhase a KleeneStructure instance; da1_closed_concrete
-  proves IsQuineAtom (bot : MachinePhase) — the initial state is self-containing, and it is
-  the only such state. The further reading "self-executing, not a static description" is
-  DA-1's claim, carried by the KleeneStructure commitment rather than by that theorem
-  (which mentions no Code and no execution). Path 2 (informational bridge, L-INF) remains
-  outside Lean scope. See § I-DA1 for the full argument and ZP-K for what is and is not proved.
-- DA-2 (Instantiation Succession): algebraic characterisation of the ⊥ role across instantiations
-- DA-3 (Perspective-Relative Cardinality): DA-3-D1 as a definition; DA-3-C1 is a
-  candidate claim and is not formalised here
-
-Key result: T-SNAP — the Binary Snap ⊥ → ε₀ is a derived theorem, not an axiom.
-AX-1 is retired. The cross-framework link is established by giving `MachinePhase`
-(`ZeroParadox/Information/Surprisal.lean`) a `ZPSemilattice` instance, making T-SNAP a direct
-consequence of the semilattice bottom law `bot_join` (`ZeroParadox/Order/Lattice.lean`).
+## Formal Overview
+AX-1 is retired: the SHAPE of the snap is proved (`t_snap_derived`, `t_snap_given`), and that the snap
+OCCURS is the occurrence commitment (`tsnap_holds_but_nothing_moves`). The inserts DA-1, DA-2, DA-3 and
+the cross-framework link: `ZeroParadox/Order/Snap.md`.
 -/
 
 namespace ZeroParadox
@@ -54,7 +39,7 @@ running) satisfies all four ZPA axioms A1–A4. Under this instance:
 - ε₀   = running = c₁  (the First Atomic State)
 This makes T-SNAP type-theoretically grounded: ⊥ ∨ ε₀ = ε₀ is definitional. -/
 
--- [ZP-CUSTOM] instance: ZPSemilattice MachinePhase | reason: The cross-framework bridge. MachinePhase is one of two two-element inductives in ZeroParadox/Information/Surprisal.lean (the other is BinaryState); giving it a ZPSemilattice instance makes T-SNAP (bot_join applied to MachinePhase) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for MachinePhase.
+-- [ZP-CUSTOM] instance: ZPSemilattice MachinePhase | reason: The cross-framework bridge. MachinePhase is one of two two-element inductives in ZeroParadox/Information/Surprisal.lean (the other is BinaryState); giving it a ZPSemilattice instance makes T-SNAP (bot_join applied to MachinePhase) a direct consequence of ZP-A's A4. AX-1 is retired: its shape is proved as T-SNAP, and that the snap occurs is stated separately, as the occurrence commitment. No Mathlib lattice instance exists for MachinePhase.
 instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join x y := match x, y with
     | .initial, y       => y
@@ -105,7 +90,7 @@ So DA-1 is closed given its commitments, not closed outright; ZP-K supplies the
 witnesses and names the commitment, and ZP-K § III states exactly which parts are
 proved. -/
 
-/-! ## II. T-SNAP — Binary Snap Causality (AX-1 Retired)
+/-! ## II. T-SNAP — the Shape of the Binary Snap (AX-1 is retired)
 
 Status: DERIVED — cross-framework.
 Dependencies: l_run, tq_ih, ZPA A4 (bot_join), ZPB C3 (cited below). -/
@@ -125,7 +110,7 @@ theorem t_snap_machine : join c₀ c₁ = c₁ := rfl
     (1) c₀ ≠ c₁  — ZPC L-RUN: execution is a non-null state change.
     (2) c₁ ≠ c₀  — ZPC TQ-IH: no execution avoids a non-null configuration.
     (3) join c₀ c₁ = c₁  — the snap is a valid join transition (A4/bot_join).
-    Conclusion: the Binary Snap is a derived consequence. AX-1 is no longer an axiom. -/
+    Conclusion: the Binary Snap's shape is derived; that it occurs is the occurrence commitment. -/
 theorem t_snap_derived :
     c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   ⟨l_run, tq_ih, rfl⟩
@@ -151,6 +136,38 @@ def stuckPhase : MachinePhase → MachinePhase := id
 theorem tsnap_holds_but_nothing_moves :
     (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) ∧ (∀ p : MachinePhase, stuckPhase p = p) :=
   ⟨t_snap_derived, fun _ => rfl⟩
+
+/-- T-SNAP with two of its commitments as hypotheses, over any ZPSemilattice: CC-1 (`hcc1`, the
+    sequence starts at ⊥) and occurrence at the first step (`hocc`, the step at index 1 is taken).
+    The two inequalities restate `hocc`; only the join conjunct is derived, from A4 (`bot_join`). -/
+theorem t_snap_given {L : Type*} [ZPSemilattice L] (S : ℕ → L)
+    (hcc1 : S 0 = bot) (hocc : S 1 ≠ S 0) :
+    S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1 :=
+  ⟨fun h => hocc h.symm, hocc, by rw [hcc1]; exact bot_join _⟩
+
+-- Statement: `t_snap_derived` is the instance at the sequence `c₀, c₁, c₁, …`, chosen to move: `hcc1` is `rfl` and `hocc` is `c₁ ≠ c₀`.
+example : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
+  t_snap_given (fun n => if n = 0 then c₀ else c₁) rfl (by decide)
+
+-- Statement: `MachinePhase` does not discharge `hocc`: a state sequence in it starts at ⊥ and never steps. Generic form: over any ZPSemilattice the constant sequence is a state sequence and not a strict one, the no-top NO-GO gauge in `ZeroParadox/Valuation/SemilatticeInstance.lean`.
+example : ∃ S : ℕ → MachinePhase, S 0 = bot ∧ IsStateSequence S ∧ ∀ n, S (n + 1) = S n :=
+  ⟨fun _ => bot, rfl, ⟨fun _ => bot, fun _ => (bot_join bot).symm⟩, fun _ => rfl⟩
+
+-- Statement: without `hocc` the conclusion fails; the sequence that stays at ⊥ refutes it.
+example : ¬ ∀ S : ℕ → MachinePhase, S 0 = bot → S 0 ≠ S 1 := fun h => h (fun _ => bot) rfl rfl
+
+-- Statement: without `hcc1` (and with no dynamics) the join conjunct fails.
+example : ¬ ∀ S : ℕ → MachinePhase, S 1 ≠ S 0 → join (S 0) (S 1) = S 1 := fun h =>
+  absurd (h (fun n => if n = 0 then c₁ else c₀) (by decide)) (by decide)
+
+-- Statement: given the dynamics instead of CC-1, the shape holds at any step that is taken.
+example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hS : IsStateSequence S) (n : ℕ)
+    (hocc : S (n + 1) ≠ S n) : S n ≠ S (n + 1) ∧ join (S n) (S (n + 1)) = S (n + 1) :=
+  ⟨fun h => hocc h.symm, state_sequence_monotone S hS n⟩
+
+-- Statement: `hocc` forces at least two points in the carrier (`Nontrivial L`).
+example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hocc : S 1 ≠ S 0) : Nontrivial L :=
+  ⟨⟨S 1, S 0, hocc⟩⟩
 
 /-- T-SNAP (irreversibility): Algebraic form of ZP-A R1 (no subtraction operator).
     If x ≼ y and x ≠ y, no join from y can return to x.
@@ -214,9 +231,9 @@ theorem da2_bottom_characterization {L : Type*} [ZPSemilattice L] (S : L) :
 
 /-- C-DA2 (Conditional Claim). `Statement:` a non-⊥ state cannot satisfy the join-identity —
     the contrapositive of the role fact, inside ONE semilattice.
-    `Reading:` taking S to play the ⊥ role for a DISTINCT successor instantiation is the
-    framework's reading, never this statement (SnapCannotBe.lean:41). Nothing here builds a
-    second semilattice or a second bottom, and it is not a novelty witness. -/
+    `Reading:` taking S to play the ⊥ role for a DISTINCT successor instantiation is the framework's
+    reading, never this statement (`c_da2_novelty` in `ZeroParadox/Order/SnapCannotBe.lean`).
+    Nothing here builds a second semilattice or a second bottom, and it is not a novelty witness. -/
 theorem c_da2_novelty {L : Type*} [ZPSemilattice L] (S : L)
     (hS_not_bot : S ≠ bot) :
     ¬(∀ x : L, join S x = x) := by
@@ -331,6 +348,7 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms t_snap_join
 #print axioms t_snap_machine
 #print axioms t_snap_derived
+#print axioms t_snap_given
 #print axioms t_snap_irreversible
 #print axioms da2_bottom_characterization
 #print axioms c_da2_novelty

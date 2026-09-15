@@ -36,7 +36,7 @@
 #   - the github MCP WRITE tools (create_pull_request, push_files, create_or_update_file,
 #     merge_pull_request, issue_write, discussion_comment_write) - those bypass this hook AND the
 #     git gate entirely by writing straight to the remote. Closing that is a permissions decision,
-#     not a hook one. SEE THE NOTE IN C:\temp\gitRobot.md.
+#     not a hook one. SEE `docs://gitrobot/readme`.
 # The threat model is DRIFT, not malice. Against that this works; against an agent deciding to route
 # around it, it does not. The only sound layer remains remote (branch protection + required status
 # checks), and `illustrated` currently has none. This is defence in depth, not a seal.
@@ -62,32 +62,26 @@ function Deny([string]$reason) {
 $GUIDANCE = @'
 DIRECT `git` AND `gh` ARE BLOCKED for agents in this repository.
 
-git was denied because a pre-push hook is the only gate on publication and one flag disables it,
-and because `git reset --hard`, `checkout -- .`, `clean` and `stash` fire no hook at all - one of
-those silently destroyed an uncommitted edit here and then reported success.
-
-gh was denied because it reaches further and less reversibly: `gh release create` mints a PERMANENT
-Zenodo DOI, `gh pr merge` lands code on main, and `gh api` is arbitrary REST including DELETE.
-Public-facing actions are also governed by the Adversary Review Gate, which is Tim's decision.
-
 WHAT TO USE INSTEAD:
-  - GitHub reads  -> the github MCP tools (mcp__github__*) are registered and still available.
   - git           -> the gitRobot MCP server (mcp__gitRobot__*), which mediates all git for this
                      tree: destructive ops refused, mutating ops gated and audited, reads passed
-                     through. Definition: C:\temp\gitRobot.md
+                     through.
+  - GitHub reads  -> the github MCP tools (mcp__github__*) are registered and still available.
   - a release     -> Tim. Releases are permanent; that is a human decision, not an agent one.
 
 If gitRobot is not yet running, git is unavailable to you. That is intentional, not a fault.
 Do NOT work around this - no aliases, no wrapper scripts, no shelling out from python. If you
 believe you genuinely need it, say so and let Tim decide.
 
-WHY EACH THING IS DENIED, AND WHAT WOULD REOPEN IT:
-  .claude-local/notes/access_controls_2026-08-22.md  (private working folder; absent from a public
-  clone - the method is public, some of the material it operates on is not)
-Read it before arguing the block is wrong - several of these are provisional, not permanent.
-
 Note: tools that use git INTERNALLY are unaffected. `python tools/verify/batch.py precommit`,
 the checkers and the build scripts all still work.
+
+WHY, AND WHAT WOULD REOPEN EACH BLOCK - provenance for whoever audits the block, not a step you
+have to take before obeying it:
+  docs://gitrobot/readme - served by the server itself: the tier model, the threat model, why
+  reset --hard / clean / stash are not exposed, and the measured incident behind each rule.
+  .claude-local/notes/access_controls_2026-08-22.md - what is denied and what would reopen it
+  (private working folder; absent from a public clone). Several are provisional, not permanent.
 '@
 
 if ([string]::IsNullOrWhiteSpace($raw)) {
@@ -124,8 +118,9 @@ if ($null -eq $cmd) { exit 0 }   # not a command-bearing tool; nothing to inspec
 #     file_path-bearing tools needs a second registration, which is a settings
 #     change and Tim's to make. THE WRITE HALF IS THE ONE THAT MATTERS - a
 #     shell block alone still leaves Edit/Write able to reach the same files.
-#   - reading is deliberately not the target. Use the Read tool; the specs in
-#     C:\temp are the approved interaction path and are NOT blocked here.
+#   - reading is deliberately not the target. The servers publish their own design at
+#     docs://gitrobot/readme and docs://verdictledger/readme, which is the approved
+#     interaction path and is NOT blocked here.
 $PROTECTED_PATH = '(?i)mcp-mayhem'
 if ($cmd -match $PROTECTED_PATH) {
     $snip = $cmd.Trim()
@@ -142,8 +137,8 @@ go there.
 
 WHAT TO USE INSTEAD:
   - to USE the servers    -> mcp__gitRobot__* and mcp__verdictLedger__*
-  - to READ their design  -> C:\temp\gitRobot.md and C:\temp\verdictLedger.md.
-                             That two-hop is the APPROVED interaction path.
+  - to READ their design  -> docs://gitrobot/readme and docs://verdictledger/readme,
+                             served by the servers themselves. That is the APPROVED path.
   - to CHANGE them        -> an MCP-development session, which is scoped to that
                              work. Not this one.
 

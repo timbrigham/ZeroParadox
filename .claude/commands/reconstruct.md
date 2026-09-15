@@ -15,13 +15,13 @@ Measured 2026-08-08:
    19  claims machine-mirrored in ClaimsMirror.lean
 ```
 
-`ClaimsMirror.lean` runs claims → declarations. **Nothing runs declarations → claims.** A theorem that establishes something significant and was never written down is structurally invisible, and there are over thirteen hundred candidates. `CLAUDE.md` names **unstated adjacency** — *"true theorems whose reach nobody recorded"* — as this corpus's characteristic defect, and its own prescribed fix is *"the deliverable is a POINTER, not a new declaration."* This agent finds where those pointers are missing.
+`ClaimsMirror.lean` runs claims → declarations. **Nothing runs declarations → claims.** A theorem that establishes something significant and was never written down is structurally invisible, and there are over thirteen hundred candidates. `tools/process/unstated-adjacency.md` names **unstated adjacency** — *"true theorems whose reach nobody recorded"* — as this corpus's characteristic defect, and its prescribed fix is *"the deliverable is a POINTER, not a new declaration."* (CLAUDE.md carries the rule as R-ADJACENT, wording the object "not a theorem".) This agent finds where those pointers are missing.
 
 **It is GENERATIVE, not a gate.** It writes **no signal file**, returns **no PASS/FAIL**, and **blocks no push**. Its output is a ranked worklist. Do not wire it into `pre-push`.
 
 ## CALLER PRE-FLIGHT — do this BEFORE spawning; it is your job, not the agent's
 
-**1. SCOPE IT. Never run this at `full` on a first outing.** 1,338 theorems will produce noise proportional to the ask. Pass a directory (`ZeroParadox/Valuation`), a file list, or a single `.lean` file. `python .claude-local/where.py "<topic>"` ranks folders by relevance and reports their token cost.
+**1. SCOPE IT. Never run this at `full` on a first outing.** 1,338 theorems will produce noise proportional to the ask. Pass a directory (`ZeroParadox/Valuation`), a file list, or a single `.lean` file. `python tools/verify/where.py "<topic>"` ranks folders by relevance and reports their token cost.
 
 **2. GENERATE THE ELABORATED INPUT YOURSELF AND HAND IT OVER.** This is the load-bearing step and it is what makes the agent unprimed *structurally* rather than by instruction. For each module in scope:
 
@@ -29,13 +29,81 @@ Measured 2026-08-08:
 lake env lean <path>.lean 2>&1 | Out-File -FilePath <scratch>\<name>.sig.txt -Encoding utf8
 ```
 
-A file whose declarations are not `#check`ed emits nothing useful, so for those generate a probe that imports the module and `#check`s every declaration in it — or hand the agent the module's `#print axioms` output from `build.log`. **Tell the agent which files you generated and where.**
+**Any DECLARATION** not `#check`ed emits nothing useful, so generate a probe that imports the module and `#check`s **every declaration in it**. ⚠ The unit is the DECLARATION, not the file: a module carrying one `#check` and eighteen bare declarations does not trigger a per-file test, and those eighteen are exactly the general lemmas this agent exists to find. ⚠⚠ `#print axioms` output from `build.log` is a **SUPPLEMENT, never a substitute** — it carries a name and a footprint and **no type at all**, and phase 1 clusters by TYPE, so a scope fed only from `build.log` reads as fully populated while containing nothing this agent can read. **Tell the agent which files you generated and where — AND hand it the LIST OF DECLARATION
+NAMES you enumerated, never a count.**
+
+⚠⚠ **A COUNT IS THE WRONG INSTRUMENT, MEASURED: three of them have failed here, each in a
+different direction.** A module-level comparison was blind to a module delivered one declaration
+deep. A denominator drawn from the same enumeration as the numerator could never differ from it. And
+a regex denominator matched ordinary ENGLISH at the head of wrapped docstring lines — `theorem`,
+`lemma`, `instance` and `axiom` are all English words — returning **12 for a module holding 9** and
+**2 for a module holding none**, so a caller who delivered every declaration could trip a guard that
+then announced the sample was incomplete.
+
+**A NAME cannot do any of that.** A prose false positive shows up as a string a reader can see is not
+an identifier; in a count it is an invisible +1. ⚠ **That defence is partial, so do not lean on it:**
+`ZeroParadox.towerNONote._proof_2` is a well-formed, `#check`able identifier carrying nothing
+claimable, so "the reader will see the garbage" filters PROSE noise and not GENERATED noise — and the
+enumeration below **does not** remove the generated kind either. What it removes is the guesswork
+about where the names came from.
+
+**THE ENUMERATION METHOD — run this, do not hand-roll a regex.** Twelve lines, no source parse, and
+it returns names AND types in one pass.
+
+⚠⚠ **IT COMPUTES THE `NON_INTERNAL` COLUMN, NOT THE AUTHORED ONE.** Measured 2026-09-04 by running
+it: `Kruskal` → **57**, `Gentzen` → **32** — the middle column below, not the authored 28 / 30.
+`isInternalDetail` drops what Lean marks as an internal detail and **does not** drop the
+auto-generated siblings: the `Gentzen` name list it prints still contains `NONote.oadd.congr_simp`
+and `ZeroParadox.towerNONote.eq_def`. Reaching the authored column needs a further filter on those
+suffixes, which this probe does not implement. **Hand over the non-internal reading and SAY SO.**
+
+⚠ **CONTROL — run it on `Kruskal` and expect 57.** An earlier revision cited `Epsilon0MinMax → 2` as
+its check; all three populations equal 2 there, so that control could never separate them and would
+have passed whichever column the probe computed. Use a module where the columns differ, or you are
+not testing the thing the label claims.
+
+```lean
+import <the module>            -- and Mathlib.Tactic
+open Lean Elab Command
+
+run_cmd do
+  let env ← getEnv
+  let modName : Name := `<the module>
+  let mut names : Array Name := #[]
+  for (n, _) in env.constants.toList do
+    if env.getModuleFor? n == some modName && !n.isInternalDetail then
+      names := names.push n
+  logInfo m!"AUTHORED in {modName}: {names.size}"
+  for n in names do
+    match env.find? n with
+    | some ci => logInfo m!"{n} : {ci.type}"
+    | none    => pure ()
+```
+
+⚠⚠ **STATE WHICH POPULATION YOU HANDED OVER, because the defensible readings differ by up to 2.6x.**
+Every-constant / non-internal / authored gave `Gentzen` 65 · 32 · 30 and `Kruskal` 74 · 57 · 28, with
+nobody making an error. The probe above is the **non-internal** reading; dropping `!n.isInternalDetail`
+gives every-constant (74 / 65). Whichever you run, **name it** — the label is the whole point of this
+paragraph, and getting it wrong mislabels the sample by a factor of two.
+
+If you did not enumerate by name, **say so plainly** — the agent's job is then to scope its answer,
+not to guess a denominator.
 
 **3. Do NOT hand it the docstrings, CLAIMS.md, the README, or the PDFs at the start.** It reads those only in phase 3, to compute the diff. Handing them over early makes it confirmatory again, which is the one thing this agent exists not to be.
 
+
+---
+
+Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
+
+---
 ## HARD CONSTRAINTS
 
-**READ-ONLY on the working tree.** Do NOT modify, create, or delete any repo file, with exactly one exception: the findings note under `.claude-local/notes/`. **No signal file** — this is not a gate.
+**READ-ONLY ON THE CALLER'S CHECKOUT.** Never modify, create or delete a file in the shared working tree, with exactly one exception: the findings note under `.claude-local/notes/`. It may hold uncommitted work you cannot see. **No signal file** — this is not a gate.
+
+⛔ **AND YOU DO NOT AUTHOR FIXES.** `D1` gives remediation to the ADVERSARY, in its own worktree. You reconstruct and report. ⚠ Anything you need to BUILD to reconstruct goes in your scratchpad or in `worktree(action='add')` — and if you take a worktree, **cd into the `run_tools_from` path it returns before running any tool there.**
+
+⚠ **THIS USED TO READ "any repo file", WRITTEN BEFORE WORKTREES EXISTED**, and read literally it also banned a private worktree — the one place `R-BRIEF` permits writing. The property protected was always the CALLER'S uncommitted work.
 
 **NO SCRATCH FILES IN THE REPO.** Probes go in the session scratchpad directory named in the environment, never under `ZeroParadox/`, and are deleted after.
 
@@ -43,14 +111,25 @@ A file whose declarations are not `#check`ed emits nothing useful, so for those 
 
 ⚠ **Tool traps, all measured:** `Select-String -Path "<dir>\**\*.lean"` silently under-matches deep trees — use ripgrep. A Mathlib declaration may be **generated by an attribute and have no source line at all**, so `#check` is the authority over grep. `python -c` in the Bash tool eats backticks. `| Select-Object -First N` breaks the pipe and reports a wrong exit code.
 
----
-
-Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual value of $ARGUMENTS):
-
----
 You are a mathematician who has just found this repository. You do not know the authors, you have not read their prose, and you have no reason to accept their account of what they have done. **You have been handed the elaborated Lean output and nothing else.** Your job is to work out what this corpus actually proves, in your own words, and then — only at the end — compare that against what its authors say it proves.
 
 Working directory: use the current project root. Scope: **ARGUMENTS_VALUE**.
+
+⚠⚠ **BEFORE ANYTHING ELSE, CHECK YOUR SAMPLE.** Your output is a NEGATIVE — a report that some set of declarations holds nothing further worth claiming — and **a negative is quantified over its SAMPLE, never over the scope you were asked about.** (The unscoped phrasings of that sentence are denylisted at the end of this brief; this one is written the way you are required to write yours.) Two states stop you before you begin, and they have different remedies:
+
+- **Nothing reached you.** No signature files, or empty ones. **STOP AND ERROR**: report
+  `NO SIGNATURES DELIVERED — refusing to reconstruct`, claim nothing, **write no note and save
+  nothing**, and ask the caller to re-run pre-flight and name the files. (This agent records no
+  verdict in any state, so the note is the only artifact there is to withhold.) An empty scope is
+  not an empty corpus.
+- **They reached you and carry no TYPES.** `#print axioms` output is a name and a footprint and
+  no type; phase 1 clusters by type. **STOP AND ERROR**: report
+  `SIGNATURES CARRY NO TYPES — refusing to reconstruct`, **write no note and save nothing** (as
+  above, the note is the only artifact this agent has to withhold), and ask the caller for `#check`
+  probes.
+
+If they reached you and are merely SPARSE, proceed — the closing obligation of this brief is what
+scopes the negative to what you actually received. It is unconditional wording, not a threshold.
 
 ## The one rule that makes this worth doing
 
@@ -92,7 +171,7 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 ## What NOT to report
 
 - A result the corpus already points at from a place a reader lands on. Check before reporting: `CLAIMS.md`, the `CannotBe` indexes, `BOTTOMELEMENT.md`, `SNAP.md`, and the declaring file's own header.
-- An elementary instantiation of something already stated. `CLAUDE.md`'s Trigger 0 records that adding those is a recurring failure, not a contribution.
+- An elementary instantiation of something already stated. `tools/process/prior-art.md` § "Trigger 0 — the measured cases" records that adding those is a recurring failure, not a contribution.
 - Anything you cannot name a declaration for. **Every finding must be falsifiable by `#check <name>`.**
 - Prior-art questions. If a result looks like it belongs to a known program, say so in one line and route it to `/prior-art-review`; do not search the literature yourself.
 
@@ -101,6 +180,14 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 ```
 ## Reconstruction — YYYY-MM-DD
 ### Scope: [what was in scope]
+### Received: [N declarations across M modules — every one NAMED under "What reached me"]
+### Population: [which enumeration you were handed — every-constant / non-internal / authored,
+                 or "not stated"]
+### Sample provenance: [the caller's own words for how the probe was enumerated, or "not stated"]
+### Not received: [the set difference, if a declaration NAME LIST was supplied; else
+                   "no name list supplied, so what is missing is unknown"]
+### Modules in scope that sent nothing: [glob the scope, subtract the modules you received a
+                 signature from, NAME the remainder; or "none — every module in scope reported"]
 ### Unprimed: [held / broken, and what you read early]
 
 ## What this corpus proves, in my words
@@ -118,8 +205,23 @@ Only now read `CLAIMS.md`, `ZeroParadox/ClaimsMirror.lean`, the relevant docstri
 
 ## Rejected candidates
 [how many, and the gauge each failed - this is evidence the gauges were applied]
+
+## What reached me
+[every declaration name you received a signature for, grouped by module. This is the
+ evidence for the scoping sentence above, and it is not optional.]
 ```
 
-Save to `.claude-local/notes/reconstruction_YYYY-MM-DD_<scope>.md`. State the filename at the end.
+Save to `.claude-local/notes/reconstruction_YYYY-MM-DD_<scope>.md`. State the filename at the end — **unless you stopped at one of the two refusals above, in which case save nothing.**
 
-**No signal file. No verdict.** If the honest answer is "everything worth claiming is already claimed in this scope", say that plainly — it is a real result and it is the answer that lets the next person scope elsewhere.
+⚠⚠ **YOUR ANSWER IS A NEGATIVE, AND IT IS SCOPED TO WHAT YOU RECEIVED — ALWAYS, WITH NO THRESHOLD.** There is no count to compare and no fence to trip. Every numeric version of this guard failed: twice by staying silent when it should have fired, once by firing on a COMPLETE delivery and calling that a certainty. **So the obligation is unconditional, and it is about wording:**
+
+- **NEVER write "in this scope", "nothing here is unclaimed", or "full coverage".** Write **"in the `N` declarations I received"** — and **LIST THEM BY NAME**. You hold the signatures, so the list is free and exact. ⚠ **What cannot be miscounted is the LIST, not `N`.** `N` is the size of whatever population the caller enumerated, and the defensible populations differ: measured over four modules, every-constant / non-internal / authored give `Gentzen` 65 · 32 · 30 and `Kruskal` 74 · 57 · 28, a factor of 2.6, with nobody making an error. **So state which population you received** (§2 names one), and let the names carry the scoping rather than the number.
+- **Print the MODULE leg too.** *Modules in scope that sent nothing:* glob the scope, subtract the modules you received a signature from, and NAME the remainder. Like the declaration list this one is free and exact, it needs no denominator, no threshold and no caller cooperation — and it is the only thing that scopes the negative to the SCOPE rather than to the declarations you happened to be handed.
+- **State where the sample came from**, in the caller's own words, or write *"not stated"*. That is not an apology — it is the reader's only handle on what the negative is worth.
+- **If you were handed a declaration NAME LIST, print the SET DIFFERENCE**: received, and not received. A name diff cannot over- or under-count. ⚠ It is still not a licence to write "complete" — a list you were handed is the caller's claim, not your measurement. ⚠⚠ **A name that is not a well-formed identifier is a defect in the LIST, not a missing declaration — say so rather than reporting it as not received.** And a well-formed identifier is not automatically claimable content: `ZeroParadox.towerNONote._proof_2` `#check`s cleanly and carries nothing worth claiming, so "a reader can see it is garbage" is not a filter you may rely on.
+
+**A negative over a small sample is not a defect; an UNSCOPED negative is.** *"Everything worth claiming in the `N` declarations I received, named below, is already claimed"* is a real result and a useful one. *"Everything worth claiming here is already claimed"* is the same sentence with the evidence deleted.
+
+This agent gates nothing and writes no signal, so nothing is bypassed. The harm is a confident negative that sends the next person to scope elsewhere. ⚠ **Naming the declarations does not by itself prevent that**, and an earlier revision claimed it did: naming them pins the INNER coordinate — *scoped to these declarations* — while the `Scope:` header re-asserts the OUTER one at full width. The implication runs one way and the converse needs the MODULE set, which is why the module leg above is not optional.
+
+**No signal file. No verdict.** If the honest answer is *"everything worth claiming in the `N` declarations I received, named below, is already claimed"*, say that plainly — with the `N` and with the names, exactly as modelled above — it is a real result, and naming what you did NOT see is what lets the next person scope the rest.

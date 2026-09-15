@@ -1,6 +1,7 @@
 """
-Build ZP-C Illustrated Companion (v2.7)
-v2.6: vocab fix: null state → ⊥.
+Build ZP-C Illustrated Companion (v2.8)
+v2.8: AX-1 SPLIT (Tim, 2026-09-14), companion sync with ZP-C v1.22: AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The key result box ended "The Binary Snap is no longer assumed — it is derived.", which denied the assumption that remains; it now says the shape is derived and that the Snap happening is still a commitment. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the key-result heading "The Binary Snap Is a Proven Theorem" was not scoped when its box was; it is now "The Shape of the Binary Snap Is a Proven Theorem", matching the box's last sentence that the Snap happening is still a commitment.
+v2.6:vocab fix: null state → ⊥.
 v2.5: "First Atomic State Q = (0,1)" → "minimum nonzero state ε₀, Q = (0,1)" in JSD section body prose.
 v2.4: K-20 continued — "Lemma L-INF (Informational Extremity of ⊥)" → "Lemma L-INF (Unbounded Surprisal of ⊥)" in body prose (missed by K-20 diagram-only fix).
 v2.3: K-20 vocabulary fix — "First Atomic State" → "ε₀" in section III diagram label.
@@ -196,7 +197,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.7'
+VERSION = '2.8'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -400,7 +401,7 @@ def build():
     # descriptions so a general reader can follow the derivation chain without
     # consulting the formal documents.
     E.append(key_result_box(
-        'Key Result: T-SNAP — The Binary Snap Is a Proven Theorem',
+        'Key Result: T-SNAP — The Shape of the Binary Snap Is a Proven Theorem',
         'The derivation chain: the incompressibility threshold P₀ produces a configuration with '
         'infinite surprisal (L-INF). A configuration with infinite surprisal cannot be a static '
         'stored description — it must be a live computation (DA-1, ZP-E). Any live computation '
@@ -408,7 +409,8 @@ def build():
         'No Turing machine program can produce any output without passing through such a non-null '
         'intermediate state. And any non-null state change starting from ⊥ is precisely the '
         'Binary Snap (ZP-A D2). ZP-E closes the chain as Theorem T-SNAP. '
-        'The Binary Snap is no longer assumed — it is derived.'
+        'The shape of the Binary Snap is no longer assumed — it is derived. '
+        'That the Snap happens is still a commitment of the framework, not one of its theorems.'
     ))
 
     print(f'Building: {out_path}')

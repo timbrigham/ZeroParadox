@@ -60,6 +60,18 @@ COST     Tim is this project's mathematician of record by decision, not by train
          caught what the gates did not. This governs REPORTS, never the corpus — it is not
          licence to add prose to `.lean` files.
 
+## R-LEDGER  The verdict ledger is a STATE ENGINE. Query it BEFORE you act.
+TRIGGER  you are about to commit, push, merge, tag, run a review gate, or re-run any checker.
+RULE     ask what is OWED, then do only that: `gitRobot admission(action=...)` for the required
+         set, then `verdictLedger progress(action=..., ref=..., admission=[...])`, which names
+         every unsatisfied step, its remedy, and what is already green. A verdict binds
+         `(step, path, git_blob_id)` — a fact about BYTES — so a step already PASSING for the
+         content in hand is ANSWERED, and re-running it is not diligence. Never learn what is owed
+         from a refusal that a query would have stated.
+COST     a merge re-derived 17 recorded passing verdicts and blocked on the one it could not
+         re-append; the 4KB query naming the two real gaps was never run.
+READ     tools/process/pipeline.md
+
 ## R-PRECOMMIT  `batch.py precommit` before every commit. `/batch` for anything multi-site.
 TRIGGER  you are about to commit, push, or start multi-site work.
 RULE     `python tools/verify/batch.py precommit` before EVERY commit — it runs the four
@@ -156,9 +168,16 @@ RULE     (1) read `ZeroParadox/MANIFEST.md`, the by-folder index of the whole co
          the claim, then READ THE HITS. Do BOTH: searching the CLAIM finds paraphrases,
          searching the NAME finds every citing site, and the identifier sweep is the
          mechanical one, so it is the one that cannot be talked past.
-         (3) LOAD THE FOLDER THE FILE LIVES IN — `where.py "<Tim's words, VERBATIM>"` and load
-         what it ranks first. Not the file, not neighbours picked by name: the FOLDER, because
-         the house style lives across it and a manifest line cannot show you a class's SHAPE.
+         (3) LOAD THE FOLDER THE FILE LIVES IN — `python tools/verify/where.py "<Tim's words,
+         VERBATIM>"`. Not the file, not neighbours picked by name: the FOLDER, because the house
+         style lives across it and a manifest line cannot show you a class's SHAPE. ⚠ THE FOLDER
+         IS THE ANSWER, NOT THE RANKING: `where.py` is a shortlist over TERM DISTINCTIVENESS, so
+         it degrades when the request is process-shaped rather than mathematical — measured
+         2026-09-01, Tim's verbatim sentence about "the scale files" ranked `Vendored/` 1.00 and
+         never listed `Valuation/`, where the file lives. Its null is UNINFORMATIVE. When it and
+         the file disagree, load the file's own folder; and when the folder is too big to load
+         whole, extract the PATTERN from its siblings rather than skipping the step — the seven
+         ride-along pairs in `Valuation/` settled a house-style question in one grep.
 COST     measured on a docstring edit made after grepping three theorem names: the wording
          survey found 4 citing sites and `grep -n "l_inf"` returns 9, and the appended
          paragraph re-committed an overclaim that had ALREADY been corrected — in the very
@@ -320,7 +339,7 @@ COST     `IO.println` of hand-written English is tier 3 wearing tier 2's clothes
 READ     tools/process/prose-to-lean.md
 
 ## R-ADJACENT  When the answer is already proved, the deliverable is a POINTER, not a theorem.
-TRIGGER  a question arose and you are about to write a new declaration to answer it.
+TRIGGER  you are about to answer a question with a new declaration, or with a NEW TRACKED `.md`.
 RULE     ask in order: is it proved in this corpus already? is it in Mathlib? is the only
          gap that nobody wrote it where the question gets asked? If the last, write it
          THERE — ONE LINE of consequence at the site, plus a pointer to the canonical home.
@@ -349,9 +368,22 @@ COST     this was re-derived four separate ways in one session; and "nothing els
 READ     tools/process/determinism.md
 
 ## R-TWOPOLE  Every face of the bottom has TWO readings. Build both, concurrently.
-TRIGGER  you are starting fresh development, a face is stuck, or a claim needs an extra
-         assumption to close.
-RULE     run both, never in sequence: Q1 — where is the zero that runs to infinity? Q2 —
+TRIGGER  ANY work on a public-facing surface, READING INCLUDED (Tim, 2026-09-14: "something that we
+         always need to apply"): a `.lean` file, a PDF build script or its rendered PDF, README /
+         GUIDE / CLAIMS / register / any root `.md` — and anything written ABOUT one: a report, a
+         question option put to Tim, an agent brief, a commit message. NO TOPIC LIST: the old
+         trigger named directions, poles, min/max, and a "retired" → "never retired" flip passed
+         straight through it; a list of topics is a category, and categories leak.
+RULE     FIRST load the five `*CannotBe.lean` indexes whole — `ZeroParadox/BottomCannotBe.lean`
+         `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` `ZeroParadox/Order/SnapCannotBe.lean`
+         `ZeroParadox/Category/ChoiceCannotBe.lean` `ZeroParadox/Computability/ComputationCannotBe.lean`
+         — once per session and again after compaction. Before you write, delete, negate or reverse
+         ANY claim — acting on a review finding and restating a ruling included — write it in the
+         OTHER chart: if it holds there too, the defect is a MISSING CHART and the fix ADDS that
+         chart — a flip or a delete writes the opposite one-chart sentence, the next round's finding.
+         Before ONE sentence is applied at more than one site, sweep the corpus for its negation
+         (`python tools/verify/check_paths.py --full --claim`) and show Tim the exact sentence.
+         Then run both, never in sequence: Q1 — where is the zero that runs to infinity? Q2 —
          what is the one-way arrow, and what does it look like run BACKWARDS? If either has
          no answer, the piece is not part of the framework yet; record that as a finding.
          Run it on METHOD too: state the claim from the other side, and ask what words the
@@ -360,6 +392,15 @@ RULE     run both, never in sequence: Q1 — where is the zero that runs to infi
          rather than forcing a second pole. Call out where Tim's read is load-bearing.
 COST     a missing pole shows up as a bridge you cannot formalize — ZP-K implemented only the
          EMPTY reading, so the step to forced execution stayed a commitment rather than a theorem.
+         ⚠ RE-KEYED 2026-09-13 (Tim) after ≥8 recorded one-face collapses, most written BY A FIX: ε₀'s
+         "minimum step" struck in both directions; ZP-J rounds 3→4 ("a lattice can fail the class" →
+         "an instance carries it informatively"); § X.III deleted for "⊥'s valuation is ∞, not zero";
+         and round 5 found "each layer requires less" where the lower class is strictly STRONGER and
+         its laws-become-theorems reading is also true. Trigger (c) alone never fired at the FIX.
+         ⚠ RE-KEYED AGAIN 2026-09-14 (Tim): Tim's "split AX-1" was paraphrased into a question
+         option as "the occurrence half was NEVER retired" (the corpus always said retired, with
+         occurrence stated separately) and two agents applied it at ~26 sites. It sat outside
+         BOTH the topic list and the "edit a sentence" action, so the trigger is now the surface.
 READ     tools/process/two-pole-test.md
 
 ## R-REVALIDATE  A sentence fixed three times is a CLAIM defect. Measure it; do not redraft.
@@ -380,7 +421,15 @@ READ     tools/process/claim-revalidation.md
 ## R-NOTINLIB  "Not in the library" is a CLAIM. So is "this is OPEN". Probe both.
 TRIGGER  you are about to write that anything is ABSENT or OPEN — in Mathlib OR IN THIS CORPUS:
          "not in Mathlib" · "no instance exists" · "no such X is claimed" · "would need a
-         bridge" · "it is open" · any dated survey negative. A RETRACTION counts.
+         bridge" · "it is open" · any dated survey negative. A RETRACTION counts. ⚠⚠ AND SO DOES
+         A FIX: "swept" · "corrected everywhere" · "no other sites" · "the last one" · any claim
+         that something is NO LONGER PRESENT. **A post-fix completeness claim is an absence claim
+         wearing work clothes**, and this list is a DENYLIST, so it was porous exactly there.
+RUN      before writing any of them about a CLAIM, sweep the wording you DELETED, not the one you
+         wrote: `python tools/verify/check_paths.py --claim "<deleted phrasing>"` — `.md` + `.lean`
+         + tracked `.py` + the RENDERED PDFs in one pass, printing which surfaces it covered. The
+         new phrasing appears only where you put it, so grepping it returns one hit and always
+         reads clean.
 RULE     a failed `#synth` or grep is evidence about YOUR PROBE, never about the library. Read
          the `CLAIMS.md` row before assigning a status, and CITE it; `#check` is the authority.
          Run THREE phrasings varied by AXIS, never synonyms — POLARITY (how the corpus would say
@@ -390,11 +439,35 @@ RULE     a failed `#synth` or grep is evidence about YOUR PROBE, never about the
          corpus, and "not in X" is not "not anywhere" — say which set you searched.
 COST     three false negatives shipped into docstrings as measured fact; and an UNDERCLAIM is
          invisible to every other gate, so a retraction is where this fires and nothing else does.
-         Measured 2026-08-27: `PROCESS_V2.md does not exist anywhere` reached a commit message,
-         from a grep that `grep -v`'d the one directory holding it, then an `ls` of a directory
-         that never had it. Both probes were honest; the conclusion added a quantifier neither
-         earned. The cited sections were real too.
+         Twice, a quantifier neither probe earned reached a commit message — the second time AFTER
+         A FIX, with both prose gates hand-searching and each honestly reporting clean over a scope
+         it had chosen itself. A tool that takes the scope out of the searcher's hands is the
+         entire difference.
 READ     tools/process/not-in-the-library.md
+
+## R-ZERONULL  Zero and null are different answers. Make the VALUE carry the difference.
+TRIGGER  you are about to RETURN, RECORD or BRANCH ON an empty, zero, missing or unreadable
+         result — an early `return True` / `return 0` / `return []` on absent input, or a
+         consumer testing one. Not "when something is ambiguous": that is a category and it
+         leaks. The action is an empty value crossing a boundary.
+RULE     ask ONE question — does the empty branch return a value that DIFFERS from the
+         satisfied branch, or only a different MESSAGE? **If only the prose differs it is a
+         defect**, because consumers branch on the value and nobody reads the string. Fix it
+         with a distinct sentinel, a second element, or a distinct status — never a comment.
+         `owing_paths` returns `None` not an empty set; `prepush_verdict` returns
+         `(total, missing)`; the ledger keeps six statuses and lets none collapse. ⛔ FENCE
+         (Tim): this binds only where the empty answer is LOAD-BEARING FOR A DECISION. An
+         advisory input whose absence changes nothing is exempt — forcing a distinction there
+         is noise. ⚠ Then ask what the CONSUMER defaults to: an honest `0` summed by a caller
+         testing non-zero is still "nothing wrong". CONSTRUCT the unreadable state and RUN it.
+COST     four sites solved this independently and four more still carry it. `check_ssot`
+         returned `True, "no ssot.json in tree"` for months — the more complete the coverage
+         looked, the less had been read — sitting two functions below `check_purity`, which
+         had the identical case right with "(failing closed)" in its message. Found by
+         executing, after being read past repeatedly. ⚠ NOT `R-NOTINLIB` (that is the PROSE
+         form) and NOT `DC-44` (one value, wrong object — its detector agrees perfectly here,
+         because both computations return the same bytes).
+READ     .claude-local/DEFECT_CLASSES.md
 
 ## R-LOOPCAP  Stopping is a decision about SEVERITY, never a wait for silence.
 TRIGGER  a review gate has returned findings and you are deciding whether to iterate again.
@@ -404,11 +477,20 @@ RULE     ask only: did this round find anything BEDROCK? BEDROCK — a violated 
          hedging, wording — gets 2, then STOP and push normally. Run `gate_round.py show` for
          the live caps; never maintain a prose copy of them. A STOP-ORDINARY reviewer WRITES
          its signal, so nothing is bypassed. EDIT AFTER A STOP ⇒ RE-SIGN; do not want another
-         round ⇒ do not edit. Prose about PREVIOUS STATES is redundant — apply the strip test,
-         state the live rule positively, and let the commit message narrate.
+         round ⇒ do not edit. AN ARC ENDS WHEN ITS GATES ARE DISCHARGED, NOT WHEN ITS CONTENT
+         MERGES: a failed gate advances the ROUND, and never starts a new arc — so a commit
+         landing mid-arc resets nothing, and the counter is the arc's, not the commit's.
+         Prose about PREVIOUS STATES is redundant — apply the strip test, state the live rule
+         positively, and let the commit message narrate.
 COST     the cap's licence assumes findings stay outstanding; acting on them creates NEW
          unreviewed prose — four of one round's six findings landed in the one file no gate
          had seen, which existed only because it was edited after the gates finished.
+         ⚠ MEASURED 2026-09-03 ON THE KRU-1 ARC, AND IT IS THE SHARPEST EVIDENCE THIS CAP
+         HAS: across five rounds, THREE OF THE LAST FOUR BEDROCK FINDINGS WERE INTRODUCED BY
+         THE PREVIOUS ROUND'S FIX and were absent from the original — an arrow direction, an
+         import-closure leg that did not cover the route it was written for, and a
+         declaration counter that then failed in the opposite direction. Iterating is not
+         free convergence; each round writes the next round's defect.
 READ     tools/process/review-loop-cap.md
 
 ## R-TRUNC  Never truncate a hook-running command; never write a `--no-verify` fallback.
@@ -447,8 +529,8 @@ RULE     `stage(paths=['a.lean','b.md'])` — the specific paths you edited. The
          `.claude-local` is exempt and bulk staging is its documented flow.
 COST     background agents write to this checkout concurrently, so the tree is not a stable
          snapshot — a review agent's scratch probe was swept into a commit that way and is in
-         the permanent history. `gitRobot.stage` now refuses `-A` outright, so there is nothing
-         left to remember.
+         the permanent history. `gitRobot.stage` refuses `-A` on the MAIN repo — that half is
+         enforced, not remembered; the `.claude-local` exemption in the RULE above still is.
 READ     tools/process/staging.md
 
 ## R-ER  Editorial review completes BEFORE the commit that touches document prose.
@@ -646,8 +728,8 @@ RULE     ask: is this the CENTRAL claim of its section, or infrastructure for so
          Readable names are ADDITIVE, never eliminative: CC-2 is "the Quine atom (CC-2)",
          glossed once as the self-containing bottom; MC-1 is "the bottom family" and gets NO
          new readable name, because its object already has one — the diagonal fixed point.
-         Keep every formal handle; never rename or remove an identifier. AX-1 is Theorem
-         T-SNAP — never call it an axiom.
+         Keep every formal handle; never rename or remove an identifier. AX-1 is retired:
+         its SHAPE is Theorem T-SNAP (never an axiom); its OCCURRENCE is a separate commitment.
 COST     the prefixes go stale as status changes and the label then misdescribes what is
          proved: CC-2's "Conditional Claim" outlived its own upgrade, and MC-1's numerical
          identity is RETIRED as ill-typed — `x = y` across distinct categories was never a
@@ -678,7 +760,8 @@ RULE     dependency order: **ZP-A** (lattice) → **ZP-B** (p-adic) → **ZP-C**
          not novel. **AX-B1 is the framework's ONE substantive modelling commitment** —
          discrete Boolean existence, not a continuum of partial states — so never call it
          "directly verifiable" or "not a novel commitment"; the `decide` proof only checks
-         the two states are distinct GIVEN the two-element type. AX-1 is Theorem T-SNAP.
+         the two states are distinct GIVEN the two-element type. AX-1 is retired (Tim,
+         2026-09-14): its shape is Theorem T-SNAP, its occurrence the occurrence commitment.
 COST     the ZP-C forcing lemmas discharge the no-half-state worry but force only the
          >=2-outcome lower bound; the residual commitment is DISCRETENESS, which they do not
          eliminate and which the reals lack — the snap fails there (`f_snap_impossible`).
@@ -697,8 +780,7 @@ COST     overwriting is safe only because `.claude-local` is a repo, and that is
          and an unstarted item that vanished for five revisions.
 
 ## R-CAPTURE  Capture a high-value insight immediately; the POINTER is the deliverable.
-TRIGGER  a structural connection, a cross-domain identification, a derivability conjecture, a
-         purity result, or anything that partially closes an open question surfaces.
+TRIGGER  you are about to write a note, or you have written one and nothing points at it yet.
 RULE     write `.claude-local/notes/<topic>_YYYY-MM-DD.md` now, without being asked: the
          insight in plain language, the precise claim, what is formal versus conjectural, the
          status, and links to related notes. THEN WIRE IT to the artifact — a line in the
@@ -732,8 +814,8 @@ TRIGGER  you are starting a session, or about to make your first edit.
 RULE     all Lean and PDF work happens on `illustrated`; `main` is production/public;
          `lake_testing` is RETIRED — never switch to it or push to it. At session start
          `fetch()` then `merge(branch='origin/main', ...)` before making any change, so you
-         never edit against a stale base. `merge` is REFUSED while the tree is dirty — that is
-         deliberate, and the answer is to commit first or take a worktree, never to force it.
+         never edit against a stale base. `merge` CARRIES a dirty tree forward and names it in
+         `carried_forward`; a STAGED change is refused by GIT. `switch`/`rebase`/`squash` refuse.
          After ANY merge, `read(op='diff', args=['--check'])` to confirm no conflict markers
          survive. Both `.lean` files and PDF build scripts are first-class here.
 COST     a file with unresolved conflict markers commits SILENTLY and corrupts the document.

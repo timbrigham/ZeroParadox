@@ -58,11 +58,14 @@ nearly tautological. Carlström takes the same antecedent to a substantive concl
 degenerates.** So this is not a weaker form of one implication; it is a different, and much smaller,
 statement off a shared hypothesis. Do not present the collapse as a framework finding.
 
-His remark that *"0 can't be inverted unless 0 ∈ S, but if that is the case … S⊙A is trivial"* (PDF
-p. 6, printed p. 4) motivates `wheelFrac_fork_open`'s `0 ∉ S` hypothesis. Two points on that quotation:
-it is stated there of the *ordinary* ring of fractions `A×S/≈_S`, with the corresponding **wheel**
-statement a separate sentence on printed p. 5; and Carlström writes the wheel of fractions **`S⊙A`**,
-not `A⊙S`. The substance — `0 ∈ S` trivializes, so exclude it — is his.
+His remark that *"Clearly, 0 can't be inverted unless 0 ∈ S, but if that is the case, then ∼_S is the
+improper relation, so that `A × S/ ∼_S` is trivial"* (PDF p. 6, printed p. 4) motivates
+`wheelFrac_fork_open`'s `0 ∉ S` hypothesis. Two points on that quotation. It is stated there of the
+*ordinary* ring of fractions `A × S/∼_S` — the object named inside the quote — with the corresponding
+**wheel** statement a separate sentence on printed p. 5: *"unless 0 ∈ S, but then S is improper and
+`⊙_S A` is trivial"*. And the wheel of fractions is Carlström's **`⊙_S A`**: a PREFIX operator with the
+submonoid SUBSCRIPTED, as in his `⊙_∅(ℤ/2ℤ)` and `⊙_{S₀}A`, which is the form this corpus uses.
+The substance — `0 ∈ S` trivializes, so exclude it — is his.
 
 ## Standard names for what is written by hand
 
@@ -86,6 +89,40 @@ which is the source actually read; **the deck** credits Kalman 1958 (slide 3) an
 (slide 5), **neither of which has been opened here**. Cite San Martín for the lineage, or read the
 originals before citing them directly. Searched 2026-08-02: no prior art located for the bare
 `InvolutiveFork` abstraction standing alone, nor for the μ/ν-versus-2-cycle contrast.
+
+## The collapsed side, and why it needed an inhabitant (2026-09-13)
+
+Until this date `InvolutiveFork` had a witness for exactly one of its two states. `wheelFork_not_collapsed`
+inhabits the OPEN side; nothing inhabited the COLLAPSED one, so `fixed_pole_forces_collapse` had **no
+witness for its own hypothesis** and could have been true vacuously for all the corpus showed. `R-TWOPOLE`
+is the rule that asks for both; the gap survived because the open side's docstring defends non-vacuity
+convincingly and one pole reads as enough.
+
+Mathlib supplies the missing one and no construction is needed. `inv_zero` — the junk-value convention
+`(0 : G)⁻¹ = 0` on any `GroupWithZero` — **is** the fixed-pole condition, and `inv_inv` is the involution
+law. So the example takes `dual := Inv.inv`, `pole₀ := 0`, and discharges `Collapsed` by `inv_zero`.
+
+⚠ **`dual` and `pole₀` are pinned in the statement**, mirroring `Wheel.lean`'s `gauge_strong`. The bare
+`∃ F, F.Collapsed` is satisfied on any inhabited type by the identity involution at a single point, so it
+would witness nothing — the genericity trap `R-TOLEAN` names. Pinning is what makes the existential say
+something about *inversion* rather than about *forks*.
+
+**The reading.** This is what totalising division looks like when you adjoin nothing: the reciprocal of
+zero lands on the zero already there, so the fork's two ends are the same point and there is no distinct
+infinity. Bergstra, Hirshfeld & Tucker (arXiv:0901.0823, abstract) define a meadow as *"a commutative ring
+with a total inverse operator satisfying two equations which imply `0⁻¹ = 0`"* and record that *"all fields
+and products of fields can be viewed as meadows"* — so the convention Mathlib already uses is that
+literature's, and the contrast needs no meadow to be built.
+
+The wheel takes the other branch: it adjoins `∞` and `⊥`, keeps them distinct, and pays for it in
+distributivity. `ZeroParadox/Algebra/Wheel.lean` § V carries both directions of why no carrier takes both
+deals — the forward leg (identifying `∞` with `⊥` forces triviality) and the reverse (the meadow equation
+`/0 = 0` forces triviality), each with controls showing the hypotheses are load-bearing on `ZPWheelElem`.
+
+⚠ **Not a claim that a meadow is a collapsed wheel.** It is not: a meadow stays a commutative ring, and
+`ZPWheelElem` is not one. The shared object is the `InvolutiveFork` abstraction, which both instantiate
+with opposite verdicts. Bergstra and Ponse (1406.6878, § 4) state that no structural connection between
+the two constructions has been found; nothing here supplies one.
 
 ## Unstated adjacency — four in-corpus instances, none wired up
 

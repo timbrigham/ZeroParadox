@@ -68,7 +68,7 @@ import report                                          # noqa: E402
 PROBE_FILE = os.path.join(REPO, "ZeroParadox", "Order", "Snap.lean")
 # A POV DENIAL: the class documented as never baselineable, so a suppression here is always a bug.
 DENIAL = "\n-- This is NOT the snap, per `t_snap_derived`.\n"
-ROUND_STATE = os.path.join(PRIV, "gate_round.json")
+ROUND_STATE = os.path.join(REPO, "gate_round.json")   # moved out of PRIV 2026-09-03
 
 
 def sh(*args):
@@ -413,6 +413,85 @@ def check_exemption_completeness():
     return rows, bad
 
 
+def check_registry_router_agreement():
+    """The ledger's `rely` SCOPE and the router's `/rely` PREFIXES must be the same set.
+
+    ⚠⚠ TWO HAND-MAINTAINED LISTS DESCRIBING ONE FACT, WHICH IS THE SHAPE THIS FILE EXISTS FOR.
+    `batch.ROUTING` says which prefixes route to `/rely`; `required.v2.json`'s `types.rely.scope`
+    says which paths that step is ACCOUNTABLE for. An exemption is priced on the replacement gate
+    actually covering the files — `batch.py`: *"That re-route is the entire warrant for the
+    exemption."* — so a prefix in the router and absent from the scope is an exemption nobody pays
+    for, and the ledger reports the gate green over files it never counted.
+
+    ⚠ MEASURED, NOT THEORISED, AND TWICE ON ONE DAY. 2026-09-01: `tools/process/` had been in
+    ROUTING, in `EXEMPT_PREFIXES`, and warranted by `check_exemption_completeness` for eleven days
+    while the registry scope listed `tools/verify/*` alone — so `coverage_gap` for `rely` returned
+    63 paths, none of them the ones the prose gates had excluded on its behalf. The fix for THAT
+    added `tools/process/*` and missed `.github/workflows/*`, the third routed prefix, **in the same
+    commit whose own note warned that a third prefix would inherit the identical hole**. A sentence
+    telling the next person to keep two lists equal was written and broken by its author inside one
+    commit. That is the whole argument for deriving the obligation instead of restating it.
+
+    ⚠ DIRECTION MATTERS AND BOTH ARE REPORTED. Router-not-in-scope is the fail-open (exempt,
+    unpaid). Scope-not-in-router is the reverse: the step is held accountable for files nothing
+    routes to it, which cannot let bad work through but makes the step permanently unsatisfiable.
+    Neither is silent."""
+    import importlib
+    import json as _json
+    import batch
+    importlib.reload(batch)
+
+    rows, bad = [], 0
+
+    def row(label, ok, verdict):
+        nonlocal bad
+        if not ok:
+            bad += 1
+        rows.append((label, ok, verdict))
+
+    # The router's side: every ROUTING pattern whose gate is `/rely`, as a bare prefix.
+    routed = set()
+    for pat, gate, _why in batch.ROUTING:
+        if gate != "/rely":
+            continue
+        p = pat.pattern.lstrip("^").replace("\\.", ".").rstrip("/")
+        routed.add(p.lower())
+
+    # The registry's side: `types.rely.scope`, with the trailing glob removed.
+    reg_path = os.path.join(BASE, "required.v2.json")
+    try:
+        with io.open(reg_path, encoding="utf-8") as fh:
+            reg = _json.load(fh)
+        scope = reg["types"]["rely"]["scope"]
+    # ⚠ TypeError too: a registry that parses to a LIST, or `scope: null`, subscripts wrongly rather
+    #   than raising KeyError. The process still failed closed without it, but through `main`'s
+    #   bare `finally` — so the designed row and its remedy text never printed, which is a checker
+    #   that is right and unreadable. RLY42-3.
+    except (OSError, ValueError, KeyError, TypeError) as e:
+        # ⚠ FAILS CLOSED. An unreadable registry must not read as "the two agree".
+        row("registry readable", False,
+            "*** could not read types.rely.scope from required.v2.json (%s) — this check cannot "
+            "pass on an absent input ***" % e)
+        return rows, bad
+    declared = {s[:-2].rstrip("/").lower() if s.endswith("/*") else s.rstrip("/").lower()
+                for s in scope}
+
+    for p in sorted(routed - declared):
+        row("routed, NOT in rely scope: %s" % p, False,
+            "*** ROUTED TO /rely AND OUTSIDE ITS DECLARED SCOPE — the prose gates exempt this "
+            "prefix on the strength of /rely covering it, and the ledger does not count it. Add "
+            "'%s/*' to types.rely.scope in required.v2.json ***" % p)
+    for p in sorted(declared - routed):
+        row("in rely scope, NOT routed: %s" % p, False,
+            "*** DECLARED SCOPE WITH NO ROUTER ENTRY — /rely is held accountable for files nothing "
+            "routes to it, so the step cannot be satisfied. Add it to batch.ROUTING or drop it "
+            "from the scope ***")
+    if not (routed ^ declared):
+        row("router and registry agree", True,
+            "%d prefix(es), same set both sides: %s" % (len(routed), ", ".join(sorted(routed))))
+    return rows, bad
+
+
 def check_routing_enforcement():
     """Does the `/rely` router still BLOCK — the property the exemption is PRICED on?
 
@@ -632,18 +711,52 @@ def check_routing_enforcement():
         finally:
             sys.stdout = _real_stdout
         _tot, _miss = batch.prepush_verdict()
-        _r_cases.append(("the producer records its own count", _tot == 1 and not _miss,
-                         "registry reports %d, missing %r" % (_tot, _miss)))
+        # ⚠ `B4`: ASSERT ABOUT `routing`, NOT ABOUT EMPTINESS. This read `not _miss`, which was right
+        # while `_EXPECTED` held one name. It now holds seven, and this frame deliberately exercises
+        # ONLY the routing producer — so the other six are absent for the correct reason, and
+        # demanding an empty `missing` here would fail a healthy registry. The property under test is
+        # "the producer wrote its own row", which is exactly `routing not in missing`.
+        _r_cases.append(("the producer records its own count",
+                         _tot == 1 and "routing" not in _miss,
+                         "registry reports %d, routing recorded (other legs not exercised in this "
+                         "frame: %r)" % (_tot, _miss)))
 
         batch.verdict_reset()
         _tot0, _miss0 = batch.prepush_verdict()
-        _r_cases.append(("an unreported step is MISSING, not zero", _miss0 == ("routing",),
-                         "empty registry reports missing=%r" % (_miss0,)))
+        # ⚠⚠ `B4`, AND THE DUPLICATION BELOW IS DELIBERATE — IT IS THE CONTROL, NOT A MIRROR DEFECT.
+        # This used to assert `_miss0 == ("routing",)`, which was correct while `_EXPECTED` held one
+        # name and six other gating legs rode an annihilable local total in `cmd_prepush`. Comparing
+        # against `batch._EXPECTED` alone would be TAUTOLOGICAL: `prepush_verdict` computes `missing`
+        # BY ITERATING `_EXPECTED`, so an empty registry always reports exactly it — the assertion
+        # would still pass if someone emptied the tuple. So the expected set is written out
+        # INDEPENDENTLY here and required to agree. Two statements of one list, and the disagreement
+        # is the signal; that is the only shape that catches a bar being quietly lowered.
+        # ⚠⚠ EVERY ENTRY IS A LITERAL — `RLYB4-2`, AND THE FIRST VERSION OF THIS LINE GOT IT HALF
+        # RIGHT, WHICH WAS WORSE THAN OBVIOUS. It read `... + tuple("signal:%%s" %% _s for _s in
+        # batch.REVIEW_STEPS)`, deriving the signal half from THE SAME SOURCE `_EXPECTED` derives it
+        # from — so for exactly the two entries `B4` added it was tautological and asserted nothing.
+        # Measured: `REVIEW_STEPS = ()` drops two gating legs, `_EXPECTED` goes 7 -> 5, and this row
+        # reported "empty registry reports all 5 expected step(s) missing" and called it **ok**.
+        # Not a hypothetical edit — `prior_art` was removed from that tuple earlier the same day.
+        #
+        # ⭐ THE DUPLICATION IS THE CONTROL. A second, independently-written statement of the
+        # expected set is the only thing that can disagree with the first; a derived copy agrees by
+        # construction and therefore checks nothing. If a legitimate change to `REVIEW_STEPS` turns
+        # this row red, THAT IS THE ROW WORKING — update it deliberately, in the same commit, and do
+        # not re-derive it to make the red go away.
+        _need = ("routing", "purity", "ssot", "pdf_coupling", "prior_art_attrib",
+                 "signal:editorial", "signal:adversary")
+        _r_cases.append(("an unreported step is MISSING, not zero",
+                         _miss0 == tuple(batch._EXPECTED) and set(_need) == set(_miss0),
+                         "empty registry reports all %d expected step(s) missing: %r"
+                         % (len(_miss0), _miss0)))
 
         batch.verdict_reset()
         _ = batch.routing_verdict({}, None) * 0          # the RLY28-1 neuter, verbatim
         _tot2, _miss2 = batch.prepush_verdict()
-        _r_cases.append(("discarding the return value is INERT", _tot2 == 1 and not _miss2,
+        # ⚠ Same `B4` correction as the first case: `routing` is the leg this frame exercises.
+        _r_cases.append(("discarding the return value is INERT",
+                         _tot2 == 1 and "routing" not in _miss2,
                          "registry still reports %d after the caller annihilated it" % (_tot2,)))
     except Exception as _e:                                   # noqa: BLE001
         _r_cases.append(("the verdict registry is reachable", False, "raised %r" % (_e,)))
@@ -837,14 +950,30 @@ r_corrupt_state.attacks = ROUND_STATE
 
 
 def r_reset_command():
-    """`gate_round.py reset` is the sanctioned escape — it must not be a QUIET one."""
+    """`gate_round.py reset` is the sanctioned escape — it must not be a QUIET one.
+
+    ⚠ RE-POINTED 2026-09-11 WITH `reset_from`'S DELETION, and the property MOVED rather than
+    weakened. It used to be checked against a LATER `show`, which announced the walk from a stored
+    field; that field could not be kept honest (two rounds, two narrowings — `DEFECTS.md` `ARC-1e`)
+    and was deleted. Visibility is now IMMEDIATE, so this returns the reset's own output and
+    `announces_reset` reads THAT. ⛔ Deleting the field without moving the check would have scored
+    this route `suppresses (permitted) but does so SILENTLY` — there is no permitted-and-silent
+    verdict in `run_property`, so the alternative to moving it was abandoning the property.
+    """
     def apply():
-        sh(sys.executable, os.path.join(BASE, "gate_round.py"), "reset")
+        _rc, out = sh(sys.executable, os.path.join(BASE, "gate_round.py"), "reset")
+        return out
 
     def undo():
         pass                                    # the property's violate/undo rewrites the file
     return apply, undo
 r_reset_command.attacks = ROUND_STATE
+
+# ⛔ `r_reset_twice` WAS REMOVED 2026-09-11, WITH THE FIELD IT TESTED. It caught a second `reset`
+# erasing `reset_from`; with no `reset_from` there is nothing to erase, and both resets print their
+# own line, so the route would be trivially green — an inert route scoring `ok`, which is `GRD-1`
+# exactly and the failure this registry exists to prevent. **Do not re-add it as a passing row.**
+# If a durable cap-walk record ever gets a real home, the route belongs beside THAT, not here.
 
 
 def r_missing_round_key():
@@ -855,7 +984,13 @@ r_missing_round_key.attacks = ROUND_STATE
 
 
 def announces_reset(ctx):
-    return "reset" in (ctx["output"] or "").lower()
+    """⚠ O-1, `/rely` 2026-09-11: this was `"reset" in ctx["output"].lower()` and that was a PROXY.
+    A route hand-writing a stale `arc_base` with NO reset executed scored `ok ... VISIBLE`, because
+    `guidance()` prints "run `gate_round.py reset` first" on a stale base — the word appears in
+    output that is not an announcement. The predicate was honest only by accident of its callers.
+    It now matches the line `reset` ITSELF emits, in the ROUTE's output rather than a later run's.
+    """
+    return "gate round reset to 0" in (ctx.get("route_output") or "").lower()
 
 
 def r_bool_round():
@@ -1187,6 +1322,125 @@ FROZEN_WRITERS = [
 ]
 
 
+def check_prepush_scope_refusal():
+    """`cmd_prepush` must REFUSE to judge a scope it cannot see — and a tree of only SESSION STATE
+    is such a scope.
+
+    ⚠⚠ THIS SECTION EXISTS BECAUSE THE PREDICATE IT TESTS WAS DEAD AND NOTHING COULD SAY SO. The
+    refusal was the literal `if ranges is None and not changed_files(None)`, which fires only on a
+    WHOLLY clean tree. From `34bd217` (2026-09-03), when `gate_round.json` became a tracked file
+    this project deliberately keeps modified, the tree is never clean during a gate arc — so the
+    refusal never fired, `batch.py prepush` judged the range-scoped legs against a working tree
+    holding no attributable file, and printed `no attributable file changed in this push` at a
+    moment the pushed range owed FOUR. Measured 2026-09-12 by /rely; unreachable by every control
+    in this file, because a decision written as a literal at a call site has no name to call.
+
+    ⚠ SO THE ROWS CALL THE DECISION DIRECTLY, WITH CONSTRUCTED TREES. That is `routing_bad`'s
+    precedent and the same reason: a refusal inferred from an exit code cannot be distinguished
+    from a crash, and cannot be exercised at all without a dirty checkout.
+
+    ⚠ THE LAST TWO ROWS ARE NOT DERIVED FROM THE CODE THEY TEST. `guards.py` has already measured
+    that a control re-deriving its expectation from the producer's own source agrees by
+    construction and asserts nothing (see the `_need` tuple in `check_routing_enforcement`). So
+    the declared session-state set is compared against an INDEPENDENTLY WRITTEN literal. If a
+    legitimate change to `session_state.txt` turns that row red, the row is working: update it
+    deliberately, in the same commit, rather than re-deriving it to clear the red."""
+    import ast as _ast
+    import inspect
+    import textwrap
+    import batch
+
+    rows, bad = [], 0
+
+    def row(label, ok, why):
+        nonlocal bad
+        if not ok:
+            bad += 1
+        rows.append((label, ok, why))
+
+    f = getattr(batch, "unjudgeable_scope", None)
+    if f is None:
+        row("the refusal has a NAME", False,
+            "*** batch.unjudgeable_scope is GONE — the scope refusal is back to a literal at the "
+            "call site, where no control can reach it. That unreachability is the entire reason "
+            "this predicate stayed wrong for weeks; deleting the name restores it ***")
+        return rows, bad
+
+    _declared = sorted(common.session_state())
+
+    # ⚠ A TREE OF ONLY SESSION STATE AND A CLEAN TREE ARE THE SAME DECISION, and a tree carrying
+    #   one real file is NOT — that pair is the whole property. The mixed case is listed because
+    #   `set(tree) <= session` is the easy thing to write as `set(tree) & session`, which would
+    #   refuse every push that happens to have touched the round counter.
+    for label, tree, want in [
+            ("refuses a CLEAN tree", [], True),
+            ("refuses a session-state-only tree", list(_declared), True),
+            ("JUDGES a tree with real content", ["ZeroParadox/BottomCannotBe.lean"], False),
+            ("JUDGES session state PLUS content", list(_declared) + ["README.md"], False)]:
+        got = f(None, tree=tree)
+        row("prepush scope: %s" % label, (got is not None) == want,
+            ("refused: %s" % got) if got is not None else "judged, no refusal" if not want else
+            "*** judged a scope it cannot see ***")
+
+    # ⚠ AND IT MUST NEVER REFUSE WHEN RANGES ARE GIVEN. The hook always supplies them; a refusal
+    #   there would block every real push, which is the shape that teaches the `--no-verify` reflex.
+    row("prepush scope: never refuses with ranges", f(["a..b"], tree=[]) is None,
+        "ranges supplied -> judgeable, whatever the tree holds")
+
+    # ⚠ THE CALL SITE, NOT ONLY THE FUNCTION (`RLY28-1`). A named decision nobody calls is the same
+    #   as no decision at all.
+    try:
+        _src = inspect.getsource(batch.cmd_prepush)
+    except (OSError, TypeError):
+        _src = ""
+    _wired = False
+    if _src:
+        try:
+            for _n in _ast.walk(_ast.parse(textwrap.dedent(_src))):
+                if isinstance(_n, _ast.Name) and _n.id == "unjudgeable_scope" and \
+                        isinstance(_n.ctx, _ast.Load):
+                    _wired = True
+        except SyntaxError:
+            _wired = False
+    row("prepush scope: cmd_prepush reads it", _wired,
+        "`unjudgeable_scope` is read in cmd_prepush" if _wired else
+        "*** cmd_prepush never mentions unjudgeable_scope — the refusal is computed nowhere and "
+        "the command will judge any scope handed to it ***")
+
+    # ⚠ AND IT MUST STILL CONSULT THE REAL TREE. `tree=` exists for these rows; a production call
+    #   that stopped reading `changed_files` would pass every row above and refuse nothing live.
+    try:
+        _fsrc = inspect.getsource(f)
+    except (OSError, TypeError):
+        _fsrc = ""
+    _reads_tree = False
+    if _fsrc:
+        try:
+            for _n in _ast.walk(_ast.parse(textwrap.dedent(_fsrc))):
+                if isinstance(_n, _ast.Name) and _n.id == "changed_files" and \
+                        isinstance(_n.ctx, _ast.Load):
+                    _reads_tree = True
+        except SyntaxError:
+            _reads_tree = False
+    row("prepush scope: reads the real tree", _reads_tree,
+        "`changed_files` is read in unjudgeable_scope" if _reads_tree else
+        "*** unjudgeable_scope never reads changed_files — the `tree=` control affordance is now "
+        "the only input, so the live decision is made about nothing ***")
+
+    # ⚠⚠ INDEPENDENTLY WRITTEN, NOT DERIVED. See the docstring: a control that re-derives its
+    #   expectation from the producer agrees by construction. An EMPTY declaration would silently
+    #   collapse the session-state arm into the clean-tree arm and every row above would still pass.
+    _expected = {"gate_round.json"}
+    row("prepush scope: the declared set is non-empty and known",
+        bool(_declared) and _expected <= set(_declared),
+        "%d declared session-state path(s): %s" % (len(_declared), ", ".join(_declared))
+        if _declared else
+        "*** common.session_state() is EMPTY — session_state.txt is missing or unreadable, so the "
+        "session-state arm cannot fire and the refusal silently narrows back to clean-tree-only, "
+        "which is the exact state measured dead on 2026-09-12 ***")
+    return rows, bad
+
+
 def check_baseline_freeze():
     """`--baseline` must REFUSE, and must not write. Two assertions, deliberately separate.
 
@@ -1285,7 +1539,113 @@ def r_pov_baseline_handedit():
 r_pov_baseline_handedit.attacks = os.path.join(BASE, "pov_baseline.txt")
 
 
+# ═══ PROPERTY — a gate brief cannot name a `record.py` flag the parser does not accept ═══
+#
+# ⚠⚠ THIS ROW EXISTS BECAUSE `check_briefs.py` HAD NO ENTRY HERE AT ALL, and its `LEGS` table
+# was built with `mode` as DATA *specifically* so a control could read the enforcement decision.
+# Nothing read it (`RLYB4-C3`). The checker was written, shipped, reported "0 findings over 14
+# briefs", and `/rely` then found the zeros were mostly SILENCE — 4 of 10 flags, 6 of 14 briefs,
+# 15 of ~65 citations. A checker with no guard row is a gate whose enforcement nobody re-tests.
+#
+# ⚠ THE ROUTES ARE TODAY'S FIXES, LOCKED IN. `B1`-`B3` closed 2026-09-06; each route below is the
+# exact shape that walked through the leg BEFORE that change, so a revert turns this row red
+# rather than silently restoring the hole.
+BRIEF_PROBE = os.path.join(REPO, ".claude", "commands", "tag-review.md")
+RECORD_PY = os.path.join(HERE, "record.py")
+BRIEFS_PY = os.path.join(HERE, "check_briefs.py")
+
+# ⚠ A FLAG THE PARSER GENUINELY DOES NOT HAVE. Verified against `record.py --list-flags`, which is
+# the parser's own list — never against `--help`, which is prose and is the defect this guards.
+BRIEF_BAD_FLAG = (chr(10) + "```" + chr(10)
+                  + "python tools/verify/record.py --step rely --verdict fail --nonesuch x"
+                  + chr(10) + "```" + chr(10))
+
+
+def briefs_block():
+    """(does check_briefs BLOCK, its output). Exit 1 is a finding; 2 is could-not-ask, NOT a block.
+
+    ⚠ RUN WITHOUT `--record`. A guard run must not append to the live verdict stream — the whole
+    point of this file is that it plants violations, and a planted violation must never become a
+    recorded verdict about the corpus.
+
+    ⚠ AND `rc == 1`, NEVER `rc != 0`. Measured on this file's own history (/rely pass 6): a
+    detector written `rc != 0` scored a DELETED checker as blocking, because a missing script
+    exits 2. `check_briefs` exits 2 when it could not ASK, which is the opposite of a finding."""
+    rc, out = sh(sys.executable, BRIEFS_PY)
+    return rc == 1, out
+
+
+def r_brief_continuation():
+    """ROUTE `B1` — move the bad flag onto a backslash CONTINUATION line.
+
+    The `flags` leg read only the FIRST line until 2026-09-06: the greedy class ate the trailing
+    backslash, the continuation group then matched ZERO times, and a zero-width match still yields
+    a successful overall match — so the engine never backtracked. Measured on the real briefs,
+    where three of them hid six flags each this way."""
+    def produce(orig):
+        return orig.replace(
+            b"--verdict fail --nonesuch x",
+            ("--verdict fail " + chr(92) + chr(10) + "    --nonesuch x").encode())
+    return _rewrite(BRIEF_PROBE, produce)
+r_brief_continuation.attacks = BRIEF_PROBE
+
+
+def r_help_prose_flag():
+    """ROUTE `B3` — name the flag in `record.py`'s HELP PROSE without adding an argument.
+
+    ⚠⚠ THIS IS THE ROUTE THAT CATCHES A REVERT OF `real_flags()`, and it is why this row was worth
+    writing. `real_flags` scraped `--help` until 2026-09-06, which reads DESCRIPTIONS as well as
+    options — so a flag mentioned only inside a help string became ground truth, and any brief
+    could then cite it. It is wired to `--list-flags`, the parser's own option strings, now.
+
+    ⚠ The two readers agreed EXACTLY on the day of the fix, 18 flags and 18, so NOTHING
+    distinguished them by observation. Only this mutation does: with `--list-flags` the prose is
+    ignored and the block survives; rewire to `--help` and this route starts BYPASSING and the row
+    goes red. **A latent defect with no control is indistinguishable from a fixed one."""
+    def produce(orig):
+        return orig.replace(
+            b'help="one line, recorded on a FAIL")',
+            b'help="one line, recorded on a FAIL; see --nonesuch")')
+    return _rewrite(RECORD_PY, produce)
+r_help_prose_flag.attacks = RECORD_PY
+
+
+def r_flags_leg_warn():
+    """ROUTE — downgrade the `flags` leg from BLOCK to WARN in the `LEGS` table.
+
+    ⚠ THIS ONE IS **PERMITTED** AND MUST BE **VISIBLE**, which is the whole reason `mode` is DATA.
+    `R-NOCONV` allows an enumeration leg to be downgraded and requires the downgraded gate to print
+    its count on every run — a warning nobody counts manufactures coverage that was never earned.
+    So this is `may_suppress=True` plus a predicate that the count is still on the page."""
+    def produce(orig):
+        return orig.replace(b"('flags',  'BLOCK',", b"('flags',  'WARN', ")
+    return _rewrite(BRIEFS_PY, produce)
+r_flags_leg_warn.attacks = BRIEFS_PY
+
+
+def flags_count_printed(ctx):
+    """The downgraded leg still prints its count — `R-NOCONV`'s visibility bar, read from output.
+
+    ⚠ Parsed by FIELDS rather than by regex on purpose: the row is `name mode count finding(s)`,
+    and matching the shape beats matching a phrase that a formatting change would silently break."""
+    for line in (ctx.get("output") or "").splitlines():
+        f = line.split()
+        if len(f) >= 3 and f[0] == "flags" and f[1] == "WARN" and f[2].isdigit():
+            return True
+    return False
+
+
 PROPERTIES = [
+    {
+        "name": "a gate brief cannot name a record.py flag the parser does not accept",
+        "violate": lambda: _append(BRIEF_PROBE, BRIEF_BAD_FLAG),
+        "detect": briefs_block,
+        "routes": [
+            ("the bad flag moves to a continuation line", r_brief_continuation, False, None),
+            ("the flag is named in record.py's HELP PROSE only", r_help_prose_flag, False, None),
+            ("the `flags` leg is downgraded to WARN", r_flags_leg_warn, True, flags_count_printed),
+        ],
+    },
     {
         "name": "a block both over cap and latching appears in BOTH reports",
         "violate": lambda: _append(PROBE_FILE, PROBE_BOTH_BLOCK),
@@ -1437,7 +1797,7 @@ def run_property(prop):
             state_before = state_probe() if state_probe is not None else None
             fs_before = snapshot()
             try:
-                r_apply()
+                emitted = r_apply()             # routes that announce something RETURN it; see ctx below
                 moved = [p for p in TOUCHED if snapshot()[p] != fs_before[p]]
                 if state_probe is not None and state_probe() == state_before:
                     results.append((label, "ROUTE INERT — its declared in-process state did not "
@@ -1455,7 +1815,14 @@ def run_property(prop):
                                            % len(TOUCHED), False))
                     continue
                 still, out = prop["detect"]()
-                ctx = {"route_before": before, "route_after": routing_hash(), "output": out}
+                # ⚠ `output` IS THE DETECTOR'S, NOT THE ROUTE'S, and the distinction became
+                # load-bearing 2026-09-11. A visibility predicate reading `output` asks "does a LATER
+                # run reveal this?"; one reading `route_output` asks "did the ACT announce itself?".
+                # Those are different properties and `reset_from`'s deletion moved the round-cap
+                # route from the first to the second. Routes that emit nothing return None and get
+                # "", so every existing predicate is unaffected.
+                ctx = {"route_before": before, "route_after": routing_hash(), "output": out,
+                       "route_output": emitted or ""}
                 if still:
                     verdict, ok = "does NOT bypass", True
                 elif not may_suppress:
@@ -1487,6 +1854,13 @@ TOUCHED = [
     os.path.join(BASE, "prose_baseline.txt"),
     ROUND_STATE,
     os.path.join(REPO, "ZeroParadox", "Order", "Vendored", "Probe.lean"),
+    # ⚠ ADDED WITH THE check_briefs PROPERTY. Its three routes write these three paths, and the
+    # rule stated above is that ANY new route names every path it writes HERE, in the same change
+    # — a restoration proof that does not cover a mutated path is a false green, which is this
+    # registry's own recorded failure mode.
+    BRIEF_PROBE,
+    RECORD_PY,
+    BRIEFS_PY,
 ]
 
 
@@ -1656,6 +2030,16 @@ def main():
         # ⚠⚠ AND THAT THE ROUTER IT WARRANTS STILL BLOCKS. The warrant above tests COVERAGE (does the
         # pattern reach the whole prefix) and is blind to ENFORCEMENT — measured 2026-08-21, a probe
         # stopped the router blocking and this file still exited 0.
+        # ⚠⚠ AND THAT THE LEDGER IS ACCOUNTABLE FOR WHAT THE ROUTER SENDS IT. The two rows above
+        # prove the prefix is registered as exempt and that the router still blocks — and BOTH pass
+        # while the step's declared scope omits the prefix entirely, which is exactly what happened
+        # to `tools/process/` for eleven days. Coverage and enforcement were tested; accountability
+        # was not.
+        print("\n  PROPERTY: the registry scope and the router agree")
+        _rows, _bad = check_registry_router_agreement()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
         print("\n  PROPERTY: the router the exemption is priced on still BLOCKS")
         _rows, _bad = check_routing_enforcement()
         for label, ok, verdict in _rows:
@@ -1665,6 +2049,15 @@ def main():
         # the other half — that the `--baseline` path is refused AND writes nothing. Both halves are
         # needed: the routes would still pass if `--baseline` quietly started working again, because
         # they no longer use it.
+        # ⚠⚠ AND THE ONE REFUSAL NOTHING HERE COULD REACH. `cmd_prepush` declines to judge a
+        # push whose scope it cannot see; that predicate was a literal at the call site, was
+        # measured DEAD from 2026-09-03 to 2026-09-12, and no row in this file could have
+        # noticed, because a literal has no name to call.
+        print("\n  PROPERTY: prepush refuses a scope it cannot see")
+        _rows, _bad = check_prepush_scope_refusal()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
         print("\n  PROPERTY: a frozen baseline cannot be regenerated")
         _rows, _bad = check_baseline_freeze()
         for label, ok, verdict in _rows:
@@ -1714,8 +2107,16 @@ def main():
         {"check_classes.py", "check_figures.py", "check_frozen.py", "check_modal.py",
          "check_negatives.py", "check_pov.py", "check_prose.py"})]
     _subjects = [p for p in _guarded if os.path.exists(os.path.join(REPO, *p.split("/")))]
+    # ⚠⚠ `session_state.txt` IS A SWITCH THIS VERDICT NOW DEPENDS ON, and it is added
+    # EXPLICITLY because the derivation above cannot reach it: `TOUCHED` is the set the routes
+    # PLANT violations in, and `check_prepush_scope_refusal` only READS this one. Emptying it
+    # collapses the session-state arm of the prepush refusal back into clean-tree-only — the
+    # state measured dead on 2026-09-12 — and without this line that edit would not re-arm
+    # this guard. Same rule as every other switch: a subject set is everything the verdict
+    # DEPENDS ON, not merely everything it scribbled on (`§ 4a-R` R-1).
     _switches = sorted({os.path.relpath(p, REPO).replace("\\", "/") for p in TOUCHED
-                        if os.path.basename(p) != os.path.basename(PROBE_FILE)})
+                        if os.path.basename(p) != os.path.basename(PROBE_FILE)}
+                       | {"tools/verify/session_state.txt"})
     _rc = common.record_if_asked("guards", _subjects,
                                  set(_subjects) if (bad or not clean) else set(),
                                  "a route to a guarded property misbehaved, or the tree was "

@@ -1,4 +1,5 @@
 import Mathlib.Topology.Compactification.OnePoint.Basic
+import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
 import Mathlib.NumberTheory.Padics.ProperSpace
 import Mathlib.Tactic
 
@@ -150,6 +151,142 @@ theorem rInv_swaps :
     rInvHomeo (OnePoint.some (0 : ℚ_[2])) = ∞ ∧ rInvHomeo ∞ = OnePoint.some (0 : ℚ_[2]) :=
   ⟨rInv_zero, rInv_infty⟩
 
+/-! ### § V. The maps that FIX the pole-pair, and why that makes it an AXIS
+
+`rInv` **exchanges** `0` and `∞`. The scalings `x ↦ 2 ^ n * x` hold both still and translate along the
+pole-pair additively in `n`, which is what makes it an *axis* rather than a bare pair.
+
+⭐ **PRIOR ART — these declarations INSTANTIATE `OnePoint.instGLAction`, they do not extend it.** The
+two `example`s closing this section are the identification, elaborated rather than asserted. What is
+ours is the TOPOLOGY, not the algebra. Prior art, the loxodromic vocabulary and the stabiliser fence
+are in `ZeroParadox/Valuation/RiemannSphere.md`, beside this file. -/
+
+
+/-- Scaling by `2 ^ n` on the sphere: `∞ ↦ ∞` and `x ↦ 2 ^ n * x`. -/
+noncomputable def rScale (n : ℤ) : Sphere → Sphere
+  | (∞ : Sphere) => (∞ : Sphere)
+  | OnePoint.some x => OnePoint.some ((2 : ℚ_[2]) ^ n * x)
+
+@[simp] theorem rScale_infty (n : ℤ) : rScale n ∞ = ∞ := rfl
+
+@[simp] theorem rScale_coe (n : ℤ) (x : ℚ_[2]) :
+    rScale n (OnePoint.some x) = OnePoint.some ((2 : ℚ_[2]) ^ n * x) := rfl
+
+/-- `Statement:` every `rScale n` sends `0` to `0` and `∞` to `∞`.
+    `Reading:` **INVARIANT** — the pole-pair is fixed POINTWISE, not merely setwise, which is what
+    separates an axis from the bare pair that `rInv_swaps` exchanges. -/
+theorem rScale_fixes_poles (n : ℤ) :
+    rScale n (OnePoint.some (0 : ℚ_[2])) = OnePoint.some (0 : ℚ_[2]) ∧ rScale n ∞ = ∞ :=
+  ⟨by simp, rfl⟩
+
+/-- `Statement:` scaling by ANY nonzero `u` fixes `0` and `∞` pointwise, not just by a power of `2`.
+    `Reading:` **INVARIANT** — the NO-GO gauge for § V: a whole `ℚ₂ˣ`-indexed family of pole-fixing
+    maps, of which `rScale` is one cyclic subgroup. ⚠ An INCLUSION, not an identification — that the
+    stabiliser IS the diagonal torus is not proved here. -/
+theorem stabiliser_is_bigger (u : ℚ_[2]) (hu : u ≠ 0) :
+    (Homeomorph.onePointCongr (Homeomorph.mulLeft₀ u hu)) (OnePoint.some (0 : ℚ_[2]))
+        = OnePoint.some (0 : ℚ_[2]) ∧
+    (Homeomorph.onePointCongr (Homeomorph.mulLeft₀ u hu)) (∞ : Sphere) = ∞ :=
+  ⟨by simp, rfl⟩
+
+/-- **The parameter is additive.** The scalings compose by adding `n`, so `n` is a translation
+    coordinate along the `0`–`∞` axis rather than a label attached to it. ⚠ The content is
+    `2 ^ (m + n) = 2 ^ m * 2 ^ n` — that `n ↦ 2 ^ n` is a homomorphism `ℤ → ℚ₂ˣ`, so the family is
+    the INFINITE CYCLIC `2 ^ ℤ`. It is not a "one-parameter subgroup": that is archimedean-Lie
+    vocabulary and `ℚ₂ˣ` is totally disconnected. -/
+theorem rScale_add (m n : ℤ) (z : Sphere) : rScale m (rScale n z) = rScale (m + n) z := by
+  have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
+  induction z using OnePoint.rec with
+  | infty => rfl
+  | coe x => simp [zpow_add₀ h2, mul_assoc]
+
+/-- **The swap reverses the translation:** conjugating a scaling by the pole-exchanging inversion
+    negates its parameter. This is the one statement that needs BOTH maps, and it is why they belong
+    in one file: `rInv` is not merely another self-map of the sphere, it acts on the translations. -/
+theorem rInv_conj_rScale (n : ℤ) (z : Sphere) :
+    rInv (rScale n (rInv z)) = rScale (-n) z := by
+  have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
+  induction z using OnePoint.rec with
+  | infty => simp
+  | coe x =>
+      by_cases hx : x = 0
+      · subst hx; simp
+      · have hz : (2 : ℚ_[2]) ^ n * x⁻¹ ≠ 0 :=
+          mul_ne_zero (zpow_ne_zero _ h2) (inv_ne_zero hx)
+        rw [rInv_coe_ne hx, rScale_coe, rInv_coe_ne hz, rScale_coe, mul_inv, inv_inv,
+          ← zpow_neg]
+
+/-- `rScale` IS the Mathlib action of `diag(2 ^ n, 1)`. Anonymous: it declares nothing and owes no
+    purity entry, and it stops compiling if the identification ever fails. -/
+example (n : ℤ) (z : Sphere) :
+    (Matrix.GeneralLinearGroup.mkOfDetNeZero !![(2 : ℚ_[2]) ^ n, 0; 0, 1]
+      (by simp only [Matrix.det_fin_two_of, mul_one, mul_zero, sub_zero, ne_eq]
+          exact zpow_ne_zero _ (by norm_num))) • z = rScale n z := by
+  induction z using OnePoint.rec with
+  | infty =>
+      rw [OnePoint.smul_infty_eq_ite]
+      simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, rScale]
+  | coe x =>
+      rw [OnePoint.smul_some_eq_ite]
+      simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, rScale]
+
+/-- `rInv` IS the Mathlib action of the Weyl element, `0 ↦ ∞` branch included. -/
+example (z : Sphere) :
+    (Matrix.GeneralLinearGroup.mkOfDetNeZero !![(0 : ℚ_[2]), 1; 1, 0]
+      (by simp [Matrix.det_fin_two_of])) • z = rInv z := by
+  induction z using OnePoint.rec with
+  | infty =>
+      rw [OnePoint.smul_infty_eq_ite]
+      simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, rInv]
+  | coe x =>
+      rw [OnePoint.smul_some_eq_ite]
+      by_cases hx : x = 0
+      · subst hx; simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, rInv]
+      · rw [rInv_coe_ne hx]
+        simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, hx, one_div]
+
+/-! ### § VI. The parameter is a COORDINATE, and the scalings are a group action
+
+`rScale_add` makes the parameter additive under composition. This section is why that parameter is a
+*coordinate on the carrier* rather than a label on the maps: it moves the 2-adic valuation one for
+one. ⚠ `Padic.valuation` is the NEGATIVE logarithm of the norm (`Padic.norm_eq_zpow_neg_valuation`:
+`‖x‖ = p ^ (-x.valuation)`), so valuation rises exactly as the norm falls.
+
+Mathlib supplies the arithmetic; the axiom-footprint fence is in
+`ZeroParadox/Valuation/RiemannSphere.md`. -/
+
+/-- **The scaling shifts the valuation by exactly `n`** — what makes `n` a coordinate read off the
+    carrier rather than a label on the map. The choice-free twin on ℕ is `v2_scale_nat`
+    (`ZeroParadox/Valuation/PricedPadicInterface.lean`); the axiom-footprint fence and the unguarded
+    `Padic.addValuation` variant are in `ZeroParadox/Valuation/RiemannSphere.md`. -/
+theorem rScale_valuation (n : ℤ) {x : ℚ_[2]} (hx : x ≠ 0) :
+    ((2 : ℚ_[2]) ^ n * x).valuation = n + x.valuation := by
+  have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
+  rw [Padic.valuation_mul (zpow_ne_zero _ h2) hx, Padic.valuation_zpow]
+  norm_num
+
+/-- `rScale 0` is the identity. With `rScale_add` this makes the scalings a genuine `ℤ`-indexed
+    group action on the sphere rather than a mere family of maps. -/
+theorem rScale_zero : rScale 0 = id := by
+  funext z
+  induction z using OnePoint.rec with
+  | infty => rfl
+  | coe x => simp
+
+/-- The scaling as a homeomorphism, mirroring `rInvHomeo`. Continuity is inherited through
+    `onePointCongr`; unlike `rInv` no work is needed at `∞`, which it never receives a finite point at. -/
+noncomputable def rScaleHomeo (n : ℤ) : Sphere ≃ₜ Sphere :=
+  Homeomorph.onePointCongr (Homeomorph.mulLeft₀ ((2 : ℚ_[2]) ^ n) (zpow_ne_zero _ (by norm_num)))
+
+theorem rScaleHomeo_apply (n : ℤ) (z : Sphere) : rScaleHomeo n z = rScale n z := by
+  induction z using OnePoint.rec with
+  | infty => rfl
+  | coe x => rfl
+
+theorem continuous_rScale (n : ℤ) : Continuous (rScale n) := by
+  have h : ⇑(rScaleHomeo n) = rScale n := funext (rScaleHomeo_apply n)
+  exact h ▸ (rScaleHomeo n).continuous
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check (enable per theorem once proved) -/
@@ -158,4 +295,19 @@ open ZeroParadox
 #print axioms rInv_involutive
 #print axioms continuous_rInv
 #print axioms rInv_swaps
+-- § V: the pole-FIXING maps. `rScale_add` is the infinite-cyclic property; `rInv_conj_rScale` is the
+-- only statement here that consumes both maps at once; `stabiliser_is_bigger` is the NO-GO gauge.
+#print axioms rScale
+#print axioms rScale_infty
+#print axioms rScale_coe
+#print axioms rScale_fixes_poles
+#print axioms stabiliser_is_bigger
+#print axioms rScale_add
+#print axioms rInv_conj_rScale
+-- § VI: the parameter as a COORDINATE, and the action packaged.
+#print axioms rScale_valuation
+#print axioms rScale_zero
+#print axioms rScaleHomeo
+#print axioms rScaleHomeo_apply
+#print axioms continuous_rScale
 end PurityCheck

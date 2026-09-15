@@ -313,12 +313,19 @@ PRE_PUSH_PLAN = [
     ("hooks armed", "BLOCK", "the installed hooks match their tracked sources"),
     ("quarantine", "BLOCK", "private/* branches never reach a remote"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
-    ("routing control", "BLOCK", "the behavioural mutation probe: 9 neuters of the routing routes, "
-                                 "each required to turn its named ROW red (~225s; fails CLOSED on a "
-                                 "moved anchor). Does NOT yet cover RLY28-1 — a tenth mutation is owed"),
+    ("routing control", "BLOCK", "the behavioural mutation probe: 17 mutations of the routing and "
+                                 "enforcement routes, each required to turn its named ROW red or to "
+                                 "move the prepush EXIT CODE (~225s; fails CLOSED on a moved anchor). "
+                                 "RLY28-1 IS covered — the debt this line used to record was paid, "
+                                 "and the line said otherwise for as long as it took a /rely round "
+                                 "to read it. It does NOT cover the recorded VALUE of the six "
+                                 "non-routing legs (RLYB4-1)"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_claude_md", "BLOCK", "CLAUDE.md shape contract: rooted paths resolve, named checkers exist "
                                  "(3 legs still PENDING — it says so on every run)"),
+    ("check_briefs", "BLOCK", "a gate brief instructs a command that WORKS: every --flag exists, "
+                              "every --step is REGISTERED in the ledger, every cited path resolves. "
+                              "2 WARN legs print their count every run"),
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
     ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
     ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
@@ -417,6 +424,7 @@ PRE_PUSH_EXPECT = [
     # ⚠ 3 = scope skipped for want of a built .lake, tolerated at both phases (RLY27-7).
     ("check_paths", ("check_paths.py", "--all", "--warn-private", "--record"), (0, 3)),
     ("check_claude_md", ("check_claude_md.py", "--record"), (0,)),
+    ("check_briefs", ("check_briefs.py", "--record"), (0,)),
     ("check_moved", ("check_moved.py", "--block", "--record"), (0,)),
     ("check_negatives", ("check_negatives.py", "--block", "--record"), (0,)),
     ("check_figures", ("check_figures.py", "--block", "--record"), (0,)),
@@ -673,6 +681,39 @@ def pre_push(stream):
     if py("check_claude_md.py", "--record") != 0:
         print("\nPush blocked: CLAUDE.md names a path or a checker that does not exist.")
         print("Fix the pointer. Body: tools/process/claude-md-maintenance.md.")
+        return 1
+    # ⚠ Keep a class id away from a following noun: `check_figures` reads a number next
+    # to a countable word as an undated artifact count, and blocked this commit twice — the
+    # second time on the comment written to explain the first. Writing ABOUT a pattern trips
+    # it, exactly as `R-TRUNC` records for its own matcher.
+    _cb = py("check_briefs.py", "--record")
+    # ⚠⚠ FOUR CODES, BECAUSE THERE ARE FOUR FACTS -- AND UNTIL 2026-09-06 TWO OF THEM SHARED A
+    # LINE. `record.emit` returns None for a ledger REFUSAL and for an OUTAGE alike, so both
+    # arrived here as exit 2 and this printed "unreachable" for both. Measured that day (`B4`):
+    # the step was not registered, the ledger ANSWERED naming exactly that rule, and the operator
+    # was told the ledger was down. **A decision rendered as an absence** -- the one collapse the
+    # exit-2 design exists to prevent, arriving inside the checker built to catch it one layer
+    # down. `check_briefs.classify_record_failure` splits them and the remedies differ.
+    # ⚠ THE REFUSAL CODE IS 4, NOT 3. `3` is UNDETERMINED in the fleet vocabulary and is also
+    # `ci_report.SKIPPED_RC`, where it renders **skipped** -- a non-failure. Read the live values
+    # from the server (`vocabulary(name='exit_code')`), never from this comment.
+    if _cb == 4:
+        print("")
+        print("Push blocked: the ledger REACHED and REFUSED check_briefs' record.")
+        print("That is a DECISION, not an outage. The rule it named is in the output above --")
+        print("an unregistered step, a conflicting revision at this basis, a malformed subject.")
+        print("Do not retry it: a validation refusal is terminal and re-sending only masks it.")
+        return 1
+    if _cb == 2:
+        print("")
+        print("Push blocked: check_briefs COULD NOT ASK (ledger or record.py unreachable).")
+        print("This is a read failure, not a finding about the briefs. Fix the reachability.")
+        return 1
+    if _cb != 0:
+        print("")
+        print("Push blocked: a gate brief names a flag, step or path that does not exist.")
+        print("A brief instructing a command that does not work is found by a confused agent")
+        print("mid-round, which is the most expensive place to find it.")
         return 1
     print("================================")
 

@@ -561,8 +561,46 @@ def ledger_basis(ref='HEAD'):
     return {'kind': 'ref', 'resolved_from': 'explicit', 'value': sha}
 
 
+_SESSION_STATE_CACHE = None
+
+
+def session_state():
+    """Repo-relative paths that are SESSION STATE and are never recorded as a verdict subject.
+
+    EXACT MATCH ONLY — no prefixes, no globs, no directories. `vendored.is_vendored` once matched
+    `/Vendored/` at ANY depth, which let a file exempt itself from all four checkers by living in a
+    directory of that name; a loosely-matching path list is a self-exemption route wearing a fix.
+
+    ⚠⚠ A MISSING FILE WARNS RATHER THAN RETURNING A QUIET EMPTY, and that is a DELIBERATE departure
+    from `vendored._allowlist`, which returns `set()` silently. The consequences are opposite. A
+    missing vendored allowlist exempts FEWER files, so the checkers get stricter and the failure is
+    safe. A missing session-state declaration excludes NOTHING, which silently restores the subject-
+    set divergence that blocked two `D1` merges (`ARC-2b`) — the failure is invisible and it is the
+    bug coming back. Same code shape, opposite direction, so it does not get the same handling.
+    ⛔ It is not FATAL either: `common` is imported by every checker, and a hard failure here would
+    take the whole verification layer down over a declaration file. Loud and non-fatal is the tier
+    that matches "the operator must know, and the checkers must still run"."""
+    global _SESSION_STATE_CACHE
+    if _SESSION_STATE_CACHE is None:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'session_state.txt')
+        if not os.path.exists(path):
+            sys.stderr.write(
+                'WARNING: tools/verify/session_state.txt is MISSING. No path is being excluded from\n'
+                '  verdict subjects, so a file that is dirty in one checkout and clean in another will\n'
+                '  again produce two different subject sets for one content (ARC-2b). Restore it.\n')
+            _SESSION_STATE_CACHE = set()
+        else:
+            out = set()
+            for line in io.open(path, encoding='utf-8-sig').read().splitlines():
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    out.add(line.replace('\\', '/').lstrip('./'))
+            _SESSION_STATE_CACHE = out
+    return _SESSION_STATE_CACHE
+
+
 def ledger_subjects(rels, ref='HEAD'):
-    """`([{path, blob}], skipped)` — subjects safe to record, and the paths deliberately left out.
+    """`([{path, git_blob_id}], skipped)` — subjects safe to record, and the paths left out.
 
     ⚠⚠ FAIL CLOSED, AND REPORT THE SKIPS. A path absent from `ref`, or differing from it in the
     worktree or the index, is DROPPED rather than recorded — because recording it would attest to
@@ -571,6 +609,24 @@ def ledger_subjects(rels, ref='HEAD'):
     subjects than the checker examined is a coverage gap, and a silent one is the defect this whole
     layer exists to end."""
     rels = [r.replace('\\', '/') for r in rels]
+    # ⚠⚠ SESSION STATE IS DROPPED BEFORE THE FENCE, AND UNCONDITIONALLY — dirty or clean. A path
+    # that is legitimately modified in one checkout and pristine in another otherwise produces TWO
+    # subject sets for one content: the carrier's tree fences `gate_round.json` as "modified" and an
+    # authoring worktree includes it, so the same checker records 471 subjects in one place and 472
+    # in the other. `V11` then refuses the second as a DIFFERING payload rather than deduping it as
+    # an identical one, the refusal becomes the checker's exit code, and a `D1` merge is blocked
+    # over a tree with nothing wrong in it. `ARC-2b`; it blocked `D1M-1` the same way on 2026-09-09
+    # and went unread for four days because that row named the wrong mechanism (`DC-39`).
+    # ⛔ "Exempt it when dirty" is NOT the fix and is the tempting one: it leaves the two checkouts
+    # disagreeing exactly as before. The property is that the subject set does not depend on which
+    # checkout you are standing in.
+    # ⚠ These files are still CHECKED — only never recorded ABOUT. A verdict binds
+    # `(step, path, git_blob_id)`, and the blob of a round counter is an accident of when someone
+    # last ran it, so it is not a fact any verdict should be keyed to.
+    _session = session_state()
+    session_skipped = [(r, 'session state, never a verdict subject (tools/verify/session_state.txt)')
+                       for r in sorted(set(rels)) if r in _session]
+    rels = [r for r in rels if r not in _session]
     # ⚠⚠ INDEX MODE IS WHAT MAKES PRE-COMMIT RECORDING POSSIBLE, and the reason is not obvious.
     # At pre-commit time HEAD is the PARENT — the commit being made does not exist yet — so a record
     # keyed to HEAD would cover the wrong content entirely. But the staged blobs ARE the new
@@ -606,7 +662,14 @@ def ledger_subjects(rels, ref='HEAD'):
             skipped.append((rel, 'not staged' if ref == INDEX else 'not present at %s' % ref))
         else:
             subjects.append({'path': rel, 'git_blob_id': blobs[rel]})
-    return subjects, skipped
+    # ⚠ Session-state paths ride in `skipped` so the caller still PRINTS them — nothing is silently
+    # dropped. Their reason names the declaration file rather than a fence, because they are not a
+    # coverage GAP: a fenced path is one the checker read and cannot attest to, which is debt; this
+    # one is simply not a subject. ⚠ `R-ZERONULL` debt, stated rather than hidden: today the two
+    # cases differ only in the REASON STRING, and nothing branches on it. If a consumer ever needs
+    # to tell "unattestable" from "not a subject", that wants a third return value, not a substring
+    # test on prose.
+    return subjects, skipped + session_skipped
 
 
 def _producer_modules(module=None):
@@ -707,9 +770,22 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     and the FAIL came back `V11`.
     ⚠ AND `revision` IS NOT THE ESCAPE. It is the supersede ordinal (a regrade); using it to carry a
     second simultaneous verdict would make a split look like a chain and corrupt tip resolution.
-    So: ONE verdict for the step — FAIL if anything failed — over ALL the subjects it examined.
-    Coverage stays exact because every examined file is still named; what is given up is a per-file
-    verdict, which the admission gate never consumed. It asks whether the STEP passed.
+    So: ONE verdict for the step — FAIL if anything failed — over ALL the subjects it examined,
+    with `failing` naming the subset actually INDICTED.
+
+    ⚠⚠ THAT LAST CLAUSE WAS MISSING UNTIL 2026-09-02 AND THIS PARAGRAPH ARGUED IT AWAY. It read
+    *“coverage stays exact because every examined file is still named; what is given up is a
+    per-file verdict, which the admission gate never consumed.”* Coverage DID stay exact.
+    CONDEMNATION did not. Resolution is per `(step, path, blob)` with worst-verdict-wins, so a
+    FAIL naming all its subjects stamps FAIL on every innocent blob beside the bad one — and the
+    gate consumes that, whatever it asks of the step. Measured (`LED-10`): this function's FAIL
+    for ONE orphan checker took ownership of 23 shared content keys and condemned a commit that
+    predated the offending file, with no re-run able to clear it.
+    ⚠ `failing` is passed UNFENCED, deliberately: `ledger_subjects` drops paths absent from the
+    ref because coverage must not overstate what was read, but an INDICTMENT is a record of what
+    was judged and includes findings that are not files at all — `check_checkers` indicts a
+    `(roster)` pseudo-path. Nothing resolves it to content, so naming it is inert; omitting it
+    would understate the indictment to keep a data structure tidy.
 
     ⚠⚠ **A VERDICT IS ALWAYS A PROPERTY VERIFIED AGAINST A FILE SET** (Tim, 2026-08-23). There is no
     second kind of checker. A scanner's subjects are the files it scanned; a PROPERTY checker's
@@ -767,7 +843,7 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     # inherit the old one's key. The cost is real: editing this file stales EVERY mechanical step at
     # once. That is the honest bill, and it is why this file should change rarely.
     rid = record.emit(step=step, tier=tier, verdict=verdict, subjects=subjects,
-                      basis=ledger_basis(ref), reason=why,
+                      basis=ledger_basis(ref), reason=why, failing=bad,
                       evidence=record.module_evidence(*_producer_modules(module)))
     if rid is None:
         print('UNDECIDED: %s ran but its %s verdict was not recorded' % (step, verdict))
@@ -913,7 +989,11 @@ def write_text_lf(path, text):
 
     ⚠ **THE PARENT DIRECTORY IS CREATED IF ABSENT, and that is not a convenience — it is the fix for
     three crashes in a PUBLIC CLONE.** `.claude-local/` is gitignored, so it does not exist in any
-    clone that is not the author's, and every piece of per-push state lives there. Measured
+    clone that is not the author's, and per-push state lived there. ⚠ `gate_round.json` MOVED
+    OUT on 2026-09-03 — to the repo ROOT, tracked at `round: 0`, so a worktree gets its own by
+    checkout (a worktree IS an arc) — so the `gate_round.py` half of the measurement below is
+    now HISTORY rather than a live hazard. `batch_state.json` and the rest still depend on this.
+    Measured
     2026-08-16 in a worktree with the private folder absent: `gate_round.py bump`, `gate_round.py
     reset` and `batch.py start` each died with a raw `FileNotFoundError` traceback rather than a
     verdict — **the three commands a remediation cycle needs FIRST.** `gate_round.py show` succeeds

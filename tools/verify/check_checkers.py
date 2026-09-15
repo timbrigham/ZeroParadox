@@ -371,7 +371,22 @@ def main(argv):
     # they are its subjects. A checker whose controls stopped proving anything must re-earn this
     # verdict, and keying on their blobs is what makes that automatic.
     _subjects = ["tools/verify/%s" % os.path.basename(c) for c in checkers()]
-    _bad = {"tools/verify/%s" % os.path.basename(c) for c, _p, _ok, _d in failures}
+    # ⚠⚠ A ROW LABEL THAT IS NOT A FILENAME MUST NOT BE DRESSED AS A PATH. Row 5 is `(roster)` — a
+    # property of the PAIR of rosters, not a defect in any one file — and this comprehension used to
+    # prefix every label, emitting `tools/verify/(roster)`: a non-file wearing a resolvable costume,
+    # under a directory that exists, in a field where every other element is a path. A consumer could
+    # not tell "this path is missing" from "this was never a path" (`DC-45`).
+    # ⚠ NOBODY CHOSE THAT STRING — the format expression did, and `common.py`'s docstring then
+    # described the consequence as an intention ("`check_checkers` indicts a `(roster)` pseudo-path").
+    # The INDICTMENT is deliberate and stays; only the costume goes.
+    # ⛔ AND IT IS STILL NOT ENFORCED, WHICH IS THE HONEST LIMIT OF THIS FIX. Measured by mcpdev in
+    # `inventory.py:467`: `indicted` is built by walking SUBJECTS, so a `failing` element that is not
+    # a subject is never iterated and contributes nothing — it cannot block a commit, and under
+    # `tip_green` a fix to the other indicted file forgives the commit while the roster disagreement
+    # still stands. **This change makes the entry HONEST, not ENFORCED.** Whether the ledger should
+    # carry a finding that blocks without being path-keyed is filed, and is not ours.
+    _bad = {c if not c.endswith(".py") else "tools/verify/%s" % os.path.basename(c)
+            for c, _p, _ok, _d in failures}
     # vendored_files.txt is an exemption SWITCH: it decides which files every checker skips, so
     # this verdict depends on it without reading it as corpus. Named here or editing it is free.
     rc = common.record_if_asked("check_checkers", _subjects, _bad,

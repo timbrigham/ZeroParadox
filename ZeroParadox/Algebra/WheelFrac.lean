@@ -230,6 +230,15 @@ theorem fixed_pole_forces_collapse {α : Type*} (F : InvolutiveFork α)
     (h : F.dual F.pole₀ = F.pole₀) : F.Collapsed :=
   F.collapsed_iff_fixed.mpr h
 
+/-- **The COLLAPSED side is inhabited, by Mathlib's own `inv_zero`.** `Statement:` every
+    `GroupWithZero` carries an `InvolutiveFork` with `dual = Inv.inv` and `pole₀ = 0`, and it is
+    `Collapsed`. `dual`/`pole₀` are PINNED, or an identity involution satisfies it and it witnesses
+    nothing. Why it matters and the meadow reading: `ZeroParadox/Algebra/WheelFrac.md`. -/
+example (G : Type*) [GroupWithZero G] :
+    ∃ F : InvolutiveFork G, F.dual = Inv.inv ∧ F.pole₀ = 0 ∧ F.Collapsed :=
+  ⟨{ dual := Inv.inv, dual_invol := inv_inv, pole₀ := 0, pole₁ := (0 : G)⁻¹, swap := rfl },
+    rfl, rfl, (InvolutiveFork.collapsed_iff_fixed _).mpr inv_zero⟩
+
 /-! ## Purity check -/
 
 section PurityCheck

@@ -238,6 +238,63 @@ theorem h_strict_from_r1_t3
   rw [h_depth n, h_depth (n + 1)]
   exact_mod_cast nat_strict_of_strict_state_seq depths h_seq n
 
+/-! ### The two loads `IsDepthChain` actually carries, separated
+
+Measured 2026-09-04 by tracing every consumer. The equality is used for exactly two things, and
+neither needs it: `h_strict_from_r1_t3` transports STRICTNESS (a difference), and
+`t_iz_h_bound_from_depth_chain` uses `h_depth 0` for NON-NEGATIVITY at the base (an inequality).
+`TracksDepth` asks for those two directly. It is strictly weaker — `tracksDepth_not_isDepthChain`
+exhibits the gap — and both consumers go through it unchanged. ⚠ It does NOT fix self-supply:
+`depthchain_iff_nonneg` (`ScaleDepthWitness.lean`) applies to this form too, and
+`tracksDepth_is_self_supplied` says so in the file. -/
+
+/-- What the depth chain is USED for: strictness transports, and the base valuation is non-negative.
+    Neither conjunct pins an absolute valuation to an index. -/
+def TracksDepth (S : ℕ → Q₂) (depths : ℕ → ℕ) : Prop :=
+  (∀ m n, depths m < depths n → (S m).valuation < (S n).valuation) ∧ 0 ≤ (S 0).valuation
+
+/-- The equality form implies the weaker one, so nothing citing `IsDepthChain` loses anything. -/
+theorem isDepthChain_tracksDepth (S : ℕ → Q₂) (depths : ℕ → ℕ) (h : IsDepthChain S depths) :
+    TracksDepth S depths :=
+  ⟨fun m n hmn => by rw [h m, h n]; exact_mod_cast hmn, by rw [h 0]; exact Int.natCast_nonneg _⟩
+
+/-- `h_strict` from the weaker hypothesis — the same conclusion as `h_strict_from_r1_t3`. -/
+theorem h_strict_of_tracksDepth (S : ℕ → Q₂) (depths : ℕ → ℕ)
+    (h_track : TracksDepth S depths) (h_seq : IsStrictStateSequence depths) :
+    ∀ n, (S n).valuation < (S (n + 1)).valuation :=
+  fun n => h_track.1 n (n + 1) (nat_strict_of_strict_state_seq depths h_seq n)
+
+/-- `Statement:` a chain whose valuations climb by TWO while the index climbs by one satisfies
+    `TracksDepth` and refutes `IsDepthChain`.
+    `Reading:` **INVARIANT** — the weakening is real, not a rename. Any rate of ascent is admitted;
+    only the ORDER has to correspond. -/
+theorem tracksDepth_not_isDepthChain :
+    TracksDepth (fun n => (2 : Q₂) ^ (2 * n)) (fun n => n) ∧
+    ¬ IsDepthChain (fun n => (2 : Q₂) ^ (2 * n)) (fun n => n) := by
+  have hv2 : (2 : Q₂).valuation = 1 := by simp
+  have hpow : ∀ k : ℕ, ((2 : Q₂) ^ k).valuation = (k : ℤ) := by
+    intro k; rw [Padic.valuation_pow, hv2]; ring
+  refine ⟨⟨fun m n hmn => ?_, ?_⟩, ?_⟩
+  · have hmn' : m < n := hmn
+    show ((2 : Q₂) ^ (2 * m)).valuation < ((2 : Q₂) ^ (2 * n)).valuation
+    rw [hpow, hpow]
+    omega
+  · show (0 : ℤ) ≤ ((2 : Q₂) ^ (2 * 0)).valuation
+    rw [hpow]; norm_num
+  · intro h
+    have h1 : ((2 : Q₂) ^ (2 * 1)).valuation = ((1 : ℕ) : ℤ) := h 1
+    rw [hpow] at h1
+    norm_num at h1
+
+/-- `Statement:` a chain with strictly ascending, non-negative valuations satisfies `TracksDepth` for
+    an index read off the chain itself.
+    `Reading:` **INVARIANT** — the fence: this weakening fixes RIGIDITY, never INDEPENDENCE. The index
+    is still a free parameter, so it is still manufacturable. See `ScaleRealization.md`. -/
+theorem tracksDepth_is_self_supplied (S : ℕ → Q₂)
+    (hmono : ∀ m n, m < n → (S m).valuation < (S n).valuation) (h0 : 0 ≤ (S 0).valuation) :
+    TracksDepth S (fun n => n) :=
+  ⟨fun m n hmn => hmono m n (by exact_mod_cast hmn), h0⟩
+
 /-! ### NO-GO gauge — no-top buys the POSSIBILITY of ascent, never its OCCURRENCE
 
 `ℕ` has no top (`nat_has_no_top`), and the constant chain is a state sequence *in that same
@@ -471,6 +528,11 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox ZeroParadox
 #print axioms nat_has_no_top
 #print axioms nat_strict_of_strict_state_seq
 #print axioms h_strict_from_r1_t3
+#print axioms TracksDepth
+#print axioms isDepthChain_tracksDepth
+#print axioms h_strict_of_tracksDepth
+#print axioms tracksDepth_not_isDepthChain
+#print axioms tracksDepth_is_self_supplied
 #print axioms t_iz_complete
 #print axioms t_iz_norm_tendsto_zero
 #print axioms t_iz_conv_zero

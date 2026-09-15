@@ -41,11 +41,18 @@ PLACEHOLDER = re.compile(r'[<>*?]|YYYY|MM-DD|<name>')
 # They are legitimately absent between runs, so a resolve-check on them measures when the
 # checker ran, not whether the pointer is good. Explicit, each with a reason, and the count
 # is PRINTED on every run -- a silent exclusion list is how suppression stops being noticed.
-TRANSIENT = {
-    '.claude-local/er_cleared.txt': 'editorial-review signal, written per-push by the gate',
-    '.claude-local/ar_cleared.txt': 'adversary-review signal, written per-push by the gate',
-    '.claude-local/pa_cleared.txt': 'prior-art signal, written per-push by the gate',
-}
+# ⚠ EMPTY, AND THAT IS THE CURRENT STATE, not an unfinished edit. Its three members were
+# `er/ar/pa_cleared.txt`, and the `*_cleared.txt` scheme was RETIRED 2026-08-24 — review coverage
+# is a verdictLedger RECORD now, so nothing writes those paths and CLAUDE.md no longer names them.
+# Suppressing them TODAY would be backwards: a CLAUDE.md that named one again would be citing a
+# path nothing writes, which is precisely the dead pointer this leg exists to catch. Removed
+# 2026-09-01, and the printed count is how it was found — the run said "0 transient destination(s)
+# excluded by name" while three sat in the list. The mechanism stays; only its members went.
+TRANSIENT = {}
+# Roots that belong to a DIFFERENT repository. Neither their presence nor their absence here is
+# evidence about the pointer, so they are classified by PREFIX rather than by what is on disk —
+# the classification must not change when the directory does. See the note in `offer`.
+EXTERNAL_ROOTS = ('.claude-local/',)
 PATHISH = re.compile(r'^[\w.\-/]+\.(md|py|lean|json|txt|sh|yml|yaml|ps1)$')
 BACKTICKED = re.compile(r'`([^`\n]+)`')
 # ⚠ `READ <path>` — 37 uses in CLAUDE.md, and the paths leg could not see one of them
@@ -75,12 +82,24 @@ def cited_paths(text):
     Blocking on the second would fire on legitimate flowing prose, and on `Foo.md`
     hypotheticals the file uses to state a rule."""
     roots = set(os.listdir(ROOT))
-    rooted, loose = {}, {}
+    rooted, loose, external = {}, {}, {}
 
     def offer(tok, ln):
         if tok.startswith(('http', 'C:', 'origin/')) or not PATHISH.match(tok):
             return
-        if '/' in tok and tok.split('/')[0] in roots:
+        # ⚠⚠ THIS BRANCH IS WHY THE LEG'S SEVERITY USED TO DEPEND ON THE MACHINE. `roots` is
+        # `os.listdir(ROOT)`, and `.claude-local/` is GITIGNORED — present here, absent in a fresh
+        # clone and on CI. So the same CLAUDE.md put every `.claude-local/...` citation in the
+        # BLOCK bucket on Tim's box and the WARN bucket everywhere else, and the run printed the
+        # identical "ok all N rooted paths resolve" either way, N quietly smaller. A shrunken claim
+        # rendered exactly like the full one. Measured 2026-09-01 by listing ROOT without it.
+        # These paths are not checkable from here in EITHER direction: `.claude-local` is its own
+        # repository (R-CONTEXT), so its absence is not evidence of a dead pointer and its presence
+        # is not evidence of a live one. Third bucket, COUNTED and PRINTED — same idiom as
+        # TRANSIENT, because an exclusion nobody counts is how coverage silently shrinks.
+        if tok.startswith(EXTERNAL_ROOTS):
+            external.setdefault(tok, ln)
+        elif '/' in tok and tok.split('/')[0] in roots:
             rooted.setdefault(tok, ln)
         else:
             loose.setdefault(tok, ln)
@@ -105,7 +124,7 @@ def cited_paths(text):
     for m in READ_LINE.finditer(text):
         offer(m.group(1).strip(), text[:m.start()].count('\n') + 1)
 
-    return rooted, loose
+    return rooted, loose, external
 
 
 def manifest(lines, secs):
@@ -133,7 +152,7 @@ def blocking_failures(text):
     re-implements the logic it is testing proves nothing about the logic that ships.
     """
     fails = []
-    rooted, _ = cited_paths(text)
+    rooted, _, _ = cited_paths(text)
     missing = [p for p in rooted
                if not os.path.exists(os.path.join(ROOT, p)) and p not in TRANSIENT]
     if missing:
@@ -151,7 +170,16 @@ def selftest():
         # (name, text, must_fire)
         ('clean-rooted-path',   'see `tools/verify/check_claude_md.py` for the contract.', False),
         ('clean-named-checker', 'run `check_encoding.py` before every commit.',            False),
-        ('transient-excluded',  'the gate writes `.claude-local/er_cleared.txt` on pass.',  False),
+        # ⚠ THIS ROW USED TO BE `transient-excluded`, must_fire=False, and it was green for a
+        # reason that had nothing to do with what it claimed to test. It asserted `er_cleared.txt`
+        # was suppressed BY TRANSIENT; measured 2026-09-01, TRANSIENT excluded nothing (the run
+        # printed "0 transient destination(s)") and the row passed anyway, because the retired
+        # file is still sitting on disk from the day the scheme was retired, so the path resolves.
+        # Three independent reasons to pass, one asserted, none checked. It is now a `.claude-local`
+        # row: those never block, whether or not the file is there — which is the property that
+        # actually holds. The TRANSIENT mechanism gets its own both-halves control below.
+        ('external-repo-path',  'the gate writes `.claude-local/er_cleared.txt` on pass.',  False),
+        ('external-repo-absent', 'see `.claude-local/notes/definitely_not_here.md` first.', False),
         ('placeholder-skipped', 'name it `.claude-local/notes/scan_YYYY-MM-DD.md`.',        False),
         ('broken-rooted-path',  'open `tools/process/definitely_not_here.md` first.',       True),
         ('missing-checker',     'run `check_definitely_absent.py` before committing.',      True),
@@ -167,6 +195,46 @@ def selftest():
         ('cmd-placeholder-dead', 'run `python tools/verify/check_absent.py <tag>` first.',  True),
     ]
     bad = 0
+
+    # The TRANSIENT mechanism itself, exercised on a member that exists only for these two lines.
+    # Both halves, against the SAME dict `blocking_failures` reads: absent -> must fire, present ->
+    # must suppress. Without this the exclusion path would be untested code the moment the list
+    # emptied, and a suppression route nobody has seen work is not a mechanism, it is a hope.
+    SYN = 'tools/verify/_synthetic_transient_destination.json'
+    syn_text = 'the batch writes `%s` between runs.' % SYN
+    if not blocking_failures(syn_text):
+        print('  %-22s %-14s expected %-6s got %-6s FAIL'
+              % ('transient-mechanism', 'MUST FIRE', True, False))
+        bad += 1
+    TRANSIENT[SYN] = 'synthetic, installed by --selftest only'
+    try:
+        fired = bool(blocking_failures(syn_text))
+    finally:
+        del TRANSIENT[SYN]
+    print('  %-22s %-14s expected %-6s got %-6s %s'
+          % ('transient-mechanism', 'BOTH HALVES', False, fired, 'ok' if not fired else 'FAIL'))
+    if fired:
+        bad += 1
+
+    # ⚠⚠ THE CONTROL THIS CHECKER DID NOT HAVE, and its absence is what hid the defect above.
+    # Every case here runs on a machine where `.claude-local/` EXISTS. The leg classified by
+    # `os.listdir(ROOT)`, so on a fresh clone or CI the same text took a different branch and the
+    # BLOCK bucket silently shrank. Re-running the whole case list against a ROOT with the
+    # gitignored directory hidden is the state nobody tested; the verdicts must be identical in
+    # both, and that INVARIANCE is the property, not either verdict on its own.
+    real_listdir = os.listdir
+    os.listdir = lambda p: [x for x in real_listdir(p) if x != '.claude-local']
+    try:
+        no_local = {n: bool(blocking_failures(t)) for n, t, _ in cases}
+    finally:
+        os.listdir = real_listdir
+
+    drift = [n for n, t, _ in cases if no_local[n] != bool(blocking_failures(t))]
+    print('  %-22s %-14s expected %-6s got %-6s %s'
+          % ('listdir-invariance', 'BOTH ROOTS', 0, len(drift),
+             'ok' if not drift else 'FAIL ' + ','.join(drift)))
+    bad += 1 if drift else 0
+
     for name, text, must_fire in cases:
         fired = bool(blocking_failures(text))
         ok = (fired == must_fire)
@@ -219,7 +287,7 @@ def main():
     bad = 0
 
     # --- BLOCK: rooted paths resolve -----------------------------------------
-    rooted, loose = cited_paths(text)
+    rooted, loose, external = cited_paths(text)
     missing = {p: ln for p, ln in rooted.items()
                if not os.path.exists(os.path.join(ROOT, p)) and p not in TRANSIENT}
     skipped = sum(1 for p in rooted if p in TRANSIENT)
@@ -232,6 +300,11 @@ def main():
         print('\n  paths            ok    all %d rooted paths resolve' % len(rooted))
     print('                         (%d transient destination(s) excluded by name, see TRANSIENT)'
           % skipped)
+    # Printed whether or not the directory is present, and the SAME number either way — that
+    # invariance is the whole point of the bucket, so a reader on CI and a reader here see one
+    # count and can tell it did not move.
+    print('                         (%d path(s) in a separate repository, not checkable here: %s)'
+          % (len(external), ', '.join(EXTERNAL_ROOTS)))
 
     # --- BLOCK: named checkers exist -----------------------------------------
     named = sorted(set(CHECKER_NAMED.findall(text)))

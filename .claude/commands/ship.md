@@ -44,13 +44,13 @@ Substitute `ARGUMENTS_VALUE` with `SHIP_SCOPE` (or the gate's own mode, e.g. `cr
 caller pre-flight: `SHIP_ROUND` and the cap, the permitted verdicts, and the three warnings below.
 
 **Tell Tim which gates are running and their parameters before they start** — command file, scope,
-mode, round, permitted verdicts, signal written, what this round must attack.
+mode, round, permitted verdicts, what gets recorded and by whom, what this round must attack.
 
 **Three warnings every brief must carry:**
 1. **Hash the FILE ON DISK for any signal, never `git show "HEAD:<path>"`** — that means different
    things before and after a commit and yields a signal stale the instant the commit lands.
 2. **Never `reset --hard` / `checkout -- .` / `clean` / `stash` the shared tree.** Assume the caller
-   holds uncommitted work. Needs commits? `git worktree add --detach`. A run destroyed the caller's
+   holds uncommitted work. Needs commits? `mcp__gitRobot__worktree(action='add')`. A run destroyed the caller's
    uncommitted file this way and reported success.
 3. **Sources are on disk in `.claude-local/papers/`** — check before calling one unobtainable; never
    record a fetch failure as a fact about a source.
@@ -71,20 +71,23 @@ means safe to commit and push.
 
 Then:
 ```
-git add <named paths>          # NEVER -A; agents may have written to the tree
-git status --short             # every staged path must be one you meant
-git commit -F <message-file>   # BOM-free: [System.IO.File]::WriteAllText(p, s, UTF8Encoding($false))
-git push origin illustrated > <scratchpad>/push.log 2>&1 ; echo $?
-python tools/verify/batch.py close      # if a batch was open
+mcp__gitRobot__stage(paths=[...])                    # NAMED paths; -A is refused outright
+mcp__gitRobot__read(op='status', args=['--short'])   # every staged path must be one you meant
+mcp__gitRobot__commit(message_file='<path>')         # the message comes from a FILE, never argv
+mcp__gitRobot__preflight(reason='<why>')             # then poll preflight_status() until it lands
+mcp__gitRobot__push(branch='illustrated', reason='<why>')
+python tools/verify/batch.py close                   # if a batch was open
 ```
+⚠ **Direct version-control commands are denied to agents** (R-ROBOT; a fail-closed `PreToolUse` hook reads the whole command string). This block used to list four raw ones, so `/ship` dead-ended at the step that commits and pushes — which reads as a broken tool rather than a working control. The mediated calls above are the whole substitute set.
 ⚠ **Never pipe a push through `head`/`grep -q`, and never write a `|| git push --no-verify`
 fallback.** If the hook blocks, read it and fix the cause.
 
 ---
 
-**Verdicts.** FAIL-BEDROCK → fix, bump, return to 2 (cap 5). STOP-ORDINARY → the gate writes its
-signal; the correct action is to PUSH, not iterate (cap 2). ⚠ **Editing after a STOP-ORDINARY stales
-every signal and restarts the obligation** — either re-run the gates or push what was certified and
+**Verdicts.** FAIL-BEDROCK → fix, bump, return to 2 (cap 5). STOP-ORDINARY → a PROCEED verdict that is NOT a pass,
+so it goes to the CALLER, who records it (`record.py --outstanding-file`) and carries the
+findings as outstanding; the correct action is to PUSH, not iterate (cap 2). ⚠ **Editing
+after a STOP-ORDINARY stales every RECORD and restarts the obligation** — either re-run the gates or push what was certified and
 ledger the rest. Not both. **Ledger every finding** in `.claude-local/DEFECTS.md`, fixed or not.
 
 **Not wired into the git hook, deliberately.** A gate run is 15-25 minutes; four in a pre-push hook
