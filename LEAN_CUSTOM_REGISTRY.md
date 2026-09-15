@@ -197,7 +197,7 @@ Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP
 ### `machinePhaseKleene` — `ZeroParadox/Computability/Kleene.lean`
 `KleeneStructure MachinePhase` (noncomputable)
 
-`botCode` is chosen via `Classical.choose`, so it names SOME computational quine and not a distinguished one; `isComputationalQuine_undecidable` says the MEMBERSHIP PREDICATE is not a `ComputablePred`, which is why nothing can pin down which code was chosen — it does not say no algorithm names a witness, and the constant codes are witnesses. The `noncomputable` marker comes from this instance's choice of `botCode`; a computable instance with a constant code also satisfies the class, so non-constructivity belongs to the instance, not to DA-1's computational path.
+`botCode` is chosen via `Classical.choose`, so it names SOME computational quine and not a distinguished one; `isComputationalQuine_undecidable` says the MEMBERSHIP PREDICATE is not a `ComputablePred`, which is why nothing can pin down which code was chosen — it does not say no algorithm names a witness, and the constant codes are witnesses. The `noncomputable` marker comes from this instance's choice of `botCode`; a computable instance with a constant code also satisfies the class, so the noncomputable marker belongs to the instance, not to DA-1's computational path.
 
 ---
 

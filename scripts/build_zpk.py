@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.18 | September 2026
+Version 1.19 | September 2026
+v1.19: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Section IV remark said the choice belongs to this instance because a computable constant-code instance exists. That fact is about the noncomputable marker, not the axiom footprint: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and is present in the computable instance too. The remark now says so, says Classical.choose is what makes machinePhaseKleene noncomputable, and says essentiality is not measured.
 v1.18: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the preamble's 'key insight' and Section II's 'They are not different things' are labelled the framework's reading at the sentence. The T-COMP box listed a fourth clause, botCode existence, under 'the following are equivalent'; t_comp states three, so the box lists those three and states the botCode existence separately as the KleeneStructure requirement. The classical-choice remark said the choice is structurally necessary; ZP-K's instance uses choice to pick botCode, and a computable instance with a constant code also exists (the example after machinePhaseKleene in Kleene.lean). 'satisfies vacuously' is now 'satisfies trivially'.
 v1.17: DA-1 READING FENCED, THIRD PASS (Tim rulings, 2026-09-15): three sentences stated the executor reading as established. The description_instantiation_gap_closed box now says that on the framework's reading bottom is not a description awaiting an external interpreter, and that Lean proves only the Quine-atom statement above it. The da1_closed_concrete box's Interpretation is labelled the framework's reading, not a Lean theorem, with c0 read as the executor. Section II's body says bottom in the computational instantiation is read as the universal Turing machine in its ground state; the general sentences about U are unchanged.
 v1.16: DA-1 PATH 3, SECOND PASS (Tim rulings, 2026-09-15): the Section V heading 'DA-1 Formally Closed', subsection 'II. DA-1 Closed' and the box title 'Theorem da1_closed_concrete - DA-1 Formally Closed' credited the Path 1 witness with closing DA-1, which is closed given DP-2; they are now 'DA-1: what Lean witnesses' and 'the Path 1 witness'. The description_instantiation_gap_closed box said bottom 'IS the executor ... identified structurally with the Kleene fixed point and the AFA Quine atom'; it now says bottom is read as the executor, Lean witnesses it as the AFA Quine atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a KleeneStructure requirement (botCode_is_quine), and that these are one structural fact is the framework's reading.
@@ -45,7 +46,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -358,8 +359,11 @@ def build():
     E.append(remark_box(
         'Remark: Classical Choice in Computability',
         [
-            'ZP-K\'s instance uses classical choice to pick botCode; a computable instance with a '
-            'constant code also exists, so the choice belongs to this instance. Kleene\'s '
+            'In the computability layer Classical.choice is carried by the statements\' types, '
+            'through Mathlib\'s numbering of program codes (Denumerable Code): it is present '
+            'even in a computable instance with a constant code. ZP-K\'s machinePhaseKleene also '
+            'picks botCode with Classical.choose, which is what makes that instance '
+            'noncomputable. Whether the numbering\'s footprint is essential is not measured. Kleene\'s '
             'theorem is an existence result, and the code it supplies is selected '
             'non-constructively. This is standard in computability theory — the '
             'theorem guarantees existence without giving a canonical construction.',

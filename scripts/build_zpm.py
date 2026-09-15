@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-M: Kleene-Ordinal Bridge PDF Builder
-Version 1.5 | September 2026
+Version 1.6 | September 2026
+v1.6: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box said the choice in the computability fixed point belongs to ZP-K's instance. Measured: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and a computable constant-code instance carries it too; Classical.choose is what makes machinePhaseKleene noncomputable; essentiality is not measured. The ordinal half of the box is unchanged.
 v1.5: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim ruling, 2026-09-15): the verification box said Classical.choice is load-bearing in the computability fixed point; the choice there belongs to ZP-K's instance (its choice of botCode), and a computable instance with a constant code also exists. The ordinal half of the sentence is unchanged.
 v1.4: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the type-bridge sentence labelled the pre-snap state c0 '(Kleene quine, ZP-K)'; ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), so c0 is now described as read as the Kleene quine, a KleeneStructure requirement in ZP-K.
 v1.3: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
@@ -14,7 +15,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -397,9 +398,13 @@ def build():
             'These are standard Mathlib infrastructure axioms, inherited from ordinal theory '
             '(ZP-L), 2-adic analysis (ZP-B), and computability theory (ZP-K).',
             'Classical.choice is load-bearing in the ordinal fixed-point (nfp) and present in '
-            'the computability fixed-point (Kleene\'s theorem), where it belongs to ZP-K\'s '
-            'instance (its choice of botCode); a computable instance with a constant code also '
-            'exists. Its presence is expected and documented.',
+            'the computability fixed-point (Kleene\'s theorem). In the computability layer '
+            'Classical.choice is carried by the statements\' types, through Mathlib\'s numbering '
+            'of program codes (Denumerable Code): it is present even in a computable instance '
+            'with a constant code. ZP-K\'s machinePhaseKleene also picks botCode with '
+            'Classical.choose, which is what makes that instance noncomputable. Whether the '
+            'numbering\'s footprint is essential is not measured. Its presence is expected and '
+            'documented.',
             'Zero sorry in Incompleteness.lean. Verified: lake build, May 2026.',
         ]
     ))
