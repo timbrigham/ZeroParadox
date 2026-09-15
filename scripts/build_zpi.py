@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.25 | September 2026
+Version 1.26 | September 2026
+v1.26: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim ruling, 2026-09-15): a ninth site the v1.25 sweep missed said DA-1 is closed given DP-2 'by ZP-K via Kleene's second recursion theorem'. DA-1 is closed given DP-2 by da1_minimal_path, which uses no axioms and no Kleene; the sentence now says so, and that ZP-K witnesses DA-1's Path 1 (da1_closed_concrete).
 v1.25: DA-1 CREDIT (Tim ruling, 2026-09-15): eight sites said ZP-K formally closes DA-1 via Kleene's second recursion theorem ('ZP-K now formally closes DA-1', 'DA-1 is now formally closed by ZP-K', 'DA-1 (formally) closed by ZP-K/Kleene'). DA-1 is closed given DP-2 (ZP-E); ZP-K witnesses Path 1 and carries Path 3 as a KleeneStructure requirement. Each site now says that. Companion reviewed; its differently shaped sentences are left for a ruling.
 v1.24: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2); the Open Items AX-1 row carries the canonical AX-1 sentence and its status cell reads 'the snap occurs given the occurrence commitment and DA-1'. Page 1 said 'where T-SNAP establishes the first transition bottom -> eps0', close to the retracted forcing wording with no occurrence fence; it now says T-SNAP fixes the shape of that transition and not that it is taken, and that T-IZ's trajectory is for a chain that takes every step (its strict-ascent hypothesis). Remark R-II.2 pointed t_iz_limit_is_new_null at ZeroParadox/Order/SnapCannotBe.lean, which only indexes it; it is declared in ZeroParadox/Valuation/SemilatticeInstance.lean, and both are named. 'Binary Snap Causality' names the retired AX-1 in this document, so T-SNAP's name gloss is not placed here.
 v1.23: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The Open Items row said "AX-1 retired. T-SNAP is derived." with status CLOSED; it now says SPLIT and carries both halves. The "Remaining axioms" row beside it called AX-B1, AX-G1, AX-G2 "the three foundational commitments", which the occurrence half now contradicts; it names them as the named axioms and says the occurrence half is a commitment, not on that list. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): Remark R-II.2's positional line pointer into SnapCannotBe.lean went stale when that index grew eight lines and now landed on its section III header; it names the declaration instead, t_iz_limit_is_new_null in ZeroParadox/Order/SnapCannotBe.lean.
@@ -44,7 +45,7 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -486,9 +487,10 @@ def build():
         '(a choice-free syntactic surrogate for the metric collapse, which states of itself that it '
         'settles the standing conjecture in neither direction). Steps 2–5 (the '
         'valuation-complexity bridge and DA-1/T-SNAP path) describe the original ZP-E '
-        'informational argument and are retained as motivational context. DA-1 is closed GIVEN DP-2 '
-        '(CLAIMS.md, Tier 5) by ZP-K via Kleene\'s second recursion theorem; the DP-2 commitment is not '
-        'discharged by it. The theorems in SemilatticeInstance.lean, '
+        'informational argument and are retained as motivational context. DA-1 is closed given DP-2 '
+        '(da1_minimal_path; CLAIMS.md, Tier 5); ZP-K witnesses its Path 1 (da1_closed_concrete: ⊥ is the '
+        'unique Quine atom of MachinePhase). The DP-2 commitment is not discharged by either. '
+        'The theorems in SemilatticeInstance.lean, '
         'with their axiom footprints:'))
     E += [
         li('t_iz_limit_is_new_null: anything satisfying the DA-2 &#8869; role IS that lattice&#8217;s &#8869; '

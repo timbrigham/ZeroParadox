@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.8 | September 2026
+Version 1.10 | September 2026
+v1.10: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim rulings, 2026-09-15): Section II's body still equated Rogers' fixed-point theorem with Kleene's second recursion theorem and dropped 'total'; it now names Mathlib fixed_point, inter-derivable with fixed_point2, for any total computable transformation. The verification box said Classical.choice is load-bearing; in the computability layer the choice belongs to ZP-K's instance (its choice of botCode), and a computable instance with a constant code also exists.
+v1.9: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the overview equated Rogers' fixed-point theorem with Kleene's second recursion theorem; it now names Rogers' theorem as Mathlib fixed_point, for a total computable transformation, inter-derivable with Kleene's second recursion theorem (fixed_point2), as Gentzen.lean section II already records. Remark 'Why K is Absent' said the AFA/Kleene route is 'a provable path'; its Kleene step is a KleeneStructure requirement, and it now says so.
 v1.8: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15): the surreals note (Remark R-L.2) sits in the ordered-field setting, where the snap is proved impossible (f_snap_impossible); the clause saying what occurrence follows from is removed there, and the sentence says only what is derived: the shape and its impossibility in an ordered field.
 v1.7: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the surreals note said 'occurrence is a framework commitment'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
 v1.6: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
@@ -17,7 +19,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.10'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -48,8 +50,9 @@ def build():
         'to standard results in ordinal theory and computability. '
         'First, Classical.choice appears at the non-constructive diagonal step in each '
         'of the four mathematical settings of the ZP framework — topology, information '
-        'theory, set theory, and computation. Second, Rogers\' fixed-point theorem '
-        '(Kleene\'s second recursion theorem) is formalized as a wrapper, formalizing the '
+        'theory, set theory, and computation. Second, Rogers\' fixed-point theorem for a total '
+        'computable transformation (Mathlib fixed_point; inter-derivable with Kleene\'s second '
+        'recursion theorem, fixed_point&#8322;) is formalized as a wrapper, formalizing the '
         'computational fixed-point structure. Third, the ordinal &#949;&#8320; is fully '
         'characterized as the first fixed point of &#945; &#8614; &#969;^&#945; and the '
         'limit of the tower &#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230;. '
@@ -96,8 +99,8 @@ def build():
             'Kolmogorov complexity K is not computed in Lean in this framework. '
             'Its existence as a total function requires Classical.choice — '
             'exactly the axiom Nat.Partrec.Code.fixed_point&#8322; already uses in ZP-K. '
-            'The AFA/Kleene route reaches the same fixed-point structure via a provable '
-            'path without requiring K to be explicitly computed.',
+            'The AFA/Kleene route reaches the same fixed-point structure via a path whose '
+            'Kleene step is a KleeneStructure requirement, without requiring K to be explicitly computed.',
             'Axiom footprint evidence — the following ZP-K theorems all carry '
             '[propext, Classical.choice, Quot.sound]:',
             '  t_comp (T-COMP three-way equivalence; the computational face is an assumption, not a clause)',
@@ -119,8 +122,9 @@ def build():
     ]
 
     E.append(body(
-        'Rogers\' fixed-point theorem (also known as Kleene\'s second recursion theorem) '
-        'states that any computable transformation of a code has a behavioral fixed point: '
+        'Rogers\' fixed-point theorem (Mathlib fixed_point; inter-derivable with Kleene\'s second '
+        'recursion theorem, fixed_point&#8322;) states that any total computable transformation of a '
+        'code has a behavioral fixed point: '
         'a code c such that running f(c) and running c produce the same partial function. '
         'For any computable transformation, at least one fixed-point code exists.'))
 
@@ -636,9 +640,10 @@ def build():
             'All 23 theorems carry axiom footprint: [propext, Classical.choice, Quot.sound].',
             'These are standard Mathlib infrastructure axioms (ordinal theory, p-adic '
             'analysis, computability). They are not ZP-L commitments.',
-            'Classical.choice is load-bearing: it is the formal non-constructivity '
-            'appearing at the diagonal step in each ZP layer (§I). Its presence is '
-            'expected and documented, not incidental.',
+            'Classical.choice is the formal non-constructivity appearing at the diagonal '
+            'step in each ZP layer (§I). In the computability layer the choice belongs to '
+            'ZP-K\'s instance (its choice of botCode); a computable instance with a constant '
+            'code also exists. Its presence is expected and documented, not incidental.',
             'Zero sorry in Gentzen.lean. Verified: lake build, May 2026.',
         ]
     ))

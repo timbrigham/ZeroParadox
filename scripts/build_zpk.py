@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.17 | September 2026
+Version 1.18 | September 2026
+v1.18: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the preamble's 'key insight' and Section II's 'They are not different things' are labelled the framework's reading at the sentence. The T-COMP box listed a fourth clause, botCode existence, under 'the following are equivalent'; t_comp states three, so the box lists those three and states the botCode existence separately as the KleeneStructure requirement. The classical-choice remark said the choice is structurally necessary; ZP-K's instance uses choice to pick botCode, and a computable instance with a constant code also exists (the example after machinePhaseKleene in Kleene.lean). 'satisfies vacuously' is now 'satisfies trivially'.
 v1.17: DA-1 READING FENCED, THIRD PASS (Tim rulings, 2026-09-15): three sentences stated the executor reading as established. The description_instantiation_gap_closed box now says that on the framework's reading bottom is not a description awaiting an external interpreter, and that Lean proves only the Quine-atom statement above it. The da1_closed_concrete box's Interpretation is labelled the framework's reading, not a Lean theorem, with c0 read as the executor. Section II's body says bottom in the computational instantiation is read as the universal Turing machine in its ground state; the general sentences about U are unchanged.
 v1.16: DA-1 PATH 3, SECOND PASS (Tim rulings, 2026-09-15): the Section V heading 'DA-1 Formally Closed', subsection 'II. DA-1 Closed' and the box title 'Theorem da1_closed_concrete - DA-1 Formally Closed' credited the Path 1 witness with closing DA-1, which is closed given DP-2; they are now 'DA-1: what Lean witnesses' and 'the Path 1 witness'. The description_instantiation_gap_closed box said bottom 'IS the executor ... identified structurally with the Kleene fixed point and the AFA Quine atom'; it now says bottom is read as the executor, Lean witnesses it as the AFA Quine atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a KleeneStructure requirement (botCode_is_quine), and that these are one structural fact is the framework's reading.
 v1.15: DA-1 PATH 3, INTERNAL CONTRADICTION (pre-existing bedrock, editorial gate round 3 B1, 2026-09-15): 'What Changed for DA-1' opened 'ZP-K resolves Paths 1 and 3' and two sentences later said 'Path 3 (computational) is NOT resolved here'; the Path 2 paragraph and its Open Items row still said 'Paths 1 and 3 are formally closed / closed', and section I said 'Paths 1 and 3 are projections of one structural identity'. Each now carries the CLAIMS.md DA-1 row: Path 1 is witnessed by da1_closed_concrete, which proves IsQuineAtom (bottom : MachinePhase) and nothing computational; Path 3's witness is the machinePhaseKleene botCode_is_quine field, a KleeneStructure requirement, not a second independent proof. 'DA-1 does not depend on Path 2' is kept.
@@ -44,7 +45,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -68,8 +69,8 @@ def build():
 
     E.append(body(
         'This document establishes the computational grounding of the Zero Paradox\'s central '
-        'self-reference structure. The key insight: ⊥ in the computational '
-        'instantiation is not a state of a Turing machine. ⊥ is the ground state of a universal '
+        'self-reference structure. On the framework\'s reading, ⊥ in the computational '
+        'instantiation is not a state of a Turing machine: it is the ground state of a universal '
         'Turing machine — the state from which no external executor is required. Kleene\'s '
         'second recursion theorem supplies a fixed point of the self-application operator; that '
         'this fixed point is to be read as the computational expression of ⊥ = {⊥} is the '
@@ -264,11 +265,11 @@ def build():
             '(1) IsQuineAtom q  — set-theoretic self-reference (AFA)',
             '(2) q = ⊥  — order-theoretic minimum (ZP-A)',
             '(3) ∀ x : L, join q x = x  — algebraic generator (ZP-A A4)',
-            '(4) ∃ botCode : Code, IsComputationalQuine botCode  — computational self-reference',
             '',
-            'Note on (4): it is present in any KleeneStructure instance by typeclass requirement '
-            '(botCode_is_quine is a required field). The equivalence of (1)–(3) is derived by '
-            'T-EXEC; the presence of (4) follows from the structural commitment of KleeneStructure.',
+            'Separately, the KleeneStructure requirement: ∃ botCode : Code, IsComputationalQuine '
+            'botCode (computational self-reference). It is not a clause of t_comp; it is present in '
+            'any KleeneStructure instance because botCode_is_quine is a required field. The '
+            'equivalence of (1)–(3) is derived by T-EXEC.',
             'Lean: ZeroParadox.t_comp. '
             'Purity: standard foundational axioms — from Mathlib computability. ✓',
         ]
@@ -314,7 +315,7 @@ def build():
         'gap": why does mathematical self-reference imply computational execution? The '
         'gap assumed the two were different things connected by a philosophical bridge.'))
     E.append(body(
-        'They are not different things. ⊥ in the computational instantiation is read as the universal '
+        'On the framework\'s reading, they are not different things. ⊥ in the computational instantiation is read as the universal '
         'Turing machine in its ground state. The universal Turing machine is not a description '
         'awaiting an external executor — it IS the executor. The question "why does this '
         'description execute?" is incoherent when applied to U, because U is not a description. '
@@ -357,9 +358,10 @@ def build():
     E.append(remark_box(
         'Remark: Classical Choice in Computability',
         [
-            'The use of classical choice in ZP-K is structurally necessary: Kleene\'s '
-            'theorem is an existence result, and the code witnessing the fixed point is '
-            'selected non-constructively. This is standard in computability theory — the '
+            'ZP-K\'s instance uses classical choice to pick botCode; a computable instance with a '
+            'constant code also exists, so the choice belongs to this instance. Kleene\'s '
+            'theorem is an existence result, and the code it supplies is selected '
+            'non-constructively. This is standard in computability theory — the '
             'theorem guarantees existence without giving a canonical construction.',
             'The MachinePhase instance (§ V) uses Classical.choose to pick botCode from '
             'the existence proof. This makes machinePhaseKleene noncomputable, '
@@ -458,7 +460,7 @@ def build():
         'here. Its witness, botCode_is_quine, is a KleeneStructure class field — an assumption '
         'supplied at instantiation, not a second independent proof — and the condition it '
         'requires, IsComputationalQuine, is a periodicity condition that a constant code '
-        'satisfies vacuously. The Kolmogorov reading ("no shorter program is prior to ⊥") has '
+        'satisfies trivially. The Kolmogorov reading ("no shorter program is prior to ⊥") has '
         'no formal content in ZP-K: Kolmogorov complexity is uncomputable and absent from the '
         'development. Path 3 therefore stands where Path 2 stands — a foundational commitment.'))
     E.append(body( # ZP-NOCHECK: description-instantiation gap cited in quotes as a closed informal gap, not a live ZP claim

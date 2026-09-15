@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.23, revised September 2026)
+Zero Paradox — Foreword PDF Builder (v2.24, revised September 2026)
+v2.24: DA-1/KLEENE CLASS AND MC-1 PREMISE, GATE ROUND 4 (Tim rulings, 2026-09-15): section IV said the framework 'proves each face in its own domain'; the Kleene face is a KleeneStructure requirement, not proved, so the sentence now reads 'It proves the lattice, 2-adic and categorical faces in their own domains and carries the computational one as a requirement'. 'In computation it is the self-reproducing program' is now 'is read as'. The MC-1 row's seam_unique_among_named pointer now carries its premise: in a lattice with no top.
 v2.23: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim ruling, 2026-09-15): section IV's 'The framework reads them as faces of one object' is past tense, 'read', since the next paragraph retires that reading. Nothing else in the paragraph changed.
 v2.22: DECISION BATCH REMEDIATION AFTER GATE ROUND 2, SECOND PASS (Tim ruling, 2026-09-15): section IV said the framework 'proves several of those faces literally identical', a cross-category identity the next paragraph retires; it now says the framework proves each face in its own domain, and that they are one object is the reading the next paragraph retires.
 v2.21: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): MC-1: 'neither x = y nor x != y is well-formed across categories' is replaced by: object equality across categories does not typecheck and is not invariant under equivalence. The commitments-table MC-1 row keeps a property clause scoped to the named bottoms of seam_unique_among_named; the section IV paragraph, whose faces (Quine atom, Kleene quine, v2(0), initial object) are not that named list, keeps only the retirement.
@@ -65,7 +66,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.23'
+VERSION = '2.24'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -145,7 +146,7 @@ def commitments_table():
          'correspondence is realized in Lean (mc1_correspondence, the four functors in ZP-H). The former '
          'numerical identity — that the four are one object — is retired as ill-typed (object equality across '
          'categories does not typecheck and is not invariant under equivalence); what separates the members is '
-         'proved property by property (seam_unique_among_named, ZeroParadox/Category/SeamUniqueness.lean, for the named bottoms).'),
+         'proved property by property (seam_unique_among_named, ZeroParadox/Category/SeamUniqueness.lean, for the named bottoms, in a lattice with no top).'),
         ('CC-1',  'Conditional Claim (restated in ZP-J, not forced)',
          'S₀ = ⊥. The initial state equals the null state. T2 establishes ⊥ ≤ S₀ unconditionally; '
          'the strengthening to equality is a modelling commitment. ZP-J restates it: in any AFAStructure '
@@ -423,13 +424,14 @@ def build():
             'There is a deeper unity here than shared position. In each layer ⊥ is not merely '
             'the starting element — it is the same kind of element: the one that refers to '
             'itself. In set theory it is the Quine atom, the set whose only member is itself '
-            '(⊥ = {⊥}). In computation it is the self-reproducing program, the fixed point of '
+            '(⊥ = {⊥}). In computation it is read as the self-reproducing program, the fixed point of '
             'Kleene\'s recursion theorem — a process that runs on its own description. In the '
             '2-adic numbers it is the point infinitely divisible into itself, v₂(0) = ∞. '
             'In category theory it is the initial object, the source from which every arrow '
             'departs and to which none return. These are not loose analogies. The framework '
             'read them as faces of one object: a self-referential fixed point. It proves '
-            'each face in its own domain; that they are one object is the reading the next '
+            'the lattice, 2-adic and categorical faces in their own domains and carries the '
+            'computational one as a requirement; that they are one object is the reading the next '
             'paragraph retires.',
             S['body']),
         Paragraph(

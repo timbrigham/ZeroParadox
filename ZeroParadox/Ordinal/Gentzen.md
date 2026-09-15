@@ -2,6 +2,28 @@
 
 Moved from `ZeroParadox/Ordinal/Gentzen.lean` § VI. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
 
+## § I. Axiom Footprint Convergence
+
+Moved from `ZeroParadox/Ordinal/Gentzen.lean` § I (2026-09-15), carried in the same accepted-defect baseline as § VI, so the warning above applies to it too.
+
+Non-constructibility appears in four formal languages across the ZP framework.
+Each proved theorem in each layer, as currently written, depends on Classical.choice at the
+diagonal step. Whether that dependence is necessary (forced by ZP geometry rather than incidental)
+is the open Classical.choice inversion conjecture (cf. ZPM §II): #print axioms shows dependence,
+not necessity.
+
+| Layer | Formal Language | Expression of non-constructibility |
+|-------|----------------|--------------------------------------|
+| ZPB   | Topology        | C3: no continuous path ⊥ → x ≠ ⊥   |
+| ZPC   | Information     | L-INF: infinite surprisal at ⊥       |
+| ZPJ/K | Set + Compute  | bot_self_mem (AFA); botCode (Kleene) |
+| ZPI   | Algorithmic IT  | K(Sₙ|n)/|Sₙ| → 1; K uncomputable    |
+
+The reason K is absent from Lean: its existence requires Classical.choice —
+exactly the axiom Nat.Partrec.Code.fixed_point₂ already uses in ZPK. The
+AFA/Kleene route reaches the same fixed-point structure via a path whose Kleene step is a
+KleeneStructure requirement.
+
 ## § VI. Kleene-Ordinal Fixed-Point Bridge
 
 The ordinal fixed-point structure (ε₀ = nfp (ω^·) 0, ω^ε₀ = ε₀) and the computational

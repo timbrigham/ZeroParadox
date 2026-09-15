@@ -17,7 +17,7 @@ cites; it is a curated map of what is established, not a source of new claims.
 same structural role across several domains. What is **proved** is the *membership* and the *recurrence of
 the slot structure*. The reading that the various bottoms are *one object* is retired as ill-typed (object
 equality across categories does not typecheck and is not invariant under equivalence); what separates the members
-is proved property by property (seam_unique_among_named, for the named bottoms).
+is proved property by property (seam_unique_among_named, for the named bottoms, in a lattice with no top).
 The index above is where the precise line between proved and conjectural is kept.
 
 ## Core (finalized results - read these)
@@ -145,6 +145,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Computability/ComputationCannotBe.lean` - Machine-checked characterization index of COMPUTATION — what it can and cannot be
 - `ZeroParadox/Computability/GroundZero.lean` - Ground zero — the bottom as a behaviour, not a configuration
 - `ZeroParadox/Computability/Kleene.lean` - ZP-K: Computational Grounding of Self-Reference
+  - ride-along docs: `ZeroParadox/Computability/Kleene.md` - The Gödel-number family: periods, constant codes, and the noncomputable marker
 - `ZeroParadox/Computability/Occurrence.lean` - Occurrence — what it takes for the bottom to move, in the computational face
   - ride-along docs: `ZeroParadox/Computability/Occurrence.md` - The carrier's reach, floor-directed motion, and stutter equivalence
 - `ZeroParadox/Computability/Periodicity.lean` - ZP-K metric: the selfApply periodicity invariant (P5)

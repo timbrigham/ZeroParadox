@@ -35,7 +35,7 @@ parameter, not from Prop-ness: two of its four fields are `IsInitial` **data**, 
 ⚠ **The reading it must not license.** Bundling the three bottoms into one term does **not** make
 them one object — that identity is **retired as ill-typed** (object equality across categories does not typecheck
 and is not invariant under equivalence); what separates the members is proved property by property
-(`seam_unique_among_named`, for the named bottoms). The bundle establishes the **correspondence** half: each
+(`seam_unique_among_named`, for the named bottoms, in a lattice with no top). The bundle establishes the **correspondence** half: each
 domain bottom is the categorical bottom of its own real Mathlib category. Cite the fields, never the bundle's existence. -/
 
 /-- The MC-1 correspondence over the real domain categories: the snap floor is the categorical

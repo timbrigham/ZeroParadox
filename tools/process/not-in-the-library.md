@@ -147,7 +147,7 @@ across distinct categories is not a well-formed proposition, so it was never a c
 prose manufactured debt the project had already closed, inside the fix for an overclaim.
 
 ⚠ **A WALL IS NOT A GAP.** The four domain bottoms are MEMBERS of one family (MC-1), membership
-proved per domain; the identity is retired as ill-typed (object equality across categories does not typecheck and is not invariant under equivalence); what separates the members is proved property by property (`seam_unique_among_named`, for the named bottoms). Hitting one
+proved per domain; the identity is retired as ill-typed (object equality across categories does not typecheck and is not invariant under equivalence); what separates the members is proved property by property (`seam_unique_among_named`, for the named bottoms, in a lattice with no top). Hitting one
 is the result, not a hole in the work. Asking for the identity is asking for a proposition that is
 not well-formed, which is why no amount of building would ever close it.
 

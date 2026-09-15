@@ -31,7 +31,7 @@ Lint policy: `weak.linter.mathlibStandardSet` is on, so the build flags genuine 
 | `Snap.lean` | `MachinePhase` ZPSemilattice instance; **T-SNAP** (`join c₀ c₁ = c₁`); DA-2 (successor null); `da1_minimal_path` (axiom-free) | Lattice–StateSpace |
 | `SetTheoryAFA.lean` | `AFAStructure` typeclass; **T-EXEC** (Quine atom = ⊥, axiom-free); `cc1_derived` (CC-1 as theorem); three-way equivalence: Quine atom = ⊥ = join-identity | Lattice |
 | `Kleene.lean` | `KleeneStructure` typeclass (a commitment, not a derived bridge); `kleene_fixed_point_exists` (Kleene's second recursion theorem, via Mathlib `fixed_point₂`); `selfApply_partrec` (self-application is partial computable); T-COMP (three-way equivalence proved; the computational face enters as a class field, not a clause); **`da1_closed_concrete : IsQuineAtom(⊥ : MachinePhase)`** | Snap, SetTheoryAFA |
-| `SemilatticeInstance.lean` | **`t_iz_complete`** (all four T-IZ steps: Cauchy convergence + DA-2 + DA-1/Kleene + T-SNAP); `h_strict_from_r1_t3` (strict valuation growth derived, not assumed) | Lattice, Padic, Snap, Kleene |
+| `SemilatticeInstance.lean` | **`t_iz_complete`** (all four T-IZ steps: Cauchy convergence + DA-2 + DA-1's Path 1 witness in a KleeneStructure (`da1_computational`) + T-SNAP); `h_strict_from_r1_t3` (strict valuation growth derived, not assumed) | Lattice, Padic, Snap, Kleene |
 
 ### Categorical extension (self-contained; depends on Snap conceptually, not formally)
 
