@@ -184,7 +184,7 @@ taxonomy that instruction is short for.* Tim, 2026-06-30:
 1. **The structureless referent** — the one ⊥ itself: timeless, spaceless, descriptionless,
    structureless; what everything reduces to. Working term *"actual ⊥"*.
 2. **A specific structured instance, a "face"** — `0 ∈ ℚ₂`, the Quine atom, the Kleisli initial
-   object, ε₀'s generation. Many, and provably **DISTINCT as structures** (the walls). Each a real
+   object, ε₀'s generation. Many; the reading that they are one object is retired as ill-typed (neither x = y nor x ≠ y is well-formed across categories); the members differ by property, each in its own category (`seam_unique_among_named`). Each a real
    bottom in its own domain.
 3. **The family** — all instances plus the slot schema (`ZPH_BottomCannotBe` + matrix + catalog). A
    set, and **NOT itself a bottom**. Working term *"Bottom-Meta"*.

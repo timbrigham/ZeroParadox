@@ -103,7 +103,8 @@ split is superseded:
   in BOTTOMELEMENT); per-domain membership is proved, the choice of criteria a design principle.
 - **Identity half — RETIRED as ill-typed.** That the four bottoms are *numerically one object* across
   distinct categories is NOT a commitment the framework holds — `x = y` across distinct categories is not a
-  well-formed proposition, so it was never a claim. The members are provably distinct (the walls); the only
+  well-formed proposition, so it was never a claim. Neither x = y nor x ≠ y is well-formed across categories; the members differ by
+  property, each in its own category (`seam_unique_among_named`). The only
   oneness is the shared *shape* (the diagonal fixed point), apophatic, never a formal identity.
 
 **The convention (ADDITIVE, never eliminative):**
@@ -111,7 +112,7 @@ split is superseded:
   keep the label, retire the framing). Do not rename it; `mc1_correspondence` is unchanged. **Never call the
   cross-category identity a "modeling commitment," "offered," or "one object we commit to"** — it is retired
   as ill-typed. Present the split: membership PROVED, criteria a design principle, identity RETIRED, members
-  provably distinct.
+  differing by property, each in its own category (`seam_unique_among_named`).
 - **No new readable name for MC-1.** Unlike CC-2 (which *is* an object = the Quine atom), MC-1 is the
   *identification*; its underlying object already has the confirmed readable name
   [[project_diagonal_fixed_point]] ("the diagonal fixed point"). Coining an MC-branded name would be

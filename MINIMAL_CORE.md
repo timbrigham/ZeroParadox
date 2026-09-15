@@ -67,7 +67,7 @@ Every step above is either something a machine already checked, or a commitment 
 
 - **It is the shape, not the whole project.** The framework's substance is its domain *instances* - set theory and AFA, the 2-adic numbers, proof theory, the categorical bridges, the full bottom-element family - which are this shape worn by real mathematics. The minimal core stands *alongside* them as the most compact statement of what they are all instances of. It does not contain them.
 - **The chain here is a shadow of the real thing.** The snap's true destination is the proof-theoretic ordinal ε₀; the minimal chain's top point is its smallest faithful shadow (a single fixed point where the real ε₀ has a whole hierarchy above it). The shape is faithful; the object is deliberately minimal.
-- **Nothing is claimed to be one object across fields.** That the domain instances are numerically identical is *not* asserted - across distinct categories it is not even a well-formed statement, and the instances are provably distinct. The only thing they share is the shape.
+- **Nothing is claimed to be one object across fields.** That the domain instances are numerically identical is retired as ill-typed (neither x = y nor x ≠ y is well-formed across categories); the members differ by property, each in its own category (`seam_unique_among_named`). The only thing they share is the shape.
 - **The content is re-derived, not new.** The engine is Lawvere (1969) / Yanofsky (2003); the pieces exist across the framework's layers. The value here is the compression - the whole shape in one place, on the smallest witnesses, checkable in one command.
 
 ---

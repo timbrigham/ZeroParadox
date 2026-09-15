@@ -56,7 +56,7 @@ def main():
              f'stroke="#9a9ab0" stroke-width="2" stroke-dasharray="2 7"/>')
     S.append(f'<text x="{CX}" y="{CY-R-98}" text-anchor="middle" font-size="12.5" fill="#7a7a92" '
              f'font-style="italic">MC-1: "these are one object" — retired as ill-typed '
-             f'(not type-statable; members provably distinct; not an edge)</text>')
+             f'(neither x = y nor x ≠ y is well-formed; members differ by property, seam_unique_among_named; not an edge)</text>')
 
     # spokes: each bottom-face domain = its domain's floor (the correspondence half)
     for n, (x, y) in zip(nodes, pos):

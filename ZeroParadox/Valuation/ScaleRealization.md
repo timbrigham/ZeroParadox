@@ -1,4 +1,4 @@
-# ScaleRealization — ride-along documentation
+# Why the welded form is not statable, the falsifiers, and how the self-supply residue is closed
 
 Long-form argument and fences for `ZeroParadox/Valuation/ScaleRealization.lean`. Written 2026-09-04.
 Everything below was elaborated or measured; nothing is recalled.

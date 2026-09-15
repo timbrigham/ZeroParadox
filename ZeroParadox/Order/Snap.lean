@@ -328,8 +328,9 @@ theorem dp2_execution_distinguishability :
     What the statement carries is that the two configurations are DISTINCT while sharing an
     output value — the output is irrelevant to whether execution occurred. **It does not carry
     that the step is taken.** An earlier revision read "structurally unavoidable", which
-    contradicts this file's own NO-GO gauge above (`tsnap_holds_but_nothing_moves`): occurrence
-    is a commitment, and `l_inf`'s docstring is where the argument for it stops. -/
+    contradicts this file's own NO-GO gauge above (`tsnap_holds_but_nothing_moves`): that the step is
+    taken follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given
+    DP-2), and `l_inf`'s docstring is where the argument for it stops. -/
 theorem da1_minimal_path :
     let before := preInstantiation
     let after  := postInstantiation

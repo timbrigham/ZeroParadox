@@ -1,5 +1,6 @@
 """
-Build: The Philosophical Question That Started This (v1.19)
+Build: The Philosophical Question That Started This (v1.20)
+v1.20: DECISION BATCH REMEDIATION (Tim, 2026-09-15): the opening said the snap occurring 'is a commitment of this framework, not one of its theorems'; it now says it follows from the occurrence commitment together with DA-1 (closed given DP-2).
 v1.19: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The layer summary carries that sentence in place of 'stated separately, as the occurrence commitment, which ZP-E's DA-1 argues for', and 'with no axioms' is 'with no Lean kernel axioms'. The opening said T-SNAP's shape is fixed 'specifically, by the bottom element axiom', contradicting README and CLAIMS: A4 gives the join, AX-B1 the atom, and the two states being distinct is, in t_snap_given, the hypothesis hocc that the first step is taken.
 v1.18: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The layer summary said ZP-E's T-SNAP closed "what had been the framework's one axiom (AX-1)", which retired AX-1 whole and also called it the one axiom, while AX-B1, AX-G1 and AX-G2 are the framework's named axioms. It now says T-SNAP closes AX-1's shape half and the occurrence half remains a commitment, matching the paragraph after it. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the layer summary said ZP-E derives the shape 'through DA-1'; DA-1 argues for occurrence, not the shape, so the summary now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
 v1.17:OCCUPANCY OVERCLAIM RETRACTED (sync with ZP-I; editorial + adversary round 6). "ZP-I proves T-IZ - every maximal ascending chain converges to a limit that fills the bottom role" asserted OCCUPANCY as part of what is proved, fencing only the successor reading beneath it. Convergence to 0 is the theorem; reading that limit as an occupant of the bottom role is a first commitment and reading the occupant as a successor null is a second. Not merely unproved: ZPSemilattice Q_[2] does not synthesize, so the join-identity is not statable of the limit. v1.16 retracted the novelty conjunct of this same sentence and left the occupancy conjunct standing - the fourth half-application in that arc, and this site was never in its scope.
@@ -45,7 +46,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -227,7 +228,7 @@ def build():
         'The proof is machine-checked; it requires no special snap axiom. '
         'What it does not establish is that the transition is taken: a join-semilattice in which T-SNAP holds and '
         'nothing whatever moves is exhibited in the Lean source (tsnap_holds_but_nothing_moves). That the snap '
-        'occurs is a commitment of this framework, not one of its theorems.'))
+        'occurs follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).'))
     E.append(body(
         'Leibniz asked: <i>why is there something rather than nothing?</i> '
         'The standard response — in philosophy and in physics — is that this question '
