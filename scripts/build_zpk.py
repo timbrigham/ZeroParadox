@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.20 | September 2026
+Version 1.22 | September 2026
+v1.22: SET-THEORETIC CLAUSE DELETED (Tim ruling, gate round 6, 2026-09-15): Section IV said 'The order-theoretic and set-theoretic results are unaffected.' IsQuineAtom (bot : MachinePhase) is a set-theoretic result whose Lean theorem da1_closed_concrete lists Classical.choice through machinePhaseKleene; the sentence is deleted. 'The classical axioms are entirely localised to the computational layer.' is kept.
+v1.21: CLASSICAL.CHOICE PROVENANCE, SCOPED (Tim ruling, gate round 6, 2026-09-15): Section IV said all ZP-K theorems' axioms enter through the types; da1_closed_concrete's statement IsQuineAtom (bot : MachinePhase) depends on no axioms, its choice comes through its proof at machinePhaseKleene, and bot_is_quine_atom proves the same statement with no axioms. The body now says most ZP-K theorems carry the axioms, scopes the types sentence to statements that mention program codes, and names da1_closed_concrete as the exception; the remark's opening is scoped the same way; the da1_closed_concrete box's Purity line names the axiom-free proof.
 v1.20: CLASSICAL.CHOICE PROVENANCE, SECTION IV BODY (Tim ruling, gate round 5, 2026-09-15): 'These enter exclusively through Kleene's theorem and Rogers' theorem, which use classical logic and the axiom of choice' was false (a constant-code instance uses neither theorem and carries Classical.choice); it now says that in the computability layer these enter through the types, via Mathlib's numbering of program codes (Denumerable Code), which Kleene's theorem and Rogers' theorem both use. Measured: Mathlib fixed_point and fixed_point2 both list Classical.choice.
 v1.19: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Section IV remark said the choice belongs to this instance because a computable constant-code instance exists. That fact is about the noncomputable marker, not the axiom footprint: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and is present in the computable instance too. The remark now says so, says Classical.choose is what makes machinePhaseKleene noncomputable, and says essentiality is not measured.
 v1.18: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the preamble's 'key insight' and Section II's 'They are not different things' are labelled the framework's reading at the sentence. The T-COMP box listed a fourth clause, botCode existence, under 'the following are equivalent'; t_comp states three, so the box lists those three and states the botCode existence separately as the KleeneStructure requirement. The classical-choice remark said the choice is structurally necessary; ZP-K's instance uses choice to pick botCode, and a computable instance with a constant code also exists (the example after machinePhaseKleene in Kleene.lean). 'satisfies vacuously' is now 'satisfies trivially'.
@@ -47,7 +49,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -348,20 +350,21 @@ def build():
     ]
 
     E.append(body(
-        'All ZP-K theorems carry the standard foundational axioms shared by all Mathlib '
-        'computability results. In the computability layer these enter through the types, '
-        'via Mathlib\'s numbering of program codes (Denumerable Code), which Kleene\'s theorem '
-        'and Rogers\' theorem both use. They do not '
-        'enter through ZPSemilattice or AFAStructure.'))
+        'Most ZP-K theorems carry the standard foundational axioms. For statements that mention '
+        'program codes they enter through the types, via Mathlib\'s numbering of program codes '
+        '(Denumerable Code), which Kleene\'s theorem and Rogers\' theorem both use. The Path 1 '
+        'witness da1_closed_concrete is the exception: its statement mentions no code and '
+        'depends on no axioms; its proof carries choice only because it runs through '
+        'machinePhaseKleene, and bot_is_quine_atom proves the same statement with no axioms. '
+        'They do not enter through ZPSemilattice or AFAStructure.'))
     E.append(body(
         'ZP-J T-EXEC and all its corollaries remain axiom-free. The classical axioms are '
-        'entirely localised to the computational layer. The order-theoretic and set-theoretic '
-        'results are unaffected.'))
+        'entirely localised to the computational layer.'))
 
     E.append(remark_box(
         'Remark: Classical Choice in Computability',
         [
-            'In the computability layer Classical.choice is carried by the statements\' types, '
+            'For statements that mention program codes, Classical.choice is carried by their types, '
             'through Mathlib\'s numbering of program codes (Denumerable Code): it is present '
             'even in a computable instance with a constant code. ZP-K\'s machinePhaseKleene also '
             'picks botCode with Classical.choose, which is what makes that instance '
@@ -447,7 +450,8 @@ def build():
             'executor; on that reading "description awaiting execution" is not a coherent state for c₀.',
             '',
             'Lean: ZeroParadox.da1_closed_concrete. '
-            'Purity: standard foundational axioms only. ✓',
+            'Purity: standard foundational axioms only (the same statement has an axiom-free '
+            'proof, bot_is_quine_atom). ✓',
         ]
     ))
     E.append(sp(8))
