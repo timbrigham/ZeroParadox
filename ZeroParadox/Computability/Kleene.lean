@@ -410,6 +410,10 @@ example : KleeneStructure MachinePhase :=
 theorem da1_closed_concrete : IsQuineAtom (bot : MachinePhase) :=
   da1_computational
 
+-- `Statement:` the same statement, proved without the Kleene instance; `bot_is_quine_atom` is axiom-free (`ZeroParadox/AxiomProfile.lean`).
+example : IsQuineAtom (bot : MachinePhase) :=
+  @bot_is_quine_atom MachinePhase _ machinePhaseAFA
+
 /-! ## § VI. Function-Gödel-Number Correspondence
 
 Argument, fences, prior art and the three formal results of this section:
@@ -665,7 +669,7 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms self_halting_undecidable
 #print axioms quine_period_is_goedel
 #print axioms quine_goedel_injective
--- Classical.choice is carried by the type, through Mathlib's Denumerable Code: see the Axiom Purity boxes of ZP-L and ZP-M.
+-- For statements that mention program codes, Classical.choice is carried by the type, through Mathlib's Denumerable Code: see the Axiom Purity boxes of ZP-L and ZP-M.
 #print axioms IsComputationalQuine
 #print axioms Nat.Partrec.Code.fixed_point₂
 
