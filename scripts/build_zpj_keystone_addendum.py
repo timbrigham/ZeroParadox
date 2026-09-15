@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.9 | September 2026
+Version 1.10 | September 2026
+v1.10: DECISION BATCH REMEDIATION AFTER GATE ROUND 3, SECOND PASS (Tim ruling, 2026-09-15): the preamble said bottom 'is the same self-referential (diagonal) fixed point in every framework', a cross-framework identity the same paragraph retires as ill-typed; it now says bottom 'plays the same self-referential (diagonal) fixed-point role in every framework'. The rest of the sentence is unchanged.
 v1.9: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): both MC-1 sites now say the identity is retired as ill-typed because object equality across categories does not typecheck and is not invariant under equivalence. The property clause citing seam_unique_among_named is dropped here: its named bottoms are not this addendum's faces (Quine atom, Kleene quine, v2(0), initial object).
 v1.8: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): two sites said the MC-1 members are 'provably distinct'; now the MC-1 identity retired as ill-typed (neither x = y nor x != y is well-formed across categories); the members differ by property, each in its own category (seam_unique_among_named).
 v1.7: BEDROCK, the same mechanism defect as ZP-R v1.6 and rendered here too. The escape from the Cantor obstruction was given as eval landing "in the partial functions, not in the codes, so the Set refutation never applied to it". Refuted by elaboration: the partial-function type is nontrivial, so the Set refutation lands on it as well. The escape is that the effective category admits fewer MORPHISMS - no computable self-map on codes is eval-fixed-point-free - so the refuting diagonal has no computable representative. Prior art unchanged; only the stated reason was wrong.
@@ -22,7 +23,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -68,8 +69,8 @@ def build():
     # ── Preamble ───────────────────────────────────────────────────────────────
     print('[build_zpj_keystone_addendum] Building preamble...')
     E.append(body(
-        'The keystone of the Zero Paradox is that &#8869; is the same self-referential '
-        '(diagonal) fixed point in every framework: the Quine atom &#8869; = {&#8869;} in set '
+        'The keystone of the Zero Paradox is that &#8869; plays the same self-referential '
+        '(diagonal) fixed-point role in every framework:the Quine atom &#8869; = {&#8869;} in set '
         'theory, the Kleene quine in computation, the point v<sub>2</sub>(0) = &#8734; in '
         'valuation, and the initial object in category theory. Their shared membership in that '
         'family (MC-1) is proved per domain; the choice of criteria is a design principle; and '

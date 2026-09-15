@@ -82,17 +82,17 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.17 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.24 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.15 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
-| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.36 | The bridge: the snap assembled as a derived theorem across the layers. |
+| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.37 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.8 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.15 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.23 | The categorical bridge: the snap holding under all four domain functors. |
 | [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.5 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
-| [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.24 | Inside zero: each maximal chain that strictly ascends at every step, with its 2-adic valuation tracking the depth index, converges to 0 in the 2-adics; reading that limit as an occupant of the ⊥ role, and then as a successor ⊥′, are two further commitments. |
+| [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.25 | Inside zero: each maximal chain that strictly ascends at every step, with its 2-adic valuation tracking the depth index, converges to 0 in the 2-adics; reading that limit as an occupant of the ⊥ role, and then as a successor ⊥′, are two further commitments. |
 | [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.8 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
 | [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.16 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
 | [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.7 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
-| [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.9 | The diagonal-fixed-point keystone: the Lawvere face-split (machine-checked) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
-| [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.15 | Computational grounding: the bottom's structural self-containment, with the computational reading carried as a commitment. |
+| [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.10 | The diagonal-fixed-point keystone: the Lawvere face-split (machine-checked) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
+| [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.16 | Computational grounding: the bottom's structural self-containment, with the computational reading carried as a commitment. |
 | [Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.8 | ε₀ as the exact ordinal threshold the snap is keyed to. (That the snap occurs follows from the occurrence commitment together with DA-1, closed given DP-2.) |
 | [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.3 | The bridge between the Kleene quine and the ε₀ fixed point. |
 | [The Constructive Snap](ZP-N_The_Constructive_Snap.pdf) | ZP-N | v2.0 | The constructive companion to ZP-L: the ε₀ snap from below on ordinal notations, choice-free (propext only). Locates ZP-L's classical dependency in Mathlib's order instance and shows it load-bearing - comparing arbitrary well-orders implies excluded middle (a known taboo, cited to Kraus/Nordvall Forsberg/Xu). Adds a carrier sized to ε₀ whose crossing into Ordinal is one named map with a measured price. Whether ZP-L's ε₀ results are eliminable remains UNCLASSIFIED. |

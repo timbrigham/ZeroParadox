@@ -1,4 +1,5 @@
 """
+v3.37: DECISION BATCH REMEDIATION AFTER GATE ROUND 3, SECOND PASS (Tim ruling, 2026-09-15): the DA-1 Status block said 'Kleene fixed-point is the in-scope formal counterpart' of AIT; it now says the Kleene structure is its in-scope counterpart, carried as a KleeneStructure requirement (botCode_is_quine), not a proof of the AIT claim.
 v3.36: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim rulings, 2026-09-15): T5 Selection credits each face of epsilon-0 with its own direction: a monotone map sending the tower's stages to c0 and epsilon-0 to c1 sends no ordinal below epsilon-0 to c1 (supremum face, fundamentalSeq_cofinal) and sends every fixed point of alpha -> omega^alpha to c1 (least-fixed-point face, hfp_from_epsilon_zero); it had said 'Both faces of epsilon-0 carry this' of the downward direction alone. Deriving h-eps0 is open 'from the 2-adic structure'. The Open Items OQ-A1 cell names the monotone map and the tower stages beside h-eps0. DA-1 PATH 3 (pre-existing bedrock, editorial round 3 B1): the DA-1 synthesis paragraph, the DA-1 Status block, the DA-1 validation row and the endnote said Paths 1 and 3 are formally closed / IN LEAN SCOPE and that DA-1 is grounded in them or closed in Lean via ZP-K. They now carry the CLAIMS.md DA-1 row: Path 1 is witnessed by da1_closed_concrete, which proves IsQuineAtom (bottom : MachinePhase) and nothing computational; Path 3's witness is the machinePhaseKleene botCode_is_quine field, a KleeneStructure requirement, not a second independent proof; da1_paths_unified carries them as a conjunction of witnesses, and that they name one structural fact is the framework's reading; DA-1 is closed given DP-2.
 v3.35: ADVERSARY GATE ROUND 3 (bedrock, D1): the T5 traceability row said 'given the alignment hypothesis h-eps0, nothing below epsilon-0 fires', dropping two of snap_unconditional's three hypotheses (monotonicity, and the tower stages sent to c0); a monotone map with h-eps0 can fire at 1. The row now names the monotone map sending the tower's stages to c0, as the T5 box already did.
 v3.34: DECISION BATCH REMEDIATION AFTER GATE ROUND 2, SECOND PASS (Tim ruling, 2026-09-15): the pointer for h-eps0 named OQ-E2, which in this document is the cardinality-semilattice correspondence, the wrong object. The T5 Selection text, the traceability row and the Open Items OQ-A1 cell now point at what ZeroParadox/Ordinal/Incompleteness.lean says: h-eps0 is the alignment hypothesis, and deriving it is open as the Classical.choice inversion conjecture. OQ-E2's own rows are unchanged.
@@ -92,7 +93,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.36'
+VERSION = '3.37'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -331,7 +332,7 @@ def build():
                 'CC-2 (&#8869; = {&#8869;}): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role (axiom-free); that &#8869; is the AFA set Q = {Q} is an argued metatheoretic commitment (see R-AFA). '
                 'DP-2 (&#167;III) — explicit. '
                 'T-SNAP&#8217;s premises, in its Lean form and in its prose argument, are stated under Premises of T-SNAP (DA-1 insert, &#167; V). '
-                'AIT (Kolmogorov complexity) outside Lean scope; Kleene fixed-point is the in-scope formal counterpart.'),
+                'AIT (Kolmogorov complexity) outside Lean scope; the Kleene structure is its in-scope counterpart, carried as a KleeneStructure requirement (botCode_is_quine), not a proof of the AIT claim.'),
     ]
 
     E.append(Paragraph('V. Theorem T-SNAP — Binary Snap Causality', S['h2']))

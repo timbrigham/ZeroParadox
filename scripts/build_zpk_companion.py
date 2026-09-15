@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.18 | September 2026
+Version 1.19 | September 2026
+v1.19: DA-1 PATH 3, SECOND PASS (Tim ruling, 2026-09-15), companion sync with ZP-K v1.16: the heading 'DA-1 Formally Closed' is 'DA-1: what Lean witnesses'.
 v1.18: DA-1 PATH 3 (pre-existing bedrock, editorial gate round 3 B1, 2026-09-15), companion sync with ZP-K v1.15: the closing Remember box said 'ZP-K closes DA-1 Paths 1 and 3 formally' and that it 'proves, in machine-checked Lean 4, that the structural role bottom plays in the algebra is the same role it plays in AFA set theory and in computability theory', contradicting this companion's own Path 3 paragraph (a foundational commitment). It now carries the CLAIMS.md DA-1 row: Path 1 witnessed by da1_closed_concrete, nothing computational; Path 3's witness a KleeneStructure requirement, not a second independent proof; the one-fact reading is the framework's. The sentences 'The gap was never a gap - bottom in all three settings is the same self-referential fixed point' are removed with it.
 v1.17: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
 v1.16: BEDROCK - two class-field overclaims struck. The four-way table's Computation row asserted "no shorter external generator exists" (Kolmogorov content this same document strikes elsewhere as having no formal part here), and the computational-Quine paragraph asserted it as an "in other words" restatement of the fixed-point definition, which says nothing about minimality. Section heading "The Four-Way Equivalence" corrected - t_comp proves three.
@@ -131,7 +132,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -251,8 +252,8 @@ def build():
         'structural role, not a global identification of the frameworks.'))
     E.append(sp(8))
 
-    # DA-1 Formally Closed
-    E.append(Paragraph('DA-1 Formally Closed', CS['h1']))
+    # DA-1: what Lean witnesses
+    E.append(Paragraph('DA-1: what Lean witnesses', CS['h1']))
     E.append(cbody(
         'DA-1 (Instantiation as Execution) had three informal argument paths in ZP-E:'))
     E.append(cbody(
