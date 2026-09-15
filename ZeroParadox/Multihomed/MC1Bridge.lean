@@ -59,6 +59,15 @@ noncomputable def mc1_correspondence : MC1Correspondence where
   info_no_return := fun {_} hn => fC_no_return hn
   top_limit := fB_bottom_is_limit
 
+-- `Statement:` forgetting to underlying types, the Kleisli bottom's carrier (`Fin 0`, empty) and the
+-- Hilbert bottom's carrier (`StateSpace 0`, which contains 0) are distinct types. This measures the
+-- underlying types only; it is not an equation or inequation between objects of the two categories.
+example : (fC_functor.obj 0 : Type) ≠ ((fD_functor.obj 0 : ModuleCat ℂ) : Type) := by
+  intro h
+  have x : ((fD_functor.obj 0 : ModuleCat ℂ) : Type) := 0
+  have y : (fC_functor.obj 0 : Type) := cast h.symm x
+  exact Fin.elim0 (show Fin 0 from y)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/

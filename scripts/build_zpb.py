@@ -1,5 +1,6 @@
 """
-Build ZP-B: p-Adic Topology (v1.16)
+Build ZP-B: p-Adic Topology (v1.17)
+v1.17: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim defaults, 2026-09-15): AX-B1's lead clause is aligned with its gloss: AX-B1 holds at every state with anything above it, the bottom included, each having a first distinct state above it with nothing strictly between; a state with nothing above it owes no step. The box adds '(In this two-state chart, 1 is the top.)'; state 1 and the definition are unchanged.
 v1.16: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): AX-B1's scope sentence is conditional: AX-B1 holds at the bottom and at every iterative bottom, every state with anything above it having a first distinct state above it with nothing strictly between; a state with nothing above it owes no step. The previous every-state reading had no model among the two-state encodings (the top state has nothing above it).
 v1.15: DECISION BATCH REMEDIATION (Tim, 2026-09-15): AX-B1's scope stated (Tim's confirmed text): AX-B1 holds at every iterative bottom, every state as the base the next step starts from having a first distinct state above it with nothing strictly between. The box previously stated it only at the origin. Still one substantive commitment.
 v1.14: D5 + R1 self-contradiction resolved (Tim's ruling, 2026-07-29): epsilon-0 is UNITLESS. The box asserted it "is a dimensionful quantity, so its numerical value depends on a choice of units", then disclaimed any physical-unit magnitude claim, then labelled the status "universe-contingent parameter" - three sentences about three different objects. epsilon-0 is a POSITION (the first step above the bottom, Ordinal.epsilon 0, Veblen (1,0)) and a position carries no units, exactly as the bottom carries none. What is contingent is the real-valued threshold 2^k of D5, on the CHOSEN exponent k - a normalisation, not a physical measurement. R1's "determined by physical constants" corrected in the same change (fix the class, not the site); Valuation/Padic.lean's docstring likewise.
@@ -22,7 +23,7 @@ distinguish pure topology (the theorem statement) from ZP-specific framing (the 
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -43,7 +44,7 @@ def build():
         'The foundational distinction of the Zero Paradox framework is binary: a state either exists or it does not. There is no third option at this level.',
         '0 — non-existence (the Null State, corresponding to &#8869; in ZP-A)',
         '1 — existence (the minimum nonzero state, &#949;<sub>0</sub>)',
-        'AX-B1 holds at the bottom and at every iterative bottom: every state with anything above it has a first distinct state above it, with nothing strictly between. A state with nothing above it owes no step.',
+        'AX-B1 holds at every state with anything above it, the bottom included: each has a first distinct state above it, with nothing strictly between. A state with nothing above it owes no step. (In this two-state chart, 1 is the top.)',
         'Status: AXIOM. This is the only non-topological commitment in ZP-B. It precedes p-adic analysis and is the premise from which the field selection is derived.',
         'Scope: AX-B1 asserts the structure of the ontological distinction, not its physical realisation. It is invariant across all instantiations.',
     ]))

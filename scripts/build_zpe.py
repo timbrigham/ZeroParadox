@@ -1,4 +1,5 @@
 """
+v3.36: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim rulings, 2026-09-15): T5 Selection credits each face of epsilon-0 with its own direction: a monotone map sending the tower's stages to c0 and epsilon-0 to c1 sends no ordinal below epsilon-0 to c1 (supremum face, fundamentalSeq_cofinal) and sends every fixed point of alpha -> omega^alpha to c1 (least-fixed-point face, hfp_from_epsilon_zero); it had said 'Both faces of epsilon-0 carry this' of the downward direction alone. Deriving h-eps0 is open 'from the 2-adic structure'. The Open Items OQ-A1 cell names the monotone map and the tower stages beside h-eps0. DA-1 PATH 3 (pre-existing bedrock, editorial round 3 B1): the DA-1 synthesis paragraph, the DA-1 Status block, the DA-1 validation row and the endnote said Paths 1 and 3 are formally closed / IN LEAN SCOPE and that DA-1 is grounded in them or closed in Lean via ZP-K. They now carry the CLAIMS.md DA-1 row: Path 1 is witnessed by da1_closed_concrete, which proves IsQuineAtom (bottom : MachinePhase) and nothing computational; Path 3's witness is the machinePhaseKleene botCode_is_quine field, a KleeneStructure requirement, not a second independent proof; da1_paths_unified carries them as a conjunction of witnesses, and that they name one structural fact is the framework's reading; DA-1 is closed given DP-2.
 v3.35: ADVERSARY GATE ROUND 3 (bedrock, D1): the T5 traceability row said 'given the alignment hypothesis h-eps0, nothing below epsilon-0 fires', dropping two of snap_unconditional's three hypotheses (monotonicity, and the tower stages sent to c0); a monotone map with h-eps0 can fire at 1. The row now names the monotone map sending the tower's stages to c0, as the T5 box already did.
 v3.34: DECISION BATCH REMEDIATION AFTER GATE ROUND 2, SECOND PASS (Tim ruling, 2026-09-15): the pointer for h-eps0 named OQ-E2, which in this document is the cardinality-semilattice correspondence, the wrong object. The T5 Selection text, the traceability row and the Open Items OQ-A1 cell now point at what ZeroParadox/Ordinal/Incompleteness.lean says: h-eps0 is the alignment hypothesis, and deriving it is open as the Classical.choice inversion conjecture. OQ-E2's own rows are unchanged.
 v3.33: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim rulings, 2026-09-15): T5 selection restated to what snap_unconditional proves: the placement at epsilon-0 is the hypothesis h-eps0 (the ordinal-lattice alignment, open as OQ-E2) and only minimality is derived, carried by both faces of epsilon-0 (supremum of the stages, fundamentalSeq_cofinal; least fixed point, epsilon0_min_eq_max). No rung is ⊥, cited for every rung (Ordinal.epsilon_pos). Iteration: the finite-step sentence is scoped short of a top. Reading gets an antecedent. T5 gloss: Forcing names the shape of each step taken. OQ-A1 short cell two-part; traceability row matches; SnapSuccession cited by full path; join written as vee.
@@ -91,7 +92,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.35'
+VERSION = '3.36'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -312,18 +313,20 @@ def build():
              'provides motivational context — unbounded surprisal as a pointer toward why static holding is '
              'incoherent — but the bridge from unbounded surprisal (L-INF) to execution is a foundational '
              'commitment, not a derived claim. Path 3 (AIT) argues that incompressibility eliminates the '
-             'static-description alternative; this path is now closed by ZP-K\'s Kleene result, which '
-             'handles the computational self-reference claim without requiring AIT. '
-             'Paths 1 and 3 are formally closed. Path 2 identifies a missing principle; '
-             'its forward resolution is in The Philosophical Question That Started This. DA-1 is grounded in Paths 1 and 3; Path 2 is context. '
+             'static-description alternative. '
+             'Path 1 is witnessed by da1_closed_concrete (ZP-K), which proves IsQuineAtom(&#8869; : MachinePhase) and nothing '
+             'computational; Path 3&#8217;s witness is the machinePhaseKleene instance&#8217;s botCode_is_quine field, a KleeneStructure '
+             'requirement, not a second independent proof. The two are carried together by da1_paths_unified as a conjunction of '
+             'witnesses; that they name one structural fact is the framework&#8217;s reading. Path 2 identifies a missing principle; '
+             'its forward resolution is in The Philosophical Question That Started This. Path 2 is context. '
              '(ZP-M R-M.1 provides a retrospective structural analysis of why the gap resisted formalization.)'),
         derived('Status: DERIVED PROPOSITION — primary formal grounding: DP-2 (§III, TrackedOutput construction). '
                 'da1_minimal_path proved axiom-free in Lean (Snap.lean &#167;VI): instantiation moves c<sub>0</sub> '
                 'to c<sub>1</sub> regardless of output value. ✓ '
-                'Path 1 (structural, ZP-J T-EXEC + ZP-K): IN LEAN SCOPE — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in Kleene.lean. '
+                'Path 1 (structural, ZP-J T-EXEC + ZP-K): witnessed by da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in Kleene.lean, which proves nothing computational. '
                 '(Under MachinePhase\'s selfMem x := x = &#8869;, this reduces to (&#8869; = &#8869;) &#8743; (&#8704; x, x = &#8869; &#8658; x = &#8869;) — structural closure enforced by typeclass design, not a set-theoretic derivation from ZF+AFA. See R-K.0.) '
                 'Path 2 (informational, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a missing proof. Forward: The Philosophical Question That Started This; ZP-M R-M.1 (retrospective structural analysis). '
-                'Path 3 (computational, ZP-K Kleene): IN LEAN SCOPE — machinePhaseKleene instance provides botCode_is_quine. '
+                'Path 3 (computational, ZP-K Kleene): its witness is the machinePhaseKleene instance&#8217;s botCode_is_quine field — a KleeneStructure requirement, not a second independent proof; da1_paths_unified carries it with Path 1 as a conjunction of witnesses. '
                 'CC-1 (S<sub>0</sub> = &#8869;): restated — ZP-J cc1_derived with t_exec_iff makes a Quine-atom start and a &#8869; start the same condition (axiom-free, Lean) — and not forced: on a carrier with a second point a valid sequence starts elsewhere (ZeroParadox/Settheory/OntBridge.lean). '
                 'CC-2 (&#8869; = {&#8869;}): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role (axiom-free); that &#8869; is the AFA set Q = {Q} is an argued metatheoretic commitment (see R-AFA). '
                 'DP-2 (&#167;III) — explicit. '
@@ -519,11 +522,13 @@ def build():
                 'T5 (restated). Selection. In the ordinal chart the next rung is the snap re-seeded one step past the current one '
                 '(succession_succ), and none lies between two consecutive rungs (ZeroParadox/Ordinal/SnapSuccession.lean &#167; I). '
                 'Carried into the two-state lattice by a monotone map that sends the tower&#8217;s stages to c<sub>0</sub> and '
-                '&#949;<sub>0</sub> to c<sub>1</sub>, no ordinal below &#949;<sub>0</sub> is sent to c<sub>1</sub> (snap_unconditional). '
-                'Both faces of &#949;<sub>0</sub> carry this: as the supremum of the stages, every ordinal below &#949;<sub>0</sub> lies '
-                'under one of them (fundamentalSeq_cofinal), and as the least fixed point of &#945; &#8614; &#969;<super>&#945;</super> '
-                'it lies below every other (epsilon0_min_eq_max). The placement at &#949;<sub>0</sub> is a hypothesis there '
-                '(h&#949;<sub>0</sub>), which the Lean names the alignment hypothesis; deriving it is open, as the Classical.choice '
+                '&#949;<sub>0</sub> to c<sub>1</sub>, no ordinal below &#949;<sub>0</sub> is sent to c<sub>1</sub>, and every fixed point '
+                'of &#945; &#8614; &#969;<super>&#945;</super> is (snap_unconditional, hfp_from_epsilon_zero). '
+                'The two faces of &#949;<sub>0</sub> carry the two directions: as the supremum of the stages, every ordinal below '
+                '&#949;<sub>0</sub> lies under one of them, so nothing below fires (fundamentalSeq_cofinal); as the least fixed point of '
+                '&#945; &#8614; &#969;<super>&#945;</super> it lies below every other, so every landing from &#949;<sub>0</sub> up fires '
+                '(epsilon0_min_eq_max). The placement at &#949;<sub>0</sub> is a hypothesis there '
+                '(h&#949;<sub>0</sub>), which the Lean names the alignment hypothesis; deriving it from the 2-adic structure is open, as the Classical.choice '
                 'inversion conjecture (ZeroParadox/Ordinal/Incompleteness.lean). The rungs are the iterative bottoms; '
                 'none of them is &#8869; (epsilon0_ne_bot; for every rung, Ordinal.epsilon_pos). On an arbitrary lattice no step is '
                 'selected: 0, 2, 4, &#8230; on the natural numbers satisfies A1&#8211;A4 and AX-B1.',
@@ -803,7 +808,7 @@ def build():
          'DA-3-C1 (candidate): no position within an instantiation can replicate the outside view. '
          'Whether this connects formally to specific set-theoretic independence results is deferred to OQ-E2.'],
         ['OQ-A1: Increment selection',
-         'OQ-A1b CLOSED by A1&#8211;A4; OQ-A1a: no reason to restrict to join-irreducibles (well-founded carriers); placement in the ordinal tower conditional on the alignment hypothesis h&#949;<sub>0</sub>',
+         'OQ-A1b CLOSED by A1&#8211;A4; OQ-A1a: no reason to restrict to join-irreducibles (well-founded carriers); placement in the ordinal tower, for a monotone map sending the tower&#8217;s stages to c<sub>0</sub>, conditional on the alignment hypothesis h&#949;<sub>0</sub> (&#949;<sub>0</sub> sent to c<sub>1</sub>)',
          'T5 (Iterative Forcing Theorem), restated in DA-1 insert &#167; VI. No step is guaranteed. On an arbitrary lattice no step is '
          'selected: 0, 2, 4, &#8230; on the natural numbers satisfies A1&#8211;A4 and AX-B1.'],
         ['OQ-B1: p = 2',
@@ -903,14 +908,15 @@ def build():
          'Valid — DP-2 formal core: da1_minimal_path proved axiom-free in Lean (Snap.lean &#167;VI). '
          'TrackedOutput separates output value from machine state; pre- and post-instantiation states '
          'are provably distinct even when both produce &#8869;. ✓ '
-         'ZP-K formal closure: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Kleene.lean. '
-         'KleeneStructure MachinePhase instance provides botCode_is_quine (Path 3 IN LEAN SCOPE). '
-         'machinePhaseAFA gives AFAStructure instance (Path 1 IN LEAN SCOPE). '
+         'ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Kleene.lean. '
+         'Path 1 is witnessed by da1_closed_concrete, which proves nothing computational; Path 3&#8217;s witness is the '
+         'machinePhaseKleene instance&#8217;s botCode_is_quine field, a KleeneStructure requirement, not a second independent proof. '
+         'da1_paths_unified carries the two together as a conjunction of witnesses; that they name one structural fact is the framework&#8217;s reading. '
          'Path 2 (informational bridge, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a '
          'missing proof. No computability library closes the gap between \'system at P₀\' and \'system is '
          'running.\' Forward paths: new axiom, Chalmers\' implementation notion, or '
          'The Philosophical Question That Started This. ZP-M R-M.1 provides a retrospective structural analysis of why the gap resisted formalization. '
-         'Paths 1 and 3 are formally closed; DA-1 does not depend on Path 2. '
+         'DA-1 does not depend on Path 2. '
          'CC-1 restated in ZP-J as an equivalence, and not forced (a valid sequence can start elsewhere on a carrier with a second point); CC-2 a Forced Metatheoretic Commitment whose Quine-atom role t_exec_iff shows only &#8869; fills.'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived, in two readings. The Lean form (t_snap_derived) fixes the SHAPE with no hypotheses and no axioms. '
@@ -958,8 +964,10 @@ def build():
         hr(),
         Paragraph(
             '<i>ZP-E carries three formal inserts (DA-1, DA-2, DA-3). T-SNAP is derived, with its premises stated in the DA-1 insert &#167; V and two of them (CC-1 and occurrence at the first step) as the hypotheses of t_snap_given; its irreversibility '
-            'rests on ZP-A R1 and ZP-B C3, with ZP-G downstream. DA-1 is closed in Lean via ZP-K '
-            '(da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase)); Paths 1 and 3 are in Lean scope and '
+            'rests on ZP-A R1 and ZP-B C3, with ZP-G downstream. DA-1 is closed given DP-2 (da1_minimal_path, axiom-free). '
+            'Path 1 is witnessed by da1_closed_concrete (ZP-K), which proves IsQuineAtom(&#8869; : MachinePhase) and nothing '
+            'computational; Path 3&#8217;s witness is the machinePhaseKleene instance&#8217;s botCode_is_quine field, a KleeneStructure '
+            'requirement, not a second independent proof; and '
             'Path 2 is a foundational commitment (a missing principle, not a missing proof). Remark '
             'R-&#949;<sub>0</sub> justifies the &#949;<sub>0</sub> symbol as a structural analogy. Remark '
             'R-AFA rules Foundation out by the self-membership of &#8869; = {&#8869;} (Regularity, '

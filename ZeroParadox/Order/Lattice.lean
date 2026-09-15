@@ -234,6 +234,7 @@ end ZPSemilattice
 /-! OQ-A1a (join-irreducible increments), in Mathlib's `SupIrred` vocabulary, outside the local `⊔`. -/
 
 -- `Statement:` on a chain the restriction is vacuous: every nonzero natural is join-irreducible under max.
+-- On any linear order this is Mathlib's `supIrred_iff_not_isMin`.
 example (n : ℕ) (hn : n ≠ 0) : SupIrred n := by
   refine ⟨?_, fun a b h => ?_⟩
   · exact fun hmin => hn (Nat.le_zero.1 (hmin (Nat.zero_le n)))
@@ -252,7 +253,8 @@ example : ¬ SupIrred (Set.univ : Set Bool) := by
     simp at this
 
 -- `Statement:` in a well-founded carrier one increment `a` equals a finite join of join-irreducibles
--- applied to the same state (Birkhoff; Mathlib `exists_supIrred_decomposition`).
+-- applied to the same state (Birkhoff 1937; see Chakir–Pouzet, arXiv:0812.2300, Thm 2.1(c); Mathlib
+-- `exists_supIrred_decomposition`).
 example {α : Type*} [SemilatticeSup α] [OrderBot α] [WellFoundedLT α] (s a : α) :
     ∃ t : Finset α, (∀ b ∈ t, SupIrred b) ∧ s ⊔ a = t.sup id ⊔ s := by
   obtain ⟨t, ht, hirr⟩ := exists_supIrred_decomposition a
