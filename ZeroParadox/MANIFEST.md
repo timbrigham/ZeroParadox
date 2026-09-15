@@ -337,6 +337,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 ### Set theory / AFA (ZP-J)
 
 - `ZeroParadox/Settheory/ForkFrameChange.lean` - The order-theoretic universal frame-change: duality swaps the fork's ends
+  - ride-along docs: `ZeroParadox/Settheory/ForkFrameChange.md` - The fork's two closures under order-duality, and the fences on the shared shape
 - `ZeroParadox/Settheory/LawvereBridge.lean` - The Lawvere dereference — selfApp as an instance of the general engine (probe)
   - ride-along docs: `ZeroParadox/Settheory/LawvereBridge.md` - Existence from the engine, pinning from the framework, and where the reflexive object lives
 - `ZeroParadox/Settheory/MetaFork.lean` - The meta-level fork — the double dereference (probe)
