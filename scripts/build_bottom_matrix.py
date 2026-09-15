@@ -176,7 +176,7 @@ CELLS = {
         "MEAS": "infinite_quine_family",
         "INV": "na: programs carry no ∞-counterpart for an inversion to swap the bottom WITH. ⚠ NOT that no involution exists - `Equiv.swap` on two distinct codes is one, compiled 2026-08-29. Narrowed to the half that stands, matching the Markov INV correction",
         "CONC": "computational_quine_exists", "SELF": "quine_period_is_goedel",
-        "GEN": "na: self-coincident fixed point (⊥ = the quine itself) - carries SELF, not floor-generates-tower",
+        "GEN": "na: self-coincident fixed point (reading ⊥ as the quine itself is the KleeneStructure requirement, botCode_is_quine, not a theorem) - carries SELF, not floor-generates-tower",
         "DYN": "in quine_encodings_approach_bot (encodings approach ⊥; a static point)",
     },
     "ε₀ (ordinal, ZPL/M)": {

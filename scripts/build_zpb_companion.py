@@ -1,5 +1,6 @@
 """
-Build ZP-B Illustrated Companion (v1.15)
+Build ZP-B Illustrated Companion (v1.16)
+v1.16: GATE ROUND 4 DEFAULT (2026-09-15): companion sync with ZP-B v1.18: AX-B1's lead clause drops ', the bottom included'.
 v1.15: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim defaults, 2026-09-15): companion sync with ZP-B v1.17: AX-B1's lead clause is aligned with its gloss (AX-B1 holds at every state with anything above it, the bottom included).
 v1.14: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): companion sync with ZP-B v1.16: AX-B1's scope sentence is the conditional form (every state with anything above it; a state with nothing above it owes no step), and the derivation of the field cites AX-B1's two states (T0 Step 1), not the scope sentence.
 v1.13: DECISION BATCH REMEDIATION (Tim, 2026-09-15): companion sync with ZP-B v1.15: AX-B1's iterative-bottom scope sentence added where the companion introduces AX-B1.
@@ -122,7 +123,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -217,7 +218,7 @@ def build():
         'return would have to jump the gap rather than cross it continuously.'))
     E.append(cbody(
         'The starting point is a single axiom: AX-B1 (Binary Existence) — a state either exists '
-        'or it does not. AX-B1 holds at every state with anything above it, the bottom included: each '
+        'or it does not. AX-B1 holds at every state with anything above it: each '
         'has a first distinct state above it, with nothing strictly between. A state with nothing above it '
         'owes no step. From AX-B1&#8217;s two states (T0 Step 1), together with a minimality principle (MP-1), the document '
         'derives that the field must be ℚ₂. The choice of geometry is proven as Theorem T0, '

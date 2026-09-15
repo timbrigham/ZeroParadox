@@ -79,11 +79,17 @@ theorem claim_node_set_theory {L : Type*} [ZPSemilattice L] [AFAStructure L] :
     IsQuineAtom (bot : L) :=
   bot_is_quine_atom
 
-/-- Claim `DA-1` (proved). Statement: "⊥ is the Quine atom realized in the computation layer (DA-1,
-    closed concretely in ZP-K)." Exact representation: the machine-phase bottom is a Quine atom.
-    Backing: `da1_closed_concrete`. -/
-theorem claim_DA1 : IsQuineAtom (bot : MachinePhase) :=
-  da1_closed_concrete
+/-- Claim `DA-1` (proved). Statement: "DA-1 (instantiation is execution) is closed given DP-2
+    (da1_minimal_path); ZP-K witnesses its Path 1: ⊥ is the unique Quine atom of the machine-phase
+    semilattice (da1_closed_concrete)." Exact representation: DA-1's minimal path, the pre- and
+    post-instantiation configurations share the output value ⊥ and differ in machine state, c₀ then c₁.
+    Backing: `da1_minimal_path`. -/
+theorem claim_DA1 :
+    let before := preInstantiation
+    let after  := postInstantiation
+    before.value = after.value ∧ before.state ≠ after.state ∧
+    before.state = c₀ ∧ after.state = c₁ :=
+  da1_minimal_path
 
 /-- Claim `T-SNAP` (proved). Statement: "The Binary Snap ⊥→ε₀ is a theorem (T-SNAP, derived in ZP-E)."
     Exact representation: the concrete snap is the join transition c₀ → c₁ between two distinct states.
@@ -187,9 +193,10 @@ theorem claim_Perron_info_state {n : ℕ}
       = Finsupp.equivFunOnFinite.symm (fun i => ((μ i).toReal : ℂ)) :=
   stationary_transports_to_unit_eigenvector f μ hμ
 
-/-- Claim `node-computability` (proved). Statement: "In computability, ⊥ is realized as the Kleene quine,
-    the self-reproducing program and diagonal fixed point of the computation layer." Exact representation:
-    in a KleeneStructure, the Kleene quine (any self-containing / Quine-atom element) equals ⊥.
+/-- Claim `node-computability` (proved). Statement: "In computability, ⊥ is read as the Kleene quine: in
+    any KleeneStructure lattice every Quine-atom element equals ⊥ (kleene_quine_is_bot), and the quine
+    itself is the structure's botCode requirement." Exact representation:
+    in a KleeneStructure, every Quine-atom element equals ⊥.
     Backing: `kleene_quine_is_bot`. -/
 theorem claim_node_computability {L : Type*} [ZPSemilattice L] [KleeneStructure L]
     (q : L) (hq : IsQuineAtom q) : q = bot :=

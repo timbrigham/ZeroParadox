@@ -27,7 +27,7 @@ First, re-read the canonical sources for full context:
 - The **correspondence half is formally realized** — each domain bottom is the categorical bottom (limit
   or initial object) of its own real Mathlib category, bundled as `mc1_correspondence`.
 - What separates the instances is proved property by property (`seam_unique_among_named`, for the named
-  bottoms); object equality across categories does not typecheck and is not invariant under equivalence.
+  bottoms, in a lattice with no top); object equality across categories does not typecheck and is not invariant under equivalence.
 - The **cross-category IDENTITY half is RETIRED as ill-typed** (2026-07-15). `x = y` across distinct
   categories is not a well-formed proposition, so it was never a claim the framework held and it is not
   "unproved" — it is not statable. The only oneness is the shared *shape* (the diagonal fixed point),

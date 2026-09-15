@@ -17,7 +17,7 @@ the diagonal fixed point.
 `Statement:` INVERSION and COINCIDENCE, bundled (`fork_is_frameflip`). `Reading:` INVERSION, conjectural: that
 the valuation and category frame-flips share this shape.
 `fork_is_frameflip` bundles both faces: the duality-swap (P2) with `fork_collapse_iff` (P1). This is the
-order-theoretic universal `snap_is_frameflip` — the domain-independent shape that the valuation
+order-theoretic universal `fork_is_frameflip` — the domain-independent shape that the valuation
 (`snap_is_frameflip`) and category (`catseam_is_frameflip`) faces are read as sharing (conjectural; see the
 Reading label). Not "instances": neither satisfies `fork_collapse_iff`'s hypotheses (complete lattice, monotone map) — see the `fork_is_frameflip`
 docstring in `ZeroParadox/Settheory/ForkFrameChange.lean`, which states this in full.

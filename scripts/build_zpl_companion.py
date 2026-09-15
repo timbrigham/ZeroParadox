@@ -1,6 +1,7 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.6 | May 2026
+Version 1.7 | September 2026
+v1.7: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-L v1.9: 'ZP-K proved that the initial machine state c0 is a Kleene fixed point' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem.
 v1.6: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.4: Strip version number from companion footer.
 v1.3: Add "Convergence with Proof Theory" section — Gentzen (1936), ε₀ as PA's proof-theoretic ordinal, structural alignment with ZPL's independent derivation.
@@ -224,7 +225,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.6'
+VERSION = '1.7'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -277,9 +278,10 @@ def build():
     # ── What Is ZP-L Doing? ───────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-L Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-K proved that the initial machine state c&#8320; is a Kleene fixed point: '
-        'a program whose behavior is determined entirely by its own index, guaranteed to exist '
-        'by the second recursion theorem. ZP-L picks up the thread from a different '
+        'ZP-K carries the computational face of the initial machine state c&#8320; as a '
+        'KleeneStructure requirement (botCode_is_quine): a program whose behavior is determined '
+        'entirely by its own index, whose existence the second recursion theorem guarantees. '
+        'Reading c&#8320; as the Kleene quine is that commitment, not a theorem. ZP-L picks up the thread from a different '
         'direction: the ordinal direction. If a map &#981; assigns machine phases to ordinals '
         '&#8212; sending c&#8320; to everything below a certain point and c&#8321; above it '
         '&#8212; what is that threshold ordinal? ZP-L establishes the answer: &#949;&#8320;, '

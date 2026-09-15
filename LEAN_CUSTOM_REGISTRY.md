@@ -190,14 +190,14 @@ Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP
 ### `machinePhaseAFA` — `ZeroParadox/Computability/Kleene.lean`
 `AFAStructure MachinePhase`
 
-`selfMem x := x = bot` is the CIC-compatible encoding of AFA self-containment (`⊥ = {⊥}` cannot be stated in Lean's well-founded type theory). `quine_unique` and `bot_self_mem` are provable by `rfl`. This is the concrete closure of DA-1 for ZP-E's machine model.
+`selfMem x := x = bot` is the CIC-compatible encoding of AFA self-containment (`⊥ = {⊥}` cannot be stated in Lean's well-founded type theory). `quine_unique` and `bot_self_mem` are provable by `rfl`. This is the concrete Path 1 witness for ZP-E's machine model; DA-1 itself is closed given DP-2 (`da1_minimal_path`).
 
 ---
 
 ### `machinePhaseKleene` — `ZeroParadox/Computability/Kleene.lean`
 `KleeneStructure MachinePhase` (noncomputable)
 
-`botCode` is chosen via `Classical.choose`, so it names SOME computational quine and not a distinguished one; `isComputationalQuine_undecidable` says the MEMBERSHIP PREDICATE is not a `ComputablePred`, which is why nothing can pin down which code was chosen — it does not say no algorithm names a witness, and the constant codes are witnesses. The `noncomputable` marker is load-bearing, not a proof artifact: the non-constructivity is the formal content of DA-1's computational path. Removing it would misrepresent the result.
+`botCode` is chosen via `Classical.choose`, so it names SOME computational quine and not a distinguished one; `isComputationalQuine_undecidable` says the MEMBERSHIP PREDICATE is not a `ComputablePred`, which is why nothing can pin down which code was chosen — it does not say no algorithm names a witness, and the constant codes are witnesses. The `noncomputable` marker comes from this instance's choice of `botCode`; a computable instance with a constant code also satisfies the class, so non-constructivity belongs to the instance, not to DA-1's computational path.
 
 ---
 

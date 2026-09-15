@@ -162,7 +162,7 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
       eval c n = eval c (Encodable.encode c + n)  for all n
     This is a periodicity condition on eval c, not a global identity constraint.
     Multiple programs can satisfy it independently — including the constant codes,
-    which satisfy it vacuously (`hconst_quine`, a `have` inside `infinite_quine_family`, § VI), so the condition is strictly
+    which satisfy it trivially (`hconst_quine`, a `have` inside `infinite_quine_family`, § VI), so the condition is strictly
     weaker than self-reference.
     The framework reads the resulting family as the DA-2 instantiation succession —
     each bottom element carrying its own Gödel number, hence its own fixed point and
@@ -284,7 +284,7 @@ theorem roger_fixed_point_exists (f : Code → Code) (hf : Computable f) :
     ∃ c : Code, eval (f c) = eval c :=
   fixed_point hf
 
-/-! ## § IV. DA-1 Closure -/
+/-! ## § IV. DA-1: the Lean witnesses -/
 
 /-- DA-1 (Computational Grounding): in any KleeneStructure lattice, the bottom
     element is a Quine atom.
@@ -339,10 +339,10 @@ theorem description_instantiation_gap_closed {L : Type*} [ZPSemilattice L]
     ∀ (q : L), IsQuineAtom q → q = bot := by
   exact ⟨bot_is_quine_atom, fun q hq => t_exec q hq⟩
 
-/-! ## § V. MachinePhase — Concrete DA-1 Closure
+/-! ## § V. MachinePhase — DA-1's Concrete Path 1 Witness
 
 Provides AFAStructure and KleeneStructure instances for ZP-E's MachinePhase type,
-closing DA-1 formally for the specific computational model ZP-E describes.
+witnessing DA-1's Path 1 for ZP-E's MachinePhase model.
 
 selfMem is modelled as equality with bot — the CIC-compatible expression of AFA
 self-containment ⊥ = {⊥}. Anti-foundation is not required at the typeclass level:
@@ -356,7 +356,7 @@ open ZeroParadox ZeroParadox
     The unique self-containing element is the initial state — the bottom of the
     semilattice. This is the CIC encoding of ⊥ = {⊥}: bot is self-containing
     and is the only element with this property. -/
--- [ZP-CUSTOM] instance: AFAStructure MachinePhase | reason: selfMem x := x = bot is the CIC-compatible encoding of AFA self-containment (⊥ = {⊥} cannot be stated in Lean's well-founded type theory). Quine uniqueness and bot_self_mem are provable by rfl. This is the concrete closure of DA-1 for ZP-E's machine model.
+-- [ZP-CUSTOM] instance: AFAStructure MachinePhase | reason: selfMem x := x = bot is the CIC-compatible encoding of AFA self-containment (⊥ = {⊥} cannot be stated in Lean's well-founded type theory). Quine uniqueness and bot_self_mem are provable by rfl. This is the concrete Path 1 witness for ZP-E's machine model; DA-1 itself is closed given DP-2 (da1_minimal_path).
 instance machinePhaseAFA : AFAStructure MachinePhase where
   selfMem x      := x = bot
   quine_unique _ _ hx hy := hx.trans hy.symm
@@ -370,13 +370,24 @@ instance machinePhaseAFA : AFAStructure MachinePhase where
     constant codes also meet (§ VI). Reading it as "the code that IS its own program,
     the computational expression of ⊥ = {⊥}" is the framework's commitment, carried by
     the class, not a property this instance establishes. -/
--- [ZP-CUSTOM] instance: KleeneStructure MachinePhase (noncomputable) | reason: botCode chosen via Classical.choose — it names SOME computational quine and not a distinguished one. isComputationalQuine_undecidable says the MEMBERSHIP PREDICATE is not a ComputablePred, which is why nothing can pin down which code was chosen — it does NOT say no algorithm names a witness, and the constant codes are witnesses. The noncomputable marker is load-bearing, not a proof artifact: the non-constructivity is the formal content of DA-1's computational path. Stripping it would misrepresent the result.
+-- [ZP-CUSTOM] instance: KleeneStructure MachinePhase (noncomputable) | reason: botCode chosen via Classical.choose — it names SOME computational quine and not a distinguished one. isComputationalQuine_undecidable says the MEMBERSHIP PREDICATE is not a ComputablePred, which is why nothing can pin down which code was chosen — it does NOT say no algorithm names a witness, and the constant codes are witnesses. The noncomputable marker comes from this instance's choice of botCode; a computable instance with a constant code also satisfies the class, so non-constructivity belongs to the instance, not to DA-1's computational path.
 noncomputable instance machinePhaseKleene : KleeneStructure MachinePhase where
   botCode               := Classical.choose computational_quine_exists
   botCode_is_quine      := Classical.choose_spec computational_quine_exists
   bot_self_mem_from_kleene := rfl
 
-/-- DA-1 closed (concrete): in the MachinePhase semilattice, ⊥ is a Quine atom.
+-- `Statement:` a computable `KleeneStructure MachinePhase` instance exists: the constant code `Code.const 0`
+-- meets `botCode_is_quine`, and this `example` compiles without `noncomputable` or `Classical.choose`.
+example : KleeneStructure MachinePhase :=
+  { machinePhaseAFA with
+    botCode := Code.const 0
+    botCode_is_quine := by
+      show eval (Code.const 0) = selfApply (Code.const 0)
+      funext m
+      simp [selfApply, eval_const]
+    bot_self_mem_from_kleene := rfl }
+
+/-- The Path 1 witness (concrete): in the MachinePhase semilattice, ⊥ is a Quine atom.
     Follows from `da1_computational` at the MachinePhase KleeneStructure instance.
 
     **Honest fence — read this before citing the theorem.** What Lean proves is exactly
@@ -401,65 +412,8 @@ theorem da1_closed_concrete : IsQuineAtom (bot : MachinePhase) :=
 
 /-! ## § VI. Function-Gödel-Number Correspondence
 
-Every computational quine c has a Gödel number encode(c) that is not external
-metadata — it is *a* period of the function computed by c in the selfApply sense. (Not
-*the* period: nothing here shows it is the least one, and a constant code is periodic
-with every period.)
-The computational quines form an infinite family with distinct Gödel numbers. Within
-that family a code is recovered from its Gödel number, since encoding is injective on
-all of `Code`. That does not make the function and the index mutually determining: the
-index is only *a* period of the function, and constant codes are periodic with every
-period, so the function does not fix the index. Reading that family as the DA-2 instantiation
-succession — one bottom element per instantiation, each with its own code — is the
-framework's interpretation and is NOT what the theorems below establish; see the fence
-immediately following for what actually witnesses the family.
-
-**Honest fence on what "computational quine" does and does not pin.**
-`IsComputationalQuine` is the *periodicity* condition eval c n = eval c (encode c + n).
-A constant code satisfies it vacuously — a constant ignores its input and is periodic
-with every period — and the proof of `infinite_quine_family` below witnesses the family
-with exactly those (`hconst_quine`, `Code.const k`). So the predicate is strictly weaker
-than "self-referential": genuine Kleene fixed points satisfy it (`computational_quine_exists`,
-via the second recursion theorem, and that witness is real), and so do constants. The
-(function, index) pairing is therefore a signature of the *code*, and should not be read
-on its own as a signature of self-reference.
-
-**And on the shape of the family.** These fixed points are genuinely many and genuinely
-distinct — `infinite_quine_family` and `quine_goedel_injective` prove it — while the
-set-theoretic side has exactly one self-containing element (`quine_unique`). A unique
-element and an infinite indexed family are different shapes, so the correspondence here
-is between the *succession* of instantiations and the family, not an identification of
-one element with one code. The framework's reading of that correspondence is in § II;
-no theorem in this file identifies a `Code` with an element of a lattice, and the type
-boundary makes such an identification unstatable.
-
-**Prior art, and a distinction that must not be collapsed.** That a computational object
-is named by many indices rather than one is standard: the **Padding Lemma** — every
-partial recursive function has infinitely many indices — is its classical home, and an
-external computability reader mentioned it as possibly related when asked about ZP-K.
-It is the right reference for the direction it actually gives: **a function does not
-determine an index**, since infinitely many indices compute it. (Stated as a named lemma
-without individual attribution; it appears as a hypothesis of Rogers' isomorphism theorem
-rather than as a result of his, so do not attach a name to it.)
-It is **not** what `infinite_quine_family` proves, and the two must not be conflated:
-padding supplies infinitely many indices for the *same* function, whereas this family is
-witnessed by the constant codes, and `Code.const 0` and `Code.const 1` compute *different*
-functions. So the family here is broad, not a padding orbit. Cite padding for the
-index-multiplicity point; do not cite it for this theorem.
-
-Three formal results capture this structure:
-  (1) quine_period_is_goedel — the Gödel number IS a period (definitionally; not shown
-      to be the least one)
-  (2) self_halting_undecidable and isComputationalQuine_undecidable — the boundary
-      between computation and self-reference is genuinely non-computable, not merely
-      unimplemented; Classical.choose in machinePhaseKleene reflects this
-  (3) infinite_quine_family — the quine family is infinite: unboundedly many distinct
-      (function, index) pairs exist. Its witnesses are the constant codes, so it bounds
-      the family from below without showing those members are instantiation bottoms
-
-The noncomputable marker on machinePhaseKleene is therefore load-bearing, not a
-proof artifact. No algorithm can identify which code IS the botCode for a given
-KleeneStructure instance — the choice is structurally outside classical computation. -/
+Argument, fences, prior art and the three formal results of this section:
+`ZeroParadox/Computability/Kleene.md`. -/
 
 /-- For any computational quine c, the Gödel number encode(c) is a period of
     eval c in the selfApply sense: eval c n = eval c (encode(c) + n) for all n.

@@ -74,13 +74,15 @@ example : (⟨0, Or.inl rfl⟩ : {o : Ordinal | o = 0 ∨ Ordinal.omega0 ^ o = o
 
 Reading: CARRIER. These lines BOUND the snap; none supplies it. ZP-F rules it out in every ordered
 field; ZP-B removes the topological obstruction in ℚ_p without replacing it. The first step is AX-B1,
-a modelling commitment, never a carrier property. AX-B1 holds at every state with anything above it,
-the bottom included: each has a first distinct state above it, with nothing strictly between. A state
-with nothing above it owes no step. -/
+a modelling commitment. Its conditional form is a property a carrier has or lacks: `Bool` and `ℕ` have
+it, `ℝ` lacks it (the examples beside `HasFirstStep`, `ZeroParadox/Reals/OrderedField.lean`); the
+commitment is that the framework's carrier has it. AX-B1 holds at every state with anything above it:
+each has a first distinct state above it, with nothing strictly between. A state with nothing above it
+owes no step. -/
 #check @ZeroParadox.HasFirstStep                      -- Statement: an ORDER predicate — `∃ a, bot ⋖ a`, Mathlib's covering relation. ⚠ `LT ℚ_[p]` does not synthesize, so this is not statable of ℚ_p; the p-adic line below fences NORM values, a different predicate
 #check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, every positive ε₀ admits a smaller positive δ
 #check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element. No Archimedean hypothesis appears in the binders
-#check @ZeroParadox.axb1_fails_in_ordered_field       -- Statement: `¬ HasFirstStep (0 : F)`. Reading: AX-B1 is what supplies the step, and it is a commitment rather than a carrier property
+#check @ZeroParadox.axb1_fails_in_ordered_field       -- Statement: `¬ HasFirstStep (0 : F)`. Reading: AX-B1 is what supplies the step; an ordered field lacks it, and that the framework's carrier has it is the commitment
 #check @ZeroParadox.axb1_fails_everywhere_iff_dense   -- Statement: the obstruction CHARACTERIZED, over a bare `Preorder` with no field and no topology — `DenselyOrdered α ↔ ∀ bot, ¬ HasFirstStep bot`. `axb1_fails_in_ordered_field` directly above is an instance of its right-hand side; `f_snap_impossible` is the same fact in the halving vocabulary, not an instance of this statement. Density is what obstructs a first step — connectedness is a separate, topological fence (`real_no_snap`)
 #check @ZeroParadox.real_no_snap                      -- Statement: CARRIER — ℝ is NOT totally disconnected
 #check @ZeroParadox.padic_snaps                       -- Statement: CARRIER — ℚ_p IS totally disconnected. Reading: this removes the obstruction and supplies no first step — norms accumulate at 0 in ANY non-trivially normed field (Mathlib `NormedField.exists_norm_lt`), ℝ included, so that half is not p-adic

@@ -1,4 +1,5 @@
 """
+v3.38: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): T5 Selection said the least-fixed-point face makes 'every landing from epsilon-0 up fire (epsilon0_min_eq_max)'; 'landing' was undefined, and read as every ordinal from epsilon-0 up it follows from monotonicity and h-eps0 alone, so the clause now reads 'every fixed point of alpha -> omega^alpha fires (hfp_from_epsilon_zero, epsilon0_min_eq_max)'. The Path 3 conclusion 'Instantiation and execution are the same act' now reads 'Given DP-2, instantiation and execution are the same act (DA-1)'.
 v3.37: DECISION BATCH REMEDIATION AFTER GATE ROUND 3, SECOND PASS (Tim ruling, 2026-09-15): the DA-1 Status block said 'Kleene fixed-point is the in-scope formal counterpart' of AIT; it now says the Kleene structure is its in-scope counterpart, carried as a KleeneStructure requirement (botCode_is_quine), not a proof of the AIT claim.
 v3.36: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim rulings, 2026-09-15): T5 Selection credits each face of epsilon-0 with its own direction: a monotone map sending the tower's stages to c0 and epsilon-0 to c1 sends no ordinal below epsilon-0 to c1 (supremum face, fundamentalSeq_cofinal) and sends every fixed point of alpha -> omega^alpha to c1 (least-fixed-point face, hfp_from_epsilon_zero); it had said 'Both faces of epsilon-0 carry this' of the downward direction alone. Deriving h-eps0 is open 'from the 2-adic structure'. The Open Items OQ-A1 cell names the monotone map and the tower stages beside h-eps0. DA-1 PATH 3 (pre-existing bedrock, editorial round 3 B1): the DA-1 synthesis paragraph, the DA-1 Status block, the DA-1 validation row and the endnote said Paths 1 and 3 are formally closed / IN LEAN SCOPE and that DA-1 is grounded in them or closed in Lean via ZP-K. They now carry the CLAIMS.md DA-1 row: Path 1 is witnessed by da1_closed_concrete, which proves IsQuineAtom (bottom : MachinePhase) and nothing computational; Path 3's witness is the machinePhaseKleene botCode_is_quine field, a KleeneStructure requirement, not a second independent proof; da1_paths_unified carries them as a conjunction of witnesses, and that they name one structural fact is the framework's reading; DA-1 is closed given DP-2.
 v3.35: ADVERSARY GATE ROUND 3 (bedrock, D1): the T5 traceability row said 'given the alignment hypothesis h-eps0, nothing below epsilon-0 fires', dropping two of snap_unconditional's three hypotheses (monotonicity, and the tower stages sent to c0); a monotone map with h-eps0 can fire at 1. The row now names the monotone map sending the tower's stages to c0, as the T5 box already did.
@@ -93,7 +94,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.37'
+VERSION = '3.38'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -298,7 +299,7 @@ def build():
              'State (A) is therefore eliminated by the Kolmogorov condition. '
              'Since (A) and (B) are exhaustive and (A) is eliminated, c<sub>1</sub> is in state (B): it is executing. '
              'Instantiation at P<sub>0</sub> is not the placement of a description to be executed later — '
-             'there is no shorter prior description to execute. Instantiation and execution are the same act.'),
+             'there is no shorter prior description to execute. Given DP-2, instantiation and execution are the same act (DA-1).'),
         body('The formal grounding (DP-2, §III) and the three paths above operate at distinct levels, '
              'not as alternatives to one another. DP-2 + da1_minimal_path establish a conditional at the '
              'level of machine-state representation: <i>if</i> instantiation of ⊥ constitutes a first '
@@ -527,8 +528,8 @@ def build():
                 'of &#945; &#8614; &#969;<super>&#945;</super> is (snap_unconditional, hfp_from_epsilon_zero). '
                 'The two faces of &#949;<sub>0</sub> carry the two directions: as the supremum of the stages, every ordinal below '
                 '&#949;<sub>0</sub> lies under one of them, so nothing below fires (fundamentalSeq_cofinal); as the least fixed point of '
-                '&#945; &#8614; &#969;<super>&#945;</super> it lies below every other, so every landing from &#949;<sub>0</sub> up fires '
-                '(epsilon0_min_eq_max). The placement at &#949;<sub>0</sub> is a hypothesis there '
+                '&#945; &#8614; &#969;<super>&#945;</super> it lies below every other, so every fixed point of &#945; &#8614; &#969;<super>&#945;</super> fires '
+                '(hfp_from_epsilon_zero, epsilon0_min_eq_max). The placement at &#949;<sub>0</sub> is a hypothesis there '
                 '(h&#949;<sub>0</sub>), which the Lean names the alignment hypothesis; deriving it from the 2-adic structure is open, as the Classical.choice '
                 'inversion conjecture (ZeroParadox/Ordinal/Incompleteness.lean). The rungs are the iterative bottoms; '
                 'none of them is &#8869; (epsilon0_ne_bot; for every rung, Ordinal.epsilon_pos). On an arbitrary lattice no step is '

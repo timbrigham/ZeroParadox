@@ -422,7 +422,7 @@ theorem t_iz_complete
     Filter.Tendsto S Filter.atTop (nhds 0) ∧
     -- Steps 3/6: terminal plays the ⊥ role, hence IS bot (DA-2); "successor" is the reading
     terminal = bot ∧
-    -- Step 4: DA-1 fires at the successor null via AFA/Kleene — no K required
+    -- Step 4: DA-1's Path 1 witness in a KleeneStructure (da1_computational) — no K required
     ZeroParadox.IsQuineAtom (bot : L') ∧
     -- Step 5: T-SNAP fires from ⊥' to ε₀' (A4 = bot_join, definitional)
     join (bot : L') ε₀' = ε₀' :=

@@ -12,7 +12,7 @@ MC-1 is the cross-framework claim about the four domain bottoms. It was stated i
 * a **literal-identity** half: the four bottoms are numerically one object across four different categories. That
   identity is **retired as ill-typed** (object equality across categories does not typecheck and is not invariant under
   equivalence); what separates the members is proved property by property (`seam_unique_among_named`,
-  `ZeroParadox/Category/SeamUniqueness.lean`, for the named bottoms). What MC-1 keeps is the bottom *family*, characterized by a
+  `ZeroParadox/Category/SeamUniqueness.lean`, for the named bottoms, in a lattice with no top). What MC-1 keeps is the bottom *family*, characterized by a
   shared list of criteria; the choice of criteria is the commitment (CLAIMS.md, MC-1 row).
 
 ## What this file formalizes

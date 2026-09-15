@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.5 | September 2026
+Version 1.6 | September 2026
+v1.6: MC-1 PREMISE (claim-review gate round 4 bedrock, Tim confirmed, 2026-09-15): both seam_unique_among_named pointers now carry the theorem's premise, reading 'for the named bottoms, in a lattice with no top'; its ZP-A conjunct binds HasNoTop.
 v1.5: ADVERSARY GATE ROUND 3 (bedrock, D1): the MC-1 section body still said the four bottoms being numerically one object 'is a modeling commitment' and 'an interpretive commitment', contradicting the retirement stated on page 1; it now states the same retirement, with the property clause for the named bottoms.
 v1.4: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): MC-1's retired identity is stated as: object equality across categories does not typecheck and is not invariant under equivalence; what separates the members is proved property by property (seam_unique_among_named, for the named bottoms). It replaces 'neither x = y nor x != y is well-formed across categories; the members differ by property'.
 v1.3: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the honesty-boundaries paragraph said the four bottoms being numerically one object 'remains a modeling commitment, not a theorem'; now the MC-1 identity retired as ill-typed (neither x = y nor x != y is well-formed across categories); the members differ by property, each in its own category (seam_unique_among_named).
@@ -24,7 +25,7 @@ Reads after ZP-H Categorical Bridge.
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -90,7 +91,7 @@ def build():
         'Two honesty boundaries hold throughout. <b>The realized claim is correspondence, '
         'not identity.</b> What is proved is that each bottom is its own category\'s '
         'categorical bottom, agreeing on the snap; that the four bottoms are <i>numerically '
-        'one object</i> is retired as ill-typed (object equality across categories does not typecheck and is not invariant under equivalence); what separates the members is proved property by property (seam_unique_among_named, for the named bottoms). <b>The native '
+        'one object</i> is retired as ill-typed (object equality across categories does not typecheck and is not invariant under equivalence); what separates the members is proved property by property (seam_unique_among_named, for the named bottoms, in a lattice with no top). <b>The native '
         'categories are the honest target.</b> Mathlib has no bespoke category of p-adic '
         'spaces, Hilbert spaces, or information spaces, so the general-purpose categories '
         '&#8212; topological spaces, &#8450;-modules, stochastic maps &#8212; are where the '
@@ -262,7 +263,7 @@ def build():
         'zero module, and the empty type are numerically one object, is retired as ill-typed '
         '(object equality across categories does not typecheck and is not invariant under '
         'equivalence); what separates the members is proved property by property '
-        '(seam_unique_among_named, for the named bottoms).'))
+        '(seam_unique_among_named, for the named bottoms, in a lattice with no top).'))
     E.append(label_box(
         'Scope and Purity',
         [

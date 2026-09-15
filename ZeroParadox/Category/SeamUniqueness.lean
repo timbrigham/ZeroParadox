@@ -144,6 +144,14 @@ theorem seam_unique_among_named (L : Type*) [ZPSemilattice L]
    forkcat_initial_not_zero,
    zpa_bot_not_greatest L hnt⟩
 
+-- `Statement:` on any ZP-A semilattice with two distinct elements the bottom is not greatest. Unlike
+-- `zpa_bot_not_greatest`, this takes no `HasNoTop` premise.
+example {L : Type*} [ZPSemilattice L] (a b : L) (hab : a ≠ b) :
+    ¬ ∀ x : L, ZPSemilattice.le x (ZPSemilattice.bot : L) := by
+  intro h
+  exact hab ((ZPSemilattice.le_antisymm (h a) (ZPSemilattice.bot_le a)).trans
+    (ZPSemilattice.le_antisymm (h b) (ZPSemilattice.bot_le b)).symm)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check

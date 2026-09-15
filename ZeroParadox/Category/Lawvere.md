@@ -77,7 +77,7 @@ The cross-face identification is a shared **shape**, confirmed precise. It is:
 
 - **NOT** a cross-category object identity — that reading is retired as ill-typed (object equality across
   categories does not typecheck and is not invariant under equivalence). MC-1 names the bottom family; what separates
-  its members is proved property by property (`seam_unique_among_named`, for the named bottoms).
+  its members is proved property by property (`seam_unique_among_named`, for the named bottoms, in a lattice with no top).
 - **NOT** a single-mechanism theorem.
 - and the lattice / 2-adic faces are **provably not** Set-level Lawvere instances.
 

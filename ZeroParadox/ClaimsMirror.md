@@ -19,4 +19,4 @@ fact about the claim's status.
 - `MC-1-identity` (retired): "the four domain bottoms are numerically one object." Retired 2026-07-15 as
   ill-typed (object equality across categories does not typecheck and is not invariant under equivalence), so it
   cannot be stated in Lean at all. The non-representability *is* the finding: what separates the members is proved
-  property by property (`seam_unique_among_named`, for the named bottoms); only the shared diagonal shape survives, apophatically. No theorem here, by type.
+  property by property (`seam_unique_among_named`, for the named bottoms, in a lattice with no top); only the shared diagonal shape survives, apophatically. No theorem here, by type.
