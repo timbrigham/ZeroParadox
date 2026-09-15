@@ -1,5 +1,6 @@
 """
-Build ZP-C: Information Theory (v1.23)
+Build ZP-C: Information Theory (v1.24)
+v1.24: DECISION BATCH REMEDIATION (Tim, 2026-09-15): DA-1's status matched to Remark R5 at three sites: L-INF's note, T-BUF Step 2 and T-BUF's status called DA-1 a design principle; each now says a Derived Proposition closed given DP-2 (ZP-E), not a mathematical consequence of L-INF alone.
 v1.23: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). Remark R5's body carries the canonical AX-1 sentence, and the Open Items AX-1 row and validation rows R1 and R5 say 'the snap occurs given the occurrence commitment and DA-1'. Tense residue: R5's 'Remaining work: DA-1 (Definitional Alignment) must formally tie instantiation of P0 to an execution event' now says DA-1 is ZP-E's Derived Proposition, closed given DP-2, and bears on whether the Snap occurs, not on its shape; TQ-IH's 'AX-1 derivability pathway now open' now says TQ-IH is one of the results ZP-E derives the Snap's shape from. 'Binary Snap Causality' names the retired AX-1 in this document, so T-SNAP's name gloss is not placed here.
 v1.22: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). Remark R5's status label ("Closed in ZP-E DA-1 insert") and the Open Items AX-1 row ("Closed as T-SNAP in ZP-E DA-1 insert") closed AX-1 whole; both now close the shape half and name the occurrence half as a commitment. ZP-C's own Candidate Theorem label is unchanged. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): Remark R5's body, its status label, the Open Items AX-1 status cell and validation rows R1 and R5 gave "Candidate Theorem" as AX-1's CURRENT status beside its retirement. Each now says AX-1 was a Candidate Theorem in ZP-C and is now retired, with the shape proved as T-SNAP and occurrence stated separately as the occurrence commitment. T-BUF's own Candidate Theorem label is untouched.
 v1.21:Self-containment note names the ZP-A cross-layer dependency — T-BUF (Section V) invokes ZP-A D2 (state-transition, f(x)=x∨α; Lean: Order/Lattice.lean) to identify ⊥∨ε₀ as the Binary Snap, closure deferred to ZP-E DA-1.
@@ -31,7 +32,7 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -141,7 +142,7 @@ def build():
         'Proof: Let M &#8712; &#8477;. By the Archimedean property, &#8707; n &#8712; &#8469; with n > M. Then I(n) = n > M. Since M was arbitrary, surprisal is unbounded above. <font name="DV">&#10003;</font>',
         'Formal content: surprisal is not bounded above by any real M.',
         'Semantic content: &#8869; is informationally extreme — it is the limit point of the binary ball hierarchy under the 2-adic metric, the accumulation point approached by sequences of increasing depth. No finite bound M contains the surprisal at that limit; therefore no finite external interpreter can hold &#8869; as a static description. This is the mathematical premise for DA-1 (ZP-E &#167; I-DA1). ZP-A CC-2 (&#8869; = {&#8869;}) provides a structural second grounding for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent derivations converging on the same fact.',
-        'Note: the connection from unbounded surprisal (L-INF) to forced execution is a named design principle (DA-1 in ZP-E), not a mathematical consequence of L-INF alone. L-INF supplies the formal premise; DA-1 supplies the ontological bridge.',
+        'Note: the connection from unbounded surprisal (L-INF) to forced execution is DA-1 in ZP-E, a Derived Proposition closed given DP-2, not a mathematical consequence of L-INF alone. L-INF supplies the formal premise; DA-1 supplies the ontological bridge.',
         'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (&#8869; = {&#8869;}) and R3. Lean: l_inf (purity check: no non-Mathlib axioms).',
     ]))
     E.append(sp(4))
@@ -237,11 +238,11 @@ def build():
     E.append(label_box('Candidate Theorem T-BUF — Incompressibility Forces Non-Null Execution State', [
         'Statement: At the incompressibility threshold P<sub>0</sub>, the Binary Snap &#8869; &#8594; &#949;<sub>0</sub> is a structural consequence of execution, not an external trigger.',
         'Step 1 — P<sub>0</sub> identifies the configuration x at which K(x|n)/n = 1: the configuration string is incompressible. (D1)',
-        'Step 2 — An incompressible configuration at P<sub>0</sub> is informationally extreme (L-INF): its surprisal is unbounded — no finite external program bounds its informational content. A configuration with unbounded informational content has no finite external interpreter and cannot be a static description. Therefore the configuration at P<sub>0</sub> is a live machine state. The design principle connecting informational extremity to forced execution is DA-1 (ZP-E &#167; I-DA1, citing L-INF).',
+        'Step 2 — An incompressible configuration at P<sub>0</sub> is informationally extreme (L-INF): its surprisal is unbounded — no finite external program bounds its informational content. A configuration with unbounded informational content has no finite external interpreter and cannot be a static description. Therefore the configuration at P<sub>0</sub> is a live machine state. The step connecting informational extremity to forced execution is DA-1 (ZP-E &#167; I-DA1, citing L-INF), a Derived Proposition closed given DP-2.',
         'Step 3 — Any execution passes through c<sub>1</sub> (L-RUN). c<sub>1</sub> &#8800; &#8869; (L-RUN conclusion).',
         'Step 4 — In (L, &#8744;, &#8869;), this non-null configuration state is c<sub>1</sub> = &#8869; &#8744; &#949;<sub>0</sub>. By ZP-A D2, this is the Binary Snap.',
         'Conclusion: At P<sub>0</sub>, execution is structurally guaranteed. Execution guarantees a non-null configuration state. That state is &#949;<sub>0</sub> in the semilattice. The derivation pathway is open: P<sub>0</sub> + L-RUN + TQ-IH + ZP-A D2, pending cross-framework integration via DA-1 in ZP-E. <font name="DV">&#10003;</font>',
-        'Status: CANDIDATE THEOREM — structurally complete within ZP-C. The step from unbounded surprisal (L-INF) to forced execution (DA-1) is a design principle, not a mathematical consequence. Full derivation owned by ZP-E.',
+        'Status: CANDIDATE THEOREM — structurally complete within ZP-C. The step from unbounded surprisal (L-INF) to forced execution (DA-1) is a Derived Proposition closed given DP-2 in ZP-E, not a mathematical consequence of L-INF alone. Full derivation owned by ZP-E.',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R5 — Updated Status of AX-1', [

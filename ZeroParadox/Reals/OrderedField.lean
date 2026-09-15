@@ -95,6 +95,16 @@ section AxB1
     (which would state the ordered-field side directly) **is not in this Mathlib pin**. -/
 def HasFirstStep {α : Type*} [LT α] (bot : α) : Prop := ∃ a, bot ⋖ a
 
+-- `Statement:` AX-B1 at the iterative bottom `a` (the bottom of its up-set `Set.Ici a`) is AX-B1 at `a`.
+-- Mathlib's `covBy_iff_atom_Ici` (`Mathlib/Order/Atoms.lean`) is the standard framing: a cover of `a`
+-- is an atom of `Set.Ici a`.
+example {α : Type*} [PartialOrder α] (a : α) :
+    HasFirstStep (⟨a, le_rfl⟩ : Set.Ici a) ↔ HasFirstStep a := by
+  have key : ∀ (b : α) (h : a ≤ b), ((⟨a, le_rfl⟩ : Set.Ici a) ⋖ ⟨b, h⟩) ↔ a ⋖ b := fun b h =>
+    ⟨fun ⟨hlt, hno⟩ => ⟨hlt, fun c hac hcb => hno (c := ⟨c, hac.le⟩) hac hcb⟩,
+     fun ⟨hlt, hno⟩ => ⟨hlt, fun c hac hcb => hno (c := c.1) hac hcb⟩⟩
+  exact ⟨fun ⟨⟨b, hb⟩, h⟩ => ⟨b, (key b hb).1 h⟩, fun ⟨b, h⟩ => ⟨⟨b, h.le⟩, (key b h.le).2 h⟩⟩
+
 /-- **The first step is unique.** This is Mathlib's `CovBy.unique_right`, and it is cited as
     such — proved here by hand only to keep the footprint at `[propext]`. Mathlib's version
     routes through `LinearOrder` machinery that pulls in `Classical.choice`, and the framework

@@ -1,5 +1,6 @@
 """
-Build ZP-H Illustrated Companion (v1.15)
+Build ZP-H Illustrated Companion (v1.16)
+v1.16: DECISION BATCH REMEDIATION (Tim, 2026-09-15): the T-H3 page said the transition 'was derived as a theorem (T-SNAP), not assumed as an axiom' and called the Binary Snap 'a structural fact that survives translation'; both are scoped to the shape with the canonical AX-1 sentence.
 v1.15: CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. Four sites; the key-result box no longer calls CC-1 'not a free commitment' (ZP-A calls it a modelling choice). ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). Also CC-1 is 'the modelling commitment CC-1', not 'the structural identification CC-1', at three sites.
 v1.13: Scope "any state change" to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix.
 v1.12: T-SNAP endpoint circles — open (white fill, colored stroke) with colored text for legibility.
@@ -142,7 +143,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -361,7 +362,9 @@ def build():
         'The Binary Snap is the transition from 0 to the first non-initial object. '
         'In the abstract category C, it is the unique morphism from 0 to ε₀ — guaranteed '
         'to exist by AX-G1 and to be unique by the definition of an initial object. '
-        'In ZP-E, this transition was derived as a theorem (T-SNAP), not assumed as an axiom.'))
+        'In ZP-E, AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, '
+        'as Theorem T-SNAP, and that the snap occurs is stated separately: it follows from the occurrence commitment '
+        '(instantiation occurs) together with DA-1 (closed given DP-2).'))
     E.append(cbody(
         'T-H3 shows that all four functors agree on what the Snap is:'))
     E.append(cbody(
@@ -405,7 +408,7 @@ def build():
 
     E.append(cbody(
         '<b>What this means:</b> The Binary Snap is not a construct of any one framework. '
-        'It is a structural fact that survives translation into four distinct mathematical '
+        'The shape of the snap, proved as Theorem T-SNAP, is a structural fact that survives translation into four distinct mathematical '
         'languages. ZP-H is the document that verifies this translation is faithful.'))
 
     print(f'Building: {out_path}')

@@ -46,6 +46,16 @@ example (a : Ordinal) : a ∈ Set.range Ordinal.epsilon ↔ Ordinal.omega0 ^ a =
   rw [show Ordinal.epsilon = deriv (fun b => Ordinal.omega0 ^ b) from funext epsilon_eq_deriv]
   exact mem_range_deriv (isNormal_opow one_lt_omega0)
 
+-- `Statement:` no fixed point of the snap-step lies strictly between two consecutive rungs.
+example (o x : Ordinal) (h1 : Ordinal.epsilon o < x) (h2 : x < Ordinal.epsilon (Order.succ o)) :
+    Ordinal.omega0 ^ x ≠ x := by
+  intro hx
+  obtain ⟨c, rfl⟩ := (mem_range_deriv (isNormal_opow one_lt_omega0)).2 hx
+  have hmono : StrictMono (deriv (fun a : Ordinal => Ordinal.omega0 ^ a)) :=
+    (isNormal_deriv _).strictMono
+  rw [epsilon_eq_deriv] at h1 h2
+  exact absurd (Order.succ_le_of_lt (hmono.lt_iff_lt.1 h1)) (not_le.2 (hmono.lt_iff_lt.1 h2))
+
 /-! ### § II. The succession is the ε-hierarchy, strictly climbing -/
 
 /-- The first rung of the succession is the framework's ε₀: `ε_ 0 = ε₀`. It is the snap's first

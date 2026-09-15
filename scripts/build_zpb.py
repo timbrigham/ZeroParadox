@@ -1,5 +1,6 @@
 """
-Build ZP-B: p-Adic Topology (v1.14)
+Build ZP-B: p-Adic Topology (v1.15)
+v1.15: DECISION BATCH REMEDIATION (Tim, 2026-09-15): AX-B1's scope stated (Tim's confirmed text): AX-B1 holds at every iterative bottom, every state as the base the next step starts from having a first distinct state above it with nothing strictly between. The box previously stated it only at the origin. Still one substantive commitment.
 v1.14: D5 + R1 self-contradiction resolved (Tim's ruling, 2026-07-29): epsilon-0 is UNITLESS. The box asserted it "is a dimensionful quantity, so its numerical value depends on a choice of units", then disclaimed any physical-unit magnitude claim, then labelled the status "universe-contingent parameter" - three sentences about three different objects. epsilon-0 is a POSITION (the first step above the bottom, Ordinal.epsilon 0, Veblen (1,0)) and a position carries no units, exactly as the bottom carries none. What is contingent is the real-valued threshold 2^k of D5, on the CHOSEN exponent k - a normalisation, not a physical measurement. R1's "determined by physical constants" corrected in the same change (fix the class, not the site); Valuation/Padic.lean's docstring likewise.
 v1.13: D5 exponent/valuation conflation corrected. The box said "eps0 = 2^k where k is the maximum valuation accessible", which contradicts this document's own ball convention B(0, 2^-n): a MAXIMUM valuation gives a MINIMUM scale, so k = -v. k is the exponent, v the valuation, and they differ by sign. No semantic change (k was always free to be negative); the Lean docstring at Valuation/Padic.lean carried the same conflation and is corrected in the same change, together with a note that the definition is inert.
 v1.12: D5 Planck-scale reference struck (last live site in the corpus). An adversary review flagged "eps0 plays the structural role of a Planck-scale quantity" as a crank signal on 2026-05-21 - "the Planck-scale analogy does the opposite of what is intended: it makes the document read as a physics grand-theory" - and it was cut from the Foreword (v1.8) and both Reals/ZP-F companions (v1.3). ZP-B kept it. Replaced with the structural reason the value is contingent: eps0 is DIMENSIONFUL, so its value depends on a unit choice and cannot be instantiation-independent. That is Buckingham pi, not empirical ignorance, and it makes R1's universal/contingent split a statement about dimensions rather than about our universe.
@@ -20,7 +21,7 @@ distinguish pure topology (the theorem statement) from ZP-specific framing (the 
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -41,6 +42,7 @@ def build():
         'The foundational distinction of the Zero Paradox framework is binary: a state either exists or it does not. There is no third option at this level.',
         '0 — non-existence (the Null State, corresponding to &#8869; in ZP-A)',
         '1 — existence (the minimum nonzero state, &#949;<sub>0</sub>)',
+        'AX-B1 holds at every iterative bottom: every state, as the base the next step starts from, has a first distinct state above it, with nothing strictly between.',
         'Status: AXIOM. This is the only non-topological commitment in ZP-B. It precedes p-adic analysis and is the premise from which the field selection is derived.',
         'Scope: AX-B1 asserts the structure of the ontological distinction, not its physical realisation. It is invariant across all instantiations.',
     ]))

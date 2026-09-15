@@ -155,6 +155,38 @@ theorem state_sequence_monotone (S : ℕ → L) (hS : IsStateSequence S) :
   calc S n ⊔ (S n ⊔ α n) = (S n ⊔ S n) ⊔ α n := by rw [join_assoc]
     _ = S n ⊔ α n                               := by rw [join_idem]
 
+-- `Statement:` a step changes nothing exactly when the increment is already below the state.
+example {L : Type*} [ZPSemilattice L] (S α : ℕ → L) (hα : ∀ n, S (n + 1) = join (S n) (α n)) (n : ℕ) :
+    S (n + 1) = S n ↔ le (α n) (S n) := by
+  rw [hα n]
+  constructor
+  · intro h
+    change join (α n) (S n) = S n
+    rw [join_comm]; exact h
+  · intro h
+    change join (α n) (S n) = S n at h
+    rw [join_comm]; exact h
+
+-- `Statement:` if the run is constant from step x on, S x is the least upper bound of the whole run.
+example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hS : IsStateSequence S) (x : ℕ)
+    (hstab : ∀ k, S (x + k) = S x) :
+    (∀ n, le (S n) (S x)) ∧ (∀ u, (∀ n, le (S n) u) → le (S x) u) := by
+  have up : ∀ n k, le (S n) (S (n + k)) := by
+    intro n k
+    induction k with
+    | zero => exact ZPSemilattice.le_refl _
+    | succ k ih => exact ZPSemilattice.le_trans ih (state_sequence_monotone S hS (n + k))
+  refine ⟨fun n => ?_, fun u hu => hu x⟩
+  rcases Nat.lt_or_ge n x with h | h
+  · obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le h.le
+    exact up n k
+  · obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le h
+    rw [hstab k]; exact ZPSemilattice.le_refl _
+
+-- `Statement:` control — one idempotent step does not fix the limit.
+example : ∃ S : ℕ → ℕ, (∀ n, S n ≤ S (n + 1)) ∧ S 1 = S 0 ∧ S 2 ≠ S 1 :=
+  ⟨fun n => if n ≤ 1 then 0 else n, fun n => by simp only []; split_ifs <;> omega, rfl, by decide⟩
+
 /-! ## No Top Element (`HasNoTop`); Strict State Sequences
 
 ⚠ **NOT ZP-A's R1**, which is NO-SUBTRACTION (`scripts/build_zpa.py` Remark R1, exported there as

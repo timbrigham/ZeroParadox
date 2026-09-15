@@ -1,5 +1,6 @@
 """
-Build ZP-B Illustrated Companion (v1.12)
+Build ZP-B Illustrated Companion (v1.13)
+v1.13: DECISION BATCH REMEDIATION (Tim, 2026-09-15): companion sync with ZP-B v1.15: AX-B1's iterative-bottom scope sentence added where the companion introduces AX-B1.
 v1.12: PRECISION FIX (release-prep), grounded in the formal ZP-B claims (C3, T5). Corrected two review-flagged overclaims: (1) the "entirely disjoint / 0 unreachable" framing — zero is a genuine LIMIT of nonzero states (not isolated; the v1.4/v1.7 correction), and the true barrier is C3 (no continuous PATH from a nonzero state to zero), the only crossing being a discrete jump (the Binary Snap); (2) "infinite valuation distance" (category error) — v₂(0) is an infinite VALUATION, not a distance (2-adic distances stay finite); it places zero in a clopen class distinct from every nonzero state. Kept the general-reader register (accessible, not jargon).
 v1.10: vocab fix: null state → ⊥.
 v1.9: Strip version number from companion footer.
@@ -119,7 +120,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -214,7 +215,8 @@ def build():
         'return would have to jump the gap rather than cross it continuously.'))
     E.append(cbody(
         'The starting point is a single axiom: AX-B1 (Binary Existence) — a state either exists '
-        'or it does not. From this, together with a minimality principle (MP-1), the document '
+        'or it does not. AX-B1 holds at every iterative bottom: every state, as the base the next step '
+        'starts from, has a first distinct state above it, with nothing strictly between. From this, together with a minimality principle (MP-1), the document '
         'derives that the field must be ℚ₂. The choice of geometry is proven as Theorem T0, '
         'not assumed.'))
     E.append(example_box('Real-world example — Light switch vs. dimmer', [

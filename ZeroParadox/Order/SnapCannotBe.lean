@@ -39,13 +39,18 @@ section SnapCannotBeIndex
 --   `t_snap_accessible_proper_subset` are generic: they hold at other points too, `t_snap_join` at ⊥
 --   itself. The ordinal ε₀ is indexed in `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`: the operator
 --   α ↦ ω^α seeded at the base ⊥ (`epsilon0_eq_nfp_bot`), least fixed point AND tower supremum at once
---   (`epsilon0_min_eq_max`), never ⊥ (`epsilon0_ne_bot`). Two orders give two answers on covering. In
---   the ordinal order ⊥ ⋖ ε₀ is FALSE: 1 lies strictly between (first example). Restricted to ⊥ and the
---   fixed points of α ↦ ω^α, ε₀ DOES cover ⊥, since nothing below it is a fixed point
---   (`nothing_between_is_a_step`, `bot_is_not_a_step`; second example).
+--   (`epsilon0_min_eq_max`), never ⊥ (`epsilon0_ne_bot`). One order, restricted to two carriers, gives
+--   two answers on covering. On all ordinals ⊥ ⋖ ε₀ is FALSE: 1 lies strictly between (first example).
+--   On the carrier {0} ∪ {fixed points of α ↦ ω^α}, where 0 is adjoined by definition (`Or.inl`), ε₀
+--   DOES cover ⊥, since no fixed point lies below it (`nothing_between_is_a_step`; last example).
 example : ¬ ((⊥ : Ordinal) ⋖ Ordinal.epsilon 0) := fun h =>
   h.2 (show (⊥ : Ordinal) < 1 by rw [Ordinal.bot_eq_zero]; exact zero_lt_one)
     (lt_trans Ordinal.one_lt_omega0 (Ordinal.omega0_lt_epsilon 0))
+-- `Statement:` ε₀ is a limit ordinal, so it covers no ordinal at all (no `b` has `b ⋖ ε₀`).
+example : Order.IsSuccPrelimit (Ordinal.epsilon 0) := by
+  rw [Ordinal.isSuccPrelimit_iff_omega0_dvd, ← Ordinal.omega0_opow_epsilon 0]
+  simpa only [Ordinal.opow_one] using
+    Ordinal.opow_dvd_opow Ordinal.omega0 (Order.one_le_iff_pos.2 (Ordinal.epsilon_pos 0))
 example : (⟨0, Or.inl rfl⟩ : {o : Ordinal | o = 0 ∨ Ordinal.omega0 ^ o = o}) ⋖
     ⟨Ordinal.epsilon 0, Or.inr ZeroParadox.epsilon0_is_fixedpoint⟩ := by
   refine ⟨Ordinal.epsilon_pos 0, ?_⟩
@@ -67,7 +72,9 @@ example : (⟨0, Or.inl rfl⟩ : {o : Ordinal | o = 0 ∨ Ordinal.omega0 ^ o = o
 
 Reading: CARRIER. These lines BOUND the snap; none supplies it. ZP-F rules it out in every ordered
 field; ZP-B removes the topological obstruction in ℚ_p without replacing it. The first step is AX-B1,
-a modelling commitment, never a carrier property. -/
+a modelling commitment, never a carrier property. AX-B1 holds at every iterative bottom: every state,
+as the base the next step starts from, has a first distinct state above it, with nothing strictly
+between. -/
 #check @ZeroParadox.HasFirstStep                      -- Statement: an ORDER predicate — `∃ a, bot ⋖ a`, Mathlib's covering relation. ⚠ `LT ℚ_[p]` does not synthesize, so this is not statable of ℚ_p; the p-adic line below fences NORM values, a different predicate
 #check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, every positive ε₀ admits a smaller positive δ
 #check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element. No Archimedean hypothesis appears in the binders

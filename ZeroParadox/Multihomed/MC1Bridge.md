@@ -3,15 +3,15 @@
 Overview for `ZeroParadox/Multihomed/MC1Bridge.lean`. The Lean file holds the declarations, the Engineer's Take and the
 per-declaration commentary. The results are described at each declaration, not listed again here.
 
-## The two halves of MC-1
+## The retired identity reading
 
-MC-1 is the cross-framework claim about the four domain bottoms. It has two halves:
+MC-1 is the cross-framework claim about the four domain bottoms. It was stated in two halves, and the second is retired:
 
 * a **correspondence** half: each domain's bottom is the categorical bottom (initial object or inverse limit) of that
   domain's own real structure, and the four agree on the snap;
 * a **literal-identity** half: the four bottoms are numerically one object across four different categories. That
-  identity is **retired as ill-typed**, because `x = y` across distinct categories is not a well-formed proposition,
-  and the members are provably distinct (the walls). What MC-1 keeps is the bottom *family*, characterized by a
+  identity is **retired as ill-typed** (neither x = y nor x ≠ y is well-formed across categories); the members differ by
+  property, each in its own category (`seam_unique_among_named`, `ZeroParadox/Category/SeamUniqueness.lean`). What MC-1 keeps is the bottom *family*, characterized by a
   shared list of criteria; the choice of criteria is the commitment (CLAIMS.md, MC-1 row).
 
 ## What this file formalizes
@@ -36,10 +36,11 @@ omitted here only to keep ℕ's category instance unambiguous, not for any mathe
 
 None of the categorical structure here is new.
 - `KleisliCat PMF` is the Kleisli category of a probability monad: a *Markov category* in the sense of Fritz (2020),
-  the categorical home of stochastic maps. Stoch and FinStoch arise as the Kleisli category of the Giry monad (cf.
-  Golubtsov, Cho–Jacobs, Lawvere).
-- In that setting `fC_no_return` is the *strict initiality* of the empty object (Carboni–Lack–Walters 1993): every
-  morphism into the initial object is an isomorphism, so nothing maps back in.
+  the categorical home of stochastic maps. Stoch and BorelStoch arise as Kleisli categories of the Giry monad (Fritz 2020,
+  § 4, via Cor. 3.2); FinStoch is defined directly (Ex. 2.5) (cf. Golubtsov, Cho–Jacobs, Lawvere).
+- A *strict* initial object is one where every morphism into it is an isomorphism; nLab cites Carboni–Lack–Walters
+  1993, Def. 2.7, for strict initial objects. `fC_no_return` is scoped to the functor's image: it states
+  `IsEmpty (fC_functor.obj n ⟶ fC_functor.obj 0)` for `0 < n`, not strict initiality in the whole category.
 - F_B's `⋂ B(0,2⁻ⁿ) = {0}` is the standard 2-adic inverse limit (ℤ₂ = lim ℤ/2ⁿ).
 - F_D's zero module is the zero/initial object of an abelian category.
 

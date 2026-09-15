@@ -1,4 +1,5 @@
 """
+v3.31: DECISION BATCH REMEDIATION (Tim, 2026-09-15): T5 box: the selection half ('if the step is taken it is the minimum viable one, alpha_n = eps(S_n), a Conditional Claim given AX-B1's discreteness at every state') is replaced by Tim's confirmed text (ordinal chart: succession_succ, SnapSuccession section I, snap_exactly_at_epsilon_zero, epsilon0_ne_bot; on an arbitrary lattice no step is selected), and the iteration half ('the occurrence commitment applied at each step') by 'No step is guaranteed' (T3, R1, t_snap_irreversible, tsnap_holds_but_nothing_moves) with its epsilon0_min_eq_max reading; the HasFirstStep-at-a-state bullet is removed. R-DA1 points at the box. The Open Items OQ-A1 row reads 'OQ-A1b CLOSED by A1-A4; OQ-A1a answered by crossing charts'; the T5 traceability row and the validation row are synced; 'restated in section VI' is 'DA-1 insert section VI'. The branching-tree implication says the Snap occurring follows from the occurrence commitment together with DA-1 (closed given DP-2).
 v3.30: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is ONE commitment, instantiation occurs (a machine configuration reaches P0); DA-1 (closed given DP-2) says a configuration at P0 is executing; together they give that the Snap occurs, and T-SNAP fixes its shape. The canonical AX-1 sentence now reads 'that the snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2)' at the abstract, the Conclusion, R-DA1, the Open Items AX-1 row, the AX-1 traceability and validation rows; premises (ii) names the commitment and DA-1 separately, and hocc is the first-step form of the Snap occurring given CC-1, never of instantiation occurring. The abstract no longer routes the shape through DA-1 ('With DA-1 in place, AX-1 is retired'), and the Binary Snap causality and T-SNAP traceability rows put DA-1 on the occurrence side. T5 (Iterative Forcing Theorem), recovered from ZP-E v1.4, is restated in section VI split the way AX-1 was: selection (if the step from Sn is taken it is the minimum viable one, alpha_n = eps(Sn)) is a Conditional Claim given AX-B1's discreteness at every state, and iteration is the occurrence commitment applied at each step; OQ-A1 is 'closed given AX-B1 and the occurrence commitment', and the T5 traceability row matches. The validation row 'All other ZP-E theorems (T1-T7, T2-C) - Unaffected in content' was false (this document states none of them; T2-C appears nowhere else in it) and now says T1-T4, T6, T7 were stated in ZP-E v1.4 and are not restated here. T-SNAP's box glosses its readable name once: 'Causality' refers to the shape of the step, not to its occurrence. Open Items: 'with no axioms' is 'with no Lean kernel axioms'. The Note on Lean scope was re-checked against Snap.lean and Surprisal.lean and is unchanged. TIM PREVIEW (2026-09-14): the T1-T4, T6, T7 validation row cites an earlier version of this document without naming its version number.
 v3.29: T-SNAP PREMISES POINT AT LEAN (Tim, 2026-09-14: pointers plus a small companion). The premises of T-SNAP now have a Lean home: t_snap_given (ZeroParadox/Order/Snap.lean) takes CC-1 (S0 = bottom) and occurrence (S1 != S0) as hypotheses over any join-semilattice with bottom, and t_snap_derived's statement is its MachinePhase instance. Premises of T-SNAP names it in reading (i) and the occurrence hypothesis in (ii); the Status block, Open Items AX-1 row, both traceability rows, the validation row and the endnote point there. CC-1 arc round-4 residue cleared: the section no longer claims to be 'the one place' every other site points to; 'rest on commitments named there' no longer reads as complete; (ii) calls the L-INF step a foundational commitment, as section IV does; the Lean-scope note no longer says 'two decide calls ... bot_join' (one decide, tq_ih its symmetric form, rfl for the join); Step 2 cites DA-1 section IV, not III; DA-2 section I no longer calls the snap 'a structural consequence of reaching P0'; pointers name the DA-1 insert, since DA-2 also has a section V. ROUND 1 GATES (FAIL-BEDROCK, D1) + TIM'S AX-1 SPLIT (Tim, 2026-09-14: 'Both: split it'): reading (i) said t_snap_derived's statement is the MachinePhase instance 'where both hypotheses hold inside the type', which put occurrence inside MachinePhase; the instance is at the chosen sequence c0, c1, c1, ... where hocc reduces to c1 != c0, and the sequence that stays at c0 is a state sequence in the same type that fails hocc. AX-1 bundled the SHAPE of the Snap with its OCCURRENCE: the shape half is Theorem T-SNAP, and the occurrence half was never retired and is the occurrence commitment; the opening, the Conclusion, R-DA1, the Open Items AX-1 row (now SPLIT), both AX-1 retirement rows (the validation row said 'No content lost') and the T5 row are scoped to that. hocc is named occurrence at the first step (a sequence first moving at a later index fails it); t_snap_given takes TWO of the premises, not all; the inequalities restate hocc and only the join is derived (A4); hocc forces at least two points, not exactly two. Also: DA-1 cited at section IV, not III, in section I; the traceability parentheticals attach to T-SNAP, not DA-1; 'NO-GO examples' is 'examples'; 'intended ontological meaning' restated as a reading about the framework's own state sequence. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the Open Items AX-1 row credited the shape to 'P0 + DA-1 + L-RUN + TQ-IH + ZP-A D2', putting DA-1 on the shape side while Premises (ii) puts it on the occurrence side; it now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which DA-1 argues for. That row and the AX-1 retirement validation row equated the occurrence commitment with hocc; both now say hocc is its first-step form, as (ii) does. Reading (i) said the start at bottom is built into the choice of the type MachinePhase; a state sequence in that type can start at c1, so the start comes from the statement's choice of c0, and only binary existence is in the type.
 v3.28: CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. Also CC-2 no longer called 'a structural consequence' (bot_self_mem is a class FIELD T-EXEC consumes): it is ZP-A's Forced Metatheoretic Commitment, T-EXEC proves bottom the only occupant of the Quine-atom role, and in AFA set theory Q = {Q} is a theorem while bottom being that set is the argued step. DA-1 Path 1's 'bottom in bottom, i.e. bottom = {bottom}' reversed to the true direction and its 'not a commitment - forced' restated as argued (more than a free choice, less than a theorem); the iff is t_exec_iff. ADVERSARY ROUND 1 (FAIL-BEDROCK, D1): the T-SNAP Status block still dropped CC-1 from T-SNAP's givens ('derived given DA-1 and AX-B1') on the strength of 'neither freestanding', while the DA-1 Status block four paragraphs earlier lists 'DA-1, CC-1, and AX-B1'; the premise that dropped it was the retracted derivation, so CC-1 is restored to the givens and called a Conditional Claim. The DA-1 synthesis paragraph's 'establishing bottom = {bottom} as a structural consequence rather than a commitment (ZP-J T-EXEC)' was the CC-2 site this entry's sweep missed; it now matches Path 1. ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). Also R-AFA and Path 1 say T-EXEC proves the Quine-atom role's occupant is bottom, not that it 'formally verifies the structure' or checks 'the structural self-application fixed point'; Path 1's executes-itself step no longer jumps silently to 'its own sole member' (Aczel's 0* = {empty, 0*} contains itself without being its own singleton); Q = {Q} cited to Aczel 1988 Example 1.3. GATE ROUND 2 (ordinary, carried): the 'not forced' reason needs its scope - on a ONE-point lattice every sequence starts at bottom, so the countermodel is stated for a lattice with a second point, and the OntBridge.lean example now also shows the start is not a Quine atom. T-SNAP PREMISE LISTS RECONCILED (Tim: fold into this arc; ZPE-TSNAP-PREMISES): the informal argument uses AX-B1 at Step 4 and CC-1 for the start at bottom, while the box, the Status block and the validation row each listed a different subset; all now say derived given the commitments AX-B1 and CC-1, and CC-1 no longer shares 'the same logical status as named axioms'. The Lean t_snap_derived is unaffected: it takes no hypotheses and no axioms. CLAIM-REVIEW ROUND 3 (FAIL-BEDROCK, D1): the reconciled lists were each one short - the box's 'given two commitments', the Status block's 'Commitments: AX-B1; CC-1' and the validation row's 'Every other dependency is a closed theorem' omitted that Step 2 imports DA-1, closed only given DP-2, and that occurrence is a commitment (tsnap_holds_but_nothing_moves satisfies AX-B1 and CC-1 and never moves). No fourth hand list: the premises are now stated ONCE, as 'Premises of T-SNAP, in two readings' after the Theorem box - (i) the Lean form, no hypotheses, fixes the shape on MachinePhase; (ii) the prose argument uses AX-B1 and CC-1 among its commitments, and occurrence rests further on DA-1 given DP-2 and the occurrence commitment - and the box, both status blocks, the validation row and the Remaining-axioms row point there without a count.
@@ -86,7 +87,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.30'
+VERSION = '3.31'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -494,9 +495,7 @@ def build():
     E.append(body(
         'Remark R-DA1: AX-1 is retired, and its content was split in two. Results in ZP-E that '
         'previously depended on AX-1 as an axiom now depend on T-SNAP, a derived theorem, for the shape, and, wherever they use that the Snap happens, on the '
-        'occurrence commitment (instantiation occurs) together with DA-1. T5 (Iterative Forcing Theorem) depended on AX-1 and is restated below, '
-        'split the same way: its selection half is a Conditional Claim given AX-B1&#8217;s discreteness at every state, and that each step is taken is the '
-        'occurrence commitment applied at each step. T4 (Unified Snap '
+        'occurrence commitment (instantiation occurs) together with DA-1. T5 (Iterative Forcing Theorem) depended on AX-1 and is restated below. T4 (Unified Snap '
         'Description) carried AX-1 as an axiom label on the causality component — that label is upgraded '
         'to Derived — T-SNAP for the shape, with occurrence still a commitment. DA-1 is additionally upgraded from Design Principle to Derived '
         'Proposition: grounded in ZP-A CC-2 (⊥ = {⊥}) and R3, with ZP-C L-INF as independent corroboration. '
@@ -513,12 +512,20 @@ def build():
         bridge_box(
             'T5 (Iterative Forcing Theorem) — restated',
             [
-                'T5 (restated). Selection: if the step from S<sub>n</sub> is taken, it is the minimum viable one, '
-                '&#945;<sub>n</sub> = &#949;(S<sub>n</sub>) &#8212; a Conditional Claim given AX-B1&#8217;s discreteness at every state. '
-                'Iteration: that each step is taken is the occurrence commitment applied at each step, not a consequence of T5 or T-SNAP.',
-                'The handle T5 is kept; the result is restated here, split the way AX-1 was. AX-B1&#8217;s discreteness at a state S is '
-                'expressed by the order predicate HasFirstStep S (ZeroParadox/Reals/OrderedField.lean), and a dense order has it at no '
-                'state (axb1_fails_everywhere_iff_dense), so the selection half has nothing to select there.',
+                'T5 (restated). Selection. In the ordinal chart the next rung is the snap re-seeded one step past the current one '
+                '(succession_succ), and the &#949;-numbers are exactly the landings of &#945; &#8614; &#969;<super>&#945;</super> '
+                '(SnapSuccession &#167; I), so none lies between two consecutive rungs. Carried into the lattice by a monotone map, the first '
+                'step lands at &#949;<sub>0</sub> and at no ordinal below it (snap_exactly_at_epsilon_zero); that it occurs is a hypothesis '
+                'there. The rungs are the iterative bottoms; none of them is &#8869; (epsilon0_ne_bot). On an arbitrary lattice no step is '
+                'selected: 0, 2, 4, &#8230; on the natural numbers satisfies A1&#8211;A4 and AX-B1.',
+                'Iteration. No step is guaranteed. A state sequence moves only upward (T3) and never returns (R1, t_snap_irreversible). '
+                'Where the next increment is already absorbed (S<sub>n</sub> &#8852; &#945;<sub>n</sub> = S<sub>n</sub>), the state stays '
+                'the same, which T-SNAP permits (tsnap_holds_but_nothing_moves); different runs need not reach the same height. If from '
+                'some step x on every new increment is already absorbed, then S<sub>x</sub> is the supremum of the run: the value that run '
+                'reaches in the limit. Reaching it cannot be confirmed at any finite step.',
+                'Reading: &#949;<sub>0</sub> is this pair for the ordinal tower, the least fixed point of &#945; &#8614; '
+                '&#969;<super>&#945;</super> and the supremum of its stages (epsilon0_min_eq_max).',
+                'The handle T5 is kept.',
             ]
         ),
     ]
@@ -667,7 +674,8 @@ def build():
     E += [
         body('<b>Structural Implication: Branching Tree Structure.</b> T-SNAP fixes the SHAPE of the Binary Snap — '
              'that if ⊥ transitions it goes to some ε₀ > ⊥, and that the step is one-way. It does not '
-             'establish that the transition is taken: occurrence is a framework commitment, and the NO-GO '
+             'establish that the transition is taken: that the Snap occurs follows from the occurrence commitment (instantiation occurs) '
+             'together with DA-1 (closed given DP-2), and the NO-GO '
              'gauge tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. '
              'DA-2 establishes that any terminal state satisfying P₀ '
              'conditions acts as ⊥ for a successor instantiation, generating a forward-directed branching '
@@ -785,9 +793,9 @@ def build():
          'DA-3-C1 (candidate): no position within an instantiation can replicate the outside view. '
          'Whether this connects formally to specific set-theoretic independence results is deferred to OQ-E2.'],
         ['OQ-A1: Increment selection',
-         'CLOSED given AX-B1 and the occurrence commitment — T5',
-         'Iterative Forcing Theorem, restated in &#167; VI. Selection: if the step from S<sub>n</sub> is taken, α<sub>n</sub> = ε(S<sub>n</sub>), '
-         'a Conditional Claim given AX-B1&#8217;s discreteness at every state. Iteration: that each step is taken is the occurrence commitment applied at each step.'],
+         'OQ-A1b CLOSED by A1&#8211;A4; OQ-A1a answered by crossing charts (snap_exactly_at_epsilon_zero)',
+         'T5 (Iterative Forcing Theorem), restated in DA-1 insert &#167; VI. No step is guaranteed. On an arbitrary lattice no step is '
+         'selected: 0, 2, 4, &#8230; on the natural numbers satisfies A1&#8211;A4 and AX-B1.'],
         ['OQ-B1: p = 2',
          'CLOSED — ZP-B T0',
          'Derived from AX-B1 and MP-1.'],
@@ -859,9 +867,9 @@ def build():
          'N/A',
          'AX-1 is retired: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2)'],
         ['Iterative Forcing T5 (restated)',
-         'Selection: AX-B1 (discreteness at every state). Iteration: the occurrence commitment, at each step',
+         'Selection: succession_succ, SnapSuccession &#167; I, snap_exactly_at_epsilon_zero. Iteration: T3, R1, t_snap_irreversible, tsnap_holds_but_nothing_moves',
          'None',
-         'Selection: Conditional Claim given AX-B1. Iteration: the occurrence commitment, not derived'],
+         'On an arbitrary lattice no step is selected. No step is guaranteed.'],
         ['Multiverse — structural implication',
          'T-SNAP + DA-2 jointly',
          'None',
@@ -927,7 +935,7 @@ def build():
          'quine_unique + bot_self_mem (AFAStructure), botCode_is_quine (KleeneStructure). '
          'Assumptions carried as hypotheses by the theorems that use them; not surfaced by &#35;print axioms. CC-1 is a further commitment (ZP-A Conditional Claim).'],
         ['ZP-E results T1–T4, T6, T7',
-         'Stated in an earlier version of this document (see the repository history) and not restated here. T5 is restated in &#167; VI.'],
+         'Stated in an earlier version of this document (see the repository history) and not restated here. T5 is restated in DA-1 insert &#167; VI.'],
     ]
     E.append(data_table(
         ['Component', 'Status / Notes'],
