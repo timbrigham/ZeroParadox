@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.11 | September 2026
+Version 1.12 | September 2026
+v1.12: CLASSICAL.CHOICE MODAL (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box's 'Its presence is expected and documented, not incidental.' read as a necessity claim beside 'essential is not measured'; it now reads 'Its presence is expected and documented.'
 v1.11: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box said the computability layer's choice belongs to ZP-K's instance. Measured: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and a computable constant-code instance carries it too; Classical.choose is what makes machinePhaseKleene noncomputable; essentiality is not measured. The box now says that.
 v1.10: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim rulings, 2026-09-15): Section II's body still equated Rogers' fixed-point theorem with Kleene's second recursion theorem and dropped 'total'; it now names Mathlib fixed_point, inter-derivable with fixed_point2, for any total computable transformation. The verification box said Classical.choice is load-bearing; in the computability layer the choice belongs to ZP-K's instance (its choice of botCode), and a computable instance with a constant code also exists.
 v1.9: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the overview equated Rogers' fixed-point theorem with Kleene's second recursion theorem; it now names Rogers' theorem as Mathlib fixed_point, for a total computable transformation, inter-derivable with Kleene's second recursion theorem (fixed_point2), as Gentzen.lean section II already records. Remark 'Why K is Absent' said the AFA/Kleene route is 'a provable path'; its Kleene step is a KleeneStructure requirement, and it now says so.
@@ -20,7 +21,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -647,7 +648,7 @@ def build():
             '(Denumerable Code): it is present even in a computable instance with a constant '
             'code. ZP-K\'s machinePhaseKleene also picks botCode with Classical.choose, which is '
             'what makes that instance noncomputable. Whether the numbering\'s footprint is '
-            'essential is not measured. Its presence is expected and documented, not incidental.',
+            'essential is not measured. Its presence is expected and documented.',
             'Zero sorry in Gentzen.lean. Verified: lake build, May 2026.',
         ]
     ))
