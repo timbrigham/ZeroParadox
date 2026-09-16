@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.12 | September 2026
+Version 1.13 | September 2026
+v1.13: ATTRIBUTION (PA-1, prior-art gate 2026-09-15): the prior-art paragraph credited Lawvere (1969) with unifying 'Cantor's diagonal, Russell's paradox, Godel's incompleteness lemma, and the recursion theorem'. Lawvere's paper does not treat the recursion theorem: his own introduction names Cantor, Russell, Godel and TARSKI, and the reprint contains no occurrence of Kleene, Rogers or 'recursion'. Turing's halting argument and the recursion theorem are Yanofsky (2003), who proves the latter as his Theorem 5. Lawvere's list now ends at Tarski's undefinability theorem and Yanofsky's sentence carries the other two, matching README.md and CLAIMS.md. Recurrence of ATTR-2, whose 2026-08-29 closure claimed a corpus-wide sweep found no further instances; that claim is retracted. This site was invisible to it because it never names Kleene.
 v1.12: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim ruling, 2026-09-15): the 'What the Zero Paradox adds' box still said 'What MC-1 carries is family membership, proved per domain'; it now names the proved faces as the preamble and Section II do (Quine atom, 2-adic and categorical; the Kleene face carried as a requirement).
 v1.11: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the preamble said the faces' shared membership in MC-1 'is proved per domain', including the Kleene quine; the Kleene face is carried as a KleeneStructure requirement, its witness computability_face_fixedPoint a fixed point of a computable map not tied to bottom, so the preamble and Section II's verdict now name which faces are proved. The preamble's missing space after 'framework:' is restored.
 v1.10: DECISION BATCH REMEDIATION AFTER GATE ROUND 3, SECOND PASS (Tim ruling, 2026-09-15): the preamble said bottom 'is the same self-referential (diagonal) fixed point in every framework', a cross-framework identity the same paragraph retires as ill-typed; it now says bottom 'plays the same self-referential (diagonal) fixed-point role in every framework'. The rest of the sentence is unchanged.
@@ -25,7 +26,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -103,10 +104,11 @@ def build():
         'The unification of self-referential fixed points across fields is not new with the '
         'Zero Paradox. <b>Lawvere</b> (Diagonal Arguments and Cartesian Closed Categories, '
         '1969) showed that Cantor\'s diagonal, Russell\'s paradox, G&#246;del\'s incompleteness '
-        'lemma, and the recursion theorem are one move; <b>Yanofsky</b> (A Universal Approach '
-        'to Self-Referential Paradoxes, Incompleteness and Fixed Points, Bull. Symbolic Logic '
-        '9(3), 2003) restated this in plain set-and-function terms across logic and '
-        'computation. Those faces are prior art, cited and not claimed.'))
+        'lemma and Tarski\'s undefinability theorem are one move; <b>Yanofsky</b> (A Universal '
+        'Approach to Self-Referential Paradoxes, Incompleteness and Fixed Points, Bull. Symbolic '
+        'Logic 9(3), 2003) restated this in plain set-and-function terms across logic and '
+        'computation, adding Turing\'s halting argument and the recursion theorem. '
+        'Those faces are prior art, cited and not claimed.'))
     E.append(remark_box(
         'What the Zero Paradox adds (and what it does not)',
         [

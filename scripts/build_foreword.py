@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.24, revised September 2026)
+Zero Paradox — Foreword PDF Builder (v2.25, revised September 2026)
+v2.25: ATTRIBUTION (PA-1, prior-art gate 2026-09-15): section IV credited Lawvere's fixed-point theorem (1969) with unifying Cantor's diagonal, Russell's paradox, Godel's fixed-point lemma 'and Kleene's recursion theorem'. Lawvere does not treat it: his introduction names Cantor, Russell, Godel and TARSKI, and the reprint contains no occurrence of Kleene or Rogers. Kleene's recursion theorem and Turing's halting argument are Yanofsky (2003). Lawvere's list now ends at Tarski's undefinability theorem; Yanofsky's sentence carries the other two. Same defect as ATTR-2 (README, 2026-08-29), whose no-further-instances claim is retracted.
 v2.24: DA-1/KLEENE CLASS AND MC-1 PREMISE, GATE ROUND 4 (Tim rulings, 2026-09-15): section IV said the framework 'proves each face in its own domain'; the Kleene face is a KleeneStructure requirement, not proved, so the sentence now reads 'It proves the lattice, 2-adic and categorical faces in their own domains and carries the computational one as a requirement'. 'In computation it is the self-reproducing program' is now 'is read as'. The MC-1 row's seam_unique_among_named pointer now carries its premise: in a lattice with no top.
 v2.23: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim ruling, 2026-09-15): section IV's 'The framework reads them as faces of one object' is past tense, 'read', since the next paragraph retires that reading. Nothing else in the paragraph changed.
 v2.22: DECISION BATCH REMEDIATION AFTER GATE ROUND 2, SECOND PASS (Tim ruling, 2026-09-15): section IV said the framework 'proves several of those faces literally identical', a cross-category identity the next paragraph retires; it now says the framework proves each face in its own domain, and that they are one object is the reading the next paragraph retires.
@@ -66,7 +67,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.24'
+VERSION = '2.25'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -438,9 +439,10 @@ def build():
             'Mathematics already has a name for this shape, and a theorem that unifies it: '
             'Lawvere\'s fixed-point theorem (1969) shows that Cantor\'s diagonal argument, '
             'Russell\'s paradox, the fixed-point lemma at the heart of Gödel\'s incompleteness, '
-            'and Kleene\'s recursion theorem are one move — the diagonal, the turn of a system '
+            'and Tarski\'s undefinability theorem are one move — the diagonal, the turn of a system '
             'back on itself. Yanofsky (2003) restated this in plain set-and-function terms and '
-            'extended it across logic and computation. What is unusual in the Zero Paradox is '
+            'extended it across logic and computation, where it reaches Turing\'s halting argument '
+            'and Kleene\'s recursion theorem. What is unusual in the Zero Paradox is '
             'its location. '
             'Self-reference is normally a ceiling phenomenon: it appears at the limits of a '
             'system, in the sentences a theory cannot prove about itself. Here it sits at the '
