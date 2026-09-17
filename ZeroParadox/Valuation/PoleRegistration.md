@@ -49,6 +49,11 @@ strength.
 (arXiv:2106.05064v5), filed in `.claude-local/papers/`. Page 7, § 2.3, verbatim: *"decidable equality
 on all of S is equivalent to excluded middle"*.
 
+⚠ **Every result number below is the arXiv v5 numbering**, which is the edition read. The MSCS
+printing may number them differently — `theoremsearch` indexes this same arXiv id under other
+numbers — so cite the arXiv version when quoting a Proposition by number. Not checked against the
+journal text, which was not retrieved.
+
 That sentence is an **equivalence of principles over a constructive base**, and this file proves one
 of its two directions. `em_of_poleDiscriminator` runs decider → excluded middle, at no axioms at all.
 `poleDiscriminator_of_classical` supplies the source end **classically**, so the implication is not
@@ -90,8 +95,23 @@ filed. **Definition 5.17** (p. 92): a *dominance* is a **set of propositions** `
 under the unit type and conditional conjunction — the notion is Rosolini's. Knapp lists three
 *trivial* examples with their liftings, and two of them are the objects in play here:
 `L_{d₂}(X) = X + 1` is `Option X`, and `L_{d_Ω}(X) = L(X)` is `Part X`. So **`Option` and `Part` are
-liftings of dominances, not dominances**, and "the Rosolini dominance" is a third object again —
-the semidecidable propositions (§ 5.7). § IV of the Lean file exhibits the Mathlib half
+liftings of dominances, not dominances**, and "the Rosolini dominance" is a third object again — the
+**Rosolini propositions** (Definition 5.25, § 5.7): `P` is Rosolini when a sequence in the extended
+naturals witnesses it, so *"a proposition is Rosolini if there exists a semi-decision procedure for
+it."*
+
+⚠ **Rosolini is NOT the same notion as semidecidable, and this file used to say it was.** Knapp keeps
+them apart and puts them in different chapters. § 8.5 (Definition 8.21) defines *semidecidable* by
+restricting to sequences with **computable structure**, and opens: *"The Rosolini partial functions
+provide an abstract notion of semidecidable proposition. A more concrete notion is given by
+restricting our attention to computable sequences."* Verbatim on the relation: *"The Rosolini
+propositions can be seen as an abstract version of the semidecidable propositions, ignoring
+computability. The restriction to semidecidable propositions not only fails to form a dominance, but
+does not even give a structural dominance without countable choice."* Nor is the Rosolini side free:
+a weak form of countable choice is what shows the Rosolini propositions form a dominance at all
+(Theorem 5.30). Read at the PDF 2026-09-17.
+
+§ IV of the Lean file exhibits the Mathlib half
 (`Part.ofOption` total and instance-free, `Part.toOption` carrying `[Decidable o.Dom]`,
 `Part.equivOption` noncomputable). **Exhibited, never discovered here.**
 
@@ -111,11 +131,14 @@ excluded middle follows"* — and from its proof, *"an element x ∈ S is sharp 
 taboo `em_of_poleDiscriminator` proves. What is added here is the machine-checked instance at
 `Part Unit`, wired to ZP-K's floor — an instance joining his programme, never a generalization of it.
 
-⚠ **No strength comparison is claimed between the two ends.** Against de Jong's Proposition 22
+⚠ **What IS claimed about the two ends, and what is not.** Against de Jong's Proposition 22
 instantiated at S, § II's hypothesis is the **stronger** one: the top-end test gives full excluded
 middle, which gives the bottom-end test, while the converse would need weak excluded middle to imply
-excluded middle, unavailable constructively. A stronger conclusion from a stronger hypothesis is
-unremarkable. No separating model is exhibited, so no inequivalence is asserted.
+excluded middle, unavailable constructively — weak excluded middle is **strictly** weaker, a fact
+this corpus states at `ZeroParadox/Category/LawvereTaboo.lean`, not here. A stronger conclusion from
+a stronger hypothesis is unremarkable. ⚠ **No inequivalence is asserted**: no separating model is
+exhibited here, and the cited propositions are implications, so they bound the ends' strength from
+below and cannot by themselves prove the two conditions differ.
 
 ## What actually survives, stated as what it is
 
@@ -153,10 +176,19 @@ the deleted claim reads: *the bottom-end condition and the top-end condition for
 the end makes no difference.* **The literature settles that, and settles it AGAINST that reading** —
 in someone else's names, not ours. de Jong 2023's Proposition 22 (p. 7) takes the **bottom** end:
 *"If y = ⊥ is decidable for every y ∈ D, then weak excluded middle follows."* Proposition 63 (p. 15)
-takes the **defined** end and gets **full** excluded middle. One paper, one author, two ends, **two
-different taboos** — so the end does make a difference. Both read at the PDF 2026-09-17. So the defect
-here is **not** a missing chart, and the fix is a citation rather than a second pole. Recorded so a
-later round does not re-add the starred sentence in the belief that a pole is absent.
+takes the **defined** end and lands on **full** excluded middle. One paper, one author, two ends,
+**two different taboos** — and weak excluded middle is strictly weaker than the full form
+(`ZeroParadox/Category/LawvereTaboo.lean`). Both read at the PDF 2026-09-17.
+
+⚠ **What that does and does not settle**, because the inference is easy to overrun. Each proposition
+is an IMPLICATION, so each bounds its end's strength **from below**; two different lower bounds do
+not by themselves prove the two conditions differ, since nothing there rules out the bottom-end
+condition independently yielding the full taboo. What the pair does establish is that **the ends are
+not interchangeable in the literature's own treatment** — the deleted sentence claimed the end makes
+no difference, and the cited results land it on different taboos. That is enough to withdraw the
+claim and not enough to assert its negation. So the defect here is **not** a missing chart, and the
+fix is a citation rather than a second pole. Recorded so a later round does not re-add the starred
+sentence in the belief that a pole is absent.
 
 ⚠ **Tim's read is load-bearing on one point**: whether this file earns a place in
 `ZeroParadox/BottomCannotBe.lean`'s index at all, now that its only novelty claim is withdrawn and
@@ -167,8 +199,14 @@ judgement about what the index is for, not a fact the Lean can settle.
 
 "Sierpiński domain" and "dcpo" were **not located outside this file and its `.lean` as of
 2026-09-17**, searched with `python tools/verify/check_paths.py --full --claim` over 472 tracked
-surfaces including 40 rendered PDFs: the stem `Sierpi` at 9 sites, `dcpo` at 2, all inside the two
-files. The sweep runs on the **stem**, which catches both spellings in one pass — see below.
+surfaces including 40 rendered PDFs. The sweep runs on the **stem** `Sierpi`, which catches both
+spellings in one pass — see below.
+
+⚠ **No site count is recorded here, deliberately.** This paragraph contains the search terms, so the
+instrument matches it: any number written here is stale the moment it is written, and re-running the
+sweep returns a larger one every time the section is edited. **The durable claim is CONTAINMENT** —
+every hit falls inside this file and `PoleRegistration.lean` — and that is what the section is for.
+Re-run the command above rather than citing a figure from it.
 
 ⚠ **A claim about the WORDS, not about the ideas.** The same instrument finds "Scott domain" in
 `ZP-R_Cross_Category_Fixed_Point.pdf` and `ZeroParadox/Valuation/PricedPadicInterface.md`, so the
