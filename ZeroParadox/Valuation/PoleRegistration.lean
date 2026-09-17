@@ -149,11 +149,11 @@ theorem poleDiscriminator_of_classical : PoleDiscriminator := by
 
 de Jong 2023 § 2.3 has § II's taboo. That which END the discriminator sits on decides which taboo you
 get is prior art in constructive/predicative domain theory, NOT this framework's; § II proves one
-instance of the top-end half. The closest result is **de Jong 2023 Proposition 63** with Proposition
-62 — since `⊤ ⊑ x` IS `x.Dom` in `Part Unit`, they state exactly `em_of_poleDiscriminator`'s taboo;
-Proposition 22 is the BOTTOM end and yields only the WEAK form, so the two ends differ.
-Knapp 2020 supplies the `Option`/`Part` vocabulary; the weak-versus-full distinction is already
-fenced in `ZeroParadox/Category/LawvereTaboo.lean`. Details:
+instance of the top-end half. Closest: **Proposition 63** with 62 — since `⊤ ⊑ x` IS `x.Dom` in
+`Part Unit`, they state exactly `em_of_poleDiscriminator`'s taboo; Proposition 22 is the BOTTOM end,
+yielding only the WEAK form. ⚠ That the ends are therefore DIFFERENT conditions does NOT follow from
+those results — the ride-along says why. Knapp 2020 supplies the `Option`/`Part` vocabulary; the
+weak-versus-full distinction is fenced in `ZeroParadox/Category/LawvereTaboo.lean`. Details:
 `ZeroParadox/Valuation/PoleRegistration.md`. -/
 
 /-! ### § III — No COMPUTABLE discriminator at ZP-K's floor -/

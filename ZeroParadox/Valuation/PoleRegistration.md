@@ -124,10 +124,13 @@ implication.
 
 **The closest prior art for `em_of_poleDiscriminator` is de Jong 2023's Proposition 63**, read at the
 PDF 2026-09-17. Proposition 62 (p. 15): *"An element x of an algebraic dcpo D is sharp if and only if
-for every compact c ∈ D it is decidable whether c ⊑ x holds."* Proposition 63 (p. 15): *"The sharp
-elements of the Sierpiński domain S are exactly ⊥ and ⊤. Hence, if every element of S is sharp, then
-excluded middle follows"* — and from its proof, *"an element x ∈ S is sharp if and only if
-⊤ = {∗} ⊑ x is decidable."* In `Part Unit`, `⊤ ⊑ x` **is** `x.Dom`, so the two together state the
+for every compact c ∈ D it is decidable whether c ⊑ x holds."* Proposition 63 (p. 15), **in full,
+both sentences**: *"Assuming excluded middle, every element of any dcpo is sharp. The sharp elements
+of the Sierpiński domain S are exactly ⊥ and ⊤. Hence, if every element of S is sharp, then excluded
+middle follows."* And from its proof, *"an element x ∈ S is sharp if and only if ⊤ = {∗} ⊑ x is
+decidable."* ⚠ The first sentence is the CONVERSE direction — quote it, because at S the two
+together make Proposition 63 an **equivalence**, and clipping it turns an equivalence into an
+implication. In `Part Unit`, `⊤ ⊑ x` **is** `x.Dom`, so the two together state the
 taboo `em_of_poleDiscriminator` proves. What is added here is the machine-checked instance at
 `Part Unit`, wired to ZP-K's floor — an instance joining his programme, never a generalization of it.
 
@@ -137,8 +140,8 @@ middle, which gives the bottom-end test, while the converse would need weak excl
 excluded middle, unavailable constructively — weak excluded middle is **strictly** weaker, a fact
 this corpus states at `ZeroParadox/Category/LawvereTaboo.lean`, not here. A stronger conclusion from
 a stronger hypothesis is unremarkable. ⚠ **No inequivalence is asserted**: no separating model is
-exhibited here, and the cited propositions are implications, so they bound the ends' strength from
-below and cannot by themselves prove the two conditions differ.
+exhibited here, and Proposition 22 gives the bottom end a lower bound on its strength with no
+converse, so the cited results cannot by themselves prove the two conditions differ.
 
 ## What actually survives, stated as what it is
 
@@ -175,18 +178,23 @@ map uniformly and you have demanded excluded middle.
 the deleted claim reads: *the bottom-end condition and the top-end condition force the same taboo, and
 the end makes no difference.* **The literature settles that, and settles it AGAINST that reading** —
 in someone else's names, not ours. de Jong 2023's Proposition 22 (p. 7) takes the **bottom** end:
-*"If y = ⊥ is decidable for every y ∈ D, then weak excluded middle follows."* Proposition 63 (p. 15)
-takes the **defined** end and lands on **full** excluded middle. One paper, one author, two ends,
-**two different taboos** — and weak excluded middle is strictly weaker than the full form
+*"Let D be any pointed dcpo that is nontrivial in the sense that there exists x ∈ D with x ≠ ⊥. If
+y = ⊥ is decidable for every y ∈ D, then weak excluded middle follows."* — the nontriviality
+hypothesis is load-bearing and is quoted with it. Proposition 63 (p. 15) takes the **defined** end
+and lands on **full** excluded middle. One paper, one author, two ends, **two different taboos** —
+and weak excluded middle is strictly weaker than the full form
 (`ZeroParadox/Category/LawvereTaboo.lean`). Both read at the PDF 2026-09-17.
 
-⚠ **What that does and does not settle**, because the inference is easy to overrun. Each proposition
-is an IMPLICATION, so each bounds its end's strength **from below**; two different lower bounds do
-not by themselves prove the two conditions differ, since nothing there rules out the bottom-end
-condition independently yielding the full taboo. What the pair does establish is that **the ends are
-not interchangeable in the literature's own treatment** — the deleted sentence claimed the end makes
-no difference, and the cited results land it on different taboos. That is enough to withdraw the
-claim and not enough to assert its negation. So the defect here is **not** a missing chart, and the
+⚠ **What that does and does not settle**, because the inference is easy to overrun — and the two
+propositions are **not** the same logical shape. At S, Proposition 63 is an **equivalence**: the
+top-end condition holds exactly when full excluded middle does. Proposition 22 is an **implication
+only** — bottom-end decidability yields weak excluded middle, and de Jong states no converse. So the
+bottom end has a lower bound on its strength and no upper one, and nothing cited here rules out the
+bottom-end condition independently yielding the full taboo. **That one gap is what blocks the
+separation**, and it is enough on its own. What the pair does establish is that **the ends are not
+interchangeable in the literature's own treatment** — the deleted sentence claimed the end makes no
+difference, and the cited results land it on different taboos. That is enough to withdraw the claim
+and not enough to assert its negation. So the defect here is **not** a missing chart, and the
 fix is a citation rather than a second pole. Recorded so a later round does not re-add the starred
 sentence in the belief that a pole is absent.
 
