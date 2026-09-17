@@ -1536,7 +1536,18 @@ def check_pdf_coupling(ranges=None):
 # `coverage_gap`, which only ever returns paths inside the step's registry `scope`. Widen one and the
 # intersection stays empty — the obligation silently does not exist. If you add an extension here,
 # add the matching glob to `prior_art.scope` in `required.v2.json` in the SAME change.
-ATTRIBUTABLE = ("*.lean", "scripts/build_*.py")
+#
+# ⚠⚠ `*.md` JOINED 2026-09-17, IN THE SAME COMMIT as `prior_art.scope` in `required.v2.json`, which
+# is what the paragraph above demands. Tim: *"My concern on the prior art is that it probably
+# shouldn't just be restricted to the lean files."* Re-derived on a 29-commit arc, ENFORCED being
+# `touched ∩ owing` and NOT `owing`: today 44/0/**0**; registry widened ALONE 44/6/**0** — inert,
+# and it LOOKS landed because `owing` moves 0→6; both routes widened 77/6/**6**. The first proposal
+# widened the registry only, and the deciding number was measured THROUGH THE LEDGER, which reads
+# registry scope and cannot reach this constant — a true number about the wrong object.
+# ⚠ OVER-MATCHING HERE IS SAFE, UNDER-MATCHING IS THE FAILURE MODE. This tuple has no exclusion
+# mechanism, so `touched` rises to 77 and includes `tools/*.md`; `owing` honours `prior_art`'s
+# `scope_exclude`, so the intersection filters them back out. Verified against the tree, not assumed.
+ATTRIBUTABLE = ("*.lean", "scripts/build_*.py", "*.md")
 
 
 def changed_attributable(ranges=None):
