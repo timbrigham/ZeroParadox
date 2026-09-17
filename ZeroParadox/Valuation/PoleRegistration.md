@@ -23,8 +23,10 @@ composing it with the first bullet would run forward twice and never return.
 **What the two legs establish is COST, not the arrows.** Both sides are theorems of the ambient
 system, so the inter-derivability alone is near-vacuous — `poleDiscriminator_of_classical` proves
 `PoleDiscriminator` outright, which makes *every* implication into it available at
-`[propext, Classical.choice, Quot.sound]`. The content is that both legs are **choice-free**
-(`[propext, Quot.sound]`), and that `PoleDiscriminator` is the pole vocabulary for `ChoiceFragment` —
+`[propext, Classical.choice, Quot.sound]`. The content is that both legs are **choice-free** —
+measured 2026-09-17 by naming the anonymous `example`s: forward `[propext]`, return
+`[propext, Quot.sound]`, and the inert-packaging leg at no axioms at all — and that
+`PoleDiscriminator` is the pole vocabulary for `ChoiceFragment` —
 the relationship `uniformChartSelection_iff_choiceFragment` already records for chart selection, and
 already stated in prose at `ExcludedMiddleBridge.lean` and `ChoiceCannotBe.lean`. Witnessed here,
 not discovered here.
@@ -45,10 +47,37 @@ strength.
 
 **T. de Jong, "Apartness, sharp elements, and the Scott topology of domains," MSCS 2023**
 (arXiv:2106.05064v5), filed in `.claude-local/papers/`. Page 7, § 2.3, verbatim: *"decidable equality
-on all of S is equivalent to excluded middle"*; Proposition 22 gives the weak-excluded-middle form.
-That sentence is `em_of_poleDiscriminator` together with `poleDiscriminator_of_classical`. **The
-taboo is his, not ours.** Definition 15 (p. 6) is where `Part Unit` gets its name: *"The Sierpiński
+on all of S is equivalent to excluded middle"*.
+
+That sentence is an **equivalence of principles over a constructive base**, and this file proves one
+of its two directions. `em_of_poleDiscriminator` runs decider → excluded middle, at no axioms at all.
+`poleDiscriminator_of_classical` supplies the source end **classically**, so the implication is not
+vacuous; it is an unconditional theorem spending `Classical.choice`, **not** the constructive
+converse, which §§ above leave open. **The taboo is his, not ours.**
+
+Definition 15 (p. 6) is where `Part Unit` gets its name: *"The Sierpiński
 domain S is the free pointed dcpo on a single generator… realize S as the set of truth values."*
+
+**The principle has a standard name too, and it is topos-theoretic.** § II's inert-packaging
+`example` proves `PoleDiscriminator ↔ ∃ d : Prop → Bool, ∀ p, d p = true ↔ p`, at no axioms at all.
+The topos-theoretic counterpart of that statement is **"the subobject classifier Ω is decidable"**,
+equivalently **Ω ≅ 1 + 1**, equivalently **the topos is Boolean**. **C. Berger and V. Iwaniack, "On
+the profinite fundamental group of a connected Grothendieck topos"** (arXiv:2304.05338v6), filed,
+**Lemma 1.2**, read at the PDF: *"The following four conditions on a topos are equivalent: (1) all
+subobjects are complemented; (2) all objects are decidable; (3) the subobject classifier Ω is
+decidable; (4) the inclusion (⊤,⊥) : 1 + 1 ↣ Ω is an isomorphism."*
+
+⚠ **No originator is asserted here.** Berger–Iwaniack open that section *"This section is a review of
+known properties of decidable objects, see Acuña-Linton"* — **O. Acuña-Ortega and F. E. J. Linton,
+"Finiteness and Decidability I," Lect. Notes Math. 753 (1979), 80–100** — and cite Johnstone's
+*Elephant* elsewhere but not for this lemma. nLab attributes the equivalences to Johnstone, *Sketches
+of an Elephant* A4.5.22; that is **not read here and not corroborated by the source that is**.
+
+⚠ **In a topos those four are EQUIVALENT; this file proves one direction.** The converse is exactly
+what §§ above leave open, and the reason is the `Prop`/`Type` stratification — a `Bool`-valued
+decider is data, `ExcludedMiddle` is `Prop`-valued, and a topos has no such split. The canonical
+statement of that fence is `ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment`
+docstring; it is not restated here.
 
 **T. de Jong and M. H. Escardó, "Predicative Aspects of Order Theory in Univalent Foundations,"
 FSCD 2021** (arXiv:2102.08812v5) and *"On Small Types in Univalent Foundations"* (arXiv:2111.00482v5,
@@ -73,11 +102,14 @@ form, defined end the full one — is prior art in constructive and predicative 
 file claims no part of it. § II proves one instance of the top-end half, at `Part Unit`, as an
 implication.
 
-⚠ **WHICH result is closest is an OPEN question here, and no attribution is made.** The candidates in
-play are de Jong 2023's Proposition 22 (bottom end) against Propositions 62–63 (top end) — and since
-`⊤ ⊑ x` is `x.Dom` in `Part Unit`, Proposition 63 may be the closest prior art for
-`em_of_poleDiscriminator` itself. Not verified at the PDF by this file's author, so it is left as the
-open question it is rather than asserted. Tracked as `PR3-2`.
+**The closest prior art for `em_of_poleDiscriminator` is de Jong 2023's Proposition 63**, read at the
+PDF 2026-09-17. Proposition 62 (p. 15): *"An element x of an algebraic dcpo D is sharp if and only if
+for every compact c ∈ D it is decidable whether c ⊑ x holds."* Proposition 63 (p. 15): *"The sharp
+elements of the Sierpiński domain S are exactly ⊥ and ⊤. Hence, if every element of S is sharp, then
+excluded middle follows"* — and from its proof, *"an element x ∈ S is sharp if and only if
+⊤ = {∗} ⊑ x is decidable."* In `Part Unit`, `⊤ ⊑ x` **is** `x.Dom`, so the two together state the
+taboo `em_of_poleDiscriminator` proves. What is added here is the machine-checked instance at
+`Part Unit`, wired to ZP-K's floor — an instance joining his programme, never a generalization of it.
 
 ⚠ **No strength comparison is claimed between the two ends.** Against de Jong's Proposition 22
 instantiated at S, § II's hypothesis is the **stronger** one: the top-end test gives full excluded
@@ -118,10 +150,13 @@ map uniformly and you have demanded excluded middle.
 
 ⚠ **Applied to the retraction itself, which is what `R-TWOPOLE` is for.** Stated in the other chart,
 the deleted claim reads: *the bottom-end condition and the top-end condition force the same taboo, and
-the end makes no difference.* The literature settles that — in **someone else's** names, not ours,
-whichever result turns out to be the closest. So the defect here is **not** a missing chart, and the
-fix is a citation rather than a second pole. Recorded so a later round does not re-add the starred
-sentence in the belief that a pole is absent.
+the end makes no difference.* **The literature settles that, and settles it AGAINST that reading** —
+in someone else's names, not ours. de Jong 2023's Proposition 22 (p. 7) takes the **bottom** end:
+*"If y = ⊥ is decidable for every y ∈ D, then weak excluded middle follows."* Proposition 63 (p. 15)
+takes the **defined** end and gets **full** excluded middle. One paper, one author, two ends, **two
+different taboos** — so the end does make a difference. Both read at the PDF 2026-09-17. So the defect
+here is **not** a missing chart, and the fix is a citation rather than a second pole. Recorded so a
+later round does not re-add the starred sentence in the belief that a pole is absent.
 
 ⚠ **Tim's read is load-bearing on one point**: whether this file earns a place in
 `ZeroParadox/BottomCannotBe.lean`'s index at all, now that its only novelty claim is withdrawn and
@@ -130,8 +165,14 @@ judgement about what the index is for, not a fact the Lean can settle.
 
 ## Vocabulary
 
-This file is where "Sierpiński domain", "dcpo" and "lifting monad" enter the corpus. No claim is made
-here about where else they appear.
+"Sierpiński domain" and "dcpo" were **not located outside this file and its `.lean` as of
+2026-09-17**, searched with `python tools/verify/check_paths.py --full --claim` over 472 tracked
+surfaces including 40 rendered PDFs: the stem `Sierpi` at 9 sites, `dcpo` at 2, all inside the two
+files. The sweep runs on the **stem**, which catches both spellings in one pass — see below.
+
+⚠ **A claim about the WORDS, not about the ideas.** The same instrument finds "Scott domain" in
+`ZP-R_Cross_Category_Fixed_Point.pdf` and `ZeroParadox/Valuation/PricedPadicInterface.md`, so the
+domain-theoretic neighbourhood was in the corpus before this file was; only this vocabulary is new.
 
 ⚠ **Grep an accented name BOTH ways.** `Sierpiński` and `Escardó` do not match sweeps written
 `Sierpinski` and `Escardo`, and an absence measured with the unaccented form reports zero for the
