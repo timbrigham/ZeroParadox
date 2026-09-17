@@ -61,10 +61,12 @@ theorem registered_discriminator_exists {α : Type*} :
 
 /-! ### § II — The unregistered pole: infinity as a `Prop`
 
-⭐ **STANDARD NAME, ADOPTED (`R-ADJACENT`): `Part Unit` IS the Sierpiński domain** — a proposition
-packaged with a map into the one-element type, i.e. the type of truth values. So `PoleDiscriminator`
-is not a statement about partiality; it says a `Bool` test decides EVERY proposition. `Option`/`Part`
-is likewise the standard **dominance** (Rosolini); see the prior-art section below. -/
+⭐ **STANDARD NAME, ADOPTED (`R-ADJACENT`): `Part Unit` IS the Sierpiński domain** (de Jong 2023,
+Definition 15) — the type of truth values. So `PoleDiscriminator` is not about partiality: it says a
+`Bool` test decides EVERY proposition. ⚠ Synthetic domain theory uses the same word for the
+*semidecidable* propositions, a smaller object (Knapp 2020, § 5.7); the reading here is de Jong's.
+`Option`/`Part` are LIFTINGS of dominances, not dominances. Details in the ride-along
+`ZeroParadox/Valuation/PoleRegistration.md`. -/
 
 /-- `Statement:` a uniform `Bool` test, correct about `Dom`, on `Part Unit` — the Sierpiński domain.
     ⚠ At `Unit` deliberately: a weaker hypothesis, hence a stronger theorem below. -/
@@ -76,8 +78,7 @@ example : PoleDiscriminator ↔ ∃ d : Prop → Bool, ∀ p : Prop, d p = true 
   ⟨fun ⟨d, hd⟩ => ⟨fun p => d (Part.mk p (fun _ => ())), fun _p => hd _⟩,
    fun ⟨d, hd⟩ => ⟨fun x => d x.Dom, fun _x => hd _⟩⟩
 
--- Statement: and it is the corpus's EXISTING hypothesis, not a new one. `em_of_choiceFragment`
--- closes the other direction, so the two are inter-derivable and § II states no new principle.
+-- Statement: § II's hypothesis yields the corpus's existing one (`ExcludedMiddleBridge.lean`).
 example : PoleDiscriminator → ChoiceFragment := by
   rintro ⟨d, hd⟩
   refine ⟨fun S => d (Part.mk (S true) (fun _ => ())), fun S hS => ?_⟩
@@ -92,6 +93,44 @@ example : PoleDiscriminator → ChoiceFragment := by
     cases b with
     | true => exact absurd hb hnt
     | false => exact hb
+
+-- Statement: and back again, so the two are inter-derivable and § II states no new principle.
+-- ⚠ THE RETURN LEG RUNS ON THE FRAGMENT'S DATA (`ch`), NOT THROUGH `em_of_choiceFragment`.
+-- That theorem lands in `ExcludedMiddle` and cannot come back: the route
+-- `ExcludedMiddle → PoleDiscriminator` fails to elaborate at `Decidable x.Dom`, which is
+-- verbatim the barrier `ZeroParadox/Category/ExcludedMiddleBridge.lean` records as its own
+-- headline finding (`Prop`/`Type` stratification). Excluded middle is used below only to
+-- inhabit the predicate — a `Prop`-valued side condition, where `Or`-elimination is legal.
+-- So `PoleDiscriminator` is the pole vocabulary for `ChoiceFragment`, exactly as
+-- `uniformChartSelection_iff_choiceFragment` is for the chart-selection principle: renaming a
+-- hypothesis does not make it true.
+example : ChoiceFragment → PoleDiscriminator := by
+  intro h
+  have em : ExcludedMiddle := em_of_choiceFragment h
+  obtain ⟨ch, hch⟩ := h
+  refine ⟨fun x => ch (fun b => (b = true ∧ x.Dom) ∨ (b = false ∧ ¬ x.Dom)), fun x => ?_⟩
+  have hinh : ∃ b, (b = true ∧ x.Dom) ∨ (b = false ∧ ¬ x.Dom) := by
+    rcases em x.Dom with hp | hnp
+    · exact ⟨true, Or.inl ⟨rfl, hp⟩⟩
+    · exact ⟨false, Or.inr ⟨rfl, hnp⟩⟩
+  have hsat := hch (fun b => (b = true ∧ x.Dom) ∨ (b = false ∧ ¬ x.Dom)) hinh
+  simp only at hsat ⊢
+  constructor
+  · intro hb
+    rw [hb] at hsat
+    rcases hsat with ⟨_, hp⟩ | ⟨hf, _⟩
+    · exact hp
+    · exact absurd hf (by decide)
+  · intro hdom
+    by_contra hne
+    have hf : ch (fun b => (b = true ∧ x.Dom) ∨ (b = false ∧ ¬ x.Dom)) = false := by
+      cases hcs : ch (fun b => (b = true ∧ x.Dom) ∨ (b = false ∧ ¬ x.Dom))
+      · rfl
+      · exact absurd hcs hne
+    rw [hf] at hsat
+    rcases hsat with ⟨hf2, _⟩ | ⟨_, hnp⟩
+    · exact absurd hf2 (by decide)
+    · exact hnp hdom
 
 /-- `Statement:` the domain of `Part.mk p f` is `p` itself. -/
 theorem dom_mk (p : Prop) (f : p → Unit) : (Part.mk p f).Dom = p := rfl
@@ -116,10 +155,13 @@ theorem poleDiscriminator_of_classical : PoleDiscriminator := by
 
 /-! ### Prior art — a KNOWN genre, NOT claimed as new
 
-de Jong 2023 § 2.3 has § II's taboo; Knapp 2020 names the `Option`/`Part` split a dominance
-(Rosolini). Ours is only the END the discriminator sits on: the DEFINED end gives full excluded
-middle, de Jong's BOTTOM end gives the weak form. Sources, quotations and the fence on that delta
-are in `ZeroParadox/Valuation/PoleRegistration.md`, beside this file. -/
+de Jong 2023 § 2.3 has § II's taboo. ⛔ The end-selection "delta" this file once starred is
+**RETRACTED (2026-09-16)**: that the END the discriminator sits on decides which taboo you get is
+**de Jong–Escardó 2021, Corollary 39 / Theorem 42**, as two matched biconditionals, four years
+earlier. § II proves one INSTANCE of the top-end half. Knapp 2020 supplies the `Option`/`Part`
+vocabulary; the weak-versus-full distinction is already fenced in
+`ZeroParadox/Category/LawvereTaboo.lean`. Sources, quotations and the retraction in full:
+`ZeroParadox/Valuation/PoleRegistration.md`. -/
 
 /-! ### § III — No COMPUTABLE discriminator at ZP-K's floor -/
 
@@ -145,8 +187,10 @@ section Cited
 
 -- Statement: `Option α → Part α`, total, no instance.
 #check @Part.ofOption
--- Statement: `Part α → Option α`, and it takes `[Decidable o.Dom]`. Reading: this pair is the
--- standard DOMINANCE (Rosolini); Knapp 2020 names it. Exhibited here, never discovered here.
+-- Statement: `Part α → Option α`, and it takes `[Decidable o.Dom]`. Reading: `Option` and `Part`
+-- are the LIFTINGS `L_{d₂}` and `L_{d_Ω}` of two of Knapp's three trivial dominances (Knapp 2020,
+-- Def. 5.17, p. 92); a dominance is a SET OF PROPOSITIONS, and the notion is Rosolini's.
+-- Exhibited here, never discovered here.
 #check @Part.toOption
 -- Statement: the equivalence of the two, and it is `noncomputable`.
 #check @Part.equivOption
