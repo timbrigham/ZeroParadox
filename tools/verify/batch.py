@@ -1591,7 +1591,13 @@ def changed_attributable(ranges=None):
 
 
 def check_prior_art_attribution(ranges=None):
-    """EVERY `.lean` FILE THIS PUSH EDITS MUST CARRY A PASSING `prior_art` VERDICT AT ITS CURRENT BYTES.
+    """EVERY ATTRIBUTABLE FILE THIS PUSH EDITS MUST CARRY A PASSING `prior_art` VERDICT AT ITS CURRENT BYTES.
+
+    ⚠ "ATTRIBUTABLE" IS `ATTRIBUTABLE` ABOVE, NARROWED BY `prior_art`'s REGISTRY SCOPE — not
+    ".lean". This sentence said `.lean` through TWO widenings (`scripts/build_*.py` 2026-09-13,
+    `*.md` 2026-09-17) and the prepush manifest line said it on every run, which `R-PRECOMMIT`
+    points readers at. Second occurrence of the same staleness = a class (RLY-PA-3); a
+    string-versus-`ATTRIBUTABLE` check is the cheap detector and is not built yet.
 
     ⚠⚠ PER FILE, NEVER PER CORPUS, AND THE DIFFERENCE IS THE WHOLE POINT (Tim, 2026-09-01: *"my goal
     be lean files specifically that whenever a specific file gets edited that that file is properly
@@ -1633,8 +1639,22 @@ def check_prior_art_attribution(ranges=None):
                        "An unreachable ledger is not a clean bill." % (len(touched), basis))
     gap = sorted(set(touched) & set(owing))
     if not gap:
-        return True, ("all %d attributable file(s) edited in %s carry a passing prior_art "
-                      "verdict at their current bytes" % (len(touched), basis))
+        # ⚠⚠ DO NOT SAY "all N carry a passing verdict". `touched` is the PATHSPEC's answer and
+        # `ATTRIBUTABLE` has no exclusion mechanism, so it includes files `prior_art`'s registry
+        # scope EXCLUDES — which are never judged and CANNOT be. Counting them as attributed was
+        # RLY-PA-1 (2026-09-17, /rely): widening the pathspec to `*.md` took the blind set from 1
+        # to 83, and the leg reported `all 4 … carry a passing prior_art verdict` over a range
+        # whose 4 files included `CLAUDE.md` and two `tools/process/` docs. TRUE OF THE DECISION,
+        # FALSE OF THE OUTPUT — the intersection was right and the sentence about it was not.
+        # ⚠ The number that is KNOWN here is the GAP, not the judged set: `owing` names what is in
+        # scope and unverdicted, so a file absent from it is either verdicted OR out of scope, and
+        # this function cannot tell those apart without reimplementing the ledger's glob matcher.
+        # A second copy of that matcher is the same one-of-two-routes defect this leg exists to
+        # avoid, so the message reports what it can defend and names scope as the discriminator.
+        return True, ("no file edited in %s owes an unmet prior_art verdict (%d attributable "
+                      "path(s) touched; `prior_art`'s registry scope decides which of them are "
+                      "judged at all, and files it excludes are NOT attributed by this line)"
+                      % (basis, len(touched)))
     return False, ("%d of %d attributable file(s) edited in %s have NO passing prior_art "
                    "verdict at their current bytes: %s%s — run `/prior-art-review` over these "
                    "files and let it record. You owe the files you TOUCHED, never the corpus."
@@ -2420,7 +2440,8 @@ def cmd_prepush(ranges=None):
         # NOT_APPLICABLE and check_signals rendering that as ok. This row is the enforcement, and it
         # is scoped to the files the push EDITED so it can be satisfied one review at a time.
         ("prior-art attrib", "BLOCK",
-         "every .lean file edited in this push carries a passing prior_art verdict at its current bytes"),
+         "every ATTRIBUTABLE file edited in this push carries a passing prior_art verdict at its "
+         "current bytes — attributable = batch.ATTRIBUTABLE, narrowed by prior_art's registry scope"),
         # ⚠ TWO ROWS, NOT ONE, BECAUSE THE LEGS NOW ENFORCE DIFFERENTLY. A manifest that still said
         # "routing BLOCK" over a leg that warns is `RLY25-1` — a report publishing a stronger
         # property than it checks. The declaration is the whole point of the manifest.
