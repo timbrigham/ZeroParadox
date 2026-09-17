@@ -59,22 +59,48 @@ theorem registered_discriminator_exists {α : Type*} :
     ∃ d : Option α → Bool, ∀ x : Option α, d x = true ↔ x ≠ Option.none :=
   ⟨fun x => x.isSome, fun x => by cases x <;> simp⟩
 
-/-! ### § II — The unregistered pole: infinity as a `Prop` -/
+/-! ### § II — The unregistered pole: infinity as a `Prop`
 
-/-- `Statement:` a uniform `Bool` test, correct about `Dom`, on `Part Unit`.
+⭐ **STANDARD NAME, ADOPTED (`R-ADJACENT`): `Part Unit` IS the Sierpiński domain** — a proposition
+packaged with a map into the one-element type, i.e. the type of truth values. So `PoleDiscriminator`
+is not a statement about partiality; it says a `Bool` test decides EVERY proposition. `Option`/`Part`
+is likewise the standard **dominance** (Rosolini); see the prior-art section below. -/
+
+/-- `Statement:` a uniform `Bool` test, correct about `Dom`, on `Part Unit` — the Sierpiński domain.
     ⚠ At `Unit` deliberately: a weaker hypothesis, hence a stronger theorem below. -/
 def PoleDiscriminator : Prop :=
   ∃ d : Part Unit → Bool, ∀ x : Part Unit, d x = true ↔ x.Dom
 
+-- Statement: the packaging is inert — testing `Dom` on `Part Unit` is testing an arbitrary `Prop`.
+example : PoleDiscriminator ↔ ∃ d : Prop → Bool, ∀ p : Prop, d p = true ↔ p :=
+  ⟨fun ⟨d, hd⟩ => ⟨fun p => d (Part.mk p (fun _ => ())), fun _p => hd _⟩,
+   fun ⟨d, hd⟩ => ⟨fun x => d x.Dom, fun _x => hd _⟩⟩
+
+-- Statement: and it is the corpus's EXISTING hypothesis, not a new one. `em_of_choiceFragment`
+-- closes the other direction, so the two are inter-derivable and § II states no new principle.
+example : PoleDiscriminator → ChoiceFragment := by
+  rintro ⟨d, hd⟩
+  refine ⟨fun S => d (Part.mk (S true) (fun _ => ())), fun S hS => ?_⟩
+  by_cases h : d (Part.mk (S true) (fun _ => ())) = true
+  · simp only [h]
+    exact (hd _).mp h
+  · have hnt : ¬ S true := fun hst => h ((hd _).mpr hst)
+    have hf : d (Part.mk (S true) (fun _ => ())) = false := by
+      simpa using h
+    simp only [hf]
+    obtain ⟨b, hb⟩ := hS
+    cases b with
+    | true => exact absurd hb hnt
+    | false => exact hb
+
 /-- `Statement:` the domain of `Part.mk p f` is `p` itself. -/
 theorem dom_mk (p : Prop) (f : p → Unit) : (Part.mk p f).Dom = p := rfl
 
-/-- `Statement:` a uniform discriminator at the unregistered pole yields excluded middle.
-    `Reading:` nothing is stipulated. `PoleChartSelection.em_of_uniformChartSelection` needs
-    Diaconescu and an ASSUMED undecided predicate; `Part` supplies the arbitrary proposition as a
-    structure field, so the proof just reads the `Bool` off.
-    ⚠ The conclusion is `Prop`-valued, NOT `∀ p, Decidable p`: `Prop`/`Type` stratification forbids
-    extracting data from the `∃`. See `Category/ExcludedMiddleBridge.lean` § II. -/
+/-- `Statement:` a uniform discriminator on the Sierpiński domain yields excluded middle.
+    `Reading:` CITED, not claimed — de Jong 2023 § 2.3. Local only in not routing through
+    Diaconescu, a fact about proof STRUCTURE: the `example`s above show the hypothesis
+    inter-derivable with `ChoiceFragment`.
+    ⚠ The conclusion is `Prop`-valued, NOT `∀ p, Decidable p` — `Prop`/`Type` stratification. -/
 theorem em_of_poleDiscriminator (h : PoleDiscriminator) : ExcludedMiddle := by
   obtain ⟨d, hd⟩ := h
   intro p
@@ -87,6 +113,13 @@ theorem em_of_poleDiscriminator (h : PoleDiscriminator) : ExcludedMiddle := by
 theorem poleDiscriminator_of_classical : PoleDiscriminator := by
   classical
   exact ⟨fun x => decide x.Dom, fun x => by simp⟩
+
+/-! ### Prior art — a KNOWN genre, NOT claimed as new
+
+de Jong 2023 § 2.3 has § II's taboo; Knapp 2020 names the `Option`/`Part` split a dominance
+(Rosolini). Ours is only the END the discriminator sits on: the DEFINED end gives full excluded
+middle, de Jong's BOTTOM end gives the weak form. Sources, quotations and the fence on that delta
+are in `ZeroParadox/Valuation/PoleRegistration.md`, beside this file. -/
 
 /-! ### § III — No COMPUTABLE discriminator at ZP-K's floor -/
 
@@ -112,7 +145,8 @@ section Cited
 
 -- Statement: `Option α → Part α`, total, no instance.
 #check @Part.ofOption
--- Statement: `Part α → Option α`, and it takes `[Decidable o.Dom]`.
+-- Statement: `Part α → Option α`, and it takes `[Decidable o.Dom]`. Reading: this pair is the
+-- standard DOMINANCE (Rosolini); Knapp 2020 names it. Exhibited here, never discovered here.
 #check @Part.toOption
 -- Statement: the equivalence of the two, and it is `noncomputable`.
 #check @Part.equivOption
