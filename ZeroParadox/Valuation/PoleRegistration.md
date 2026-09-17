@@ -15,27 +15,31 @@ the two `example`s in § II prove that, both directions:
   in § II. So § II's hypothesis and the one already in
   `ZeroParadox/Category/ExcludedMiddleBridge.lean` are **inter-derivable**, not two principles.
 
-⛔ **An earlier version named `em_of_choiceFragment` as closing the return leg. It does not, and the
-claim was corrected 2026-09-16 by building the real proof.** That theorem runs
-`ChoiceFragment → ExcludedMiddle`, forward; composing it with the first bullet runs forward twice and
-never returns. The return leg is built instead from the **data** the fragment carries — the chooser
-`ch` — with excluded middle used only to inhabit the predicate, a `Prop`-valued side condition.
-Measured at the artifact: the leg elaborates at `[propext, Quot.sound]`, and the route the old comment
-named, `ExcludedMiddle → PoleDiscriminator`, fails at `failed to synthesize Decidable x.Dom` —
-verbatim the `Prop`/`Type` stratification barrier `ExcludedMiddleBridge.lean` records as its own
-headline finding. Both runs are in the session log, not inferred from the comment.
+**The return leg runs on the chooser's DATA, and uses no excluded middle at all.** Diaconescu's two
+predicates are each constructively inhabited, so `decide (ch A = ch B)` is already data.
+`em_of_choiceFragment` plays no part: it runs `ChoiceFragment → ExcludedMiddle`, forward, and
+composing it with the first bullet would run forward twice and never return.
 
-**The consequence is a modesty result, and it is the useful half.** `PoleDiscriminator` is the pole
-vocabulary for `ChoiceFragment` at a different carrier — the same relationship
-`uniformChartSelection_iff_choiceFragment` already records for the chart-selection principle.
-Renaming a hypothesis does not make it true.
+**What the two legs establish is COST, not the arrows.** Both sides are theorems of the ambient
+system, so the inter-derivability alone is near-vacuous — `poleDiscriminator_of_classical` proves
+`PoleDiscriminator` outright, which makes *every* implication into it available at
+`[propext, Classical.choice, Quot.sound]`. The content is that both legs are **choice-free**
+(`[propext, Quot.sound]`), and that `PoleDiscriminator` is the pole vocabulary for `ChoiceFragment` —
+the relationship `uniformChartSelection_iff_choiceFragment` already records for chart selection, and
+already stated in prose at `ExcludedMiddleBridge.lean` and `ChoiceCannotBe.lean`. Witnessed here,
+not discovered here.
 
-⛔ **An earlier gloss claimed § II "removes the stipulation" that
-`PoleChartSelection.em_of_uniformChartSelection` needs. That was false** and is corrected in place.
+⚠ **A failed elaboration measures a CONSTRUCTION, never a route** — and it is the axiom budget, never
+the arrow, that is ever in question here. The natural construction of a discriminator from excluded
+middle alone does not elaborate, dying at `Decidable x.Dom`; that is a fact about the construction.
+Whether `PoleDiscriminator` follows from excluded middle **choice-free** is not settled in this file,
+and no failed elaboration could settle it.
+
+**§ II does NOT remove the stipulation `PoleChartSelection.em_of_uniformChartSelection` needs.**
 `poleAdmissible` appears nowhere in that theorem's binders or proof term; its hypothesis is
-`ChoiceFragment` by `Iff.rfl`, universally quantified over `S : Bool → Prop`. The surviving true
-half is narrower: this proof does not route through Diaconescu, which is a fact about proof
-structure and not about strength.
+`ChoiceFragment` by `Iff.rfl`, universally quantified over `S : Bool → Prop`. The narrower true
+statement: this proof does not route through Diaconescu, a fact about proof structure and not about
+strength.
 
 ## Sources, read at rung D
 
@@ -47,12 +51,10 @@ taboo is his, not ours.** Definition 15 (p. 6) is where `Part Unit` gets its nam
 domain S is the free pointed dcpo on a single generator… realize S as the set of truth values."*
 
 **T. de Jong and M. H. Escardó, "Predicative Aspects of Order Theory in Univalent Foundations,"
-FSCD 2021** (arXiv:2102.08812v5), filed. **Theorem 42** (p. 12) and **Corollary 39** (p. 11) pair the
-two ends with the two taboos, as matched biconditionals: a locally small poset with decidable equality
-that is *nontrivial* exists **iff** weak excluded middle holds, and one that is *positive* exists
-**iff** excluded middle holds. Definition 40 supplies the axis — *nontrivial* is the negative
-(⊥-side) form, *positive* its inhabited counterpart. Same result as Theorem 4.31 / Theorem 4.26 in
-their *"On Small Types in Univalent Foundations"* (arXiv:2111.00482v5, LMCS 2023), also filed.
+FSCD 2021** (arXiv:2102.08812v5) and *"On Small Types in Univalent Foundations"* (arXiv:2111.00482v5,
+LMCS 2023), both filed. Same neighbourhood, and **this file makes no claim about what either proves**
+— a previous version characterised their Corollary 39 / Theorem 42 and that characterisation was
+withdrawn as unverified. Read them before citing them.
 
 **C. Knapp, "Partial Functions and Recursion in Univalent Type Theory," 2020** (arXiv:2011.00272),
 filed. **Definition 5.17** (p. 92): a *dominance* is a **set of propositions** `d : U → U` closed
@@ -64,31 +66,24 @@ the semidecidable propositions (§ 5.7). § IV of the Lean file exhibits the Mat
 (`Part.ofOption` total and instance-free, `Part.toOption` carrying `[Decidable o.Dom]`,
 `Part.equivOption` noncomputable). **Exhibited, never discovered here.**
 
-## ⛔ RETRACTED: the end-selection "delta" was never ours
+## The end-selection pairing is NOT this framework's
 
-**An earlier version of this file starred the following as the framework's own observation:**
-*"Which END the discriminator sits on decides which taboo you get — de Jong places it at the bottom
-end and obtains weak excluded middle; § II places it at the defined end and obtains full excluded
-middle."*
+**That which end the discriminator sits on decides which taboo you get — bottom end giving the weak
+form, defined end the full one — is prior art in constructive and predicative domain theory.** This
+file claims no part of it. § II proves one instance of the top-end half, at `Part Unit`, as an
+implication.
 
-**That is de Jong–Escardó 2021, Corollary 39 and Theorem 42**, stated four years earlier, more
-strongly (two matched biconditionals rather than one implication), over a whole class of posets
-rather than one carrier, by authors this file already cited. Retracted 2026-09-16. It is an instance
-joining that programme, not a delta over it.
+⚠ **WHICH result is closest is an OPEN question here, and no attribution is made.** The candidates in
+play are de Jong 2023's Proposition 22 (bottom end) against Propositions 62–63 (top end) — and since
+`⊤ ⊑ x` is `x.Dom` in `Part Unit`, Proposition 63 may be the closest prior art for
+`em_of_poleDiscriminator` itself. Not verified at the PDF by this file's author, so it is left as the
+open question it is rather than asserted. Tracked as `PR3-2`.
 
-⚠ **"Strictly weaker" is retracted with it, and it pointed the wrong way.** Against de Jong's
-Proposition 22 instantiated at S — the comparison that sentence itself set up — § II's hypothesis is
-**stronger**: the top-end test gives full excluded middle, which gives the bottom-end test, while the
-converse would need weak excluded middle to imply excluded middle, which is unavailable
-constructively. A stronger conclusion from a stronger hypothesis is unremarkable and is not claimed.
-No separating model is exhibited anywhere in this file, so no inequivalence is asserted either.
-
-**How the error got in, recorded because the shape recurs.** The pointer to Corollary 39 sits three
-lines below a sentence this file already quotes — de Jong 2023 p. 7, immediately after Proposition 22:
-*"we showed in (de Jong and Escardó, 2021b, Corollary 39) that this implies (weak) excluded middle,
-unless the dcpo is trivial."* The first review round logged that pointer as *"Not retrieved"* and the
-remediation shipped the starred claim anyway. The rung that verifies — retrieve and read the document —
-was skipped at exactly the place it was load-bearing.
+⚠ **No strength comparison is claimed between the two ends.** Against de Jong's Proposition 22
+instantiated at S, § II's hypothesis is the **stronger** one: the top-end test gives full excluded
+middle, which gives the bottom-end test, while the converse would need weak excluded middle to imply
+excluded middle, unavailable constructively. A stronger conclusion from a stronger hypothesis is
+unremarkable. No separating model is exhibited, so no inequivalence is asserted.
 
 ## What actually survives, stated as what it is
 
@@ -98,9 +93,12 @@ value, no novelty claim. Three things are genuinely here:
 1. **The top-end instance, machine-checked at `Part Unit`.** `em_of_poleDiscriminator` depends on **no
    axioms at all**, and `poleDiscriminator_of_classical` supplies the source end so the implication is
    not vacuous. A formalization, not an observation.
-2. **A modesty result that did not exist before.** `PoleDiscriminator` and the corpus's own
-   `ChoiceFragment` are inter-derivable, both legs now `example`s in § II. So § II introduces **no new
-   principle** — it is the pole vocabulary for a hypothesis the corpus already had.
+2. **A modesty result, WITNESSED here and stated in prose elsewhere already.** `PoleDiscriminator`
+   and the corpus's own `ChoiceFragment` are inter-derivable, both legs now `example`s in § II, and
+   both choice-free. So § II introduces **no new principle** — it is the pole vocabulary for a
+   hypothesis the corpus already had. ⚠ Not a discovery: `ExcludedMiddleBridge.lean` and
+   `ChoiceCannotBe.lean` already say in prose that `ChoiceFragment` is really `∀ p, Decidable p`.
+   What is added is the machine-checked witness, not the observation.
 3. **The consequence at the computational floor**, § III: what § II costs constructively, ZP-K's floor
    cannot buy at any price — no *computable* discriminator decides self-application, by reduction to
    `self_halting_undecidable`.
@@ -120,20 +118,21 @@ map uniformly and you have demanded excluded middle.
 
 ⚠ **Applied to the retraction itself, which is what `R-TWOPOLE` is for.** Stated in the other chart,
 the deleted claim reads: *the bottom-end condition and the top-end condition force the same taboo, and
-the end makes no difference.* That is false, and de Jong–Escardó's Theorem 42 is precisely what
-settles it — in **their** names, not ours. So the defect here is **not** a missing chart, and the fix
-is therefore a citation, not a second pole. Recorded so a later round does not re-add the starred
+the end makes no difference.* The literature settles that — in **someone else's** names, not ours,
+whichever result turns out to be the closest. So the defect here is **not** a missing chart, and the
+fix is a citation rather than a second pole. Recorded so a later round does not re-add the starred
 sentence in the belief that a pole is absent.
 
 ⚠ **Tim's read is load-bearing on one point**: whether this file earns a place in
 `ZeroParadox/BottomCannotBe.lean`'s index at all, now that its only novelty claim is withdrawn and
-what remains is a formalization of cited results plus one modesty result. That is a judgement about
-what the index is for, not a fact the Lean can settle.
+what remains is a formalization of cited results plus one witnessed modesty result. That is a
+judgement about what the index is for, not a fact the Lean can settle.
 
-## Not located
+## Vocabulary
 
-"Sierpinski", "dcpo" and "lifting monad" appeared at **0 sites across 471 tracked surfaces**
-including 40 rendered PDFs, measured 2026-09-16 with `check_paths.py --full --claim`. So this
-vocabulary enters the corpus here, and a reader looking for the standard names will not find them
-anywhere earlier. Not a claim that the ideas are absent — a claim about the words, with the
-instrument named.
+This file is where "Sierpiński domain", "dcpo" and "lifting monad" enter the corpus. No claim is made
+here about where else they appear.
+
+⚠ **Grep an accented name BOTH ways.** `Sierpiński` and `Escardó` do not match sweeps written
+`Sierpinski` and `Escardo`, and an absence measured with the unaccented form reports zero for the
+wrong reason.

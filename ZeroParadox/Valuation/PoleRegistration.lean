@@ -63,10 +63,8 @@ theorem registered_discriminator_exists {α : Type*} :
 
 ⭐ **STANDARD NAME, ADOPTED (`R-ADJACENT`): `Part Unit` IS the Sierpiński domain** (de Jong 2023,
 Definition 15) — the type of truth values. So `PoleDiscriminator` is not about partiality: it says a
-`Bool` test decides EVERY proposition. ⚠ Synthetic domain theory uses the same word for the
-*semidecidable* propositions, a smaller object (Knapp 2020, § 5.7); the reading here is de Jong's.
-`Option`/`Part` are LIFTINGS of dominances, not dominances. Details in the ride-along
-`ZeroParadox/Valuation/PoleRegistration.md`. -/
+`Bool` test decides EVERY proposition. `Option`/`Part` are LIFTINGS of dominances, not dominances.
+Details in the ride-along `ZeroParadox/Valuation/PoleRegistration.md`. -/
 
 /-- `Statement:` a uniform `Bool` test, correct about `Dom`, on `Part Unit` — the Sierpiński domain.
     ⚠ At `Unit` deliberately: a weaker hypothesis, hence a stronger theorem below. -/
@@ -94,43 +92,32 @@ example : PoleDiscriminator → ChoiceFragment := by
     | true => exact absurd hb hnt
     | false => exact hb
 
--- Statement: and back again, so the two are inter-derivable and § II states no new principle.
--- ⚠ THE RETURN LEG RUNS ON THE FRAGMENT'S DATA (`ch`), NOT THROUGH `em_of_choiceFragment`.
--- That theorem lands in `ExcludedMiddle` and cannot come back: the route
--- `ExcludedMiddle → PoleDiscriminator` fails to elaborate at `Decidable x.Dom`, which is
--- verbatim the barrier `ZeroParadox/Category/ExcludedMiddleBridge.lean` records as its own
--- headline finding (`Prop`/`Type` stratification). Excluded middle is used below only to
--- inhabit the predicate — a `Prop`-valued side condition, where `Or`-elimination is legal.
--- So `PoleDiscriminator` is the pole vocabulary for `ChoiceFragment`, exactly as
--- `uniformChartSelection_iff_choiceFragment` is for the chart-selection principle: renaming a
--- hypothesis does not make it true.
+-- Statement: and back again, so the two hypotheses are inter-derivable.
+-- The content is not the inter-derivability — both sides are theorems here — it is that BOTH LEGS
+-- ARE CHOICE-FREE: this one measures `[propext, Quot.sound]`, and it uses no excluded middle at
+-- all. Diaconescu's two predicates are each constructively inhabited, so `decide (ch A = ch B)`
+-- is already data and the chooser alone supplies it.
 example : ChoiceFragment → PoleDiscriminator := by
   intro h
-  have em : ExcludedMiddle := em_of_choiceFragment h
   obtain ⟨ch, hch⟩ := h
-  refine ⟨fun x => ch (fun b => (b = true ∧ x.Dom) ∨ (b = false ∧ ¬ x.Dom)), fun x => ?_⟩
-  have hinh : ∃ b, (b = true ∧ x.Dom) ∨ (b = false ∧ ¬ x.Dom) := by
-    rcases em x.Dom with hp | hnp
-    · exact ⟨true, Or.inl ⟨rfl, hp⟩⟩
-    · exact ⟨false, Or.inr ⟨rfl, hnp⟩⟩
-  have hsat := hch (fun b => (b = true ∧ x.Dom) ∨ (b = false ∧ ¬ x.Dom)) hinh
-  simp only at hsat ⊢
+  refine ⟨fun x =>
+    decide (ch (fun b => b = true ∨ x.Dom) = ch (fun b => b = false ∨ x.Dom)), fun x => ?_⟩
+  have hA : (ch (fun b => b = true ∨ x.Dom) = true) ∨ x.Dom :=
+    hch (fun b => b = true ∨ x.Dom) ⟨true, Or.inl rfl⟩
+  have hB : (ch (fun b => b = false ∨ x.Dom) = false) ∨ x.Dom :=
+    hch (fun b => b = false ∨ x.Dom) ⟨false, Or.inl rfl⟩
+  simp only [decide_eq_true_eq]
   constructor
-  · intro hb
-    rw [hb] at hsat
-    rcases hsat with ⟨_, hp⟩ | ⟨hf, _⟩
+  · intro heq
+    rcases hA with hAt | hp
+    · rcases hB with hBf | hp
+      · exact absurd (hAt ▸ hBf ▸ heq) (by decide)
+      · exact hp
     · exact hp
-    · exact absurd hf (by decide)
   · intro hdom
-    by_contra hne
-    have hf : ch (fun b => (b = true ∧ x.Dom) ∨ (b = false ∧ ¬ x.Dom)) = false := by
-      cases hcs : ch (fun b => (b = true ∧ x.Dom) ∨ (b = false ∧ ¬ x.Dom))
-      · rfl
-      · exact absurd hcs hne
-    rw [hf] at hsat
-    rcases hsat with ⟨hf2, _⟩ | ⟨_, hnp⟩
-    · exact absurd hf2 (by decide)
-    · exact hnp hdom
+    have : (fun b => b = true ∨ x.Dom) = (fun b => b = false ∨ x.Dom) :=
+      funext fun b => propext ⟨fun _ => Or.inr hdom, fun _ => Or.inr hdom⟩
+    rw [this]
 
 /-- `Statement:` the domain of `Part.mk p f` is `p` itself. -/
 theorem dom_mk (p : Prop) (f : p → Unit) : (Part.mk p f).Dom = p := rfl
@@ -155,12 +142,11 @@ theorem poleDiscriminator_of_classical : PoleDiscriminator := by
 
 /-! ### Prior art — a KNOWN genre, NOT claimed as new
 
-de Jong 2023 § 2.3 has § II's taboo. ⛔ The end-selection "delta" this file once starred is
-**RETRACTED (2026-09-16)**: that the END the discriminator sits on decides which taboo you get is
-**de Jong–Escardó 2021, Corollary 39 / Theorem 42**, as two matched biconditionals, four years
-earlier. § II proves one INSTANCE of the top-end half. Knapp 2020 supplies the `Option`/`Part`
-vocabulary; the weak-versus-full distinction is already fenced in
-`ZeroParadox/Category/LawvereTaboo.lean`. Sources, quotations and the retraction in full:
+de Jong 2023 § 2.3 has § II's taboo. That which END the discriminator sits on decides which taboo you
+get is prior art in constructive/predicative domain theory, NOT this framework's; § II proves one
+instance of the top-end half. Which result is closest is an open question — none is named here.
+Knapp 2020 supplies the `Option`/`Part` vocabulary; the weak-versus-full distinction is already
+fenced in `ZeroParadox/Category/LawvereTaboo.lean`. Details:
 `ZeroParadox/Valuation/PoleRegistration.md`. -/
 
 /-! ### § III — No COMPUTABLE discriminator at ZP-K's floor -/
@@ -202,10 +188,8 @@ end Cited
 
 /-! ### § V — The identification with ⊥ is NOT formalized here
 
-⛔ A theorem taking `∃ c, UnregisteredFloor c` as a hypothesis was DELETED 2026-09-16. Measured: the
-same proof term elaborated with the hypothesis removed AND with its negation supplied, so the binder
-carried nothing and the gloss calling it conditional was false. Option (a)'s second half is OPEN and
-this file does not narrow it. -/
+Nothing below is proved conditional on `UnregisteredFloor`: it is a NAME for the commitment, carrying
+a signature and no theorem. Option (a)'s second half is OPEN and this file does not narrow it. -/
 
 /-- `Statement:` that self-application at `c` is undefined.
     `Reading:` the COMMITMENT, named so it has a signature. Nothing is proved conditional on it. -/
