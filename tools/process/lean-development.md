@@ -90,6 +90,11 @@ corpus written in the register a question arrives in, they are attached to the f
 **all of them together are ~16k tokens — cheap enough to load wholesale.** Measured 2026-07-31: on four separate questions the answering
 Take was found *after* the work, never before.
 
+**How a Take gets WRITTEN is NOT here.** The assembly method — restate Tim's own session questions as
+declaratives — and the ORDERING rule that the Take goes in *before* the gates run, both live in
+`tools/process/gated-conventions.md`. This line is a pointer because a second copy of that rule was
+nearly written here on 2026-09-16 and would have drifted.
+
 **Not this, for error-sweeps.** A claim-sweep's unit is the **rendered PDF text**, never the source —
 a claim survived four vocabulary changes and one split across two Python string literals. See
 `vocabulary_reference.md`.

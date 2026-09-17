@@ -57,6 +57,7 @@ import vendored  # noqa: E402
 import report    # noqa: E402  the one formatter every entry point announces itself with
 import agent_gate  # noqa: E402  the interpretation layer — ADVISORY, never blocks (rung 5)
 import record      # noqa: E402  the ledger client — review freshness is asked, never re-derived
+import selfheal    # noqa: E402  MARKERS ONLY — `_recurrence_note` selects its rows by name
 STATE = os.path.join(PRIV, "batch_state.json")
 # The ones that GATE. `check_poles.py` is a counter with no baseline (REL-3) and is excluded
 # deliberately — see check_suite.
@@ -2634,13 +2635,36 @@ def _recurrence_note():
                            # EVERY push for a note that is advisory. (/rely round 3, ORDINARY.)
                            capture_output=True, text=True, timeout=5,
                            encoding="utf-8", errors="replace")
-    except (OSError, subprocess.SubprocessError):
+    except (OSError, subprocess.SubprocessError) as e:
+        # ⚠ SECOND ROUTE TO THE SAME PROPERTY (`/rely` R3-O1). The `else` below was fixed while
+        # this branch still returned in silence — and `TimeoutExpired` IS a `SubprocessError`, so
+        # a hung child rendered exactly like "nothing over threshold". SH-3 inside the function
+        # whose own comment cites SH-3. Advisory either way; it never blocks.
+        print()
+        print("  recurrence note: selfheal.py could not be run (%s) — advisory, and NOT a clean"
+              " bill" % type(e).__name__)
         return
     # ⚠ ADVISORY MEANS ADVISORY: this must never be able to fail the caller. A note about process
     # health that can block a push is a worse defect than the one it reports.
-    if not r.stdout:
+    # ⚠⚠ THE EXIT CODE IS READ FIRST, NOT ONLY WHEN STDOUT IS EMPTY (`/rely` round 4, B4). A real
+    # child that printed a TRUNCATED report and then died rendered as a complete advisory, because
+    # the status was consulted only on empty output. Partial output is the dangerous case: it
+    # LOOKS like a full answer.
+    # ⛔ AN EARLIER VERSION OF THIS COMMENT SAID `ship.py cmd_plan` "is the sibling that had this
+    # right", AND THAT WAS MEASURABLY FALSE — round 5 found `cmd_plan` reading content before
+    # status, the third of three consumers to carry the defect. Corrected 2026-09-16. All three
+    # now check the exit code first; a claim about a sibling is a claim, and this one was not run.
+    # ⚠ SILENT AND NOTHING-TO-REPORT ARE DIFFERENT ANSWERS (R-ZERONULL). Advisory either way.
+    if r.returncode != 0 or not r.stdout:
+        print()
+        print("  recurrence note: selfheal.py did not complete (exit %s, %d byte(s) of output) —"
+              " advisory, and NOT a clean bill" % (r.returncode, len(r.stdout or "")))
         return
-    rows = [l.strip() for l in r.stdout.splitlines() if "← NO CLASS ROW" in l]
+    # ⚠ THE MARKERS ARE IMPORTED, NOT RETYPED (`/rely` R2-B1). A retyped literal here matched one
+    # of the two UNCLASSED markers, so shapes naming a class row that does not exist never
+    # reached this channel — under a heading promising the whole set. SH-7 selecting SH-7.
+    rows = [l.strip() for l in r.stdout.splitlines()
+            if any(m in l for m in selfheal.UNCLASSED_MARKS)]
     if not rows:
         return
     print()
@@ -2747,12 +2771,19 @@ DECL_CASES = [
 
 def selftest():
     bad = 0
+    # ⚠ `total` EXISTS SO THE SUMMARY CAN BE RE-DERIVED FROM THE ROWS ABOVE IT. Until 2026-09-16
+    # this printed a bare "selftest: PASS" with no count at all, so the only way to learn how much
+    # it covered was to count the lines by hand — which two readers did on the same day and got
+    # 28 and 33. A suite that cannot state its own size cannot be cited, and `R-NOTINLIB` now
+    # requires re-deriving any count of what a tool does from that tool's own output.
+    total = 0
     print("decls_in — comment stripping and name shape")
     for label, src, want in DECL_CASES:
         got = decls_in(src)
         ok = got == want
         print("  %-46s %s" % (label, "ok" if ok else "*** got %s, want %s ***" % (got, want)))
         bad += 0 if ok else 1
+        total += 1
 
     print("stage ordering")
     st = {"stages": {"start": {"ok": True}}, "checker_hashes": {}}
@@ -2764,6 +2795,7 @@ def selftest():
         ok = allowed == should_pass
         print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
         bad += 0 if ok else 1
+        total += 1
 
     print("gate-stage staleness (DC-18)")
     fresh = {"stages": {"precommit": {"ok": True, "tool": self_hash()}}}
@@ -2773,6 +2805,7 @@ def selftest():
         ok = stage_done(state, "precommit") == want
         print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
         bad += 0 if ok else 1
+        total += 1
 
     # ⚠⚠ RLY36-2. The freshness question must be asked about the content the push PUBLISHES, and
     # for two months it was asked about the literal ref `HEAD` while the changed-file half of the
@@ -2791,6 +2824,7 @@ def selftest():
         ok = got == want
         print("  %-46s %s" % (label, "ok" if ok else "*** got %s, want %s ***" % (got, want)))
         bad += 0 if ok else 1
+        total += 1
 
     asked, _real = [], record.step_status
     _real_changed = reviewable_changed
@@ -2813,12 +2847,14 @@ def selftest():
                            all(r[1] for r in rows if r[0] != REVIEW_STEPS[0]))]:
             print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
             bad += 0 if ok else 1
+            total += 1
 
         record.step_status = lambda ref, action="commit": None if ref == "B" else {}
         rows = check_signals(["o/m..A", "o/m..B"])
         ok = all(not r[1] for r in rows)
         print("  %-46s %s" % ("unreachable at ANY tip fails CLOSED", "ok" if ok else "*** WRONG ***"))
         bad += 0 if ok else 1
+        total += 1
 
         # ⚠⚠ `REFUSED` BLOCKED BEFORE THIS BRANCH EXISTED — the generic `else` fails closed — so a
         # control that only asserted BLOCKING would have been green against the defect. The defect
@@ -2838,6 +2874,7 @@ def selftest():
                  "NOTHING has been established" in _why[2])]:
             print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
             bad += 0 if ok else 1
+            total += 1
     finally:
         record.step_status = _real
         globals()["reviewable_changed"] = _real_changed
@@ -2869,10 +2906,48 @@ def selftest():
             ok = got == want
             print("  %-46s %s" % (label, "ok" if ok else "*** got %s, want %s ***" % (got, want)))
             bad += 0 if ok else 1
+            total += 1
     finally:
         globals()["_numstat"] = _real_numstat
 
-    print("\nselftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
+    # ⚠⚠ `_recurrence_note` HAD NO CONTROL AT ALL (`/rely` R3-O3): reverting its marker set
+    # changed what reaches the push-time channel (2 shapes -> 1) while this suite printed PASS
+    # either way. Both halves, on synthetic child output, so nothing here shells out.
+    print("push-time recurrence advisory (R3-O3)")
+    _real_run = subprocess.run
+
+    class _FakeChild(object):
+        def __init__(self, out, rc=0):
+            self.stdout, self.returncode, self.stderr = out, rc, ""
+
+    _both = ("  1. [SH-A] a shape — 4 row(s)  %s\n"
+             "  2. [SH-B] another — 3 row(s)  ← DC-999 %s\n"
+             % (selfheal.MARK_NO_ROW, selfheal.MARK_NAMES_NO_ROW))
+    _rec_cases = [
+        ("both UNCLASSED markers reach the channel", _FakeChild(_both), 2, None),
+        ("an unreadable child is not a clean bill", _FakeChild("", 2), 0, "NOT a clean"),
+    ]
+    for label, child, want_rows, want_text in _rec_cases:
+        try:
+            subprocess.run = lambda *a, **k: child
+            buf = io.StringIO()
+            _real_stdout = sys.stdout
+            try:
+                sys.stdout = buf
+                _recurrence_note()
+            finally:
+                sys.stdout = _real_stdout
+        finally:
+            subprocess.run = _real_run
+        got = buf.getvalue()
+        rows = len([l for l in got.splitlines() if "row(s)" in l])
+        ok = rows == want_rows and (want_text is None or want_text in got)
+        print("  %-46s %s" % (label, "ok" if ok else "*** got %d row(s) ***" % rows))
+        bad += 0 if ok else 1
+        total += 1
+
+    print("\nselftest: %s (%d/%d control(s))"
+          % ("PASS" if not bad else "FAIL", total - bad, total))
     return 1 if bad else 0
 
 

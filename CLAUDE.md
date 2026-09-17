@@ -425,6 +425,33 @@ TRIGGER  you are about to write that anything is ABSENT or OPEN — in Mathlib O
          A FIX: "swept" · "corrected everywhere" · "no other sites" · "the last one" · any claim
          that something is NO LONGER PRESENT. **A post-fix completeness claim is an absence claim
          wearing work clothes**, and this list is a DENYLIST, so it was porous exactly there.
+         ⚠⚠ AND SO DOES A CLAIM ABOUT OUR OWN TOOLING — added 2026-09-15, and it is the costliest
+         variant yet: "not yet built" · "has no mechanical half" · "no checker exists" · "still
+         owed" · "the attempt was PULLED". **Before writing that WE lack a tool, look for it under
+         `tools/verify/`; a tool's own source header outranks any prose about it.** Measured:
+         `DEFECT_CLASSES.md` said `DC-24` had no mechanical half for 28 days after `check_paths
+         --claim` shipped self-describing as exactly that (`7c9669a`, 2026-08-19) — the "PULLED"
+         note was about `check_attribution.py`, a DIFFERENT tool, so the row recorded one
+         withdrawal and read as the absence of both. **A false absence claim in the DETECTOR
+         REGISTRY is a force multiplier**: the tool that would have caught the Lawvere
+         misattribution was believed not to exist, a manual sweep closed `ATTR-2` on a false
+         "no further instances", and the defect shipped inside two permanent DOIs. Class `DC-53`.
+         ⚠⚠ AND THE OTHER POLE, ADDED 2026-09-16 BECAUSE THE CLAUSE ABOVE SHIPPED WITHOUT IT: a
+         false PRESENCE claim is the same defect and the list above cannot see one — every term
+         in it is absence vocabulary. **The ACTION is what binds, not a word list: you are about
+         to write that a tool DOES something. RUN IT FIRST.** Any present tense about tooling
+         qualifies — "now run(s)", "is wired in", "ships with", "cover(s)", "is enforced" — and
+         a word list cannot be the test here, because the two sentences that motivated this rule
+         matched NONE of the four anchors first drafted for it ("now run" against "now runs",
+         "covering" against "covers"; the PART OF SPEECH axis this entry's own RULE mandates).
+         Before writing a COUNT of what a tool does, re-derive it from that tool's own output —
+         and if the tool prints no total, that is the defect to fix first.
+         Measured the day the clause landed: `DC-53`'s row said its prepush leg was live and
+         "eight controls now run inside `batch.py selftest`" — the leg had been REMOVED, the
+         controls went with it, and `selftest` printed PASS because the thing they controlled was
+         gone. The reviewer that caught it then reported the surviving suite as 33 controls; the
+         printed output carries 28. **A present-tense sentence about tooling is a measurement, and
+         it goes stale in the direction nobody greps for.**
 RUN      before writing any of them about a CLAIM, sweep the wording you DELETED, not the one you
          wrote: `python tools/verify/check_paths.py --claim "<deleted phrasing>"` — `.md` + `.lean`
          + tracked `.py` + the RENDERED PDFs in one pass, printing which surfaces it covered. The
@@ -508,7 +535,7 @@ COST     BOTH bypasses succeed SILENTLY and the push looks green: the identical 
          "a command that runs a GATE", a one-file `check_encoding` run did not feel like one, and
          `| Select-Object -Last 2` hid four warnings an hour after this rule was quoted. A CATEGORY
          leaks; A PIPE AFTER A PATH binds. A fail-closed `PreToolUse` hook keyed to INVOCATION
-         (`claude_hooks/block_checker_truncation.ps1`, 39 controls) catches the NAMED consumers, and
+         (`tools/verify/claude_hooks/block_checker_truncation.ps1`, 39 controls) catches the NAMED consumers, and
          reading checker SOURCE stays free. ⚠⚠ IT IS A DENYLIST, SO THE TRIGGER LIST ABOVE IS STILL
          LOAD-BEARING MEMORY. An earlier version of this line said "nothing here is remembered";
          that was measured FALSE 2026-08-29 — 15 of 19 filters walked through, among them `sed -n`,

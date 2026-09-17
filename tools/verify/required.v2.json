@@ -243,7 +243,7 @@
       "family": "mechanical",
       "module": "tools/verify/batch.py",
       "approved_modules": [
-        "1fffe94461ff819f39d373fc03eaf872b08ecf60"
+        "b9c6258c5ad1b1fb67a8672aaf03c465e175b31e"
       ],
       "scope": [
         "ZeroParadox/*.lean",
@@ -258,8 +258,7 @@
       "reason": "only meaningful when a PDF changed",
       "module": "tools/verify/batch.py",
       "approved_modules": [
-        "1fffe94461ff819f39d373fc03eaf872b08ecf60",
-        "3f11ba688949ddd16d7f03fc67b44488e5b9063b"
+        "b9c6258c5ad1b1fb67a8672aaf03c465e175b31e"
       ],
       "_approved_why": "Tim, 2026-09-13, asked and answered. 1fffe944 is batch.py at e61bad9c (same blob decls pins); 3f11ba68 is batch.py at fa99005f and earlier, whose records cover all 40 PDFs at 929a9f89's bytes. Under mcp-mayhem 636e6cb an approved build freshens only subjects a record citing it actually judged, and the two wheel PDFs at 929a9f89 were never judged by 1fffe944 -- so the tip build alone cannot heal that commit (simulated by mcpdev). ⚠ Every future batch.py edit now needs a repin here before pdf_coupling can record.",
       "_module_why": "V20, 2026-09-08. `record_pdf_coupling()` in batch.py passes module=\"tools/verify/batch.py\" explicitly at the call site, so this declaration records what the emitter already claims rather than choosing between candidates. There is no pdf_coupling.py. ⚠ NOT common.py, although 113 of 113 records name it in evidence: `record_if_asked`/`emit_verdict` live there and every one of the 22 call sites routes through them, so a common.py pin would be satisfied by every step in the registry -- a pin every step satisfies pins nothing. The 113/104 split that made this look ambiguous was never two producers: 104 name tools/verify/batch.py and 9 name the SAME FILE under an escaped path from one heal run on 2026-09-02 (PDFEV-1)."
@@ -390,7 +389,7 @@
       "when": "CLAUDE.md",
       "module": "tools/verify/check_claude_md.py",
       "approved_modules": [
-        "409c72fb50b86cbe37814acb820d7f394a09fbe6"
+        "6763e2d088f36f56c46d4717fb2fecfbee3e7088"
       ],
       "scope": [
         "CLAUDE.md"

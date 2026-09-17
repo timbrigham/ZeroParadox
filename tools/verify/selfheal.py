@@ -59,6 +59,44 @@ DEFECTS = os.path.join(PRIV, "DEFECTS.md")
 CLASSES = os.path.join(PRIV, "DEFECT_CLASSES.md")
 THRESHOLD = 3
 
+# The summary line's stable half. `/ship` selects that line out of this script's stdout, so the
+# two of them agreed on a wording by COPY until 2026-09-16, when `/rely` O2 measured the copy
+# broken: `ship.py` looked for a line that both began `⚠` and contained "shape(s)", and no line
+# here has ever satisfied both. **The self-heal line had never once printed.** One definition,
+# imported — which is the remedy SH-7 itself prescribes, applied to SH-7's own reporting path.
+SUMMARY_TAG = "shape(s) over threshold"
+
+# The ranked list's two UNCLASSED markers, exported for the same reason as `SUMMARY_TAG` and
+# after the same defect one ring further out (`/rely` R2-B1, 2026-09-16): `batch.py` selects the
+# push-time advisory by matching `← NO CLASS ROW` as a retyped literal, so when the second marker
+# was added, a shape naming a row that does not exist stopped reaching the push-time channel
+# entirely — under a heading that promises "recurring process shapes with NO class row", which
+# this script defines as *no id at all, or an id naming no row*. Half the set, under the heading
+# for the whole set. **Consumers select on these names; they do not retype the strings.**
+ACTIONS_HEADING = "WHAT TO DO BEFORE THE NEXT RUN"
+MARK_NO_ROW = "← NO CLASS ROW"
+MARK_NAMES_NO_ROW = "NAMES NO ROW"
+UNCLASSED_MARKS = (MARK_NO_ROW, MARK_NAMES_NO_ROW)
+
+# A class id is DEFINED at exactly two kinds of site in `DEFECT_CLASSES.md`: a row in the
+# summary table (`| **DC-N** |`) and a section heading whose subject it IS. Anywhere else it is
+# a REFERENCE, and a reference is not evidence the row exists.
+#
+# ⚠ LEADING POSITION IS THE TEST, tightened 2026-09-16 (`/rely` R2-O4). "anywhere in a heading"
+# accepted `### Why this is not DC-99` and `#### See also: DC-99` — headings that CITE a class
+# while defining nothing. Every real heading in the register leads with the id, after at most a
+# marker glyph: `## DC-44 — a TRUE value read against the WRONG OBJECT`, `### ⛔ DC-2 has NO
+# CHECKER`, `### ⚠ DC-24's DIAGNOSIS WAS WRONG`.
+#
+# ⛔ WHAT IT STILL ACCEPTS, DELIBERATELY: `### DC-99 was withdrawn`. A heading LEADING with the
+# id is that class's section, and the question this answers is "has the reader somewhere to go?"
+# — a section recording a retirement answers YES. Naming the limit beats implying it is closed;
+# a third narrowing of the same proxy is where `R-REVALIDATE` says to stop and measure instead.
+CLASS_DEFN = re.compile(
+    r"^(?:\|\s*\*\*(DC-\d+)\*\*"                 # a row in the summary table
+    r"|#{1,6}\s+[^\w\n]*(DC-\d+))",              # or a heading LEADING with the id
+    re.M)
+
 # id, name, pattern, existing class (or None), the process change worth considering
 SHAPES = [
     ("SH-1", "exit status not propagated",
@@ -100,9 +138,16 @@ SHAPES = [
      # top-level name inside ONE module, and none of the rows this pattern matches is that.
      # They are cross-file duplication and paraphrase drift. A row that does not cover the
      # shape is worse than no row, because the banner then reports the shape as covered.
-     None,
+     # ⭐ MAPPED 2026-09-15 to DC-53, written FOR this shape at its 18th occurrence. The banner
+     # had printed "← NO CLASS ROW" on every prepush run in the meantime; the row it was asking
+     # for now exists, and DC-53 carries the detector (the claim sweep over DELETED wording).
+     "DC-53",
      "One definition, imported. If two languages need it, one of them delegates. Measured cost so "
-     "far: two hook implementations, two vendored rules, two ways to spawn agents."),
+     "far: two hook implementations, two vendored rules, two ways to spawn agents. ⚠ AND THE "
+     "REGISTRY FORM IS THE EXPENSIVE ONE: when the drifted copy is a CLASS ROW describing a "
+     "detector, the tool is believed absent and the defect it would catch ships. Measured "
+     "2026-09-15: DC-24's row denied having a mechanical half for 28 days after it shipped, and "
+     "the defect that half would have caught reached two DOI-bearing PDFs."),
     ("SH-8", "report/manifest claims more than it does",
      r"manifest .{0,20}lie|claims? .{0,25}BLOCK|advisory .{0,20}blocked|reads as (a )?confirmation",
      None,
@@ -112,7 +157,18 @@ SHAPES = [
 
 
 def read(p):
-    return io.open(p, encoding="utf-8", errors="replace").read() if os.path.exists(p) else ""
+    """The file's text, or `None` when there is no file.
+
+    ⚠ IT RETURNED `""` UNTIL 2026-09-16, AND THAT IS NOT A WEAKER MESSAGE — IT IS THE SAME
+    BYTES. `/rely` R2-B3 measured it: a MISSING `DEFECTS.md` and a ledger with no rows produce
+    byte-identical output, a clean bill of health, exit 0. And missing is the DEFAULT state on
+    any checkout without the private repo, since `.claude-local` is its own repository that the
+    parent ignores — so the reading nobody can distinguish is also the common one. R-ZERONULL:
+    the empty branch must return a VALUE that differs, never only a different message.
+    """
+    if not os.path.exists(p):
+        return None
+    return io.open(p, encoding="utf-8", errors="replace").read()
 
 
 def rows_of(ledger):
@@ -128,8 +184,28 @@ def rows_of(ledger):
 def main():
     show_all = "--all" in sys.argv
     ledger, classes = read(DEFECTS), read(CLASSES)
+
+    # ⛔ FAIL LOUD AND EARLY. An UNREADABLE input cannot produce a report about recurrence, and
+    # the one thing it must never produce is the report it would print if there were nothing to
+    # find. Both inputs live in `.claude-local`, a separate repository the parent ignores, so
+    # their absence is ordinary rather than exotic.
+    absent = [p for p, t in ((DEFECTS, ledger), (CLASSES, classes)) if t is None]
+    if absent:
+        for p in absent:
+            sys.stderr.write("  ** NOT FOUND: %s **\n" % p)
+        sys.stderr.write(
+            "  This script counts recurrence across those two files. With either missing it has\n"
+            "  NOTHING to count, and a count of zero would be indistinguishable from a clean\n"
+            "  register. Refusing rather than reporting health it has not measured.\n")
+        return 2
     rows = len(re.findall(r"^\| \*\*", ledger, re.M))
-    known = sorted(set(re.findall(r"DC-\d+", classes)),
+    # ⚠ DEFINITION SITES ONLY — a table row `| **DC-N**` or a heading naming DC-N. `/rely`
+    # O1, 2026-09-16: the old `DC-\d+` scan accepted ANY mention, so a class id merely
+    # discussed in prose read as proof its row existed. The property under test is
+    # EXISTENCE, and a mention is not an existence proof — the same substitution DC-27
+    # names (a PROXY tested for the PROPERTY). Measured at the change: both forms return
+    # the same 53 ids today, so this tightens the test without moving the output.
+    known = sorted({a or b for a, b in CLASS_DEFN.findall(classes)},
                    key=lambda s: int(s.split("-")[1]))
 
     report.banner("self-heal — recurrence on gates and agent behaviour", [
@@ -155,7 +231,12 @@ def main():
         shown = (cls + "  ⚠ NO SUCH ROW") if bogus else (cls or "— none —")
         print("  %-6s %-42s %6d%s %s" % (sid, name, n, mark, shown))
         if n >= THRESHOLD:
-            flagged.append((sid, name, n, cls, fix))
+            # ⚠ `bogus` TRAVELS. `/rely` B2, 2026-09-16: it was computed here and consumed
+            # only by this table, while both downstream consumers re-derived "is it classed?"
+            # from `cls` being non-empty. A shape carrying a class id that names NO ROW then
+            # counted as COVERED in the summary and lost its marker in the ranked list —
+            # the same defect RLY37-1 fixed at the mark-and-string route, one ring out.
+            flagged.append((sid, name, n, cls, fix, bogus))
 
     print("")
     if not flagged:
@@ -166,18 +247,22 @@ def main():
     # Tim, 2026-08-10: *"what should we be doing here and now to make the next run better? that's
     # the question that I'm going to keep wanting to ask."* So it is answered on every run, in the
     # imperative, ranked — rather than left as a table the reader has to turn into actions.
-    uncl = [f for f in flagged if not f[3]]
+    # UNCLASSED means "has no row you can go and read" — no id at all, OR an id naming no row.
+    # Collapsing the second into the first is what made the summary sentence false.
+    uncl = [f for f in flagged if not f[3] or f[5]]
     print("  " + "=" * 74)
-    print("  WHAT TO DO BEFORE THE NEXT RUN — ranked, most leverage first")
+    print("  %s — ranked, most leverage first" % ACTIONS_HEADING)
     print("  " + "=" * 74)
-    for i, (sid, name, n, cls, fix) in enumerate(
-            sorted(flagged, key=lambda f: (bool(f[3]), -f[2])), 1):
-        print("  %d. [%s] %s — %d row(s)%s" % (i, sid, name, n,
-                                               "" if cls else "  ← NO CLASS ROW"))
+    for i, (sid, name, n, cls, fix, bogus) in enumerate(
+            sorted(flagged, key=lambda f: (bool(f[3]) and not f[5], -f[2])), 1):
+        flag = ("  " + MARK_NO_ROW if not cls else
+                ("  ← %s %s" % (cls.split()[0], MARK_NAMES_NO_ROW)) if bogus else "")
+        print("  %d. [%s] %s — %d row(s)%s" % (i, sid, name, n, flag))
         print("     %s" % fix)
     print("")
-    print("  %d shape(s) over threshold; %d still have no class row in DEFECT_CLASSES.md."
-          % (len(flagged), len(uncl)))
+    print("  %d %s; %d have no class row to read in DEFECT_CLASSES.md"
+          % (len(flagged), SUMMARY_TAG, len(uncl)))
+    print("  (no id at all, or an id naming no row — both leave the reader with nowhere to go).")
     print("  A class row is worth adding only where the DETECTOR transfers to a question nobody")
     print("  has asked yet — otherwise it is a label, and this register has been through six.")
     print("")

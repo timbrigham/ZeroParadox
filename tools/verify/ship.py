@@ -57,6 +57,7 @@ if BASE not in sys.path:
 
 import report                                    # noqa: E402
 import batch                                     # noqa: E402
+import selfheal                                  # noqa: E402  (SUMMARY_TAG only — see below)
 
 # gate key -> (command file to read, LEDGER STEP it records, human name)
 #
@@ -288,12 +289,33 @@ def cmd_plan(ranges):
     # suggest process improvements"*). It runs here rather than on request because the rule it
     # enforces — "the SECOND occurrence is a class" — requires holding 67 ledger rows in mind at
     # once, which is exactly the kind of remembering this project has measured itself failing at.
-    _rc, sh_out = batch.sh(sys.executable, os.path.join(BASE, "selfheal.py"))
-    tail = [l for l in sh_out.splitlines() if l.strip().startswith("⚠") and "shape(s)" in l]
-    if tail:
-        print("\n  self-heal: %s" % tail[0].strip().lstrip("⚠ "))
+    # ⚠ THE SELECTOR IS IMPORTED, NOT RETYPED (`/rely` O2, 2026-09-16). It used to require a line
+    # that both began `⚠` AND contained "shape(s)"; no line selfheal prints has ever satisfied
+    # both, so this block was dead from the day it was written and `/ship` reported nothing while
+    # looking like it reported nothing to report. That is SH-6 — success not earned — reached
+    # through SH-7 — a definition copied instead of imported.
+    sh_rc, sh_out = batch.sh(sys.executable, os.path.join(BASE, "selfheal.py"))
+    tail = [l for l in sh_out.splitlines() if selfheal.SUMMARY_TAG in l]
+    if sh_rc != 0:
+        # ⚠ STATUS BEFORE CONTENT — the THIRD consumer of this child, and the one still reading
+        # content first after rounds 3 and 4 fixed the other two (`/rely` round 5, B2). A child
+        # that printed its summary line and THEN died satisfied `tail` and rendered as a complete
+        # advisory with no mention of the exit code.
+        print("\n  self-heal: did not complete (exit %s) — advisory, and NOT a clean bill" % sh_rc)
+    elif tail:
+        print("\n  self-heal: %s" % tail[0].strip())
         print("             run `python %s/selfheal.py` for the suggestions"
               % os.path.dirname(SELF))
+    elif sh_rc == 0:
+        # ⚠ THREE OUTCOMES, NOT TWO (`/rely` R3-O2). `cmd_verify` got the third and this sibling
+        # kept two, so a MEASURED "nothing at or over the threshold" printed "not a clean bill" —
+        # over-warning, which is the safe polarity and still the wrong sentence.
+        print("\n  self-heal: nothing at or over the recurrence threshold — nothing to propose.")
+    else:
+        # ⚠ SILENCE AND NOTHING-TO-REPORT ARE DIFFERENT ANSWERS (R-ZERONULL). Advisory either
+        # way — this never blocks — but an unreadable self-heal must not render as a clean one.
+        print("\n  self-heal: NO SUMMARY LINE (selfheal.py exit %s) — advisory, and NOT a clean"
+              " bill" % sh_rc)
 
     # ⚠ THE GATES READ A TREE THAT CAN MOVE UNDER THEM, AND THAT IS HANDLED DOWNSTREAM, NOT HERE.
     # Editing a reviewed file mid-round changes its SHA-256, the signal stops covering it, and
@@ -342,10 +364,24 @@ def cmd_verify(ranges):
     # I'm going to keep wanting to ask."* Asked at `pre` it reports what the last runs cost; asked
     # here it reports what THIS run just added, while the evidence is still in front of you.
     print("")
-    _rc, out = batch.sh(sys.executable, os.path.join(BASE, "selfheal.py"))
-    tail = out.split("WHAT TO DO BEFORE THE NEXT RUN", 1)
-    if len(tail) == 2:
-        print("  WHAT TO DO BEFORE THE NEXT RUN" + tail[1].rstrip())
+    # ⚠ THE SECOND SELECTOR, and it was untouched when the first was fixed (`/rely` R2-B2) —
+    # a retyped heading, the exit status discarded, and no branch for "produced nothing". That is
+    # `SH-3`, one of two routes to the same property, committed inside the fix for the other one.
+    # THREE outcomes here, and they must not render alike (R-ZERONULL): a report, a measured
+    # nothing-to-propose, and a failure to report at all.
+    sh_rc, out = batch.sh(sys.executable, os.path.join(BASE, "selfheal.py"))
+    tail = out.split(selfheal.ACTIONS_HEADING, 1)
+    if sh_rc != 0:
+        # ⚠ STATUS BEFORE CONTENT (`/rely` round 4, B4). A child that printed a truncated report
+        # and then died satisfied the split below and rendered as a complete advisory.
+        print("\n  self-heal: did not complete (exit %s) — advisory, and NOT a clean bill" % sh_rc)
+    elif len(tail) == 2:
+        print("  " + selfheal.ACTIONS_HEADING + tail[1].rstrip())
+    elif sh_rc == 0:
+        print("  self-heal: nothing at or over the recurrence threshold — nothing to propose.")
+    else:
+        print("  self-heal: NO REPORT (selfheal.py exit %s) — advisory, and NOT a clean bill"
+              % sh_rc)
     return 1 if bad else 0
 
 

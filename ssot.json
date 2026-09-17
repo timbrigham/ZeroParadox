@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1737,
-        "files": 146
+        "declarations": 1747,
+        "files": 147
       },
       "entries": [
         {
@@ -7640,6 +7640,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "withdrawn",
+          "id": "19952723-1146-4852-a933-5c5fc003df1d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unregistered_floor_has_no_computable_discriminator",
+            "short": "unregistered_floor_has_no_computable_discriminator"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unregistered_floor_has_no_computable_discriminator",
+            "short": "unregistered_floor_has_no_computable_discriminator",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Deleted 2026-09-16, same day it was added, by /rely round 4 B5. The hypothesis was INERT: measured with lake env lean, the identical proof term elaborates with the hypothesis removed AND with its negation supplied, so the conclusion followed from the commitment and from its denial alike. Its gloss claimed the result was conditional and reduced the open gap to one named assumption; neither was true. R-REVALIDATE step 5(b) — delete rather than redraft. UnregisteredFloor survives as a definition naming the commitment; nothing is proved conditional on it.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "new",
           "id": "199d3add-115d-448d-8882-a7951e455dec",
           "new": {
@@ -11739,6 +11778,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2a620e2f-58b8-4922-ad88-38b3817abbdf",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.registered_discriminator_exists",
+            "short": "registered_discriminator_exists"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.registered_discriminator_exists",
+            "short": "registered_discriminator_exists",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New 2026-09-16. The registered pole's separator as an existence claim, shaped for comparison with PoleDiscriminator. Footprint [propext].",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2a6504cd-d7fa-4865-a6fe-18c7bac2489b",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -11800,6 +11878,45 @@
             ]
           },
           "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2a69685b-0059-4ed4-ae81-475c02c3e450",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.registered_ends_separated",
+            "short": "registered_ends_separated"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.registered_ends_separated",
+            "short": "registered_ends_separated",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New 2026-09-16 with ZeroParadox/Valuation/PoleRegistration.lean. Option.isNone separates the two ends of a registered pole. Footprint [propext].",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13232,6 +13349,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "30110e45-d800-46f4-b2bd-1336cfa747bc",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dom_mk",
+            "short": "dom_mk"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dom_mk",
+            "short": "dom_mk",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New 2026-09-16. (Part.mk p f).Dom = p by rfl — the structural fact that Part carries an arbitrary Prop, so section II stipulates nothing. Axiom-free.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14859,6 +15015,45 @@
             "role": []
           },
           "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3750e2ce-d861-485c-ab81-f97dd6a01006",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_computable_registration_at_kleene_floor",
+            "short": "no_computable_registration_at_kleene_floor"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_computable_registration_at_kleene_floor",
+            "short": "no_computable_registration_at_kleene_floor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New 2026-09-16. No computable Bool test decides whether self-application is defined — self_halting_undecidable as a fact about REGISTRATION, reduced to it rather than restated. Footprint [propext, Classical.choice, Quot.sound], inherited from Mathlib recursion theory.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17645,6 +17840,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "43cb4fa9-0ea9-419a-8768-eab7b3fc584d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_poleDiscriminator",
+            "short": "em_of_poleDiscriminator"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_poleDiscriminator",
+            "short": "em_of_poleDiscriminator",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New 2026-09-16. A uniform discriminator at the unregistered pole yields excluded middle — directly, with no Diaconescu machinery and nothing stipulated, because Part supplies the arbitrary Prop as a field. AXIOM-FREE: the classical content is entirely in the antecedent.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25733,6 +25967,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "64c8a785-b3d7-45f4-b321-d5a7debe4cab",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.registeredDecider",
+            "short": "registeredDecider"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.registeredDecider",
+            "short": "registeredDecider",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New 2026-09-16. A decision procedure (DATA) for \"am I at infinity?\" on Option, uniform in the carrier and needing no DecidableEq. The contrast that section II cannot have. Footprint [propext].",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "64d0ba1e-a097-4b12-ad18-80b104ac90d2",
           "new": {
@@ -26016,6 +26289,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "669b00fb-e634-4d55-a9d8-36e6159cc7dd",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UnregisteredFloor",
+            "short": "UnregisteredFloor"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UnregisteredFloor",
+            "short": "UnregisteredFloor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "commitment"
+            ]
+          },
+          "reason": "New 2026-09-16. THE COMMITMENT, named: that self-application at c is undefined. Can be false — a carrier could floor at a defined value — so it is a hypothesis, never a class field (R-COMMIT).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -54690,6 +55002,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "dbe125a2-37a1-43e7-a7f3-57b4a457dbf7",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.PoleDiscriminator",
+            "short": "PoleDiscriminator"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.PoleDiscriminator",
+            "short": "PoleDiscriminator",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New 2026-09-16. The hypothesis: a uniform Bool test correct about Part.Dom, stated at Unit so the hypothesis is weaker and em_of_poleDiscriminator is stronger. Axiom-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "dc4fef5b-2e82-44ca-9ed0-6e7288277897",
           "new": {
@@ -56679,6 +57030,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e3afae88-46c7-4456-b4c4-5e3ab4c3e3f0",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleDiscriminator_of_classical",
+            "short": "poleDiscriminator_of_classical"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.poleDiscriminator_of_classical",
+            "short": "poleDiscriminator_of_classical",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "New 2026-09-16. The source end of the arrow: classically a discriminator exists, so em_of_poleDiscriminator's antecedent is not unsatisfiable. Classical by construction. Footprint [propext, Classical.choice, Quot.sound].",
           "verify": {
             "axioms": null,
             "sorry_free": true

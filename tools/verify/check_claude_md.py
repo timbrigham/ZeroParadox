@@ -23,7 +23,7 @@ LINE_CAP = 12
 # --- leg registry. `mode` is DATA, never a literal at the call site, so a control can read it.
 LEGS = [
     ('paths',    'BLOCK',   'every ROOTED repo-relative path resolves on disk (CM-9/CM-10)'),
-    ('checkers', 'BLOCK',   'every checker named in CLAUDE.md exists'),
+    ('checkers', 'BLOCK',   'every checker name RESOLVES to a file or is REGISTERED withdrawn'),
     ('unrooted', 'WARN',    'bare-basename / partial file citations (as-touched rollout debt)'),
     ('cap',      'WARN',    'entries over the %d-line cap (CM-1 proxy)' % LINE_CAP),
     ('history',  'WARN',    'prior-state prose (CM-2)'),
@@ -36,6 +36,11 @@ BLOCKING = [n for n, m, _ in LEGS if m == 'BLOCK']
 PENDING = [n for n, m, _ in LEGS if m == 'PENDING']
 
 PLACEHOLDER = re.compile(r'[<>*?]|YYYY|MM-DD|<name>')
+
+# The truncation floor. Live figures on 2026-09-16 were 46 rooted paths and 4 checker names, so
+# this sits at roughly a fifth of the former and the bare minimum of the latter: reachable only by
+# a file that has lost most of itself, never by ordinary editing. Raise it only with a measurement.
+MIN_ROOTED = 10
 
 # Transient DESTINATIONS: paths a tool WRITES rather than paths this file tells you to READ.
 # They are legitimately absent between runs, so a resolve-check on them measures when the
@@ -59,6 +64,31 @@ BACKTICKED = re.compile(r'`([^`\n]+)`')
 # until 2026-08-27 (RLY37-1). It is this file's dominant pointer idiom.
 READ_LINE = re.compile(r'^READ\s+(\S+)', re.M)
 CHECKER_NAMED = re.compile(r'`(check_\w+\.py|guards\.py|batch\.py|hooks\.py|report\.py)`')
+
+# ⭐⭐ A REGISTRY CAN ONLY SPEAK ABOUT WHAT REGISTERED WITH IT (Tim, 2026-09-16: *"the premise of
+# a ledger saying these are the only things doing XYZ — that doesn't make sense. The only thing
+# you can say is these are the things that have properly registered with me"*). So this leg
+# stopped reporting "N named checker(s) MISSING", which asserts a fact about the world it never
+# measured, and reports which of four states each name is in — every count printed every run.
+# The same inversion `R-TRUNC` already demands of the truncation hook: enumerate the positives,
+# do not chase the negatives.
+#
+#   RESOLVED    a file of that name is under `tools/verify`
+#   REGISTERED  the name is declared BELOW as a historical referent, not a dependency
+#   REVIVED     declared below AND present on disk — the registration is stale. BLOCKS.
+#   UNRESOLVED  neither. BLOCKS — and the message says the LOOKUP failed, never that the tool
+#               does not exist, because this leg cannot see anything outside `tools/verify`.
+#
+# ⚠ REGISTERING A NAME IS A TYPED ACT WITH A REASON, exactly like TRANSIENT above, and it is
+# NOT the same as suppressing it: a registered name still appears in the printed counts, and a
+# registration that goes stale BLOCKS rather than rotting quietly.
+WITHDRAWN = {
+    'check_attribution.py':
+        'The withdrawn attribution-checker attempt. CLAUDE.md names it to say what the "PULLED" '
+        'note was ABOUT: mistaking it for the live `check_paths --claim` is DC-53\'s founding '
+        'instance, which cost 28 days and shipped a misattribution into two DOIs. Strip the name '
+        'and the entry stops explaining anything.',
+}
 HISTORY_IDIOMS = re.compile(
     r'this line said|used to read|used to say|previously read|was FALSE|'
     r'until 2026-|an earlier draft|is retracted|corrected 2026-', re.I)
@@ -145,22 +175,71 @@ def manifest(lines, secs):
     print('=' * 78)
 
 
-def blocking_failures(text):
-    """The two BLOCK legs, evaluated against `text`. Returns a list of failure strings.
+def classify_checkers(text):
+    """Every checker name in `text`, partitioned into the four states above.
+
+    Returns `(resolved, registered, revived, unresolved)`. The partition is total and the
+    buckets are disjoint, so `len` of the four always sums to the number of names found —
+    which is the property that makes the printed counts auditable rather than decorative.
+    """
+    resolved, registered, revived, unresolved = [], [], [], []
+    for c in sorted(set(CHECKER_NAMED.findall(text))):
+        on_disk = os.path.exists(os.path.join(ROOT, 'tools', 'verify', c))
+        if c in WITHDRAWN and on_disk:
+            revived.append(c)
+        elif on_disk:
+            resolved.append(c)
+        elif c in WITHDRAWN:
+            registered.append(c)
+        else:
+            unresolved.append(c)
+    return resolved, registered, revived, unresolved
+
+
+def blocking_failures(text, whole_file=False):
+    """The BLOCK legs, evaluated against `text`. Returns a list of failure strings.
 
     Factored out so --selftest exercises THE SAME CODE the push gate runs. A control that
     re-implements the logic it is testing proves nothing about the logic that ships.
+
+    ⚠ `whole_file` GATES THE FLOOR, and the reason is honest rather than convenient: the floor is a
+    property of a COMPLETE `CLAUDE.md`, and the fragment cases below feed one-line snippets that
+    are all legitimately below it. Passing a fragment is not a claim that the file is intact, so
+    the floor must not judge one. `main()` passes True; the end-to-end fixtures reach it THROUGH
+    `main()`, so the shipping path is still what the controls drive.
     """
     fails = []
+
+    # ⛔⛔ THE FLOOR — AN ABSENT FILE IS NOT A CLEAN ONE. `/rely` round 5, ruled BEDROCK by Tim
+    # 2026-09-16: every other leg here is a search for BAD pointers, so a `CLAUDE.md` emptied or
+    # truncated has none and the gate returned exit 0, printed `OK: 2 blocking leg(s) clear`, and
+    # handed `record_if_asked` an empty failing list — PUBLISHING a pass over absent evidence.
+    # Measured end to end at 3 bytes: this checker, `check_paths`, `check_prose` and
+    # `check_encoding` all exited 0, and `required.v2.json` scope-excludes `CLAUDE.md` from
+    # `editorial` and `adversary`, so this is the only gate it has.
+    # ⚠ SCOPE, STATED: a floor catches GROSS truncation, never a surgical edit that keeps the
+    # pointer density. It is a tripwire on the file's SIZE, not a judgement on its content, and
+    # the counts are far below the live figures (46 rooted paths, 4 named checkers) so ordinary
+    # editing cannot reach it. R-ZERONULL: the empty branch must return a different VALUE.
+    rooted_all, _loose_all, _ext_all = cited_paths(text)
+    named_all = set(CHECKER_NAMED.findall(text))
+    if whole_file and (len(rooted_all) < MIN_ROOTED or not named_all):
+        fails.append('floor:%d rooted path(s) and %d checker name(s) — below the floor of %d/1, '
+                     'so this file is truncated or empty rather than clean'
+                     % (len(rooted_all), len(named_all), MIN_ROOTED))
+
     rooted, _, _ = cited_paths(text)
     missing = [p for p in rooted
                if not os.path.exists(os.path.join(ROOT, p)) and p not in TRANSIENT]
     if missing:
         fails.append('paths:' + ','.join(sorted(missing)))
-    absent = [c for c in sorted(set(CHECKER_NAMED.findall(text)))
-              if not os.path.exists(os.path.join(ROOT, 'tools', 'verify', c))]
-    if absent:
-        fails.append('checkers:' + ','.join(absent))
+    _res, _reg, revived, unresolved = classify_checkers(text)
+    if unresolved:
+        fails.append('checkers:' + ','.join(unresolved))
+    if revived:
+        # A stale WITHDRAWN entry is the registry disagreeing with the tree, which is the exact
+        # class this mechanism exists to stop CLAUDE.md committing. It fails on the way back too.
+        fails.append('checkers-revived:' + ','.join(revived))
     return fails
 
 
@@ -193,6 +272,12 @@ def selftest():
         # argument, dropping the R-RELEASE idiom's real path with it.
         ('cmd-placeholder-live', 'run `python tools/verify/check_hashes.py <tag>` first.',  False),
         ('cmd-placeholder-dead', 'run `python tools/verify/check_absent.py <tag>` first.',  True),
+        # A REGISTERED withdrawn name must not block, and it must not be silent either -- the
+        # run prints it with its reason. This row asserts only the first half; the mechanism's
+        # both-halves control is below, on a synthetic member, so it cannot go green by accident
+        # the way `transient-excluded` did for three independent wrong reasons.
+        ('withdrawn-registered', 'the note was about `check_attribution.py`, a DIFFERENT tool.',
+                                                                                          False),
     ]
     bad = 0
 
@@ -200,12 +285,20 @@ def selftest():
     # Both halves, against the SAME dict `blocking_failures` reads: absent -> must fire, present ->
     # must suppress. Without this the exclusion path would be untested code the moment the list
     # emptied, and a suppression route nobody has seen work is not a mechanism, it is a hope.
+    # ⚠ `mech` COUNTS THE MECHANISM CONTROLS so the summary can state a total the reader can
+    # re-derive from the rows above it (`/rely` R2-O3, 2026-09-16: the run printed 13 rows and
+    # claimed `PASS (11/11)`, counting `cases` only). And the two MUST-FIRE halves below now
+    # print on PASS as well as on FAIL — a control that is silent when it succeeds cannot be
+    # counted, and an uncountable control is indistinguishable from one that never ran.
+    mech = 0
+
     SYN = 'tools/verify/_synthetic_transient_destination.json'
     syn_text = 'the batch writes `%s` between runs.' % SYN
-    if not blocking_failures(syn_text):
-        print('  %-22s %-14s expected %-6s got %-6s FAIL'
-              % ('transient-mechanism', 'MUST FIRE', True, False))
-        bad += 1
+    t_fired = bool(blocking_failures(syn_text))
+    print('  %-22s %-14s expected %-6s got %-6s %s'
+          % ('transient-mechanism', 'MUST FIRE', True, t_fired, 'ok' if t_fired else 'FAIL'))
+    mech += 1
+    bad += (not t_fired)
     TRANSIENT[SYN] = 'synthetic, installed by --selftest only'
     try:
         fired = bool(blocking_failures(syn_text))
@@ -213,8 +306,44 @@ def selftest():
         del TRANSIENT[SYN]
     print('  %-22s %-14s expected %-6s got %-6s %s'
           % ('transient-mechanism', 'BOTH HALVES', False, fired, 'ok' if not fired else 'FAIL'))
+    mech += 1
     if fired:
         bad += 1
+
+    # The WITHDRAWN mechanism, same shape, on a synthetic member -- and a THIRD half the
+    # TRANSIENT control does not have: the REVIVED state, where the registration is stale
+    # because the file came back. That direction is the one a suppression list normally rots
+    # in, so it is the one worth a control.
+    WSYN = 'check_synthetic_withdrawn.py'
+    wsyn_text = 'the `%s` attempt was pulled; do not confuse it with the live sweep.' % WSYN
+    w_fired = bool(blocking_failures(wsyn_text))
+    print('  %-22s %-14s expected %-6s got %-6s %s'
+          % ('withdrawn-mechanism', 'MUST FIRE', True, w_fired, 'ok' if w_fired else 'FAIL'))
+    mech += 1
+    bad += (not w_fired)
+    WITHDRAWN[WSYN] = 'synthetic, installed by --selftest only'
+    try:
+        wfired = bool(blocking_failures(wsyn_text))
+        # REVIVED: registered AND on disk. Build the file, so the state is CONSTRUCTED and run
+        # rather than argued -- the same discipline the `unreadable state` rule asks for.
+        wpath = os.path.join(ROOT, 'tools', 'verify', WSYN)
+        open(wpath, 'w').close()
+        try:
+            revived_fired = any(f.startswith('checkers-revived:')
+                                for f in blocking_failures(wsyn_text))
+        finally:
+            os.remove(wpath)
+    finally:
+        del WITHDRAWN[WSYN]
+    print('  %-22s %-14s expected %-6s got %-6s %s'
+          % ('withdrawn-mechanism', 'BOTH HALVES', False, wfired, 'ok' if not wfired else 'FAIL'))
+    mech += 1
+    bad += bool(wfired)
+    print('  %-22s %-14s expected %-6s got %-6s %s'
+          % ('withdrawn-revived', 'MUST FIRE', True, revived_fired,
+             'ok' if revived_fired else 'FAIL'))
+    mech += 1
+    bad += (not revived_fired)
 
     # ⚠⚠ THE CONTROL THIS CHECKER DID NOT HAVE, and its absence is what hid the defect above.
     # Every case here runs on a machine where `.claude-local/` EXISTS. The leg classified by
@@ -233,6 +362,7 @@ def selftest():
     print('  %-22s %-14s expected %-6s got %-6s %s'
           % ('listdir-invariance', 'BOTH ROOTS', 0, len(drift),
              'ok' if not drift else 'FAIL ' + ','.join(drift)))
+    mech += 1
     bad += 1 if drift else 0
 
     for name, text, must_fire in cases:
@@ -243,8 +373,66 @@ def selftest():
         print('  %-22s %-14s expected %-6s got %-6s %s'
               % (name, 'MUST FIRE' if must_fire else 'MUST SUPPRESS',
                  must_fire, fired, 'ok' if ok else 'FAIL'))
-    print('\nselftest: %s (%d/%d) - FIRES on %d planted defect(s), SUPPRESSES on %d clean case(s)'
-          % ('PASS' if not bad else 'FAIL', len(cases) - bad, len(cases),
+    # ⚠⚠ END-TO-END ON `main()` ITSELF — the function `hooks.py` invokes and the one that calls
+    # `record_if_asked`. `/rely` round 4, BEDROCK: the round-3 control asserted the STRING
+    # 'blocking_failures(' appeared in `main`'s source, which is a PROXY for the property (DC-27).
+    # Measured: keeping the call, discarding its value and re-deriving the verdict from the legs
+    # gave `exit 0` on a planted defect while this suite printed `PASS (19/19)`. A control must
+    # drive the thing that PRODUCES THE VERDICT; nothing short of running the gate does that.
+    import contextlib
+    import tempfile
+    global TARGET
+    _real_target = TARGET
+    _real_argv = sys.argv
+    _live = io.open(_real_target, encoding='utf-8').read()
+    # ⚠⚠ ONE DEFECT PER FIXTURE, AND THAT IS THE WHOLE POINT. A first version planted a dead path
+    # AND an unresolved checker in one file; measured against the round-4 mutation (checkers leg
+    # neutered, paths leg intact) it stayed GREEN, because the surviving leg still blocked. A
+    # control bound to a fixture carrying two defects cannot fail in the shape a single-leg
+    # regression takes — DC-49's "bound to its subject by position" wearing a fixture.
+    _bad_path = _live + ('\n## R-PROBE  --selftest fixture, never committed\n'
+                         'READ     tools/process/definitely_not_here.md\n')
+    _bad_check = _live + ('\n## R-PROBE  --selftest fixture, never committed\n'
+                          'RULE     run `check_definitely_absent.py` before committing.\n')
+    _tmp = os.path.join(tempfile.gettempdir(), '_ccm_selftest_fixture.md')
+    # ⛔ THE FIXTURES BELOW ARE SMALLER THAN LIVE, AND THAT IS THE POINT (`/rely` round 5). Every
+    # earlier fixture was `_live + <appended defect>`, so the CONSTRUCTION could never produce a
+    # target shorter than the real file nor a defect outside the tail — the gate's blindness to an
+    # emptied or truncated `CLAUDE.md` was unreachable by its own controls.
+    _empty = ''
+    _truncated = '\n'.join(_live.split('\n')[:40])
+    for _label, _content, _want_block in (('gate-blocks-bad-path', _bad_path, True),
+                                          ('gate-blocks-bad-checker', _bad_check, True),
+                                          ('gate-blocks-empty', _empty, True),
+                                          ('gate-blocks-truncated', _truncated, True),
+                                          ('gate-clears-live', _live, False)):
+        try:
+            io.open(_tmp, 'w', encoding='utf-8').write(_content)
+            TARGET = _tmp
+            sys.argv = ['check_claude_md.py']          # no --selftest: main() must not recurse
+            _buf = io.StringIO()
+            with contextlib.redirect_stdout(_buf):
+                _rc = main()
+        finally:
+            TARGET, sys.argv = _real_target, _real_argv
+            if os.path.exists(_tmp):
+                os.remove(_tmp)
+        _blocked = bool(_rc)
+        _ok = _blocked == _want_block
+        print('  %-22s %-14s expected %-6s got %-6s %s'
+              % (_label, 'MUST FIRE' if _want_block else 'MUST SUPPRESS',
+                 _want_block, _blocked, 'ok' if _ok else 'FAIL'))
+        mech += 1
+        bad += (not _ok)
+
+    # ⚠ THE TOTAL COUNTS EVERY ROW PRINTED ABOVE — `cases` plus the `mech` mechanism controls.
+    # It used to count `cases` alone, so the printed total was smaller than the printed rows and
+    # no reader could re-derive it (`/rely` R2-O3). The `mech` controls are named in the same
+    # column as the cases precisely so the two are addable.
+    total = len(cases) + mech
+    print('\nselftest: %s (%d/%d) - %d case(s) + %d mechanism control(s); '
+          'FIRES on %d planted defect(s), SUPPRESSES on %d clean case(s)'
+          % ('PASS' if not bad else 'FAIL', total - bad, total, len(cases), mech,
              sum(1 for c in cases if c[2]), sum(1 for c in cases if not c[2])))
     return 1 if bad else 0
 
@@ -292,7 +480,6 @@ def main():
                if not os.path.exists(os.path.join(ROOT, p)) and p not in TRANSIENT}
     skipped = sum(1 for p in rooted if p in TRANSIENT)
     if missing:
-        bad += 1
         print('\n  paths            FAIL  %d rooted path(s) do not resolve' % len(missing))
         for p, ln in sorted(missing.items()):
             print('      CLAUDE.md:%d  %s' % (ln, p))
@@ -307,15 +494,57 @@ def main():
           % (len(external), ', '.join(EXTERNAL_ROOTS)))
 
     # --- BLOCK: named checkers exist -----------------------------------------
-    named = sorted(set(CHECKER_NAMED.findall(text)))
-    absent = [c for c in named
-              if not os.path.exists(os.path.join(ROOT, 'tools', 'verify', c))]
-    if absent:
-        bad += 1
-        print('  checkers         FAIL  %d named checker(s) missing: %s'
-              % (len(absent), ', '.join(absent)))
+    resolved, registered, revived, unresolved = classify_checkers(text)
+    named = resolved + registered + revived + unresolved
+    if unresolved or revived:
+        if unresolved:
+            # ⚠ THE WORDING IS THE FINDING. "missing" claims the tool does not exist; all this
+            # leg did was fail to find a file in ONE directory and fail to find a registration.
+            print('  checkers         FAIL  %d name(s) resolved to no file under tools/verify '
+                  'and are not registered: %s' % (len(unresolved), ', '.join(unresolved)))
+        if revived:
+            print('  checkers         FAIL  %d name(s) registered as WITHDRAWN but present on '
+                  'disk — drop the registration: %s' % (len(revived), ', '.join(revived)))
     else:
-        print('  checkers         ok    all %d named checkers exist' % len(named))
+        print('  checkers         ok    %d of %d name(s) resolved to a file under tools/verify'
+              % (len(resolved), len(named)))
+    # Printed on EVERY run, clear or blocked, and the reason is the same one TRANSIENT carries:
+    # an exclusion nobody counts is how coverage silently shrinks.
+    print('                         (%d name(s) registered as WITHDRAWN, see WITHDRAWN)'
+          % len(registered))
+    for c in registered:
+        print('                             %s — %s' % (c, WITHDRAWN[c]))
+
+    # --- THE VERDICT IS `blocking_failures`. The legs above PRINT; they do not decide. ------
+    # ⚠⚠ `/rely` ROUND 3, BEDROCK, 2026-09-16. `main()` used to accumulate its own `bad` and
+    # called `blocking_failures()` ZERO times, while that function's docstring said *"Factored
+    # out so --selftest exercises THE SAME CODE the push gate runs."* Measured both halves:
+    # neutering `main()`'s two `bad += 1` lines took the gate from exit 1 to exit 0 on a planted
+    # defect, and `--selftest` still printed `PASS (18/18)`. `hooks.py` runs `main()`, so `main()`
+    # IS the push gate — and it also calls `record_if_asked`, so the divergence would have
+    # PUBLISHED a passing verdict for a `CLAUDE.md` the controls never judged.
+    fails = blocking_failures(text, whole_file=True)
+    bad = len(fails)
+
+    # And they must not drift apart again. Both sides are computed from the SAME `text`, so a
+    # disagreement is a defect in THIS file rather than in `CLAUDE.md` — and it blocks, because a
+    # gate that cannot agree with its own controls has no verdict to give.
+    # ⚠ COUNT THE SAME OBJECT ON BOTH SIDES (`/rely` round 4, O2). This compared LEGS (max 2)
+    # against FAILURE STRINGS (max 3, since the checkers leg can emit both `checkers:` and
+    # `checkers-revived:`), so a revived pin plus an unresolved name raised a false DIVERGED.
+    # It failed closed, and an alarm that is wrong is still a defect in the alarm.
+    printed = set()
+    if missing:
+        printed.add('paths')
+    if unresolved:
+        printed.add('checkers')
+    if revived:
+        printed.add('checkers-revived')
+    if printed != {f.split(':', 1)[0] for f in fails}:
+        print('\n  ** INTERNAL: legs printed %s, blocking_failures() reports %s.'
+              % (sorted(printed) or ['none'], sorted(fails) or ['none']))
+        print('     The gate and the code its controls exercise have DIVERGED. Blocking. **')
+        bad = max(bad, len(printed), 1)
 
     # --- WARN legs. Counts printed on EVERY run, blocked or clear. -----------
     print('  unrooted         WARN  %d bare/partial file citation(s) '
