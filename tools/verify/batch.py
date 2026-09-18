@@ -1545,8 +1545,15 @@ def check_pdf_coupling(ranges=None):
 # widened the registry only, and the deciding number was measured THROUGH THE LEDGER, which reads
 # registry scope and cannot reach this constant — a true number about the wrong object.
 # ⚠ OVER-MATCHING HERE IS SAFE, UNDER-MATCHING IS THE FAILURE MODE. This tuple has no exclusion
-# mechanism, so `touched` rises to 77 and includes `tools/*.md`; `owing` honours `prior_art`'s
-# `scope_exclude`, so the intersection filters them back out. Verified against the tree, not assumed.
+# mechanism, so `touched` over-matches; `owing` honours `prior_art`'s `scope_exclude`, so the
+# intersection filters the excluded paths back out. `CLAUDE.md` is the live example — matched here,
+# excluded there, never owed.
+# ⛔ THIS COMMENT ONCE NAMED `tools/*.md` AS THAT EXAMPLE AND WENT FALSE INSIDE ITS OWN COMMIT.
+# `b13e67cc` struck `tools/*.md` from `prior_art.scope_exclude` in the SAME change that wrote the
+# sentence relying on it, so the claim was true when drafted and false when committed — 29
+# `tools/*.md` paths now appear in `prior_art`'s owing list. Found by `/rely` 2026-09-18 (`O1`).
+# **A worked example is a FACT ABOUT THE CURRENT CONFIG, not an illustration** — it goes stale
+# exactly like a count, and it goes stale fastest in the commit that edits the config it cites.
 ATTRIBUTABLE = ("*.lean", "scripts/build_*.py", "*.md")
 
 
