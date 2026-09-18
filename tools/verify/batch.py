@@ -752,18 +752,30 @@ ROUTING = [
     # AND `ROUTING rows: NONE` — the same file exempt from the prose gates and routed to no
     # gate at all, which is the round-1 signature character for character. Latent on Windows
     # (git normalises case here) and LIVE on ubuntu-latest, where CI runs.
-    (re.compile(r"^tools/verify/", re.I),
-     "/rely", "a checker, hook, or exemption switch changed - its first run produced CHK-2 and "
-              "CHK-3, both checker bugs, so this is the measured persona for the verification layer"),
+    # ⚠⚠ WIDENED TO THE WHOLE `tools/` FOLDER 2026-09-18, Tim's ruling: *"The tools folder doesn't
+    # make sense for anything but rely to cover. Adversary is math, as is prior art. Editorial
+    # doesn't make sense on tooling."* This row REPLACES the separate `^tools/verify/` and
+    # `^tools/process/` rows; `EXEMPT_PREFIXES` and `rely.scope` moved in the SAME commit, because
+    # `guards.check_registry_router_agreement` requires this prefix set and the scope to be EQUAL.
+    # ⛔ THE GAP IT CLOSES WAS PRE-EXISTING, NOT NEW. Measured 2026-09-18 over all 109 tracked
+    # `tools/` paths: 12 were claimed by NO gate at all — every file under `tools/registry/` and
+    # `tools/render/` — because the prose gates excluded them via `tools/*.md` (`*` crosses `/`)
+    # while `rely.scope` reached only `tools/verify/*` and `tools/process/*`. A /rely round read
+    # that as a hole opened by the harmonisation; the census says orphans were 12 before and 12
+    # after, so the harmonisation created none of it. **Two lists that disagree about a folder
+    # leave its subdirectories to nobody, and neither list looks wrong on its own.**
+    # ⚠ The two personas below are merged rather than lost: one prefix cannot carry two reasons,
+    # and an overlapping second row would route the same file twice.
+    (re.compile(r"^tools/", re.I),
+     "/rely", "a checker, hook, exemption switch, or routed process document changed - the "
+              "verification layer's first run produced CHK-2 and CHK-3, both checker bugs, and a "
+              "routed rule whose trigger or pointer rots stops firing silently"),
     # `tools/process/` is CLAUDE.md's body — the argument behind each routed rule, split out so the
     # injected file can be a routing table rather than the payload. Same pairing as the prefix above:
     # it is exempt in EXEMPT_PREFIXES and routed here, and the two MUST be edited together. Added
     # 2026-08-20 with its first two files; the exemption is DECLARED in CLAUDE.md's header, never
     # inferred from "it is operating instructions" — that inference is what put `.claude/commands/`
     # in the exempt tuple for an hour before it was removed.
-    (re.compile(r"^tools/process/", re.I),
-     "/rely", "CLAUDE.md's routed body changed - a rule whose trigger or pointer rots stops firing "
-              "silently, which is the failure mode the split exists to remove"),
     (re.compile(r"^\.github/workflows/", re.I),
      "/rely", "CI workflow changed - a fail-open here publishes a false verification claim"),
 ]
@@ -1769,7 +1781,10 @@ EXEMPT_PATHS = ("claude.md", "ssot.json", "lake-manifest.json")
 # The exemption is DECLARED in CLAUDE.md's header rather than inferred here, and `ROUTING` above
 # fires on this exact prefix, so the pair covers the same set. Fence: anything in there asserting
 # mathematics belongs in the corpus and is gated normally.
-EXEMPT_PREFIXES = ("tools/verify/", "tools/process/")
+# ⚠⚠ WIDENED TO `tools/` 2026-09-18 IN THE SAME COMMIT AS `ROUTING` AND `rely.scope`, because the
+# three describe one fact and the file's own history is that editing one alone breaks it. The
+# exemption and its compensating route must cover the SAME SET or the pair is a story.
+EXEMPT_PREFIXES = ("tools/",)
 
 
 def _range_tips(ranges):
