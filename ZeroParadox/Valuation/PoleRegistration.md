@@ -37,7 +37,8 @@ middle alone does not elaborate, dying at `Decidable x.Dom`; that is a fact abou
 Whether `PoleDiscriminator` follows from excluded middle **choice-free** is not settled in this file,
 and no failed elaboration could settle it.
 
-**§ II does NOT remove the stipulation `PoleChartSelection.em_of_uniformChartSelection` needs.**
+**§ II does NOT remove the stipulation `em_of_uniformChartSelection` needs**
+(`ZeroParadox/Valuation/PoleChartSelection.lean`).
 `poleAdmissible` appears nowhere in that theorem's binders or proof term; its hypothesis is
 `ChoiceFragment` by `Iff.rfl`, universally quantified over `S : Bool → Prop`. The narrower true
 statement: this proof does not route through Diaconescu, a fact about proof structure and not about
