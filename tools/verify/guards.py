@@ -506,8 +506,49 @@ def check_registry_router_agreement():
     # three-probe set, unchecked regex flags, a routing PATTERN for enforcement. A prefix STRING is
     # the same error: accountability is the SET OF PATHS the step answers for, and `scope_exclude`
     # subtracts from that set without touching any prefix. **Narrowing the proxy would be the
-    # failure repeating; this leg replaces it with the observation.**
-    tracked = sorted(common.index_blobs().keys())
+    # failure repeating; this leg ADDS the observation.**
+    #
+    # ⛔⛔ "ADDS", NOT "REPLACES" — DO NOT RETIRE THE PREFIX ROWS ABOVE AS A SUPERSEDED PROXY.
+    # An earlier draft of this comment said "replaces", which invites deleting them.
+    #
+    # THE HAZARD, stated as what was measured and by whom, because the two measurements DISAGREE and
+    # the disagreement is the reason to keep both legs rather than a reason to trust one:
+    #   · /rely round 2 reported a co-ordinated narrowing — `batch.ROUTING` and `rely.scope` moved
+    #     TOGETHER — leaving the PATH rows green at 72/114 while `EXEMPT_PREFIXES` still exempted
+    #     all of `tools/`: 42 files exempt and unpriced, the 2026-09-01 hole verbatim.
+    #   · Reproducing it here 2026-09-18, narrowing both to `tools/verify/`, BOTH legs fired
+    #     (2 prefix rows, 1 path row at 42). ⚠ SO THE STRONGER CLAIM — "only the prefix rows catch
+    #     this" — IS NOT REPRODUCED HERE AND IS NOT ASSERTED. The exact construction matters and I
+    #     did not recover theirs.
+    # ⭐ EITHER WAY THE INSTRUCTION IS THE SAME, and it does not depend on which measurement is
+    # right: a co-ordinated narrowing shrinks BOTH SIDES OF THE PATH COMPARISON IN STEP, which is
+    # the one thing a same-source set comparison structurally cannot see, while the prefix rows read
+    # the router's declared prefixes and do not move with it. The path rows catch a `scope_exclude`
+    # carve of a SINGLE file, which no prefix string can express. Neither dominates. Delete either
+    # and you reopen the case it was the only one to see — and `EXEMPT_PREFIXES` is a THIRD surface
+    # that neither leg reads, which is why `check_exemption_surface` exists beside both.
+    # ⛔⛔ THE ZERO POINT, AND IT IS CHECKED BEFORE ANYTHING IS COMPARED. Both sets below are carved
+    # out of this ONE list, so an empty `tracked` makes every set difference empty and "the two
+    # agree" is VACUOUSLY TRUE — green, exit 0, over a run that observed nothing. Found by /rely
+    # 2026-09-18 round 2 against the leg written in round 1 to fix a DIFFERENT vacuity in the same
+    # function: the round-1 fix replaced a proxy with the property and then inherited a fail-open
+    # through its INPUT instead of its registry key. ⚠ `common.index_blobs()` now fails closed on a
+    # git error (`check=True`), so reaching here with nothing means a genuinely empty index — which
+    # this repository cannot have. Both halves are kept: the helper refuses to invent an empty
+    # answer, and this leg refuses to CONCLUDE from one.
+    try:
+        tracked = sorted(common.index_blobs().keys())
+    except (OSError, subprocess.SubprocessError) as e:
+        row("index readable", False,
+            "*** could not read the git index (%s) — this leg compares two sets carved from it, "
+            "and an unreadable index makes them trivially equal. It CANNOT pass on absent input ***"
+            % e)
+        return rows, bad
+    if not tracked:
+        row("index non-empty", False,
+            "*** the git index lists NO tracked paths — every set difference below would be empty "
+            "and this leg would report agreement having observed nothing. Refusing to conclude ***")
+        return rows, bad
 
     def _matches(globs, path):
         return any(fnmatch.fnmatch(path, g) for g in (globs or []))

@@ -496,9 +496,28 @@ INDEX = 'INDEX'   # the staged content — see `ledger_subjects`
 
 
 def index_blobs():
-    """`{path: blob id}` from the INDEX. One git call, whatever the subject count."""
+    """`{path: blob id}` from the INDEX. One git call, whatever the subject count.
+
+    ⚠⚠ `check=True` IS LOAD-BEARING AND WAS ABSENT UNTIL 2026-09-18. Without it a failed
+    `ls-files` — unreadable index, absent repository, git itself broken — returned `{}`, which is
+    indistinguishable from a genuinely empty index. `R-ZERONULL`: the empty branch must not return
+    the same VALUE as the satisfied one, because consumers branch on the value and nobody reads the
+    message.
+
+    ⛔ MEASURED, AND BY A CONSUMER THAT DID NOT EXIST WHEN THIS WAS WRITTEN. A /rely round made the
+    index unreadable with the worktree otherwise intact, and
+    `guards.check_registry_router_agreement` — which carves BOTH of its compared sets out of this
+    dict — printed `router and registry agree ON PATHS, 0 tracked path(s), identical set both
+    sides`, exit 0, with every other leg unchanged. `hooks.py` invokes guards as exit-0-is-pass and
+    records the verdict on the same call, so the artifact a human and the hook both read said PASS
+    over a run that observed nothing. An empty universe makes every set difference empty, so a
+    check phrased as "these two sets agree" is VACUOUSLY TRUE exactly when the input failed.
+
+    ⭐ `tracked_md()`, twenty lines above, has always had `check=True`. Two routes to one property
+    and only one of them honoured it — the `SH-3` shape this bundle keeps recording. The sibling was
+    right the whole time and nobody diffed them."""
     out = subprocess.run(['git', 'ls-files', '-s'], cwd=str(REPO), capture_output=True,
-                         text=True, encoding='utf-8', errors='replace').stdout
+                         text=True, encoding='utf-8', errors='replace', check=True).stdout
     blobs = {}
     for line in out.splitlines():
         meta, _, path = line.partition('\t')          # `<mode> <blob> <stage>\t<path>`
