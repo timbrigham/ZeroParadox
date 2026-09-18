@@ -36,6 +36,7 @@ lets this run inside the hooks, where it is worth having.
 ⚠ If the process is KILLED mid-route the mutation survives — visibly: the checkers fire and
 `git status` shows the probe file. It is not silent, and re-running restores nothing on its own.
 """
+import fnmatch
 import io
 import json
 import os
@@ -487,8 +488,93 @@ def check_registry_router_agreement():
             "routes to it, so the step cannot be satisfied. Add it to batch.ROUTING or drop it "
             "from the scope ***")
     if not (routed ^ declared):
-        row("router and registry agree", True,
+        row("prefix lists agree", True,
             "%d prefix(es), same set both sides: %s" % (len(routed), ", ".join(sorted(routed))))
+
+    # ── THE PREFIX COMPARISON ABOVE IS A PROXY. THE PROPERTY IS A SET OF PATHS. ───────────────
+    #
+    # ⚠⚠ ADDED 2026-09-18 AFTER A /rely ROUND GOT THIS CHECK TO PRINT `router and registry agree`,
+    # EXIT 0, BYTE-IDENTICAL OUTPUT, OVER A `rely` ENTRY CARRYING
+    # `scope_exclude: ["tools/verify/*", "tools/process/*"]` — the two directories the whole prose-gate
+    # exemption is priced on. Everything above reads `types.rely.scope` and NOTHING ELSE, so it
+    # watched the one key an honest editor would move and none of the three a careless one would.
+    # `scope_exclude` has measured force (on `editorial`: 160 scope-matched paths, ledger
+    # `applies_to` 122), so one key withdrew rely's accountability invisibly to its own control.
+    #
+    # ⭐ THE LESSON IS THIS FILE'S OWN, RESTATED: every instance of warrant-satisfied-while-empty
+    # here tested a STAND-IN for the property instead of the property — a sampling, a narrowing, a
+    # three-probe set, unchecked regex flags, a routing PATTERN for enforcement. A prefix STRING is
+    # the same error: accountability is the SET OF PATHS the step answers for, and `scope_exclude`
+    # subtracts from that set without touching any prefix. **Narrowing the proxy would be the
+    # failure repeating; this leg replaces it with the observation.**
+    tracked = sorted(common.index_blobs().keys())
+
+    def _matches(globs, path):
+        return any(fnmatch.fnmatch(path, g) for g in (globs or []))
+
+    rely_cfg = reg["types"]["rely"]
+    routed_paths = {p for p in tracked
+                    if any(pat.search(p) for pat, gate, _w in batch.ROUTING if gate == "/rely")}
+    accountable = {p for p in tracked
+                   if _matches(rely_cfg.get("scope"), p)
+                   and not _matches(rely_cfg.get("scope_exclude"), p)}
+
+    only_routed = routed_paths - accountable
+    only_account = accountable - routed_paths
+    if only_routed:
+        row("PATHS routed to /rely that it does not answer for: %d" % len(only_routed), False,
+            "*** %d FILE(S) ROUTE TO /rely AND ARE OUTSIDE ITS ACCOUNTABILITY — the prose gates "
+            "exempt them on the strength of /rely covering them, and the ledger counts none of "
+            "them. First few: %s. Check types.rely.scope AND types.rely.scope_exclude ***"
+            % (len(only_routed), ", ".join(sorted(only_routed)[:6])))
+    if only_account:
+        row("PATHS in rely accountability that nothing routes: %d" % len(only_account), False,
+            "*** %d FILE(S) THE LEDGER HOLDS /rely ACCOUNTABLE FOR WITH NO ROUTER ENTRY — the step "
+            "cannot be satisfied over them. First few: %s ***"
+            % (len(only_account), ", ".join(sorted(only_account)[:6])))
+    if not (only_routed or only_account):
+        row("router and registry agree ON PATHS", True,
+            "%d tracked path(s), identical set both sides, computed through scope AND scope_exclude"
+            % len(routed_paths))
+
+    # ── AND FAIL CLOSED ON A NARROWING KEY THIS LEG DOES NOT UNDERSTAND. ──────────────────────
+    #
+    # ⚠ AN ALLOWLIST, DELIBERATELY, AND THE REASON IS THIS PROJECT'S OWN MEASURED RULE: a DENYLIST
+    # is porous by construction — every fix closes the cut its author thought of, and `R-TRUNC`
+    # recorded 15 of 19 filters walking straight through one. Enumerating the narrowing keys we
+    # know about (`scope_exclude`, `actions`, `when`) would go stale silently the day a new one is
+    # added. So: every non-note key in the `rely` entry must be RECOGNISED, or this fails.
+    # Adding a key to the registry then forces a decision about whether it narrows accountability,
+    # which is the decision that was skipped here.
+    # HANDLED — this leg reads them and the path sets above account for them.
+    HANDLED = {"scope", "scope_exclude"}
+    # INERT for path accountability: they bear on HOW the step is judged, never on WHICH paths it
+    # answers for. Each was checked against the registry's own key vocabulary before being listed.
+    INERT = {"family", "module", "reason", "approved_modules", "switches", "min_coverage"}
+    #
+    # ⛔ `actions` AND `when` ARE DELIBERATELY IN NEITHER SET, AND THAT IS THE POINT OF THIS ROW.
+    # They narrow APPLICABILITY rather than paths — `actions: []` makes the step NOT_APPLICABLE and
+    # owing nothing, while every path set computed above is unchanged — so the comparison cannot
+    # see them. ⚠ AN EARLIER DRAFT OF THIS VERY LEG LISTED THEM AS "recognised", WHICH WAS THE
+    # SKIPPED DECISION THIS ALLOWLIST EXISTS TO FORCE, COMMITTED INSIDE THE FIX FOR IT. Caught by
+    # mutation: `actions: []` passed a leg written the same hour to stop exactly that move.
+    # `rely` carries neither key today, so this row is green until someone adds one — at which
+    # point it stops and demands the decision rather than modelling it wrong.
+    unknown = sorted(k for k in rely_cfg
+                     if not k.startswith("_") and k not in (HANDLED | INERT))
+    if unknown:
+        row("key(s) in types.rely this leg cannot account for", False,
+            "*** %s — the path sets above are computed from `scope` and `scope_exclude` ALONE. "
+            "These keys are not modelled here: `actions` and `when` narrow WHEN the step applies "
+            "(`actions: []` owes nothing while every path set is unchanged), and an unrecognised "
+            "key may do anything. THIS LEG CANNOT PASS WHILE UNSURE. Either model the key here, or "
+            "add it to INERT having confirmed it does not narrow accountability ***"
+            % ", ".join(unknown))
+    else:
+        row("every types.rely key is accounted for", True,
+            "%d non-note key(s): %d handled, the rest inert for path accountability"
+            % (sum(1 for k in rely_cfg if not k.startswith("_")),
+               len(HANDLED & set(rely_cfg))))
     return rows, bad
 
 

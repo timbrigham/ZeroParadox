@@ -2472,8 +2472,9 @@ def cmd_prepush(ranges=None):
         ("prose migration", "WARN",
          "a .lean prose block that SHRANK with no sibling .md gaining — deleted or migrated?"),
         ("routing: routed docs", "WARN",
-         "prose under tools/verify|tools/process — DOWNGRADED 2026-08-21 (rung 5, measured "
-         "non-convergence 10>4>6>9 then deadlock); stale count prints every run"),
+         "prose under tools/ — WIDENED 2026-09-18 from tools/verify|tools/process; DOWNGRADED "
+         "2026-08-21 (rung 5, measured non-convergence 10>4>6>9 then deadlock); stale count "
+         "prints every run"),
         ("signals", "BLOCK", "editorial + adversary (+ prior-art on trigger 5) fresh and covering"),
         ("agent gate", "WARN", "an agent judges whether each check's PASS is EARNED; never blocks"),
     ])
