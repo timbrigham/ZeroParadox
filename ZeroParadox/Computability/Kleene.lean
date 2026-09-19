@@ -685,8 +685,8 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms IsComputationalQuine
 #print axioms Nat.Partrec.Code.fixed_point₂
 -- ZP-K § IV holds the dated measurement table and states no rule: five successive general
--- rules about this one `Classical.choice` were each measured false. The next four lines are
--- the measurement rather than a rule. Re-run them rather than citing anything.
+-- rules about this one `Classical.choice` were each measured false. What follows is the
+-- measurement rather than a rule. Re-run it rather than citing anything.
 #print axioms Nat.Partrec.Code
 #print axioms Nat.Partrec.Code.eval
 #print axioms IsKleeneFixedPoint

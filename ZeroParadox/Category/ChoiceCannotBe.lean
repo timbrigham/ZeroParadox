@@ -313,6 +313,21 @@ proved about where choice does work. -/
 #check @ZeroParadox.snapNucleus
 #check @ZeroParadox.snapNucleus_bot_ne_bot
 
+-- ⭐⭐ THE SAME CORRECTION FOR `Code`, AND IT COST TWO ATTEMPTS AND FOURTEEN BEDROCK FINDINGS
+-- BECAUSE THE `Ordinal` ONE DIRECTLY ABOVE NEVER PROPAGATED. Measured 2026-09-19:
+-- `Nat.Partrec.Code` is axiom-free and so is `Nat.Partrec.Code.eval`, so the choice is not "in
+-- the `Code` type" either. It enters through Mathlib's `Denumerable Code` instance, reached by
+-- `Encodable.encode` — so the two SPELLINGS of one code's Gödel number differ:
+-- `ZeroParadox.encodeCode_self` measures NO axioms while `ZeroParadox.encode_self` carries the
+-- triple, although `encode = encodeCode` holds by `rfl`. Both are `rfl` and do no work.
+-- Home, with the emitted `#print axioms` lines: `ZeroParadox/Computability/Kleene.lean` § VII.
+-- ⛔ NO RULE IS STATED FROM THIS, HERE OR ANYWHERE. Five general rules about this one footprint
+-- were each measured FALSE — "all ZP-K theorems carry…", "the cost rides on the statement's
+-- TYPE", "…on the PROOF", "runs a program versus names its index", "the binder and the numbering
+-- each spend it". ZP-K § IV holds a DATED MEASUREMENT TABLE instead, which is this file's own
+-- § "No count is recorded here" discipline applied to provenance rather than to counts.
+-- Post-mortem: `.claude-local/notes/axiom_footprint_measured_2026-09-19.md`.
+
 -- AND THE NATURAL COUNTERPART ROUTE IS BLOCKED — the attempt was made, and it failed provably.
 -- `no_snap_closure`: no idempotent endomap of the notation carrier has the ε-numbers as its closed
 -- points. Idempotence alone suffices; `no_snap_nucleus` is the `Nucleus`-typed corollary, non-vacuous

@@ -471,9 +471,10 @@ def build():
     # ── Axiom Footprint Note ──────────────────────────────────────────────────
     E.append(Paragraph('A Note on Classical.choice', CS['h1']))
     E.append(cbody(
-        'Every ZP-L theorem carries the axiom footprint [propext, Classical.choice, '
-        'Quot.sound]. That footprint is inherited from Lean 4 and Mathlib, not a novel '
-        'ZP-L commitment. ZP-K Section IV tabulates measured footprints on both sides.'))
+        'Every theorem in ZP-L\'s own Lean file carries the axiom footprint '
+        '[propext, Classical.choice, Quot.sound], inherited from Lean 4 and Mathlib rather '
+        'than a novel ZP-L commitment. Results ZP-L cites from other layers are a separate '
+        'question: ZP-K Section IV tabulates measured footprints on both sides.'))
     E.append(cbody(
         'What is notable is where Classical.choice appears, and where it does not. Across '
         'the layers ZP-L &#167;I tabulates, the footprints are not uniform; ZP-K Section IV '

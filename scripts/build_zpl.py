@@ -638,8 +638,10 @@ def build():
     E.append(axiom_box(
         'Axiom Purity',
         [
-            'Every theorem in the summary above carries axiom footprint: '
-            '[propext, Classical.choice, Quot.sound].',
+            'Every theorem in the Theorem Summary above carries axiom footprint: '
+            '[propext, Classical.choice, Quot.sound]. That is uniform within this document; '
+            'across the ZP layers it is not, which is what Section I and ZP-K Section IV '
+            'record.',
             'These are standard Mathlib infrastructure axioms (ordinal theory, p-adic '
             'analysis, computability). They are not ZP-L commitments.',
             'The footprints are not uniform; ZP-K Section IV tabulates the measurements. '
