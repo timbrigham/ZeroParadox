@@ -1,7 +1,8 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.8 | September 2026
-v1.8: ZPK-BED-2 COMPANION SYNC with ZP-L v1.13 (Tim ruling, 2026-09-19). The four-settings universal is replaced by a POINTER to ZP-K Section IV, which is the one site that states the rule; prose no longer enumerates the settings (Tim ruling). "Both fixed-point proofs require Classical.choice" reads "carry" - a footprint cannot earn a necessity claim. Deleted rather than restated: "the Kleene proof uses it for the fixed-point selection" and its twin "the same non-constructive selection step" in the two-rooms box, a mechanism register.md ZP-K v1.20 had already retracted. "ZP-K identified bot as a Kleene fixed point" now states the identification as the framework's reading, since a program code and the lattice carrier are different types. Both claims that ZPM formalizes a type bridge between the settings are corrected: snapEmbed is MachinePhase -> Z_2, so ZPM relates the two ENCODINGS, and a bridge between the settings is open.
+Version 1.9 | September 2026
+v1.9: GATE ROUNDS 3-4 REMEDIATION (2026-09-19), companion sync with ZP-L v1.14. "Every ZP-L theorem carries the axiom footprint [propext, Classical.choice, Quot.sound]" was an unscoped universal, and the surrounding paragraph set scope wider than ZP-L's own file: ZP-L cites Snap.lean, whose t_snap_derived is axiom-free. It is now scoped to Gentzen.lean and names it, with results cited from other layers called out as a separate question. The v1.8 changelog's "ZP-K Section IV, which is the one site that states the rule" inverted this arc's own architecture - Section IV holds a dated measurement table and states no rule - and now says so. ⚠ v1.8's content changed after its version was cut and the PDF was rebuilt without an increment; this bump is that correction.
+v1.8: ZPK-BED-2 COMPANION SYNC with ZP-L v1.13 (Tim ruling, 2026-09-19). The four-settings universal is replaced by a POINTER to ZP-K Section IV, which holds a dated measurement table and states no rule; prose no longer enumerates the settings (Tim ruling). "Both fixed-point proofs require Classical.choice" reads "carry" - a footprint cannot earn a necessity claim. Deleted rather than restated: "the Kleene proof uses it for the fixed-point selection" and its twin "the same non-constructive selection step" in the two-rooms box, a mechanism register.md ZP-K v1.20 had already retracted. "ZP-K identified bot as a Kleene fixed point" now states the identification as the framework's reading, since a program code and the lattice carrier are different types. Both claims that ZPM formalizes a type bridge between the settings are corrected: snapEmbed is MachinePhase -> Z_2, so ZPM relates the two ENCODINGS, and a bridge between the settings is open.
 v1.7: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-L v1.9: 'ZP-K proved that the initial machine state c0 is a Kleene fixed point' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem.
 v1.6: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.4: Strip version number from companion footer.
@@ -226,7 +227,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.8'
+VERSION = '1.9'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -471,7 +472,7 @@ def build():
     # ── Axiom Footprint Note ──────────────────────────────────────────────────
     E.append(Paragraph('A Note on Classical.choice', CS['h1']))
     E.append(cbody(
-        'Every theorem in ZP-L\'s own Lean file carries the axiom footprint '
+        'Every theorem in ZP-L\'s own Lean file (Gentzen.lean) carries the axiom footprint '
         '[propext, Classical.choice, Quot.sound], inherited from Lean 4 and Mathlib rather '
         'than a novel ZP-L commitment. Results ZP-L cites from other layers are a separate '
         'question: ZP-K Section IV tabulates measured footprints on both sides.'))

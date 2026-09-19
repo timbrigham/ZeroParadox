@@ -321,7 +321,8 @@ proved about where choice does work. -/
 -- `ZeroParadox.encodeCode_self` measures NO axioms while `ZeroParadox.encode_self` carries the
 -- triple, although `encode = encodeCode` holds by `rfl`. Both are `rfl` and do no work.
 -- Home, with the emitted `#print axioms` lines: `ZeroParadox/Computability/Kleene.lean` § VII.
--- ⛔ NO RULE IS STATED FROM THIS, HERE OR ANYWHERE. Five general rules about this one footprint
+-- ⛔ NO RULE IS STATED FROM THIS, HERE OR IN ZP-K § IV. (That is a claim about those two sites,
+-- which were checked; it is not a swept absence claim about the corpus.) Five rules about this footprint
 -- were each measured FALSE — "all ZP-K theorems carry…", "the cost rides on the statement's
 -- TYPE", "…on the PROOF", "runs a program versus names its index", "the binder and the numbering
 -- each spend it". ZP-K § IV holds a DATED MEASUREMENT TABLE instead, which is this file's own

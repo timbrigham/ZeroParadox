@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.13 | September 2026
+Version 1.14 | September 2026
+v1.14 / comp v1.9: GATE ROUNDS 3-4 REMEDIATION (2026-09-19). The Axiom Purity box's "Every theorem in the summary above carries the triple" sat three lines from "the footprints are not uniform", both true but with unanchored referents, reading as self-retraction; the first is now anchored to the Theorem Summary and the second to the ZP layers. Page 1's "axiom footprint [...] throughout" had the same unanchored shape and now names Gentzen.lean. Companion: "Every ZP-L theorem carries the triple" was an unscoped universal while the paragraph set scope wider than ZP-L's own file - ZP-L cites Snap.lean, whose t_snap_derived is axiom-free - and is now scoped to Gentzen.lean and names it. ⚠ v1.13's content changed after its version was cut and the PDFs were rebuilt without an increment; this bump is that correction (R-REGISTER: a hash mismatch means the bump was skipped, not that a rebuild is needed).
 v1.13 / comp v1.8: ZPK-BED-2, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-19). Sites in this document and its companion asserted one axiom footprint across all the settings, and the Section I table refutes that: its ZPJ/K cell names bot_self_mem (AFA), which measures no axioms, beside botCode (Kleene), which carries them. "Required" is a necessity claim no #print axioms run can earn - necessity takes a reduction to a taboo (ChoiceCannotBe.lean § IV) - and "a constructive alternative was not found" is false, the alternative being the row's own AFA witness. Sites here POINT at ZP-K Section IV, which holds a dated measurement table rather than a rule (Tim ruling, 2026-09-19), instead of restating anything. Also removed: the "Why K is Absent from Lean" reason (uncomputability does not explain absence from Lean - the corpus carries ~200 noncomputable declarations, two of them in Gentzen.lean), a theorem count that counted table ROWS, and "24 theorems proved" on page 1. Prose no longer enumerates the settings (Tim ruling) - the table defines them, and three prose sites had enumerated them three different ways while every claim was quantified over the set. The table is unchanged, per the ruling. ⚠ SCOPE OF THE SEARCH, stated instead of a count (R-NOTINLIB): check_paths.py --full --claim over .md + .lean + tracked .py + the 40 rendered PDFs, phrasings varied by POLARITY, PART OF SPEECH and VOCABULARY. Post-mortem: .claude-local/notes/axiom_footprint_measured_2026-09-19.md.
 v1.12: CLASSICAL.CHOICE MODAL (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box's 'Its presence is expected and documented, not incidental.' read as a necessity claim beside 'essential is not measured'; it now reads 'Its presence is expected and documented.'
 v1.11: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box said the computability layer's choice belongs to ZP-K's instance. Measured: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and a computable constant-code instance carries it too; Classical.choose is what makes machinePhaseKleene noncomputable; essentiality is not measured. The box now says that.
@@ -22,7 +23,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -41,7 +42,9 @@ def build():
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>All theorems §I&#8211;§VII proved sorry-free in Lean 4. '
-            'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.</i>',
+            'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout this '
+            'document&#8217;s own Lean file (Gentzen.lean). Across the ZP layers the '
+            'footprints are not uniform &#8212; ZP-K Section IV tabulates them.</i>',
             S['note']),
         sp(10),
         hr(),
