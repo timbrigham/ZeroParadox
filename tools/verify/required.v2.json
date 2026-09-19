@@ -262,7 +262,8 @@
         "ca31f5531aa1fbc960bbaf5b3a99c2e10f49bfba",
         "e4412e23caa025ca61f76d0e4043f05a37fc1e0c",
         "0c52a23f86114089a0a3c1bdbf05f1edf18182aa",
-        "0d71b189969f794cc283cafe7b66daf5bd6642a0"
+        "0d71b189969f794cc283cafe7b66daf5bd6642a0",
+        "b6efc29fb106a9268f09a9aab115afef27fca02a"
       ],
       "_repinned_2026_09_17": "`f3c8140c` is `batch.py` after `ATTRIBUTABLE` gained `*.md` (see `prior_art._md_joined_2026_09_17`). ADDED, never substituted: the old blob stays so records produced by it remain valid, the same way `guards` kept its pre-repin build on 2026-09-13. ⭐ THE REPIN WAS NOT ANTICIPATED -- it was DEMANDED by a V16c refusal at precommit, which named the blob and the remedy and called the edit *'a REVIEWABLE EDIT in the same history as the tool change, and the point of pinning rather than an obstacle to it.'* Recorded because a pin that widens silently is the thing pinning exists to prevent.",
       "scope": [
@@ -285,7 +286,8 @@
         "ca31f5531aa1fbc960bbaf5b3a99c2e10f49bfba",
         "e4412e23caa025ca61f76d0e4043f05a37fc1e0c",
         "0c52a23f86114089a0a3c1bdbf05f1edf18182aa",
-        "0d71b189969f794cc283cafe7b66daf5bd6642a0"
+        "0d71b189969f794cc283cafe7b66daf5bd6642a0",
+        "b6efc29fb106a9268f09a9aab115afef27fca02a"
       ],
       "_repinned_2026_09_17": "`f3c8140c` is `batch.py` after `ATTRIBUTABLE` gained `*.md` (see `prior_art._md_joined_2026_09_17`). ADDED, never substituted -- the old blob stays valid for records it produced. Demanded by a V16c refusal at precommit, not anticipated; see the same key on `decls`, which pins the identical module.",
       "_approved_why": "Tim, 2026-09-13, asked and answered. 1fffe944 is batch.py at e61bad9c (same blob decls pins); 3f11ba68 is batch.py at fa99005f and earlier, whose records cover all 40 PDFs at 929a9f89's bytes. Under mcp-mayhem 636e6cb an approved build freshens only subjects a record citing it actually judged, and the two wheel PDFs at 929a9f89 were never judged by 1fffe944 -- so the tip build alone cannot heal that commit (simulated by mcpdev). ⚠ Every future batch.py edit now needs a repin here before pdf_coupling can record.",

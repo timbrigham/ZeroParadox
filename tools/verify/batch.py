@@ -287,9 +287,65 @@ UNVERIFIABLE_ROUTED = {
 # ⚠ THE GLOB MUST BE DERIVED FROM `ROUTING`, NOT RE-TYPED BESIDE IT. A second copy of the prefix
 # list is how these two fell out of step in the first place: the third prefix was added to `ROUTING`
 # and this function was not touched, so it silently kept answering for two.
+def _gitignored(dirs):
+    """What git IGNORES under `dirs` — generated artifacts, NOT merely untracked files.
+
+    Returns repo-relative entries; one ending in `/` is a whole directory git collapsed.
+
+    ⚠⚠ THE DISTINCTION IS THE WHOLE POINT AND IT IS EASY TO GET BACKWARDS. An UNTRACKED file under a
+    routed prefix must still block: a new checker nobody staged is exactly the content `/rely` exists
+    to catch. An IGNORED file can never be staged at all, so no record can ever name it, and counting
+    it as unreviewed makes the leg UNSATISFIABLE rather than strict — `check_routing`'s own comment
+    says so at the `UNVERIFIABLE_ROUTED` branch. A membership test against the index cannot separate
+    them, because it answers *tracked?* and this asks *ignorable?*
+
+    ⛔ FAILS CLOSED BY WIDENING, AND THE DIRECTION IS DELIBERATE. Every error path returns the EMPTY
+    set, which skips nothing and leaves the routed set at its widest. An exception handler that
+    returned "everything is ignored" would empty the routed set and silently retire the gate — the
+    exact fail-open shape this file keeps recording.
+
+    ⚠⚠ THE INSTRUMENT IS `status --ignored`, NOT `check-ignore`, AND THAT WAS MEASURED THE HARD WAY.
+    `git check-ignore --stdin` gave the RIGHT answer for three paths passed alone and the WRONG one
+    for the same three inside the real 117-path list — `rc=1`, empty stdout, empty stderr, i.e. a
+    confident "nothing here is ignored" for files `status` flags `!!`. Trusting it would have
+    concluded that two of the three generated SVGs were not ignored and sent the fix in the opposite
+    direction. Two instruments, same question, opposite answers: prefer the one whose scope you can
+    see, and never conclude an absence from the narrower.
+    """
+    if not dirs:
+        return set()
+    try:
+        out = subprocess.run(["git", "status", "--porcelain", "--ignored=matching", "--"]
+                             + sorted(dirs), cwd=REPO, capture_output=True,
+                             text=True, encoding="utf-8", errors="replace")
+    except OSError:
+        return set()
+    if out.returncode != 0:
+        return set()
+    # `!! path` for a file, `!! path/` for a whole directory git collapsed.
+    return {ln[3:].strip().replace("\\", "/")
+            for ln in out.stdout.splitlines() if ln.startswith("!! ")}
+
+
 def _routed_files():
-    """Every file under a routed prefix — recursive, all extensions, prefixes taken from ROUTING."""
-    out = []
+    """Every file under a routed prefix — recursive, all extensions, prefixes taken from ROUTING.
+
+    ⚠⚠ GENERATED ARTIFACTS ARE EXCLUDED BY ASKING GIT, NOT BY LISTING THEM (Tim, 2026-09-19).
+    This walk is over the DISK, so it sees build output that is not in the index and never can be.
+    Measured by /rely 2026-09-19 (`REL19-3`): `.gitignore` carries `tools/render/*.svg`, the three
+    generated diagrams sit inside the `^tools/` prefix, `_leg_of` types `.svg` as a BLOCKING
+    `switch`, the index reports them `<ABSENT>` — and the push was refused by a leg no record could
+    ever discharge. Regenerating a diagram minted a fresh blocking row on the spot.
+
+    ⭐ THE FIX IS DERIVED, NOT ENUMERATED, for the reason `_leg_of` gives below: *naming today's
+    members closes today's holes and the next arrival is invisible.* Hand-listing the three SVGs in
+    `UNVERIFIABLE_ROUTED` would have unblocked this push and left the NEXT generated artifact to
+    rediscover it. `__pycache__`/`.pyc` were the same class handled one instance at a time; they are
+    kept below as a fast path that also survives git being unavailable.
+
+    ⛔ UNTRACKED IS NOT IGNORED. A file that is merely unstaged still routes and still blocks — see
+    `_gitignored`. This narrows the routed set by exactly the paths git says can never be staged."""
+    out, prefixes = [], []
     for pat, agent, _w in ROUTING:
         if agent != "/rely":
             continue
@@ -297,13 +353,18 @@ def _routed_files():
         d = os.path.join(REPO, *rel.split("/"))
         if not os.path.isdir(d):
             continue
+        prefixes.append(rel)
         for root, dirs, names in os.walk(d):
             dirs[:] = [x for x in dirs if x != "__pycache__"]
             for n in names:
                 if n.endswith((".pyc", ".pyo")):
                     continue
                 out.append(os.path.relpath(os.path.join(root, n), REPO).replace("\\", "/"))
-    return sorted(out)
+    ignored = _gitignored(prefixes)
+    files = {p for p in ignored if not p.endswith("/")}
+    trees = tuple(p for p in ignored if p.endswith("/"))
+    return sorted(p for p in out
+                  if p not in files and not (trees and p.startswith(trees)))
 
 
 # ⚠⚠ THE THREE KINDS IN `CHECKERS` ARE NOT ONE OBLIGATION, AND UNTIL 2026-08-21 THEY SHARED ONE ROW.
