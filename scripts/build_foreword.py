@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.25, revised September 2026)
+Zero Paradox — Foreword PDF Builder (v2.26, revised September 2026)
+v2.26: ZPK-BED-1 SECOND HALF (Tim ruling, 2026-09-19). The foundations paragraph said ZP-K's choice dependency is "the same dependency carried by any theorem using Mathlib's computability library". That universal is refuted: Nat.Partrec.Code and Nat.Partrec.Code.eval are both axiom-free, IsKleeneFixedPoint (type eval c = f c) measures no axioms, and a theorem that runs a program carries no choice. It now states the inheritance and POINTS at ZP-K Section IV, which is the one site that states the rule. Located by an axis-varied claim sweep over the rendered PDFs, not by the defect row.
 v2.25: ATTRIBUTION (PA-1, prior-art gate 2026-09-15): section IV credited Lawvere's fixed-point theorem (1969) with unifying Cantor's diagonal, Russell's paradox, Godel's fixed-point lemma 'and Kleene's recursion theorem'. Lawvere does not treat it: his introduction names Cantor, Russell, Godel and TARSKI, and the reprint contains no occurrence of Kleene or Rogers. Kleene's recursion theorem and Turing's halting argument are Yanofsky (2003). Lawvere's list now ends at Tarski's undefinability theorem; Yanofsky's sentence carries the other two. Same defect as ATTR-2 (README, 2026-08-29), whose no-further-instances claim is retracted.
 v2.24: DA-1/KLEENE CLASS AND MC-1 PREMISE, GATE ROUND 4 (Tim rulings, 2026-09-15): section IV said the framework 'proves each face in its own domain'; the Kleene face is a KleeneStructure requirement, not proved, so the sentence now reads 'It proves the lattice, 2-adic and categorical faces in their own domains and carries the computational one as a requirement'. 'In computation it is the self-reproducing program' is now 'is read as'. The MC-1 row's seam_unique_among_named pointer now carries its premise: in a lattice with no top.
 v2.23: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim ruling, 2026-09-15): section IV's 'The framework reads them as faces of one object' is past tense, 'read', since the next paragraph retires that reading. Nothing else in the paragraph changed.
@@ -67,7 +68,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.25'
+VERSION = '2.26'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -386,8 +387,8 @@ def build():
             'cannot host it. The Axiom of Choice is not assumed '
             'as a framework commitment. One exception at the infrastructure level: ZP-K\'s '
             'Kleene computability machinery depends on Classical.choice as a standard Lean '
-            'library axiom — the same dependency carried by any theorem using Mathlib\'s '
-            'computability library, not a novel Zero Paradox commitment.',
+            'library axiom, inherited rather than a novel Zero Paradox commitment. ZP-K '
+            'Section IV tabulates the measured axiom footprints.',
             S['body']),
         Paragraph(
             'ZF+Foundation and ZF+AFA are not two theories this work bridges — '

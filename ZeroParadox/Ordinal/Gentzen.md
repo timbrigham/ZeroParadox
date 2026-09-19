@@ -2,13 +2,46 @@
 
 Moved from `ZeroParadox/Ordinal/Gentzen.lean` § VI. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
 
+## Formal Overview
+
+Moved from `ZeroParadox/Ordinal/Gentzen.lean`'s module doc (2026-09-19) — editing that block
+un-grandfathered it against the prose-length cap, and the long form belongs here.
+
+ZPL has four components:
+
+1. **Axiom Footprint Convergence** — a survey of where `Classical.choice` appears across the
+   layers tabulated in §I. The footprints are not uniform:
+   `ZeroParadox/Computability/Kleene.lean` §V proves one statement both ways with opposite
+   footprints, and ZP-K §IV tabulates the measurements. Not a Lean proposition — and
+   `#print axioms` measures a proof's dependencies, never a theorem's need; necessity takes a
+   reduction to a taboo (`ZeroParadox/Category/ChoiceCannotBe.lean` §IV).
+2. **Rogers' Fixed-Point Stability** — for any computable `f`, some code is behaviourally
+   fixed by `f` (`eval (f c) = eval c`). In Lean scope; follows from ZPK's
+   `roger_fixed_point_exists`.
+3. **Ordinal ε₀ tower** — `ε₀ = nfp (ω^·) 0` is the supremum of the tower `ω, ω^ω, ω^(ω^ω), …`;
+   it is a fixed point of `α ↦ ω^α`; it is the first such fixed point above 0. Fully in Lean
+   scope via Mathlib ordinals.
+4. **Cantor Normal Form Bridge** — ordinals below ε₀ (`NONote`) encode into `ℤ₂` via their
+   Cantor normal form; as the tower stages approach ε₀ their encodings converge to `0 = ⊥` in
+   `ℤ₂`. The identification of these two limits is the remaining gap. Proof partially in Lean
+   scope.
+
+Axiom footprint: `[propext, Classical.choice, Quot.sound]` throughout `Gentzen.lean`, measured.
+
+### Dependencies
+
+- ZPK (§I): `KleeneStructure`, `roger_fixed_point_exists`, `IsComputationalQuine`
+- ZPB (§IV): 2-adic topology, `PadicInt 2`, 2-adic valuation
+- ZPE (§V): T-SNAP, `MachinePhase`, `t_snap_machine`
+
 ## § I. Axiom Footprint Convergence
 
 Moved from `ZeroParadox/Ordinal/Gentzen.lean` § I (2026-09-15), carried in the same accepted-defect baseline as § VI, so the warning above applies to it too.
 
-Non-constructibility appears in four formal languages across the ZP framework.
-Each proved theorem in each layer, as currently written, depends on Classical.choice at the
-diagonal step. Whether that dependence is necessary (forced by ZP geometry rather than incidental)
+Non-constructibility appears across the layers tabulated below. The axiom footprints are not
+uniform — the ZPJ/K row names a witness on each side, `AFAStructure.bot_self_mem` measuring no
+axioms and `botCode` carrying them — and ZP-K § IV tabulates the measured footprints.
+Whether any of that dependence is necessary (forced by ZP geometry rather than incidental)
 is the open Classical.choice inversion conjecture (cf. ZPM §II): #print axioms shows dependence,
 not necessity.
 
@@ -19,16 +52,15 @@ not necessity.
 | ZPJ/K | Set + Compute  | bot_self_mem (AFA); botCode (Kleene) |
 | ZPI   | Algorithmic IT  | K(Sₙ|n)/|Sₙ| → 1; K uncomputable    |
 
-The reason K is absent from Lean: its existence requires Classical.choice —
-exactly the axiom Nat.Partrec.Code.fixed_point₂ already uses in ZPK. The
-AFA/Kleene route reaches the same fixed-point structure via a path whose Kleene step is a
-KleeneStructure requirement.
+K is not computed in Lean in this framework. The AFA/Kleene route reaches the same
+fixed-point structure via a path whose Kleene step is a KleeneStructure requirement.
 
 ## § VI. Kleene-Ordinal Fixed-Point Bridge
 
 The ordinal fixed-point structure (ε₀ = nfp (ω^·) 0, ω^ε₀ = ε₀) and the computational
-fixed-point structure (Rogers' fixed-point theorem, roger_fixed_point_stability) both require
-Classical.choice at their non-constructive step — parallel structure, not a proved isomorphism.
+fixed-point structure (Rogers' fixed-point theorem, roger_fixed_point_stability) both carry
+Classical.choice in the proofs recorded here — parallel structure, not a proved isomorphism,
+and a fact about those proofs rather than a necessity.
 This is the content of §I Axiom Footprint Convergence.
 
 The hypothesis

@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.20 | September 2026
+Version 1.21 | September 2026
+v1.21: ZPK-BED-1 COMPANION SYNC with ZP-K v1.23 (Tim ruling, 2026-09-19). Two defects, both in the Proof Purity note. (1) "a standard dependency for any theorem that uses Mathlib's computability library" is the same refuted universal as ZP-K Section I: Nat.Partrec.Code and Nat.Partrec.Code.eval are both axiom-free, and IsKleeneFixedPoint, whose type is eval c = f c, measures no axioms. It now states the inheritance and points at ZP-K Section IV rather than restating the rule. ⚠ This companion was reviewed in an earlier round of this work and judged "not materially stale" - that judgement was WRONG and R-COMPANION exists to prevent it; the defect was found by an adversary sweep of the DEPOSITED companion PDF, which had not been rebuilt while its formal document moved. (2) "IVT itself depends on completeness of the reals, which depends on choice" - Dedekind completeness is a ZF theorem. The analogy is kept and the false clause removed.
 v1.20: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-K v1.18: 'It proves that there is a fourth description of bottom' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem. The executor sentences ('bottom IS an instance of a Turing machine', 'It is already executing', 'Description and execution are the same act') are labelled the framework's reading at the sentence. The Path 1 paragraph said 'Now IN LEAN SCOPE via ZP-K ... The AFA self-containment of bottom is not just argued, it is machine-checked'; it now states what Lean witnesses: da1_closed_concrete from machinePhaseAFA, where selfMem is x = bottom, so the content is uniqueness rather than membership.
 v1.19: DA-1 PATH 3, SECOND PASS (Tim ruling, 2026-09-15), companion sync with ZP-K v1.16: the heading 'DA-1 Formally Closed' is 'DA-1: what Lean witnesses'.
 v1.18: DA-1 PATH 3 (pre-existing bedrock, editorial gate round 3 B1, 2026-09-15), companion sync with ZP-K v1.15: the closing Remember box said 'ZP-K closes DA-1 Paths 1 and 3 formally' and that it 'proves, in machine-checked Lean 4, that the structural role bottom plays in the algebra is the same role it plays in AFA set theory and in computability theory', contradicting this companion's own Path 3 paragraph (a foundational commitment). It now carries the CLAIMS.md DA-1 row: Path 1 witnessed by da1_closed_concrete, nothing computational; Path 3's witness a KleeneStructure requirement, not a second independent proof; the one-fact reading is the framework's. The sentences 'The gap was never a gap - bottom in all three settings is the same self-referential fixed point' are removed with it.
@@ -133,7 +134,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -316,12 +317,12 @@ def build():
     E.append(Paragraph('A Note on Proof Purity', CS['h1']))
     E.append(cbody(
         'The computability machinery in ZP-K (Kleene\'s theorem, Rogers\' fixed-point theorem) '
-        'requires classical logic — a standard dependency for any theorem that uses '
-        'Mathlib\'s computability library, not a novel Zero Paradox commitment. '
+        'requires classical logic, inherited from Mathlib rather than a novel Zero Paradox '
+        'commitment. ZP-K Section IV tabulates the measured axiom footprints. '
         'The ZP-A, ZP-J, and core ZP-E results remain free of this dependency.'))
     E.append(cbody(
-        'This is analogous to a proof that invokes the intermediate value theorem: IVT '
-        'itself depends on completeness of the reals, which depends on choice. Using IVT '
+        'This is analogous to a proof that invokes the intermediate value theorem. Reaching '
+        'for a result from the standard, classically built libraries '
         'does not make your proof "non-constructive" in any meaningful sense — it means '
         'you are working in the standard mathematical setting. ZP-K\'s classical footprint '
         'is of the same character.'))

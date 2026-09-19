@@ -19,8 +19,8 @@ Since `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`), the seed of that tower is t
 the snap `⊥ → ε₀` reads literally as `⊥ → ⨆ₙ (ω^·)ⁿ(⊥)`: the floor ⊥ is the *seed* and ε₀ its *closure*
 (`epsilon0_eq_nfp_bot`). This is a *placement* of ε₀ as the μ (least fixed point) of the ascent operator
 seeded at ⊥ — a bundling of already-proved in-repo results and Mathlib's `nfp` theory, not a new
-theorem, and it does not close the separate CNF/ℤ₂ value-bridge (`ZeroParadox/Ordinal/Gentzen.lean`,
-item 4, open).
+theorem, and it does not close the separate CNF/ℤ₂ value-bridge (`ZeroParadox/Ordinal/Gentzen.md`,
+Formal Overview item 4, open).
 
 ## Two fences on the "⊥ the seed" reading (Tim, 2026-07-31)
 

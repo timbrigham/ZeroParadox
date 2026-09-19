@@ -1,6 +1,7 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.7 | September 2026
+Version 1.8 | September 2026
+v1.8: ZPK-BED-2 COMPANION SYNC with ZP-L v1.13 (Tim ruling, 2026-09-19). The four-settings universal is replaced by a POINTER to ZP-K Section IV, which is the one site that states the rule; prose no longer enumerates the settings (Tim ruling). "Both fixed-point proofs require Classical.choice" reads "carry" - a footprint cannot earn a necessity claim. Deleted rather than restated: "the Kleene proof uses it for the fixed-point selection" and its twin "the same non-constructive selection step" in the two-rooms box, a mechanism register.md ZP-K v1.20 had already retracted. "ZP-K identified bot as a Kleene fixed point" now states the identification as the framework's reading, since a program code and the lattice carrier are different types. Both claims that ZPM formalizes a type bridge between the settings are corrected: snapEmbed is MachinePhase -> Z_2, so ZPM relates the two ENCODINGS, and a bridge between the settings is open.
 v1.7: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-L v1.9: 'ZP-K proved that the initial machine state c0 is a Kleene fixed point' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem.
 v1.6: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.4: Strip version number from companion footer.
@@ -225,7 +226,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -402,30 +403,32 @@ def build():
     # ── The Kleene Connection ─────────────────────────────────────────────────
     E.append(Paragraph('The Kleene Connection', CS['h1']))
     E.append(cbody(
-        'ZP-K identified &#8869; as a Kleene fixed point: a program that is its own output, '
-        'guaranteed to exist by Kleene\'s second recursion theorem. ZP-L identifies '
+        'ZP-K carries &#8869;\'s computational face as a requirement of its Kleene structure: '
+        'a program that is its own output, guaranteed to exist by Kleene\'s second recursion '
+        'theorem. That the program and the bottom are one object is the framework\'s reading '
+        'rather than a Lean equation &#8212; a program code and the lattice carrier are '
+        'different types. ZP-L identifies '
         '&#949;&#8320; as an ordinal fixed point: the first ordinal satisfying &#969;^&#945; = &#945;, '
         'guaranteed to exist by the fixed-point theorem for normal functions. Both fixed-point '
-        'proofs require Classical.choice in their Lean formalizations. In each case, the choice '
-        'axiom enters at a non-constructive selection step: the ordinal proof uses it for the '
-        'supremum that defines &#949;&#8320;; the Kleene proof uses it for the fixed-point '
-        'selection. Whether these reflect the same underlying mathematical phenomenon &#8212; '
+        'proofs carry Classical.choice in their Lean formalizations; ZP-K Section IV '
+        'tabulates the measured footprints. '
+        'Whether these reflect the same underlying mathematical phenomenon &#8212; '
         'or are coincidentally parallel &#8212; is the open question Gentzen.lean &#167;I poses.'))
     E.append(cbody(
         'ZP-L &#167;VI (kleene_ordinal_snap_bridge) names this structural parallel explicitly. '
         'The theorem itself is purely ordinal &#8212; no Code or eval object appears in it. '
         'What the section establishes is that the hypothesis structure of the two proofs '
-        'is the same: diagonalization, non-constructive selection, fixed-point existence.'))
+        'is the same: diagonalization and fixed-point existence.'))
     E.append(sp(4))
     E.append(example_box('Two rooms, same pattern', [
         'Imagine two mathematicians working in separate rooms. One (ZP-K) is computing '
         'with programs and asking: what program runs itself? The other (ZP-L) is computing '
         'with ordinals and asking: what ordinal satisfies &#969;^&#945; = &#945;? Neither '
         'knows what the other is doing. When they compare notes, they find the same proof '
-        'structure: the same diagonal argument, the same non-constructive selection step, '
-        'the same kind of fixed-point existence result.',
-        'ZPM formalizes this parallel with a type bridge between the two settings. '
-        'The two rooms share the same floor plan.',
+        'structure: the same diagonal argument, the same kind of fixed-point existence '
+        'result.',
+        'ZPM relates the two through their 2-adic encodings; a bridge between the settings '
+        'themselves is still open. The two rooms share a floor plan.',
     ]))
     E.append(sp(8))
 
@@ -469,15 +472,13 @@ def build():
     E.append(Paragraph('A Note on Classical.choice', CS['h1']))
     E.append(cbody(
         'Every ZP-L theorem carries the axiom footprint [propext, Classical.choice, '
-        'Quot.sound]. This is the standard footprint of Lean 4 + Mathlib for any theorem '
-        'that uses ordinal theory, p-adic analysis, or computability. It is not a novel '
-        'ZP-L commitment.'))
+        'Quot.sound]. That footprint is inherited from Lean 4 and Mathlib, not a novel '
+        'ZP-L commitment. ZP-K Section IV tabulates measured footprints on both sides.'))
     E.append(cbody(
-        'What is notable is where Classical.choice appears. Across the four mathematical '
-        'settings of the ZP framework &#8212; topology (ZP-B), information theory (ZP-C), '
-        'set theory and computation (ZP-J/K), and ordinal theory (ZP-L) &#8212; the same '
-        'axiom appears at the same structural step: the non-constructive diagonal. '
-        'ZP-L &#167;I documents this convergence. Whether Classical.choice is structurally '
+        'What is notable is where Classical.choice appears, and where it does not. Across '
+        'the layers ZP-L &#167;I tabulates, the footprints are not uniform; ZP-K Section IV '
+        'tabulates the measured footprints. '
+        'Whether Classical.choice is structurally '
         'forced by the ZP framework &#8212; rather than merely inherited from Mathlib '
         'infrastructure &#8212; remains an open question.'))
     E.append(sp(8))
@@ -493,8 +494,8 @@ def build():
         'and &#949;&#8320; minimal &#8212; with no free hypotheses. '
         'snap_zp2_correspondence co-proves that the same tower witnesses both the '
         'ordinal approach to &#949;&#8320; and the 2-adic convergence to 0 = &#8869;. '
-        'All theorems proved without sorry. ZPM formalizes the type bridge between the '
-        'ordinal and machine-phase encodings. &#10003;'))
+        'All theorems proved without sorry. ZPM relates the ordinal and machine-phase '
+        'encodings through the 2-adics.'))
 
     print(f'Building: {out_path}')
     doc.build(E)
