@@ -100,6 +100,39 @@
         ]
       },
       {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\block_corpus_edit.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking for a direct corpus edit..."
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\block_corpus_edit.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking for a direct corpus edit..."
+          }
+        ]
+      },
+      {
+        "matcher": "NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\block_corpus_edit.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking for a direct corpus edit..."
+          }
+        ]
+      },
+      {
         "matcher": "PowerShell(gh api graphql *)",
         "hooks": [
           {
