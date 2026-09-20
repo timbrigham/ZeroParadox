@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.21 | September 2026
+Version 1.22 | September 2026
+v1.22: ZPKB-6, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-20). The Proof Purity note closed with "The ZP-A, ZP-J, and core ZP-E results remain free of this dependency", which is false as measured: decoration_unique in ZeroParadox/Settheory/APG.lean reports propext, Classical.choice, Quot.sound, as do six siblings in that file, and ZeroParadox/Valuation/ScaleBridge.lean adds thirty more - MANIFEST.md labels both files ZPJ, and both of this document's own layers attribute that content to ZP-J. The true statement is narrower and already exists: AxiomProfile.lean Section I scopes it to the CORE - T-SNAP, the lattice, the Quine atom. The sentence turned "the core" into "the results"; it now names the core, POINTS at ZeroParadox/AxiomProfile.lean, and names decoration_unique as the counterexample inside the same layer. ⚠⚠ THIS ONE SURVIVED THE PRIOR ARC BECAUSE IT IS THE RULE PHRASED AS AN ABSENCE. Two positive-wording fixes to this same box DID land; a third statement, worded as what is FREE OF the dependency, was invisible to every sweep keyed on the positive phrasing (R-NOTINLIB, POLARITY axis). The corrective sweep for this fix was run on "remain free of this dependency" and "free of this dependency" as well as the positive forms, over .md + .lean + tracked .py + the 40 rendered PDFs. ⛔ Lines above this one - the computability machinery "requires classical logic", a necessity claim where ZP-K Section IV says essentiality is not measured - are a separate ORDINARY finding, out of scope for this arc by Tim's decision and deliberately not touched here.
 v1.21: ZPK-BED-1 COMPANION SYNC with ZP-K v1.23 (Tim ruling, 2026-09-19). Two defects, both in the Proof Purity note. (1) "a standard dependency for any theorem that uses Mathlib's computability library" is the same refuted universal as ZP-K Section I: Nat.Partrec.Code and Nat.Partrec.Code.eval are both axiom-free, and IsKleeneFixedPoint, whose type is eval c = f c, measures no axioms. It now states the inheritance and points at ZP-K Section IV rather than restating the rule. ⚠ This companion was reviewed in an earlier round of this work and judged "not materially stale" - that judgement was WRONG and R-COMPANION exists to prevent it; the defect was found by an adversary sweep of the DEPOSITED companion PDF, which had not been rebuilt while its formal document moved. (2) "IVT itself depends on completeness of the reals, which depends on choice" - Dedekind completeness is a ZF theorem. The analogy is kept and the false clause removed.
 v1.20: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-K v1.18: 'It proves that there is a fourth description of bottom' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem. The executor sentences ('bottom IS an instance of a Turing machine', 'It is already executing', 'Description and execution are the same act') are labelled the framework's reading at the sentence. The Path 1 paragraph said 'Now IN LEAN SCOPE via ZP-K ... The AFA self-containment of bottom is not just argued, it is machine-checked'; it now states what Lean witnesses: da1_closed_concrete from machinePhaseAFA, where selfMem is x = bottom, so the content is uniqueness rather than membership.
 v1.19: DA-1 PATH 3, SECOND PASS (Tim ruling, 2026-09-15), companion sync with ZP-K v1.16: the heading 'DA-1 Formally Closed' is 'DA-1: what Lean witnesses'.
@@ -134,7 +135,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -319,7 +320,13 @@ def build():
         'The computability machinery in ZP-K (Kleene\'s theorem, Rogers\' fixed-point theorem) '
         'requires classical logic, inherited from Mathlib rather than a novel Zero Paradox '
         'commitment. ZP-K Section IV tabulates the measured axiom footprints. '
-        'The ZP-A, ZP-J, and core ZP-E results remain free of this dependency.'))
+        'What is free of it is the choice-free CORE, and that is narrower than any layer '
+        'name: ZeroParadox/AxiomProfile.lean &#167;I is where the core is listed and each '
+        'footprint measured &#8212; T-SNAP, the lattice, the Quine atom. Results elsewhere '
+        'in the same layers do carry the dependency: decoration_unique, the AFA '
+        'decoration-uniqueness theorem in ZeroParadox/Settheory/APG.lean, is a ZP-J result '
+        'and reports the full triple. Check the artifact for a given result rather than '
+        'reading a layer name as a footprint.'))
     E.append(cbody(
         'This is analogous to a proof that invokes the intermediate value theorem. Reaching '
         'for a result from the standard, classically built libraries '

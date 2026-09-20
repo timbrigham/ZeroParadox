@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.26, revised September 2026)
+Zero Paradox — Foreword PDF Builder (v2.27, revised September 2026)
+v2.27: ZPKB-4, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-20). The foundations paragraph localised the framework's whole use of Classical.choice to ZP-K: "One exception at the infrastructure level: ZP-K's Kleene computability machinery ... inherited rather than a novel Zero Paradox commitment." Two things are wrong. Provenance: the category-theory layer spends a bare classical written in framework source (fixedPointFree_of_nontrivial, ZeroParadox/Category/Lawvere.lean), so the dependence is not all inherited, and AxiomProfile.lean Section III lists the realizations where it enters, none of them computability. Necessity: "inherited rather than a novel commitment" reads provenance as settling removability, which AxiomProfile.lean Section 0 records as a conflation already corrected once — em_of_wellOrder_comparable shows an INHERITED dependence that is essential. The paragraph now states the choice-free core (t_snap_derived, no Lean kernel axioms at all), names the framework's own classical and its essentiality (wem_of_fixedPointFree), separates the two axes, and POINTS at ZeroParadox/AxiomProfile.lean. ⚠ NO NEW RULE IS STATED. This site was the SIXTH general rule written about this one Classical.choice and the first in the LOCALIZATION grammar (where it comes from) rather than the FOOTPRINT grammar (which theorems carry it), which is why the five sweeps keyed to the earlier five did not reach it. The front page (README "The Result") already carried the correct shape; this aligns the Foreword to it rather than inventing a third wording.
 v2.26: ZPK-BED-1 SECOND HALF (Tim ruling, 2026-09-19). The foundations paragraph said ZP-K's choice dependency is "the same dependency carried by any theorem using Mathlib's computability library". That universal is refuted by two named measurements: Nat.Partrec.Code and Nat.Partrec.Code.eval are both axiom-free, and IsKleeneFixedPoint (type eval c = f c) measures no axioms. It now states the inheritance and POINTS at ZP-K Section IV, which holds a dated measurement table and states no rule. Located by an axis-varied claim sweep over the rendered PDFs, not by the defect row.
 v2.25: ATTRIBUTION (PA-1, prior-art gate 2026-09-15): section IV credited Lawvere's fixed-point theorem (1969) with unifying Cantor's diagonal, Russell's paradox, Godel's fixed-point lemma 'and Kleene's recursion theorem'. Lawvere does not treat it: his introduction names Cantor, Russell, Godel and TARSKI, and the reprint contains no occurrence of Kleene or Rogers. Kleene's recursion theorem and Turing's halting argument are Yanofsky (2003). Lawvere's list now ends at Tarski's undefinability theorem; Yanofsky's sentence carries the other two. Same defect as ATTR-2 (README, 2026-08-29), whose no-further-instances claim is retracted.
 v2.24: DA-1/KLEENE CLASS AND MC-1 PREMISE, GATE ROUND 4 (Tim rulings, 2026-09-15): section IV said the framework 'proves each face in its own domain'; the Kleene face is a KleeneStructure requirement, not proved, so the sentence now reads 'It proves the lattice, 2-adic and categorical faces in their own domains and carries the computational one as a requirement'. 'In computation it is the self-reproducing program' is now 'is read as'. The MC-1 row's seam_unique_among_named pointer now carries its premise: in a lattice with no top.
@@ -68,7 +69,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.26'
+VERSION = '2.27'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -385,10 +386,17 @@ def build():
             'Foundation) is incompatible with CC-2: ⊥ = {⊥} is a member of itself, which the Axiom of '
             'Regularity forbids (no set is self-membered, no_quine_atom), so a Foundation universe '
             'cannot host it. The Axiom of Choice is not assumed '
-            'as a framework commitment. One exception at the infrastructure level: ZP-K\'s '
-            'Kleene computability machinery depends on Classical.choice as a standard Lean '
-            'library axiom, inherited rather than a novel Zero Paradox commitment. ZP-K '
-            'Section IV tabulates the measured axiom footprints.',
+            'as a framework commitment, and the core does not use it: T-SNAP (t_snap_derived) '
+            'depends on no Lean kernel axioms at all. Classical.choice does reach the realization '
+            'layers, and not only by inheritance from Mathlib — the category-theory layer spends a '
+            'bare classical written in framework source (fixedPointFree_of_nontrivial, in '
+            'ZeroParadox/Category/Lawvere.lean), and that one is essential rather than incidental, '
+            'since wem_of_fixedPointFree derives weak excluded middle from the general '
+            'fixed-point-free principle. Where a dependence comes from and whether it can be '
+            'removed are independent questions: an inherited dependence can be essential too '
+            '(em_of_wellOrder_comparable, on Mathlib\'s InitialSeg.total). The measured footprints '
+            'are a checkable artifact — ZeroParadox/AxiomProfile.lean, with ZP-K Section IV '
+            'holding a dated measurement table for the computability layer.',
             S['body']),
         Paragraph(
             'ZF+Foundation and ZF+AFA are not two theories this work bridges — '

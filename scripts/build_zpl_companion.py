@@ -1,6 +1,7 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.9 | September 2026
+Version 1.10 | September 2026
+v1.10: ZPKB-5, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-20), companion sync with ZP-L v1.15. The Kleene Connection paragraph described ZP-K's requirement as "a program that is its own output". The requirement is the class field botCode_is_quine, which asks the nominated code to satisfy IsComputationalQuine - defined as IsKleeneFixedPoint selfApply c, which unfolds to the periodicity condition eval c n = eval c (encode c + n) for every n. That is not self-printing: the constant codes satisfy it, and they are what witness infinite_quine_family. The paragraph now states the condition, names the period as the code's own Godel number (quine_period_is_goedel says A period, not the least), and says what the condition does NOT pin. ⚠ ZP-K v1.13 recorded this exact phrasing as BEDROCK and ZeroParadox/Computability/Kleene.lean Section II fences the reading explicitly; the fix reached ZP-K and never reached this companion - the same non-propagation that cost the prior arc. The nearby fence here covers the IDENTIFICATION of the two conditions, not the DESCRIPTION of the requirement, which is why the site read as covered. Verified at ZeroParadox/Computability/Kleene.lean Sections I, II and VI.
 v1.9: GATE ROUNDS 3-4 REMEDIATION (2026-09-19), companion sync with ZP-L v1.14. "Every ZP-L theorem carries the axiom footprint [propext, Classical.choice, Quot.sound]" was an unscoped universal, and the surrounding paragraph set scope wider than ZP-L's own file: ZP-L cites Snap.lean, whose t_snap_derived is axiom-free. It is now scoped to Gentzen.lean and names it, with results cited from other layers called out as a separate question. The v1.8 changelog's "ZP-K Section IV, which is the one site that states the rule" inverted this arc's own architecture - Section IV holds a dated measurement table and states no rule - and now says so. ⚠ v1.8's content changed after its version was cut and the PDF was rebuilt without an increment; this bump is that correction.
 v1.8: ZPK-BED-2 COMPANION SYNC with ZP-L v1.13 (Tim ruling, 2026-09-19). The four-settings universal is replaced by a POINTER to ZP-K Section IV, which holds a dated measurement table and states no rule; prose no longer enumerates the settings (Tim ruling). "Both fixed-point proofs require Classical.choice" reads "carry" - a footprint cannot earn a necessity claim. Deleted rather than restated: "the Kleene proof uses it for the fixed-point selection" and its twin "the same non-constructive selection step" in the two-rooms box, a mechanism register.md ZP-K v1.20 had already retracted. "ZP-K identified bot as a Kleene fixed point" now states the identification as the framework's reading, since a program code and the lattice carrier are different types. Both claims that ZPM formalizes a type bridge between the settings are corrected: snapEmbed is MachinePhase -> Z_2, so ZPM relates the two ENCODINGS, and a bridge between the settings is open.
 v1.7: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-L v1.9: 'ZP-K proved that the initial machine state c0 is a Kleene fixed point' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem.
@@ -227,7 +228,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -405,10 +406,14 @@ def build():
     E.append(Paragraph('The Kleene Connection', CS['h1']))
     E.append(cbody(
         'ZP-K carries &#8869;\'s computational face as a requirement of its Kleene structure: '
-        'a program that is its own output, guaranteed to exist by Kleene\'s second recursion '
-        'theorem. That the program and the bottom are one object is the framework\'s reading '
-        'rather than a Lean equation &#8212; a program code and the lattice carrier are '
-        'different types. ZP-L identifies '
+        'the class field botCode_is_quine, which asks the nominated code to satisfy '
+        'IsComputationalQuine &#8212; a periodicity condition, eval c n = eval c (encode c + n) '
+        'for every n, so the code\'s own G&#246;del number is a period of it. Kleene\'s second '
+        'recursion theorem guarantees such a code exists. The condition does not by itself pin '
+        'self-reference: the constant codes satisfy it, and they are what witnesses '
+        'infinite_quine_family (ZP-K &#167;VI). That the program and the bottom are one object '
+        'is the framework\'s reading rather than a Lean equation &#8212; a program code and the '
+        'lattice carrier are different types. ZP-L identifies '
         '&#949;&#8320; as an ordinal fixed point: the first ordinal satisfying &#969;^&#945; = &#945;, '
         'guaranteed to exist by the fixed-point theorem for normal functions. Both fixed-point '
         'proofs carry Classical.choice in their Lean formalizations; ZP-K Section IV '
