@@ -16,6 +16,31 @@ import os, sys, re, inspect
 from datetime import datetime
 sys.stdout.reconfigure(encoding='utf-8')
 
+# ── Reproducible output (PDFDET-1) ────────────────────────────────────────────
+# Pin the embedded build timestamp so a rebuild that changes nothing produces
+# byte-identical bytes. Without this every run stamps a fresh /CreationDate and
+# /ModDate, and the /ID trailer with them -- ReportLab seeds the document
+# signature from the timestamp digest (pdfdoc.py: sig.update(bytestr(cat))
+# where cat comes from TimeStamp), so the /ID is derived, not independent.
+#
+# Two mechanisms, deliberately both:
+#   SOURCE_DATE_EPOCH  read at CALL time by TimeStamp, so it works regardless of
+#                      import order, and its presence alone selects the
+#                      deterministic branch (`if invariant or t`).
+#   rl_config.invariant  also suppresses pdfComments. MUST be set before any
+#                      reportlab.platypus/pdfbase import, because PDFDocument
+#                      takes `invariant=rl_config.invariant` as a DEFAULT
+#                      ARGUMENT -- bound once at import, never re-read.
+#
+# 946684800 = 2000-01-01T00:00:00Z, ReportLab's own invariant epoch. Jan 1 1900
+# was asked for and is NOT reachable here: it is epoch -2208988800, and
+# time.gmtime() raises OSError on negative values on Windows. Any FIXED epoch
+# pins the /ID equally, so the value is arbitrary as long as it never moves;
+# keeping ReportLab's own avoids depending on a platform-specific workaround.
+os.environ.setdefault('SOURCE_DATE_EPOCH', '946684800')
+from reportlab import rl_config
+rl_config.invariant = 1
+
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import LETTER
 from reportlab.lib.units import inch

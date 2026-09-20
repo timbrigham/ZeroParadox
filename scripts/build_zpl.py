@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.14 | September 2026
+Version 1.15 | September 2026
+v1.15 / comp v1.10: ZPKB-8 AND ZPKB-5, BEDROCK IN DEPOSITED PDFs (Tim ruling, 2026-09-20). The Remaining Gap box listed three things a bridge "would require", and two of the three were already built in ZPM while the third was described as a different object. Verified at ZeroParadox/Ordinal/Incompleteness.lean: (1) the mapping was REVERSED - snapEmbed c0 = 1 and snapEmbed c1 = 0, both by rfl, not c0 to 0 and c1 to 1; (2) "proof that snapEmbed is join-preserving" is proved, as snapEmbed_mul_morphism, and it carries join to MULTIPLICATION, so it is an absorbing-element morphism and not a ZPSemilattice morphism - Z_2 carries no lattice bottom, which is why the box's own "what is not proved" sentence stays true; (3) hfp is no longer a free hypothesis - hfp_from_epsilon_zero derives it from monotonicity plus the alignment hypothesis h_eps0, and snap_unconditional uses it. ⛔ THE BOX IS NARROWED, NOT DELETED (R-TWOPOLE). Its opening and its "what is not proved" sentence are TRUE as literally worded - ZPM's own Remark states that the order-preserving identification of eps0 with the bottom is not derived and would need ZPSemilattice morphisms that do not exist in this library - so deleting the box would write the opposite one-chart sentence. What remains open is now stated as the thing that IS open: deriving h_eps0 from the 2-adic structure through snapEmbed, which ZPM Section II names the Classical.choice inversion conjecture. Companion: "a program that is its own output" described the KleeneStructure requirement as self-printing; the requirement is botCode_is_quine, which asks for IsComputationalQuine - the periodicity condition eval c n = eval c (encode c + n), satisfied by the constant codes, which are what witness infinite_quine_family. The fix had reached ZP-K and never reached this companion. Verified at ZeroParadox/Computability/Kleene.lean Sections I, II and VI.
 v1.14 / comp v1.9: GATE ROUNDS 3-4 REMEDIATION (2026-09-19). ⚠ The first attempt at the Axiom Purity fix wrote "That is uniform within this document", which the document contradicts twice - the abstract and Section I, whose ZPJ/K row names bot_self_mem, measured at no axioms. Anchoring an unanchored referent produced the opposite one-chart sentence, which is R-TWOPOLE's measured shape. The box now states only what was measured (every theorem in the Theorem Summary carries the triple) and points at where the layers differ, naming that row. The Axiom Purity box's "Every theorem in the summary above carries the triple" sat three lines from "the footprints are not uniform", both true but with unanchored referents, reading as self-retraction; the first is now anchored to the Theorem Summary and the second to the ZP layers. Page 1's "axiom footprint [...] throughout" had the same unanchored shape and now names Gentzen.lean. Companion: "Every ZP-L theorem carries the triple" was an unscoped universal while the paragraph set scope wider than ZP-L's own file - ZP-L cites Snap.lean, whose t_snap_derived is axiom-free - and is now scoped to Gentzen.lean and names it. ⚠ v1.13's content changed after its version was cut and the PDFs were rebuilt without an increment; this bump is that correction (R-REGISTER: a hash mismatch means the bump was skipped, not that a rebuild is needed).
 v1.13 / comp v1.8: ZPK-BED-2, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-19). Sites in this document and its companion asserted one axiom footprint across all the settings, and the Section I table refutes that: its ZPJ/K cell names bot_self_mem (AFA), which measures no axioms, beside botCode (Kleene), which carries them. "Required" is a necessity claim no #print axioms run can earn - necessity takes a reduction to a taboo (ChoiceCannotBe.lean § IV) - and "a constructive alternative was not found" is false, the alternative being the row's own AFA witness. Sites here POINT at ZP-K Section IV, which holds a dated measurement table rather than a rule (Tim ruling, 2026-09-19), instead of restating anything. Also removed: the "Why K is Absent from Lean" reason (uncomputability does not explain absence from Lean - the corpus carries ~200 noncomputable declarations, two of them in Gentzen.lean), a theorem count that counted table ROWS, and "24 theorems proved" on page 1. Prose no longer enumerates the settings (Tim ruling) - the table defines them, and three prose sites had enumerated them three different ways while every claim was quantified over the set. The table is unchanged, per the ruling. ⚠ SCOPE OF THE SEARCH, stated instead of a count (R-NOTINLIB): check_paths.py --full --claim over .md + .lean + tracked .py + the 40 rendered PDFs, phrasings varied by POLARITY, PART OF SPEECH and VOCABULARY. Post-mortem: .claude-local/notes/axiom_footprint_measured_2026-09-19.md.
 v1.12: CLASSICAL.CHOICE MODAL (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box's 'Its presence is expected and documented, not incidental.' read as a necessity claim beside 'essential is not measured'; it now reads 'Its presence is expected and documented.'
@@ -23,7 +24,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -587,14 +588,27 @@ def build():
             'exactly at &#949;&#8320; and nowhere earlier. What is not proved: a canonical '
             'ZPSemilattice morphism MachinePhase &#8594; &#8484;&#8322; that would connect '
             'ZPE\'s &#8869; = c&#8320; to ZPB\'s &#8869; = 0 formally.',
-            'Such a bridge would require:',
-            '  (1) snapEmbed : MachinePhase &#8594; &#8484;&#8322; mapping c&#8320; &#8614; 0, c&#8321; &#8614; 1',
-            '  (2) proof that snapEmbed is join-preserving',
-            '  (3) a bridge theorem deriving hfp from tower_converges_to_zero via snapEmbed',
-            'This would make hfp a theorem rather than a hypothesis in '
-            'snap_exactly_at_epsilon_zero. The canonical witness (epsilon_zero_snap_canonical) '
-            'satisfies all five conditions without this bridge; the bridge would close '
-            'the gap between the two formal instances of &#8869; across ZPE and ZPB.',
+            'Two of the three pieces such a bridge was expected to need are built, in ZPM '
+            '(ZeroParadox/Ordinal/Incompleteness.lean &#167;I&#8211;&#167;II), and the third is '
+            'the one still open:',
+            '  (1) snapEmbed : MachinePhase &#8594; &#8484;&#8322; exists, sending c&#8320; '
+            '&#8614; 1 and c&#8321; &#8614; 0 &#8212; the snap state to 2-adic zero, the pre-snap '
+            'state to a unit (snapEmbed_c0, snapEmbed_c1, both by rfl)',
+            '  (2) snapEmbed_mul_morphism proves snapEmbed (join a b) = snapEmbed a &#215; '
+            'snapEmbed b, carrying join to multiplication because c&#8321; absorbs joins as 0 '
+            'absorbs products. That is an absorbing-element morphism, not a ZPSemilattice '
+            'morphism: &#8484;&#8322; carries no lattice &#8869;',
+            '  (3) still open &#8212; no theorem derives the alignment from '
+            'tower_converges_to_zero through snapEmbed',
+            'So hfp is derived rather than assumed: hfp_from_epsilon_zero obtains it from '
+            'monotonicity together with h&#949;&#8320; : &#981; &#949;&#8320; = c&#8321;, and '
+            'snap_unconditional uses it in place of the free hypothesis of '
+            'snap_exactly_at_epsilon_zero. What remains open is h&#949;&#8320; itself &#8212; '
+            'deriving &#981; &#949;&#8320; = c&#8321; from the 2-adic structure rather than '
+            'taking it as an alignment hypothesis, which ZPM &#167;II names the Classical.choice '
+            'inversion conjecture. The canonical witness (epsilon_zero_snap_canonical) '
+            'satisfies all five conditions without any such bridge; what the bridge would close '
+            'is the gap between the two formal instances of &#8869; across ZPE and ZPB.',
         ]
     ))
     E.append(sp(6))
