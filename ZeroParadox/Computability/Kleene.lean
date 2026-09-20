@@ -647,6 +647,19 @@ theorem infinite_quine_family :
     exact Nat.lt_succ_of_le (h k)
   exact ⟨Code.const k, hconst_quine k, hk⟩
 
+/-! ### § VII. The two spellings of a code's Gödel number
+
+Mathlib proves `Encodable.encode = encodeCode`, so the pair below names the same natural
+number. Both are `rfl` and do no work; their axiom footprints differ, because
+`Encodable.encode` routes through the `Denumerable Code` instance and `encodeCode` does not.
+Witnesses for ZP-K § IV's measurement table. -/
+
+/-- The raw numbering function, applied to itself. `rfl`. -/
+theorem encodeCode_self (c : Code) : encodeCode c = encodeCode c := rfl
+
+/-- The same Gödel number, spelled through the `Encodable` instance. `rfl`. -/
+theorem encode_self (c : Code) : Encodable.encode c = Encodable.encode c := rfl
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -669,8 +682,15 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms self_halting_undecidable
 #print axioms quine_period_is_goedel
 #print axioms quine_goedel_injective
--- For statements that mention program codes, Classical.choice is carried by the type, through Mathlib's Denumerable Code: see the Axiom Purity boxes of ZP-L and ZP-M.
 #print axioms IsComputationalQuine
 #print axioms Nat.Partrec.Code.fixed_point₂
+-- ZP-K § IV holds the dated measurement table and states no rule: five successive general
+-- rules about this one `Classical.choice` were each measured false. What follows is the
+-- measurement rather than a rule. Re-run it rather than citing anything.
+#print axioms Nat.Partrec.Code
+#print axioms Nat.Partrec.Code.eval
+#print axioms IsKleeneFixedPoint
+#print axioms encodeCode_self
+#print axioms encode_self
 
 end PurityCheck

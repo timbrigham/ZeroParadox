@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1747,
-        "files": 147
+        "declarations": 1749,
+        "files": 148
       },
       "entries": [
         {
@@ -19949,6 +19949,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4bbbec29-f394-45f2-b95f-1bd3f9a5cf7a",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encodeCode_self",
+            "short": "encodeCode_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encodeCode_self",
+            "short": "encodeCode_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "ZPK-BED arc: the two spellings of a code's Godel number, as tracked witnesses for ZP-K section IV's measurement table",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4bca99cb-f6d3-49f3-a8d4-1a2ce1b2035e",
           "new": {
@@ -26992,6 +27029,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "69238596-abe5-42d3-a04e-311de51c6721",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encode_self",
+            "short": "encode_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encode_self",
+            "short": "encode_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "ZPK-BED arc: the two spellings of a code's Godel number, as tracked witnesses for ZP-K section IV's measurement table",
           "verify": {
             "axioms": null,
             "sorry_free": true

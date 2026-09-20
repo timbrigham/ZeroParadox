@@ -20,35 +20,9 @@ a limit from one direction and a fixed value from the other.
 
 ## Formal Overview
 
-ZPL has four components:
-
-(1) Axiom Footprint Convergence — the informal observation that Classical.choice
-    appears at the non-constructive diagonal step in each of the four ZP layers
-    listed in §I. Not a Lean proposition — evidenced by #print axioms.
-
-(2) Rogers' Fixed-Point Stability — for any computable f, some code is behaviorally
-    fixed by f (eval (f c) = eval c).
-    In Lean scope. Follows from ZPK's roger_fixed_point_exists.
-
-(3) Ordinal ε₀ tower — ε₀ = nfp (ω^·) 0 is the supremum of the tower
-    ω, ω^ω, ω^(ω^ω), ...; it is a fixed point of α ↦ ω^α; it is the first
-    such fixed point above 0. Fully in Lean scope via Mathlib ordinals.
-
-(4) Cantor Normal Form Bridge — ordinals below ε₀ (NONote) encode into ℤ₂
-    via their Cantor normal form; as the tower stages approach ε₀, their encodings
-    converge to 0 = ⊥ in ℤ₂. The identification of these two limits is the
-    remaining gap. Proof partially in Lean scope.
-
-Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.
-The Classical.choice dependency is load-bearing — it is the formal non-constructivity.
-
----
-
-## Dependencies
-
-ZPK (§I): KleeneStructure, roger_fixed_point_exists, IsComputationalQuine
-ZPB (§IV): 2-adic topology, PadicInt 2, 2-adic valuation
-ZPE (§V): T-SNAP, MachinePhase, t_snap_machine -/
+The four components, the layer table, the dependencies and the axiom-footprint note live in
+`ZeroParadox/Ordinal/Gentzen.md`. Footprint: `[propext, Classical.choice, Quot.sound]`
+throughout this file, measured. ZP-K § IV tabulates the measurements on both sides. -/
 
 namespace ZeroParadox
 
@@ -63,8 +37,8 @@ open Ordinal
 
 Argument, layer table and the reason K is absent from Lean: `ZeroParadox/Ordinal/Gentzen.md`. -/
 
--- Axiom footprint evidence: all load-bearing ZPK theorems share this footprint.
--- The Classical.choice entry is the computational expression of the diagonal.
+-- Axiom footprint evidence: the ZPK theorems printed below share this footprint.
+-- Where the axiom enters is recorded in ZP-K § IV.
 section AxiomFootprintEvidence
 
 #print axioms ZeroParadox.t_comp

@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.22 | September 2026
+Version 1.24 | September 2026
+v1.24: GATE ROUNDS 3-4 REMEDIATION (2026-09-19). Section IV's two load-bearing rows now NAME their witnesses - encodeCode_self and encode_self, minted in this arc - so a reader can re-run a row instead of retyping its statement. ⚠ The v1.23 entry below said "a theorem that RUNS a program reports [propext, Quot.sound] with no choice"; that is true of the named witness eval (Code.const k) n = Part.some k and FALSE as a general claim - roger_fixed_point_exists states there is a code whose evaluation matches, which runs a program, and carries the full triple. Three sites had dropped the witness and kept the generic; all three now name it. The correction also reached ZeroParadox/Category/ChoiceCannotBe.lean SS III, which carried the identical Ordinal correction and had never received the Code one - that non-propagation is what cost this arc two attempts.
+v1.23: ZPK-BED-1 AND ZPK-BED-3, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-19). MEASURED, and the measurement corrects Section IV as well as the defect sites: the axiom does not ride on the type. Nat.Partrec.Code is axiom-free, Nat.Partrec.Code.eval is axiom-free, and a theorem that RUNS a program (eval (Code.const k) n = Part.some k) reports [propext, Quot.sound] with no choice; encode c = encode c, proved by rfl and doing no work, reports the full triple. The axiom enters through Mathlib's Denumerable/Encodable instance, reached by encode - an OPERATION, not a type. Section IV said "statements that mention program codes" and now states no predicate at all - see the table ruling below. Section I said the non-constructive existence "is why all ZP-K theorems carry the standard foundational axioms shared by all Mathlib computability results"; both universals are false as measured, and Section I now points at Section IV instead of restating it. Section II chained a false premise - distinct CODES have distinct Godel numbers "so" each generates a fixed point with a distinct period; injectivity presupposes plurality and cannot produce it, so only the infinitude is given, with the Godel number named as A period rather than the least. ⚠⚠ SECTION IV NOW HOLDS A DATED MEASUREMENT TABLE AND NO GENERAL RULE (Tim ruling, 2026-09-19). Five successive general rules were written about this one Classical.choice and all five were false, the last two in this arc: "a theorem that runs a program carries no choice" is refuted by roger_fixed_point_exists (full triple), and "a statement that names a program's index carries the axiom" is refuted by encodeCode c = encodeCode c, proved by rfl and AXIOM-FREE, against Encodable.encode c = Encodable.encode c, proved by rfl and carrying the triple - two spellings of the same Godel number, opposite footprints, since Mathlib proves encode = encodeCode. A centre holding a rule hands its error to every document pointing at it; a centre holding a measurement inherits nothing. ⚠ The table is DATED and says to re-run rather than cite it - ChoiceCannotBe.lean's "No count is recorded here" records this project getting a cited figure wrong three times. Post-mortem: .claude-local/notes/axiom_footprint_measured_2026-09-19.md.
 v1.22: SET-THEORETIC CLAUSE DELETED (Tim ruling, gate round 6, 2026-09-15): Section IV said 'The order-theoretic and set-theoretic results are unaffected.' IsQuineAtom (bot : MachinePhase) is a set-theoretic result whose Lean theorem da1_closed_concrete lists Classical.choice through machinePhaseKleene; the sentence is deleted. 'The classical axioms are entirely localised to the computational layer.' is kept.
 v1.21: CLASSICAL.CHOICE PROVENANCE, SCOPED (Tim ruling, gate round 6, 2026-09-15): Section IV said all ZP-K theorems' axioms enter through the types; da1_closed_concrete's statement IsQuineAtom (bot : MachinePhase) depends on no axioms, its choice comes through its proof at machinePhaseKleene, and bot_is_quine_atom proves the same statement with no axioms. The body now says most ZP-K theorems carry the axioms, scopes the types sentence to statements that mention program codes, and names da1_closed_concrete as the exception; the remark's opening is scoped the same way; the da1_closed_concrete box's Purity line names the axiom-free proof.
 v1.20: CLASSICAL.CHOICE PROVENANCE, SECTION IV BODY (Tim ruling, gate round 5, 2026-09-15): 'These enter exclusively through Kleene's theorem and Rogers' theorem, which use classical logic and the axiom of choice' was false (a constant-code instance uses neither theorem and carries Classical.choice); it now says that in the computability layer these enter through the types, via Mathlib's numbering of program codes (Denumerable Code), which Kleene's theorem and Rogers' theorem both use. Measured: Mathlib fixed_point and fixed_point2 both list Classical.choice.
@@ -49,7 +51,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.22'
+VERSION = '1.24'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -107,9 +109,8 @@ def build():
     E.append(body(
         'In Lean 4, this is formalized in Mathlib\'s computability library. '
         'For any partially computable transformation f of codes, '
-        'there exists a code c such that eval c = f c. The existence is non-constructive, '
-        'which is why all ZP-K theorems carry the standard foundational axioms '
-        'shared by all Mathlib computability results.'))
+        'there exists a code c such that eval c = f c. The theorem supplies a code without '
+        'distinguishing one. Section IV tabulates the measured axiom footprints.'))
 
     E.append(import_box(
         'Kleene\'s Second Recursion Theorem (Mathlib)',
@@ -118,7 +119,8 @@ def build():
             'there exists c : Code such that eval c = f c.',
             'Applied to the selfApply transformation, this yields a code c satisfying '
             'eval c n = eval c (encode c + n) for all n — a periodicity condition with '
-            'period equal to c\'s own Gödel number. Multiple such codes exist.',
+            'period c\'s own Gödel number, though not necessarily the least. Multiple '
+            'such codes exist.',
         ]
     ))
     E.append(sp(6))
@@ -128,9 +130,10 @@ def build():
         'The self-application map sends each code c to the partial function that runs c on '
         'c\'s own Gödel number plus an offset. A fixed point of self-application satisfies '
         'a periodicity condition: eval c n = eval c (encode c + n) for all n, with period '
-        'equal to c\'s own Gödel number. Non-uniqueness is expected: distinct codes have '
-        'distinct Gödel numbers, so each generates a fixed point with a distinct period — '
-        'the family of fixed points is infinite and its members are not mutually constrained.'))
+        'equal to c\'s own Gödel number, though not necessarily the least. Non-uniqueness is '
+        'expected: the family of fixed points is infinite, witnessed by the constant codes '
+        '(infinite_quine_family). Kleene.lean § I states what that does and does not imply '
+        'about codes generally.'))
 
     E.append(def_box(
         'Definition: selfApply and IsComputationalQuine (Kleene.lean § I)',
@@ -350,13 +353,41 @@ def build():
     ]
 
     E.append(body(
-        'Most ZP-K theorems carry the standard foundational axioms. For statements that mention '
-        'program codes they enter through the types, via Mathlib\'s numbering of program codes '
-        '(Denumerable Code), which Kleene\'s theorem and Rogers\' theorem both use. The Path 1 '
-        'witness da1_closed_concrete is the exception: its statement mentions no code and '
-        'depends on no axioms; its proof carries choice only because it runs through '
-        'machinePhaseKleene, and bot_is_quine_atom proves the same statement with no axioms. '
-        'They do not enter through ZPSemilattice or AFAStructure.'))
+        'This section records measurements, not a rule. `#print axioms` traverses a '
+        'declaration&#8217;s statement as well as its proof term, and reports what a proof '
+        'used &#8212; never what a theorem needs. The following were measured on '
+        '2026-09-19 against the pinned Mathlib; re-run them rather than citing this table '
+        'if the answer matters.'))
+
+    E.append(data_table(
+        headers=['Declaration', 'Axiom footprint'],
+        rows_data=[
+            ['Nat.Partrec.Code', 'none'],
+            ['Nat.Partrec.Code.eval', 'none'],
+            ['IsKleeneFixedPoint', 'none'],
+            ['encodeCode_self&#8195;(encodeCode c = encodeCode c, by rfl)', 'none'],
+            ['encode_self&#8195;(Encodable.encode c = Encodable.encode c, by rfl)', 'propext, Classical.choice, Quot.sound'],
+            ['kleene_fixed_point_exists', 'propext, Classical.choice, Quot.sound'],
+            ['roger_fixed_point_exists', 'propext, Classical.choice, Quot.sound'],
+            ['machinePhaseKleene', 'propext, Classical.choice, Quot.sound'],
+            ['da1_closed_concrete', 'propext, Classical.choice, Quot.sound'],
+            ['machinePhaseAFA', 'none'],
+            ['bot_is_quine_atom', 'none'],
+            ['t_exec', 'none'],
+        ],
+        col_widths=[230, 200],
+    ))
+    E.append(sp(6))
+
+    E.append(body(
+        'Two readings of that table are worth naming, and neither generalises beyond the '
+        'rows above. The two spellings of a code&#8217;s G&#246;del number differ: the raw '
+        'encodeCode is axiom-free, while Encodable.encode reaches through Mathlib&#8217;s '
+        'Denumerable Code instance, whose own term spends Classical.choice. And one '
+        'statement is proved both ways in Kleene.lean &#167;V &#8212; IsQuineAtom (bot : '
+        'MachinePhase) via machinePhaseKleene carries the triple, and the same statement '
+        'via machinePhaseAFA carries nothing. The axioms do not enter through ZPSemilattice '
+        'or AFAStructure.'))
     E.append(body(
         'ZP-J T-EXEC and all its corollaries remain axiom-free. The classical axioms are '
         'entirely localised to the computational layer.'))
@@ -364,8 +395,8 @@ def build():
     E.append(remark_box(
         'Remark: Classical Choice in Computability',
         [
-            'For statements that mention program codes, Classical.choice is carried by their types, '
-            'through Mathlib\'s numbering of program codes (Denumerable Code): it is present '
+            'Where the measurements above show Classical.choice, it is reached through '
+            'Mathlib\'s numbering of program codes (Denumerable Code): it is present '
             'even in a computable instance with a constant code. ZP-K\'s machinePhaseKleene also '
             'picks botCode with Classical.choose, which is what makes that instance '
             'noncomputable. Whether the numbering\'s footprint is essential is not measured. Kleene\'s '

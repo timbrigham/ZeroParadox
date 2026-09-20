@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.12 | September 2026
+Version 1.14 | September 2026
+v1.14 / comp v1.9: GATE ROUNDS 3-4 REMEDIATION (2026-09-19). ⚠ The first attempt at the Axiom Purity fix wrote "That is uniform within this document", which the document contradicts twice - the abstract and Section I, whose ZPJ/K row names bot_self_mem, measured at no axioms. Anchoring an unanchored referent produced the opposite one-chart sentence, which is R-TWOPOLE's measured shape. The box now states only what was measured (every theorem in the Theorem Summary carries the triple) and points at where the layers differ, naming that row. The Axiom Purity box's "Every theorem in the summary above carries the triple" sat three lines from "the footprints are not uniform", both true but with unanchored referents, reading as self-retraction; the first is now anchored to the Theorem Summary and the second to the ZP layers. Page 1's "axiom footprint [...] throughout" had the same unanchored shape and now names Gentzen.lean. Companion: "Every ZP-L theorem carries the triple" was an unscoped universal while the paragraph set scope wider than ZP-L's own file - ZP-L cites Snap.lean, whose t_snap_derived is axiom-free - and is now scoped to Gentzen.lean and names it. ⚠ v1.13's content changed after its version was cut and the PDFs were rebuilt without an increment; this bump is that correction (R-REGISTER: a hash mismatch means the bump was skipped, not that a rebuild is needed).
+v1.13 / comp v1.8: ZPK-BED-2, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-19). Sites in this document and its companion asserted one axiom footprint across all the settings, and the Section I table refutes that: its ZPJ/K cell names bot_self_mem (AFA), which measures no axioms, beside botCode (Kleene), which carries them. "Required" is a necessity claim no #print axioms run can earn - necessity takes a reduction to a taboo (ChoiceCannotBe.lean § IV) - and "a constructive alternative was not found" is false, the alternative being the row's own AFA witness. Sites here POINT at ZP-K Section IV, which holds a dated measurement table rather than a rule (Tim ruling, 2026-09-19), instead of restating anything. Also removed: the "Why K is Absent from Lean" reason (uncomputability does not explain absence from Lean - the corpus carries ~200 noncomputable declarations, two of them in Gentzen.lean), a theorem count that counted table ROWS, and "24 theorems proved" on page 1. Prose no longer enumerates the settings (Tim ruling) - the table defines them, and three prose sites had enumerated them three different ways while every claim was quantified over the set. The table is unchanged, per the ruling. ⚠ SCOPE OF THE SEARCH, stated instead of a count (R-NOTINLIB): check_paths.py --full --claim over .md + .lean + tracked .py + the 40 rendered PDFs, phrasings varied by POLARITY, PART OF SPEECH and VOCABULARY. Post-mortem: .claude-local/notes/axiom_footprint_measured_2026-09-19.md.
 v1.12: CLASSICAL.CHOICE MODAL (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box's 'Its presence is expected and documented, not incidental.' read as a necessity claim beside 'essential is not measured'; it now reads 'Its presence is expected and documented.'
 v1.11: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box said the computability layer's choice belongs to ZP-K's instance. Measured: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and a computable constant-code instance carries it too; Classical.choose is what makes machinePhaseKleene noncomputable; essentiality is not measured. The box now says that.
 v1.10: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim rulings, 2026-09-15): Section II's body still equated Rogers' fixed-point theorem with Kleene's second recursion theorem and dropped 'total'; it now names Mathlib fixed_point, inter-derivable with fixed_point2, for any total computable transformation. The verification box said Classical.choice is load-bearing; in the computability layer the choice belongs to ZP-K's instance (its choice of botCode), and a computable instance with a constant code also exists.
@@ -21,7 +23,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.14'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -40,7 +42,9 @@ def build():
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>All theorems §I&#8211;§VII proved sorry-free in Lean 4. '
-            'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.</i>',
+            'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout this '
+            'document&#8217;s own Lean file (Gentzen.lean). Across the ZP layers the '
+            'footprints are not uniform &#8212; ZP-K Section IV tabulates them.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -50,9 +54,9 @@ def build():
     E.append(body(
         'ZP-L establishes four results connecting the formal axioms of the ZP framework '
         'to standard results in ordinal theory and computability. '
-        'First, Classical.choice appears at the non-constructive diagonal step in each '
-        'of the four mathematical settings of the ZP framework — topology, information '
-        'theory, set theory, and computation. Second, Rogers\' fixed-point theorem for a total '
+        'First, the axiom footprints of the layers tabulated in Section I are surveyed, and '
+        'they are not uniform; ZP-K Section IV tabulates the measured footprints. '
+        'Second, Rogers\' fixed-point theorem for a total '
         'computable transformation (Mathlib fixed_point; inter-derivable with Kleene\'s second '
         'recursion theorem, fixed_point&#8322;) is formalized as a wrapper, formalizing the '
         'computational fixed-point structure. Third, the ordinal &#949;&#8320; is fully '
@@ -67,7 +71,7 @@ def build():
         'simultaneously satisfies all five conditions — monotone, tower-aligned, '
         'fixed-point-respecting, snapping at &#949;&#8320;, and &#949;&#8320; minimal. '
         'All conditions are verified without free hypotheses for this witness. '
-        '24 theorems proved, zero sorry, axiom footprint [propext, Classical.choice, '
+        'Proved sorry-free, axiom footprint [propext, Classical.choice, '
         'Quot.sound] throughout.'))
     E.append(hr())
 
@@ -79,9 +83,10 @@ def build():
     ]
 
     E.append(body(
-        'Non-constructibility appears in four mathematical settings across the ZP framework. '
-        'Classical.choice is required at each diagonal step in these proofs — '
-        'a constructive alternative was not found in any of the four settings.'))
+        'Non-constructibility appears across the layers listed below. The axiom footprints '
+        'are not uniform: ZP-K Section IV tabulates the measured footprints, and the ZPJ/K '
+        'row below names a witness on each side — bot_self_mem, '
+        'which measures no axioms, and botCode, which carries them.'))
 
     E.append(data_table(
         headers=['Layer', 'Formal Language', 'Expression of non-constructibility'],
@@ -96,11 +101,9 @@ def build():
     E.append(sp(6))
 
     E.append(remark_box(
-        'Remark: Why K is Absent from Lean',
+        'Remark: K is not computed in Lean',
         [
             'Kolmogorov complexity K is not computed in Lean in this framework. '
-            'Its existence as a total function requires Classical.choice — '
-            'exactly the axiom Nat.Partrec.Code.fixed_point&#8322; already uses in ZP-K. '
             'The AFA/Kleene route reaches the same fixed-point structure via a path whose '
             'Kleene step is a KleeneStructure requirement, without requiring K to be explicitly computed.',
             'Axiom footprint evidence — the following ZP-K theorems all carry '
@@ -109,8 +112,8 @@ def build():
             '  da1_paths_unified',
             '  isComputationalQuine_undecidable',
             '  infinite_quine_family',
-            'The Classical.choice entry is the computational expression of the diagonal. '
-            'ZP-L inherits this footprint throughout.',
+            'ZP-L inherits that footprint throughout. Where it enters is recorded in '
+            'ZP-K Section IV.',
         ]
     ))
     E.append(sp(6))
@@ -138,8 +141,7 @@ def build():
             'Proof: wrapper around roger_fixed_point_exists.',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
             'Note: this is an existential result. The specific code c is not '
-            'constructively produced; Classical.choice selects it. This is the '
-            'same non-constructive step that appears across all ZP layers (§I).',
+            'constructively produced. ZP-K Section IV tabulates the measured footprints.',
         ]
     ))
     E.append(sp(6))
@@ -463,8 +465,8 @@ def build():
     E.append(body(
         'The ordinal fixed-point structure (&#949;&#8320; = nfp (&#969;^&#183;) 0, '
         '&#969;^&#949;&#8320; = &#949;&#8320;) and the computational fixed-point structure '
-        '(Kleene\'s recursion theorem, roger_fixed_point_stability) both require '
-        'Classical.choice at their non-constructive step — parallel structure, not a '
+        '(Kleene\'s recursion theorem, roger_fixed_point_stability) both carry '
+        'Classical.choice in the proofs recorded here — parallel structure, not a '
         'proved isomorphism. The hypothesis hfp encodes that ordinal fixed points of &#969;^&#183; '
         'map to the snap state c&#8321;. Under this hypothesis plus monotonicity and tower '
         'alignment, &#949;&#8320; is the minimal snap threshold.'))
@@ -639,12 +641,15 @@ def build():
     E.append(axiom_box(
         'Axiom Purity',
         [
-            'All 23 theorems carry axiom footprint: [propext, Classical.choice, Quot.sound].',
+            'Every theorem in the Theorem Summary above carries axiom footprint: '
+            '[propext, Classical.choice, Quot.sound]. Section I\'s table and ZP-K Section IV '
+            'record where the ZP layers differ &#8212; Section I\'s own ZPJ/K row names '
+            'bot_self_mem, which measures no axioms.',
             'These are standard Mathlib infrastructure axioms (ordinal theory, p-adic '
             'analysis, computability). They are not ZP-L commitments.',
-            'Classical.choice is the formal non-constructivity appearing at the diagonal '
-            'step in each ZP layer (§I). In the computability layer Classical.choice is carried '
-            'by the statements\' types, through Mathlib\'s numbering of program codes '
+            'The footprints are not uniform; ZP-K Section IV tabulates the measurements. '
+            'In the computability layer Classical.choice is reached through '
+            'Mathlib\'s numbering of program codes '
             '(Denumerable Code): it is present even in a computable instance with a constant '
             'code. ZP-K\'s machinePhaseKleene also picks botCode with Classical.choose, which is '
             'what makes that instance noncomputable. Whether the numbering\'s footprint is '
