@@ -1514,6 +1514,95 @@ def check_routing(state, ranges=None):
     return rows
 
 
+# ⚠⚠ THE PUSH-DIFF PROPERTY GETS ITS OWN STEP NAME, AND THE SPLIT IS THE FIX RATHER THAN A TIDY-UP.
+# Two questions were sharing one name, and the WEAK one was the one recorded:
+#   `pdf_coupling`  (the ledger step, produced by `record_pdf_coupling` below) asks a TREE question --
+#                   does any `scripts/build_*.py` ON DISK name this PDF literally. Every PDF has a
+#                   builder, so it is 40 of 40 PASS and near-vacuous as a gate. Measured 2026-09-21:
+#                   `coverage_gap(step='pdf_coupling', ref='HEAD')` returns `missing: 0, nothing owed`.
+#   `check_pdf_coupling` below asks a PUSH-DIFF question -- does a build script CHANGED IN THIS PUSH
+#                   name this changed PDF. That is the one with teeth, and the one `P7-3` tightened.
+#                   Same tree, same bytes, same moment: 33 of 40 FAIL.
+#
+# ⭐ THE IMPLICATION RUNS ONE WAY ONLY, AND THAT IS WHY THE NAIVE CONSULT IS FATAL. A script arriving
+# in the push necessarily names the PDF on disk, so push-diff implies tree; a script merely SITTING on
+# disk says nothing about what arrived, so tree does NOT imply push-diff. A consult that honoured the
+# tree step's PASS would replace the strong check with the weak one on every future push -- and it
+# would look SIGNED while doing it, which is worse than loosening the check openly. That is exactly
+# the hole `P7-3` closed.
+#
+# ⛔⛔ AND UNDER `sign()` ONE NAME FOR BOTH IS UNSOUND, NOT MERELY CONFUSING. Measured by `mcpdev` in
+# `core/ledger.py`, 2026-09-21: an accept is stored as `verdict: "PASS"` -- the literal string, in
+# `_decided`. So a signature clearing the push-diff leg would ALSO satisfy the tree-scope property at
+# that basis: ONE SIGNATURE DISCHARGING 40 SUBJECTS FOR A QUESTION NOBODY EXAMINED, on a step pinned
+# at `min_coverage: 1.0`. Hence a second registered step rather than a cleverer consult.
+#
+# ⚠ REGISTERED, DELIBERATELY NOT ADMITTED. `sign()` validates against the REGISTRY
+# (`required.v2.json`), never against gitRobot's `admission.v1.json`, and `find`/`get` do not consult
+# admission at all -- so this name is signable and consultable HERE and gates nothing at the ledger.
+# Fixture case H (`tools/verify/LEDGER_GATE_FIXTURE.md`): registering does not gate, promoting does.
+#
+# ⚠⚠ NO PRODUCER, BY DESIGN -- and saying so matters, because a registered step with no producer is
+# how `pdf_coupling` ITSELF sat unsatisfiable (the `<ABSENT>` floor, invisible behind a dead `when`
+# glob). The ONLY writer of this step is `sign()` / `override()`, by hand, by a person. Nothing in
+# this pipeline records it, for two measured reasons: `sign()` emits DE NOVO, so a recorded FAIL is
+# not needed to have something to accept; and a producer here would owe an `approved_modules` repin on
+# every future `batch.py` edit -- a third one, beside `decls` and `pdf_coupling` -- for no property
+# gained. The debt is made visible by the leg PRINTING it on every run instead.
+PDF_COUPLING_PUSH_STEP = "pdf_coupling_in_push"
+
+
+def pdf_coupling_accepts(subjects):
+    """The `{path}` of `subjects` carrying a HUMAN ACCEPT at THOSE EXACT BYTES, or None if unaskable.
+
+    ⚠⚠ `None` IS NOT AN EMPTY SET (`R-ZERONULL`). "I could not ask the ledger" and "nobody has
+    accepted anything" are different facts with different remedies, and the caller treats None as
+    fail-CLOSED. An empty set means the question WAS answered and the answer was "none". An accept
+    path that fails open when the ledger is down is a bypass with better manners.
+
+    ⚠⚠ THE DISCRIMINATOR IS `decided.how`, AND NOTHING ELSE CAN SERVE. A signed accept is stored with
+    `verdict: "PASS"` hardcoded, so BY VERDICT ALONE a human accept and a mechanical pass are
+    indistinguishable -- a consult keyed on the verdict field cannot tell them apart and would clear
+    this leg for ever off the tree-scope record. `tier` cannot separate them either: `override()` also
+    defaults to `H`.
+
+    ⚠ ONLY `signature` CLEARS, AND `override` DELIBERATELY DOES NOT. They are opposite signals: an
+    accept says the finding STANDS and we ship anyway (corpus debt), an override says the STEP is
+    defective. An override here would assert `check_pdf_coupling` erred -- a different decision with a
+    different remedy -- so it is refused rather than quietly honoured. Widening to `override` is a
+    one-word change and wants its own ruling, not an inference from this one.
+
+    ⚠ THE PAIR IS THE KEY, NEVER THE BLOB ALONE. `find(subject_sha=...)` matches any record naming
+    that blob ANYWHERE, so two byte-identical PDFs at different paths would clear each other. The
+    `(path, git_blob_id)` pair is what `R-GATED` requires, and it is re-checked inside the record.
+    """
+    accepted = set()
+    for s in subjects:
+        path = (s.get("path") or "").replace("\\", "/")
+        blob = s.get("git_blob_id") or ""
+        # A subject that cannot be keyed to bytes is one no accept could bind to. Fail closed rather
+        # than skip it: a silently unkeyable offender is an exemption with no expiry.
+        if not path or not blob:
+            return None
+        try:
+            out = record._call("find", {"step": PDF_COUPLING_PUSH_STEP,
+                                        "subject_sha": blob, "limit": 500})
+        except Exception:                          # noqa: BLE001 — cannot ask == None
+            return None
+        if not out or not out.get("ok") or not isinstance(out.get("records"), list):
+            return None
+        for rec in out["records"]:
+            decided = rec.get("decided") or {}
+            if decided.get("how") != "signature" or not decided.get("who"):
+                continue
+            if any((sub.get("path") or "").replace("\\", "/") == path
+                   and sub.get("git_blob_id") == blob
+                   for sub in (rec.get("subjects") or [])):
+                accepted.add(path)
+                break
+    return accepted
+
+
 def check_pdf_coupling(ranges=None):
     """A changed PDF must arrive with the build script that produced it.
 
@@ -1593,15 +1682,112 @@ def check_pdf_coupling(ranges=None):
                 hit = True
                 break
         if not hit:
-            unpaired.append(base)
+            # ⚠ THE REPO-RELATIVE PATH, NOT THE BASENAME. It used to collect `base`, which reads
+            # identically for the 40 root-level PDFs and is NOT a key: an accept binds to
+            # `(step, path, git_blob_id)` and `common.ledger_subjects` resolves a repo-relative
+            # path. A basename would resolve nothing, or -- worse -- the wrong file of that name
+            # under `historical/`. The message below still PRINTS basenames; only the key changed.
+            unpaired.append(pdf)
     if not unpaired:
         return True, "%d PDF(s), each paired with the script naming it (%s)" % (
             len(pdfs), ", ".join(scripts[:3]))
-    return False, ("%d of %d changed PDF(s) have no build script IN THIS PUSH that names them "
-                   "(%s) — a DOI freezes the PDF permanently, and the build script is the only "
-                   "reviewable surface it has. Mirror the producing script per CLAUDE.md. "
-                   "Two build scripts do not name their output literal; if this is one, say so."
-                   % (len(unpaired), len(pdfs), ", ".join(unpaired[:3])))
+    unpaired = sorted(unpaired)
+    _why = ("%d of %d changed PDF(s) have no build script IN THIS PUSH that names them "
+            "(%s) — a DOI freezes the PDF permanently, and the build script is the only "
+            "reviewable surface it has. Mirror the producing script per CLAUDE.md. "
+            "Two build scripts do not name their output literal; if this is one, say so."
+            % (len(unpaired), len(pdfs),
+               ", ".join(os.path.basename(u) for u in unpaired[:3])))
+
+    # ⭐⭐ THE RATCHET: CONSULT THE LEDGER BEFORE BLOCKING (Tim, 2026-09-21, "update the behavior so
+    # the ratchet works"; the requirement it comes from is "you just have to be able to sign off on
+    # them as a human accepting the fact that they are not all fully remediated yet").
+    #
+    # ⛔ THIS IS NOT A LOOSENING OF THE PAIRING TEST, AND IT MUST NEVER BECOME ONE. `P7-3` tightened
+    # the pairing from *any* `scripts/*.py` to *a script that NAMES the PDF*, and the shared-layer
+    # rebuild that motivated this change would have sailed straight through the hole `P7-3` closed.
+    # The finding above is computed identically and still FAILS; what follows asks only whether a
+    # PERSON has already looked at this exact finding, at these exact bytes, and accepted it as debt.
+    #
+    # ⚠⚠ AND THE CONSULT IS THE DANGEROUS HALF OF THIS FILE. `LEDGER_GATE_FIXTURE.md`: "Cases C and K
+    # are the dangerous ones to get wrong. Everything else fails closed; those two are the paths that
+    # let a push through." Every branch below therefore names why it blocks, and only the last one
+    # returns True.
+    subjects, skipped = common.ledger_subjects(unpaired, ref="HEAD")
+    if skipped:
+        # ⚠ AN OFFENDER WE CANNOT KEY TO COMMITTED BYTES CANNOT BE ACCEPTED, so no accept is even
+        # looked for. An exemption that cannot say WHICH BYTES either never expires or expires by
+        # someone noticing -- which is the `DEFECTS.md` accept route this design exists to replace.
+        return False, (_why + "  ⚠ AND %d OFFENDING PATH(S) CANNOT BE KEYED TO COMMITTED BYTES (%s), "
+                       "so no signature could bind to them and none was sought. Fails CLOSED."
+                       % (len(skipped), "; ".join("%s: %s" % (p, r) for p, r in skipped[:2])))
+    accepted = pdf_coupling_accepts(subjects)
+    if accepted is None:
+        # ⚠⚠ THE FORCED ANSWER, settled before this was built: LEDGER UNREACHABLE => BLOCK. An accept
+        # path that fails OPEN when the ledger is down is a bypass with better manners, and the exact
+        # inversion of `R-GATED`'s fail-closed requirement.
+        return False, (_why + "  ⚠ AND THE LEDGER COULD NOT BE ASKED whether these bytes carry a "
+                       "human accept, so this is UNDECIDED rather than owed. Fails CLOSED — fix the "
+                       "reachability and re-push; do not read an outage as a finding about the PDFs.")
+    owed = [u for u in unpaired if u not in accepted]
+    if owed:
+        _hint = _write_pdf_coupling_owed(subjects, owed)
+        return False, (_why + "  ⚠ %d of the %d carry a human accept at these bytes and %d do NOT: "
+                       "%s. Accept those too, or pair them with the script that builds them.%s"
+                       % (len(unpaired) - len(owed), len(unpaired), len(owed),
+                          ", ".join(os.path.basename(o) for o in owed[:3]), _hint))
+
+    # ⚠⚠ ACCEPTED AS CARRIED DEBT — THE ONE PATH HERE THAT LETS A PUSH THROUGH WITH A RED FINDING.
+    # Fixture case K: "the allow line must make that visible rather than rendering identically to a
+    # clean pass." So it prints its own block, on every run, and the leg's one-line summary leads
+    # with the words rather than with a count.
+    print("")
+    print("  ⚠⚠ pdf coupling: ACCEPTED AS CARRIED DEBT — NOT a clean pass.")
+    print("     %d unpaired PDF(s) are shipping with the finding STANDING, on a human signature"
+          % len(unpaired))
+    print("     over these exact bytes (`%s`, decided.how=signature)." % PDF_COUPLING_PUSH_STEP)
+    for u in unpaired[:10]:
+        print("       debt  %s" % u)
+    if len(unpaired) > 10:
+        print("       debt  ... and %d more" % (len(unpaired) - 10))
+    print("     The accept binds to (step, path, git_blob_id), so it EXPIRES BY CONSTRUCTION the")
+    print("     instant any of these files changes — there is no expiry logic and nothing to")
+    print("     remember. Each discharges when its document is next rebuilt with its own script.")
+    return True, ("ACCEPTED AS CARRIED DEBT — %d of %d changed PDF(s) are unpaired and every one "
+                  "carries a `%s` signature at these bytes; the FAIL stands as debt"
+                  % (len(unpaired), len(pdfs), PDF_COUPLING_PUSH_STEP))
+
+
+def _write_pdf_coupling_owed(subjects, owed):
+    """Dump the owed `(path, git_blob_id)` set so the printed `sign()` route is actually followable.
+
+    ⚠ THE POINT IS THAT A ROUTE NOBODY CAN WALK IS THE DEFECT THIS WHOLE CHANGE FIXES. The six hook
+    lines pointed at `.claude-local/DEFECTS.md`, which nothing reads; telling an operator to `sign()`
+    33 subjects while making them hand-derive 33 blob ids would be the same failure in a new costume.
+    Returns a sentence to append to the leg's message, or "" if the dump could not be written -- a
+    failure here must never change the VERDICT, only the helpfulness of the refusal."""
+    payload = {
+        "step": PDF_COUPLING_PUSH_STEP,
+        # ⚠ `common.ledger_basis`, NOT `record.read_ref`. The first draft used `read_ref("HEAD")`,
+        # which resolves the INDEX sentinel and returns every other ref UNCHANGED -- so the dump
+        # said `basis: {"value": "HEAD"}` and an accept written from it would have bound to a MOVING
+        # LABEL rather than to a commit, quietly re-applying itself at whatever HEAD became. This is
+        # the one function that resolves a basis the way the WRITE path does, and it also supplies
+        # `resolved_from`, which V1 requires and a hand-built block forgets.
+        "basis": common.ledger_basis("HEAD"),
+        "why": ("Each subject is a PDF this push changes with no build script in the push naming "
+                "it. Signing accepts the finding as carried debt at THESE bytes only."),
+        "subjects": [s for s in subjects if s.get("path") in set(owed)],
+    }
+    try:
+        p = os.path.join(PRIV, "pdf_coupling_owed.json")
+        with io.open(p, "w", encoding="utf-8") as fh:
+            fh.write(json.dumps(payload, indent=2, sort_keys=True))
+    except OSError:
+        return ""
+    return ("  The exact subject set is written to %s — pass it to "
+            "`verdictLedger sign(step='%s', subjects=..., who=..., reason=...)`."
+            % (os.path.join(PRIV, "pdf_coupling_owed.json"), PDF_COUPLING_PUSH_STEP))
 
 
 # ⚠⚠ THE PATHSPEC AND `prior_art`'s REGISTRY `scope` MUST AGREE, AND NEITHER ALONE DOES ANYTHING.
@@ -3061,6 +3247,96 @@ def selftest():
         print("  %-46s %s" % (label, "ok" if ok else "*** got %d row(s) ***" % rows))
         bad += 0 if ok else 1
         total += 1
+
+    # ⭐⭐ THE ACCEPT CONSULT — EVERY ROW OF THE RATCHET CONTROL TABLE, EXECUTED.
+    # This is the half of `check_pdf_coupling` that can let a push through with a RED finding, and
+    # `LEDGER_GATE_FIXTURE.md` names that as one of the two dangerous cases: "everything else fails
+    # closed; those two are the paths that let a push through, so they are where a fail-open would
+    # actually cost something."
+    #
+    # ⚠⚠ THE ROWS PIN BOTH DIRECTIONS, WHICH IS WHY THERE IS A POSITIVE ONE. Row 1 requires the
+    # consult to ACCEPT and rows 2-8 require it to REFUSE, so a stub returning an empty set fails
+    # row 1 and a stub returning every path fails the other seven. A one-directional suite over an
+    # accept path is how a control layer stays green over a switched-off gate (`B5`).
+    #
+    # ⚠ THE FAKE HONOURS THE SERVER'S OWN FILTERS — both `step` and `subject_sha` — so a row cannot
+    # pass merely because the double is more permissive than `find` is. It also refuses any tool but
+    # `find`, so a consult that started asking a different question would go red here rather than
+    # silently reading something else.
+    print("pdf coupling: the accept consult (the ratchet)")
+    _real_call = record._call
+    _P, _B = "ZP-A_Illustrated_Companion.pdf", "a" * 40
+    _SUBJ = [{"path": _P, "git_blob_id": _B}]
+    _asked = []
+
+    def _mkrec(step=PDF_COUPLING_PUSH_STEP, path=_P, blob=_B, how="signature", who="Tim"):
+        # ⚠ `verdict` is "PASS" on EVERY row, including the ones that must be refused. That is not
+        # laziness: a signed accept really is stored as "PASS" (mcpdev, from `_decided`), so if the
+        # consult ever keyed on the verdict field instead of `decided.how`, all eight rows would
+        # look identical to it and seven would go red. The fixture bakes in the thing that bites.
+        return {"step": step, "verdict": "PASS",
+                "decided": {"how": how, "who": who},
+                "subjects": [{"path": path, "git_blob_id": blob}]}
+
+    def _mkfake(records, answers=True):
+        def _call(tool, args):
+            if tool != "find":
+                raise AssertionError("the consult asked %r, expected 'find'" % tool)
+            _asked.append(args.get("step"))
+            if not answers:
+                return None                     # the ledger did not answer
+            return {"ok": True, "records": [
+                r for r in records
+                if r["step"] == args.get("step")
+                and any(s["git_blob_id"] == args.get("subject_sha") for s in r["subjects"])]}
+        return _call
+
+    def _raises(_tool, _args):
+        raise RuntimeError("transport down")
+
+    _accept_cases = [
+        ("accepted FAIL at THESE bytes clears", _mkfake([_mkrec()]), _SUBJ, {_P}),
+        ("accepted at DIFFERENT bytes does not", _mkfake([_mkrec(blob="b" * 40)]), _SUBJ, set()),
+        ("no accept at all does not", _mkfake([]), _SUBJ, set()),
+        ("accept for a DIFFERENT STEP does not", _mkfake([_mkrec(step="pdf_coupling")]), _SUBJ,
+         set()),
+        ("accept for a DIFFERENT PATH does not", _mkfake([_mkrec(path="ZP-B_Other.pdf")]), _SUBJ,
+         set()),
+        ("a MECHANICAL PASS does not clear", _mkfake([_mkrec(how="mechanical", who=None)]), _SUBJ,
+         set()),
+        ("an OVERRIDE does not clear (opposite signal)", _mkfake([_mkrec(how="override")]), _SUBJ,
+         set()),
+        ("a signature with no WHO does not clear", _mkfake([_mkrec(who=None)]), _SUBJ, set()),
+        # ⚠⚠ None, NEVER set() — `R-ZERONULL`. "I could not ask" and "nobody accepted" must differ
+        # in the VALUE, because the caller blocks on one and computes an owed list from the other.
+        ("ledger unreachable is None, not empty", _mkfake([], answers=False), _SUBJ, None),
+        ("a raising transport is None too", _raises, _SUBJ, None),
+        ("an unkeyable subject is None too", _mkfake([_mkrec()]),
+         [{"path": _P, "git_blob_id": ""}], None),
+    ]
+    for label, caller, subj, want in _accept_cases:
+        try:
+            record._call = caller
+            got = pdf_coupling_accepts(subj)
+        except Exception as e:                            # noqa: BLE001 — a raise IS a failure here
+            got = "raised %r" % (e,)
+        finally:
+            record._call = _real_call
+        ok = got == want
+        print("  %-46s %s" % (label, "ok" if ok else "*** got %r, want %r ***" % (got, want)))
+        bad += 0 if ok else 1
+        total += 1
+
+    # ⚠ AND IT MUST ASK ABOUT THE PUSH-DIFF STEP, NOT THE TREE ONE. The whole design turns on the
+    # split, so a consult that quietly asked `pdf_coupling` would read the near-vacuous 40-of-40
+    # PASS and clear this leg for ever — green on every row above, because those fakes answer
+    # whatever step they are handed. The step name is the one thing the rows cannot pin themselves.
+    _wrong = sorted({s for s in _asked if s != PDF_COUPLING_PUSH_STEP})
+    _ok_step = bool(_asked) and not _wrong
+    print("  %-46s %s" % ("the consult asks the PUSH-DIFF step",
+                          "ok" if _ok_step else "*** asked %r ***" % (_wrong or "nothing",)))
+    bad += 0 if _ok_step else 1
+    total += 1
 
     print("\nselftest: %s (%d/%d control(s))"
           % ("PASS" if not bad else "FAIL", total - bad, total))

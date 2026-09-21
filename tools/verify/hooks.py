@@ -519,7 +519,8 @@ def pre_commit():
         print("")
         print("Commit blocked — NEW violations in: " + " ".join(failed))
         print("These are baselined checkers, so a hit is a genuinely new site, and each one")
-        print("already blocks at push. Fix it now, or ledger it in .claude-local/DEFECTS.md.")
+        print("already blocks at push. Fix it now — ⚠ writing it into .claude-local/DEFECTS.md")
+        print("clears nothing here: nothing reads that file, and every leg above recomputes.")
         print("Bypassing here only defers the identical block to the push.")
         return 1
     return 0
@@ -666,7 +667,8 @@ def pre_push(stream):
     if _rc_paths not in (0, 3):
         print("\nPush blocked: a repo-relative reference in TRACKED markdown does not resolve.")
         print("Fix the path, or word the line so the resolver skips it (e.g. 'no longer exists').")
-        print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
+        print("⚠ Writing it into .claude-local/DEFECTS.md does NOT clear this gate: nothing reads")
+        print("  that file, and this leg recomputes from the checker on every run.")
         return 1
     print("===========================")
 
@@ -737,14 +739,16 @@ def pre_push(stream):
     if recorded("check_moved.py", "--block") != 0:
         print("\nPush blocked: something still points at a relocated path.")
         print("Update the reference, or record the file as a dated record in check_moved.py.")
-        print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
+        print("⚠ Writing it into .claude-local/DEFECTS.md does NOT clear this gate: nothing reads")
+        print("  that file, and this leg recomputes from the checker on every run.")
         return 1
 
     if recorded("check_negatives.py", "--block") != 0:
         print("\nPush blocked: an undated universal negative.")
         print("Write 'none located as of <date>, searched as follows' — a universal negative")
         print("is falsified by any single future commit and nothing mechanical notices.")
-        print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
+        print("⚠ Writing it into .claude-local/DEFECTS.md does NOT clear this gate: nothing reads")
+        print("  that file, and this leg recomputes from the checker on every run.")
         return 1
 
     if recorded("check_figures.py", "--block") != 0:
@@ -804,7 +808,8 @@ def pre_push(stream):
         print("\nPush blocked: build-script hash mismatch vs register.md.")
         print("A script changed without completing the four-step workflow")
         print("(change + version bump + PDF rebuild + hash update).")
-        print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
+        print("⚠ Writing it into .claude-local/DEFECTS.md does NOT clear this gate: nothing reads")
+        print("  that file, and this leg recomputes from the checker on every run.")
         return 1
 
     # ⚠ scan_pdfs lives in `scripts/`, NOT in this bundle. It is a BUILD-side tool (it checks
@@ -825,7 +830,17 @@ def pre_push(stream):
     rc = py("batch.py", "prepush", "--ranges", ",".join(ranges))
     if rc != 0:
         print("\nPush blocked: the pre-push pipeline reported a failure above.")
-        print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
+        # ⚠⚠ EXACTLY ONE LEG HAS A HUMAN-ACCEPT ROUTE, AND NAMING MORE WOULD BE THE DEFECT THIS
+        # LINE WAS JUST FIXED FOR. Being a registered ledger step is NECESSARY but NOT SUFFICIENT:
+        # the leg must also CONSULT the ledger before blocking, and only `pdf coupling` does
+        # (`batch.pdf_coupling_accepts`, step `pdf_coupling_in_push`). `check_paths`, `check_moved`,
+        # `check_negatives` and `check_hashes` are registered and admitted and still recompute from
+        # their checker every run, so a signature against them changes nothing at this gate.
+        # `purity`, `ssot`, `routing` and `prior_art_attrib` are not registered steps at all.
+        print("The ONLY leg here with a human-accept route is `pdf coupling`: an accepted FAIL")
+        print("recorded as `pdf_coupling_in_push` over those exact (path, blob) pairs is not a")
+        print("block. Every other leg above must be FIXED — a signature does not reach them, and")
+        print("⚠ writing any of them into .claude-local/DEFECTS.md clears nothing.")
         # ⚠ This line used to read "This gate is mirrored in CI: a local bypass only defers the
         # block to the PR." That is FALSE and was measured false 2026-08-10: grepping all four
         # workflows for any checker returns nothing — CI runs `lake build`. Telling the operator a
