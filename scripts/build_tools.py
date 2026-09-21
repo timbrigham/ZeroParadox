@@ -37,11 +37,16 @@ S['kr_body']  = ParagraphStyle('kr_body',  fontName='DVS',   fontSize=9,  leadin
 # NOTE: no local body(). zp_utils.body() is used deliberately, because it calls
 # prose_check() — the banned-vocabulary and rendered-version gate. A local
 # `def body(t): return Paragraph(fix(t), S['body'])` was identical to the shared one
-# except for dropping that call, so it silently exempted this whole document from the
-# gate. S['body'] is not among the styles overridden above, so there was nothing for a
+# except for dropping that call, so it silently exempted every body() call site in this
+# file. S['body'] is not among the styles overridden above, so there was nothing for a
 # local override to do. Do not reintroduce one: route new prose through body()/cbody(),
 # and where a term is genuinely wanted, suppress at the call site with
 # `# ZP-NOCHECK: <reason>` so the exemption is visible and attributable.
+# AND THAT IS ALL IT RESTORES — measured 2026-09-21 by calling each helper with a banned
+# term: body() and cbody() block, li(), derived() and a bare Paragraph(fix(..)) do not.
+# The data_table() and key_result_box() text on this page travels the bare-Paragraph
+# route and is NOT gated, and the banner's "[x] Banned vocabulary" line is printed per
+# build rather than per call site. Route prose you want checked through body().
 
 def data_table(headers, rows, col_widths):
     hdr_row = [Paragraph(h, S['tbl_hdr']) for h in headers]
