@@ -124,15 +124,25 @@ theorem kleene_fixed_point_exists (f : Code → ℕ →. ℕ) (hf : Partrec₂ f
     A fixed point of selfApply satisfies a periodicity condition with period encode(c):
     eval c n = eval c (encode c + n) for all n — so a code's own Gödel number is a
     period of it, though not necessarily the least. Non-uniqueness is expected: the
-    family is infinite, witnessed by the constant codes (`infinite_quine_family`).
-    Injectivity of the encoding makes those members genuinely distinct, which is a
-    different job from making them many (`quine_goedel_injective`). (Note this
+    family is infinite, witnessed by the constant codes (`infinite_quine_family`), and
+    that proof CONSUMES injectivity of the encoding (`Encodable.encode_inj` with
+    `const_inj`) to push the constants' Gödel numbers past every bound. The arrow runs
+    injectivity → infinitude and not back: unbounded indices say nothing about whether
+    `encode` is injective. `quine_goedel_injective` states that same injectivity as a
+    theorem about quines — equal Gödel numbers force equal codes — and it is NOT what
+    tells the family's members apart; the `example` below is. (Note this
     says nothing about codes that are not fixed points; most are not.)
 
     The Gödel numbering uses Mathlib's `Encodable.encode : Code → ℕ`, which gives
     each code a canonical index. selfApply_partrec confirms this is computable. -/
 noncomputable def selfApply : Code → ℕ →. ℕ :=
   fun c n => eval c (Encodable.encode c + n)
+
+-- `Statement:` distinct Gödel numbers give distinct codes by `congrArg` alone, which
+-- every function supplies — so telling the family's members apart is not injectivity's
+-- job. `quine_goedel_injective` is the converse direction, and that one does need it.
+example (c₁ c₂ : Code) (h : Encodable.encode c₁ ≠ Encodable.encode c₂) : c₁ ≠ c₂ :=
+  fun he => h (congrArg Encodable.encode he)
 
 /-- selfApply is partially computable. -/
 lemma selfApply_partrec : Partrec₂ selfApply := by
