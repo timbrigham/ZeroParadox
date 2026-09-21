@@ -15,6 +15,15 @@
 # pass under a glob list; that one goes red the moment the default flips back to allow. It is the
 # class control, and the reason the other rows are not merely a longer hole-list.
 #
+# ** THE THIRD IS `SIBLING dir extending the root name`, AND IT WAS ADDED BECAUSE IT WAS MISSING. **
+# The containment test is a string prefix PLUS a separator, and the separator is the whole
+# difference between `...\ZeroParadox\` and a sibling directory called `...\ZeroParadox-scratch\`.
+# Measured 2026-09-20: dropping it applies cleanly, resolves correctly, and left this suite fully
+# green at exit 0 - 68 rows, every one behaving, over a hook that had lost its containment
+# boundary. The failure is an OVER-block rather than a leak, so it is ORDINARY, and it is pinned
+# anyway: an unpinned mutation leaves the next edit to that line with nothing to regress against,
+# which is the whole reason this file exists.
+#
 # ** MUTATION CONTROLS VERIFY THAT THE MUTATION APPLIED, BEFORE READING THE RESULT. ** A /rely
 # reviewer reported ALL 25 CONTROLS BEHAVED over a hook it believed it had neutered: its own
 # `-replace` had silently failed to match, so it measured an unperturbed system and read it as a
@@ -122,6 +131,12 @@ $cases = @(
     # a local drive letter would be a fabrication, so it must pass straight through.
     @{ want='ALLOW'; why='UNC to another host';       tool='Edit'; key='file_path'; path='\\fileserver\share\ZeroParadox\Computability\Kleene.lean' }
 
+    # ** THE CONTAINMENT BOUNDARY ITSELF. ** A sibling directory whose name merely EXTENDS the repo
+    # root's is outside the checkout, and only the trailing separator in the StartsWith test says
+    # so. Drop it and this row flips to DENY while every other row stays green - see the mutation
+    # of the same name at the bottom of this file, which is this row's proof of teeth.
+    @{ want='ALLOW'; why='SIBLING dir extending the root name'; tool='Write'; key='file_path'; path="${repo}-scratch\notes.md" }
+
     # --- MUST ALLOW: what Tim ruled stays the main instance's. THIS IS THE WHOLE LIST. --------
     @{ want='ALLOW'; why='.claude-local note';       tool='Write'; key='file_path'; path="$repo\.claude-local\notes\x_2026-09-19.md" }
     @{ want='ALLOW'; why='.claude-local queue';      tool='Write'; key='file_path'; path="$repo\.claude-local\queue\x.md" }
@@ -209,8 +224,13 @@ if ($shortRepo -and $shortRepo -ne $repo) {
 $naming = @(
     @{ why='root module is named as the corpus'; path="$repo\ZeroParadox.lean";        expect='the Lean corpus' }
     @{ why='corpus directory, same noun';        path="$repo\ZeroParadox\Order\Snap.lean"; expect='the Lean corpus' }
+    # The default noun names the CLASSIFIER's state, not the file's. It used to say "a tracked
+    # surface of this checkout" - untrue of the commonest case that reaches it, a `Write` to a
+    # path that does not exist yet and so is untracked by construction.
     @{ why='a sibling that merely starts with the word is NOT the corpus'
-       path="$repo\ZeroParadoxNotes.txt";        expect='a tracked surface of this checkout' }
+       path="$repo\ZeroParadoxNotes.txt";        expect='an unclassified file' }
+    @{ why='an UNTRACKED new file is not called tracked'
+       path="$repo\some-future-surface.xyz";     expect='an unclassified file' }
     @{ why='published page names the page';      path="$repo\snap-loop.html";          expect='a published web page' }
     @{ why='DOI record names the DOI record';    path="$repo\.zenodo.json";            expect='the permanent DOI record' }
 )
@@ -281,10 +301,21 @@ $mutations = @(
        probe= "\\?\$mutRepo\ZeroParadox\Computability\Kleene.lean"
        want = 'ALLOW' }
     @{ why  = 'deny-by-default removed -> unclassified root file must ALLOW'
-       find = '    $what = ''a tracked surface of this checkout'''
-       repl = '    return $null; $what = ''a tracked surface of this checkout'''
+       find = '    $what = ''an unclassified file'''
+       repl = '    return $null; $what = ''an unclassified file'''
        probe= "$mutRepo\some-future-surface.xyz"
        want = 'ALLOW' }
+    # ** THE CONTAINMENT BOUNDARY. ** Measured 2026-09-20: this mutation applied cleanly, resolved
+    # correctly, and left the suite green at exit 0 - nothing pinned it. Under it, `$rel` is taken
+    # from one character too early, so a SIBLING of the checkout is read as being inside it and
+    # denied. It over-blocks rather than leaking, so it is ORDINARY - and an over-block that denies
+    # every worktree whose path happens to extend the root's name would stop delegation dead, which
+    # is the one outcome this guard's design claim cannot survive.
+    @{ why  = 'containment test loses its separator -> a SIBLING of the root must DENY'
+       find = 'if (-not $full.StartsWith($repoRoot + [System.IO.Path]::DirectorySeparatorChar, $cmp)) { return $null }'
+       repl = 'if (-not $full.StartsWith($repoRoot, $cmp)) { return $null }'
+       probe= "${mutRepo}-scratch\notes.md"
+       want = 'DENY' }
     @{ why  = 'both-keys loop reverted to first-only -> corpus notebook beside benign file ALLOWs'
        find = 'foreach ($t in @($data.tool_input.file_path, $data.tool_input.notebook_path)) {'
        repl = 'foreach ($t in @($data.tool_input.file_path)) {'

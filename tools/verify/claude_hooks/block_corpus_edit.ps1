@@ -95,29 +95,51 @@
 #     mirror-image gap from the other side. Closing the shell half means a path matcher on
 #     Bash/PowerShell, which is a separate change with its own false-positive surface.
 #   - indirection, an encoded command, or a script written first and executed second.
-#   - ** SPELLINGS. THE STATUS OF EACH IS MEASURED, NOT ASSUMED, AND THE FIRST DRAFT OF THIS
-#     PARAGRAPH GOT ONE OF THEM WRONG IN THE UNEARNED DIRECTION. ** It listed 8.3 short names as
-#     still open, from reading the code; running it says otherwise. Measured 2026-09-20, each probe
-#     naming the same `Kleene.lean`:
-#       `\\?\C:\` `//?/C:/` `\\localhost\C$\` `\\127.0.0.1\C$\` `\\.\C:\`   DENY - normalised below,
-#                                                                          five controls, all five
-#                                                                          ALLOWed before this change
-#       8.3 short name (`...\GITROB~1\FIX-GU~1\...`)                       DENY - `GetFullPath` on
-#                                                                          .NET Framework expands a
-#                                                                          short component when the
-#                                                                          path exists. Not designed
-#                                                                          for; pinned by a control
-#                                                                          so a runtime change shows
-#       a directory JUNCTION into the checkout from outside it             ** ALLOW - open **
-#       a `subst` drive mapped onto the checkout                           ** ALLOW - open **
-#     The last two are left open DELIBERATELY, and the reason is that they are strictly weaker than a
-#     gap already named above: creating either one requires running `mklink` or `subst`, and an actor
-#     who can run those can run `Set-Content` at the file directly, which this hook has never seen.
-#     Closing them means resolving reparse points and device mappings, which needs the file to EXIST,
-#     while a `Write` to a new file must be judged exactly like an `Edit` to an existing one - so it
-#     means walking up to the nearest existing ancestor, and that is a new false-DENY surface bought
-#     for no reduction in reach. Comparing normalised strings is the deliberate choice; the residual
-#     is written here rather than implied.
+#   - ** SPELLINGS. THIS IS A LIST OF WHAT WAS RUN, NOT A CLAIM ABOUT WHAT EXISTS. ** Two drafts of
+#     this paragraph got an entry wrong, once in each direction, and the second is the one that
+#     matters. The FIRST listed 8.3 short names as still open, from READING the code; running it
+#     said DENY. The SECOND said "all five are rewritten" and left the residual list at junctions
+#     and `subst` - a completeness claim, over a normaliser that matches three literal host strings
+#     and nothing else. That is R-NOTINLIB's shape inside a control's own documentation, and DC-53
+#     records why it is the expensive place to put one: the next reader trusts the sentence instead
+#     of re-measuring. So this list is dated and scoped, and it never says "all".
+#     Measured as of 2026-09-20, as follows - each probe naming the same `Kleene.lean`, each verdict
+#     read from this hook's own JSON output, and each ALLOW below additionally confirmed by opening
+#     the path and comparing its length against the plain drive spelling's:
+#       `\\?\C:\` `//?/C:/` `\\.\C:\`                        DENY - device prefix stripped below
+#       `\\localhost\C$\` `\\127.0.0.1\C$\`                  DENY - these two literal spellings are
+#                                                            what the host test matches, and it is
+#                                                            case-insensitive (`\\LOCALHOST\` too)
+#       `\\?\UNC\localhost\C$\`                              DENY - device-UNC folds onto the line
+#                                                            above before the host test runs
+#       8.3 short name (`...\GITROB~1\FIX-GU~1\...`)         DENY - `GetFullPath` on .NET Framework
+#                                                            expands a short component when the path
+#                                                            exists. Not designed for; pinned by a
+#                                                            control so a runtime change shows
+#       `\\<COMPUTERNAME>\C$\` - this machine's OWN name     ** ALLOW - open, and it REACHES **
+#       `\\0--1.ipv6-literal.net\C$\` - IPv6 loopback        ** ALLOW - open, and it REACHES **
+#       `\\?\UNC\<COMPUTERNAME>\C$\`                         ** ALLOW - open, and it REACHES **
+#       a directory JUNCTION into the checkout from outside  ** ALLOW - open **
+#       a `subst` drive mapped onto the checkout             ** ALLOW - open **
+#     EVERY ALLOW ABOVE IS LEFT OPEN DELIBERATELY, and one argument covers all five: each needs an
+#     actor to CONSTRUCT a spelling nobody types by accident, and the threat model at the bottom of
+#     this block is DRIFT, not malice. Drift edits the path it was handed. An actor willing to
+#     compose `\\<COMPUTERNAME>\C$\...` is already willing to run `Set-Content` at the plain path,
+#     which this hook has never seen and which is named as open three bullets up - so a host-UNC
+#     spelling adds a second door to a room whose first door has no lock, and no reach at all.
+#     ** AND THE PARTIAL FIX WOULD BE THIS SAME DEFECT ONE LAYER DOWN, WHICH IS WHY THE CODE IS
+#     UNCHANGED. ** Adding `$env:COMPUTERNAME` to the host test closes exactly the row somebody
+#     thought of, leaves the IPv6-literal and device-UNC forms measured open above, and restores
+#     the "covered now" reading this paragraph exists to remove. Closing the CLASS means asking
+#     whether a host name resolves to THIS machine, which is a name-resolution call inside a
+#     fail-closed PreToolUse hook: a network round trip on every edit, and on lookup failure a
+#     fail-closed guard must DENY - so an unreachable resolver would start refusing legitimate
+#     edits to genuinely foreign UNC paths. The junction and `subst` rows carry their own version
+#     of the same trade: closing them means resolving reparse points and device mappings, which
+#     needs the file to EXIST, while a `Write` to a new file must be judged exactly like an `Edit`
+#     to an existing one - so it means walking up to the nearest existing ancestor, a new
+#     false-DENY surface bought for no reduction in reach. Comparing normalised strings is the
+#     deliberate choice; the residual is written here rather than implied.
 # The threat model is DRIFT, not malice.
 
 $raw = [Console]::In.ReadToEnd()
@@ -192,10 +214,17 @@ $cmp = [StringComparison]::OrdinalIgnoreCase
 # device prefixes by design - that is what they mean - so a prefixed corpus path never started with
 # the repo root and fell out of the guard as "outside the checkout". The loopback administrative
 # shares are the same defect in UNC clothing: `\\localhost\C$\...` and `\\127.0.0.1\C$\...` open the
-# identical bytes. All five are rewritten to the plain drive form HERE, before any resolution,
+# identical bytes. Those five are rewritten to the plain drive form HERE, before any resolution,
 # because `\\?\` also suppresses `..` normalisation and the traversal control depends on it.
-# A UNC path to any OTHER host is left exactly as it is - it is a different machine, it is not this
-# checkout, and rewriting it into a local drive letter would be a fabrication.
+#
+# ** THE HOST TEST BELOW MATCHES THREE LITERAL SPELLINGS - `localhost`, `127.0.0.1`, `.` - AND
+# NOTHING ELSE, so read it as a list rather than as a class. ** Every other host name is left
+# exactly as it is. For a genuinely foreign host that is CORRECT: it is a different machine, it is
+# not this checkout, and rewriting it into a local drive letter would be a fabrication. For a
+# spelling that names THIS machine - its own `$env:COMPUTERNAME`, or the IPv6 loopback written as
+# `0--1.ipv6-literal.net` - it is a RESIDUAL: those reach the identical bytes and are ALLOWed.
+# Measured, listed and argued in the SPELLINGS block of the header. Do not read this function as
+# covering the class, and do not close one row of it without reading that argument first.
 function ConvertTo-PlainSpelling([string]$p) {
     $s = $p -replace '/', '\'
     if ($s -match '^\\\\[?.]\\UNC\\(.+)$')            { $s = '\\' + $Matches[1] }
@@ -222,8 +251,16 @@ function Test-Carved([string]$rel) {
 }
 
 # NAMES ONLY. This table picks the noun for the refusal message so the block says what it stopped;
-# it decides NOTHING. A path that matches no row is still denied, as "a tracked surface", which is
-# the property this file now enforces directly rather than through a proxy.
+# it decides NOTHING. A path that matches no row is still denied.
+#
+# ** THE DEFAULT NOUN DESCRIBES THE CLASSIFIER, NOT THE FILE, AND THAT IS THE FIX. ** It used to
+# read "a tracked surface of this checkout", which is a claim this hook cannot make: it never
+# consults the index, and the case that reaches the default MOST often is a `Write` to a path that
+# does not exist yet and is therefore untracked by construction. The refusal would then have said
+# "tracked" about an untracked file - a true-sounding word attached to the wrong object. What the
+# default actually knows is that no row below matched, so that is what it now says. The property
+# being enforced is CONTAINMENT in the shared checkout, and the refusal's next clause - "directly
+# in the shared checkout" - already carries it, so the noun does not have to.
 #
 # `^ZeroParadox(\\|\.lean$)` is the root-module fix, and it is written to avoid the mirror-image
 # bug. The old `^ZeroParadox\\` required a separator, so the DIRECTORY matched and `ZeroParadox.lean`
@@ -276,7 +313,7 @@ function Get-Refusal([string]$target) {
     $rel = $full.Substring($repoRoot.Length + 1)
     if (Test-Carved $rel) { return $null }
 
-    $what = 'a tracked surface of this checkout'
+    $what = 'an unclassified file'
     foreach ($p in $CLASSIFY) {
         if ($rel -match ('(?i)' + $p.Pattern)) { $what = $p.What; break }
     }
