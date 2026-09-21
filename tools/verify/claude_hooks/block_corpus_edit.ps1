@@ -95,14 +95,29 @@
 #     mirror-image gap from the other side. Closing the shell half means a path matcher on
 #     Bash/PowerShell, which is a separate change with its own false-positive surface.
 #   - indirection, an encoded command, or a script written first and executed second.
-#   - ** SPELLINGS THAT NEED THE FILESYSTEM TO UNMASK. ** The five device and loopback-UNC spellings
-#     GUARD-2 measured - `\\?\C:\`, `//?/C:/`, `\\localhost\C$\`, `\\127.0.0.1\C$\`, `\\.\C:\` - are
-#     now normalised away before the comparison, and each has a control. What is NOT closed: 8.3
-#     short names (`TIMBR~1`), a directory junction or symlink pointing into the checkout from
-#     outside it, and a `subst` drive. All three are the same shape - a different NAME for the same
-#     bytes - and unmasking them needs the file to EXIST, while a `Write` to a new file must be
-#     judged exactly like an `Edit` to an existing one. Comparing normalised strings is therefore the
-#     deliberate choice, and its residual is written here rather than implied.
+#   - ** SPELLINGS. THE STATUS OF EACH IS MEASURED, NOT ASSUMED, AND THE FIRST DRAFT OF THIS
+#     PARAGRAPH GOT ONE OF THEM WRONG IN THE UNEARNED DIRECTION. ** It listed 8.3 short names as
+#     still open, from reading the code; running it says otherwise. Measured 2026-09-20, each probe
+#     naming the same `Kleene.lean`:
+#       `\\?\C:\` `//?/C:/` `\\localhost\C$\` `\\127.0.0.1\C$\` `\\.\C:\`   DENY - normalised below,
+#                                                                          five controls, all five
+#                                                                          ALLOWed before this change
+#       8.3 short name (`...\GITROB~1\FIX-GU~1\...`)                       DENY - `GetFullPath` on
+#                                                                          .NET Framework expands a
+#                                                                          short component when the
+#                                                                          path exists. Not designed
+#                                                                          for; pinned by a control
+#                                                                          so a runtime change shows
+#       a directory JUNCTION into the checkout from outside it             ** ALLOW - open **
+#       a `subst` drive mapped onto the checkout                           ** ALLOW - open **
+#     The last two are left open DELIBERATELY, and the reason is that they are strictly weaker than a
+#     gap already named above: creating either one requires running `mklink` or `subst`, and an actor
+#     who can run those can run `Set-Content` at the file directly, which this hook has never seen.
+#     Closing them means resolving reparse points and device mappings, which needs the file to EXIST,
+#     while a `Write` to a new file must be judged exactly like an `Edit` to an existing one - so it
+#     means walking up to the nearest existing ancestor, and that is a new false-DENY surface bought
+#     for no reduction in reach. Comparing normalised strings is the deliberate choice; the residual
+#     is written here rather than implied.
 # The threat model is DRIFT, not malice.
 
 $raw = [Console]::In.ReadToEnd()

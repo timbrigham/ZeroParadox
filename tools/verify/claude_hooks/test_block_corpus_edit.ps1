@@ -177,6 +177,30 @@ foreach ($bad in $closed) {
     "{0}  want=DENY  got={1,-5}  fail-closed: {2}" -f $mark, $got, $bad.why | Write-Host
 }
 
+# --- the 8.3 short name. PINNING A BEHAVIOUR WE GET FOR FREE AND DID NOT DESIGN. ------------
+# `GetFullPath` on .NET Framework expands a short component when the path exists, so this route is
+# closed without the hook doing anything about it. The header's first draft said it was open, from
+# reading the code; running it said DENY. A behaviour nobody implemented is exactly the one a
+# runtime change can take away silently, so it gets a row.
+# The row is SKIPPED, not passed, where the repo root has no distinct short form - `n/a` is a third
+# value, and it is not counted in the total. A skip that prints as a pass is the defect this is
+# avoiding.
+$extra = 0
+$shortRepo = $null
+try {
+    $shortRepo = (New-Object -ComObject Scripting.FileSystemObject).GetFolder($repo).ShortPath
+} catch { $shortRepo = $null }
+if ($shortRepo -and $shortRepo -ne $repo) {
+    $got = Invoke-Hook 'Edit' 'file_path' "$shortRepo\ZeroParadox\Computability\Kleene.lean" $null
+    $ok = ($got -eq 'DENY')
+    if (-not $ok) { $fails++ }
+    $extra++
+    $mark = if ($ok) { 'ok  ' } else { 'FAIL' }
+    "{0}  want=DENY  got={1,-5}  8.3 short name: {2}" -f $mark, $got, $shortRepo | Write-Host
+} else {
+    "n/a   8.3 short name: this repo root has no distinct short form ({0}) - row not counted" -f $repo | Write-Host
+}
+
 # --- the refusal NAMES the surface. The classifier decides nothing, but it CLAIMS. ----------
 # The root-module row is the one that motivated this: `^ZeroParadox\` required a separator, so the
 # directory matched and `ZeroParadox.lean` beside it did not. A bare `^ZeroParadox` would be the
@@ -308,7 +332,7 @@ $mark = if ($ctlOk) { 'ok  ' } else { 'FAIL' }
 Remove-Item -Recurse -Force $mutRepo
 
 ""
-$total = $cases.Count + $bothKeys.Count + $closed.Count + $naming.Count + $instr.Count + $mutations.Count + 1
+$total = $cases.Count + $bothKeys.Count + $closed.Count + $naming.Count + $instr.Count + $mutations.Count + $extra + 1
 if ($fails -eq 0) { "ALL {0} CONTROLS BEHAVED" -f $total | Write-Host; exit 0 }
 "{0} of {1} CONTROL(S) MISBEHAVED" -f $fails, $total | Write-Host
 exit 1
