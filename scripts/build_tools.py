@@ -1,8 +1,11 @@
 """
 Build ZP Tools and Methods document.
-Updated May 2026 (adversary-review pass): repo URL added to reproducibility section;
-key result box updated to acknowledge ZP-F as a non-Lean-verified layer and correct layer count.
-Updated April 2026: Lean 4 formal verification now complete for all layers.
+
+What was and was not used to develop and verify the framework. Layer inventories are
+POINTED AT, never enumerated here: register.md lists the formal documents and
+ZeroParadox/MANIFEST.md maps each layer to its Lean files, so a new layer does not
+silently falsify a count on this page. The changelog that stood here is dropped per
+R-LOOPCAP -- prose about previous states is redundant, and the commit history narrates.
 """
 
 import os
@@ -251,10 +254,11 @@ def build():
             ['Python 3',    'General scripting',
              'All PDF build scripts. Environment: Windows 11 with system Python.'],
             ['ReportLab',   'PDF generation',
-             'All technical PDFs (ZP-A through ZP-K plus ZP-F, companions, foreword, this document). '
+             'Every technical PDF in the release package: the formal layers listed in register.md, '
+             'their companions, the foreword, and this document. '
              'Used for Paragraph layout, Table construction, and Drawing (vector diagrams).'],
             ['Lean 4 + Mathlib', 'Formal proof verification',
-             'Machine-checked proofs for all eleven layers (ZP-A through ZP-K, plus ZP-F). '
+             'The machine-checked proofs. ZeroParadox/MANIFEST.md maps each layer to its Lean files. '
              'Source on illustrated branch. Built with lake build. Purity checks via #print axioms.'],
             ['DejaVu fonts','Typography',
              'DejaVuSerif (body text) and DejaVuSans (headers, labels, diagrams). '
@@ -343,8 +347,8 @@ def build():
         'running the appropriate build script in a Python 3 environment with ReportLab '
         'installed and the DejaVu fonts in scripts/fonts/.'))
     E.append(body(
-        'The mathematical content is fully specified in the formal ontology documents '
-        '(ZP-A through ZP-K, plus ZP-F). The companion documents and foreword are narrative '
+        'The mathematical content is fully specified in the formal ontology documents, which '
+        'register.md lists. The companion documents and foreword are narrative '
         'restatements of the same content. If the formal documents change, the companions '
         'and foreword require updating to match.'))
     E.append(body(
@@ -357,10 +361,13 @@ def build():
         'The Zero Paradox is a human-originated mathematical framework, developed through '
         'iterative collaboration with an AI research assistant, documented in a rigorous '
         'ontology format, rendered as publication-quality PDFs using open-source Python '
-        'tooling, and formally verified in Lean 4 + Mathlib. All ten Lean-verified formal layers '
-        '(ZP-A, ZP-B, ZP-C, ZP-D, ZP-E, ZP-G, ZP-H, ZP-I, ZP-J, ZP-K) build clean. '
-        'ZP-F (The Counterexamples) provides a classical mathematical argument without a Lean component. '
-        'Proofs are machine-checked.',
+        'tooling, and formally verified in Lean 4 + Mathlib. The Lean corpus lives under '
+        'ZeroParadox/ and is indexed by ZeroParadox/MANIFEST.md, which maps each layer to its '
+        'files; register.md lists the formal documents, and Section 6 above gives the command that '
+        'rebuilds the proofs. ZP-F (The Counterexamples) argues classically in its own document, '
+        'and its central result is machine-checked all the same: the Binary Snap cannot occur in '
+        'any field carrying a compatible linear order '
+        '(f_snap_impossible, ZeroParadox/Reals/OrderedField.lean).',
         bg=GREEN, hdr_bg=GREEN))
 
     print(f'Building: {out_path}')
