@@ -123,10 +123,10 @@ theorem kleene_fixed_point_exists (f : Code → ℕ →. ℕ) (hf : Partrec₂ f
     partial function encoding "run c on c's own Gödel number plus offset n."
     A fixed point of selfApply satisfies a periodicity condition with period encode(c):
     eval c n = eval c (encode c + n) for all n — so a code's own Gödel number is a
-    period of it, though not necessarily the least. Non-uniqueness is expected, and it
-    holds for two separate reasons: distinct fixed points have distinct Gödel numbers
-    (encoding is injective), and the family is infinite (`infinite_quine_family`,
-    witnessed by the constant codes). Neither reason follows from the other. (Note this
+    period of it, though not necessarily the least. Non-uniqueness is expected: the
+    family is infinite, witnessed by the constant codes (`infinite_quine_family`).
+    Injectivity of the encoding makes those members genuinely distinct, which is a
+    different job from making them many (`quine_goedel_injective`). (Note this
     says nothing about codes that are not fixed points; most are not.)
 
     The Gödel numbering uses Mathlib's `Encodable.encode : Code → ℕ`, which gives

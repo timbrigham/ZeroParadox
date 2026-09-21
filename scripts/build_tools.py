@@ -34,7 +34,14 @@ S['kr_hdr']   = ParagraphStyle('kr_hdr',   fontName='DVS-B', fontSize=9,  leadin
 S['kr_body']  = ParagraphStyle('kr_body',  fontName='DVS',   fontSize=9,  leading=13,
                                 textColor=WHITE)
 
-def body(t): return Paragraph(fix(t), S['body'])
+# NOTE: no local body(). zp_utils.body() is used deliberately, because it calls
+# prose_check() — the banned-vocabulary and rendered-version gate. A local
+# `def body(t): return Paragraph(fix(t), S['body'])` was identical to the shared one
+# except for dropping that call, so it silently exempted this whole document from the
+# gate. S['body'] is not among the styles overridden above, so there was nothing for a
+# local override to do. Do not reintroduce one: route new prose through body()/cbody(),
+# and where a term is genuinely wanted, suppress at the call site with
+# `# ZP-NOCHECK: <reason>` so the exemption is visible and attributable.
 
 def data_table(headers, rows, col_widths):
     hdr_row = [Paragraph(h, S['tbl_hdr']) for h in headers]
