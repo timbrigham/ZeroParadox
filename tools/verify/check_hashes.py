@@ -1477,6 +1477,38 @@ def main():
 
     ar_data = load_ar_status()
 
+    if marks and not AR_AVAILABLE:
+        # ⛔⛔ REFUSE TO CREATE THE TRACKER FROM NOTHING. Measured 2026-09-21 (/rely), reproduced in a
+        # clean worktree: `--mark-remediated Foreword` created BOTH `.claude-local/` and
+        # `ar_status.json`, wrote a ONE-KEY file, and the very next plain run reported
+        # `PhilQ: hash=MISMATCH` and `Tools: hash=MISMATCH` with `stored: ?  *** re-mark required ***`
+        # and exit 1 — on a tree nobody had touched. The checker blamed two documents for its own
+        # write, and it is a PRE-PUSH leg, so that is a manufactured push block.
+        #
+        # ⚠ THE MECHANISM IS TWO ROUTES TO ONE PROPERTY, AND ONLY ONE WAS GUARDED (`R-GATED`: a guard
+        # protects a PROPERTY, not a hole — enumerate EVERY route). The property is "an absent AR
+        # record is not a hash mismatch". Route 1, the whole file missing, IS guarded by the
+        # `if not AR_AVAILABLE` branch in the reporting loop, which prints `AR=n/a (private tracker
+        # absent)` and continues. Route 2, the file PRESENT but this key missing, falls to
+        # `ar_data.get(key, {}).get('hash', '?')`, and `'?' != <hash>` renders as MISMATCH. Marking
+        # one key is precisely the operation that converts every OTHER document from route 1 to
+        # route 2 in a single command.
+        #
+        # ⚠ FIXED AT THE CAUSE, NOT THE SYMPTOM. Silencing the route-2 MISMATCH would also silence a
+        # DELETED entry, and no checker can tell an entry GONE from one that was never there — the
+        # `check_frozen` fail-closed argument exactly. Refusing the write loosens NOTHING: it removes
+        # only the ability to fabricate a tracker, and `reg_tok` above remains the public provenance
+        # check and still runs for every document regardless of this file.
+        print('REFUSING to mark: the private AR tracker does not exist at')
+        print('  %s' % AR_STATUS)
+        print('Marking would CREATE it holding only the key(s) you named, and every other')
+        print('standalone document would then read `hash=MISMATCH  stored: ?  *** re-mark')
+        print('required ***` on the next run — blaming those documents for this command.')
+        print('This is a clone or worktree without the author\'s private state, not a finding')
+        print('about any document. If you genuinely mean to start a tracker, create the file')
+        print('with an explicit `{}` first, so that is a deliberate act with its own diff.')
+        return 1
+
     if marks:
         # ⚠ COUNT THE FAILURES. This returned 0 unconditionally, so
         # `--mark-remediated "ZP-Q The Frame-Change"` printed `ERROR: unknown key`, then
@@ -1585,8 +1617,14 @@ def main():
         # what the CI job would have published.
         #
         # The PUBLIC provenance check is `reg_tok` above, against register.md, and it runs
-        # regardless. This one is a legacy per-doc review tracker that CLAUDE.md already records as
-        # superseded by the per-file `*_cleared.txt` signals. Unavailable != wrong.
+        # regardless. This one is a legacy per-doc review tracker, superseded by REVIEW VERDICTS IN
+        # THE LEDGER (`record.py --step editorial|adversary`). Unavailable != wrong.
+        # ⚠ THIS SAID "superseded by the per-file `*_cleared.txt` signals" UNTIL 2026-09-21, and
+        # that scheme was RETIRED 2026-08-24 — `R-ER` and `R-AR` both record the prose signal files
+        # as dead, and every other file in this directory already says so (`batch.py`, `guards.py`,
+        # `check_frozen.py`, `check_release_ready.py`, `ship.py`). These were the LAST TWO sites
+        # asserting it was live. Naming a route that no longer exists is the same defect the hook
+        # lines were fixed for the same day: a reader who follows it writes a file nothing reads.
         if not AR_AVAILABLE:
             print(f'  {key}: hash={"OK" if reg_tok else "not publicly tracked"}  '
                   f'AR=n/a (private tracker absent)')
@@ -1668,7 +1706,11 @@ def main():
     print("NOTE: the LIVE, load-bearing check is build-script HASH INTEGRITY above (script bytes vs")
     print("      register.md) - it runs in the pre-push hook and check_release_ready.py imports it.")
     print("      The 'AR=' columns are a LEGACY per-doc adversary-review tracker (ar_status.json),")
-    print("      superseded by the per-file *_cleared.txt signals (the SHA-256-per-file review gate).")
+    # ⚠ THIS LINE IS PRINTED BY A CHECKER INSIDE THE PRE-PUSH HOOK, so a stale route here is read by
+    # every operator on every push. It said "superseded by the per-file *_cleared.txt signals" until
+    # 2026-09-21; that scheme was RETIRED 2026-08-24 and review coverage is a LEDGER RECORD now.
+    print("      superseded by review VERDICTS IN THE LEDGER (record.py --step editorial|adversary);")
+    print("      the per-file *_cleared.txt signals this used to name were retired 2026-08-24.")
     print("      They read 'N/-' because nothing is marked there anymore - ignore them. Kept as-is on")
     print("      purpose (Tim, 2026-07-20); not stripped, just annotated so the output isn't confusing.")
 

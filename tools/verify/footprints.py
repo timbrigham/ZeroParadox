@@ -481,7 +481,19 @@ def report_universal(pat: str, include_auto: bool, kind: str | None) -> int:
             print(f'             table built {table["built"]}')
         print()
 
-    print('  ⚠ NO COUNTEREXAMPLE LOCATED IS NOT A VERIFICATION, AND THIS TOOL WILL NOT SAY IT IS.')
+    # ⛔⛔ THIS BLOCK STAYS ASCII-ONLY, AND THAT IS A CORRECTNESS REQUIREMENT RATHER THAN A STYLE
+    # PREFERENCE. Measured 2026-09-21 (/rely): these were the ONLY two printed lines in this file
+    # carrying non-ASCII (a `⚠` here and a `§` below), so under a cp1252 stdout they were the only
+    # output that could fail — and the thing that died was THE SAFETY FENCE ITSELF. The claim rows
+    # above, some reading `NO COUNTEREXAMPLE LOCATED`, had already printed; this disclaimer then
+    # raised `UnicodeEncodeError: 'charmap' codec can't encode character '⚠'` and the reader was
+    # left with an unqualified absence result. `R-TRUNC` makes that the DEFAULT way to run this tool
+    # (redirect to a file and read it), and redirection is exactly when stdout stops being a
+    # UTF-8 console. `DC-45`: two distinguishable states rendered identically and the safe one was
+    # assumed. ⚠ IT WAS MASKED IN THE MEASURING SESSION by `PYTHONIOENCODING=utf-8:surrogateescape`
+    # while `locale.getpreferredencoding()` was cp1252 — so whether the fence survives depended on
+    # an environment variable nobody declares. Do not reintroduce a glyph on any PRINTED line here.
+    print('  /!\\ NO COUNTEREXAMPLE LOCATED IS NOT A VERIFICATION, AND THIS TOOL WILL NOT SAY IT IS.')
     print('    Three reasons it can come back empty while the sentence is still false:')
     print('    1. Anonymous `example`s declare no constant and are INVISIBLE here (97 in the')
     print('       corpus, measured 2026-09-19). `R-TOLEAN` actively prefers that form.')
@@ -489,7 +501,7 @@ def report_universal(pat: str, include_auto: bool, kind: str | None) -> int:
     print('       sentence quantifies over. Read the scope line and check it yourself.')
     print('    3. A footprint follows the STATEMENT as well as the proof, so it never shows a')
     print('       theorem NEEDS an axiom. Necessity takes a reduction to a taboo, not a')
-    print('       measurement -- `ZeroParadox/Category/ChoiceCannotBe.lean` § IV.')
+    print('       measurement -- `ZeroParadox/Category/ChoiceCannotBe.lean` section IV.')
     return EXIT_REFUTED if refuted else EXIT_OK
 
 
