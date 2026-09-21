@@ -68,8 +68,24 @@ RULE     ask what is OWED, then do only that: `gitRobot admission(action=...)` f
          `(step, path, git_blob_id)` — a fact about BYTES — so a step already PASSING for the
          content in hand is ANSWERED, and re-running it is not diligence. Never learn what is owed
          from a refusal that a query would have stated.
+         ⚠⚠ FOR A PUSH, THE DECIDER IS `gitRobot preflight()` — NOT ANY OF THE ABOVE. Three tools
+         answer three different questions and only the last one gates: `progress(ref=...)` scores
+         the WHOLE REF (it will quote a backlog that is not owed); `can_push(rev_range=...)` scores
+         the RANGE and says so — *"the backlog is NOT owed, only what this push changes"*; and
+         `preflight()` RUNS THE PRE-PUSH HOOK, which is the thing that refuses. Use the first two to
+         PLAN and the third to KNOW. ⚠ AND THEIR LISTS DISAGREE BY CONSTRUCTION, per `RATCHET-1`:
+         the ratchet reports a path whose verdict went STALE and is silent on one that was NEVER
+         EXAMINED, so cross-check any owed list against `coverage_gap(step=...)` before treating it
+         as the work.
 COST     a merge re-derived 17 recorded passing verdicts and blocked on the one it could not
          re-append; the 4KB query naming the two real gaps was never run.
+         ⚠ AND MEASURED 2026-09-20, WHICH IS WHY THE CLAUSE ABOVE EXISTS: this rule was FOLLOWED
+         and still produced hours of wrong reporting. `progress` said 4 steps and a 76/55/267
+         backlog; `can_push` said 30 signatures over 25 paths and that the backlog was not owed;
+         `prepush --ranges` said 7 legs. **The real blockers were one re-seeded baseline file and a
+         guard's globs — neither named by any of the three — and `preflight` returned them in one
+         call.** The trigger fired correctly every time; the ROUTING was wrong, which is a failure
+         mode `R-RECUR`'s ladder does not otherwise name.
 READ     tools/process/pipeline.md
 
 ## R-PRECOMMIT  `batch.py precommit` before every commit. `/batch` for anything multi-site.
