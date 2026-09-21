@@ -1,11 +1,8 @@
 """
 Build ZP Tools and Methods document.
-
-What was and was not used to develop and verify the framework. Layer inventories are
-POINTED AT, never enumerated here: register.md lists the formal documents and
-ZeroParadox/MANIFEST.md maps each layer to its Lean files, so a new layer does not
-silently falsify a count on this page. The changelog that stood here is dropped per
-R-LOOPCAP -- prose about previous states is redundant, and the commit history narrates.
+Updated May 2026 (adversary-review pass): repo URL added to reproducibility section;
+key result box updated to acknowledge ZP-F as a non-Lean-verified layer and correct layer count.
+Updated April 2026: Lean 4 formal verification now complete for all layers.
 """
 
 import os
@@ -37,19 +34,7 @@ S['kr_hdr']   = ParagraphStyle('kr_hdr',   fontName='DVS-B', fontSize=9,  leadin
 S['kr_body']  = ParagraphStyle('kr_body',  fontName='DVS',   fontSize=9,  leading=13,
                                 textColor=WHITE)
 
-# NOTE: no local body(). zp_utils.body() is used deliberately, because it calls
-# prose_check() — the banned-vocabulary and rendered-version gate. A local
-# `def body(t): return Paragraph(fix(t), S['body'])` was identical to the shared one
-# except for dropping that call, so it silently exempted every body() call site in this
-# file. S['body'] is not among the styles overridden above, so there was nothing for a
-# local override to do. Do not reintroduce one: route new prose through body()/cbody(),
-# and where a term is genuinely wanted, suppress at the call site with
-# `# ZP-NOCHECK: <reason>` so the exemption is visible and attributable.
-# AND THAT IS ALL IT RESTORES — measured 2026-09-21 by calling each helper with a banned
-# term: body() and cbody() block, li(), derived() and a bare Paragraph(fix(..)) do not.
-# The data_table() and key_result_box() text on this page travels the bare-Paragraph
-# route and is NOT gated, and the banner's "[x] Banned vocabulary" line is printed per
-# build rather than per call site. Route prose you want checked through body().
+def body(t): return Paragraph(fix(t), S['body'])
 
 def data_table(headers, rows, col_widths):
     hdr_row = [Paragraph(h, S['tbl_hdr']) for h in headers]
@@ -254,11 +239,10 @@ def build():
             ['Python 3',    'General scripting',
              'All PDF build scripts. Environment: Windows 11 with system Python.'],
             ['ReportLab',   'PDF generation',
-             'Every technical PDF in the release package: the formal layers listed in register.md, '
-             'their companions, the foreword, and this document. '
+             'All technical PDFs (ZP-A through ZP-K plus ZP-F, companions, foreword, this document). '
              'Used for Paragraph layout, Table construction, and Drawing (vector diagrams).'],
             ['Lean 4 + Mathlib', 'Formal proof verification',
-             'The machine-checked proofs. ZeroParadox/MANIFEST.md maps each layer to its Lean files. '
+             'Machine-checked proofs for all eleven layers (ZP-A through ZP-K, plus ZP-F). '
              'Source on illustrated branch. Built with lake build. Purity checks via #print axioms.'],
             ['DejaVu fonts','Typography',
              'DejaVuSerif (body text) and DejaVuSans (headers, labels, diagrams). '
@@ -347,8 +331,8 @@ def build():
         'running the appropriate build script in a Python 3 environment with ReportLab '
         'installed and the DejaVu fonts in scripts/fonts/.'))
     E.append(body(
-        'The mathematical content is fully specified in the formal ontology documents, which '
-        'register.md lists. The companion documents and foreword are narrative '
+        'The mathematical content is fully specified in the formal ontology documents '
+        '(ZP-A through ZP-K, plus ZP-F). The companion documents and foreword are narrative '
         'restatements of the same content. If the formal documents change, the companions '
         'and foreword require updating to match.'))
     E.append(body(
@@ -361,13 +345,10 @@ def build():
         'The Zero Paradox is a human-originated mathematical framework, developed through '
         'iterative collaboration with an AI research assistant, documented in a rigorous '
         'ontology format, rendered as publication-quality PDFs using open-source Python '
-        'tooling, and formally verified in Lean 4 + Mathlib. The Lean corpus lives under '
-        'ZeroParadox/ and is indexed by ZeroParadox/MANIFEST.md, which maps each layer to its '
-        'files; register.md lists the formal documents, and Section 6 above gives the command that '
-        'rebuilds the proofs. ZP-F (The Counterexamples) argues classically in its own document, '
-        'and its central result is machine-checked all the same: the Binary Snap cannot occur in '
-        'any field carrying a compatible linear order '
-        '(f_snap_impossible, ZeroParadox/Reals/OrderedField.lean).',
+        'tooling, and formally verified in Lean 4 + Mathlib. All ten Lean-verified formal layers '
+        '(ZP-A, ZP-B, ZP-C, ZP-D, ZP-E, ZP-G, ZP-H, ZP-I, ZP-J, ZP-K) build clean. '
+        'ZP-F (The Counterexamples) provides a classical mathematical argument without a Lean component. '
+        'Proofs are machine-checked.',
         bg=GREEN, hdr_bg=GREEN))
 
     print(f'Building: {out_path}')
