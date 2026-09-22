@@ -252,8 +252,8 @@ def build():
         [
             'Three results establish that &#949;&#8320; is the '
             'proof-theoretic ordinal of Peano Arithmetic &#8212; the furthest '
-            'that PA\'s proofs of transfinite induction reach &#8212; and it '
-            'takes more than one result. Transfinite induction up to '
+            'that PA\'s proofs of transfinite induction reach. '
+            'Transfinite induction up to '
             '&#949;&#8320; suffices to prove PA consistent (1936). That '
             'induction is not itself provable in PA, which follows indirectly '
             'from G&#246;del\'s theorem together with the 1936 result, and '
