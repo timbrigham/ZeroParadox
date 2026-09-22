@@ -250,7 +250,7 @@ def build():
     E.append(remark_box(
         'Remark R-L.1: Proof-Theoretic Alignment',
         [
-            'Gentzen\'s theorem establishes that &#949;&#8320; is the '
+            'Three results establish that &#949;&#8320; is the '
             'proof-theoretic ordinal of Peano Arithmetic &#8212; the furthest '
             'that PA\'s proofs of transfinite induction reach &#8212; and it '
             'takes more than one result. Transfinite induction up to '
@@ -260,8 +260,7 @@ def build():
             'which Gentzen proved directly in 1943. And Gentzen reports, '
             'crediting Hilbert-Bernays, that transfinite induction up to any '
             'ordinal strictly below &#949;&#8320; is provable in PA. '
-            'Sufficiency scales upward, so the 1936 bound alone holds of any '
-            'larger ordinal. What pins the value to exactly &#949;&#8320; is '
+            'What pins the value to exactly &#949;&#8320; is '
             'the other two together, and they run in opposite directions: PA '
             'proves transfinite induction at every ordinal strictly below '
             '&#949;&#8320;, and does not prove it at &#949;&#8320; itself. '
