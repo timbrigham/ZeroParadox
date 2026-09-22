@@ -158,8 +158,14 @@
       ],
       "module": "tools/verify/check_hashes.py",
       "approved_modules": [
-        "1fd14e21adbca2712e8a47398f57821e4e59ab33"
-      ]
+        "cbf6f8c776b9732c5c89329a118c708cf6a9e68e"
+      ],
+      "actions": [
+        "push",
+        "tag"
+      ],
+      "_actions_why": "⚠⚠ STATED BECAUSE IT WAS BEING STATED TWICE AND THE TWO DISAGREED. Tim ruled 2026-09-21 that hash integrity is a TIP property, not a per-commit one, and gitRobot's `admission.v1.json` now reads `commit: false, push: true, tag: true`. This entry declared no `actions` and therefore claimed ALL of them, so admission and the registry asserted different obligations for one step — caught immediately by mcpdev's mirror ratchet and carried in its `KNOWN_MISMATCHES` until this edit. ⭐ THE VALUE MIRRORS ADMISSION and that is the whole argument for it (mcpdev, measured in `admission.v1.json` rather than recalled); the registry is simply the half where a narrowing states its REASON. ⚠ THE RULING'S REASON, which is stronger than 'it completes per arc': `R-REGISTER`'s workflow -- edit, bump the internal version, rebuild the PDF, recompute the token -- completes per ARC, and the stub-first protocol deliberately commits incomplete work as rollback points. A STALE row does not say the hashes DISAGREE, it says NO VERDICT EXISTS at those bytes. So per-commit enforcement was demanding a PASSING verdict for a property the protocol intends to be FALSE mid-arc: an intermediate with a moved script and an un-bumped token would fail HONESTLY if the checker ran. Measured before and after over 42 commits: blocking 18/42 -> 2/42, every removed blocker `stale:check_hashes`, and the scoped stale paths were `register.md` plus the build scripts at all 26 commits carrying them. THE TIP STILL REQUIRES IT, so what gets PUBLISHED is still checked. ⚠ `tag` IS RETAINED DELIBERATELY, and this half is my finding verified by mcpdev rather than the other way round: `tools/verify/check_release_ready.py` does `import check_hashes as ch` and delegates to `check_hashes.all_hash_mismatches()`, so a release genuinely needs it. A release mints a permanent DOI; a rollback point does not. ⛔ NOT extended to `pdf_coupling`, which is the TREE property (does some `scripts/build_*.py` on disk name this PDF) and could reasonably hold at every commit -- a different question, decided on its own evidence, never by analogy from this one.",
+      "_repinned_2026_09_21": "`cbf6f8c7…` REPLACES `1fd14e21…`, per the top-level `_approved_modules` rule -- *\"`[\\\"<new>\\\"]` is correct; `[\\\"<old>\\\", \\\"<new>\\\"]` is wrong absent a stated expiry\"* -- never appended. The blob moved because a `/rely` round edited this checker on 2026-09-21: it made `footprints.py`'s safety fence printable under cp1252 and stopped `--mark-remediated` fabricating an `ar_status.json` that flipped untouched documents to MISMATCH. ⚠⚠ THIS REPIN WAS THE PUSH BLOCKER AND I HAD CALLED IT PARKABLE. V16c refused every `check_hashes` record against the unapproved build, so the step could not leave STALE, the tip sat at 19/20 and the ratchet owed `register.md` and `scripts/build_zpl.py`. **Editing a checker stales its own pin, and the checker a `/rely` round fixes is the one easiest to forget.** ⚠ The blob was re-derived with `record.module_evidence` in this tree and independently confirmed by mcpdev against worktree, index AND HEAD -- all three agreeing, which also rules out a worktree/index/HEAD ambiguity hiding in it. NOT relayed: a hash taken on someone's word is a hash you authored (`RELAY-2`, three instances in one day)."
     },
     "check_moved": {
       "family": "mechanical",
@@ -286,6 +292,10 @@
     "pdf_coupling_in_push": {
       "family": "mechanical",
       "when": "*.pdf",
+      "actions": [
+        "push"
+      ],
+      "_actions_why": "⚠ DECLARED BECAUSE AN UNDECLARED `actions` CLAIMS EVERY ACTION. Without this key the registry had this step gating commit, push AND tag, when its entire purpose is the PUSH DIFF -- it asks whether a build script arrived IN THIS PUSH naming a changed PDF, which is not a question a commit or a tag can even be asked. Caught by mcpdev reviewing the entry, 2026-09-21, the same day it was registered. ⚠ `R-NOTINLIB`'s shape and the one this file already warns about at `rely` and `check_briefs`: a default that silently claims more than intended reads later as a STALE REGISTRY rather than as a deliberate narrowing, so the narrowing has to be written. ⛔ This step gates nothing today regardless -- it is deliberately absent from gitRobot's `admission.v1.json` (`registered_not_admitted`), so `sign()` can reach it while it adds no key to any action. The declaration states the intent for the day someone promotes it, rather than leaving the intent inferable only from the code.",
       "module": "tools/verify/batch.py",
       "scope": [
         "*.pdf"
