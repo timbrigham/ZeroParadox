@@ -82,7 +82,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.18 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.24 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.15 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
-| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.41 | The bridge: the snap assembled as a derived theorem across the layers. |
+| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.42 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.8 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.15 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.23 | The categorical bridge: the snap holding under all four domain functors. |
