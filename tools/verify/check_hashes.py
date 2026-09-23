@@ -388,8 +388,16 @@ def all_hash_mismatches():
     # returns `header is None` for a script whose title line cannot be located above its changelog;
     # printing that tuple raw would put a bare `None` in front of the one reader whose next action
     # mints a permanent DOI. Say what is wrong and what to do about it.
+    # ⚠⚠ AND THE UNREADABLE ROW GETS ITS OWN SENTENCE TOO, FOR THE SAME REASON AND A SHARPER ONE.
+    # `header` is an `OSError` instance when the file could not be OPENED. That is NOT the
+    # not-found case and must not borrow its wording: the remedy is to investigate a lock or a
+    # permission, never to add a title line. Branch on the exception BEFORE branching on `None`.
     for name, head, const in check_docstring_versions():
-        if head is None:
+        if isinstance(head, OSError):
+            out.append('build script UNREADABLE: %s could not be opened (%s), so neither its '
+                       'docstring header nor its VERSION constant was read - this file was '
+                       'checked against nothing' % (name, head))
+        elif head is None:
             out.append('docstring header NOT FOUND in %s (VERSION = %s): no title line above the '
                        'changelog, so step 4 of the four-step rule cannot be checked on this file'
                        % (name, const))
@@ -1151,20 +1159,31 @@ def selftest():
             '"""\nZero Paradox - Probe: Fine (v1.0)\n"""\n\nVERSION = \'1.0\'\n',
     }
     _probe_paths = dict((os.path.join(REPO, 'scripts', _n), _b) for _n, _b in _probes.items())
+    # ⚠⚠ THE FIFTH PROBE IS NOT A FILE, IT IS AN EXCEPTION, and that is exactly why the four above
+    # could not reach this defect: they are injected through a `StringIO` that never raises, so no
+    # arrangement of their CONTENT can produce a file that will not OPEN. `/rely` named this as the
+    # instance its own construction could never produce (2026-09-23). The probe is a path that
+    # `glob` lists and `io.open` refuses - the race `R-STAGE` records between a listing and a read,
+    # and a Windows file lock, both arrive at this shape.
+    _probe_locked = os.path.join(REPO, 'scripts', 'build_zzprobe_locked.py')
     _real_glob, _real_open = glob.glob, io.open
 
     def _probe_open(p, *a, **k):
+        if str(p) == _probe_locked:
+            raise PermissionError(13, 'Permission denied', str(p))
         if str(p) in _probe_paths:
             import io as _io
             return _io.StringIO(_probe_paths[str(p)])
         return _real_open(p, *a, **k)
 
     try:
-        glob.glob = lambda *_a, **_k: list(_probe_paths)
+        glob.glob = lambda *_a, **_k: list(_probe_paths) + [_probe_locked]
         io.open = _probe_open
-        _seen = dict((n, h) for n, h, _c in check_docstring_versions())
+        _rows = check_docstring_versions()
     finally:
         glob.glob, io.open = _real_glob, _real_open
+    _seen = dict((n, h) for n, h, _c in _rows)
+    _seen_const = dict((n, c) for n, _h, c in _rows)
 
     print('  MUST FIRE  (a header that cannot be located is REPORTED)')
     _buried_ok = 'build_zzprobe_buried.py' in _seen and _seen['build_zzprobe_buried.py'] is None
@@ -1175,6 +1194,46 @@ def selftest():
     bad += 0 if _stale_ok else 1
     print('    %-34s %s' % ('a stale header is still reported',
                             'ok' if _stale_ok else '*** WRONG ***'))
+    # ⚠⚠ AND A FILE THAT WILL NOT OPEN IS REPORTED TOO, WITH ITS OWN TAG. `except OSError: continue`
+    # dropped it entirely: zero rows, which is the value the AGREEING branch returns. The row must
+    # exist AND be distinguishable - a row tagged `None` would route this to "add a title line",
+    # which is a wrong instruction for a file nobody could read.
+    _locked_head = _seen.get('build_zzprobe_locked.py', '<no row>')
+    _locked_ok = isinstance(_locked_head, OSError)
+    bad += 0 if _locked_ok else 1
+    print('    %-34s %s%s' % ('an unopenable script is reported',
+                              'ok' if _locked_ok else '*** SILENTLY SKIPPED ***',
+                              '' if _locked_ok else ' — %r' % (_locked_head,)))
+    # The TAG must separate it from the not-found case, by VALUE (`R-ZERONULL`). `None` would
+    # collide; an exception instance cannot be mistaken for a version string or for `None`.
+    _tag_ok = (_locked_ok and _seen.get('build_zzprobe_buried.py') is None
+               and _seen_const.get('build_zzprobe_locked.py') is None
+               and _seen_const.get('build_zzprobe_buried.py') == '9.9')
+    bad += 0 if _tag_ok else 1
+    print('    %-34s %s' % ('unopenable != header-not-found',
+                            'ok' if _tag_ok else '*** THE TWO SHARE A ROW SHAPE ***'))
+    # ⛔ AND THE NARROW `except` MUST STAY NARROW. Bad bytes raise `UnicodeDecodeError`, a
+    # `ValueError`, which this must NOT catch - widening to a bare `except:` would turn a LOUD
+    # failure into a quiet row and hand back the coverage the row above just bought.
+    class _BadBytes(object):
+        def read(self):
+            return b'\xff\xfe\x00'.decode('utf-8')
+
+    def _bad_open(p, *_a, **_k):
+        return _BadBytes()
+
+    _loud = False
+    try:
+        glob.glob = lambda *_a, **_k: [os.path.join(REPO, 'scripts', 'build_zzprobe_bytes.py')]
+        io.open = _bad_open
+        check_docstring_versions()
+    except UnicodeDecodeError:
+        _loud = True
+    finally:
+        glob.glob, io.open = _real_glob, _real_open
+    bad += 0 if _loud else 1
+    print('    %-34s %s' % ('undecodable bytes still fail LOUD',
+                            'ok' if _loud else '*** SWALLOWED ***'))
     # ⚠ AND THE RELEASE GATE MUST SAY SO IN WORDS. `RLY18-5` again: the gate whose output is a
     # permanent DOI must not render this row as a bare `None` the reader cannot act on.
     _real_cdv = globals()['check_docstring_versions']
@@ -1188,6 +1247,73 @@ def selftest():
     print('    %-34s %s%s' % ('the release gate names the absence',
                               'ok' if _gate_ok else '*** WRONG ***',
                               '' if _gate_ok else ' — %s' % (_msgs or 'no message',)))
+    # ⚠ THE SAME, FOR THE UNREADABLE ROW. It must reach the gate, say UNREADABLE rather than borrow
+    # the NOT FOUND wording, and never render the raw exception tuple in front of the one reader
+    # whose next action mints a permanent DOI.
+    try:
+        globals()['check_docstring_versions'] = lambda *_a, **_k: [
+            ('<locked>.py', PermissionError(13, 'Permission denied'), None)]
+        _lmsgs = [m for m in all_hash_mismatches() if '<locked>.py' in m]
+    finally:
+        globals()['check_docstring_versions'] = _real_cdv
+    _lgate_ok = bool(_lmsgs) and all('UNREADABLE' in m and 'NOT FOUND' not in m
+                                     and 'Permission denied' in m for m in _lmsgs)
+    bad += 0 if _lgate_ok else 1
+    print('    %-34s %s%s' % ('the gate names the unreadable file',
+                              'ok' if _lgate_ok else '*** WRONG ***',
+                              '' if _lgate_ok else ' — %s' % (_lmsgs or 'no message',)))
+
+    # ⚠⚠ AND `main()`'s REPORTER IS CONTROLLED THROUGH `main()`, NOT AROUND IT (`/rely` ORDINARY-1,
+    # 2026-09-23). Reverting the block split there returned rc 0 with nothing red, because no leg
+    # called `main()` - and the misrender it produces is `build_zpe.py  docstring None  constant
+    # 3.42` under the STALE heading, sending a reader to edit a line that does not exist. This is
+    # the same shape as the delegation legs above, one level up: patch the SOURCE function, run the
+    # real CALLER, and read what a human would actually see. `sys.argv` is emptied so `main()` does
+    # not re-enter `--selftest`, and `record_if_asked` is inert without `--record`, so this writes
+    # nothing.
+    _probe_rows = [('<probe-absent>.py', None, '9.9'),
+                   ('<probe-locked>.py', PermissionError(13, 'Permission denied'), None)]
+    _heads = ('DOCSTRING VERSION != VERSION constant',
+              'DOCSTRING HEADER NOT FOUND',
+              'BUILD SCRIPT COULD NOT BE READ')
+
+    def _section_of(txt, marker):
+        """Which heading most recently preceded the line naming `marker`."""
+        cur = None
+        for ln in txt.splitlines():
+            for h in _heads:
+                if ln.startswith(h):
+                    cur = h
+            if marker in ln and not ln.startswith(_heads):
+                return cur
+        return '<never printed>'
+
+    import io as _io2
+    _buf = _io2.StringIO()
+    _save_out, _save_argv = sys.stdout, sys.argv
+    try:
+        globals()['check_docstring_versions'] = lambda *_a, **_k: list(_probe_rows)
+        sys.argv = ['check_hashes.py']
+        sys.stdout = _buf
+        _main_rc = main()
+    finally:
+        sys.stdout, sys.argv = _save_out, _save_argv
+        globals()['check_docstring_versions'] = _real_cdv
+    _txt = _buf.getvalue()
+    for _marker, _want, _label in (
+            ('<probe-absent>.py', 'DOCSTRING HEADER NOT FOUND',
+             'main() routes absent to its own block'),
+            ('<probe-locked>.py', 'BUILD SCRIPT COULD NOT BE READ',
+             'main() routes unreadable to its own')):
+        _got = _section_of(_txt, _marker)
+        _ok = (_got == _want)
+        bad += 0 if _ok else 1
+        print('    %-34s %s%s' % (_label, 'ok' if _ok else '*** MISROUTED ***',
+                                  '' if _ok else ' — under %r' % (_got,)))
+    _rc_ok = (_main_rc == 1)
+    bad += 0 if _rc_ok else 1
+    print('    %-34s %s%s' % ('main() fails on either row', 'ok' if _rc_ok else '*** WRONG ***',
+                              '' if _rc_ok else ' — rc %r' % (_main_rc,)))
 
     print('  MUST SUPPRESS  (out-of-scope and agreeing scripts stay silent)')
     _noversion_ok = 'build_zzprobe_noversion.py' not in _seen
@@ -1254,9 +1380,19 @@ def check_docstring_versions():
 
     Step 4 of the four-step rule (edit, bump, rebuild, update the docstring) is the one that gets
     skipped, because nothing mechanical reads it: the hash check fingerprints the file and the
-    release gate compares the constant. Returns a list of `(name, header, const)` rows, where
-    `header` is the version the docstring advertises - or **`None` when no header could be located
-    at all**, a THIRD outcome that is now REPORTED rather than dropped.
+    release gate compares the constant. Returns a list of `(name, header, const)` rows in which
+    **`header` IS THE TAG**, and the tag carries its own payload:
+
+        `str`               the version the docstring advertises, and it DISAGREES - remedy: edit
+                            one line. `const` is the constant it disagreed with.
+        `None`              no header could be located above the changelog - remedy: ADD a title
+                            line. `const` is known, because the file was read.
+        an `OSError`        the file could not be OPENED - remedy: INVESTIGATE THE FILE. `const`
+                            is `None`, because nothing in the file was ever read, and the
+                            exception itself is the payload a reader needs (errno, strerror).
+
+    A header that agrees produces no row. Four outcomes; the three that mean "this file was not
+    successfully compared" all reach the caller as VALUES, and only agreement is silence.
 
     ⚠ MATCH THE HEADER LINE ONLY. A first draft of this scanned for any `Version N.N` before the
     constant and flagged `build_zpc.py`, whose only hit sits INSIDE a changelog entry
@@ -1271,6 +1407,36 @@ def check_docstring_versions():
     README versions in sync." `R-ZERONULL`: the unfindable branch now returns a VALUE that differs
     from the satisfied branch - a row whose `header` is `None` - so it reaches `all_ok` and the
     release gate exactly as a mismatch does.
+
+    ⚠⚠ AND THE SAME DEFECT HAD A SECOND DOOR, WHICH THE FIX ABOVE DID NOT CLOSE (`/rely`,
+    2026-09-23). `except OSError: continue` dropped an UNOPENABLE build script with no row and no
+    message. Measured on a synthetic `build_zzlocked.py` with `PermissionError(13)` injected:
+    `check_docstring_versions()` returned `[]`, `all_hash_mismatches()` returned no docstring row,
+    and `main()` printed "Docstring and README versions in sync." at exit 0 - the same sentence and
+    the same exit code, through a different opening. Zero rows is the value the SATISFIED branch
+    produces, so `all_ok` stayed true on this axis. The unreadable file now emits a row too, and
+    the `continue` below is loop control only: one unopenable script must not abort the walk over
+    the other 43.
+    ⛔ THE TWO STATES MUST NOT SHARE A ROW SHAPE, because they have DIFFERENT REMEDIES. "No header
+    located" is answered by ADDING a title line; "could not open" is answered by INVESTIGATING a
+    lock, a permission or a vanished path. Telling a reader to add a title line to a file nobody
+    could open is a wrong instruction, not merely a vague one - so the tag is the exception
+    INSTANCE, never a second `None`, and both consumers branch on it before they branch on `None`.
+    ⛔ `except OSError` STAYS NARROW. Bad bytes raise `UnicodeDecodeError`, a `ValueError`, which is
+    NOT caught and fails LOUD - verified by injection, not assumed. Widening this to a bare
+    `except:` would convert that loud failure into a quiet row and give back the coverage this
+    change just bought.
+    ⚠ ONE SILENT PATH REMAINS, NAMED RATHER THAN CLAIMED CLOSED. This walks whatever `glob.glob`
+    lists, so a listing SHORTER than the directory drops the scripts it omitted with no row - again
+    the satisfied value. Measured 2026-09-23 over an empty listing: `[]`.
+    ⛔ AND THE HASH LAYER DOES NOT COVER IT, though it reads as though it should - that clause was
+    drafted here from the code and measured FALSE the same day. `all_hash_mismatches` does read each
+    script BY NAME from `register.md`'s five maps (40 of the 44 `build_*.py` on disk; with every
+    script made absent it produced 41 loud rows), but that catches a file that is GONE. A file that
+    EXISTS and was merely not LISTED opens fine under its own name and its hash matches, so the hash
+    layer is silent on it too. Not fixed here: the remedy is to compare the LISTING against those
+    maps, which is a roster check rather than a row shape. Stated at this length because the
+    reassuring half of the sentence is the half that was wrong.
     ⛔ REPORT THE ABSENCE; NEVER WIDEN THE SCAN. `_header_version`'s changelog truncation and its
     header shapes are load-bearing, and each carries its own measured incident below: a greedier
     pattern trades a silent SKIP for a silent REWRITE of a historical record, which is worse.
@@ -1282,7 +1448,12 @@ def check_docstring_versions():
     for p in sorted(glob.glob(os.path.join(REPO, 'scripts', 'build_*.py'))):
         try:
             body = io.open(p, encoding='utf-8').read()
-        except OSError:
+        except OSError as exc:
+            # A file we could not OPEN was checked against nothing - the same fact as a file whose
+            # header we could not FIND, and it gets the same treatment: a row, not silence. The
+            # exception instance IS the tag and IS the payload; `const` is None because no VERSION
+            # constant was ever read. `continue` here only skips the rest of THIS file.
+            out.append((os.path.basename(p), exc, None))
             continue
         m = re.search(r"^VERSION\s*=\s*['\"]([^'\"]+)['\"]", body, re.M)
         if not m:
@@ -1899,8 +2070,13 @@ def main():
     # the file and could not locate a title line above its changelog, so it was measuring nothing
     # there. Printing the second as `docstring None constant 3.42` reads like the first and sends
     # the reader to edit a line that does not exist.
+    # ⚠⚠ THREE REMEDIES NOW, NOT TWO (`/rely` 2026-09-23). A file that could not be OPENED is a
+    # third class again: not a wrong answer, and not a missing title line either - the checker never
+    # got as far as the docstring. It must not land in EITHER block above, because both of those
+    # tell the reader to edit the docstring of a file nobody could read.
+    _unreadable = [r for r in doc_mismatches if isinstance(r[1], OSError)]
     _absent = [r for r in doc_mismatches if r[1] is None]
-    _stale = [r for r in doc_mismatches if r[1] is not None]
+    _stale = [r for r in doc_mismatches if r[1] is not None and not isinstance(r[1], OSError)]
     if _stale:
         print('DOCSTRING VERSION != VERSION constant (step 4 of the four-step rule):')
         for name, head, const in _stale:
@@ -1914,6 +2090,14 @@ def main():
         print('The docstring has no title line ABOVE its first `vN:` changelog entry, so there is')
         print('nothing for the constant to be compared against. Add a title line at the TOP of the')
         print('docstring - do NOT delete or rewrite the changelog to expose one buried inside it.')
+    if _unreadable:
+        print('BUILD SCRIPT COULD NOT BE READ (this file was checked against nothing):')
+        for name, err, _const in _unreadable:
+            print('  %-42s %s' % (name, err))
+        print('The path was listed but would not open, so neither the docstring header nor the')
+        print('VERSION constant was ever read - a lock, a permission, or a path that moved between')
+        print('the listing and the read. INVESTIGATE THE FILE. Do NOT add a title line: nothing')
+        print('here says the header is missing, only that nobody looked.')
     return 1
 
 
