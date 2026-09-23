@@ -1427,11 +1427,16 @@ def check_docstring_versions():
     `except:` would convert that loud failure into a quiet row and give back the coverage this
     change just bought.
     ⚠ ONE SILENT PATH REMAINS, NAMED RATHER THAN CLAIMED CLOSED. This walks whatever `glob.glob`
-    lists; a listing that returns FEWER paths than exist - an empty `scripts/` at the limit - yields
-    `[]`, which is again the satisfied value. Measured 2026-09-23 over an empty listing: `[]`. Not
-    fixed here, because the remedy is a roster comparison against `register.md`'s script maps rather
-    than a row shape, and `all_hash_mismatches` already fingerprints those scripts by name. Stated
-    so this docstring does not outrun its own fix a second time.
+    lists, so a listing SHORTER than the directory drops the scripts it omitted with no row - again
+    the satisfied value. Measured 2026-09-23 over an empty listing: `[]`.
+    ⛔ AND THE HASH LAYER DOES NOT COVER IT, though it reads as though it should - that clause was
+    drafted here from the code and measured FALSE the same day. `all_hash_mismatches` does read each
+    script BY NAME from `register.md`'s five maps (40 of the 44 `build_*.py` on disk; with every
+    script made absent it produced 41 loud rows), but that catches a file that is GONE. A file that
+    EXISTS and was merely not LISTED opens fine under its own name and its hash matches, so the hash
+    layer is silent on it too. Not fixed here: the remedy is to compare the LISTING against those
+    maps, which is a roster check rather than a row shape. Stated at this length because the
+    reassuring half of the sentence is the half that was wrong.
     ⛔ REPORT THE ABSENCE; NEVER WIDEN THE SCAN. `_header_version`'s changelog truncation and its
     header shapes are load-bearing, and each carries its own measured incident below: a greedier
     pattern trades a silent SKIP for a silent REWRITE of a historical record, which is worse.
