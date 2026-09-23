@@ -384,8 +384,17 @@ def all_hash_mismatches():
     # one whose output is an amendable push.
     for pdf, readme_v, reg_v in check_readme_versions():
         out.append('README %s: says %s, register says %s' % (pdf, readme_v, reg_v))
-    for entry in check_docstring_versions():
-        out.append('docstring version: %s' % (entry,))
+    # ⚠ AND THE NOT-FOUND ROW GETS ITS OWN SENTENCE (`HDRVER-1`). `check_docstring_versions` now
+    # returns `header is None` for a script whose title line cannot be located above its changelog;
+    # printing that tuple raw would put a bare `None` in front of the one reader whose next action
+    # mints a permanent DOI. Say what is wrong and what to do about it.
+    for name, head, const in check_docstring_versions():
+        if head is None:
+            out.append('docstring header NOT FOUND in %s (VERSION = %s): no title line above the '
+                       'changelog, so step 4 of the four-step rule cannot be checked on this file'
+                       % (name, const))
+        else:
+            out.append('docstring version: %s' % ((name, head, const),))
     return sorted(out)
 
 
@@ -1021,7 +1030,15 @@ def selftest():
             # fails is one people learn to scroll past**, which is worse than not having it. So the
             # open item is named here explicitly: when it is fixed, this line must be deleted, and if
             # a SECOND item appears the control fires.
-            _KNOWN_OPEN = ('Tools: no formal: token',)
+            # ⚠ SECOND ENTRY ADDED 2026-09-23 WITH THE FIX THAT FOUND IT (`HDRVER-1`). Teaching this
+            # leg to report an unlocatable docstring header made a REAL finding appear on the live
+            # tree - `build_zpe.py`'s only title line sits inside its changelog - and repairing that
+            # file is a content edit to a build script, a different change with different gates. The
+            # entry is keyed to that ONE file by name, so any OTHER script acquiring the same shape
+            # still fires the control. DELETE THIS LINE when `build_zpe.py` gains a title line above
+            # its changelog; the synthetic probes below cover the LOGIC either way.
+            _KNOWN_OPEN = ('Tools: no formal: token',
+                           'docstring header NOT FOUND in build_zpe.py')
             _base = [m for m in all_hash_mismatches()
                      if not any(m.startswith(k) for k in _KNOWN_OPEN)]
             ok = _base == []
@@ -1108,6 +1125,80 @@ def selftest():
         print('    %-34s %s' % ('%s route reaches the release gate' % _label,
                                 'ok' if _reached else '*** NOT DELEGATED ***'))
 
+    # ⚠⚠ A HEADER THAT CANNOT BE FOUND IS A REPORTABLE OUTCOME, NOT SILENCE (`HDRVER-1`, 2026-09-23).
+    # `check_docstring_versions` used to drop such a file with NO row and NO message, so
+    # `build_zpe.py` - whose only title line sits INSIDE its changelog - was never compared against
+    # anything while its constant drifted 16 versions and this module printed "in sync", exit 0.
+    # ⚠ CONTROLLED ON SYNTHETIC SCRIPTS, NEVER ON THE LIVE TREE. A control keyed to `build_zpe.py`
+    # goes quiet the moment that file is repaired and takes its own evidence with it - the same
+    # "pinned to the world's current state" trap the README control records above.
+    _probes = {
+        # A title line that EXISTS but sits below the first changelog entry: `_header_version`
+        # truncates there by design, so it returns None. This is the `build_zpe.py` shape.
+        'build_zzprobe_buried.py':
+            '"""\nv1.0: first cut.\nv1.9: renamed.\nZero Paradox - Probe: Buried (v1.9)\n"""\n'
+            "VERSION = '9.9'\n",
+        # An ordinary stale header. Nothing on the real tree is stale today, so without this probe
+        # the check's PRIMARY finding has no control at all.
+        'build_zzprobe_stale.py':
+            '"""\nZero Paradox - Probe: Stale (v1.0)\n"""\n\nVERSION = \'2.0\'\n',
+        # No VERSION constant: legitimately OUT OF SCOPE, and turning these five real scripts into
+        # failures would be a new defect, not a fix.
+        'build_zzprobe_noversion.py':
+            '"""\nZero Paradox - Probe: No Constant\nVersion 1.0 | July 2026\n"""\n',
+        # Header found and agreeing: the satisfied branch stays silent.
+        'build_zzprobe_ok.py':
+            '"""\nZero Paradox - Probe: Fine (v1.0)\n"""\n\nVERSION = \'1.0\'\n',
+    }
+    _probe_paths = dict((os.path.join(REPO, 'scripts', _n), _b) for _n, _b in _probes.items())
+    _real_glob, _real_open = glob.glob, io.open
+
+    def _probe_open(p, *a, **k):
+        if str(p) in _probe_paths:
+            import io as _io
+            return _io.StringIO(_probe_paths[str(p)])
+        return _real_open(p, *a, **k)
+
+    try:
+        glob.glob = lambda *_a, **_k: list(_probe_paths)
+        io.open = _probe_open
+        _seen = dict((n, h) for n, h, _c in check_docstring_versions())
+    finally:
+        glob.glob, io.open = _real_glob, _real_open
+
+    print('  MUST FIRE  (a header that cannot be located is REPORTED)')
+    _buried_ok = 'build_zzprobe_buried.py' in _seen and _seen['build_zzprobe_buried.py'] is None
+    bad += 0 if _buried_ok else 1
+    print('    %-34s %s' % ('buried title line is reported',
+                            'ok' if _buried_ok else '*** SILENTLY SKIPPED ***'))
+    _stale_ok = _seen.get('build_zzprobe_stale.py') == '1.0'
+    bad += 0 if _stale_ok else 1
+    print('    %-34s %s' % ('a stale header is still reported',
+                            'ok' if _stale_ok else '*** WRONG ***'))
+    # ⚠ AND THE RELEASE GATE MUST SAY SO IN WORDS. `RLY18-5` again: the gate whose output is a
+    # permanent DOI must not render this row as a bare `None` the reader cannot act on.
+    _real_cdv = globals()['check_docstring_versions']
+    try:
+        globals()['check_docstring_versions'] = lambda *_a, **_k: [('<probe>.py', None, '9.9')]
+        _msgs = [m for m in all_hash_mismatches() if '<probe>.py' in m]
+    finally:
+        globals()['check_docstring_versions'] = _real_cdv
+    _gate_ok = bool(_msgs) and all('NOT FOUND' in m and 'None' not in m for m in _msgs)
+    bad += 0 if _gate_ok else 1
+    print('    %-34s %s%s' % ('the release gate names the absence',
+                              'ok' if _gate_ok else '*** WRONG ***',
+                              '' if _gate_ok else ' — %s' % (_msgs or 'no message',)))
+
+    print('  MUST SUPPRESS  (out-of-scope and agreeing scripts stay silent)')
+    _noversion_ok = 'build_zzprobe_noversion.py' not in _seen
+    bad += 0 if _noversion_ok else 1
+    print('    %-34s %s' % ('no VERSION constant: skipped',
+                            'ok' if _noversion_ok else '*** FALSE POSITIVE ***'))
+    _agree_ok = 'build_zzprobe_ok.py' not in _seen
+    bad += 0 if _agree_ok else 1
+    print('    %-34s %s' % ('header agrees: silent',
+                            'ok' if _agree_ok else '*** FALSE POSITIVE ***'))
+
 
     # ⚠ THE TWO-RECORD COMPARATOR (README vs register.md). Editorial rated this above the claim sweep
     # because it is DECIDABLE, and this arc is why: README's ZP-R row was fixed in one commit while its
@@ -1163,12 +1254,29 @@ def check_docstring_versions():
 
     Step 4 of the four-step rule (edit, bump, rebuild, update the docstring) is the one that gets
     skipped, because nothing mechanical reads it: the hash check fingerprints the file and the
-    release gate compares the constant. Returns a list of `(name, header, const)` mismatches.
+    release gate compares the constant. Returns a list of `(name, header, const)` rows, where
+    `header` is the version the docstring advertises - or **`None` when no header could be located
+    at all**, a THIRD outcome that is now REPORTED rather than dropped.
 
     ⚠ MATCH THE HEADER LINE ONLY. A first draft of this scanned for any `Version N.N` before the
     constant and flagged `build_zpc.py`, whose only hit sits INSIDE a changelog entry
     ("Version 1.4 updates this") - a historical record that must never be rewritten. Changelog
     entries and the header line look alike to a loose pattern and mean opposite things.
+
+    ⚠⚠ AND AN UNFINDABLE HEADER IS NOT SILENCE (`HDRVER-1`, 2026-09-23). The guard here read
+    `if head and head != const`, so a file whose header `_header_version` could NOT locate was
+    dropped with NO row and NO message - observationally identical to a file that AGREES.
+    `build_zpe.py` has no title line ABOVE its changelog (its only one sits at line 19, INSIDE it),
+    so it was skipped while its constant drifted 16 versions and this module printed "Docstring and
+    README versions in sync." `R-ZERONULL`: the unfindable branch now returns a VALUE that differs
+    from the satisfied branch - a row whose `header` is `None` - so it reaches `all_ok` and the
+    release gate exactly as a mismatch does.
+    ⛔ REPORT THE ABSENCE; NEVER WIDEN THE SCAN. `_header_version`'s changelog truncation and its
+    header shapes are load-bearing, and each carries its own measured incident below: a greedier
+    pattern trades a silent SKIP for a silent REWRITE of a historical record, which is worse.
+    ⛔ `if not m: continue` STAYS. Five build scripts (`build_bottom_matrix`, `build_dictionary_map`,
+    `build_manifest`, `build_snap_map`, `build_tools`) define no `VERSION` constant at all and are
+    legitimately OUT OF SCOPE - there is no step 4 to skip where there is no version to bump.
     """
     out = []
     for p in sorted(glob.glob(os.path.join(REPO, 'scripts', 'build_*.py'))):
@@ -1180,7 +1288,7 @@ def check_docstring_versions():
         if not m:
             continue
         head = _header_version(body[:m.start()])
-        if head and head != m.group(1):
+        if head is None or head != m.group(1):
             out.append((os.path.basename(p), head, m.group(1)))
     return out
 
@@ -1786,12 +1894,26 @@ def main():
     if ar_stale:
         print(f'AR STALE: {", ".join(ar_stale)}')
         print('Run: python %s --mark-remediated <KEY>' % SELF)
-    if doc_mismatches:
+    # ⚠ TWO DIFFERENT FAILURES, TWO DIFFERENT REMEDIES (`HDRVER-1`). A STALE header is a wrong
+    # answer and the fix is to edit one line. A NOT-FOUND header is NO answer: this checker walked
+    # the file and could not locate a title line above its changelog, so it was measuring nothing
+    # there. Printing the second as `docstring None constant 3.42` reads like the first and sends
+    # the reader to edit a line that does not exist.
+    _absent = [r for r in doc_mismatches if r[1] is None]
+    _stale = [r for r in doc_mismatches if r[1] is not None]
+    if _stale:
         print('DOCSTRING VERSION != VERSION constant (step 4 of the four-step rule):')
-        for name, head, const in doc_mismatches:
+        for name, head, const in _stale:
             print('  %-42s docstring %-8s constant %s' % (name, head, const))
         print('Edit the docstring header line. Do NOT touch changelog entries below it - those')
         print('record what each version actually contained and rewriting them falsifies the record.')
+    if _absent:
+        print('DOCSTRING HEADER NOT FOUND (this file was checked against nothing):')
+        for name, _head, const in _absent:
+            print('  %-42s no header located above the changelog; constant %s' % (name, const))
+        print('The docstring has no title line ABOVE its first `vN:` changelog entry, so there is')
+        print('nothing for the constant to be compared against. Add a title line at the TOP of the')
+        print('docstring - do NOT delete or rewrite the changelog to expose one buried inside it.')
     return 1
 
 
