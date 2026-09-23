@@ -1,6 +1,7 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.11 | September 2026
+Version 1.12 | September 2026
+v1.12: THE COUNT CONTRADICTED ITSELF, AND A POSSESSIVE SURVIVED A FOUR-SITE SWEEP (copy_editor panel finding, 2026-09-22, ticket corpus-zpl-panel-findings-r-l-1), companion sync with ZP-L v1.19. TWO SITES. (1) The remember_box read "Three results together establish that ε₀ is the specific ordinal where PA's proof-theoretic strength is exhausted" and then "it takes the last two of those together" - three establish it, two do the establishing. THE COUNT IS TWO and both sites now state it outright, so the pronoun disappears rather than being disambiguated. Pinning a supremum takes a ceiling and witnesses beneath it: provability of transfinite induction at every ordinal strictly below ε₀ supplies the witnesses, unprovability at ε₀ supplies the ceiling, and the 1936 sufficiency result supplies neither - sufficiency is monotone upward, so it is equally true of any larger ordinal and singles nothing out. (2) The Convergence body opened "Gentzen proved that ε₀ is the proof-theoretic ordinal of Peano Arithmetic, and it takes more than one of HIS reported results" two sentences before crediting the below-ε₀ half to Hilbert-Bernays. That was the fifth site of the possessive finding E2-1, left standing at the four-site sweep on the PROCEDURAL ground that editorial's payload enumerated four - a process reason given for a mathematical question, which is why it was still here. The possessive is gone from both sites. ⛔ THE 1936 HALF IS NOT DELETED (R-TWOPOLE): deleting it writes the opposite one-chart sentence, which is how this arc's round-1 BEDROCK defect was made. It stands behind the pair at both sites, named as the indirect route via Gödel's theorem together with that 1936 result. ⭐ The general-reader register is kept: the body now says in plain terms what each half buys - every ordinal short of the boundary is reached, the boundary itself is not - and keeps the gated sentence "A boundary needs both sides - the side that is reached and the side that is not - and neither result supplies both." Every v1.11 fence is unchanged: Gentzen REPORTS the below-ε₀ result CREDITING Hilbert-Bernays and it is never called Hilbert-Bernays' theorem, no claim is made about what § 2 proves, 1938 is never cited, and the primary source only.
 v1.11: GENTZEN CITED AT A PAPER THAT CARRIES NEITHER CLAUSE, companion sync with ZP-L v1.18 (prior-art findings PA4-1 / PA4-2 / PA-2026-09-21-A, ticket corpus-gentzen-two-bounds-propagation). Two sites credited "Gentzen (1936)" with a two-sided result the 1936 paper does not carry. The Convergence body read "Gentzen (1936) proved that ε₀ is the proof-theoretic ordinal of Peano Arithmetic: PA can prove transfinite induction up to any ordinal strictly below ε₀, but not for ε₀ itself", and the remember_box read "Gentzen (1936) established that ε₀ is the specific ordinal where PA's proof-theoretic strength is exhausted". EXHAUSTION IS PRECISELY THE TWO-SIDED CLAIM, so that second site needed both halves as much as the first did. The cited paper - Die Widerspruchsfreiheit der reinen Zahlentheorie, Math. Annalen 112 (1936) 493-565 - gives the UPPER bound only: transfinite induction up to ε₀ SUFFICES to prove PA consistent. Sufficiency is monotone upward - anything ε₀ steps of induction prove, more steps prove too - so that bound alone is equally true of any larger ordinal and singles out nothing. ⚠⚠ THE FIRST ATTEMPT AT THIS FIX THEN WROTE "it is the second result that pins the value to exactly ε₀" AND DELETED THE CLAUSE THAT WOULD HAVE EARNED IT (adversary and editorial both FAIL-BEDROCK, 2026-09-22). Exhaustion, and the body's own "the furthest point its provability reaches", are claims about a SUPREMUM, and pinning a supremum takes BOTH directions: unprovability at ε₀ is the ceiling, and provability at every ordinal strictly below ε₀ supplies the witnesses underneath it. The companion stated the supremum's own conclusion one clause after removing its warrant. The third result is RESTORED at both sites and the pinning now rests on provability-below together with unprovability-at. ⛔ THE CREDIT IS SCOPED TO WHAT p.140 LITERALLY SAYS: Gentzen calls the below-ε₀ result bekanntlich - already known - and credits it in footnote 3 to Hilbert-Bernays, Grundlagen der Mathematik II, § 5, 3c. Both sites say GENTZEN REPORTS IT, CREDITING HILBERT-BERNAYS, never that it is Hilbert-Bernays' theorem; the scoped form asserts what Gentzen WROTE on a page this project has read, not what Grundlagen II contains, which nobody here has opened. p.140's announcement of formalized presentations in § 2 is deliberately NOT cited - pages 145-155 have not been opened here. ⚠ ALSO FIXED HERE: "proved directly in 1943" appeared twice with the contrast dropped, leaving "directly" a dangling comparative for a general reader. Both sites now name the indirect route it contrasts with - Gödel's theorem together with the 1936 result. ⚠⚠ THE SECONDARY LITERATURE WOULD HAVE SHIPPED A THIRD WRONG YEAR: Cheng arXiv:2401.12531v4 Thm 4.1 and Rathjen arXiv:1405.4484v1 Thm 2.8 both label the pair "(Gentzen, 1936, 1938)", and p.140 footnote 4 identifies that 1938 item as Neue Fassung des Widerspruchsfreiheitsbeweises fuer die reine Zahlentheorie, Forschungen zur Logik Heft 4 - a SECOND consistency proof, the upper bound again. Cited from the primary source only. ⭐ WHY THIS SURVIVED THE PROSE GATE: the remember_box site sits inside remember_box, one of the 10 of 12 Paragraph-producing helpers in zp_utils that prose_check never sees (build_tools.py's own note, and finding PA4-4) - the cbody site was gated and the gate has no attribution leg either way. Verified at the primary source, read as page images: .claude-local/papers/gentzen_1943_beweisbarkeit_unbeweisbarkeit_anfangsfaelle_transfinite_induktion_mathann119.pdf - Gerhard Gentzen, Beweisbarkeit und Unbeweisbarkeit von Anfangsfaellen der transfiniten Induktion in der reinen Zahlentheorie, Math. Annalen 119 (1943) 140-161.
 v1.10: ZPKB-5, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-20), companion sync with ZP-L v1.15. The Kleene Connection paragraph described ZP-K's requirement as "a program that is its own output". The requirement is the class field botCode_is_quine, which asks the nominated code to satisfy IsComputationalQuine - defined as IsKleeneFixedPoint selfApply c, which unfolds to the periodicity condition eval c n = eval c (encode c + n) for every n. That is not self-printing: the constant codes satisfy it, and they are what witness infinite_quine_family. The paragraph now states the condition, names the period as the code's own Godel number (quine_period_is_goedel says A period, not the least), and says what the condition does NOT pin. ⚠ ZP-K v1.13 recorded this exact phrasing as BEDROCK and ZeroParadox/Computability/Kleene.lean Section II fences the reading explicitly; the fix reached ZP-K and never reached this companion - the same non-propagation that cost the prior arc. The nearby fence here covers the IDENTIFICATION of the two conditions, not the DESCRIPTION of the requirement, which is why the site read as covered. Verified at ZeroParadox/Computability/Kleene.lean Sections I, II and VI.
 v1.9: GATE ROUNDS 3-4 REMEDIATION (2026-09-19), companion sync with ZP-L v1.14. "Every ZP-L theorem carries the axiom footprint [propext, Classical.choice, Quot.sound]" was an unscoped universal, and the surrounding paragraph set scope wider than ZP-L's own file: ZP-L cites Snap.lean, whose t_snap_derived is axiom-free. It is now scoped to Gentzen.lean and names it, with results cited from other layers called out as a separate question. The v1.8 changelog's "ZP-K Section IV, which is the one site that states the rule" inverted this arc's own architecture - Section IV holds a dated measurement table and states no rule - and now says so. ⚠ v1.8's content changed after its version was cut and the PDF was rebuilt without an increment; this bump is that correction.
@@ -229,7 +230,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -448,19 +449,21 @@ def build():
         'Remark R-L.1 in the formal document notes a structural alignment with an independent '
         'result from proof theory.'))
     E.append(cbody(
-        'Gentzen proved that &#949;&#8320; is the proof-theoretic ordinal of Peano '
-        'Arithmetic, and it takes more than one of his reported results. Transfinite '
-        'induction up to &#949;&#8320; is enough to prove PA consistent (1936). That '
-        'induction is not itself provable in PA &#8212; which already follows '
-        'indirectly from G&#246;del&#8217;s theorem together with the 1936 result, '
-        'and which Gentzen proved directly in 1943. And Gentzen reports, crediting '
-        'Hilbert-Bernays, that transfinite induction up to any ordinal strictly below '
-        '&#949;&#8320; is provable in PA. What pins the '
-        'value to exactly &#949;&#8320; is the other two together, and they run in '
-        'opposite directions: PA&#8217;s proofs reach every ordinal short of '
-        '&#949;&#8320;, and they do not reach &#949;&#8320; itself. A boundary needs '
+        'Two results pin &#949;&#8320; as the proof-theoretic ordinal of Peano '
+        'Arithmetic &#8212; the furthest point PA&#8217;s own proofs of transfinite '
+        'induction reach &#8212; and they run in opposite directions. Gentzen '
+        'reports, crediting Hilbert-Bernays, that transfinite induction up to any '
+        'ordinal strictly below &#949;&#8320; is provable in PA: every ordinal short '
+        'of the boundary is reached. And transfinite induction up to &#949;&#8320; '
+        'itself is not provable in PA, which Gentzen proved directly in 1943: the '
+        'boundary itself is not reached. A boundary needs '
         'both sides &#8212; the side that is reached and the side that is not &#8212; '
-        'and neither result supplies both.'))
+        'and neither result supplies both. A third result stands behind the pair: '
+        'transfinite induction up to &#949;&#8320; is enough to prove PA consistent '
+        '(1936). That is a fact about what &#949;&#8320; steps of induction prove '
+        'rather than about what PA proves, so it does not on its own single out '
+        '&#949;&#8320;; it is also the indirect route to the unprovability half, by '
+        'way of G&#246;del&#8217;s theorem together with that 1936 result.'))
     E.append(cbody(
         'ZP-L and Gentzen arrive at &#949;&#8320; from entirely separate starting points. '
         'ZP-L starts from ordinal fixed-point structure: &#949;&#8320; is where &#969;-tower '
@@ -477,17 +480,17 @@ def build():
         'ZP does not prove any part of G&#246;del&#8217;s incompleteness theorems, and does '
         'not reprove Gentzen&#8217;s ordinal analysis of PA. The connection is a structural '
         'observation: two independent formal derivations arrive at the same ordinal boundary. '
-        'Three results together establish that &#949;&#8320; is the '
-        'specific ordinal where PA&#8217;s proof-theoretic strength is exhausted: '
-        'transfinite induction up to &#949;&#8320; suffices to prove PA '
-        'consistent (1936); that induction is not itself provable in PA (which '
-        'already follows indirectly from G&#246;del&#8217;s theorem with the 1936 '
-        'result, and which Gentzen proved directly in 1943); and transfinite '
-        'induction up to any ordinal strictly below &#949;&#8320; is provable in '
-        'PA, which Gentzen reports as already known, crediting Hilbert-Bernays. '
-        'Exhaustion is a two-sided claim &#8212; PA does not reach &#949;&#8320; '
-        'itself, and it does reach every ordinal short of it &#8212; so it takes '
-        'the last two of those together. ZP-L established &#949;&#8320; as '
+        'Two results together establish that &#949;&#8320; is the '
+        'specific ordinal where PA&#8217;s proof-theoretic strength is exhausted, and '
+        'exhaustion is a two-sided claim: transfinite induction up to any ordinal '
+        'strictly below &#949;&#8320; is provable in PA, which Gentzen reports as '
+        'already known, crediting Hilbert-Bernays; and transfinite induction up to '
+        '&#949;&#8320; itself is not provable in PA, which Gentzen proved directly '
+        'in 1943. A third result stands behind the pair &#8212; transfinite '
+        'induction up to &#949;&#8320; suffices to prove PA consistent (1936) '
+        '&#8212; and it is also the indirect route to the unprovability half, by way '
+        'of G&#246;del&#8217;s theorem together with that 1936 result. '
+        'ZP-L established &#949;&#8320; as '
         'the snap threshold from ordinal fixed-point structure. No formal equivalence '
         'between the two derivations is claimed.'))
     E.append(sp(8))
