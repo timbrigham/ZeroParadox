@@ -158,7 +158,7 @@
       ],
       "module": "tools/verify/check_hashes.py",
       "approved_modules": [
-        "cbf6f8c776b9732c5c89329a118c708cf6a9e68e"
+        "53303add72b6663f3fe684db83124bac68e90829"
       ],
       "actions": [
         "push",
