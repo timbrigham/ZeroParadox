@@ -1030,15 +1030,15 @@ def selftest():
             # fails is one people learn to scroll past**, which is worse than not having it. So the
             # open item is named here explicitly: when it is fixed, this line must be deleted, and if
             # a SECOND item appears the control fires.
-            # ⚠ SECOND ENTRY ADDED 2026-09-23 WITH THE FIX THAT FOUND IT (`HDRVER-1`). Teaching this
-            # leg to report an unlocatable docstring header made a REAL finding appear on the live
-            # tree - `build_zpe.py`'s only title line sits inside its changelog - and repairing that
-            # file is a content edit to a build script, a different change with different gates. The
-            # entry is keyed to that ONE file by name, so any OTHER script acquiring the same shape
-            # still fires the control. DELETE THIS LINE when `build_zpe.py` gains a title line above
-            # its changelog; the synthetic probes below cover the LOGIC either way.
-            _KNOWN_OPEN = ('Tools: no formal: token',
-                           'docstring header NOT FOUND in build_zpe.py')
+            # ⚠ A SECOND ENTRY LIVED HERE FOR ONE COMMIT AND IS GONE (`HDRVER-1`, 2026-09-23).
+            # Teaching this leg to report an unlocatable docstring header made a REAL finding appear
+            # on the live tree - `build_zpe.py`'s only title line sat INSIDE its changelog - so the
+            # entry was added to keep this control green while that finding stood. `build_zpe.py`
+            # now carries a title line above its changelog, the finding is gone, and the exemption
+            # is deleted in the same change that removed its cause: an exemption is priced on what
+            # it buys, and left standing it would be a permanent silent exemption for the one file
+            # this defect row is about. The synthetic probes below cover the LOGIC either way.
+            _KNOWN_OPEN = ('Tools: no formal: token',)
             _base = [m for m in all_hash_mismatches()
                      if not any(m.startswith(k) for k in _KNOWN_OPEN)]
             ok = _base == []
