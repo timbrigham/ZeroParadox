@@ -1,4 +1,5 @@
 """
+v3.40: GENTZEN CREDITED WITH A BICONDITIONAL HE PROVED ONE ARROW OF, IN AN ALREADY-DEPOSITED PDF (DEFECTS.md GENTZEN-3; copy_editor panel 2026-09-22, all three readers indicting independently, one of them writing "I think F4 is likely mine alone"). Remark R-ε₀ read "Gentzen established that transfinite induction up to ε₀ is necessary and sufficient to prove Con(PA)." THE PROPOSITION IS TRUE AND THE SUBJECT IS WRONG. SUFFICIENCY IS HIS: transfinite induction up to ε₀ proves Con(PA), Math. Annalen 112 (1936) 493-565. NECESSITY - that no smaller ordinal would do - is the other direction and rests on different ground: the provability in PA of transfinite induction at every ordinal strictly below ε₀, which Gentzen reports as already known (bekanntlich) crediting Hilbert-Bernays at Math. Annalen 119 (1943) p.140 and its footnote 3, together with Gödel's second incompleteness theorem. The two halves are now attributed separately, and the Gödel sentence that used to follow is absorbed into the second half so the Gödel fact is stated once rather than twice and its pronoun no longer dangles. ⚠ ALSO FIXED, SAME REMARK AND SAME DEFECT: "Gentzen locates the minimum ordinal strength at which PA cannot describe its own consistency from within" credited him with the MINIMALITY, which is the necessity half wearing different words; the subject is now "the proof-theoretic analysis". ⛔ NEITHER ARROW IS DELETED (R-TWOPOLE): a fix that drops one direction rather than attributing both writes the opposite one-chart sentence, which is how the sibling ZP-L arc's round-1 BEDROCK defect was made. ⛔ FENCES HELD: never "Hilbert-Bernays' theorem" - nobody on this project has opened Grundlagen der Mathematik II, so what is asserted is what Gentzen WROTE on a page we have read; no claim whatever about what his § 2 proves, since pp. 145-155 are unopened here; and never the 1938 Neue Fassung, which p.140 footnote 4 identifies and which is a second consistency proof, i.e. the sufficiency half again. Verified at the primary source read as page images: .claude-local/papers/gentzen_1943_beweisbarkeit_unbeweisbarkeit_anfangsfaelle_transfinite_induktion_mathann119.pdf, p.140 (PDF page 2) for the bekanntlich sentence and footnotes 1-4. ⚠ Companion REVIEWED and unchanged: it carries the from-above form "the proof-theoretic ordinal of Peano Arithmetic, the minimum ordinal whose well-ordering PA cannot prove", asserts no date and attributes no direction to anyone, so it is not materially stale.
 v3.39: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim ruling, 2026-09-15): Remark R-DA1 said DA-1 is 'grounded in ZP-A CC-2 and R3', beside the Status block's primary formal grounding DP-2; it now says DA-1 is closed given DP-2 (da1_minimal_path), with CC-2 and R3 motivating it and ZP-C L-INF as independent corroboration.
 v3.38: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): T5 Selection said the least-fixed-point face makes 'every landing from epsilon-0 up fire (epsilon0_min_eq_max)'; 'landing' was undefined, and read as every ordinal from epsilon-0 up it follows from monotonicity and h-eps0 alone, so the clause now reads 'every fixed point of alpha -> omega^alpha fires (hfp_from_epsilon_zero, epsilon0_min_eq_max)'. The Path 3 conclusion 'Instantiation and execution are the same act' now reads 'Given DP-2, instantiation and execution are the same act (DA-1)'.
 v3.37: DECISION BATCH REMEDIATION AFTER GATE ROUND 3, SECOND PASS (Tim ruling, 2026-09-15): the DA-1 Status block said 'Kleene fixed-point is the in-scope formal counterpart' of AIT; it now says the Kleene structure is its in-scope counterpart, carried as a KleeneStructure requirement (botCode_is_quine), not a proof of the AIT claim.
@@ -95,7 +96,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.39'
+VERSION = '3.40'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -419,8 +420,12 @@ def build():
                 'point of the map α → ω<sup>α</sup>: equivalently, ε₀ = sup{ω, ω<sup>ω</sup>, '
                 'ω<sup>ω<sup>ω</sup></sup>, ...}. No finite ω-tower reaches it — it is the minimum ordinal '
                 'that cannot be generated from 0 by any finite iteration of the base operation. Gentzen '
-                'established that transfinite induction up to ε₀ is necessary and sufficient to prove '
-                'Con(PA). By G&#246;del\'s incompleteness theorem, PA cannot prove this from within. The '
+                'proved in 1936 that transfinite induction up to ε₀ is sufficient to prove Con(PA). '
+                'Necessity — that no smaller ordinal would do — is the other direction, and it rests on '
+                'different ground: the provability in PA of transfinite induction at every ordinal '
+                'strictly below ε₀, which Gentzen reports as already known, crediting Hilbert-Bernays, '
+                'together with G&#246;del\'s second incompleteness theorem, by which PA cannot prove '
+                'Con(PA) from within. The '
                 'ordinal ε₀ is therefore the minimum threshold at which finite arithmetic exhausts its own '
                 'generative capacity.',
                 '<b>The structural analogy.</b> ZP\'s ε₀ occupies an analogous position in the state '
@@ -429,8 +434,8 @@ def build():
                 'Cantor ε₀ cannot be reached from 0 by any finite ω-tower, ZP\'s ε₀ cannot be reached '
                 'from ⊥ by any finite external description. Both name a structurally analogous object: the '
                 'minimum witness for a transition that exhausts the finite generative hierarchy below it.',
-                '<b>The proof structures are parallel.</b> Gentzen locates the minimum ordinal strength at '
-                'which PA cannot describe its own consistency from within. ZP locates the minimum state '
+                '<b>The proof structures are parallel.</b> The proof-theoretic analysis locates the minimum '
+                'ordinal strength at which PA cannot describe its own consistency from within. ZP locates the minimum state '
                 'displacement at which no external program can hold ⊥ as a static string — where unbounded '
                 'surprisal (ZP-C L-INF) and self-containment (ZP-A CC-2) together eliminate any external '
                 'interpreter position. In both cases the exhaustion of finite description is not a '

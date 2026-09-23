@@ -68,7 +68,7 @@ These *realize* the snap floor inside standard analytic structures and inherit `
 | ⊥ as inverse limit | TopCat | `fB_functor` |
 | ⊥ as initial object | ModuleCat ℂ | `fD_functor` |
 | ⊥ as initial object | KleisliCat PMF (`fC_no_return` = AX-G2 as theorem) | `fC_functor` |
-| ε₀ as exact snap threshold | ordinal tower, 2-adic convergence | `c1_epsilon_zero_identification`, `snap_zp2_correspondence` |
+| ε₀ as exact snap threshold | ordinal tower, 2-adic convergence | `epsilon_zero_snap_canonical`, `snap_zp2_correspondence` |
 | ε₀ is min ≡ max (least fixed point ≡ tower supremum) | ordinal fixed-point theory; the snap ⊥ → ε₀ as one Kleene chain, seed ⊥ → closure ε₀ | `epsilon0_min_eq_max`, `epsilon0_eq_nfp_bot` |
 | Computational grounding | MachinePhase: ⊥ is the unique Quine atom. The computational face enters as a `KleeneStructure` class field, not as a clause of the theorem | `da1_closed_concrete` |
 | Rice face (diagonal family) | computability - the fixed point provably exists yet its membership is undecidable | `rice_face_has_bottom`, `quine_exists_yet_rice` |

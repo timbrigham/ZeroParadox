@@ -82,7 +82,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.18 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.24 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.15 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
-| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.39 | The bridge: the snap assembled as a derived theorem across the layers. |
+| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.40 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.8 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.15 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.23 | The categorical bridge: the snap holding under all four domain functors. |
@@ -93,7 +93,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.7 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
 | [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.13 | The diagonal-fixed-point keystone: the Lawvere face-split (machine-checked) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
 | [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.24 | Computational grounding: the bottom's structural self-containment, with the computational reading carried as a commitment. |
-| [Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.19 | ε₀ as the exact ordinal threshold the snap is keyed to. (That the snap occurs follows from the occurrence commitment together with DA-1, closed given DP-2.) |
+| [Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.20 | ε₀ as the exact ordinal threshold the snap is keyed to. (That the snap occurs follows from the occurrence commitment together with DA-1, closed given DP-2.) |
 | [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.7 | The bridge between the Kleene quine and the ε₀ fixed point. |
 | [The Constructive Snap](ZP-N_The_Constructive_Snap.pdf) | ZP-N | v2.0 | The constructive companion to ZP-L: the ε₀ snap from below on ordinal notations, choice-free (propext only). Locates ZP-L's classical dependency in Mathlib's order instance and shows it load-bearing - comparing arbitrary well-orders implies excluded middle (a known taboo, cited to Kraus/Nordvall Forsberg/Xu). Adds a carrier sized to ε₀ whose crossing into Ordinal is one named map with a measured price. Whether ZP-L's ε₀ results are eliminable remains UNCLASSIFIED. |
 | [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) | ZP-P | v1.24 | Synthesis layer: the least-vs-greatest fixed-point fork, generalizing the Foundation/AFA orthogonal-contact-point claim across frameworks. |
