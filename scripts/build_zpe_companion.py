@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.18 | September 2026
+Version 1.19 | September 2026
+v1.19: GENTZEN-5, THE RENDERED TWIN (DEFECTS.md GENTZEN-5; editorial E4-5 and prior_art PA6-1, 2026-09-23), companion sync with ZP-E v3.42. The Four Descriptions paragraph read "the minimum ordinal whose well-ordering PA cannot prove" one sentence before "the proof requires transfinite induction up to ε₀" - two DIFFERENT schemas in adjacent sentences, an INDUCTION schema and a WELL-FOUNDEDNESS statement, identified only through an ordinal NOTATION SYSTEM that no surface here stated (not located as of 2026-09-23; the search is recorded in ZP-E v3.42). This change replaced that VOCABULARY with "the minimum ordinal up to which PA cannot prove transfinite induction": it needs no notation caveat, and it put the paragraph into one vocabulary where it had been in two. ⛔ THE CHART WAS NOT TOUCHED - it stayed from-above, the chart both prose gates ruled right at the formal's twin site - so R-TWOPOLE returned INVARIANT, the ratified null case: vocabulary moved, no direction reversed, no second chart owed. ⭐ The new form also rests on what this project has READ: the below-ε₀ provability of transfinite induction is Gentzen reporting it as already known, crediting Hilbert-Bernays (1943 p.140 footnote 3, read as page images and filed), whereas the well-ordering form's MINIMUM needed a half that a gate derived in one step and nobody read at a passage. This change asserted no date for Grundlagen der Mathematik II, never wrote "Hilbert-Bernays' theorem", cited 1938 nowhere, and left the ordinal chart and the discrete state chart unmerged with no embedding claimed.
 v1.18: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (2026-09-15), companion sync with ZP-E v3.36, DA-1 PATH 3 (pre-existing bedrock since v1.3, editorial round 3 B1): the ZP-K paragraph said ZP-K 'proves that this Quine and the AFA self-containment argument are the same structural fact', that two paths are machine-checked and IN LEAN SCOPE, and that DA-1's formal grounding is 'DP-2 plus two Lean-verified structural paths'. da1_paths_unified is a conjunction, and botCode_is_quine is a class field met by constant codes. The paragraph now carries the CLAIMS.md DA-1 row (Path 1 witnessed by da1_closed_concrete, nothing computational; Path 3's witness a KleeneStructure requirement, not a second independent proof; the one-fact reading is the framework's), and DA-1's formal grounding is DP-2, through da1_minimal_path.
 v1.17: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15), companion sync with ZP-E v3.33: the T-SNAP chain diagram drew DA-1 on the shape chain while its caption puts DA-1 on the occurrence side; it now has two rows, Shape (L-RUN, TQ-IH, ZP-A D2, T-SNAP) and Occurrence (P0, DA-1, the Snap occurs with the occurrence commitment), with fixed row positions and validate_drawing.
 v1.16: DECISION BATCH REMEDIATION (Tim, 2026-09-15): companion sync with ZP-E v3.31: the legal-case box says the Snap happening follows from the occurrence commitment together with DA-1 (closed given DP-2), not that it 'remains a commitment'; the T-SNAP chain diagram and its caption are kept together (the caption was orphaned onto the next page).
@@ -190,7 +191,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -250,8 +251,8 @@ def build():
         'that all four descriptions are consistent: one event, four angles.'))
     E.append(cbody(
         'The symbol ε₀ has two charts, and they are not merged. In the ordinal chart, ε₀ is the '
-        'proof-theoretic ordinal of Peano Arithmetic, the minimum ordinal whose '
-        'well-ordering PA cannot prove. Goodstein\'s theorem is the standard witness: every '
+        'proof-theoretic ordinal of Peano Arithmetic, the minimum ordinal up to which PA '
+        'cannot prove transfinite induction. Goodstein\'s theorem is the standard witness: every '
         'Goodstein sequence eventually terminates, but PA cannot prove this; the proof requires '
         'transfinite induction up to ε₀. That ordinal is at once the least fixed point of the map '
         'α ↦ ω^α and the supremum of the tower ω, ω^ω, ω^(ω^ω), …, and neither face replaces the other. '
