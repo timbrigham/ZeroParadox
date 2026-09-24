@@ -104,8 +104,9 @@
         "tools/verify/vendored_files.txt"
       ],
       "module": "tools/verify/check_modal.py",
+      "_repinned_2026_09_24": "`953ca866...` REPLACES `fce373af...`, per the top-level `_approved_modules` rule -- `[\"<new>\"]` is correct; `[\"<old>\", \"<new>\"]` is wrong absent a stated expiry. REGDESC-1: the comment block above SKIP_NAMES asserted register.md was a changelog of record and cited CLAUDE.md as the authority for it. Both were false -- the Notes column was stripped to hash tokens, and CLAUDE.md exempts nothing of the kind (the exemption lived in tools/process/document-workflow.md). Comment-only change; no pattern, no threshold and no scan set moved in THIS file. Reviewed by `/rely` rounds 1 and 2 (`rely@e7f2103d...#0`, `rely@fc38ee3c...#0`); Tim authorised the repin 2026-09-24.",
       "approved_modules": [
-        "fce373afa7025ee67dbf3ecf7c29bff4d5ba3b5a"
+        "953ca86634ac0af380e6204771cb87147a8f27e7"
       ]
     },
     "check_classes": {
@@ -173,8 +174,9 @@
         "tools/verify/vendored_files.txt"
       ],
       "module": "tools/verify/check_moved.py",
+      "_repinned_2026_09_24": "`03f87ad7...` REPLACES `27dd4db6...`, same rule and same arc as `check_modal` above. REGDESC-1: this one is NOT comment-only -- `register.md` was REMOVED from `EXEMPT_FILES`, which WIDENS what the checker scans. Widening is the safe direction and it is now pinned: `register.md` was added to `scope_baseline.txt` under `[check_moved]` in the same change, so re-granting the exemption fails `--selftest` on both legs (`*** 1 DROPPED ***` and `*** 1 ADDED and unrecorded ***`), verified by execution in rounds 1 and 2. Measured: zero new findings, `check_moved --block` exit 0. Reviewed by `/rely` rounds 1 and 2 (`rely@e7f2103d...#0`, `rely@fc38ee3c...#0`); Tim authorised the repin 2026-09-24.",
       "approved_modules": [
-        "27dd4db640a3f3660e1ea5077d47df8bd713df02"
+        "03f87ad72712d8cf03b847b49d7890423f218191"
       ]
     },
     "check_negatives": {
@@ -184,8 +186,9 @@
         "tools/verify/vendored_files.txt"
       ],
       "module": "tools/verify/check_negatives.py",
+      "_repinned_2026_09_24": "`00d075a3...` REPLACES `c65a993c...`, same rule and same arc as the two above. REGDESC-1: comment-only -- line 182 enumerated `register.md` among the shared skips in `common.SKIP_NAMES` and no longer does, matching the live set. ⚠ THIS MODULE WAS THE SEVENTH SURFACE AND THE FIRST SWEEP MISSED IT, because that sweep was keyed to the six surfaces the defect row named rather than to the property -- [[DC-62]], found by `/rely` round 1. `check_negatives` does not record at precommit (`batch.check_suite` covers the five GATING_CHECKERS only) but DOES at push via `hooks.py`, so omitting this repin would have surfaced as a V16c refusal one gate later. Reviewed by `/rely` rounds 1 and 2 (`rely@e7f2103d...#0`, `rely@fc38ee3c...#0`); Tim authorised the repin 2026-09-24.",
       "approved_modules": [
-        "c65a993c57750b44ff199d6a484b110e546d50a4"
+        "00d075a3a429262daf76671251637d2299589d49"
       ]
     },
     "check_figures": {

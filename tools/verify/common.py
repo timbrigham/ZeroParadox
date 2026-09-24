@@ -108,7 +108,17 @@ SKIP_DIRS = ('.lake', '.git', 'notes', 'papers', 'archive', 'feedback', 'outreac
 # Files no checker in this family should scan, whatever it is looking for. A checker additionally
 # skips ITSELF and its OWN baseline — those two are per-checker and passed in, not listed here,
 # because a shared list of every checker's name would exempt all of them from all of each other.
-SKIP_NAMES = frozenset({'CLAUDE.md', 'register.md', 'RELEASES.md'})
+#
+# ⭐ THE PROPERTY, AND IT IS WHAT DECIDES MEMBERSHIP: a file belongs here only while its CONTENT is
+# a record of past state. Scanning such a file for live correctness asks it to be something it is
+# not, and "fixing" a finding there falsifies the record. `RELEASES.md` qualifies — it quotes what
+# each release said, on purpose. `CLAUDE.md` qualifies under `R-EXEMPT` on different grounds.
+# ⚠ `register.md` WAS here and was REMOVED 2026-09-24 (`REGDESC-1`), because the property stopped
+# holding: the Notes column that carried the history was stripped, and the file is now 25 rows of
+# live version data plus live paths. Measured before removing — all three exempting checkers report
+# ZERO findings on it, so this restores coverage without adding noise. It would belong here again
+# only if the file starts carrying history again, which is a content question, never a name one.
+SKIP_NAMES = frozenset({'CLAUDE.md', 'RELEASES.md'})
 
 # The glob patterns. `.claude-local/build_*.py` was a fourth until the build scripts stopped being
 # mirrored: `scripts/` is now their only home, so the third pattern already covers them and a fourth

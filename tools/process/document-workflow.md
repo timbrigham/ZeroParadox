@@ -65,9 +65,15 @@ formal document.
 ## 3. Version numbers and changelogs in rendered PDF content — ALL PDFs
 
 **Generalized 2026-06-13** (Tim: version changelogs in rendered content should be *"murdered by the
-style guide and review"*). Scope is **rendered PDF content only** — build-script docstrings,
-`register.md` and `RELEASES.md` are the changelog of record and are exempt. Git history is the real
-changelog.
+style guide and review"*). Scope is **rendered PDF content only** — build-script docstrings and
+`RELEASES.md` are the changelog of record and are exempt. Git history is the real changelog.
+
+⚠ **`register.md` was exempted here by name until 2026-09-24 and is not any more** (`REGDESC-1`).
+The exemption is keyed to a file **carrying past wording**, and the register's Notes column — the
+thing that carried it — was stripped to hash tokens. The file is now 25 rows of live version data,
+so nothing in it is a changelog and nothing in it needs protecting from a scan. ⛔ This entry was the
+rule the changelog inventory cited when it declined to touch the register; do not read the deletion
+above as narrowing the rule, which is unchanged — the register simply stopped meeting it.
 
 **A document's OWN version appears in exactly one place in rendered content: the subtitle / tagline
 meta line** (`'... | Version ' + VERSION + ' | ...'`; formal-doc footers via `make_doc()` may also

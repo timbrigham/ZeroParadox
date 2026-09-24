@@ -157,7 +157,9 @@ _CHANGELOG = re.compile(r"^v\d+\.\d+[:.]", re.M)
 
 def _is_dated_record(block):
     """True for a build script's module changelog — a DATED RECORD, exempt on the same grounds
-    `check_moved` exempts `.claude-local/notes/` and register.md's Notes column.
+    `check_moved` exempts `.claude-local/notes/` and `RELEASES.md`. (This docstring cited
+    register.md's Notes column until 2026-09-24; that column was stripped, so the example no longer
+    names a dated record — see `REGDESC-1`. The grounds are unchanged, only the illustration.)
 
     ⚠ NOT A CONVENIENCE EXEMPTION. A changelog entry records the document AS IT STOOD at a
     version — including, in several of these files, the very sentence a later version retracted.

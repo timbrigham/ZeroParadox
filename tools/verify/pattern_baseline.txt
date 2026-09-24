@@ -141,7 +141,6 @@ EXEMPT_FILES	RELEASES.md
 EXEMPT_FILES	check_moved.py
 EXEMPT_FILES	nb.txt
 EXEMPT_FILES	phase2_file_list.txt
-EXEMPT_FILES	register.md
 EXEMPT_FILES	scope_baseline.txt
 GLOB_REF	\.claude-local[/\\](?:check_\w*\*\w*\.py|proposed_pre_\w*\*\w*_hook\.sh|\w*\*\w*_baseline\.txt|build_zp\w*\*\w*\.py|gate_round\w*\*\w*\.json)
 MOVED	\.claude-local[\\/]PDF_Rendering_Standards\.md	scripts/PDF_Rendering_Standards.md

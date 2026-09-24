@@ -161,11 +161,15 @@ STRONG = re.compile(
     r"|no such re-proof|not attempted|open question|is open",
     re.I)
 
-# register.md's Notes column and each build script's module docstring are THE CHANGELOG OF RECORD
-# (CLAUDE.md exempts them). They quote what past versions said, verbatim and on purpose -- exactly the
+# RELEASES.md and each build script's module docstring are THE CHANGELOG OF RECORD
+# (`tools/process/document-workflow.md` exempts them; CLAUDE.md does NOT, and this comment claimed it
+# did until 2026-09-24 -- R-REGISTER says the opposite, that a version appears in exactly one rendered
+# place). They quote what past versions said, verbatim and on purpose -- exactly the
 # retraction-pollution case. Structurally exempt, not grandfathered -- and shared, so the exemption
 # cannot hold in one checker and lapse in another (`common.SKIP_NAMES`). What stays here is only what
 # is genuinely THIS checker's: its own source and its own baseline.
+# ⚠ register.md was named here too and was dropped from the shared set 2026-09-24 (`REGDESC-1`): the
+# Notes column it referred to is gone, so there is no past wording left in that file to protect.
 SKIP_NAMES = {'check_modal.py', 'modal_baseline.txt'}
 
 
