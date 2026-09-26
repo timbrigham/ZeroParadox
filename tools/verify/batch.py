@@ -233,7 +233,19 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # that the tool existed. The cleaner fix is for `_unhashed` to skip
                               # paths that do not exist — a logic change to a blocking fail-open
                               # leg, which wants its own control and its own round.
-                              "gatelock.py"]
+                              "gatelock.py",
+                              # ⚠⚠ THE SECOND TOMBSTONE, AND IT REPRODUCED THE FIRST ONE'S DEADLOCK
+                              # EXACTLY. `admission.v1.json` (this repo's copy) was DELETED
+                              # 2026-09-26 as a dead 2026-08-23 seed: nothing read it, it admitted
+                              # 3 types at push where the live set admits 21, and only gitRobot's
+                              # `config/admission.v1.json` was ever live. The deletion then blocked
+                              # its own push — `_unhashed` flagged a routed file absent from this
+                              # list, which can never be discharged, and the block clears only when
+                              # the deletion leaves the range, which cannot happen until the push it
+                              # is blocking lands. Predicted verbatim by the entry above; met anyway,
+                              # because a deletion does not feel like a change to the person making
+                              # it. ⚠ Do not remove this line when the range moves on.
+                              "admission.v1.json"]
 
 ABSENT = "<ABSENT>"
 
@@ -259,6 +271,14 @@ UNVERIFIABLE_ROUTED = {
                       "visible in the fingerprint; no index blob can exist for a file that is gone.",
     "ar_status.json": "private adversary-review tracker under .claude-local/, gitignored BY DESIGN "
                       "and therefore never stageable, so ledger_subjects drops it on every run.",
+    "admission.v1.json":
+                      "DELETED 2026-09-26. A dead 2026-08-23 seed that nothing read — it admitted "
+                      "3 types at push where the live set admits 21, and `batch.py` itself already "
+                      "recorded it 'itself dead: RLY31-12' while tools/verify/README.md still "
+                      "advertised it as REMAINING. Only gitRobot's config/admission.v1.json was "
+                      "ever live. Same tombstone reason as gatelock.py: no index blob can exist "
+                      "for a file that is gone, so the routing leg can acknowledge it and can "
+                      "never discharge it.",
 }
 
 
