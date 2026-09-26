@@ -37,6 +37,7 @@ lets this run inside the hooks, where it is worth having.
 `git status` shows the probe file. It is not silent, and re-running restores nothing on its own.
 """
 import fnmatch
+import ast
 import fnmatch
 import io
 import json
@@ -889,10 +890,25 @@ def check_registry_enumerator_agreement():
     # to do with the property holding. Silence here would be the enumerator-found-nothing defect
     # this project has recorded repeatedly; the controls below are what keep the leg honest.
     if not declared_steps:
+        # ⛔⛔ THE INTERSECTION IS STRUCTURALLY ZERO, MEASURED 2026-09-26 BY `/rely` ROUND 3, AND
+        # SAYING SO IS THE POINT OF THIS ROW. The steps that DECLARE a scope are exactly the ones
+        # that enumerate privately and expose no `targets()`; the ones that can be asked are
+        # exactly the ones whose surface is the shared one and so declare none. The two properties
+        # are ANTI-CORRELATED by construction, so this branch is not a temporary state that a
+        # future registry edit clears — it is where this comparison lives.
+        # ⭐ SO THE BLOCKING CLAIM MOVED OUT OF THIS LEG ENTIRELY. `check_enumeration_widening_
+        # strands` is DC-64's own detector, it has live subjects, and it reproduces `HEALWT-1`
+        # (controlled: 18 steps stranded on `register.md`, `check_hashes` among them). This leg
+        # keeps a verdict function with controls proving it discriminates, plus the per-producer
+        # disclosure below — which is the half that actually moved under simulation.
         row("declared-scope subjects", True,
-            "NONE — of the %d producer(s) measured, not one declares a `scope`, so the subset "
-            "test judged nothing. This is NOT a pass on the property; leg 2 carries the live "
-            "measurement and the controls below prove the test still fires." % len(measured))
+            "NONE, AND STRUCTURALLY SO — of the %d producer(s) that can be asked, not one declares "
+            "a `scope`, and the %d step(s) that declare one cannot be asked. The intersection is "
+            "empty by construction, not by accident. ⚠ THIS LEG THEREFORE BLOCKS NOTHING TODAY AND "
+            "IS NOT CLAIMED TO: the blocking half of DC-64 is `a widening strands no commit the "
+            "range must satisfy`, which is the detector that has subjects. What remains here is a "
+            "discriminating verdict function (controls below) and the disclosure that follows."
+            % (len(measured), len(unreachable)))
 
     # ── THE MUST-FIRE CONTROL — synthetic, in-process, mutates nothing ──────────────────────
     #
@@ -1007,6 +1023,227 @@ def check_registry_enumerator_agreement():
     else:
         row("producers this leg could NOT ask (disclosed, not blocking)", True,
             "none — every registry step declaring a `.py` producer answered `targets()`")
+
+    return rows, bad
+
+
+# ═══ PROPERTY — a WIDENING must not strand a commit the range still has to satisfy ═══════════
+
+def _pglob(pattern):
+    """`pathlib`-style glob → regex. `**/` spans zero or more directories; `*` never crosses `/`.
+
+    ⚠ `fnmatch` CANNOT express this and using it here would be wrong in the dangerous direction:
+    `fnmatch('ZeroParadox/Order/Snap.lean', 'ZeroParadox/**/*.lean')` is True only because its `*`
+    crosses `/` by accident, and `ZeroParadox/**/*.lean` must ALSO match `ZeroParadox/Top.lean`
+    (zero directories), which `fnmatch` gets wrong the other way. `common.GLOBS` is consumed by
+    `REPO.glob()`, so the semantics that matter are pathlib's."""
+    out, i = [], 0
+    while i < len(pattern):
+        if pattern.startswith("**/", i):
+            out.append("(?:[^/]+/)*")
+            i += 3
+        elif pattern[i] == "*":
+            out.append("[^/]*")
+            i += 1
+        elif pattern[i] == "?":
+            out.append("[^/]")
+            i += 1
+        else:
+            out.append(re.escape(pattern[i]))
+            i += 1
+    return re.compile("^" + "".join(out) + "$")
+
+
+def _literal(node):
+    """`ast.literal_eval`, but tolerating the `frozenset({...})` / `set({...})` wrapper."""
+    if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) \
+            and node.func.id in ("frozenset", "set") and len(node.args) == 1:
+        node = node.args[0]
+    return ast.literal_eval(node)
+
+
+def _enum_config_at(ref):
+    """`{GLOBS, SKIP_DIRS, SKIP_NAMES}` read from `tools/verify/common.py` AT `ref`.
+
+    Reading the CONFIG rather than running the old checker is deliberate and is what makes this
+    affordable: `common.REPO` derives from `Path(__file__)`, so an old build can only be run by
+    checking it out, and the enumeration it would perform is fully determined by these three
+    literals plus the vendored allowlist."""
+    rc, out = sh("git", "show", "%s:tools/verify/common.py" % ref)
+    if rc != 0:
+        raise OSError("cannot read common.py at %s" % ref)
+    cfg = {}
+    for node in ast.parse(out).body:
+        if not isinstance(node, ast.Assign) or len(node.targets) != 1:
+            continue
+        tgt = node.targets[0]
+        if isinstance(tgt, ast.Name) and tgt.id in ("GLOBS", "SKIP_DIRS", "SKIP_NAMES"):
+            try:
+                cfg[tgt.id] = _literal(node.value)
+            except (ValueError, TypeError):
+                pass
+    missing = {"GLOBS", "SKIP_DIRS", "SKIP_NAMES"} - set(cfg)
+    if missing:
+        raise ValueError("common.py at %s: could not read %s" % (ref, ", ".join(sorted(missing))))
+    return cfg
+
+
+def _surface_from_config(cfg, universe, is_vendored):
+    """The surface `common.targets()` would yield under `cfg`, over today's tracked paths.
+
+    Mirrors `common.targets` exactly: glob-matched paths PLUS every tracked `.md`, minus
+    SKIP_NAMES by basename, minus anything under a SKIP_DIR, minus vendored.
+    ⚠ The `skip_names` a CALLER passes (its own source and baseline) are deliberately NOT applied
+    — this compares the SHARED configuration across commits, and a per-caller skip is constant
+    across the range unless that caller changed, which is a different question."""
+    globs = [_pglob(g) for g in cfg["GLOBS"]]
+    skip_dirs, skip_names = set(cfg["SKIP_DIRS"]), set(cfg["SKIP_NAMES"])
+    out = set()
+    for rel in universe:
+        if not (any(g.match(rel) for g in globs) or rel.endswith(".md")):
+            continue
+        if os.path.basename(rel) in skip_names:
+            continue
+        if any(("/" + d + "/") in ("/" + rel) for d in skip_dirs):
+            continue
+        if is_vendored(os.path.join(REPO, rel.replace("/", os.sep)), rel):
+            continue
+        out.add(rel)
+    return out
+
+
+def check_enumeration_widening_strands():
+    """`DC-64`'s OWN detector: does a widening strand a commit the range must still satisfy?
+
+    ⚠⚠ THIS IS THE LEG WITH LIVE SUBJECTS, AND IT EXISTS BECAUSE THE OTHER ONE HAS NONE.
+    `check_registry_enumerator_agreement` compares scope against what a producer enumerates TODAY,
+    and three `/rely` rounds established that its blocking half is structurally empty: the steps
+    that DECLARE a scope are exactly the ones that enumerate privately, and the ones that can be
+    asked declare no scope. Intersection measured 2026-09-26: **zero, by construction.** A test
+    that cannot acquire a subject is not a test.
+
+    ⭐ THE PROPERTY, and it is about HISTORY rather than about today: widen the checker's scan set
+    and every EARLIER unpushed commit is stranded. The ledger now demands the new path at every
+    commit in the range, and those commits carry the OLD checker, which skips it — so the verdict
+    is owed and **no route can produce it**, from any checkout. That is `HEALWT-1` exactly:
+    `REGDESC-1` removed `register.md` from `common.SKIP_NAMES`, four steps went STALE at
+    `ce32401a`, and the push was refused with nothing able to clear it.
+
+    ⛔ IT RUNS BEFORE THE PUSH, WHICH IS WHEN IT CAN STILL BE ACTED ON. `DC-64` says the detector
+    *belongs at the moment of widening*; the pre-push hook is the last moment that is still true.
+
+    ⚠ ITS REACH, STATED: it compares the SHARED configuration (`common.GLOBS`, `SKIP_DIRS`,
+    `SKIP_NAMES`) across the range. A checker that narrows its OWN private skip list is a
+    different question and is NOT covered here — say so rather than let the row imply otherwise."""
+    import vendored
+    rows, bad = [], 0
+
+    def row(label, ok, verdict):
+        nonlocal bad
+        if not ok:
+            bad += 1
+        rows.append((label, ok, verdict))
+
+    try:
+        universe = _tracked_paths()
+        surface_now = _enumerator_surface()
+        cfg_now = _enum_config_at("HEAD")
+    except Exception as e:                                    # noqa: BLE001 — fail closed
+        row("enumeration readable", False,
+            "*** could not read the current enumeration (%s) — a leg that cannot see today's "
+            "surface cannot tell whether history diverges from it ***" % e)
+        return rows, bad
+
+    # ⛔⛔ THE SELF-CHECK THAT MAKES EVERY ROW BELOW TRUSTWORTHY, and it BLOCKS. The whole leg
+    # rests on reconstructing a surface from three literals; if that reconstruction is wrong for
+    # TODAY — where the true answer is known, because `common.targets()` can simply be run — then
+    # every historical surface it computes is wrong too, and silently. A recipe never checked
+    # against a known-good value is a guess, which is the same rule the convergence freeze is
+    # priced on.
+    rebuilt = _surface_from_config(cfg_now, universe, vendored.is_vendored)
+    if rebuilt != surface_now:
+        only_rb, only_live = sorted(rebuilt - surface_now), sorted(surface_now - rebuilt)
+        row("reconstruction reproduces TODAY's surface", False,
+            "*** THE MODEL DISAGREES WITH THE LIVE ENUMERATOR — %d path(s) only in the rebuild, "
+            "%d only in `common.targets()`. Every historical surface below would be wrong the same "
+            "way, so this leg REFUSES rather than reporting. First divergences: %s | %s ***"
+            % (len(only_rb), len(only_live), ", ".join(only_rb[:3]), ", ".join(only_live[:3])))
+        return rows, bad
+    row("reconstruction reproduces TODAY's surface", True,
+        "the config model and the live `common.targets()` agree exactly on %d path(s), so a "
+        "surface computed for an older commit is computed the same way" % len(surface_now))
+
+    # THE RANGE. `@{u}` is the branch's own upstream, never a hardcoded name — a pinned `origin/…`
+    # would be a second copy of the branch's configuration and would be wrong in a worktree.
+    rc, out = sh("git", "rev-list", "@{u}..HEAD")
+    if rc != 0:
+        row("range resolvable", True,
+            "NOT APPLICABLE — no upstream is configured for this branch, so there is no set of "
+            "unpushed commits to strand. This is not a pass on the property: nothing was compared.")
+        return rows, bad
+    commits = [c for c in out.split() if c.strip()]
+    if not commits:
+        row("unpushed commits in range", True,
+            "NONE — the branch is level with its upstream, so no earlier commit can be stranded. "
+            "⚠ NOT a pass on the property; there was nothing to test.")
+        return rows, bad
+
+    # ⚠ DISTINCT STATE, NOT A PASS: an unchanged config cannot strand anything, and saying so is
+    # different from saying the range was examined and found safe. `R-ZERONULL` — the empty answer
+    # gets its own value, and here its own row.
+    changed = []
+    for c in commits:
+        try:
+            if _enum_config_at(c) != cfg_now:
+                changed.append(c)
+        except (OSError, ValueError) as e:
+            row("config readable at %s" % c[:8], False,
+                "*** could not read the enumeration config at this commit (%s) — an unreadable "
+                "history entry must not read as an unchanged one ***" % e)
+            return rows, bad
+    if not changed:
+        row("shared enumeration config across the range", True,
+            "UNCHANGED across all %d unpushed commit(s), so no widening exists to strand them. "
+            "⚠ This is the NOT-APPLICABLE state, not a cleared one — the test acquires subjects "
+            "only when `common.GLOBS`/`SKIP_DIRS`/`SKIP_NAMES` actually move." % len(commits))
+        return rows, bad
+
+    # THE PROPERTY ITSELF. For every commit whose config differs, which paths does TODAY enumerate
+    # that THAT commit would skip — and does any step's scope demand one of them?
+    try:
+        with io.open(os.path.join(BASE, "required.v2.json"), encoding="utf-8") as fh:
+            types = json.load(fh)["types"]
+    except (OSError, ValueError, KeyError, TypeError) as e:
+        row("registry readable", False,
+            "*** could not read types from required.v2.json (%s) — fails closed ***" % e)
+        return rows, bad
+
+    stranded_total = 0
+    for c in changed:
+        surf_then = _surface_from_config(_enum_config_at(c), universe, vendored.is_vendored)
+        widened = surface_now - surf_then
+        if not widened:
+            continue
+        for step, entry in sorted(types.items()):
+            _declared, scope = _scope_paths(entry, universe)
+            hit = sorted(scope & widened)
+            if not hit:
+                continue
+            stranded_total += 1
+            row("stranded at %s: %s" % (c[:8], step), False,
+                "*** %d PATH(S) THIS COMMIT'S CHECKER WOULD SKIP AND THE REGISTRY DEMANDS: %s. "
+                "The ledger asks `%s` for a verdict at these bytes; the build at this commit "
+                "cannot enumerate them, so the row is owed and UNFILLABLE BY ANY ROUTE — not a "
+                "worktree artefact, not fixable by re-running. This is `HEALWT-1`. Either land "
+                "the widening in a commit no earlier one has to satisfy, or push the range first "
+                "and widen after ***"
+                % (len(hit), ", ".join(hit[:4]), step))
+
+    if not stranded_total:
+        row("widening strands no commit in range", True,
+            "the shared config moved in %d of %d unpushed commit(s) and every path it newly "
+            "reaches is outside every step's scope, so nothing in the range is owed a verdict it "
+            "cannot produce" % (len(changed), len(commits)))
 
     return rows, bad
 
@@ -2567,6 +2804,16 @@ def main():
         # was reconciled; PRODUCIBILITY was not.
         print("\n  PROPERTY: the registry scope and the checker's enumeration agree")
         _rows, _bad = check_registry_enumerator_agreement()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
+        # ⚠⚠ AND THE HISTORICAL HALF, WHICH IS THE ONE WITH LIVE SUBJECTS. The row above compares
+        # scope against what a producer enumerates TODAY and its blocking half is structurally
+        # empty (intersection of askable-and-declared measured at ZERO, 2026-09-26). This leg asks
+        # DC-64's own question instead — does a widening strand an earlier unpushed commit — and
+        # it is the one that reproduces `HEALWT-1`.
+        print("\n  PROPERTY: a widening strands no commit the range must satisfy")
+        _rows, _bad = check_enumeration_widening_strands()
         for label, ok, verdict in _rows:
             print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
         bad += _bad
