@@ -37,7 +37,6 @@ lets this run inside the hooks, where it is worth having.
 `git status` shows the probe file. It is not silent, and re-running restores nothing on its own.
 """
 import fnmatch
-import ast
 import fnmatch
 import io
 import json
@@ -623,79 +622,95 @@ def check_registry_router_agreement():
 
 # ═══ PROPERTY — the registry's SCOPE and the CHECKER'S ENUMERATION are one policy ═════════════
 
-# Steps whose ENTIRE scan set is `common.targets()`, so the registry's scope for them is
-# comparable against a surface this leg can compute without running the checker.
+# ⚠⚠ THERE IS NO LIST HERE ANY MORE, AND ITS ABSENCE IS THE DESIGN. Two `/rely` rounds killed the
+# list-based versions, and both times the defect was in the CLASSIFICATION rather than in the
+# comparison it fed:
+#   · round 1 (RLY64-1) — a hand-written tuple whose `len()` was printed as *"N of the registry's
+#     steps use common.targets()"*: a classification presented as a measurement, in the row whose
+#     stated job is to stop narrowness reading as coverage, with the inverse never computed.
+#   · round 2 (BLOCKING-1) — the fix added `_TARGETS_CALLERS_ACKNOWLEDGED`, **a waiver the blocked
+#     party grants itself by editing one tuple in the same file**, and the reviewer EXECUTED the
+#     route the row's own remediation text recommended: acknowledge everything and the leg judges
+#     zero steps while printing *"no unclassified caller"* as ok, with the disclosure rows gone and
+#     no count printed. `required.v2.json`'s `_approved_modules` names that decay verbatim, and the
+#     same commit fixed it for pins while reintroducing it one file over.
+#   · round 2 (BLOCKING-2) — the AST matcher recognised ONE of five call syntaxes, and the error
+#     direction INVERTED: the substring scan it replaced failed CLOSED (noisy false positives), the
+#     parse version failed OPEN (silent false negatives) — the condition its docstring claimed to
+#     close, in the established local idiom (`from common import X`, 8 modules).
 #
-# ⚠⚠ THIS IS A CLASSIFICATION, NOT A MEASUREMENT, AND THE DIFFERENCE IS WHY THE DERIVED CHECK
-# BELOW EXISTS. Membership is a JUDGEMENT — it says the module has no private enumeration beside
-# the shared one — and no static test decides that. `guards.py` is the standing counterexample:
-# it calls `common.targets()` to compute the surface for THIS leg while its own registry scope
-# legitimately names baseline `.txt` files it reads directly, so "calls `common.targets`" would
-# classify it wrongly and the subset test would block on a correct configuration.
-# ⛔ SO THE LIST STAYS, AND `_unlisted_targets_callers` BLOCKS WHEN IT GOES STALE. An earlier
-# version printed `len()` of this tuple as *"N of the registry's steps use common.targets()"* —
-# a constant presented as a measurement, in the row whose stated job is to stop narrowness reading
-# as coverage, and the inverse direction was never computed at all: a FOURTH checker adopting the
-# shared enumerator would silently get no subset test, which is `HEALWT-1`'s own shape. Found by
-# `/rely` 2026-09-26 (RLY64-1), and it was that round's answer to *name the first unjustified step*.
-_SHARED_ENUMERATOR_STEPS = ("check_modal", "check_negatives", "check_figures")
-
-# Modules that call `common.targets()` for something OTHER than defining their whole scan set.
-# Each entry is a reviewed exception to the derived check below; adding one is a deliberate act.
-_TARGETS_CALLERS_ACKNOWLEDGED = ("tools/verify/guards.py",)
+# ⭐⭐ SO STOP ASKING WHO CALLS WHAT AND ASK EACH PRODUCER WHAT IT SCANS. A module that exposes a
+# zero-argument `targets()` can simply be RUN, and its answer IS its scan set — no syntax to parse,
+# no judgement to record, nothing to waive, and the "shared enumerator" concept disappears from
+# this leg entirely because each step is compared against ITS OWN surface. `CLAUDE.md`: *prefer a
+# detector whose verb is RUN over one whose verb is READ* — across ~20 agent runs every BEDROCK
+# finding came from executing something.
+# ⚠ WHAT IT COSTS, STATED: a producer that does not expose `targets()` cannot be asked, and is
+# OUT OF REACH rather than passing. That set is counted and named on every run.
 
 
 def _enum_types(surface):
-    """The extensions the shared enumerator actually yields, DERIVED from the surface.
+    """The extensions a surface actually contains, DERIVED from that surface.
 
     ⚠ Was a hardcoded `{'.lean', '.py', '.md'}` — a copy of `common.GLOBS`' type universe living
-    inside the guard written to stop that policy being copied (`/rely` RLY64-6). It was faithful,
-    which is exactly why it was worth removing: a copy that is right today buys nothing and can
-    only go stale. This is the same fact computed from the same run's evidence."""
+    inside the guard written to stop that policy being copied (`/rely` RLY64-6). Round 2 confirmed
+    by execution that the derived set equals the hardcoded one and misattributes no path, and that
+    it is NOT circular: the extensions partition paths ALREADY known to be outside the surface, so
+    nothing is classified by the set it was drawn from."""
     return frozenset(os.path.splitext(rel)[1] for rel in surface)
 
 
-def _unlisted_targets_callers(types):
-    """Registry steps whose declared producer calls `common.targets()` and is NOT classified.
+def _producer_surfaces(types):
+    """ASK each registry step's producer what it enumerates. Returns `(measured, unreachable)`.
 
-    THE HOLE THIS CLOSES: `_SHARED_ENUMERATOR_STEPS` is hand-maintained, so a checker that starts
-    using the shared enumerator gets no subset test and nothing notices — the leg silently narrows
-    while continuing to report. Derivation is used for DETECTION (source is authoritative about
-    who calls what) and the list for CLASSIFICATION (only a human decides whether the call IS the
-    module's whole scan set). Neither can do the other's job.
+    `measured` is `{step: (module, frozenset_of_rels)}` for every step whose declared producer
+    exposes a callable `targets()` taking no required arguments — its answer is its scan set,
+    measured by CALLING it. `unreachable` is `[(step, module, why)]` for the rest.
 
-    ⚠⚠ AST, NOT A SUBSTRING SCAN, AND THE FIRST DRAFT WAS THE SUBSTRING SCAN. `"common.targets(" in
-    src` reported `check_pov` and `check_prose` as callers on its first run. Both are FALSE
-    POSITIVES: every hit is a COMMENT or DOCSTRING saying the module deliberately does NOT use the
-    shared enumerator (`check_pov.py:105` — *"THIS CHECKER'S SCOPE IS ITS OWN, DELIBERATELY, AND IT
-    IS NOT common.targets()"*). A text scan cannot tell a call from prose ABOUT a call, and this
-    project's own rule for that is `CLAUDE.md` rung 5 — the screen may replace the ENUMERATION,
-    never the VERDICT. Here the enumeration IS the verdict, so it has to parse."""
-    out = []
+    ⚠⚠ IMPORTING A PRODUCER IS ESTABLISHED PRACTICE HERE, not a new hazard: this file already does
+    `import batch; importlib.reload(batch)` for the router property, and every checker guards its
+    `main()` behind `__name__`. A module whose import has side effects is a defect in that module.
+
+    ⛔ FAILS CLOSED ON EVERY UNKNOWN. An import error, a `targets` that is not callable, or one
+    that raises when called all land in `unreachable` WITH THE REASON — never in `measured`, and
+    never silently dropped. A producer this leg cannot interrogate must not read as one it
+    interrogated and cleared; that distinction is the entire content of `R-ZERONULL`."""
+    import importlib
+    import inspect
+
+    measured, unreachable = {}, []
     for step, entry in sorted(types.items()):
         mod = entry.get("module")
         if not isinstance(mod, str) or not mod.endswith(".py"):
+            continue                      # review steps declare a .md brief; not a scanner at all
+        name = os.path.splitext(os.path.basename(mod))[0]
+        try:
+            m = importlib.import_module(name)
+        except Exception as e:            # noqa: BLE001 — any import failure is "cannot ask"
+            unreachable.append((step, mod, "import failed: %s" % type(e).__name__))
             continue
-        if step in _SHARED_ENUMERATOR_STEPS or mod in _TARGETS_CALLERS_ACKNOWLEDGED:
+        fn = getattr(m, "targets", None)
+        if fn is None or not callable(fn):
+            unreachable.append((step, mod, "exposes no callable `targets()`"))
             continue
         try:
-            with io.open(os.path.join(REPO, mod.replace("/", os.sep)), encoding="utf-8") as fh:
-                tree = ast.parse(fh.read())
-        except (OSError, SyntaxError):
-            # ⚠ FAILS OPEN HERE, DELIBERATELY AND NARROWLY: an unparseable producer is reported by
-            # `check_checkers`, which is the step that owns module health. Blocking twice on one
-            # fact would make this leg refuse for a reason it cannot act on.
+            required = [p for p in inspect.signature(fn).parameters.values()
+                        if p.default is inspect.Parameter.empty
+                        and p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)]
+        except (TypeError, ValueError):
+            unreachable.append((step, mod, "`targets` signature is not introspectable"))
             continue
-        for node in ast.walk(tree):
-            if not isinstance(node, ast.Call):
-                continue
-            fn = node.func
-            hit = (isinstance(fn, ast.Attribute) and fn.attr == "targets"
-                   and isinstance(fn.value, ast.Name) and fn.value.id == "common")
-            if hit:
-                out.append((step, mod))
-                break
-    return out
+        if required:
+            unreachable.append((step, mod, "`targets()` needs %d argument(s); this leg cannot "
+                                           "supply them without guessing" % len(required)))
+            continue
+        try:
+            rels = frozenset(rel for _p, rel in fn())
+        except Exception as e:            # noqa: BLE001 — a producer that raises is unmeasured
+            unreachable.append((step, mod, "`targets()` raised %s" % type(e).__name__))
+            continue
+        measured[step] = (mod, rels)
+    return measured, unreachable
 
 
 def _enumerator_surface():
@@ -815,9 +830,9 @@ def check_registry_enumerator_agreement():
     # THE VERDICT FUNCTION, factored out so the CONTROL below can call the SAME CODE. A control
     # that re-implements the comparison it is checking tests a stand-in, which is the single
     # defect shape this file records most often.
-    enum_types = _enum_types(surface)
+    measured, unreachable = _producer_surfaces(types)
 
-    def _subset_verdict(entry):
+    def _subset_verdict(entry, surf):
         _declared, scope = _scope_paths(entry, universe)
         # ⚠⚠ ZERO IS A THIRD ANSWER, NOT THE SATISFIED ONE. A declared scope that selects NO
         # tracked path makes the subset test vacuously true, and an earlier version returned the
@@ -835,10 +850,10 @@ def check_registry_enumerator_agreement():
                 "is NOT a pass. A declared `scope` matching nothing is a dead glob or a typo: the "
                 "step claims a universe it can never be measured against, and every coverage "
                 "number computed for it is 0 of 0. Fix the glob or remove the declaration ***")
-        stranded = sorted(scope - surface)
+        stranded = sorted(scope - surf)
         if not stranded:
             return True, "%d in-scope path(s), every one enumerable" % len(scope)
-        skip_str = [r for r in stranded if os.path.splitext(r)[1] in enum_types]
+        skip_str = [r for r in stranded if os.path.splitext(r)[1] in _enum_types(surf)]
         return False, (
             "*** %d PATH(S) DEMANDED AND NEVER ENUMERATED — no run of this checker can record a "
             "verdict there, so the row is owed and unfillable by any route. %d of them carry an "
@@ -847,32 +862,37 @@ def check_registry_enumerator_agreement():
             "do NOT copy common.GLOBS into the registry (DC-64) ***"
             % (len(stranded), len(skip_str), ", ".join(stranded[:5])))
 
+    # ⛔⛔ THE FLOOR, AND IT BLOCKS. `/rely` round 2 (BLOCKING-1) executed a route that left the
+    # leg judging ZERO steps while every row still printed ok — the waiver-to-vacuity path. There
+    # is no waiver any more, but the vacuous state is still reachable (every producer failing to
+    # import would do it), so the floor is asserted DIRECTLY instead of being a property of the
+    # configuration. A leg that measured nothing has not passed.
+    if not measured:
+        row("producers measured", False,
+            "*** NO PRODUCER COULD BE ASKED WHAT IT SCANS — %d step(s) unreachable and none "
+            "measured, so every comparison below judged nothing. This is a FAILURE of the leg, "
+            "not a clean tree: %s ***"
+            % (len(unreachable), "; ".join("%s (%s)" % (s, w) for s, _m, w in unreachable[:4])))
+        return rows, bad
+
     declared_steps = []
-    for step in _SHARED_ENUMERATOR_STEPS:
-        entry = types.get(step)
-        if entry is None:
-            row("registered: %s" % step, False,
-                "*** this leg names a step the registry does not carry — either the step was "
-                "renamed and this list was not, or the registry lost an entry. A control that "
-                "names a nonexistent subject reports clean for the wrong reason ***")
-            continue
-        is_declared, _scope = _scope_paths(entry, universe)
+    for step, (_mod, surf) in sorted(measured.items()):
+        is_declared, _scope = _scope_paths(types[step], universe)
         if not is_declared:
             continue
         declared_steps.append(step)
-        ok, verdict = _subset_verdict(entry)
+        ok, verdict = _subset_verdict(types[step], surf)
         row("scope ⊆ enumeration: %s" % step, ok, verdict)
 
-    # ⚠⚠ A BLOCKING LEG WITH NO SUBJECTS MUST SAY SO, NOT PASS. Today no shared-enumerator step
-    # declares a scope, so the loop above has nothing to judge and `bad` stays 0 for a reason that
-    # has nothing to do with the property holding. Silence here would be the enumerator-found-
-    # nothing defect this project has recorded repeatedly; the synthetic control below is what
-    # keeps the leg honest meanwhile.
+    # ⚠⚠ A BLOCKING LEG WITH NO SUBJECTS MUST SAY SO, NOT PASS. Today no measured step declares a
+    # scope, so the loop above has nothing to judge and `bad` stays 0 for a reason that has nothing
+    # to do with the property holding. Silence here would be the enumerator-found-nothing defect
+    # this project has recorded repeatedly; the controls below are what keep the leg honest.
     if not declared_steps:
         row("declared-scope subjects", True,
-            "NONE — no shared-enumerator step declares a `scope`, so the subset test judged "
-            "nothing. This is NOT a pass on the property; leg 2 carries the live measurement and "
-            "the control below proves the test still fires.")
+            "NONE — of the %d producer(s) measured, not one declares a `scope`, so the subset "
+            "test judged nothing. This is NOT a pass on the property; leg 2 carries the live "
+            "measurement and the controls below prove the test still fires." % len(measured))
 
     # ── THE MUST-FIRE CONTROL — synthetic, in-process, mutates nothing ──────────────────────
     #
@@ -892,12 +912,13 @@ def check_registry_enumerator_agreement():
     # stranded by FILE TYPE — but `HEALWT-1` was `register.md`, stranded by a SKIP LIST, and that is
     # the half of the message the docstring calls DC-64's failure mode. A control that can never
     # select that half leaves it untested (`/rely` RLY64-3). The row says which kind it drew.
-    _skip_stranded = [r for r in _unreachable if os.path.splitext(r)[1] in enum_types]
+    _skip_stranded = [r for r in _unreachable
+                      if os.path.splitext(r)[1] in _enum_types(surface)]
     _probe = _skip_stranded[0] if _skip_stranded else (_unreachable[0] if _unreachable else None)
     _kind = "SKIP-stranded" if _skip_stranded else "TYPE-stranded (no skip-stranded path exists)"
 
     if _probe is not None:
-        _ok, _ = _subset_verdict({"scope": [_probe]})
+        _ok, _ = _subset_verdict({"scope": [_probe]}, surface)
         row("control MUST FIRE: unenumerable path in scope", not _ok,
             "a scope naming `%s` (%s) is flagged by the SAME verdict function leg 1 uses"
             % (_probe, _kind) if not _ok else
@@ -912,7 +933,7 @@ def check_registry_enumerator_agreement():
     # ⚠ THE EMPTY-SCOPE STATE HAS ITS OWN CONTROL, because it is the one `/rely` reached three
     # different ways and the leg answered affirmatively each time. `scope_exclude` is also the
     # half of `_scope_paths` neither other control touches (RLY64-4).
-    _ok_empty, _ = _subset_verdict({"scope": ["*"], "scope_exclude": ["*"]})
+    _ok_empty, _ = _subset_verdict({"scope": ["*"], "scope_exclude": ["*"]}, surface)
     row("control MUST FIRE: scope excluded to nothing", not _ok_empty,
         "a scope of `*` cancelled by `scope_exclude: [\"*\"]` selects zero paths and is REFUSED "
         "rather than certified — the vacuous-pass route, and it exercises scope_exclude"
@@ -921,7 +942,7 @@ def check_registry_enumerator_agreement():
         "is the R-ZERONULL vacuous pass and it makes every green row above meaningless ***")
 
     if _reachable:
-        _ok, _ = _subset_verdict({"scope": [_reachable[0]]})
+        _ok, _ = _subset_verdict({"scope": [_reachable[0]]}, surface)
         row("control MUST SUPPRESS: enumerable path in scope", _ok,
             "a scope naming `%s` — enumerated — is NOT flagged, so the test discriminates rather "
             "than always firing" % _reachable[0] if _ok else
@@ -945,51 +966,47 @@ def check_registry_enumerator_agreement():
     # ⚠ THE REMEDY IS NOT "declare a scope". It is to decide, deliberately, whether these steps
     # SHOULD answer for the 110 — and if they should not, whether the registry's default is the
     # right one for a step whose producer is a text scanner.
-    for step in _SHARED_ENUMERATOR_STEPS:
-        entry = types.get(step)
-        if entry is None:
-            continue
-        is_declared, scope = _scope_paths(entry, universe)
+    for step, (_mod, surf) in sorted(measured.items()):
+        is_declared, scope = _scope_paths(types[step], universe)
         if is_declared:
             continue
-        stranded = sorted(scope - surface)
-        by_skip = [r for r in stranded if os.path.splitext(r)[1] in enum_types]
+        stranded = sorted(scope - surf)
+        by_skip = [r for r in stranded if os.path.splitext(r)[1] in _enum_types(surf)]
         row("undeclared scope (disclosed, not blocking): %s" % step, True,
-            "scope defaults to ALL %d tracked path(s); the enumerator reaches %d; %d unreachable "
-            "— %d by FILE TYPE the scanner never opens, %d dropped by a SKIP despite a handled "
-            "extension%s"
-            % (len(scope), len(surface), len(stranded), len(stranded) - len(by_skip), len(by_skip),
+            "scope defaults to ALL %d tracked path(s); this producer's own `targets()` yields %d; "
+            "%d unreachable — %d by FILE TYPE the scanner never opens, %d dropped by a SKIP "
+            "despite a handled extension%s"
+            % (len(scope), len(surf), len(stranded), len(stranded) - len(by_skip), len(by_skip),
                (" (%s)" % ", ".join(by_skip[:6])) if by_skip else ""))
 
-    # ── THE REACH OF THIS PROPERTY — DERIVED, and it BLOCKS when the classification goes stale ──
+    # ── THE REACH OF THIS PROPERTY — MEASURED, with both halves counted every run ────────────
     #
-    # ⚠⚠ THIS ROW USED TO ASSERT ITS NUMBER FROM A CONSTANT. It printed `len()` of the tuple as
-    # *"N of the registry's steps use common.targets()"* — a classification presented as a
-    # measurement, in the row whose stated job is to stop narrowness being read as coverage — and
-    # it named `check_poles`, which is NOT one of the registry's types at all. `/rely` RLY64-1.
-    unlisted = _unlisted_targets_callers(types)
-    if unlisted:
-        row("every common.targets() caller is classified", False,
-            "*** %d REGISTRY STEP(S) WHOSE PRODUCER CALLS `common.targets()` ARE UNCLASSIFIED: %s. "
-            "A checker that adopts the shared enumerator and is not listed gets NO subset test, so "
-            "the leg narrows silently while still reporting — `HEALWT-1`'s own shape. Either add "
-            "the step to `_SHARED_ENUMERATOR_STEPS` (its whole scan set IS the shared one) or add "
-            "its module to `_TARGETS_CALLERS_ACKNOWLEDGED` (it calls it for something else) ***"
-            % (len(unlisted), ", ".join("%s (%s)" % (s, m) for s, m in unlisted)))
-    else:
-        row("every common.targets() caller is classified", True,
-            "%d step(s) classified shared-enumerator-only and comparable here; %d module(s) call "
-            "`common.targets()` for another purpose and are acknowledged; no unclassified caller"
-            % (len(_SHARED_ENUMERATOR_STEPS), len(_TARGETS_CALLERS_ACKNOWLEDGED)))
+    # ⚠⚠ THIS ROW HAS BEEN THE DEFECT TWICE AND BOTH TIMES FOR THE SAME REASON: it asserted
+    # something it had not computed. Round 1 printed `len()` of a hand-written tuple as *"N of the
+    # registry's steps use common.targets()"* and named `check_poles`, which is not a registry
+    # type. Round 2's fix then shipped a self-granting waiver and an AST matcher that recognised
+    # one call syntax of five, failing OPEN. **Neither number is asserted now** — a producer is in
+    # `measured` because it was CALLED and answered, and in `unreachable` because asking it failed,
+    # with the reason attached. There is nothing left here to keep in sync and nothing to waive.
+    row("producers measured by asking them", True,
+        "%d producer(s) answered `targets()` and were compared against their OWN scan set: %s"
+        % (len(measured), ", ".join("%s (%d path(s))" % (s, len(f)) for s, (_m, f)
+                                    in sorted(measured.items()))))
 
-    # ⚠ AND THE LIMIT IS STATED SEPARATELY FROM THE COUNT, because they are different claims.
-    # The steps OUT of reach are those whose producer enumerates privately; naming them is a fact
-    # about the checkers, not about the registry, so it carries no number it has not derived.
-    row("steps this leg cannot compute", True,
-        "checkers that walk the tree PRIVATELY are out of reach whatever the registry says — "
-        "`check_pov` says so in its own source, and `check_prose`/`check_classes` walk "
-        "`common.SRC` directly. This leg sees the SHARED enumerator only, which is the same "
-        "partial-coverage trap common.py records as SCOPE-3 one level down.")
+    # ⚠ THE LIMIT IS A SEPARATE CLAIM FROM THE COUNT, and it is DISCLOSED rather than blocking: a
+    # producer with no uniform way to be asked is a fact about that checker, not a registry defect.
+    # `R-NOCONV` — a leg that does not block prints its count on every run.
+    if unreachable:
+        row("producers this leg could NOT ask (disclosed, not blocking)", True,
+            "%d step(s) out of reach, each with the reason asking failed: %s. Their registry "
+            "scope is NOT compared here, whatever it says — `check_pov` keeps its own `TARGETS` "
+            "and says so in its source; `check_prose`/`check_classes` walk `common.SRC` directly. "
+            "This is the same partial-coverage trap common.py records as SCOPE-3 one level down."
+            % (len(unreachable),
+               "; ".join("%s: %s" % (s, w) for s, _m, w in sorted(unreachable))))
+    else:
+        row("producers this leg could NOT ask (disclosed, not blocking)", True,
+            "none — every registry step declaring a `.py` producer answered `targets()`")
 
     return rows, bad
 
