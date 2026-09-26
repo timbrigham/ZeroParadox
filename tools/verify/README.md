@@ -87,8 +87,10 @@ Measured 2026-09-26 — commit admits 17, push 21, tag 23.
 ⚠⚠ **THIS PARAGRAPH USED TO BEGIN *"`admission.v1.json` REMAINS"*, AND THAT NAMED THE WRONG FILE.**
 Two files carried that name and only gitRobot's `config/admission.v1.json` was ever live. The copy
 in THIS directory was a 2026-08-23 seed that nothing read — it admitted 3 types at push where the
-live set admits 21 — and `batch.py` had already recorded it *"itself dead: `RLY31-12`"* while this
-line still advertised it. **It was DELETED 2026-09-26**, so the name now resolves to one file and
+live set admits 21 — and a comment in `batch.py` had already recorded it *"itself dead:
+`RLY31-12`"* while this line still advertised it. ⚠ That comment was rewritten in `8192e54`, so
+the quotation is HISTORICAL: `log -S` finds it, the working tree does not. **The file was DELETED
+2026-09-26**, so the name now resolves to one file and
 a reader cannot reach for the wrong one. The registry/admission distinction above is unaffected;
 what changed is that only one artifact states it.
 

@@ -273,9 +273,11 @@ UNVERIFIABLE_ROUTED = {
                       "and therefore never stageable, so ledger_subjects drops it on every run.",
     "admission.v1.json":
                       "DELETED 2026-09-26. A dead 2026-08-23 seed that nothing read — it admitted "
-                      "3 types at push where the live set admits 21, and `batch.py` itself already "
+                      "3 types at push where the live set admits 21, and a comment in this file "
                       "recorded it 'itself dead: RLY31-12' while tools/verify/README.md still "
-                      "advertised it as REMAINING. Only gitRobot's config/admission.v1.json was "
+                      "advertised it as REMAINING. (⚠ That comment was itself rewritten in "
+                      "8192e54, so the quotation is HISTORICAL and `log -S` is where it lives "
+                      "now, not the working tree — RS-4.) Only gitRobot's config/admission.v1.json was "
                       "ever live. Same tombstone reason as gatelock.py: no index blob can exist "
                       "for a file that is gone, so the routing leg can acknowledge it and can "
                       "never discharge it.",
@@ -1462,6 +1464,26 @@ def check_routing(state, ranges=None):
                 # The sentinel already existed for precisely this reason one leg over; this leg
                 # simply has to use it, so deleting a gate stays louder than editing one.
                 h = _blob_hash(tip, f) or ABSENT
+                # ⚠⚠ THE SAME CARVE AS THE DISK LEG, AND ITS ABSENCE HERE WAS `SH-3` EXACTLY:
+                # ONE PROPERTY, TWO ROUTES, IMPLEMENTED AT ONE. `UNVERIFIABLE_ROUTED` says a
+                # tombstoned entry can never be a ledger subject — no index blob exists for a file
+                # that is gone — and `_unhashed`'s loop honours that at line ~1354 while this leg
+                # did not. ⭐ MEASURED 2026-09-26, and it is why this is a fix and not a widening:
+                # tombstoning `admission.v1.json` to clear `_unhashed` simply MOVED the block here,
+                # and the four states were run — with the tombstone the push blocks at the tip, and
+                # it blocks here EVEN IF `_unhashed` is later taught to skip absent paths, because
+                # putting the name in `CHECKERS` is precisely what makes this leg's `key` lookup
+                # resolve instead of `continue`. So the deferred remedy could not work while the
+                # tombstone stood, and the deletion blocked its own deletion at two legs in turn.
+                # ⛔ NARROW ON PURPOSE — `h == ABSENT` AND tombstoned, never one or the other. The
+                # comment above is the property this must not break: a push DELETING a gating
+                # checker still blocks, because that checker is not in `UNVERIFIABLE_ROUTED`.
+                # Verified by execution after this change: `check_prose.py`, `guards.py` and
+                # `required.v2.json` absent at the tip all still block.
+                if h == ABSENT and key in UNVERIFIABLE_ROUTED:
+                    print("  routed but UNVERIFIABLE at the TIP — acknowledged, NOT discharged: "
+                          "%s\n      %s" % (key, UNVERIFIABLE_ROUTED[key]))
+                    continue
                 # ⚠⚠ `reviewed` IS None WHEN THE LEDGER CANNOT BE ASKED, AND THIS LINE USED TO
                 # ASSUME OTHERWISE. `rely_reviewed_blobs()` returns None for BOTH "no record" and
                 # "could not ask", and every other consumer handles that — this one called `.get`
