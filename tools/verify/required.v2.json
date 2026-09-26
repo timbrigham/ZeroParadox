@@ -16,7 +16,9 @@
       "actions": [
         "tag"
       ],
-      "reason": "stub-first commits sorry-stubbed files on purpose, and CI at the PR owns build state; only a release asserts the corpus builds"
+      "reason": "stub-first commits sorry-stubbed files on purpose, and CI at the PR owns build state; only a release asserts the corpus builds",
+      "module": "tools/verify/batch.py",
+      "_module_why": "⭐ ADDED 2026-09-26, Tim's ruling. **V20 REFUSES A RECORD FROM A STEP DECLARING NO PRODUCER**, so this entry could never be re-recorded — its only verdict is a STALE FAIL over `README.md` at a basis whose blob has moved, and that state was unrepairable rather than merely old. ⚠ At `push` and `commit` the step renders NOT_APPLICABLE so nothing noticed; **at `tag` it is applicable, and tag gating therefore could not be turned on without blocking permanently on this one missing field.** The producer is `batch.check_build()`, which runs `lake build` — not a `build.py`, because there is not one. ⛔ NO `approved_modules`: this step is not push-gating, and pinning would levy a THIRD `batch.py` repin beside `decls` and `pdf_coupling` while constraining nothing. `policy().undeclared_producers` had been reporting this the whole time."
     },
     "check_encoding": {
       "min_coverage": 1.0,
@@ -403,7 +405,9 @@
       "actions": [
         "tag"
       ],
-      "reason": "release-only by construction"
+      "reason": "release-only by construction",
+      "module": "tools/verify/check_release_ready.py",
+      "_module_why": "⭐⭐ ADDED 2026-09-26, Tim's ruling, AND IT IS THE PRECONDITION IN FRONT OF AN EARLIER ONE. This step has **0 records in a 5,940-record stream** — and the cause is not that nobody wrote an emitter. **V20 refuses a record from a step declaring no producer, so an emitter written today would be refused on its first call.** Verified by `validate` against the live server rather than by `append`, deliberately: a probe verdict in the stream would satisfy a gate no check ran. ⭐ So the order is registry line → emitter → tag-gating decision; Tim ruled the middle step before he had the first, and this supplies it. ⚠ The producer is `check_release_ready.py`, which `R-RELEASE` already requires to exit 0 before a release body is drafted — so this declares what the process already demands. ⛔ The step still records nothing until an emitter exists; this makes that possible, not done."
     },
     "rely": {
       "family": "review",
