@@ -77,9 +77,20 @@ than one file.
   `verdictLedger/config/`, each commit carrying its reason. What was lost here is *proximity*,
   never reviewability — and the fix for proximity is this pointer, not a second file.
 
-`admission.v1.json` REMAINS, and it is a copy of neither: the registry says what may be
-**recorded**, the admission set says what must be green to let an action **through**. Two facts,
-two lifecycles — registering a type is free, promoting one to gate a push is deliberate.
+**The admission set is a THIRD fact and it is not ours.** The registry says what may be
+**recorded**; the admission set says what must be green to let an action **through**. Two facts,
+two lifecycles — registering a type is free, promoting one to gate a push is deliberate. Ask for
+it with `gitRobot admission(action=...)`, and ask **per action**: the answer differs across the
+three, so any sentence about admission that names no action is wrong about at least one of them.
+Measured 2026-09-26 — commit admits 17, push 21, tag 23.
+
+⚠⚠ **THIS PARAGRAPH USED TO BEGIN *"`admission.v1.json` REMAINS"*, AND THAT NAMED THE WRONG FILE.**
+Two files carried that name and only gitRobot's `config/admission.v1.json` was ever live. The copy
+in THIS directory was a 2026-08-23 seed that nothing read — it admitted 3 types at push where the
+live set admits 21 — and `batch.py` had already recorded it *"itself dead: `RLY31-12`"* while this
+line still advertised it. **It was DELETED 2026-09-26**, so the name now resolves to one file and
+a reader cannot reach for the wrong one. The registry/admission distinction above is unaffected;
+what changed is that only one artifact states it.
 
 ---
 

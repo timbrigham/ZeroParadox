@@ -37,6 +37,7 @@ lets this run inside the hooks, where it is worth having.
 `git status` shows the probe file. It is not silent, and re-running restores nothing on its own.
 """
 import fnmatch
+import fnmatch
 import io
 import json
 import os
@@ -616,6 +617,245 @@ def check_registry_router_agreement():
             "%d non-note key(s): %d handled, the rest inert for path accountability"
             % (sum(1 for k in rely_cfg if not k.startswith("_")),
                len(HANDLED & set(rely_cfg))))
+    return rows, bad
+
+
+# ═══ PROPERTY — the registry's SCOPE and the CHECKER'S ENUMERATION are one policy ═════════════
+
+# The shared enumerator's file-type universe. `common.GLOBS` reaches `.lean` and `.py`, and
+# `common.tracked_md()` adds every tracked `.md`. A path whose extension is outside this set is
+# stranded by TYPE and no skip list is involved; one INSIDE it that still does not appear is
+# stranded by a SKIP, which is the half that carries DC-64's failure mode.
+_ENUM_TYPES = frozenset({".lean", ".py", ".md"})
+
+# The steps whose producer enumerates through `common.targets()`.
+#
+# ⚠⚠ THREE OF SEVEN, AND THE RESTRICTION IS DISCLOSED RATHER THAN QUIETLY ASSUMED. `common.py`'s
+# own SCOPE-3 note records the identical trap one level down: pinning `targets()` alone pinned
+# three checkers out of seven, because `check_pov`, `check_prose`, `check_classes` and
+# `check_poles` each walk the tree PRIVATELY. This leg can only compare against a surface it can
+# COMPUTE without running the checker, so those four are out of its reach and saying so is part of
+# the verdict. A row below states the count so the narrowness cannot be read as coverage.
+_SHARED_ENUMERATOR_STEPS = ("check_modal", "check_negatives", "check_figures")
+
+
+def _enumerator_surface():
+    """The set of repo-relative paths `common.targets()` actually yields."""
+    import vendored
+    return {rel for _p, rel in common.targets(is_vendored=vendored.is_vendored)}
+
+
+def _tracked_paths():
+    """Every tracked path, as `common.tracked_md` gets its own list — one definition, reused."""
+    rc, out = sh("git", "ls-files")
+    if rc != 0:
+        raise OSError("git ls-files failed: %s" % out.strip()[:200])
+    return sorted(p for p in out.split("\n") if p.strip())
+
+
+def _scope_paths(entry, universe):
+    """(declared, paths) for one registry entry, expanded over `universe`.
+
+    An ABSENT `scope` is NOT an empty scope and must never render as one: the registry's stated
+    default is REQUIRED_FOR_ALL_ACTIONS, so absence claims EVERY tracked path. `declared` carries
+    that difference out to the caller instead of collapsing it into the path set -- `R-ZERONULL`,
+    whose whole content is that the empty branch must differ in VALUE and not merely in message."""
+    scope = entry.get("scope")
+    declared = scope is not None
+    pats = scope if declared else ["*"]
+    excl = entry.get("scope_exclude", []) or []
+    sel = {r for r in universe
+           if any(fnmatch.fnmatch(r, p) for p in pats)
+           and not any(fnmatch.fnmatch(r, p) for p in excl)}
+    return declared, sel
+
+
+def check_registry_enumerator_agreement():
+    """`DC-64` — what a checker EXAMINES and what the registry says it examines are two copies
+    of one policy, and while they agree nothing shows.
+
+    ⚠⚠ THE FAILURE IS NOT A FALSE PASS, IT IS AN UNHEALABLE DEMAND. A verdict binds
+    `(step, path, git_blob_id)`. If the registry's scope for a step contains a path that step's own
+    producer never enumerates, no run of that checker can ever record a verdict there -- so the
+    moment anything asks for one (staleness, the ratchet, `min_coverage`) the row is owed and
+    cannot be filled BY ANY ROUTE. `common.REPO` derives from `Path(__file__)`, so whichever copy
+    runs reads the tree it lives in and no invocation fixes it.
+
+    ⭐ THE MEASURED INSTANCE, `HEALWT-1`, 2026-09-25. `REGDESC-1` removed `register.md` from
+    `common.SKIP_NAMES` -- a WIDENING, and the safe direction. The tip's records then covered
+    `register.md`; `ce32401a` carries a checker build that skips the path, four steps went STALE,
+    and the push was refused with nothing able to clear it. ⚠ IT WAS NOT A WORKTREE ARTEFACT:
+    probed at the ref, the tree's own checkers enumerated 416 paths with `register.md` absent and
+    `ledger_subjects` skipped ZERO. The same run from the main checkout fails identically.
+
+    ⛔⛔ THE FIX THIS LEG MUST NOT BE, and it was proposed and retracted once already: transcribing
+    `common.GLOBS` into `required.v2.json`. That is a second copy of the very policy that just
+    broke, one level up, and the next skip-list edit reopens it silently. `DC-64` names the only
+    two honest options -- ONE SOURCE (the checker derives its surface from the registry) or A TEST
+    asserting the two agree. This is the test, and `R-NOCONV` binds it to the same change.
+
+    ⚠ WHAT THIS LEG DOES NOT DO, stated because a narrow check read as a broad one is this file's
+    recurring defect: it does not run the RANGE test. `DC-64`'s detector -- for each commit in
+    `origin/<branch>..HEAD`, does the post-edit scope contain a path that commit's own checker
+    build would skip -- answers a question about HISTORY and belongs BEFORE a widening edit, not in
+    a prepush leg. This leg answers the present-tense half only: do the two definitions agree
+    TODAY. A green row here is not evidence that a range is healable."""
+    rows, bad = [], 0
+
+    def row(label, ok, verdict):
+        nonlocal bad
+        if not ok:
+            bad += 1
+        rows.append((label, ok, verdict))
+
+    reg_path = os.path.join(BASE, "required.v2.json")
+    try:
+        with io.open(reg_path, encoding="utf-8") as fh:
+            reg = json.load(fh)
+        types = reg["types"]
+        if not isinstance(types, dict):
+            raise TypeError("types is %s, not an object" % type(types).__name__)
+    except (OSError, ValueError, KeyError, TypeError) as e:
+        # ⚠ FAILS CLOSED, and for the reason RLY42-3 records on the sibling leg: an unreadable
+        # registry must not read as "the two agree". TypeError is caught with the rest because a
+        # registry that parses to a LIST subscripts wrongly rather than raising KeyError.
+        row("registry readable", False,
+            "*** could not read types from required.v2.json (%s) — this check cannot pass on an "
+            "absent input ***" % e)
+        return rows, bad
+
+    try:
+        universe = _tracked_paths()
+        surface = _enumerator_surface()
+    except Exception as e:                                    # noqa: BLE001 - fail closed on any
+        row("enumeration readable", False,
+            "*** could not compute the scan surface (%s) — a leg that cannot see the enumerator "
+            "must not report agreement ***" % e)
+        return rows, bad
+
+    # ── LEG 1 — the BLOCKING subset test, over steps that DECLARE a scope ────────────────────
+    #
+    # The property: scope ⊆ surface. A path in scope and outside the surface is a demand the
+    # producer cannot satisfy at any commit.
+    # THE VERDICT FUNCTION, factored out so the CONTROL below can call the SAME CODE. A control
+    # that re-implements the comparison it is checking tests a stand-in, which is the single
+    # defect shape this file records most often.
+    def _subset_verdict(entry):
+        _declared, scope = _scope_paths(entry, universe)
+        stranded = sorted(scope - surface)
+        if not stranded:
+            return True, "%d in-scope path(s), every one enumerable" % len(scope)
+        skip_str = [r for r in stranded if os.path.splitext(r)[1] in _ENUM_TYPES]
+        return False, (
+            "*** %d PATH(S) DEMANDED AND NEVER ENUMERATED — no run of this checker can record a "
+            "verdict there, so the row is owed and unfillable by any route. %d of them carry an "
+            "extension the enumerator DOES handle, which means a skip list is dropping them "
+            "(SKIP_NAMES / SKIP_DIRS / vendored). First: %s. Fix the disagreement at ONE source — "
+            "do NOT copy common.GLOBS into the registry (DC-64) ***"
+            % (len(stranded), len(skip_str), ", ".join(stranded[:5])))
+
+    declared_steps = []
+    for step in _SHARED_ENUMERATOR_STEPS:
+        entry = types.get(step)
+        if entry is None:
+            row("registered: %s" % step, False,
+                "*** this leg names a step the registry does not carry — either the step was "
+                "renamed and this list was not, or the registry lost an entry. A control that "
+                "names a nonexistent subject reports clean for the wrong reason ***")
+            continue
+        is_declared, _scope = _scope_paths(entry, universe)
+        if not is_declared:
+            continue
+        declared_steps.append(step)
+        ok, verdict = _subset_verdict(entry)
+        row("scope ⊆ enumeration: %s" % step, ok, verdict)
+
+    # ⚠⚠ A BLOCKING LEG WITH NO SUBJECTS MUST SAY SO, NOT PASS. Today no shared-enumerator step
+    # declares a scope, so the loop above has nothing to judge and `bad` stays 0 for a reason that
+    # has nothing to do with the property holding. Silence here would be the enumerator-found-
+    # nothing defect this project has recorded repeatedly; the synthetic control below is what
+    # keeps the leg honest meanwhile.
+    if not declared_steps:
+        row("declared-scope subjects", True,
+            "NONE — no shared-enumerator step declares a `scope`, so the subset test judged "
+            "nothing. This is NOT a pass on the property; leg 2 carries the live measurement and "
+            "the control below proves the test still fires.")
+
+    # ── THE MUST-FIRE CONTROL — synthetic, in-process, mutates nothing ──────────────────────
+    #
+    # ⚠ A leg whose subjects are all absent is exactly where a broken detector hides. This plants a
+    # scope naming a path that CANNOT be in the surface and asserts the comparison flags it. It
+    # runs on every invocation rather than only under `--selftest`, because the vacuity it guards
+    # against is the everyday state of leg 1, not a test-time condition.
+    # ⚠ BOTH HALVES, because a control with only a must-fire half is half-tested — this file has
+    # had to learn that three times, once inside the control written to stop the recurrence. The
+    # subjects are DERIVED from the live sets rather than hardcoded: a named path can change side
+    # (`register.md` left SKIP_NAMES in September), and a control that silently stops testing what
+    # it claims is worse than none.
+    _unreachable = sorted(set(universe) - surface)
+    _reachable = sorted(surface)
+
+    if _unreachable:
+        _ok, _ = _subset_verdict({"scope": [_unreachable[0]]})
+        row("control MUST FIRE: unenumerable path in scope", not _ok,
+            "a scope naming `%s` — tracked and never enumerated — is flagged by the SAME verdict "
+            "function leg 1 uses" % _unreachable[0] if not _ok else
+            "*** DETECTOR BROKEN — a scope naming `%s`, which the enumerator provably never "
+            "yields, was reported as fully enumerable. Every green row above is meaningless ***"
+            % _unreachable[0])
+    else:
+        row("control MUST FIRE: unenumerable path in scope", False,
+            "*** NO SUBJECT — every tracked path is enumerable, so the must-fire half could not "
+            "be exercised. That is not a pass: an untested detector is an unknown one ***")
+
+    if _reachable:
+        _ok, _ = _subset_verdict({"scope": [_reachable[0]]})
+        row("control MUST SUPPRESS: enumerable path in scope", _ok,
+            "a scope naming `%s` — enumerated — is NOT flagged, so the test discriminates rather "
+            "than always firing" % _reachable[0] if _ok else
+            "*** FALSE POSITIVE — a scope naming `%s`, which the enumerator DOES yield, was "
+            "reported stranded. The leg would block on correct configuration ***" % _reachable[0])
+    else:
+        row("control MUST SUPPRESS: enumerable path in scope", False,
+            "*** NO SUBJECT — the enumerator yielded nothing at all, which is itself the failure "
+            "this property exists to catch ***")
+
+    # ── LEG 2 — the UNDECLARED-scope disclosure, non-blocking, counted every run ─────────────
+    #
+    # ⛔ WHY THIS DOES NOT BLOCK, and it is a judgement worth stating rather than a softening.
+    # With `scope` absent the registry's strict default claims EVERY tracked path for these steps.
+    # That is a claim nobody made deliberately — `R-ZERONULL`'s shape, where absence and "all"
+    # render identically — so the resulting difference is an artefact of the default, not a
+    # decision that went wrong. Blocking on it would refuse every push today over a pre-existing
+    # condition, and the obvious way to clear it is to declare a scope copied from `common.GLOBS`,
+    # which is the ONE fix DC-64 forbids. So it is DISCLOSED with a number on every run, per
+    # `R-NOCONV`: a downgraded leg prints its count.
+    # ⚠ THE REMEDY IS NOT "declare a scope". It is to decide, deliberately, whether these steps
+    # SHOULD answer for the 110 — and if they should not, whether the registry's default is the
+    # right one for a step whose producer is a text scanner.
+    for step in _SHARED_ENUMERATOR_STEPS:
+        entry = types.get(step)
+        if entry is None:
+            continue
+        is_declared, scope = _scope_paths(entry, universe)
+        if is_declared:
+            continue
+        stranded = sorted(scope - surface)
+        by_skip = [r for r in stranded if os.path.splitext(r)[1] in _ENUM_TYPES]
+        row("undeclared scope (disclosed, not blocking): %s" % step, True,
+            "scope defaults to ALL %d tracked path(s); the enumerator reaches %d; %d unreachable "
+            "— %d by FILE TYPE the scanner never opens, %d dropped by a SKIP despite a handled "
+            "extension%s"
+            % (len(scope), len(surface), len(stranded), len(stranded) - len(by_skip), len(by_skip),
+               (" (%s)" % ", ".join(by_skip[:6])) if by_skip else ""))
+
+    # ── THE REACH OF THIS WHOLE PROPERTY, stated so narrowness is never read as coverage ─────
+    row("enumerators this leg can compute", True,
+        "%d of the registry's steps use `common.targets()` and are comparable here; "
+        "check_pov, check_prose, check_classes and check_poles each walk the tree PRIVATELY and "
+        "are OUT OF REACH — the same three-of-seven split common.py records as SCOPE-3"
+        % len(_SHARED_ENUMERATOR_STEPS))
+
     return rows, bad
 
 
@@ -2164,6 +2404,17 @@ def main():
         # was not.
         print("\n  PROPERTY: the registry scope and the router agree")
         _rows, _bad = check_registry_router_agreement()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
+        # ⚠⚠ AND THAT THE STEP CAN ACTUALLY PRODUCE WHAT THE REGISTRY DEMANDS OF IT. The row above
+        # reconciles the registry with the ROUTER — which prefixes reach which gate. It says nothing
+        # about whether the CHECKER can enumerate the paths its own scope names, and those come
+        # apart: `HEALWT-1` had the router and the registry agreeing perfectly while four steps sat
+        # STALE on a path the checker build skipped, unhealable from any checkout. Accountability
+        # was reconciled; PRODUCIBILITY was not.
+        print("\n  PROPERTY: the registry scope and the checker's enumeration agree")
+        _rows, _bad = check_registry_enumerator_agreement()
         for label, ok, verdict in _rows:
             print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
         bad += _bad

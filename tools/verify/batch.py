@@ -2180,10 +2180,25 @@ def signal_verdict(name):
 # nothing. Tim, the same day: "the entire premise here is iterative fixing... we didn't touch 220
 # files. that right there is the false premise."
 #
-# ⚠ IT REMOVES NO LEDGER GATE. `prior_art` is absent from BOTH push admission sets — gitRobot's
-# `config/admission.v1.json` and this repo's (itself dead: `RLY31-12`). The registry entry says so
-# outright: "deliberately ABSENT from admission... blocks nothing at the ledger". So `check_signals`
-# was the only consumer, reading a row the ledger itself does not gate on.
+# ⚠⚠ THIS PARAGRAPH CLAIMED `prior_art` WAS ABSENT FROM BOTH PUSH ADMISSION SETS. BOTH HALVES ARE
+# NOW FALSE, and the first one gates a push. Re-derived 2026-09-26 by calling `gitRobot admission`
+# for all three actions rather than relaying any of them: commit -> `registered_not_admitted`
+# (17 admitted), push -> **ADMITTED** (21), tag -> `registered_not_admitted` (23). So `prior_art`
+# DOES gate a push at the ledger, which is the single action this sentence was about.
+# ⚠ ADMISSION IS PER ACTION, and a sentence naming no action is wrong about at least one of them.
+# `required.v2.json` records this exact correction at `prior_art._admission_is_action_scoped_2026_09_22`
+# — so this is that fix failing to travel to its second site, which is `DC-53`, not a new defect.
+# ⛔ THE QUOTATION IS RETIRED TOO: "deliberately ABSENT from admission... blocks nothing at the
+# ledger" was DELETED from the registry on 2026-09-22 when that key was renamed and its central
+# claim reversed. Do not re-quote it — read the live entry.
+# ⭐ WHAT SURVIVES, AND IT IS WHY REMOVING THE LEG STILL STANDS: the argument never rested on
+# admission. The leg went because it asked a STEP-level question whose scope was every `.lean` file
+# while the push touched six, so it discriminated nothing in any state. That is untouched by who
+# admits what, which is precisely why the false sentence sat here unnoticed — it was decoration on
+# a sound conclusion.
+# ⚠ The second half was wrong differently: this repo's `tools/verify/admission.v1.json` was not
+# merely dead, it should never have been named beside the live one. DELETED 2026-09-26. There is
+# one admission set and it is gitRobot's.
 #
 # ⚠ THE RELEASE GATE KEEPS IT ON PURPOSE. `check_release_ready.py`'s own `REVIEW_STEPS` still lists
 # `prior_art`, and that is correct rather than an oversight: a release mints a permanent DOI, so
