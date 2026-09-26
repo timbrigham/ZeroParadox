@@ -48,7 +48,7 @@ CATEGORY, dualizing μ↔ν, while inversion acts on the ELEMENT set, swapping 0
 
 ## Prior art — Carlström § 4 proves MORE
 
-The specific result is **Prop. 4.4** (`.claude-local/papers/carlstrom_wheels_2001_11.pdf`, p. 27):
+The specific result is **Prop. 4.4** (Carlström 2001:11, PDF p. 27, printed p. 25):
 *"If any two of the elements 0, 1, /0 and 0/0 are equal in a wheel H, then H is trivial."*
 
 **State the relation precisely.** The two share an **antecedent** and have **different consequents**. At
@@ -62,10 +62,17 @@ His remark that *"Clearly, 0 can't be inverted unless 0 ∈ S, but if that is th
 improper relation, so that `A × S/ ∼_S` is trivial"* (PDF p. 6, printed p. 4) motivates
 `wheelFrac_fork_open`'s `0 ∉ S` hypothesis. Two points on that quotation. It is stated there of the
 *ordinary* ring of fractions `A × S/∼_S` — the object named inside the quote — with the corresponding
-**wheel** statement a separate sentence on printed p. 5: *"unless 0 ∈ S, but then S is improper and
-`⊙_S A` is trivial"*. And the wheel of fractions is Carlström's **`⊙_S A`**: a PREFIX operator with the
-submonoid SUBSCRIPTED, as in his `⊙_∅(ℤ/2ℤ)` and `⊙_{S₀}A`, which is the form this corpus uses.
-The substance — `0 ∈ S` trivializes, so exclude it — is his.
+**wheel** statement a separate sentence (PDF p. 7, printed p. 5): *"unless 0 ∈ S, but then ≡_S is
+improper and `⊙_S A` is trivial"* — where what is improper is again a RELATION, the wheel congruence
+`≡_S` on `A × A`, not the submonoid `S`. And the wheel of fractions is Carlström's **`⊙_S A`**: a PREFIX
+operator with the submonoid SUBSCRIPTED, as in his `⊙_∅(ℤ/2ℤ)` and `⊙_{S₀}A`, which is the form this
+corpus uses. The substance — `0 ∈ S` trivializes, so exclude it — is his.
+
+⚠ **The construction's lineage runs through Setzer.** Carlström credits him for the name and the
+construction at printed p. 3 and presents his own paper as a generalisation from integral domains to any
+commutative semiring — so "Carlström's" here means that general form, which is the one this file
+formalizes. The quotations and the full credit chain are in `ZeroParadox/Algebra/Wheel.lean`
+§ "Lineage" (the `Wheel` class docstring).
 
 ## Standard names for what is written by hand
 
@@ -121,12 +128,24 @@ deals — the forward leg (identifying `∞` with `⊥` forces triviality) and t
 
 ⚠ **Not a claim that a meadow is a collapsed wheel.** It is not: a meadow stays a commutative ring, and
 `ZPWheelElem` is not one. The shared object is the `InvolutiveFork` abstraction, which both instantiate
-with opposite verdicts. Bergstra and Ponse (1406.6878, § 4) state that no structural connection between
-the two constructions has been found; nothing here supplies one.
+with opposite verdicts. Bergstra and Ponse (1406.6878, § 4 "Concluding Remarks", printed p. 14) write
+that *"we have not yet found a structural connection"* between wheels and **common** meadows — their
+own first-person hedge, not a settled negative. Common meadows are the NON-involutive ones, where `0⁻¹`
+is a separate error element, so they are a different pair from the involutive meadow (`0⁻¹ = 0`,
+BHT 0901.0823) this paragraph is built on — involutivity being exactly what separates them. Nothing
+here supplies a connection on either pair.
 
-## Unstated adjacency — four in-corpus instances, none wired up
+## Unstated adjacency — five involution declarations under four names, none wired up as of 2026-09-25
 
+**The unit is the DECLARATION, not the identifier: five declarations, four distinct names.**
 `rInv_involutive` + `rInv_swaps` (`ZeroParadox/Valuation/RiemannSphere.lean`) is the Riemann fork the
-`InvolutiveFork` docstring calls "the motivating instance" and is never actually instantiated; also
-`flipPoles_involutive`, `codeDataSwap_involutive`, and two `swap_involutive`. Wiring them is a pointer
-exercise, not new declarations.
+`InvolutiveFork` docstring calls "the motivating instance"; also `flipPoles_involutive`
+(`ZeroParadox/Computability/Occurrence.lean` — stated pointwise rather than as `Function.Involutive`),
+`codeDataSwap_involutive` (`ZeroParadox/Computability/CodeDataFrameChange.lean`), and `swap_involutive`
+at two sites (`ZeroParadox/Valuation/PoleCorners.lean`, `ZeroParadox/Miniature.lean`). Searched
+2026-09-25 over `ZeroParadox/**/*.lean` and the tracked `.md`: the only `InvolutiveFork` instances
+located are `wheelFork` and the `GroupWithZero` example, both in `ZeroParadox/Algebra/WheelFrac.lean`,
+so none of the five is wired up. **Not a closed list of the corpus's involutions** — the same sweep for
+`Function.Involutive` also returns `σ_involutive`
+(`ZeroParadox/Computability/MarkovNuUniversal.lean`), an involution but not a pole exchange. Wiring any
+of them is a pointer exercise, not new declarations.
