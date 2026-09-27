@@ -1,6 +1,6 @@
 **ISOLATION REQUIRED: Do not run this review inline. Use the Agent tool to spawn a fresh instance with no conversation context.**
 
-**⚠⚠ AND SPAWN THREE OF THEM, IN ONE MESSAGE, WITH IDENTICAL PROMPTS.** This gate is `D9`: three copy editors, 2-of-3 to proceed. One is not a cheaper version of this gate — it is a different gate with no divergence signal at all.
+**⚠⚠ AND SPAWN THREE OF THEM, IN ONE MESSAGE, WITH IDENTICAL PROMPTS.** This gate is `D9`: three copy editors, unanimity to proceed — any split escalates and blocks, with no majority path (this line read *"2-of-3 to proceed"* until Tim ruled otherwise 2026-09-27, `COPYEDITOR-ESCALATION-1`). One is not a cheaper version of this gate — it is a different gate with no divergence signal at all.
 
 Read `$ARGUMENTS` to determine the two states and the references, then spawn three Agents using the Agent tool with `subagent_type` omitted (general-purpose). Pass the prompt below verbatim to each, substituting `ARGUMENTS_VALUE` for the actual value of `$ARGUMENTS`. None of them may have knowledge of the current session, or of each other.
 
@@ -34,17 +34,31 @@ Read `$ARGUMENTS` to determine the two states and the references, then spawn thr
 **⭐ FINDINGS UNION. ONLY THE VERDICT IS VOTED (`D10`).**
 
 - **Findings: take the UNION.** A lone reader who catches a meaning shift the other two missed **must not be outvoted** — measured this week, the reviewer who found seven sites saw four the others did not. Majority decides *"may this proceed"*; it never decides *"did anyone find something"*. Same rule as `outstanding`, which unions across every covering record.
-- **Verdict: 2 of 3 must agree the meaning survived.**
+- **Verdict: unanimity. All three agreeing it survived is a PASS; all three agreeing it moved is a `FAIL`; anything else is `UNDECIDED`.** This line read *"2 of 3 must agree the meaning survived"* until 2026-09-27, when Tim ruled on `COPYEDITOR-ESCALATION-1`: on a copy-editor split, unanimity is required for a PASS — there is no "2-of-3 with a written justification" alternative, that option was offered and not chosen. The ledger's own V3 rule (quoted in full below, § Recording) already refused a non-unanimous PASS; the ruling raises the ESCALATION half of this brief to match the RECORDING half, which was unanimous from the start.
 
-**On a split — 1 or 2 of 3 saying the meaning survived — record `UNDECIDED` and escalate.** ⚠ **When ALL THREE say the mathematics moved, that is `FAIL`, not `UNDECIDED`** (AR8-1): unanimity is not a contested answer, and filing the panel's strongest finding as a disagreement misdescribes it. Both block; only one is true. ⚠ **And "which BLOCKS" is true of the VERDICT CLASS and NOT YET of this gate** — `copy_editor` is in no admission set today, `inventory(tag)` renders it NOT_APPLICABLE, and there are 0 records ever, so the fence exists downstream and is not wired here. Do not describe this gate as fail-closed (AR8-2). ⚠ **Escalation goes to YOU, and you carry it to the author (`D4`). Gates never report to the author directly** — one channel up, and the carrier holds it. **A split IS the signal**, and it is the first natural producer of a verdict that is fully wired and has never once been used.
+**On a split — 1 or 2 of 3 saying the meaning survived — record `UNDECIDED` and escalate.** ⚠ **When ALL THREE say the mathematics moved, that is `FAIL`, not `UNDECIDED`** (AR8-1): unanimity is not a contested answer, and filing the panel's strongest finding as a disagreement misdescribes it. Both block; only one is true. ⚠ **And "which BLOCKS" is true of the VERDICT CLASS and, as of 2026-09-26, of this gate too.** This line read *"`copy_editor` is in no admission set today, `inventory(tag)` renders it NOT_APPLICABLE, and there are 0 records ever, so the fence exists downstream and is not wired here"* until today (2026-09-27) — re-derived live rather than trusted: `gitRobot admission(action='push')` and `admission(action='tag')` both list `copy_editor` among the admitted steps (`registered_not_admitted` only at commit), and the ledger holds exactly one `copy_editor` record, `copy_editor@f08e7ec9...#0`, `UNDECIDED` from 2026-09-22 (3 readers, 0 agreed). Do not describe this gate as fail-closed regardless (AR8-2) — a step with no record at all is `MISSING`, a status distinct from `FAIL`/`UNDECIDED`, and admission does not turn silence into a block; it means a record that has run and split blocks. ⚠ **Escalation goes to YOU, and you carry it to the author (`D4`). Gates never report to the author directly** — one channel up, and the carrier holds it. **A split IS the signal**, and it is no longer hypothetical: the one record on file already blocks a real push or tag.
 
 ⛔⛔ **AND YOU EMIT THE RECORD — ONE, FOR THE PANEL. THE COPY EDITORS DO NOT RECORD.** Changed
 2026-09-08. The command and the full reasoning are in **§ Recording** below; read it before you
 tally, because the shape constrains what you can say. In one line: **`--how agreement --passes 3
 --agreed <how many said the meaning survived>`**, and V3 refuses a non-unanimous PASS, so a 2-1
 split is recorded as `UNDECIDED` with `--agreed 2` and `--failing-file` naming the contested sites.
-⚠ That is the RECORD. Your ESCALATION decision still follows the 2-of-3 rule above — what the panel
-found and what you do about it are different questions, and the split between them is deliberate.
+⚠ That is the RECORD. Your ESCALATION decision now follows the SAME unanimity threshold (Tim,
+2026-09-27) — a split escalates and blocks, full stop, with no proceed-anyway path. What the panel
+found and what happens next remain different questions — the RECORD narrows a blocking verdict to
+the contested sites via `--failing-file`, and the ESCALATION carries the whole split to the author
+— but the two no longer disagree about HOW MUCH AGREEMENT IS ENOUGH.
+
+⚠⚠ **ESCALATED-AND-BLOCKED IS NOT A DEAD END — TWO ROUTES THROUGH, AND RE-RUNNING THE SAME PANEL
+IS NEITHER** (Tim, 2026-09-27, `COPYEDITOR-ESCALATION-1`). Once a split reaches you and you carry
+it to the author, exactly two things move it: **(a) the content changes** — different bytes are a
+different basis, so a fresh panel run over the fix answers a NEW question, not a retry of the one
+that split; or **(b) the author accepts the split as it stands**, recorded `--how signature --who
+<name>` (mechanics and why in **§ Recording**, below). **Re-spawning the same three copy editors
+over the same, unchanged content, hoping for a different tally, is explicitly neither of these and
+is forbidden** — a uniform result on a second try is not evidence the first split was wrong, it is
+indistinguishable from having quietly dropped whichever reader dissented the first time, which is
+the exact loss `D10`'s unioned findings exist to prevent.
 
 ---
 
@@ -256,8 +270,9 @@ ONE producer.** The brief is the artifact that produced the verdict, exactly as 
 round. What differs is how many agents read it, which is `passes`/`agreed` — headcount, not
 provenance.
 
-⛔⛔ **V3 REFUSES A NON-UNANIMOUS PASS, AND THIS COLLIDES WITH THE 2-OF-3 RULE ABOVE.** Measured
-against this repo's own `policy.v1.json` (`agreement.min_passes = 3`):
+⛔⛔ **V3 REFUSES A NON-UNANIMOUS PASS. UNTIL 2026-09-27 THIS COLLIDED WITH A 2-OF-3 ESCALATION RULE
+ABOVE; THE COLLISION IS RESOLVED, NOT STANDING.** Measured against this repo's own
+`policy.v1.json` (`agreement.min_passes = 3`):
 
     --how agreement --verdict pass --passes 3 --agreed 3   ->  VALID
     --how agreement --verdict pass --passes 3 --agreed 2   ->  REFUSED
@@ -269,30 +284,108 @@ and `--failing-file` narrowing it to the contested sites. That is not a downgrad
 judgement — it is the ledger's own vocabulary for exit 3, *asked, ran to completion, answer
 contested*, and it is the same word `control.md` uses for the same state.
 
-⚠⚠ **THE THRESHOLD TENSION IS REAL AND IS NOT MINE TO RESOLVE — DO NOT SILENTLY PICK A SIDE.** The
-tally rule above says *"2 of 3 must agree the meaning survived"*; V3 says an agreement is unanimous
-among `min_passes` readers. These are different thresholds and both are deliberate. **The recording
-follows the LEDGER (a 2-1 split records UNDECIDED); the carrier's escalation decision follows THIS
-BRIEF (2 of 3 may still proceed).** They are different questions — what the panel found, and what
-the carrier does about it — and keeping them apart is what lets a contested record exist without
-freezing the work. The project already runs one of these: `STOP-ORDINARY` is *"a PROCEED verdict
-that is NOT a pass"*.
+⚠⚠ **THE THRESHOLD TENSION WAS REAL AND IS NOW RESOLVED — TIM RULED 2026-09-27, `COPYEDITOR-ESCALATION-1`.**
+Until that date the tally rule above said *"2 of 3 must agree the meaning survived"* while V3 said
+an agreement is unanimous among `min_passes` readers — two different thresholds, both deliberate
+at the time. **The ruling collapses them: the RECORD follows the LEDGER (a non-unanimous split
+records `UNDECIDED`) and the carrier's ESCALATION decision follows the SAME threshold — any split
+blocks, and there is no "2 of 3 may still proceed."** What the panel found and what the carrier
+does about it remain different QUESTIONS, but they now share one answer to "how much agreement is
+enough," which is what closes the gap the paragraph below used to warn was still open.
+`STOP-ORDINARY` (*"a PROCEED verdict that is NOT a pass"*) is a different mechanism entirely and is
+untouched by this ruling.
 
-⛔⛔ **BUT IT IS COHERENT ONLY WHILE THIS RECORD GATES NOTHING, AND THAT IS A FACT ABOUT TODAY'S
-WIRING RATHER THAN ABOUT THE DESIGN** (AR8-3, 2026-09-08). Read straight through, this brief says
-(a) the record BLOCKS and (b) proceed anyway on 2 of 3 — **an instruction to walk past a block**,
-harmless only because (a) is currently false: `copy_editor` is in no admission set and has 0 records
-ever.
+⛔⛔ **AR8-3 (2026-09-08) PREDICTED THIS DAY, AND IT ARRIVED.** Read straight through, this brief
+used to say (a) the record BLOCKS and (b) proceed anyway on 2 of 3 — **an instruction to walk past
+a block** — and called the pairing harmless only because (a) was then false: `copy_editor` was in
+no admission set and had 0 records. **Both halves of that excuse are gone.** Admission landed
+2026-09-26 — `copy_editor` is admitted at push and at tag; re-derive live with `gitRobot
+admission(action='push'|'tag')` rather than trusting this line. Tim ruled 2026-09-27: unanimity,
+not 2-of-3-with-a-written-justification — that alternative was offered and not chosen. **So (b) is
+retired outright: there is no "proceed anyway" path.** ANY split — not a unanimous PASS, not a
+unanimous FAIL — is `UNDECIDED`, and `UNDECIDED` blocks the push or tag it is recorded against,
+full stop.
 
-⚠⚠ **SO THE GUARD BELONGS IN THE SAME CHANGE AS THE ADMISSION ENTRY, NOT AFTERWARDS.** This file
-documents the plan *"Register, watch one panel, then admit"*, and **nothing makes the 2-of-3
-escalation rule change at the moment admission lands** — which is exactly when the composition
-stops being harmless and becomes a real bypass. Whoever adds `copy_editor` to
-`admission.v1.json` must, in that commit, either raise the escalation rule to unanimity or state
-in writing why proceeding past a blocking record is still correct. **A carve that becomes live
-because a DIFFERENT file changed is the shape this project keeps paying for** — see the
-`admission.v1.json` note on `RLY31-6`, where a downgrade's compensating control was withdrawn the
-next day and nobody revisited the row.
+⚠⚠ **THE GUARD LANDED ONE DAY AFTER THE ADMISSION ENTRY, WHICH IS EXACTLY THE SHAPE THIS PARAGRAPH
+WARNED AGAINST.** This file documented the plan *"Register, watch one panel, then admit"* and said
+whoever adds `copy_editor` to `admission.v1.json` must, in that same commit, either raise the
+escalation rule to unanimity or write down why 2-of-3 was still correct. Admission landed
+2026-09-26; neither happened until this ruling landed a day later — the gap was live for that
+entire day, and `COPYEDITOR-ESCALATION-1` is the record of it, found by editorial review sweeping
+the PROPERTY rather than the deleted string. **A carve that becomes live because a DIFFERENT file
+changed is the shape this project keeps paying for** — see the `admission.v1.json` note on
+`RLY31-6`, where a downgrade's compensating control was withdrawn the next day and nobody
+revisited the row. This is the second time that shape has cost a day; the fix here is the ruling
+applied everywhere this file states the tally, not a second promise to apply it faster next time.
+
+⚠⚠ **ONCE ESCALATED, HOW A SPLIT ACTUALLY GETS RESOLVED — ADDED 2026-09-27, EXTENDING RATHER THAN
+CORRECTING THE PARAGRAPHS ABOVE.** Everything above says a split blocks, full stop; none of it says
+how a blocked release ever moves again. Tim ruled on exactly this, same conversation as the
+threshold ruling, `COPYEDITOR-ESCALATION-1`: exactly two routes, and a third that sounds like a
+route is named and refused.
+
+1. **Fix the content.** Editorial, or the author, changes the bytes. That is a NEW basis, so the
+   next panel run answers a NEW question rather than re-asking the one that split — nothing special
+   to this gate; every gate here already works this way.
+
+2. **The author signs.** `--how signature --who <name>` records that a PERSON accepted the verdict
+   the round produced, split and all. **This is not a new mechanism invented for `copy_editor`** —
+   it is the SAME route this section already documents for a single honest agent round that needs a
+   human to become a PASS (`record.py`: *"one agent round is not an agreement - if a human is
+   accepting it, use --how signature --who <name>"*), pointed at a three-reader split instead of a
+   one-reader round. `--who` is required — `record.py` refuses a signature naming nobody (*"a
+   sign-off with no signatory records nothing about who is accountable for it"*) — and `--evidence`
+   is REFUSED on this route, not merely unneeded: `signature` and `override` "have no producing file
+   at all," so there is no brief to pin the record to. **V3's unanimity arithmetic does not apply
+   here either** — V3 fires only on `--how agreement`, and a human accepting a verdict is not an
+   agreement record. **The `--revision` this needs depends on whether the basis has moved, and that
+   is basis-dependent, not universal — verify it live, do not assume either answer.** `basis` is the
+   WHOLE-REPO tree hash, not one scoped to `copy_editor`'s subjects, so ANY commit anywhere between
+   the panel running and the signature — not only one touching this file — moves it, and
+   `record.py`'s `--ref` accepts only `HEAD` or `INDEX`: an explicit historical tree is refused
+   outright (`ledger_subjects`: *"cannot be fenced - a checker reads the worktree, so only HEAD or
+   INDEX can correspond to what it read"*). **If the sign-off happens before anything else lands
+   anywhere in the repo**, `HEAD`/`INDEX` still resolves to the exact basis the panel's `UNDECIDED`
+   was recorded against, and `--revision` raised by one supersedes it there, per V11's ordinary rule.
+   **Once anything else has been committed, that basis is gone and unreachable through this CLI** —
+   verified live against the one real `copy_editor` record on file
+   (`copy_editor@f08e7ec9...#0`, recorded 2026-09-22): by 2026-09-27 `HEAD`'s tree had already moved,
+   and `--how signature --revision 1 --ref HEAD` was REFUSED, *"V11: revision 1 with no prior
+   revision at this basis"* — there is no revision 0 to supersede at the new tip. In that case the
+   correct command is a FRESH `--revision 0` record (still `--how signature --who <name>`) at the
+   CURRENT tip — verified live, accepted — asserting the human's acceptance as of today rather than
+   claiming to supersede the stale one. Either way the original `UNDECIDED` is never deleted; it
+   stays in the append-only stream. What changes is whether `inventory` still resolves it as the
+   tip's decider: once the basis has moved, it no longer is, and a fresh revision-0 record at the new
+   tip is what actually gates the release you are trying to clear.
+
+   ⚠ **Checked against the source before writing this, not assumed:** `record.py`'s `--how` choices
+   are exactly `delegated`, `agreement`, `signature`, `override` — no fifth value for "a panel
+   voted." **And this is NOT `R-LOOPCAP`'s `STOP-ORDINARY` wearing a new name** — the comparison was
+   considered and does not hold, verified at `tools/process/review-loop-cap.md` rather than assumed
+   by analogy. `STOP-ORDINARY` is the REVIEWER'S own call: after the capped rounds turn up nothing
+   worse than ordinary findings, the reviewer itself stops and writes its own PASS (`--how
+   delegated`, findings carried on `--outstanding-file`) — no human is party to that decision at
+   all. `signature` is the opposite shape: the agents' own verdict already stands, unchanged
+   (`UNDECIDED`), and what gets recorded is a separate HUMAN decision to accept it anyway. One is an
+   agent certifying its own severity judgment; the other is a human accepting a judgment the agents
+   already reached. Different actors, different questions; neither substitutes for the other.
+
+⛔⛔ **WHAT IS NOT A THIRD ROUTE: RE-RUNNING THE SAME THREE PROMPTS OVER THE SAME, UNCHANGED
+CONTENT.** Named and ruled out, Tim, 2026-09-27, same ruling as above: there is no "try again until
+it converges" path. A uniform verdict on a second pass over identical content is not evidence the
+first split was spurious — from the record alone, a genuine re-convergence and a panel that quietly
+lost its dissenting reader the second time look IDENTICAL, and only one of those is real. Re-running
+is functionally indistinguishable from discarding a finding `D10` unions in specifically so that no
+single dissenting reader can be outvoted out of existence.
+
+⚠ **A FOURTH OPTION WAS RAISED IN THE SAME CONVERSATION AND IS NOT AVAILABLE TODAY.** A new
+`decided.how` ledger value for a voted or majority panel (M-of-N counts as DECIDED on its own, no
+human required) came up alongside this ruling, and Tim commissioned it as its OWN piece of work —
+separate from this fix, tracked outside this file, coordinated with the ledger's own maintainers
+before it is built. **It does not exist yet.** Do not describe a copy-editor split as something a
+future panel vote could resolve without a human: today `--how` has the four values named above and
+no fifth, and a split resolves only by route 1 or route 2.
 
 ⚠ **`--verdict undecided` EXISTS AS OF 2026-09-06, AND UNTIL THAT MORNING THIS BRIEF INSTRUCTED AN
 IMPOSSIBLE COMMAND.** The flag took `pass` and `fail` only, so the split verdict this gate is built
@@ -320,11 +413,18 @@ condemns thirty-nine files nobody disputed.
 correct when written** — registration landed the same afternoon, which is exactly the far-side
 staleness this project keeps filing. Re-check rather than trusting this line.
 
-⚠ **IT IS REGISTERED AND NOT ADMITTED, DELIBERATELY.** Registering says a verdict may be RECORDED;
-admission says it must be GREEN. `copy_editor` is absent from `admission.v1.json`, so **an
-`UNDECIDED` recorded here does NOT yet block a push.** That is on purpose: a panel split would be
-its first real use anywhere, and admitting a gate nobody has watched work would let its first
-exercise refuse a push. **Register, watch one panel, then admit.**
+⚠ **IT IS REGISTERED, AND ADMISSION IS PER-ACTION — NOT ONE YES/NO.** Registering says a verdict
+may be RECORDED; admission says it must be GREEN, and the admission SET differs by which action is
+asking. **This paragraph said "absent from `admission.v1.json`" until today, as if one flag covered
+every action, and that was already the wrong shape for how admission works here — Tim ruled
+2026-09-26 that `copy_editor` gates every push, and the admission sets were changed accordingly.**
+Re-derived live, 2026-09-27, call `gitRobot admission(action=...)` yourself rather than trusting
+this line: at **commit**, `copy_editor` is `registered_not_admitted` — an `UNDECIDED` recorded there
+does NOT block a bare commit. At **push** and at **tag**, `copy_editor` IS admitted — an `UNDECIDED`
+recorded there **DOES block that push or tag.** The only existing `copy_editor` record in the ledger
+right now is an `UNDECIDED`. **So: register, watch one panel, then admit was the old sequence; the
+admit half already happened for push and tag, and a split you record today gates the release you are
+trying to clear, not some future exercise.**
 
 ⚠ **THE ZERO IS REAL AND THE REASON FOR IT CHANGED.** This paragraph read *"`UNDECIDED` has 0
 records in 2,170"* and drew a conclusion about restraint. Re-measured 2026-09-06 against the live
@@ -336,9 +436,16 @@ will mean something different from this one.
 ⚠ **You do not record it yourself — that changed 2026-09-08 and the reason is above:** three
 records at one basis meant first-writer-wins and your dissent would have been REFUSED, silently.
 The carrier emits one agreement-shaped record carrying `passes`/`agreed`, so a 2-1 split is
-preserved as a contested record rather than lost to whichever agent finished first. Until admission
-lands, the carrier is what makes escalation happen — do not describe it as fail-closed, because it
-is not yet.
+preserved as a contested record rather than lost to whichever agent finished first. **This
+paragraph read *"until admission lands, the carrier is what makes escalation happen — do not
+describe it as fail-closed, because it is not yet"* until 2026-09-27; admission landed 2026-09-26,
+one day earlier, and the paragraph had not caught up.** The carrier still carries the split to the
+author (`D4`) — that half never depended on admission. What changed: an `UNDECIDED` recorded at
+push or tag now blocks that push or tag on its own, mechanically, because `copy_editor` is admitted
+there. Still do not call this "fail-closed" — a step with no record at all is `MISSING`, a status
+distinct from `FAIL`/`UNDECIDED`, and admission does not turn silence into a block; it only means a
+record that has run and split blocks. The gate is wired now; it is not fail-closed, and those are
+different claims.
 
 ## Before you finish — your controls, and the step you could not justify
 
