@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.13 | September 2026
+Version 1.14 | September 2026
+v1.14: PRIOR ART (PA-4, 2026-09-28): the Section IV 'Open contribution point' box listed Pataraia's fixed-point theorem as machinery still missing and did not name Mathlib's Bourbaki-Witt. Classically, both Pataraia statements Taylor uses (least fixed point; Pataraia induction, Cor. 119) follow from Bourbaki-Witt, derived in ZeroParadox/Order/PataraiaFromBourbakiWitt.lean (dcpo_exists_least_fixedPoint, pataraia_induction; footprint carries Classical.choice). The box now says so, and names what remains missing: Pataraia's intuitionistic proof (Taylor Thm 118) and the General Recursion Theorem itself.
 v1.13: ATTRIBUTION (PA-1, prior-art gate 2026-09-15): the prior-art paragraph credited Lawvere (1969) with unifying 'Cantor's diagonal, Russell's paradox, Godel's incompleteness lemma, and the recursion theorem'. Lawvere's paper does not treat the recursion theorem: his own introduction names Cantor, Russell, Godel and TARSKI, and the reprint contains no occurrence of Kleene, Rogers or 'recursion'. Turing's halting argument and the recursion theorem are Yanofsky (2003), who proves the latter as his Theorem 5. Lawvere's list now ends at Tarski's undefinability theorem and Yanofsky's sentence carries the other two, matching README.md and CLAIMS.md. Recurrence of ATTR-2, whose 2026-08-29 closure claimed a corpus-wide sweep found no further instances; that claim is retracted. This site was invisible to it because it never names Kleene.
 v1.12: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim ruling, 2026-09-15): the 'What the Zero Paradox adds' box still said 'What MC-1 carries is family membership, proved per domain'; it now names the proved faces as the preamble and Section II do (Quine atom, 2-adic and categorical; the Kleene face carried as a requirement).
 v1.11: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the preamble said the faces' shared membership in MC-1 'is proved per domain', including the Kleene quine; the Kleene face is carried as a KleeneStructure requirement, its witness computability_face_fixedPoint a fixed point of a computable map not tied to bottom, so the preamble and Section II's verdict now name which faces are proved. The preamble's missing space after 'framework:' is restored.
@@ -26,7 +27,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -275,8 +276,16 @@ def build():
     E.append(remark_box(
         'Open contribution point',
         [
-            'Formalizing the machinery still missing &#8212; Pataraia\'s fixed-point theorem '
-            'and the General Recursion Theorem &#8212; would upgrade this best-effort bridge to '
+            'Classically, the two things Taylor needs from Pataraia &#8212; the least fixed point of '
+            'a monotone self-map of a directed-complete order with a least element, and Pataraia '
+            'induction (Taylor Cor. 119) &#8212; follow from the Bourbaki&#8211;Witt theorem, which '
+            'the pinned Mathlib carries (Mathlib/Order/BourbakiWitt.lean); this project derives both '
+            '(dcpo_exists_least_fixedPoint, pataraia_induction; '
+            'ZeroParadox/Order/PataraiaFromBourbakiWitt.lean), with Classical.choice in their '
+            'footprint. Bourbaki&#8211;Witt is not a substitute for Pataraia\'s intuitionistic '
+            'proof (Taylor Thm 118). Formalizing the machinery still missing &#8212; that '
+            'intuitionistic proof, and the General Recursion Theorem itself &#8212; would upgrade '
+            'this best-effort bridge to '
             'the full coalgebraic statement, and would be a reusable Lean contribution '
             'independent of the Zero Paradox. Upstreaming the next-time operator, already built '
             'here, is a third. Contributions are welcome, to this project and to Mathlib as a '
