@@ -397,7 +397,7 @@ example {W : Type*} [Wheel W] (h : (wheelInf : W) = wheelBot) : ∀ x y : W, x =
 
     Together with that example: a wheel is not also a NON-TRIVIAL involutive meadow, in either
     direction. The substantial implication runs meadow-equation ⇒ trivial, never the reverse as
-    provenance; as a bare implication the converse elaborates too, but only vacuously — see below. -/
+    provenance; as a bare implication the converse elaborates too, but only uninformatively — see below. -/
 example {W : Type*} [Wheel W] (hm : Wheel.winv (Wheel.wzero : W) = Wheel.wzero) :
     ∀ x y : W, x = y := by
   have hbot : (wheelBot : W) = Wheel.wzero := by
@@ -411,14 +411,14 @@ example {W : Type*} [Wheel W] (hm : Wheel.winv (Wheel.wzero : W) = Wheel.wzero) 
   intro x y
   rw [hz x, hz y]
 
-/-- **The converse holds, but vacuously.** Once the carrier is trivial, the meadow equation is just
+/-- **The converse holds, but adds no information.** Once the carrier is trivial, the meadow equation is just
     one instance of "every two elements are equal" — no separate argument is needed, unlike the
     substantial direction above. -/
 example {W : Type*} [Wheel W] (h : ∀ x y : W, x = y) :
     Wheel.winv (Wheel.wzero : W) = Wheel.wzero := h _ _
 
--- Controls on the two examples above: both hypotheses are load-bearing, not vacuous. On this
--- carrier the meadow equation FAILS, and the carrier is not trivial.
+-- Controls on the two substantial-hypothesis examples above: both hypotheses are load-bearing, not
+-- uninformative. On this carrier the meadow equation FAILS, and the carrier is not trivial.
 example : Wheel.winv (Wheel.wzero : ZPWheelElem) ≠ Wheel.wzero := by
   show zpwInv (ZPWheelElem.fin 0) ≠ ZPWheelElem.fin 0
   rw [zpw_inv_zero_eq_inf]
