@@ -1883,7 +1883,19 @@ def main():
         # register.md - so a standalone register token could go stale forever and --mark-remediated
         # would clear the push block without touching it. PhilQ was stale exactly this way.
         reg_tok = register_formal_token(key)
-        if reg_tok and reg_tok != current_hash:
+        # ⚠⚠ AN ABSENT TOKEN IS A FINDING, NOT A SKIP (CHECKHASHES-ARBASIS-1 round 3, /rely
+        # BLOCKING:1, 2026-09-28). `if reg_tok and ...` treated `None` the same as `False`, so a
+        # doc with NO register.md token (Tools) was silently exempt from this, the only TRACKED
+        # check standalone docs have — `all_hash_mismatches()` (the RELEASE gate) already fixed
+        # the identical bug in its own copy of this loop; ported here rather than re-derived, so
+        # the two stop disagreeing about the same property. This was masked here as long as the
+        # untracked `ar_status.json` comparison (removed above from gating) happened to also
+        # change on the same edits — closing that hole exposed this one, which predates it.
+        if reg_tok is None:
+            print(f'  {key}: NO register.md token - {script} has NO public provenance to check '
+                  f'against tracked content')
+            hash_mismatches.append(key + ' (no register token)')
+        elif reg_tok != current_hash:
             print(f'  {key}: REGISTER TOKEN STALE - register has {reg_tok}, script is {current_hash}')
             hash_mismatches.append(key + ' (register token)')
 
@@ -1930,8 +1942,17 @@ def main():
         if ar_label == 'STALE':
             print(f'       AR STALE — reviewed at: {stored_hash}  current: {current_hash}')
             ar_stale.append(key)
-        if not hash_ok:
-            hash_mismatches.append(key)
+        elif not hash_ok:
+            # ⚠ SAME AXIS AS `ar_label == 'STALE'` (CHECKHASHES-ARBASIS-1, /rely BLOCKING:1,
+            # 2026-09-28 caught this the first fix missed): `hash_ok` compares `current_hash`
+            # against the exact same `ar_data[key]['hash']` that `compute_ar_label` compares —
+            # reached here instead of the STALE branch only when ar_data holds NO entry at all
+            # (a fresh clone, or a doc never marked). Either way the comparison is against
+            # untracked `.claude-local/ar_status.json`, not tracked content, so it must not gate
+            # `all_ok` (previously fed `hash_mismatches`, which does) — route it to `ar_stale`
+            # instead, same as the STALE case, so two runs at identical tracked content can never
+            # disagree on this axis again.
+            ar_stale.append(key)
 
     # --- Formal-only documents: verify formal build-script hash vs register ---
     # ⚠ THE VERDICT IS NAMED FOR WHAT IT COVERS. This printed a bare `hash=OK` per row while
@@ -2023,8 +2044,23 @@ def main():
         for pdf, rv, gv in readme_drift:
             print('    %-44s README %-8s register %s' % (pdf, rv, gv))
         print('  Update register.md FIRST, then propagate to README (and GUIDE if it ever carries one).')
-    all_ok = (not hash_mismatches and not ar_stale and not doc_mismatches
+    # ⚠ `ar_stale` is DELIBERATELY EXCLUDED from `all_ok` (CHECKHASHES-ARBASIS-1, 2026-09-27/28).
+    # `ar_status.json` is untracked private state (`.claude-local/`), so it is not part of the
+    # ledger's (step, basis, revision) key — but it USED TO gate this same `all_ok`, which meant
+    # two `--record` runs at IDENTICAL tracked content could disagree solely because someone ran
+    # `--mark-remediated` between them, and the second run collided with V11 instead of superseding
+    # it (no revision is threaded through this call site). Folding it out here means the recorded
+    # verdict — and the exit code, which is the SAME variable — depends only on tracked content,
+    # exactly like the basis it is checked against. AR staleness is still surfaced (see below);
+    # it just cannot flip a PASS/FAIL pair at one basis anymore.
+    all_ok = (not hash_mismatches and not doc_mismatches
               and not shared_moved and not readme_drift)
+
+    if ar_stale:
+        print()
+        print(f'AR STALE: {", ".join(ar_stale)}')
+        print('Run: python %s --mark-remediated <KEY>' % SELF)
+        print('(Legacy private tracker only - does not gate the recorded hash/version verdict.)')
 
     # ⚠ THE PROPERTY IS VERIFIED AGAINST THE SCRIPTS AND THE REGISTRY IT COMPARES THEM TO. Those two
     # are its inputs: change a build script or `register.md` and "the fingerprints match" must be
@@ -2062,9 +2098,6 @@ def main():
     if hash_mismatches:
         print(f'HASH MISMATCHES: {", ".join(hash_mismatches)}')
         print('Version bump + rebuild + hash update required.')
-    if ar_stale:
-        print(f'AR STALE: {", ".join(ar_stale)}')
-        print('Run: python %s --mark-remediated <KEY>' % SELF)
     # ⚠ TWO DIFFERENT FAILURES, TWO DIFFERENT REMEDIES (`HDRVER-1`). A STALE header is a wrong
     # answer and the fix is to edit one line. A NOT-FOUND header is NO answer: this checker walked
     # the file and could not locate a title line above its changelog, so it was measuring nothing
