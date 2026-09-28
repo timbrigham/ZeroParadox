@@ -1,7 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
 Version 1.14 | September 2026
-v1.14: PRIOR ART (PA-4, 2026-09-28): the Section IV 'Open contribution point' box listed Pataraia's fixed-point theorem as machinery still missing and did not name Mathlib's Bourbaki-Witt. Classically, both Pataraia statements Taylor uses (least fixed point; Pataraia induction, Cor. 119) follow from Bourbaki-Witt, derived in ZeroParadox/Order/PataraiaFromBourbakiWitt.lean (dcpo_exists_least_fixedPoint, pataraia_induction; footprint carries Classical.choice). The box now says so, and names what remains missing: Pataraia's intuitionistic proof (Taylor Thm 118) and the General Recursion Theorem itself.
+v1.14: PRIOR ART (PA-4, 2026-09-28): the Section IV 'Open contribution point' box listed Pataraia's fixed-point theorem as machinery still missing and did not name Mathlib's Bourbaki-Witt. Classically, both Pataraia statements Taylor uses (least fixed point; Pataraia induction, Cor. 119) follow from Bourbaki-Witt, derived in ZeroParadox/Order/PataraiaFromBourbakiWitt.lean (dcpo_exists_least_fixedPoint, pataraia_induction; footprint carries Classical.choice). The box now says so, and names what remains missing: Pataraia's intuitionistic proof (Taylor Thm 118) and the General Recursion Theorem itself. The Section IV body's dated Mathlib survey gains a pointer to that classical route, and the endnote lists the new Lean source, its sorry-free date moved to September 2026 so it holds for every listed file.
 v1.13: ATTRIBUTION (PA-1, prior-art gate 2026-09-15): the prior-art paragraph credited Lawvere (1969) with unifying 'Cantor's diagonal, Russell's paradox, Godel's incompleteness lemma, and the recursion theorem'. Lawvere's paper does not treat the recursion theorem: his own introduction names Cantor, Russell, Godel and TARSKI, and the reprint contains no occurrence of Kleene, Rogers or 'recursion'. Turing's halting argument and the recursion theorem are Yanofsky (2003), who proves the latter as his Theorem 5. Lawvere's list now ends at Tarski's undefinability theorem and Yanofsky's sentence carries the other two, matching README.md and CLAIMS.md. Recurrence of ATTR-2, whose 2026-08-29 closure claimed a corpus-wide sweep found no further instances; that claim is retracted. This site was invisible to it because it never names Kleene.
 v1.12: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim ruling, 2026-09-15): the 'What the Zero Paradox adds' box still said 'What MC-1 carries is family membership, proved per domain'; it now names the proved faces as the preamble and Section II do (Quine atom, 2-adic and categorical; the Kleene face carried as a requirement).
 v1.11: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the preamble said the faces' shared membership in MC-1 'is proved per domain', including the Kleene quine; the Kleene face is carried as a KleeneStructure requirement, its witness computability_face_fixedPoint a fixed point of a computable map not tied to bottom, so the preamble and Section II's verdict now name which faces are proved. The preamble's missing space after 'framework:' is restored.
@@ -266,7 +266,9 @@ def build():
         '<i>coalgebra</i> in the broken-pullback sense, with the General Recursion Theorem '
         '<i>and its converse</i> &#8212; is deliberately <i>not</i> formalized here. Searched '
         'as of August 2026, the pinned Mathlib carries neither Pataraia\'s fixed-point theorem '
-        'nor a recursion theorem for well-founded coalgebras; the <b>next-time operator</b> on '
+        'nor a recursion theorem for well-founded coalgebras (classically, both of Pataraia\'s '
+        'statements follow from Bourbaki&#8211;Witt; see the contribution point below); the '
+        '<b>next-time operator</b> on '
         'subobject lattices is no longer missing, having since been built in this project '
         '(ZeroParadox/Category/NextTimeCategorical.lean), though it is not upstreamed. The '
         'depth result is '
@@ -301,7 +303,8 @@ def build():
         'Lawvere face-split and the well-foundedness boundary &#8212; each fenced as to exactly '
         'what it proves. Lean sources: ZeroParadox/Category/Lawvere.lean, '
         'ZeroParadox/Multihomed/Boundary.lean, ZeroParadox/Multihomed/BoundaryBridge.lean, '
-        'all sorry-free in Lean 4 as of June 2026.',
+        'ZeroParadox/Order/PataraiaFromBourbakiWitt.lean, '
+        'all sorry-free in Lean 4 as of September 2026.',
         S['endnote']))
 
     print(f'[build_zpj_keystone_addendum] Assembling document ({len(E)} elements)...')
