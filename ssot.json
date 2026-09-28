@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1749,
-        "files": 148
+        "declarations": 1751,
+        "files": 149
       },
       "entries": [
         {
@@ -28772,6 +28772,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6f9653a2-02f3-43a4-a57f-22fcdfd429fc",
+          "new": {
+            "file": "ZeroParadox/Order/PataraiaFromBourbakiWitt.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_induction",
+            "short": "pataraia_induction"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PataraiaFromBourbakiWitt.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_induction",
+            "short": "pataraia_induction",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New declaration: Pataraia induction (Taylor Cor. 119), classically from Mathlib Bourbaki-Witt (2026-09-28)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6fbafa81-314a-4b74-9b21-f8894c2fc753",
           "new": {
@@ -37862,6 +37899,43 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9611ec49-ecec-4877-93d0-6a18d63180e2",
+          "new": {
+            "file": "ZeroParadox/Order/PataraiaFromBourbakiWitt.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dcpo_exists_least_fixedPoint",
+            "short": "dcpo_exists_least_fixedPoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PataraiaFromBourbakiWitt.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dcpo_exists_least_fixedPoint",
+            "short": "dcpo_exists_least_fixedPoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New declaration: Pataraia's statement from Mathlib Bourbaki-Witt, classically (PA-4, 2026-09-28)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
