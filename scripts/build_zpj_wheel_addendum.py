@@ -1,6 +1,17 @@
 """
 Zero Paradox — ZP-J Wheel Addendum: The Wheel of Fractions is a Wheel
-Version 1.7 | September 2026
+Version 1.8 | September 2026
+v1.8: ROUND-6 OUTSTANDING CLOSEOUT, items 7c, 7d (corpus-zpj-v2.8-round6-outstanding.md EXECUTION
+SPEC 2026-09-28; item 5c explicitly DROPPED and left untouched — see that spec's note that the
+"non-trivial" qualifier was already tried at v1.5, found vacuous, and deliberately removed at v1.6).
+7c (degenerate-overlap remark): named the standard term for the one-element case, Bergstra,
+Hirshfeld and Tucker's "the trivial meadow" (arXiv:0901.0823, pp. 7, 12), at first mention. 7d
+(preamble): "which of the two standard ways of totalising division" implicitly claimed
+exhaustiveness; Bergstra & Tucker's WADT paper (LNCS 12669, published 2020) places wheels and
+meadows in one signature alongside a third totalisation, so the preamble now says which
+totalisation the porthole gives rise to without claiming there are only two, and compares the two
+most directly relevant. The WADT citation is added to the Sources list (already filed in
+.claude-local/papers/).
 v1.7: THE DEGENERATE OVERLAP IS RESTORED, AND THE TERM-LEVEL IDENTIFICATION WITH IT (two-pole audit, 2026-09-13, Tim's call). v1.6 deleted the sentence "the one overlap is degenerate, and is worth stating exactly rather than denying" together with the false "never the reverse", although 43116ba had recorded the decision that the overlap is stated rather than denied. Both charts are now on the page: beyond one element no carrier is a wheel whose /0 is 0 (Wheel.lean section V, by its binders), and the one-element algebra is both a wheel with infinity = bottom and a model of the meadow equations (a new rfl example in the same section, with Ref and Ril checked at arXiv:0901.0823 p. 2; the separation-axiom quote is the one v1.5 already used, 1406.6878 section 1 p. 2). The remark's "no pair of new elements available to identify" was element-level only; at the level of terms 0^-1 and 0*0^-1 both evaluate to 0, so the meadow does equate the two terms a wheel keeps apart.
 v1.6: THE MEADOW REMARK'S IMPLICATION IS DELETED, NOT RESTATED. Five successive versions tried
       to state a SCOPED implication in unscoped prose and all five failed: v1.0-1.3 "a wheel in
@@ -73,7 +84,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -126,8 +137,10 @@ def build():
         'reciprocal /x, so /0 becomes a defined first-class element rather than an error. '
         'The two elements this produces &#8212; &#8734; = /0 (the reciprocal of zero) and '
         '&#8869; = 0&#183;/0 (an absorbing "undefined" element) &#8212; are what distinguish '
-        'a wheel from a field. ZP-J Self-Reference left open which of the two standard ways '
-        'of totalising division the Zero Paradox porthole gives rise to: a <b>wheel</b>, which '
+        'a wheel from a field. ZP-J Self-Reference left open which way of totalising division '
+        'the Zero Paradox porthole gives rise to &#8212; Bergstra &amp; Tucker\'s WADT 2020 paper '
+        'places wheels and meadows in one signature alongside a third totalisation; this addendum '
+        'compares the two most directly relevant to the porthole: a <b>wheel</b>, which '
         'adjoins &#8734; and &#8869; as two distinct new elements, or a <b>meadow</b> (Bergstra '
         '&amp; Tucker), which adjoins nothing at all and instead declares 0<sup>&#8722;1</sup> = 0, '
         'staying inside the original number system. This addendum settles that question.'))
@@ -316,8 +329,9 @@ def build():
             'meadow are carried as machine-checked <i>example</i>s in '
             'ZeroParadox/Algebra/Wheel.lean §V, with controls showing both hypotheses are '
             'load-bearing. The statements are scoped there by their binders, which is why they '
-            'are cited rather than restated here. The one overlap is degenerate, and it is stated '
-            'rather than denied: the one-element algebra is a wheel in which &#8734; = &#8869; and also '
+            'are cited rather than restated here. The one overlap is degenerate &#8212; Bergstra, '
+            'Hirshfeld and Tucker\'s own term is <i>the trivial meadow</i> (pp. 7, 12) &#8212; and it is '
+            'stated rather than denied: the one-element algebra is a wheel in which &#8734; = &#8869; and also '
             'satisfies the meadow equations; Bergstra and Ponse "do not require a meadow to satisfy the '
             'separation axiom 0 &#8800; 1" (arXiv:1406.6878, &#167;1, p. 2). Both facts are examples in the '
             'same section. Searched 2026-09-13 over the sources listed '
@@ -327,7 +341,9 @@ def build():
             'equational specification of division", arXiv:0901.0823 (abstract); J. A. Bergstra '
             'and A. Ponse, "Division by Zero in Common Meadows", arXiv:1406.6878v4, §1 (p. 2) '
             'and §4 (p. 14). The concept originates with J. A. Bergstra and J. V. Tucker, '
-            '"The rational numbers as an abstract data type", JACM 54(2), 2007.',
+            '"The rational numbers as an abstract data type", JACM 54(2), 2007. J. A. Bergstra '
+            'and J. V. Tucker, "The Wheel of Rational Numbers as an Abstract Data Type", WADT '
+            '2020, LNCS 12669.',
         ]
     ))
     E.append(sp(4))
