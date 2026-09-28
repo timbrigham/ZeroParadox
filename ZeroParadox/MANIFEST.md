@@ -30,6 +30,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Order/LeastFixedPoint.lean` - The μ abstraction: least fixed point reached from a seed (the ceiling analogue of `AbstractSelfApp`)
   - ride-along docs: `ZeroParadox/Order/LeastFixedPoint.md` - The schema, its three faces, and why the seed is a role rather than an origin
 - `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean` - Pataraia's statement from Bourbaki–Witt, classically
+  - ride-along docs: `ZeroParadox/Order/PataraiaFromBourbakiWitt.md` - Prior art for the classical route, and where the choice-free proofs are formalized
 - `ZeroParadox/Order/PerronCapstone.lean` - Capstone: Perron–Frobenius for finite stochastic operators
 - `ZeroParadox/Order/PowerSet.lean` - ZP-H Extension: Power Set Lattice as Structural Floor Witness
 - `ZeroParadox/Order/Snap.lean` - ZP-E: Bridge Document
