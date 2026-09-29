@@ -14,8 +14,8 @@ project as well as Mathlib as a whole.
 ---
 **PROBE.** The snap ⊥→ε₀ as the crossing of the well-foundedness boundary, in two registers, bundled by `snap_boundary_two_registers` below. **NOT the full Taylor statement** — registers, citations and which theorem carries which direction: `ZeroParadox/Multihomed/BoundaryBridge.md`.
 Not located in the pinned Mathlib as of 2026-08-12 (environment sweep over names and types):
-Pataraia's fixed-point theorem — `Mathlib/Order/BourbakiWitt.lean` is NOT a substitute for its intuitionistic proof; classically, the derivation in `dcpo_exists_least_fixedPoint`
-(`ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`) obtains its statement from it — and the General Recursion Theorem itself. The **next-time
+Pataraia's fixed-point theorem — proved in this corpus with no axioms, `pataraia_least_prefixedPoint`
+(`ZeroParadox/Order/PataraiaChoiceFree.lean`) — and the General Recursion Theorem itself. The **next-time
 operator is no longer open** — `ZeroParadox/Category/NextTimeCategorical.lean` builds it (`nextTimeCat`); read it before re-deriving one.
 -/
 

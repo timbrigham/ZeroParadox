@@ -11,26 +11,28 @@ set_option maxHeartbeats 400000
 
 Mathlib runs on classical logic by default, choice included. Working inside that default, the two
 things Taylor needs from Pataraia, the least fixed point and the induction principle that goes with
-it, aren't actually missing: both fall out of Bourbaki–Witt, which Mathlib already has. That route
-is textbook, and this file is the adapter that shows it works in Lean. It doesn't get rid of choice,
-it uses it like everything else built on that default. Pataraia's own proof needs neither choice nor
-excluded middle, and it has been formalized in Agda; we didn't find a Lean port as of September
-2026. I defer to my AI assistant regarding the specifics of how the internals work.
+it, aren't actually missing: both fall out of Bourbaki–Witt, which Mathlib already has, and this
+file is the adapter that shows it works in Lean. It uses choice like everything else built on that
+default, and that is a fact about this route, not about the theorem. Pataraia's own proof needs
+neither choice nor excluded middle, and it has been formalized in Agda. We finally got a port of it
+working in Lean, in PataraiaChoiceFree.lean, with no axioms at all. I defer to my AI assistant
+regarding the specifics of how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
 Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`) has a least
 fixed point (Taylor Thm 118), in every set holding `⊥` and closed under `f` and directed joins
-(Pataraia induction, Cor. 119). Bourbaki–Witt plus classical logic ⇒ both STATEMENTS (a standard
-route), not Pataraia's intuitionistic proof; prior art: `ZeroParadox/Order/PataraiaFromBourbakiWitt.md`.
+(Pataraia induction, Cor. 119). Bourbaki–Witt plus classical logic ⇒ both STATEMENTS here; the
+no-axiom proof is `ZeroParadox/Order/PataraiaChoiceFree.lean`; prior art in the ride-along `.md`.
 -/
 
 namespace ZeroParadox
 
 /-- `Statement:` for `[CompletePartialOrder α]` and monotone `f`, some `y` is a fixed point of `f`
-    lying below every fixed point. Classically standard (Adámek–Milius–Moss, CALCO 2021, Thm 2.1);
+    lying below every fixed point: Pataraia's theorem (Adámek–Milius–Moss, CALCO 2021, Thm 2.4);
     the citations are in `ZeroParadox/Order/PataraiaFromBourbakiWitt.md`. Footprint
-    `[propext, Classical.choice, Quot.sound]`, which measures this proof, not the principle. -/
+    `[propext, Classical.choice, Quot.sound]` measures this proof, not the principle, which
+    `pataraia_least_prefixedPoint` gives with no axioms. -/
 theorem dcpo_exists_least_fixedPoint {α : Type*} [CompletePartialOrder α] (f : α →o α) :
     ∃ y, f y = y ∧ ∀ p, f p = p → y ≤ p := by
   -- `S`: post-fixed points of `f` lying below every fixed point.
@@ -64,7 +66,9 @@ theorem dcpo_exists_least_fixedPoint {α : Type*} [CompletePartialOrder α] (f :
 
 /-- `Statement:` Pataraia induction (Taylor Cor. 119; Adámek–Milius–Moss, CALCO 2021, Cor 2.6): if
     `U` contains `⊥` and is closed under `f` and under joins of nonempty directed subsets, then `U`
-    contains every least fixed point `y` of `f`. Footprint `[propext, Classical.choice, Quot.sound]` measures this proof, not the principle. -/
+    contains every least fixed point `y` of `f`. Footprint `[propext, Classical.choice, Quot.sound]`
+    measures this proof, not the principle: `pataraia_induction_constructive` has this signature
+    and no axioms. -/
 theorem pataraia_induction {α : Type*} [CompletePartialOrder α] (f : α →o α) (U : Set α)
     (hbot : ⊥ ∈ U) (hf : ∀ x ∈ U, f x ∈ U)
     (hsup : ∀ d ⊆ U, d.Nonempty → DirectedOn (· ≤ ·) d → sSup d ∈ U)
