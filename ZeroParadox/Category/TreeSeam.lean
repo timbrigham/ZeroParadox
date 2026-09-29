@@ -64,6 +64,16 @@ theorem hilbert_bottom_isZero : Limits.IsZero (fD_functor.obj 0) := by
     exact Fin.elim0 i⟩
   exact ModuleCat.isZero_of_subsingleton (ModuleCat.of ℂ (StateSpace 0))
 
+-- `Statement:` that zero object is NOT a strict initial object: the zero map from `ℂ` into it is not
+-- an isomorphism, since an iso would make `ℂ` a zero object too.
+example : ¬ ∀ (X : ModuleCat ℂ) (f : X ⟶ fD_functor.obj 0), IsIso f := by
+  intro h
+  haveI := h (ModuleCat.of ℂ ℂ) 0
+  have hz : Limits.IsZero (ModuleCat.of ℂ ℂ) :=
+    hilbert_bottom_isZero.of_iso (asIso (0 : ModuleCat.of ℂ ℂ ⟶ fD_functor.obj 0))
+  haveI := ModuleCat.subsingleton_of_isZero hz
+  exact one_ne_zero (Subsingleton.elim (1 : ℂ) 0)
+
 /-- #4 is strictly on the μ side: the Kleisli bottom `Fin 0` is initial but **not terminal** — a
     terminal object would need a morphism into it from `fC_functor.obj 1`, but `fC_no_return` proves
     that hom-set is empty (the snap's irreversibility). -/

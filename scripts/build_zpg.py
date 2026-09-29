@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.15 | June 2026
+Version 1.16 | September 2026
+v1.16: Remark R-AX scoped — AX-G2 (not AX-G1) is what holds in many categories; the axioms hold in the four ℕ-indexed depth categories, and AX-G1 fails in TopCat and ModuleCat ℂ, whose bottom is a zero object (initial, not strict).
 v1.15: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.14: R-AX remark — named AX-G2 as the standard strict-initial-object property (Carboni-Lack-Walters 1993) and noted AX-G1+AX-G2 = a non-trivial strict initial; prior-art positioning, paired with the CLAIMS Convergence section.
 v1.12: Rendered version refs removed from BA-G1 compatibility remark ("ZP-G v1.0", "In v1.1") — C1 sweep, no version refs in rendered PDF content.
@@ -27,7 +28,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -222,7 +223,7 @@ def build():
         'Remark R-AX — On the Non-Triviality of AX-G1 and AX-G2',
         'Status: Remark',
         [
-            'AX-G1 and AX-G2 are satisfied by many categories — they are structural conditions, not exotic ones. '
+            'AX-G2 holds in many categories — it is a structural condition, not an exotic one. '
             'AX-G2 is the standard notion of a <i>strict initial object</i> (Carboni, Lack and Walters, 1993): '
             'an initial object into which every morphism is an isomorphism. Strict initial objects are the norm '
             'in well-behaved categories — the initial object of any topos, extensive category, or cartesian '
@@ -236,7 +237,10 @@ def build():
             'four concrete domain functors (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>), '
             'each of which maps the natural number depth hierarchy into its domain category and preserves '
             'the initial object. The axioms are not postulated in isolation; they are shown to hold in each '
-            'of the four domain categories that constitute the framework\'s subject matter. The categorical '
+            'of four ℕ-indexed depth categories, one per domain (ZP-H). They do not all hold in the domains\' '
+            'own Mathlib categories: TopCat and ModuleCat ℂ each have a terminal object, so AX-G1 fails there, '
+            'and ModuleCat ℂ\'s bottom is a zero object that every object maps into, so it is initial but not '
+            'strict. The categorical '
             'layer generalises a phenomenon that is independently grounded in four distinct mathematical domains.',
         ]
     ))
