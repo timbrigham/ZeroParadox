@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.17 | September 2026
+Version 1.18 | September 2026
+v1.18: SCOPE OF "MACHINE-CHECKED" (Tim rulings, 2026-09-29): the Section II heading now reads "The Lawvere Face-Split (Set face machine-checked; computability face cited)", and the Section II verdict marks the effective-category instance as cited (Bauer 2017), with Lean proving Rogers' theorem classically; matching CLAIMS.md and README.md. Every box is now kept on one page (a KeepTogether on each, including "What the Zero Paradox adds"), so no box header repeats across a page break.
 v1.17: GATE ROUND 1 ON v1.16 (Tim rulings, 2026-09-29): the Section IV box no longer reads as crediting Bourbaki-Witt to Markowsky; it says the classical route through Mathlib's Bourbaki-Witt theorem is kept, is Markowsky's for the least fixed point (Algebra Universalis 6 (1976), Thm 9(i), proved there without choice), and that the same adapter gives the induction, with the Classical.choice footprint attached to these Lean proofs. The Bauer citation now carries its venue (Tbilisi Math. J. 10(3), 2017) and drops the preprint page number, and says he works in synthetic computability, whose axioms hold in Hyland's effective topos. "Genuine instance" is scoped: the Section II box heading says the instance is cited and that Lean proves Rogers' theorem classically, a new sentence says the Lawvere-form derivation lives inside synthetic computability, where excluded middle is not assumed, and the introduction says the Set face is machine-checked and the computability face cited. The endnote's Lean sources add ZeroParadox/Category/DiagonalWitness.lean, which the Section II box points at. The "Honest scope" box and the endnote are each kept on one page.
 v1.16: PRIOR ART AND SCOPE (PA-5 and the Pataraia arc's carried ordinaries, 2026-09-29): the Section II "In computability: a genuine instance" box cited only Mathlib; it now credits the effective-category setting to Hyland (The effective topos, 1982) and Cockett-Hofstra (Introduction to Turing categories, 2008), as ZeroParadox/Category/DiagonalWitness.lean does, and Bauer (On fixed-point theorems in synthetic computability), who derives the Kleene-Rogers Recursion Theorem from a Lawvere-form fixed-point theorem for multi-valued maps in Hyland's effective topos (Thm 5.2, Cor 5.3). Section IV: the August survey method now reads "by declaration name and type", matching the measurement record in ZeroParadox/Multihomed/BoundaryBridge.md (was "by name and vocabulary"); the box credits the classical route to Markowsky 1976, Thm 9(i); and "the first full published proof of both" now says which result is which (Pataraia's theorem, Cor 2.1; the induction, the second clause of Thm 2.2, stated for sets of inflationary maps).
 v1.15: PATARAIA, CHOICE-FREE (2026-09-28): ZeroParadox/Order/PataraiaChoiceFree.lean proves Pataraia's theorem (a fixed point below every pre-fixed point; pataraia_least_prefixedPoint) and Pataraia induction (pataraia_induction_constructive) with no axioms, ported from TypeTopology Various.Pataraia-Taylor. The Section IV box no longer says a Lean port was not located or that porting would take Classical.choice off the fixed-point step; it names the new file, credits TypeTopology's Various.Pataraia (Escardo) and Various.Pataraia-Taylor (Escardo and de Jong) and Escardo 2003 (Cor 2.1; Thm 2.2, which states the induction for sets of inflationary maps) as the first full published proof, keeps the classical Bourbaki-Witt adapter as a second route, re-scopes the negative to a dated survey ("Neither result was located in the pinned Mathlib as of September 2026 (searched by statement shape and by name)"), and drops the "route is standard" sentence (Bauer-Lumsdaine Prop 3.4 gives a fixed point above every post-fixed point, not the least; the Bourbaki-Witt route to the least fixed point is credited to Markowsky 1976, Thm 9, in ZeroParadox/Order/PataraiaFromBourbakiWitt.md). Round-2 ordinary findings folded in: the box's upgrade is the General Recursion Theorem AND ITS CONVERSE, matching the Section IV body; the induction principle is Taylor's own Cor. 119; the next-time operator is "built in this project" (it predates the August survey, so "having since been built" was chronologically false); "functors on vector spaces, whose category has neither". The endnote lists the new Lean source.
@@ -31,7 +32,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -114,7 +115,7 @@ def build():
         'Logic 9(3), 2003) restated this in plain set-and-function terms across logic and '
         'computation, adding Turing\'s halting argument and the recursion theorem. '
         'Those faces are prior art, cited and not claimed.'))
-    E.append(remark_box(
+    E.append(KeepTogether(remark_box(
         'What the Zero Paradox adds (and what it does not)',
         [
             'Adds: candidate faces outside the classical scheme &#8212; the 2-adic valuation '
@@ -127,14 +128,14 @@ def build():
             'equivalence). What MC-1 carries is family membership, proved per domain for the Quine '
             'atom, 2-adic and categorical faces (the Kleene face carried as a requirement).',
         ]
-    ))
+    )))
     E.append(sp(6))
 
     # ── Section II: The Lawvere face-split ─────────────────────────────────────
     print('[build_zpj_keystone_addendum] Building Section II...')
     E += [
         hr(),
-        Paragraph('Section II: The Lawvere Face-Split (machine-checked)', S['h1']),
+        Paragraph('Section II: The Lawvere Face-Split (Set face machine-checked; computability face cited)', S['h1']),
         hr(),
     ]
     E.append(body(
@@ -144,7 +145,7 @@ def build():
         'The keystone\'s fixed points are posited (the self-application has &#8869; as its '
         'fixed point); Lawvere\'s are <i>derived</i> from a surjection. So the question is '
         'whether each face supplies that surjection. The verdict is face-dependent.'))
-    E.append(result_box(
+    E.append(KeepTogether(result_box(
         'In Set: no face is a Lawvere instance (Lawvere.lean)',
         [
             'For any nontrivial type, a Lawvere witness cannot exist: it would force every '
@@ -158,9 +159,9 @@ def build():
             'at this face.',
             'fixedPoint_of_witness, no_witness_of_fixedPointFree: fully axiom-free.',
         ]
-    ))
+    )))
     E.append(sp(4))
-    E.append(result_box(
+    E.append(KeepTogether(result_box(
         'In computability: a genuine instance (cited; Lean proves Rogers\' theorem classically)',
         [
             'computability_face_fixedPoint &#8212; every <i>computable</i> self-map on codes '
@@ -183,12 +184,12 @@ def build():
             'Rogers\' theorem; the Lawvere-form derivation itself lives inside synthetic '
             'computability, where excluded middle is not assumed.',
         ]
-    ))
+    )))
     E.append(sp(4))
     E.append(body(
         '<b>The verdict, plainly:</b> the test is category-relative. In Set no face is a '
         'Lawvere instance; in the effective (computability) category the recursion theorem is '
-        'a genuine one. The keystone therefore unifies a <i>shape</i> (the diagonal), not a '
+        'a genuine one (cited: Bauer 2017; Lean proves Rogers\' theorem classically). The keystone therefore unifies a <i>shape</i> (the diagonal), not a '
         'single mechanism. What MC-1 carries is family membership, proved per domain for the Quine '
         'atom, 2-adic and categorical faces (the Kleene face carried as a requirement), with the '
         'choice of criteria the design commitment.'))
@@ -226,7 +227,7 @@ def build():
         'the well-foundedness boundary: from the non-well-founded floor (&#8869;, the '
         'self-loop, where recursion cannot reach) to the well-founded ascent (the &#949;<sub>0</sub> '
         'ordinal tower, recursively generated). The Zero Paradox formalizes this at two levels.'))
-    E.append(result_box(
+    E.append(KeepTogether(result_box(
         'Relation level (Boundary.lean)',
         [
             'floor_not_wellFounded &#8212; the self-application floor is non-well-founded '
@@ -236,9 +237,9 @@ def build():
             'non-accessible point; every post-snap state is accessible. The snap exits the '
             'unique non-well-founded point into the well-founded ascent.',
         ]
-    ))
+    )))
     E.append(sp(4))
-    E.append(result_box(
+    E.append(KeepTogether(result_box(
         'Categorical bridge (BoundaryBridge.lean)',
         [
             'snap_boundary_two_registers &#8212; the crossing witnessed in two registers at '
@@ -246,7 +247,7 @@ def build():
             'fork (categorical_fork_strict: the initial algebra empty, the final coalgebra '
             'inhabited &#8212; the self-referential element lives in &#957;, not &#956;).',
         ]
-    ))
+    )))
     E.append(sp(4))
     E.append(KeepTogether(remark_box(
         'Honest scope &#8212; what is proved, and what is committed',
@@ -290,7 +291,7 @@ def build():
         'therefore cited (Taylor; Ad&#225;mek&#8211;Milius&#8211;Moss), not re-proved. What is '
         'given here is the relation-level boundary and the QPF bridge: a best effort that names '
         'its own boundary.'))
-    E.append(remark_box(
+    E.append(KeepTogether(remark_box(
         'Open contribution point',
         [
             'Pataraia\'s fixed-point theorem (Taylor Thm 118: a monotone self-map of a '
@@ -318,7 +319,7 @@ def build():
             'reusable Lean contribution independent of the Zero Paradox. Contributions are welcome, '
             'to this project and to Mathlib as a whole; the precise missing pieces are named above.',
         ]
-    ))
+    )))
     E.append(sp(6))
 
     E.append(KeepTogether(Paragraph(
