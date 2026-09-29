@@ -3,17 +3,10 @@ import ZeroParadox.Category.Category
 /-!
 # B4 (pipeline): AX-G2 is derivable from strict-initiality (a ZP-G posit collapses)
 
-Experiment B4 (T2 reduce-the-posit): `ZPCategory.ax_g2` (source asymmetry:
-`IsEmpty (X ≅ 0) → IsEmpty (X ⟶ 0)`) is posited. Its own docstring claims it "is the standard notion of a
-strict initial object (Carboni–Lack–Walters 1993): every morphism into 0 is an iso." This experiment tests
-whether that prose claim is a THEOREM — i.e. whether AX-G2 reduces to strict-initiality with no extra
-hypothesis.
-
-**Result: CONFIRMED.** AX-G2 derives from strict-initiality alone (no non-terminal/balancedness needed).
-If every morphism into `zero` is an iso, then a morphism `f : X → zero` makes `X ≅ zero`; contrapositive
-is exactly AX-G2. So ZP-G's AX-G2 is NOT an independent commitment beyond the standard strict-initial
-notion it cites — the docstring claim is a theorem. (The could-fail outcome — "needs more than
-strict-initial" — did not occur.)
+`ax_g2_from_strict_initial`: if every morphism into `zero` is an isomorphism (strict initiality,
+Carboni–Lack–Walters), the AX-G2 shape `IsEmpty (X ≅ zero) → IsEmpty (X ⟶ zero)` follows, with no
+further hypothesis. The converse needs `zero` initial; it is the `example` below, not a declaration, and
+a named scratch copy of the same proof measured `[propext, Classical.choice, Quot.sound]` (2026-09-29).
 
 ## Engineer's Take
 
@@ -37,6 +30,17 @@ theorem ax_g2_from_strict_initial {C : Type*} [Category C] (zero : C)
   intro f
   haveI := hstrict X f
   exact hne.false (asIso f)
+
+-- `Statement:` the converse, given initiality: AX-G2 at an initial `zero` makes every morphism into
+-- `zero` an isomorphism. With the theorem above, the two are equivalent at an initial object.
+example {C : Type*} [Category C] (zero : C) (hi : Limits.IsInitial zero)
+    (hg2 : ∀ X : C, IsEmpty (X ≅ zero) → IsEmpty (X ⟶ zero)) (X : C) (f : X ⟶ zero) : IsIso f := by
+  classical
+  by_cases h : Nonempty (X ≅ zero)
+  · obtain ⟨e⟩ := h
+    obtain rfl : f = e.hom := (hi.ofIso e.symm).hom_ext _ _
+    infer_instance
+  · exact ((hg2 X ⟨fun e => h ⟨e⟩⟩).false f).elim
 
 end ZeroParadox
 

@@ -319,6 +319,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Category/SeamLimColim.lean` - The seam diagram-level coincidence (lim = colim at the zero object)
 - `ZeroParadox/Category/SeamNotColimit.lean` - The seam is NOT a colimit (coproduct) apex over the μ-bottoms
 - `ZeroParadox/Category/SeamUniqueness.lean` - Seam uniqueness extended: is any OTHER bottom a zero object?
+  - ride-along docs: `ZeroParadox/Category/SeamUniqueness.md` - Which named bottom is a zero object: the per-bottom obstructions and the fence
 - `ZeroParadox/Category/TopNoGo.lean` - In TopCat the empty space is not isomorphic to the one-point space
 - `ZeroParadox/Category/TreeSeam.lean` - ZP-H tree — the #5 straddle resolved: the Hilbert bottom is the μ=ν seam
 - `ZeroParadox/Category/WellFoundedCoalgebra.lean` - The next time operator: μ/ν as an INTRINSIC property, not a construction

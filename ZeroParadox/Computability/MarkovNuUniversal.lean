@@ -77,8 +77,8 @@ def IsStationaryPMF (f : Fin n → PMF (Fin n)) (μ : PMF (Fin n)) : Prop := μ.
 /-! ## GO half (holds): the stationary set is inhabited -/
 
 /-- **GO half — existence.** Every finite stochastic action has at least one stationary
-    distribution. Re-export of `PerronFrobenius.exists_stationary`. This is the only half of the
-    pre-registered GO conjecture that survives: inhabited, but (see below) **not** subsingleton. -/
+    distribution. Re-export of `exists_stationary` (`ZeroParadox/Reals/PerronFrobenius.lean`). The
+    only half of the pre-registered GO conjecture that survives: inhabited, but **not** subsingleton. -/
 theorem markov_node_stationary_inhabited [Nonempty (Fin n)] (f : Fin n → PMF (Fin n)) :
     ∃ μ : PMF (Fin n), IsStationaryPMF f μ :=
   ZeroParadox.exists_stationary f

@@ -3,6 +3,7 @@ import Mathlib.CategoryTheory.Limits.Shapes.Terminal
 import Mathlib.CategoryTheory.Iso
 import Mathlib.CategoryTheory.Category.Preorder
 import Mathlib.CategoryTheory.Limits.Preorder
+import Mathlib.CategoryTheory.Limits.Shapes.StrictInitial
 import Mathlib.Tactic
 
 /-!
@@ -64,6 +65,12 @@ class ZPCategory (C : Type*) [Category C] where
   zpIsInitial : IsInitial zpInitial
   ax_g1_no_terminal : ∀ t : C, IsEmpty (IsTerminal t)
   ax_g2 : ∀ (X : C), IsEmpty (X ≅ zpInitial) → IsEmpty (X ⟶ zpInitial)
+
+-- Statement: Mathlib's strict-initial class: every morphism into an initial object is an iso.
+-- CITED, not ZP-proved: the library home of the notion AX-G2 is paired with above.
+#check @CategoryTheory.Limits.HasStrictInitialObjects
+-- Statement: its accessor: under that class, any `f : A ⟶ I` with `I` initial is an iso.
+#check @CategoryTheory.Limits.IsInitial.isIso_to
 
 /-! ## I-b. Non-members of `ZPCategory`, proved
 

@@ -6,13 +6,12 @@ set_option maxHeartbeats 400000
 /-!
 # Deep cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
 
-The first genuinely deep dictionary entry that crosses a domain boundary. It composes the deep stochastic-side
-existence result (`PerronFrobenius.exists_stationary`, cold-audited SOUND) with the info→Hilbert transport
-(`FinStoch.stationary_transports_to_unit_eigenvector`) to conclude: the linearized transfer operator on the
-Hilbert side has a NONZERO fixed vector (a unit eigenvector). The depth is inherited from existence — the
-Hilbert-side eigenvector cannot be produced without the stochastic existence theorem (the trivial all-ones
-vector is only the LEFT eigenvector; the right one is the stationary distribution). So existence on the
-stochastic side proves existence on the Hilbert side, through the bridge.
+Composes the stochastic-side existence theorem `exists_stationary` with the info→Hilbert transport
+`stationary_transports_to_unit_eigenvector`: the linearized transfer operator has a NONZERO fixed vector
+(a unit eigenvector). A nonzero fixed vector of the transfer matrix `P f` alone needs no stochastic
+existence: the all-ones vector is a LEFT fixed vector, so `P f - 1` is singular (the `example` below).
+What `exists_stationary` adds is a fixed vector that is a probability distribution:
+`perron_frobenius_finite` (`ZeroParadox/Order/PerronCapstone.lean`).
 
 ## Engineer's Take
 This file is one of a series of iterative attempts on this branch to build a map of how the various
@@ -25,7 +24,8 @@ namespace ZeroParadox
 
 open ZeroParadox ZeroParadox
 
-/-- **Deep cross-domain existence.** For any finite stochastic kernel `f`, the linearized transfer operator
+/-- **Deep cross-domain existence.** For any finite stochastic kernel `f` on a nonempty state space
+    (`[Nonempty (Fin n)]`; at `n = 0` no vector is nonzero), the linearized transfer operator
     `linMap f` has a nonzero fixed vector (eigenvalue `1`). Proved by transporting the stationary distribution
     (whose existence is `exists_stationary`) across the linearization. -/
 theorem transfer_operator_has_unit_eigenvector {n : ℕ} [Nonempty (Fin n)]
@@ -45,6 +45,26 @@ theorem transfer_operator_has_unit_eigenvector {n : ℕ} [Nonempty (Fin n)]
     have hh := DFunLike.congr_fun hzero i
     simpa [Finsupp.coe_equivFunOnFinite_symm] using hh
   exact (ENNReal.toReal_ne_zero.mpr ⟨hi, μ.apply_ne_top i⟩) (by exact_mod_cast hcoord)
+
+-- `Statement:` the transfer matrix `P f` has a nonzero fixed vector by linear algebra alone: the
+-- all-ones vector is killed by `(P f - 1)ᵀ`, so the determinant vanishes. `exists_stationary` is not
+-- used, and nothing here makes the vector nonnegative.
+example {n : ℕ} [Nonempty (Fin n)] (f : Fin n → PMF (Fin n)) :
+    ∃ v : Fin n → ℝ, v ≠ 0 ∧ (P f).mulVec v = v := by
+  set M : Matrix (Fin n) (Fin n) ℝ := P f - 1 with hM
+  have hT : M.transpose.mulVec (fun _ => (1 : ℝ)) = 0 := by
+    ext j
+    have hr := row_sum f j
+    simp only [Matrix.mulVec, dotProduct, Matrix.transpose_apply, mul_one, hM, Matrix.sub_apply,
+      Finset.sum_sub_distrib, Matrix.one_apply, Pi.zero_apply]
+    simp only [P, Matrix.of_apply, hr]
+    simp
+  have hdet : M.det = 0 := by
+    rw [← Matrix.det_transpose, ← Matrix.exists_mulVec_eq_zero_iff]
+    obtain ⟨i⟩ := (inferInstance : Nonempty (Fin n))
+    exact ⟨fun _ => 1, fun h => by simpa using congrFun h i, hT⟩
+  obtain ⟨v, hv, hMv⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hdet
+  exact ⟨v, hv, sub_eq_zero.mp (by simpa [hM, Matrix.sub_mulVec] using hMv)⟩
 
 end ZeroParadox
 

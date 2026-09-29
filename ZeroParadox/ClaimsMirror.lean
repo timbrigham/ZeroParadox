@@ -10,6 +10,7 @@ import ZeroParadox.Multihomed.MC1Bridge
 import ZeroParadox.Multihomed.TopNumEdge
 import ZeroParadox.Category.Category
 import ZeroParadox.Category.LinFunctor
+import ZeroParadox.Reals.PerronFrobenius
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -186,12 +187,27 @@ theorem claim_E4_info_floor (n : ℕ) :
 
 /-- Claim `Perron-info-state` (deep). Statement: "Perron–Frobenius transport across the
     information→state boundary: the stochastic transfer operator has a unit eigenvector (the
-    stationary/floor state)." Backing: `stationary_transports_to_unit_eigenvector`. -/
+    stationary/floor state)." Exact representation: GIVEN a stationary distribution `μ` (the
+    hypothesis `hμ`), its vector is fixed by `linMap f`. This transports existence from the
+    hypothesis; it does not establish it. Existence is `exists_stationary`
+    (`ZeroParadox/Reals/PerronFrobenius.lean`), composed in `transfer_operator_has_unit_eigenvector`.
+    Backing: `stationary_transports_to_unit_eigenvector`. -/
 theorem claim_Perron_info_state {n : ℕ}
     (f : Fin n → PMF (Fin n)) (μ : PMF (Fin n)) (hμ : μ.bind f = μ) :
     linMap (a := ⟨n⟩) (b := ⟨n⟩) f (Finsupp.equivFunOnFinite.symm (fun i => ((μ i).toReal : ℂ)))
       = Finsupp.equivFunOnFinite.symm (fun i => ((μ i).toReal : ℂ)) :=
   stationary_transports_to_unit_eigenvector f μ hμ
+
+-- `Statement:` existence follows only by composing with `exists_stationary`, which needs a nonempty
+-- state space; with `n = 0` there is no distribution at all, so the transport above holds vacuously.
+example {n : ℕ} [Nonempty (Fin n)] (f : Fin n → PMF (Fin n)) :
+    ∃ μ : PMF (Fin n), linMap (a := ⟨n⟩) (b := ⟨n⟩) f
+        (Finsupp.equivFunOnFinite.symm (fun i => ((μ i).toReal : ℂ)))
+      = Finsupp.equivFunOnFinite.symm (fun i => ((μ i).toReal : ℂ)) :=
+  let ⟨μ, hμ⟩ := exists_stationary f
+  ⟨μ, claim_Perron_info_state f μ hμ⟩
+example : IsEmpty (PMF (Fin 0)) :=
+  ⟨fun μ => by simpa using μ.tsum_coe⟩
 
 /-- Claim `node-computability` (proved). Statement: "In computability, ⊥ is read as the Kleene quine: in
     any KleeneStructure lattice every Quine-atom element equals ⊥ (kleene_quine_is_bot), and the quine
