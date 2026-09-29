@@ -1,5 +1,8 @@
 """
-Build ZP-G Illustrated Companion (v1.9)
+Build ZP-G Illustrated Companion (v1.10)
+v1.10: AX-G1 paragraph carries the no-terminal half (resting on ZP-A's no-top premise); "What comes
+next" scoped to what ZP-H proves: the axioms hold on four ℕ-indexed stand-in categories, and two of
+the standard categories do have a terminal object (Tim ruling, 2026-09-29).
 v1.8: category_diagram — fix overlapping text: use fixed cy=68, dh=2.2in, remove redundant internal title string.
 v1.7: vocab fix: null state → ⊥; categorical bridge → ZP-H.
 v1.6: Strip version number from companion footer.
@@ -146,7 +149,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -271,11 +274,13 @@ def build():
         'These properties are stated as two axioms within ZP-G — neither is a novel commitment. '
         'Both are grounded in structure established in prior layers.'))
     E.append(cbody(
-        '<b>AX-G1 (Initial Object):</b> The category C has an initial object, called 0. '
+        '<b>AX-G1 (Initial Object):</b> The category C has an initial object, called 0, and no terminal object. '
         'An initial object is an object with exactly one morphism to every other object — a '
-        'universal source. Every other object is "reachable" from 0 by exactly one route. '
-        'This is not a new assumption: ⊥\'s existence as the bottom element of the ZP-A semilattice '
-        'already guarantees it. ZP-G names it in categorical language.'))
+        'universal source. A terminal object would be the reverse — a universal destination, with exactly one '
+        'morphism into it from every object — and C has none. Every other object is "reachable" from 0 by exactly '
+        'one route. The initial object is not a new assumption: ⊥\'s existence as the bottom element of the ZP-A '
+        'semilattice already guarantees it. The "no terminal object" half rests on a premise of ZP-A, that the '
+        'semilattice has no top element. ZP-G names both in categorical language.'))
     E.append(cbody(
         '<b>AX-G2 (Source Asymmetry):</b> No morphism points from any non-initial object '
         'back to 0. Once you leave the initial object, you cannot return. '
@@ -347,9 +352,13 @@ def build():
 
     E.append(cbody(
         '<b>What comes next:</b> ZP-H constructs four concrete '
-        'functors from C to the four domain frameworks of the Zero Paradox, verifying that '
-        'the abstract categorical structure is faithfully realized in lattice algebra, '
-        'p-adic topology, information theory, and Hilbert space. See the ZP-H Illustrated '
+        'functors from C to the four domain frameworks of the Zero Paradox — lattice algebra, '
+        'p-adic topology, information theory, and Hilbert space. It checks both axioms on four simple '
+        'stand-in categories indexed by the natural numbers, one per domain. It also sends the p-adic, '
+        'information and Hilbert-space bottoms into their standard categories, where each lands on that '
+        'category\'s own bottom (an initial object, or in p-adic topology a limit). Two of those standard '
+        'categories do have a terminal object, so there the "no terminal object" axiom does not hold — the '
+        'axioms are verified on the stand-ins, not in every standard category. See the ZP-H Illustrated '
         'Companion for that story.'))
 
     print(f'Building: {out_path}')
