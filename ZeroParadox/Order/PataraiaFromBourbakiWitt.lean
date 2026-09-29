@@ -16,8 +16,8 @@ file is the adapter that shows it works in Lean. It uses choice, in Mathlib's Bo
 and in the adapter's own step from chains to directed sets, and that is a fact about this route,
 not about the theorem. Pataraia's own proof needs neither choice nor excluded middle, and Escardó
 and de Jong formalized a version of it in Agda. We finally got a port of theirs working in Lean, in
-PataraiaChoiceFree.lean, with no axioms at all. I defer to my AI assistant regarding the specifics of how the internals
-work.
+PataraiaChoiceFree.lean, with no axioms at all. I defer to my AI assistant regarding the specifics
+of how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
