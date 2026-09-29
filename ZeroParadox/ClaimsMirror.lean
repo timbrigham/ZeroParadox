@@ -79,11 +79,17 @@ theorem claim_node_set_theory {L : Type*} [ZPSemilattice L] [AFAStructure L] :
     IsQuineAtom (bot : L) :=
   bot_is_quine_atom
 
-/-- Claim `DA-1` (proved). Statement: "⊥ is the Quine atom realized in the computation layer (DA-1,
-    closed concretely in ZP-K)." Exact representation: the machine-phase bottom is a Quine atom.
-    Backing: `da1_closed_concrete`. -/
-theorem claim_DA1 : IsQuineAtom (bot : MachinePhase) :=
-  da1_closed_concrete
+/-- Claim `DA-1` (proved). Statement: "DA-1 (instantiation is execution) is closed given DP-2
+    (da1_minimal_path); ZP-K witnesses its Path 1: ⊥ is the unique Quine atom of the machine-phase
+    semilattice (da1_closed_concrete)." Exact representation: DA-1's minimal path, the pre- and
+    post-instantiation configurations share the output value ⊥ and differ in machine state, c₀ then c₁.
+    Backing: `da1_minimal_path`. -/
+theorem claim_DA1 :
+    let before := preInstantiation
+    let after  := postInstantiation
+    before.value = after.value ∧ before.state ≠ after.state ∧
+    before.state = c₀ ∧ after.state = c₁ :=
+  da1_minimal_path
 
 /-- Claim `T-SNAP` (proved). Statement: "The Binary Snap ⊥→ε₀ is a theorem (T-SNAP, derived in ZP-E)."
     Exact representation: the concrete snap is the join transition c₀ → c₁ between two distinct states.
@@ -187,9 +193,10 @@ theorem claim_Perron_info_state {n : ℕ}
       = Finsupp.equivFunOnFinite.symm (fun i => ((μ i).toReal : ℂ)) :=
   stationary_transports_to_unit_eigenvector f μ hμ
 
-/-- Claim `node-computability` (proved). Statement: "In computability, ⊥ is realized as the Kleene quine,
-    the self-reproducing program and diagonal fixed point of the computation layer." Exact representation:
-    in a KleeneStructure, the Kleene quine (any self-containing / Quine-atom element) equals ⊥.
+/-- Claim `node-computability` (proved). Statement: "In computability, ⊥ is read as the Kleene quine: in
+    any KleeneStructure lattice every Quine-atom element equals ⊥ (kleene_quine_is_bot), and the quine
+    itself is the structure's botCode requirement." Exact representation:
+    in a KleeneStructure, every Quine-atom element equals ⊥.
     Backing: `kleene_quine_is_bot`. -/
 theorem claim_node_computability {L : Type*} [ZPSemilattice L] [KleeneStructure L]
     (q : L) (hq : IsQuineAtom q) : q = bot :=
@@ -197,22 +204,9 @@ theorem claim_node_computability {L : Type*} [ZPSemilattice L] [KleeneStructure 
 
 /-! ## § VI. Claims that are NOT theorems (the faithful non-representation)
 
-Three claim-graph nodes are, by their own recorded status, not Lean theorems. Representing them faithfully
-means writing no theorem for them — the absence is the representation, and each absence is itself a checked
-fact about the claim's status.
-
-- `Lawvere-unification` (conj): "The diagonal fixed point keystone is a manifestation of Lawvere's
-  fixed-point theorem." A conjectural cross-domain *connection*, not a single provable proposition (the
-  claim graph marks it `conj`). Stated, never asserted; no theorem here.
-
-- `Lawvere-set-comp` (conj): "the set-theoretic and computational diagonal fixed points are two faces of
-  one Lawvere fixed point." Conjecture only — and the Set face is provably *not* a Lawvere instance (the
-  Cantor obstruction), so this edge stays unbuilt. A theorem asserting it would be false; hence none.
-
-- `MC-1-identity` (retired): "the four domain bottoms are numerically one object." Retired 2026-07-15 as
-  ill-typed — `x = y` across distinct categories is not a well-formed proposition, so it cannot be stated
-  in Lean at all. The non-representability *is* the finding: the members are provably distinct (the
-  walls); only the shared diagonal shape survives, apophatically. No theorem here, by type. -/
+Three claim-graph nodes are, by their own recorded status, not Lean theorems, so this section declares
+nothing for them: `Lawvere-unification`, `Lawvere-set-comp` and `MC-1-identity`. Why each is absent:
+`ZeroParadox/ClaimsMirror.md`. -/
 
 end ZeroParadox
 

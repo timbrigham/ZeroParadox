@@ -14,10 +14,14 @@ notes get archived. Add a row to MOVED whenever something relocates, and the che
     python tools/verify/check_moved.py --block    # BLOCK (exit 1 on any live stale reference)
 
 DATED RECORDS ARE EXEMPT, AND THAT IS NOT A LOOPHOLE. `.claude-local/notes/`, `archive/`, and
-register.md's Notes column record the tree AS IT STOOD. Rewriting them to name today's paths would
-falsify a historical record - a changelog entry saying a checker lived at tools/verify/ in v1.17,
-when it did not, is worse than a stale path. The project's standing rule is to verify at the
-artifact, never from a note; these surfaces are notes.
+RELEASES.md record the tree AS IT STOOD. Rewriting them to name today's paths would falsify a
+historical record - a changelog entry saying a checker lived at tools/verify/ in v1.17, when it
+did not, is worse than a stale path. The project's standing rule is to verify at the artifact,
+never from a note; these surfaces are notes.
+
+The exemption is keyed to CONTENT, never to a filename. register.md was exempt here until
+2026-09-24 and is not any more (`REGDESC-1`): the column that made it a dated record was stripped,
+so it is now live data carrying live paths and is scanned like anything else.
 """
 import io
 import os
@@ -118,7 +122,10 @@ GLOB_REF = re.compile(r"\.claude-local[/\\](?:" + "|".join(_MOVED_FAMILIES) + ")
 # Surfaces that are DATED RECORDS, plus the tombstones (which name the old path by design).
 EXEMPT_DIRS = ("/notes/", "/archive/", "/autobiography/", "/feedback/", "/outreach/",
                "/papers/", "/deepseek/", "/.git/", "/.lake/", "/__pycache__/")
-# register.md / RELEASES.md: the changelog of record, quoting past versions verbatim and on purpose.
+# RELEASES.md: the changelog of record, quoting past versions verbatim and on purpose. ⚠ register.md
+# sat beside it until 2026-09-24 and was removed (`REGDESC-1`) when the Notes column that made the
+# claim true was stripped - the test is whether the CONTENT is a past record, not what the file is
+# called, and a stale build-script path in register.md is now a real finding rather than history.
 # check_moved.py: this file IS the relocation table, so every old path appears here by definition.
 # phase2_file_list.txt: a frozen worklist from an earlier migration - a dated record, not guidance.
 # nb.txt and friends: captured console OUTPUT. A log records what a tool printed at a moment
@@ -132,7 +139,7 @@ EXEMPT_DIRS = ("/notes/", "/archive/", "/autobiography/", "/feedback/", "/outrea
 # edited, and because it sits in `batch.CHECKERS`, so a change to it is a hash change routed to
 # `/rely`. Do NOT extend this to the other `*_baseline.txt` files — those carry prose keys that can
 # and do contain real stale paths.
-EXEMPT_FILES = ("register.md", "RELEASES.md", "check_moved.py", "phase2_file_list.txt",
+EXEMPT_FILES = ("RELEASES.md", "check_moved.py", "phase2_file_list.txt",
                 "nb.txt", "scope_baseline.txt")
 SCAN_EXT = (".py", ".md", ".sh", ".ps1", ".yml", ".txt", ".lean")
 

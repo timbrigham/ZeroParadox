@@ -12,8 +12,8 @@ from zp_utils import *
 # ── Local additions: Tools document uses unique visual style ──────────────────
 BLUE_DARK = colors.HexColor('#1A4A7A')
 AMBER_C   = colors.HexColor('#B07800')
-GREEN     = colors.HexColor('#1B5E20')   # override — Tools uses GREEN_DARK value
-GREY      = colors.HexColor('#555555')   # override — Tools uses darker grey
+GREEN     = colors.HexColor('#1B5E20')   # ZP-OVERRIDE: Tools key-result box uses the GREEN_DARK value (#1B5E20), not GREEN (#2E7D32)
+GREY      = colors.HexColor('#555555')   # ZP-OVERRIDE: Tools captions and diagram labels use the GREY_TEXT value (#555555), not GREY (#888888)
 
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
                                 alignment=1, spaceAfter=4)

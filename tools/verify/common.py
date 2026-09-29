@@ -108,7 +108,17 @@ SKIP_DIRS = ('.lake', '.git', 'notes', 'papers', 'archive', 'feedback', 'outreac
 # Files no checker in this family should scan, whatever it is looking for. A checker additionally
 # skips ITSELF and its OWN baseline — those two are per-checker and passed in, not listed here,
 # because a shared list of every checker's name would exempt all of them from all of each other.
-SKIP_NAMES = frozenset({'CLAUDE.md', 'register.md', 'RELEASES.md'})
+#
+# ⭐ THE PROPERTY, AND IT IS WHAT DECIDES MEMBERSHIP: a file belongs here only while its CONTENT is
+# a record of past state. Scanning such a file for live correctness asks it to be something it is
+# not, and "fixing" a finding there falsifies the record. `RELEASES.md` qualifies — it quotes what
+# each release said, on purpose. `CLAUDE.md` qualifies under `R-EXEMPT` on different grounds.
+# ⚠ `register.md` WAS here and was REMOVED 2026-09-24 (`REGDESC-1`), because the property stopped
+# holding: the Notes column that carried the history was stripped, and the file is now 25 rows of
+# live version data plus live paths. Measured before removing — all three exempting checkers report
+# ZERO findings on it, so this restores coverage without adding noise. It would belong here again
+# only if the file starts carrying history again, which is a content question, never a name one.
+SKIP_NAMES = frozenset({'CLAUDE.md', 'RELEASES.md'})
 
 # The glob patterns. `.claude-local/build_*.py` was a fourth until the build scripts stopped being
 # mirrored: `scripts/` is now their only home, so the third pattern already covers them and a fourth
@@ -496,9 +506,28 @@ INDEX = 'INDEX'   # the staged content — see `ledger_subjects`
 
 
 def index_blobs():
-    """`{path: blob id}` from the INDEX. One git call, whatever the subject count."""
+    """`{path: blob id}` from the INDEX. One git call, whatever the subject count.
+
+    ⚠⚠ `check=True` IS LOAD-BEARING AND WAS ABSENT UNTIL 2026-09-18. Without it a failed
+    `ls-files` — unreadable index, absent repository, git itself broken — returned `{}`, which is
+    indistinguishable from a genuinely empty index. `R-ZERONULL`: the empty branch must not return
+    the same VALUE as the satisfied one, because consumers branch on the value and nobody reads the
+    message.
+
+    ⛔ MEASURED, AND BY A CONSUMER THAT DID NOT EXIST WHEN THIS WAS WRITTEN. A /rely round made the
+    index unreadable with the worktree otherwise intact, and
+    `guards.check_registry_router_agreement` — which carves BOTH of its compared sets out of this
+    dict — printed `router and registry agree ON PATHS, 0 tracked path(s), identical set both
+    sides`, exit 0, with every other leg unchanged. `hooks.py` invokes guards as exit-0-is-pass and
+    records the verdict on the same call, so the artifact a human and the hook both read said PASS
+    over a run that observed nothing. An empty universe makes every set difference empty, so a
+    check phrased as "these two sets agree" is VACUOUSLY TRUE exactly when the input failed.
+
+    ⭐ `tracked_md()`, twenty lines above, has always had `check=True`. Two routes to one property
+    and only one of them honoured it — the `SH-3` shape this bundle keeps recording. The sibling was
+    right the whole time and nobody diffed them."""
     out = subprocess.run(['git', 'ls-files', '-s'], cwd=str(REPO), capture_output=True,
-                         text=True, encoding='utf-8', errors='replace').stdout
+                         text=True, encoding='utf-8', errors='replace', check=True).stdout
     blobs = {}
     for line in out.splitlines():
         meta, _, path = line.partition('\t')          # `<mode> <blob> <stage>\t<path>`

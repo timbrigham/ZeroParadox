@@ -1,6 +1,7 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.5 | June 2026
+Version 1.6 | September 2026
+v1.6: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-M v1.4: 'ZP-K proved that the initial state c0 is a Kleene fixed point' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem; 'they were unified in ZP-K' (Paths 1 and 3) now says they were carried together as a conjunction of witnesses (da1_paths_unified), their being one structural fact the framework's reading.
 v1.5: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.3: Rendered self-version ref removed from Key Results box header (C1 sweep).
 v1.2: fix HTML entities in String() drawing primitives (rendered literally);
@@ -18,7 +19,7 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -184,9 +185,10 @@ def build():
         'proved separately in ZP-K and ZP-L and show that they are looking at the same '
         'structure from different angles.'))
     E.append(cbody(
-        'ZP-K proved that the initial state c₀ (⊥) is a '
-        'Kleene fixed point — a program that is its own program, with no external '
-        'executor required. ZP-L proved that the ordinal ε₀ is the exact snap '
+        'ZP-K carries the computational face of the initial state c₀ (⊥) as a KleeneStructure '
+        'requirement (botCode_is_quine): read as a Kleene fixed point, a program that is its own '
+        'program, with no external executor required. Reading c₀ as the Kleene quine is that '
+        'commitment, not a theorem. ZP-L proved that the ordinal ε₀ is the exact snap '
         'threshold: the tower ω, ω^ω, ω^ω^ω, … approaches ε₀ from below, and '
         'any monotone map that sends tower stages to c₀ must send ε₀ to c₁. '
         'ZP-L also showed that the tower encodings in ℤ₂ converge to 0.'))
@@ -312,7 +314,9 @@ def build():
     E.append(cbody(
         'ZP-M establishes the diagonalization frame for two of the three threads in '
         'the DA-1 argument. Path 1 (AFA structural) and Path 3 (Kleene computational) '
-        'are both diagonalization instances — they were unified in ZP-K. Now both share '
+        'are both diagonalization instances — they were carried together in ZP-K as a conjunction '
+        'of witnesses (da1_paths_unified); that they are one structural fact is the framework\'s '
+        'reading. Now both share '
         'the frame with the ordinal result.'))
     E.append(cbody(
         'Path 2 (informational) remains outside this frame. L-INF (ZP-C) says that '

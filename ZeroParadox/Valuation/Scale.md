@@ -1,4 +1,4 @@
-# Scale — ride-along documentation
+# From scale to AFA content: the valuation argument, the 2-adic parallel, and its prior art
 
 Moved from `ZeroParadox/Valuation/Scale.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
 

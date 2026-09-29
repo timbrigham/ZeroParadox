@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.10 | July 2026
+Version 1.11 | September 2026
+v1.11: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the computability realization said 'the bottom is the unique fixed point of self-application (ZP-K; AbstractSelfApp.unique_fp)'. unique_fp is a class field of AbstractSelfApp (ZP-J), and ZP-K carries the computational face as a KleeneStructure requirement; the sentence now says both.
 v1.10: NOVELTY OVERCLAIM RETRACTED (bedrock). Two sites attributed novelty to a NAMED theorem - "resolves onto a new bottom" and "converging to a new bottom, cnf_encode_tower_tendsto_zero" - in the one chart where the corpus proves the opposite. The encodings converge to the floor they started from; snap_arc_z2_loop and tower_image_loops_to_seed both state it.
 v1.9: same universal negative as ZP-P v1.24 - "choice enters only in the analytic realisations" - corrected to "mostly ... not only there", naming the category-theory face as the framework's own. No other claim changed.
 
@@ -29,7 +30,7 @@ rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -364,8 +365,11 @@ def build():
     E.append(body(
         'The remaining realizations are referenced, not re-proved here. Set theory: the Quine atom '
         '&#8869; = {&#8869;} is the collapse of the Foundation / AFA fork (ZP-J, ZP-P; '
-        'fork_collapse_iff, selfMem_eq_singleton_bot). Computability: the bottom is the unique fixed '
-        'point of self-application (ZP-K; AbstractSelfApp.unique_fp). State / Hilbert: &#8869; is the '
+        'fork_collapse_iff, selfMem_eq_singleton_bot). Computability: ZP-K carries the bottom\'s '
+        'computational face as a KleeneStructure requirement (botCode_is_quine); reading the bottom '
+        'as the Kleene quine is that commitment, not a theorem. That the bottom is the unique fixed '
+        'point of self-application is the AbstractSelfApp class field unique_fp (ZP-J), a requirement '
+        'rather than a theorem. State / Hilbert: &#8869; is the '
         'unique finite-dimensional fixed point of the biproduct-diagonal X &#8614; X &#8862; X (ZP-H; '
         'biprod_diagonal_only_zero). Information: measure runs to 0 at the floor exactly as surprisal '
         'runs to &#8734; (ZP-C; info_bottom_diverges, addVal_bot), the two joined by &#8722;log.'))

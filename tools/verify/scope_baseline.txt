@@ -269,6 +269,7 @@ ZeroParadox/Valuation/ValuationAFA_Padic.lean
 ZeroParadox/Vendored/NaturalOps.lean
 fmc.md
 fmc_guide.md
+register.md
 scripts/PDF_Rendering_Standards.md
 scripts/README.md
 scripts/build_dictionary_map.py
@@ -1946,6 +1947,7 @@ ZeroParadox/Vendored/NaturalOps.lean
 _config.yml
 fmc.md
 fmc_guide.md
+register.md
 scripts/PDF_Rendering_Standards.md
 scripts/README.md
 scripts/build_dictionary_map.py

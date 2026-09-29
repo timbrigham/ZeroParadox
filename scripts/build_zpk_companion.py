@@ -1,6 +1,11 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.17 | May 2026
+Version 1.22 | September 2026
+v1.22: ZPKB-6, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-20). The Proof Purity note closed with "The ZP-A, ZP-J, and core ZP-E results remain free of this dependency", which is false as measured: decoration_unique in ZeroParadox/Settheory/APG.lean reports propext, Classical.choice, Quot.sound, as do six siblings in that file, and ZeroParadox/Valuation/ScaleBridge.lean adds thirty more - MANIFEST.md labels both files ZPJ, and both of this document's own layers attribute that content to ZP-J. The true statement is narrower and already exists: AxiomProfile.lean Section I scopes it to the CORE - T-SNAP, the lattice, the Quine atom. The sentence turned "the core" into "the results"; it now names the core, POINTS at ZeroParadox/AxiomProfile.lean, and names decoration_unique as the counterexample inside the same layer. ⚠⚠ THIS ONE SURVIVED THE PRIOR ARC BECAUSE IT IS THE RULE PHRASED AS AN ABSENCE. Two positive-wording fixes to this same box DID land; a third statement, worded as what is FREE OF the dependency, was invisible to every sweep keyed on the positive phrasing (R-NOTINLIB, POLARITY axis). The corrective sweep for this fix was run on "remain free of this dependency" and "free of this dependency" as well as the positive forms, over .md + .lean + tracked .py + the 40 rendered PDFs. ⛔ Lines above this one - the computability machinery "requires classical logic", a necessity claim where ZP-K Section IV says essentiality is not measured - are a separate ORDINARY finding, out of scope for this arc by Tim's decision and deliberately not touched here.
+v1.21: ZPK-BED-1 COMPANION SYNC with ZP-K v1.23 (Tim ruling, 2026-09-19). Two defects, both in the Proof Purity note. (1) "a standard dependency for any theorem that uses Mathlib's computability library" is the same refuted universal as ZP-K Section I: Nat.Partrec.Code and Nat.Partrec.Code.eval are both axiom-free, and IsKleeneFixedPoint, whose type is eval c = f c, measures no axioms. It now states the inheritance and points at ZP-K Section IV rather than restating the rule. ⚠ This companion was reviewed in an earlier round of this work and judged "not materially stale" - that judgement was WRONG and R-COMPANION exists to prevent it; the defect was found by an adversary sweep of the DEPOSITED companion PDF, which had not been rebuilt while its formal document moved. (2) "IVT itself depends on completeness of the reals, which depends on choice" - Dedekind completeness is a ZF theorem. The analogy is kept and the false clause removed.
+v1.20: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-K v1.18: 'It proves that there is a fourth description of bottom' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem. The executor sentences ('bottom IS an instance of a Turing machine', 'It is already executing', 'Description and execution are the same act') are labelled the framework's reading at the sentence. The Path 1 paragraph said 'Now IN LEAN SCOPE via ZP-K ... The AFA self-containment of bottom is not just argued, it is machine-checked'; it now states what Lean witnesses: da1_closed_concrete from machinePhaseAFA, where selfMem is x = bottom, so the content is uniqueness rather than membership.
+v1.19: DA-1 PATH 3, SECOND PASS (Tim ruling, 2026-09-15), companion sync with ZP-K v1.16: the heading 'DA-1 Formally Closed' is 'DA-1: what Lean witnesses'.
+v1.18: DA-1 PATH 3 (pre-existing bedrock, editorial gate round 3 B1, 2026-09-15), companion sync with ZP-K v1.15: the closing Remember box said 'ZP-K closes DA-1 Paths 1 and 3 formally' and that it 'proves, in machine-checked Lean 4, that the structural role bottom plays in the algebra is the same role it plays in AFA set theory and in computability theory', contradicting this companion's own Path 3 paragraph (a foundational commitment). It now carries the CLAIMS.md DA-1 row: Path 1 witnessed by da1_closed_concrete, nothing computational; Path 3's witness a KleeneStructure requirement, not a second independent proof; the one-fact reading is the framework's. The sentences 'The gap was never a gap - bottom in all three settings is the same self-referential fixed point' are removed with it.
 v1.17: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
 v1.16: BEDROCK - two class-field overclaims struck. The four-way table's Computation row asserted "no shorter external generator exists" (Kolmogorov content this same document strikes elsewhere as having no formal part here), and the computational-Quine paragraph asserted it as an "in other words" restatement of the fixed-point definition, which says nothing about minimality. Section heading "The Four-Way Equivalence" corrected - t_comp proves three.
 v1.15: witness audit (mechanical). "proved via da1_closed_concrete" for the Quine atom now records that MachinePhase defines selfMem as x = bottom, so the content of that theorem is the uniqueness rather than the membership.
@@ -130,7 +135,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.17'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -173,14 +178,15 @@ def build():
     E.append(cbody(
         'ZP-J proved that the Quine atom (set-theoretic self-reference) and the bottom element '
         '(order-theoretic minimum) are the same object. ZP-K adds a fourth language: '
-        'computability theory. It proves that there is a fourth description of ⊥, this time '
-        'in terms of Turing machines and Kleene\'s second recursion theorem — and that all '
-        'THREE of the four descriptions are proved to name the same structural role; the '
-        'computational one is joined to them by assumption, not by proof.'))
+        'computability theory. It adds a fourth description of ⊥, this time in terms of '
+        'Turing machines and Kleene\'s second recursion theorem. THREE of the four descriptions '
+        'are proved to name the same structural role. ZP-K carries c₀\'s computational face as a '
+        'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is that '
+        'commitment, not a theorem.'))
     E.append(cbody(
-        'The consequence for DA-1 is direct: ⊥ is not a description of a Turing machine. '
-        '⊥ IS an instance of a Turing machine — specifically its ground state, serving as its own program. '
-        'The "description vs. execution" gap that DA-1 had to close is structurally '
+        'On the framework\'s reading, the consequence for DA-1 is direct: ⊥ is not a description of a Turing machine; '
+        '⊥ IS an instance of a Turing machine (specifically its ground state, serving as its own program), '
+        'and the "description vs. execution" gap that DA-1 had to close is structurally '
         'dissolved: there is no gap, because ⊥ in the four formal languages of this framework '
         'is proved to be the same structural object for three of the four descriptions, the '
         'computational one being assumed rather than derived — and it is that structural identity, '
@@ -211,8 +217,9 @@ def build():
         'A Quine program in computer science is a program that, when run, outputs its own '
         'source code. It needs no external file to read — the source is baked in. '
         'Kleene\'s theorem guarantees that for any computable transformation, such a fixed '
-        'point always exists. The computational Quine is the formal expression of ⊥ = {⊥} '
-        'in the language of programs: c is its own program, just as ⊥ is its own member.',
+        'point always exists. On the framework\'s reading, the computational Quine is the expression '
+        'of ⊥ = {⊥} in the language of programs: c is its own program, just as ⊥ is its own member. '
+        'ZP-K carries that reading as a KleeneStructure requirement (botCode_is_quine), not a theorem.',
     ]))
     E.append(sp(8))
 
@@ -250,16 +257,16 @@ def build():
         'structural role, not a global identification of the frameworks.'))
     E.append(sp(8))
 
-    # DA-1 Formally Closed
-    E.append(Paragraph('DA-1 Formally Closed', CS['h1']))
+    # DA-1: what Lean witnesses
+    E.append(Paragraph('DA-1: what Lean witnesses', CS['h1']))
     E.append(cbody(
         'DA-1 (Instantiation as Execution) had three informal argument paths in ZP-E:'))
     E.append(cbody(
         '<b>Path 1 (Structural — AFA):</b> Nothing external to ⊥ can execute ⊥. Therefore '
         '⊥ must execute itself. ZP-J proved axiom-free that ⊥ is the unique self-containing element (the structural fixed point); that this is the literal ⊥ = {⊥} holds in the ZF+AFA setting. '
-        '<b>Now IN LEAN SCOPE via ZP-K:</b> the KleeneStructure instance for MachinePhase '
-        'includes an AFAStructure instance (machinePhaseAFA). The AFA self-containment of ⊥ '
-        'is not just argued — it is machine-checked.'))
+        '<b>What Lean witnesses via ZP-K:</b> Path 1\'s witness is da1_closed_concrete, which proves '
+        'IsQuineAtom (⊥ : MachinePhase) from the AFAStructure instance machinePhaseAFA. There '
+        'selfMem is defined as x = ⊥, so the content is the uniqueness rather than the membership.'))
     E.append(cbody(
         '<b>Path 2 (Informational — L-INF):</b> The surprisal of ⊥ is unbounded — no finite '
         'interpreter can hold it. This eliminates the static-description alternative. '
@@ -285,13 +292,15 @@ def build():
         'KleeneStructure assumption, not a derivation. Path 2: outside Lean scope (ontological bridge).'))
     E.append(sp(6))
     E.append(cbody(
-        'What does it mean that ⊥ IS an instance of a Turing machine in its ground state? '
+        'What does it mean, on the framework\'s reading, that ⊥ IS an instance of a Turing machine in its ground state? '
         'In ZP-C, the model distinguishes c₀ (the initial configuration, before any '
         'instruction executes) from c₁ (after the first instruction fetch). '
         'DP-2 (ZP-E) proved that these are distinct machine states even when both '
-        'produce the same output value. The Kleene fixed-point result says: c₀ is not '
-        'waiting for someone to press "run." It is already executing — the execution and '
-        'the description are the same act - a framework reading. What T-COMP proves is narrower: '
+        'produce the same output value. On the framework\'s reading, c₀ is not '
+        'waiting for someone to press "run": it is already executing, and the execution and '
+        'the description are the same act. ZP-K carries c₀\'s computational face as a '
+        'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is that '
+        'commitment, not a theorem. What T-COMP proves is narrower: '
         'three of the four descriptions of ⊥ are equivalent to one another. It says nothing '
         'about external agents, and nothing about execution.'))
     E.append(sp(4))
@@ -299,9 +308,9 @@ def build():
         'Consider a camera that, instead of photographing external scenes, photographs only '
         'its own sensor. The image it produces is the state of the sensor; the sensor\'s '
         'state is the image. There is no external scene being captured — the camera IS '
-        'the scene. ⊥ as a Kleene fixed point has exactly this structure: the program '
-        'that runs is the program that describes what runs. Description and execution '
-        'are the same act.',
+        'the scene. On the framework\'s reading, ⊥ as a Kleene fixed point has exactly this '
+        'structure: the program that runs is the program that describes what runs, so '
+        'description and execution are the same act.',
     ]))
     E.append(sp(8))
 
@@ -309,22 +318,29 @@ def build():
     E.append(Paragraph('A Note on Proof Purity', CS['h1']))
     E.append(cbody(
         'The computability machinery in ZP-K (Kleene\'s theorem, Rogers\' fixed-point theorem) '
-        'requires classical logic — a standard dependency for any theorem that uses '
-        'Mathlib\'s computability library, not a novel Zero Paradox commitment. '
-        'The ZP-A, ZP-J, and core ZP-E results remain free of this dependency.'))
+        'requires classical logic, inherited from Mathlib rather than a novel Zero Paradox '
+        'commitment. ZP-K Section IV tabulates the measured axiom footprints. '
+        'What is free of it is the choice-free CORE, and that is narrower than any layer '
+        'name: ZeroParadox/AxiomProfile.lean &#167;I is where the core is listed and each '
+        'footprint measured &#8212; T-SNAP, the lattice, the Quine atom. Results elsewhere '
+        'in the same layers do carry the dependency: decoration_unique, the AFA '
+        'decoration-uniqueness theorem in ZeroParadox/Settheory/APG.lean, is a ZP-J result '
+        'and reports the full triple. Check the artifact for a given result rather than '
+        'reading a layer name as a footprint.'))
     E.append(cbody(
-        'This is analogous to a proof that invokes the intermediate value theorem: IVT '
-        'itself depends on completeness of the reals, which depends on choice. Using IVT '
+        'This is analogous to a proof that invokes the intermediate value theorem. Reaching '
+        'for a result from the standard, classically built libraries '
         'does not make your proof "non-constructive" in any meaningful sense — it means '
         'you are working in the standard mathematical setting. ZP-K\'s classical footprint '
         'is of the same character.'))
     E.append(sp(4))
     E.append(remember_box(
-        'Remember: ZP-K closes DA-1 Paths 1 and 3 formally. It does not claim to resolve '
-        'the description-execution gap by philosophical argument. It proves, in machine-checked '
-        'Lean 4, that the structural role ⊥ plays in the algebra is the same role it plays '
-        'in AFA set theory and in computability theory. The gap was never a gap — '
-        '⊥ in all three settings is the same self-referential fixed point.'))
+        'Remember: in ZP-K, DA-1 Path 1 is witnessed by da1_closed_concrete, which proves '
+        'IsQuineAtom(⊥ : MachinePhase) and nothing computational; Path 3\'s witness is the '
+        'machinePhaseKleene instance\'s botCode_is_quine field, a KleeneStructure requirement, '
+        'not a second independent proof. The two are carried together by da1_paths_unified as a '
+        'conjunction of witnesses; that they name one structural fact is the framework\'s reading. '
+        'ZP-K does not claim to resolve the description-execution gap by philosophical argument.'))
     E.append(sp(8))
 
     # ── Fixed-Point vs. Oscillation ───────────────────────────────────────────

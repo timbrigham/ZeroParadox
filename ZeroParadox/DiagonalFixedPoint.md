@@ -24,7 +24,9 @@ Self-reference runs off one **engine** — Lawvere's fixed-point construction �
 - **Wall faces (μ) — self-reference CANNOT close.** No fixed point exists; the reflexive object is
   impossible. The classical negative diagonal arguments: Cantor, Russell, Turing, Tarski, Curry.
 - **Floor faces (ν) — self-reference CLOSES, and the fixed point lands at ⊥.** The fixed point is
-  genuinely produced and it is the bottom: the Quine atom, the Kleene quine, Löb / Gödel's second, Rice.
+  genuinely produced and it is the bottom: the Quine atom, Löb / Gödel's second, Rice. The Kleene face is carried as a
+  requirement (ZP-K `KleeneStructure`), its witness `computability_face_fixedPoint` a fixed point of a computable
+  map, not tied to ⊥.
 
 This mirrors the ZP-R Diagonal Family Addendum exactly. As with the bottom family (MC-1), the roster is a
 matrix of domain cells; the cells present are the ones currently formalized, and other domains' cells

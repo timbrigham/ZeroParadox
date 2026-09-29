@@ -68,8 +68,24 @@ RULE     ask what is OWED, then do only that: `gitRobot admission(action=...)` f
          `(step, path, git_blob_id)` — a fact about BYTES — so a step already PASSING for the
          content in hand is ANSWERED, and re-running it is not diligence. Never learn what is owed
          from a refusal that a query would have stated.
+         ⚠⚠ FOR A PUSH, THE DECIDER IS `gitRobot preflight()` — NOT ANY OF THE ABOVE. Three tools
+         answer three different questions and only the last one gates: `progress(ref=...)` scores
+         the WHOLE REF (it will quote a backlog that is not owed); `can_push(rev_range=...)` scores
+         the RANGE and says so — *"the backlog is NOT owed, only what this push changes"*; and
+         `preflight()` RUNS THE PRE-PUSH HOOK, which is the thing that refuses. Use the first two to
+         PLAN and the third to KNOW. ⚠ AND THEIR LISTS DISAGREE BY CONSTRUCTION, per `RATCHET-1`:
+         the ratchet reports a path whose verdict went STALE and is silent on one that was NEVER
+         EXAMINED, so cross-check any owed list against `coverage_gap(step=...)` before treating it
+         as the work.
 COST     a merge re-derived 17 recorded passing verdicts and blocked on the one it could not
          re-append; the 4KB query naming the two real gaps was never run.
+         ⚠ AND MEASURED 2026-09-20, WHICH IS WHY THE CLAUSE ABOVE EXISTS: this rule was FOLLOWED
+         and still produced hours of wrong reporting. `progress` said 4 steps and a 76/55/267
+         backlog; `can_push` said 30 signatures over 25 paths and that the backlog was not owed;
+         `prepush --ranges` said 7 legs. **The real blockers were one re-seeded baseline file and a
+         guard's globs — neither named by any of the three — and `preflight` returned them in one
+         call.** The trigger fired correctly every time; the ROUTING was wrong, which is a failure
+         mode `R-RECUR`'s ladder does not otherwise name.
 READ     tools/process/pipeline.md
 
 ## R-PRECOMMIT  `batch.py precommit` before every commit. `/batch` for anything multi-site.
@@ -425,6 +441,33 @@ TRIGGER  you are about to write that anything is ABSENT or OPEN — in Mathlib O
          A FIX: "swept" · "corrected everywhere" · "no other sites" · "the last one" · any claim
          that something is NO LONGER PRESENT. **A post-fix completeness claim is an absence claim
          wearing work clothes**, and this list is a DENYLIST, so it was porous exactly there.
+         ⚠⚠ AND SO DOES A CLAIM ABOUT OUR OWN TOOLING — added 2026-09-15, and it is the costliest
+         variant yet: "not yet built" · "has no mechanical half" · "no checker exists" · "still
+         owed" · "the attempt was PULLED". **Before writing that WE lack a tool, look for it under
+         `tools/verify/`; a tool's own source header outranks any prose about it.** Measured:
+         `DEFECT_CLASSES.md` said `DC-24` had no mechanical half for 28 days after `check_paths
+         --claim` shipped self-describing as exactly that (`7c9669a`, 2026-08-19) — the "PULLED"
+         note was about `check_attribution.py`, a DIFFERENT tool, so the row recorded one
+         withdrawal and read as the absence of both. **A false absence claim in the DETECTOR
+         REGISTRY is a force multiplier**: the tool that would have caught the Lawvere
+         misattribution was believed not to exist, a manual sweep closed `ATTR-2` on a false
+         "no further instances", and the defect shipped inside two permanent DOIs. Class `DC-53`.
+         ⚠⚠ AND THE OTHER POLE, ADDED 2026-09-16 BECAUSE THE CLAUSE ABOVE SHIPPED WITHOUT IT: a
+         false PRESENCE claim is the same defect and the list above cannot see one — every term
+         in it is absence vocabulary. **The ACTION is what binds, not a word list: you are about
+         to write that a tool DOES something. RUN IT FIRST.** Any present tense about tooling
+         qualifies — "now run(s)", "is wired in", "ships with", "cover(s)", "is enforced" — and
+         a word list cannot be the test here, because the two sentences that motivated this rule
+         matched NONE of the four anchors first drafted for it ("now run" against "now runs",
+         "covering" against "covers"; the PART OF SPEECH axis this entry's own RULE mandates).
+         Before writing a COUNT of what a tool does, re-derive it from that tool's own output —
+         and if the tool prints no total, that is the defect to fix first.
+         Measured the day the clause landed: `DC-53`'s row said its prepush leg was live and
+         "eight controls now run inside `batch.py selftest`" — the leg had been REMOVED, the
+         controls went with it, and `selftest` printed PASS because the thing they controlled was
+         gone. The reviewer that caught it then reported the surviving suite as 33 controls; the
+         printed output carries 28. **A present-tense sentence about tooling is a measurement, and
+         it goes stale in the direction nobody greps for.**
 RUN      before writing any of them about a CLAIM, sweep the wording you DELETED, not the one you
          wrote: `python tools/verify/check_paths.py --claim "<deleted phrasing>"` — `.md` + `.lean`
          + tracked `.py` + the RENDERED PDFs in one pass, printing which surfaces it covered. The
@@ -508,7 +551,7 @@ COST     BOTH bypasses succeed SILENTLY and the push looks green: the identical 
          "a command that runs a GATE", a one-file `check_encoding` run did not feel like one, and
          `| Select-Object -Last 2` hid four warnings an hour after this rule was quoted. A CATEGORY
          leaks; A PIPE AFTER A PATH binds. A fail-closed `PreToolUse` hook keyed to INVOCATION
-         (`claude_hooks/block_checker_truncation.ps1`, 39 controls) catches the NAMED consumers, and
+         (`tools/verify/claude_hooks/block_checker_truncation.ps1`, 39 controls) catches the NAMED consumers, and
          reading checker SOURCE stays free. ⚠⚠ IT IS A DENYLIST, SO THE TRIGGER LIST ABOVE IS STILL
          LOAD-BEARING MEMORY. An earlier version of this line said "nothing here is remembered";
          that was measured FALSE 2026-08-29 — 15 of 19 filters walked through, among them `sed -n`,
@@ -733,7 +776,7 @@ RULE     ask: is this the CENTRAL claim of its section, or infrastructure for so
 COST     the prefixes go stale as status changes and the label then misdescribes what is
          proved: CC-2's "Conditional Claim" outlived its own upgrade, and MC-1's numerical
          identity is RETIRED as ill-typed — `x = y` across distinct categories was never a
-         well-formed proposition, so it was never a commitment either.
+         well-formed proposition in the typed language, so it was never a commitment either.
 READ     tools/process/naming-and-labels.md
 
 ## R-ISSUES  Public issues are transparency, not a request for validation.

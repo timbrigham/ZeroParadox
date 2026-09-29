@@ -31,7 +31,7 @@ no two of them — and none of them and ⊥ — may be identified.
 The bottom the snap-arc returns to is a `ZPSemilattice` fact, not a fact about an ordinal ε-number.
 ⚠ And `t_iz_limit_is_new_null` gives the **ROLE half only** — anything satisfying the join-identity
 IS that lattice's bottom, the one already present. Reading that occupant as a **NEW** bottom is
-**C-DA2, a commitment**, and `Order/SnapCannotBe.lean:43` forbids citing that theorem as a novelty
+**C-DA2, a commitment**, and the `t_iz_limit_is_new_null` gloss in `Order/SnapCannotBe.lean` forbids citing that theorem as a novelty
 witness. Do not merge the two readings.
 
 ## Why re-seeding, not iteration

@@ -1,6 +1,20 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.6 | July 2026
+Version 1.20 | September 2026
+v1.20: A SUPREMUM GLOSSED AS ATTAINED, IN A DEPOSITED PDF (DEFECTS.md GENTZEN-2, found by prior_art@9fcf703f as PA3-1 after recording it as F3 one round earlier). Remark R-L.1's appositive read "- the furthest that PA's proofs of transfinite induction reach -", which asserts that ε₀ IS reached. The proof-theoretic ordinal is a supremum - sup S over the set S of ordinals at which PA proves transfinite induction - and ε₀ ∉ S: the supremum is a limit, never a maximum. The same paragraph says exactly that four sentences later ("transfinite induction up to ε₀ itself is not provable in PA"), so the gloss asserted the negation of the thing the remark exists to establish. It now reads "- the limit of how far PA's proofs of transfinite induction reach -". ⭐ FALSE ON BOTH CHARTS, WHICH IS WHY A FLIP DOES NOT FIX IT: from below the true form is the limit of how far the proofs reach, ε₀ read as the tower SUPREMUM; from above it is the least ordinal at which they stop, which was ZP-E's companion's wording then, "the minimum ordinal whose well-ordering PA cannot prove" (ZP-E comp v1.19 later replaced that VOCABULARY with the transfinite-induction form, keeping the from-above chart; DEFECTS.md GENTZEN-5) - THE SAME min-and-max-at-once SHAPE THAT epsilon0_min_eq_max CARRIES FOR ε₀ IN ORDINAL ARITHMETIC, AND NOT AN INSTANCE OF IT (adversary F1 / editorial E3-6, 2026-09-23; this entry first wrote "ε₀ read as the LEAST FIXED POINT (epsilon0_min_eq_max, both faces at once)", which states an instance-of relation the theorem does not support). Read at its declaration in ZeroParadox/Ordinal/Epsilon0MinMax.lean, that theorem is the conjunction "epsilonZero = ⨆ n, fundamentalSeq n ∧ IsLeast {o | ω^o = o} epsilonZero": its supremum ranges over the ω-TOWER STAGES and its least over the FIXED POINTS of α ↦ ω^α, and NEITHER conjunct mentions Peano Arithmetic, provability, or transfinite induction. The two proof-theoretic charts range over an entirely different set - the ordinals at which PA PROVES transfinite induction - so what they share with the theorem is a SHAPE, one object carrying both extremal characterizations at once, and per that theorem's own twice-corrected docstring a shared shape across distinct structures is a TYPE BOUNDARY, never a common theorem: STATE THE SHAPE, DO NOT STATE AN INSTANCE-OF RELATION. The corpus fences this exact move in three further places - cnf_bridge_type_boundary ("co-witness only; ε₀ = 0 never asserted (ill-typed)"), both_fixed_points_exist ("a conjunction, not a cross-domain identity"), and BottomCannotBe.lean's note on fixedPoints.lfp_eq_sSup_iterate ("A shared SHAPE across structures, never an instance-of relation"). ⛔ THE CITATION IS RELABELLED, NOT DELETED (R-TWOPOLE): the shared shape is real, so deleting it writes the opposite one-chart sentence. The shipped wording was the one phrasing neither chart licenses. ⛔ ZP-L KEEPS THE FROM-BELOW CHART AND ZP-E KEEPS THE FROM-ABOVE ONE - one chart per document, not a collapse to one - and ⛔ the appositive is NOT deleted (R-TWOPOLE): a delete writes the opposite one-chart sentence, which is how this arc's round-1 BEDROCK defect was made. Every v1.19 fence is unchanged: no claim about what Gentzen's § 2 proves, never "Hilbert-Bernays' theorem", never 1938, the full-PA claim only, and the primary source only. ⚠ § V's "What this does NOT claim" box is unchanged and still correct; the divergence with the Lean source comment in ZeroParadox/Ordinal/Gentzen.lean § V remains OPEN for the reason v1.19 recorded, re-measured here by MAKING the edit and running check_prose.py against it: with that block edited the checker reported one NEW oversized prose site, the § V module-doc block at 29 lines against a BLOCK_CAP of 10, because tools/verify/prose_baseline.txt grandfathers the block by a SHA-256 of its own body and any byte change lapses that. ⚠ THAT "1" MEASURES THE ATTEMPTED EDIT AND NEVER THESE BYTES (adversary F2, 2026-09-23): the edit was reverted, and on the shipping tree check_prose.py reports "NEW oversized prose sites: 0", re-derived here from the tool's own output rather than restated from this entry. The MECHANISM claim is correct and was verified at the artifact; only the tense was wrong, and a present-tense sentence about tooling goes stale in the direction nobody greps for. Companion moves with it (comp v1.13).
+v1.19: THE COUNT CONTRADICTED ITSELF FOUR CLAUSES APART, IN A DEPOSITED PDF (copy_editor panel finding, 2026-09-22, ticket corpus-zpl-panel-findings-r-l-1; raised independently by all three panel readers, each believing itself alone). Remark R-L.1 opened "Three results establish that ε₀ is the proof-theoretic ordinal of Peano Arithmetic" and four clauses later said the pinning takes "the other two together" - three establish it, two pin it, and in that paragraph pinning IS what establishing means, nothing distinguishing the verbs. THE COUNT IS TWO, AND THE REMARK NOW STATES IT. Pinning a supremum takes a ceiling and witnesses beneath it: provability of transfinite induction at every ordinal strictly below ε₀ supplies the witnesses, unprovability at ε₀ supplies the ceiling. The 1936 sufficiency result pins NOTHING on its own - it is a fact about what ε₀-induction proves, not about what PA proves, and sufficiency is monotone upward, so it is equally true of any larger ordinal. "Three" double-counted: it counted 1936 alongside the unprovability half that the INDIRECT route derives from it, which is one conclusion plus one of its own premises counted as two independent establishers - and the same sentence says Gentzen proved that half DIRECTLY in 1943, so the indirect route is not load-bearing there. That is why "three" could not be defended while "directly" stood. ⛔ THE 1936 HALF IS NOT DELETED (R-TWOPOLE): deleting it writes the opposite one-chart sentence, which is exactly how this arc's round-1 BEDROCK defect was made. It now stands behind the pair, named as the indirect route via Gödel's theorem together with that 1936 result. ⭐ THE TWO-POLE READING CONFIRMS THE COUNT RATHER THAN OPPOSING IT: provability-below is ε₀ read as the tower SUPREMUM (every stage beneath it is reached) and unprovability-at is ε₀ read as the LEAST FIXED POINT (nothing smaller fails first) - the same min-and-max-at-once SHAPE that epsilon0_min_eq_max carries for ε₀ in ordinal arithmetic, over a DIFFERENT set and never an instance of it - v1.20 above reads the theorem at its declaration. ⚠ AND IT DOES NOT LICENSE THE COUNT (adversary F1 / editorial E3-6, 2026-09-23): this clause once ended "epsilon0_min_eq_max appearing in proof theory, which is why the count is exactly two", running an implication FROM an ordinal theorem TO a proof-theoretic count, a direction nothing licenses. What licenses the count is the pinning argument stated earlier in this same entry - a supremum takes a ceiling and witnesses beneath it - and that argument stands on its own without the theorem. ⚠ ALSO FIXED HERE: § V's "What this does NOT claim" box labelled the characterization "Gentzen's theorem" while pointing at a remark that no longer said so. The label is dropped - the characterization takes the below-ε₀ half, which Gentzen explicitly credits to Hilbert-Bernays at p.140 footnote 3, so it is not his theorem to be named after. That site was invisible in the diff and was found only by extracting the rendered PDF. ⚠ THE PDF IS DE-LABELLED AND THE LEAN SOURCE COMMENT IS NOT. The identical string still stands in ZeroParadox/Ordinal/Gentzen.lean § V, so the divergence is open rather than closed. De-labelling it was attempted here and deliberately reverted: tools/verify/prose_baseline.txt grandfathers that module-doc block by a SHA-256 of the block's own content, so any byte change inside it lapses the grandfathering and brings a 29-line block under check_prose.py's 10-line BLOCK_CAP, and re-baselining would defeat the mechanism that caught it. Removing the label from the Lean is a separate, ticketed change and is not done here. Every v1.18 fence is unchanged: no claim about what Gentzen's § 2 proves, never "Hilbert-Bernays' theorem", never 1938, and the primary source only. ⛔ AND ONE FENCE ADDED: p.140 also states unprovability of transfinite induction below ε₀ in gewissen Teilbereichen - in certain SUBSYSTEMS, not in full PA - and no surface here cites or relies on that; the claim carried at every ZP-L site is the full-PA one. Companion moves with it (comp v1.12).
+v1.18: GENTZEN CITED AT A PAPER THAT CARRIES NEITHER CLAUSE, IN A DEPOSITED PDF (prior-art finding PA4-1 / PA-2026-09-21-A, ticket corpus-gentzen-two-bounds-propagation). Remark R-L.1 read "Gentzen's theorem (1936) establishes that ε₀ is the proof-theoretic ordinal of Peano Arithmetic: PA can prove transfinite induction for any ordinal strictly below ε₀, but not for ε₀ itself." The cited 1936 paper - Die Widerspruchsfreiheit der reinen Zahlentheorie, Math. Annalen 112 (1936) 493-565 - licenses NEITHER of those two clauses. "ε₀ is the proof-theoretic ordinal of PA" is two bounds running in opposite directions, and the document shipped one of them: 1936 gives the UPPER bound, that transfinite induction up to ε₀ SUFFICES to prove PA consistent; the LOWER bound, that PA cannot itself prove that induction, is a different result. Sufficiency is monotone upward - anything ε₀ steps of induction prove, more steps prove too - so the 1936 bound alone is equally true of ε₁ or of any larger ordinal and singles out nothing. ⚠⚠ THE FIRST ATTEMPT AT THIS FIX THEN WROTE "only the unprovability bound pins the value to exactly ε₀", WHICH IS FALSE, AND DELETED THE CLAUSE THAT WOULD HAVE MADE IT TRUE (adversary and editorial both FAIL-BEDROCK, 2026-09-22, at five sites including README.md:42). "ε₀ is the proof-theoretic ordinal of PA" is a claim about a SUPREMUM - this project's own vocabulary reference defines the term as the supremum of the ordinals for which the system proves transfinite induction - and PINNING A SUPREMUM TAKES BOTH DIRECTIONS, WHICH RUN OPPOSITE WAYS. Unprovability at ε₀ is the ceiling; provability at every ordinal strictly below ε₀ is the set of witnesses underneath it, and it is the entire content of the word "exactly". A ceiling with no witnesses beneath it locates nothing. So the third result is RESTORED here rather than dropped, and the pinning is attributed to provability-below together with unprovability-at. ⛔ THE RESTORED CREDIT IS SCOPED TO WHAT p.140 LITERALLY SAYS: Gentzen calls the below-ε₀ result bekanntlich - already known - and credits it in footnote 3 to Hilbert-Bernays, Grundlagen der Mathematik II, § 5, 3c. The remark says GENTZEN REPORTS IT, CREDITING HILBERT-BERNAYS - never that it is Hilbert-Bernays' theorem, which would assert what Grundlagen II contains, and nobody on this project has opened Grundlagen II. That scoping is what makes the clause safe: it asserts what Gentzen WROTE, on a page this project has read. ⛔ AND p.140's announcement that he gives formalized presentations of such proofs in § 2 is NOT cited: pages 145-155 have not been opened here, so no claim is made about what § 2 proves. ⚠ The original pre-v1.18 wording - "PA can prove transfinite induction for any ordinal strictly below ε₀, but not for ε₀ itself" - was MATHEMATICALLY RIGHT and only mis-dated; the defect was always the YEAR, never the characterization, and elaborating the date fix into a sufficiency-versus-unprovability story traded a citation error for a mathematical one. ⚠ THE SECONDARY SOURCE READ HERE WOULD HAVE SHIPPED A THIRD WRONG YEAR: Rathjen arXiv:1405.4484v1 Thm 2.8 labels the pair "(Gentzen 1936, 1938)". ⚠ THIS ENTRY ALSO CITED Cheng arXiv:2401.12531v4 Thm 4.1 BESIDE IT, AND THAT CITATION IS WITHDRAWN AND IS REMOVED HERE (DEFECTS.md CITE-4; verified at arxiv.org, 2026-09-23): the abstract page reads "This paper has been withdrawn by Yong Cheng", and the pinned v4 (2025-06-16, 1 KB) is the withdrawal stub and carries no Theorem 4.1 - so the pin named a document that does not contain the cited claim, independently of the withdrawal. ⛔ THE WRONG-YEAR WARNING ITSELF IS NOT DELETED (R-TWOPOLE): it stands on Rathjen alone, whose Thm 2.8 carries that label and was read at a page image and filed. Gentzen 1943 p.140 footnote 4 identifies that 1938 item as Neue Fassung des Widerspruchsfreiheitsbeweises fuer die reine Zahlentheorie, Forschungen zur Logik Heft 4 - a SECOND consistency proof, the upper bound again - so "1936, 1938" cites the sufficiency half twice and the pinning half never. Cited from the primary source only. ⭐ AND THE ATTRIBUTION IS SHARPER THAN "(1943)": Gentzen's own opening on p.140 says the unprovability follows INDIRECTLY from Goedel's theorem together with the 1936 result, and that what he supplies in 1943 is the DIRECT proof. The remark says that, rather than dating the result to 1943. Verified at the primary source, read as page images: .claude-local/papers/gentzen_1943_beweisbarkeit_unbeweisbarkeit_anfangsfaelle_transfinite_induktion_mathann119.pdf, Gerhard Gentzen, Beweisbarkeit und Unbeweisbarkeit von Anfangsfaellen der transfiniten Induktion in der reinen Zahlentheorie, Math. Annalen 119 (1943) 140-161 - p.140 for the opening and footnotes 1-4, p.161 for the closing folio that fixes the range. Companion moves with it (comp v1.11).
+v1.17: TWO SITES THE v1.16 FIX DID NOT REACH (adversary round 2, 2026-09-21). (1) The second abstract paragraph still ended "axiom footprint [propext, Classical.choice, Quot.sound] throughout." with no referent - the shape v1.14 removed from the title block by naming the file, left standing one paragraph below it. It now names ZeroParadox/Ordinal/Gentzen.lean, and the universal is measured rather than asserted: all 65 constants of the ZeroParadox.Ordinal.Gentzen module were enumerated from its module data and passed through Lean.collectAxioms, and every declaration carries the triple - the only entries reporting no axioms are the compiler-generated auxiliaries c0.eq_1, c1.eq_1 and towerNONote.match_1, which are not results. This also covers four declarations the file's own PurityCheck section does not print, among them epsilonZero_eq_nfp. (2) v1.16's own entry said ZP-K Section IV's table is "twelve rows, every one a computability object". Twelve is right and the quantifier was false: machinePhaseAFA is an AFAStructure instance, and t_exec and bot_is_quine_atom are declared in ZeroParadox/Settheory/SetTheoryAFA.lean, which MANIFEST.md labels ZP-J, while build_zpk.py's own body under that table says ZP-J T-EXEC and all its corollaries remain axiom-free. The conclusion that premise carried is unchanged and still holds, because none of the twelve is an ordinal declaration. ⚠⚠ AND THE CLAUSE v1.16 COULD NOT EARN IS NOW MEASURED, by removing the candidate source instead of walking the term: with `import ZeroParadox.Computability.Kleene` deleted from a scratch copy, Sections III-VII elaborate at exit 0 and all 23 ordinal-side declarations still report the triple, while a scope control confirms t_comp, da1_paths_unified, isComputationalQuine_undecidable, infinite_quine_family, roger_fixed_point_exists, botCode and Mathlib's Nat.Partrec.Code.fixed_point are every one ABSENT from that environment. A footprint that is present when the candidate source is absent cannot have come from it. ⚠ The closure walk v1.16 dropped its clause over is a REFUTED INSTRUMENT, not a negative result: ConstantInfo.value? is absent for every imported theorem, Mathlib's included, and for locally elaborated ones read from a run_cmd, and toKernelEnv does not recover it - while a control theorem whose statement is True and whose proof goes through Classical.em reports Classical.choice under #print axioms. So #print axioms does reach proof terms, every footprint figure in this file stands, and term-level provenance here is settled by ablating an import rather than by traversing constants.
+v1.16: FALSE PROVENANCE IN A DEPOSITED PDF (adversary FAIL-BEDROCK, 2026-09-21). The Section I remark box said "ZP-L inherits that footprint throughout. Where it enters is recorded in ZP-K Section IV", directly after listing four ZP-K theorems that carry the triple. Both halves are false for most of what they quantify over. Measured by elaboration with NO ZeroParadox and NO computability module in scope (lake env lean, exit 0): Ordinal.nfp, Ordinal.epsilon, Ordinal.epsilon_zero_eq_nfp, Ordinal.omega0_opow_epsilon and Ordinal.iterate_omega0_opow_lt_epsilon_zero each report [propext, Classical.choice, Quot.sound], and two probe theorems restating Section III's own shape carry the triple too - so Gentzen.lean's ordinal declarations get the footprint from Mathlib's ordinal theory, not from those four theorems. A module-level import is not a term dependency; collectAxioms follows the term. And ZP-K Section IV's table is twelve rows of ZP-K and ZP-J objects, none of them an ordinal declaration, so it records nothing about where an ordinal declaration's footprint enters. ⚠ THIS IS THE ROUND-2 FINDING AT BASIS 74c316c RECURRING, WRITTEN BY ITS OWN FIX: that round indicted "Every theorem in ZP-L's own development inherits this footprint" as a false provenance claim, and the remediation changed this to that, rescoped the subject, KEPT THE VERB and ADDED the pointer clause. The corpus already held the correct chart one file over - this document's own companion says the footprint is "inherited from Lean 4 and Mathlib rather than a novel ZP-L commitment". The box now names Mathlib as the source with two re-runnable witnesses, points at Section IV for the computability side only, and states no general rule. ⛔ NARROWED, NOT DELETED (R-TWOPOLE): the four listed ZP-K theorems do carry the triple, so deleting the box writes the opposite one-chart sentence. ⚠⚠ A UNIQUENESS CLAUSE WAS DRAFTED FOR THIS FIX AND DROPPED, BECAUSE THE PROBE THAT WOULD HAVE EARNED IT FAILED ITS OWN CONTROL. The draft said the one ZP-L result routing through ZP-K is Section II's Rogers wrapper, roger_fixed_point_stability. A run_cmd walking each Gentzen declaration's transitive constant closure reported NO-KLEENE-TERM-DEP for all 40 non-internal declarations - including the wrapper, whose source is literally roger_fixed_point_exists f hf. The control explains why and refutes the walk, not the corpus: ConstantInfo.value? returned none for the wrapper, so the walk only ever saw TYPES and no proof term of any declaration was examined. collectAxioms does reach proofs, so every footprint figure in this entry stands; the term-dependency question is UNMEASURED as of 2026-09-21 and the clause asserting it is therefore absent rather than reworded (R-REVALIDATE: restate to what was measured, and deleting is legitimate).
+v1.15 / comp v1.10: ZPKB-8 AND ZPKB-5, BEDROCK IN DEPOSITED PDFs (Tim ruling, 2026-09-20). The Remaining Gap box listed three things a bridge "would require", and two of the three were already built in ZPM while the third was described as a different object. Verified at ZeroParadox/Ordinal/Incompleteness.lean: (1) the mapping was REVERSED - snapEmbed c0 = 1 and snapEmbed c1 = 0, both by rfl, not c0 to 0 and c1 to 1; (2) "proof that snapEmbed is join-preserving" is proved, as snapEmbed_mul_morphism, and it carries join to MULTIPLICATION, so it is an absorbing-element morphism and not a ZPSemilattice morphism - Z_2 carries no lattice bottom, which is why the box's own "what is not proved" sentence stays true; (3) hfp is no longer a free hypothesis - hfp_from_epsilon_zero derives it from monotonicity plus the alignment hypothesis h_eps0, and snap_unconditional uses it. ⛔ THE BOX IS NARROWED, NOT DELETED (R-TWOPOLE). Its opening and its "what is not proved" sentence are TRUE as literally worded - ZPM's own Remark states that the order-preserving identification of eps0 with the bottom is not derived and would need ZPSemilattice morphisms that do not exist in this library - so deleting the box would write the opposite one-chart sentence. What remains open is now stated as the thing that IS open: deriving h_eps0 from the 2-adic structure through snapEmbed, which ZPM Section II names the Classical.choice inversion conjecture. Companion: "a program that is its own output" described the KleeneStructure requirement as self-printing; the requirement is botCode_is_quine, which asks for IsComputationalQuine - the periodicity condition eval c n = eval c (encode c + n), satisfied by the constant codes, which are what witness infinite_quine_family. The fix had reached ZP-K and never reached this companion. Verified at ZeroParadox/Computability/Kleene.lean Sections I, II and VI.
+v1.14 / comp v1.9: GATE ROUNDS 3-4 REMEDIATION (2026-09-19). ⚠ The first attempt at the Axiom Purity fix wrote "That is uniform within this document", which the document contradicts twice - the abstract and Section I, whose ZPJ/K row names bot_self_mem, measured at no axioms. Anchoring an unanchored referent produced the opposite one-chart sentence, which is R-TWOPOLE's measured shape. The box now states only what was measured (every theorem in the Theorem Summary carries the triple) and points at where the layers differ, naming that row. The Axiom Purity box's "Every theorem in the summary above carries the triple" sat three lines from "the footprints are not uniform", both true but with unanchored referents, reading as self-retraction; the first is now anchored to the Theorem Summary and the second to the ZP layers. Page 1's "axiom footprint [...] throughout" had the same unanchored shape and now names Gentzen.lean. Companion: "Every ZP-L theorem carries the triple" was an unscoped universal while the paragraph set scope wider than ZP-L's own file - ZP-L cites Snap.lean, whose t_snap_derived is axiom-free - and is now scoped to Gentzen.lean and names it. ⚠ v1.13's content changed after its version was cut and the PDFs were rebuilt without an increment; this bump is that correction (R-REGISTER: a hash mismatch means the bump was skipped, not that a rebuild is needed).
+v1.13 / comp v1.8: ZPK-BED-2, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-19). Sites in this document and its companion asserted one axiom footprint across all the settings, and the Section I table refutes that: its ZPJ/K cell names bot_self_mem (AFA), which measures no axioms, beside botCode (Kleene), which carries them. "Required" is a necessity claim no #print axioms run can earn - necessity takes a reduction to a taboo (ChoiceCannotBe.lean § IV) - and "a constructive alternative was not found" is false, the alternative being the row's own AFA witness. Sites here POINT at ZP-K Section IV, which holds a dated measurement table rather than a rule (Tim ruling, 2026-09-19), instead of restating anything. Also removed: the "Why K is Absent from Lean" reason (uncomputability does not explain absence from Lean - the corpus carries ~200 noncomputable declarations, two of them in Gentzen.lean), a theorem count that counted table ROWS, and "24 theorems proved" on page 1. Prose no longer enumerates the settings (Tim ruling) - the table defines them, and three prose sites had enumerated them three different ways while every claim was quantified over the set. The table is unchanged, per the ruling. ⚠ SCOPE OF THE SEARCH, stated instead of a count (R-NOTINLIB): check_paths.py --full --claim over .md + .lean + tracked .py + the 40 rendered PDFs, phrasings varied by POLARITY, PART OF SPEECH and VOCABULARY. Post-mortem: .claude-local/notes/axiom_footprint_measured_2026-09-19.md.
+v1.12: CLASSICAL.CHOICE MODAL (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box's 'Its presence is expected and documented, not incidental.' read as a necessity claim beside 'essential is not measured'; it now reads 'Its presence is expected and documented.'
+v1.11: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box said the computability layer's choice belongs to ZP-K's instance. Measured: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and a computable constant-code instance carries it too; Classical.choose is what makes machinePhaseKleene noncomputable; essentiality is not measured. The box now says that.
+v1.10: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim rulings, 2026-09-15): Section II's body still equated Rogers' fixed-point theorem with Kleene's second recursion theorem and dropped 'total'; it now names Mathlib fixed_point, inter-derivable with fixed_point2, for any total computable transformation. The verification box said Classical.choice is load-bearing; in the computability layer the choice belongs to ZP-K's instance (its choice of botCode), and a computable instance with a constant code also exists.
+v1.9: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the overview equated Rogers' fixed-point theorem with Kleene's second recursion theorem; it now names Rogers' theorem as Mathlib fixed_point, for a total computable transformation, inter-derivable with Kleene's second recursion theorem (fixed_point2), as Gentzen.lean section II already records. Remark 'Why K is Absent' said the AFA/Kleene route is 'a provable path'; its Kleene step is a KleeneStructure requirement, and it now says so.
+v1.8: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15): the surreals note (Remark R-L.2) sits in the ordered-field setting, where the snap is proved impossible (f_snap_impossible); the clause saying what occurrence follows from is removed there, and the sentence says only what is derived: the shape and its impossibility in an ordered field.
+v1.7: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the surreals note said 'occurrence is a framework commitment'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
 v1.6: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
 v1.5: axiom-footprint list label corrected - t_comp described as a four-way equivalence; it proves three, the computational face being an assumption rather than a clause. Footprint figures themselves unchanged (measured, not quoted).
 v1.4: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers) — Section II heading and prose.
@@ -15,7 +29,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.20'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -34,7 +48,9 @@ def build():
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>All theorems §I&#8211;§VII proved sorry-free in Lean 4. '
-            'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.</i>',
+            'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout this '
+            'document&#8217;s own Lean file (Gentzen.lean). Across the ZP layers the '
+            'footprints are not uniform &#8212; ZP-K Section IV tabulates them.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -44,10 +60,11 @@ def build():
     E.append(body(
         'ZP-L establishes four results connecting the formal axioms of the ZP framework '
         'to standard results in ordinal theory and computability. '
-        'First, Classical.choice appears at the non-constructive diagonal step in each '
-        'of the four mathematical settings of the ZP framework — topology, information '
-        'theory, set theory, and computation. Second, Rogers\' fixed-point theorem '
-        '(Kleene\'s second recursion theorem) is formalized as a wrapper, formalizing the '
+        'First, the axiom footprints of the layers tabulated in Section I are surveyed, and '
+        'they are not uniform; ZP-K Section IV tabulates the measured footprints. '
+        'Second, Rogers\' fixed-point theorem for a total '
+        'computable transformation (Mathlib fixed_point; inter-derivable with Kleene\'s second '
+        'recursion theorem, fixed_point&#8322;) is formalized as a wrapper, formalizing the '
         'computational fixed-point structure. Third, the ordinal &#949;&#8320; is fully '
         'characterized as the first fixed point of &#945; &#8614; &#969;^&#945; and the '
         'limit of the tower &#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230;. '
@@ -60,8 +77,8 @@ def build():
         'simultaneously satisfies all five conditions — monotone, tower-aligned, '
         'fixed-point-respecting, snapping at &#949;&#8320;, and &#949;&#8320; minimal. '
         'All conditions are verified without free hypotheses for this witness. '
-        '24 theorems proved, zero sorry, axiom footprint [propext, Classical.choice, '
-        'Quot.sound] throughout.'))
+        'Proved sorry-free, axiom footprint [propext, Classical.choice, '
+        'Quot.sound] throughout ZeroParadox/Ordinal/Gentzen.lean, measured.'))
     E.append(hr())
 
     # ── Section I: Axiom Footprint Convergence ─────────────────────────────────
@@ -72,9 +89,10 @@ def build():
     ]
 
     E.append(body(
-        'Non-constructibility appears in four mathematical settings across the ZP framework. '
-        'Classical.choice is required at each diagonal step in these proofs — '
-        'a constructive alternative was not found in any of the four settings.'))
+        'Non-constructibility appears across the layers listed below. The axiom footprints '
+        'are not uniform: ZP-K Section IV tabulates the measured footprints, and the ZPJ/K '
+        'row below names a witness on each side — bot_self_mem, '
+        'which measures no axioms, and botCode, which carries them.'))
 
     E.append(data_table(
         headers=['Layer', 'Formal Language', 'Expression of non-constructibility'],
@@ -89,21 +107,22 @@ def build():
     E.append(sp(6))
 
     E.append(remark_box(
-        'Remark: Why K is Absent from Lean',
+        'Remark: K is not computed in Lean',
         [
             'Kolmogorov complexity K is not computed in Lean in this framework. '
-            'Its existence as a total function requires Classical.choice — '
-            'exactly the axiom Nat.Partrec.Code.fixed_point&#8322; already uses in ZP-K. '
-            'The AFA/Kleene route reaches the same fixed-point structure via a provable '
-            'path without requiring K to be explicitly computed.',
+            'The AFA/Kleene route reaches the same fixed-point structure via a path whose '
+            'Kleene step is a KleeneStructure requirement, without requiring K to be explicitly computed.',
             'Axiom footprint evidence — the following ZP-K theorems all carry '
             '[propext, Classical.choice, Quot.sound]:',
             '  t_comp (T-COMP three-way equivalence; the computational face is an assumption, not a clause)',
             '  da1_paths_unified',
             '  isComputationalQuine_undecidable',
             '  infinite_quine_family',
-            'The Classical.choice entry is the computational expression of the diagonal. '
-            'ZP-L inherits this footprint throughout.',
+            'Gentzen.lean carries that footprint throughout, measured &#8212; and it is not '
+            'inherited from the theorems above. Mathlib\'s ordinal theory carries it on its '
+            'own: Ordinal.nfp and Ordinal.epsilon_zero_eq_nfp each measure [propext, '
+            'Classical.choice, Quot.sound] with no computability module in scope. ZP-K '
+            'Section IV tabulates the measured footprints for the computability side.',
         ]
     ))
     E.append(sp(6))
@@ -117,8 +136,9 @@ def build():
     ]
 
     E.append(body(
-        'Rogers\' fixed-point theorem (also known as Kleene\'s second recursion theorem) '
-        'states that any computable transformation of a code has a behavioral fixed point: '
+        'Rogers\' fixed-point theorem (Mathlib fixed_point; inter-derivable with Kleene\'s second '
+        'recursion theorem, fixed_point&#8322;) states that any total computable transformation of a '
+        'code has a behavioral fixed point: '
         'a code c such that running f(c) and running c produce the same partial function. '
         'For any computable transformation, at least one fixed-point code exists.'))
 
@@ -130,8 +150,7 @@ def build():
             'Proof: wrapper around roger_fixed_point_exists.',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
             'Note: this is an existential result. The specific code c is not '
-            'constructively produced; Classical.choice selects it. This is the '
-            'same non-constructive step that appears across all ZP layers (§I).',
+            'constructively produced. ZP-K Section IV tabulates the measured footprints.',
         ]
     ))
     E.append(sp(6))
@@ -233,10 +252,21 @@ def build():
     E.append(remark_box(
         'Remark R-L.1: Proof-Theoretic Alignment',
         [
-            'Gentzen\'s theorem (1936) establishes that &#949;&#8320; is the '
-            'proof-theoretic ordinal of Peano Arithmetic: PA can prove transfinite '
-            'induction for any ordinal strictly below &#949;&#8320;, but not for '
-            '&#949;&#8320; itself. This is not claimed or proved here.',
+            'Two results pin &#949;&#8320; as the proof-theoretic ordinal of '
+            'Peano Arithmetic &#8212; the limit of how far PA\'s proofs of '
+            'transfinite induction reach &#8212; and they run in opposite '
+            'directions. Gentzen reports, crediting Hilbert-Bernays, that '
+            'transfinite induction up to any ordinal strictly below '
+            '&#949;&#8320; is provable in PA. And transfinite induction up to '
+            '&#949;&#8320; itself is not provable in PA, which Gentzen proved '
+            'directly in 1943. Neither half alone locates the boundary: a '
+            'ceiling with no witnesses beneath it pins nothing, and witnesses '
+            'with no ceiling pin nothing either. A third result stands behind '
+            'them &#8212; transfinite induction up to &#949;&#8320; suffices '
+            'to prove PA consistent (1936) &#8212; and it is also the '
+            'indirect route to the unprovability half, via G&#246;del\'s '
+            'theorem together with that 1936 result. This is not claimed or '
+            'proved here.',
             'ZP-L derives &#949;&#8320; as the snap threshold from ordinal fixed-point '
             'structure, independently of proof theory. Both derivations locate the same '
             'boundary: the ordinal where &#969;-tower self-iteration becomes self-limiting. '
@@ -256,7 +286,7 @@ def build():
             'ZP-F (The Counterexamples) proves that the Binary Snap &#8212; the transition from &#8869; to the first non-null ordinal threshold (&#949;&#8320;, '
             'established in §V&#8211;§VII above) &#8212; cannot occur in any linearly ordered '
             'field. This result applies directly to No considered as a linearly ordered field. '
-            'Note the scope: what is derived is the transition&#8217;s SHAPE and its impossibility in an ordered field, never that the transition is taken - occurrence is a framework commitment.',
+            'Note the scope: what is derived is the transition&#8217;s SHAPE and its impossibility in an ordered field.',
             'The surreals therefore contain &#949;&#8320; as an ordinal while simultaneously '
             'satisfying the density condition that blocks the Binary Snap in their ordered '
             'field structure. Both structures coexist in No: &#949;&#8320; is present as an '
@@ -384,8 +414,8 @@ def build():
     E.append(import_box(
         'What this does NOT claim (§V)',
         [
-            'Gentzen\'s theorem: that &#949;&#8320; is the proof-theoretic ordinal of '
-            'PA (not claimed — see Remark R-L.1).',
+            'That &#949;&#8320; is the proof-theoretic ordinal of '
+            'PA (not claimed &#8212; see Remark R-L.1).',
             'Any statement about formal provability in PA.',
             'That &#949;&#8320; is the UNIQUE minimal snap boundary: '
             'snap_threshold_is_epsilon_zero shows no ordinal below &#949;&#8320; '
@@ -455,8 +485,8 @@ def build():
     E.append(body(
         'The ordinal fixed-point structure (&#949;&#8320; = nfp (&#969;^&#183;) 0, '
         '&#969;^&#949;&#8320; = &#949;&#8320;) and the computational fixed-point structure '
-        '(Kleene\'s recursion theorem, roger_fixed_point_stability) both require '
-        'Classical.choice at their non-constructive step — parallel structure, not a '
+        '(Kleene\'s recursion theorem, roger_fixed_point_stability) both carry '
+        'Classical.choice in the proofs recorded here — parallel structure, not a '
         'proved isomorphism. The hypothesis hfp encodes that ordinal fixed points of &#969;^&#183; '
         'map to the snap state c&#8321;. Under this hypothesis plus monotonicity and tower '
         'alignment, &#949;&#8320; is the minimal snap threshold.'))
@@ -577,14 +607,27 @@ def build():
             'exactly at &#949;&#8320; and nowhere earlier. What is not proved: a canonical '
             'ZPSemilattice morphism MachinePhase &#8594; &#8484;&#8322; that would connect '
             'ZPE\'s &#8869; = c&#8320; to ZPB\'s &#8869; = 0 formally.',
-            'Such a bridge would require:',
-            '  (1) snapEmbed : MachinePhase &#8594; &#8484;&#8322; mapping c&#8320; &#8614; 0, c&#8321; &#8614; 1',
-            '  (2) proof that snapEmbed is join-preserving',
-            '  (3) a bridge theorem deriving hfp from tower_converges_to_zero via snapEmbed',
-            'This would make hfp a theorem rather than a hypothesis in '
-            'snap_exactly_at_epsilon_zero. The canonical witness (epsilon_zero_snap_canonical) '
-            'satisfies all five conditions without this bridge; the bridge would close '
-            'the gap between the two formal instances of &#8869; across ZPE and ZPB.',
+            'Two of the three pieces such a bridge was expected to need are built, in ZPM '
+            '(ZeroParadox/Ordinal/Incompleteness.lean &#167;I&#8211;&#167;II), and the third is '
+            'the one still open:',
+            '  (1) snapEmbed : MachinePhase &#8594; &#8484;&#8322; exists, sending c&#8320; '
+            '&#8614; 1 and c&#8321; &#8614; 0 &#8212; the snap state to 2-adic zero, the pre-snap '
+            'state to a unit (snapEmbed_c0, snapEmbed_c1, both by rfl)',
+            '  (2) snapEmbed_mul_morphism proves snapEmbed (join a b) = snapEmbed a &#215; '
+            'snapEmbed b, carrying join to multiplication because c&#8321; absorbs joins as 0 '
+            'absorbs products. That is an absorbing-element morphism, not a ZPSemilattice '
+            'morphism: &#8484;&#8322; carries no lattice &#8869;',
+            '  (3) still open &#8212; no theorem derives the alignment from '
+            'tower_converges_to_zero through snapEmbed',
+            'So hfp is derived rather than assumed: hfp_from_epsilon_zero obtains it from '
+            'monotonicity together with h&#949;&#8320; : &#981; &#949;&#8320; = c&#8321;, and '
+            'snap_unconditional uses it in place of the free hypothesis of '
+            'snap_exactly_at_epsilon_zero. What remains open is h&#949;&#8320; itself &#8212; '
+            'deriving &#981; &#949;&#8320; = c&#8321; from the 2-adic structure rather than '
+            'taking it as an alignment hypothesis, which ZPM &#167;II names the Classical.choice '
+            'inversion conjecture. The canonical witness (epsilon_zero_snap_canonical) '
+            'satisfies all five conditions without any such bridge; what the bridge would close '
+            'is the gap between the two formal instances of &#8869; across ZPE and ZPB.',
         ]
     ))
     E.append(sp(6))
@@ -631,12 +674,19 @@ def build():
     E.append(axiom_box(
         'Axiom Purity',
         [
-            'All 23 theorems carry axiom footprint: [propext, Classical.choice, Quot.sound].',
+            'Every theorem in the Theorem Summary above carries axiom footprint: '
+            '[propext, Classical.choice, Quot.sound]. Section I\'s table and ZP-K Section IV '
+            'record where the ZP layers differ &#8212; Section I\'s own ZPJ/K row names '
+            'bot_self_mem, which measures no axioms.',
             'These are standard Mathlib infrastructure axioms (ordinal theory, p-adic '
             'analysis, computability). They are not ZP-L commitments.',
-            'Classical.choice is load-bearing: it is the formal non-constructivity '
-            'appearing at the diagonal step in each ZP layer (§I). Its presence is '
-            'expected and documented, not incidental.',
+            'The footprints are not uniform; ZP-K Section IV tabulates the measurements. '
+            'In the computability layer Classical.choice is reached through '
+            'Mathlib\'s numbering of program codes '
+            '(Denumerable Code): it is present even in a computable instance with a constant '
+            'code. ZP-K\'s machinePhaseKleene also picks botCode with Classical.choose, which is '
+            'what makes that instance noncomputable. Whether the numbering\'s footprint is '
+            'essential is not measured. Its presence is expected and documented.',
             'Zero sorry in Gentzen.lean. Verified: lake build, May 2026.',
         ]
     ))

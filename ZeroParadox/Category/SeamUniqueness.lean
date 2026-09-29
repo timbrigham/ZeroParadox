@@ -119,7 +119,8 @@ theorem padic_bottom_not_zero :
 /-! ## Capstone: among the named bottoms, #5 is the only zero object -/
 
 /-- **Seam uniqueness among the named bottoms.** Of the five framework bottoms, only #5 (the Hilbert
-    bottom) is a zero object; #3, #4, the ZP-G initial, and the ZP-A bottom each provably fail.
+    bottom) is a zero object; #3, #4, the ZP-G initial, and the ZP-A bottom each provably fail, the
+    ZP-A bottom under the premise `HasNoTop L` (it is least but not greatest when `L` has no top).
 
     This refutes the pre-registered GO conjecture ("another zero-object bottom exists") and
     establishes the pre-registered NO-GO obstruction ("#5 is the only zero-object bottom among those
@@ -143,6 +144,14 @@ theorem seam_unique_among_named (L : Type*) [ZPSemilattice L]
    padic_bottom_not_zero,
    forkcat_initial_not_zero,
    zpa_bot_not_greatest L hnt⟩
+
+-- `Statement:` on any ZP-A semilattice with two distinct elements the bottom is not greatest. Unlike
+-- `zpa_bot_not_greatest`, this takes no `HasNoTop` premise.
+example {L : Type*} [ZPSemilattice L] (a b : L) (hab : a ≠ b) :
+    ¬ ∀ x : L, ZPSemilattice.le x (ZPSemilattice.bot : L) := by
+  intro h
+  exact hab ((ZPSemilattice.le_antisymm (h a) (ZPSemilattice.bot_le a)).trans
+    (ZPSemilattice.le_antisymm (h b) (ZPSemilattice.bot_le b)).symm)
 
 end ZeroParadox
 

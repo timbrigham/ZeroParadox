@@ -16,7 +16,7 @@ tower climbing to `ε₀` has stage-encodings that land on the 2-adic floor `0 =
 ⚠ The encodings **converge to** ⊥; `ε₀` is not ⊥ (`ε₀ ≠ ⊥`). And reading that floor as a **NEW**
 bottom ⊥ₙ₊₁ is **C-DA2, a commitment** — no theorem here carries it, and in this very chart
 `snap_arc_z2_loop` has the arc returning to the **same** `0`. `t_iz_limit_is_new_null` proves the
-ROLE half only and must never be cited as a novelty witness (`Order/SnapCannotBe.lean:43`).
+ROLE half only and must never be cited as a novelty witness (the `t_iz_limit_is_new_null` gloss in `Order/SnapCannotBe.lean`).
 
 **RiemannSphere** (`ZeroParadox/Valuation/RiemannSphere.lean`) built the inversion `rInv` on the
 one-point compactification `OnePoint ℚ₂`, a homeomorphism swapping the floor `0` with the point at

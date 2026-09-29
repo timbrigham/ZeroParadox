@@ -384,8 +384,25 @@ def all_hash_mismatches():
     # one whose output is an amendable push.
     for pdf, readme_v, reg_v in check_readme_versions():
         out.append('README %s: says %s, register says %s' % (pdf, readme_v, reg_v))
-    for entry in check_docstring_versions():
-        out.append('docstring version: %s' % (entry,))
+    # ⚠ AND THE NOT-FOUND ROW GETS ITS OWN SENTENCE (`HDRVER-1`). `check_docstring_versions` now
+    # returns `header is None` for a script whose title line cannot be located above its changelog;
+    # printing that tuple raw would put a bare `None` in front of the one reader whose next action
+    # mints a permanent DOI. Say what is wrong and what to do about it.
+    # ⚠⚠ AND THE UNREADABLE ROW GETS ITS OWN SENTENCE TOO, FOR THE SAME REASON AND A SHARPER ONE.
+    # `header` is an `OSError` instance when the file could not be OPENED. That is NOT the
+    # not-found case and must not borrow its wording: the remedy is to investigate a lock or a
+    # permission, never to add a title line. Branch on the exception BEFORE branching on `None`.
+    for name, head, const in check_docstring_versions():
+        if isinstance(head, OSError):
+            out.append('build script UNREADABLE: %s could not be opened (%s), so neither its '
+                       'docstring header nor its VERSION constant was read - this file was '
+                       'checked against nothing' % (name, head))
+        elif head is None:
+            out.append('docstring header NOT FOUND in %s (VERSION = %s): no title line above the '
+                       'changelog, so step 4 of the four-step rule cannot be checked on this file'
+                       % (name, const))
+        else:
+            out.append('docstring version: %s' % ((name, head, const),))
     return sorted(out)
 
 
@@ -1021,6 +1038,14 @@ def selftest():
             # fails is one people learn to scroll past**, which is worse than not having it. So the
             # open item is named here explicitly: when it is fixed, this line must be deleted, and if
             # a SECOND item appears the control fires.
+            # ⚠ A SECOND ENTRY LIVED HERE FOR ONE COMMIT AND IS GONE (`HDRVER-1`, 2026-09-23).
+            # Teaching this leg to report an unlocatable docstring header made a REAL finding appear
+            # on the live tree - `build_zpe.py`'s only title line sat INSIDE its changelog - so the
+            # entry was added to keep this control green while that finding stood. `build_zpe.py`
+            # now carries a title line above its changelog, the finding is gone, and the exemption
+            # is deleted in the same change that removed its cause: an exemption is priced on what
+            # it buys, and left standing it would be a permanent silent exemption for the one file
+            # this defect row is about. The synthetic probes below cover the LOGIC either way.
             _KNOWN_OPEN = ('Tools: no formal: token',)
             _base = [m for m in all_hash_mismatches()
                      if not any(m.startswith(k) for k in _KNOWN_OPEN)]
@@ -1108,6 +1133,198 @@ def selftest():
         print('    %-34s %s' % ('%s route reaches the release gate' % _label,
                                 'ok' if _reached else '*** NOT DELEGATED ***'))
 
+    # ⚠⚠ A HEADER THAT CANNOT BE FOUND IS A REPORTABLE OUTCOME, NOT SILENCE (`HDRVER-1`, 2026-09-23).
+    # `check_docstring_versions` used to drop such a file with NO row and NO message, so
+    # `build_zpe.py` - whose only title line sits INSIDE its changelog - was never compared against
+    # anything while its constant drifted 16 versions and this module printed "in sync", exit 0.
+    # ⚠ CONTROLLED ON SYNTHETIC SCRIPTS, NEVER ON THE LIVE TREE. A control keyed to `build_zpe.py`
+    # goes quiet the moment that file is repaired and takes its own evidence with it - the same
+    # "pinned to the world's current state" trap the README control records above.
+    _probes = {
+        # A title line that EXISTS but sits below the first changelog entry: `_header_version`
+        # truncates there by design, so it returns None. This is the `build_zpe.py` shape.
+        'build_zzprobe_buried.py':
+            '"""\nv1.0: first cut.\nv1.9: renamed.\nZero Paradox - Probe: Buried (v1.9)\n"""\n'
+            "VERSION = '9.9'\n",
+        # An ordinary stale header. Nothing on the real tree is stale today, so without this probe
+        # the check's PRIMARY finding has no control at all.
+        'build_zzprobe_stale.py':
+            '"""\nZero Paradox - Probe: Stale (v1.0)\n"""\n\nVERSION = \'2.0\'\n',
+        # No VERSION constant: legitimately OUT OF SCOPE, and turning these five real scripts into
+        # failures would be a new defect, not a fix.
+        'build_zzprobe_noversion.py':
+            '"""\nZero Paradox - Probe: No Constant\nVersion 1.0 | July 2026\n"""\n',
+        # Header found and agreeing: the satisfied branch stays silent.
+        'build_zzprobe_ok.py':
+            '"""\nZero Paradox - Probe: Fine (v1.0)\n"""\n\nVERSION = \'1.0\'\n',
+    }
+    _probe_paths = dict((os.path.join(REPO, 'scripts', _n), _b) for _n, _b in _probes.items())
+    # ⚠⚠ THE FIFTH PROBE IS NOT A FILE, IT IS AN EXCEPTION, and that is exactly why the four above
+    # could not reach this defect: they are injected through a `StringIO` that never raises, so no
+    # arrangement of their CONTENT can produce a file that will not OPEN. `/rely` named this as the
+    # instance its own construction could never produce (2026-09-23). The probe is a path that
+    # `glob` lists and `io.open` refuses - the race `R-STAGE` records between a listing and a read,
+    # and a Windows file lock, both arrive at this shape.
+    _probe_locked = os.path.join(REPO, 'scripts', 'build_zzprobe_locked.py')
+    _real_glob, _real_open = glob.glob, io.open
+
+    def _probe_open(p, *a, **k):
+        if str(p) == _probe_locked:
+            raise PermissionError(13, 'Permission denied', str(p))
+        if str(p) in _probe_paths:
+            import io as _io
+            return _io.StringIO(_probe_paths[str(p)])
+        return _real_open(p, *a, **k)
+
+    try:
+        glob.glob = lambda *_a, **_k: list(_probe_paths) + [_probe_locked]
+        io.open = _probe_open
+        _rows = check_docstring_versions()
+    finally:
+        glob.glob, io.open = _real_glob, _real_open
+    _seen = dict((n, h) for n, h, _c in _rows)
+    _seen_const = dict((n, c) for n, _h, c in _rows)
+
+    print('  MUST FIRE  (a header that cannot be located is REPORTED)')
+    _buried_ok = 'build_zzprobe_buried.py' in _seen and _seen['build_zzprobe_buried.py'] is None
+    bad += 0 if _buried_ok else 1
+    print('    %-34s %s' % ('buried title line is reported',
+                            'ok' if _buried_ok else '*** SILENTLY SKIPPED ***'))
+    _stale_ok = _seen.get('build_zzprobe_stale.py') == '1.0'
+    bad += 0 if _stale_ok else 1
+    print('    %-34s %s' % ('a stale header is still reported',
+                            'ok' if _stale_ok else '*** WRONG ***'))
+    # ⚠⚠ AND A FILE THAT WILL NOT OPEN IS REPORTED TOO, WITH ITS OWN TAG. `except OSError: continue`
+    # dropped it entirely: zero rows, which is the value the AGREEING branch returns. The row must
+    # exist AND be distinguishable - a row tagged `None` would route this to "add a title line",
+    # which is a wrong instruction for a file nobody could read.
+    _locked_head = _seen.get('build_zzprobe_locked.py', '<no row>')
+    _locked_ok = isinstance(_locked_head, OSError)
+    bad += 0 if _locked_ok else 1
+    print('    %-34s %s%s' % ('an unopenable script is reported',
+                              'ok' if _locked_ok else '*** SILENTLY SKIPPED ***',
+                              '' if _locked_ok else ' — %r' % (_locked_head,)))
+    # The TAG must separate it from the not-found case, by VALUE (`R-ZERONULL`). `None` would
+    # collide; an exception instance cannot be mistaken for a version string or for `None`.
+    _tag_ok = (_locked_ok and _seen.get('build_zzprobe_buried.py') is None
+               and _seen_const.get('build_zzprobe_locked.py') is None
+               and _seen_const.get('build_zzprobe_buried.py') == '9.9')
+    bad += 0 if _tag_ok else 1
+    print('    %-34s %s' % ('unopenable != header-not-found',
+                            'ok' if _tag_ok else '*** THE TWO SHARE A ROW SHAPE ***'))
+    # ⛔ AND THE NARROW `except` MUST STAY NARROW. Bad bytes raise `UnicodeDecodeError`, a
+    # `ValueError`, which this must NOT catch - widening to a bare `except:` would turn a LOUD
+    # failure into a quiet row and hand back the coverage the row above just bought.
+    class _BadBytes(object):
+        def read(self):
+            return b'\xff\xfe\x00'.decode('utf-8')
+
+    def _bad_open(p, *_a, **_k):
+        return _BadBytes()
+
+    _loud = False
+    try:
+        glob.glob = lambda *_a, **_k: [os.path.join(REPO, 'scripts', 'build_zzprobe_bytes.py')]
+        io.open = _bad_open
+        check_docstring_versions()
+    except UnicodeDecodeError:
+        _loud = True
+    finally:
+        glob.glob, io.open = _real_glob, _real_open
+    bad += 0 if _loud else 1
+    print('    %-34s %s' % ('undecodable bytes still fail LOUD',
+                            'ok' if _loud else '*** SWALLOWED ***'))
+    # ⚠ AND THE RELEASE GATE MUST SAY SO IN WORDS. `RLY18-5` again: the gate whose output is a
+    # permanent DOI must not render this row as a bare `None` the reader cannot act on.
+    _real_cdv = globals()['check_docstring_versions']
+    try:
+        globals()['check_docstring_versions'] = lambda *_a, **_k: [('<probe>.py', None, '9.9')]
+        _msgs = [m for m in all_hash_mismatches() if '<probe>.py' in m]
+    finally:
+        globals()['check_docstring_versions'] = _real_cdv
+    _gate_ok = bool(_msgs) and all('NOT FOUND' in m and 'None' not in m for m in _msgs)
+    bad += 0 if _gate_ok else 1
+    print('    %-34s %s%s' % ('the release gate names the absence',
+                              'ok' if _gate_ok else '*** WRONG ***',
+                              '' if _gate_ok else ' — %s' % (_msgs or 'no message',)))
+    # ⚠ THE SAME, FOR THE UNREADABLE ROW. It must reach the gate, say UNREADABLE rather than borrow
+    # the NOT FOUND wording, and never render the raw exception tuple in front of the one reader
+    # whose next action mints a permanent DOI.
+    try:
+        globals()['check_docstring_versions'] = lambda *_a, **_k: [
+            ('<locked>.py', PermissionError(13, 'Permission denied'), None)]
+        _lmsgs = [m for m in all_hash_mismatches() if '<locked>.py' in m]
+    finally:
+        globals()['check_docstring_versions'] = _real_cdv
+    _lgate_ok = bool(_lmsgs) and all('UNREADABLE' in m and 'NOT FOUND' not in m
+                                     and 'Permission denied' in m for m in _lmsgs)
+    bad += 0 if _lgate_ok else 1
+    print('    %-34s %s%s' % ('the gate names the unreadable file',
+                              'ok' if _lgate_ok else '*** WRONG ***',
+                              '' if _lgate_ok else ' — %s' % (_lmsgs or 'no message',)))
+
+    # ⚠⚠ AND `main()`'s REPORTER IS CONTROLLED THROUGH `main()`, NOT AROUND IT (`/rely` ORDINARY-1,
+    # 2026-09-23). Reverting the block split there returned rc 0 with nothing red, because no leg
+    # called `main()` - and the misrender it produces is `build_zpe.py  docstring None  constant
+    # 3.42` under the STALE heading, sending a reader to edit a line that does not exist. This is
+    # the same shape as the delegation legs above, one level up: patch the SOURCE function, run the
+    # real CALLER, and read what a human would actually see. `sys.argv` is emptied so `main()` does
+    # not re-enter `--selftest`, and `record_if_asked` is inert without `--record`, so this writes
+    # nothing.
+    _probe_rows = [('<probe-absent>.py', None, '9.9'),
+                   ('<probe-locked>.py', PermissionError(13, 'Permission denied'), None)]
+    _heads = ('DOCSTRING VERSION != VERSION constant',
+              'DOCSTRING HEADER NOT FOUND',
+              'BUILD SCRIPT COULD NOT BE READ')
+
+    def _section_of(txt, marker):
+        """Which heading most recently preceded the line naming `marker`."""
+        cur = None
+        for ln in txt.splitlines():
+            for h in _heads:
+                if ln.startswith(h):
+                    cur = h
+            if marker in ln and not ln.startswith(_heads):
+                return cur
+        return '<never printed>'
+
+    import io as _io2
+    _buf = _io2.StringIO()
+    _save_out, _save_argv = sys.stdout, sys.argv
+    try:
+        globals()['check_docstring_versions'] = lambda *_a, **_k: list(_probe_rows)
+        sys.argv = ['check_hashes.py']
+        sys.stdout = _buf
+        _main_rc = main()
+    finally:
+        sys.stdout, sys.argv = _save_out, _save_argv
+        globals()['check_docstring_versions'] = _real_cdv
+    _txt = _buf.getvalue()
+    for _marker, _want, _label in (
+            ('<probe-absent>.py', 'DOCSTRING HEADER NOT FOUND',
+             'main() routes absent to its own block'),
+            ('<probe-locked>.py', 'BUILD SCRIPT COULD NOT BE READ',
+             'main() routes unreadable to its own')):
+        _got = _section_of(_txt, _marker)
+        _ok = (_got == _want)
+        bad += 0 if _ok else 1
+        print('    %-34s %s%s' % (_label, 'ok' if _ok else '*** MISROUTED ***',
+                                  '' if _ok else ' — under %r' % (_got,)))
+    _rc_ok = (_main_rc == 1)
+    bad += 0 if _rc_ok else 1
+    print('    %-34s %s%s' % ('main() fails on either row', 'ok' if _rc_ok else '*** WRONG ***',
+                              '' if _rc_ok else ' — rc %r' % (_main_rc,)))
+
+    print('  MUST SUPPRESS  (out-of-scope and agreeing scripts stay silent)')
+    _noversion_ok = 'build_zzprobe_noversion.py' not in _seen
+    bad += 0 if _noversion_ok else 1
+    print('    %-34s %s' % ('no VERSION constant: skipped',
+                            'ok' if _noversion_ok else '*** FALSE POSITIVE ***'))
+    _agree_ok = 'build_zzprobe_ok.py' not in _seen
+    bad += 0 if _agree_ok else 1
+    print('    %-34s %s' % ('header agrees: silent',
+                            'ok' if _agree_ok else '*** FALSE POSITIVE ***'))
+
 
     # ⚠ THE TWO-RECORD COMPARATOR (README vs register.md). Editorial rated this above the claim sweep
     # because it is DECIDABLE, and this arc is why: README's ZP-R row was fixed in one commit while its
@@ -1163,24 +1380,86 @@ def check_docstring_versions():
 
     Step 4 of the four-step rule (edit, bump, rebuild, update the docstring) is the one that gets
     skipped, because nothing mechanical reads it: the hash check fingerprints the file and the
-    release gate compares the constant. Returns a list of `(name, header, const)` mismatches.
+    release gate compares the constant. Returns a list of `(name, header, const)` rows in which
+    **`header` IS THE TAG**, and the tag carries its own payload:
+
+        `str`               the version the docstring advertises, and it DISAGREES - remedy: edit
+                            one line. `const` is the constant it disagreed with.
+        `None`              no header could be located above the changelog - remedy: ADD a title
+                            line. `const` is known, because the file was read.
+        an `OSError`        the file could not be OPENED - remedy: INVESTIGATE THE FILE. `const`
+                            is `None`, because nothing in the file was ever read, and the
+                            exception itself is the payload a reader needs (errno, strerror).
+
+    A header that agrees produces no row. Four outcomes; the three that mean "this file was not
+    successfully compared" all reach the caller as VALUES, and only agreement is silence.
 
     ⚠ MATCH THE HEADER LINE ONLY. A first draft of this scanned for any `Version N.N` before the
     constant and flagged `build_zpc.py`, whose only hit sits INSIDE a changelog entry
     ("Version 1.4 updates this") - a historical record that must never be rewritten. Changelog
     entries and the header line look alike to a loose pattern and mean opposite things.
+
+    ⚠⚠ AND AN UNFINDABLE HEADER IS NOT SILENCE (`HDRVER-1`, 2026-09-23). The guard here read
+    `if head and head != const`, so a file whose header `_header_version` could NOT locate was
+    dropped with NO row and NO message - observationally identical to a file that AGREES.
+    `build_zpe.py` has no title line ABOVE its changelog (its only one sits at line 19, INSIDE it),
+    so it was skipped while its constant drifted 16 versions and this module printed "Docstring and
+    README versions in sync." `R-ZERONULL`: the unfindable branch now returns a VALUE that differs
+    from the satisfied branch - a row whose `header` is `None` - so it reaches `all_ok` and the
+    release gate exactly as a mismatch does.
+
+    ⚠⚠ AND THE SAME DEFECT HAD A SECOND DOOR, WHICH THE FIX ABOVE DID NOT CLOSE (`/rely`,
+    2026-09-23). `except OSError: continue` dropped an UNOPENABLE build script with no row and no
+    message. Measured on a synthetic `build_zzlocked.py` with `PermissionError(13)` injected:
+    `check_docstring_versions()` returned `[]`, `all_hash_mismatches()` returned no docstring row,
+    and `main()` printed "Docstring and README versions in sync." at exit 0 - the same sentence and
+    the same exit code, through a different opening. Zero rows is the value the SATISFIED branch
+    produces, so `all_ok` stayed true on this axis. The unreadable file now emits a row too, and
+    the `continue` below is loop control only: one unopenable script must not abort the walk over
+    the other 43.
+    ⛔ THE TWO STATES MUST NOT SHARE A ROW SHAPE, because they have DIFFERENT REMEDIES. "No header
+    located" is answered by ADDING a title line; "could not open" is answered by INVESTIGATING a
+    lock, a permission or a vanished path. Telling a reader to add a title line to a file nobody
+    could open is a wrong instruction, not merely a vague one - so the tag is the exception
+    INSTANCE, never a second `None`, and both consumers branch on it before they branch on `None`.
+    ⛔ `except OSError` STAYS NARROW. Bad bytes raise `UnicodeDecodeError`, a `ValueError`, which is
+    NOT caught and fails LOUD - verified by injection, not assumed. Widening this to a bare
+    `except:` would convert that loud failure into a quiet row and give back the coverage this
+    change just bought.
+    ⚠ ONE SILENT PATH REMAINS, NAMED RATHER THAN CLAIMED CLOSED. This walks whatever `glob.glob`
+    lists, so a listing SHORTER than the directory drops the scripts it omitted with no row - again
+    the satisfied value. Measured 2026-09-23 over an empty listing: `[]`.
+    ⛔ AND THE HASH LAYER DOES NOT COVER IT, though it reads as though it should - that clause was
+    drafted here from the code and measured FALSE the same day. `all_hash_mismatches` does read each
+    script BY NAME from `register.md`'s five maps (40 of the 44 `build_*.py` on disk; with every
+    script made absent it produced 41 loud rows), but that catches a file that is GONE. A file that
+    EXISTS and was merely not LISTED opens fine under its own name and its hash matches, so the hash
+    layer is silent on it too. Not fixed here: the remedy is to compare the LISTING against those
+    maps, which is a roster check rather than a row shape. Stated at this length because the
+    reassuring half of the sentence is the half that was wrong.
+    ⛔ REPORT THE ABSENCE; NEVER WIDEN THE SCAN. `_header_version`'s changelog truncation and its
+    header shapes are load-bearing, and each carries its own measured incident below: a greedier
+    pattern trades a silent SKIP for a silent REWRITE of a historical record, which is worse.
+    ⛔ `if not m: continue` STAYS. Five build scripts (`build_bottom_matrix`, `build_dictionary_map`,
+    `build_manifest`, `build_snap_map`, `build_tools`) define no `VERSION` constant at all and are
+    legitimately OUT OF SCOPE - there is no step 4 to skip where there is no version to bump.
     """
     out = []
     for p in sorted(glob.glob(os.path.join(REPO, 'scripts', 'build_*.py'))):
         try:
             body = io.open(p, encoding='utf-8').read()
-        except OSError:
+        except OSError as exc:
+            # A file we could not OPEN was checked against nothing - the same fact as a file whose
+            # header we could not FIND, and it gets the same treatment: a row, not silence. The
+            # exception instance IS the tag and IS the payload; `const` is None because no VERSION
+            # constant was ever read. `continue` here only skips the rest of THIS file.
+            out.append((os.path.basename(p), exc, None))
             continue
         m = re.search(r"^VERSION\s*=\s*['\"]([^'\"]+)['\"]", body, re.M)
         if not m:
             continue
         head = _header_version(body[:m.start()])
-        if head and head != m.group(1):
+        if head is None or head != m.group(1):
             out.append((os.path.basename(p), head, m.group(1)))
     return out
 
@@ -1477,6 +1756,38 @@ def main():
 
     ar_data = load_ar_status()
 
+    if marks and not AR_AVAILABLE:
+        # ⛔⛔ REFUSE TO CREATE THE TRACKER FROM NOTHING. Measured 2026-09-21 (/rely), reproduced in a
+        # clean worktree: `--mark-remediated Foreword` created BOTH `.claude-local/` and
+        # `ar_status.json`, wrote a ONE-KEY file, and the very next plain run reported
+        # `PhilQ: hash=MISMATCH` and `Tools: hash=MISMATCH` with `stored: ?  *** re-mark required ***`
+        # and exit 1 — on a tree nobody had touched. The checker blamed two documents for its own
+        # write, and it is a PRE-PUSH leg, so that is a manufactured push block.
+        #
+        # ⚠ THE MECHANISM IS TWO ROUTES TO ONE PROPERTY, AND ONLY ONE WAS GUARDED (`R-GATED`: a guard
+        # protects a PROPERTY, not a hole — enumerate EVERY route). The property is "an absent AR
+        # record is not a hash mismatch". Route 1, the whole file missing, IS guarded by the
+        # `if not AR_AVAILABLE` branch in the reporting loop, which prints `AR=n/a (private tracker
+        # absent)` and continues. Route 2, the file PRESENT but this key missing, falls to
+        # `ar_data.get(key, {}).get('hash', '?')`, and `'?' != <hash>` renders as MISMATCH. Marking
+        # one key is precisely the operation that converts every OTHER document from route 1 to
+        # route 2 in a single command.
+        #
+        # ⚠ FIXED AT THE CAUSE, NOT THE SYMPTOM. Silencing the route-2 MISMATCH would also silence a
+        # DELETED entry, and no checker can tell an entry GONE from one that was never there — the
+        # `check_frozen` fail-closed argument exactly. Refusing the write loosens NOTHING: it removes
+        # only the ability to fabricate a tracker, and `reg_tok` above remains the public provenance
+        # check and still runs for every document regardless of this file.
+        print('REFUSING to mark: the private AR tracker does not exist at')
+        print('  %s' % AR_STATUS)
+        print('Marking would CREATE it holding only the key(s) you named, and every other')
+        print('standalone document would then read `hash=MISMATCH  stored: ?  *** re-mark')
+        print('required ***` on the next run — blaming those documents for this command.')
+        print('This is a clone or worktree without the author\'s private state, not a finding')
+        print('about any document. If you genuinely mean to start a tracker, create the file')
+        print('with an explicit `{}` first, so that is a deliberate act with its own diff.')
+        return 1
+
     if marks:
         # ⚠ COUNT THE FAILURES. This returned 0 unconditionally, so
         # `--mark-remediated "ZP-Q The Frame-Change"` printed `ERROR: unknown key`, then
@@ -1572,7 +1883,19 @@ def main():
         # register.md - so a standalone register token could go stale forever and --mark-remediated
         # would clear the push block without touching it. PhilQ was stale exactly this way.
         reg_tok = register_formal_token(key)
-        if reg_tok and reg_tok != current_hash:
+        # ⚠⚠ AN ABSENT TOKEN IS A FINDING, NOT A SKIP (CHECKHASHES-ARBASIS-1 round 3, /rely
+        # BLOCKING:1, 2026-09-28). `if reg_tok and ...` treated `None` the same as `False`, so a
+        # doc with NO register.md token (Tools) was silently exempt from this, the only TRACKED
+        # check standalone docs have — `all_hash_mismatches()` (the RELEASE gate) already fixed
+        # the identical bug in its own copy of this loop; ported here rather than re-derived, so
+        # the two stop disagreeing about the same property. This was masked here as long as the
+        # untracked `ar_status.json` comparison (removed above from gating) happened to also
+        # change on the same edits — closing that hole exposed this one, which predates it.
+        if reg_tok is None:
+            print(f'  {key}: NO register.md token - {script} has NO public provenance to check '
+                  f'against tracked content')
+            hash_mismatches.append(key + ' (no register token)')
+        elif reg_tok != current_hash:
             print(f'  {key}: REGISTER TOKEN STALE - register has {reg_tok}, script is {current_hash}')
             hash_mismatches.append(key + ' (register token)')
 
@@ -1585,8 +1908,14 @@ def main():
         # what the CI job would have published.
         #
         # The PUBLIC provenance check is `reg_tok` above, against register.md, and it runs
-        # regardless. This one is a legacy per-doc review tracker that CLAUDE.md already records as
-        # superseded by the per-file `*_cleared.txt` signals. Unavailable != wrong.
+        # regardless. This one is a legacy per-doc review tracker, superseded by REVIEW VERDICTS IN
+        # THE LEDGER (`record.py --step editorial|adversary`). Unavailable != wrong.
+        # ⚠ THIS SAID "superseded by the per-file `*_cleared.txt` signals" UNTIL 2026-09-21, and
+        # that scheme was RETIRED 2026-08-24 — `R-ER` and `R-AR` both record the prose signal files
+        # as dead, and every other file in this directory already says so (`batch.py`, `guards.py`,
+        # `check_frozen.py`, `check_release_ready.py`, `ship.py`). These were the LAST TWO sites
+        # asserting it was live. Naming a route that no longer exists is the same defect the hook
+        # lines were fixed for the same day: a reader who follows it writes a file nothing reads.
         if not AR_AVAILABLE:
             print(f'  {key}: hash={"OK" if reg_tok else "not publicly tracked"}  '
                   f'AR=n/a (private tracker absent)')
@@ -1613,8 +1942,17 @@ def main():
         if ar_label == 'STALE':
             print(f'       AR STALE — reviewed at: {stored_hash}  current: {current_hash}')
             ar_stale.append(key)
-        if not hash_ok:
-            hash_mismatches.append(key)
+        elif not hash_ok:
+            # ⚠ SAME AXIS AS `ar_label == 'STALE'` (CHECKHASHES-ARBASIS-1, /rely BLOCKING:1,
+            # 2026-09-28 caught this the first fix missed): `hash_ok` compares `current_hash`
+            # against the exact same `ar_data[key]['hash']` that `compute_ar_label` compares —
+            # reached here instead of the STALE branch only when ar_data holds NO entry at all
+            # (a fresh clone, or a doc never marked). Either way the comparison is against
+            # untracked `.claude-local/ar_status.json`, not tracked content, so it must not gate
+            # `all_ok` (previously fed `hash_mismatches`, which does) — route it to `ar_stale`
+            # instead, same as the STALE case, so two runs at identical tracked content can never
+            # disagree on this axis again.
+            ar_stale.append(key)
 
     # --- Formal-only documents: verify formal build-script hash vs register ---
     # ⚠ THE VERDICT IS NAMED FOR WHAT IT COVERS. This printed a bare `hash=OK` per row while
@@ -1668,7 +2006,11 @@ def main():
     print("NOTE: the LIVE, load-bearing check is build-script HASH INTEGRITY above (script bytes vs")
     print("      register.md) - it runs in the pre-push hook and check_release_ready.py imports it.")
     print("      The 'AR=' columns are a LEGACY per-doc adversary-review tracker (ar_status.json),")
-    print("      superseded by the per-file *_cleared.txt signals (the SHA-256-per-file review gate).")
+    # ⚠ THIS LINE IS PRINTED BY A CHECKER INSIDE THE PRE-PUSH HOOK, so a stale route here is read by
+    # every operator on every push. It said "superseded by the per-file *_cleared.txt signals" until
+    # 2026-09-21; that scheme was RETIRED 2026-08-24 and review coverage is a LEDGER RECORD now.
+    print("      superseded by review VERDICTS IN THE LEDGER (record.py --step editorial|adversary);")
+    print("      the per-file *_cleared.txt signals this used to name were retired 2026-08-24.")
     print("      They read 'N/-' because nothing is marked there anymore - ignore them. Kept as-is on")
     print("      purpose (Tim, 2026-07-20); not stripped, just annotated so the output isn't confusing.")
 
@@ -1702,8 +2044,23 @@ def main():
         for pdf, rv, gv in readme_drift:
             print('    %-44s README %-8s register %s' % (pdf, rv, gv))
         print('  Update register.md FIRST, then propagate to README (and GUIDE if it ever carries one).')
-    all_ok = (not hash_mismatches and not ar_stale and not doc_mismatches
+    # ⚠ `ar_stale` is DELIBERATELY EXCLUDED from `all_ok` (CHECKHASHES-ARBASIS-1, 2026-09-27/28).
+    # `ar_status.json` is untracked private state (`.claude-local/`), so it is not part of the
+    # ledger's (step, basis, revision) key — but it USED TO gate this same `all_ok`, which meant
+    # two `--record` runs at IDENTICAL tracked content could disagree solely because someone ran
+    # `--mark-remediated` between them, and the second run collided with V11 instead of superseding
+    # it (no revision is threaded through this call site). Folding it out here means the recorded
+    # verdict — and the exit code, which is the SAME variable — depends only on tracked content,
+    # exactly like the basis it is checked against. AR staleness is still surfaced (see below);
+    # it just cannot flip a PASS/FAIL pair at one basis anymore.
+    all_ok = (not hash_mismatches and not doc_mismatches
               and not shared_moved and not readme_drift)
+
+    if ar_stale:
+        print()
+        print(f'AR STALE: {", ".join(ar_stale)}')
+        print('Run: python %s --mark-remediated <KEY>' % SELF)
+        print('(Legacy private tracker only - does not gate the recorded hash/version verdict.)')
 
     # ⚠ THE PROPERTY IS VERIFIED AGAINST THE SCRIPTS AND THE REGISTRY IT COMPARES THEM TO. Those two
     # are its inputs: change a build script or `register.md` and "the fingerprints match" must be
@@ -1741,15 +2098,39 @@ def main():
     if hash_mismatches:
         print(f'HASH MISMATCHES: {", ".join(hash_mismatches)}')
         print('Version bump + rebuild + hash update required.')
-    if ar_stale:
-        print(f'AR STALE: {", ".join(ar_stale)}')
-        print('Run: python %s --mark-remediated <KEY>' % SELF)
-    if doc_mismatches:
+    # ⚠ TWO DIFFERENT FAILURES, TWO DIFFERENT REMEDIES (`HDRVER-1`). A STALE header is a wrong
+    # answer and the fix is to edit one line. A NOT-FOUND header is NO answer: this checker walked
+    # the file and could not locate a title line above its changelog, so it was measuring nothing
+    # there. Printing the second as `docstring None constant 3.42` reads like the first and sends
+    # the reader to edit a line that does not exist.
+    # ⚠⚠ THREE REMEDIES NOW, NOT TWO (`/rely` 2026-09-23). A file that could not be OPENED is a
+    # third class again: not a wrong answer, and not a missing title line either - the checker never
+    # got as far as the docstring. It must not land in EITHER block above, because both of those
+    # tell the reader to edit the docstring of a file nobody could read.
+    _unreadable = [r for r in doc_mismatches if isinstance(r[1], OSError)]
+    _absent = [r for r in doc_mismatches if r[1] is None]
+    _stale = [r for r in doc_mismatches if r[1] is not None and not isinstance(r[1], OSError)]
+    if _stale:
         print('DOCSTRING VERSION != VERSION constant (step 4 of the four-step rule):')
-        for name, head, const in doc_mismatches:
+        for name, head, const in _stale:
             print('  %-42s docstring %-8s constant %s' % (name, head, const))
         print('Edit the docstring header line. Do NOT touch changelog entries below it - those')
         print('record what each version actually contained and rewriting them falsifies the record.')
+    if _absent:
+        print('DOCSTRING HEADER NOT FOUND (this file was checked against nothing):')
+        for name, _head, const in _absent:
+            print('  %-42s no header located above the changelog; constant %s' % (name, const))
+        print('The docstring has no title line ABOVE its first `vN:` changelog entry, so there is')
+        print('nothing for the constant to be compared against. Add a title line at the TOP of the')
+        print('docstring - do NOT delete or rewrite the changelog to expose one buried inside it.')
+    if _unreadable:
+        print('BUILD SCRIPT COULD NOT BE READ (this file was checked against nothing):')
+        for name, err, _const in _unreadable:
+            print('  %-42s %s' % (name, err))
+        print('The path was listed but would not open, so neither the docstring header nor the')
+        print('VERSION constant was ever read - a lock, a permission, or a path that moved between')
+        print('the listing and the read. INVESTIGATE THE FILE. Do NOT add a title line: nothing')
+        print('here says the header is missing, only that nobody looked.')
     return 1
 
 

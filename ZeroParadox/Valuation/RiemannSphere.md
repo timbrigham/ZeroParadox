@@ -1,4 +1,4 @@
-# RiemannSphere — ride-along documentation
+# Prior art for the sphere's group action, the loxodromic vocabulary, and the stabiliser fence
 
 Long-form prior art and fences for `ZeroParadox/Valuation/RiemannSphere.lean`. Written 2026-09-04,
 in response to a prior-art gate that found §§ V–VI restating Mathlib. Everything below was

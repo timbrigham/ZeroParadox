@@ -12,21 +12,11 @@ our abilities using indexes. Please take this as an open invitation to expand bo
 project as well as Mathlib as a whole.
 
 ---
-
-**PROBE.** The snap ⊥→ε₀ as the crossing of the well-foundedness boundary, in two registers —
-`ZeroParadox/Multihomed/Boundary.lean` (`snap_crossing`) and `ZeroParadox/Settheory/Coalgebra.lean`
-(`categorical_fork_strict`) — bundled by `snap_boundary_two_registers` below.
-**NOT the full Taylor statement.** The General Recursion Theorem is the ⇒ direction alone — every
-well-founded coalgebra is recursive (Adámek–Milius–Moss 2020, arXiv:1910.09401v2, Thm 7.2 p. 27). The
-converse is their § 8, needing inverse-image preservation plus either a subobject classifier (Thm 8.6)
-or universally smooth monos and a pre-fixed point (Thm 8.1); the equivalence including the
-initial-algebra leg is Cor 8.2. Taylor states necessity in a topos (Prop 111, p. 6).
+**PROBE.** The snap ⊥→ε₀ as the crossing of the well-foundedness boundary, in two registers, bundled by `snap_boundary_two_registers` below. **NOT the full Taylor statement** — registers, citations and which theorem carries which direction: `ZeroParadox/Multihomed/BoundaryBridge.md`.
 Not located in the pinned Mathlib as of 2026-08-12 (environment sweep over names and types):
-Pataraia's fixed-point theorem — `Mathlib/Order/BourbakiWitt.lean` is adjacent, NOT a substitute —
-and the General Recursion Theorem itself. The **next-time
-operator is no longer open** — `ZeroParadox/Category/NextTimeCategorical.lean` builds it
-(`nextTimeCat`); read it before re-deriving one. Detail, sources and the survey's limits:
-`.claude-local/notes/boundarybridge_scope_2026-08-12.md`.
+Pataraia's fixed-point theorem — proved in this corpus with no axioms, `pataraia_least_prefixedPoint`
+(`ZeroParadox/Order/PataraiaChoiceFree.lean`) — and the General Recursion Theorem itself. The **next-time
+operator is no longer open** — `ZeroParadox/Category/NextTimeCategorical.lean` builds it (`nextTimeCat`); read it before re-deriving one.
 -/
 
 namespace ZeroParadox
@@ -40,7 +30,7 @@ set_option maxHeartbeats 400000
     non-accessible point, every post-snap state accessible) and the categorical μ/ν level
     (`categorical_fork_strict` — initial algebra empty, final coalgebra inhabited; the self-referential
     element lives in ν, not μ). The *depth* results — AMM Thm 7.2's ⇒ and its § 8 converse — are
-    cited, not proved here; see the header for which theorem carries which direction. -/
+    cited, not proved here; see `ZeroParadox/Multihomed/BoundaryBridge.md` for which carries which. -/
 theorem snap_boundary_two_registers {L : Type*} [ZPSemilattice L] [AbstractSelfApp L] :
     ((¬ WellFounded (floorRel (L := L)))
         ∧ (¬ Acc phaseRel Phase.floor ∧ ∀ o : Ordinal, Acc phaseRel (Phase.up o)))

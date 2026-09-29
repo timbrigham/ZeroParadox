@@ -57,6 +57,7 @@ import vendored  # noqa: E402
 import report    # noqa: E402  the one formatter every entry point announces itself with
 import agent_gate  # noqa: E402  the interpretation layer — ADVISORY, never blocks (rung 5)
 import record      # noqa: E402  the ledger client — review freshness is asked, never re-derived
+import selfheal    # noqa: E402  MARKERS ONLY — `_recurrence_note` selects its rows by name
 STATE = os.path.join(PRIV, "batch_state.json")
 # The ones that GATE. `check_poles.py` is a counter with no baseline (REL-3) and is excluded
 # deliberately — see check_suite.
@@ -232,7 +233,19 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # that the tool existed. The cleaner fix is for `_unhashed` to skip
                               # paths that do not exist — a logic change to a blocking fail-open
                               # leg, which wants its own control and its own round.
-                              "gatelock.py"]
+                              "gatelock.py",
+                              # ⚠⚠ THE SECOND TOMBSTONE, AND IT REPRODUCED THE FIRST ONE'S DEADLOCK
+                              # EXACTLY. `admission.v1.json` (this repo's copy) was DELETED
+                              # 2026-09-26 as a dead 2026-08-23 seed: nothing read it, it admitted
+                              # 3 types at push where the live set admits 21, and only gitRobot's
+                              # `config/admission.v1.json` was ever live. The deletion then blocked
+                              # its own push — `_unhashed` flagged a routed file absent from this
+                              # list, which can never be discharged, and the block clears only when
+                              # the deletion leaves the range, which cannot happen until the push it
+                              # is blocking lands. Predicted verbatim by the entry above; met anyway,
+                              # because a deletion does not feel like a change to the person making
+                              # it. ⚠ Do not remove this line when the range moves on.
+                              "admission.v1.json"]
 
 ABSENT = "<ABSENT>"
 
@@ -258,6 +271,16 @@ UNVERIFIABLE_ROUTED = {
                       "visible in the fingerprint; no index blob can exist for a file that is gone.",
     "ar_status.json": "private adversary-review tracker under .claude-local/, gitignored BY DESIGN "
                       "and therefore never stageable, so ledger_subjects drops it on every run.",
+    "admission.v1.json":
+                      "DELETED 2026-09-26. A dead 2026-08-23 seed that nothing read — it admitted "
+                      "3 types at push where the live set admits 21, and a comment in this file "
+                      "recorded it 'itself dead: RLY31-12' while tools/verify/README.md still "
+                      "advertised it as REMAINING. (⚠ That comment was itself rewritten in "
+                      "8192e54, so the quotation is HISTORICAL and `log -S` is where it lives "
+                      "now, not the working tree — RS-4.) Only gitRobot's config/admission.v1.json was "
+                      "ever live. Same tombstone reason as gatelock.py: no index blob can exist "
+                      "for a file that is gone, so the routing leg can acknowledge it and can "
+                      "never discharge it.",
 }
 
 
@@ -286,9 +309,65 @@ UNVERIFIABLE_ROUTED = {
 # ⚠ THE GLOB MUST BE DERIVED FROM `ROUTING`, NOT RE-TYPED BESIDE IT. A second copy of the prefix
 # list is how these two fell out of step in the first place: the third prefix was added to `ROUTING`
 # and this function was not touched, so it silently kept answering for two.
+def _gitignored(dirs):
+    """What git IGNORES under `dirs` — generated artifacts, NOT merely untracked files.
+
+    Returns repo-relative entries; one ending in `/` is a whole directory git collapsed.
+
+    ⚠⚠ THE DISTINCTION IS THE WHOLE POINT AND IT IS EASY TO GET BACKWARDS. An UNTRACKED file under a
+    routed prefix must still block: a new checker nobody staged is exactly the content `/rely` exists
+    to catch. An IGNORED file can never be staged at all, so no record can ever name it, and counting
+    it as unreviewed makes the leg UNSATISFIABLE rather than strict — `check_routing`'s own comment
+    says so at the `UNVERIFIABLE_ROUTED` branch. A membership test against the index cannot separate
+    them, because it answers *tracked?* and this asks *ignorable?*
+
+    ⛔ FAILS CLOSED BY WIDENING, AND THE DIRECTION IS DELIBERATE. Every error path returns the EMPTY
+    set, which skips nothing and leaves the routed set at its widest. An exception handler that
+    returned "everything is ignored" would empty the routed set and silently retire the gate — the
+    exact fail-open shape this file keeps recording.
+
+    ⚠⚠ THE INSTRUMENT IS `status --ignored`, NOT `check-ignore`, AND THAT WAS MEASURED THE HARD WAY.
+    `git check-ignore --stdin` gave the RIGHT answer for three paths passed alone and the WRONG one
+    for the same three inside the real 117-path list — `rc=1`, empty stdout, empty stderr, i.e. a
+    confident "nothing here is ignored" for files `status` flags `!!`. Trusting it would have
+    concluded that two of the three generated SVGs were not ignored and sent the fix in the opposite
+    direction. Two instruments, same question, opposite answers: prefer the one whose scope you can
+    see, and never conclude an absence from the narrower.
+    """
+    if not dirs:
+        return set()
+    try:
+        out = subprocess.run(["git", "status", "--porcelain", "--ignored=matching", "--"]
+                             + sorted(dirs), cwd=REPO, capture_output=True,
+                             text=True, encoding="utf-8", errors="replace")
+    except OSError:
+        return set()
+    if out.returncode != 0:
+        return set()
+    # `!! path` for a file, `!! path/` for a whole directory git collapsed.
+    return {ln[3:].strip().replace("\\", "/")
+            for ln in out.stdout.splitlines() if ln.startswith("!! ")}
+
+
 def _routed_files():
-    """Every file under a routed prefix — recursive, all extensions, prefixes taken from ROUTING."""
-    out = []
+    """Every file under a routed prefix — recursive, all extensions, prefixes taken from ROUTING.
+
+    ⚠⚠ GENERATED ARTIFACTS ARE EXCLUDED BY ASKING GIT, NOT BY LISTING THEM (Tim, 2026-09-19).
+    This walk is over the DISK, so it sees build output that is not in the index and never can be.
+    Measured by /rely 2026-09-19 (`REL19-3`): `.gitignore` carries `tools/render/*.svg`, the three
+    generated diagrams sit inside the `^tools/` prefix, `_leg_of` types `.svg` as a BLOCKING
+    `switch`, the index reports them `<ABSENT>` — and the push was refused by a leg no record could
+    ever discharge. Regenerating a diagram minted a fresh blocking row on the spot.
+
+    ⭐ THE FIX IS DERIVED, NOT ENUMERATED, for the reason `_leg_of` gives below: *naming today's
+    members closes today's holes and the next arrival is invisible.* Hand-listing the three SVGs in
+    `UNVERIFIABLE_ROUTED` would have unblocked this push and left the NEXT generated artifact to
+    rediscover it. `__pycache__`/`.pyc` were the same class handled one instance at a time; they are
+    kept below as a fast path that also survives git being unavailable.
+
+    ⛔ UNTRACKED IS NOT IGNORED. A file that is merely unstaged still routes and still blocks — see
+    `_gitignored`. This narrows the routed set by exactly the paths git says can never be staged."""
+    out, prefixes = [], []
     for pat, agent, _w in ROUTING:
         if agent != "/rely":
             continue
@@ -296,13 +375,18 @@ def _routed_files():
         d = os.path.join(REPO, *rel.split("/"))
         if not os.path.isdir(d):
             continue
+        prefixes.append(rel)
         for root, dirs, names in os.walk(d):
             dirs[:] = [x for x in dirs if x != "__pycache__"]
             for n in names:
                 if n.endswith((".pyc", ".pyo")):
                     continue
                 out.append(os.path.relpath(os.path.join(root, n), REPO).replace("\\", "/"))
-    return sorted(out)
+    ignored = _gitignored(prefixes)
+    files = {p for p in ignored if not p.endswith("/")}
+    trees = tuple(p for p in ignored if p.endswith("/"))
+    return sorted(p for p in out
+                  if p not in files and not (trees and p.startswith(trees)))
 
 
 # ⚠⚠ THE THREE KINDS IN `CHECKERS` ARE NOT ONE OBLIGATION, AND UNTIL 2026-08-21 THEY SHARED ONE ROW.
@@ -751,18 +835,30 @@ ROUTING = [
     # AND `ROUTING rows: NONE` — the same file exempt from the prose gates and routed to no
     # gate at all, which is the round-1 signature character for character. Latent on Windows
     # (git normalises case here) and LIVE on ubuntu-latest, where CI runs.
-    (re.compile(r"^tools/verify/", re.I),
-     "/rely", "a checker, hook, or exemption switch changed - its first run produced CHK-2 and "
-              "CHK-3, both checker bugs, so this is the measured persona for the verification layer"),
+    # ⚠⚠ WIDENED TO THE WHOLE `tools/` FOLDER 2026-09-18, Tim's ruling: *"The tools folder doesn't
+    # make sense for anything but rely to cover. Adversary is math, as is prior art. Editorial
+    # doesn't make sense on tooling."* This row REPLACES the separate `^tools/verify/` and
+    # `^tools/process/` rows; `EXEMPT_PREFIXES` and `rely.scope` moved in the SAME commit, because
+    # `guards.check_registry_router_agreement` requires this prefix set and the scope to be EQUAL.
+    # ⛔ THE GAP IT CLOSES WAS PRE-EXISTING, NOT NEW. Measured 2026-09-18 over all 109 tracked
+    # `tools/` paths: 12 were claimed by NO gate at all — every file under `tools/registry/` and
+    # `tools/render/` — because the prose gates excluded them via `tools/*.md` (`*` crosses `/`)
+    # while `rely.scope` reached only `tools/verify/*` and `tools/process/*`. A /rely round read
+    # that as a hole opened by the harmonisation; the census says orphans were 12 before and 12
+    # after, so the harmonisation created none of it. **Two lists that disagree about a folder
+    # leave its subdirectories to nobody, and neither list looks wrong on its own.**
+    # ⚠ The two personas below are merged rather than lost: one prefix cannot carry two reasons,
+    # and an overlapping second row would route the same file twice.
+    (re.compile(r"^tools/", re.I),
+     "/rely", "a checker, hook, exemption switch, or routed process document changed - the "
+              "verification layer's first run produced CHK-2 and CHK-3, both checker bugs, and a "
+              "routed rule whose trigger or pointer rots stops firing silently"),
     # `tools/process/` is CLAUDE.md's body — the argument behind each routed rule, split out so the
     # injected file can be a routing table rather than the payload. Same pairing as the prefix above:
     # it is exempt in EXEMPT_PREFIXES and routed here, and the two MUST be edited together. Added
     # 2026-08-20 with its first two files; the exemption is DECLARED in CLAUDE.md's header, never
     # inferred from "it is operating instructions" — that inference is what put `.claude/commands/`
     # in the exempt tuple for an hour before it was removed.
-    (re.compile(r"^tools/process/", re.I),
-     "/rely", "CLAUDE.md's routed body changed - a rule whose trigger or pointer rots stops firing "
-              "silently, which is the failure mode the split exists to remove"),
     (re.compile(r"^\.github/workflows/", re.I),
      "/rely", "CI workflow changed - a fail-open here publishes a false verification claim"),
 ]
@@ -1368,6 +1464,26 @@ def check_routing(state, ranges=None):
                 # The sentinel already existed for precisely this reason one leg over; this leg
                 # simply has to use it, so deleting a gate stays louder than editing one.
                 h = _blob_hash(tip, f) or ABSENT
+                # ⚠⚠ THE SAME CARVE AS THE DISK LEG, AND ITS ABSENCE HERE WAS `SH-3` EXACTLY:
+                # ONE PROPERTY, TWO ROUTES, IMPLEMENTED AT ONE. `UNVERIFIABLE_ROUTED` says a
+                # tombstoned entry can never be a ledger subject — no index blob exists for a file
+                # that is gone — and `_unhashed`'s loop honours that at line ~1354 while this leg
+                # did not. ⭐ MEASURED 2026-09-26, and it is why this is a fix and not a widening:
+                # tombstoning `admission.v1.json` to clear `_unhashed` simply MOVED the block here,
+                # and the four states were run — with the tombstone the push blocks at the tip, and
+                # it blocks here EVEN IF `_unhashed` is later taught to skip absent paths, because
+                # putting the name in `CHECKERS` is precisely what makes this leg's `key` lookup
+                # resolve instead of `continue`. So the deferred remedy could not work while the
+                # tombstone stood, and the deletion blocked its own deletion at two legs in turn.
+                # ⛔ NARROW ON PURPOSE — `h == ABSENT` AND tombstoned, never one or the other. The
+                # comment above is the property this must not break: a push DELETING a gating
+                # checker still blocks, because that checker is not in `UNVERIFIABLE_ROUTED`.
+                # Verified by execution after this change: `check_prose.py`, `guards.py` and
+                # `required.v2.json` absent at the tip all still block.
+                if h == ABSENT and key in UNVERIFIABLE_ROUTED:
+                    print("  routed but UNVERIFIABLE at the TIP — acknowledged, NOT discharged: "
+                          "%s\n      %s" % (key, UNVERIFIABLE_ROUTED[key]))
+                    continue
                 # ⚠⚠ `reviewed` IS None WHEN THE LEDGER CANNOT BE ASKED, AND THIS LINE USED TO
                 # ASSUME OTHERWISE. `rely_reviewed_blobs()` returns None for BOTH "no record" and
                 # "could not ask", and every other consumer handles that — this one called `.get`
@@ -1438,6 +1554,95 @@ def check_routing(state, ranges=None):
                                              "" if blocking else "  [routed prose only — WARN]"),
                          blocking))
     return rows
+
+
+# ⚠⚠ THE PUSH-DIFF PROPERTY GETS ITS OWN STEP NAME, AND THE SPLIT IS THE FIX RATHER THAN A TIDY-UP.
+# Two questions were sharing one name, and the WEAK one was the one recorded:
+#   `pdf_coupling`  (the ledger step, produced by `record_pdf_coupling` below) asks a TREE question --
+#                   does any `scripts/build_*.py` ON DISK name this PDF literally. Every PDF has a
+#                   builder, so it is 40 of 40 PASS and near-vacuous as a gate. Measured 2026-09-21:
+#                   `coverage_gap(step='pdf_coupling', ref='HEAD')` returns `missing: 0, nothing owed`.
+#   `check_pdf_coupling` below asks a PUSH-DIFF question -- does a build script CHANGED IN THIS PUSH
+#                   name this changed PDF. That is the one with teeth, and the one `P7-3` tightened.
+#                   Same tree, same bytes, same moment: 33 of 40 FAIL.
+#
+# ⭐ THE IMPLICATION RUNS ONE WAY ONLY, AND THAT IS WHY THE NAIVE CONSULT IS FATAL. A script arriving
+# in the push necessarily names the PDF on disk, so push-diff implies tree; a script merely SITTING on
+# disk says nothing about what arrived, so tree does NOT imply push-diff. A consult that honoured the
+# tree step's PASS would replace the strong check with the weak one on every future push -- and it
+# would look SIGNED while doing it, which is worse than loosening the check openly. That is exactly
+# the hole `P7-3` closed.
+#
+# ⛔⛔ AND UNDER `sign()` ONE NAME FOR BOTH IS UNSOUND, NOT MERELY CONFUSING. Measured by `mcpdev` in
+# `core/ledger.py`, 2026-09-21: an accept is stored as `verdict: "PASS"` -- the literal string, in
+# `_decided`. So a signature clearing the push-diff leg would ALSO satisfy the tree-scope property at
+# that basis: ONE SIGNATURE DISCHARGING 40 SUBJECTS FOR A QUESTION NOBODY EXAMINED, on a step pinned
+# at `min_coverage: 1.0`. Hence a second registered step rather than a cleverer consult.
+#
+# ⚠ REGISTERED, DELIBERATELY NOT ADMITTED. `sign()` validates against the REGISTRY
+# (`required.v2.json`), never against gitRobot's `admission.v1.json`, and `find`/`get` do not consult
+# admission at all -- so this name is signable and consultable HERE and gates nothing at the ledger.
+# Fixture case H (`tools/verify/LEDGER_GATE_FIXTURE.md`): registering does not gate, promoting does.
+#
+# ⚠⚠ NO PRODUCER, BY DESIGN -- and saying so matters, because a registered step with no producer is
+# how `pdf_coupling` ITSELF sat unsatisfiable (the `<ABSENT>` floor, invisible behind a dead `when`
+# glob). The ONLY writer of this step is `sign()` / `override()`, by hand, by a person. Nothing in
+# this pipeline records it, for two measured reasons: `sign()` emits DE NOVO, so a recorded FAIL is
+# not needed to have something to accept; and a producer here would owe an `approved_modules` repin on
+# every future `batch.py` edit -- a third one, beside `decls` and `pdf_coupling` -- for no property
+# gained. The debt is made visible by the leg PRINTING it on every run instead.
+PDF_COUPLING_PUSH_STEP = "pdf_coupling_in_push"
+
+
+def pdf_coupling_accepts(subjects):
+    """The `{path}` of `subjects` carrying a HUMAN ACCEPT at THOSE EXACT BYTES, or None if unaskable.
+
+    ⚠⚠ `None` IS NOT AN EMPTY SET (`R-ZERONULL`). "I could not ask the ledger" and "nobody has
+    accepted anything" are different facts with different remedies, and the caller treats None as
+    fail-CLOSED. An empty set means the question WAS answered and the answer was "none". An accept
+    path that fails open when the ledger is down is a bypass with better manners.
+
+    ⚠⚠ THE DISCRIMINATOR IS `decided.how`, AND NOTHING ELSE CAN SERVE. A signed accept is stored with
+    `verdict: "PASS"` hardcoded, so BY VERDICT ALONE a human accept and a mechanical pass are
+    indistinguishable -- a consult keyed on the verdict field cannot tell them apart and would clear
+    this leg for ever off the tree-scope record. `tier` cannot separate them either: `override()` also
+    defaults to `H`.
+
+    ⚠ ONLY `signature` CLEARS, AND `override` DELIBERATELY DOES NOT. They are opposite signals: an
+    accept says the finding STANDS and we ship anyway (corpus debt), an override says the STEP is
+    defective. An override here would assert `check_pdf_coupling` erred -- a different decision with a
+    different remedy -- so it is refused rather than quietly honoured. Widening to `override` is a
+    one-word change and wants its own ruling, not an inference from this one.
+
+    ⚠ THE PAIR IS THE KEY, NEVER THE BLOB ALONE. `find(subject_sha=...)` matches any record naming
+    that blob ANYWHERE, so two byte-identical PDFs at different paths would clear each other. The
+    `(path, git_blob_id)` pair is what `R-GATED` requires, and it is re-checked inside the record.
+    """
+    accepted = set()
+    for s in subjects:
+        path = (s.get("path") or "").replace("\\", "/")
+        blob = s.get("git_blob_id") or ""
+        # A subject that cannot be keyed to bytes is one no accept could bind to. Fail closed rather
+        # than skip it: a silently unkeyable offender is an exemption with no expiry.
+        if not path or not blob:
+            return None
+        try:
+            out = record._call("find", {"step": PDF_COUPLING_PUSH_STEP,
+                                        "subject_sha": blob, "limit": 500})
+        except Exception:                          # noqa: BLE001 — cannot ask == None
+            return None
+        if not out or not out.get("ok") or not isinstance(out.get("records"), list):
+            return None
+        for rec in out["records"]:
+            decided = rec.get("decided") or {}
+            if decided.get("how") != "signature" or not decided.get("who"):
+                continue
+            if any((sub.get("path") or "").replace("\\", "/") == path
+                   and sub.get("git_blob_id") == blob
+                   for sub in (rec.get("subjects") or [])):
+                accepted.add(path)
+                break
+    return accepted
 
 
 def check_pdf_coupling(ranges=None):
@@ -1519,15 +1724,112 @@ def check_pdf_coupling(ranges=None):
                 hit = True
                 break
         if not hit:
-            unpaired.append(base)
+            # ⚠ THE REPO-RELATIVE PATH, NOT THE BASENAME. It used to collect `base`, which reads
+            # identically for the 40 root-level PDFs and is NOT a key: an accept binds to
+            # `(step, path, git_blob_id)` and `common.ledger_subjects` resolves a repo-relative
+            # path. A basename would resolve nothing, or -- worse -- the wrong file of that name
+            # under `historical/`. The message below still PRINTS basenames; only the key changed.
+            unpaired.append(pdf)
     if not unpaired:
         return True, "%d PDF(s), each paired with the script naming it (%s)" % (
             len(pdfs), ", ".join(scripts[:3]))
-    return False, ("%d of %d changed PDF(s) have no build script IN THIS PUSH that names them "
-                   "(%s) — a DOI freezes the PDF permanently, and the build script is the only "
-                   "reviewable surface it has. Mirror the producing script per CLAUDE.md. "
-                   "Two build scripts do not name their output literal; if this is one, say so."
-                   % (len(unpaired), len(pdfs), ", ".join(unpaired[:3])))
+    unpaired = sorted(unpaired)
+    _why = ("%d of %d changed PDF(s) have no build script IN THIS PUSH that names them "
+            "(%s) — a DOI freezes the PDF permanently, and the build script is the only "
+            "reviewable surface it has. Mirror the producing script per CLAUDE.md. "
+            "Two build scripts do not name their output literal; if this is one, say so."
+            % (len(unpaired), len(pdfs),
+               ", ".join(os.path.basename(u) for u in unpaired[:3])))
+
+    # ⭐⭐ THE RATCHET: CONSULT THE LEDGER BEFORE BLOCKING (Tim, 2026-09-21, "update the behavior so
+    # the ratchet works"; the requirement it comes from is "you just have to be able to sign off on
+    # them as a human accepting the fact that they are not all fully remediated yet").
+    #
+    # ⛔ THIS IS NOT A LOOSENING OF THE PAIRING TEST, AND IT MUST NEVER BECOME ONE. `P7-3` tightened
+    # the pairing from *any* `scripts/*.py` to *a script that NAMES the PDF*, and the shared-layer
+    # rebuild that motivated this change would have sailed straight through the hole `P7-3` closed.
+    # The finding above is computed identically and still FAILS; what follows asks only whether a
+    # PERSON has already looked at this exact finding, at these exact bytes, and accepted it as debt.
+    #
+    # ⚠⚠ AND THE CONSULT IS THE DANGEROUS HALF OF THIS FILE. `LEDGER_GATE_FIXTURE.md`: "Cases C and K
+    # are the dangerous ones to get wrong. Everything else fails closed; those two are the paths that
+    # let a push through." Every branch below therefore names why it blocks, and only the last one
+    # returns True.
+    subjects, skipped = common.ledger_subjects(unpaired, ref="HEAD")
+    if skipped:
+        # ⚠ AN OFFENDER WE CANNOT KEY TO COMMITTED BYTES CANNOT BE ACCEPTED, so no accept is even
+        # looked for. An exemption that cannot say WHICH BYTES either never expires or expires by
+        # someone noticing -- which is the `DEFECTS.md` accept route this design exists to replace.
+        return False, (_why + "  ⚠ AND %d OFFENDING PATH(S) CANNOT BE KEYED TO COMMITTED BYTES (%s), "
+                       "so no signature could bind to them and none was sought. Fails CLOSED."
+                       % (len(skipped), "; ".join("%s: %s" % (p, r) for p, r in skipped[:2])))
+    accepted = pdf_coupling_accepts(subjects)
+    if accepted is None:
+        # ⚠⚠ THE FORCED ANSWER, settled before this was built: LEDGER UNREACHABLE => BLOCK. An accept
+        # path that fails OPEN when the ledger is down is a bypass with better manners, and the exact
+        # inversion of `R-GATED`'s fail-closed requirement.
+        return False, (_why + "  ⚠ AND THE LEDGER COULD NOT BE ASKED whether these bytes carry a "
+                       "human accept, so this is UNDECIDED rather than owed. Fails CLOSED — fix the "
+                       "reachability and re-push; do not read an outage as a finding about the PDFs.")
+    owed = [u for u in unpaired if u not in accepted]
+    if owed:
+        _hint = _write_pdf_coupling_owed(subjects, owed)
+        return False, (_why + "  ⚠ %d of the %d carry a human accept at these bytes and %d do NOT: "
+                       "%s. Accept those too, or pair them with the script that builds them.%s"
+                       % (len(unpaired) - len(owed), len(unpaired), len(owed),
+                          ", ".join(os.path.basename(o) for o in owed[:3]), _hint))
+
+    # ⚠⚠ ACCEPTED AS CARRIED DEBT — THE ONE PATH HERE THAT LETS A PUSH THROUGH WITH A RED FINDING.
+    # Fixture case K: "the allow line must make that visible rather than rendering identically to a
+    # clean pass." So it prints its own block, on every run, and the leg's one-line summary leads
+    # with the words rather than with a count.
+    print("")
+    print("  ⚠⚠ pdf coupling: ACCEPTED AS CARRIED DEBT — NOT a clean pass.")
+    print("     %d unpaired PDF(s) are shipping with the finding STANDING, on a human signature"
+          % len(unpaired))
+    print("     over these exact bytes (`%s`, decided.how=signature)." % PDF_COUPLING_PUSH_STEP)
+    for u in unpaired[:10]:
+        print("       debt  %s" % u)
+    if len(unpaired) > 10:
+        print("       debt  ... and %d more" % (len(unpaired) - 10))
+    print("     The accept binds to (step, path, git_blob_id), so it EXPIRES BY CONSTRUCTION the")
+    print("     instant any of these files changes — there is no expiry logic and nothing to")
+    print("     remember. Each discharges when its document is next rebuilt with its own script.")
+    return True, ("ACCEPTED AS CARRIED DEBT — %d of %d changed PDF(s) are unpaired and every one "
+                  "carries a `%s` signature at these bytes; the FAIL stands as debt"
+                  % (len(unpaired), len(pdfs), PDF_COUPLING_PUSH_STEP))
+
+
+def _write_pdf_coupling_owed(subjects, owed):
+    """Dump the owed `(path, git_blob_id)` set so the printed `sign()` route is actually followable.
+
+    ⚠ THE POINT IS THAT A ROUTE NOBODY CAN WALK IS THE DEFECT THIS WHOLE CHANGE FIXES. The six hook
+    lines pointed at `.claude-local/DEFECTS.md`, which nothing reads; telling an operator to `sign()`
+    33 subjects while making them hand-derive 33 blob ids would be the same failure in a new costume.
+    Returns a sentence to append to the leg's message, or "" if the dump could not be written -- a
+    failure here must never change the VERDICT, only the helpfulness of the refusal."""
+    payload = {
+        "step": PDF_COUPLING_PUSH_STEP,
+        # ⚠ `common.ledger_basis`, NOT `record.read_ref`. The first draft used `read_ref("HEAD")`,
+        # which resolves the INDEX sentinel and returns every other ref UNCHANGED -- so the dump
+        # said `basis: {"value": "HEAD"}` and an accept written from it would have bound to a MOVING
+        # LABEL rather than to a commit, quietly re-applying itself at whatever HEAD became. This is
+        # the one function that resolves a basis the way the WRITE path does, and it also supplies
+        # `resolved_from`, which V1 requires and a hand-built block forgets.
+        "basis": common.ledger_basis("HEAD"),
+        "why": ("Each subject is a PDF this push changes with no build script in the push naming "
+                "it. Signing accepts the finding as carried debt at THESE bytes only."),
+        "subjects": [s for s in subjects if s.get("path") in set(owed)],
+    }
+    try:
+        p = os.path.join(PRIV, "pdf_coupling_owed.json")
+        with io.open(p, "w", encoding="utf-8") as fh:
+            fh.write(json.dumps(payload, indent=2, sort_keys=True))
+    except OSError:
+        return ""
+    return ("  The exact subject set is written to %s — pass it to "
+            "`verdictLedger sign(step='%s', subjects=..., who=..., reason=...)`."
+            % (os.path.join(PRIV, "pdf_coupling_owed.json"), PDF_COUPLING_PUSH_STEP))
 
 
 # ⚠⚠ THE PATHSPEC AND `prior_art`'s REGISTRY `scope` MUST AGREE, AND NEITHER ALONE DOES ANYTHING.
@@ -1535,7 +1837,25 @@ def check_pdf_coupling(ranges=None):
 # `coverage_gap`, which only ever returns paths inside the step's registry `scope`. Widen one and the
 # intersection stays empty — the obligation silently does not exist. If you add an extension here,
 # add the matching glob to `prior_art.scope` in `required.v2.json` in the SAME change.
-ATTRIBUTABLE = ("*.lean", "scripts/build_*.py")
+#
+# ⚠⚠ `*.md` JOINED 2026-09-17, IN THE SAME COMMIT as `prior_art.scope` in `required.v2.json`, which
+# is what the paragraph above demands. Tim: *"My concern on the prior art is that it probably
+# shouldn't just be restricted to the lean files."* Re-derived on a 29-commit arc, ENFORCED being
+# `touched ∩ owing` and NOT `owing`: today 44/0/**0**; registry widened ALONE 44/6/**0** — inert,
+# and it LOOKS landed because `owing` moves 0→6; both routes widened 77/6/**6**. The first proposal
+# widened the registry only, and the deciding number was measured THROUGH THE LEDGER, which reads
+# registry scope and cannot reach this constant — a true number about the wrong object.
+# ⚠ OVER-MATCHING HERE IS SAFE, UNDER-MATCHING IS THE FAILURE MODE. This tuple has no exclusion
+# mechanism, so `touched` over-matches; `owing` honours `prior_art`'s `scope_exclude`, so the
+# intersection filters the excluded paths back out. `CLAUDE.md` is the live example — matched here,
+# excluded there, never owed.
+# ⛔ THIS COMMENT ONCE NAMED `tools/*.md` AS THAT EXAMPLE AND WENT FALSE INSIDE ITS OWN COMMIT.
+# `b13e67cc` struck `tools/*.md` from `prior_art.scope_exclude` in the SAME change that wrote the
+# sentence relying on it, so the claim was true when drafted and false when committed — 29
+# `tools/*.md` paths now appear in `prior_art`'s owing list. Found by `/rely` 2026-09-18 (`O1`).
+# **A worked example is a FACT ABOUT THE CURRENT CONFIG, not an illustration** — it goes stale
+# exactly like a count, and it goes stale fastest in the commit that edits the config it cites.
+ATTRIBUTABLE = ("*.lean", "scripts/build_*.py", "*.md")
 
 
 def changed_attributable(ranges=None):
@@ -1579,7 +1899,13 @@ def changed_attributable(ranges=None):
 
 
 def check_prior_art_attribution(ranges=None):
-    """EVERY `.lean` FILE THIS PUSH EDITS MUST CARRY A PASSING `prior_art` VERDICT AT ITS CURRENT BYTES.
+    """EVERY ATTRIBUTABLE FILE THIS PUSH EDITS MUST CARRY A PASSING `prior_art` VERDICT AT ITS CURRENT BYTES.
+
+    ⚠ "ATTRIBUTABLE" IS `ATTRIBUTABLE` ABOVE, NARROWED BY `prior_art`'s REGISTRY SCOPE — not
+    ".lean". This sentence said `.lean` through TWO widenings (`scripts/build_*.py` 2026-09-13,
+    `*.md` 2026-09-17) and the prepush manifest line said it on every run, which `R-PRECOMMIT`
+    points readers at. Second occurrence of the same staleness = a class (RLY-PA-3); a
+    string-versus-`ATTRIBUTABLE` check is the cheap detector and is not built yet.
 
     ⚠⚠ PER FILE, NEVER PER CORPUS, AND THE DIFFERENCE IS THE WHOLE POINT (Tim, 2026-09-01: *"my goal
     be lean files specifically that whenever a specific file gets edited that that file is properly
@@ -1621,8 +1947,22 @@ def check_prior_art_attribution(ranges=None):
                        "An unreachable ledger is not a clean bill." % (len(touched), basis))
     gap = sorted(set(touched) & set(owing))
     if not gap:
-        return True, ("all %d attributable file(s) edited in %s carry a passing prior_art "
-                      "verdict at their current bytes" % (len(touched), basis))
+        # ⚠⚠ DO NOT SAY "all N carry a passing verdict". `touched` is the PATHSPEC's answer and
+        # `ATTRIBUTABLE` has no exclusion mechanism, so it includes files `prior_art`'s registry
+        # scope EXCLUDES — which are never judged and CANNOT be. Counting them as attributed was
+        # RLY-PA-1 (2026-09-17, /rely): widening the pathspec to `*.md` took the blind set from 1
+        # to 83, and the leg reported `all 4 … carry a passing prior_art verdict` over a range
+        # whose 4 files included `CLAUDE.md` and two `tools/process/` docs. TRUE OF THE DECISION,
+        # FALSE OF THE OUTPUT — the intersection was right and the sentence about it was not.
+        # ⚠ The number that is KNOWN here is the GAP, not the judged set: `owing` names what is in
+        # scope and unverdicted, so a file absent from it is either verdicted OR out of scope, and
+        # this function cannot tell those apart without reimplementing the ledger's glob matcher.
+        # A second copy of that matcher is the same one-of-two-routes defect this leg exists to
+        # avoid, so the message reports what it can defend and names scope as the discriminator.
+        return True, ("no file edited in %s owes an unmet prior_art verdict (%d attributable "
+                      "path(s) touched; `prior_art`'s registry scope decides which of them are "
+                      "judged at all, and files it excludes are NOT attributed by this line)"
+                      % (basis, len(touched)))
     return False, ("%d of %d attributable file(s) edited in %s have NO passing prior_art "
                    "verdict at their current bytes: %s%s — run `/prior-art-review` over these "
                    "files and let it record. You owe the files you TOUCHED, never the corpus."
@@ -1730,7 +2070,10 @@ EXEMPT_PATHS = ("claude.md", "ssot.json", "lake-manifest.json")
 # The exemption is DECLARED in CLAUDE.md's header rather than inferred here, and `ROUTING` above
 # fires on this exact prefix, so the pair covers the same set. Fence: anything in there asserting
 # mathematics belongs in the corpus and is gated normally.
-EXEMPT_PREFIXES = ("tools/verify/", "tools/process/")
+# ⚠⚠ WIDENED TO `tools/` 2026-09-18 IN THE SAME COMMIT AS `ROUTING` AND `rely.scope`, because the
+# three describe one fact and the file's own history is that editing one alone breaks it. The
+# exemption and its compensating route must cover the SAME SET or the pair is a story.
+EXEMPT_PREFIXES = ("tools/",)
 
 
 def _range_tips(ranges):
@@ -1879,10 +2222,25 @@ def signal_verdict(name):
 # nothing. Tim, the same day: "the entire premise here is iterative fixing... we didn't touch 220
 # files. that right there is the false premise."
 #
-# ⚠ IT REMOVES NO LEDGER GATE. `prior_art` is absent from BOTH push admission sets — gitRobot's
-# `config/admission.v1.json` and this repo's (itself dead: `RLY31-12`). The registry entry says so
-# outright: "deliberately ABSENT from admission... blocks nothing at the ledger". So `check_signals`
-# was the only consumer, reading a row the ledger itself does not gate on.
+# ⚠⚠ THIS PARAGRAPH CLAIMED `prior_art` WAS ABSENT FROM BOTH PUSH ADMISSION SETS. BOTH HALVES ARE
+# NOW FALSE, and the first one gates a push. Re-derived 2026-09-26 by calling `gitRobot admission`
+# for all three actions rather than relaying any of them: commit -> `registered_not_admitted`
+# (17 admitted), push -> **ADMITTED** (21), tag -> `registered_not_admitted` (23). So `prior_art`
+# DOES gate a push at the ledger, which is the single action this sentence was about.
+# ⚠ ADMISSION IS PER ACTION, and a sentence naming no action is wrong about at least one of them.
+# `required.v2.json` records this exact correction at `prior_art._admission_is_action_scoped_2026_09_22`
+# — so this is that fix failing to travel to its second site, which is `DC-53`, not a new defect.
+# ⛔ THE QUOTATION IS RETIRED TOO: "deliberately ABSENT from admission... blocks nothing at the
+# ledger" was DELETED from the registry on 2026-09-22 when that key was renamed and its central
+# claim reversed. Do not re-quote it — read the live entry.
+# ⭐ WHAT SURVIVES, AND IT IS WHY REMOVING THE LEG STILL STANDS: the argument never rested on
+# admission. The leg went because it asked a STEP-level question whose scope was every `.lean` file
+# while the push touched six, so it discriminated nothing in any state. That is untouched by who
+# admits what, which is precisely why the false sentence sat here unnoticed — it was decoration on
+# a sound conclusion.
+# ⚠ The second half was wrong differently: this repo's `tools/verify/admission.v1.json` was not
+# merely dead, it should never have been named beside the live one. DELETED 2026-09-26. There is
+# one admission set and it is gitRobot's.
 #
 # ⚠ THE RELEASE GATE KEEPS IT ON PURPOSE. `check_release_ready.py`'s own `REVIEW_STEPS` still lists
 # `prior_art`, and that is correct rather than an oversight: a release mints a permanent DOI, so
@@ -2408,7 +2766,8 @@ def cmd_prepush(ranges=None):
         # NOT_APPLICABLE and check_signals rendering that as ok. This row is the enforcement, and it
         # is scoped to the files the push EDITED so it can be satisfied one review at a time.
         ("prior-art attrib", "BLOCK",
-         "every .lean file edited in this push carries a passing prior_art verdict at its current bytes"),
+         "every ATTRIBUTABLE file edited in this push carries a passing prior_art verdict at its "
+         "current bytes — attributable = batch.ATTRIBUTABLE, narrowed by prior_art's registry scope"),
         # ⚠ TWO ROWS, NOT ONE, BECAUSE THE LEGS NOW ENFORCE DIFFERENTLY. A manifest that still said
         # "routing BLOCK" over a leg that warns is `RLY25-1` — a report publishing a stronger
         # property than it checks. The declaration is the whole point of the manifest.
@@ -2417,8 +2776,9 @@ def cmd_prepush(ranges=None):
         ("prose migration", "WARN",
          "a .lean prose block that SHRANK with no sibling .md gaining — deleted or migrated?"),
         ("routing: routed docs", "WARN",
-         "prose under tools/verify|tools/process — DOWNGRADED 2026-08-21 (rung 5, measured "
-         "non-convergence 10>4>6>9 then deadlock); stale count prints every run"),
+         "prose under tools/ — WIDENED 2026-09-18 from tools/verify|tools/process; DOWNGRADED "
+         "2026-08-21 (rung 5, measured non-convergence 10>4>6>9 then deadlock); stale count "
+         "prints every run"),
         ("signals", "BLOCK", "editorial + adversary (+ prior-art on trigger 5) fresh and covering"),
         ("agent gate", "WARN", "an agent judges whether each check's PASS is EARNED; never blocks"),
     ])
@@ -2634,13 +2994,36 @@ def _recurrence_note():
                            # EVERY push for a note that is advisory. (/rely round 3, ORDINARY.)
                            capture_output=True, text=True, timeout=5,
                            encoding="utf-8", errors="replace")
-    except (OSError, subprocess.SubprocessError):
+    except (OSError, subprocess.SubprocessError) as e:
+        # ⚠ SECOND ROUTE TO THE SAME PROPERTY (`/rely` R3-O1). The `else` below was fixed while
+        # this branch still returned in silence — and `TimeoutExpired` IS a `SubprocessError`, so
+        # a hung child rendered exactly like "nothing over threshold". SH-3 inside the function
+        # whose own comment cites SH-3. Advisory either way; it never blocks.
+        print()
+        print("  recurrence note: selfheal.py could not be run (%s) — advisory, and NOT a clean"
+              " bill" % type(e).__name__)
         return
     # ⚠ ADVISORY MEANS ADVISORY: this must never be able to fail the caller. A note about process
     # health that can block a push is a worse defect than the one it reports.
-    if not r.stdout:
+    # ⚠⚠ THE EXIT CODE IS READ FIRST, NOT ONLY WHEN STDOUT IS EMPTY (`/rely` round 4, B4). A real
+    # child that printed a TRUNCATED report and then died rendered as a complete advisory, because
+    # the status was consulted only on empty output. Partial output is the dangerous case: it
+    # LOOKS like a full answer.
+    # ⛔ AN EARLIER VERSION OF THIS COMMENT SAID `ship.py cmd_plan` "is the sibling that had this
+    # right", AND THAT WAS MEASURABLY FALSE — round 5 found `cmd_plan` reading content before
+    # status, the third of three consumers to carry the defect. Corrected 2026-09-16. All three
+    # now check the exit code first; a claim about a sibling is a claim, and this one was not run.
+    # ⚠ SILENT AND NOTHING-TO-REPORT ARE DIFFERENT ANSWERS (R-ZERONULL). Advisory either way.
+    if r.returncode != 0 or not r.stdout:
+        print()
+        print("  recurrence note: selfheal.py did not complete (exit %s, %d byte(s) of output) —"
+              " advisory, and NOT a clean bill" % (r.returncode, len(r.stdout or "")))
         return
-    rows = [l.strip() for l in r.stdout.splitlines() if "← NO CLASS ROW" in l]
+    # ⚠ THE MARKERS ARE IMPORTED, NOT RETYPED (`/rely` R2-B1). A retyped literal here matched one
+    # of the two UNCLASSED markers, so shapes naming a class row that does not exist never
+    # reached this channel — under a heading promising the whole set. SH-7 selecting SH-7.
+    rows = [l.strip() for l in r.stdout.splitlines()
+            if any(m in l for m in selfheal.UNCLASSED_MARKS)]
     if not rows:
         return
     print()
@@ -2747,12 +3130,19 @@ DECL_CASES = [
 
 def selftest():
     bad = 0
+    # ⚠ `total` EXISTS SO THE SUMMARY CAN BE RE-DERIVED FROM THE ROWS ABOVE IT. Until 2026-09-16
+    # this printed a bare "selftest: PASS" with no count at all, so the only way to learn how much
+    # it covered was to count the lines by hand — which two readers did on the same day and got
+    # 28 and 33. A suite that cannot state its own size cannot be cited, and `R-NOTINLIB` now
+    # requires re-deriving any count of what a tool does from that tool's own output.
+    total = 0
     print("decls_in — comment stripping and name shape")
     for label, src, want in DECL_CASES:
         got = decls_in(src)
         ok = got == want
         print("  %-46s %s" % (label, "ok" if ok else "*** got %s, want %s ***" % (got, want)))
         bad += 0 if ok else 1
+        total += 1
 
     print("stage ordering")
     st = {"stages": {"start": {"ok": True}}, "checker_hashes": {}}
@@ -2764,6 +3154,7 @@ def selftest():
         ok = allowed == should_pass
         print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
         bad += 0 if ok else 1
+        total += 1
 
     print("gate-stage staleness (DC-18)")
     fresh = {"stages": {"precommit": {"ok": True, "tool": self_hash()}}}
@@ -2773,6 +3164,7 @@ def selftest():
         ok = stage_done(state, "precommit") == want
         print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
         bad += 0 if ok else 1
+        total += 1
 
     # ⚠⚠ RLY36-2. The freshness question must be asked about the content the push PUBLISHES, and
     # for two months it was asked about the literal ref `HEAD` while the changed-file half of the
@@ -2791,6 +3183,7 @@ def selftest():
         ok = got == want
         print("  %-46s %s" % (label, "ok" if ok else "*** got %s, want %s ***" % (got, want)))
         bad += 0 if ok else 1
+        total += 1
 
     asked, _real = [], record.step_status
     _real_changed = reviewable_changed
@@ -2813,12 +3206,14 @@ def selftest():
                            all(r[1] for r in rows if r[0] != REVIEW_STEPS[0]))]:
             print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
             bad += 0 if ok else 1
+            total += 1
 
         record.step_status = lambda ref, action="commit": None if ref == "B" else {}
         rows = check_signals(["o/m..A", "o/m..B"])
         ok = all(not r[1] for r in rows)
         print("  %-46s %s" % ("unreachable at ANY tip fails CLOSED", "ok" if ok else "*** WRONG ***"))
         bad += 0 if ok else 1
+        total += 1
 
         # ⚠⚠ `REFUSED` BLOCKED BEFORE THIS BRANCH EXISTED — the generic `else` fails closed — so a
         # control that only asserted BLOCKING would have been green against the defect. The defect
@@ -2838,6 +3233,7 @@ def selftest():
                  "NOTHING has been established" in _why[2])]:
             print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
             bad += 0 if ok else 1
+            total += 1
     finally:
         record.step_status = _real
         globals()["reviewable_changed"] = _real_changed
@@ -2869,10 +3265,138 @@ def selftest():
             ok = got == want
             print("  %-46s %s" % (label, "ok" if ok else "*** got %s, want %s ***" % (got, want)))
             bad += 0 if ok else 1
+            total += 1
     finally:
         globals()["_numstat"] = _real_numstat
 
-    print("\nselftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
+    # ⚠⚠ `_recurrence_note` HAD NO CONTROL AT ALL (`/rely` R3-O3): reverting its marker set
+    # changed what reaches the push-time channel (2 shapes -> 1) while this suite printed PASS
+    # either way. Both halves, on synthetic child output, so nothing here shells out.
+    print("push-time recurrence advisory (R3-O3)")
+    _real_run = subprocess.run
+
+    class _FakeChild(object):
+        def __init__(self, out, rc=0):
+            self.stdout, self.returncode, self.stderr = out, rc, ""
+
+    _both = ("  1. [SH-A] a shape — 4 row(s)  %s\n"
+             "  2. [SH-B] another — 3 row(s)  ← DC-999 %s\n"
+             % (selfheal.MARK_NO_ROW, selfheal.MARK_NAMES_NO_ROW))
+    _rec_cases = [
+        ("both UNCLASSED markers reach the channel", _FakeChild(_both), 2, None),
+        ("an unreadable child is not a clean bill", _FakeChild("", 2), 0, "NOT a clean"),
+    ]
+    for label, child, want_rows, want_text in _rec_cases:
+        try:
+            subprocess.run = lambda *a, **k: child
+            buf = io.StringIO()
+            _real_stdout = sys.stdout
+            try:
+                sys.stdout = buf
+                _recurrence_note()
+            finally:
+                sys.stdout = _real_stdout
+        finally:
+            subprocess.run = _real_run
+        got = buf.getvalue()
+        rows = len([l for l in got.splitlines() if "row(s)" in l])
+        ok = rows == want_rows and (want_text is None or want_text in got)
+        print("  %-46s %s" % (label, "ok" if ok else "*** got %d row(s) ***" % rows))
+        bad += 0 if ok else 1
+        total += 1
+
+    # ⭐⭐ THE ACCEPT CONSULT — EVERY ROW OF THE RATCHET CONTROL TABLE, EXECUTED.
+    # This is the half of `check_pdf_coupling` that can let a push through with a RED finding, and
+    # `LEDGER_GATE_FIXTURE.md` names that as one of the two dangerous cases: "everything else fails
+    # closed; those two are the paths that let a push through, so they are where a fail-open would
+    # actually cost something."
+    #
+    # ⚠⚠ THE ROWS PIN BOTH DIRECTIONS, WHICH IS WHY THERE IS A POSITIVE ONE. Row 1 requires the
+    # consult to ACCEPT and rows 2-8 require it to REFUSE, so a stub returning an empty set fails
+    # row 1 and a stub returning every path fails the other seven. A one-directional suite over an
+    # accept path is how a control layer stays green over a switched-off gate (`B5`).
+    #
+    # ⚠ THE FAKE HONOURS THE SERVER'S OWN FILTERS — both `step` and `subject_sha` — so a row cannot
+    # pass merely because the double is more permissive than `find` is. It also refuses any tool but
+    # `find`, so a consult that started asking a different question would go red here rather than
+    # silently reading something else.
+    print("pdf coupling: the accept consult (the ratchet)")
+    _real_call = record._call
+    _P, _B = "ZP-A_Illustrated_Companion.pdf", "a" * 40
+    _SUBJ = [{"path": _P, "git_blob_id": _B}]
+    _asked = []
+
+    def _mkrec(step=PDF_COUPLING_PUSH_STEP, path=_P, blob=_B, how="signature", who="Tim"):
+        # ⚠ `verdict` is "PASS" on EVERY row, including the ones that must be refused. That is not
+        # laziness: a signed accept really is stored as "PASS" (mcpdev, from `_decided`), so if the
+        # consult ever keyed on the verdict field instead of `decided.how`, all eight rows would
+        # look identical to it and seven would go red. The fixture bakes in the thing that bites.
+        return {"step": step, "verdict": "PASS",
+                "decided": {"how": how, "who": who},
+                "subjects": [{"path": path, "git_blob_id": blob}]}
+
+    def _mkfake(records, answers=True):
+        def _call(tool, args):
+            if tool != "find":
+                raise AssertionError("the consult asked %r, expected 'find'" % tool)
+            _asked.append(args.get("step"))
+            if not answers:
+                return None                     # the ledger did not answer
+            return {"ok": True, "records": [
+                r for r in records
+                if r["step"] == args.get("step")
+                and any(s["git_blob_id"] == args.get("subject_sha") for s in r["subjects"])]}
+        return _call
+
+    def _raises(_tool, _args):
+        raise RuntimeError("transport down")
+
+    _accept_cases = [
+        ("accepted FAIL at THESE bytes clears", _mkfake([_mkrec()]), _SUBJ, {_P}),
+        ("accepted at DIFFERENT bytes does not", _mkfake([_mkrec(blob="b" * 40)]), _SUBJ, set()),
+        ("no accept at all does not", _mkfake([]), _SUBJ, set()),
+        ("accept for a DIFFERENT STEP does not", _mkfake([_mkrec(step="pdf_coupling")]), _SUBJ,
+         set()),
+        ("accept for a DIFFERENT PATH does not", _mkfake([_mkrec(path="ZP-B_Other.pdf")]), _SUBJ,
+         set()),
+        ("a MECHANICAL PASS does not clear", _mkfake([_mkrec(how="mechanical", who=None)]), _SUBJ,
+         set()),
+        ("an OVERRIDE does not clear (opposite signal)", _mkfake([_mkrec(how="override")]), _SUBJ,
+         set()),
+        ("a signature with no WHO does not clear", _mkfake([_mkrec(who=None)]), _SUBJ, set()),
+        # ⚠⚠ None, NEVER set() — `R-ZERONULL`. "I could not ask" and "nobody accepted" must differ
+        # in the VALUE, because the caller blocks on one and computes an owed list from the other.
+        ("ledger unreachable is None, not empty", _mkfake([], answers=False), _SUBJ, None),
+        ("a raising transport is None too", _raises, _SUBJ, None),
+        ("an unkeyable subject is None too", _mkfake([_mkrec()]),
+         [{"path": _P, "git_blob_id": ""}], None),
+    ]
+    for label, caller, subj, want in _accept_cases:
+        try:
+            record._call = caller
+            got = pdf_coupling_accepts(subj)
+        except Exception as e:                            # noqa: BLE001 — a raise IS a failure here
+            got = "raised %r" % (e,)
+        finally:
+            record._call = _real_call
+        ok = got == want
+        print("  %-46s %s" % (label, "ok" if ok else "*** got %r, want %r ***" % (got, want)))
+        bad += 0 if ok else 1
+        total += 1
+
+    # ⚠ AND IT MUST ASK ABOUT THE PUSH-DIFF STEP, NOT THE TREE ONE. The whole design turns on the
+    # split, so a consult that quietly asked `pdf_coupling` would read the near-vacuous 40-of-40
+    # PASS and clear this leg for ever — green on every row above, because those fakes answer
+    # whatever step they are handed. The step name is the one thing the rows cannot pin themselves.
+    _wrong = sorted({s for s in _asked if s != PDF_COUPLING_PUSH_STEP})
+    _ok_step = bool(_asked) and not _wrong
+    print("  %-46s %s" % ("the consult asks the PUSH-DIFF step",
+                          "ok" if _ok_step else "*** asked %r ***" % (_wrong or "nothing",)))
+    bad += 0 if _ok_step else 1
+    total += 1
+
+    print("\nselftest: %s (%d/%d control(s))"
+          % ("PASS" if not bad else "FAIL", total - bad, total))
     return 1 if bad else 0
 
 

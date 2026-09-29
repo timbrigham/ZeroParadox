@@ -1,4 +1,4 @@
-# Node4Generation — ride-along documentation
+# Generation by iteration: the successor chain from the empty floor `Fin 0` to its colimit `ℕ`
 
 Moved from `ZeroParadox/Category/Node4Generation.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
 

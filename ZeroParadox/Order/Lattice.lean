@@ -1,4 +1,5 @@
 import Mathlib.Tactic
+import Mathlib.Order.Irreducible
 
 /-!
 # ZP-A: Lattice Algebra
@@ -155,6 +156,52 @@ theorem state_sequence_monotone (S : ℕ → L) (hS : IsStateSequence S) :
   calc S n ⊔ (S n ⊔ α n) = (S n ⊔ S n) ⊔ α n := by rw [join_assoc]
     _ = S n ⊔ α n                               := by rw [join_idem]
 
+-- `Statement:` a step changes nothing exactly when the increment is already below the state.
+-- In Mathlib's lattices this is `sup_eq_left`.
+example {L : Type*} [ZPSemilattice L] (S α : ℕ → L) (hα : ∀ n, S (n + 1) = join (S n) (α n)) (n : ℕ) :
+    S (n + 1) = S n ↔ le (α n) (S n) := by
+  rw [hα n]
+  constructor
+  · intro h
+    change join (α n) (S n) = S n
+    rw [join_comm]; exact h
+  · intro h
+    change join (α n) (S n) = S n at h
+    rw [join_comm]; exact h
+
+-- `Statement:` if the run is constant from step x on, S x is the least upper bound of the whole run.
+-- That EVERY run is eventually constant is the ascending chain condition
+-- (Mathlib `wellFoundedGT_iff_monotone_chain_condition`).
+example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hS : IsStateSequence S) (x : ℕ)
+    (hstab : ∀ k, S (x + k) = S x) :
+    (∀ n, le (S n) (S x)) ∧ (∀ u, (∀ n, le (S n) u) → le (S x) u) := by
+  have up : ∀ n k, le (S n) (S (n + k)) := by
+    intro n k
+    induction k with
+    | zero => exact ZPSemilattice.le_refl _
+    | succ k ih => exact ZPSemilattice.le_trans ih (state_sequence_monotone S hS (n + k))
+  refine ⟨fun n => ?_, fun u hu => hu x⟩
+  rcases Nat.lt_or_ge n x with h | h
+  · obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le h.le
+    exact up n k
+  · obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le h
+    rw [hstab k]; exact ZPSemilattice.le_refl _
+
+-- `Statement:` control — one idempotent step does not fix the limit.
+example : ∃ S : ℕ → ℕ, (∀ n, S n ≤ S (n + 1)) ∧ S 1 = S 0 ∧ S 2 ≠ S 1 :=
+  ⟨fun n => if n ≤ 1 then 0 else n, fun n => by simp only []; split_ifs <;> omega, rfl, by decide⟩
+
+-- `Statement:` a state sequence that reaches a top at step x stays there: every later state is S x.
+example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hS : IsStateSequence S) (x : ℕ)
+    (htop : ∀ y, le y (S x)) : ∀ k, S (x + k) = S x := by
+  intro k
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+    have hmono := state_sequence_monotone S hS (x + k)
+    rw [ih] at hmono
+    exact ZPSemilattice.le_antisymm (htop _) hmono
+
 /-! ## No Top Element (`HasNoTop`); Strict State Sequences
 
 ⚠ **NOT ZP-A's R1**, which is NO-SUBTRACTION (`scripts/build_zpa.py` Remark R1, exported there as
@@ -183,6 +230,35 @@ theorem cc1 (S : ℕ → L) (_ : IsStateSequence S) (_ : S 0 = ⊥ₗ) :
   fun n => bot_le (S n)
 
 end ZPSemilattice
+
+/-! OQ-A1a (join-irreducible increments), in Mathlib's `SupIrred` vocabulary, outside the local `⊔`. -/
+
+-- `Statement:` on a chain the restriction is vacuous: every nonzero natural is join-irreducible under max.
+-- On any linear order this is Mathlib's `supIrred_iff_not_isMin`.
+example (n : ℕ) (hn : n ≠ 0) : SupIrred n := by
+  refine ⟨?_, fun a b h => ?_⟩
+  · exact fun hmin => hn (Nat.le_zero.1 (hmin (Nat.zero_le n)))
+  · rcases le_total a b with hab | hab
+    · right; simpa [max_eq_right hab] using h
+    · left; simpa [max_eq_left hab] using h
+
+-- `Statement:` on a branching carrier it is not: the top of `Set Bool` is `{true} ⊔ {false}`.
+example : ¬ SupIrred (Set.univ : Set Bool) := by
+  intro h
+  have hj : ({true} : Set Bool) ⊔ {false} = Set.univ := by ext x; cases x <;> simp
+  rcases h.2 hj with h1 | h1
+  · have : false ∈ ({true} : Set Bool) := h1 ▸ Set.mem_univ false
+    simp at this
+  · have : true ∈ ({false} : Set Bool) := h1 ▸ Set.mem_univ true
+    simp at this
+
+-- `Statement:` in a well-founded carrier one increment `a` equals a finite join of join-irreducibles
+-- applied to the same state (Birkhoff 1937; see Chakir–Pouzet, arXiv:0812.2300, Thm 2.1(c); Mathlib
+-- `exists_supIrred_decomposition`).
+example {α : Type*} [SemilatticeSup α] [OrderBot α] [WellFoundedLT α] (s a : α) :
+    ∃ t : Finset α, (∀ b ∈ t, SupIrred b) ∧ s ⊔ a = t.sup id ⊔ s := by
+  obtain ⟨t, ht, hirr⟩ := exists_supIrred_decomposition a
+  exact ⟨t, hirr, by rw [ht, sup_comm]⟩
 
 end ZeroParadox
 

@@ -1,4 +1,4 @@
-# ScaleDepthWitness — ride-along documentation
+# What satisfying the depth-chain seam is worth, and what it is not
 
 Long-form analysis for `ZeroParadox/Valuation/ScaleDepthWitness.lean`. Written 2026-09-04 after two
 review gates; every claim below was elaborated or measured, not recalled.

@@ -165,6 +165,12 @@ into the brief explicitly — the same way the encoding and glob warnings are al
     disk that day.** Commit *and push* it; see the handoff's PART 0b step 4.
 - **Engineer's Takes are Tim's voice.** Claude never drafts one. The only sanctioned assembly is
   restating Tim's own session statements as declaratives, grammar-cleaned, shown back for approval.
+  ⚠ **WHICH questions qualify, added 2026-09-16:** only those about the MATHEMATICS. A question about
+  the EXPLANATION — *"redescribe this in terms an engineer would use"* — is evidence the Take is
+  OWED, never material for it. Hedges survive the flip: *"is an operator I think"* stays hedged.
+  ⚠ This rule already existed in two places when a third copy was nearly written into
+  `lean-development.md`; the probe that missed it was one phrasing against one file. Three phrasings
+  varied by AXIS, per `R-NOTINLIB`, or `check_paths.py --claim`.
   **Fill the Take BEFORE running the review gates (Tim, 2026-07-20)** — it is public prose in the pushed
   file, so the reviews must cover it. Order: finish the work → insert Tim's Take (with approval) → run
   editorial/adversary/prior-art on the COMPLETE file → push. Gating first and adding the Take after

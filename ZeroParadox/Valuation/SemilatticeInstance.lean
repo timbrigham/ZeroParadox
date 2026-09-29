@@ -365,7 +365,7 @@ theorem t_inside_zero
     is the bottom element of its semilattice — the structural role of ⊥.
     ⚠ The role property is the HYPOTHESIS, never the conclusion, and this says nothing
     about Q₂: `ZPSemilattice ℚ_[2]` does not synthesize, so the join-identity is not
-    statable of `0 : ℚ₂`. Nor is novelty (SnapCannotBe.lean:43). See CLAIMS.md's T-IZ row. -/
+    statable of `0 : ℚ₂`. Nor is novelty (this theorem's gloss in SnapCannotBe.lean). See CLAIMS.md's T-IZ row. -/
 theorem t_iz_limit_is_new_null
     {L : Type*} [ZPSemilattice L]
     (terminal : L)
@@ -422,7 +422,7 @@ theorem t_iz_complete
     Filter.Tendsto S Filter.atTop (nhds 0) ∧
     -- Steps 3/6: terminal plays the ⊥ role, hence IS bot (DA-2); "successor" is the reading
     terminal = bot ∧
-    -- Step 4: DA-1 fires at the successor null via AFA/Kleene — no K required
+    -- Step 4: DA-1's Path 1 witness in a KleeneStructure (da1_computational) — no K required
     ZeroParadox.IsQuineAtom (bot : L') ∧
     -- Step 5: T-SNAP fires from ⊥' to ε₀' (A4 = bot_join, definitional)
     join (bot : L') ε₀' = ε₀' :=

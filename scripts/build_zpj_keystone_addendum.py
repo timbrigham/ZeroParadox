@@ -1,6 +1,14 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.7 | August 2026
+Version 1.15 | September 2026
+v1.15: PATARAIA, CHOICE-FREE (2026-09-28): ZeroParadox/Order/PataraiaChoiceFree.lean proves Pataraia's theorem (a fixed point below every pre-fixed point; pataraia_least_prefixedPoint) and Pataraia induction (pataraia_induction_constructive) with no axioms, ported from TypeTopology Various.Pataraia-Taylor. The Section IV box no longer says a Lean port was not located or that porting would take Classical.choice off the fixed-point step; it names the new file, credits TypeTopology's Various.Pataraia (Escardo) and Various.Pataraia-Taylor (Escardo and de Jong) and Escardo 2003 (Cor 2.1; Thm 2.2, which states the induction for sets of inflationary maps) as the first full published proof, keeps the classical Bourbaki-Witt adapter as a second route, re-scopes the negative to a dated survey ("Neither result was located in the pinned Mathlib as of September 2026 (searched by statement shape and by name)"), and drops the "route is standard" sentence (Bauer-Lumsdaine Prop 3.4 gives a fixed point above every post-fixed point, not the least; the Bourbaki-Witt route to the least fixed point is credited to Markowsky 1976, Thm 9, in ZeroParadox/Order/PataraiaFromBourbakiWitt.md). Round-2 ordinary findings folded in: the box's upgrade is the General Recursion Theorem AND ITS CONVERSE, matching the Section IV body; the induction principle is Taylor's own Cor. 119; the next-time operator is "built in this project" (it predates the August survey, so "having since been built" was chronologically false); "functors on vector spaces, whose category has neither". The endnote lists the new Lean source.
+v1.14: PRIOR ART (PA-4, 2026-09-28): the Section IV 'Open contribution point' box listed Pataraia's fixed-point theorem as machinery still missing and did not name Mathlib's Bourbaki-Witt. Classically, both Pataraia statements Taylor uses (least fixed point; Pataraia induction, Cor. 119) follow from Bourbaki-Witt, derived in ZeroParadox/Order/PataraiaFromBourbakiWitt.lean (dcpo_exists_least_fixedPoint, pataraia_induction; footprint carries Classical.choice). The box now says so, and names what remains missing: Pataraia's intuitionistic proof (Taylor Thm 118) and the General Recursion Theorem itself. The Section IV body's dated Mathlib survey gains a pointer to that classical route, and the endnote lists the new Lean source, its sorry-free date moved to September 2026 so it holds for every listed file. Gate round 1 (2026-09-28): the box now credits the classical route as standard (Adamek-Milius-Moss CALCO 2021 Thm 2.1; Bauer-Lumsdaine p. 3), separates dropping choice (classical without choice: Dubut-Yamada; in Lean an intuitionistic proof, formalized in Agda in TypeTopology) from the upgrade to the full coalgebraic statement (the General Recursion Theorem), and names Taylor Thm 118 and Cor. 119 in place of 'both of Pataraia's statements' in the Section IV body.
+v1.13: ATTRIBUTION (PA-1, prior-art gate 2026-09-15): the prior-art paragraph credited Lawvere (1969) with unifying 'Cantor's diagonal, Russell's paradox, Godel's incompleteness lemma, and the recursion theorem'. Lawvere's paper does not treat the recursion theorem: his own introduction names Cantor, Russell, Godel and TARSKI, and the reprint contains no occurrence of Kleene, Rogers or 'recursion'. Turing's halting argument and the recursion theorem are Yanofsky (2003), who proves the latter as his Theorem 5. Lawvere's list now ends at Tarski's undefinability theorem and Yanofsky's sentence carries the other two, matching README.md and CLAIMS.md. Recurrence of ATTR-2, whose 2026-08-29 closure claimed a corpus-wide sweep found no further instances; that claim is retracted. This site was invisible to it because it never names Kleene.
+v1.12: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim ruling, 2026-09-15): the 'What the Zero Paradox adds' box still said 'What MC-1 carries is family membership, proved per domain'; it now names the proved faces as the preamble and Section II do (Quine atom, 2-adic and categorical; the Kleene face carried as a requirement).
+v1.11: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the preamble said the faces' shared membership in MC-1 'is proved per domain', including the Kleene quine; the Kleene face is carried as a KleeneStructure requirement, its witness computability_face_fixedPoint a fixed point of a computable map not tied to bottom, so the preamble and Section II's verdict now name which faces are proved. The preamble's missing space after 'framework:' is restored.
+v1.10: DECISION BATCH REMEDIATION AFTER GATE ROUND 3, SECOND PASS (Tim ruling, 2026-09-15): the preamble said bottom 'is the same self-referential (diagonal) fixed point in every framework', a cross-framework identity the same paragraph retires as ill-typed; it now says bottom 'plays the same self-referential (diagonal) fixed-point role in every framework'. The rest of the sentence is unchanged.
+v1.9: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): both MC-1 sites now say the identity is retired as ill-typed because object equality across categories does not typecheck and is not invariant under equivalence. The property clause citing seam_unique_among_named is dropped here: its named bottoms are not this addendum's faces (Quine atom, Kleene quine, v2(0), initial object).
+v1.8: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): two sites said the MC-1 members are 'provably distinct'; now the MC-1 identity retired as ill-typed (neither x = y nor x != y is well-formed across categories); the members differ by property, each in its own category (seam_unique_among_named).
 v1.7: BEDROCK, the same mechanism defect as ZP-R v1.6 and rendered here too. The escape from the Cantor obstruction was given as eval landing "in the partial functions, not in the codes, so the Set refutation never applied to it". Refuted by elaboration: the partial-function type is nontrivial, so the Set refutation lands on it as well. The escape is that the effective category admits fewer MORPHISMS - no computable self-map on codes is eval-fixed-point-free - so the refuting diagonal has no computable representative. Prior art unchanged; only the stated reason was wrong.
 v1.5: THE v1.4 FIX WAS PARTIAL, AND THAT MADE THINGS WORSE. v1.4 corrected the two sites carrying the literal strings "modeling commitment" and "offered", and missed a THIRD stating the same claim in different words - Section II's closing sentence, "The one-object identification remains the MC-1 commitment." The result was a document saying the identity was retired on page 1 and live on page 2. Before v1.4 it was uniformly stale, i.e. self-consistent; a partial fix to a self-consistent error manufactures a self-contradiction, which is worse than not fixing it. The cause was grepping the three forbidden PHRASES rather than the CLAIM. Section II now states what MC-1 does carry: family membership proved per domain, with the choice of criteria the design commitment. Found independently by both gates at FAIL-BEDROCK. A FOURTH site then turned up - one neither gate flagged - found only by sweeping the rendered text for the CLAIM (any sentence pairing an identity notion with a live-status verb) rather than for the phrases: Section III called MC-1 an "existing identification", and its "bottom/epsilon-zero identification" wording could be read as equating the two endpoints, which epsilon0_ne_bot forbids. Now stated as a role assignment, with the endpoints' distinctness named. Also: the endnote's Lean sources upgraded to full repository paths.
 v1.3: CITATION SCOPE. Section III called the biconditional "the General Recursion Theorem". AMM's Thm 7.2 (p. 27) is the FORWARD direction only; their section 8 is titled "The Converse of the General Recursion Theorem". That converse always asks the ENDOFUNCTOR to preserve inverse images and then takes one of several routes - the CATEGORY having universally smooth monos with the functor carrying a pre-fixed point (Thm 8.1), or the category having a subobject classifier (Thm 8.6, Taylor's), or a third route for functors on vector spaces which have neither (Thm 8.12). The smooth-mono and subobject-classifier conditions are the CATEGORY's; preserving inverse images and carrying a pre-fixed point are the ENDOFUNCTOR's; and the routes are not exhaustive. Cor 8.2 lists five equivalent conditions, including the initial-algebra leg, under Thm 8.1's assumptions specifically. Taylor's necessity result is scoped as he scopes it - IN A TOPOS (Prop 111, p. 6), which he states rather than proves - and his forward half is Thm 36, p. 15. The "one cannot recurse through the bottom" reading is marked as this framework's gloss: Prop 111 names no bottom element. Also: the next-time operator is no longer listed as missing machinery, having been built in ZeroParadox/Category/NextTimeCategorical.lean; the remaining Mathlib absences are dated rather than asserted. All locators read from source.
@@ -20,7 +28,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.15'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -66,14 +74,16 @@ def build():
     # ── Preamble ───────────────────────────────────────────────────────────────
     print('[build_zpj_keystone_addendum] Building preamble...')
     E.append(body(
-        'The keystone of the Zero Paradox is that &#8869; is the same self-referential '
-        '(diagonal) fixed point in every framework: the Quine atom &#8869; = {&#8869;} in set '
+        'The keystone of the Zero Paradox is that &#8869; plays the same self-referential '
+        '(diagonal) fixed-point role in every framework: the Quine atom &#8869; = {&#8869;} in set '
         'theory, the Kleene quine in computation, the point v<sub>2</sub>(0) = &#8734; in '
         'valuation, and the initial object in category theory. Their shared membership in that '
-        'family (MC-1) is proved per domain; the choice of criteria is a design principle; and '
+        'family (MC-1) is proved per domain for the Quine atom, 2-adic and categorical faces; the '
+        'Kleene face is carried as a requirement, its witness computability_face_fixedPoint a fixed '
+        'point of a computable map, not tied to &#8869;; the choice of criteria is a design principle; and '
         'the claim that the faces are <i>numerically one object</i> is <b>retired as '
-        'ill-typed</b> &#8212; an equation across distinct categories is not a well-formed '
-        'proposition, and the members are provably distinct. This addendum is a thin, '
+        'ill-typed</b> (object equality across categories does not typecheck and is not invariant under '
+        'equivalence). This addendum is a thin, '
         'honest record of two machine-checked investigations into the structure of that '
         'keystone &#8212; both probe-level, both fenced as to exactly what they prove.'))
     E.append(body(
@@ -96,10 +106,11 @@ def build():
         'The unification of self-referential fixed points across fields is not new with the '
         'Zero Paradox. <b>Lawvere</b> (Diagonal Arguments and Cartesian Closed Categories, '
         '1969) showed that Cantor\'s diagonal, Russell\'s paradox, G&#246;del\'s incompleteness '
-        'lemma, and the recursion theorem are one move; <b>Yanofsky</b> (A Universal Approach '
-        'to Self-Referential Paradoxes, Incompleteness and Fixed Points, Bull. Symbolic Logic '
-        '9(3), 2003) restated this in plain set-and-function terms across logic and '
-        'computation. Those faces are prior art, cited and not claimed.'))
+        'lemma and Tarski\'s undefinability theorem are one move; <b>Yanofsky</b> (A Universal '
+        'Approach to Self-Referential Paradoxes, Incompleteness and Fixed Points, Bull. Symbolic '
+        'Logic 9(3), 2003) restated this in plain set-and-function terms across logic and '
+        'computation, adding Turing\'s halting argument and the recursion theorem. '
+        'Those faces are prior art, cited and not claimed.'))
     E.append(remark_box(
         'What the Zero Paradox adds (and what it does not)',
         [
@@ -108,10 +119,10 @@ def build():
             'each with a machine-checked axiom footprint; and the <i>location</i> claim, that '
             'the fixed point sits at the floor &#8869; (the G&#246;del inversion), a framing.',
             'Does not add: the unification itself (Lawvere/Yanofsky), nor any identification of '
-            'the four faces as one object &#8212; that identity is <b>retired as ill-typed</b>, '
-            'since an equation across distinct categories is not a well-formed proposition. What '
-            'MC-1 carries is family membership, proved per domain, with the members provably '
-            'distinct.',
+            'the four faces as one object &#8212; that identity is <b>retired as ill-typed</b> '
+            '(object equality across categories does not typecheck and is not invariant under '
+            'equivalence). What MC-1 carries is family membership, proved per domain for the Quine '
+            'atom, 2-adic and categorical faces (the Kleene face carried as a requirement).',
         ]
     ))
     E.append(sp(6))
@@ -166,7 +177,8 @@ def build():
         '<b>The verdict, plainly:</b> the test is category-relative. In Set no face is a '
         'Lawvere instance; in the effective (computability) category the recursion theorem is '
         'a genuine one. The keystone therefore unifies a <i>shape</i> (the diagonal), not a '
-        'single mechanism. What MC-1 carries is family membership, proved per domain, with the '
+        'single mechanism. What MC-1 carries is family membership, proved per domain for the Quine '
+        'atom, 2-adic and categorical faces (the Kleene face carried as a requirement), with the '
         'choice of criteria the design commitment.'))
     E.append(sp(6))
 
@@ -191,7 +203,7 @@ def build():
         'asks the <i>endofunctor</i> to preserve inverse images, and then takes one of several '
         'routes: the <i>category</i> may have universally smooth monomorphisms with the functor '
         'carrying a pre-fixed point (Thm 8.1), or the category may have a subobject classifier '
-        '(Thm 8.6, which is Taylor\'s); a third covers functors on vector spaces, which have '
+        '(Thm 8.6, which is Taylor\'s); a third covers functors on vector spaces, whose category has '
         'neither (Thm 8.12). Under Thm 8.1\'s assumptions the characterizations coincide &#8212; '
         'well-founded &#8660; recursive &#8660; a morphism to the initial algebra (Cor 8.2). '
         'Reading the necessity direction as <i>one cannot recurse '
@@ -253,10 +265,14 @@ def build():
     E.append(body(
         'The <b>full</b> Taylor coalgebraic statement &#8212; &#8869; as a non-well-founded '
         '<i>coalgebra</i> in the broken-pullback sense, with the General Recursion Theorem '
-        '<i>and its converse</i> &#8212; is deliberately <i>not</i> formalized here. Searched '
-        'as of August 2026, the pinned Mathlib carries neither Pataraia\'s fixed-point theorem '
-        'nor a recursion theorem for well-founded coalgebras; the <b>next-time operator</b> on '
-        'subobject lattices is no longer missing, having since been built in this project '
+        '<i>and its converse</i> &#8212; is deliberately <i>not</i> formalized here. Neither '
+        'Pataraia\'s fixed-point theorem nor a recursion theorem for well-founded coalgebras was '
+        'located in the pinned Mathlib as of August 2026, searched by name and vocabulary (this '
+        'project has since proved '
+        'Taylor\'s Thm 118 and the Pataraia induction of his Cor. 119 with no axioms, as the '
+        'contribution point below records); the '
+        '<b>next-time operator</b> on '
+        'subobject lattices is built in this project '
         '(ZeroParadox/Category/NextTimeCategorical.lean), though it is not upstreamed. The '
         'depth result is '
         'therefore cited (Taylor; Ad&#225;mek&#8211;Milius&#8211;Moss), not re-proved. What is '
@@ -265,12 +281,29 @@ def build():
     E.append(remark_box(
         'Open contribution point',
         [
-            'Formalizing the machinery still missing &#8212; Pataraia\'s fixed-point theorem '
-            'and the General Recursion Theorem &#8212; would upgrade this best-effort bridge to '
-            'the full coalgebraic statement, and would be a reusable Lean contribution '
-            'independent of the Zero Paradox. Upstreaming the next-time operator, already built '
-            'here, is a third. Contributions are welcome, to this project and to Mathlib as a '
-            'whole; the precise missing pieces are named above.',
+            'Pataraia\'s fixed-point theorem (Taylor Thm 118: a monotone self-map of a '
+            'directed-complete order with a least element has a least fixed point) and the induction '
+            'principle Taylor derives from it (his Cor. 119, Pataraia induction) are proved in this '
+            'project with no axioms at all: pataraia_least_prefixedPoint gives a fixed point below '
+            'every pre-fixed point, hence the least fixed point, and pataraia_induction_constructive '
+            'gives the induction principle (ZeroParadox/Order/PataraiaChoiceFree.lean, ported from '
+            'TypeTopology\'s Agda modules Various.Pataraia, Escard&#243;\'s, for the &#947; step, and '
+            'Various.Pataraia-Taylor, Escard&#243; and de Jong\'s, for Taylor\'s condition TC). The '
+            'first full published proof of both is Escard&#243;, Joins in the frame of nuclei, '
+            'Applied Categorical Structures 11 (2003) 117&#8211;124 (Cor 2.1, and Thm 2.2, which '
+            'states the induction for sets of inflationary maps). A '
+            'classical route '
+            'through Mathlib\'s '
+            'Bourbaki&#8211;Witt theorem is also kept, with Classical.choice in its footprint '
+            '(dcpo_exists_least_fixedPoint and pataraia_induction, '
+            'ZeroParadox/Order/PataraiaFromBourbakiWitt.lean). Neither result was located in the '
+            'pinned Mathlib as of September 2026 (searched by statement shape and by name). What '
+            'upgrades '
+            'this best-effort bridge to the full coalgebraic statement is the General Recursion '
+            'Theorem and its converse, with well-founded coalgebras. That, upstreaming Pataraia\'s '
+            'theorem, and upstreaming the next-time operator already built here would each be a '
+            'reusable Lean contribution independent of the Zero Paradox. Contributions are welcome, '
+            'to this project and to Mathlib as a whole; the precise missing pieces are named above.',
         ]
     ))
     E.append(sp(6))
@@ -282,7 +315,8 @@ def build():
         'Lawvere face-split and the well-foundedness boundary &#8212; each fenced as to exactly '
         'what it proves. Lean sources: ZeroParadox/Category/Lawvere.lean, '
         'ZeroParadox/Multihomed/Boundary.lean, ZeroParadox/Multihomed/BoundaryBridge.lean, '
-        'all sorry-free in Lean 4 as of June 2026.',
+        'ZeroParadox/Order/PataraiaFromBourbakiWitt.lean, ZeroParadox/Order/PataraiaChoiceFree.lean, '
+        'all sorry-free in Lean 4 as of September 2026.',
         S['endnote']))
 
     print(f'[build_zpj_keystone_addendum] Assembling document ({len(E)} elements)...')

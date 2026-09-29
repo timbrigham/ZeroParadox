@@ -66,7 +66,7 @@ theorem quine_exists_yet_rice (C : Set Code)
 
 /-! ## § IV. The bottom-element relationship — the floor (ν): the bottom exists -/
 
-/-- **Rice on the family's μ/ν fork: the computability face HAS a bottom element.** Unlike the truth /
+/-- **Rice on the family's μ/ν fork: the computability face has a fixed point (Rogers); reading it as the face's bottom is the family's criterion, not this theorem.** Unlike the truth /
     comprehension walls (Tarski, Curry — μ, no floor), computation reaches a floor: every computable
     self-map on codes has a fixed point **up to `eval`** (`computability_face_fixedPoint` — Rogers';
     while `rice_face`, via `ComputablePred.rice₂`, is the one that genuinely routes through

@@ -50,3 +50,10 @@ __pycache__/
 *.pyc
 # Generated diagram artifacts (regenerate via tools/render/*.py)
 tools/render/*.svg
+# Measured axiom footprints (regenerate via `tools/verify/footprints.py --build`).
+# ⚠ DELIBERATELY UNTRACKED, and the reason is the tool's whole point. A committed table is a
+# CITED FIGURE, and `ZeroParadox/Category/ChoiceCannotBe.lean` records that this project got such
+# a figure wrong three times — once quoted rather than measured, twice measured correctly and
+# stale within the session, because "a docstring cannot regenerate anything". This table goes
+# stale on the next commit that adds a declaration. Measure it at the moment you cite it.
+tools/verify/footprints.json

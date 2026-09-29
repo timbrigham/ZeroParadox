@@ -20,35 +20,9 @@ a limit from one direction and a fixed value from the other.
 
 ## Formal Overview
 
-ZPL has four components:
-
-(1) Axiom Footprint Convergence — the informal observation that Classical.choice
-    appears at the non-constructive diagonal step in each of the four ZP layers
-    listed in §I. Not a Lean proposition — evidenced by #print axioms.
-
-(2) Rogers' Fixed-Point Stability — for any computable f, some code is behaviorally
-    fixed by f (eval (f c) = eval c).
-    In Lean scope. Follows from ZPK's roger_fixed_point_exists.
-
-(3) Ordinal ε₀ tower — ε₀ = nfp (ω^·) 0 is the supremum of the tower
-    ω, ω^ω, ω^(ω^ω), ...; it is a fixed point of α ↦ ω^α; it is the first
-    such fixed point above 0. Fully in Lean scope via Mathlib ordinals.
-
-(4) Cantor Normal Form Bridge — ordinals below ε₀ (NONote) encode into ℤ₂
-    via their Cantor normal form; as the tower stages approach ε₀, their encodings
-    converge to 0 = ⊥ in ℤ₂. The identification of these two limits is the
-    remaining gap. Proof partially in Lean scope.
-
-Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.
-The Classical.choice dependency is load-bearing — it is the formal non-constructivity.
-
----
-
-## Dependencies
-
-ZPK (§I): KleeneStructure, roger_fixed_point_exists, IsComputationalQuine
-ZPB (§IV): 2-adic topology, PadicInt 2, 2-adic valuation
-ZPE (§V): T-SNAP, MachinePhase, t_snap_machine -/
+The four components, the layer table, the dependencies and the axiom-footprint note live in
+`ZeroParadox/Ordinal/Gentzen.md`. Footprint: `[propext, Classical.choice, Quot.sound]`
+throughout this file, measured. ZP-K § IV tabulates the measurements on both sides. -/
 
 namespace ZeroParadox
 
@@ -61,25 +35,10 @@ open Ordinal
 
 /-! ## § I. Axiom Footprint Convergence
 
-Non-constructibility appears in four formal languages across the ZP framework.
-Each proved theorem in each layer, as currently written, depends on Classical.choice at the
-diagonal step. Whether that dependence is necessary (forced by ZP geometry rather than incidental)
-is the open Classical.choice inversion conjecture (cf. ZPM §II): #print axioms shows dependence,
-not necessity.
+Argument, layer table and the reason K is absent from Lean: `ZeroParadox/Ordinal/Gentzen.md`. -/
 
-| Layer | Formal Language | Expression of non-constructibility |
-|-------|----------------|--------------------------------------|
-| ZPB   | Topology        | C3: no continuous path ⊥ → x ≠ ⊥   |
-| ZPC   | Information     | L-INF: infinite surprisal at ⊥       |
-| ZPJ/K | Set + Compute  | bot_self_mem (AFA); botCode (Kleene) |
-| ZPI   | Algorithmic IT  | K(Sₙ|n)/|Sₙ| → 1; K uncomputable    |
-
-The reason K is absent from Lean: its existence requires Classical.choice —
-exactly the axiom Nat.Partrec.Code.fixed_point₂ already uses in ZPK. The
-AFA/Kleene route reaches the same fixed-point structure via a provable path. -/
-
--- Axiom footprint evidence: all load-bearing ZPK theorems share this footprint.
--- The Classical.choice entry is the computational expression of the diagonal.
+-- Axiom footprint evidence: the ZPK theorems printed below share this footprint.
+-- Where the axiom enters is recorded in ZP-K § IV.
 section AxiomFootprintEvidence
 
 #print axioms ZeroParadox.t_comp
@@ -423,33 +382,9 @@ theorem snap_threshold_is_epsilon_zero
 
 /-! ## § VI. Kleene-Ordinal Fixed-Point Bridge
 
-The ordinal fixed-point structure (ε₀ = nfp (ω^·) 0, ω^ε₀ = ε₀) and the computational
-fixed-point structure (Rogers' fixed-point theorem, roger_fixed_point_stability) both require
-Classical.choice at their non-constructive step — parallel structure, not a proved isomorphism.
-This is the content of §I Axiom Footprint Convergence.
-
-The hypothesis
-  hfp : ∀ α, ω^α = α → φ α = c₁
-encodes that ordinal fixed points of ω^· (the ordinal analogues of Kleene fixed points)
-map to the snap state c₁. Under this hypothesis, combined with monotonicity (hmono) and
-tower alignment (h0), φ is forced to take the value c₁ at ε₀ and at no smaller ordinal — a statement
-about WHERE the value changes, not that anything occurs:
-  - every ordinal below ε₀ maps to c₀ (snap_threshold_is_epsilon_zero)
-  - ε₀ maps to c₁ (epsilonZero_fixedPoint + hfp)
-  - ε₀ is the minimal ordinal assigned c₁ (from the two above)
-
-**⚠ CORRECTED 2026-07-31. This paragraph read "The computational side — that the snap MUST
-occur — is proved in ZPE (T-SNAP)", and that is FALSE.** T-SNAP constrains the *shape* of a
-transition, never that one occurs: `ZeroParadox/Order/Snap.lean` says so in its own NO-GO gauge (the "T-SNAP constrains the SHAPE of a transition, not that one occurs" block) and
-makes it checkable with `tsnap_holds_but_nothing_moves`, a machine-checked model in which
-T-SNAP holds and **nothing moves** (`stuckPhase := id`). `t_snap_derived` is `⟨l_run, tq_ih,
-rfl⟩`, where `l_run` is `by decide` — it proves the two phases are distinct and that the join
-absorbs. Occurrence is a **commitment**; `Information/Surprisal.lean`'s `l_inf` docstring is
-the framework's designated honest statement of where the argument for it stops.
-
-So nothing below is unconditional. The bridge here is structural, and note that `hfp` **is**
-the snap rather than a route to it: IF maps aligned with the fixed-point structure snap at
-fixed points, THEN ε₀ is the minimal snap threshold (no snap before ε₀, and φ ε₀ = c₁). -/
+The hypothesis `hfp` sends every fixed point of ω^· to c₁; with `hmono` and `h0` the theorem below says
+WHERE the value changes, not that anything occurs. The argument, and the corrected T-SNAP reading
+(`tsnap_holds_but_nothing_moves`): `ZeroParadox/Ordinal/Gentzen.md`. -/
 
 /-- ε₀ is the minimal snap threshold: for any map φ : Ordinal → MachinePhase satisfying
     (a) hmono: φ is order-non-decreasing (join (φ α) (φ β) = φ β for α ≤ β),

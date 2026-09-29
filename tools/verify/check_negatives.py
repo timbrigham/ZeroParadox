@@ -179,7 +179,7 @@ EVIDENCE = re.compile(
     r"retired\b",
     re.I)
 
-# The shared skips (`CLAUDE.md`, `register.md`, `RELEASES.md`) live in `common.SKIP_NAMES`. What is
+# The shared skips (`CLAUDE.md`, `RELEASES.md`) live in `common.SKIP_NAMES`. What is
 # genuinely THIS checker's stays here: its own source, its own baseline, and the defect register —
 # which is an INDEX OF DEFECT KINDS, so it states universal negatives as the thing being catalogued
 # rather than as claims of its own. (It is gitignored, so this skip is intent rather than filter:

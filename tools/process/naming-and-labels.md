@@ -68,7 +68,7 @@ When assigning a label, ask: "Is this result the central claim of its section, o
 ### The keystone concept — "the diagonal fixed point" (confirmed name)
 
 **Standing rule (Tim, 2026-06-10).** The Quine atom (CC-2) is only the *set-theoretic face* of the
-framework's actual keystone: **⊥ is the same self-referential fixed point in every framework, and the
+framework's actual keystone: **⊥ plays the same self-referential fixed-point role in every framework, and the
 floor of each structure is its point of self-reference** (the Gödel inversion — self-reference located
 at the floor, not the ceiling). The confirmed readable name for this keystone is **"the diagonal fixed
 point."** This language has recurred across many sessions; it is the real central concept.
@@ -80,7 +80,7 @@ point."** This language has recurred across many sessions; it is the real centra
 - **Name it to evoke the recognized phenomenon, do NOT claim the unification as proved.** "Diagonal"
   anchors it to the diagonal argument and Lawvere's fixed-point theorem (the recognized home for
   self-referential fixed points across Russell / Quine / Kleene / Gödel / Tarski / Cantor). What ZP has
-  *formalized*: `AbstractSelfApp` + instances, T-COMP (Quine atom = Kleene fixed point = ⊥), ZP-M
+  *formalized*: `AbstractSelfApp` + instances, T-COMP (Quine atom ⇔ ⊥ and the join identity, `t_comp`; the Kleene quine is the KleeneStructure requirement), ZP-M
   (Kleene quine ∧ ε₀ co-witnessed). That ZP's keystone *is* a manifestation of Lawvere's theorem is a
   CONNECTION / conjecture, not a ZP result — keep that fence.
 - Full articulation, faces, and the formal-vs-conjectural split:
@@ -103,15 +103,17 @@ split is superseded:
   in BOTTOMELEMENT); per-domain membership is proved, the choice of criteria a design principle.
 - **Identity half — RETIRED as ill-typed.** That the four bottoms are *numerically one object* across
   distinct categories is NOT a commitment the framework holds — `x = y` across distinct categories is not a
-  well-formed proposition, so it was never a claim. The members are provably distinct (the walls); the only
+  well-formed proposition in the typed language, so it was never a claim. Object equality across categories does not
+  typecheck and is not invariant under equivalence; what separates the members is proved property by property
+  (`seam_unique_among_named`, for the named bottoms, in a lattice with no top). The only
   oneness is the shared *shape* (the diagonal fixed point), apophatic, never a formal identity.
 
 **The convention (ADDITIVE, never eliminative):**
 - Keep **"MC-1"** as the formal handle everywhere; it now points at the **bottom family** (CC-2 precedent:
   keep the label, retire the framing). Do not rename it; `mc1_correspondence` is unchanged. **Never call the
   cross-category identity a "modeling commitment," "offered," or "one object we commit to"** — it is retired
-  as ill-typed. Present the split: membership PROVED, criteria a design principle, identity RETIRED, members
-  provably distinct.
+  as ill-typed. Present the split: membership PROVED, criteria a design principle, identity RETIRED, what
+  separates the members proved property by property (`seam_unique_among_named`, for the named bottoms, in a lattice with no top).
 - **No new readable name for MC-1.** Unlike CC-2 (which *is* an object = the Quine atom), MC-1 is the
   *identification*; its underlying object already has the confirmed readable name
   [[project_diagonal_fixed_point]] ("the diagonal fixed point"). Coining an MC-branded name would be

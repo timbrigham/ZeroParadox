@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# A witness for the depth-chain seam: the powers of two
+# A concrete family satisfying ZP-I's `IsDepthChain`, and the gauge pricing what that satisfaction is worth
 
 ## Engineer's Take
 

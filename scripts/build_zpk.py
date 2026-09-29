@@ -1,6 +1,16 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.14 | May 2026
+Version 1.24 | September 2026
+v1.24: GATE ROUNDS 3-4 REMEDIATION (2026-09-19). Section IV's two load-bearing rows now NAME their witnesses - encodeCode_self and encode_self, minted in this arc - so a reader can re-run a row instead of retyping its statement. ⚠ The v1.23 entry below said "a theorem that RUNS a program reports [propext, Quot.sound] with no choice"; that is true of the named witness eval (Code.const k) n = Part.some k and FALSE as a general claim - roger_fixed_point_exists states there is a code whose evaluation matches, which runs a program, and carries the full triple. Three sites had dropped the witness and kept the generic; all three now name it. The correction also reached ZeroParadox/Category/ChoiceCannotBe.lean SS III, which carried the identical Ordinal correction and had never received the Code one - that non-propagation is what cost this arc two attempts.
+v1.23: ZPK-BED-1 AND ZPK-BED-3, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-19). MEASURED, and the measurement corrects Section IV as well as the defect sites: the axiom does not ride on the type. Nat.Partrec.Code is axiom-free, Nat.Partrec.Code.eval is axiom-free, and a theorem that RUNS a program (eval (Code.const k) n = Part.some k) reports [propext, Quot.sound] with no choice; encode c = encode c, proved by rfl and doing no work, reports the full triple. The axiom enters through Mathlib's Denumerable/Encodable instance, reached by encode - an OPERATION, not a type. Section IV said "statements that mention program codes" and now states no predicate at all - see the table ruling below. Section I said the non-constructive existence "is why all ZP-K theorems carry the standard foundational axioms shared by all Mathlib computability results"; both universals are false as measured, and Section I now points at Section IV instead of restating it. Section II chained a false premise - distinct CODES have distinct Godel numbers "so" each generates a fixed point with a distinct period; injectivity presupposes plurality and cannot produce it, so only the infinitude is given, with the Godel number named as A period rather than the least. ⚠⚠ SECTION IV NOW HOLDS A DATED MEASUREMENT TABLE AND NO GENERAL RULE (Tim ruling, 2026-09-19). Five successive general rules were written about this one Classical.choice and all five were false, the last two in this arc: "a theorem that runs a program carries no choice" is refuted by roger_fixed_point_exists (full triple), and "a statement that names a program's index carries the axiom" is refuted by encodeCode c = encodeCode c, proved by rfl and AXIOM-FREE, against Encodable.encode c = Encodable.encode c, proved by rfl and carrying the triple - two spellings of the same Godel number, opposite footprints, since Mathlib proves encode = encodeCode. A centre holding a rule hands its error to every document pointing at it; a centre holding a measurement inherits nothing. ⚠ The table is DATED and says to re-run rather than cite it - ChoiceCannotBe.lean's "No count is recorded here" records this project getting a cited figure wrong three times. Post-mortem: .claude-local/notes/axiom_footprint_measured_2026-09-19.md.
+v1.22: SET-THEORETIC CLAUSE DELETED (Tim ruling, gate round 6, 2026-09-15): Section IV said 'The order-theoretic and set-theoretic results are unaffected.' IsQuineAtom (bot : MachinePhase) is a set-theoretic result whose Lean theorem da1_closed_concrete lists Classical.choice through machinePhaseKleene; the sentence is deleted. 'The classical axioms are entirely localised to the computational layer.' is kept.
+v1.21: CLASSICAL.CHOICE PROVENANCE, SCOPED (Tim ruling, gate round 6, 2026-09-15): Section IV said all ZP-K theorems' axioms enter through the types; da1_closed_concrete's statement IsQuineAtom (bot : MachinePhase) depends on no axioms, its choice comes through its proof at machinePhaseKleene, and bot_is_quine_atom proves the same statement with no axioms. The body now says most ZP-K theorems carry the axioms, scopes the types sentence to statements that mention program codes, and names da1_closed_concrete as the exception; the remark's opening is scoped the same way; the da1_closed_concrete box's Purity line names the axiom-free proof.
+v1.20: CLASSICAL.CHOICE PROVENANCE, SECTION IV BODY (Tim ruling, gate round 5, 2026-09-15): 'These enter exclusively through Kleene's theorem and Rogers' theorem, which use classical logic and the axiom of choice' was false (a constant-code instance uses neither theorem and carries Classical.choice); it now says that in the computability layer these enter through the types, via Mathlib's numbering of program codes (Denumerable Code), which Kleene's theorem and Rogers' theorem both use. Measured: Mathlib fixed_point and fixed_point2 both list Classical.choice.
+v1.19: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Section IV remark said the choice belongs to this instance because a computable constant-code instance exists. That fact is about the noncomputable marker, not the axiom footprint: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and is present in the computable instance too. The remark now says so, says Classical.choose is what makes machinePhaseKleene noncomputable, and says essentiality is not measured.
+v1.18: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the preamble's 'key insight' and Section II's 'They are not different things' are labelled the framework's reading at the sentence. The T-COMP box listed a fourth clause, botCode existence, under 'the following are equivalent'; t_comp states three, so the box lists those three and states the botCode existence separately as the KleeneStructure requirement. The classical-choice remark said the choice is structurally necessary; ZP-K's instance uses choice to pick botCode, and a computable instance with a constant code also exists (the example after machinePhaseKleene in Kleene.lean). 'satisfies vacuously' is now 'satisfies trivially'.
+v1.17: DA-1 READING FENCED, THIRD PASS (Tim rulings, 2026-09-15): three sentences stated the executor reading as established. The description_instantiation_gap_closed box now says that on the framework's reading bottom is not a description awaiting an external interpreter, and that Lean proves only the Quine-atom statement above it. The da1_closed_concrete box's Interpretation is labelled the framework's reading, not a Lean theorem, with c0 read as the executor. Section II's body says bottom in the computational instantiation is read as the universal Turing machine in its ground state; the general sentences about U are unchanged.
+v1.16: DA-1 PATH 3, SECOND PASS (Tim rulings, 2026-09-15): the Section V heading 'DA-1 Formally Closed', subsection 'II. DA-1 Closed' and the box title 'Theorem da1_closed_concrete - DA-1 Formally Closed' credited the Path 1 witness with closing DA-1, which is closed given DP-2; they are now 'DA-1: what Lean witnesses' and 'the Path 1 witness'. The description_instantiation_gap_closed box said bottom 'IS the executor ... identified structurally with the Kleene fixed point and the AFA Quine atom'; it now says bottom is read as the executor, Lean witnesses it as the AFA Quine atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a KleeneStructure requirement (botCode_is_quine), and that these are one structural fact is the framework's reading.
+v1.15: DA-1 PATH 3, INTERNAL CONTRADICTION (pre-existing bedrock, editorial gate round 3 B1, 2026-09-15): 'What Changed for DA-1' opened 'ZP-K resolves Paths 1 and 3' and two sentences later said 'Path 3 (computational) is NOT resolved here'; the Path 2 paragraph and its Open Items row still said 'Paths 1 and 3 are formally closed / closed', and section I said 'Paths 1 and 3 are projections of one structural identity'. Each now carries the CLAIMS.md DA-1 row: Path 1 is witnessed by da1_closed_concrete, which proves IsQuineAtom (bottom : MachinePhase) and nothing computational; Path 3's witness is the machinePhaseKleene botCode_is_quine field, a KleeneStructure requirement, not a second independent proof. 'DA-1 does not depend on Path 2' is kept.
 v1.14: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
 v1.13: BEDROCK - the 2026-07-26 class-field-as-theorem root cause propagated, six sites. botCode described as "the code witnessing bottom's computational self-reference" and botCode_is_quine as "botCode IS its own program" now name it as a CLASS FIELD carrying a periodicity condition that constant codes also satisfy; the preamble no longer says Kleene's theorem "provides the formal witness"; the machinePhaseKleene def-box no longer says "a program that IS its own program". Section III heading and the verification table said "four-way equivalence" while t_comp proves THREE. R-K.0 gains the type-level statement of the gap: (1)-(3) are properties of an element of L, (4) is a property of a Code, and there is NO function or equivalence between Code and L anywhere in the development - the fourth condition is bundled by the class, not connected by a mapping.
 v1.12: witness audit (mechanical corrections). bot_self_mem_from_kleene described as "the Kleene side implies the AFA side" - it is a RESTATEMENT of the inherited AFAStructure field, adding no content, per Kleene.lean's own note. And "required together because they are the same structural fact" now names both as class FIELDS and the sameness as the framework's reading, which is the motivation for the class rather than something derived within it.
@@ -41,7 +51,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.24'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -65,8 +75,8 @@ def build():
 
     E.append(body(
         'This document establishes the computational grounding of the Zero Paradox\'s central '
-        'self-reference structure. The key insight: ⊥ in the computational '
-        'instantiation is not a state of a Turing machine. ⊥ is the ground state of a universal '
+        'self-reference structure. On the framework\'s reading, ⊥ in the computational '
+        'instantiation is not a state of a Turing machine: it is the ground state of a universal '
         'Turing machine — the state from which no external executor is required. Kleene\'s '
         'second recursion theorem supplies a fixed point of the self-application operator; that '
         'this fixed point is to be read as the computational expression of ⊥ = {⊥} is the '
@@ -99,9 +109,8 @@ def build():
     E.append(body(
         'In Lean 4, this is formalized in Mathlib\'s computability library. '
         'For any partially computable transformation f of codes, '
-        'there exists a code c such that eval c = f c. The existence is non-constructive, '
-        'which is why all ZP-K theorems carry the standard foundational axioms '
-        'shared by all Mathlib computability results.'))
+        'there exists a code c such that eval c = f c. The theorem supplies a code without '
+        'distinguishing one. Section IV tabulates the measured axiom footprints.'))
 
     E.append(import_box(
         'Kleene\'s Second Recursion Theorem (Mathlib)',
@@ -110,7 +119,8 @@ def build():
             'there exists c : Code such that eval c = f c.',
             'Applied to the selfApply transformation, this yields a code c satisfying '
             'eval c n = eval c (encode c + n) for all n — a periodicity condition with '
-            'period equal to c\'s own Gödel number. Multiple such codes exist.',
+            'period c\'s own Gödel number, though not necessarily the least. Multiple '
+            'such codes exist.',
         ]
     ))
     E.append(sp(6))
@@ -120,9 +130,10 @@ def build():
         'The self-application map sends each code c to the partial function that runs c on '
         'c\'s own Gödel number plus an offset. A fixed point of self-application satisfies '
         'a periodicity condition: eval c n = eval c (encode c + n) for all n, with period '
-        'equal to c\'s own Gödel number. Non-uniqueness is expected: distinct codes have '
-        'distinct Gödel numbers, so each generates a fixed point with a distinct period — '
-        'the family of fixed points is infinite and its members are not mutually constrained.'))
+        'equal to c\'s own Gödel number, though not necessarily the least. Non-uniqueness is '
+        'expected: the family of fixed points is infinite, witnessed by the constant codes '
+        '(infinite_quine_family). Kleene.lean § I states what that does and does not imply '
+        'about codes generally.'))
 
     E.append(def_box(
         'Definition: selfApply and IsComputationalQuine (Kleene.lean § I)',
@@ -261,11 +272,11 @@ def build():
             '(1) IsQuineAtom q  — set-theoretic self-reference (AFA)',
             '(2) q = ⊥  — order-theoretic minimum (ZP-A)',
             '(3) ∀ x : L, join q x = x  — algebraic generator (ZP-A A4)',
-            '(4) ∃ botCode : Code, IsComputationalQuine botCode  — computational self-reference',
             '',
-            'Note on (4): it is present in any KleeneStructure instance by typeclass requirement '
-            '(botCode_is_quine is a required field). The equivalence of (1)–(3) is derived by '
-            'T-EXEC; the presence of (4) follows from the structural commitment of KleeneStructure.',
+            'Separately, the KleeneStructure requirement: ∃ botCode : Code, IsComputationalQuine '
+            'botCode (computational self-reference). It is not a clause of t_comp; it is present in '
+            'any KleeneStructure instance because botCode_is_quine is a required field. The '
+            'equivalence of (1)–(3) is derived by T-EXEC.',
             'Lean: ZeroParadox.t_comp. '
             'Purity: standard foundational axioms — from Mathlib computability. ✓',
         ]
@@ -276,9 +287,10 @@ def build():
     E.append(body(
         'DA-1\'s three informal paths (Path 1: AFA structural, Path 2: informational, '
         'Path 3: Kolmogorov/computational) were previously understood as three separate '
-        'corroborations converging on the same conclusion. ZP-K shows they are not '
-        'independent: Paths 1 and 3 are projections of one structural identity onto two '
-        'different formal systems.'))
+        'corroborations converging on the same conclusion. In ZP-K, Path 1 is witnessed by '
+        'da1_closed_concrete, which proves IsQuineAtom (⊥ : MachinePhase) and nothing '
+        'computational; Path 3\'s witness is the machinePhaseKleene instance\'s botCode_is_quine '
+        'field, a KleeneStructure requirement, not a second independent proof.'))
     E.append(body(
         'Path 1 says: nothing external to ⊥ can execute ⊥, so ⊥ must execute itself — '
         '⊥ = {⊥}. Path 3 says: no shorter external program generates ⊥ — ⊥ is its own '
@@ -310,7 +322,7 @@ def build():
         'gap": why does mathematical self-reference imply computational execution? The '
         'gap assumed the two were different things connected by a philosophical bridge.'))
     E.append(body(
-        'They are not different things. ⊥ in the computational instantiation IS the universal '
+        'On the framework\'s reading, they are not different things. ⊥ in the computational instantiation is read as the universal '
         'Turing machine in its ground state. The universal Turing machine is not a description '
         'awaiting an external executor — it IS the executor. The question "why does this '
         'description execute?" is incoherent when applied to U, because U is not a description. '
@@ -321,10 +333,12 @@ def build():
         [
             'In any KleeneStructure lattice:',
             'IsQuineAtom ⊥  ∧  ∀ q : L, IsQuineAtom q → q = ⊥',
-            'The static-description alternative is structurally eliminated, not argued away. '
-            '⊥ is not a description that could await an external interpreter. ⊥ IS the '
-            'executor — the universal Turing machine in ground state, identified structurally '
-            'with the Kleene fixed point and the AFA Quine atom.',
+            'On the framework\'s reading, ⊥ is not a description awaiting an external interpreter; '
+            'Lean proves only the Quine-atom statement above. ⊥ is read as the '
+            'executor, the universal machine in its ground state. Lean witnesses ⊥ as the AFA Quine '
+            'atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a '
+            'KleeneStructure requirement (botCode_is_quine); that these are one structural fact is '
+            'the framework\'s reading.',
             'Lean: ZeroParadox.description_instantiation_gap_closed. '
             'Purity: standard foundational axioms only. ✓',
         ]
@@ -339,21 +353,55 @@ def build():
     ]
 
     E.append(body(
-        'All ZP-K theorems carry the standard foundational axioms shared by all Mathlib '
-        'computability results. These enter exclusively through Kleene\'s theorem and '
-        'Rogers\' theorem, which use classical logic and the axiom of choice. They do not '
-        'enter through ZPSemilattice or AFAStructure.'))
+        'This section records measurements, not a rule. `#print axioms` traverses a '
+        'declaration&#8217;s statement as well as its proof term, and reports what a proof '
+        'used &#8212; never what a theorem needs. The following were measured on '
+        '2026-09-19 against the pinned Mathlib; re-run them rather than citing this table '
+        'if the answer matters.'))
+
+    E.append(data_table(
+        headers=['Declaration', 'Axiom footprint'],
+        rows_data=[
+            ['Nat.Partrec.Code', 'none'],
+            ['Nat.Partrec.Code.eval', 'none'],
+            ['IsKleeneFixedPoint', 'none'],
+            ['encodeCode_self&#8195;(encodeCode c = encodeCode c, by rfl)', 'none'],
+            ['encode_self&#8195;(Encodable.encode c = Encodable.encode c, by rfl)', 'propext, Classical.choice, Quot.sound'],
+            ['kleene_fixed_point_exists', 'propext, Classical.choice, Quot.sound'],
+            ['roger_fixed_point_exists', 'propext, Classical.choice, Quot.sound'],
+            ['machinePhaseKleene', 'propext, Classical.choice, Quot.sound'],
+            ['da1_closed_concrete', 'propext, Classical.choice, Quot.sound'],
+            ['machinePhaseAFA', 'none'],
+            ['bot_is_quine_atom', 'none'],
+            ['t_exec', 'none'],
+        ],
+        col_widths=[230, 200],
+    ))
+    E.append(sp(6))
+
+    E.append(body(
+        'Two readings of that table are worth naming, and neither generalises beyond the '
+        'rows above. The two spellings of a code&#8217;s G&#246;del number differ: the raw '
+        'encodeCode is axiom-free, while Encodable.encode reaches through Mathlib&#8217;s '
+        'Denumerable Code instance, whose own term spends Classical.choice. And one '
+        'statement is proved both ways in Kleene.lean &#167;V &#8212; IsQuineAtom (bot : '
+        'MachinePhase) via machinePhaseKleene carries the triple, and the same statement '
+        'via machinePhaseAFA carries nothing. The axioms do not enter through ZPSemilattice '
+        'or AFAStructure.'))
     E.append(body(
         'ZP-J T-EXEC and all its corollaries remain axiom-free. The classical axioms are '
-        'entirely localised to the computational layer. The order-theoretic and set-theoretic '
-        'results are unaffected.'))
+        'entirely localised to the computational layer.'))
 
     E.append(remark_box(
         'Remark: Classical Choice in Computability',
         [
-            'The use of classical choice in ZP-K is structurally necessary: Kleene\'s '
-            'theorem is an existence result, and the code witnessing the fixed point is '
-            'selected non-constructively. This is standard in computability theory — the '
+            'Where the measurements above show Classical.choice, it is reached through '
+            'Mathlib\'s numbering of program codes (Denumerable Code): it is present '
+            'even in a computable instance with a constant code. ZP-K\'s machinePhaseKleene also '
+            'picks botCode with Classical.choose, which is what makes that instance '
+            'noncomputable. Whether the numbering\'s footprint is essential is not measured. Kleene\'s '
+            'theorem is an existence result, and the code it supplies is selected '
+            'non-constructively. This is standard in computability theory — the '
             'theorem guarantees existence without giving a canonical construction.',
             'The MachinePhase instance (§ V) uses Classical.choose to pick botCode from '
             'the existence proof. This makes machinePhaseKleene noncomputable, '
@@ -365,7 +413,7 @@ def build():
     print('[build_zpk] Building Section V...')
     E += [
         hr(),
-        Paragraph('Section V: MachinePhase Instance — DA-1 Formally Closed', S['h1']),
+        Paragraph('Section V: MachinePhase Instance — DA-1: what Lean witnesses', S['h1']),
         hr(),
     ]
 
@@ -414,27 +462,27 @@ def build():
     ))
     E.append(sp(6))
 
-    E.append(Paragraph('II. DA-1 Closed', S['h2']))
+    E.append(Paragraph('II. DA-1: what Lean witnesses', S['h2']))
     E.append(body(
         'With the MachinePhase KleeneStructure instance in place, the abstract theorem '
         'da1_computational (which holds for any KleeneStructure lattice) applies '
         'directly to ZP-E\'s machine. The result is concrete.'))
 
     E.append(result_box(
-        'Theorem da1_closed_concrete — DA-1 Formally Closed (Kleene.lean § V)',
+        'Theorem da1_closed_concrete — the Path 1 witness (Kleene.lean § V)',
         [
             'da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase)',
             '',
             'The initial machine state c₀ is a Quine atom: it is self-containing and is the '
             'unique self-containing element of the MachinePhase lattice.',
             '',
-            'Interpretation: c₀ is not a static description awaiting an external interpreter. '
-            'c₀ IS the executor — the universal Turing machine in its ground state, for which '
-            'no external executor exists by structural definition. The description-instantiation '
-            'gap is dissolved: "description awaiting execution" is not a coherent state for c₀.',
+            'Interpretation (the framework\'s reading, not a Lean theorem): c₀ is read as the '
+            'executor, the universal Turing machine in its ground state, needing no external '
+            'executor; on that reading "description awaiting execution" is not a coherent state for c₀.',
             '',
             'Lean: ZeroParadox.da1_closed_concrete. '
-            'Purity: standard foundational axioms only. ✓',
+            'Purity: standard foundational axioms only (the same statement has an axiom-free '
+            'proof, bot_is_quine_atom). ✓',
         ]
     ))
     E.append(sp(8))
@@ -446,13 +494,14 @@ def build():
         'Path 3 requires Kolmogorov complexity (uncomputable, absent from Mathlib); Path 2 '
         'requires an ontological bridge not formalizable in type theory.'))
     E.append(body(
-        'ZP-K resolves Paths 1 and 3. Path 1 (AFA structural) is resolved by the AFAStructure '
-        'typeclass: selfMem encodes ⊥ = {⊥} in CIC-compatible form, and the proof obligation '
+        'Path 1 (AFA structural) is witnessed by da1_closed_concrete, which proves '
+        'IsQuineAtom (⊥ : MachinePhase) and nothing computational: in the AFAStructure '
+        'typeclass, selfMem encodes ⊥ = {⊥} in CIC-compatible form, and the proof obligation '
         'is discharged by the MachinePhase instance. Path 3 (computational) is NOT resolved '
         'here. Its witness, botCode_is_quine, is a KleeneStructure class field — an assumption '
         'supplied at instantiation, not a second independent proof — and the condition it '
         'requires, IsComputationalQuine, is a periodicity condition that a constant code '
-        'satisfies vacuously. The Kolmogorov reading ("no shorter program is prior to ⊥") has '
+        'satisfies trivially. The Kolmogorov reading ("no shorter program is prior to ⊥") has '
         'no formal content in ZP-K: Kolmogorov complexity is uncomputable and absent from the '
         'development. Path 3 therefore stands where Path 2 stands — a foundational commitment.'))
     E.append(body( # ZP-NOCHECK: description-instantiation gap cited in quotes as a closed informal gap, not a live ZP claim
@@ -466,8 +515,8 @@ def build():
         '(b) a connection to Chalmers\' notion of implementation; '
         '(c) the dissolution argument in The Philosophical Question That Started This — the description-instantiation gap assumes a '
         'separability that the universality of the framework dissolves. '
-        'Importantly, DA-1 does not depend on Path 2: Paths 1 and 3 are formally closed, '
-        'and the formal spine (DP-2 + da1_minimal_path) is proved axiom-free. '
+        'Importantly, DA-1 does not depend on Path 2: '
+        'the formal spine (DP-2 + da1_minimal_path) is proved axiom-free. '
         'Path 2 is motivational context; its forward resolution is in The Philosophical Question That Started This.'))
 
     E.append(callout(
@@ -546,7 +595,7 @@ def build():
          'is a missing principle, not a missing proof. The gap between \'system at P₀\' and '
          '\'system is running\' cannot be closed by any computability library. '
          'Forward paths: new axiom, Chalmers\' implementation notion, or The Philosophical Question That Started This. '
-         'DA-1 does not depend on Path 2 — Paths 1 and 3 are closed.'],
+         'DA-1 does not depend on Path 2.'],
         ['selfApply uniqueness',
          'CLOSED — not attempted (correct)',
          'Computational quines are not unique in general. Uniqueness flows from ZP-J T-EXEC '

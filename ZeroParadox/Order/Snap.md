@@ -7,7 +7,11 @@ the per-declaration commentary; the results are described at each declaration, n
 
 Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 
-- DA-1 (Instantiation as Execution): Paths 1 and 3 are in Lean scope via ZP-K.
+- DA-1 (Instantiation as Execution): Path 1 is witnessed by da1_closed_concrete (ZP-K),
+  which proves IsQuineAtom (bot : MachinePhase) and nothing computational; Path 3's witness is
+  the machinePhaseKleene instance's botCode_is_quine field, a KleeneStructure requirement, not a
+  second independent proof. The two are carried together by da1_paths_unified as a conjunction of
+  witnesses; that they name one structural fact is the framework's reading.
   machinePhaseKleene gives MachinePhase a KleeneStructure instance; da1_closed_concrete
   proves IsQuineAtom (bot : MachinePhase) — the initial state is self-containing, and it is
   the only such state. The further reading "self-executing, not a static description" is
@@ -21,8 +25,8 @@ Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 ## T-SNAP, and the retirement of AX-1
 
 AX-1 (Binary Snap Causality) is retired. Its content was split in two: the SHAPE of the snap is proved,
-as Theorem T-SNAP, and that the snap OCCURS is stated separately, as the occurrence commitment
-(`tsnap_holds_but_nothing_moves` shows T-SNAP does not carry it). Here the Binary Snap is ⊥ → ε₀ with ε₀
+as Theorem T-SNAP, and that the snap OCCURS is stated separately: it follows from the occurrence commitment
+(instantiation occurs) together with DA-1 (closed given DP-2). `tsnap_holds_but_nothing_moves` shows T-SNAP does not carry it. Here the Binary Snap is ⊥ → ε₀ with ε₀
 the running phase c₁ of MachinePhase, the first state above ⊥ in the discrete-state chart. The cross-framework link is
 established by giving `MachinePhase` (`ZeroParadox/Information/Surprisal.lean`) a `ZPSemilattice`
 instance, which makes the join conjunct of T-SNAP a direct consequence of the semilattice bottom law

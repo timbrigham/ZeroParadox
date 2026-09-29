@@ -10,7 +10,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# Realizing an abstract scale step as 2-adic doubling
+# Realizing an abstract scale step as 2-adic doubling: the ZP-I commitment as equivariance, with the valuation law derived and both valuations bridged
 
 ## Engineer's Take
 

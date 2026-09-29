@@ -73,7 +73,15 @@
             "bottom"
           ],
           "reason": null,
-          "statement": "⊥ is the Quine atom realized in the computation layer (DA-1, closed concretely in ZP-K).",
+          "restatements": [
+            {
+              "by": "Tim",
+              "date": "2026-09-15",
+              "prior_statement": "⊥ is the Quine atom realized in the computation layer (DA-1, closed concretely in ZP-K).",
+              "reason": "Decision-batch arc, round-4 ruling: the prior statement credited ZP-K with closing DA-1 concretely; DA-1 is closed given DP-2 (da1_minimal_path) and da1_closed_concrete is only its Path 1 witness. ClaimsMirror.lean claim_DA1 now backed by da1_minimal_path."
+            }
+          ],
+          "statement": "DA-1 (instantiation is execution) is closed given DP-2 (da1_minimal_path); ZP-K witnesses its Path 1: ⊥ is the unique Quine atom of the machine-phase semilattice (da1_closed_concrete).",
           "status": "proved",
           "to": null
         },
@@ -434,7 +442,15 @@
             "bottom"
           ],
           "reason": null,
-          "statement": "In computability, ⊥ is realized as the Kleene quine, the self-reproducing program and diagonal fixed point of the computation layer.",
+          "restatements": [
+            {
+              "by": "Tim",
+              "date": "2026-09-15",
+              "prior_statement": "In computability, ⊥ is realized as the Kleene quine, the self-reproducing program and diagonal fixed point of the computation layer.",
+              "reason": "Decision-batch arc, round-4 ruling: the prior statement asserted ⊥ is realized as the Kleene quine as proved; kleene_quine_is_bot mentions no computational fixed point, and the quine is the KleeneStructure botCode requirement, so the identification is a reading."
+            }
+          ],
+          "statement": "In computability, ⊥ is read as the Kleene quine: in any KleeneStructure lattice every Quine-atom element equals ⊥ (kleene_quine_is_bot), and the quine itself is the structure's botCode requirement.",
           "status": "proved",
           "to": null
         },
@@ -616,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1737,
-        "files": 146
+        "declarations": 1754,
+        "files": 150
       },
       "entries": [
         {
@@ -7624,6 +7640,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "withdrawn",
+          "id": "19952723-1146-4852-a933-5c5fc003df1d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unregistered_floor_has_no_computable_discriminator",
+            "short": "unregistered_floor_has_no_computable_discriminator"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unregistered_floor_has_no_computable_discriminator",
+            "short": "unregistered_floor_has_no_computable_discriminator",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Deleted 2026-09-16, same day it was added, by /rely round 4 B5. The hypothesis was INERT: measured with lake env lean, the identical proof term elaborates with the hypothesis removed AND with its negation supplied, so the conclusion followed from the commitment and from its denial alike. Its gloss claimed the result was conditional and reduced the open gap to one named assumption; neither was true. R-REVALIDATE step 5(b) — delete rather than redraft. UnregisteredFloor survives as a definition naming the commitment; nothing is proved conditional on it.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "new",
           "id": "199d3add-115d-448d-8882-a7951e455dec",
           "new": {
@@ -11723,6 +11778,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2a620e2f-58b8-4922-ad88-38b3817abbdf",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.registered_discriminator_exists",
+            "short": "registered_discriminator_exists"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.registered_discriminator_exists",
+            "short": "registered_discriminator_exists",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New 2026-09-16. The registered pole's separator as an existence claim, shaped for comparison with PoleDiscriminator. Footprint [propext].",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2a6504cd-d7fa-4865-a6fe-18c7bac2489b",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -11784,6 +11878,45 @@
             ]
           },
           "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2a69685b-0059-4ed4-ae81-475c02c3e450",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.registered_ends_separated",
+            "short": "registered_ends_separated"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.registered_ends_separated",
+            "short": "registered_ends_separated",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New 2026-09-16 with ZeroParadox/Valuation/PoleRegistration.lean. Option.isNone separates the two ends of a registered pole. Footprint [propext].",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13216,6 +13349,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "30110e45-d800-46f4-b2bd-1336cfa747bc",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dom_mk",
+            "short": "dom_mk"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dom_mk",
+            "short": "dom_mk",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New 2026-09-16. (Part.mk p f).Dom = p by rfl — the structural fact that Part carries an arbitrary Prop, so section II stipulates nothing. Axiom-free.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14843,6 +15015,45 @@
             "role": []
           },
           "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3750e2ce-d861-485c-ab81-f97dd6a01006",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_computable_registration_at_kleene_floor",
+            "short": "no_computable_registration_at_kleene_floor"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_computable_registration_at_kleene_floor",
+            "short": "no_computable_registration_at_kleene_floor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New 2026-09-16. No computable Bool test decides whether self-application is defined — self_halting_undecidable as a fact about REGISTRATION, reduced to it rather than restated. Footprint [propext, Classical.choice, Quot.sound], inherited from Mathlib recursion theory.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17640,6 +17851,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "43cb4fa9-0ea9-419a-8768-eab7b3fc584d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_poleDiscriminator",
+            "short": "em_of_poleDiscriminator"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_poleDiscriminator",
+            "short": "em_of_poleDiscriminator",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New 2026-09-16. A uniform discriminator at the unregistered pole yields excluded middle — directly, with no Diaconescu machinery and nothing stipulated, because Part supplies the arbitrary Prop as a field. AXIOM-FREE: the classical content is entirely in the antecedent.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "43e050f8-7beb-449a-9f8e-b470bee91c4b",
           "new": {
             "file": "ZeroParadox/Settheory/MetaFork.lean",
@@ -19689,6 +19939,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4bbbec29-f394-45f2-b95f-1bd3f9a5cf7a",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encodeCode_self",
+            "short": "encodeCode_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encodeCode_self",
+            "short": "encodeCode_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "ZPK-BED arc: the two spellings of a code's Godel number, as tracked witnesses for ZP-K section IV's measurement table",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25717,6 +26004,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "64c8a785-b3d7-45f4-b321-d5a7debe4cab",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.registeredDecider",
+            "short": "registeredDecider"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.registeredDecider",
+            "short": "registeredDecider",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New 2026-09-16. A decision procedure (DATA) for \"am I at infinity?\" on Option, uniform in the carrier and needing no DecidableEq. The contrast that section II cannot have. Footprint [propext].",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "64d0ba1e-a097-4b12-ad18-80b104ac90d2",
           "new": {
@@ -26000,6 +26326,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "669b00fb-e634-4d55-a9d8-36e6159cc7dd",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UnregisteredFloor",
+            "short": "UnregisteredFloor"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UnregisteredFloor",
+            "short": "UnregisteredFloor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "commitment"
+            ]
+          },
+          "reason": "New 2026-09-16. THE COMMITMENT, named: that self-application at c is undefined. Can be false — a carrier could floor at a defined value — so it is a hypothesis, never a class field (R-COMMIT).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26664,6 +27029,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "69238596-abe5-42d3-a04e-311de51c6721",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encode_self",
+            "short": "encode_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encode_self",
+            "short": "encode_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "ZPK-BED arc: the two spellings of a code's Godel number, as tracked witnesses for ZP-K section IV's measurement table",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28362,6 +28764,43 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6f9653a2-02f3-43a4-a57f-22fcdfd429fc",
+          "new": {
+            "file": "ZeroParadox/Order/PataraiaFromBourbakiWitt.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_induction",
+            "short": "pataraia_induction"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PataraiaFromBourbakiWitt.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_induction",
+            "short": "pataraia_induction",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New declaration: Pataraia induction (Taylor Cor. 119), classically from Mathlib Bourbaki-Witt (2026-09-28)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -37468,6 +37907,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9611ec49-ecec-4877-93d0-6a18d63180e2",
+          "new": {
+            "file": "ZeroParadox/Order/PataraiaFromBourbakiWitt.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dcpo_exists_least_fixedPoint",
+            "short": "dcpo_exists_least_fixedPoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PataraiaFromBourbakiWitt.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dcpo_exists_least_fixedPoint",
+            "short": "dcpo_exists_least_fixedPoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New declaration: Pataraia's statement from Mathlib Bourbaki-Witt, classically (PA-4, 2026-09-28)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9623d8f3-95a8-4117-b5c9-92dbdb389f54",
           "new": {
@@ -38526,6 +39002,43 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "99edc618-b8b9-4815-97b0-0bf8175caecd",
+          "new": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_least_prefixedPoint_mem",
+            "short": "pataraia_least_prefixedPoint_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_least_prefixedPoint_mem",
+            "short": "pataraia_least_prefixedPoint_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New declarations: Pataraia's theorem and induction with no axioms, ported from TypeTopology Various.Pataraia-Taylor (2026-09-28)",
+          "verify": {
+            "axioms": "(none) - does not depend on any axioms",
             "sorry_free": true
           }
         },
@@ -40575,6 +41088,43 @@
           "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a2f01e34-386c-4b0b-9cc7-c40b4fb92f10",
+          "new": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_least_prefixedPoint",
+            "short": "pataraia_least_prefixedPoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_least_prefixedPoint",
+            "short": "pataraia_least_prefixedPoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New declarations: Pataraia's theorem and induction with no axioms, ported from TypeTopology Various.Pataraia-Taylor (2026-09-28)",
+          "verify": {
+            "axioms": "(none) - does not depend on any axioms",
             "sorry_free": true
           }
         },
@@ -54674,6 +55224,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "dbe125a2-37a1-43e7-a7f3-57b4a457dbf7",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.PoleDiscriminator",
+            "short": "PoleDiscriminator"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.PoleDiscriminator",
+            "short": "PoleDiscriminator",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New 2026-09-16. The hypothesis: a uniform Bool test correct about Part.Dom, stated at Unit so the hypothesis is weaker and em_of_poleDiscriminator is stronger. Axiom-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "dc4fef5b-2e82-44ca-9ed0-6e7288277897",
           "new": {
@@ -56663,6 +57252,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e3afae88-46c7-4456-b4c4-5e3ab4c3e3f0",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleDiscriminator_of_classical",
+            "short": "poleDiscriminator_of_classical"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleRegistration.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.poleDiscriminator_of_classical",
+            "short": "poleDiscriminator_of_classical",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "New 2026-09-16. The source end of the arrow: classically a discriminator exists, so em_of_poleDiscriminator's antecedent is not unsatisfiable. Classical by construction. Footprint [propext, Classical.choice, Quot.sound].",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -62786,6 +63414,43 @@
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb51605e-086d-4858-9646-2545564e7cdc",
+          "new": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_induction_constructive",
+            "short": "pataraia_induction_constructive"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_induction_constructive",
+            "short": "pataraia_induction_constructive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New declarations: Pataraia's theorem and induction with no axioms, ported from TypeTopology Various.Pataraia-Taylor (2026-09-28)",
+          "verify": {
+            "axioms": "(none) - does not depend on any axioms",
             "sorry_free": true
           }
         },
