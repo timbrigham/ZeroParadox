@@ -17,14 +17,14 @@ ported from an Agda version, and as of September 2026 we didn't find another one
 Lean core.
 
 A fixed point and a pre-fixed point sounded a whole lot like epsilon zero and the asymptote that
-approaches it. The asymptote turned out to be the other side: the post-fixed points climb up from
-below, the pre-fixed points are ceilings coming down from above, and the fixed point is where they
-meet. For epsilon zero itself the meeting is already proved, from epsilon0_min_eq_max together
-with Ordinal.right_le_opow, which says omega to the p is never below p. Pataraia's theorem doesn't
-apply to the ordinals as a whole, since they have no top. It does apply to the ordinals up to
-epsilon zero, or up to any later fixed point, and the point it finds there is epsilon zero. So on
-that stretch the two meetings are the same point. I defer to my AI assistant regarding the
-specifics of how the internals work.
+approaches it. The asymptote turned out to be the other side: the tower climbs up from below, the
+pre-fixed points are ceilings coming down from above, and epsilon zero is where they meet. For
+epsilon zero itself the meeting is already proved, from epsilon0_min_eq_max together with
+Ordinal.right_le_opow, which says omega to the p is never below p. Pataraia's theorem doesn't apply
+to the ordinals as a whole, since they have no top. It does apply to the ordinals up to epsilon
+zero, or up to any later fixed point, and the point it finds there is epsilon zero. So on that
+stretch the two meetings are the same point. I defer to my AI assistant regarding the specifics of
+how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
