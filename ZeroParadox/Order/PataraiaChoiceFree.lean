@@ -9,19 +9,22 @@ set_option maxHeartbeats 400000
 ## Engineer's Take
 
 I had to ask how this shifted from the last file. That one got a least fixed point by way of
-Bourbaki-Witt, and it carried choice because Mathlib's Bourbaki-Witt proof does. This one gets a
-fixed point below every pre-fixed point, which is a stronger promise about the same point, and it
-needs no axioms at all. The proof isn't ours; it is Pataraia's, in the form Taylor gives it, ported
-from an Agda version, and as of September 2026 we didn't find another one in Mathlib or Lean core.
+Bourbaki-Witt, and it carried choice, both in Mathlib's Bourbaki-Witt proof and in the adapter's
+own step from chains to directed sets. This one gets a fixed point below every pre-fixed point,
+and it needs no axioms at all. That reads as a stronger promise, and in this setting it turns out
+to pick out the same point. The proof isn't ours; it is Pataraia's, in the form Taylor gives it,
+ported from an Agda version, and as of September 2026 we didn't find another one in Mathlib or
+Lean core.
 
 A fixed point and a pre-fixed point sounded a whole lot like epsilon zero and the asymptote that
 approaches it. The asymptote turned out to be the other side: the post-fixed points climb up from
 below, the pre-fixed points are ceilings coming down from above, and the fixed point is where they
-meet. For epsilon zero itself the meeting is already proved, as epsilon0_min_eq_max. Pataraia's
-theorem doesn't apply to the ordinals as a whole, since they have no top. It does apply to the
-ordinals up to epsilon zero, or up to any later fixed point, and the point it finds there is epsilon
-zero. So on that stretch the two meetings are the same point. I defer to my AI assistant regarding
-the specifics of how the internals work.
+meet. For epsilon zero itself the meeting is already proved, from epsilon0_min_eq_max together
+with Ordinal.right_le_opow, which says omega to the p is never below p. Pataraia's theorem doesn't
+apply to the ordinals as a whole, since they have no top. It does apply to the ordinals up to
+epsilon zero, or up to any later fixed point, and the point it finds there is epsilon zero. So on
+that stretch the two meetings are the same point. I defer to my AI assistant regarding the
+specifics of how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
@@ -113,20 +116,24 @@ example {α : Type*} [CompletePartialOrder α] (f : α →o α) (y : α)
   obtain rfl : y = z := le_antisymm (hy.2 z hfz) (hz y (le_of_eq hy.1))
   exact hz
 
--- On the ordinals from 0 to epsilon zero, with omega-power restricted there, the fixed point
--- `pataraia_least_prefixedPoint` returns is epsilon zero.
-example : ∃ (f : Set.Icc (0 : Ordinal.{0}) epsilonZero →o Set.Icc (0 : Ordinal.{0}) epsilonZero)
-    (y : Set.Icc (0 : Ordinal.{0}) epsilonZero), (∀ x, (f x).1 = Ordinal.omega0 ^ x.1) ∧
+-- For `a` with omega^a = a, on [0, a] with omega-power restricted, the fixed point returned by
+-- `pataraia_least_prefixedPoint` is epsilon zero, by leastness once `a` is past epsilon zero.
+example (a : Ordinal.{0}) (ha : Ordinal.omega0 ^ a = a) :
+    ∃ (f : Set.Icc (0 : Ordinal.{0}) a →o Set.Icc (0 : Ordinal.{0}) a)
+      (y : Set.Icc (0 : Ordinal.{0}) a), (∀ x, (f x).1 = Ordinal.omega0 ^ x.1) ∧
       f y = y ∧ (∀ p, f p ≤ p → y ≤ p) ∧ y.1 = epsilonZero := by
-  haveI : Fact ((0 : Ordinal.{0}) ≤ epsilonZero) := ⟨zero_le _⟩
+  haveI : Fact ((0 : Ordinal.{0}) ≤ a) := ⟨zero_le _⟩
   have hmax := epsilon0_min_eq_max.{0, 0}
-  let f : Set.Icc (0 : Ordinal.{0}) epsilonZero →o Set.Icc (0 : Ordinal.{0}) epsilonZero :=
+  let f : Set.Icc (0 : Ordinal.{0}) a →o Set.Icc (0 : Ordinal.{0}) a :=
     { toFun := fun x => ⟨Ordinal.omega0 ^ x.1, zero_le _,
-        (Ordinal.opow_le_opow_right Ordinal.omega0_pos x.2.2).trans (le_of_eq hmax.2.1)⟩
+        (Ordinal.opow_le_opow_right Ordinal.omega0_pos x.2.2).trans (le_of_eq ha)⟩
       monotone' := fun _ _ h => Ordinal.opow_le_opow_right Ordinal.omega0_pos h }
   obtain ⟨y, hfy, hy⟩ := pataraia_least_prefixedPoint f
-  exact ⟨f, y, fun _ => rfl, hfy, hy,
-    le_antisymm y.2.2 (hmax.2.2 (congrArg Subtype.val hfy))⟩
+  have hle : epsilonZero ≤ a := hmax.2.2 ha
+  have e : (⟨epsilonZero, zero_le _, hle⟩ : Set.Icc (0 : Ordinal.{0}) a) =
+      f ⟨epsilonZero, zero_le _, hle⟩ := Subtype.ext hmax.2.1.symm
+  refine ⟨f, y, fun _ => rfl, hfy, hy, le_antisymm ?_ (hmax.2.2 (congrArg Subtype.val hfy))⟩
+  exact hy _ (le_of_eq e.symm)
 
 /-- `Statement:` Pataraia induction, with the signature of `pataraia_induction`: if `U` contains `⊥`
     and is closed under `f` and under joins of nonempty directed subsets, then `U` contains every
