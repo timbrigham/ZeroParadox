@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.15 | September 2026
+Version 1.16 | September 2026
+v1.16: PRIOR ART AND SCOPE (PA-5 and the Pataraia arc's carried ordinaries, 2026-09-29): the Section II "In computability: a genuine instance" box cited only Mathlib; it now credits the effective-category setting to Hyland (The effective topos, 1982) and Cockett-Hofstra (Introduction to Turing categories, 2008), as ZeroParadox/Category/DiagonalWitness.lean does, and Bauer (On fixed-point theorems in synthetic computability), who derives the Kleene-Rogers Recursion Theorem from a Lawvere-form fixed-point theorem for multi-valued maps in Hyland's effective topos (Thm 5.2, Cor 5.3, p. 10). Section IV: the August survey method now reads "by declaration name and type", matching the measurement record in ZeroParadox/Multihomed/BoundaryBridge.md (was "by name and vocabulary"); the box credits the classical route to Markowsky 1976, Thm 9(i); and "the first full published proof of both" now says which result is which (Pataraia's theorem, Cor 2.1; the induction, the second clause of Thm 2.2, stated for sets of inflationary maps).
 v1.15: PATARAIA, CHOICE-FREE (2026-09-28): ZeroParadox/Order/PataraiaChoiceFree.lean proves Pataraia's theorem (a fixed point below every pre-fixed point; pataraia_least_prefixedPoint) and Pataraia induction (pataraia_induction_constructive) with no axioms, ported from TypeTopology Various.Pataraia-Taylor. The Section IV box no longer says a Lean port was not located or that porting would take Classical.choice off the fixed-point step; it names the new file, credits TypeTopology's Various.Pataraia (Escardo) and Various.Pataraia-Taylor (Escardo and de Jong) and Escardo 2003 (Cor 2.1; Thm 2.2, which states the induction for sets of inflationary maps) as the first full published proof, keeps the classical Bourbaki-Witt adapter as a second route, re-scopes the negative to a dated survey ("Neither result was located in the pinned Mathlib as of September 2026 (searched by statement shape and by name)"), and drops the "route is standard" sentence (Bauer-Lumsdaine Prop 3.4 gives a fixed point above every post-fixed point, not the least; the Bourbaki-Witt route to the least fixed point is credited to Markowsky 1976, Thm 9, in ZeroParadox/Order/PataraiaFromBourbakiWitt.md). Round-2 ordinary findings folded in: the box's upgrade is the General Recursion Theorem AND ITS CONVERSE, matching the Section IV body; the induction principle is Taylor's own Cor. 119; the next-time operator is "built in this project" (it predates the August survey, so "having since been built" was chronologically false); "functors on vector spaces, whose category has neither". The endnote lists the new Lean source.
 v1.14: PRIOR ART (PA-4, 2026-09-28): the Section IV 'Open contribution point' box listed Pataraia's fixed-point theorem as machinery still missing and did not name Mathlib's Bourbaki-Witt. Classically, both Pataraia statements Taylor uses (least fixed point; Pataraia induction, Cor. 119) follow from Bourbaki-Witt, derived in ZeroParadox/Order/PataraiaFromBourbakiWitt.lean (dcpo_exists_least_fixedPoint, pataraia_induction; footprint carries Classical.choice). The box now says so, and names what remains missing: Pataraia's intuitionistic proof (Taylor Thm 118) and the General Recursion Theorem itself. The Section IV body's dated Mathlib survey gains a pointer to that classical route, and the endnote lists the new Lean source, its sorry-free date moved to September 2026 so it holds for every listed file. Gate round 1 (2026-09-28): the box now credits the classical route as standard (Adamek-Milius-Moss CALCO 2021 Thm 2.1; Bauer-Lumsdaine p. 3), separates dropping choice (classical without choice: Dubut-Yamada; in Lean an intuitionistic proof, formalized in Agda in TypeTopology) from the upgrade to the full coalgebraic statement (the General Recursion Theorem), and names Taylor Thm 118 and Cor. 119 in place of 'both of Pataraia's statements' in the Section IV body.
 v1.13: ATTRIBUTION (PA-1, prior-art gate 2026-09-15): the prior-art paragraph credited Lawvere (1969) with unifying 'Cantor's diagonal, Russell's paradox, Godel's incompleteness lemma, and the recursion theorem'. Lawvere's paper does not treat the recursion theorem: his own introduction names Cantor, Russell, Godel and TARSKI, and the reprint contains no occurrence of Kleene, Rogers or 'recursion'. Turing's halting argument and the recursion theorem are Yanofsky (2003), who proves the latter as his Theorem 5. Lawvere's list now ends at Tarski's undefinability theorem and Yanofsky's sentence carries the other two, matching README.md and CLAIMS.md. Recurrence of ATTR-2, whose 2026-08-29 closure claimed a corpus-wide sweep found no further instances; that claim is retracted. This site was invisible to it because it never names Kleene.
@@ -28,7 +29,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -170,6 +171,12 @@ def build():
             'refute the witness has no computable representative and the obstruction cannot fire. '
             'This is ZP-K\'s face (the Kleene quine).',
             'Footprint: [propext, Classical.choice, Quot.sound], inherited from Mathlib.',
+            'Prior art, cited and not claimed: this is the effective-topos / Turing-category '
+            'setting (Hyland, The effective topos, 1982; Cockett&#8211;Hofstra, Introduction to '
+            'Turing categories, 2008; see ZeroParadox/Category/DiagonalWitness.lean). Bauer (On '
+            'fixed-point theorems in synthetic computability), working in the internal language of '
+            'Hyland\'s effective topos, derives the Kleene&#8211;Rogers Recursion Theorem from a fixed-point theorem of Lawvere\'s '
+            'form for multi-valued maps (Thm 5.2, Cor 5.3, p. 10).',
         ]
     ))
     E.append(sp(4))
@@ -267,7 +274,7 @@ def build():
         '<i>coalgebra</i> in the broken-pullback sense, with the General Recursion Theorem '
         '<i>and its converse</i> &#8212; is deliberately <i>not</i> formalized here. Neither '
         'Pataraia\'s fixed-point theorem nor a recursion theorem for well-founded coalgebras was '
-        'located in the pinned Mathlib as of August 2026, searched by name and vocabulary (this '
+        'located in the pinned Mathlib as of August 2026, searched by declaration name and type (this '
         'project has since proved '
         'Taylor\'s Thm 118 and the Pataraia induction of his Cor. 119 with no axioms, as the '
         'contribution point below records); the '
@@ -289,12 +296,12 @@ def build():
             'gives the induction principle (ZeroParadox/Order/PataraiaChoiceFree.lean, ported from '
             'TypeTopology\'s Agda modules Various.Pataraia, Escard&#243;\'s, for the &#947; step, and '
             'Various.Pataraia-Taylor, Escard&#243; and de Jong\'s, for Taylor\'s condition TC). The '
-            'first full published proof of both is Escard&#243;, Joins in the frame of nuclei, '
-            'Applied Categorical Structures 11 (2003) 117&#8211;124 (Cor 2.1, and Thm 2.2, which '
-            'states the induction for sets of inflationary maps). A '
-            'classical route '
-            'through Mathlib\'s '
-            'Bourbaki&#8211;Witt theorem is also kept, with Classical.choice in its footprint '
+            'first full published proof is Escard&#243;, Joins in the frame of nuclei, '
+            'Applied Categorical Structures 11 (2003) 117&#8211;124: Pataraia\'s theorem is his '
+            'Cor 2.1, and the induction is the second clause of his Thm 2.2, stated there for sets '
+            'of inflationary maps. A classical route through Mathlib\'s Bourbaki&#8211;Witt theorem, '
+            'Markowsky\'s (Algebra Universalis 6 (1976), Thm 9(i)), '
+            'is also kept, with Classical.choice in its footprint '
             '(dcpo_exists_least_fixedPoint and pataraia_induction, '
             'ZeroParadox/Order/PataraiaFromBourbakiWitt.lean). Neither result was located in the '
             'pinned Mathlib as of September 2026 (searched by statement shape and by name). What '
