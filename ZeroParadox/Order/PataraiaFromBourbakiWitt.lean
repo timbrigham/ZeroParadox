@@ -20,10 +20,10 @@ regarding the specifics of how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
-Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`) has a least fixed point
-(Taylor Thm 118), in every set holding `⊥` and closed under `f` and directed joins (Pataraia induction, Cor. 119).
-Bourbaki–Witt plus classical logic ⇒ both STATEMENTS, not Pataraia's intuitionistic proof, which is
-`ZeroParadox/Order/PataraiaChoiceFree.lean` (no axioms); prior art: `ZeroParadox/Order/PataraiaFromBourbakiWitt.md`.
+Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`) has a least
+fixed point (Taylor Thm 118), in every set holding `⊥` and closed under `f` and directed joins
+(Pataraia induction, Cor. 119). Bourbaki–Witt plus classical logic ⇒ both STATEMENTS here; the
+no-axiom proof is `ZeroParadox/Order/PataraiaChoiceFree.lean`; prior art in the ride-along `.md`.
 -/
 
 namespace ZeroParadox
@@ -66,7 +66,9 @@ theorem dcpo_exists_least_fixedPoint {α : Type*} [CompletePartialOrder α] (f :
 
 /-- `Statement:` Pataraia induction (Taylor Cor. 119; Adámek–Milius–Moss, CALCO 2021, Cor 2.6): if
     `U` contains `⊥` and is closed under `f` and under joins of nonempty directed subsets, then `U`
-    contains every least fixed point `y` of `f`. Footprint `[propext, Classical.choice, Quot.sound]` measures this proof, not the principle: `pataraia_induction_constructive` has this signature and no axioms. -/
+    contains every least fixed point `y` of `f`. Footprint `[propext, Classical.choice, Quot.sound]`
+    measures this proof, not the principle: `pataraia_induction_constructive` has this signature
+    and no axioms. -/
 theorem pataraia_induction {α : Type*} [CompletePartialOrder α] (f : α →o α) (U : Set α)
     (hbot : ⊥ ∈ U) (hf : ∀ x ∈ U, f x ∈ U)
     (hsup : ∀ d ⊆ U, d.Nonempty → DirectedOn (· ≤ ·) d → sSup d ∈ U)

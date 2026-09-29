@@ -22,10 +22,10 @@ the specifics of how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
-Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`): a fixed point below every pre-fixed
-point, hence least fixed (not conversely), and Pataraia induction. The Pataraia–Taylor proof (Pataraia's first step, Taylor's
-predicate for the second), ported from TypeTopology `Various.Pataraia-Taylor` (Escardó–de Jong, Agda, 2024): `Y` is Taylor's
-`TC` plus `x ∈ U` (their `lfp-induction`'s `TC'`), `T` is `γ` of `lemma₂·₁` in `Various.Pataraia`. Classical: `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`.
+Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`): a fixed
+point below every pre-fixed point, hence least fixed (not conversely), and Pataraia induction.
+Ported from TypeTopology `Various.Pataraia-Taylor` (Escardó–de Jong, Agda, 2024); the proof's
+comments map `Y` and `T` to it. Classical route: `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`.
 -/
 
 namespace ZeroParadox
@@ -37,7 +37,8 @@ theorem pataraia_least_prefixedPoint_mem {α : Type*} [CompletePartialOrder α] 
     (U : Set α) (hbot : ⊥ ∈ U) (hf : ∀ x ∈ U, f x ∈ U)
     (hsup : ∀ d ⊆ U, d.Nonempty → DirectedOn (· ≤ ·) d → sSup d ∈ U) :
     ∃ z, z ∈ U ∧ f z = z ∧ ∀ p, f p ≤ p → z ≤ p := by
-  -- `Y` (Taylor's `TC`): post-fixed points in `U` lying below every pre-fixed point.
+  -- `Y` (Taylor's `TC`, plus `x ∈ U` as in their `lfp-induction`): post-fixed points in `U`
+  -- lying below every pre-fixed point.
   let Y : α → Prop := fun x => x ≤ f x ∧ (∀ p, f p ≤ p → x ≤ p) ∧ x ∈ U
   have hYsup : ∀ d : Set α, (∀ x ∈ d, Y x) → d.Nonempty → DirectedOn (· ≤ ·) d → Y (sSup d) := by
     intro d hd hne hdir
