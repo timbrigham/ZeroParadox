@@ -12,8 +12,8 @@ set_option maxHeartbeats 400000
 Mathlib runs on classical logic by default, choice included. Working inside that default, the two
 things Taylor needs from Pataraia, the least fixed point and the induction principle that goes with
 it, aren't actually missing: both fall out of Bourbaki–Witt, which Mathlib already has, and this
-file is the adapter that shows it works in Lean. It uses choice like everything else built on that
-default, and that is a fact about this route, not about the theorem. Pataraia's own proof needs
+file is the adapter that shows it works in Lean. It uses choice because Mathlib's Bourbaki-Witt
+proof does, and that is a fact about this route, not about the theorem. Pataraia's own proof needs
 neither choice nor excluded middle, and it has been formalized in Agda. We finally got a port of it
 working in Lean, in PataraiaChoiceFree.lean, with no axioms at all. I defer to my AI assistant
 regarding the specifics of how the internals work.

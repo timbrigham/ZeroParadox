@@ -3,7 +3,7 @@
 Citations for `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`. The Lean file holds the
 declarations, the Engineer's Take and the per-declaration statements.
 
-## The statements are standard; the Bourbaki–Witt route is this file's
+## The statements are standard; a source for the Bourbaki–Witt route was not located as of 2026-09-28
 
 Every monotone map on a chain-complete poset has a least fixed point: Zermelo's theorem as stated
 by Adámek, Milius and Moss, *Initial Algebras Without Iteration*, CALCO 2021 (LIPIcs, Article 6;
@@ -34,11 +34,18 @@ adapter to Mathlib's `CompletePartialOrder`, not the mathematics.
   excluded middle postulated as a separate axiom would be reported as itself, not as
   `Classical.choice`.
 - **Intuitionistic.** Pataraia's proof (Taylor, *Well founded coalgebras and recursion*, Prop 117
-  with Thm 118, p. 8). Formalized in Agda in TypeTopology: `Various.Pataraia` (Escardó, 2024,
-  assuming propositional resizing) and `Various.Pataraia-Taylor` (Escardó and de Jong, 2024, a
-  predicative version after Taylor, whose module notes that predicatively there are no non-trivial
-  dcpos of the required size to apply it to). In Lean, `ZeroParadox/Order/PataraiaChoiceFree.lean`
-  ports `Various.Pataraia-Taylor`, and `#print axioms` reports no axioms for
+  with Thm 118, p. 8). Pataraia did not publish it (Taylor, p. 8). Its first full published proof
+  is Escardó, *Joins in the frame of nuclei*, Applied Categorical Structures 11 (2003) 117–124:
+  Pataraia's theorem is his Cor 2.1, and the induction principle is the second clause of his
+  Thm 2.2, stated there for sets of inflationary maps. Escardó notes that only a brief sketch had
+  been published before (Taylor, *Practical Foundations of Mathematics*, 1999, Exercises 3.44 and
+  3.45). Formalized in Agda in TypeTopology: `Various.Pataraia` (Escardó, 2024, following the 2003
+  paper and assuming propositional resizing) and `Various.Pataraia-Taylor` (Escardó and de Jong,
+  2024, a predicative version replacing the second step with Taylor's condition `TC`, whose module
+  notes that predicatively there are no non-trivial dcpos of the required size to apply it to). In
+  Lean, `ZeroParadox/Order/PataraiaChoiceFree.lean` ports `Various.Pataraia-Taylor` (`TC`) together
+  with the `γ` step, `lemma₂·₁` of `Various.Pataraia`, which that module imports, and
+  `#print axioms` reports no axioms for
   `pataraia_least_prefixedPoint` and `pataraia_induction_constructive`. No other Lean formalization
   was located as of 2026-09-28, searched in the pinned Mathlib (eight `exact?` statement-shape
   probes and a name search) and in Lean core.

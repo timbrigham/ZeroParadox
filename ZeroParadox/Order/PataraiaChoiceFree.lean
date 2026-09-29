@@ -9,23 +9,24 @@ set_option maxHeartbeats 400000
 ## Engineer's Take
 
 I had to ask how this shifted from the last file. That one got a least fixed point by way of
-Bourbaki-Witt, and it carried choice because Mathlib does. This one gets a fixed point below every
-pre-fixed point, which is a stronger promise about the same point, and it needs no axioms at all.
-The proof isn't ours; it is Pataraia's, in the form Taylor gives it, ported from an Agda version,
-and as of September 2026 we didn't find another one in Mathlib or Lean core.
+Bourbaki-Witt, and it carried choice because Mathlib's Bourbaki-Witt proof does. This one gets a
+fixed point below every pre-fixed point, which is a stronger promise about the same point, and it
+needs no axioms at all. The proof isn't ours; it is Pataraia's, in the form Taylor gives it, ported
+from an Agda version, and as of September 2026 we didn't find another one in Mathlib or Lean core.
 
 A fixed point and a pre-fixed point sounded a whole lot like epsilon zero and the asymptote that
 approaches it. The asymptote turned out to be the other side: the post-fixed points climb up from
 below, the pre-fixed points are ceilings coming down from above, and the fixed point is where they
-meet. Whether that is more than a resemblance is still open. I defer to my AI assistant regarding
-the specifics of how the internals work.
+meet. For epsilon zero itself the meeting is already proved, as epsilon0_min_eq_max. Pataraia's
+theorem doesn't reach the ordinals, so whether the two are one thing is still open. I defer to my AI
+assistant regarding the specifics of how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
 Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`): a fixed
 point below every pre-fixed point, hence least fixed (here also conversely), and Pataraia induction.
-Ported from TypeTopology `Various.Pataraia-Taylor` (Escardó–de Jong, Agda, 2024); the proof's
-comments map `Y` and `T` to it. Classical route: `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`.
+First published in full: Escardó, ACS 11 (2003), Cor 2.1 and Thm 2.2. Ported from TypeTopology,
+`γ` of `Various.Pataraia` (Escardó), Taylor's `TC` of `Various.Pataraia-Taylor` (Escardó–de Jong).
 -/
 
 namespace ZeroParadox
@@ -37,8 +38,9 @@ theorem pataraia_least_prefixedPoint_mem {α : Type*} [CompletePartialOrder α] 
     (U : Set α) (hbot : ⊥ ∈ U) (hf : ∀ x ∈ U, f x ∈ U)
     (hsup : ∀ d ⊆ U, d.Nonempty → DirectedOn (· ≤ ·) d → sSup d ∈ U) :
     ∃ z, z ∈ U ∧ f z = z ∧ ∀ p, f p ≤ p → z ≤ p := by
-  -- `Y` (Taylor's `TC`, plus `x ∈ U` as in their `lfp-induction`): post-fixed points in `U`
-  -- lying below every pre-fixed point.
+  -- `Y` (Taylor's `TC` in TypeTopology `Various.Pataraia-Taylor`, plus `x ∈ U` as in its
+  -- `lfp-induction`): post-fixed points in `U` lying below every pre-fixed point. Not the `Y` of
+  -- Taylor's Prop 117, which is the set of inflationary monotone maps (`M` here).
   let Y : α → Prop := fun x => x ≤ f x ∧ (∀ p, f p ≤ p → x ≤ p) ∧ x ∈ U
   have hYsup : ∀ d : Set α, (∀ x ∈ d, Y x) → d.Nonempty → DirectedOn (· ≤ ·) d → Y (sSup d) := by
     intro d hd hne hdir
@@ -65,7 +67,8 @@ theorem pataraia_least_prefixedPoint_mem {α : Type*} [CompletePartialOrder α] 
   have himgY : ∀ x, Y x → ∀ z ∈ img x, Y z := by
     rintro x hx _ ⟨g, hg, rfl⟩
     exact (hg x hx).1
-  -- `T` (`γ` of `lemma₂·₁`): the pointwise sup of `M`, itself the greatest member of `M`.
+  -- `T` (`γ` of `lemma₂·₁`, TypeTopology `Various.Pataraia`): the pointwise sup of `M`, itself
+  -- the greatest member of `M`.
   let T : α → α := fun x => sSup (img x)
   have hTlub : ∀ x, Y x → IsLUB (img x) (T x) := fun x hx =>
     CompletePartialOrder.lubOfDirected _ (himgdir x hx)
