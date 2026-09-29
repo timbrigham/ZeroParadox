@@ -11,8 +11,8 @@ set_option maxHeartbeats 400000
 I had to ask how this shifted from the last file. That one got a least fixed point by way of
 Bourbaki-Witt, and it carried choice because Mathlib does. This one gets a fixed point below every
 pre-fixed point, which is a stronger promise about the same point, and it needs no axioms at all.
-The proof isn't ours; it is Pataraia's, ported from an Agda version, and as of September 2026 we
-didn't find another one in Lean.
+The proof isn't ours; it is Pataraia's, in the form Taylor gives it, ported from an Agda version,
+and as of September 2026 we didn't find another one in Mathlib or Lean core.
 
 A fixed point and a pre-fixed point sounded a whole lot like epsilon zero and the asymptote that
 approaches it. The asymptote turned out to be the other side: the post-fixed points climb up from
@@ -22,10 +22,10 @@ the specifics of how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
-Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`): a fixed point
-below every pre-fixed point, hence least fixed (not conversely), and Pataraia induction. Pataraia's
-proof, ported from TypeTopology `Various.Pataraia-Taylor` (Escardó–de Jong, Agda, 2024): Taylor's `TC`
-is `Y`, `T` is `γ` of `lemma₂·₁` in `Various.Pataraia`. Classical: `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`.
+Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`): a fixed point below every pre-fixed
+point, hence least fixed (not conversely), and Pataraia induction. The Pataraia–Taylor proof (Pataraia's first step, Taylor's
+predicate for the second), ported from TypeTopology `Various.Pataraia-Taylor` (Escardó–de Jong, Agda, 2024): `Y` is Taylor's
+`TC` plus `x ∈ U` (their `lfp-induction`'s `TC'`), `T` is `γ` of `lemma₂·₁` in `Various.Pataraia`. Classical: `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`.
 -/
 
 namespace ZeroParadox
