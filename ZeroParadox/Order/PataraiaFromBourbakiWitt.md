@@ -13,12 +13,18 @@ Lumsdaine, *On the Bourbaki-Witt principle in toposes*, arXiv:1201.0340, p. 3). 
 Moss state both targets of this file for such a poset: Pataraia's theorem (Thm 2.4, p. 6:4) and
 the Pataraia induction principle (Cor 2.6, p. 6:5). Markowsky, *Chain-complete posets and directed
 sets with applications*, Algebra Universalis 6 (1976) 53–68, Thm 9(i), p. 65, reaches the least
-fixed point by applying Bourbaki's theorem (his Thm 8) to the post-fixed points lying below every
-fixed point, for chains "including the empty chain" (p. 53), without "the axiom of choice" (p. 65);
-Dubut and Yamada report it (LMCS 18(1), 2022, p. 30:1). `dcpo_exists_least_fixedPoint` uses that
-set, with Mathlib's Bourbaki–Witt; `pataraia_induction` uses the post-fixed points in `U` below the
-least fixed point. Goubault-Larrecq, *Bourbaki, Witt, and Dito Pataraia* (web note, June 13th,
-2013), reaches the least common fixed point by Pataraia's route, not Bourbaki–Witt. What the Lean
+fixed point on a chain-complete poset (every chain, "including the empty chain", has a sup, p. 53)
+by applying Bourbaki's theorem (his Thm 8) to the post-fixed points lying below every fixed point,
+without "the axiom of choice" (p. 65). Dubut and Yamada report that Markowsky showed the fixed
+points of a chain-complete poset are again chain-complete and that his proof uses the Bourbaki–Witt
+theorem (LMCS 18(1), 2022, p. 30:1). `dcpo_exists_least_fixedPoint` uses Markowsky's set, with
+Mathlib's Bourbaki–Witt. `pataraia_induction` restricts `f` to the post-fixed points in `U` below
+the least fixed point, where it is inflationary, and applies Bourbaki–Witt there; Adámek, Milius and
+Moss's proof of Thm 2.4 (items 3–4, pp. 6:4–6:5) likewise restricts `f` to a set of post-fixed
+points on which it is inflationary, taking the fixed point from Pataraia's step (their item 2)
+instead. Goubault-Larrecq, *Bourbaki, Witt, and Dito Pataraia* (web note, June 13th, 2013), reaches
+the least common fixed point, above a given point, of a family of inflationary monotone maps on a
+dcpo, by Pataraia's route rather than Bourbaki–Witt, and credits it to Escardó (2003). What the Lean
 file adds is the machine-checked adapter to Mathlib's `CompletePartialOrder`, not the mathematics.
 
 ## Three settings, kept apart
@@ -26,7 +32,8 @@ file adds is the machine-checked adapter to Mathlib's `CompletePartialOrder`, no
 - **Classical, with choice** (Lean and Mathlib by default). Done in the Lean file. `#print axioms`
   reports `Classical.choice` for both theorems, which measures these proofs, not the principle:
   the same two statements hold with no axioms (third item).
-- **Classical, without choice.** Lang's proof of Bourbaki–Witt is "classically but without choice"
+- **Classical, without choice.** Markowsky's Thm 9(i), cited above, gives the least fixed point
+  without the axiom of choice (p. 65). Lang's proof of Bourbaki–Witt is "classically but without choice"
   (Bauer and Lumsdaine, p. 8), and Dubut and Yamada's Isabelle/HOL library, checked with the axiom
   of choice excluded, proves a generalization of Pataraia's theorem
   (`mono_imp_fp_directed_complete`; *Fixed-point theorems for non-transitive relations*, LMCS

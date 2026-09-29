@@ -30,8 +30,8 @@ how the internals work.
 ## Formal Overview (AI-assisted)
 Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`): a fixed
 point below every pre-fixed point, hence least fixed (here also conversely), and Pataraia induction.
-First published in full: Escardó, ACS 11 (2003), Cor 2.1 and Thm 2.2. Ported from TypeTopology,
-`γ` of `Various.Pataraia` (Escardó), Taylor's `TC` of `Various.Pataraia-Taylor` (Escardó–de Jong).
+First published in full: Escardó, ACS 11 (2003), Cor 2.1, and Thm 2.2 for sets of inflationary maps.
+Ported from TypeTopology, `γ` of `Various.Pataraia` (Escardó), Taylor's `TC` of `Various.Pataraia-Taylor` (Escardó–de Jong).
 -/
 
 namespace ZeroParadox
@@ -110,14 +110,16 @@ example {α : Type*} [CompletePartialOrder α] (f : α →o α) :
   ⟨y, ⟨bot_le, hfy, fun b hb _ => hy b (le_of_eq hb)⟩⟩
 
 -- The converse holds in this setting: every least fixed point lies below every pre-fixed point.
+-- For chain-complete posets this is Markowsky, Algebra Universalis 6 (1976), Thm 9(ii), p. 65.
 example {α : Type*} [CompletePartialOrder α] (f : α →o α) (y : α)
     (hy : f y = y ∧ ∀ p, f p = p → y ≤ p) : ∀ p, f p ≤ p → y ≤ p := by
   obtain ⟨z, hfz, hz⟩ := pataraia_least_prefixedPoint f
   obtain rfl : y = z := le_antisymm (hy.2 z hfz) (hz y (le_of_eq hy.1))
   exact hz
 
--- For `a` with omega^a = a, on [0, a] with omega-power restricted, the fixed point returned by
--- `pataraia_least_prefixedPoint` is epsilon zero, by leastness once `a` is past epsilon zero.
+-- For `a` with omega^a = a, so that epsilon zero is at most `a` by its leastness (`a` may equal
+-- it), on [0, a] with omega-power restricted, the fixed point returned by
+-- `pataraia_least_prefixedPoint` is epsilon zero.
 example (a : Ordinal.{0}) (ha : Ordinal.omega0 ^ a = a) :
     ∃ (f : Set.Icc (0 : Ordinal.{0}) a →o Set.Icc (0 : Ordinal.{0}) a)
       (y : Set.Icc (0 : Ordinal.{0}) a), (∀ x, (f x).1 = Ordinal.omega0 ^ x.1) ∧
@@ -134,6 +136,9 @@ example (a : Ordinal.{0}) (ha : Ordinal.omega0 ^ a = a) :
       f ⟨epsilonZero, zero_le _, hle⟩ := Subtype.ext hmax.2.1.symm
   refine ⟨f, y, fun _ => rfl, hfy, hy, le_antisymm ?_ (hmax.2.2 (congrArg Subtype.val hfy))⟩
   exact hy _ (le_of_eq e.symm)
+
+-- `a` may equal epsilon zero: epsilon zero itself meets the hypothesis on `a`.
+example : Ordinal.omega0 ^ (epsilonZero : Ordinal.{0}) = epsilonZero := epsilonZero_fixedPoint
 
 /-- `Statement:` Pataraia induction, with the signature of `pataraia_induction`: if `U` contains `⊥`
     and is closed under `f` and under joins of nonempty directed subsets, then `U` contains every
