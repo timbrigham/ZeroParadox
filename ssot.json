@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1751,
-        "files": 149
+        "declarations": 1754,
+        "files": 150
       },
       "entries": [
         {
@@ -39010,6 +39010,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "99edc618-b8b9-4815-97b0-0bf8175caecd",
+          "new": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_least_prefixedPoint_mem",
+            "short": "pataraia_least_prefixedPoint_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_least_prefixedPoint_mem",
+            "short": "pataraia_least_prefixedPoint_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New declarations: Pataraia's theorem and induction with no axioms, ported from TypeTopology Various.Pataraia-Taylor (2026-09-28)",
+          "verify": {
+            "axioms": "(none) - does not depend on any axioms",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9a58ff8e-fb60-4e5e-9a04-b1dd1da20138",
           "new": {
@@ -41051,6 +41088,43 @@
           "reason": "ZP-I rewiring: TracksDepth separates the two loads IsDepthChain actually carries (strictness transport, base non-negativity), both weaker than the equality. Additive — every existing declaration untouched, old form carried in by isDepthChain_tracksDepth.",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a2f01e34-386c-4b0b-9cc7-c40b4fb92f10",
+          "new": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_least_prefixedPoint",
+            "short": "pataraia_least_prefixedPoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_least_prefixedPoint",
+            "short": "pataraia_least_prefixedPoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New declarations: Pataraia's theorem and induction with no axioms, ported from TypeTopology Various.Pataraia-Taylor (2026-09-28)",
+          "verify": {
+            "axioms": "(none) - does not depend on any axioms",
             "sorry_free": true
           }
         },
@@ -63340,6 +63414,43 @@
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb51605e-086d-4858-9646-2545564e7cdc",
+          "new": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_induction_constructive",
+            "short": "pataraia_induction_constructive"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.pataraia_induction_constructive",
+            "short": "pataraia_induction_constructive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New declarations: Pataraia's theorem and induction with no axioms, ported from TypeTopology Various.Pataraia-Taylor (2026-09-28)",
+          "verify": {
+            "axioms": "(none) - does not depend on any axioms",
             "sorry_free": true
           }
         },
