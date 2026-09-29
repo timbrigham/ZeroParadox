@@ -12,9 +12,9 @@ I had to ask how this shifted from the last file. That one got a least fixed poi
 Bourbaki-Witt, and it carried choice, both in Mathlib's Bourbaki-Witt proof and in the adapter's
 own step from chains to directed sets. This one gets a fixed point below every pre-fixed point,
 and it needs no axioms at all. That reads as a stronger promise, and in this setting it turns out
-to pick out the same point. The proof isn't ours; it is Pataraia's, in the form Taylor gives it,
-ported from an Agda version, and as of September 2026 we didn't find another one in Mathlib or
-Lean core.
+to pick out the same point. The proof isn't ours; it is Pataraia's, with a step reshaped by Taylor,
+ported from Escardó and de Jong's Agda version, and as of September 2026 we didn't find another one
+in Mathlib or Lean core.
 
 A fixed point and a pre-fixed point sounded a whole lot like epsilon zero and the asymptote that
 approaches it. The asymptote turned out to be the other side: the tower climbs up from below, the
