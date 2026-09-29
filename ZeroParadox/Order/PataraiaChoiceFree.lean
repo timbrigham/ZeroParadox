@@ -30,7 +30,7 @@ how the internals work.
 ## Formal Overview (AI-assisted)
 Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`): a fixed
 point below every pre-fixed point, hence least fixed (here also conversely), and Pataraia induction.
-First published in full: Escardó, ACS 11 (2003), Cor 2.1, and Thm 2.2 for sets of inflationary maps.
+First published in full: Escardó, ACS 11 (2003): Pataraia's theorem is his Cor 2.1, and the induction is the second clause of his Thm 2.2, stated there for sets of inflationary maps.
 Ported from TypeTopology, `γ` of `Various.Pataraia` (Escardó), Taylor's `TC` of `Various.Pataraia-Taylor` (Escardó–de Jong).
 -/
 
