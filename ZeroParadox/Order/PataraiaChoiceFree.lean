@@ -18,8 +18,10 @@ A fixed point and a pre-fixed point sounded a whole lot like epsilon zero and th
 approaches it. The asymptote turned out to be the other side: the post-fixed points climb up from
 below, the pre-fixed points are ceilings coming down from above, and the fixed point is where they
 meet. For epsilon zero itself the meeting is already proved, as epsilon0_min_eq_max. Pataraia's
-theorem doesn't reach the ordinals, so whether the two are one thing is still open. I defer to my AI
-assistant regarding the specifics of how the internals work.
+theorem doesn't apply to the ordinals as a whole, since they have no top. It does apply to the
+ordinals up to epsilon zero, or up to any later fixed point, and the point it finds there is epsilon
+zero. So on that stretch the two meetings are the same point. I defer to my AI assistant regarding
+the specifics of how the internals work.
 
 ---
 ## Formal Overview (AI-assisted)
@@ -33,7 +35,8 @@ namespace ZeroParadox
 
 /-- `Statement:` for monotone `f` on `[CompletePartialOrder α]` and any `U` containing `⊥`, closed
     under `f` and under joins of nonempty directed subsets, some `z ∈ U` is a fixed point of `f`
-    lying below every pre-fixed point of `f`. -/
+    lying below every pre-fixed point of `f`. The pre-fixed form is TypeTopology's `initial-algebra`
+    (`Various.Pataraia-Taylor`). -/
 theorem pataraia_least_prefixedPoint_mem {α : Type*} [CompletePartialOrder α] (f : α →o α)
     (U : Set α) (hbot : ⊥ ∈ U) (hf : ∀ x ∈ U, f x ∈ U)
     (hsup : ∀ d ⊆ U, d.Nonempty → DirectedOn (· ≤ ·) d → sSup d ∈ U) :
@@ -89,10 +92,11 @@ theorem pataraia_least_prefixedPoint_mem {α : Type*} [CompletePartialOrder α] 
   exact ⟨T ⊥, hY0.2.2, le_antisymm hle hY0.1, hY0.2.1⟩
 
 /-- `Statement:` for monotone `f` on `[CompletePartialOrder α]`, some `y` is a fixed point of `f`
-    lying below every pre-fixed point (`f p ≤ p`) of `f`. -/
+    lying below every pre-fixed point (`f p ≤ p`) of `f`, as in TypeTopology's `initial-algebra`
+    (`Various.Pataraia-Taylor`). -/
 theorem pataraia_least_prefixedPoint {α : Type*} [CompletePartialOrder α] (f : α →o α) :
     ∃ y, f y = y ∧ ∀ p, f p ≤ p → y ≤ p :=
-  let ⟨z, _, hz⟩ :=pataraia_least_prefixedPoint_mem f Set.univ trivial (fun _ _ => trivial)
+  let ⟨z, _, hz⟩ := pataraia_least_prefixedPoint_mem f Set.univ trivial (fun _ _ => trivial)
     (fun _ _ _ _ => trivial)
   ⟨z, hz⟩
 
@@ -108,6 +112,21 @@ example {α : Type*} [CompletePartialOrder α] (f : α →o α) (y : α)
   obtain ⟨z, hfz, hz⟩ := pataraia_least_prefixedPoint f
   obtain rfl : y = z := le_antisymm (hy.2 z hfz) (hz y (le_of_eq hy.1))
   exact hz
+
+-- On the ordinals from 0 to epsilon zero, with omega-power restricted there, the fixed point
+-- `pataraia_least_prefixedPoint` returns is epsilon zero.
+example : ∃ (f : Set.Icc (0 : Ordinal.{0}) epsilonZero →o Set.Icc (0 : Ordinal.{0}) epsilonZero)
+    (y : Set.Icc (0 : Ordinal.{0}) epsilonZero), (∀ x, (f x).1 = Ordinal.omega0 ^ x.1) ∧
+      f y = y ∧ (∀ p, f p ≤ p → y ≤ p) ∧ y.1 = epsilonZero := by
+  haveI : Fact ((0 : Ordinal.{0}) ≤ epsilonZero) := ⟨zero_le _⟩
+  have hmax := epsilon0_min_eq_max.{0, 0}
+  let f : Set.Icc (0 : Ordinal.{0}) epsilonZero →o Set.Icc (0 : Ordinal.{0}) epsilonZero :=
+    { toFun := fun x => ⟨Ordinal.omega0 ^ x.1, zero_le _,
+        (Ordinal.opow_le_opow_right Ordinal.omega0_pos x.2.2).trans (le_of_eq hmax.2.1)⟩
+      monotone' := fun _ _ h => Ordinal.opow_le_opow_right Ordinal.omega0_pos h }
+  obtain ⟨y, hfy, hy⟩ := pataraia_least_prefixedPoint f
+  exact ⟨f, y, fun _ => rfl, hfy, hy,
+    le_antisymm y.2.2 (hmax.2.2 (congrArg Subtype.val hfy))⟩
 
 /-- `Statement:` Pataraia induction, with the signature of `pataraia_induction`: if `U` contains `⊥`
     and is closed under `f` and under joins of nonempty directed subsets, then `U` contains every
