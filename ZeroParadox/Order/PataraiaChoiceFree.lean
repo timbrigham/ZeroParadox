@@ -23,7 +23,7 @@ the specifics of how the internals work.
 ---
 ## Formal Overview (AI-assisted)
 Monotone `f` on a Mathlib `CompletePartialOrder` (directed-complete, least element `⊥`): a fixed
-point below every pre-fixed point, hence least fixed (not conversely), and Pataraia induction.
+point below every pre-fixed point, hence least fixed (here also conversely), and Pataraia induction.
 Ported from TypeTopology `Various.Pataraia-Taylor` (Escardó–de Jong, Agda, 2024); the proof's
 comments map `Y` and `T` to it. Classical route: `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`.
 -/
@@ -98,6 +98,13 @@ example {α : Type*} [CompletePartialOrder α] (f : α →o α) :
     ∃ y, IsLeastFixedPointFrom (· ≤ ·) (⇑f) ⊥ y :=
   let ⟨y, hfy, hy⟩ := pataraia_least_prefixedPoint f
   ⟨y, ⟨bot_le, hfy, fun b hb _ => hy b (le_of_eq hb)⟩⟩
+
+-- The converse holds in this setting: every least fixed point lies below every pre-fixed point.
+example {α : Type*} [CompletePartialOrder α] (f : α →o α) (y : α)
+    (hy : f y = y ∧ ∀ p, f p = p → y ≤ p) : ∀ p, f p ≤ p → y ≤ p := by
+  obtain ⟨z, hfz, hz⟩ := pataraia_least_prefixedPoint f
+  obtain rfl : y = z := le_antisymm (hy.2 z hfz) (hz y (le_of_eq hy.1))
+  exact hz
 
 /-- `Statement:` Pataraia induction, with the signature of `pataraia_induction`: if `U` contains `⊥`
     and is closed under `f` and under joins of nonempty directed subsets, then `U` contains every
