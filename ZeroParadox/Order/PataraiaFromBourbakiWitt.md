@@ -3,7 +3,7 @@
 Citations for `ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`. The Lean file holds the
 declarations, the Engineer's Take and the per-declaration statements.
 
-## The statements are standard; a source for the Bourbaki–Witt route was not located as of 2026-09-28
+## Standard statements; Markowsky 1976 gives the Bourbaki–Witt route to the least fixed point
 
 Every monotone map on a chain-complete poset has a least fixed point: Zermelo's theorem as stated
 by Adámek, Milius and Moss, *Initial Algebras Without Iteration*, CALCO 2021 (LIPIcs, Article 6;
@@ -11,13 +11,15 @@ arXiv:2104.09837), Thm 2.1, p. 6:3, proved through Hartogs' lemma and stated the
 constructive". A directed-complete poset with a least element is chain-complete (Bauer and
 Lumsdaine, *On the Bourbaki-Witt principle in toposes*, arXiv:1201.0340, p. 3). Adámek, Milius and
 Moss state both targets of this file for such a poset: Pataraia's theorem (Thm 2.4, p. 6:4) and
-the Pataraia induction principle (Cor 2.6, p. 6:5). The Lean file reaches both through Mathlib's
-Bourbaki–Witt, applied to the post-fixed points lying below every fixed point. A source stating
-that route to the LEAST fixed point was not located as of 2026-09-28, searched in Adámek–Milius–Moss
-2021, Bauer–Lumsdaine, Dubut–Yamada and Taylor; Bauer and Lumsdaine derive from Bourbaki–Witt the
-Knaster–Tarski principle for chain-complete posets (Prop 3.4, p. 5), which gives a fixed point
-above every post-fixed point, not the least one. What the Lean file adds is the machine-checked
-adapter to Mathlib's `CompletePartialOrder`, not the mathematics.
+the Pataraia induction principle (Cor 2.6, p. 6:5). Markowsky, *Chain-complete posets and directed
+sets with applications*, Algebra Universalis 6 (1976) 53–68, Thm 9(i), p. 65, reaches the least
+fixed point by applying Bourbaki's theorem (his Thm 8) to the post-fixed points lying below every
+fixed point, for chains "including the empty chain" (p. 53), without "the axiom of choice" (p. 65);
+Dubut and Yamada report it (LMCS 18(1), 2022, p. 30:1). `dcpo_exists_least_fixedPoint` uses that
+set, with Mathlib's Bourbaki–Witt; `pataraia_induction` uses the post-fixed points in `U` below the
+least fixed point. Goubault-Larrecq, *Bourbaki, Witt, and Dito Pataraia* (web note, June 13th,
+2013), reaches the least common fixed point by Pataraia's route, not Bourbaki–Witt. What the Lean
+file adds is the machine-checked adapter to Mathlib's `CompletePartialOrder`, not the mathematics.
 
 ## Three settings, kept apart
 
