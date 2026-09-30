@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.22 | September 2026
+Version 1.23 | September 2026
+v1.23: INITIAL GLOSS (Tim ruling 2026-09-29): the initial side of v1.22's fix (R-TWOPOLE). "A starting point that reaches everything" glossed a WEAKLY initial object; an initial object reaches every object, itself included, in exactly one way. Now "a starting point that reaches everything in exactly one way".
 v1.22: TERMINAL GLOSS (copy_editor panel, Tim ruling 2026-09-29): the AX-G1 row glossed the absent terminal object as "no end point that everything reaches". Reaching alone glosses a WEAKLY terminal object; a terminal object is reached in exactly one way (panel readers built counter-models: a ZPCategory with no terminal object but an object every object maps into). Now "no end point that everything reaches in exactly one way".
 v1.21: AX-G1 NOVELTY (Tim ruling, 2026-09-29, reading (i)): the no-terminal half of AX-G1 is ZP-G's own commitment; in ZP-A a top-free carrier is an optional hypothesis, which the two-state carriers do not satisfy. v1.20's "rests on ZP-A's premise" is withdrawn. Same wording as the Foreword's AX-G1 row, in this table's register.
 v1.20: AX-G1 ROW (Tim ruling, 2026-09-29): the axioms-table AX-G1 row stated only the initial object and omitted AX-G1's second half, that there is no terminal object. The row now carries both: the starting point is grounded in the ZP-A bottom element, and the absence of an end point rests on ZP-A's premise that the semilattice has no top. Same wording as the Foreword's AX-G1 row, in this table's register.
@@ -172,7 +173,7 @@ def axioms_table():
          'Binary Existence. A state either exists or it does not. No third option. '
          'The framework&#8217;s ONE substantive modelling commitment: that the outcome space is DISCRETE rather than a continuum. The two states being distinct is decidable; the choice of a discrete alphabet is not, and the real numbers are where it fails.'],
         ['AX-G1',
-         'Initial Object Exists, and No Terminal Object. There is a starting point that reaches everything, '
+         'Initial Object Exists, and No Terminal Object. There is a starting point that reaches everything in exactly one way, '
          'and no end point that everything reaches in exactly one way. '
          'The starting point is not a novel commitment — it is grounded in ⊥ as the bottom element of the ZP-A '
          'semilattice. The absence of an end point is ZP-G&#8217;s own commitment: in ZP-A it is an optional '
@@ -197,7 +198,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'April 2026'
 
 
