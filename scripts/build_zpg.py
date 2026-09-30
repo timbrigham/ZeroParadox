@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.19 | September 2026
+Version 1.20 | September 2026
+v1.20: T2/T3 remark: "0 reaches every object (T2)" dropped T2's uniqueness; now "0 reaches every object in exactly one way (T2)" (Tim ruling 2026-09-29).
 v1.19: Remark R-AX: "the two axioms jointly pick out exactly the non-degenerate case" stated a conditional as a biconditional. Now only the proved direction (a strict initial that is also terminal forces every object isomorphic to it, so AX-G1 rules it out) and the failing converse (in sets, the empty set is strict initial and the one-point set terminal); both checked as examples in AxG2Reduce.lean (copy_editor panel, Tim ruling 2026-09-29).
 v1.18: Remark R-AX: the domain facts behind the four stand-ins now list ZP-A T2 (the lattice stand-in's fact, bot_le) beside ZP-B C3, ZP-C T1b and ZP-D T4 (gate round 1, Tim ruling 2026-09-29).
 v1.17: Remark R-AX: the axioms are not claimed for the three Mathlib categories ZP-H targets (TopCat, KleisliCat PMF, ModuleCat ℂ), each of which has a terminal object; the four stand-ins are one ℕ-order instance. AX-G1 box: the no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top). Tim rulings, 2026-09-29.
@@ -31,7 +32,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -282,7 +283,7 @@ def build():
         'Remark R1 — Structural Inversion — The Categorical Zero Paradox',
         'Status: Remark',
         [
-            'T2 and T3 together constitute the categorical Zero Paradox. 0 reaches every object (T2); '
+            'T2 and T3 together constitute the categorical Zero Paradox. 0 reaches every object in exactly one way (T2); '
             'no non-initial object reaches 0 (T3). This is not a logical contradiction. It is a structural '
             'inversion: the unique universal source is the unique object with no incoming non-trivial morphisms.',
         ]
