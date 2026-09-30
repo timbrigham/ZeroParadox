@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.28, revised September 2026)
+Zero Paradox — Foreword PDF Builder (v2.29, revised September 2026)
+v2.29: AX-G1 NOVELTY (Tim ruling, 2026-09-29, reading (i)): the no-terminal half of AX-G1 is ZP-G's own commitment, not supplied by ZP-A. In ZP-A a top-free carrier is the optional hypothesis HasNoTop, and the two-state carriers MachinePhase and OntologicalStates do not satisfy it (examples in Snap.lean and OntBridge.lean). The AX-G1 row, the commitments paragraph ("introduces one novel axiom clause, and names it") and the closing paragraph now say so; v2.28's "rests on ZP-A's premise that the semilattice has no top" is withdrawn.
 v2.28: AX-G1 ROW (F1, Tim ruling, 2026-09-29): the commitments-table AX-G1 row stated only the initial object and omitted AX-G1's second half, that there is no terminal object. The row now carries both halves: the starting point comes from the ZP-A bottom element, and the absence of an end point rests on ZP-A's premise that the semilattice has no top. Aligned with CLAIMS.md's AX-G1 row.
 v2.27: ZPKB-4, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-20). The foundations paragraph localised the framework's whole use of Classical.choice to ZP-K: "One exception at the infrastructure level: ZP-K's Kleene computability machinery ... inherited rather than a novel Zero Paradox commitment." Two things are wrong. Provenance: the category-theory layer spends a bare classical written in framework source (fixedPointFree_of_nontrivial, ZeroParadox/Category/Lawvere.lean), so the dependence is not all inherited, and AxiomProfile.lean Section III lists the realizations where it enters, none of them computability. Necessity: "inherited rather than a novel commitment" reads provenance as settling removability, which AxiomProfile.lean Section 0 records as a conflation already corrected once — em_of_wellOrder_comparable shows an INHERITED dependence that is essential. The paragraph now states the choice-free core (t_snap_derived, no Lean kernel axioms at all), names the framework's own classical and its essentiality (wem_of_fixedPointFree), separates the two axes, and POINTS at ZeroParadox/AxiomProfile.lean. ⚠ NO NEW RULE IS STATED. This site was the SIXTH general rule written about this one Classical.choice and the first in the LOCALIZATION grammar (where it comes from) rather than the FOOTPRINT grammar (which theorems carry it), which is why the five sweeps keyed to the earlier five did not reach it. The front page (README "The Result") already carried the correct shape; this aligns the Foreword to it rather than inventing a third wording.
 v2.26: ZPK-BED-1 SECOND HALF (Tim ruling, 2026-09-19). The foundations paragraph said ZP-K's choice dependency is "the same dependency carried by any theorem using Mathlib's computability library". That universal is refuted by two named measurements: Nat.Partrec.Code and Nat.Partrec.Code.eval are both axiom-free, and IsKleeneFixedPoint (type eval c = f c) measures no axioms. It now states the inheritance and POINTS at ZP-K Section IV, which holds a dated measurement table and states no rule. Located by an axis-varied claim sweep over the rendered PDFs, not by the defect row.
@@ -70,7 +71,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.28'
+VERSION = '2.29'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -126,9 +127,9 @@ def commitments_table():
         ('AX-G1', 'Axiom',
          'Initial Object Exists, and No Terminal Object. There is a starting point that reaches every other object, '
          'and no end point that every object reaches. '
-         'Not a novel commitment — the existence of ⊥ as the bottom element of the ZP-A semilattice already guarantees '
-         'the starting point, and the absence of an end point rests on ZP-A&#8217;s premise that the semilattice has no top; '
-         'ZP-G names both in categorical language.'),
+         'The starting point is not a novel commitment — the existence of ⊥ as the bottom element of the ZP-A '
+         'semilattice already guarantees it. The absence of an end point is ZP-G&#8217;s own commitment: in ZP-A it is '
+         'an optional hypothesis, which ZP-A&#8217;s two-state carriers do not satisfy.'),
         ('AX-G2', 'Axiom',
          'Source Asymmetry. No morphism returns to the initial object from outside. '
          'Not a novel commitment — follows from antisymmetry of the ZP-A partial order and ZP-B C3 (topological irreversibility).'),
@@ -376,8 +377,9 @@ def build():
         Paragraph(
             'Every formal system rests on commitments it does not derive. The Zero Paradox '
             'framework is unusually explicit about its own. As of the current version, this '
-            'framework introduces no novel axioms. Stated explicitly: one substantive modeling '
-            'commitment (AX-B1), two structural commitments grounded in prior layers (AX-G1, AX-G2), '
+            'framework introduces one novel axiom clause, and names it. Stated explicitly: one substantive modeling '
+            'commitment (AX-B1), two structural commitments (AX-G1, AX-G2) grounded in prior layers except for '
+            'AX-G1&#8217;s no-terminal half, which is ZP-G&#8217;s own, '
             'two methodological principles, and one design commitment. CC-1 is a Conditional Claim that ZP-J restates rather than forces, CC-2 '
             'is a Forced Metatheoretic Commitment, and MC-1 names the bottom family rather than a commitment:',
             S['body']),
@@ -524,7 +526,8 @@ def build():
             'The framework is silent on these questions.',
             S['body']),
         Paragraph(
-            'The open commitments are honest. No novel axioms are introduced. '
+            'The open commitments are honest. The one novel axiom clause is named: AX-G1&#8217;s no-terminal half, '
+            'ZP-G&#8217;s own. '
             'One substantive modeling commitment (AX-B1), two structural commitments, two principles, '
             'and one design commitment are stated; CC-1 is a Conditional Claim restated in ZP-J, CC-2 is a Forced Metatheoretic '
             'Commitment, and MC-1 is the bottom family. The framework does not launder their status. '
