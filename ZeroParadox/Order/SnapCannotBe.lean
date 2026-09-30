@@ -59,6 +59,24 @@ example : (⟨0, Or.inl rfl⟩ : {o : Ordinal | o = 0 ∨ Ordinal.omega0 ^ o = o
   rintro ⟨c, hc | hc⟩ h0 hε
   · exact (ne_of_gt (show (0 : Ordinal) < c from h0)) hc
   · exact ZeroParadox.nothing_between_is_a_step c hε hc
+-- `Statement:` `t_snap_given`'s binders and AX-B1's `HasFirstStep` form do not supply the cover. On ℕ
+-- (join `max`, ⊥ = 0) the run 0, 2, 2, … meets `hcc1`, `hocc` and `HasFirstStep 0`, and `S 1` does not
+-- cover `S 0`: 1 lies between.
+example : let S : ℕ → ℕ := fun n => if n = 0 then 0 else 2
+    S 0 = ZeroParadox.ZPSemilattice.bot ∧ S 1 ≠ S 0 ∧ ZeroParadox.HasFirstStep (0 : ℕ) ∧
+      ¬ (S 0 ⋖ S 1) :=
+  ⟨rfl, by decide, ⟨1, Nat.lt_succ_self 0, fun c h1 h2 => by omega⟩,
+    fun h => h.2 (c := 1) (by decide) (by decide)⟩
+-- `Statement:` a two-state carrier does supply it: if every state is ⊥ or `a`, a step off ⊥ lands on `a`
+-- and every state is `S 0` or `S 1`. `MachinePhase` is such a carrier, with `a = c₁`.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (a : L)
+    (h2 : ∀ x : L, x = ZeroParadox.ZPSemilattice.bot ∨ x = a) (S : ℕ → L)
+    (hcc1 : S 0 = ZeroParadox.ZPSemilattice.bot) (hocc : S 1 ≠ S 0) :
+    S 1 = a ∧ ∀ x : L, x = S 0 ∨ x = S 1 := by
+  have h1 : S 1 = a := (h2 (S 1)).resolve_left fun h => hocc (h.trans hcc1.symm)
+  exact ⟨h1, fun x => (h2 x).imp (fun h => h.trans hcc1.symm) (fun h => h.trans h1.symm)⟩
+example : ∀ x : ZeroParadox.MachinePhase, x = ZeroParadox.ZPSemilattice.bot ∨ x = ZeroParadox.c₁ := by
+  intro x; cases x; exacts [Or.inl rfl, Or.inr rfl]
 
 /-! ### § III. What the snap DOES — it narrows reachability, permanently -/
 #check @ZeroParadox.t_snap_accessible_proper_subset   -- from ε₀ only a proper subset is reachable; ⊥ is foreclosed

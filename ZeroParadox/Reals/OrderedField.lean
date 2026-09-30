@@ -160,6 +160,10 @@ example : (∅ : Set Bool) ⋖ {true} ∧ (∅ : Set Bool) ⋖ {false} ∧ ({tru
 -- `Statement:` the converse holds in any partial order: a least element strictly above `bot` covers it.
 example {α : Type*} [PartialOrder α] (bot a : α) (h : IsLeast {x | bot < x} a) : bot ⋖ a :=
   ⟨h.1, fun c hbc hca => absurd hca (not_lt_of_ge (show c ≥ a from h.2 hbc))⟩
+-- `Statement:` and on a linear order a cover of `bot` is the least element strictly above it
+-- (Mathlib's `CovBy.ge_of_gt`); the `Set Bool` example above is why linearity is needed.
+example {α : Type*} [LinearOrder α] (bot a : α) (h : bot ⋖ a) : IsLeast {x | bot < x} a :=
+  ⟨h.1, fun _ hx => h.ge_of_gt hx⟩
 
 /-- **AX-B1 fails exactly where the order is dense — a BICONDITIONAL, and it is Mathlib's.**
 
