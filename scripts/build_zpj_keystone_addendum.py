@@ -1,9 +1,10 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.18 | September 2026
+Version 1.19 | September 2026
+v1.19: GATE ROUND 2 ON v1.18 (Tim rulings, 2026-09-29): "machine-checked" is scoped everywhere it still covered the whole document: the preamble calls this a record of two investigations "machine-checked except where marked cited", the introduction says that where a result is cited rather than re-proved the text says so, and the endnote carries the same qualifier. The Section II computability box heading and verdict name the multi-valued form of the Lawvere instance (Bauer Thm 5.2), and the box says excluded middle fails in synthetic computability. The "In Set" box states the measured footprint of the face verdicts nontrivial_lattice_no_witness and q2_no_witness, [propext, Classical.choice, Quot.sound]; the Section IV box says "the same Lean adapter". The v1.16 line's "p. 10", removed in v1.17, is restored: changelog lines record what shipped.
 v1.18: SCOPE OF "MACHINE-CHECKED" (Tim rulings, 2026-09-29): the Section II heading now reads "The Lawvere Face-Split (Set face machine-checked; computability face cited)", and the Section II verdict marks the effective-category instance as cited (Bauer 2017), with Lean proving Rogers' theorem classically; matching CLAIMS.md and README.md. Every box is now kept on one page (a KeepTogether on each, including "What the Zero Paradox adds"), so no box header repeats across a page break.
 v1.17: GATE ROUND 1 ON v1.16 (Tim rulings, 2026-09-29): the Section IV box no longer reads as crediting Bourbaki-Witt to Markowsky; it says the classical route through Mathlib's Bourbaki-Witt theorem is kept, is Markowsky's for the least fixed point (Algebra Universalis 6 (1976), Thm 9(i), proved there without choice), and that the same adapter gives the induction, with the Classical.choice footprint attached to these Lean proofs. The Bauer citation now carries its venue (Tbilisi Math. J. 10(3), 2017) and drops the preprint page number, and says he works in synthetic computability, whose axioms hold in Hyland's effective topos. "Genuine instance" is scoped: the Section II box heading says the instance is cited and that Lean proves Rogers' theorem classically, a new sentence says the Lawvere-form derivation lives inside synthetic computability, where excluded middle is not assumed, and the introduction says the Set face is machine-checked and the computability face cited. The endnote's Lean sources add ZeroParadox/Category/DiagonalWitness.lean, which the Section II box points at. The "Honest scope" box and the endnote are each kept on one page.
-v1.16: PRIOR ART AND SCOPE (PA-5 and the Pataraia arc's carried ordinaries, 2026-09-29): the Section II "In computability: a genuine instance" box cited only Mathlib; it now credits the effective-category setting to Hyland (The effective topos, 1982) and Cockett-Hofstra (Introduction to Turing categories, 2008), as ZeroParadox/Category/DiagonalWitness.lean does, and Bauer (On fixed-point theorems in synthetic computability), who derives the Kleene-Rogers Recursion Theorem from a Lawvere-form fixed-point theorem for multi-valued maps in Hyland's effective topos (Thm 5.2, Cor 5.3). Section IV: the August survey method now reads "by declaration name and type", matching the measurement record in ZeroParadox/Multihomed/BoundaryBridge.md (was "by name and vocabulary"); the box credits the classical route to Markowsky 1976, Thm 9(i); and "the first full published proof of both" now says which result is which (Pataraia's theorem, Cor 2.1; the induction, the second clause of Thm 2.2, stated for sets of inflationary maps).
+v1.16: PRIOR ART AND SCOPE (PA-5 and the Pataraia arc's carried ordinaries, 2026-09-29): the Section II "In computability: a genuine instance" box cited only Mathlib; it now credits the effective-category setting to Hyland (The effective topos, 1982) and Cockett-Hofstra (Introduction to Turing categories, 2008), as ZeroParadox/Category/DiagonalWitness.lean does, and Bauer (On fixed-point theorems in synthetic computability), who derives the Kleene-Rogers Recursion Theorem from a Lawvere-form fixed-point theorem for multi-valued maps in Hyland's effective topos (Thm 5.2, Cor 5.3, p. 10). Section IV: the August survey method now reads "by declaration name and type", matching the measurement record in ZeroParadox/Multihomed/BoundaryBridge.md (was "by name and vocabulary"); the box credits the classical route to Markowsky 1976, Thm 9(i); and "the first full published proof of both" now says which result is which (Pataraia's theorem, Cor 2.1; the induction, the second clause of Thm 2.2, stated for sets of inflationary maps).
 v1.15: PATARAIA, CHOICE-FREE (2026-09-28): ZeroParadox/Order/PataraiaChoiceFree.lean proves Pataraia's theorem (a fixed point below every pre-fixed point; pataraia_least_prefixedPoint) and Pataraia induction (pataraia_induction_constructive) with no axioms, ported from TypeTopology Various.Pataraia-Taylor. The Section IV box no longer says a Lean port was not located or that porting would take Classical.choice off the fixed-point step; it names the new file, credits TypeTopology's Various.Pataraia (Escardo) and Various.Pataraia-Taylor (Escardo and de Jong) and Escardo 2003 (Cor 2.1; Thm 2.2, which states the induction for sets of inflationary maps) as the first full published proof, keeps the classical Bourbaki-Witt adapter as a second route, re-scopes the negative to a dated survey ("Neither result was located in the pinned Mathlib as of September 2026 (searched by statement shape and by name)"), and drops the "route is standard" sentence (Bauer-Lumsdaine Prop 3.4 gives a fixed point above every post-fixed point, not the least; the Bourbaki-Witt route to the least fixed point is credited to Markowsky 1976, Thm 9, in ZeroParadox/Order/PataraiaFromBourbakiWitt.md). Round-2 ordinary findings folded in: the box's upgrade is the General Recursion Theorem AND ITS CONVERSE, matching the Section IV body; the induction principle is Taylor's own Cor. 119; the next-time operator is "built in this project" (it predates the August survey, so "having since been built" was chronologically false); "functors on vector spaces, whose category has neither". The endnote lists the new Lean source.
 v1.14: PRIOR ART (PA-4, 2026-09-28): the Section IV 'Open contribution point' box listed Pataraia's fixed-point theorem as machinery still missing and did not name Mathlib's Bourbaki-Witt. Classically, both Pataraia statements Taylor uses (least fixed point; Pataraia induction, Cor. 119) follow from Bourbaki-Witt, derived in ZeroParadox/Order/PataraiaFromBourbakiWitt.lean (dcpo_exists_least_fixedPoint, pataraia_induction; footprint carries Classical.choice). The box now says so, and names what remains missing: Pataraia's intuitionistic proof (Taylor Thm 118) and the General Recursion Theorem itself. The Section IV body's dated Mathlib survey gains a pointer to that classical route, and the endnote lists the new Lean source, its sorry-free date moved to September 2026 so it holds for every listed file. Gate round 1 (2026-09-28): the box now credits the classical route as standard (Adamek-Milius-Moss CALCO 2021 Thm 2.1; Bauer-Lumsdaine p. 3), separates dropping choice (classical without choice: Dubut-Yamada; in Lean an intuitionistic proof, formalized in Agda in TypeTopology) from the upgrade to the full coalgebraic statement (the General Recursion Theorem), and names Taylor Thm 118 and Cor. 119 in place of 'both of Pataraia's statements' in the Section IV body.
 v1.13: ATTRIBUTION (PA-1, prior-art gate 2026-09-15): the prior-art paragraph credited Lawvere (1969) with unifying 'Cantor's diagonal, Russell's paradox, Godel's incompleteness lemma, and the recursion theorem'. Lawvere's paper does not treat the recursion theorem: his own introduction names Cantor, Russell, Godel and TARSKI, and the reprint contains no occurrence of Kleene, Rogers or 'recursion'. Turing's halting argument and the recursion theorem are Yanofsky (2003), who proves the latter as his Theorem 5. Lawvere's list now ends at Tarski's undefinability theorem and Yanofsky's sentence carries the other two, matching README.md and CLAIMS.md. Recurrence of ATTR-2, whose 2026-08-29 closure claimed a corpus-wide sweep found no further instances; that claim is retracted. This site was invisible to it because it never names Kleene.
@@ -32,7 +33,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -88,7 +89,7 @@ def build():
         'the claim that the faces are <i>numerically one object</i> is <b>retired as '
         'ill-typed</b> (object equality across categories does not typecheck and is not invariant under '
         'equivalence). This addendum is a thin, '
-        'honest record of two machine-checked investigations into the structure of that '
+        'honest record of two investigations, machine-checked except where marked cited, into the structure of that '
         'keystone &#8212; both probe-level, both fenced as to exactly what they prove.'))
     E.append(body(
         'The first asks whether the keystone is a literal instance of <b>Lawvere\'s '
@@ -96,8 +97,8 @@ def build():
         'face-dependent: the Set face is machine-checked, and the computability face is cited. The second gives the keystone\'s structural home '
         'in <b>well-founded coalgebra theory</b> (Taylor; Ad&#225;mek&#8211;Milius&#8211;Moss): '
         'the snap &#8869; &#8594; &#949;<sub>0</sub> as a crossing of the well-foundedness '
-        'boundary. Neither investigation is claimed beyond what Lean verifies; the deeper '
-        'category-theoretic result is cited, not re-proved.'))
+        'boundary. Neither investigation is claimed beyond what Lean verifies; where a result '
+        'is cited rather than re-proved, the text says so.'))
     E.append(hr())
 
     # ── Section I: The keystone ────────────────────────────────────────────────
@@ -157,12 +158,13 @@ def build():
             'So in Set the keystone\'s &#8869; is a <i>posited</i> fixed point of one specific '
             'self-map, not a Lawvere-derived one. The "diagonal fixed point" name is an analogy '
             'at this face.',
-            'fixedPoint_of_witness, no_witness_of_fixedPointFree: fully axiom-free.',
+            'fixedPoint_of_witness, no_witness_of_fixedPointFree: fully axiom-free; the face verdicts '
+            'nontrivial_lattice_no_witness and q2_no_witness carry [propext, Classical.choice, Quot.sound].',
         ]
     )))
     E.append(sp(4))
     E.append(KeepTogether(result_box(
-        'In computability: a genuine instance (cited; Lean proves Rogers\' theorem classically)',
+        'In computability: a genuine instance, in multi-valued form (cited; Lean proves Rogers\' theorem classically)',
         [
             'computability_face_fixedPoint &#8212; every <i>computable</i> self-map on codes '
             'has a fixed point <i>up to eval</i>: two codes computing the same function. This wraps '
@@ -182,14 +184,14 @@ def build():
             'Kleene&#8211;Rogers Recursion Theorem from a fixed-point theorem of Lawvere\'s form for '
             'multi-valued maps (Thm 5.2, Cor 5.3). Lean proves the classical, external form of '
             'Rogers\' theorem; the Lawvere-form derivation itself lives inside synthetic '
-            'computability, where excluded middle is not assumed.',
+            'computability, where excluded middle fails.',
         ]
     )))
     E.append(sp(4))
     E.append(body(
         '<b>The verdict, plainly:</b> the test is category-relative. In Set no face is a '
         'Lawvere instance; in the effective (computability) category the recursion theorem is '
-        'a genuine one (cited: Bauer 2017; Lean proves Rogers\' theorem classically). The keystone therefore unifies a <i>shape</i> (the diagonal), not a '
+        'a genuine one (cited: Bauer 2017, multi-valued form; Lean proves Rogers\' theorem classically). The keystone therefore unifies a <i>shape</i> (the diagonal), not a '
         'single mechanism. What MC-1 carries is family membership, proved per domain for the Quine '
         'atom, 2-adic and categorical faces (the Kleene face carried as a requirement), with the '
         'choice of criteria the design commitment.'))
@@ -307,7 +309,7 @@ def build():
             'Cor 2.1, and the induction is the second clause of his Thm 2.2, stated there for sets '
             'of inflationary maps. A classical route through Mathlib\'s Bourbaki&#8211;Witt theorem '
             'is also kept. For the least fixed point it is Markowsky\'s (Algebra Universalis 6 '
-            '(1976), Thm 9(i), proved there without choice), and the same adapter gives the '
+            '(1976), Thm 9(i), proved there without choice), and the same Lean adapter gives the '
             'induction; these Lean proofs carry Classical.choice in their footprint '
             '(dcpo_exists_least_fixedPoint and pataraia_induction, '
             'ZeroParadox/Order/PataraiaFromBourbakiWitt.lean). Neither result was located in the '
@@ -325,8 +327,9 @@ def build():
     E.append(KeepTogether(Paragraph(
         'Endnote: This document is an addendum to ZP-J Self-Reference and reads after it. ZP-J '
         'established the porthole (v<sub>2</sub>(&#8869;) = &#8734;, &#8869; = {&#8869;}); this '
-        'addendum records two machine-checked probes into the keystone\'s structure &#8212; the '
-        'Lawvere face-split and the well-foundedness boundary &#8212; each fenced as to exactly '
+        'addendum records two probes into the keystone\'s structure &#8212; the '
+        'Lawvere face-split and the well-foundedness boundary &#8212; machine-checked except where '
+        'marked cited, each fenced as to exactly '
         'what it proves. Lean sources: ZeroParadox/Category/Lawvere.lean, '
         'ZeroParadox/Category/DiagonalWitness.lean, '
         'ZeroParadox/Multihomed/Boundary.lean, ZeroParadox/Multihomed/BoundaryBridge.lean, '
