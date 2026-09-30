@@ -140,6 +140,20 @@ theorem tower_stage_one : fundamentalSeq 1 = 1 := by
 theorem tower_stage_two : fundamentalSeq 2 = Ordinal.omega0 := by
   simp [fundamentalSeq, Ordinal.opow_zero, Ordinal.opow_one]
 
+-- `Statement:` 2 lies below ε₀ and on no finite stage of the tower from 0, so ε₀ is not the least
+-- ordinal the iteration of `α ↦ ω^α` misses. Its minimum property is `epsilonZero_le_fixedPoint`.
+example : (2 : Ordinal) < epsilonZero ∧ ∀ n : ℕ, fundamentalSeq n ≠ 2 := by
+  refine ⟨lt_trans (Ordinal.natCast_lt_omega0 2) (Ordinal.omega0_lt_epsilon 0), fun n => ?_⟩
+  match n with
+  | 0 => rw [tower_stage_zero]; exact two_ne_zero.symm
+  | 1 => rw [tower_stage_one]; exact (by norm_num : (1 : Ordinal) ≠ 2)
+  | k + 2 =>
+    intro h
+    have hle : fundamentalSeq 2 ≤ fundamentalSeq (k + 2) :=
+      (strictMono_nat_of_lt_succ fundamentalSeq_strictMono).monotone (by omega)
+    rw [tower_stage_two, h] at hle
+    exact absurd (Ordinal.natCast_lt_omega0 2) (not_lt.2 hle)
+
 /-! ## § IV. Cantor Normal Form Bridge
 
 Every ordinal below ε₀ has a unique Cantor normal form — a finite expression
@@ -379,6 +393,23 @@ theorem snap_threshold_is_epsilon_zero
   -- join (φ α) c₀ = φ α since c₀ = bot (both cases of MachinePhase reduce by rfl)
   have hjoin : join (φ α) (c₀ : MachinePhase) = φ α := by cases (φ α) <;> rfl
   exact hjoin.symm.trans hle
+
+-- `Statement:` the note above, checked. `hmono` and `h0` do not place the snap at ε₀: a map meeting
+-- both can stay at c₀ everywhere, or first reach c₁ at ε₀ + 1. The placement is `hfp` / `hε₀`.
+example : ∃ φ : Ordinal → MachinePhase, (∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β) ∧
+    (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧ ∀ α, φ α = c₀ :=
+  ⟨fun _ => c₀, fun _ _ _ => rfl, fun _ => rfl, fun _ => rfl⟩
+example : ∃ φ : Ordinal → MachinePhase, (∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β) ∧
+    (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧ φ epsilonZero = c₀ ∧ φ (epsilonZero + 1) = c₁ := by
+  classical
+  refine ⟨fun α => if α ≤ epsilonZero then c₀ else c₁, fun α β hab => ?_, fun n => ?_, ?_, ?_⟩
+  · by_cases hb : β ≤ epsilonZero
+    · simp only [hab.trans hb, hb, if_true]; rfl
+    · simp only [hb, if_false]
+      split_ifs <;> rfl
+  · simp only [(epsilonZero_tower_lt n).le, if_true]
+  · simp
+  · simp
 
 /-! ## § VI. Kleene-Ordinal Fixed-Point Bridge
 
