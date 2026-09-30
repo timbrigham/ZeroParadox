@@ -1,6 +1,10 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.19 | September 2026
+Version 1.23 | September 2026
+v1.23: INITIAL GLOSS (Tim ruling 2026-09-29): the initial side of v1.22's fix (R-TWOPOLE). "A starting point that reaches everything" glossed a WEAKLY initial object; an initial object reaches every object, itself included, in exactly one way. Now "a starting point that reaches everything in exactly one way".
+v1.22: TERMINAL GLOSS (copy_editor panel, Tim ruling 2026-09-29): the AX-G1 row glossed the absent terminal object as "no end point that everything reaches". Reaching alone glosses a WEAKLY terminal object; a terminal object is reached in exactly one way (panel readers built counter-models: a ZPCategory with no terminal object but an object every object maps into). Now "no end point that everything reaches in exactly one way".
+v1.21: AX-G1 NOVELTY (Tim ruling, 2026-09-29, reading (i)): the no-terminal half of AX-G1 is ZP-G's own commitment; in ZP-A a top-free carrier is an optional hypothesis, which the two-state carriers do not satisfy. v1.20's "rests on ZP-A's premise" is withdrawn. Same wording as the Foreword's AX-G1 row, in this table's register.
+v1.20: AX-G1 ROW (Tim ruling, 2026-09-29): the axioms-table AX-G1 row stated only the initial object and omitted AX-G1's second half, that there is no terminal object. The row now carries both: the starting point is grounded in the ZP-A bottom element, and the absence of an end point rests on ZP-A's premise that the semilattice has no top. Same wording as the Foreword's AX-G1 row, in this table's register.
 v1.19: GENTZEN-5, THE RENDERED TWIN (DEFECTS.md GENTZEN-5; editorial E4-5 and prior_art PA6-1, 2026-09-23), companion sync with ZP-E v3.42. The Four Descriptions paragraph read "the minimum ordinal whose well-ordering PA cannot prove" one sentence before "the proof requires transfinite induction up to ε₀" - two DIFFERENT schemas in adjacent sentences, an INDUCTION schema and a WELL-FOUNDEDNESS statement, identified only through an ordinal NOTATION SYSTEM that no surface here stated (not located as of 2026-09-23; the search is recorded in ZP-E v3.42). This change replaced that VOCABULARY with "the minimum ordinal up to which PA cannot prove transfinite induction": it needs no notation caveat, and it put the paragraph into one vocabulary where it had been in two. ⛔ THE CHART WAS NOT TOUCHED - it stayed from-above, the chart both prose gates ruled right at the formal's twin site - so R-TWOPOLE returned INVARIANT, the ratified null case: vocabulary moved, no direction reversed, no second chart owed. ⭐ The new form also rests on what this project has READ: the below-ε₀ provability of transfinite induction is Gentzen reporting it as already known, crediting Hilbert-Bernays (1943 p.140 footnote 3, read as page images and filed), whereas the well-ordering form's MINIMUM needed a half that a gate derived in one step and nobody read at a passage. This change asserted no date for Grundlagen der Mathematik II, never wrote "Hilbert-Bernays' theorem", cited 1938 nowhere, and left the ordinal chart and the discrete state chart unmerged with no embedding claimed.
 v1.18: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (2026-09-15), companion sync with ZP-E v3.36, DA-1 PATH 3 (pre-existing bedrock since v1.3, editorial round 3 B1): the ZP-K paragraph said ZP-K 'proves that this Quine and the AFA self-containment argument are the same structural fact', that two paths are machine-checked and IN LEAN SCOPE, and that DA-1's formal grounding is 'DP-2 plus two Lean-verified structural paths'. da1_paths_unified is a conjunction, and botCode_is_quine is a class field met by constant codes. The paragraph now carries the CLAIMS.md DA-1 row (Path 1 witnessed by da1_closed_concrete, nothing computational; Path 3's witness a KleeneStructure requirement, not a second independent proof; the one-fact reading is the framework's), and DA-1's formal grounding is DP-2, through da1_minimal_path.
 v1.17: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15), companion sync with ZP-E v3.33: the T-SNAP chain diagram drew DA-1 on the shape chain while its caption puts DA-1 on the occurrence side; it now has two rows, Shape (L-RUN, TQ-IH, ZP-A D2, T-SNAP) and Occurrence (P0, DA-1, the Snap occurs with the occurrence commitment), with fixed row positions and validate_drawing.
@@ -169,8 +173,11 @@ def axioms_table():
          'Binary Existence. A state either exists or it does not. No third option. '
          'The framework&#8217;s ONE substantive modelling commitment: that the outcome space is DISCRETE rather than a continuum. The two states being distinct is decidable; the choice of a discrete alphabet is not, and the real numbers are where it fails.'],
         ['AX-G1',
-         'Initial Object Exists. There is a starting point that reaches everything. '
-         'Not a novel commitment — grounded in ⊥ as the bottom element of the ZP-A semilattice.'],
+         'Initial Object Exists, and No Terminal Object. There is a starting point that reaches everything in exactly one way, '
+         'and no end point that everything reaches in exactly one way. '
+         'The starting point is not a novel commitment — it is grounded in ⊥ as the bottom element of the ZP-A '
+         'semilattice. The absence of an end point is ZP-G&#8217;s own commitment: in ZP-A it is an optional '
+         'hypothesis, which ZP-A&#8217;s two-state carriers do not satisfy.'],
         ['AX-G2',
          'Source Asymmetry. Nothing returns to the initial object. '
          'The origin is unreachable from outside. '
@@ -191,7 +198,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.19'
+VERSION = '1.23'
 FIRST_RELEASED = 'April 2026'
 
 

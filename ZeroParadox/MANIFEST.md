@@ -115,7 +115,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Multihomed/BoundaryBridge.md` - Which theorem carries which direction, and the survey's limits
 - `ZeroParadox/Multihomed/CategoricalBridge.lean` - ZP-H: Categorical Bridge
   - ride-along docs: `ZeroParadox/Multihomed/CategoricalBridge.md` - The categorical bridge: key results, functor witnesses and the OQ-G3 status
-- `ZeroParadox/Multihomed/EigenvectorExists.lean` - Deep cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
+- `ZeroParadox/Multihomed/EigenvectorExists.lean` - Cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
 - `ZeroParadox/Multihomed/HilbertDiagonal.lean` - ZP-H: ⊥ is the unique finite-dimensional fixed point of the biproduct-diagonal
 - `ZeroParadox/Multihomed/InfoFunctor.lean` - ZP-H Info Functor: F_C into the real category `KleisliCat PMF` (MC-1 remediation)
 - `ZeroParadox/Multihomed/MC1Bridge.lean` - ZP-H MC-1 Correspondence: the snap floor realized across the real domain categories
@@ -319,6 +319,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Category/SeamLimColim.lean` - The seam diagram-level coincidence (lim = colim at the zero object)
 - `ZeroParadox/Category/SeamNotColimit.lean` - The seam is NOT a colimit (coproduct) apex over the μ-bottoms
 - `ZeroParadox/Category/SeamUniqueness.lean` - Seam uniqueness extended: is any OTHER bottom a zero object?
+  - ride-along docs: `ZeroParadox/Category/SeamUniqueness.md` - Which named bottom is a zero object: the per-bottom obstructions and the fence
 - `ZeroParadox/Category/TopNoGo.lean` - In TopCat the empty space is not isomorphic to the one-point space
 - `ZeroParadox/Category/TreeSeam.lean` - ZP-H tree — the #5 straddle resolved: the Hilbert bottom is the μ=ν seam
 - `ZeroParadox/Category/WellFoundedCoalgebra.lean` - The next time operator: μ/ν as an INTRINSIC property, not a construction

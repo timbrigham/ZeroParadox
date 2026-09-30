@@ -1,5 +1,15 @@
 """
-Build ZP-G Illustrated Companion (v1.9)
+Build ZP-G Illustrated Companion (v1.13)
+v1.13: "What Is a Functor?" — ZP-G states the axioms the stand-in categories are checked against (it does not
+build the category the functors target) (gate round 1, Tim ruling 2026-09-29).
+v1.12: "What Is a Functor?" — ZP-H's four functors run from the natural-number depth order, as in
+"What comes next" (Tim ruling, 2026-09-29).
+v1.11: AX-G1's no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top);
+"What comes next": functors from the natural-number depth order, the stand-ins are one order under
+four names, and each of the three standard categories has a terminal object (Tim rulings, 2026-09-29).
+v1.10: AX-G1 paragraph carries the no-terminal half (resting on ZP-A's no-top premise); "What comes
+next" scoped to what ZP-H proves: the axioms hold on four ℕ-indexed stand-in categories, and two of
+the standard categories do have a terminal object (Tim ruling, 2026-09-29).
 v1.8: category_diagram — fix overlapping text: use fixed cy=68, dh=2.2in, remove redundant internal title string.
 v1.7: vocab fix: null state → ⊥; categorical bridge → ZP-H.
 v1.6: Strip version number from companion footer.
@@ -146,7 +156,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.9'
+VERSION = '1.13'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -243,10 +253,10 @@ def build():
         'F(g) ∘ F(f) in D. Functors are the "translations" between mathematical worlds — they '
         'carry structure faithfully from one setting to another.'))
     E.append(cbody(
-        'ZP-H (the companion bridge document) constructs four functors from the abstract '
-        'category C to the four concrete frameworks of the Zero Paradox — lattice algebra, '
-        'p-adic topology, information theory, and Hilbert space. ZP-G builds the abstract '
-        'category that those functors will target.'))
+        'ZP-H (the companion bridge document) constructs four functors from the natural-number '
+        'depth order to the four concrete frameworks of the Zero Paradox — lattice algebra, '
+        'p-adic topology, information theory, and Hilbert space. ZP-G states the two axioms (AX-G1, AX-G2) '
+        'that the stand-in categories are checked against.'))
 
     E.append(example_box('Real-world example — Translation between languages', [
         'A functor is like a careful translator. Objects are words; morphisms are grammatical '
@@ -268,14 +278,17 @@ def build():
         'ZP-G constructs a single abstract category C whose structure captures everything '
         'essential about the Zero Paradox: there is a privileged starting point (the initial '
         'object), all structure flows forward from it, and no morphism ever returns to it. '
-        'These properties are stated as two axioms within ZP-G — neither is a novel commitment. '
-        'Both are grounded in structure established in prior layers.'))
+        'These properties are stated as two axioms within ZP-G. The initial object and the fact that '
+        'nothing returns to it are grounded in structure established in prior layers; that C has no '
+        'terminal object is ZP-G\'s own commitment.'))
     E.append(cbody(
-        '<b>AX-G1 (Initial Object):</b> The category C has an initial object, called 0. '
-        'An initial object is an object with exactly one morphism to every other object — a '
-        'universal source. Every other object is "reachable" from 0 by exactly one route. '
-        'This is not a new assumption: ⊥\'s existence as the bottom element of the ZP-A semilattice '
-        'already guarantees it. ZP-G names it in categorical language.'))
+        '<b>AX-G1 (Initial Object):</b> The category C has an initial object, called 0, and no terminal object. '
+        'An initial object is an object with exactly one morphism to every object — a '
+        'universal source. A terminal object would be the reverse — a universal destination, with exactly one '
+        'morphism into it from every object — and C has none. Every other object is "reachable" from 0 by exactly '
+        'one route. The initial object is not a new assumption: ⊥\'s existence as the bottom element of the ZP-A '
+        'semilattice already guarantees it. The "no terminal object" half is ZP-G\'s own commitment: in ZP-A, '
+        'having no top element is an optional hypothesis, and ZP-A\'s two-state carriers have a top.'))
     E.append(cbody(
         '<b>AX-G2 (Source Asymmetry):</b> No morphism points from any non-initial object '
         'back to 0. Once you leave the initial object, you cannot return. '
@@ -346,11 +359,15 @@ def build():
     E.append(sp(8))
 
     E.append(cbody(
-        '<b>What comes next:</b> ZP-H constructs four concrete '
-        'functors from C to the four domain frameworks of the Zero Paradox, verifying that '
-        'the abstract categorical structure is faithfully realized in lattice algebra, '
-        'p-adic topology, information theory, and Hilbert space. See the ZP-H Illustrated '
-        'Companion for that story.'))
+        '<b>What comes next:</b> ZP-H constructs four concrete functors from the natural-number depth '
+        'order to the four domain frameworks of the Zero Paradox — lattice algebra, p-adic topology, '
+        'information theory, and Hilbert space. It checks both axioms on four simple stand-in categories '
+        'indexed by the natural numbers, one per domain — each the natural-number order under a different '
+        'name. It also sends the p-adic, information and Hilbert-space bottoms into their standard categories '
+        '(the p-adic functor runs on the reversed order, as an inverse system), where the information and '
+        'Hilbert-space ones land on an initial object and the p-adic one on a limit. The "no terminal object" '
+        'axiom is not claimed there: the axioms are verified on the stand-ins, and each of those standard '
+        'categories has a terminal object. See the ZP-H Illustrated Companion for that story.'))
 
     print(f'Building: {out_path}')
     doc.build(E)
