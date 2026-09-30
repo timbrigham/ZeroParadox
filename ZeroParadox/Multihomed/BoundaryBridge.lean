@@ -16,7 +16,7 @@ project as well as Mathlib as a whole.
 Not located in the pinned Mathlib as of 2026-08-12 (environment sweep over names and types):
 Pataraia's fixed-point theorem — proved in this corpus with no axioms, `pataraia_least_prefixedPoint`
 (`ZeroParadox/Order/PataraiaChoiceFree.lean`) — and the General Recursion Theorem itself. The **next-time
-operator is no longer open** — `ZeroParadox/Category/NextTimeCategorical.lean` builds it (`nextTimeCat`); read it before re-deriving one.
+operator is built** in this corpus — `ZeroParadox/Category/NextTimeCategorical.lean` (`nextTimeCat`); read it before re-deriving one.
 -/
 
 namespace ZeroParadox

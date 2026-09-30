@@ -21,7 +21,7 @@
 That the classical self-reference arguments share one diagonal fixed point is prior art, not this framework's: **Lawvere (1969)** for Cantor, Russell, Gödel and Tarski, **Yanofsky (2003)** for Turing and the recursion theorem. What this framework adds is checkable and specific:
 
 - **It is located at the floor, not the ceiling** - the Gödel inversion. The concrete instance, the **Binary Snap** (⊥ → ε₀), is a theorem, not an axiom; the core snap `t_snap_derived` is Lean-kernel-axiom-free - not even choice. Choice enters elsewhere in the framework, including at the separate identification of that first step with the ordinal ε₀; see The Result below for where.
-- **The recurrence is verified across *heterogeneous* domains** - the computability face is a genuine Lawvere/Kleene fixed point; the lattice and 2-adic faces are proved fixed points of their own self-maps ([`q2_unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`scale_unique_fp`](ZeroParadox/Valuation/Scale.lean)), carrying the shape but not genuine Lawvere instances - Cantor forbids the Set-level witness.
+- **The recurrence is verified across *heterogeneous* domains** - the computability face is a machine-checked Kleene/Rogers fixed point, and a Lawvere-form instance in multi-valued form (cited: Bauer 2017); the lattice and 2-adic faces are proved fixed points of their own self-maps ([`q2_unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`scale_unique_fp`](ZeroParadox/Valuation/Scale.lean)), carrying the shape but not genuine Lawvere instances - Cantor forbids the Set-level witness.
 - **The boundary is proved, not assumed** - there is no single cross-category theorem folding the domains into one object (`x = y` across distinct categories is not a well-formed proposition); a Cantor/Lawvere obstruction establishes the impossibility. The framework proves where the shape recurs, and where it stops.
 
 ---
@@ -91,7 +91,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.9 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
 | [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.16 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
 | [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.8 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
-| [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.15 | The diagonal-fixed-point keystone: the Lawvere face-split (machine-checked) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
+| [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.19 | The diagonal-fixed-point keystone: the Lawvere face-split (Set face machine-checked, computability face cited) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
 | [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.24 | Computational grounding: the bottom's structural self-containment, with the computational reading carried as a commitment. |
 | [Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.20 | ε₀ as the exact ordinal threshold the snap is keyed to. (That the snap occurs follows from the occurrence commitment together with DA-1, closed given DP-2.) |
 | [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.7 | The bridge between the Kleene quine and the ε₀ fixed point. |
