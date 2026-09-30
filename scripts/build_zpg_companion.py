@@ -1,5 +1,7 @@
 """
-Build ZP-G Illustrated Companion (v1.11)
+Build ZP-G Illustrated Companion (v1.12)
+v1.12: "What Is a Functor?" — ZP-H's four functors run from the natural-number depth order, as in
+"What comes next" (Tim ruling, 2026-09-29).
 v1.11: AX-G1's no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top);
 "What comes next": functors from the natural-number depth order, the stand-ins are one order under
 four names, and each of the three standard categories has a terminal object (Tim rulings, 2026-09-29).
@@ -152,7 +154,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -249,8 +251,8 @@ def build():
         'F(g) ∘ F(f) in D. Functors are the "translations" between mathematical worlds — they '
         'carry structure faithfully from one setting to another.'))
     E.append(cbody(
-        'ZP-H (the companion bridge document) constructs four functors from the abstract '
-        'category C to the four concrete frameworks of the Zero Paradox — lattice algebra, '
+        'ZP-H (the companion bridge document) constructs four functors from the natural-number '
+        'depth order to the four concrete frameworks of the Zero Paradox — lattice algebra, '
         'p-adic topology, information theory, and Hilbert space. ZP-G builds the abstract '
         'category that those functors will target.'))
 
