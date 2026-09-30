@@ -62,6 +62,12 @@ instance instOntZPS : ZPSemilattice OntologicalStates where
   join_idem  := by intro a; cases a <;> rfl
   bot_join   := by intro a; cases a <;> rfl
 
+-- `Statement:` this carrier HAS a top: `exist` has nothing strictly above it, so ZP-A's optional
+-- hypothesis `HasNoTop` fails here too.
+example : ¬ HasNoTop OntologicalStates := by
+  intro h; obtain ⟨y, hle, hne⟩ := h OntologicalStates.exist
+  cases y <;> simp_all [ZPSemilattice.le]
+
 /-! ## §II. AbstractSelfApp Instance for OntologicalStates
 
 selfApp is the constant-to-null function. null maps to itself (fixed_bot).

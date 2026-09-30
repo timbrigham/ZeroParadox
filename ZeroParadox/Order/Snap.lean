@@ -51,6 +51,12 @@ instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join_idem  := by intro x;     cases x                          <;> rfl
   bot_join   := by intro x;     cases x                          <;> rfl
 
+-- `Statement:` this carrier HAS a top: `running` has nothing strictly above it, so ZP-A's optional
+-- hypothesis `HasNoTop` fails here. AX-G1's no-terminal half is therefore not supplied by ZP-A.
+example : ¬ HasNoTop MachinePhase := by
+  intro h; obtain ⟨y, hle, hne⟩ := h MachinePhase.running
+  cases y <;> simp_all [ZPSemilattice.le]
+
 /-! ## I-DA1. DA-1 — Derived Proposition: Instantiation as Execution
 
 DA-1 states: a machine configuration at the incompressibility threshold P₀ is a
