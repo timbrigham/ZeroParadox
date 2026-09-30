@@ -798,13 +798,16 @@ READ     tools/process/naming-and-labels.md
 TRIGGER  you need the framework's shape, or are about to describe a layer's status.
 RULE     dependency order: **ZP-A** (lattice) → **ZP-B** (p-adic) → **ZP-C** (information) →
          **ZP-D** (state) → **ZP-E** (DA-1 / T-SNAP). **ZP-G** (category) → **ZP-H** (bridge)
-         is self-contained — conceptually downstream of ZP-E, formally independent. Each
-         formal document has a paired illustrated companion. AX-G1 and AX-G2 are grounded,
-         not novel. **AX-B1 is the framework's ONE substantive modelling commitment** —
-         discrete Boolean existence, not a continuum of partial states — so never call it
-         "directly verifiable" or "not a novel commitment"; the `decide` proof only checks
-         the two states are distinct GIVEN the two-element type. AX-1 is retired (Tim,
-         2026-09-14): its shape is Theorem T-SNAP, its occurrence the occurrence commitment.
+         is self-contained — conceptually downstream of ZP-E, formally independent. AX-G2 and
+         the initial-object half of AX-G1 are grounded, not novel; AX-G1's no-terminal half is
+         ZP-G's own commitment — in ZP-A it is the optional hypothesis `HasNoTop`
+         (`ZeroParadox/Order/Lattice.lean`), which the two-state carriers `MachinePhase` and
+         `OntologicalStates` do not satisfy. **AX-B1 is the framework's ONE substantive
+         modelling commitment** — discrete Boolean existence, not a continuum of partial
+         states — so never call it "directly verifiable" or "not a novel commitment"; the
+         `decide` proof only checks the two states are distinct GIVEN the two-element type.
+         AX-1 is retired (Tim, 2026-09-14): its shape is Theorem T-SNAP, its occurrence the
+         occurrence commitment.
 COST     the ZP-C forcing lemmas discharge the no-half-state worry but force only the
          >=2-outcome lower bound; the residual commitment is DISCRETENESS, which they do not
          eliminate and which the reals lack — the snap fails there (`f_snap_impossible`).
