@@ -150,12 +150,7 @@ theorem axb1_gives_unique_target {α : Type*} [LinearOrder α] (bot : α)
 -- (AX-B1 holds) through two distinct covers, and no least element lies strictly above `∅`.
 example : (∅ : Set Bool) ⋖ {true} ∧ (∅ : Set Bool) ⋖ {false} ∧ ({true} : Set Bool) ≠ {false} ∧
     ¬ ∃ m : Set Bool, IsLeast {x | (∅ : Set Bool) < x} m := by
-  have cov : ∀ b : Bool, (∅ : Set Bool) ⋖ {b} := fun b => by
-    refine ⟨Set.empty_ssubset.2 ⟨b, rfl⟩, fun c hc hcb => ?_⟩
-    obtain ⟨x, hx⟩ := Set.nonempty_iff_ne_empty.2 hc.ne'
-    have hxb : x = b := Set.mem_singleton_iff.1 (hcb.le hx)
-    subst hxb
-    exact hcb.2 (Set.singleton_subset_iff.2 hx)
+  have cov : ∀ b : Bool, (∅ : Set Bool) ⋖ {b} := Set.empty_covBy_singleton
   refine ⟨cov true, cov false, fun h => absurd (h ▸ Set.mem_singleton true : true ∈ ({false} : Set Bool)) (by simp),
     fun ⟨m, hm, hlow⟩ => ?_⟩
   have ht : m ⊆ {true} := hlow (cov true).1
