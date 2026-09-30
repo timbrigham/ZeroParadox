@@ -25,6 +25,7 @@ section SnapCannotBeIndex
 /-! ### § I. What the snap IS NOT — not an axiom, not reversible, not a return to the same ⊥ -/
 #check @ZeroParadox.t_snap_derived                    -- DERIVED (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) — the shape (AX-1 is retired); that the snap occurs follows from the occurrence commitment together with DA-1, not from this line, and the next line is why
 #check @ZeroParadox.tsnap_holds_but_nothing_moves     -- Statement: T-SNAP's statement holds together with a dynamics `stuckPhase` in which every phase is fixed, so T-SNAP is not an occurrence claim
+-- `Statement:` a state sequence that starts at ⊥ and never steps is the `example` after `t_snap_given` in `ZeroParadox/Order/Snap.lean`.
 #check @ZeroParadox.t_snap_irreversible              -- NOT reversible: no join from ε₀ returns to ⊥
 #check @ZeroParadox.dp2_execution_distinguishability  -- the post-snap null ≠ the pre-snap null (distinct instances)
 #check @ZeroParadox.da1_minimal_path                  -- Statement: the two configurations are DISTINCT while sharing an output value. It does NOT carry that the step is taken, and irrecoverability is not in it — see the fence in its home docstring
@@ -77,6 +78,17 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] (a : L)
   exact ⟨h1, fun x => (h2 x).imp (fun h => h.trans hcc1.symm) (fun h => h.trans h1.symm)⟩
 example : ∀ x : ZeroParadox.MachinePhase, x = ZeroParadox.ZPSemilattice.bot ∨ x = ZeroParadox.c₁ := by
   intro x; cases x; exacts [Or.inl rfl, Or.inr rfl]
+#check @bot_covBy_iff                                 -- Statement: `⊥ ⋖ a ↔ IsAtom a`; an atom's two halves are `a ≠ ⊥` and nothing strictly between, a different pair from the ordinal ε₀'s least fixed point and tower supremum
+#check @covBy_iff_atom_Ici                            -- Statement: `a ⋖ b ↔ IsAtom ⟨b, _⟩ : Set.Ici a`; a cover is an atom measured from the local bottom `a`
+-- `Statement:` the ℕ run's step 0 → 2 lands on an atom one rung up: 2 is not an atom of `Set.Ici 0`,
+-- and it is an atom of `Set.Ici 1`.
+example : ¬ @IsAtom (Set.Ici (0 : ℕ)) _ Set.Ici.orderBot ⟨2, Nat.zero_le 2⟩ ∧
+    @IsAtom (Set.Ici (1 : ℕ)) _ Set.Ici.orderBot ⟨2, (by decide : (1 : ℕ) ≤ 2)⟩ := by
+  have h02 : (0 : ℕ) ≤ 2 := Nat.zero_le 2
+  have h12 : (1 : ℕ) ≤ 2 := by decide
+  have c12 : (1 : ℕ) ⋖ 2 := ⟨by decide, fun c h1 h2 => by omega⟩
+  exact ⟨fun h => ((covBy_iff_atom_Ici h02).2 h).2 (c := 1) (by decide) (by decide),
+    (covBy_iff_atom_Ici h12).1 c12⟩
 
 /-! ### § III. What the snap DOES — it narrows reachability, permanently -/
 #check @ZeroParadox.t_snap_accessible_proper_subset   -- from ε₀ only a proper subset is reachable; ⊥ is foreclosed
@@ -97,6 +109,7 @@ it, `ℝ` lacks it (the examples beside `HasFirstStep`, `ZeroParadox/Reals/Order
 commitment is that the framework's carrier has it. AX-B1 holds at every state with anything above it:
 each has a first distinct state above it, with nothing strictly between. A state with nothing above it
 owes no step. -/
+#check @ZeroParadox.axb1_gives_unique_target          -- Statement: on a LINEAR order, AX-B1 at `bot` gives exactly one cover; the `Set Bool` control beside it in `ZeroParadox/Reals/OrderedField.lean` has two
 #check @ZeroParadox.HasFirstStep                      -- Statement: an ORDER predicate — `∃ a, bot ⋖ a`, Mathlib's covering relation. ⚠ `LT ℚ_[p]` does not synthesize, so this is not statable of ℚ_p; the p-adic line below fences NORM values, a different predicate
 #check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, every positive ε₀ admits a smaller positive δ
 #check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element. No Archimedean hypothesis appears in the binders
