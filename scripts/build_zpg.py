@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.16 | September 2026
+Version 1.17 | September 2026
+v1.17: Remark R-AX: the axioms are not claimed for the three Mathlib categories ZP-H targets (TopCat, KleisliCat PMF, ModuleCat ℂ), each of which has a terminal object; the four stand-ins are one ℕ-order instance. AX-G1 box: the no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top). Tim rulings, 2026-09-29.
 v1.16: Remark R-AX scoped — AX-G2 (not AX-G1) is what holds in many categories; the axioms hold in the four ℕ-indexed depth categories, and AX-G1 fails in TopCat and ModuleCat ℂ, whose bottom is a zero object (initial, not strict).
 v1.15: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.14: R-AX remark — named AX-G2 as the standard strict-initial-object property (Carboni-Lack-Walters 1993) and noted AX-G1+AX-G2 = a non-trivial strict initial; prior-art positioning, paired with the CLAIMS Convergence section.
@@ -28,7 +29,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -202,7 +203,9 @@ def build():
         [
             'The category C possesses an initial object 0 and no terminal object.',
             'Formally: ∃ 0 ∈ ob(C) satisfying D3. ¬∃ 1 ∈ ob(C) satisfying D4.',
-            'Correspondence: In ZP-A: join-semilattice without &#8868; and without ∧. '
+            'Correspondence: in ZP-A, a join-semilattice with &#8869; and without ∧; a carrier with no top is '
+            'an optional hypothesis there, and ZP-A\'s two-state carriers have a top, so the no-terminal half '
+            'is ZP-G\'s own commitment. '
             'In ZP-B: Q<sub>2</sub> has no element to which all paths converge. '
             'The present axiom is the categorical generalization.',
         ]
@@ -235,13 +238,14 @@ def build():
             'object here is not an abstract placeholder: it is &#8869;, the algebraically minimal element of '
             'ZP-A\'s lattice. This identification is not asserted in ZP-G; it is demonstrated in ZP-H via '
             'four concrete domain functors (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>), '
-            'each of which maps the natural number depth hierarchy into its domain category and preserves '
-            'the initial object. The axioms are not postulated in isolation; they are shown to hold in each '
-            'of four ℕ-indexed depth categories, one per domain (ZP-H). They do not all hold in the domains\' '
-            'own Mathlib categories: TopCat and ModuleCat ℂ each have a terminal object, so AX-G1 fails there, '
-            'and ModuleCat ℂ\'s bottom is a zero object that every object maps into, so it is initial but not '
-            'strict. The categorical '
-            'layer generalises a phenomenon that is independently grounded in four distinct mathematical domains.',
+            'each of which maps the natural number depth hierarchy into a stand-in category for its domain and '
+            'preserves the initial object. The axioms are not postulated in isolation; they are shown to hold in '
+            'each of four ℕ-indexed depth categories, one per domain (ZP-H), and are not claimed for the three '
+            'Mathlib categories ZP-H also targets (TopCat, KleisliCat PMF, ModuleCat ℂ) — each of which has a '
+            'terminal object, so AX-G1 fails in every one of them. ModuleCat ℂ\'s bottom is a zero object that '
+            'every object maps into, so it is initial but not strict. The domain facts behind the stand-ins '
+            '(ZP-B C3, ZP-C T1b, ZP-D T4) are proved separately in their own layers; the categorical check is '
+            'the same ℕ-order instance each time.',
         ]
     ))
 

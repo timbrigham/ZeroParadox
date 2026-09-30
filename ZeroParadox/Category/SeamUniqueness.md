@@ -1,6 +1,6 @@
 # Which named bottom is a zero object: the per-bottom obstructions and the fence
 
-Moved from `ZeroParadox/Category/SeamUniqueness.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise. One sentence was changed in the move: the `zpcategory_initial_not_zero` bullet paired the Carboni–Lack–Walters citation with AX-G1, and now pairs it with AX-G2 (PA-7).
+Moved from `ZeroParadox/Category/SeamUniqueness.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
 
 ## Formal Overview (AI-assisted)
 
@@ -23,7 +23,8 @@ and show each fails — every one of them lands strictly on a single side of the
 - `zpa_bot_not_greatest` (ZP-A, generic) — in any ZP-A semilattice `HasNoTop L`, the bottom `⊥ₗ`
   is the **least** element (`bot_le`) but is **not** a greatest element: `¬ ∀ x, x ≼ ⊥ₗ`. The
   order-theoretic shadow of "initial but not terminal" — the poset-as-category bottom is the colimit
-  end, not the limit end, exactly because there is no top.
+  end, not the limit end; here from `HasNoTop`, though two distinct elements already suffice (the
+  `example` after `seam_unique_among_named`).
 - `kleisli_bottom_not_zero` (#4) — `fC_functor.obj 0 = Fin 0` is **not** a zero object: a zero
   object is terminal, but `kleisli_bottom_not_terminal` proves it is not terminal
   (`fC_no_return`: no stochastic map returns into the empty type). Strictly μ.
@@ -40,7 +41,7 @@ zero-object bottom exists"; it is **refuted** for every bottom tested. The pre-r
 obstruction — "#5 is the only zero-object bottom among those tested" — is the result.
 
 **Honest fence.** This is NOT a uniqueness theorem quantified over *all* objects of *all* categories
-(that would be false — every category with a zero object has one). The Lean content is exactly: of
+(that would be false: zero objects are common — the zero module in ModuleCat ℂ is one). The Lean content is exactly: of
 the five **named framework bottoms**, #5 is a zero object and the other four are provably not. The
 five live in five different categories, so "uniqueness" here means "of the named list," a finite
 case check, not a universal claim. The seam reading (#5 is the diagonal-fixed-point keystone realized
