@@ -96,6 +96,14 @@ example : IsEmpty (ZPCategory Bool)             := no_zpcat_top Bool
 example : IsEmpty (ZPCategory (Fin 3))          := no_zpcat_top (Fin 3)
 example : IsEmpty (ZPCategory (Finset (Fin 4))) := no_zpcat_top (Finset (Fin 4))
 
+-- Statement: the other direction, for a preorder: if every element has something strictly above it
+-- (the shape of ZP-A's `HasNoTop`), no object is terminal. That condition gives AX-G1's no-terminal
+-- half on carriers that satisfy it; it is a hypothesis here, not a property of every ZP-A carrier.
+example (α : Type) [Preorder α] (h : ∀ x : α, ∃ y, x < y) : ∀ t : α, IsEmpty (IsTerminal t) :=
+  fun t => ⟨fun ht => by
+    obtain ⟨y, hy⟩ := h t
+    exact lt_irrefl _ (lt_of_lt_of_le hy (leOfHom (ht.from y)))⟩
+
 /-! ## II. ZPSurprisal — I-KC Import (D7') -/
 
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib has no formalization of Kolmogorov complexity. ZPSurprisal is an import stub for the I-KC axiom (D7'): it models conditional K-complexity as an abstract ℕ-valued morphism assignment. The one field (surp_id: identity morphisms have zero surprisal) is the only structurally usable I-KC axiom in the ZP-G theorems; the rest of K-complexity is outside Lean scope.

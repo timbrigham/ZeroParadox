@@ -115,7 +115,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Multihomed/BoundaryBridge.md` - Which theorem carries which direction, and the survey's limits
 - `ZeroParadox/Multihomed/CategoricalBridge.lean` - ZP-H: Categorical Bridge
   - ride-along docs: `ZeroParadox/Multihomed/CategoricalBridge.md` - The categorical bridge: key results, functor witnesses and the OQ-G3 status
-- `ZeroParadox/Multihomed/EigenvectorExists.lean` - Deep cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
+- `ZeroParadox/Multihomed/EigenvectorExists.lean` - Cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
 - `ZeroParadox/Multihomed/HilbertDiagonal.lean` - ZP-H: ⊥ is the unique finite-dimensional fixed point of the biproduct-diagonal
 - `ZeroParadox/Multihomed/InfoFunctor.lean` - ZP-H Info Functor: F_C into the real category `KleisliCat PMF` (MC-1 remediation)
 - `ZeroParadox/Multihomed/MC1Bridge.lean` - ZP-H MC-1 Correspondence: the snap floor realized across the real domain categories

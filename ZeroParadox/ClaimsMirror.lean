@@ -198,7 +198,7 @@ theorem claim_Perron_info_state {n : ℕ}
       = Finsupp.equivFunOnFinite.symm (fun i => ((μ i).toReal : ℂ)) :=
   stationary_transports_to_unit_eigenvector f μ hμ
 
--- `Statement:` existence follows only by composing with `exists_stationary`, which needs a nonempty
+-- `Statement:` existence follows by composing with `exists_stationary`, which needs a nonempty
 -- state space; with `n = 0` there is no distribution at all, so the transport above holds vacuously.
 example {n : ℕ} [Nonempty (Fin n)] (f : Fin n → PMF (Fin n)) :
     ∃ μ : PMF (Fin n), linMap (a := ⟨n⟩) (b := ⟨n⟩) f

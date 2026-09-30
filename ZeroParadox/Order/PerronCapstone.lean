@@ -29,7 +29,9 @@ namespace ZeroParadox
 
 open ZeroParadox ZeroParadox ZeroParadox
 
-/-- **Perron–Frobenius for a finite stochastic kernel.** (i) There is a probability vector `w`
+/-- **Perron–Frobenius for a finite stochastic kernel — the deep cross-domain entry.** The depth is
+    that the fixed vector is a probability distribution; a nonzero one alone is linear algebra (the
+    `example` in `ZeroParadox/Multihomed/EigenvectorExists.lean`). (i) There is a probability vector `w`
     (`0 ≤ w i`, `∑ w i = 1`) whose free-module image is a unit eigenvector of the transfer operator
     `linMap f`; (ii) every eigenvalue has modulus `≤ 1`. So the spectral radius is exactly `1`, attained by a
     probability distribution (the stationary distribution). -/

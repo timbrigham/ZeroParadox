@@ -4,7 +4,7 @@ import ZeroParadox.Category.LinFunctor
 set_option maxHeartbeats 400000
 
 /-!
-# Deep cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
+# Cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
 
 Composes the stochastic-side existence theorem `exists_stationary` with the info→Hilbert transport
 `stationary_transports_to_unit_eigenvector`: the linearized transfer operator has a NONZERO fixed vector
@@ -24,7 +24,7 @@ namespace ZeroParadox
 
 open ZeroParadox ZeroParadox
 
-/-- **Deep cross-domain existence.** For any finite stochastic kernel `f` on a nonempty state space
+/-- **Cross-domain existence.** For any finite stochastic kernel `f` on a nonempty state space
     (`[Nonempty (Fin n)]`; at `n = 0` no vector is nonzero), the linearized transfer operator
     `linMap f` has a nonzero fixed vector (eigenvalue `1`). Proved by transporting the stationary distribution
     (whose existence is `exists_stationary`) across the linearization. -/
@@ -48,7 +48,9 @@ theorem transfer_operator_has_unit_eigenvector {n : ℕ} [Nonempty (Fin n)]
 
 -- `Statement:` the transfer matrix `P f` has a nonzero fixed vector by linear algebra alone: the
 -- all-ones vector is killed by `(P f - 1)ᵀ`, so the determinant vanishes. `exists_stationary` is not
--- used, and nothing here makes the vector nonnegative.
+-- used, and nothing here makes the vector nonnegative. The all-ones fact is Mathlib's
+-- `Matrix.one_vecMul_of_mem_colStochastic` (`Mathlib/LinearAlgebra/Matrix/Stochastic.lean`), `P f` being
+-- column-stochastic; `row_sum` is the same fact proved here by hand.
 example {n : ℕ} [Nonempty (Fin n)] (f : Fin n → PMF (Fin n)) :
     ∃ v : Fin n → ℝ, v ≠ 0 ∧ (P f).mulVec v = v := by
   set M : Matrix (Fin n) (Fin n) ℝ := P f - 1 with hM

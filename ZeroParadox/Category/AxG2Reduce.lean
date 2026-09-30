@@ -33,6 +33,9 @@ theorem ax_g2_from_strict_initial {C : Type*} [Category C] (zero : C)
 
 -- `Statement:` the converse, given initiality: AX-G2 at an initial `zero` makes every morphism into
 -- `zero` an isomorphism. With the theorem above, the two are equivalent at an initial object.
+-- Folklore: nLab (*strict initial object*) states strictness in AX-G2's form. Mathlib's neighbouring
+-- `IsInitial.ofStrict` (`Mathlib/CategoryTheory/Limits/Shapes/StrictInitial.lean`): a morphism into a
+-- strict initial object makes its source initial.
 example {C : Type*} [Category C] (zero : C) (hi : Limits.IsInitial zero)
     (hg2 : ∀ X : C, IsEmpty (X ≅ zero) → IsEmpty (X ⟶ zero)) (X : C) (f : X ⟶ zero) : IsIso f := by
   classical
