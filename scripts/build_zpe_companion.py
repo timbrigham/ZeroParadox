@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.20 | September 2026
+Version 1.21 | September 2026
+v1.21: AX-G1 NOVELTY (Tim ruling, 2026-09-29, reading (i)): the no-terminal half of AX-G1 is ZP-G's own commitment; in ZP-A a top-free carrier is an optional hypothesis, which the two-state carriers do not satisfy. v1.20's "rests on ZP-A's premise" is withdrawn. Same wording as the Foreword's AX-G1 row, in this table's register.
 v1.20: AX-G1 ROW (Tim ruling, 2026-09-29): the axioms-table AX-G1 row stated only the initial object and omitted AX-G1's second half, that there is no terminal object. The row now carries both: the starting point is grounded in the ZP-A bottom element, and the absence of an end point rests on ZP-A's premise that the semilattice has no top. Same wording as the Foreword's AX-G1 row, in this table's register.
 v1.19: GENTZEN-5, THE RENDERED TWIN (DEFECTS.md GENTZEN-5; editorial E4-5 and prior_art PA6-1, 2026-09-23), companion sync with ZP-E v3.42. The Four Descriptions paragraph read "the minimum ordinal whose well-ordering PA cannot prove" one sentence before "the proof requires transfinite induction up to ε₀" - two DIFFERENT schemas in adjacent sentences, an INDUCTION schema and a WELL-FOUNDEDNESS statement, identified only through an ordinal NOTATION SYSTEM that no surface here stated (not located as of 2026-09-23; the search is recorded in ZP-E v3.42). This change replaced that VOCABULARY with "the minimum ordinal up to which PA cannot prove transfinite induction": it needs no notation caveat, and it put the paragraph into one vocabulary where it had been in two. ⛔ THE CHART WAS NOT TOUCHED - it stayed from-above, the chart both prose gates ruled right at the formal's twin site - so R-TWOPOLE returned INVARIANT, the ratified null case: vocabulary moved, no direction reversed, no second chart owed. ⭐ The new form also rests on what this project has READ: the below-ε₀ provability of transfinite induction is Gentzen reporting it as already known, crediting Hilbert-Bernays (1943 p.140 footnote 3, read as page images and filed), whereas the well-ordering form's MINIMUM needed a half that a gate derived in one step and nobody read at a passage. This change asserted no date for Grundlagen der Mathematik II, never wrote "Hilbert-Bernays' theorem", cited 1938 nowhere, and left the ordinal chart and the discrete state chart unmerged with no embedding claimed.
 v1.18: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (2026-09-15), companion sync with ZP-E v3.36, DA-1 PATH 3 (pre-existing bedrock since v1.3, editorial round 3 B1): the ZP-K paragraph said ZP-K 'proves that this Quine and the AFA self-containment argument are the same structural fact', that two paths are machine-checked and IN LEAN SCOPE, and that DA-1's formal grounding is 'DP-2 plus two Lean-verified structural paths'. da1_paths_unified is a conjunction, and botCode_is_quine is a class field met by constant codes. The paragraph now carries the CLAIMS.md DA-1 row (Path 1 witnessed by da1_closed_concrete, nothing computational; Path 3's witness a KleeneStructure requirement, not a second independent proof; the one-fact reading is the framework's), and DA-1's formal grounding is DP-2, through da1_minimal_path.
@@ -172,8 +173,9 @@ def axioms_table():
         ['AX-G1',
          'Initial Object Exists, and No Terminal Object. There is a starting point that reaches everything, '
          'and no end point that everything reaches. '
-         'Not a novel commitment — the starting point is grounded in ⊥ as the bottom element of the ZP-A semilattice, '
-         'and the absence of an end point rests on ZP-A&#8217;s premise that the semilattice has no top.'],
+         'The starting point is not a novel commitment — it is grounded in ⊥ as the bottom element of the ZP-A '
+         'semilattice. The absence of an end point is ZP-G&#8217;s own commitment: in ZP-A it is an optional '
+         'hypothesis, which ZP-A&#8217;s two-state carriers do not satisfy.'],
         ['AX-G2',
          'Source Asymmetry. Nothing returns to the initial object. '
          'The origin is unreachable from outside. '
@@ -194,7 +196,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 
