@@ -1,5 +1,7 @@
 import ZeroParadox.Category.Category
 import ZeroParadox.Order.Lattice
+import Mathlib.CategoryTheory.Limits.Types.Products
+import Mathlib.CategoryTheory.Limits.Types.Coproducts
 
 /-!
 # B4 (pipeline): AX-G2 is derivable from strict-initiality (a ZP-G posit collapses)
@@ -45,6 +47,25 @@ example {C : Type*} [Category C] (zero : C) (hi : Limits.IsInitial zero)
     obtain rfl : f = e.hom := (hi.ofIso e.symm).hom_ext _ _
     infer_instance
   · exact ((hg2 X ⟨fun e => h ⟨e⟩⟩).false f).elim
+
+-- `Statement:` a strict initial object that is also terminal makes every object isomorphic to it:
+-- the unique morphism from each object into it is an isomorphism. So AX-G1 (no terminal object) rules
+-- that degenerate case out of a ZPCategory.
+example {C : Type*} [Category C] (z : C) (hs : ∀ (X : C) (f : X ⟶ z), IsIso f)
+    (ht : Limits.IsTerminal z) (X : C) : Nonempty (X ≅ z) :=
+  haveI := hs X (ht.from X); ⟨asIso (ht.from X)⟩
+
+-- `Statement:` but not conversely: in `Type` the empty type is initial and strict (every map into it
+-- is an isomorphism), the one-point type is terminal, the two are not isomorphic, and so `Type` is a
+-- non-trivial category with a strict initial object that is not a ZPCategory.
+example :
+    Nonempty (Limits.IsInitial (PEmpty : Type)) ∧ (∀ (X : Type) (f : X ⟶ PEmpty), IsIso f)
+    ∧ Nonempty (Limits.IsTerminal (PUnit : Type)) ∧ IsEmpty ((PUnit : Type) ≅ PEmpty)
+    ∧ IsEmpty (ZPCategory Type) :=
+  ⟨⟨Limits.Types.isInitialPEmpty⟩,
+   fun _ f => (isIso_iff_bijective f).mpr ⟨fun x _ _ => (f x).elim, fun e => e.elim⟩,
+   ⟨Limits.Types.isTerminalPUnit⟩, ⟨fun e => (e.hom PUnit.unit).elim⟩,
+   ⟨fun Z => (Z.ax_g1_no_terminal PUnit).false Limits.Types.isTerminalPUnit⟩⟩
 
 -- `Statement:` AX-G2 from antisymmetry: in the poset category of any partial order with a least
 -- element, nothing not isomorphic to `⊥` has a morphism into it (a morphism `X ⟶ ⊥` is `X ≤ ⊥`, so

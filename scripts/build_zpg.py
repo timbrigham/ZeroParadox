@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.18 | September 2026
+Version 1.19 | September 2026
+v1.19: Remark R-AX: "the two axioms jointly pick out exactly the non-degenerate case" stated a conditional as a biconditional. Now only the proved direction (a strict initial that is also terminal forces every object isomorphic to it, so AX-G1 rules it out) and the failing converse (in sets, the empty set is strict initial and the one-point set terminal); both checked as examples in AxG2Reduce.lean (copy_editor panel, Tim ruling 2026-09-29).
 v1.18: Remark R-AX: the domain facts behind the four stand-ins now list ZP-A T2 (the lattice stand-in's fact, bot_le) beside ZP-B C3, ZP-C T1b and ZP-D T4 (gate round 1, Tim ruling 2026-09-29).
 v1.17: Remark R-AX: the axioms are not claimed for the three Mathlib categories ZP-H targets (TopCat, KleisliCat PMF, ModuleCat ℂ), each of which has a terminal object; the four stand-ins are one ℕ-order instance. AX-G1 box: the no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top). Tim rulings, 2026-09-29.
 v1.16: Remark R-AX scoped — AX-G2 (not AX-G1) is what holds in many categories; the axioms hold in the four ℕ-indexed depth categories, and AX-G1 fails in TopCat and ModuleCat ℂ, whose bottom is a zero object (initial, not strict).
@@ -30,7 +31,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -233,8 +234,10 @@ def build():
             'in well-behaved categories — the initial object of any topos, extensive category, or cartesian '
             'closed category is strict — so AX-G2 names a recognised structural property, not a ZP-specific '
             'stipulation. Together with AX-G1 (no terminal object) it places C at a <i>non-trivial</i> strict '
-            'initial object: a strict initial that is also terminal (a zero object) forces the category to be '
-            'trivial, so the two axioms jointly pick out exactly the non-degenerate case. '
+            'initial object: a strict initial that is also terminal (a zero object) forces every object to be '
+            'isomorphic to it, so AX-G1 rules that degenerate case out — but not conversely, since a non-trivial '
+            'category can have a strict initial object and still have a terminal one (in the category of sets, '
+            'the empty set is strict initial and the one-point set is terminal). '
             'What distinguishes ZP-G from a trivial application of initial-object asymmetry is that the initial '
             'object here is not an abstract placeholder: it is &#8869;, the algebraically minimal element of '
             'ZP-A\'s lattice. This identification is not asserted in ZP-G; it is demonstrated in ZP-H via '
