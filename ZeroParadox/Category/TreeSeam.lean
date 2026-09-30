@@ -86,7 +86,8 @@ theorem kleisli_bottom_not_terminal :
 -- `Statement:` yet each of the three native categories HAS a terminal object: the one-point space in
 -- `TopCat`, the Hilbert bottom in `ModuleCat ℂ`, and the one-point type in `KleisliCat PMF` (every
 -- distribution on it is the point mass). So none of them satisfies AX-G1's no-terminal half. The
--- Kleisli case is Fritz 2020, Rem. 2.3: in a Markov category the monoidal unit is terminal.
+-- Kleisli case: Fritz 2020, § 3 just before Cor. 3.2, p. 17 (for an affine monad the unit is terminal
+-- in the Kleisli category), and Rem. 2.3 for Markov categories generally (the unit is terminal).
 example :
     Nonempty (Limits.IsTerminal (TopCat.of PUnit.{1}))
     ∧ Nonempty (Limits.IsTerminal (fD_functor.obj 0))

@@ -41,7 +41,7 @@ zero-object bottom exists"; it is **refuted** for every bottom tested. The pre-r
 obstruction — "#5 is the only zero-object bottom among those tested" — is the result.
 
 **Honest fence.** This is NOT a uniqueness theorem quantified over *all* objects of *all* categories
-(that would be false: zero objects are common — the zero module in ModuleCat ℂ is one). The Lean content is exactly: of
+(that would be false: zero objects are common — the trivial group is one in the category of groups). The Lean content is exactly: of
 the five **named framework bottoms**, #5 is a zero object and the other four are provably not. The
 five live in five different categories, so "uniqueness" here means "of the named list," a finite
 case check, not a universal claim. The seam reading (#5 is the diagonal-fixed-point keystone realized

@@ -75,8 +75,9 @@ class ZPCategory (C : Type*) [Category C] where
 /-! ## I-b. Non-members of `ZPCategory`, proved
 
 A preorder is a category (`Preorder.smallCategory`), so these are ordinary carriers, and each
-obstruction is one Mathlib lemma: `isTerminalTop` and `IsInitial.orderBot`, both from
-`Mathlib/CategoryTheory/Limits/Preorder.lean`. They are what the NO-GO gauge above cites. -/
+obstruction is one Mathlib lemma: `CategoryTheory.Limits.isTerminalTop`
+(`Mathlib/CategoryTheory/Limits/Shapes/IsTerminal.lean`) and `IsInitial.orderBot`
+(`Mathlib/CategoryTheory/Limits/Preorder.lean`). They are what the NO-GO gauge above cites. -/
 
 /-- **`Statement:` no `Preorder` with a top element carries a `ZPCategory`** — `isTerminalTop` makes
     `⊤` terminal, and AX-G1 forbids a terminal object. -/
@@ -99,6 +100,8 @@ example : IsEmpty (ZPCategory (Finset (Fin 4))) := no_zpcat_top (Finset (Fin 4))
 -- Statement: the other direction, for a preorder: if every element has something strictly above it
 -- (the shape of ZP-A's `HasNoTop`), no object is terminal. That condition gives AX-G1's no-terminal
 -- half on carriers that satisfy it; it is a hypothesis here, not a property of every ZP-A carrier.
+-- Standard: in a preorder a terminal object is a greatest element (Mathlib `IsTerminal.orderTop`,
+-- `Mathlib/CategoryTheory/Limits/Preorder.lean`; nLab, *terminal object*).
 example (α : Type) [Preorder α] (h : ∀ x : α, ∃ y, x < y) : ∀ t : α, IsEmpty (IsTerminal t) :=
   fun t => ⟨fun ht => by
     obtain ⟨y, hy⟩ := h t

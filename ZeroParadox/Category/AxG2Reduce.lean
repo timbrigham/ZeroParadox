@@ -1,4 +1,5 @@
 import ZeroParadox.Category.Category
+import ZeroParadox.Order.Lattice
 
 /-!
 # B4 (pipeline): AX-G2 is derivable from strict-initiality (a ZP-G posit collapses)
@@ -44,6 +45,24 @@ example {C : Type*} [Category C] (zero : C) (hi : Limits.IsInitial zero)
     obtain rfl : f = e.hom := (hi.ofIso e.symm).hom_ext _ _
     infer_instance
   · exact ((hg2 X ⟨fun e => h ⟨e⟩⟩).false f).elim
+
+-- `Statement:` AX-G2 from antisymmetry: in the poset category of any partial order with a least
+-- element, nothing not isomorphic to `⊥` has a morphism into it (a morphism `X ⟶ ⊥` is `X ≤ ⊥`, so
+-- `X = ⊥`). nLab (*strict initial object*) lists posets among the categories with strict initials.
+example (α : Type) [PartialOrder α] [OrderBot α] :
+    ∀ X : α, IsEmpty (X ≅ (⊥ : α)) → IsEmpty (X ⟶ (⊥ : α)) := by
+  intro X hX
+  refine ⟨fun f => hX.false ?_⟩
+  have h1 : X ≤ ⊥ := leOfHom f
+  have : X = ⊥ := le_antisymm h1 bot_le
+  subst this
+  exact Iso.refl _
+
+-- `Statement:` the same fact in ZP-A's own vocabulary: on any `ZPSemilattice`, an element below `bot`
+-- is `bot` (antisymmetry with T2, `bot_le`).
+example (L : Type) [ZPSemilattice L] (x : L) (hx : ZPSemilattice.le x ZPSemilattice.bot) :
+    x = (ZPSemilattice.bot : L) :=
+  ZPSemilattice.le_antisymm hx (ZPSemilattice.bot_le x)
 
 end ZeroParadox
 

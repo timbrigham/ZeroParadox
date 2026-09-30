@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.17 | September 2026
+Version 1.18 | September 2026
+v1.18: Remark R-AX: the domain facts behind the four stand-ins now list ZP-A T2 (the lattice stand-in's fact, bot_le) beside ZP-B C3, ZP-C T1b and ZP-D T4 (gate round 1, Tim ruling 2026-09-29).
 v1.17: Remark R-AX: the axioms are not claimed for the three Mathlib categories ZP-H targets (TopCat, KleisliCat PMF, ModuleCat ℂ), each of which has a terminal object; the four stand-ins are one ℕ-order instance. AX-G1 box: the no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top). Tim rulings, 2026-09-29.
 v1.16: Remark R-AX scoped — AX-G2 (not AX-G1) is what holds in many categories; the axioms hold in the four ℕ-indexed depth categories, and AX-G1 fails in TopCat and ModuleCat ℂ, whose bottom is a zero object (initial, not strict).
 v1.15: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
@@ -29,7 +30,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -244,7 +245,7 @@ def build():
             'Mathlib categories ZP-H also targets (TopCat, KleisliCat PMF, ModuleCat ℂ) — each of which has a '
             'terminal object, so AX-G1 fails in every one of them. ModuleCat ℂ\'s bottom is a zero object that '
             'every object maps into, so it is initial but not strict. The domain facts behind the stand-ins '
-            '(ZP-B C3, ZP-C T1b, ZP-D T4) are proved separately in their own layers; the categorical check is '
+            '(ZP-A T2, ZP-B C3, ZP-C T1b, ZP-D T4) are proved separately in their own layers; the categorical check is '
             'the same ℕ-order instance each time.',
         ]
     ))
