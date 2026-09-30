@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.30, revised September 2026)
+Zero Paradox — Foreword PDF Builder (v2.31, revised September 2026)
+v2.31: TERMINAL GLOSS (copy_editor panel, Tim ruling 2026-09-29): the AX-G1 row glossed the absent terminal object as "no end point that every object reaches". Reaching alone glosses a WEAKLY terminal object; a terminal object is reached in exactly one way (panel readers built counter-models: a ZPCategory with no terminal object but an object every object maps into). Now "no end point that every object reaches in exactly one way".
 v2.30: COUNT VS ENUMERATION (gate round 1, N-R1-6, Tim ruling 2026-09-29): after the sentence that counts one novel axiom clause, the list of commitments read as complete, but it omits the occurrence commitment and DP-2. It now opens "Among the commitments stated explicitly".
 v2.29: AX-G1 NOVELTY (Tim ruling, 2026-09-29, reading (i)): the no-terminal half of AX-G1 is ZP-G's own commitment, not supplied by ZP-A. In ZP-A a top-free carrier is the optional hypothesis HasNoTop, and the two-state carriers MachinePhase and OntologicalStates do not satisfy it (examples in Snap.lean and OntBridge.lean). The AX-G1 row, the commitments paragraph ("introduces one novel axiom clause, and names it") and the closing paragraph now say so; v2.28's "rests on ZP-A's premise that the semilattice has no top" is withdrawn.
 v2.28: AX-G1 ROW (F1, Tim ruling, 2026-09-29): the commitments-table AX-G1 row stated only the initial object and omitted AX-G1's second half, that there is no terminal object. The row now carries both halves: the starting point comes from the ZP-A bottom element, and the absence of an end point rests on ZP-A's premise that the semilattice has no top. Aligned with CLAIMS.md's AX-G1 row.
@@ -72,7 +73,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.30'
+VERSION = '2.31'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -127,7 +128,7 @@ def commitments_table():
          'itself, not what decide checks (the snap provably fails in the reals, f_snap_impossible).'),
         ('AX-G1', 'Axiom',
          'Initial Object Exists, and No Terminal Object. There is a starting point that reaches every other object, '
-         'and no end point that every object reaches. '
+         'and no end point that every object reaches in exactly one way. '
          'The starting point is not a novel commitment — the existence of ⊥ as the bottom element of the ZP-A '
          'semilattice already guarantees it. The absence of an end point is ZP-G&#8217;s own commitment: in ZP-A it is '
          'an optional hypothesis, which ZP-A&#8217;s two-state carriers do not satisfy.'),
