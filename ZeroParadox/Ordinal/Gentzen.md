@@ -21,8 +21,8 @@ ZPL has four components:
 3. **Ordinal ε₀ tower** — `ε₀ = nfp (ω^·) 0` is the supremum of the tower `ω, ω^ω, ω^(ω^ω), …`;
    it is a fixed point of `α ↦ ω^α`; it is the first such fixed point above 0. Fully in Lean
    scope via Mathlib ordinals.
-4. **Cantor Normal Form Bridge** — ordinals below ε₀ (`NONote`) encode into `ℤ₂` via their
-   Cantor normal form; as the tower stages approach ε₀ their encodings converge to `0 = ⊥` in
+4. **Cantor Normal Form Bridge** — `cnfToZp2` maps ordinals below ε₀ (`NONote`) into `ℤ₂` by
+   recursion on their Cantor normal form; as the tower stages approach ε₀ their encodings converge to `0 = ⊥` in
    `ℤ₂`; ε₀ itself has no encoding, and the two limits correspond as in
    `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. The remaining gap is the type bridge
    Ordinal → MachinePhase (`ZeroParadox/Ordinal/Gentzen.lean` § V). Proof partially in Lean
@@ -66,8 +66,9 @@ Every ordinal below ε₀ has a unique Cantor normal form — a finite expressio
 with e₁ > e₂ > ... > eₙ and aᵢ < ω. In Lean: `NONote` (the type of ordinals
 below ε₀ in Cantor normal form from Mathlib.SetTheory.Ordinal.Notation).
 
-The bridge: NONote → ℤ_[2] encodes each CNF term as a 2-adic integer where
-the 2-adic valuation tracks the ordinal height. For `ω^e · n + a`:
+The bridge: `cnfToZp2 : NONote → ℤ_[2]` maps each CNF term to a 2-adic integer. Along the
+tower stages, the 2-adic valuation of the image tracks ordinal height (`tower_orders_agree`,
+`ZeroParadox/Ordinal/CnfBridge.lean`). For `ω^e · n + a`:
   cnfToZp2(ω^e · n + a) = 2^(v₂(cnfToZp2(e)) + 1) · n + cnfToZp2(a)
 
 This recursion ensures that the tower stages get valuation = stage index:
