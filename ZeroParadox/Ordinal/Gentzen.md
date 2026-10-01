@@ -62,8 +62,8 @@ fixed-point structure via a path whose Kleene step is a KleeneStructure requirem
 Moved from `ZeroParadox/Ordinal/Gentzen.lean` § IV (2026-09-30), carried in the same accepted-defect baseline as § VI, so the warning above applies to it too.
 
 Every ordinal below ε₀ has a unique Cantor normal form — a finite expression
-  a₁ · ω^e₁ + a₂ · ω^e₂ + ... + aₙ · ω^eₙ
-with e₁ > e₂ > ... > eₙ and aᵢ < ω. In Lean: `NONote` (the type of ordinals
+  ω^e₁ · a₁ + ω^e₂ · a₂ + ... + ω^eₙ · aₙ
+with e₁ > e₂ > ... > eₙ and 0 < aᵢ < ω. In Lean: `NONote` (the type of ordinals
 below ε₀ in Cantor normal form from Mathlib.SetTheory.Ordinal.Notation).
 
 The bridge: `cnfToZp2 : NONote → ℤ_[2]` maps each CNF term to a 2-adic integer. Along the
