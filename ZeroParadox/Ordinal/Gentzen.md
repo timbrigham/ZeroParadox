@@ -25,7 +25,10 @@ ZPL has four components:
    recursion on their Cantor normal form; as the tower stages approach ε₀ their encodings converge to `0 = ⊥` in
    `ℤ₂`; ε₀ itself has no encoding, and the two limits correspond as in
    `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. The remaining gap is the alignment
-   hypothesis hε₀ (CLAIMS.md OQ-A1). Proof partially in Lean
+   hypothesis hε₀ (φ ε₀ = c₁; in the ℤ₂ chart, snapEmbed (φ ε₀) = 0), the snap's occurrence
+   at ε₀: monotonicity and tower alignment do not supply it
+   (`ZeroParadox/Ordinal/Incompleteness.lean` § II, the examples after `snap_unconditional`).
+   Proof partially in Lean
    scope.
 
 Axiom footprint: `[propext, Classical.choice, Quot.sound]` throughout `Gentzen.lean`, measured.
@@ -44,8 +47,8 @@ Non-constructibility appears across the layers tabulated below. The axiom footpr
 uniform — the ZPJ/K row names a witness on each side, `AFAStructure.bot_self_mem` measuring no
 axioms and `botCode` carrying them — and ZP-K § IV tabulates the measured footprints.
 Whether any of that dependence is necessary (forced by ZP geometry rather than incidental)
-is the open Classical.choice inversion conjecture (cf. ZPM §II): #print axioms shows dependence,
-not necessity.
+is the open Classical.choice inversion conjecture (ZeroParadox/Ordinal/SyntacticCollapse.lean): #print axioms shows
+dependence, not necessity.
 
 | Layer | Formal Language | Expression of non-constructibility |
 |-------|----------------|--------------------------------------|
