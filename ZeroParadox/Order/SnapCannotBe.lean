@@ -68,6 +68,30 @@ example : let S : ℕ → ℕ := fun n => if n = 0 then 0 else 2
       ¬ (S 0 ⋖ S 1) :=
   ⟨rfl, by decide, ⟨1, Nat.lt_succ_self 0, fun c h1 h2 => by omega⟩,
     fun h => h.2 (c := 1) (by decide) (by decide)⟩
+#check @ZeroParadox.t_snap_given_cover               -- Statement: `t_snap_given` with the cover as a third hypothesis `hcov`, in ZP-A's induced order (`zpSemilatticeSup`); concludes `bot ⋖ S 1`. The run above meets every binder but `hcov`
+-- `Statement:` the run above, in that order: 2 does not cover 0. The order is passed with `@`, since
+-- a `letI` loses to ℕ's own `<`.
+example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
+  h.2 (c := 1) ⟨show ZeroParadox.ZPSemilattice.join 0 1 = 1 by decide,
+      show ¬ ZeroParadox.ZPSemilattice.join 1 0 = 0 by decide⟩
+    ⟨show ZeroParadox.ZPSemilattice.join 1 2 = 2 by decide,
+      show ¬ ZeroParadox.ZPSemilattice.join 2 1 = 1 by decide⟩
+-- `Statement:` on `Set Bool` (join `∪`, ⊥ = ∅) `∅` has two distinct covers in that order, so `hcov`
+-- does not fix the target; on a linear order `axb1_gives_unique_target` does.
+example : letI : ZeroParadox.ZPSemilattice (Set Bool) :=
+      ⟨(· ∪ ·), ∅, Set.union_assoc, Set.union_comm, Set.union_self, Set.empty_union⟩
+    @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {true} ∧
+      @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {false} ∧
+      ({true} : Set Bool) ≠ {false} := by
+  letI : ZeroParadox.ZPSemilattice (Set Bool) :=
+    ⟨(· ∪ ·), ∅, Set.union_assoc, Set.union_comm, Set.union_self, Set.empty_union⟩
+  have key : ∀ a b : Set Bool,
+      @LT.lt (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT a b ↔ a ⊂ b := fun _ _ =>
+    and_congr Set.union_eq_right (not_congr Set.union_eq_right)
+  have cov : ∀ b : Bool, @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {b} :=
+    fun b => ⟨(key _ _).2 (Set.empty_covBy_singleton b).1,
+      fun _ h1 h2 => (Set.empty_covBy_singleton b).2 ((key _ _).1 h1) ((key _ _).1 h2)⟩
+  exact ⟨cov true, cov false, fun h => absurd (h ▸ Set.mem_singleton true) (by simp)⟩
 -- `Statement:` a two-state carrier does supply it: if every state is ⊥ or `a`, a step off ⊥ lands on `a`
 -- and every state is `S 0` or `S 1`. `MachinePhase` is such a carrier, with `a = c₁`.
 example {L : Type*} [ZeroParadox.ZPSemilattice L] (a : L)
