@@ -112,6 +112,11 @@ EXECUTED = []
 # judged — see `reconcile`'s independent quarantine re-test (R4-2).
 REFS_SEEN = []
 
+# The exact (local_ref, local_sha, remote_ref, remote_sha) tuples git fed THIS process on stdin —
+# the advisory-skip receipt's match key. Recorded beside `REFS_SEEN`, where the line is parsed, so
+# the key can only ever come from git's own stdin (ticket fence 1), never from a caller's claim.
+REF_TUPLES = []
+
 
 def py(script, *args):
     # ⚠ No recording here — `run()` records, and only after the child actually returns (R3-1).
@@ -127,7 +132,7 @@ def _found(expect):
     return None
 
 
-def reconcile(phase, expected, refs=()):
+def reconcile(phase, expected, refs=(), skipped=None):
     """Block unless every advertised check LAUNCHED and its exit code was ACCEPTABLE.
 
     `expected` is [(label, argv_prefix_or_None, ok_codes)]. `ok_codes` of None tolerates any code
@@ -168,6 +173,35 @@ def reconcile(phase, expected, refs=()):
     #   first and an observer of a deleted branch sees nothing.
     # Both shapes `parse_refs` refuses: a quarantined LOCAL branch, and any REMOTE ref under
     # a `private/` path. Matching one and not the other would re-open half the hole.
+    # ⚠⚠ FENCE 3 (`R-NOCONV`): THE GUARD ASSERTING WHAT STILL BLOCKS LANDS WITH THE SKIP. Printed on
+    #   EVERY push run, matched or not, so a skip can never be the reason a BLOCK row went quiet:
+    #   every BLOCK row named here must have launched, and no skipped label may be a BLOCK row of
+    #   EITHER manifest. `skipped is None` is the commit phase, which has no skip at all.
+    if skipped is not None:
+        _block = [label for label, argv, ok in expected
+                  if argv and ok is not None and 1 not in ok]
+        _launched = [label for label in _block if label not in missing]
+        print("  BLOCK rows launched: %d of %d; advisory leg(s) skipped: %s"
+              % (len(_launched), len(_block), ", ".join(skipped) or "none"))
+        if skipped:
+            _never = {label for label, argv, ok in expected
+                      if not argv or (ok is not None and 1 not in ok)}
+            _brows = _batch_rows()
+            if _brows is None:
+                print("%s BLOCKED — a leg was skipped and batch.py's manifest, which it must be "
+                      "checked against, could not be read." % phase.upper())
+                return 1
+            _never |= {label for label, mode, _e in _brows if mode != "WARN"}
+            _known = {label for label, _a, _o in expected} | {label for label, _m, _e in _brows}
+            _bad_skip = sorted(set(skipped) & _never) + sorted(set(skipped) - _known)
+            if _bad_skip:
+                print("")
+                print("%s BLOCKED — a skipped leg is a BLOCK row, or names no row at all: %s"
+                      % (phase.upper(), ", ".join(_bad_skip)))
+                print("Only a derivably ADVISORY leg may ever be skipped. This is the second of two")
+                print("checks on that property (batch.py refuses first); reaching it is a defect.")
+                return 1
+
     leaked = sorted({r for r in refs
                      if r.startswith("refs/heads/private/") or "/private/" in r})
     if leaked:
@@ -223,6 +257,360 @@ def git_out(*args):
         return r.returncode, (r.stdout or "")
     except OSError:
         return 1, ""
+
+
+# ------------------------------------------------------------------ advisory skip
+#
+# ⭐ TIM'S RULING, 2026-09-30 (ticket `tooling-prepush-pipeline-rerun-necessity`): *"advisory legs
+# only; blocking legs and scope derivation from git's stdin refs stay untouched (fences 1 and 2);
+# the skip must be control-tested (a mutation that should turn the hook red still does)."*
+# Receipts are SINGLE-USE and expire after 24h.
+#
+# WHAT IT IS: `preflight()` runs this hook to green and `push()` then runs it again on the same
+# HEAD and refs. The second run may skip ONLY the legs `advisory_skip_set()` derives as advisory —
+# WARN mode AND an emitter that records no gating step. Today that is `agent gate`, the leg that
+# makes paid model calls. Every BLOCK leg, the routing probe included, runs on every push.
+#
+# ⛔ WHAT IT IS NOT: a ledger lookup standing in for a check (fence 2), or trust in a caller's
+# claim about scope (fence 1). The match key is the tuple set THIS process read from git's stdin,
+# plus a digest of `tools/verify/**` and the HEAD tree; `GITROBOT_RUN_ID` / `GITROBOT_OP` are
+# PROVENANCE printed on the SKIPPED line and are never part of the key, because anyone can set an
+# environment variable.
+#
+# ⚠ THE RECEIPT LIVES IN THE GIT COMMON DIRECTORY, beside the installed hooks. `.claude-local` is
+# its own repository whose documented flow is bulk staging, so a state file there would be
+# committed and pushed; nothing under the common dir is tracked by either repository.
+
+RECEIPT_NAME = "zp_prepush_green.json"
+RECEIPT_SCHEMA = "zp.prepush_green.v1"
+RECEIPT_MAX_AGE = 24 * 3600
+ENV_RUN_ID = "GITROBOT_RUN_ID"
+ENV_OP = "GITROBOT_OP"
+
+# `R-ZERONULL`: one VALUE per state, and only MATCHED skips anything. "No receipt" and "could not
+# read the receipt" are different answers and must not share a value with each other or with a match.
+MATCHED = "MATCHED"
+NO_RECEIPT = "NO_RECEIPT"
+UNREADABLE = "UNREADABLE"
+NOT_TERMINAL = "NOT_TERMINAL"
+CONSUMED = "CONSUMED"
+STALE = "STALE"
+MISMATCH = "MISMATCH"
+UNKEYABLE = "UNKEYABLE"
+UNCONSUMABLE = "UNCONSUMABLE"
+
+_RECEIPT_PATH_OVERRIDE = None     # controls only; production resolves the common dir
+
+
+def _now():
+    import datetime
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
+def receipt_path():
+    """Absolute path of the receipt, or None when the git common directory cannot be resolved."""
+    if _RECEIPT_PATH_OVERRIDE:
+        return _RECEIPT_PATH_OVERRIDE
+    rc, out = git_out("rev-parse", "--git-common-dir")
+    if rc != 0 or not out.strip():
+        return None
+    d = out.strip()
+    if not os.path.isabs(d):
+        d = os.path.join(REPO, d)
+    return os.path.join(d, RECEIPT_NAME)
+
+
+def tools_digest():
+    """sha256 over (path, sha256 of on-disk bytes) for every TRACKED file under tools/verify, or None.
+
+    On-disk bytes because those are what ran. A tracked file missing from disk hashes as ABSENT
+    rather than being dropped, so deleting a checker moves the digest."""
+    import hashlib
+    rc, out = git_out("ls-files", "-z", "--", "tools/verify")
+    if rc != 0:
+        return None
+    paths = sorted(p for p in out.split("\0") if p)
+    if not paths:
+        return None
+    h = hashlib.sha256()
+    for rel in paths:
+        try:
+            with open(os.path.join(REPO, rel), "rb") as fh:
+                inner = hashlib.sha256(fh.read()).hexdigest()
+        except OSError:
+            inner = "ABSENT"
+        h.update(("%s\0%s\n" % (rel, inner)).encode("utf-8"))
+    return h.hexdigest()
+
+
+def head_tree():
+    rc, out = git_out("rev-parse", "HEAD^{tree}")
+    return out.strip() if rc == 0 and out.strip() else None
+
+
+def push_key(ref_tuples):
+    """(key, None) or (None, why). The key is everything a receipt must equal to be used."""
+    refs = sorted(tuple(t) for t in ref_tuples)
+    if not refs:
+        return None, "no ref lines on stdin, so there is nothing to key a receipt on"
+    digest = tools_digest()
+    if not digest:
+        return None, "the tools/verify digest could not be computed"
+    tree = head_tree()
+    if not tree:
+        return None, "HEAD's tree could not be resolved"
+    return {"refs": [list(r) for r in refs], "tools_verify_digest": digest,
+            "head_tree": tree}, None
+
+
+def _provenance():
+    return os.environ.get(ENV_RUN_ID) or None, os.environ.get(ENV_OP) or None
+
+
+def _write_json_atomic(path, obj):
+    import json
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(obj, fh, indent=2, sort_keys=True)
+        fh.write("\n")
+    os.replace(tmp, path)
+
+
+def consult_receipt(key):
+    """(status, receipt or None, why). Consumes the receipt on MATCHED — single-use.
+
+    Every branch that is not a full match returns a status other than MATCHED, and the caller
+    skips nothing on any of them: no receipt, unreadable, not a terminal pass, already consumed,
+    older than 24h or dated in the future, any component of the key unequal."""
+    import datetime
+    import json
+    if key is None:
+        return UNKEYABLE, None, "this run could not establish its own match key"
+    path = receipt_path()
+    if path is None:
+        return UNREADABLE, None, "the git common directory could not be resolved"
+    if not os.path.exists(path):
+        return NO_RECEIPT, None, "no green receipt on disk"
+    try:
+        with open(path, encoding="utf-8") as fh:
+            rec = json.load(fh)
+    except (OSError, ValueError) as e:
+        return UNREADABLE, None, "receipt is not valid JSON or could not be read (%s)" % (e,)
+    if not isinstance(rec, dict) or rec.get("schema") != RECEIPT_SCHEMA:
+        return UNREADABLE, None, "receipt has no %s schema marker" % RECEIPT_SCHEMA
+    if rec.get("terminal") != "PASS" or rec.get("skipped") != []:
+        return NOT_TERMINAL, rec, ("receipt is not from a fully-green run that skipped nothing "
+                                   "(terminal=%r, skipped=%r)" % (rec.get("terminal"),
+                                                                  rec.get("skipped")))
+    if rec.get("consumed_at"):
+        return CONSUMED, rec, "receipt was already used at %sZ" % rec.get("consumed_at")
+    try:
+        ts = datetime.datetime.strptime(rec.get("ts_utc") or "", "%Y-%m-%dT%H:%M:%S").replace(
+            tzinfo=datetime.timezone.utc)
+    except (TypeError, ValueError):
+        return UNREADABLE, rec, "receipt timestamp %r is not parseable" % (rec.get("ts_utc"),)
+    age = (_now() - ts).total_seconds()
+    if age < 0 or age > RECEIPT_MAX_AGE:
+        return STALE, rec, "receipt is %ds old; the window is 0..%ds" % (age, RECEIPT_MAX_AGE)
+    for part in ("refs", "tools_verify_digest", "head_tree"):
+        if rec.get(part) != key[part]:
+            return MISMATCH, rec, "receipt %s differs from this push's" % part
+    run_id, op = _provenance()
+    rec["consumed_at"] = _now().strftime("%Y-%m-%dT%H:%M:%S")
+    rec["consumed_by"] = {"gitrobot_run_id": run_id, "gitrobot_op": op}
+    try:
+        _write_json_atomic(path, rec)
+    except OSError as e:
+        return UNCONSUMABLE, rec, "receipt matched but could not be marked used (%s)" % (e,)
+    return MATCHED, rec, "matched"
+
+
+def write_green_receipt(key, skipped):
+    """Write the receipt for THIS run. Only a run that exited 0 AND skipped nothing gets here with
+    effect, so a skipped run can never mint the receipt the next run would skip on."""
+    if skipped:
+        print("  green receipt NOT written: this run skipped %s, and skips must not chain."
+              % ", ".join(skipped))
+        return False
+    if key is None:
+        print("  green receipt NOT written: this run had no match key.")
+        return False
+    end_key, why = push_key([tuple(r) for r in key["refs"]])
+    if end_key != key:
+        print("  green receipt NOT written: %s" % (why or "tools/verify or HEAD moved during the run"))
+        return False
+    path = receipt_path()
+    if path is None:
+        print("  green receipt NOT written: the git common directory could not be resolved.")
+        return False
+    run_id, op = _provenance()
+    rec = dict(key)
+    rec.update({"schema": RECEIPT_SCHEMA, "terminal": "PASS", "skipped": [],
+                "ts_utc": _now().strftime("%Y-%m-%dT%H:%M:%S"),
+                "gitrobot_run_id": run_id, "gitrobot_op": op})
+    try:
+        _write_json_atomic(path, rec)
+    except OSError as e:
+        print("  green receipt NOT written: %s" % (e,))
+        return False
+    print("  green receipt written (%s, run %s): single-use, valid 24h, for these exact refs."
+          % (RECEIPT_NAME, run_id or "no gitRobot provenance"))
+    return True
+
+
+def _emitter_of(argv):
+    """Repo-relative module a push row's child records from, or None for an inline row."""
+    if not argv:
+        return None
+    if os.path.exists(os.path.join(HERE, argv[0])):
+        return "tools/verify/%s" % argv[0]
+    if os.path.exists(os.path.join(REPO, "scripts", argv[0])):
+        return "scripts/%s" % argv[0]
+    return None
+
+
+def _hook_rows():
+    """(label, derived mode, emitter) for every row of THIS hook's push manifest."""
+    argv = {label: a for label, a, _ok in PRE_PUSH_EXPECT}
+    return [(label, mode, _emitter_of(argv.get(label)))
+            for label, mode, _desc in _bind_push_modes(PRE_PUSH_PLAN, PRE_PUSH_EXPECT)]
+
+
+REGISTRY = os.path.join(HERE, "required.v2.json")
+BATCH_SRC = os.path.join(HERE, "batch.py")
+
+
+def _registry_types(path=None):
+    """The registry's `types` mapping, or None if it cannot be read."""
+    import json
+    try:
+        with open(path or REGISTRY, encoding="utf-8") as fh:
+            types = json.load(fh)["types"]
+        return types if isinstance(types, dict) else None
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
+def gating_emitters(path=None):
+    """Repo-relative modules that emit a record for a step that GATES some action, or None.
+
+    A step gates unless the registry declares `actions: []` EXPLICITLY. An ABSENT `actions` key
+    means the registry `default`, `REQUIRED_FOR_ALL_ACTIONS` — `claim_review` is the live instance,
+    emitted by `check_frozen.py` with no `actions` key and admitted at push. Reading absence as
+    "gates nothing" would make `check_frozen` skippable and starve `claim_review`.
+
+    ⚠ `R-ZERONULL`: `None` (could not read the registry) is DISTINCT from an empty set (read it,
+    nothing gates). Every consumer treats `None` as "nothing is skippable"."""
+    types = _registry_types(path)
+    if types is None:
+        return None
+    out = set()
+    for _name, spec in types.items():
+        if not isinstance(spec, dict) or not spec.get("module"):
+            continue
+        if "actions" not in spec or spec["actions"]:
+            out.add(spec["module"])
+    return out
+
+
+def _batch_rows(src_path=None, types=None):
+    """(label, mode, emitter) for every row of `batch.py prepush`'s manifest, or None.
+
+    READ FROM THE SOURCE, not imported and not copied: the rows are the literal list passed to
+    `report.plan(...)` inside `cmd_prepush`, which is exactly the manifest that command prints.
+    `batch.py` is a PINNED producer (`decls`, `pdf_coupling`), and the ledger reads the pin from
+    the main checkout's registry, so this change could not edit it from a worktree — measured: the
+    commit was refused by V16c naming the unapproved blob. Reading its manifest needs no edit.
+
+    The EMITTER of a row is the registry step whose name is the label with spaces as underscores
+    when that step declares a `module` (`agent gate` -> `agent_gate` -> `tools/verify/agent_gate.py`);
+    otherwise the row is computed inside `batch.py` and its emitter is `batch.py`, which records
+    the gating `decls` and `pdf_coupling` — so no such row can ever be skippable."""
+    import ast
+    try:
+        with open(src_path or BATCH_SRC, encoding="utf-8") as fh:
+            tree = ast.parse(fh.read())
+    except (OSError, SyntaxError, ValueError):
+        return None
+    types = _registry_types() if types is None else types
+    if types is None:
+        return None
+    plans = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef) and node.name == "cmd_prepush":
+            for sub in ast.walk(node):
+                if (isinstance(sub, ast.Call) and isinstance(sub.func, ast.Attribute)
+                        and sub.func.attr == "plan" and sub.args):
+                    try:
+                        plans.append(ast.literal_eval(sub.args[0]))
+                    except (ValueError, TypeError, SyntaxError):
+                        return None
+    if len(plans) != 1:
+        return None                     # zero or two manifests: refuse to guess which one ran
+    rows = []
+    for row in plans[0]:
+        if not (isinstance(row, tuple) and len(row) == 3):
+            return None
+        label, mode, _desc = row
+        spec = types.get(label.replace(" ", "_"))
+        emitter = spec.get("module") if isinstance(spec, dict) else None
+        rows.append((label, mode, emitter or "tools/verify/batch.py"))
+    return rows
+
+
+def advisory_skippable(rows, gating=False):
+    """The labels in `rows` [(label, mode, emitter)] whose mode is exactly WARN AND whose emitter
+    records no gating step. `None` in, or an unreadable registry, gives `None` — never an empty
+    set a caller could not tell from "read it, nothing qualifies"."""
+    if gating is False:
+        gating = gating_emitters()
+    if gating is None or rows is None:
+        return None
+    return frozenset(label for label, mode, emitter in rows
+                     if mode == "WARN" and emitter and emitter not in gating)
+
+
+# How each skippable leg is actually switched off in the `batch.py prepush` child. `agent_gate.py`
+# already reads `ZP_AGENT_GATE` at import and prints `skip` when it is not "1" (an opt-out that
+# predates this change), so the skip needs no edit to the pinned `batch.py`. A derivably advisory
+# leg with NO entry here is simply not skipped: it runs, and the hook says so.
+SKIP_SWITCHES = {"agent gate": ("ZP_AGENT_GATE", "0")}
+
+
+def advisory_skip_set():
+    """THE ONE SET of legs a matched green receipt may skip, or None when it cannot be derived.
+
+    DERIVED, never listed: `advisory_skippable` over this hook's manifest (modes derived by
+    `_bind_push_modes` from the same `ok_codes` `reconcile` enforces) and over `batch.py`'s
+    manifest, against the registry's gating emitters. `check_frozen` is WARN here and is excluded
+    because its module also emits `claim_review`, which gates."""
+    try:
+        hook = advisory_skippable(_hook_rows())
+        bat = advisory_skippable(_batch_rows())
+    except Exception as e:                                  # noqa: BLE001 — nothing skips on error
+        print("  advisory skip: derivation errored (%r); nothing is skippable." % (e,))
+        return None
+    if hook is None or bat is None:
+        return None
+    return hook | bat
+
+
+def skip_set_violations(skippable):
+    """Every way `skippable` breaks the invariant: a BLOCK row, or a gating emitter, in it."""
+    gating = gating_emitters()
+    rows = _batch_rows()
+    if gating is None or rows is None:
+        return ["the registry or batch.py's manifest is unreadable; the invariant cannot be checked"]
+    out = []
+    rows = _hook_rows() + rows
+    for label, mode, emitter in rows:
+        if label not in (skippable or ()):
+            continue
+        if mode != "WARN":
+            out.append("%s is a %s row" % (label, mode))
+        if emitter in gating or not emitter:
+            out.append("%s's emitter %s records a gating step (or is unknown)" % (label, emitter))
+    return out
 
 
 # ------------------------------------------------------------------ pre-commit
@@ -312,6 +700,9 @@ PRE_COMMIT_PLAN = [(label, _mode(ok), desc) for label, _argv, ok, desc in PRE_CO
 PRE_PUSH_PLAN = [
     ("hooks armed", "BLOCK", "the installed hooks match their tracked sources"),
     ("quarantine", "BLOCK", "private/* branches never reach a remote"),
+    ("advisory-skip controls", "BLOCK", "the green-receipt match that may skip an ADVISORY leg is "
+                                        "run against a mutant per control, in a child, before any "
+                                        "receipt is read; its own output prints the count"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
     ("routing control", "BLOCK", "the behavioural mutation probe: 17 mutations of the routing and "
                                  "enforcement routes, each required to turn its named ROW red or to "
@@ -419,6 +810,7 @@ PRE_PUSH_EXPECT = [
     #   from `REFS_SEEN`. R4-2 measured the hole: delete the inline branch and a `private/*` ref
     #   pushed green while the manifest printed this row's name.
     ("quarantine", None, None),
+    ("advisory-skip controls", ("hooks.py", "selftest"), (0,)),
     ("guards", ("guards.py", "--record"), (0,)),
     ("routing control", ("probe_routing_behavioural.py",), (0,)),
     # ⚠ 3 = scope skipped for want of a built .lake, tolerated at both phases (RLY27-7).
@@ -550,6 +942,7 @@ def parse_refs(stream):
         #   second check on the same property survives that branch being deleted (R4-2).
         REFS_SEEN.append(local_ref)
         REFS_SEEN.append(remote_ref)
+        REF_TUPLES.append((local_ref, local_sha, remote_ref, remote_sha))
         if local_ref.startswith("refs/heads/private/"):
             quarantined.append("BLOCKED: '%s' is a quarantined branch — never push it." % local_ref)
         if "/private/" in remote_ref:
@@ -595,6 +988,49 @@ def pre_push(stream):
         ("not run", "lake build — CI at the PR owns build state (stub-first pushes stubs)"),
     ])
     report.plan(_bind_push_modes(PRE_PUSH_PLAN, PRE_PUSH_EXPECT))
+
+    # ⚠⚠ THE SKIP'S OWN CONTROLS RUN FIRST, IN A CHILD, BEFORE ANY RECEIPT IS READ. A child, so no
+    #   control's stubbing can leak into this process; first, so a skip is never decided by
+    #   machinery whose controls did not pass on this very run.
+    print("\n=== Advisory-skip controls ===")
+    if py("hooks.py", "selftest") != 0:
+        print("\nPush blocked: the advisory-skip controls did not behave as required.")
+        print("Each FAIL row above names the control and the mutant it had to catch. Fix the")
+        print("cause; never skip the controls to get the skip.")
+        return 1
+
+    # The decision. Scope is NOT touched by any of this: `ranges` above came from git's stdin and
+    # every BLOCK leg below runs whatever the receipt says. Only the derived advisory set can shrink.
+    skip = []
+    skippable = advisory_skip_set()
+    key, _why = push_key(REF_TUPLES)
+    if not skippable:
+        print("  advisory skip: none — %s; every leg runs."
+              % ("the skippable set could not be derived" if skippable is None
+                 else "no leg is derivably advisory"))
+    else:
+        status, rec, detail = consult_receipt(key)
+        if status == MATCHED:
+            _batch_labels = {label for label, _m, _e in (_batch_rows() or [])}
+            skip = sorted(skippable & _batch_labels & set(SKIP_SWITCHES))
+            for leg in sorted(skippable - set(skip)):
+                print("  advisory skip: %s is derivably advisory but has no skip switch; it RUNS."
+                      % leg)
+            _refs = "; ".join("%s@%s -> %s@%s" % (lr, ls[:12], rr, rs[:12])
+                              for lr, ls, rr, rs in rec.get("refs", []))
+            for leg in skip:
+                print("SKIPPED %s: matched green run %s at %sZ, refs %s"
+                      % (leg, rec.get("gitrobot_run_id") or "no gitRobot provenance",
+                         rec.get("ts_utc"), _refs))
+        else:
+            print("  advisory skip: none — %s: %s; every leg runs."
+                  % (status, detail if key is not None else _why))
+    # ⚠ An opt-out exported by the CALLER predates this change and is not this skip; say so, so a
+    #   "nothing skipped" line is never read over an agent gate that will not run anyway.
+    for leg, (var, val) in sorted(SKIP_SWITCHES.items()):
+        if leg not in skip and os.environ.get(var, "1") == val:
+            print("  note: %s=%s was inherited from the caller, so `%s` will not run — a "
+                  "pre-existing opt-out, not a receipt match." % (var, val, leg))
 
     # ⚠ `gatelock` RETIRED 2026-08-23 — deliberately, not dropped. It froze reviewed paths with the
     # read-only bit while a gate round ran. Three reasons it went: the worktree rule makes the
@@ -827,7 +1263,21 @@ def pre_push(stream):
     # Routing + review signals, computed from the RANGES BEING PUSHED. This is the one call that
     # `batch.py` could not make correctly on its own (REL-1): it had only the working tree, which
     # is empty post-commit, so coverage was vacuous exactly at push time.
-    rc = py("batch.py", "prepush", "--ranges", ",".join(ranges))
+    # ⚠ The skip reaches the child ONLY as the leg's own switch, set for this one launch and put back
+    #   afterwards; the argv is unchanged, so `reconcile`'s expectation for this row is unchanged.
+    _saved_switch = {}
+    for leg in skip:
+        var, val = SKIP_SWITCHES[leg]
+        _saved_switch[var] = os.environ.get(var)
+        os.environ[var] = val
+    try:
+        rc = py("batch.py", "prepush", "--ranges", ",".join(ranges))
+    finally:
+        for var, old in _saved_switch.items():
+            if old is None:
+                os.environ.pop(var, None)
+            else:
+                os.environ[var] = old
     if rc != 0:
         print("\nPush blocked: the pre-push pipeline reported a failure above.")
         # ⚠⚠ EXACTLY ONE LEG HAS A HUMAN-ACCEPT ROUTE, AND NAMING MORE WOULD BE THE DEFECT THIS
@@ -855,15 +1305,365 @@ def pre_push(stream):
     # here, so a short run is a REPORTED failure, not a silent one; reconciling early would report
     # rows "missing" that were simply never reached. What this catches is the dangerous case: a
     # green run whose manifest advertised a check that no longer launches.
-    if reconcile("push", PRE_PUSH_EXPECT, refs=REFS_SEEN):
+    if reconcile("push", PRE_PUSH_EXPECT, refs=REFS_SEEN, skipped=skip):
         return 1
 
+    if scan_exit == 0:
+        write_green_receipt(key, skip)
     return scan_exit
+
+
+# ------------------------------------------------------------------ advisory-skip controls
+#
+# ⚠⚠ EACH CONTROL IS RUN TWICE: against THIS module, where it must PASS, and against a MUTANT of
+# this file's (or batch.py's) source with the one protection it exists for removed, where it must
+# FAIL. A control that also passes on its mutant cannot fail, which is a check in name only. A
+# mutant whose anchor is missing is reported `MUTATION DID NOT APPLY` and fails the suite — fail
+# CLOSED, so a refactor that slides an anchor blocks the push instead of retiring the control
+# silently (the `probe_routing_behavioural.py` precedent).
+#
+# Simulated runs drive `pre_push` in-process with every child process stubbed: `run` records the
+# launch and returns a scripted exit code, `tools_digest` / `head_tree` return fixed values, and the
+# receipt lives in a temporary directory outside the repository. Nothing here launches a checker,
+# touches the real receipt, or writes into the tree.
+
+_CONTROLS_MARK = "# " + "-" * 66 + " advisory-skip controls"
+_SHA_A = "a" * 40
+_SHA_B = "b" * 40
+_REFS = "refs/heads/illustrated %s refs/heads/illustrated %s\n" % (_SHA_A, _SHA_B)
+_DIGEST = "d" * 64
+_TREE = "e" * 40
+
+
+def _ts(seconds_ago):
+    import datetime
+    return (_now() - datetime.timedelta(seconds=seconds_ago)).strftime("%Y-%m-%dT%H:%M:%S")
+
+
+def _good_receipt(**over):
+    rec = {"schema": RECEIPT_SCHEMA, "terminal": "PASS", "skipped": [],
+           "refs": [["refs/heads/illustrated", _SHA_A, "refs/heads/illustrated", _SHA_B]],
+           "tools_verify_digest": _DIGEST, "head_tree": _TREE, "ts_utc": _ts(600),
+           "gitrobot_run_id": "ctl-preflight-1", "gitrobot_op": "preflight"}
+    rec.update(over)
+    return rec
+
+
+def _simulate(m, stdin=_REFS, receipt=None, raw=None, env=None, red=(), digest=_DIGEST,
+              keep_dir=None):
+    """Run `m.pre_push` with every child stubbed. Returns a dict describing what happened."""
+    import io as _io
+    import json
+    import shutil
+    import tempfile
+    tmp = keep_dir or tempfile.mkdtemp(prefix="zp_hooks_ctl_")
+    path = os.path.join(tmp, m.RECEIPT_NAME)
+    if receipt is not None:
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(receipt, fh)
+    if raw is not None:
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(raw)
+    names = ("run", "tools_digest", "head_tree", "git_out", "_RECEIPT_PATH_OVERRIDE")
+    saved = {n: getattr(m, n) for n in names}
+    switch_vars = sorted({var for var, _val in SKIP_SWITCHES.values()})
+    env_keys = (ENV_RUN_ID, ENV_OP, "ZPLEDGER_BASIS", "ZPLEDGER_RUN") + tuple(switch_vars)
+    saved_env = {k: os.environ.get(k) for k in env_keys}
+    launched, child_env = [], {}
+
+    def fake_run(*cmd):
+        inv = m._invocation(cmd)
+        rc = 1 if any(tuple(inv[:len(r)]) == tuple(r) for r in red) else 0
+        launched.append(inv)
+        if tuple(inv[:2]) == ("batch.py", "prepush"):
+            # What the CHILD would have seen: the switch values at the moment of launch.
+            child_env.update({v: os.environ.get(v) for v in switch_vars})
+        m.EXECUTED.append((inv, rc))
+        return rc
+
+    m.run = fake_run
+    m.tools_digest = lambda: digest
+    m.head_tree = lambda: _TREE
+    m.git_out = lambda *a: (0, "illustrated\n")
+    m._RECEIPT_PATH_OVERRIDE = path
+    for k in (ENV_RUN_ID, ENV_OP) + tuple(switch_vars):
+        os.environ.pop(k, None)
+    for k, v in (env or {}).items():
+        os.environ[k] = v
+    del m.EXECUTED[:], m.REFS_SEEN[:], m.REF_TUPLES[:]
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        rc = m.pre_push(_io.StringIO(stdin))
+        post_env = {v: os.environ.get(v) for v in switch_vars}
+    finally:
+        sys.stdout = real
+        for n, v in saved.items():
+            setattr(m, n, v)
+        for k, v in saved_env.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+        del m.EXECUTED[:], m.REFS_SEEN[:], m.REF_TUPLES[:]
+    after = None
+    if os.path.exists(path):
+        try:
+            with open(path, encoding="utf-8") as fh:
+                after = json.load(fh)
+        except (OSError, ValueError):
+            after = "unreadable"
+    if keep_dir is None:
+        shutil.rmtree(tmp, ignore_errors=True)
+    skipped = sorted(leg for leg, (var, val) in SKIP_SWITCHES.items()
+                     if child_env.get(var) == val)
+    # A switch still set in THIS process after `pre_push` returned would leak into anything it
+    # launches later; every switch was cleared before the run, so any value here is a leak.
+    leaked = sorted(v for v in switch_vars if post_env.get(v) is not None)
+    return {"rc": rc, "out": buf.getvalue(), "skipped": skipped, "after": after,
+            "launched": launched, "leaked": leaked}
+
+
+_POV_RED = (("check_pov.py",),)
+_BATCH_RED = (("batch.py", "prepush"),)
+
+
+def _ctl_positive(m):
+    r = _simulate(m, receipt=_good_receipt())
+    ok = (r["rc"] == 0 and r["skipped"] == ["agent gate"] and not r["leaked"]
+          and "SKIPPED agent gate: matched green run ctl-preflight-1" in r["out"])
+    return ok, "rc=%s skipped=%s switch leaked past the launch=%s" % (
+        r["rc"], r["skipped"], r["leaked"] or "no")
+
+
+def _ctl_switch_restored(m):
+    r = _simulate(m, receipt=_good_receipt())
+    ok = r["skipped"] == ["agent gate"] and not r["leaked"]
+    return ok, "skipped=%s; switch still set after the batch launch: %s" % (
+        r["skipped"], r["leaked"] or "none")
+
+
+def _ctl_a_block_red(m):
+    r1 = _simulate(m, receipt=_good_receipt(), red=_POV_RED)
+    r2 = _simulate(m, receipt=_good_receipt(), red=_BATCH_RED)
+    matched = "SKIPPED agent gate" in r1["out"] and "SKIPPED agent gate" in r2["out"]
+    ok = matched and r1["rc"] != 0 and r2["rc"] != 0
+    return ok, "receipt matched=%s; check_pov red -> rc=%s; batch prepush red -> rc=%s" % (
+        matched, r1["rc"], r2["rc"])
+
+
+def _ctl_b_sha_changed(m):
+    stdin = _REFS.replace(_SHA_A, "c" * 40)
+    if stdin == _REFS:
+        return False, "input mutation did not apply"
+    r = _simulate(m, stdin=stdin, receipt=_good_receipt())
+    return r["skipped"] == [] and r["rc"] == 0, "one local sha changed -> skipped=%s" % r["skipped"]
+
+
+def _ctl_c_env_no_receipt(m):
+    r = _simulate(m, env={ENV_RUN_ID: "forged-run", ENV_OP: "push"})
+    ok = r["skipped"] == [] and "NO_RECEIPT" in r["out"]
+    return ok, "GITROBOT_RUN_ID set by hand, no receipt -> skipped=%s" % r["skipped"]
+
+
+def _ctl_d_skipping_receipt(m):
+    r1 = _simulate(m, receipt=_good_receipt(skipped=["agent gate"]))
+    # And the writer half: a run that skipped must not leave a fresh, usable receipt behind.
+    r2 = _simulate(m, receipt=_good_receipt())
+    after = r2["after"] if isinstance(r2["after"], dict) else {}
+    chained = bool(after) and not after.get("consumed_at")
+    ok = r1["skipped"] == [] and r2["skipped"] == ["agent gate"] and not chained
+    return ok, ("receipt marked skipped -> skipped=%s; after a skipping run the receipt is %s"
+                % (r1["skipped"], "FRESH (chains!)" if chained else "consumed"))
+
+
+def _ctl_e_digest(m):
+    r = _simulate(m, receipt=_good_receipt(), digest="f" * 64)
+    return r["skipped"] == [], "tools/verify digest moved -> skipped=%s" % r["skipped"]
+
+
+def _ctl_f_single_use(m):
+    import tempfile
+    import shutil
+    d = tempfile.mkdtemp(prefix="zp_hooks_ctl_")
+    try:
+        r1 = _simulate(m, receipt=_good_receipt(), keep_dir=d)
+        r2 = _simulate(m, keep_dir=d)
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+    ok = r1["skipped"] == ["agent gate"] and r2["skipped"] == []
+    return ok, "first use skipped=%s; second use skipped=%s" % (r1["skipped"], r2["skipped"])
+
+
+def _ctl_g_stale(m):
+    r = _simulate(m, receipt=_good_receipt(ts_utc=_ts(25 * 3600)))
+    return r["skipped"] == [], "receipt 25h old -> skipped=%s" % r["skipped"]
+
+
+def _ctl_unreadable(m):
+    r = _simulate(m, raw="{ not json")
+    seen = [s for s in (UNREADABLE, NO_RECEIPT, MATCHED) if "none — %s:" % s in r["out"]]
+    ok = r["skipped"] == [] and seen == [UNREADABLE]
+    return ok, "garbage receipt -> skipped=%s, status reported %s (must be UNREADABLE, never " \
+               "NO_RECEIPT)" % (r["skipped"], seen or "none")
+
+
+def _ctl_writes(m):
+    r = _simulate(m, env={ENV_RUN_ID: "ctl-run-9", ENV_OP: "preflight"})
+    a = r["after"] if isinstance(r["after"], dict) else {}
+    ok = (r["rc"] == 0 and a.get("terminal") == "PASS" and a.get("skipped") == []
+          and a.get("gitrobot_run_id") == "ctl-run-9" and not a.get("consumed_at"))
+    return ok, "green unskipped run -> receipt terminal=%s run_id=%s" % (
+        a.get("terminal"), a.get("gitrobot_run_id"))
+
+
+def _ctl_reconcile(m):
+    import io as _io
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        rc = m.reconcile("push", [("guards", None, None)], skipped=["guards"])
+    finally:
+        sys.stdout = real
+    return rc == 1, "reconcile with a BLOCK row in the skipped list -> rc=%s" % rc
+
+
+def _ctl_invariant(m):
+    s = m.advisory_skip_set()
+    v = m.skip_set_violations(s) if s is not None else ["the set could not be derived"]
+    return not v, "derived set %s; violations: %s" % (sorted(s or ()), "; ".join(v) or "none")
+
+
+# ⚠ INDEPENDENTLY WRITTEN, NOT DERIVED: a control that re-derives its expectation from the producer
+# agrees by construction (`guards.py`'s own finding). If a legitimate change grows the set, this row
+# goes red and the literal is updated deliberately, in the same commit.
+_EXPECTED_SKIPPABLE = {"agent gate"}
+
+
+def _ctl_literal(m):
+    s = m.advisory_skip_set()
+    return s == _EXPECTED_SKIPPABLE, "derived %s, expected %s" % (
+        sorted(s or ()), sorted(_EXPECTED_SKIPPABLE))
+
+
+# (label, control, anchor, replacement). The replacement removes exactly the protection the
+# control exists for; the control must PASS on the real module and FAIL on the mutant.
+_CONTROLS = [
+    ("positive  a matching receipt skips agent gate", _ctl_positive,
+     "        os.environ[var] = val",
+     "        pass"),
+    ("switch    the skip does not outlive its launch", _ctl_switch_restored,
+     "        for var, old in _saved_switch.items():",
+     "        for var, old in []:"),
+    ("(a) BLOCK leg red under a matched receipt", _ctl_a_block_red,
+     "        if status == MATCHED:\n            _batch_labels =",
+     "        if status == MATCHED:\n            return 0\n            _batch_labels ="),
+    ("(b) one stdin sha changed", _ctl_b_sha_changed,
+     '        if rec.get(part) != key[part]:',
+     '        if part != "refs" and rec.get(part) != key[part]:'),
+    ("(c) GITROBOT_RUN_ID by hand, no receipt", _ctl_c_env_no_receipt,
+     "    path = receipt_path()\n    if path is None:\n        return UNREADABLE",
+     "    if os.environ.get(ENV_RUN_ID):\n        return MATCHED, {\"gitrobot_run_id\": "
+     "os.environ.get(ENV_RUN_ID), \"ts_utc\": \"env\", \"refs\": []}, \"env\"\n"
+     "    path = receipt_path()\n    if path is None:\n        return UNREADABLE"),
+    ("(d) a skipping run's receipt never qualifies", _ctl_d_skipping_receipt,
+     '    if rec.get("terminal") != "PASS" or rec.get("skipped") != []:',
+     '    if rec.get("terminal") != "PASS":'),
+    ("(e) tools/verify digest moved", _ctl_e_digest,
+     '    for part in ("refs", "tools_verify_digest", "head_tree"):',
+     '    for part in ("refs", "head_tree"):'),
+    ("(f) a consumed receipt does not match twice", _ctl_f_single_use,
+     '    if rec.get("consumed_at"):',
+     '    if False:'),
+    ("(g) a receipt older than 24h does not match", _ctl_g_stale,
+     "    if age < 0 or age > RECEIPT_MAX_AGE:",
+     "    if age < 0:"),
+    ("R-ZERONULL unreadable is not NO_RECEIPT", _ctl_unreadable,
+     '        return UNREADABLE, None, "receipt is not valid JSON',
+     '        return NO_RECEIPT, None, "receipt is not valid JSON'),
+    ("writer  a green unskipped run mints a receipt", _ctl_writes,
+     "    if scan_exit == 0:\n        write_green_receipt(key, skip)",
+     "    if False:\n        write_green_receipt(key, skip)"),
+    ("fence 3 reconcile refuses a skipped BLOCK row", _ctl_reconcile,
+     "            _bad_skip = sorted(set(skipped) & _never) + sorted(set(skipped) - _known)",
+     "            _bad_skip = []"),
+    ("invariant no BLOCK row in the set (mode)", _ctl_invariant,
+     '                     if mode == "WARN" and emitter and emitter not in gating)',
+     '                     if emitter and emitter not in gating)'),
+    ("invariant no gating emitter in the set", _ctl_invariant,
+     '                     if mode == "WARN" and emitter and emitter not in gating)',
+     '                     if mode == "WARN" and emitter)'),
+    ("literal  absent `actions` still gates", _ctl_literal,
+     '        if "actions" not in spec or spec["actions"]:',
+     '        if spec.get("actions"):'),
+    ("literal  a batch.py-computed row stays unskippable", _ctl_literal,
+     '        rows.append((label, mode, emitter or "tools/verify/batch.py"))',
+     '        rows.append((label, mode, emitter or "tools/verify/report.py"))'),
+]
+
+
+def _mutant(anchor, repl):
+    """(module, None) built from this file's source with ONE anchor replaced, or (None, why).
+
+    Asserts the text actually changed and that the mutant compiles; either failure is reported as
+    `MUTATION DID NOT APPLY`, which fails the suite rather than retiring the control."""
+    import types
+    src_path = os.path.abspath(__file__)
+    if src_path.endswith(".pyc"):
+        src_path = src_path[:-1]
+    with open(src_path, encoding="utf-8") as fh:
+        src = fh.read()
+    # ⚠ Anchors are searched ABOVE this controls section only: the table above quotes every anchor
+    #   as a literal, so a whole-file search would find each one twice and could mutate the quote.
+    head, sep, tail = src.partition(_CONTROLS_MARK)
+    if head.count(anchor) != 1:
+        return None, "MUTATION DID NOT APPLY — anchor found %d time(s)" % head.count(anchor)
+    mutated = head.replace(anchor, repl, 1) + sep + tail
+    if mutated == src:
+        return None, "MUTATION DID NOT APPLY — text unchanged"
+    try:
+        code = compile(mutated, src_path + ".mutant", "exec")
+    except SyntaxError as e:
+        return None, "MUTATION DID NOT APPLY — mutant does not compile: %s" % (e,)
+    mod = types.ModuleType("zp_hooks_mutant")
+    mod.__file__ = src_path
+    exec(code, mod.__dict__)
+    return mod, None
+
+
+def selftest():
+    """Every advisory-skip control, each seen to pass on this module and to FAIL on its mutant."""
+    me = sys.modules[__name__]
+    print("advisory-skip controls (each: MUST PASS on the live code, MUST FIRE on its mutant)")
+    total = bad = 0
+    for label, ctl, anchor, repl in _CONTROLS:
+        total += 1
+        try:
+            ok_live, why_live = ctl(me)
+        except Exception as e:                              # noqa: BLE001 — a raise is a failure
+            ok_live, why_live = False, "raised %r" % (e,)
+        mod, err = _mutant(anchor, repl)
+        if mod is None:
+            ok_mut, why_mut = True, err                     # True = the mutant "passed" = FAIL
+        else:
+            try:
+                ok_mut, why_mut = ctl(mod)
+            except Exception as e:                          # noqa: BLE001 — a crash is not a catch
+                ok_mut, why_mut = True, "mutant raised %r, which proves nothing" % (e,)
+        good = ok_live and not ok_mut
+        bad += 0 if good else 1
+        print("  %-4s %-46s live: %s" % ("ok" if good else "FAIL", label, why_live))
+        print("       %-46s mutant fired: %s — %s" % ("", "yes" if not ok_mut else "NO", why_mut))
+    print("\nhooks advisory-skip selftest: %s (%d/%d control(s))"
+          % ("PASS" if not bad else "FAIL", total - bad, total))
+    return 1 if bad else 0
 
 
 def main():
     what = sys.argv[1] if len(sys.argv) > 1 else ""
     try:
+        if what == "selftest":
+            return selftest()
         if what == "pre-commit":
             return pre_commit()
         if what == "pre-push":
