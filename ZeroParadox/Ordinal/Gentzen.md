@@ -24,12 +24,16 @@ ZPL has four components:
 4. **Cantor Normal Form Bridge** — `cnfToZp2` maps ordinals below ε₀ (`NONote`) into `ℤ₂` by
    recursion on their Cantor normal form; as the tower stages approach ε₀ their encodings converge to `0 = ⊥` in
    `ℤ₂`; ε₀ itself has no encoding, and the two limits correspond as in
-   `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. The remaining gap is the alignment
-   hypothesis hε₀ (φ ε₀ = c₁; in the ℤ₂ chart, snapEmbed (φ ε₀) = 0), the snap's occurrence
-   at ε₀: monotonicity and tower alignment do not supply it
-   (`ZeroParadox/Ordinal/Incompleteness.lean` § II, the examples after `snap_unconditional`).
-   Proof partially in Lean
-   scope.
+   `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. For a map φ : Ordinal → MachinePhase,
+   the tower forces the floor of where the value can change: nothing fires below ε₀
+   (`snap_threshold_is_epsilon_zero`), which is not occurrence. That φ fires there is:
+   hε₀ (φ ε₀ = c₁; in the ℤ₂ chart, snapEmbed (φ ε₀) = 0) is the snap's occurrence at ε₀,
+   taken as a hypothesis: of the infinitely many admissible firing points that monotonicity
+   and tower alignment (every tower stage sent to c₀) leave open, hε₀ selects the least, and
+   so fixes φ uniquely (`ZeroParadox/Ordinal/Incompleteness.lean` § II, the examples after
+   `snap_unconditional`). Whether Classical.choice is forced by the metric collapse is a
+   separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.lean`).
+   Proof partially in Lean scope.
 
 Axiom footprint: `[propext, Classical.choice, Quot.sound]` throughout `Gentzen.lean`, measured.
 

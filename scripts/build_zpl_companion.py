@@ -1,6 +1,7 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.15 | October 2026
+Version 1.16 | October 2026
+v1.16: companion sync with ZP-L v1.22, PA-6b (DEFECTS.md PRIOR-ART-DB-ORDINARY, PA-6b; queue corpus-zpl-separate-starting-points). The Convergence section and the Remember box said ZP-L reaches epsilon-0 from 'entirely separate starting points', by an 'independent derivation', in 'separate domains with separate machinery', and that 'two independent formal derivations' meet there. Restated to what was measured: the definition (Mathlib's Ordinal.epsilon 0) and the Cantor normal form notation are SHARED with proof theory; ZP-L's own part is the snap, which fires nowhere below epsilon-0 for a monotone map sending the tower's stages to c0 and fires at epsilon-0 by the hypothesis h-eps0 (ZeroParadox/Ordinal/Incompleteness.lean section II). Gate round 1 (Tim's 2026-10-01 rulings): sentence S now reads that, of the infinitely many admissible firing points monotonicity and tower alignment leave open, h-eps0 selects the least and so fixes phi uniquely (the U1-U3 examples after snap_unconditional, ZeroParadox/Ordinal/Incompleteness.lean section II); Gentzen.md item 4 carries both readings (the tower forces the floor, nothing fires below epsilon-0, which is not occurrence; occurrence is h-eps0); ZP-L Gap box reframed as what the bridge supplies. Gate round 0 findings addressed (AR-1 already in; CRH-1/E2/O1 ZP-E; E3/O2 gloss; O3/O4; E5; CRH-4; ZP-L section VII co-witness). PA-6b folded in.
 v1.15: companion sync with ZP-L v1.21 (DEFECTS.md CNFTOZP2-ANTITONE-OVERCLAIM, companion sites). The Two-Adic Connection section and the Convergence section called cnfToZp2 an "encoding" of ordinals below ε₀ into ℤ₂ at five sites, which reads as injective; cnfToZp2 is a map and is not injective (2 and ω share the image 4). "Encoding" is now "map"/"image" at those five sites (four sites still say "encoding" and are outside this change: the opening overview paragraph, the dual-convergence diagram label, "ZPM relates the two through their 2-adic encodings" in the Kleene Connection section's "Two rooms" box, and the closing summary), and the Two-Adic body carries BOTH charts - valuation climbing toward ∞ and norm falling toward 0 - with the seed stage 0 mapping to 0 itself (snap_arc_z2_loop). ZP-L v1.21 also fixes the ZPI K-ratio row (ZPI-KRATIO-ROW) and the Cantor normal form coefficient order (ZPL-CNF-COEFF-LEFT); neither site appears in this companion. Gate round 1 (editorial@351b3d16…#0, adversary@c9ff0da6…#0, both PASS with ordinary findings): the seed stage 0 was left unscoped at four sites and is now scoped (n ≥ 1, or Lean's convention named). Gate round 2 (both STOP-ORDINARY): v₂ named both Lean's and the standard valuation in the definition box, now one symbol per valuation; the companion credited snap_zp2_correspondence with the values 2ⁿ, which come from Gentzen.lean § IV — that theorem states only the convergence.
 v1.14: GATE ROUND 1 REMEDIATION - TWO RENDERED FIXES IN THE RECAP BOX, AND A FALSE PRESENCE CLAIM INSIDE v1.13's OWN ENTRY (editorial E3-1 / E3-2 / E3-3, adversary and prior_art PA5-1 / PA5-2, 2026-09-23); companion stays with ZP-L v1.20. THREE SITES, AND v1.13 WROTE ALL THREE - defect class DC-58 in its general form, a remediation writing the next round's defect. (1) E3-1, A DANGLING NOUN: the box read "because exhaustion is a two-sided claim" while the clause that INTRODUCED the word had been deleted by that same change. Re-measured here on the rendered companion rather than relayed: before this change exhaust* occurred exactly ONCE in the whole document, at this site, so a general reader met an abstract noun with no antecedent anywhere on the page. It now reads "because pinning a boundary is two-sided", which takes its antecedent from the verb in its own sentence and from "the same ordinal boundary" one sentence earlier. ⛔ THE WARRANT IS NOT DELETED - round 1's E2-3 kill protects the two-sidedness, not the credits-and-dates clauses - so "it needs witnesses below the boundary and a ceiling at it" survives verbatim and both directions are still named. R-TWOPOLE returns INVARIANT here, the ratified null case: this renames the claim, it does not reverse a direction, so there is no second chart to add. (2) E3-2 / PA5-2, RAISED INDEPENDENTLY BY TWO GATES - A PROMISE THE BODY CANNOT KEEP: the box pointed at the Convergence section "with its credit and its date", and of the three results that section states, the below-ε₀ provability carries a credit and NO DATE. That absence is deliberate and fenced - Grundlagen der Mathematik II is not a 1943 publication and no year is asserted for it, because nobody here has opened it - so the BODY cannot be moved to match and the box is the half that must. It now promises "with its credit" and nothing about dates. (3) E3-3 / PA5-1, ALSO RAISED BY TWO GATES - A FALSE PRESENCE CLAIM ABOUT CONTENT THE SAME CHANGE HAD DELETED: v1.13's E2-4 note said the credit reads "which Gentzen reports as already known, crediting Hilbert-Bernays" IN THE BOX, and item (2) of v1.13 is what removed it from the box. Re-measured here on the rendered companion: at this change Bernays occurred exactly ONCE, in the Convergence body, never in the box. ⛔ THE E2-4 RULING ITSELF IS CORRECT AND IS KEPT - what E2-4 requires is that the second-handness still be SAID, and the body says it in plain words; the entry's WARRANT was the false half, and it now names the body and records that the box carries no credit by design. ⚠ R-NOTINLIB, SECOND POLE: a false PRESENCE claim is the same defect as a false absence one, and no word list catches it, because every term on that list is absence vocabulary - the ACTION is what binds, that you are about to write that a surface DOES contain something. Every v1.13 fence is unchanged: Gentzen REPORTS the below-ε₀ result CREDITING Hilbert-Bernays and it is never called Hilbert-Bernays' theorem, no claim is made about what § 2 proves, 1938 is never cited, the count stays TWO and is still stated outright, the 1936 result still stands behind the pair, and the primary source only.
 v1.13: TWO FIXES IN THE CONVERGENCE SECTION, companion sync with ZP-L v1.20. (1) DEFECTS.md GENTZEN-2 SPREAD, AND THE ARC'S OWN FIX IS WHAT SPREAD IT (defect class DC-58, a remediation re-importing a defect the paragraph had already shed): the v1.12 change ACQUIRED the attainment gloss "- the furthest point PA's own proofs of transfinite induction reach -" as NEW BYTES, replacing a formulation that was already correct, so a supremum-glossed-as-attained clause that previously shipped in one deposited ZP-L PDF shipped in both. The proof-theoretic ordinal is a supremum and ε₀ is not a member of the set it is the supremum of, so nothing REACHES it. It now reads "- the limit of how far PA's own proofs of transfinite induction reach -", matching the formal document. (2) E2-3, THE RECAP STOPPED RECAPPING: the remember box ran 161 words against the section body's 167, carrying the same results, the same credits and the same dates about 25 rendered lines apart - a second copy rather than a recap, and false at every line under R-ADJACENT's test (would this sentence become false if the canonical statement changed?). This change CUT the box to the SHAPE only - two results pin ε₀ because exhaustion is a two-sided claim, needing witnesses below the boundary and a ceiling at it, with a third result standing behind the pair - and made it POINT at the Convergence section above and at Remark R-L.1 in the formal ZP-L for each result with its credit and its date, so that those would live in exactly one place per document and could not go stale in two. Model: CLAIMS.md's prior-art row, which points at R-L.1 instead of copying the account. ⛔ The "exhaustion is a two-sided claim" unpacking was round 1's kill and was KEPT by this change (comp v1.14 above then renamed it). ⛔ The 1936 result is NOT deleted (R-TWOPOLE): it is named as standing behind the pair. ⛔ The count stays TWO and is still stated outright, so v1.12's pronoun fix is not regressed. ⚠ E2-4 NEEDED NO EDIT AND NONE WAS MADE: "more than one of his reported results" was already removed at v1.12, and the surviving credit reads "Gentzen reports, crediting Hilbert-Bernays" in the Convergence body - the second-hand scoping is in plain words there, with no load left on the word "reported". ⚠ AND THE BOX CARRIES NO CREDIT, BY DESIGN - THIS ENTRY ORIGINALLY SAID IT DID, AND ITEM (2) OF THIS SAME CHANGE IS WHAT REMOVED IT: the recap now POINTS at the Convergence body instead of restating it, and a box that makes no attribution owes none. What E2-4 requires is that the second-handness still be SAID, not that it be said twice; the body says it. Every v1.12 fence is unchanged.
@@ -233,7 +234,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -448,10 +449,10 @@ def build():
     # ── Proof-Theoretic Connection ────────────────────────────────────────────
     E.append(Paragraph('Convergence with Proof Theory', CS['h1']))
     E.append(cbody(
-        'ZP-L derives &#949;&#8320; as the snap threshold from ordinal fixed-point structure '
-        'alone &#8212; &#969;-tower iteration, the fixed-point property of '
+        'ZP-L works with &#949;&#8320; through ordinal fixed-point structure '
+        '&#8212; &#969;-tower iteration, the fixed-point property of '
         '&#945; &#8614; &#969;^&#945;, and the map cnfToZp2 from Cantor normal forms into &#8484;&#8322;. '
-        'Remark R-L.1 in the formal document notes a structural alignment with an independent '
+        'Remark R-L.1 in the formal document notes a structural alignment with a '
         'result from proof theory.'))
     E.append(cbody(
         'Two results pin &#949;&#8320; as the proof-theoretic ordinal of Peano '
@@ -470,28 +471,29 @@ def build():
         '&#949;&#8320;; it is also the indirect route to the unprovability half, by '
         'way of G&#246;del&#8217;s theorem together with that 1936 result.'))
     E.append(cbody(
-        'ZP-L and Gentzen arrive at &#949;&#8320; from entirely separate starting points. '
-        'ZP-L starts from ordinal fixed-point structure: &#949;&#8320; is where &#969;-tower '
-        'self-iteration closes on itself. Gentzen starts from proof theory: &#949;&#8320; is '
-        'where PA&#8217;s provability tower runs out. Neither derivation references the '
-        'other&#8217;s domain. Both locate the same boundary.'))
+        'ZP-L and Gentzen share the ordinal itself. ZP-L defines &#949;&#8320; as Mathlib&#8217;s '
+        'Ordinal.epsilon 0, where &#969;-tower self-iteration closes on itself, and writes the '
+        'ordinals below it in Cantor normal form, the notation ordinal analysis also uses. Gentzen '
+        'starts from proof theory: &#949;&#8320; is where PA&#8217;s provability tower runs out. '
+        'What is ZP-L&#8217;s own is the snap: a monotone map sending the tower&#8217;s stages to '
+        'c&#8320; fires nowhere below &#949;&#8320;, and its firing at &#949;&#8320; is a hypothesis, '
+        'h&#949;&#8320; (ZeroParadox/Ordinal/Incompleteness.lean &#167; II).'))
     E.append(cbody(
-        'The convergence is notable. ZP-L&#8217;s fixed-point derivation and Gentzen&#8217;s '
-        'proof-theoretic analysis were conducted in separate domains with separate machinery. '
-        'That both locate &#949;&#8320; is a structural observation, not an argument for '
+        'That ZP-L&#8217;s snap and Gentzen&#8217;s analysis both meet &#949;&#8320; is a '
+        'structural observation, not an argument for '
         'either result. Both stand or fall on their own proofs.'))
     E.append(sp(4))
     E.append(remember_box(
         'ZP does not prove any part of G&#246;del&#8217;s incompleteness theorems, and does '
         'not reprove Gentzen&#8217;s ordinal analysis of PA. The connection is a structural '
-        'observation: two independent formal derivations arrive at the same ordinal boundary. '
+        'observation: the same ordinal, defined the same way, carries both. '
         'Two results pin &#949;&#8320;, because pinning a boundary is two-sided: it '
         'needs witnesses below the boundary and a ceiling at it, and a third result '
         'stands behind the pair. The Convergence section above states each of them, '
         'with its credit; the formal ZP-L states them in Remark R-L.1. '
-        'ZP-L established &#949;&#8320; as '
-        'the snap threshold from ordinal fixed-point structure. No formal equivalence '
-        'between the two derivations is claimed.'))
+        'ZP-L proves that a monotone map sending the tower&#8217;s stages to c&#8320; fires '
+        'nowhere below &#949;&#8320;, and takes its firing at &#949;&#8320; as the hypothesis '
+        'h&#949;&#8320;. No formal equivalence between the two is claimed.'))
     E.append(sp(8))
 
     # ── Axiom Footprint Note ──────────────────────────────────────────────────

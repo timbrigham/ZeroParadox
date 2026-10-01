@@ -6,8 +6,8 @@
   **Gap 1 (ZP-L):** `snap_exactly_at_epsilon_zero` carries a free hypothesis
       hfp : ∀ α, ω^α = α → φ α = c₁
   which states that ordinal fixed points of ω^· map to c₁. This layer proves hfp
-  follows from φ epsilonZero = c₁ alone (given monotonicity), via the snapEmbed bridge
-  and c₁'s absorbing property in MachinePhase.
+  follows from φ epsilonZero = c₁ alone (given monotonicity), via c₁'s absorbing
+  property in MachinePhase.
 
   **Gap 2 (ZP-K / ZP-L):** ZP-K establishes that the Quine atom is ⊥ = c₀ (bottom of
   MachinePhase) — an order-theoretic fact about MachinePhase, with no `Code` and no
@@ -15,7 +15,7 @@
   `KleeneStructure` commitment, not a theorem, and no equation between a `Code` and a
   `MachinePhase` is well-formed. ZP-L establishes that ε₀ is the *minimal* threshold — **given** that the transition happens,
   it happens nowhere below ε₀. It does not establish that it happens: `snap_unconditional`
-  takes `hε₀ : φ epsilonZero = c₁` as a hypothesis. See the fuller note at § V. The formal path from c₀ = ⊥ through the snap at ε₀ to c₁ (ZP-L), mediated by
+  takes `hε₀ : φ epsilonZero = c₁` as a hypothesis. See the fuller note at § III. The formal path from c₀ = ⊥ through the snap at ε₀ to c₁ (ZP-L), mediated by
   the 2-adic encoding, is the missing structural triangle: ⊥ → ε₀ → c₁.
 
   The central formal object is:
@@ -98,13 +98,13 @@ theorem snapEmbed_c1_dvd (n : ℕ) : (2 : ℤ_[2])^n ∣ snapEmbed c₁ := by
 
 /-! ## §II. Deriving hfp from ε₀ Initialization
 
-The free hypothesis `hfp` in `snap_exactly_at_epsilon_zero` asserts that any map φ
-assigns c₁ to ordinal fixed points of ω^·.
+`hfp` is the free hypothesis of `snap_exactly_at_epsilon_zero`.
 
 `hε₀` (`φ ε₀ = c₁`; in the ℤ₂ chart, `snapEmbed (φ ε₀) = 0`) is the snap's occurrence at ε₀,
-taken as a hypothesis: monotonicity and tower alignment do not supply it (the examples after
-`snap_unconditional` below). Whether `Classical.choice` is forced by the metric collapse is a
-separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.lean`).
+taken as a hypothesis: of the infinitely many admissible firing points that monotonicity and
+tower alignment (every tower stage sent to c₀) leave open, `hε₀` selects the least, and so fixes φ
+uniquely (the examples after `snap_unconditional` below). Whether `Classical.choice` is forced by
+the metric collapse is a separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.lean`).
 -/
 
 /-- Given φ ε₀ = c₁ and monotonicity, every ordinal fixed point of ω^· maps to c₁.
@@ -129,18 +129,47 @@ theorem snap_unconditional (φ : Ordinal → MachinePhase)
     φ epsilonZero = c₁ ∧ ∀ α : Ordinal, φ α = c₁ → epsilonZero ≤ α :=
   snap_exactly_at_epsilon_zero φ hmono h0 (hfp_from_epsilon_zero φ hmono hε₀)
 
--- `Statement:` `hε₀` is not supplied by `snap_unconditional`'s other two hypotheses: the constant
--- map `c₀` is monotone and sends every tower stage to `c₀`, and it sends ε₀ to `c₀`.
-example : ∃ φ : Ordinal → MachinePhase,
-    (∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β) ∧
-    (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧ φ epsilonZero ≠ c₁ :=
-  ⟨fun _ => c₀, fun _ _ _ => rfl, fun _ => rfl, by decide⟩
+-- `Statement:` `hε₀` is not supplied by `hmono`/`h0`: the never-firing and fire-at-ε₀+1 witnesses are the examples at `ZeroParadox/Ordinal/Gentzen.lean` after `snap_threshold_is_epsilon_zero`.
+-- `Statement:` under `hmono` and `h0` every β ≥ ε₀ is an admissible firing point: the threshold map at β meets both.
+example (β : Ordinal) (hβ : epsilonZero ≤ β) :
+    let φ : Ordinal → MachinePhase := fun α => if α < β then c₀ else c₁
+    (∀ α γ : Ordinal, α ≤ γ → join (φ α) (φ γ) = φ γ) ∧ (∀ n : ℕ, φ (fundamentalSeq n) = c₀) := by
+  refine ⟨fun α γ hαγ => ?_, fun n => if_pos (lt_of_lt_of_le (epsilonZero_tower_lt n) hβ)⟩
+  by_cases hγ : γ < β
+  · have hα : α < β := lt_of_le_of_lt hαγ hγ
+    simp only [if_pos hα, if_pos hγ]; rfl
+  · simp only [if_neg hγ]; split <;> rfl
+-- `Statement:` among those threshold maps, `hε₀` holds exactly at β = ε₀ — it selects the least.
+example (β : Ordinal) (hβ : epsilonZero ≤ β) :
+    ((fun α => if α < β then (c₀ : MachinePhase) else c₁) epsilonZero = c₁) ↔ β = epsilonZero := by
+  constructor
+  · intro h
+    by_contra hne
+    have hlt : epsilonZero < β := lt_of_le_of_ne hβ (Ne.symm hne)
+    simp only [if_pos hlt] at h; exact absurd h (by decide)
+  · rintro rfl; simp
+-- `Statement:` with `hmono`, `h0` and `hε₀`, φ is the canonical threshold map — fixed uniquely.
+example (φ : Ordinal → MachinePhase)
+    (hmono : ∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β)
+    (h0 : ∀ n : ℕ, φ (fundamentalSeq n) = c₀)
+    (hε₀ : φ epsilonZero = c₁) :
+    φ = fun α => if α < epsilonZero then c₀ else c₁ := by
+  funext α
+  by_cases h : α < epsilonZero
+  · rw [if_pos h]; exact snap_threshold_is_epsilon_zero φ hmono h0 α h
+  · rw [if_neg h]
+    have hle : epsilonZero ≤ α := not_lt.mp h
+    have h1 := hmono _ _ hle
+    rw [hε₀] at h1
+    have h2 : join c₁ (φ α) = c₁ := by cases (φ α) <;> rfl
+    rw [h2] at h1; exact h1.symm
 -- `Statement:` the ℤ₂ chart of `hε₀`: `φ ε₀ = c₁` exactly when `snapEmbed (φ ε₀) = 0`.
 example (φ : Ordinal → MachinePhase) :
     φ epsilonZero = c₁ ↔ snapEmbed (φ epsilonZero) = 0 := by
   rw [← snapEmbed_c1]; exact snapEmbed_injective.eq_iff.symm
 -- `Statement:` if `snapEmbed ∘ φ` is continuous along the tower into ε₀, then `h0` forces
--- `φ ε₀ = c₀`, the opposite of `hε₀`; the stages' images under `cnfToZp2` tend to `snapEmbed c₁`.
+-- `φ ε₀ = c₀`, the opposite of `hε₀`.
+-- `Reading:` uses only that `snapEmbed` is injective and ℤ₂ is Hausdorff; not a 2-adic-specific fact.
 example (φ : Ordinal → MachinePhase) (h0 : ∀ n : ℕ, φ (fundamentalSeq n) = c₀)
     (hcont : Filter.Tendsto (fun n => snapEmbed (φ (fundamentalSeq n))) Filter.atTop
       (nhds (snapEmbed (φ epsilonZero)))) : φ epsilonZero = c₀ := by
