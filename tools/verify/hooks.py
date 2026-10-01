@@ -425,24 +425,53 @@ def consult_receipt(key):
     return MATCHED, rec, "matched"
 
 
-def write_green_receipt(key, skipped):
-    """Write the receipt for THIS run. Only a run that exited 0 AND skipped nothing gets here with
-    effect, so a skipped run can never mint the receipt the next run would skip on."""
+# `R-ZERONULL` on the WRITER side: one value per outcome, every one printed. Only WRITTEN leaves a
+# receipt behind; each NOT_WRITTEN_* is a different reason, so "the child ran with agent gate off"
+# never shares a value with "the disk refused" or with "this run was red".
+RECEIPT_WRITTEN = "WRITTEN"
+NOT_WRITTEN_SKIPPED = "NOT_WRITTEN_SKIPPED"
+NOT_WRITTEN_OPTED_OUT = "NOT_WRITTEN_OPTED_OUT"
+NOT_WRITTEN_UNKNOWN = "NOT_WRITTEN_UNKNOWN"
+NOT_WRITTEN_NO_KEY = "NOT_WRITTEN_NO_KEY"
+NOT_WRITTEN_KEY_MOVED = "NOT_WRITTEN_KEY_MOVED"
+NOT_WRITTEN_NO_PATH = "NOT_WRITTEN_NO_PATH"
+NOT_WRITTEN_IO = "NOT_WRITTEN_IO"
+NOT_WRITTEN_RED = "NOT_WRITTEN_RED"
+
+
+def _receipt_state(state, detail):
+    print("  green receipt: %s — %s" % (state, detail))
+    return state
+
+
+def write_green_receipt(key, skipped, child_off):
+    """Write the receipt for THIS run; return one of the RECEIPT_* / NOT_WRITTEN_* states.
+
+    `child_off` is the legs switched OFF in the environment the `batch.py prepush` child was launched
+    with: the hook's own skip AND any opt-out inherited from the caller. A receipt asserts a run in
+    which every leg ran, so it is keyed on what the child SAW, never on `skipped` alone. ORDINARY-1
+    (2026-09-30): keyed on `skipped`, a caller-exported ZP_AGENT_GATE=0 minted `"skipped": []` and
+    the next run skipped on it, so agent gate ran on neither. Now neither a skipped run nor an
+    opted-out one can mint the receipt the next run would skip on. `None` (not known) refuses too."""
     if skipped:
-        print("  green receipt NOT written: this run skipped %s, and skips must not chain."
-              % ", ".join(skipped))
-        return False
+        return _receipt_state(NOT_WRITTEN_SKIPPED, "this run skipped %s, and skips must not chain"
+                              % ", ".join(skipped))
+    if child_off is None:
+        return _receipt_state(NOT_WRITTEN_UNKNOWN, "what the batch.py child ran with is not known")
+    if child_off:
+        return _receipt_state(NOT_WRITTEN_OPTED_OUT,
+                              "%s did NOT run in the child (switched off in the environment it "
+                              "inherited); a receipt asserts a run in which every leg ran"
+                              % ", ".join(child_off))
     if key is None:
-        print("  green receipt NOT written: this run had no match key.")
-        return False
+        return _receipt_state(NOT_WRITTEN_NO_KEY, "this run had no match key")
     end_key, why = push_key([tuple(r) for r in key["refs"]])
     if end_key != key:
-        print("  green receipt NOT written: %s" % (why or "tools/verify or HEAD moved during the run"))
-        return False
+        return _receipt_state(NOT_WRITTEN_KEY_MOVED,
+                              why or "tools/verify or HEAD moved during the run")
     path = receipt_path()
     if path is None:
-        print("  green receipt NOT written: the git common directory could not be resolved.")
-        return False
+        return _receipt_state(NOT_WRITTEN_NO_PATH, "the git common directory could not be resolved")
     run_id, op = _provenance()
     rec = dict(key)
     rec.update({"schema": RECEIPT_SCHEMA, "terminal": "PASS", "skipped": [],
@@ -451,11 +480,9 @@ def write_green_receipt(key, skipped):
     try:
         _write_json_atomic(path, rec)
     except OSError as e:
-        print("  green receipt NOT written: %s" % (e,))
-        return False
-    print("  green receipt written (%s, run %s): single-use, valid 24h, for these exact refs."
-          % (RECEIPT_NAME, run_id or "no gitRobot provenance"))
-    return True
+        return _receipt_state(NOT_WRITTEN_IO, "%s" % (e,))
+    return _receipt_state(RECEIPT_WRITTEN, "%s, run %s: single-use, valid 24h, for these exact refs"
+                          % (RECEIPT_NAME, run_id or "no gitRobot provenance"))
 
 
 def _emitter_of(argv):
@@ -575,6 +602,24 @@ def advisory_skippable(rows, gating=False):
 # predates this change), so the skip needs no edit to the pinned `batch.py`. A derivably advisory
 # leg with NO entry here is simply not skipped: it runs, and the hook says so.
 SKIP_SWITCHES = {"agent gate": ("ZP_AGENT_GATE", "0")}
+
+# The value at which each switched leg RUNS, mirroring the leg's own reader: `agent_gate.py` sets
+# `ENABLED = os.environ.get("ZP_AGENT_GATE", "1") == "1"`, so ANY other value switches it off, not
+# only "0". The receipt writer keys on this, never on the hook's own skip list (ORDINARY-1).
+SWITCH_ON = {"ZP_AGENT_GATE": "1"}
+
+
+def legs_disabled(environ=None):
+    """Sorted switched legs that a child launched with `environ` (default: this process's, which is
+    what `run()` passes on) would NOT run. A switch with no known run-value counts as off: what the
+    child would do cannot be told, and a receipt may only assert a run in which every leg ran."""
+    env = os.environ if environ is None else environ
+    out = []
+    for leg, (var, _off) in SKIP_SWITCHES.items():
+        on = SWITCH_ON.get(var)
+        if on is None or env.get(var, on) != on:
+            out.append(leg)
+    return sorted(out)
 
 
 def advisory_skip_set():
@@ -1027,10 +1072,12 @@ def pre_push(stream):
                   % (status, detail if key is not None else _why))
     # ⚠ An opt-out exported by the CALLER predates this change and is not this skip; say so, so a
     #   "nothing skipped" line is never read over an agent gate that will not run anyway.
-    for leg, (var, val) in sorted(SKIP_SWITCHES.items()):
-        if leg not in skip and os.environ.get(var, "1") == val:
+    for leg in legs_disabled():
+        if leg not in skip:
+            var = SKIP_SWITCHES[leg][0]
             print("  note: %s=%s was inherited from the caller, so `%s` will not run — a "
-                  "pre-existing opt-out, not a receipt match." % (var, val, leg))
+                  "pre-existing opt-out, not a receipt match; this run writes no green receipt."
+                  % (var, os.environ.get(var), leg))
 
     # ⚠ `gatelock` RETIRED 2026-08-23 — deliberately, not dropped. It froze reviewed paths with the
     # read-only bit while a gate round ran. Three reasons it went: the worktree rule makes the
@@ -1270,6 +1317,9 @@ def pre_push(stream):
         var, val = SKIP_SWITCHES[leg]
         _saved_switch[var] = os.environ.get(var)
         os.environ[var] = val
+    # ⚠ ORDINARY-1: snapshot what the child will SEE, after the hook's own switches are applied, so
+    #   the receipt writer keys on the child's environment rather than on `skip`.
+    child_off = legs_disabled()
     try:
         rc = py("batch.py", "prepush", "--ranges", ",".join(ranges))
     finally:
@@ -1309,7 +1359,9 @@ def pre_push(stream):
         return 1
 
     if scan_exit == 0:
-        write_green_receipt(key, skip)
+        write_green_receipt(key, skip, child_off)
+    else:
+        _receipt_state(NOT_WRITTEN_RED, "scan_pdfs exited %d, so this run was not green" % scan_exit)
     return scan_exit
 
 
@@ -1326,6 +1378,11 @@ def pre_push(stream):
 # launch and returns a scripted exit code, `tools_digest` / `head_tree` return fixed values, and the
 # receipt lives in a temporary directory outside the repository. Nothing here launches a checker,
 # touches the real receipt, or writes into the tree.
+#
+# ⚠ ORDINARY-2 (2026-09-30): because `_simulate` stubs `tools_digest` / `head_tree`, no control could
+#   see a mutation INSIDE them — seven mutants survived all sixteen controls. The `_ScratchRepo`
+#   controls run the REAL pair against a throwaway repository in the system temp dir (never this
+#   checkout), and the receipt-validation branches each have a control of their own.
 
 _CONTROLS_MARK = "# " + "-" * 66 + " advisory-skip controls"
 _SHA_A = "a" * 40
@@ -1382,7 +1439,7 @@ def _simulate(m, stdin=_REFS, receipt=None, raw=None, env=None, red=(), digest=_
         return rc
 
     m.run = fake_run
-    m.tools_digest = lambda: digest
+    m.tools_digest = digest if callable(digest) else (lambda: digest)
     m.head_tree = lambda: _TREE
     m.git_out = lambda *a: (0, "illustrated\n")
     m._RECEIPT_PATH_OVERRIDE = path
@@ -1479,7 +1536,178 @@ def _ctl_d_skipping_receipt(m):
 
 def _ctl_e_digest(m):
     r = _simulate(m, receipt=_good_receipt(), digest="f" * 64)
-    return r["skipped"] == [], "tools/verify digest moved -> skipped=%s" % r["skipped"]
+    return r["skipped"] == [], "receipt digest != this run's digest -> skipped=%s" % r["skipped"]
+
+
+def _ctl_h_inherited_optout(m):
+    """ORDINARY-1: a caller-exported opt-out must not mint a receipt the next run skips on."""
+    import shutil
+    import tempfile
+    seen = []
+    for val in ("0", "off"):                     # agent_gate runs only on "1": any other value is off
+        d = tempfile.mkdtemp(prefix="zp_hooks_ctl_")
+        try:
+            r1 = _simulate(m, env={"ZP_AGENT_GATE": val}, keep_dir=d)
+            r2 = _simulate(m, keep_dir=d)
+        finally:
+            shutil.rmtree(d, ignore_errors=True)
+        state = NOT_WRITTEN_OPTED_OUT in r1["out"]
+        seen.append((val, r1["rc"], r1["after"] is None, state, r2["skipped"]))
+    ok = all(rc == 0 and none and state and nxt == [] for _v, rc, none, state, nxt in seen)
+    return ok, "; ".join("ZP_AGENT_GATE=%s inherited -> rc=%s, receipt %s, %s printed=%s; next run "
+                         "skipped=%s" % (v, rc, "absent" if none else "WRITTEN", NOT_WRITTEN_OPTED_OUT,
+                                         st, nxt) for v, rc, none, st, nxt in seen)
+
+
+def _ctl_i_future(m):
+    r = _simulate(m, receipt=_good_receipt(ts_utc=_ts(-3600)))
+    ok = r["skipped"] == [] and "none — %s:" % STALE in r["out"]
+    return ok, "receipt dated 1h in the future -> skipped=%s, STALE reported=%s" % (
+        r["skipped"], "none — %s:" % STALE in r["out"])
+
+
+def _ctl_j_schema(m):
+    wrong = _good_receipt(schema="zp.prepush_green.v0")
+    absent = _good_receipt()
+    del absent["schema"]
+    rs = [_simulate(m, receipt=wrong), _simulate(m, receipt=absent)]
+    ok = all(r["skipped"] == [] and "none — %s:" % UNREADABLE in r["out"] for r in rs)
+    return ok, "wrong schema -> skipped=%s; no schema -> skipped=%s" % (
+        rs[0]["skipped"], rs[1]["skipped"])
+
+
+def _ctl_k_terminal(m):
+    failed = _good_receipt(terminal="FAIL")
+    absent = _good_receipt()
+    del absent["terminal"]
+    rs = [_simulate(m, receipt=failed), _simulate(m, receipt=absent)]
+    ok = all(r["skipped"] == [] and "none — %s:" % NOT_TERMINAL in r["out"] for r in rs)
+    return ok, "terminal=FAIL -> skipped=%s; no terminal -> skipped=%s" % (
+        rs[0]["skipped"], rs[1]["skipped"])
+
+
+def _ctl_l_end_key(m):
+    calls = []
+
+    def moving():
+        calls.append(1)
+        return _DIGEST if len(calls) == 1 else "f" * 64
+    r = _simulate(m, digest=moving)
+    ok = r["rc"] == 0 and r["after"] is None and NOT_WRITTEN_KEY_MOVED in r["out"]
+    return ok, "tools/verify moved between key and write (%d digest call(s)) -> receipt %s" % (
+        len(calls), "absent" if r["after"] is None else "WRITTEN")
+
+
+# Repository-locating variables git may export into a running hook; any of them would point the
+# scratch repository's git calls back at the REAL one, so they are removed for its lifetime.
+_GIT_LOCATION_VARS = ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_COMMON_DIR",
+                      "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+                      "GIT_NAMESPACE", "GIT_PREFIX")
+
+
+class _ScratchRepo(object):
+    """A throwaway repository in the system temp dir, with `m.REPO` pointed at it, so a control runs
+    the REAL `tools_digest` / `head_tree`. Plumbing only — init, add, rm --cached, write-tree,
+    hash-object, and HEAD written as a file — so no hook, signing or identity setting fires."""
+
+    def __init__(self, m):
+        self.m = m
+
+    def _git(self, *args, **kw):
+        # ⚠ BYTES, not text: text-mode stdin on Windows writes CRLF, and a commit body with a `\r`
+        #   in its tree line is refused by hash-object's fsck.
+        data = kw.get("stdin")
+        r = subprocess.run(["git"] + list(args), cwd=self.dir, capture_output=True,
+                           input=data.encode("utf-8") if data is not None else None)
+        if r.returncode != 0:
+            raise RuntimeError("scratch repo: %s exited %d: %s" % (
+                args[0], r.returncode, r.stderr.decode("utf-8", "replace").strip()))
+        return r.stdout.decode("utf-8", "replace").strip()
+
+    def __enter__(self):
+        import tempfile
+        self.saved_env = {k: os.environ.pop(k) for k in _GIT_LOCATION_VARS if k in os.environ}
+        self.saved_repo = self.m.REPO
+        self.dir = tempfile.mkdtemp(prefix="zp_hooks_ctl_repo_")
+        self.m.REPO = self.dir
+        self._git("init", "-q")
+        return self
+
+    def __exit__(self, *exc):
+        import shutil
+        self.m.REPO = self.saved_repo
+        os.environ.update(self.saved_env)
+        shutil.rmtree(self.dir, ignore_errors=True)
+        return False
+
+    def put(self, rel, data):
+        p = os.path.join(self.dir, *rel.split("/"))
+        if not os.path.isdir(os.path.dirname(p)):
+            os.makedirs(os.path.dirname(p))
+        with open(p, "wb") as fh:
+            fh.write(data)
+
+    def remove(self, rel):
+        os.remove(os.path.join(self.dir, *rel.split("/")))
+
+    def track(self, *rels):
+        self._git("add", "--", *rels)
+
+    def untrack(self, rel):
+        self._git("rm", "-q", "--cached", "--", rel)
+
+    def commit(self):
+        """Commit the index as a detached HEAD; return its tree id, computed independently."""
+        tree = self._git("write-tree")
+        body = ("tree %s\nauthor ctl <ctl@invalid> 0 +0000\ncommitter ctl <ctl@invalid> 0 +0000\n"
+                "\nctl\n" % tree)
+        sha = self._git("hash-object", "-t", "commit", "-w", "--stdin", stdin=body)
+        with open(os.path.join(self.dir, ".git", "HEAD"), "w", encoding="ascii", newline="\n") as fh:
+            fh.write(sha + "\n")
+        return tree
+
+
+def _ctl_m_digest_content(m):
+    with _ScratchRepo(m) as s:
+        s.put("tools/verify/a.py", b"print(1)\n")
+        s.put("tools/verify/b.py", b"x = 1\n")
+        s.track("tools/verify")
+        d1 = m.tools_digest()
+        s.put("tools/verify/a.py", b"print(2)\n")         # same tracked set, one byte of content
+        d2 = m.tools_digest()
+    ok = bool(d1) and bool(d2) and d1 != d2
+    return ok, "REAL tools_digest, scratch repo: a content edit moved the digest=%s" % (
+        bool(d1) and d1 != d2)
+
+
+def _ctl_n_digest_absent(m):
+    with _ScratchRepo(m) as s:
+        s.put("tools/verify/a.py", b"print(1)\n")
+        s.put("tools/verify/b.py", b"x = 1\n")
+        s.track("tools/verify")
+        full = m.tools_digest()
+        s.remove("tools/verify/b.py")
+        absent = m.tools_digest()                         # tracked, missing from disk
+        s.untrack("tools/verify/b.py")
+        untracked = m.tools_digest()                      # no longer tracked at all
+    ok = bool(full and absent and untracked) and absent != full and absent != untracked
+    return ok, ("REAL tools_digest: deleted-but-tracked differs from intact=%s and from "
+                "never-tracked=%s" % (absent != full, absent != untracked))
+
+
+def _ctl_o_head_tree(m):
+    with _ScratchRepo(m) as s:
+        s.put("tools/verify/a.py", b"print(1)\n")
+        s.track("tools/verify")
+        t1 = s.commit()
+        h1 = m.head_tree()
+        s.put("tools/verify/a.py", b"print(2)\n")
+        s.track("tools/verify")
+        t2 = s.commit()
+        h2 = m.head_tree()
+    ok = t1 != t2 and h1 == t1 and h2 == t2
+    return ok, "REAL head_tree, scratch repo: tracks commit 1=%s, tracks commit 2=%s" % (
+        h1 == t1, h2 == t2)
 
 
 def _ctl_f_single_use(m):
@@ -1569,7 +1797,7 @@ _CONTROLS = [
     ("(d) a skipping run's receipt never qualifies", _ctl_d_skipping_receipt,
      '    if rec.get("terminal") != "PASS" or rec.get("skipped") != []:',
      '    if rec.get("terminal") != "PASS":'),
-    ("(e) tools/verify digest moved", _ctl_e_digest,
+    ("(e) a receipt whose digest differs is refused", _ctl_e_digest,
      '    for part in ("refs", "tools_verify_digest", "head_tree"):',
      '    for part in ("refs", "head_tree"):'),
     ("(f) a consumed receipt does not match twice", _ctl_f_single_use,
@@ -1582,8 +1810,34 @@ _CONTROLS = [
      '        return UNREADABLE, None, "receipt is not valid JSON',
      '        return NO_RECEIPT, None, "receipt is not valid JSON'),
     ("writer  a green unskipped run mints a receipt", _ctl_writes,
-     "    if scan_exit == 0:\n        write_green_receipt(key, skip)",
-     "    if False:\n        write_green_receipt(key, skip)"),
+     "    if scan_exit == 0:\n        write_green_receipt(key, skip, child_off)",
+     "    if False:\n        write_green_receipt(key, skip, child_off)"),
+    # ⚠ The eight below close ORDINARY-1 and ORDINARY-2 of the 2026-09-30 `/rely` round; each
+    #   mutant is the reviewer's own (M1, M2, M3, M4, M6, M8, M12) or, for (h), the inherited opt-out.
+    ("(h) an inherited opt-out mints no receipt", _ctl_h_inherited_optout,
+     "    child_off = legs_disabled()",
+     "    child_off = list(skip)"),
+    ("(i) M3 a future-dated receipt does not match", _ctl_i_future,
+     "    if age < 0 or age > RECEIPT_MAX_AGE:",
+     "    if age > RECEIPT_MAX_AGE:"),
+    ("(j) M6 a receipt without the schema is refused", _ctl_j_schema,
+     '    if not isinstance(rec, dict) or rec.get("schema") != RECEIPT_SCHEMA:',
+     '    if not isinstance(rec, dict):'),
+    ("(k) M12 a non-PASS receipt is refused", _ctl_k_terminal,
+     '    if rec.get("terminal") != "PASS" or rec.get("skipped") != []:',
+     '    if rec.get("skipped") != []:'),
+    ("(l) M4 the end-of-run key re-check holds", _ctl_l_end_key,
+     "    if end_key != key:",
+     "    if False:"),
+    ("(m) M1 REAL digest moves on a content edit", _ctl_m_digest_content,
+     "                inner = hashlib.sha256(fh.read()).hexdigest()",
+     '                inner = "same"'),
+    ("(n) M8 REAL digest hashes a deleted file ABSENT", _ctl_n_digest_absent,
+     '        except OSError:\n            inner = "ABSENT"',
+     "        except OSError:\n            continue"),
+    ("(o) M2 REAL head_tree follows HEAD", _ctl_o_head_tree,
+     "    return out.strip() if rc == 0 and out.strip() else None",
+     '    return "e" * 40'),
     ("fence 3 reconcile refuses a skipped BLOCK row", _ctl_reconcile,
      "            _bad_skip = sorted(set(skipped) & _never) + sorted(set(skipped) - _known)",
      "            _bad_skip = []"),
