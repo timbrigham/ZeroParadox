@@ -24,8 +24,8 @@ ZPL has four components:
 4. **Cantor Normal Form Bridge** — `cnfToZp2` maps ordinals below ε₀ (`NONote`) into `ℤ₂` by
    recursion on their Cantor normal form; as the tower stages approach ε₀ their encodings converge to `0 = ⊥` in
    `ℤ₂`; ε₀ itself has no encoding, and the two limits correspond as in
-   `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. The remaining gap is the type bridge
-   Ordinal → MachinePhase (`ZeroParadox/Ordinal/Gentzen.lean` § V). Proof partially in Lean
+   `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. The remaining gap is the alignment
+   hypothesis hε₀ (CLAIMS.md OQ-A1). Proof partially in Lean
    scope.
 
 Axiom footprint: `[propext, Classical.choice, Quot.sound]` throughout `Gentzen.lean`, measured.
@@ -52,7 +52,7 @@ not necessity.
 | ZPB   | Topology        | C3: no continuous path ⊥ → x ≠ ⊥   |
 | ZPC   | Information     | L-INF: infinite surprisal at ⊥       |
 | ZPJ/K | Set + Compute  | bot_self_mem (AFA); botCode (Kleene) |
-| ZPI   | Algorithmic IT  | K(Sₙ|n)/|Sₙ| → 1; K uncomputable    |
+| ZPI   | Algorithmic IT  | K uncomputable; the K-ratio bridge is superseded (ZeroParadox/Valuation/SemilatticeInstance.lean § II) |
 
 K is not computed in Lean in this framework. The AFA/Kleene route reaches the same
 fixed-point structure via a path whose Kleene step is a KleeneStructure requirement.
