@@ -47,8 +47,8 @@ Non-constructibility appears across the layers tabulated below. The axiom footpr
 uniform — the ZPJ/K row names a witness on each side, `AFAStructure.bot_self_mem` measuring no
 axioms and `botCode` carrying them — and ZP-K § IV tabulates the measured footprints.
 Whether any of that dependence is necessary (forced by ZP geometry rather than incidental)
-is the open Classical.choice inversion conjecture (cf. ZPM §II): #print axioms shows dependence,
-not necessity.
+is the open Classical.choice inversion conjecture (ZeroParadox/Ordinal/SyntacticCollapse.lean): #print axioms shows
+dependence, not necessity.
 
 | Layer | Formal Language | Expression of non-constructibility |
 |-------|----------------|--------------------------------------|

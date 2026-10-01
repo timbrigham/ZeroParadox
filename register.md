@@ -4,12 +4,12 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.29 | ZP-A_Lattice_Algebra.pdf | v1.11 | N/— | formal:8c003b4e comp:8e00c888 |
+| ZP-A Lattice Algebra | v1.30 | ZP-A_Lattice_Algebra.pdf | v1.11 | N/— | formal:59167dd6 comp:8e00c888 |
 | ZP-B p-Adic Topology | v1.18 | ZP-B_pAdic_Topology.pdf | v1.16 | N/— | formal:df43d2f5 comp:79b374cc |
 | ZP-F The Counterexamples | v1.8 | ZP-F_The_Counterexamples.pdf | v1.14 | N/— | formal:bfed0e0f comp:d6bdb1f7 |
 | ZP-C Information Theory | v1.24 | ZP-C_Information_Theory.pdf | v2.9 | N/— | formal:b206f0a9 comp:e98d8d80 |
 | ZP-D State Layer | v1.15 | ZP-D_State_Layer.pdf | v1.13 | N/— | formal:923468a5 comp:32064117 |
-| ZP-E Bridge Document | v3.49 | ZP-E_Bridge_Document.pdf | v1.23 | Y/Y | formal:65ca8930 comp:0bad3417 |
+| ZP-E Bridge Document | v3.50 | ZP-E_Bridge_Document.pdf | v1.23 | Y/Y | formal:ab7338ad comp:0bad3417 |
 | ZP-G Category Theory | v1.20 | ZP-G_Category_Theory.pdf | v1.13 | N/— | formal:4c05aaff comp:81573f2b |
 | ZP-H Categorical Bridge | v1.23 | ZP-H_Categorical_Bridge.pdf | v1.16 | N/— | formal:cece605b comp:c89777ab |
 | ZP-H Native Categories Addendum | v1.6 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:c9da80f9 |
@@ -19,7 +19,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-J Wheel Addendum | v1.8 | ZP-J_Wheel_Addendum.pdf | v1.6 | N/— | formal:2be7f9c9 comp:5f817977 |
 | ZP-J Keystone Addendum | v1.19 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:d9eb9c0a |
 | ZP-K Computational Grounding | v1.24 | ZP-K_Computational_Grounding.pdf | v1.22 | N/— | formal:1a307934 comp:ce5fd785 |
-| ZP-L Incomputability Convergence | v1.21 | ZP-L_Incomputability_Convergence.pdf | v1.15 | N/— | formal:b6821755 comp:4de560d8 |
+| ZP-L Incomputability Convergence | v1.22 | ZP-L_Incomputability_Convergence.pdf | v1.15 | N/— | formal:41374bfa comp:4de560d8 |
 | ZP-M Kleene-Ordinal Bridge | v1.7 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.6 | N/— | formal:589cbf08 comp:d2106aba |
 | ZP-N The Constructive Snap | v2.0 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:5011bb68 |
 | ZP-P The Fixed-Point Fork | v1.24 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:4b914ac3 |

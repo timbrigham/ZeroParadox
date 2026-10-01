@@ -101,16 +101,10 @@ theorem snapEmbed_c1_dvd (n : ℕ) : (2 : ℤ_[2])^n ∣ snapEmbed c₁ := by
 The free hypothesis `hfp` in `snap_exactly_at_epsilon_zero` asserts that any map φ
 assigns c₁ to ordinal fixed points of ω^·.
 
-Key insight: given monotonicity, `hfp` follows from just `φ epsilonZero = c₁`.
-Proof: for any fixed point α, `epsilonZero_le_fixedPoint` gives ε₀ ≤ α; monotonicity
-gives `join (φ ε₀) (φ α) = φ α`; substituting `φ ε₀ = c₁` and using c₁'s absorbing
-property (`join c₁ x = c₁` for all x) gives `c₁ = φ α`.
-
-Note: deriving `φ epsilonZero = c₁` itself from the 2-adic structure (rather than
-taking it as a hypothesis) is the Classical.choice inversion conjecture — whether the
-non-constructive snap is structurally forced by ZP geometry rather than incidentally
-imported from Mathlib. That question is deferred to ZPM §V (future work). For now
-`hε₀ : φ epsilonZero = c₁` is the alignment hypothesis.
+`hε₀` (`φ ε₀ = c₁`; in the ℤ₂ chart, `snapEmbed (φ ε₀) = 0`) is the snap's occurrence at ε₀,
+taken as a hypothesis: monotonicity and tower alignment do not supply it (the examples after
+`snap_unconditional` below). Whether `Classical.choice` is forced by the metric collapse is a
+separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.lean`).
 -/
 
 /-- Given φ ε₀ = c₁ and monotonicity, every ordinal fixed point of ω^· maps to c₁.
