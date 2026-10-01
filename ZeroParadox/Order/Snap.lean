@@ -177,8 +177,8 @@ example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hS : IsStateSequence S) (
 example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hocc : S 1 ≠ S 0) : Nontrivial L :=
   ⟨⟨S 1, S 0, hocc⟩⟩
 
-/-- ZP-A's induced order D1 (`le x y ↔ join x y = y`) as Mathlib's `SemilatticeSup`, built by
-    `SemilatticeSup.mk'` from A1–A3. A `def`, not an instance: a carrier such as ℕ has its own. -/
+/-- ZP-A's induced order D1 (`le x y ↔ join x y = y`) as Mathlib's `SemilatticeSup`, by `SemilatticeSup.mk'`
+    from A1–A3. An `abbrev` (a reducible def), not an instance: a carrier such as ℕ has its own. -/
 abbrev zpSemilatticeSup (L : Type*) [ZPSemilattice L] : SemilatticeSup L :=
   @SemilatticeSup.mk' L ⟨join⟩ join_comm join_assoc join_idem
 
@@ -190,9 +190,11 @@ abbrev zpOrderBot (L : Type*) [ZPSemilattice L] : @OrderBot L (zpSemilatticeSup 
 example {L : Type*} [ZPSemilattice L] (x y : L) : (zpSemilatticeSup L).le x y ↔ le x y := Iff.rfl
 
 /-- T-SNAP with a third commitment, the cover `hcov`: `S 1` covers `S 0` in ZP-A's induced order.
-    With CC-1 (`hcc1`) the step is a cover of `bot`, AX-B1's form (`HasFirstStep`). `hcov` is a
-    hypothesis because no binder of `t_snap_given` supplies it (the ℕ run in
-    `ZeroParadox/Order/SnapCannotBe.lean`). -/
+    With CC-1 (`hcc1`) the step is a cover of `bot`, AX-B1's form (`HasFirstStep`). No binder of
+    `t_snap_given` supplies `hcov` (the ℕ run in `ZeroParadox/Order/SnapCannotBe.lean`).
+    Reading: prior art, Winskel, *Event structures*, LNCS 255 (1987), p. 336: a cover adds one event
+    to a configuration, and each strict inclusion `x ⊂ y` passes through a cover of `x` (Lemma
+    1.1.11, p. 329). A run's step here need not be one, so `hcov` is assumed. -/
 theorem t_snap_given_cover {L : Type*} [ZPSemilattice L] (S : ℕ → L)
     (hcc1 : S 0 = bot) (hocc : S 1 ≠ S 0) (hcov : letI := zpSemilatticeSup L; S 0 ⋖ S 1) :
     (S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1) ∧
