@@ -23,7 +23,9 @@ ZPL has four components:
    scope via Mathlib ordinals.
 4. **Cantor Normal Form Bridge** — ordinals below ε₀ (`NONote`) encode into `ℤ₂` via their
    Cantor normal form; as the tower stages approach ε₀ their encodings converge to `0 = ⊥` in
-   `ℤ₂`. The identification of these two limits is the remaining gap. Proof partially in Lean
+   `ℤ₂`; ε₀ itself has no encoding, and the two limits correspond as in
+   `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. The remaining gap is the type bridge
+   Ordinal → MachinePhase (`ZeroParadox/Ordinal/Gentzen.lean` § V). Proof partially in Lean
    scope.
 
 Axiom footprint: `[propext, Classical.choice, Quot.sound]` throughout `Gentzen.lean`, measured.
@@ -54,6 +56,32 @@ not necessity.
 
 K is not computed in Lean in this framework. The AFA/Kleene route reaches the same
 fixed-point structure via a path whose Kleene step is a KleeneStructure requirement.
+
+## § IV. Cantor Normal Form Bridge
+
+Moved from `ZeroParadox/Ordinal/Gentzen.lean` § IV (2026-09-30), carried in the same accepted-defect baseline as § VI, so the warning above applies to it too.
+
+Every ordinal below ε₀ has a unique Cantor normal form — a finite expression
+  a₁ · ω^e₁ + a₂ · ω^e₂ + ... + aₙ · ω^eₙ
+with e₁ > e₂ > ... > eₙ and aᵢ < ω. In Lean: `NONote` (the type of ordinals
+below ε₀ in Cantor normal form from Mathlib.SetTheory.Ordinal.Notation).
+
+The bridge: NONote → ℤ_[2] encodes each CNF term as a 2-adic integer where
+the 2-adic valuation tracks the ordinal height. For `ω^e · n + a`:
+  cnfToZp2(ω^e · n + a) = 2^(v₂(cnfToZp2(e)) + 1) · n + cnfToZp2(a)
+
+This recursion ensures that the tower stages get valuation = stage index:
+  cnfToZp2(ω^[0] 0) = 0              (valuation 0 by convention)
+  cnfToZp2(ω^[1] 0) = 2^1 = 2       (valuation 1)
+  cnfToZp2(ω^[2] 0) = 2^2 = 4       (valuation 2)
+  cnfToZp2(ω^[n] 0) = 2^n           (valuation n)
+
+As n → ∞, valuation → +∞, so the sequence converges to 0 = ⊥ in ℤ_[2].
+
+The valuation and convergence results in this section are fully in Lean scope:
+- `cnfToZp2` is defined by structural recursion on the underlying ONote
+- `towerNONote n` lifts each fundamentalSeq n to a NONote via NONote.oadd
+- The valuation formula is proved by induction using PadicInt.valuation_pow
 
 ## § VI. Kleene-Ordinal Fixed-Point Bridge
 

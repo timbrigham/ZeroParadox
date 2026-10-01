@@ -156,30 +156,13 @@ example : (2 : Ordinal) < epsilonZero ∧ ∀ n : ℕ, fundamentalSeq n ≠ 2 :=
 
 /-! ## § IV. Cantor Normal Form Bridge
 
-Every ordinal below ε₀ has a unique Cantor normal form — a finite expression
-  a₁ · ω^e₁ + a₂ · ω^e₂ + ... + aₙ · ω^eₙ
-with e₁ > e₂ > ... > eₙ and aᵢ < ω. In Lean: `NONote` (the type of ordinals
-below ε₀ in Cantor normal form from Mathlib.SetTheory.Ordinal.Notation).
+The bridge: NONote → ℤ_[2] encodes each CNF term as a 2-adic integer, where `NONote` is
+the type of ordinals below ε₀ in Cantor normal form (Mathlib.SetTheory.Ordinal.Notation).
+The tower stages' encodings converge to 0 = ⊥ in ℤ_[2] (`tower_converges_to_zero`).
+ε₀ itself has no encoding (`NONote` is the ordinals below it); how the ordinal ascent
+and this ℤ₂ descent correspond is `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V.
 
-The bridge: NONote → ℤ_[2] encodes each CNF term as a 2-adic integer where
-the 2-adic valuation tracks the ordinal height. For `ω^e · n + a`:
-  cnfToZp2(ω^e · n + a) = 2^(v₂(cnfToZp2(e)) + 1) · n + cnfToZp2(a)
-
-This recursion ensures that the tower stages get valuation = stage index:
-  cnfToZp2(ω^[0] 0) = 0              (valuation 0 by convention)
-  cnfToZp2(ω^[1] 0) = 2^1 = 2       (valuation 1)
-  cnfToZp2(ω^[2] 0) = 2^2 = 4       (valuation 2)
-  cnfToZp2(ω^[n] 0) = 2^n           (valuation n)
-
-As n → ∞, valuation → +∞, so the sequence converges to 0 = ⊥ in ℤ_[2].
-
-The target identification is that ε₀ is the ordinal whose ZPB encoding is ⊥ —
-the ZPE T-SNAP (⊥ → ε₀) is this limit, viewed in reverse.
-
-The valuation and convergence results in this section are fully in Lean scope:
-- `cnfToZp2` is defined by structural recursion on the underlying ONote
-- `towerNONote n` lifts each fundamentalSeq n to a NONote via NONote.oadd
-- The valuation formula is proved by induction using PadicInt.valuation_pow -/
+Derivation (CNF, recursion, valuation table, Lean scope): `ZeroParadox/Ordinal/Gentzen.md`. -/
 
 private instance : Fact (Nat.Prime 2) := ⟨by decide⟩
 
@@ -324,8 +307,7 @@ epsilonZero via a type bridge. The ordinal and ZPB sides are fully proved.
 The identification requires a morphism Ordinal → MachinePhase, not Gentzen. -/
 
 /-- Tower-stage bound and fixed-point: every finite stage of the ε₀ tower is
-    strictly below ε₀, and ω^ε₀ = ε₀. The ZPB encoding identification
-    (ε₀ maps to ⊥) is the remaining gap in § IV. -/
+    strictly below ε₀, and ω^ε₀ = ε₀. -/
 theorem zpe_snap_ordinal_correspondence :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero ∧
     Ordinal.omega0 ^ epsilonZero = epsilonZero :=
@@ -334,7 +316,8 @@ theorem zpe_snap_ordinal_correspondence :
 /-- Tower-stage bound: every finite stage of the ε₀ fundamental sequence is
     strictly below ε₀. This is the proved ordinal component of the ZPB bridge;
     the structural correspondence between epsilonZero and ZPE's c₁ is the
-    gap requiring the CNF encoding identification from § IV. -/
+    type-bridge gap stated in the section docstring above (a morphism
+    Ordinal → MachinePhase). -/
 theorem epsilonZero_tower_bound :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero := fun n => epsilonZero_tower_lt n
 
