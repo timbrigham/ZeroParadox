@@ -76,16 +76,18 @@ example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
       show ¬ ZeroParadox.ZPSemilattice.join 1 0 = 0 by decide⟩
     ⟨show ZeroParadox.ZPSemilattice.join 1 2 = 2 by decide,
       show ¬ ZeroParadox.ZPSemilattice.join 2 1 = 1 by decide⟩
--- `Statement:` on `Set Bool` (join `∪`, ⊥ = ∅) `∅` has two distinct covers in that order, so `hcov`
--- does not fix the target; on a carrier with its own linear order, `axb1_gives_unique_target` fixes the
--- cover in that order. Reading: prior art, Winskel, *Event structures*, LNCS 255 (1987), Example 1.1.5
--- p. 327: two covers of ∅ are nondeterministic branching. There `{0, 1}` is inconsistent; in `Set Bool`
--- the two covers have a join.
+-- `Statement:` on `Set Bool` (join `∪`, ⊥ = ∅) `∅` has two distinct covers in that order, with join
+-- `Set.univ`, so `hcov` does not fix the target; on a carrier with its own linear order,
+-- `axb1_gives_unique_target` fixes the cover in that order. Reading: prior art, Winskel, *Event
+-- structures*, LNCS 255 (1987). `Set Bool` is, up to renaming events, the configuration domain of
+-- Example 1.1.6 p. 328, concurrency, the "little square"; Example 1.1.5 p. 327, conflict, is the
+-- contrast, two covers of ∅ with no join; within the class every pair has a join (next example), so
+-- 1.1.5's shape does not arise.
 example : letI : ZeroParadox.ZPSemilattice (Set Bool) :=
       ⟨(· ∪ ·), ∅, Set.union_assoc, Set.union_comm, Set.union_self, Set.empty_union⟩
     @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {true} ∧
       @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {false} ∧
-      ({true} : Set Bool) ≠ {false} := by
+      ({true} : Set Bool) ≠ {false} ∧ ({true} : Set Bool) ∪ {false} = Set.univ := by
   letI : ZeroParadox.ZPSemilattice (Set Bool) :=
     ⟨(· ∪ ·), ∅, Set.union_assoc, Set.union_comm, Set.union_self, Set.empty_union⟩
   have key : ∀ a b : Set Bool,
@@ -94,7 +96,14 @@ example : letI : ZeroParadox.ZPSemilattice (Set Bool) :=
   have cov : ∀ b : Bool, @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {b} :=
     fun b => ⟨(key _ _).2 (Set.empty_covBy_singleton b).1,
       fun _ h1 h2 => (Set.empty_covBy_singleton b).2 ((key _ _).1 h1) ((key _ _).1 h2)⟩
-  exact ⟨cov true, cov false, fun h => absurd (h ▸ Set.mem_singleton true) (by simp)⟩
+  exact ⟨cov true, cov false, fun h => absurd (h ▸ Set.mem_singleton true) (by simp),
+    by ext b; cases b <;> simp⟩
+-- `Statement:` in ZP-A's induced order any two states, so any two covers of `bot`, have `join a b` as
+-- least upper bound: the join is total.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (a b : L) :
+    letI := ZeroParadox.zpSemilatticeSup L; IsLUB {a, b} (ZeroParadox.ZPSemilattice.join a b) := by
+  letI := ZeroParadox.zpSemilatticeSup L; exact isLUB_pair
+#check @Set.covBy_iff_exists_insert                   -- Statement: `s ⋖ t ↔ ∃ a ∉ s, insert a s = t`. Reading: the powerset form of Winskel's one-event characterisation of a cover (p. 336)
 -- `Statement:` a two-state carrier does supply the cover: if every state is ⊥ or `a`, a step off ⊥ lands on `a`
 -- and every state is `S 0` or `S 1`. `MachinePhase` is such a carrier, with `a = c₁`.
 example {L : Type*} [ZeroParadox.ZPSemilattice L] (a : L)
