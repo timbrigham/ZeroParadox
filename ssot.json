@@ -632,7 +632,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1754,
+        "declarations": 1757,
         "files": 150
       },
       "entries": [
@@ -34413,6 +34413,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "87349ca5-3373-40ff-86a6-32a45b3f142e",
+          "new": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_given_cover",
+            "short": "t_snap_given_cover"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t_snap_given_cover",
+            "short": "t_snap_given_cover",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "2026-09-30 cover commitment (Tim's ruling): t_snap_given_cover takes the cover hcov as a hypothesis in ZP-A's induced order, built by zpSemilatticeSup (SemilatticeSup.mk') with zpOrderBot",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "875a3295-df68-42a5-bb4c-bad7f93dd14b",
           "new": {
             "file": "ZeroParadox/Valuation/PadicBallIndicator.lean",
@@ -55735,6 +55774,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "de5f3937-45bb-49d8-97d9-e165b2a66f40",
+          "new": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zpSemilatticeSup",
+            "short": "zpSemilatticeSup"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zpSemilatticeSup",
+            "short": "zpSemilatticeSup",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "2026-09-30 cover commitment (Tim's ruling): t_snap_given_cover takes the cover hcov as a hypothesis in ZP-A's induced order, built by zpSemilatticeSup (SemilatticeSup.mk') with zpOrderBot",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "de76c0e5-2f74-4253-be2a-c3ce1531f84c",
           "new": {
@@ -55982,6 +56058,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "df726866-96ec-4933-af05-9ad2d86d18ef",
+          "new": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zpOrderBot",
+            "short": "zpOrderBot"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zpOrderBot",
+            "short": "zpOrderBot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "2026-09-30 cover commitment (Tim's ruling): t_snap_given_cover takes the cover hcov as a hypothesis in ZP-A's induced order, built by zpSemilatticeSup (SemilatticeSup.mk') with zpOrderBot",
           "verify": {
             "axioms": null,
             "sorry_free": true

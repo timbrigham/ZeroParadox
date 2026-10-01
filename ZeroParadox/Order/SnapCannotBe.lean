@@ -68,7 +68,43 @@ example : let S : ℕ → ℕ := fun n => if n = 0 then 0 else 2
       ¬ (S 0 ⋖ S 1) :=
   ⟨rfl, by decide, ⟨1, Nat.lt_succ_self 0, fun c h1 h2 => by omega⟩,
     fun h => h.2 (c := 1) (by decide) (by decide)⟩
--- `Statement:` a two-state carrier does supply it: if every state is ⊥ or `a`, a step off ⊥ lands on `a`
+#check @ZeroParadox.t_snap_given_cover               -- Statement: `t_snap_given` with the cover as a third hypothesis `hcov`, in ZP-A's induced order (`zpSemilatticeSup`); concludes `t_snap_given`'s triple and `bot ⋖ S 1`, the latter `hcov` transported along `hcc1`, and `hocc` follows from `hcov`. The run above meets every binder but `hcov`
+-- `Statement:` the run above, in that order: 2 does not cover 0. The order is passed with `@`, since
+-- a `letI` loses to ℕ's own `<`.
+example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
+  h.2 (c := 1) ⟨show ZeroParadox.ZPSemilattice.join 0 1 = 1 by decide,
+      show ¬ ZeroParadox.ZPSemilattice.join 1 0 = 0 by decide⟩
+    ⟨show ZeroParadox.ZPSemilattice.join 1 2 = 2 by decide,
+      show ¬ ZeroParadox.ZPSemilattice.join 2 1 = 1 by decide⟩
+-- `Statement:` on `Set Bool` (join `∪`, ⊥ = ∅) `∅` has two distinct covers in that order, with join
+-- `Set.univ`, so `hcov` does not fix the target; on a carrier with its own linear order,
+-- `axb1_gives_unique_target` fixes the cover in that order. Reading: prior art, Winskel, *Event
+-- structures*, LNCS 255 (1987). `Set Bool` is, up to renaming events, the configuration domain of
+-- Example 1.1.6 p. 328, concurrency, the "little square"; Example 1.1.5 p. 327, conflict, is the
+-- contrast, two covers of ∅ with no join; within the class every pair has a join (next example), so
+-- 1.1.5's shape does not arise.
+example : letI : ZeroParadox.ZPSemilattice (Set Bool) :=
+      ⟨(· ∪ ·), ∅, Set.union_assoc, Set.union_comm, Set.union_self, Set.empty_union⟩
+    @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {true} ∧
+      @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {false} ∧
+      ({true} : Set Bool) ≠ {false} ∧ ({true} : Set Bool) ∪ {false} = Set.univ := by
+  letI : ZeroParadox.ZPSemilattice (Set Bool) :=
+    ⟨(· ∪ ·), ∅, Set.union_assoc, Set.union_comm, Set.union_self, Set.empty_union⟩
+  have key : ∀ a b : Set Bool,
+      @LT.lt (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT a b ↔ a ⊂ b := fun _ _ =>
+    and_congr Set.union_eq_right (not_congr Set.union_eq_right)
+  have cov : ∀ b : Bool, @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {b} :=
+    fun b => ⟨(key _ _).2 (Set.empty_covBy_singleton b).1,
+      fun _ h1 h2 => (Set.empty_covBy_singleton b).2 ((key _ _).1 h1) ((key _ _).1 h2)⟩
+  exact ⟨cov true, cov false, fun h => absurd (h ▸ Set.mem_singleton true) (by simp),
+    by ext b; cases b <;> simp⟩
+-- `Statement:` in ZP-A's induced order any two states, so any two covers of `bot`, have `join a b` as
+-- least upper bound: the join is total.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (a b : L) :
+    letI := ZeroParadox.zpSemilatticeSup L; IsLUB {a, b} (ZeroParadox.ZPSemilattice.join a b) := by
+  letI := ZeroParadox.zpSemilatticeSup L; exact isLUB_pair
+#check @Set.covBy_iff_exists_insert                   -- Statement: `s ⋖ t ↔ ∃ a ∉ s, insert a s = t`. Reading: the powerset form of Winskel's one-event characterisation of a cover (p. 336)
+-- `Statement:` a two-state carrier does supply the cover: if every state is ⊥ or `a`, a step off ⊥ lands on `a`
 -- and every state is `S 0` or `S 1`. `MachinePhase` is such a carrier, with `a = c₁`.
 example {L : Type*} [ZeroParadox.ZPSemilattice L] (a : L)
     (h2 : ∀ x : L, x = ZeroParadox.ZPSemilattice.bot ∨ x = a) (S : ℕ → L)
@@ -79,7 +115,7 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] (a : L)
 example : ∀ x : ZeroParadox.MachinePhase, x = ZeroParadox.ZPSemilattice.bot ∨ x = ZeroParadox.c₁ := by
   intro x; cases x; exacts [Or.inl rfl, Or.inr rfl]
 #check @bot_covBy_iff                                 -- Statement: `⊥ ⋖ a ↔ IsAtom a`; an atom's two halves are `a ≠ ⊥` and nothing strictly between, a different pair from the ordinal ε₀'s least fixed point and tower supremum
-#check @covBy_iff_atom_Ici                            -- Statement: `a ⋖ b ↔ IsAtom ⟨b, _⟩ : Set.Ici a`; a cover is an atom measured from the local bottom `a`
+#check @covBy_iff_atom_Ici                            -- Statement: `a ⋖ b ↔ IsAtom ⟨b, _⟩ : Set.Ici a`; a cover is an atom measured from the bottom of `Set.Ici a`
 -- `Statement:` the ℕ run's step 0 → 2 lands on an atom one rung up: 2 is not an atom of `Set.Ici 0`,
 -- and it is an atom of `Set.Ici 1`.
 example : ¬ @IsAtom (Set.Ici (0 : ℕ)) _ Set.Ici.orderBot ⟨2, Nat.zero_le 2⟩ ∧
