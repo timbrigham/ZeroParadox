@@ -135,6 +135,30 @@ theorem snap_unconditional (φ : Ordinal → MachinePhase)
     φ epsilonZero = c₁ ∧ ∀ α : Ordinal, φ α = c₁ → epsilonZero ≤ α :=
   snap_exactly_at_epsilon_zero φ hmono h0 (hfp_from_epsilon_zero φ hmono hε₀)
 
+-- `Statement:` `hε₀` is not supplied by `snap_unconditional`'s other two hypotheses: the constant
+-- map `c₀` is monotone and sends every tower stage to `c₀`, and it sends ε₀ to `c₀`.
+example : ∃ φ : Ordinal → MachinePhase,
+    (∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β) ∧
+    (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧ φ epsilonZero ≠ c₁ :=
+  ⟨fun _ => c₀, fun _ _ _ => rfl, fun _ => rfl, by decide⟩
+-- `Statement:` the ℤ₂ chart of `hε₀`: `φ ε₀ = c₁` exactly when `snapEmbed (φ ε₀) = 0`.
+example (φ : Ordinal → MachinePhase) :
+    φ epsilonZero = c₁ ↔ snapEmbed (φ epsilonZero) = 0 := by
+  rw [← snapEmbed_c1]; exact snapEmbed_injective.eq_iff.symm
+-- `Statement:` if `snapEmbed ∘ φ` is continuous along the tower into ε₀, then `h0` forces
+-- `φ ε₀ = c₀`, the opposite of `hε₀`; the stages' images under `cnfToZp2` tend to `snapEmbed c₁`.
+example (φ : Ordinal → MachinePhase) (h0 : ∀ n : ℕ, φ (fundamentalSeq n) = c₀)
+    (hcont : Filter.Tendsto (fun n => snapEmbed (φ (fundamentalSeq n))) Filter.atTop
+      (nhds (snapEmbed (φ epsilonZero)))) : φ epsilonZero = c₀ := by
+  have h1 : Filter.Tendsto (fun n => snapEmbed (φ (fundamentalSeq n))) Filter.atTop
+      (nhds (snapEmbed c₀)) := by
+    simp only [h0]; exact tendsto_const_nhds
+  exact snapEmbed_injective (tendsto_nhds_unique hcont h1)
+-- `Statement:` the tower stages' `cnfToZp2` images tend to `snapEmbed c₁`.
+example : Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop
+    (nhds (snapEmbed c₁)) := by
+  rw [snapEmbed_c1]; exact tower_converges_to_zero
+
 /-! ## §III. The Kleene–Ordinal Triangle
 
 ZP-K established: ⊥ = c₀ is the unique Quine atom of MachinePhase
