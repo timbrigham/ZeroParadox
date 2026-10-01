@@ -62,12 +62,12 @@ fixed-point structure via a path whose Kleene step is a KleeneStructure requirem
 Moved from `ZeroParadox/Ordinal/Gentzen.lean` § IV (2026-09-30), carried in the same accepted-defect baseline as § VI, so the warning above applies to it too.
 
 Every ordinal below ε₀ has a unique Cantor normal form — a finite expression
-  a₁ · ω^e₁ + a₂ · ω^e₂ + ... + aₙ · ω^eₙ
-with e₁ > e₂ > ... > eₙ and aᵢ < ω. In Lean: `NONote` (the type of ordinals
+  ω^e₁ · a₁ + ω^e₂ · a₂ + ... + ω^eₙ · aₙ
+with e₁ > e₂ > ... > eₙ and 0 < aᵢ < ω. In Lean: `NONote` (the type of ordinals
 below ε₀ in Cantor normal form from Mathlib.SetTheory.Ordinal.Notation).
 
-The bridge: `cnfToZp2 : NONote → ℤ_[2]` maps each CNF term to a 2-adic integer. Along the
-tower stages, the 2-adic valuation of the image tracks ordinal height (`tower_orders_agree`,
+The bridge: `cnfToZp2 : NONote → ℤ_[2]` maps each CNF term to a 2-adic integer. From tower
+stage 1 on, the 2-adic valuation of the image tracks ordinal height (`tower_orders_agree`,
 `ZeroParadox/Ordinal/CnfBridge.lean`). For `ω^e · n + a`:
   cnfToZp2(ω^e · n + a) = 2^(v₂(cnfToZp2(e)) + 1) · n + cnfToZp2(a)
 
@@ -75,7 +75,7 @@ This recursion ensures that the tower stages get valuation = stage index:
   cnfToZp2(ω^[0] 0) = 0              (valuation 0 by convention)
   cnfToZp2(ω^[1] 0) = 2^1 = 2       (valuation 1)
   cnfToZp2(ω^[2] 0) = 2^2 = 4       (valuation 2)
-  cnfToZp2(ω^[n] 0) = 2^n           (valuation n)
+  cnfToZp2(ω^[n] 0) = 2^n           (valuation n; n ≥ 1)
 
 As n → ∞, valuation → +∞, so the sequence converges to 0 = ⊥ in ℤ_[2].
 
