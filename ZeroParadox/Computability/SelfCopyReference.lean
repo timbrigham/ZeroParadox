@@ -14,9 +14,9 @@ The question here is whether infinite complexity at the bottom denotes a mandato
 ---
 ## Formal Overview (AI-assisted)
 `SelfCopyRef f`: `f` is one-to-one, not onto, with exactly one fixed point. Central result:
-`infinite_iff_exists_selfCopyRef`. Prior art: Dedekind (1888), *Was sind und was sollen die Zahlen?* —
-infinite ⟺ a proper self-embedding. The unique-fixed-point refinement is this file's packaging.
-Fences: § IV. Choice footprints, measured: `PurityCheck`.
+`infinite_iff_exists_selfCopyRef`. Prior art: Dedekind (1888), *Was sind und was sollen die Zahlen?*,
+Erklärung 64; Sätze 159, 160 — infinite ⟺ a proper self-embedding; the unique-fixed-point refinement is
+this file's packaging. Fences: § IV. Choice footprints, and the set-theory status of ⟹: `PurityCheck`.
 -/
 
 namespace ZeroParadox
@@ -210,7 +210,9 @@ open ZeroParadox
 -- Measured: the three below carry `Classical.choice` (Mathlib routes). For the ⟹ half it enters
 -- turning bare `Infinite α` into a counting — `Cardinal.aleph0_le_mk`, `Cardinal.mul_aleph0_eq`,
 -- `Cardinal.add_one_eq`, `Cardinal.mk_option` (and `Infinite.natEmbedding`) each report it;
--- `Cardinal.eq` does not. A proof's footprint, not a theorem's necessity.
+-- `Cardinal.eq` does not. A proof's footprint, not a theorem's necessity: UNCLASSIFIED. In set theory
+-- without choice the ⟹ half is unprovable, and dependent choice suffices (Banakh, arXiv:2006.01613v4,
+-- Prop. 43.12; Rem. 43.14, citing Jech 1973 § 4.6).
 #print axioms no_selfCopyRef_of_finite
 #print axioms exists_selfCopyRef_of_infinite
 #print axioms infinite_iff_exists_selfCopyRef

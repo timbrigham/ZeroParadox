@@ -129,7 +129,11 @@ theorem snap_unconditional (φ : Ordinal → MachinePhase)
     φ epsilonZero = c₁ ∧ ∀ α : Ordinal, φ α = c₁ → epsilonZero ≤ α :=
   snap_exactly_at_epsilon_zero φ hmono h0 (hfp_from_epsilon_zero φ hmono hε₀)
 
--- `Statement:` `hε₀` is not supplied by `hmono`/`h0`: the never-firing and fire-at-ε₀+1 witnesses are the examples at `ZeroParadox/Ordinal/Gentzen.lean` after `snap_threshold_is_epsilon_zero`.
+-- `Statement:` `hε₀` is not supplied by `hmono`/`h0`: the constant map c₀ meets both and fails `hε₀`
+-- (a fire-at-ε₀+1 witness follows `snap_threshold_is_epsilon_zero` in `ZeroParadox/Ordinal/Gentzen.lean`).
+example : ∃ φ : Ordinal → MachinePhase, (∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β) ∧
+    (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧ φ epsilonZero ≠ c₁ :=
+  ⟨fun _ => c₀, fun _ _ _ => rfl, fun _ => rfl, by decide⟩
 -- `Statement:` under `hmono` and `h0` every β ≥ ε₀ is an admissible firing point: the threshold map at β meets both.
 example (β : Ordinal) (hβ : epsilonZero ≤ β) :
     let φ : Ordinal → MachinePhase := fun α => if α < β then c₀ else c₁
@@ -182,7 +186,7 @@ example : Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop
     (nhds (snapEmbed c₁)) := by
   rw [snapEmbed_c1]; exact tower_converges_to_zero
 -- `Statement:` for every φ, `snapEmbed ∘ φ ∘ repr` disagrees with `cnfToZp2` at every tower stage n ≥ 1:
--- `snapEmbed` takes only the values 1 and 0, and stage n ≥ 1 encodes as 2^n, which is neither.
+-- `snapEmbed` takes only the values 1 and 0, and stage n ≥ 1 maps to 2^n, which is neither.
 example (φ : Ordinal → MachinePhase) (n : ℕ) (hn : 1 ≤ n) :
     snapEmbed (φ (NONote.repr (towerNONote n))) ≠ cnfToZp2 (towerNONote n) := by
   intro h

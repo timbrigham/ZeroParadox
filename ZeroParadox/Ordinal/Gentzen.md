@@ -26,8 +26,8 @@ ZPL has four components:
    `ℤ₂`; ε₀ itself has no encoding, and the two limits correspond as in
    `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. For a map φ : Ordinal → MachinePhase,
    the tower forces the floor of where the value can change: nothing fires below ε₀
-   (`snap_threshold_is_epsilon_zero`), which is not occurrence. That φ fires there is:
-   hε₀ (φ ε₀ = c₁; in the ℤ₂ chart, snapEmbed (φ ε₀) = 0) is the snap's occurrence at ε₀,
+   (`snap_threshold_is_epsilon_zero`), which is not occurrence. That φ fires there is
+   hε₀ (φ ε₀ = c₁; in the ℤ₂ chart, snapEmbed (φ ε₀) = 0), the snap's occurrence at ε₀,
    taken as a hypothesis: of the infinitely many admissible firing points that monotonicity
    and tower alignment (every tower stage sent to c₀) leave open, hε₀ selects the least, and
    so fixes φ uniquely (`ZeroParadox/Ordinal/Incompleteness.lean` § II, the examples after
@@ -93,10 +93,10 @@ The valuation and convergence results in this section are fully in Lean scope:
 
 ## § V. Ordinal Tower Limit and ZPB Pre-image
 
-Moved from `ZeroParadox/Ordinal/Gentzen.lean` § V (2026-10-01), carried in the same accepted-defect baseline as § VI, so the warning above applies to it too.
+Moved from `ZeroParadox/Ordinal/Gentzen.lean` § V (2026-10-01), carried in the same accepted-defect baseline as § VI, so the warning above applies to it too. The section's last paragraph (the bridge to ZPE's MachinePhase) is new text written 2026-10-01, not moved, and is not covered by that banner.
 
 What this does NOT claim:
-  - Gentzen's theorem: that ε₀ is the proof-theoretic ordinal of PA (not claimed)
+  - That ε₀ is the proof-theoretic ordinal of PA (two results, credited in ZP-L Remark R-L.1; not claimed)
   - Any statement about formal provability in PA
   - A "solution" to the continuum hypothesis or other independent questions
   - Anything outside the structural identification of the snap with the ordinal limit
@@ -107,10 +107,10 @@ What this does NOT claim:
   - That the snap threshold result applies to all maps Ordinal → MachinePhase,
     regardless of the monotonicity and tower-alignment hypotheses
 
-What is proved here (§ III + § IV + §V):
+What is proved in `ZeroParadox/Ordinal/Gentzen.lean` (§ III + § IV + § V):
   - Ordinal: ε₀ = sup{(ω^·)^[n] 0 | n : ℕ}, every finite stage strictly below ε₀
   - ZPB: cnfToZp2(towerNONote n).valuation = n; for n ≥ 1, cnfToZp2(towerNONote n) = 2^n
-    in ℤ_[2]; norm = ‖2‖^n → 0, so the tower encodings converge to 0 = ⊥ in ℤ_[2]
+    in ℤ_[2]; norm = ‖2‖^n → 0, so the tower images converge to 0 = ⊥ in ℤ_[2]
     (tower_converges_to_zero)
   - Cofinality: the fundamental sequence is cofinal in ε₀ — for any α < ε₀,
     some tower stage exceeds α (fundamentalSeq_cofinal)

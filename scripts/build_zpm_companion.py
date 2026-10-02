@@ -1,6 +1,7 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.6 | September 2026
+Version 1.7 | October 2026
+v1.7: ED1-1 (gate round 1, 2026-10-01): §1 'any monotone map that sends tower stages to c0 must send eps0 to c1' was false (the constant-c0 map, ZeroParadox/Ordinal/Gentzen.lean example after snap_threshold_is_epsilon_zero); now states the proved lower bound (nothing fires below eps0) and that firing at eps0 is the hypothesis h-eps0 (ZeroParadox/Ordinal/Incompleteness.lean § II).
 v1.6: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-M v1.4: 'ZP-K proved that the initial state c0 is a Kleene fixed point' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem; 'they were unified in ZP-K' (Paths 1 and 3) now says they were carried together as a conjunction of witnesses (da1_paths_unified), their being one structural fact the framework's reading.
 v1.5: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.3: Rendered self-version ref removed from Key Results box header (C1 sweep).
@@ -19,7 +20,7 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.6'
+VERSION = '1.7'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -188,9 +189,12 @@ def build():
         'ZP-K carries the computational face of the initial state c₀ (⊥) as a KleeneStructure '
         'requirement (botCode_is_quine): read as a Kleene fixed point, a program that is its own '
         'program, with no external executor required. Reading c₀ as the Kleene quine is that '
-        'commitment, not a theorem. ZP-L proved that the ordinal ε₀ is the exact snap '
-        'threshold: the tower ω, ω^ω, ω^ω^ω, … approaches ε₀ from below, and '
-        'any monotone map that sends tower stages to c₀ must send ε₀ to c₁. '
+        'commitment, not a theorem. ZP-L proved that nothing fires below the ordinal ε₀: '
+        'the tower ω, ω^ω, ω^ω^ω, … approaches ε₀ from below, and '
+        'any monotone map that sends tower stages to c₀ also sends every ordinal below ε₀ '
+        'to c₀ (snap_threshold_is_epsilon_zero). Firing at ε₀ itself is not forced (the map '
+        'that is c₀ everywhere meets both conditions); it is the hypothesis hε₀, that the map '
+        'sends ε₀ to c₁ (ZP-M §II), and given it, ε₀ is the least firing point. '
         'ZP-L also showed that the tower encodings in ℤ₂ converge to 0.'))
     E.append(cbody(
         'ZP-M builds the bridge connecting these: a formal map snapEmbed that sends '

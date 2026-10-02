@@ -100,7 +100,8 @@ instance instAbstractSelfAppEnd : AbstractSelfApp End where
 
 /-! ### Iterating the boundary self-application: depth-`k` cells around `botEnd`
 
-Classical: the digit form of `2ᵏℤ₂`, the closed ball of radius `2⁻ᵏ` around `0`. The ball-chart relative
+The digit form of `2ᵏℤ₂`, the closed ball of radius `2⁻ᵏ` around `0` (Mathlib
+`PadicInt.norm_le_pow_iff_mem_span_pow`). The ball-chart relative
 of `iInter_range_iterate_boundaryDouble` is `fB_bottom_is_limit` (`ZeroParadox/Valuation/TopFunctor.lean`).
 `Reading:` `k` applications of the self-application are the depth-`k` cell around the all-zeros end —
 one map for tower step and cell depth. -/

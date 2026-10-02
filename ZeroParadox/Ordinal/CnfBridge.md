@@ -7,7 +7,7 @@ Moved from `ZeroParadox/Ordinal/CnfBridge.lean`. ⚠ **This content was GRANDFAT
 * the ordinal tower `fundamentalSeq n` ascends to **ε₀** (`epsilonZero_eq_iSup`), which is the
   *least fixed point* of `α ↦ ω^α` from the ordinal bottom ⊥ (`epsilon0_isLeastFixedPointFrom`,
   `Order/LeastFixedPoint.lean`);
-* the 2-adic encodings `cnfToZp2 (towerNONote n)` converge in norm to **0 = ⊥** in `ℤ_[2]`
+* the 2-adic images `cnfToZp2 (towerNONote n)` converge in norm to **0 = ⊥** in `ℤ_[2]`
   (`tower_converges_to_zero`).
 
 The *identification of these two limits* — ε₀ (∈ `Ordinal`) with 0 (∈ `ℤ_[2]`) — is not a
