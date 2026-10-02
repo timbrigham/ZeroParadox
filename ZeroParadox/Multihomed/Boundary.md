@@ -168,7 +168,8 @@ alone is not. The snap is the irreversible exit `floor ↦ up 0`.
 ascent, and the irreversible snap are represented. Given that model the theorems are proven, B2
 nontrivially, by ordinal well-founded induction. So "the snap is one crossing" is a faithful, coherent
 MODEL whose content is the two proven endpoints plus an identification — and that identification is NOT
-a new commitment: it is the framework's existing ⊥/ε₀ identification (MC-1, plus the ε₀ identity already
-open under OQ-E2). The floor endpoint is tied to ZP's real ⊥ (`floor_not_wellFounded`, axiom-free); the
+a new commitment: it is the framework's existing ⊥/ε₀ identification (MC-1; the cross-type ε₀ identity is
+ill-typed, not open: the same category error `cnf_bridge_type_boundary` fences for Ordinal vs ℤ₂, with the
+link running through maps). The floor endpoint is tied to ZP's real ⊥ (`floor_not_wellFounded`, axiom-free); the
 abstract `Phase` carrier is the illustrative toy form, with non-well-foundedness localized at the floor
 by construction. No new commitment is introduced.
