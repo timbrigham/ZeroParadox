@@ -169,9 +169,11 @@ ascent, and the irreversible snap are represented. Given that model the theorems
 nontrivially, by ordinal well-founded induction. So "the snap is one crossing" is a faithful, coherent
 MODEL whose content is the two proven endpoints plus the reading of those endpoints as ZP's own ⊥ and ε₀
 respectively — and that reading is NOT a new commitment: it is a role assignment the framework already
-carries (MC-1 family membership; the cross-type ε₀ identity is ill-typed, not open: the same category error
-`cnf_bridge_type_boundary` fences for Ordinal vs ℤ₂, with the link running through maps). The two endpoints
-stay distinct, and ε₀ never fills the bottom role: in the ordinal chart the role is filled by 0, and
-ε₀ ≠ 0 (`epsilon0_ne_bot`); in `Phase` the floor and `up ε₀` are different constructors. The floor endpoint is tied to ZP's real ⊥ (`floor_not_wellFounded`, axiom-free); the
+carries (for the ⊥ endpoint, MC-1 family membership; for the ε₀ endpoint, a cross-type identity is
+ill-typed, not open: the same category error `cnf_bridge_type_boundary` fences for Ordinal vs ℤ₂, with
+the link running through maps). Relative to the ordinals' floor, the bottom role is filled by 0 and the
+ε₀ role by `Ordinal.epsilon 0`, and the two occupants differ (`epsilon0_ne_bot`); relative to its own
+floor, that same ordinal fills the bottom role, as the first iterative bottom. The floor endpoint is
+tied to the lattice chart's ⊥ (`floor_not_wellFounded`, axiom-free); the
 abstract `Phase` carrier is the illustrative toy form, with non-well-foundedness localized at the floor
 by construction. No new commitment is introduced.
