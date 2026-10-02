@@ -629,8 +629,11 @@ def build():
             'state to a unit (snapEmbed_c0, snapEmbed_c1, both by rfl)',
             '  (2) snapEmbed_mul_morphism proves snapEmbed (join a b) = snapEmbed a &#215; '
             'snapEmbed b, carrying join to multiplication because c&#8321; absorbs joins as 0 '
-            'absorbs products. That is an absorbing-element morphism, not a ZPSemilattice '
-            'morphism: &#8484;&#8322; carries no lattice &#8869;',
+            'absorbs products. That is an absorbing-element morphism, and it does not send '
+            'bottom to bottom: in the &#8484;&#8322; chart the bottom role is filled by 0 '
+            '(a ZPSemilattice on &#8484;&#8322; with &#8869; = 0 is built in '
+            'ZeroParadox/Valuation/Scale.lean &#167; V), and snapEmbed sends c&#8320; to 1 '
+            '(snapEmbed_c0)',
             '  (3) not supplied &#8212; for a map &#981; sending the tower&#8217;s stages to c&#8320; (h0), '
             'continuity of snapEmbed &#8728; &#981; along the tower would '
             'force &#981; &#949;&#8320; = c&#8320;, the opposite (the examples after snap_unconditional, '
