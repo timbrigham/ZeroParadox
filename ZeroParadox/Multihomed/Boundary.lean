@@ -196,7 +196,7 @@ localized entirely at the floor, and the snap is the irreversible exit `floor �
 MODELING CHOICE and introduces no new commitment — what that means, exactly: `ZeroParadox/Multihomed/Boundary.md`. -/
 
 /-- The combined carrier: the self-looping floor, and the ordinal-indexed ascent. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Illustrative single-carrier model for the well-foundedness boundary — floor (self-looping ⊥) + up : Ordinal → Phase (ε₀ ascent); phaseRel self-loops at the floor, follows ordinal < above it, snap := up 0 is the irreversible exit. Mathlib has no type bundling a non-well-founded floor with a well-founded ordinal ascent. A modeling choice (content = two proven endpoints + the existing ⊥/ε₀ identification MC-1/OQ-E2, no new commitment); the real-⊥ endpoint (floorRel/floor_not_wellFounded) is axiom-free on the actual lattice.
+-- [ZP-CUSTOM] no Mathlib analog | reason: Illustrative single-carrier model for the well-foundedness boundary — floor (self-looping ⊥) + up : Ordinal → Phase (ε₀ ascent); phaseRel self-loops at the floor, follows ordinal < above it, snap := up 0 is the irreversible exit. Mathlib has no type bundling a non-well-founded floor with a well-founded ordinal ascent. A modeling choice (content = two proven endpoints + reading them as ZP's own ⊥ and ε₀ respectively, a role assignment already carried: MC-1 family membership, the cross-type ε₀ identity ill-typed not open, endpoints distinct by epsilon0_ne_bot; no new commitment); the real-⊥ endpoint (floorRel/floor_not_wellFounded) is axiom-free on the actual lattice.
 inductive Phase where
   | floor : Phase
   | up : Ordinal → Phase
