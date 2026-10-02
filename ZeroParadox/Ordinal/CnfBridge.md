@@ -31,7 +31,9 @@ does **not** prove it.
    the seed's image *and* the tower's norm-limit are both the *value* 0. So the ordinal ascent
    ⊥ → ε₀ realizes, through the map, as a `ℤ_[2]` path that departs 0 and whose norm returns to 0.
    This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (never the same; **not** order-adjacent — see
-   `epsilonZero_tower_lt`), and the finite stages are all ≠ 0 (next to the floor, never it); the returned-to ⊥ is a new instance.
+   `epsilonZero_tower_lt`), and the finite stages are all ≠ 0 (next to the floor, never it). In this realization the norm
+   reapproaches the same 0 the seed maps to (`snap_arc_z2_loop`); reading the returned-to ⊥ as a new
+   instance is a commitment, not a theorem.
 
 4. **The construction-level correspondence** (`mu_construction_correspondence`): ONE sequence
    `towerNONote : ℕ → NONote` (the μ-ascent seeded at the NONote bottom) has TWO type-specific
