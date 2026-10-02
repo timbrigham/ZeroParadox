@@ -2,6 +2,8 @@
 
 Moved from `ZeroParadox/Ordinal/Gentzen.lean` § VI. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
 
+Two senses of "occurrence" appear below, and both are meant: in the table chart, hε₀ (φ ε₀ = c₁) is the entry the tower does not force; in the dynamics chart, occurrence is the separate commitment that instantiation occurs (`ZeroParadox/Order/Snap.lean`, the NO-GO gauge, `tsnap_holds_but_nothing_moves`).
+
 ## Formal Overview
 
 Moved from `ZeroParadox/Ordinal/Gentzen.lean`'s module doc (2026-09-19) — editing that block
@@ -27,7 +29,7 @@ ZPL has four components:
    `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. For a map φ : Ordinal → MachinePhase,
    the tower forces the floor of where the value can change: nothing fires below ε₀
    (`snap_threshold_is_epsilon_zero`), which is not occurrence. That φ fires there is
-   hε₀ (φ ε₀ = c₁; in the ℤ₂ chart, snapEmbed (φ ε₀) = 0), the snap's occurrence at ε₀,
+   hε₀ (φ ε₀ = c₁; in the ℤ₂ chart, snapEmbed (φ ε₀) = 0), the snap's occurrence at ε₀ (the table chart),
    taken as a hypothesis: of the infinitely many admissible firing points that monotonicity
    and tower alignment (every tower stage sent to c₀) leave open, hε₀ selects the least, and
    so fixes φ uniquely (`ZeroParadox/Ordinal/Incompleteness.lean` § II, the examples after
@@ -138,7 +140,7 @@ The hypothesis
 encodes that ordinal fixed points of ω^· (the ordinal analogues of Kleene fixed points)
 map to the snap state c₁. Under this hypothesis, combined with monotonicity (hmono) and
 tower alignment (h0), φ is forced to take the value c₁ at ε₀ and at no smaller ordinal — a statement
-about WHERE the value changes, not that anything occurs:
+about WHERE the value changes, not that anything occurs (the dynamics chart):
   - every ordinal below ε₀ maps to c₀ (snap_threshold_is_epsilon_zero)
   - ε₀ maps to c₁ (epsilonZero_fixedPoint + hfp)
   - ε₀ is the minimal ordinal assigned c₁ (from the two above)
