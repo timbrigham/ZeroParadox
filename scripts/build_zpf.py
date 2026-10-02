@@ -252,9 +252,10 @@ def build():
             'identification of these two results &#8212; that &#8484;&#8322;\'s limit at 0 '
             'and the ordinal threshold at &#949;&#8320; reflect the same boundary &#8212; '
             'is a co-witness, not an identity: cnfToZp2 maps the &#969;-tower into '
-            '&#8484;&#8322;, and the literal &#949;&#8320; = 0 is ill-typed '
+            '&#8484;&#8322;, and the literal &#949;&#8320; = 0 is ill-typed with 0 the 2-adic zero '
             '(cnf_bridge_type_boundary, ZeroParadox/Ordinal/CnfBridge.lean; see ZP-L, '
-            'The Bridge: What Is Formal and What Is Assumed).',
+            'The Bridge: What Is Formal and What Is Assumed), and well-typed and false with 0 the '
+            'ordinal zero (epsilon0_ne_zero).',
             'This is an observation, not a proved theorem. The blocking result '
             '(F-SNAP-IMPOSSIBLE) is proved here; the threshold and convergence results '
             'are proved in ZP-L. The claim that both conditions reflect a common structural '

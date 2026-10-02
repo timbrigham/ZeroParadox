@@ -175,6 +175,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Ordinal/Gentzen.md` - The Kleene-ordinal bridge: where the value changes, and why that is not occurrence
 - `ZeroParadox/Ordinal/Goodstein.lean` - Goodstein's theorem (full, hereditary base) — ε₀ ordinal descent
 - `ZeroParadox/Ordinal/Incompleteness.lean` - ZP-M: Kleene–Ordinal Bridge Layer
+  - ride-along docs: `ZeroParadox/Ordinal/Incompleteness.md` - Incompleteness — ride-along documentation
 - `ZeroParadox/Ordinal/KirbyParis.lean` - Kirby–Paris hydra termination (the ε₀ gap) — proved
 - `ZeroParadox/Ordinal/Kruskal.lean` - Kruskal's Tree Theorem (labeled) — finite rose trees are well-quasi-ordered
   - ride-along docs: `ZeroParadox/Ordinal/Kruskal.md` - Where the choice comes from, and which half of the axiom-free proof transfers

@@ -621,7 +621,8 @@ def build():
             'Ordinal &#8594; MachinePhase and snapEmbed : MachinePhase &#8594; &#8484;&#8322;.',
             'What is proved: a canonical map Ordinal &#8594; MachinePhase assigns c&#8321; '
             'exactly at &#949;&#8320; and nowhere earlier.',
-            'Two of the three pieces such a bridge was expected to need are built, in ZPM '
+            'Two of the three pieces a type bridge from the ordinals through MachinePhase to '
+            '&#8484;&#8322; was expected to need are built, in ZPM '
             '(ZeroParadox/Ordinal/Incompleteness.lean &#167;I&#8211;&#167;II), and the third is '
             'not supplied by them:',
             '  (1) snapEmbed : MachinePhase &#8594; &#8484;&#8322; exists, sending c&#8320; '
@@ -650,7 +651,7 @@ def build():
             '(ZeroParadox/Ordinal/Incompleteness.lean &#167; II). Whether Classical.choice is forced by '
             'the metric collapse is a separate open question (ZeroParadox/Ordinal/SyntacticCollapse.lean). '
             'The canonical witness (epsilon_zero_snap_canonical) '
-            'satisfies all five conditions without any such bridge.',
+            'satisfies all five conditions without any such type bridge.',
         ]
     ))
     E.append(sp(6))

@@ -149,11 +149,15 @@ def build():
     E.append(sp(6))
 
     E.append(remark_box(
-        'Remark: snapEmbed vs the Identification Conjecture',
+        'Remark: snapEmbed and the bottom role',
         [
             'snapEmbed establishes the morphism property (join &#8614; &#215;) and the '
-            'absorbing-element correspondence. It does not derive the identification '
-            '&#949;&#8320; &#8596; &#8869; as a type-theoretic theorem. The canonical threshold '
+            'absorbing-element correspondence. Relative to the ordinals\' floor, the bottom-role '
+            'occupant 0 and the &#949;&#8320; occupant differ (epsilon0_ne_bot); against the '
+            '2-adic 0 an identity with &#949;&#8320; is not a well-formed statement '
+            '(cnf_bridge_type_boundary fences Ordinal vs &#8484;&#8322;), and the link runs '
+            'through maps: snapEmbed sends c&#8321; to 0, the &#8484;&#8322; chart\'s '
+            'bottom-role occupant. The canonical threshold '
             'map Ordinal &#8594; MachinePhase is order-non-decreasing in ZP-A\'s join order '
             '(snap_map_mono), and no map Ordinal &#8594; MachinePhase is compatible with the '
             'CNF &#8594; &#8484;&#8322; map along the tower: through snapEmbed the square fails '
