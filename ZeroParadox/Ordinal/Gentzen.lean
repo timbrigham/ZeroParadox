@@ -513,10 +513,9 @@ theorem epsilon_zero_snap_canonical :
     (iv)  The canonical map sends ε₀ to c₁
     All four are provable from already-established theorems. The same indexing sequence
     (n : ℕ) drives the ordinal tower (fundamentalSeq n < ε₀ for all n) and the 2-adic
-    tower (cnfToZp2(towerNONote n) → 0). The limits are limits in different types; no
-    type bridge between them is established here. This is a co-witness, not an identity: ε₀
-    and the ℤ₂ zero live in different types (cnf_bridge_type_boundary,
-    ZeroParadox/Ordinal/CnfBridge.lean). -/
+    tower (cnfToZp2(towerNONote n) → 0). The limits are limits in different types.
+    This is a co-witness, not an identity: ε₀ and the ℤ₂ zero live in different types
+    (cnf_bridge_type_boundary, ZeroParadox/Ordinal/CnfBridge.lean). -/
 theorem snap_zp2_correspondence :
     (∀ n : ℕ, fundamentalSeq n < epsilonZero) ∧
     (∀ n : ℕ, (fun α : Ordinal =>
