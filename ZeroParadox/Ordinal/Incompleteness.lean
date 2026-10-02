@@ -56,16 +56,9 @@ open Ordinal
 
 /-! ## §I. The snapEmbed Morphism
 
-snapEmbed sends the snap state c₁ to 0 in ℤ_[2] (the 2-adic limit of the tower
-encodings) and the pre-snap state c₀ to 1 (a nonzero 2-adic integer).
-
-This formalizes the embedding: c₁ maps to 0 ∈ ℤ_[2], the 2-adic limit of the tower
-encodings. Within the ZP framework, 0 here plays the role of ⊥; ℤ_[2] itself has
-no lattice ⊥ — the identification is a modelling commitment, not a ring-theoretic fact.
-
-The morphism property: join on MachinePhase (c₁ is absorbing) corresponds to
-multiplication on ℤ_[2] (0 is absorbing). Both structures have the same absorbing
-element pattern: c₁ absorbs all joins, 0 absorbs all products.
+snapEmbed sends the snap state c₁ to 0 in ℤ_[2] and the pre-snap state c₀ to 1 (`snapEmbed_c1`,
+`snapEmbed_c0`), carrying join on MachinePhase to multiplication on ℤ_[2] (`snapEmbed_mul_morphism`).
+Long form: `ZeroParadox/Ordinal/Incompleteness.md`.
 -/
 
 /-- The canonical type bridge: pre-snap (initial) maps to 1, snap state (running) maps to 0. -/
