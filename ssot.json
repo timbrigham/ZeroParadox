@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1768,
-        "files": 151
+        "declarations": 1772,
+        "files": 152
       },
       "entries": [
         {
@@ -35622,6 +35622,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8c5f938a-8a91-4296-bca8-9a93e0e683f6",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.range_iterate_boundaryDouble",
+            "short": "range_iterate_boundaryDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.range_iterate_boundaryDouble",
+            "short": "range_iterate_boundaryDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "PoleCompletion.lean (2026-10-01): k iterates of boundaryDouble put k zeros in front; image = depth-k cell around botEnd; intersection of images = {botEnd}. Promoted from probes_2026-10-01/native_probe.lean (X1, X3, X4); choice-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8cb8c208-9132-4981-83a4-090639428747",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -44101,6 +44140,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ae63f656-de3e-4f7c-a02a-f0f44eb2aa74",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boundaryCell",
+            "short": "boundaryCell"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boundaryCell",
+            "short": "boundaryCell",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PoleCompletion.lean (2026-10-01): k iterates of boundaryDouble put k zeros in front; image = depth-k cell around botEnd; intersection of images = {botEnd}. Promoted from probes_2026-10-01/native_probe.lean (X1, X3, X4); choice-free.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56404,6 +56482,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "df854703-7af2-4772-9313-a65b07a38df8",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.iterate_boundaryDouble",
+            "short": "iterate_boundaryDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.iterate_boundaryDouble",
+            "short": "iterate_boundaryDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PoleCompletion.lean (2026-10-01): k iterates of boundaryDouble put k zeros in front; image = depth-k cell around botEnd; intersection of images = {botEnd}. Promoted from probes_2026-10-01/native_probe.lean (X1, X3, X4); choice-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "df85e2b7-3659-40b1-9e62-4110cfd8b65b",
           "new": {
@@ -61431,6 +61546,45 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f350ed48-ee80-4da2-adc0-e5ba86bda360",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.iInter_range_iterate_boundaryDouble",
+            "short": "iInter_range_iterate_boundaryDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.iInter_range_iterate_boundaryDouble",
+            "short": "iInter_range_iterate_boundaryDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "PoleCompletion.lean (2026-10-01): k iterates of boundaryDouble put k zeros in front; image = depth-k cell around botEnd; intersection of images = {botEnd}. Promoted from probes_2026-10-01/native_probe.lean (X1, X3, X4); choice-free.",
           "verify": {
             "axioms": null,
             "sorry_free": true
