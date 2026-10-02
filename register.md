@@ -19,8 +19,8 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-J Wheel Addendum | v1.8 | ZP-J_Wheel_Addendum.pdf | v1.6 | N/— | formal:2be7f9c9 comp:5f817977 |
 | ZP-J Keystone Addendum | v1.20 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:a52a2ebc |
 | ZP-K Computational Grounding | v1.24 | ZP-K_Computational_Grounding.pdf | v1.22 | N/— | formal:1a307934 comp:ce5fd785 |
-| ZP-L Incomputability Convergence | v1.22 | ZP-L_Incomputability_Convergence.pdf | v1.16 | N/— | formal:7c90b72c comp:5542de7f |
-| ZP-M Kleene-Ordinal Bridge | v1.8 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.7 | N/— | formal:988ec5ab comp:ea60a38d |
+| ZP-L Incomputability Convergence | v1.22 | ZP-L_Incomputability_Convergence.pdf | v1.16 | N/— | formal:21af18a2 comp:5542de7f |
+| ZP-M Kleene-Ordinal Bridge | v1.8 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.7 | N/— | formal:7d44caaf comp:ea60a38d |
 | ZP-N The Constructive Snap | v2.0 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:5011bb68 |
 | ZP-P The Fixed-Point Fork | v1.24 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:4b914ac3 |
 | ZP-R Cross-Category Fixed Point | v1.6 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:cfe3495f |
