@@ -45,4 +45,3 @@ does **not** prove it.
    (no lattice ascent on `ℤ_[2]` to 0). The two are co-witnessed and connected by `towerNONote` — and
    the residual literal `ε₀ = 0` stays a **type boundary**, never a Lean `=`. Built in the spirit of
    `zpm_triangle` (`Ordinal/Incompleteness.lean`), which co-witnesses without a type identity.
-
