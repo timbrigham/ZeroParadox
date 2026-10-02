@@ -220,7 +220,8 @@ open ZeroParadox
 #print axioms selfCopyRef_of_equiv_nat
 #print axioms boundaryDouble_selfCopyRef
 -- The finite half re-proved without `Classical.choice` (list pigeonhole over a `Fintype` enumeration):
--- the ACCIDENTAL classification of `no_selfCopyRef_of_finite`'s footprint, for `[Fintype] [DecidableEq]`.
+-- ACCIDENTAL for the `[Fintype] [DecidableEq]` statement, whose Mathlib route reports choice. The
+-- `[Finite]` statement `no_selfCopyRef_of_finite` is not re-proved here and stays UNCLASSIFIED.
 #print axioms no_selfCopyRef_of_fintype
 #print axioms orbit_reaches_unique_periodic_of_finite
 #print axioms doubling_only_periodic_point_zero
