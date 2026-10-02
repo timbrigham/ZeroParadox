@@ -1,7 +1,7 @@
 """
 Zero Paradox — ZP-M: Kleene-Ordinal Bridge PDF Builder
 Version 1.8 | October 2026
-v1.8: TYPE-BRIDGE ABSENCE CLAIM RETIRED (Tim ruling, 2026-10-01). The Identification Conjecture remark said ZPSemilattice morphisms between Ordinal and MachinePhase are not defined in this library. The canonical threshold map Ordinal to MachinePhase exists and is order-non-decreasing (snap_map_mono), and no map Ordinal to MachinePhase is compatible with the CNF to Z2 map along the tower: through snapEmbed the square fails at every stage n >= 1 (the examples after c1_epsilon_zero_identification in ZeroParadox/Ordinal/Gentzen.lean, and in ZeroParadox/Ordinal/Incompleteness.lean section II). The remark now says so.
+v1.8: TYPE-BRIDGE ABSENCE CLAIM RETIRED (Tim ruling, 2026-10-01). The Identification Conjecture remark said ZPSemilattice morphisms between Ordinal and MachinePhase are not defined in this library. The canonical threshold map Ordinal to MachinePhase exists and is order-non-decreasing (snap_map_mono), and no map Ordinal to MachinePhase is compatible with the CNF to Z2 map along the tower: through snapEmbed the square fails at every stage n >= 1 (the examples after c1_epsilon_zero_identification in ZeroParadox/Ordinal/Gentzen.lean, and in ZeroParadox/Ordinal/Incompleteness.lean section II). The remark now says so. Gate round 1 fixes (2026-10-02): the square-fails sentence gains its reason (two values against tower images of pairwise distinct valuation, O4), and the dangling 'deferred to section V (future work)' now routes the choice question to ZeroParadox/Ordinal/SyntacticCollapse.lean as a separate open question (ED1-2/O6).
 v1.7: ZPK-BED SWEEP (Tim rulings, 2026-09-19). The Axiom Purity box carried the third rendered statement of the axiom-provenance rule - "Classical.choice is carried by the statements' types" - which ZP-K Section IV stopped stating this same day, because five successive general rules about this one Classical.choice were all measured false. It now names the mechanism it can back (the Denumerable Code instance) and points at Section IV's dated measurement table. ⚠ Line 400's "Classical.choice is load-bearing in the ordinal fixed-point (nfp)" is UNTOUCHED and NOT a defect: it is licensed by ZeroParadox/Ordinal/OrdinalChoiceEssential.lean, a reviewer filed it and WITHDREW it, and the withdrawal is the recorded lesson. Located by an axis-varied sweep of the RENDERED PDFs; two earlier gates saw it and correctly scoped it out.
 v1.6: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box said the choice in the computability fixed point belongs to ZP-K's instance. Measured: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and a computable constant-code instance carries it too; Classical.choose is what makes machinePhaseKleene noncomputable; essentiality is not measured. The ordinal half of the box is unchanged.
 v1.5: DA-1/KLEENE CLASS, GATE ROUND 4 SECOND PASS (Tim ruling, 2026-09-15): the verification box said Classical.choice is load-bearing in the computability fixed point; the choice there belongs to ZP-K's instance (its choice of botCode), and a computable instance with a constant code also exists. The ordinal half of the sentence is unchanged.
@@ -157,13 +157,15 @@ def build():
             'map Ordinal &#8594; MachinePhase is order-non-decreasing in ZP-A\'s join order '
             '(snap_map_mono), and no map Ordinal &#8594; MachinePhase is compatible with the '
             'CNF &#8594; &#8484;&#8322; map along the tower: through snapEmbed the square fails '
-            'at every stage n &#8805; 1 (the examples after c1_epsilon_zero_identification in '
+            'at every stage n &#8805; 1, because MachinePhase has two values while the tower '
+            'images have pairwise distinct 2-adic valuations; stage n maps to 2^n, of valuation '
+            'n, which is neither 1 nor 0 (the examples after c1_epsilon_zero_identification in '
             'ZeroParadox/Ordinal/Gentzen.lean, and in ZeroParadox/Ordinal/Incompleteness.lean '
             '&#167; II).',
             'What the bridge achieves: c&#8321; (the snap state assigned at &#949;&#8320;) '
             'maps to 0 (the 2-adic limit) under snapEmbed. The triangle is formally exhibited. '
-            'The conjectured stronger bridge &#8212; Classical.choice forced by ZP metric '
-            'collapse &#8212; is deferred to §V (future work).',
+            'Whether Classical.choice is forced by the ZP metric collapse is a separate open '
+            'question (ZeroParadox/Ordinal/SyntacticCollapse.lean).',
         ]
     ))
     E.append(sp(6))

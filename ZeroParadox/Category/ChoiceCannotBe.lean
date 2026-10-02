@@ -355,6 +355,11 @@ proved about where choice does work. -/
 #check @ZeroParadox.no_snap_nucleus
 #check @ZeroParadox.idNucleus
 
+-- Statement: every infinite type carries a `SelfCopyRef` map; measured with `Classical.choice`, UNCLASSIFIED.
+-- Cited, not claimed: in set theory without choice the analogue is unprovable, dependent choice suffices
+-- (Banakh, arXiv:2006.01613v4, Prop. 43.12, Rem. 43.14).
+#check @ZeroParadox.exists_selfCopyRef_of_infinite
+
 -- The choice fragment is NON-VACUOUS: `Classical.choice` supplies it. Without this, `em_of_choiceFragment`
 -- could be dismissed as an implication with an unsatisfiable hypothesis. Classical by construction —
 -- it is the SOURCE end of the arrow.

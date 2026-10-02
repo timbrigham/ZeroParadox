@@ -76,7 +76,7 @@ example (s t : Ordinal) (hs : s ≤ ε₀) (ht : ε₀ < t) :
   rw [nfp_seed_independent_below_epsilon0 s hs]
   exact ne_of_lt (lt_of_lt_of_le ht (Ordinal.le_nfp _ t))
 
-/-- **`Statement:` every seed in `(ε_o, ε_(o+1)]` reaches `ε_(o+1)`.** Veblen's Corollary 1 clause (B);
+/-- **`Statement:` every seed in `(ε_o, ε_(o+1)]` reaches `ε_(o+1)`.** Veblen's Corollary 1 to Theorem 4, clause (B);
 see `ZeroParadox/Ordinal/Epsilon0LeastFP.md`. -/
 theorem nfp_seed_successor_cell (o s : Ordinal) (h1 : Ordinal.epsilon o < s)
     (h2 : s ≤ Ordinal.epsilon (Order.succ o)) :
