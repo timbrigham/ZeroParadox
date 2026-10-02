@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1757,
-        "files": 150
+        "declarations": 1774,
+        "files": 153
       },
       "entries": [
         {
@@ -1611,6 +1611,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "031d0a5b-92cd-49f3-92bb-01c8003bcc63",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfCopyRef_of_equiv_nat",
+            "short": "selfCopyRef_of_equiv_nat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfCopyRef_of_equiv_nat",
+            "short": "selfCopyRef_of_equiv_nat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10607,6 +10644,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "25c40c75-c045-46c5-bcc2-4a02d60ecb31",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nfp_seed_successor_cell",
+            "short": "nfp_seed_successor_cell"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nfp_seed_successor_cell",
+            "short": "nfp_seed_successor_cell",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-01): seed basins of nfp (omega^.) beyond epsilon-zero — successor cell (eps_o, eps_(o+1)] lands on eps_(o+1) (Veblen 1908 Cor. 1 clause B); at a limit index only eps_o itself seeds eps_o. From probes_2026-10-01 (B2) plus new limit-rung proof.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "25d4b4fa-bbe2-446e-9668-41dc102366cc",
           "new": {
             "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
@@ -10920,6 +10996,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "270c2a3f-866b-43c4-a41b-08d8a52b78f0",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.SelfCopyRef",
+            "short": "SelfCopyRef"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.SelfCopyRef",
+            "short": "SelfCopyRef",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13852,6 +13965,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "324f6705-98ee-41e2-8076-bbd6e123e52c",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_selfCopyRef_of_finite",
+            "short": "no_selfCopyRef_of_finite"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_selfCopyRef_of_finite",
+            "short": "no_selfCopyRef_of_finite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18251,6 +18401,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "453d5650-98e3-4277-bf05-ceeb2f2b9d2a",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_selfCopyRef_of_fintype",
+            "short": "no_selfCopyRef_of_fintype"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_selfCopyRef_of_fintype",
+            "short": "no_selfCopyRef_of_fintype",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25831,6 +26018,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6409acb6-bc0d-4cbb-9130-1d9c15a2fc47",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_selfCopyRef_of_infinite",
+            "short": "exists_selfCopyRef_of_infinite"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_selfCopyRef_of_infinite",
+            "short": "exists_selfCopyRef_of_infinite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "640b9ef1-4939-4cd8-af29-f5401b21231e",
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
@@ -27361,6 +27585,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6a825d94-1383-49f9-913a-437847e72dda",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.orbit_reaches_unique_periodic_of_finite",
+            "short": "orbit_reaches_unique_periodic_of_finite"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.orbit_reaches_unique_periodic_of_finite",
+            "short": "orbit_reaches_unique_periodic_of_finite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35400,6 +35661,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8c5f938a-8a91-4296-bca8-9a93e0e683f6",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.range_iterate_boundaryDouble",
+            "short": "range_iterate_boundaryDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.range_iterate_boundaryDouble",
+            "short": "range_iterate_boundaryDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "PoleCompletion.lean (2026-10-01): k iterates of boundaryDouble put k zeros in front; image = depth-k cell around botEnd; intersection of images = {botEnd}. Promoted from probes_2026-10-01/native_probe.lean (X1, X3, X4); choice-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8cb8c208-9132-4981-83a4-090639428747",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -38782,6 +39082,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "99640b46-9af2-4505-b346-a281c2ebbd01",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boundaryDouble_selfCopyRef",
+            "short": "boundaryDouble_selfCopyRef"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boundaryDouble_selfCopyRef",
+            "short": "boundaryDouble_selfCopyRef",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43849,6 +44189,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ae63f656-de3e-4f7c-a02a-f0f44eb2aa74",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boundaryCell",
+            "short": "boundaryCell"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boundaryCell",
+            "short": "boundaryCell",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PoleCompletion.lean (2026-10-01): k iterates of boundaryDouble put k zeros in front; image = depth-k cell around botEnd; intersection of images = {botEnd}. Promoted from probes_2026-10-01/native_probe.lean (X1, X3, X4); choice-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ae6933a6-5bf9-4c76-8c2c-63e9d366830b",
           "new": {
@@ -45235,6 +45614,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b3b96bfa-0f67-4b01-95ec-995f80867210",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.infinite_iff_exists_selfCopyRef",
+            "short": "infinite_iff_exists_selfCopyRef"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.infinite_iff_exists_selfCopyRef",
+            "short": "infinite_iff_exists_selfCopyRef",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50482,6 +50898,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c94c69fc-5b51-43d9-bb85-d822be7c888c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.seed_eq_of_nfp_eq_epsilon_limit",
+            "short": "seed_eq_of_nfp_eq_epsilon_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.seed_eq_of_nfp_eq_epsilon_limit",
+            "short": "seed_eq_of_nfp_eq_epsilon_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-01): seed basins of nfp (omega^.) beyond epsilon-zero — successor cell (eps_o, eps_(o+1)] lands on eps_(o+1) (Veblen 1908 Cor. 1 clause B); at a limit index only eps_o itself seeds eps_o. From probes_2026-10-01 (B2) plus new limit-rung proof.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56105,6 +56560,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "df854703-7af2-4772-9313-a65b07a38df8",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.iterate_boundaryDouble",
+            "short": "iterate_boundaryDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.iterate_boundaryDouble",
+            "short": "iterate_boundaryDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PoleCompletion.lean (2026-10-01): k iterates of boundaryDouble put k zeros in front; image = depth-k cell around botEnd; intersection of images = {botEnd}. Promoted from probes_2026-10-01/native_probe.lean (X1, X3, X4); choice-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "df85e2b7-3659-40b1-9e62-4110cfd8b65b",
           "new": {
@@ -60119,6 +60611,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ee74cedd-b8f2-467d-adc3-5b2f8abecdc2",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natSCR",
+            "short": "natSCR"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natSCR",
+            "short": "natSCR",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ee7ee3f7-26bc-4b39-a50d-f819bddeed65",
           "new": {
@@ -60738,6 +61267,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f2088fe4-3af1-4bd4-b4e3-675fe1b32836",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natSCR_selfCopyRef",
+            "short": "natSCR_selfCopyRef"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natSCR_selfCopyRef",
+            "short": "natSCR_selfCopyRef",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f24705f5-ee8f-4bf6-a8a3-2cf8aad06ad1",
           "new": {
             "file": "ZeroParadox/Valuation/PadicCharacter.lean",
@@ -61068,6 +61634,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f350ed48-ee80-4da2-adc0-e5ba86bda360",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.iInter_range_iterate_boundaryDouble",
+            "short": "iInter_range_iterate_boundaryDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PoleCompletion.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.iInter_range_iterate_boundaryDouble",
+            "short": "iInter_range_iterate_boundaryDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "PoleCompletion.lean (2026-10-01): k iterates of boundaryDouble put k zeros in front; image = depth-k cell around botEnd; intersection of images = {botEnd}. Promoted from probes_2026-10-01/native_probe.lean (X1, X3, X4); choice-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f39ee72c-1b8c-48c7-9860-0c9107bd469b",
           "new": {
@@ -61202,6 +61807,45 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f4218e17-7dbf-48e4-a405-714214d9ba14",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_only_periodic_point_zero",
+            "short": "doubling_only_periodic_point_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/SelfCopyReference.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.doubling_only_periodic_point_zero",
+            "short": "doubling_only_periodic_point_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
           "verify": {
             "axioms": null,
             "sorry_free": true

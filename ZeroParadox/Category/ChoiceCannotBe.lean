@@ -10,6 +10,7 @@ import ZeroParadox.Computability.ChoicePurityInvariant
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Ordinal.OrdinalChoiceEssential
 import ZeroParadox.Category.LawvereTaboo
+import ZeroParadox.Computability.SelfCopyReference
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -237,6 +238,15 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 -- The μ side of the same fork, emptiness witnessed by the bare inductive `WType` eliminator: NO axioms,
 -- strictly tighter than the earlier `fix_isEmpty` (`[propext, Quot.sound]`).
 #check @ZeroParadox.fix_isEmpty_constructive
+
+-- Statement: `boundaryDouble` is one-to-one, not onto, with unique fixed point `botEnd`; measured
+-- `[propext, Quot.sound]`.
+#check @ZeroParadox.boundaryDouble_selfCopyRef
+-- Statement: along a GIVEN `α ≃ ℕ`, a `SelfCopyRef` map exists on `α`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.selfCopyRef_of_equiv_nat
+-- Statement: an ACCIDENTAL case — over `[Fintype] [DecidableEq]` no `SelfCopyRef` map exists, re-proved at
+-- `[propext, Quot.sound]`; Mathlib's `Finite.injective_iff_surjective` route reports `Classical.choice`.
+#check @ZeroParadox.no_selfCopyRef_of_fintype
 
 /-! ## § II. What choice is NOT to be confused with — the excluded-middle boundary
 
