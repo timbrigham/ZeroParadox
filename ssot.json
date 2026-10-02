@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1772,
-        "files": 152
+        "declarations": 1774,
+        "files": 153
       },
       "entries": [
         {
@@ -10633,6 +10633,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "25c40c75-c045-46c5-bcc2-4a02d60ecb31",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nfp_seed_successor_cell",
+            "short": "nfp_seed_successor_cell"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.nfp_seed_successor_cell",
+            "short": "nfp_seed_successor_cell",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-01): seed basins of nfp (omega^.) beyond epsilon-zero — successor cell (eps_o, eps_(o+1)] lands on eps_(o+1) (Veblen 1908 Cor. 1 clause B); at a limit index only eps_o itself seeds eps_o. From probes_2026-10-01 (B2) plus new limit-rung proof.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50859,6 +50898,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c94c69fc-5b51-43d9-bb85-d822be7c888c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.seed_eq_of_nfp_eq_epsilon_limit",
+            "short": "seed_eq_of_nfp_eq_epsilon_limit"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.seed_eq_of_nfp_eq_epsilon_limit",
+            "short": "seed_eq_of_nfp_eq_epsilon_limit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-01): seed basins of nfp (omega^.) beyond epsilon-zero — successor cell (eps_o, eps_(o+1)] lands on eps_(o+1) (Veblen 1908 Cor. 1 clause B); at a limit index only eps_o itself seeds eps_o. From probes_2026-10-01 (B2) plus new limit-rung proof.",
           "verify": {
             "axioms": null,
             "sorry_free": true
