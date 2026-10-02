@@ -620,9 +620,7 @@ def build():
             'is not a well-formed statement; the formal link runs through maps: a canonical map '
             'Ordinal &#8594; MachinePhase and snapEmbed : MachinePhase &#8594; &#8484;&#8322;.',
             'What is proved: a canonical map Ordinal &#8594; MachinePhase assigns c&#8321; '
-            'exactly at &#949;&#8320; and nowhere earlier. What is not proved: were &#8484;&#8322; '
-            'given a ZPSemilattice structure, a canonical ZPSemilattice morphism MachinePhase &#8594; &#8484;&#8322; that would connect '
-            'ZPE\'s &#8869; = c&#8320; to ZPB\'s &#8869; = 0 formally.',
+            'exactly at &#949;&#8320; and nowhere earlier.',
             'Two of the three pieces such a bridge was expected to need are built, in ZPM '
             '(ZeroParadox/Ordinal/Incompleteness.lean &#167;I&#8211;&#167;II), and the third is '
             'not supplied by them:',
@@ -649,10 +647,7 @@ def build():
             '(ZeroParadox/Ordinal/Incompleteness.lean &#167; II). Whether Classical.choice is forced by '
             'the metric collapse is a separate open question (ZeroParadox/Ordinal/SyntacticCollapse.lean). '
             'The canonical witness (epsilon_zero_snap_canonical) '
-            'satisfies all five conditions without any such bridge; were &#8484;&#8322; given a '
-            'ZPSemilattice structure, what a ZPSemilattice morphism '
-            'MachinePhase &#8594; &#8484;&#8322; would add is a formal link between ZPE\'s '
-            '&#8869; = c&#8320; and ZPB\'s &#8869; = 0.',
+            'satisfies all five conditions without any such bridge.',
         ]
     ))
     E.append(sp(6))

@@ -263,8 +263,10 @@ def build():
             '&#8869; and &#949;<sub>0</sub> respectively &#8212; a role assignment the framework '
             'already carries (MC-1 family membership; the cross-type &#949;<sub>0</sub> identity is '
             'ill-typed, not open: the same category error cnf_bridge_type_boundary fences for '
-            'Ordinal vs &#8484;<sub>2</sub>, with the link running through maps), not a fresh one. The two endpoints stay distinct: '
-            '&#949;<sub>0</sub> &#8800; &#8869; (epsilon0_ne_bot). The floor endpoint '
+            'Ordinal vs &#8484;<sub>2</sub>, with the link running through maps), not a fresh one. The two endpoints stay distinct, '
+            'and &#949;<sub>0</sub> never fills the bottom role: in the ordinal chart the role is '
+            'filled by 0, and &#949;<sub>0</sub> &#8800; 0 (epsilon0_ne_bot); in Phase the floor and '
+            'up &#949;<sub>0</sub> are different constructors. The floor endpoint '
             'is tied to the real &#8869; of ZP (floor_not_wellFounded, axiom-free); the single-carrier '
             'Phase is the illustrative toy model, where non-well-foundedness localizes at the floor by '
             'construction.',
