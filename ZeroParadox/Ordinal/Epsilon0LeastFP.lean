@@ -17,7 +17,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview
 **Result: CONFIRMED.** ε₀ is the least fixed point of `α ↦ ω^α` — positionally the FIRST, never a
 "ceiling" or "a large ordinal". ⚠ Least in the FIXED-POINT order, **not** order-adjacency: ordinals sit
-strictly between ⊥ and ε₀. Which order, Veblen's Corollary 1, and the traps: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`.
+strictly between ⊥ and ε₀. Which order, Veblen's Corollary 1 to Theorem 4, and the traps: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`.
 -/
 
 namespace ZeroParadox
@@ -76,7 +76,8 @@ example (s t : Ordinal) (hs : s ≤ ε₀) (ht : ε₀ < t) :
   rw [nfp_seed_independent_below_epsilon0 s hs]
   exact ne_of_lt (lt_of_lt_of_le ht (Ordinal.le_nfp _ t))
 
-/-- **`Statement:` every seed in `(ε_o, ε_(o+1)]` reaches `ε_(o+1)`.** Veblen's Corollary 1 to Theorem 4, clause (B);
+/-- **`Statement:` every seed in `(ε_o, ε_(o+1)]` reaches `ε_(o+1)`.** Veblen's Corollary 1 to Theorem 4, clause (B),
+which is strict, together with the trivial endpoint `s = ε_(o+1)` (`Ordinal.nfp_le_fp`);
 see `ZeroParadox/Ordinal/Epsilon0LeastFP.md`. -/
 theorem nfp_seed_successor_cell (o s : Ordinal) (h1 : Ordinal.epsilon o < s)
     (h2 : s ≤ Ordinal.epsilon (Order.succ o)) :

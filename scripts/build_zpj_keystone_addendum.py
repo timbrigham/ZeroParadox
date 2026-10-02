@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.19 | September 2026
+Version 1.20 | October 2026
+v1.20: OQ-E2 POINTER (Tim ruling, 2026-10-02: the type-level identity is ill-typed, not open; extend to all siblings): the Section III "Honest scope" box said the epsilon-0 type bridge was open under OQ-E2. OQ-E2 is the cardinality-semilattice correspondence, and the cross-type identity is not a well-formed statement; the box now says it is ill-typed, not open, the same category error cnf_bridge_type_boundary (ZeroParadox/Ordinal/CnfBridge.lean) fences for Ordinal vs Z2, with the link running through maps.
 v1.19: GATE ROUND 2 ON v1.18 (Tim rulings, 2026-09-29): "machine-checked" is scoped everywhere it still covered the whole document: the preamble calls this a record of two investigations "machine-checked except where marked cited", the introduction says that where a result is cited rather than re-proved the text says so, and the endnote carries the same qualifier. The Section II computability box heading and verdict name the multi-valued form of the Lawvere instance (Bauer Thm 5.2), and the box says excluded middle fails in synthetic computability. The "In Set" box states the measured footprint of the face verdicts nontrivial_lattice_no_witness and q2_no_witness, [propext, Classical.choice, Quot.sound]; the Section IV box says "the same Lean adapter". The v1.16 line's "p. 10", removed in v1.17, is restored: changelog lines record what shipped.
 v1.18: SCOPE OF "MACHINE-CHECKED" (Tim rulings, 2026-09-29): the Section II heading now reads "The Lawvere Face-Split (Set face machine-checked; computability face cited)", and the Section II verdict marks the effective-category instance as cited (Bauer 2017), with Lean proving Rogers' theorem classically; matching CLAIMS.md and README.md. Every box is now kept on one page (a KeepTogether on each, including "What the Zero Paradox adds"), so no box header repeats across a page break.
 v1.17: GATE ROUND 1 ON v1.16 (Tim rulings, 2026-09-29): the Section IV box no longer reads as crediting Bourbaki-Witt to Markowsky; it says the classical route through Mathlib's Bourbaki-Witt theorem is kept, is Markowsky's for the least fixed point (Algebra Universalis 6 (1976), Thm 9(i), proved there without choice), and that the same adapter gives the induction, with the Classical.choice footprint attached to these Lean proofs. The Bauer citation now carries its venue (Tbilisi Math. J. 10(3), 2017) and drops the preprint page number, and says he works in synthetic computability, whose axioms hold in Hyland's effective topos. "Genuine instance" is scoped: the Section II box heading says the instance is cited and that Lean proves Rogers' theorem classically, a new sentence says the Lawvere-form derivation lives inside synthetic computability, where excluded middle is not assumed, and the introduction says the Set face is machine-checked and the computability face cited. The endnote's Lean sources add ZeroParadox/Category/DiagonalWitness.lean, which the Section II box points at. The "Honest scope" box and the endnote are each kept on one page.
@@ -33,7 +34,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -260,8 +261,9 @@ def build():
             'No new commitment: that the snap <i>is</i> this crossing is a faithful model whose '
             'content is the two proven endpoints, plus the reading of those endpoints as ZP\'s own '
             '&#8869; and &#949;<sub>0</sub> respectively &#8212; a role assignment the framework '
-            'already carries (MC-1 family membership; the &#949;<sub>0</sub> type bridge open under '
-            'OQ-E2), not a fresh one. The two endpoints stay distinct: '
+            'already carries (MC-1 family membership; the cross-type &#949;<sub>0</sub> identity is '
+            'ill-typed, not open: the same category error cnf_bridge_type_boundary fences for '
+            'Ordinal vs &#8484;<sub>2</sub>, with the link running through maps), not a fresh one. The two endpoints stay distinct: '
             '&#949;<sub>0</sub> &#8800; &#8869; (epsilon0_ne_bot). The floor endpoint '
             'is tied to the real &#8869; of ZP (floor_not_wellFounded, axiom-free); the single-carrier '
             'Phase is the illustrative toy model, where non-well-foundedness localizes at the floor by '
