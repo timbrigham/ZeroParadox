@@ -181,6 +181,25 @@ example (φ : Ordinal → MachinePhase) (h0 : ∀ n : ℕ, φ (fundamentalSeq n)
 example : Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop
     (nhds (snapEmbed c₁)) := by
   rw [snapEmbed_c1]; exact tower_converges_to_zero
+-- `Statement:` for every φ, `snapEmbed ∘ φ ∘ repr` disagrees with `cnfToZp2` at every tower stage n ≥ 1:
+-- `snapEmbed` takes only the values 1 and 0, and stage n ≥ 1 encodes as 2^n, which is neither.
+example (φ : Ordinal → MachinePhase) (n : ℕ) (hn : 1 ≤ n) :
+    snapEmbed (φ (NONote.repr (towerNONote n))) ≠ cnfToZp2 (towerNONote n) := by
+  intro h
+  have hv := cnfToZp2_tower_valuation n
+  rw [← h] at hv
+  rcases hφ : φ (NONote.repr (towerNONote n)) with _ | _ <;> rw [hφ] at hv <;>
+    simp [snapEmbed] at hv <;> omega
+-- `Statement:` under `h0` the disagreement holds at stage 0 too: there `snapEmbed c₀ = 1` and `cnfToZp2 0 = 0`.
+example (φ : Ordinal → MachinePhase) (h0 : ∀ n : ℕ, φ (fundamentalSeq n) = c₀) (n : ℕ) :
+    snapEmbed (φ (NONote.repr (towerNONote n))) ≠ cnfToZp2 (towerNONote n) := by
+  rw [towerNONote_repr, h0, snapEmbed_c0]
+  intro h
+  rcases n with _ | n
+  · exact one_ne_zero (h.trans cnfToZp2_zero)
+  · have hv := cnfToZp2_tower_valuation (n + 1)
+    rw [← h, PadicInt.valuation_one] at hv
+    omega
 
 /-! ## §III. The Kleene–Ordinal Triangle
 

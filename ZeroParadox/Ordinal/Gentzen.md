@@ -91,6 +91,40 @@ The valuation and convergence results in this section are fully in Lean scope:
 - `towerNONote n` lifts each fundamentalSeq n to a NONote via NONote.oadd
 - The valuation formula is proved by induction using PadicInt.valuation_pow
 
+## § V. Ordinal Tower Limit and ZPB Pre-image
+
+Moved from `ZeroParadox/Ordinal/Gentzen.lean` § V (2026-10-01), carried in the same accepted-defect baseline as § VI, so the warning above applies to it too.
+
+What this does NOT claim:
+  - Gentzen's theorem: that ε₀ is the proof-theoretic ordinal of PA (not claimed)
+  - Any statement about formal provability in PA
+  - A "solution" to the continuum hypothesis or other independent questions
+  - Anything outside the structural identification of the snap with the ordinal limit
+  - That ε₀ is the UNIQUE minimal snap boundary: snap_threshold_is_epsilon_zero
+    shows no ordinal below ε₀ works (for maps satisfying the stated hypotheses),
+    but does not rule out maps satisfying those hypotheses that snap at some ordinal
+    strictly above ε₀
+  - That the snap threshold result applies to all maps Ordinal → MachinePhase,
+    regardless of the monotonicity and tower-alignment hypotheses
+
+What is proved here (§ III + § IV + §V):
+  - Ordinal: ε₀ = sup{(ω^·)^[n] 0 | n : ℕ}, every finite stage strictly below ε₀
+  - ZPB: cnfToZp2(towerNONote n).valuation = n; for n ≥ 1, cnfToZp2(towerNONote n) = 2^n
+    in ℤ_[2]; norm = ‖2‖^n → 0, so the tower encodings converge to 0 = ⊥ in ℤ_[2]
+    (tower_converges_to_zero)
+  - Cofinality: the fundamental sequence is cofinal in ε₀ — for any α < ε₀,
+    some tower stage exceeds α (fundamentalSeq_cofinal)
+  - Snap lower bound: any order-non-decreasing φ that maps all tower stages to c₀
+    maps every ordinal below ε₀ to c₀ (snap_threshold_is_epsilon_zero). This is a
+    lower bound on the snap threshold, not a uniqueness result. A witness snapping
+    exactly at ε₀ is provided by c1_epsilon_zero_identification.
+
+The bridge to ZPE's MachinePhase: the canonical threshold map is order-non-decreasing
+(`snap_map_mono`); no φ : Ordinal → MachinePhase and g : MachinePhase → ℤ_[2] make `g ∘ φ`
+agree with `cnfToZp2` along the tower (the `example` after `c1_epsilon_zero_identification`).
+Through `snapEmbed` the two disagree at every stage n ≥ 1, and the stages' `cnfToZp2` images
+tend to `snapEmbed c₁` = 0 (`ZeroParadox/Ordinal/Incompleteness.lean` § II).
+
 ## § VI. Kleene-Ordinal Fixed-Point Bridge
 
 The ordinal fixed-point structure (ε₀ = nfp (ω^·) 0, ω^ε₀ = ε₀) and the computational

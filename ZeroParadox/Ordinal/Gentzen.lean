@@ -278,33 +278,11 @@ theorem tower_converges_to_zero :
 
 /-! ## § V. Ordinal Tower Limit and ZPB Pre-image
 
-What this does NOT claim:
-  - Gentzen's theorem: that ε₀ is the proof-theoretic ordinal of PA (not claimed)
-  - Any statement about formal provability in PA
-  - A "solution" to the continuum hypothesis or other independent questions
-  - Anything outside the structural identification of the snap with the ordinal limit
-  - That ε₀ is the UNIQUE minimal snap boundary: snap_threshold_is_epsilon_zero
-    shows no ordinal below ε₀ works (for maps satisfying the stated hypotheses),
-    but does not rule out maps satisfying those hypotheses that snap at some ordinal
-    strictly above ε₀
-  - That the snap threshold result applies to all maps Ordinal → MachinePhase,
-    regardless of the monotonicity and tower-alignment hypotheses
+The canonical threshold map Ordinal → MachinePhase is order-non-decreasing (`snap_map_mono`);
+no φ : Ordinal → MachinePhase and g : MachinePhase → ℤ_[2] make `g ∘ φ` agree with `cnfToZp2`
+along the tower (the `example` after `c1_epsilon_zero_identification`).
 
-What is proved here (§ III + § IV + §V):
-  - Ordinal: ε₀ = sup{(ω^·)^[n] 0 | n : ℕ}, every finite stage strictly below ε₀
-  - ZPB: cnfToZp2(towerNONote n).valuation = n; for n ≥ 1, cnfToZp2(towerNONote n) = 2^n
-    in ℤ_[2]; norm = ‖2‖^n → 0, so the tower encodings converge to 0 = ⊥ in ℤ_[2]
-    (tower_converges_to_zero)
-  - Cofinality: the fundamental sequence is cofinal in ε₀ — for any α < ε₀,
-    some tower stage exceeds α (fundamentalSeq_cofinal)
-  - Snap lower bound: any order-non-decreasing φ that maps all tower stages to c₀
-    maps every ordinal below ε₀ to c₀ (snap_threshold_is_epsilon_zero). This is a
-    lower bound on the snap threshold, not a uniqueness result. A witness snapping
-    exactly at ε₀ is provided by c1_epsilon_zero_identification.
-
-The remaining gap: connecting ZPE's MachinePhase element c₁ to the ordinal
-epsilonZero via a type bridge. The ordinal and ZPB sides are fully proved.
-The identification requires a morphism Ordinal → MachinePhase, not Gentzen. -/
+What is and is not claimed: `ZeroParadox/Ordinal/Gentzen.md`. -/
 
 /-- Tower-stage bound and fixed-point: every finite stage of the ε₀ tower is
     strictly below ε₀, and ω^ε₀ = ε₀. -/
@@ -315,9 +293,10 @@ theorem zpe_snap_ordinal_correspondence :
 
 /-- Tower-stage bound: every finite stage of the ε₀ fundamental sequence is
     strictly below ε₀. This is the proved ordinal component of the ZPB bridge;
-    the structural correspondence between epsilonZero and ZPE's c₁ is the
-    type-bridge gap stated in the section docstring above (a morphism
-    Ordinal → MachinePhase). -/
+    the canonical threshold map to ZPE's MachinePhase is order-non-decreasing
+    (`snap_map_mono`); no φ : Ordinal → MachinePhase and g : MachinePhase → ℤ_[2] make
+    `g ∘ φ` agree with `cnfToZp2` along the tower (the `example` after
+    `c1_epsilon_zero_identification`). -/
 theorem epsilonZero_tower_bound :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero := fun n => epsilonZero_tower_lt n
 
@@ -328,15 +307,29 @@ theorem epsilonZero_tower_bound :
     fundamentalSeq n < ε₀ (epsilonZero_tower_lt), so maps to c₀. ε₀ itself fails
     the strict inequality (lt_irrefl), so maps to c₁.
 
-    The stronger structural claim — an order-preserving morphism (Ordinal →o MachinePhase)
-    compatible with the CNF→ℤ_[2] encoding — remains outside Lean scope: no type bridge
-    between Ordinal and MachinePhase is defined in this library. -/
+    This map is order-non-decreasing (`snap_map_mono`); no φ : Ordinal → MachinePhase and
+    g : MachinePhase → ℤ_[2] make `g ∘ φ` agree with `cnfToZp2` along the tower (the `example` below). -/
 theorem c1_epsilon_zero_identification :
     ∃ (φ : Ordinal → MachinePhase),
       (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧ φ epsilonZero = c₁ :=
   ⟨fun α => if α < epsilonZero then c₀ else c₁,
    fun n => if_pos (epsilonZero_tower_lt n),
    if_neg (lt_irrefl epsilonZero)⟩
+
+-- `Statement:` no φ : Ordinal → MachinePhase and g : MachinePhase → ℤ_[2] make `g ∘ φ ∘ repr` agree
+-- with `cnfToZp2` along the tower: stages 1, 2, 3 have valuations 1, 2, 3, and MachinePhase has two values.
+example (φ : Ordinal → MachinePhase) (g : MachinePhase → ℤ_[2]) :
+    ¬ ∀ n : ℕ, g (φ (NONote.repr (towerNONote n))) = cnfToZp2 (towerNONote n) := by
+  intro h
+  have hv : ∀ n : ℕ, (g (φ (fundamentalSeq n))).valuation = n := fun n => by
+    rw [← towerNONote_repr, h, cnfToZp2_tower_valuation]
+  have h1 := hv 1
+  have h2 := hv 2
+  have h3 := hv 3
+  clear hv h
+  rcases hφ1 : φ (fundamentalSeq 1) with _ | _ <;> rcases hφ2 : φ (fundamentalSeq 2) with _ | _ <;>
+    rcases hφ3 : φ (fundamentalSeq 3) with _ | _ <;> rw [hφ1] at h1 <;> rw [hφ2] at h2 <;>
+    rw [hφ3] at h3 <;> omega
 
 /-- The fundamental sequence is cofinal in ε₀: for any ordinal below ε₀,
     some tower stage exceeds it.
