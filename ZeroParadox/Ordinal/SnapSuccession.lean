@@ -59,7 +59,7 @@ example (o x : Ordinal) (h1 : Ordinal.epsilon o < x) (h2 : x < Ordinal.epsilon (
 /-! ### § II. The succession is the ε-hierarchy, strictly climbing -/
 
 /-- The first rung of the succession is the framework's ε₀: `ε_ 0 = ε₀`. It is the snap's first
-    **target**, seeded at ⊥ — not a bottom (`ε₀ ≠ ⊥`, `epsilon0_ne_bot`). -/
+    **target**, seeded at ⊥ — not the ordinals' bottom (`ε₀ ≠ ⊥` in `Ordinal`, `epsilon0_ne_bot`). -/
 theorem succession_zero : Ordinal.epsilon 0 = epsilonZero := by
   rw [epsilon_eq_deriv, deriv_zero_right, ← Ordinal.bot_eq_zero]
   exact epsilon0_eq_nfp_bot.symm
