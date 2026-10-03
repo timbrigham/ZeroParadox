@@ -170,10 +170,13 @@ nontrivially, by ordinal well-founded induction. So "the snap is one crossing" i
 MODEL whose content is the two proven endpoints plus the reading of those endpoints as ZP's own ⊥ and ε₀
 respectively — and that reading is NOT a new commitment: it is a role assignment the framework already
 carries (for the ⊥ endpoint, MC-1 family membership; for the ε₀ endpoint, a theorem about the model
-itself: with the floor placed below the ascent (one of the two extreme placements,
-`phase_placement_extreme_iff`), the snap `up 0` is the floor's cover (`phase_floor_covBy_snap`) and
-`up ε₀` is the least closure landing strictly above the floor
-(`phase_epsilon0_isLeast_landing_above_floor`), so no cross-type identity is involved). Relative to the ordinals' floor, the bottom role is filled by 0 and the
+itself: with the floor placed below the ascent as the bottom of `WithBot Ordinal` (`phaseEquivWithBot`,
+`phase_floor_isBot`; one of the two extreme placements, `phase_placement_extreme_iff`), the snap
+`up 0` is the floor's cover (`phase_floor_covBy_snap`) and `up ε₀` is the least closure landing
+strictly above the floor (`phase_epsilon0_isLeast_landing_above_floor`); with the floor placed above
+as the top of `WithTop Ordinal`, the floor covers nothing (`phaseEquivWithTop_floor_covers_nothing`)
+and `up ε₀` is the least closure landing strictly above the snap
+(`phaseTop_epsilon0_isLeast_landing_above_snap`); so no cross-type identity is involved). Relative to the ordinals' floor, the bottom role is filled by 0 and the
 ε₀ role by `Ordinal.epsilon 0`, and the two occupants differ (`epsilon0_ne_bot`); relative to its own
 floor, that same ordinal fills the bottom role, as the first iterative bottom. The floor endpoint is
 tied to the lattice chart's ⊥ (`floor_not_wellFounded`, axiom-free); the
