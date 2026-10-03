@@ -95,7 +95,7 @@ section Epsilon0CannotBeIndex
 /-! ### § V. The 2-adic realization (`cnfToZp2` order-reversing; ε₀ ≠ 0 preserved, no identity) -/
 #check @ZeroParadox.snap_arc_z2_loop          -- start 0, ∀n≥1 ≠0, reapproach 0 (the loop)
 #check @ZeroParadox.mu_construction_correspondence  -- one tower, two carrier closures (ε₀ ; 0)
-#check @ZeroParadox.cnf_bridge_type_boundary  -- co-witness only; ε₀ = 0 never asserted (ill-typed)
+#check @ZeroParadox.cnf_bridge_type_boundary  -- co-witness only; ε₀ = 0 never asserted (it fails to elaborate, `Ordinal` vs `ℤ_[2]`)
 
 /-! ### § VI. The loop returns to a ⊥, never to ε₀ (the *successor* reading is a commitment) -/
 #check @ZeroParadox.t_iz_limit_is_new_null    -- role half only: (∀ x, join terminal x = x) → terminal = bot. No chain, no limit, no novelty in the statement; "a fresh instance" is the framework's reading, not this theorem

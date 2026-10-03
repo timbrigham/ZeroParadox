@@ -105,6 +105,11 @@ theorem phase_placement_extreme_iff {β : Type*} [LinearOrder β] (f : Phase →
     | floor => exact le_rfl
     | up o => exact (h o).le
 
+-- `Reading:` in the standard terminology the floor-least and floor-greatest placements are the empty
+-- cut `(∅, I)` and the full cut `(I, ∅)` of the ascent `I`, its two improper cuts, each realized by the
+-- one added element (Kuhlmann, Nart, "Cuts and small extensions of abelian ordered groups", arXiv
+-- 2109.12528 (2021): § 1 for the improper cuts, § 4.2 eq. (8) and Lemma 4.6 for one-element extensions).
+
 -- `Statement:` a middle placement: `floor ↦ 1`, `up 0 ↦ 0`, `up a ↦ a + 1` for `a ≠ 0`, injective
 -- and compatible with `phaseRel` on the ascent, puts the floor strictly between the snap `up 0` and
 -- `up 1`, so by `phase_placement_extreme_iff` its image is neither least nor greatest.
