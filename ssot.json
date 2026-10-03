@@ -632,7 +632,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1784,
+        "declarations": 1786,
         "files": 154
       },
       "entries": [
@@ -11043,6 +11043,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2728040e-7a2d-4449-8dfa-84aa9bb5657f",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.open_landing",
+            "short": "open_landing"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.open_landing",
+            "short": "open_landing",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UpAndOver corner field (Tim ruling 2026-10-02): moves and open_landing derived from corner as theorems",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2737ace2-c384-4e4e-a6a4-6f1929a3acbc",
           "new": {
@@ -18214,6 +18253,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "442c9548-fc03-4eb9-bf96-5425c98e416a",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.moves",
+            "short": "moves"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.moves",
+            "short": "moves",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UpAndOver corner field (Tim ruling 2026-10-02): moves and open_landing derived from corner as theorems",
           "verify": {
             "axioms": null,
             "sorry_free": true

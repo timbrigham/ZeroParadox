@@ -250,7 +250,7 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Relationship to Mathlib:** Has a `ClosureOperator` field; no Mathlib analog for the bundle
 
-**Reason:** Mathlib's `ClosureOperator` admits the identity closure and the constant-top closure, and says nothing about covers. This structure bundles one with two existential non-degeneracy fields, one of them a closed point that is not maximal, and a cover in the carrier order (`CovBy`) at every non-maximal closed point. The non-maximal closed point and its cover together refuse every densely ordered carrier (`isEmpty_of_denselyOrdered`): the ceiling map on ℝ is a closure operator that passes the other three fields and fails `cover`. Each field refuses a control in that file's section III.
+**Reason:** Mathlib's `ClosureOperator` admits the identity closure and the constant-top closure, and says nothing about covers. This structure bundles one with two fields: `corner`, a closed point with a cover in the carrier order (`CovBy`) that the closure moves, and `cover`, a cover at every non-maximal closed point. That some point moves and some closed point is not maximal are theorems (`UpAndOver.moves`, `UpAndOver.open_landing`). The cover in `corner` refuses every densely ordered carrier (`isEmpty_of_denselyOrdered`), so the ceiling map on ℝ, a closure operator, fails both fields. Each of `corner` and `cover` refuses a control in that file's section III that the other passes.
 
 ### `ProvabilityLogic` — `ZeroParadox/Settheory/Loeb.lean`
 

@@ -19,9 +19,9 @@ types, into the motions that it takes to get there.
 ---
 
 ## Formal Overview (AI-assisted)
-`UpAndOver α` bundles a Mathlib `ClosureOperator` (UP) with a carrier-order cover at each
-non-maximal landing (OVER) and two existential non-degeneracy fields, all data. § III refuses the
-degenerate carriers; § IV is the ordinal instance. Prior art and fences: `ZeroParadox/Order/UpAndOver.md`.
+`UpAndOver α` bundles a Mathlib `ClosureOperator` (UP) with a corner, a landing whose cover UP then
+moves, and a carrier-order cover at each non-maximal landing (OVER), all data. § III refuses the
+standing controls; § IV is the ordinal instance. Prior art and fences: `ZeroParadox/Order/UpAndOver.md`.
 -/
 
 namespace ZeroParadox
@@ -32,20 +32,19 @@ universe u
 
 /-! ### § I. The shape -/
 
-/-- `Statement:` a closure operator `up` on a partial order that moves some point, has a closed point
-    that is not maximal, and gives every non-maximal closed point a cover in the carrier order.
-    `Reading:` UP is `up`; OVER is the step from a landing to a cover of it. -/
+/-- `Statement:` a closure operator `up` on a partial order with a closed point `y` and a cover `b`
+    of `y` that `up` moves, and a cover in the carrier order at every non-maximal closed point.
+    `Reading:` UP is `up`; OVER is the step from a landing to a cover of it; `corner` is a place
+    where OVER then UP moves. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `ClosureOperator` admits the identity and the
--- constant-top closure and says nothing about covers; this bundles it with existential
--- non-degeneracy and a carrier-order cover at each non-maximal closed point. Together, a
--- non-maximal landing and its cover exclude every densely ordered carrier, ℝ with ceiling included.
+-- constant-top closure and says nothing about covers; this bundles it with a corner (a closed
+-- point whose cover the closure moves) and a carrier-order cover at each non-maximal closed point.
+-- The corner's cover excludes every densely ordered carrier, ℝ with ceiling included.
 structure UpAndOver (α : Type u) [PartialOrder α] where
   /-- The UP leg: a closure operator; its closed points are the landings. -/
   up : ClosureOperator α
-  /-- Some point is moved by `up`. -/
-  moves : ∃ x, up x ≠ x
-  /-- Some landing has something above it, so the OVER leg is asked at least once. -/
-  open_landing : ∃ y, up.IsClosed y ∧ ¬ IsMax y
+  /-- The corner: a landing `y` with a cover `b` that `up` moves, so OVER then UP moves. -/
+  corner : ∃ y b, up.IsClosed y ∧ y ⋖ b ∧ up b ≠ b
   /-- The OVER leg: every landing with something above it has a cover in the carrier order. -/
   cover : ∀ y, up.IsClosed y → ¬ IsMax y → ∃ b, y ⋖ b
 
@@ -55,12 +54,22 @@ variable {α : Type u} [PartialOrder α] (U : UpAndOver α)
 
 /-! ### § II. Derived facts -/
 
+/-- `Statement:` some point is moved by `up` (the corner's cover). -/
+theorem moves : ∃ x, U.up x ≠ x := by
+  obtain ⟨-, b, -, -, hb⟩ := U.corner
+  exact ⟨b, hb⟩
+
+/-- `Statement:` some landing is not maximal (the corner's landing). -/
+theorem open_landing : ∃ y, U.up.IsClosed y ∧ ¬ IsMax y := by
+  obtain ⟨y, b, hy, hb, -⟩ := U.corner
+  exact ⟨y, hy, not_isMax_of_lt hb.lt⟩
+
 -- `Statement:` the `cover` field is the corpus predicate `HasFirstStep`
 -- (`ZeroParadox/Reals/OrderedField.lean`), asked landing by landing.
 example {y : α} (hy : U.up.IsClosed y) (hmax : ¬ IsMax y) : HasFirstStep y := U.cover y hy hmax
 
 -- `Statement:` COINCIDENCE — one cover `y ⋖ b` in two charts: an atom of the up-set `Set.Ici y`
--- read from below (L), a coatom of the down-set `Set.Iic b` read from above (J).
+-- read from below, a coatom of the down-set `Set.Iic b` read from above.
 example {y b : α} (h : y ≤ b) :
     (y ⋖ b ↔ IsAtom (⟨b, h⟩ : Set.Ici y)) ∧ (y ⋖ b ↔ IsCoatom (⟨y, h⟩ : Set.Iic b)) :=
   ⟨covBy_iff_atom_Ici h, covBy_iff_coatom_Iic h⟩
@@ -93,29 +102,28 @@ example : ∃ y z, U.up.IsClosed y ∧ U.up.IsClosed z ∧ y ≠ z := by
   obtain ⟨b, -, hb, hlt⟩ := U.exists_next_landing hy hmax
   exact ⟨y, U.up b, hy, hb, hlt.ne⟩
 
-/-- `Statement:` a densely ordered carrier carries no `UpAndOver`: density refuses the cover at the
-    open landing (Mathlib `not_covBy`; the corpus form is `axb1_fails_everywhere_iff_dense`). -/
+/-- `Statement:` a densely ordered carrier carries no `UpAndOver`: density refuses the cover in the
+    corner (Mathlib `not_covBy`; the corpus form is `axb1_fails_everywhere_iff_dense`). -/
 theorem isEmpty_of_denselyOrdered [DenselyOrdered α] : IsEmpty (UpAndOver α) :=
   ⟨fun U => by
-    obtain ⟨y, hy, hmax⟩ := U.open_landing
-    obtain ⟨b, hb⟩ := U.cover y hy hmax
-    obtain ⟨c, h1, h2⟩ := exists_between hb.1
-    exact hb.2 h1 h2⟩
+    obtain ⟨y, b, -, hb, -⟩ := U.corner
+    exact not_covBy hb⟩
 
 end UpAndOver
 
-/-! ### § III. NO-GO gauge — what fails to be an `UpAndOver`? Each control names a field that
-refuses it. -/
+/-! ### § III. NO-GO gauge — what fails to be an `UpAndOver`? Each control's `Statement:` names
+each field that refuses it. -/
 
 -- `Statement:` the ceiling map on ℝ is a closure operator that moves `1/2`, is not injective, and has
--- the two distinct closed points `0` and `1`, with `0` not maximal; ℝ still carries no `UpAndOver`,
--- so `cover` is the field that refuses it.
+-- the two distinct closed points `0` and `1`, with `0` not maximal; ℝ has no cover anywhere, so
+-- `cover` refuses it at `0` and `corner`, which asks for a cover, refuses it too.
 example : ∃ c : ClosureOperator ℝ, (∀ x, c x = (⌈x⌉ : ℝ)) ∧ c (1 / 2) ≠ 1 / 2 ∧
-    ¬ Function.Injective c ∧ c.IsClosed 0 ∧ c.IsClosed 1 ∧ (0 : ℝ) ≠ 1 ∧ ¬ IsMax (0 : ℝ) := by
+    ¬ Function.Injective c ∧ c.IsClosed 0 ∧ c.IsClosed 1 ∧ (0 : ℝ) ≠ 1 ∧ ¬ IsMax (0 : ℝ) ∧
+    (∀ a b : ℝ, ¬ a ⋖ b) := by
   let c : ClosureOperator ℝ := ClosureOperator.mk' (fun x => (⌈x⌉ : ℝ))
     (fun _ _ h => Int.cast_mono (Int.ceil_mono h)) (fun x => Int.le_ceil x) (fun x => by simp)
   refine ⟨c, fun _ => rfl, ?_, ?_, c.isClosed_iff.2 ?_, c.isClosed_iff.2 ?_, by norm_num,
-    not_isMax 0⟩
+    not_isMax 0, fun _ _ => not_covBy⟩
   · show ((⌈(1 / 2 : ℝ)⌉ : ℤ) : ℝ) ≠ 1 / 2
     norm_num [Int.ceil_eq_iff]
   · intro h
@@ -130,43 +138,37 @@ example : ∃ c : ClosureOperator ℝ, (∀ x, c x = (⌈x⌉ : ℝ)) ∧ c (1 /
     simp
 example : IsEmpty (UpAndOver ℝ) := UpAndOver.isEmpty_of_denselyOrdered
 
--- `Statement:` the identity closure moves nothing, so it is the `up` of no `UpAndOver`.
+-- `Statement:` the identity closure moves no cover, so `corner` refuses it: it is the `up` of no
+-- `UpAndOver`.
 example (α : Type u) [PartialOrder α] : ¬ ∃ U : UpAndOver α, U.up = ClosureOperator.id α := by
   rintro ⟨U, hU⟩
-  obtain ⟨x, hx⟩ := U.moves
-  exact hx (by rw [hU]; rfl)
+  obtain ⟨-, b, -, -, hb⟩ := U.corner
+  exact hb (by rw [hU]; rfl)
 
--- `Statement:` no `UpAndOver` on `Unit` (nothing moves) or on `Empty` (`moves` is existential).
+-- `Statement:` `corner` refuses `Unit` (nothing moves) and `Empty` (`corner` is existential).
 example : IsEmpty (UpAndOver Unit) :=
-  ⟨fun U => by obtain ⟨x, hx⟩ := U.moves; exact hx (Subsingleton.elim _ _)⟩
+  ⟨fun U => by obtain ⟨-, b, -, -, hb⟩ := U.corner; exact hb (Subsingleton.elim _ _)⟩
 example : IsEmpty (UpAndOver Empty) :=
-  ⟨fun U => by obtain ⟨x, -⟩ := U.moves; exact x.elim⟩
-
--- `Statement:` `open_landing` refuses `Unit` and `Empty` as well: every point of `Unit` is maximal,
--- and `Empty` has no point.
-example (c : ClosureOperator Unit) : ¬ ∃ y, c.IsClosed y ∧ ¬ IsMax y := by
-  rintro ⟨y, -, h⟩
-  exact h fun b _ => le_of_eq (Subsingleton.elim _ _)
-example (c : ClosureOperator Empty) : ¬ ∃ y, c.IsClosed y ∧ ¬ IsMax y := by
-  rintro ⟨y, -⟩
-  exact y.elim
+  ⟨fun U => by obtain ⟨y, -⟩ := U.corner; exact y.elim⟩
 
 -- `Statement:` a closure sending every point to `⊤` exists on `Bool` and moves `false`; any such
--- closure has `⊤` as its only closed point, which is maximal, so `open_landing` refuses it.
+-- closure has `⊤` as its only closed point, which has no cover above it, so `corner` refuses it.
 example : ∃ c : ClosureOperator Bool, (∀ x, c x = ⊤) ∧ c false ≠ false :=
   ⟨ClosureOperator.mk' (fun _ => ⊤) (fun _ _ _ => le_rfl) (fun _ => le_top) (fun _ => le_rfl),
     fun _ => rfl, fun h => Bool.noConfusion h⟩
 example {α : Type u} [PartialOrder α] [OrderTop α] (c : ClosureOperator α) (hc : ∀ x, c x = ⊤) :
-    ¬ ∃ y, c.IsClosed y ∧ ¬ IsMax y := by
-  rintro ⟨y, hy, hmax⟩
-  rw [hy.closure_eq.symm.trans (hc y)] at hmax
-  exact hmax isMax_top
+    ¬ ∃ y b, c.IsClosed y ∧ y ⋖ b ∧ c b ≠ b := by
+  rintro ⟨y, b, hy, hb, -⟩
+  have hy' : y = ⊤ := hy.closure_eq.symm.trans (hc y)
+  exact not_top_lt (hy' ▸ hb.lt)
 
 -- `Statement:` on two disjoint copies of `WithTop ℚ`, a densely ordered carrier with no cover
 -- anywhere, sending each copy to its own `⊤` is a closure that moves a point and has two distinct
--- closed points, both maximal, so `cover` holds there vacuously; `open_landing` refuses it.
+-- closed points, both maximal; `cover` holds there vacuously, and `corner`, which asks for a cover,
+-- refuses it.
 example : ∃ c : ClosureOperator (WithTop ℚ ⊕ WithTop ℚ), (∃ x, c x ≠ x) ∧
     c.IsClosed (Sum.inl ⊤) ∧ c.IsClosed (Sum.inr ⊤) ∧
+    (Sum.inl ⊤ : WithTop ℚ ⊕ WithTop ℚ) ≠ Sum.inr ⊤ ∧
     (∀ y, c.IsClosed y → IsMax y) ∧ (∀ a b : WithTop ℚ ⊕ WithTop ℚ, ¬ a ⋖ b) := by
   let f : WithTop ℚ ⊕ WithTop ℚ → WithTop ℚ ⊕ WithTop ℚ :=
     Sum.elim (fun _ => Sum.inl ⊤) (fun _ => Sum.inr ⊤)
@@ -181,7 +183,7 @@ example : ∃ c : ClosureOperator (WithTop ℚ ⊕ WithTop ℚ), (∃ x, c x ≠
       | inr _ => exact Sum.LiftRel.inr le_top)
     (fun a => by cases a <;> exact le_rfl)
   refine ⟨c, ⟨Sum.inl ((0 : ℚ) : WithTop ℚ), fun h => ?_⟩, c.isClosed_iff.2 rfl,
-    c.isClosed_iff.2 rfl, fun y hy b hb => ?_, fun _ _ => not_covBy⟩
+    c.isClosed_iff.2 rfl, Sum.inl_ne_inr, fun y hy b hb => ?_, fun _ _ => not_covBy⟩
   · have : (Sum.inl ⊤ : WithTop ℚ ⊕ WithTop ℚ) = Sum.inl ((0 : ℚ) : WithTop ℚ) := h
     simp at this
   · have hy' : f y = y := c.isClosed_iff.1 hy
@@ -200,15 +202,127 @@ example : ∃ c : ClosureOperator (WithTop ℚ ⊕ WithTop ℚ), (∃ x, c x ≠
         exact Sum.inr_le_inr_iff.2 le_top
 example : IsEmpty (UpAndOver (WithTop ℚ ⊕ WithTop ℚ)) := UpAndOver.isEmpty_of_denselyOrdered
 
+-- `Statement:` on the linear carrier `ℕ ⊕ₗ WithTop ℚ` (ℕ below `WithTop ℚ`), the closure fixing ℕ
+-- and sending every point of `WithTop ℚ` to its `⊤` moves a point, has a non-maximal landing, and
+-- has a cover at every non-maximal landing, so it passes `cover`; no landing has a cover that the
+-- closure moves, so `corner` refuses it.
+example : ∃ c : ClosureOperator (ℕ ⊕ₗ WithTop ℚ), (∃ x, c x ≠ x) ∧
+    (∃ y, c.IsClosed y ∧ ¬ IsMax y) ∧ (∀ y, c.IsClosed y → ¬ IsMax y → ∃ b, y ⋖ b) ∧
+    ¬ ∃ y b, c.IsClosed y ∧ y ⋖ b ∧ c b ≠ b := by
+  let g : ℕ ⊕ₗ WithTop ℚ → ℕ ⊕ₗ WithTop ℚ :=
+    fun x => Sum.elim (fun n => toLex (Sum.inl n)) (fun _ => toLex (Sum.inr ⊤)) (ofLex x)
+  have hmax : IsMax (toLex (Sum.inr ⊤) : ℕ ⊕ₗ WithTop ℚ) := fun b _ => by
+    rcases b with n | q
+    · exact Sum.Lex.inl_le_inr n ⊤
+    · exact Sum.Lex.inr_le_inr_iff.2 le_top
+  let c : ClosureOperator (ℕ ⊕ₗ WithTop ℚ) := ClosureOperator.mk' g
+    (fun a b h => by
+      rcases a with m | p <;> rcases b with n | q
+      · exact h
+      · exact Sum.Lex.inl_le_inr m ⊤
+      · exact absurd h Sum.Lex.not_inr_le_inl
+      · exact le_rfl)
+    (fun a => by
+      rcases a with n | q
+      · exact le_rfl
+      · exact Sum.Lex.inr_le_inr_iff.2 le_top)
+    (fun a => by rcases a with n | q <;> exact le_rfl)
+  have hcl : ∀ q, c.IsClosed (toLex (Sum.inr q)) → q = ⊤ := fun q h => by
+    have h' : (toLex (Sum.inr ⊤) : ℕ ⊕ₗ WithTop ℚ) = toLex (Sum.inr q) := c.isClosed_iff.1 h
+    exact (Sum.inr_injective (toLex.injective h')).symm
+  refine ⟨c, ⟨toLex (Sum.inr ((0 : ℚ) : WithTop ℚ)), fun h => ?_⟩,
+    ⟨toLex (Sum.inl 0), c.isClosed_iff.2 rfl, fun h => ?_⟩, fun y hy hm => ?_, ?_⟩
+  · have h' : (toLex (Sum.inr ⊤) : ℕ ⊕ₗ WithTop ℚ) = toLex (Sum.inr ((0 : ℚ) : WithTop ℚ)) := h
+    have := Sum.inr_injective (toLex.injective h')
+    simp at this
+  · have := Sum.Lex.inl_le_inl_iff.1 (h (Sum.Lex.inl_le_inl_iff.2 (Nat.zero_le 1)))
+    omega
+  · rcases y with n | q
+    · refine ⟨toLex (Sum.inl (n + 1)), Sum.Lex.inl_lt_inl_iff.2 (Nat.lt_succ_self n),
+        fun d h1 h2 => ?_⟩
+      rcases d with m | q
+      · have := Sum.Lex.inl_lt_inl_iff.1 h1
+        have := Sum.Lex.inl_lt_inl_iff.1 h2
+        omega
+      · exact Sum.Lex.not_inr_lt_inl h2
+    · obtain rfl := hcl q hy
+      exact absurd hmax hm
+  · rintro ⟨y, b, hy, hb, hne⟩
+    rcases y with n | q
+    · rcases b with m | q
+      · exact hne rfl
+      · exact hb.2 (Sum.Lex.inl_lt_inl_iff.2 (Nat.lt_succ_self n)) (Sum.Lex.inl_lt_inr (n + 1) q)
+    · obtain rfl := hcl q hy
+      exact absurd hb.1 (not_lt.2 (hmax hb.1.le))
+
+-- `Statement:` on the disjoint sum `Fin 3 ⊕ ℚ`, the closure sending `1` to `2` and fixing every
+-- other point has a corner (the landing `0`, its cover `1`, moved to `2`), so it passes `corner`;
+-- the landing `inr 0` is not maximal and has no cover, so `cover` refuses it.
+example : ∃ c : ClosureOperator (Fin 3 ⊕ ℚ), (∃ y b, c.IsClosed y ∧ y ⋖ b ∧ c b ≠ b) ∧
+    c.IsClosed (Sum.inr 0) ∧ ¬ IsMax (Sum.inr 0 : Fin 3 ⊕ ℚ) ∧
+    ¬ ∃ b, (Sum.inr 0 : Fin 3 ⊕ ℚ) ⋖ b := by
+  let f : Fin 3 → Fin 3 := fun x => if x = 1 then 2 else x
+  have hmono : ∀ a b : Fin 3, a ≤ b → f a ≤ f b := by decide
+  have hinfl : ∀ a : Fin 3, a ≤ f a := by decide
+  have hidem : ∀ a : Fin 3, f (f a) ≤ f a := by decide
+  let c : ClosureOperator (Fin 3 ⊕ ℚ) := ClosureOperator.mk' (Sum.map f id)
+    (fun _ _ h => by
+      cases h with
+      | inl h => exact Sum.LiftRel.inl (hmono _ _ h)
+      | inr h => exact Sum.LiftRel.inr h)
+    (fun a => by
+      cases a with
+      | inl x => exact Sum.LiftRel.inl (hinfl x)
+      | inr q => exact Sum.LiftRel.inr le_rfl)
+    (fun a => by
+      cases a with
+      | inl x => exact Sum.LiftRel.inl (hidem x)
+      | inr q => exact Sum.LiftRel.inr le_rfl)
+  have hf0 : f 0 = 0 := by decide
+  have hf1 : f 1 = 2 := by decide
+  refine ⟨c, ⟨Sum.inl 0, Sum.inl 1, c.isClosed_iff.2 ?_, ⟨Sum.inl_lt_inl_iff.2 (by decide),
+    fun d h1 h2 => ?_⟩, ?_⟩, c.isClosed_iff.2 rfl, fun h => ?_, ?_⟩
+  · show Sum.inl (f 0) = Sum.inl 0
+    rw [hf0]
+  · cases d with
+    | inl z =>
+      have h1' := Sum.inl_lt_inl_iff.1 h1
+      have h2' := Sum.inl_lt_inl_iff.1 h2
+      clear h1 h2
+      revert z
+      decide
+    | inr q => exact Sum.not_inr_lt_inl h2
+  · show Sum.inl (f 1) ≠ Sum.inl 1
+    rw [hf1]
+    exact fun h => absurd (Sum.inl_injective h) (by decide)
+  · have := Sum.inr_le_inr_iff.1 (h (Sum.inr_le_inr_iff.2 (zero_le_one' ℚ)))
+    norm_num at this
+  · rintro ⟨b, hb⟩
+    cases b with
+    | inl w => exact Sum.not_inr_le_inl hb.1.le
+    | inr q =>
+      obtain ⟨m, h1, h2⟩ := exists_between (Sum.inr_lt_inr_iff.1 hb.1)
+      exact hb.2 (Sum.inr_lt_inr_iff.2 h1) (Sum.inr_lt_inr_iff.2 h2)
+
 /-! ### § IV. The ordinal instance -/
 
-/-- `Statement:` the ordinals carry the shape with `up` the snap-nucleus `nfp (ω^·)` (`snapNucleus`)
-    and covers by `Order.succ`. -/
+/-- `Statement:` the ordinals carry the shape with `up` the snap-nucleus `nfp (ω^·)` (`snapNucleus`),
+    covers by `Order.succ`, and the corner at the landing `ε_ 0` and its cover `succ (ε_ 0)`, which
+    `up` sends to `ε_ (succ 0)` (`succession_succ`), a successor limit (Mathlib
+    `Ordinal.isSuccLimit_opow_left`, `Ordinal.omega0_opow_epsilon`) and so not `succ (ε_ 0)`. -/
 noncomputable def ordinalUpAndOver : UpAndOver Ordinal.{u} where
   up := snapNucleus.toClosureOperator
-  moves := ⟨⊥, snapNucleus_bot_ne_bot⟩
-  open_landing := ⟨Ordinal.epsilon 0,
-    snapNucleus.toClosureOperator.isClosed_iff.2 (snapNucleus_fixes_epsilon 0), not_isMax _⟩
+  corner := ⟨Ordinal.epsilon 0, Order.succ (Ordinal.epsilon 0),
+    snapNucleus.toClosureOperator.isClosed_iff.2 (snapNucleus_fixes_epsilon 0),
+    Order.covBy_succ _, by
+      show Ordinal.nfp (fun a => Ordinal.omega0 ^ a) (Order.succ (Ordinal.epsilon 0))
+        ≠ Order.succ (Ordinal.epsilon 0)
+      rw [← succession_succ]
+      intro h
+      have hl := Ordinal.isSuccLimit_opow_left Ordinal.isSuccLimit_omega0
+        (Ordinal.epsilon_pos (Order.succ 0)).ne'
+      rw [Ordinal.omega0_opow_epsilon, h] at hl
+      exact Order.not_isSuccLimit_succ _ hl⟩
   cover := fun y _ _ => ⟨Order.succ y, Order.covBy_succ y⟩
 
 /-- `Statement:` `up` on the ordinal instance is `nfp (ω^·)`. -/
@@ -253,6 +367,8 @@ section PurityCheck
 open ZeroParadox
 
 #print axioms UpAndOver
+#print axioms UpAndOver.moves
+#print axioms UpAndOver.open_landing
 #print axioms UpAndOver.up_eq_of_mem_Icc
 #print axioms UpAndOver.up_not_injective
 #print axioms UpAndOver.exists_next_landing
