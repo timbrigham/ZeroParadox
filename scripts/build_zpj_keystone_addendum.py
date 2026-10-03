@@ -123,7 +123,10 @@ def build():
             'Adds: candidate faces outside the classical scheme &#8212; the 2-adic valuation '
             'v<sub>2</sub>(0) = &#8734;, &#949;<sub>0</sub>, the wheel of fractions &#8212; '
             'each with a machine-checked axiom footprint; and the <i>location</i> claim, that '
-            'the fixed point sits at the floor &#8869; (the G&#246;del inversion), a framing.',
+            'each face\'s fixed point sits at a floor (the G&#246;del inversion), a framing: at '
+            '&#8869; for the floor faces; for &#949;<sub>0</sub> at its own floor, where it fills '
+            'the bottom role as the first iterative bottom, and never at the ordinals\' floor 0 '
+            '(epsilon0_ne_bot).',
             'Does not add: the unification itself (Lawvere/Yanofsky), nor any identification of '
             'the four faces as one object &#8212; that identity is <b>retired as ill-typed</b> '
             '(object equality across categories does not typecheck and is not invariant under '
