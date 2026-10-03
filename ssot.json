@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1786,
-        "files": 154
+        "declarations": 1808,
+        "files": 155
       },
       "entries": [
         {
@@ -6304,6 +6304,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1442423f-7037-470f-8540-3627080169d9",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotClosure",
+            "short": "withBotClosure"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotClosure",
+            "short": "withBotClosure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1459ea5b-8e86-4cf8-a545-b9bff370aea9",
           "new": {
@@ -7230,6 +7267,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "17add508-0274-44fa-9e94-063ec34d90e3",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseFloorToTop",
+            "short": "phaseFloorToTop"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseFloorToTop",
+            "short": "phaseFloorToTop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "phase-order arc r1 fixes: floor-above member (WithTop), phaseRel compatibility, floor move, least landing above floor, named distinctness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "17d9fa55-e2f1-46c3-bf87-5c955f116fec",
           "new": {
@@ -8144,6 +8219,45 @@
           "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": "propext, Classical.choice, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1ad79c41-6080-46bc-b4d7-911319b18ac2",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_floor_isBot",
+            "short": "phase_floor_isBot"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_floor_isBot",
+            "short": "phase_floor_isBot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -9876,6 +9990,47 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2269bb5a-54f4-48df-ad14-7f3300688cd4",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseUp_snap",
+            "short": "phaseUp_snap"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseUp_snap",
+            "short": "phaseUp_snap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [
+              "snap",
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "22782b64-9fa0-40e7-85ea-84bc67c20c2c",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -11144,6 +11299,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "273e74be-2e6f-4a8e-9235-ddc8723b3180",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseEquivWithBot_floor_lt_up",
+            "short": "phaseEquivWithBot_floor_lt_up"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseEquivWithBot_floor_lt_up",
+            "short": "phaseEquivWithBot_floor_lt_up",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14303,6 +14498,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "335392dc-896e-4d5e-ac98-679e06e68dc3",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_floor_snap_epsilon0_ne",
+            "short": "phase_floor_snap_epsilon0_ne"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_floor_snap_epsilon0_ne",
+            "short": "phase_floor_snap_epsilon0_ne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "phase-order arc r1 fixes: floor-above member (WithTop), phaseRel compatibility, floor move, least landing above floor, named distinctness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "withdrawn",
           "id": "337e0196-a0e1-46bf-9cb6-a8e2230555a9",
           "new": {
@@ -14474,6 +14707,44 @@
             ]
           },
           "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "33ebf9ea-c149-45b5-8272-c0cf5532b078",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseRel_up_iff_withTop",
+            "short": "phaseRel_up_iff_withTop"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseRel_up_iff_withTop",
+            "short": "phaseRel_up_iff_withTop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "phase-order arc r1 fixes: floor-above member (WithTop), phaseRel compatibility, floor move, least landing above floor, named distinctness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15345,6 +15616,46 @@
             "role": []
           },
           "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "37c8a3bb-a0fb-435d-9f86-b6d820192d73",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_epsilon0_isLeastFixedPointFrom_snap",
+            "short": "phase_epsilon0_isLeastFixedPointFrom_snap"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_epsilon0_isLeastFixedPointFrom_snap",
+            "short": "phase_epsilon0_isLeastFixedPointFrom_snap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17133,6 +17444,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3fb59d5b-e0ec-4d56-afe1-8a8639ea6a07",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotClosure_apply",
+            "short": "withBotClosure_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.withBotClosure_apply",
+            "short": "withBotClosure_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3fc797ee-2ce6-44f8-bf79-6365639a7541",
           "new": {
@@ -17957,6 +18305,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "438efbe1-f4e0-4ff6-a892-4bce2fb71d40",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseEquivWithBot",
+            "short": "phaseEquivWithBot"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseEquivWithBot",
+            "short": "phaseEquivWithBot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29381,6 +29767,46 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7082fcf0-d7a0-4670-af7d-e4076fa42424",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_placement_extreme_iff",
+            "short": "phase_placement_extreme_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_placement_extreme_iff",
+            "short": "phase_placement_extreme_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "phase-order arc r2 fixes: rename F3, extremal-placement characterization (P2), floor-above epsilon0 landing (P3)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "70f5980b-c61b-431d-9b96-bd3a3ecc88c0",
           "new": {
             "file": "ZeroParadox/Category/BottomUndecidable.lean",
@@ -30185,6 +30611,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7454d88e-8281-4a4c-aaf2-bd431205a0f1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseRel_up_iff_withBot",
+            "short": "phaseRel_up_iff_withBot"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseRel_up_iff_withBot",
+            "short": "phaseRel_up_iff_withBot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "phase-order arc r1 fixes: floor-above member (WithTop), phaseRel compatibility, floor move, least landing above floor, named distinctness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "745afcbd-4a53-4e82-92b8-5667a36f4502",
           "new": {
@@ -30467,6 +30931,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7586c4d8-23c9-4bb4-a718-9a6f1872dc87",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseEquivWithBot_up_le_up",
+            "short": "phaseEquivWithBot_up_le_up"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseEquivWithBot_up_le_up",
+            "short": "phaseEquivWithBot_up_le_up",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35082,6 +35584,46 @@
             ]
           },
           "reason": "Round 18: the numeral counterfactual moves from bare ℕ∞ values to the class itself, so the emitted footprint and the claim about ValuationStructure are the same statement.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "87ca89a5-e8a8-4103-8270-07bbfc327279",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_floor_covBy_snap",
+            "short": "phase_floor_covBy_snap"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_floor_covBy_snap",
+            "short": "phase_floor_covBy_snap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40928,6 +41470,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9eb0a332-d3fc-48c3-bf2b-daa9d19d60ac",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseUp_zero_eq_one",
+            "short": "phaseUp_zero_eq_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseUp_zero_eq_one",
+            "short": "phaseUp_zero_eq_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46882,6 +47463,46 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "renamed",
+          "id": "b7331014-6b36-42a6-9d60-6659425a81dd",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseEquivWithTop_floor_covers_nothing",
+            "short": "phaseEquivWithTop_floor_covers_nothing"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseEquivWithTop_floor_not_covered",
+            "short": "phaseEquivWithTop_floor_not_covered",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "phase-order arc r2 F3: name matches statement (forall x, not x covBy top)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "new",
           "id": "b76d1906-efdf-4128-a4ea-8c6b97efa9f3",
           "new": {
@@ -48490,6 +49111,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "bd5050c1-ade6-4fe3-ac54-72b1bdca0d4c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseFloorToTop_apply",
+            "short": "phaseFloorToTop_apply"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseFloorToTop_apply",
+            "short": "phaseFloorToTop_apply",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "phase-order arc r1 fixes: floor-above member (WithTop), phaseRel compatibility, floor move, least landing above floor, named distinctness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "bdc19d67-ae50-4f67-8a39-669861ed5179",
           "new": {
@@ -48922,6 +49581,44 @@
             ]
           },
           "reason": "Slot reused: valBridge_nonempty_infinitudeFloor was removed in round-2 gate fixes and replaced by the characterisation theorem in the same section.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c01de912-646f-4392-bd6c-c81e45d6f06b",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseEquivWithTop",
+            "short": "phaseEquivWithTop"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseEquivWithTop",
+            "short": "phaseEquivWithTop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "phase-order arc r1 fixes: floor-above member (WithTop), phaseRel compatibility, floor move, least landing above floor, named distinctness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -52932,6 +53629,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cf84fa0f-96b0-4ac2-8039-a3070ce813ad",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseTower",
+            "short": "phaseTower"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseTower",
+            "short": "phaseTower",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -64022,6 +64756,46 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fa2429c3-b58c-4751-aef2-50180de7c5f4",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseUpAndOver",
+            "short": "phaseUpAndOver"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseUpAndOver",
+            "short": "phaseUpAndOver",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fa2d3fab-0a98-44e6-b111-3ab2ce2778bc",
           "new": {
@@ -64720,6 +65494,47 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "fbcaa1a8-0e86-4ae5-ab81-79f9a8b23713",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseTop_epsilon0_isLeast_landing_above_snap",
+            "short": "phaseTop_epsilon0_isLeast_landing_above_snap"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phaseTop_epsilon0_isLeast_landing_above_snap",
+            "short": "phaseTop_epsilon0_isLeast_landing_above_snap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [
+              "ceiling",
+              "snap"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "phase-order arc r2 fixes: rename F3, extremal-placement characterization (P2), floor-above epsilon0 landing (P3)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "fbecaedb-6ceb-46d4-8eb5-08f4360e1747",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -65368,6 +66183,46 @@
             "role": []
           },
           "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fddd51d3-2953-41a2-af3d-e6de8e884539",
+          "new": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_epsilon0_isLeast_landing_above_floor",
+            "short": "phase_epsilon0_isLeast_landing_above_floor"
+          },
+          "old": {
+            "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.phase_epsilon0_isLeast_landing_above_floor",
+            "short": "phase_epsilon0_isLeast_landing_above_floor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "phase-order arc r1 fixes: floor-above member (WithTop), phaseRel compatibility, floor move, least landing above floor, named distinctness",
           "verify": {
             "axioms": null,
             "sorry_free": true
