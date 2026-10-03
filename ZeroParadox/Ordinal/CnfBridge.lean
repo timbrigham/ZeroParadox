@@ -130,7 +130,7 @@ theorem cnf_bridge_type_boundary :
     because ⊥ and ε₀ are one point: **⊥ is never ε₀** (ε₀ is the least fixed point of `α ↦ ω^α`), never identical — and **not** order-adjacent, see
     `epsilonZero_tower_lt` — and
     the images of the finite stages n ≥ 1 never even reach 0 (always next to, never the same). Honest fence: this is the
-    `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = 0`, which stays ill-typed: it fails
+    `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = 0` with 0 the 2-adic zero, which stays ill-typed: it fails
     to elaborate (MC-1 / ZP-P). -/
 theorem snap_arc_z2_loop :
     cnfToZp2 (towerNONote 0) = 0 ∧

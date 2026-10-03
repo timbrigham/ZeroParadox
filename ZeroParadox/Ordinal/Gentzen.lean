@@ -317,7 +317,7 @@ theorem c1_epsilon_zero_identification :
    if_neg (lt_irrefl epsilonZero)⟩
 
 -- `Statement:` no φ : Ordinal → MachinePhase and g : MachinePhase → ℤ_[2] make `g ∘ φ ∘ repr` agree
--- with `cnfToZp2` along the tower: stages 1, 2, 3 have valuations 1, 2, 3, and MachinePhase has two values.
+-- with `cnfToZp2` along the tower: the images of stages 1, 2, 3 have valuations 1, 2, 3, and MachinePhase has two values.
 example (φ : Ordinal → MachinePhase) (g : MachinePhase → ℤ_[2]) :
     ¬ ∀ n : ℕ, g (φ (NONote.repr (towerNONote n))) = cnfToZp2 (towerNONote n) := by
   intro h

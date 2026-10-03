@@ -71,8 +71,8 @@ point versus infinite field" seen at BOTH ends at once. On the 2-adic sphere: `0
 `rInv` swaps them; and `ℚ_[2]` is the infinite field between. Via `cnfToZp2` (`CnfBridge`) the **top-down**
 view — summit `ε₀` (a single point), tree boundary `ℤ₂` (a field) — is the **inverted image** of the
 **bottom-up** view — floor `0` (a single point), its field. One construction, two ends, joined by the map,
-never by `=`: `ε₀ = 0` stays a type boundary (it fails to elaborate). The point and the field are the
-same object read up or down; the inversion is what turns each into the other. -/
+never by `=`: `ε₀ = 0` with 0 the 2-adic zero stays a type boundary (it fails to elaborate). The point
+and the field are the same object read up or down; the inversion is what turns each into the other. -/
 theorem point_and_field_at_the_poles :
     poleToSphere Pole.zero ≠ poleToSphere Pole.infty ∧
       rInv (poleToSphere Pole.zero) = poleToSphere Pole.infty ∧

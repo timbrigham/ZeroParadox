@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.23 | October 2026
+Version 1.24 | October 2026
 v1.20: OQ-E2 POINTER (Tim ruling, 2026-10-02: the type-level identity is ill-typed, not open; extend to all siblings): the Section III "Honest scope" box said the epsilon-0 type bridge was open under OQ-E2. OQ-E2 is the cardinality-semilattice correspondence, and the cross-type identity is not a well-formed statement; the box now says it is ill-typed, not open, the same category error cnf_bridge_type_boundary (ZeroParadox/Ordinal/CnfBridge.lean) fences for Ordinal vs Z2, with the link running through maps.
 v1.19: GATE ROUND 2 ON v1.18 (Tim rulings, 2026-09-29): "machine-checked" is scoped everywhere it still covered the whole document: the preamble calls this a record of two investigations "machine-checked except where marked cited", the introduction says that where a result is cited rather than re-proved the text says so, and the endnote carries the same qualifier. The Section II computability box heading and verdict name the multi-valued form of the Lawvere instance (Bauer Thm 5.2), and the box says excluded middle fails in synthetic computability. The "In Set" box states the measured footprint of the face verdicts nontrivial_lattice_no_witness and q2_no_witness, [propext, Classical.choice, Quot.sound]; the Section IV box says "the same Lean adapter". The v1.16 line's "p. 10", removed in v1.17, is restored: changelog lines record what shipped.
 v1.18: SCOPE OF "MACHINE-CHECKED" (Tim rulings, 2026-09-29): the Section II heading now reads "The Lawvere Face-Split (Set face machine-checked; computability face cited)", and the Section II verdict marks the effective-category instance as cited (Bauer 2017), with Lean proving Rogers' theorem classically; matching CLAIMS.md and README.md. Every box is now kept on one page (a KeepTogether on each, including "What the Zero Paradox adds"), so no box header repeats across a page break.
@@ -34,7 +34,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -267,7 +267,7 @@ def build():
             '&#8869; (the lattice chart\'s &#8869;) and &#949;<sub>0</sub> respectively &#8212; a '
             'role assignment the framework '
             'already carries (for the &#8869; endpoint, MC-1 family membership; for the '
-            '&#949;<sub>0</sub> endpoint, a theorem about the model itself in both of its orderings, '
+            '&#949;<sub>0</sub> endpoint, theorems about the model itself in both of its extreme orderings, '
             'floor below as WithBot Ordinal (phase_epsilon0_isLeast_landing_above_floor) and floor '
             'above as WithTop Ordinal (phaseTop_epsilon0_isLeast_landing_above_snap) '
             '(ZeroParadox/Multihomed/BoundaryOrder.lean), so no cross-type identity is involved), '
