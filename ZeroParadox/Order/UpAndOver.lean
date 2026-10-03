@@ -11,8 +11,6 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-(assembled from Tim's words 2026-10-01/02; pending his edit)
-
 I think it is the same shape, what our "up and over" transform applied. The up and over always felt L
 or J shaped. The cell width vs layer height. I think we're seeing it. The fundamental premise being
 that that exact shape continues to recur, defining the shape when we can do it. Extrapolated away from
@@ -34,20 +32,20 @@ universe u
 
 /-! ### § I. The shape -/
 
-/-- `Statement:` a closure operator `up` on a partial order that moves some point, has two distinct
-    closed points, and gives every non-maximal closed point a cover in the carrier order.
+/-- `Statement:` a closure operator `up` on a partial order that moves some point, has a closed point
+    that is not maximal, and gives every non-maximal closed point a cover in the carrier order.
     `Reading:` UP is `up`; OVER is the step from a landing to a cover of it. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `ClosureOperator` admits the identity and the
 -- constant-top closure and says nothing about covers; this bundles it with existential
--- non-degeneracy and a carrier-order cover at each non-maximal closed point, the field that
--- excludes dense carriers such as ℝ with ceiling.
+-- non-degeneracy and a carrier-order cover at each non-maximal closed point. Together, a
+-- non-maximal landing and its cover exclude every densely ordered carrier, ℝ with ceiling included.
 structure UpAndOver (α : Type u) [PartialOrder α] where
   /-- The UP leg: a closure operator; its closed points are the landings. -/
   up : ClosureOperator α
   /-- Some point is moved by `up`. -/
   moves : ∃ x, up x ≠ x
-  /-- Two distinct landings exist. -/
-  two_landings : ∃ y z, up.IsClosed y ∧ up.IsClosed z ∧ y ≠ z
+  /-- Some landing has something above it, so the OVER leg is asked at least once. -/
+  open_landing : ∃ y, up.IsClosed y ∧ ¬ IsMax y
   /-- The OVER leg: every landing with something above it has a cover in the carrier order. -/
   cover : ∀ y, up.IsClosed y → ¬ IsMax y → ∃ b, y ⋖ b
 
@@ -56,6 +54,16 @@ namespace UpAndOver
 variable {α : Type u} [PartialOrder α] (U : UpAndOver α)
 
 /-! ### § II. Derived facts -/
+
+-- `Statement:` the `cover` field is the corpus predicate `HasFirstStep`
+-- (`ZeroParadox/Reals/OrderedField.lean`), asked landing by landing.
+example {y : α} (hy : U.up.IsClosed y) (hmax : ¬ IsMax y) : HasFirstStep y := U.cover y hy hmax
+
+-- `Statement:` COINCIDENCE — one cover `y ⋖ b` in two charts: an atom of the up-set `Set.Ici y`
+-- read from below (L), a coatom of the down-set `Set.Iic b` read from above (J).
+example {y b : α} (h : y ≤ b) :
+    (y ⋖ b ↔ IsAtom (⟨b, h⟩ : Set.Ici y)) ∧ (y ⋖ b ↔ IsCoatom (⟨y, h⟩ : Set.Iic b)) :=
+  ⟨covBy_iff_atom_Ici h, covBy_iff_coatom_Iic h⟩
 
 /-- `Statement:` the corner law: `up` is constant on the interval `[x, up x]`. -/
 theorem up_eq_of_mem_Icc {x s : α} (h1 : x ≤ s) (h2 : s ≤ U.up x) : U.up s = U.up x :=
@@ -79,28 +87,35 @@ theorem up_le_of_covBy {β : Type u} [LinearOrder β] (V : UpAndOver β) {y b z 
     (hb : y ⋖ b) (hz : V.up.IsClosed z) (hyz : y < z) : V.up b ≤ z :=
   V.up.closure_min (not_lt.1 fun hzb => hb.2 hyz hzb) hz
 
-/-- `Statement:` a densely ordered carrier with no maximal element carries no `UpAndOver`: density
-    refuses the cover (the corpus form is `axb1_fails_everywhere_iff_dense`). -/
-theorem isEmpty_of_denselyOrdered [DenselyOrdered α] [NoMaxOrder α] : IsEmpty (UpAndOver α) :=
+-- `Statement:` two distinct landings follow: the open landing and the landing reached over it.
+example : ∃ y z, U.up.IsClosed y ∧ U.up.IsClosed z ∧ y ≠ z := by
+  obtain ⟨y, hy, hmax⟩ := U.open_landing
+  obtain ⟨b, -, hb, hlt⟩ := U.exists_next_landing hy hmax
+  exact ⟨y, U.up b, hy, hb, hlt.ne⟩
+
+/-- `Statement:` a densely ordered carrier carries no `UpAndOver`: density refuses the cover at the
+    open landing (Mathlib `not_covBy`; the corpus form is `axb1_fails_everywhere_iff_dense`). -/
+theorem isEmpty_of_denselyOrdered [DenselyOrdered α] : IsEmpty (UpAndOver α) :=
   ⟨fun U => by
-    obtain ⟨y, -, hy, -, -⟩ := U.two_landings
-    obtain ⟨z, hz⟩ := exists_gt y
-    obtain ⟨b, hb⟩ := U.cover y hy fun h => not_le_of_gt hz (h hz.le)
+    obtain ⟨y, hy, hmax⟩ := U.open_landing
+    obtain ⟨b, hb⟩ := U.cover y hy hmax
     obtain ⟨c, h1, h2⟩ := exists_between hb.1
     exact hb.2 h1 h2⟩
 
 end UpAndOver
 
-/-! ### § III. NO-GO gauge — what fails to be an `UpAndOver`? Each control fails one field. -/
+/-! ### § III. NO-GO gauge — what fails to be an `UpAndOver`? Each control names a field that
+refuses it. -/
 
 -- `Statement:` the ceiling map on ℝ is a closure operator that moves `1/2`, is not injective, and has
--- the two distinct closed points `0` and `1`; ℝ still carries no `UpAndOver`, so `cover` is the field
--- that refuses it.
+-- the two distinct closed points `0` and `1`, with `0` not maximal; ℝ still carries no `UpAndOver`,
+-- so `cover` is the field that refuses it.
 example : ∃ c : ClosureOperator ℝ, (∀ x, c x = (⌈x⌉ : ℝ)) ∧ c (1 / 2) ≠ 1 / 2 ∧
-    ¬ Function.Injective c ∧ c.IsClosed 0 ∧ c.IsClosed 1 ∧ (0 : ℝ) ≠ 1 := by
+    ¬ Function.Injective c ∧ c.IsClosed 0 ∧ c.IsClosed 1 ∧ (0 : ℝ) ≠ 1 ∧ ¬ IsMax (0 : ℝ) := by
   let c : ClosureOperator ℝ := ClosureOperator.mk' (fun x => (⌈x⌉ : ℝ))
     (fun _ _ h => Int.cast_mono (Int.ceil_mono h)) (fun x => Int.le_ceil x) (fun x => by simp)
-  refine ⟨c, fun _ => rfl, ?_, ?_, c.isClosed_iff.2 ?_, c.isClosed_iff.2 ?_, by norm_num⟩
+  refine ⟨c, fun _ => rfl, ?_, ?_, c.isClosed_iff.2 ?_, c.isClosed_iff.2 ?_, by norm_num,
+    not_isMax 0⟩
   · show ((⌈(1 / 2 : ℝ)⌉ : ℤ) : ℝ) ≠ 1 / 2
     norm_num [Int.ceil_eq_iff]
   · intro h
@@ -127,15 +142,63 @@ example : IsEmpty (UpAndOver Unit) :=
 example : IsEmpty (UpAndOver Empty) :=
   ⟨fun U => by obtain ⟨x, -⟩ := U.moves; exact x.elim⟩
 
+-- `Statement:` `open_landing` refuses `Unit` and `Empty` as well: every point of `Unit` is maximal,
+-- and `Empty` has no point.
+example (c : ClosureOperator Unit) : ¬ ∃ y, c.IsClosed y ∧ ¬ IsMax y := by
+  rintro ⟨y, -, h⟩
+  exact h fun b _ => le_of_eq (Subsingleton.elim _ _)
+example (c : ClosureOperator Empty) : ¬ ∃ y, c.IsClosed y ∧ ¬ IsMax y := by
+  rintro ⟨y, -⟩
+  exact y.elim
+
 -- `Statement:` a closure sending every point to `⊤` exists on `Bool` and moves `false`; any such
--- closure has at most one closed point, so `two_landings` refuses it.
+-- closure has `⊤` as its only closed point, which is maximal, so `open_landing` refuses it.
 example : ∃ c : ClosureOperator Bool, (∀ x, c x = ⊤) ∧ c false ≠ false :=
   ⟨ClosureOperator.mk' (fun _ => ⊤) (fun _ _ _ => le_rfl) (fun _ => le_top) (fun _ => le_rfl),
     fun _ => rfl, fun h => Bool.noConfusion h⟩
 example {α : Type u} [PartialOrder α] [OrderTop α] (c : ClosureOperator α) (hc : ∀ x, c x = ⊤) :
-    ¬ ∃ y z, c.IsClosed y ∧ c.IsClosed z ∧ y ≠ z := by
-  rintro ⟨y, z, hy, hz, hne⟩
-  exact hne (hy.closure_eq.symm.trans ((hc y).trans ((hc z).symm.trans hz.closure_eq)))
+    ¬ ∃ y, c.IsClosed y ∧ ¬ IsMax y := by
+  rintro ⟨y, hy, hmax⟩
+  rw [hy.closure_eq.symm.trans (hc y)] at hmax
+  exact hmax isMax_top
+
+-- `Statement:` on two disjoint copies of `WithTop ℚ`, a densely ordered carrier with no cover
+-- anywhere, sending each copy to its own `⊤` is a closure that moves a point and has two distinct
+-- closed points, both maximal, so `cover` holds there vacuously; `open_landing` refuses it.
+example : ∃ c : ClosureOperator (WithTop ℚ ⊕ WithTop ℚ), (∃ x, c x ≠ x) ∧
+    c.IsClosed (Sum.inl ⊤) ∧ c.IsClosed (Sum.inr ⊤) ∧
+    (∀ y, c.IsClosed y → IsMax y) ∧ (∀ a b : WithTop ℚ ⊕ WithTop ℚ, ¬ a ⋖ b) := by
+  let f : WithTop ℚ ⊕ WithTop ℚ → WithTop ℚ ⊕ WithTop ℚ :=
+    Sum.elim (fun _ => Sum.inl ⊤) (fun _ => Sum.inr ⊤)
+  let c : ClosureOperator (WithTop ℚ ⊕ WithTop ℚ) := ClosureOperator.mk' f
+    (fun _ _ h => by
+      cases h with
+      | inl _ => exact Sum.LiftRel.inl le_rfl
+      | inr _ => exact Sum.LiftRel.inr le_rfl)
+    (fun a => by
+      cases a with
+      | inl _ => exact Sum.LiftRel.inl le_top
+      | inr _ => exact Sum.LiftRel.inr le_top)
+    (fun a => by cases a <;> exact le_rfl)
+  refine ⟨c, ⟨Sum.inl ((0 : ℚ) : WithTop ℚ), fun h => ?_⟩, c.isClosed_iff.2 rfl,
+    c.isClosed_iff.2 rfl, fun y hy b hb => ?_, fun _ _ => not_covBy⟩
+  · have : (Sum.inl ⊤ : WithTop ℚ ⊕ WithTop ℚ) = Sum.inl ((0 : ℚ) : WithTop ℚ) := h
+    simp at this
+  · have hy' : f y = y := c.isClosed_iff.1 hy
+    cases y with
+    | inl x =>
+      cases b with
+      | inl w =>
+        obtain rfl : x = ⊤ := by simpa [f] using hy'.symm
+        exact Sum.inl_le_inl_iff.2 le_top
+      | inr w => exact absurd hb Sum.not_inl_le_inr
+    | inr x =>
+      cases b with
+      | inl w => exact absurd hb Sum.not_inr_le_inl
+      | inr w =>
+        obtain rfl : x = ⊤ := by simpa [f] using hy'.symm
+        exact Sum.inr_le_inr_iff.2 le_top
+example : IsEmpty (UpAndOver (WithTop ℚ ⊕ WithTop ℚ)) := UpAndOver.isEmpty_of_denselyOrdered
 
 /-! ### § IV. The ordinal instance -/
 
@@ -144,10 +207,8 @@ example {α : Type u} [PartialOrder α] [OrderTop α] (c : ClosureOperator α) (
 noncomputable def ordinalUpAndOver : UpAndOver Ordinal.{u} where
   up := snapNucleus.toClosureOperator
   moves := ⟨⊥, snapNucleus_bot_ne_bot⟩
-  two_landings := ⟨Ordinal.epsilon 0, Ordinal.epsilon (Order.succ 0),
-    snapNucleus.toClosureOperator.isClosed_iff.2 (snapNucleus_fixes_epsilon 0),
-    snapNucleus.toClosureOperator.isClosed_iff.2 (snapNucleus_fixes_epsilon _),
-    (succession_lt_succ 0).ne⟩
+  open_landing := ⟨Ordinal.epsilon 0,
+    snapNucleus.toClosureOperator.isClosed_iff.2 (snapNucleus_fixes_epsilon 0), not_isMax _⟩
   cover := fun y _ _ => ⟨Order.succ y, Order.covBy_succ y⟩
 
 /-- `Statement:` `up` on the ordinal instance is `nfp (ω^·)`. -/
@@ -170,7 +231,7 @@ theorem limit_rung_no_over_leg (o p : Ordinal.{u}) (ho : Order.IsSuccLimit o) (h
   exact (succession_strictMono (ho.succ_lt hp)).ne
 
 -- `Statement:` the cell of `ε_ (o+1)` contains every seed in `(ε_ o, ε_ (o+1)]`
--- (`nfp_seed_successor_cell`, Veblen 1908 Cor. 1 clause B).
+-- (`nfp_seed_successor_cell`, Veblen 1908, Corollary 1 to Theorem 4, clause (B)).
 example (o s : Ordinal.{u}) (h1 : Ordinal.epsilon o < s) (h2 : s ≤ Ordinal.epsilon (Order.succ o)) :
     ordinalUpAndOver.up s = Ordinal.epsilon (Order.succ o) :=
   nfp_seed_successor_cell o s h1 h2
@@ -184,8 +245,7 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-§§ I-II measure `[propext, Quot.sound]`; Mathlib's `not_isMax` carries `Classical.choice`, so
-`isEmpty_of_denselyOrdered` reaches non-maximality through `exists_gt` instead. § IV inherits
+The named declarations of §§ I-II measure `[propext, Quot.sound]`. § IV inherits
 `Classical.choice` from `snapNucleus` and Mathlib's `Ordinal` fixed-point theory, UNCLASSIFIED as in
 `ZeroParadox/Ordinal/SnapNucleus.lean`. -/
 
