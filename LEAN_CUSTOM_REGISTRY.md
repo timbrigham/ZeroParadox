@@ -246,6 +246,12 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Reason:** Mathlib's least-fixed-point API (`OrderHom.lfp`, `isLeast_lfp`) is fixed to a `CompleteLattice` carrier. This predicate states the SAME mu characterization (least fixed point at or above a seed) over a bare relation, so it applies to the framework's non-lattice carriers — the axiom-clean `ZPSemilattice` L, and `Ordinal`, which is not a complete lattice. It is the order-generic placement schema, grounded back to `OrderHom.lfp` in that file's section II.
 
+### `UpAndOver` — `ZeroParadox/Order/UpAndOver.lean`
+
+**Relationship to Mathlib:** Has a `ClosureOperator` field; no Mathlib analog for the bundle
+
+**Reason:** Mathlib's `ClosureOperator` admits the identity closure and the constant-top closure, and says nothing about covers. This structure bundles one with two existential non-degeneracy fields and a cover in the carrier order (`CovBy`) at every non-maximal closed point. That last field is what refuses a dense carrier: the ceiling map on ℝ is a closure operator that passes the other three. Each field is refused by a control in that file's section III.
+
 ### `ProvabilityLogic` — `ZeroParadox/Settheory/Loeb.lean`
 
 **Relationship to Mathlib:** No Mathlib analog

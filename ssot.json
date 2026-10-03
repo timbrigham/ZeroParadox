@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1774,
-        "files": 153
+        "declarations": 1784,
+        "files": 154
       },
       "entries": [
         {
@@ -18262,6 +18262,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "44468176-7d3a-4a11-ac24-b72fdf41cf48",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.deriv_add_one_eq_up_succ",
+            "short": "deriv_add_one_eq_up_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.deriv_add_one_eq_up_succ",
+            "short": "deriv_add_one_eq_up_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "withdrawn",
           "id": "44a2ba45-74f8-4b8e-b8a9-0d4a661deebd",
           "new": {
@@ -18772,6 +18811,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4675faf0-a6d8-49b0-9baf-3363c6c787cb",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.limit_rung_no_over_leg",
+            "short": "limit_rung_no_over_leg"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.limit_rung_no_over_leg",
+            "short": "limit_rung_no_over_leg",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22500,6 +22578,46 @@
             ]
           },
           "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "54d5ae08-5615-418e-bf58-4bb85ae5850e",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered",
+            "short": "isEmpty_of_denselyOrdered"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered",
+            "short": "isEmpty_of_denselyOrdered",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "reals"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33561,6 +33679,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "824376d2-7e83-458e-a0b9-230025ee9c4d",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver",
+            "short": "UpAndOver"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver",
+            "short": "UpAndOver",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -45334,6 +45491,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b2c1338a-448f-4f1b-b22e-738937a42939",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalUpAndOver_up",
+            "short": "ordinalUpAndOver_up"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalUpAndOver_up",
+            "short": "ordinalUpAndOver_up",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b2d9f2bf-9113-4e1e-af1a-2c63e8c4a251",
           "new": {
@@ -49743,6 +49939,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c4e51e10-c07b-46b7-9440-9b8a74de7411",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.up_eq_of_mem_Icc",
+            "short": "up_eq_of_mem_Icc"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.up_eq_of_mem_Icc",
+            "short": "up_eq_of_mem_Icc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c4e5d732-5c12-4013-8fa3-145a8a8f31b8",
           "new": {
@@ -51960,6 +52195,45 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cdb5edbb-df34-4dd0-b425-a783e8399aae",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.up_not_injective",
+            "short": "up_not_injective"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.up_not_injective",
+            "short": "up_not_injective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -64439,6 +64713,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fc4f0658-23fd-49b2-924a-594ff22afca1",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.up_le_of_covBy",
+            "short": "up_le_of_covBy"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.up_le_of_covBy",
+            "short": "up_le_of_covBy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fc78ef24-a6ae-4de8-bc41-e3522035a52d",
           "new": {
@@ -64612,6 +64925,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fca9fbba-df55-4b36-a906-539978e18883",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.exists_next_landing",
+            "short": "exists_next_landing"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.exists_next_landing",
+            "short": "exists_next_landing",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -65086,6 +65438,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fe6e0e89-1529-49ea-87f2-f38b66abfa93",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalUpAndOver",
+            "short": "ordinalUpAndOver"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalUpAndOver",
+            "short": "ordinalUpAndOver",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file Order/UpAndOver.lean — atlas core v1: the up-and-over shape (closure + cover), controls, ordinal instance",
           "verify": {
             "axioms": null,
             "sorry_free": true
