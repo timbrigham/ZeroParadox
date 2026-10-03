@@ -337,37 +337,22 @@ COST     a subagent invented a detail about a cited paper while that exact rule 
          and correctly verified the tree was clean — which WAS the destruction.
 READ     tools/process/gated-conventions.md
 
-## R-TOLEAN  Anything convertible from prose to Lean MUST be converted.
-TRIGGER  you are about to write a sentence making a claim a declaration could carry.
-RULE     write the declaration and leave ONE line at the site. Three tiers, lowest first:
-         (1) an `example` that FAILS TO COMPILE when the claim is wrong — now required for
-         `Reading:` too wherever the reading is checkable, and a reading is checkable whenever
-         it claims STRENGTH, SCOPE or GENERICITY; (2) emitted output (`#print axioms`,
-         `#check`); (3) prose, only for interpretation carrying no mathematical content.
-         Prefer an anonymous `example` over a named decl — it declares nothing, so it owes no
-         `#print axioms` entry, no `ssot.json` row and no SJV sync. Put the `example` AFTER
-         the `#check` it qualifies, never between the gloss and the `#check`.
-COST     `IO.println` of hand-written English is tier 3 wearing tier 2's clothes — the machine
-         echoed a FALSE sentence, exit 0. And the `example` must not itself be generic: ask
-         what it EXCLUDES relative to the claim. `Subsingleton (α ≃ PUnit)` elaborates for
-         every type, so it witnessed nothing — but where the claim IS a universal, a generic
-         witness is the content, not the defect.
+## R-TOLEAN  A mathematical sentence is a pointer, an `example`, or interpretation — in that order.
+TRIGGER  you are about to write, propose or approve a sentence that states a mathematical
+         property — an edit to existing prose, a docstring, a PDF line, or a draft put to Tim.
+RULE     decide in order, before wording anything. (1) IN LEAN ALREADY, here or in Mathlib
+         (R-ADJACENT, body tools/process/unstated-adjacency.md)? ONE LINE of consequence at the
+         site plus a pointer to the canonical home — never a paraphrase, even one that names
+         the declaration. THE TEST: would this sentence go false if the canonical statement
+         changed? If yes it is a copy. (2) CHECKABLE but not yet in Lean — any claim of
+         STRENGTH, SCOPE or GENERICITY? Write the `example` that FAILS TO COMPILE when the claim
+         is wrong, after the `#check` it qualifies (anonymous: no `#print axioms`, `ssot.json`
+         row or SJV sync owed), then do (1). (3) Only interpretation carrying no mathematical
+         content stays prose. Never enumerate in prose what an artifact defines.
+COST     naming the theorem does not make a sentence a pointer: four rewrites of one ZP-E
+         remark each cited declarations and each failed a gate, while the facts already sat in
+         `SnapCannotBe.lean`. And a paraphrase goes stale the instant the original moves.
 READ     tools/process/prose-to-lean.md
-
-## R-ADJACENT  When the answer is already proved, the deliverable is a POINTER, not a theorem.
-TRIGGER  you are about to answer a question with a new declaration, or with a NEW TRACKED `.md`.
-RULE     ask in order: is it proved in this corpus already? is it in Mathlib? is the only
-         gap that nobody wrote it where the question gets asked? If the last, write it
-         THERE — ONE LINE of consequence at the site, plus a pointer to the canonical home.
-         Never a bare pointer, and never a paraphrase. THE TEST: would this sentence become
-         false if the canonical statement changed? If yes it is a copy — replace it with a
-         line and a pointer. Never enumerate in prose what an artifact defines — counts,
-         field lists, "the N conditions". Point, name the load-bearing member, stop. A
-         DATED survey is legitimate; a completeness claim is not.
-COST     adding an elementary instantiation is what the prior-art gate keeps catching, and a
-         paraphrase goes stale the instant the original moves — 10 of 25 sites citing `l_inf`
-         paraphrased it, and one rewrite falsified four of them immediately.
-READ     tools/process/unstated-adjacency.md
 
 ## R-DETERMINISM  Single-valuedness is the obstruction, never the fixed point.
 TRIGGER  you are about to write prose about why the bottom cannot move, or about the
@@ -423,8 +408,10 @@ READ     tools/process/two-pole-test.md
 TRIGGER  the same sentence or `--target` has been re-fixed three times, or the gate round
          reaches 3 — `gate_round.py` prints the protocol at that point.
 RULE     stop editing. Name the claim in one line without its framing; ask what would settle
-         it and whether anyone did that; probe it in the scratchpad; then restate to exactly
-         what was measured, restate as an explicit conjecture, or DELETE the sentence —
+         it and whether anyone did that; probe it in the scratchpad; then, if the measurement
+         already lives in Lean, replace the sentence with one line and a pointer (R-TOLEAN step
+         1); otherwise restate to exactly what was measured, restate as an explicit conjecture,
+         or DELETE the sentence —
          deleting is legitimate and often correct. Record what the MEASUREMENT showed, never
          that you re-worded something. MODAL claims are the high-risk class: ACCIDENTAL is
          proved only by exhibiting the clean proof, ESSENTIAL only by a reduction to a taboo,
@@ -798,13 +785,16 @@ READ     tools/process/naming-and-labels.md
 TRIGGER  you need the framework's shape, or are about to describe a layer's status.
 RULE     dependency order: **ZP-A** (lattice) → **ZP-B** (p-adic) → **ZP-C** (information) →
          **ZP-D** (state) → **ZP-E** (DA-1 / T-SNAP). **ZP-G** (category) → **ZP-H** (bridge)
-         is self-contained — conceptually downstream of ZP-E, formally independent. Each
-         formal document has a paired illustrated companion. AX-G1 and AX-G2 are grounded,
-         not novel. **AX-B1 is the framework's ONE substantive modelling commitment** —
-         discrete Boolean existence, not a continuum of partial states — so never call it
-         "directly verifiable" or "not a novel commitment"; the `decide` proof only checks
-         the two states are distinct GIVEN the two-element type. AX-1 is retired (Tim,
-         2026-09-14): its shape is Theorem T-SNAP, its occurrence the occurrence commitment.
+         is self-contained — conceptually downstream of ZP-E, formally independent. AX-G2 and
+         the initial-object half of AX-G1 are grounded, not novel; AX-G1's no-terminal half is
+         ZP-G's own commitment — in ZP-A it is the optional hypothesis `HasNoTop`
+         (`ZeroParadox/Order/Lattice.lean`), which the two-state carriers `MachinePhase` and
+         `OntologicalStates` do not satisfy. **AX-B1 is the framework's ONE substantive
+         modelling commitment** — discrete Boolean existence, not a continuum of partial
+         states — so never call it "directly verifiable" or "not a novel commitment"; the
+         `decide` proof only checks the two states are distinct GIVEN the two-element type.
+         AX-1 is retired (Tim, 2026-09-14): its shape is Theorem T-SNAP, its occurrence the
+         occurrence commitment.
 COST     the ZP-C forcing lemmas discharge the no-half-state worry but force only the
          >=2-outcome lower bound; the residual commitment is DISCRETENESS, which they do not
          eliminate and which the reals lack — the snap fails there (`f_snap_impossible`).

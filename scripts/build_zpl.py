@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.20 | September 2026
+Version 1.24 | October 2026
+v1.22: Tim's ruling, 2026-10-01: h-eps0 is the occurrence commitment at epsilon-0, measured independent of hmono/h0 (the examples after snap_unconditional, ZeroParadox/Ordinal/Incompleteness.lean section II). The Remaining Gap box no longer says what remains open is deriving h-eps0, named the Classical.choice inversion conjecture; it carries Tim's sentence, which points that conjecture, the separate footprint question, at its own home (ZeroParadox/Ordinal/SyntacticCollapse.lean). Remaining Gap item (3) restated to the measurement (Tim, 2026-10-01): the continuity route forces the opposite of hε₀. Adversary gate round 0 (bedrock, D1): item (3) said continuity of snapEmbed ∘ φ along the tower forces φ ε₀ = c₀ without the premise that the tower's stages go to c₀ (h0); the constant map c₁ is continuous there with φ ε₀ = c₁. Item (3) now names h0, as the Statement line on the Lean example does. Gate round 1 (Tim's 2026-10-01 rulings): sentence S now reads that, of the infinitely many admissible firing points monotonicity and tower alignment leave open, h-eps0 selects the least and so fixes phi uniquely (the U1-U3 examples after snap_unconditional, ZeroParadox/Ordinal/Incompleteness.lean section II); Gentzen.md item 4 carries both readings (the tower forces the floor, nothing fires below epsilon-0, which is not occurrence; occurrence is h-eps0); ZP-L Gap box reframed as what the bridge supplies. Gate round 0 findings addressed (AR-1 already in; CRH-1/E2/O1 ZP-E; E3/O2 gloss; O3/O4; E5; CRH-4; ZP-L section VII co-witness). PA-6b folded in. Tim's 2026-10-01 ruling: the c1_epsilon_zero_identification box no longer says no type bridge between Ordinal and MachinePhase is defined; it says the witness map is order-non-decreasing (snap_map_mono) and that no map Ordinal to MachinePhase is compatible with the CNF to Z2 map along the tower (the examples after c1_epsilon_zero_identification and in Incompleteness.lean section II). Gate round 1 fixes (2026-10-02): the square-fails sentence gains its reason, two values against tower images of pairwise distinct valuation (O4); Remark R-L.1's 'this alignment' now names its antecedent, sharing eps0 with proof theory (O3); the Cantor normal form phrase cites Gentzen 1943 section 1 (PA-5); the morphism MachinePhase to Z2 is stated conditional on a ZPSemilattice structure on Z2 (ED1-5). Gate round 2 fixes (Tim's 2026-10-02 rulings): the square-fails reason is now the value check, snapEmbed takes only the values 1 and 0 and stage n >= 1 maps to 2^n, of valuation n >= 1, which is neither, replacing the counting reason that gave failure at all but at most two stages (ED2-1/O2-1); the Bridge box's 'What is not proved' sentence is conditional on a ZPSemilattice structure on Z2, as its last sentence already was (ED2-3). Gate round 3 fix (Tim's 2026-10-02 ruling, R3-O2): the square-fails sentence drops 'of valuation n >= 1', so 'which is neither' binds to 2^n, matching the Lean Statement.
+v1.21: THREE DEFECTS IN THE DEPOSITED PDF (DEFECTS.md ZPI-KRATIO-ROW (BEDROCK), ZPL-CNF-COEFF-LEFT, CNFTOZP2-ANTITONE-OVERCLAIM (PDF site)). (1) The Section I ZPI row stated the informal K-ratio bridge K(Sₙ|n)/|Sₙ| → 1 as fact; ZeroParadox/Valuation/SemilatticeInstance.lean § II marks it superseded, and Sₙ = 2ⁿ (valuation n → ∞, computable in n) refutes it. The row now carries Tim's ruled wording from Gentzen.md. (2) Section IV wrote Cantor normal form coefficient-first; ordinal multiplication is not commutative (a·ω^e = ω^e for e ≥ 1), so the coefficient sits on the right, as in Cantor 1897 § 20 and Mathlib ONote.repr. (3) "ordinals below ε₀ encode into ℤ₂" read as injective; cnfToZp2 is a map and is not injective (2 and ω share the image 4). The overview now scopes the convergence to tower stages n ≥ 1 and carries BOTH charts - valuation climbing toward ∞ and norm falling toward 0 - with the seed stage 0 mapping to 0 itself (snap_arc_z2_loop); "encoding" is replaced by "map"/"image" throughout the body. Companion moves with it (comp v1.15). Gate round 1 (editorial@351b3d16…#0, adversary@c9ff0da6…#0, both PASS with ordinary findings): the seed stage 0 was left unscoped at four sites and is now scoped (n ≥ 1, or Lean's convention named). Gate round 2 (both STOP-ORDINARY): v₂ named both Lean's and the standard valuation in the definition box, now one symbol per valuation; the companion credited snap_zp2_correspondence with the values 2ⁿ, which come from Gentzen.lean § IV — that theorem states only the convergence.
 v1.20: A SUPREMUM GLOSSED AS ATTAINED, IN A DEPOSITED PDF (DEFECTS.md GENTZEN-2, found by prior_art@9fcf703f as PA3-1 after recording it as F3 one round earlier). Remark R-L.1's appositive read "- the furthest that PA's proofs of transfinite induction reach -", which asserts that ε₀ IS reached. The proof-theoretic ordinal is a supremum - sup S over the set S of ordinals at which PA proves transfinite induction - and ε₀ ∉ S: the supremum is a limit, never a maximum. The same paragraph says exactly that four sentences later ("transfinite induction up to ε₀ itself is not provable in PA"), so the gloss asserted the negation of the thing the remark exists to establish. It now reads "- the limit of how far PA's proofs of transfinite induction reach -". ⭐ FALSE ON BOTH CHARTS, WHICH IS WHY A FLIP DOES NOT FIX IT: from below the true form is the limit of how far the proofs reach, ε₀ read as the tower SUPREMUM; from above it is the least ordinal at which they stop, which was ZP-E's companion's wording then, "the minimum ordinal whose well-ordering PA cannot prove" (ZP-E comp v1.19 later replaced that VOCABULARY with the transfinite-induction form, keeping the from-above chart; DEFECTS.md GENTZEN-5) - THE SAME min-and-max-at-once SHAPE THAT epsilon0_min_eq_max CARRIES FOR ε₀ IN ORDINAL ARITHMETIC, AND NOT AN INSTANCE OF IT (adversary F1 / editorial E3-6, 2026-09-23; this entry first wrote "ε₀ read as the LEAST FIXED POINT (epsilon0_min_eq_max, both faces at once)", which states an instance-of relation the theorem does not support). Read at its declaration in ZeroParadox/Ordinal/Epsilon0MinMax.lean, that theorem is the conjunction "epsilonZero = ⨆ n, fundamentalSeq n ∧ IsLeast {o | ω^o = o} epsilonZero": its supremum ranges over the ω-TOWER STAGES and its least over the FIXED POINTS of α ↦ ω^α, and NEITHER conjunct mentions Peano Arithmetic, provability, or transfinite induction. The two proof-theoretic charts range over an entirely different set - the ordinals at which PA PROVES transfinite induction - so what they share with the theorem is a SHAPE, one object carrying both extremal characterizations at once, and per that theorem's own twice-corrected docstring a shared shape across distinct structures is a TYPE BOUNDARY, never a common theorem: STATE THE SHAPE, DO NOT STATE AN INSTANCE-OF RELATION. The corpus fences this exact move in three further places - cnf_bridge_type_boundary ("co-witness only; ε₀ = 0 never asserted (ill-typed)"), both_fixed_points_exist ("a conjunction, not a cross-domain identity"), and BottomCannotBe.lean's note on fixedPoints.lfp_eq_sSup_iterate ("A shared SHAPE across structures, never an instance-of relation"). ⛔ THE CITATION IS RELABELLED, NOT DELETED (R-TWOPOLE): the shared shape is real, so deleting it writes the opposite one-chart sentence. The shipped wording was the one phrasing neither chart licenses. ⛔ ZP-L KEEPS THE FROM-BELOW CHART AND ZP-E KEEPS THE FROM-ABOVE ONE - one chart per document, not a collapse to one - and ⛔ the appositive is NOT deleted (R-TWOPOLE): a delete writes the opposite one-chart sentence, which is how this arc's round-1 BEDROCK defect was made. Every v1.19 fence is unchanged: no claim about what Gentzen's § 2 proves, never "Hilbert-Bernays' theorem", never 1938, the full-PA claim only, and the primary source only. ⚠ § V's "What this does NOT claim" box is unchanged and still correct; the divergence with the Lean source comment in ZeroParadox/Ordinal/Gentzen.lean § V remains OPEN for the reason v1.19 recorded, re-measured here by MAKING the edit and running check_prose.py against it: with that block edited the checker reported one NEW oversized prose site, the § V module-doc block at 29 lines against a BLOCK_CAP of 10, because tools/verify/prose_baseline.txt grandfathers the block by a SHA-256 of its own body and any byte change lapses that. ⚠ THAT "1" MEASURES THE ATTEMPTED EDIT AND NEVER THESE BYTES (adversary F2, 2026-09-23): the edit was reverted, and on the shipping tree check_prose.py reports "NEW oversized prose sites: 0", re-derived here from the tool's own output rather than restated from this entry. The MECHANISM claim is correct and was verified at the artifact; only the tense was wrong, and a present-tense sentence about tooling goes stale in the direction nobody greps for. Companion moves with it (comp v1.13).
 v1.19: THE COUNT CONTRADICTED ITSELF FOUR CLAUSES APART, IN A DEPOSITED PDF (copy_editor panel finding, 2026-09-22, ticket corpus-zpl-panel-findings-r-l-1; raised independently by all three panel readers, each believing itself alone). Remark R-L.1 opened "Three results establish that ε₀ is the proof-theoretic ordinal of Peano Arithmetic" and four clauses later said the pinning takes "the other two together" - three establish it, two pin it, and in that paragraph pinning IS what establishing means, nothing distinguishing the verbs. THE COUNT IS TWO, AND THE REMARK NOW STATES IT. Pinning a supremum takes a ceiling and witnesses beneath it: provability of transfinite induction at every ordinal strictly below ε₀ supplies the witnesses, unprovability at ε₀ supplies the ceiling. The 1936 sufficiency result pins NOTHING on its own - it is a fact about what ε₀-induction proves, not about what PA proves, and sufficiency is monotone upward, so it is equally true of any larger ordinal. "Three" double-counted: it counted 1936 alongside the unprovability half that the INDIRECT route derives from it, which is one conclusion plus one of its own premises counted as two independent establishers - and the same sentence says Gentzen proved that half DIRECTLY in 1943, so the indirect route is not load-bearing there. That is why "three" could not be defended while "directly" stood. ⛔ THE 1936 HALF IS NOT DELETED (R-TWOPOLE): deleting it writes the opposite one-chart sentence, which is exactly how this arc's round-1 BEDROCK defect was made. It now stands behind the pair, named as the indirect route via Gödel's theorem together with that 1936 result. ⭐ THE TWO-POLE READING CONFIRMS THE COUNT RATHER THAN OPPOSING IT: provability-below is ε₀ read as the tower SUPREMUM (every stage beneath it is reached) and unprovability-at is ε₀ read as the LEAST FIXED POINT (nothing smaller fails first) - the same min-and-max-at-once SHAPE that epsilon0_min_eq_max carries for ε₀ in ordinal arithmetic, over a DIFFERENT set and never an instance of it - v1.20 above reads the theorem at its declaration. ⚠ AND IT DOES NOT LICENSE THE COUNT (adversary F1 / editorial E3-6, 2026-09-23): this clause once ended "epsilon0_min_eq_max appearing in proof theory, which is why the count is exactly two", running an implication FROM an ordinal theorem TO a proof-theoretic count, a direction nothing licenses. What licenses the count is the pinning argument stated earlier in this same entry - a supremum takes a ceiling and witnesses beneath it - and that argument stands on its own without the theorem. ⚠ ALSO FIXED HERE: § V's "What this does NOT claim" box labelled the characterization "Gentzen's theorem" while pointing at a remark that no longer said so. The label is dropped - the characterization takes the below-ε₀ half, which Gentzen explicitly credits to Hilbert-Bernays at p.140 footnote 3, so it is not his theorem to be named after. That site was invisible in the diff and was found only by extracting the rendered PDF. ⚠ THE PDF IS DE-LABELLED AND THE LEAN SOURCE COMMENT IS NOT. The identical string still stands in ZeroParadox/Ordinal/Gentzen.lean § V, so the divergence is open rather than closed. De-labelling it was attempted here and deliberately reverted: tools/verify/prose_baseline.txt grandfathers that module-doc block by a SHA-256 of the block's own content, so any byte change inside it lapses the grandfathering and brings a 29-line block under check_prose.py's 10-line BLOCK_CAP, and re-baselining would defeat the mechanism that caught it. Removing the label from the Lean is a separate, ticketed change and is not done here. Every v1.18 fence is unchanged: no claim about what Gentzen's § 2 proves, never "Hilbert-Bernays' theorem", never 1938, and the primary source only. ⛔ AND ONE FENCE ADDED: p.140 also states unprovability of transfinite induction below ε₀ in gewissen Teilbereichen - in certain SUBSYSTEMS, not in full PA - and no surface here cites or relies on that; the claim carried at every ZP-L site is the full-PA one. Companion moves with it (comp v1.12).
 v1.18: GENTZEN CITED AT A PAPER THAT CARRIES NEITHER CLAUSE, IN A DEPOSITED PDF (prior-art finding PA4-1 / PA-2026-09-21-A, ticket corpus-gentzen-two-bounds-propagation). Remark R-L.1 read "Gentzen's theorem (1936) establishes that ε₀ is the proof-theoretic ordinal of Peano Arithmetic: PA can prove transfinite induction for any ordinal strictly below ε₀, but not for ε₀ itself." The cited 1936 paper - Die Widerspruchsfreiheit der reinen Zahlentheorie, Math. Annalen 112 (1936) 493-565 - licenses NEITHER of those two clauses. "ε₀ is the proof-theoretic ordinal of PA" is two bounds running in opposite directions, and the document shipped one of them: 1936 gives the UPPER bound, that transfinite induction up to ε₀ SUFFICES to prove PA consistent; the LOWER bound, that PA cannot itself prove that induction, is a different result. Sufficiency is monotone upward - anything ε₀ steps of induction prove, more steps prove too - so the 1936 bound alone is equally true of ε₁ or of any larger ordinal and singles out nothing. ⚠⚠ THE FIRST ATTEMPT AT THIS FIX THEN WROTE "only the unprovability bound pins the value to exactly ε₀", WHICH IS FALSE, AND DELETED THE CLAUSE THAT WOULD HAVE MADE IT TRUE (adversary and editorial both FAIL-BEDROCK, 2026-09-22, at five sites including README.md:42). "ε₀ is the proof-theoretic ordinal of PA" is a claim about a SUPREMUM - this project's own vocabulary reference defines the term as the supremum of the ordinals for which the system proves transfinite induction - and PINNING A SUPREMUM TAKES BOTH DIRECTIONS, WHICH RUN OPPOSITE WAYS. Unprovability at ε₀ is the ceiling; provability at every ordinal strictly below ε₀ is the set of witnesses underneath it, and it is the entire content of the word "exactly". A ceiling with no witnesses beneath it locates nothing. So the third result is RESTORED here rather than dropped, and the pinning is attributed to provability-below together with unprovability-at. ⛔ THE RESTORED CREDIT IS SCOPED TO WHAT p.140 LITERALLY SAYS: Gentzen calls the below-ε₀ result bekanntlich - already known - and credits it in footnote 3 to Hilbert-Bernays, Grundlagen der Mathematik II, § 5, 3c. The remark says GENTZEN REPORTS IT, CREDITING HILBERT-BERNAYS - never that it is Hilbert-Bernays' theorem, which would assert what Grundlagen II contains, and nobody on this project has opened Grundlagen II. That scoping is what makes the clause safe: it asserts what Gentzen WROTE, on a page this project has read. ⛔ AND p.140's announcement that he gives formalized presentations of such proofs in § 2 is NOT cited: pages 145-155 have not been opened here, so no claim is made about what § 2 proves. ⚠ The original pre-v1.18 wording - "PA can prove transfinite induction for any ordinal strictly below ε₀, but not for ε₀ itself" - was MATHEMATICALLY RIGHT and only mis-dated; the defect was always the YEAR, never the characterization, and elaborating the date fix into a sufficiency-versus-unprovability story traded a citation error for a mathematical one. ⚠ THE SECONDARY SOURCE READ HERE WOULD HAVE SHIPPED A THIRD WRONG YEAR: Rathjen arXiv:1405.4484v1 Thm 2.8 labels the pair "(Gentzen 1936, 1938)". ⚠ THIS ENTRY ALSO CITED Cheng arXiv:2401.12531v4 Thm 4.1 BESIDE IT, AND THAT CITATION IS WITHDRAWN AND IS REMOVED HERE (DEFECTS.md CITE-4; verified at arxiv.org, 2026-09-23): the abstract page reads "This paper has been withdrawn by Yong Cheng", and the pinned v4 (2025-06-16, 1 KB) is the withdrawal stub and carries no Theorem 4.1 - so the pin named a document that does not contain the cited claim, independently of the withdrawal. ⛔ THE WRONG-YEAR WARNING ITSELF IS NOT DELETED (R-TWOPOLE): it stands on Rathjen alone, whose Thm 2.8 carries that label and was read at a page image and filed. Gentzen 1943 p.140 footnote 4 identifies that 1938 item as Neue Fassung des Widerspruchsfreiheitsbeweises fuer die reine Zahlentheorie, Forschungen zur Logik Heft 4 - a SECOND consistency proof, the upper bound again - so "1936, 1938" cites the sufficiency half twice and the pinning half never. Cited from the primary source only. ⭐ AND THE ATTRIBUTION IS SHARPER THAN "(1943)": Gentzen's own opening on p.140 says the unprovability follows INDIRECTLY from Goedel's theorem together with the 1936 result, and that what he supplies in 1943 is the DIRECT proof. The remark says that, rather than dating the result to 1943. Verified at the primary source, read as page images: .claude-local/papers/gentzen_1943_beweisbarkeit_unbeweisbarkeit_anfangsfaelle_transfinite_induktion_mathann119.pdf, Gerhard Gentzen, Beweisbarkeit und Unbeweisbarkeit von Anfangsfaellen der transfiniten Induktion in der reinen Zahlentheorie, Math. Annalen 119 (1943) 140-161 - p.140 for the opening and footnotes 1-4, p.161 for the closing folio that fixes the range. Companion moves with it (comp v1.11).
@@ -29,7 +31,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.24'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -68,9 +70,11 @@ def build():
         'computational fixed-point structure. Third, the ordinal &#949;&#8320; is fully '
         'characterized as the first fixed point of &#945; &#8614; &#969;^&#945; and the '
         'limit of the tower &#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230;. '
-        'Fourth, ordinals below &#949;&#8320; encode into &#8484;&#8322; via their Cantor '
-        'normal form, and as the tower stages approach &#949;&#8320;, their 2-adic '
-        'encodings converge to 0 = &#8869;.'))
+        'Fourth, cnfToZp2 maps ordinals below &#949;&#8320; into &#8484;&#8322; by recursion '
+        'on their Cantor normal form. From tower stage 1 on, the 2-adic valuation of the '
+        'image climbs with ordinal height toward &#8734; while the 2-adic norm falls toward 0; '
+        'the images converge to 0 = &#8869;, the point the seed stage 0 itself maps to '
+        '(snap_arc_z2_loop, ZeroParadox/Ordinal/CnfBridge.lean).'))
     E.append(body(
         'The central result (§VII) is the canonical snap map: '
         '&#981; &#945; = if &#945; < &#949;&#8320; then c&#8320; else c&#8321; '
@@ -100,7 +104,8 @@ def build():
             ['ZPB', 'Topology', 'C3: no continuous path &#8869; &#8594; x &#8800; &#8869;'],
             ['ZPC', 'Information Theory', 'L-INF: infinite surprisal at &#8869;'],
             ['ZPJ/K', 'Set Theory + Computation', 'bot_self_mem (AFA); botCode (Kleene)'],
-            ['ZPI', 'Algorithmic IT', 'K(S<sub>n</sub>|n)/|S<sub>n</sub>| &#8594; 1; K uncomputable'],
+            ['ZPI', 'Algorithmic IT', 'K uncomputable; the K-ratio bridge is superseded '
+             '(ZeroParadox/Valuation/SemilatticeInstance.lean &#167; II)'],
         ],
         col_widths=[50, 100, 280],
     ))
@@ -267,10 +272,13 @@ def build():
             'indirect route to the unprovability half, via G&#246;del\'s '
             'theorem together with that 1936 result. This is not claimed or '
             'proved here.',
-            'ZP-L derives &#949;&#8320; as the snap threshold from ordinal fixed-point '
-            'structure, independently of proof theory. Both derivations locate the same '
-            'boundary: the ordinal where &#969;-tower self-iteration becomes self-limiting. '
-            'No claim is made that this alignment is more than a structural observation.',
+            'ZP-L shares its &#949;&#8320; with proof theory: it is Mathlib\'s Ordinal.epsilon 0 '
+            '(epsilonZero, ZeroParadox/Ordinal/Gentzen.lean), and the ordinals below it are written in '
+            'Cantor normal form, the notation ordinal analysis also uses (Gentzen 1943, &#167;1). What is ZP-L\'s own is the snap: '
+            'a monotone map sending the tower\'s stages to c&#8320; fires nowhere below &#949;&#8320; '
+            '(snap_threshold_is_epsilon_zero), and its firing at &#949;&#8320; is the hypothesis '
+            'h&#949;&#8320; (ZeroParadox/Ordinal/Incompleteness.lean &#167; II). '
+            'That the snap\'s least possible firing point is the ordinal of Gentzen\'s consistency proof is offered as a structural observation, not as a link between the two results.',
         ]
     ))
     E.append(sp(6))
@@ -337,12 +345,14 @@ def build():
 
     E.append(body(
         'Every ordinal below &#949;&#8320; has a unique Cantor normal form — a finite '
-        'sum a&#8321;&#183;&#969;^e&#8321; + a&#8322;&#183;&#969;^e&#8322; + &#8230; '
+        'sum &#969;^e&#8321;&#183;a&#8321; + &#969;^e&#8322;&#183;a&#8322; + &#8230; '
         'with strictly decreasing exponents e&#8321; > e&#8322; > &#8230; and each '
         'coefficient a nonzero natural number (a nonzero ordinal strictly below &#969;). In Lean: '
         'NONote (Mathlib.SetTheory.Ordinal.Notation). '
-        'The encoding cnfToZp2 maps each such ordinal to &#8484;&#8322; via structural '
-        'recursion on the Cantor normal form.'))
+        'The map cnfToZp2 sends each such ordinal to &#8484;&#8322; by structural '
+        'recursion on the Cantor normal form. From tower stage 1 on, the 2-adic valuation '
+        'of the image tracks ordinal height (tower_orders_agree, '
+        'ZeroParadox/Ordinal/CnfBridge.lean).'))
 
     E.append(def_box(
         'Definition: cnfToZp2 (Gentzen.lean §IV)',
@@ -351,12 +361,12 @@ def build():
             'Base: cnfToZp2(0) = 0',
             'Recursive: cnfToZp2(&#969;^e &#183; n + a) = '
             '2^(v&#8322;(cnfToZp2(e)) + 1) &#183; n + cnfToZp2(a)   [n : &#8469;&#8314;]',
-            'where v&#8322; denotes the 2-adic valuation.',
+            'where v&#8322; denotes Lean\'s PadicInt.valuation, which sets v&#8322;(0) = 0; the recursion uses that value.',
             'Valuation of the n-th tower stage:',
-            '  cnfToZp2(towerNONote 0) = 0           (Lean: PadicInt.valuation 0 = 0; standard: v&#8322;(0) = +&#8734;)',
+            '  cnfToZp2(towerNONote 0) = 0           (Lean: PadicInt.valuation 0 = 0; the standard 2-adic valuation of 0 is +&#8734;)',
             '  cnfToZp2(towerNONote 1) = 2            (valuation 1)',
             '  cnfToZp2(towerNONote 2) = 4            (valuation 2)',
-            '  cnfToZp2(towerNONote n) = 2^n          (valuation n)',
+            '  cnfToZp2(towerNONote n) = 2^n          (valuation n; n &#8805; 1)',
         ]
     ))
     E.append(sp(6))
@@ -365,7 +375,7 @@ def build():
         'Theorem: cnfToZp2_tower_valuation',
         [
             '&#8704; n : &#8469;, (cnfToZp2 (towerNONote n)).valuation = n',
-            'The 2-adic valuation of the n-th tower stage encoding equals n.',
+            'The 2-adic valuation of the image of the n-th tower stage equals n (at n = 0, by Lean\'s convention PadicInt.valuation 0 = 0).',
             'Proof: by induction; successor step uses PadicInt.valuation_pow.',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
         ]
@@ -387,7 +397,7 @@ def build():
         'Theorem: tower_converges_to_zero',
         [
             'Filter.Tendsto (fun n &#8614; cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0)',
-            'The tower encodings converge to 0 = &#8869; in &#8484;&#8322;.',
+            'The images of the tower stages converge to 0 = &#8869; in &#8484;&#8322;.',
             'Proof: each stage cnfToZp2(towerNONote (n+1)) = 2^(n+1) in &#8484;&#8322;, '
             'so its 2-adic norm is &#8214;2&#8214;^(n+1) = (1/2)^(n+1) &#8594; 0. '
             'Uses Metric.tendsto_atTop and exists_pow_lt_of_lt_one.',
@@ -465,10 +475,14 @@ def build():
             '  (&#8704; n : &#8469;, &#981; (fundamentalSeq n) = c&#8320;) &#8743; &#981; &#949;&#8320; = c&#8321;',
             'Witness: &#981; &#945; = if &#945; < &#949;&#8320; then c&#8320; else c&#8321;.',
             'One specific map sends all tower stages to c&#8320; and &#949;&#8320; to c&#8321;.',
-            'The stronger structural claim — an order-preserving morphism '
-            'Ordinal &#8594;<sub>o</sub> MachinePhase compatible with the CNF &#8594; &#8484;&#8322; '
-            'encoding — remains outside Lean scope: no type bridge between Ordinal '
-            'and MachinePhase is defined in this library.',
+            'The witness map is order-non-decreasing in ZP-A\'s join order (snap_map_mono), and '
+            'no map Ordinal &#8594; MachinePhase is compatible with the CNF &#8594; &#8484;&#8322; '
+            'map along the tower: for every g : MachinePhase &#8594; &#8484;&#8322; the square fails, '
+            'because MachinePhase has two values and the images of stages 1, 2, 3 have three distinct 2-adic '
+            'valuations (the example after c1_epsilon_zero_identification in '
+            'ZeroParadox/Ordinal/Gentzen.lean); through snapEmbed it fails at every stage n &#8805; 1, '
+            'because snapEmbed takes only the values 1 and 0, and stage n &#8805; 1 maps to 2^n, '
+            'which is neither (ZeroParadox/Ordinal/Incompleteness.lean &#167; II).',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
         ]
     ))
@@ -582,8 +596,10 @@ def build():
             '  (iii) Filter.Tendsto (fun n &#8614; cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0)',
             '  (iv)  &#981; &#949;&#8320; = c&#8321;',
             'The same tower sequence witnesses both the ordinal approach to &#949;&#8320; '
-            'and the 2-adic approach to 0. The full structural identification '
-            '(&#949;&#8320; &#8596; &#8869; via a type bridge) remains outside Lean scope — see §V.',
+            'and the 2-adic approach to 0. This is a co-witness, not an identity '
+            '(cnf_bridge_type_boundary, ZeroParadox/Ordinal/CnfBridge.lean): &#949;&#8320; and the '
+            '&#8484;&#8322; zero live in different types, so an identity between them fails to '
+            'elaborate.',
             'Proof: &#10216;epsilonZero_tower_lt, fun n &#8614; if_pos &#8230;, '
             'tower_converges_to_zero, if_neg (lt_irrefl &#949;&#8320;)&#10217;',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
@@ -594,40 +610,52 @@ def build():
     # ── Remaining Gap ───────────────────────────────────────────────────────────
     E += [
         hr(),
-        Paragraph('Remaining Formal Gap', S['h1']),
+        Paragraph('The Bridge: What Is Formal and What Is Assumed', S['h1']),
         hr(),
     ]
 
     E.append(import_box(
-        'The Remaining Gap',
+        'What the Bridge Supplies',
         [
-            'The identification of ZPE\'s MachinePhase element c&#8321; with the ordinal '
-            '&#949;&#8320; via a formal type bridge remains outside Lean scope.',
+            'c&#8321; is a MachinePhase state and &#949;&#8320; an ordinal, so an identity between them '
+            'is not a well-formed statement; the formal link runs through maps: a canonical map '
+            'Ordinal &#8594; MachinePhase and snapEmbed : MachinePhase &#8594; &#8484;&#8322;.',
             'What is proved: a canonical map Ordinal &#8594; MachinePhase assigns c&#8321; '
-            'exactly at &#949;&#8320; and nowhere earlier. What is not proved: a canonical '
-            'ZPSemilattice morphism MachinePhase &#8594; &#8484;&#8322; that would connect '
-            'ZPE\'s &#8869; = c&#8320; to ZPB\'s &#8869; = 0 formally.',
-            'Two of the three pieces such a bridge was expected to need are built, in ZPM '
+            'exactly at &#949;&#8320; and nowhere earlier.',
+            'Two of the three pieces a type bridge from the ordinals through MachinePhase to '
+            '&#8484;&#8322; was expected to need are built, in ZPM '
             '(ZeroParadox/Ordinal/Incompleteness.lean &#167;I&#8211;&#167;II), and the third is '
-            'the one still open:',
+            'not supplied by them:',
             '  (1) snapEmbed : MachinePhase &#8594; &#8484;&#8322; exists, sending c&#8320; '
             '&#8614; 1 and c&#8321; &#8614; 0 &#8212; the snap state to 2-adic zero, the pre-snap '
             'state to a unit (snapEmbed_c0, snapEmbed_c1, both by rfl)',
             '  (2) snapEmbed_mul_morphism proves snapEmbed (join a b) = snapEmbed a &#215; '
             'snapEmbed b, carrying join to multiplication because c&#8321; absorbs joins as 0 '
-            'absorbs products. That is an absorbing-element morphism, not a ZPSemilattice '
-            'morphism: &#8484;&#8322; carries no lattice &#8869;',
-            '  (3) still open &#8212; no theorem derives the alignment from '
-            'tower_converges_to_zero through snapEmbed',
+            'absorbs products. That is an absorbing-element morphism, and it does not send '
+            'bottom to bottom in the Scale.lean chart (&#8869; = 0): there the bottom role is '
+            'filled by 0 (a ZPSemilattice on &#8484;&#8322; with &#8869; = 0 is built in '
+            'ZeroParadox/Valuation/Scale.lean &#167; V), and snapEmbed sends c&#8320; to 1 '
+            '(snapEmbed_c0); in the multiplicative reading snapEmbed c&#8320; = 1 is the identity '
+            '(1 &#183; x = x), as c&#8320; is the identity of join, and that reading is not a '
+            'ZPSemilattice, since multiplication on &#8484;&#8322; is not idempotent '
+            '(2 &#183; 2 &#8800; 2)',
+            '  (3) not supplied &#8212; for a map &#981; sending the tower&#8217;s stages to c&#8320; (h0), '
+            'continuity of snapEmbed &#8728; &#981; along the tower would '
+            'force &#981; &#949;&#8320; = c&#8320;, the opposite (the examples after snap_unconditional, '
+            'ZeroParadox/Ordinal/Incompleteness.lean &#167; II), while the cnfToZp2 images of the stages '
+            'do tend to snapEmbed c&#8321; = 0; the placement enters as h&#949;&#8320;.',
             'So hfp is derived rather than assumed: hfp_from_epsilon_zero obtains it from '
             'monotonicity together with h&#949;&#8320; : &#981; &#949;&#8320; = c&#8321;, and '
             'snap_unconditional uses it in place of the free hypothesis of '
-            'snap_exactly_at_epsilon_zero. What remains open is h&#949;&#8320; itself &#8212; '
-            'deriving &#981; &#949;&#8320; = c&#8321; from the 2-adic structure rather than '
-            'taking it as an alignment hypothesis, which ZPM &#167;II names the Classical.choice '
-            'inversion conjecture. The canonical witness (epsilon_zero_snap_canonical) '
-            'satisfies all five conditions without any such bridge; what the bridge would close '
-            'is the gap between the two formal instances of &#8869; across ZPE and ZPB.',
+            'snap_exactly_at_epsilon_zero. h&#949;&#8320; (&#981; &#949;&#8320; = c&#8321;; in the '
+            '&#8484;&#8322; chart, snapEmbed (&#981; &#949;&#8320;) = 0) is the snap&#8217;s occurrence at '
+            '&#949;&#8320;, taken as a hypothesis: of the infinitely many admissible firing points that '
+            'monotonicity and tower alignment (every tower stage sent to c&#8320;) leave open, '
+            'h&#949;&#8320; selects the least, and so fixes &#981; uniquely '
+            '(ZeroParadox/Ordinal/Incompleteness.lean &#167; II). Whether Classical.choice is forced by '
+            'the metric collapse is a separate open question (ZeroParadox/Ordinal/SyntacticCollapse.lean). '
+            'The canonical witness (epsilon_zero_snap_canonical) '
+            'satisfies all five conditions without any such type bridge.',
         ]
     ))
     E.append(sp(6))

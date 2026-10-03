@@ -1898,6 +1898,11 @@ def changed_attributable(ranges=None):
     return sorted(seen)
 
 
+# The ledger step the `prior-art attrib` BLOCK leg below asks about. A NAME, not a second list: the
+# leg reads it and so does `ENFORCED_REVIEW_LEGS`, so the review report cannot drift from the leg.
+ATTRIB_STEP = "prior_art"
+
+
 def check_prior_art_attribution(ranges=None):
     """EVERY ATTRIBUTABLE FILE THIS PUSH EDITS MUST CARRY A PASSING `prior_art` VERDICT AT ITS CURRENT BYTES.
 
@@ -1940,7 +1945,7 @@ def check_prior_art_attribution(ranges=None):
     if not touched:
         return True, ("no attributable file in %s — no attribution owed" % basis)
     ref = record.read_ref("HEAD")
-    owing = record.owing_paths("prior_art", ref, "push")
+    owing = record.owing_paths(ATTRIB_STEP, ref, "push")
     if owing is None:
         return False, ("could not ask the ledger which attributable files carry a passing prior_art "
                        "verdict, so the %d edited file(s) in %s cannot be shown attributed. "
@@ -2261,6 +2266,151 @@ REVIEW_STEPS = ("editorial", "adversary")
 # already removed one step from that tuple (`prior_art`, above). Deriving means a removal cannot
 # leave `_EXPECTED` demanding a leg that no longer runs, and an addition cannot ride in unexpected.
 _EXPECTED += tuple("signal:%s" % s for s in REVIEW_STEPS)
+
+# ⭐ THE REPORT STATES TWO LISTS, AND THEY ANSWER DIFFERENT QUESTIONS.
+# (a) ENFORCED HERE — the review steps this hook itself BLOCKS on, whatever any admission set says:
+#     `REVIEW_STEPS` (the signals leg) and `ATTRIB_STEP` (the prior-art attrib leg). Derived from
+#     those two names, never written out again. `REVIEW_STEPS` stays a literal, guarded by
+#     `guards.py`'s independently-written `_need` (`R-NOCONV`: the guard asserting what still BLOCKS).
+# (b) ADMITTED — gitRobot's push admission set, handed to the hook as the env var below, intersected
+#     with the registry's `family: review` types, so a review step admitted at push (`copy_editor`)
+#     is reported without anyone editing a list. ⛔ TRUST FOOTING: anyone can set an env var, so (b)
+#     REPORTS and never BLOCKS, and no BLOCK leg may read it (a selftest row holds that); the ledger
+#     (gitRobot's push inventory) is the enforcement. An admission set is NOT a statement of what
+#     this hook requires: treating it as one dropped (a) from the page in the SET and EMPTY states.
+# ⚠ NOT `GITROBOT_ADMISSION` — that name is the admission FILE PATH override, something else entirely.
+ADMITTED_ENV = "GITROBOT_ADMITTED"
+ENFORCED_REVIEW_LEGS = (tuple((s, "signals") for s in REVIEW_STEPS)
+                        + ((ATTRIB_STEP, "prior-art attrib"),))
+
+
+def registry_review_family(path=None):
+    """Sorted tuple of registry types with `family: review`, or None if the registry is unreadable.
+
+    None, never (): an unreadable registry and a registry with no review types are different answers,
+    and only the first may fall back (`R-ZERONULL`). A registry of the wrong SHAPE (top level or
+    `types` not an object) is unreadable for this purpose, and returns None rather than raising."""
+    try:
+        with io.open(path or os.path.join(BASE, "required.v2.json"), encoding="utf-8") as fh:
+            doc = json.load(fh)
+        types = doc.get("types") if isinstance(doc, dict) else None
+        if not isinstance(types, dict):
+            return None
+        return tuple(sorted(k for k, v in types.items()
+                            if isinstance(v, dict) and v.get("family") == "review"))
+    except (OSError, ValueError, RecursionError):
+        return None
+
+
+def admitted_review_steps(raw=False, family=False):
+    """Classify the admission set handed to this hook. Returns `(state, steps, detail)`.
+
+    `raw` is the env var's text (False = read the environment; None = ABSENT). `family` is the registry
+    review family (False = read the registry). The three states carry DIFFERENT VALUES (`R-ZERONULL`):
+      SET      steps = sorted tuple of admitted review steps — () when steps were admitted but none
+               is a review step; `detail` = how many steps were admitted in all
+      EMPTY    steps = () — the admission set was read and admits nothing at all
+      UNKNOWN  steps = None — never (): absent (a human `git push`), unparseable, malformed, for a
+               different action, or no readable registry to derive against
+    """
+    try:
+        if raw is False:
+            raw = os.environ.get(ADMITTED_ENV)
+        if family is False:
+            family = registry_review_family()
+        return _classify_admission(raw, family)
+    except Exception as e:
+        # ⚠ F3: a crafted value (32k nested brackets measured a RecursionError out of `json.loads`)
+        # must land in UNKNOWN, never raise into `cmd_prepush`. RecursionError is an Exception.
+        return ("UNKNOWN", None, "%s could not be classified (%s)" % (ADMITTED_ENV, type(e).__name__))
+
+
+def _classify_admission(raw, family):
+    """`admitted_review_steps`' body, behind its catch-all. Same contract, same three states."""
+    if raw is None:
+        return ("UNKNOWN", None, "%s is not set — a push not launched by gitRobot (e.g. a human "
+                                 "`git push`)" % ADMITTED_ENV)
+    try:
+        doc = json.loads(raw)
+    except (ValueError, RecursionError):
+        return ("UNKNOWN", None, "%s is not parseable JSON" % ADMITTED_ENV)
+    if not isinstance(doc, dict):
+        return ("UNKNOWN", None, "%s is JSON but not an object" % ADMITTED_ENV)
+    state, action, admitted = doc.get("state"), doc.get("action"), doc.get("admitted")
+    if state == "UNKNOWN":
+        return ("UNKNOWN", None, "gitRobot could not read the admission set: %s"
+                % (doc.get("why") or "no reason given"))
+    if action != "push":
+        return ("UNKNOWN", None, "%s describes action %r, not push" % (ADMITTED_ENV, action))
+    if (state not in ("SET", "EMPTY") or not isinstance(admitted, list)
+            or not all(isinstance(s, str) for s in admitted)
+            or (state == "SET") != bool(admitted)):
+        return ("UNKNOWN", None, "%s is malformed (state %r with %r)" % (ADMITTED_ENV, state, admitted))
+    if family is None:
+        return ("UNKNOWN", None, "the registry's review family could not be read, so nothing can be "
+                                 "derived from the admission set")
+    if state == "EMPTY":
+        return ("EMPTY", (), "the admission set was read and admits no step at all")
+    steps = tuple(sorted(set(admitted) & set(family)))
+    return ("SET", steps, "%d step(s) admitted at push" % len(admitted))
+
+
+def review_report_lines(adm):
+    """Render the review report: what this hook ENFORCES, then what gitRobot ADMITTED. Pure.
+
+    The enforced list prints in EVERY state, because the BLOCK legs apply whatever the admission set
+    says; an EMPTY or SET-without-reviews admission set is gitRobot's statement, never a waiver here.
+    ⚠ UNKNOWN NEVER RENDERS AS A COUNT. It names itself UNKNOWN and points at the enforced list as
+    the FALLBACK — those steps are owed wherever their legs' triggers apply."""
+    state, steps, detail = adm
+    legs = {}
+    for s, leg in ENFORCED_REVIEW_LEGS:
+        legs.setdefault(s, []).append(leg)
+    out = ["  enforced here: %s — BLOCK legs of this hook, each on its own trigger, whatever the "
+           "admission set says"
+           % "; ".join("%s (%s)" % (s, " + ".join(l)) for s, l in legs.items())]
+    if state == "UNKNOWN":
+        out.append("  admitted review set: UNKNOWN — %s. gitRobot's review set could not be read; "
+                   "this is NOT \"none required\"." % detail)
+        out.append("      FALLBACK (owed wherever their legs apply: the enforced list above): %s"
+                   % ", ".join(legs))
+        return out
+    if state == "EMPTY":
+        out.append("  admitted review set: EMPTY — %s, so gitRobot's set names no review step. This "
+                   "does NOT lift the enforced list above." % detail)
+        return out
+    if not steps:
+        out.append("  admitted review set: SET — %s, NONE of them in the registry's review family. "
+                   "This does NOT lift the enforced list above." % detail)
+        return out
+    out.append("  admitted review set: SET — %s ∩ registry family:review — %d review step(s) (%s)"
+               % (ADMITTED_ENV, len(steps), detail))
+    for s in steps:
+        out.append("      %-14s %s" % (s, "admitted at push; ALSO enforced here by the %s BLOCK leg"
+                                       % " + ".join(legs[s]) if s in legs else
+                                       "admitted at push; ENFORCED BY THE LEDGER (gitRobot push "
+                                       "inventory) — this hook reports it and carries no BLOCK leg "
+                                       "for it"))
+    return out
+
+
+def signal_need(name, fires):
+    """Whether the signals leg REQUIRES step `name` this push. A function so a control can run it
+    under a forged admission set and show the answer does not move: it must never read `ADMITTED_ENV`."""
+    return (name != "prior_art") or fires
+
+
+def review_report():
+    """The report as `cmd_prepush` prints it. Never raises: the report must not take the hook down."""
+    try:
+        return review_report_lines(admitted_review_steps())
+    except Exception as e:
+        try:
+            return review_report_lines(("UNKNOWN", None, "the review report itself errored (%s)"
+                                        % type(e).__name__))
+        except Exception:
+            return ["  admitted review set: UNKNOWN — the review report errored; this is NOT "
+                    "\"none required\"."]
 
 
 def _numstat(ranges=None):
@@ -2779,7 +2929,14 @@ def cmd_prepush(ranges=None):
          "prose under tools/ — WIDENED 2026-09-18 from tools/verify|tools/process; DOWNGRADED "
          "2026-08-21 (rung 5, measured non-convergence 10>4>6>9 then deadlock); stale count "
          "prints every run"),
-        ("signals", "BLOCK", "editorial + adversary (+ prior-art on trigger 5) fresh and covering"),
+        # ⚠ THESE ROWS MUST STAY LITERALS: `hooks._batch_rows` reads this list with `ast.literal_eval`
+        # and returns None on any expression. So the signals row cannot be derived from
+        # `REVIEW_STEPS`; a selftest row holds it to that tuple instead.
+        ("signals", "BLOCK", "editorial + adversary fresh and covering"),
+        ("review set", "report",
+         "names the review steps this hook ENFORCES (signals + prior-art attrib) in every state, then "
+         "those admitted at push: GITROBOT_ADMITTED ∩ registry family:review; UNKNOWN when absent "
+         "or unreadable — never blocks"),
         ("agent gate", "WARN", "an agent judges whether each check's PASS is EARNED; never blocks"),
     ])
     if state is None:
@@ -2910,6 +3067,9 @@ def cmd_prepush(ranges=None):
     print("  scope: %d reviewable file(s) in %s%s"
           % (len(scope), _scope_basis,
              (" — e.g. " + ", ".join(scope[:3])) if scope else " (none)"))
+    # REPORT ONLY — see `ADMITTED_ENV`. Nothing below reads this answer; the signals legs are unchanged.
+    for _line in review_report():
+        print(_line)
     meta = {
         "editorial": ("/editorial-review", "internal consistency + prose precision",
                       "any reviewable prose in the push"),
@@ -2919,7 +3079,7 @@ def cmd_prepush(ranges=None):
                       "trigger 5: a new .lean file, or >=50 inserted .lean lines"),
     }
     for name, valid, why in check_signals(ranges):
-        need = (name != "prior_art") or fires
+        need = signal_need(name, fires)
         ok = valid or not need
         agent, purpose, when = meta[name]
         print("  %-20s %-4s %s" % (agent, "ok" if ok else "FAIL",
@@ -3394,6 +3554,186 @@ def selftest():
                           "ok" if _ok_step else "*** asked %r ***" % (_wrong or "nothing",)))
     bad += 0 if _ok_step else 1
     total += 1
+
+    # ⚠ THE REVIEW REPORT IS DERIVED FROM THE ADMISSION SET, AND THESE ROWS ARE WHAT HOLDS IT THERE.
+    # The family is passed explicitly so a registry edit cannot move the fixture; the SET row uses a
+    # step outside `REVIEW_STEPS` on purpose, because a step the hand-written pair already names would
+    # appear in the report whether or not the derivation ran.
+    print("review report: derived from %s, three states (R-ZERONULL)" % ADMITTED_ENV)
+    _fam = ("adversary", "claim_review", "copy_editor", "editorial", "prior_art", "rely")
+    _set = json.dumps({"state": "SET", "action": "push",
+                       "admitted": ["adversary", "build", "copy_editor", "editorial", "guards"]})
+    _adm_set = admitted_review_steps(_set, _fam)
+    _txt_set = "\n".join(review_report_lines(_adm_set))
+    _adm_unk = admitted_review_steps(None, _fam)
+    _txt_unk = "\n".join(review_report_lines(_adm_unk))
+    _adm_emp = admitted_review_steps(json.dumps({"state": "EMPTY", "action": "push", "admitted": []}),
+                                     _fam)
+    _rev_cases = [
+        ("SET: every admitted review step is reported",
+         _adm_set[0] == "SET" and all(re.search(r"^\s+%s\s" % s, _txt_set, re.M)
+                                      for s in ("adversary", "copy_editor", "editorial"))),
+        ("SET: a non-review admitted step is not",
+         not re.search(r"^\s+(build|guards)\s", _txt_set, re.M)),
+        ("UNKNOWN (absent) is None, never an empty list", _adm_unk[1] is None),
+        ("UNKNOWN renders UNKNOWN + the fallback pair",
+         "UNKNOWN" in _txt_unk and "FALLBACK" in _txt_unk
+         and all(s in _txt_unk for s in REVIEW_STEPS)),
+        ("unparseable JSON is UNKNOWN",
+         admitted_review_steps("{not json", _fam)[1] is None),
+        ("EMPTY differs from UNKNOWN and from SET-with-none",
+         _adm_emp[:2] == ("EMPTY", ()) and _adm_emp[1] != _adm_unk[1]
+         and admitted_review_steps(json.dumps({"state": "SET", "action": "push",
+                                               "admitted": ["build"]}), _fam)[:2] == ("SET", ())),
+    ]
+    # The manifest's signals row is a LITERAL (see the comment on it), so it is held to the tuple the
+    # leg iterates here: every `REVIEW_STEPS` name appears in it, and no other registry review step.
+    import ast as _ast
+    _sig = None
+    try:
+        for _n in _ast.walk(_ast.parse(io.open(__file__, encoding="utf-8").read())):
+            if isinstance(_n, _ast.FunctionDef) and _n.name == "cmd_prepush":
+                for _c in _ast.walk(_n):
+                    if (isinstance(_c, _ast.Call) and isinstance(_c.func, _ast.Attribute)
+                            and _c.func.attr == "plan" and _c.args):
+                        _sig = [r[2] for r in _ast.literal_eval(_c.args[0]) if r[0] == "signals"]
+    except (OSError, SyntaxError, ValueError):
+        _sig = None
+    _rev_cases.append(
+        ("manifest signals row names exactly REVIEW_STEPS",
+         bool(_sig) and len(_sig) == 1
+         and set(re.findall(r"[a-z_]+", _sig[0])) & set(_fam) == set(REVIEW_STEPS)))
+
+    # ⚠⚠ ENFORCED vs ADMITTED (`/rely` 2026-10-03, F1-F4). The admission set is gitRobot's statement,
+    # never this hook's requirement list, so the enforced list must print in every state, and a step
+    # with a BLOCK leg here must never be labelled as having none.
+    _enf = [s for s, _l in ENFORCED_REVIEW_LEGS]
+    _adm_none = admitted_review_steps(json.dumps({"state": "SET", "action": "push",
+                                                  "admitted": ["build"]}), _fam)
+    _adm_pa = admitted_review_steps(json.dumps({"state": "SET", "action": "push",
+                                                "admitted": ["copy_editor", "prior_art"]}), _fam)
+    _enf_line = [all(s in (review_report_lines(a) or [""])[0] for s in _enf)
+                 and (review_report_lines(a) or [""])[0].startswith("  enforced here:")
+                 for a in (_adm_set, _adm_none, _adm_emp, _adm_unk)]
+    _txt_pa = review_report_lines(_adm_pa)
+    _rev_cases.append(("every state prints the enforced list first", all(_enf_line)))
+    _rev_cases.append(
+        ("no enforced step labelled 'no BLOCK leg'",
+         _adm_pa[1] == ("copy_editor", "prior_art")
+         and not [l for l in _txt_pa if re.match(r"^\s+(%s)\s.*no BLOCK leg" % "|".join(_enf), l)]
+         and [l for l in _txt_pa if re.match(r"^\s+copy_editor\s.*no BLOCK leg", l)] != []))
+    # F3: a crafted env value and a mis-shaped registry are UNKNOWN / None, never a raise.
+    _deep = "[" * 16000 + "]" * 16000
+    try:
+        _ok_deep = admitted_review_steps(_deep, _fam)[:2] == ("UNKNOWN", None)
+    except BaseException:
+        _ok_deep = False
+    _rev_cases.append(("deep-nested env value is UNKNOWN, never raises", _ok_deep))
+    _saved_env = os.environ.get(ADMITTED_ENV)
+    try:
+        os.environ[ADMITTED_ENV] = _deep
+        try:
+            _ok_rep = any("UNKNOWN" in l for l in review_report())
+        except BaseException:
+            _ok_rep = False
+    finally:
+        if _saved_env is None:
+            os.environ.pop(ADMITTED_ENV, None)
+        else:
+            os.environ[ADMITTED_ENV] = _saved_env
+    _rev_cases.append(("review_report() under a deep env value -> UNKNOWN", _ok_rep))
+    # M9: an admission set for another action is not a push set.
+    _rev_cases.append(
+        ("a commit-action set is UNKNOWN, not SET",
+         admitted_review_steps(json.dumps({"state": "SET", "action": "commit",
+                                           "admitted": ["editorial"]}), _fam)[:2]
+         == ("UNKNOWN", None)))
+    # M10: a mis-shaped registry is unreadable (None), never "no review types" (()).
+    import tempfile as _tf
+    _reg_ok = []
+    for _body in ('{"types": []}', "[1, 2]", '{"types": {"x": {"family": "review"}}}'):
+        _fd, _rp = _tf.mkstemp(suffix=".json")
+        try:
+            with io.open(_fd, "w", encoding="utf-8") as _fh:
+                _fh.write(_body)
+            try:
+                _reg_ok.append(registry_review_family(_rp))
+            except BaseException as _e:
+                _reg_ok.append("raised %s" % type(_e).__name__)
+        finally:
+            os.remove(_rp)
+    _rev_cases.append(("mis-shaped registry is None; a good one is a tuple",
+                       _reg_ok == [None, None, ("x",)]))
+    # M11: the signals leg's `need` must not move under a forged admission set (behaviour), and no
+    # function outside the report reads the env var or its parser (shape) — so no BLOCK leg can.
+    _need_rows = []
+    try:
+        for _forge in (None, json.dumps({"state": "EMPTY", "action": "push", "admitted": []}),
+                       json.dumps({"state": "SET", "action": "push", "admitted": ["build"]})):
+            if _forge is None:
+                os.environ.pop(ADMITTED_ENV, None)
+            else:
+                os.environ[ADMITTED_ENV] = _forge
+            _need_rows.append(tuple(signal_need(_s, _f) for _s in _enf + ["prior_art"]
+                                    for _f in (True, False)))
+    finally:
+        if _saved_env is None:
+            os.environ.pop(ADMITTED_ENV, None)
+        else:
+            os.environ[ADMITTED_ENV] = _saved_env
+    _rev_cases.append(("signals need unchanged under forged EMPTY / SET",
+                       len(set(_need_rows)) == 1 and len(_need_rows) == 3))
+    _allowed = {"admitted_review_steps", "_classify_admission", "review_report_lines",
+                "review_report", "selftest"}
+    _tainted = {"admitted_review_steps", "_classify_admission", "review_report_lines", ADMITTED_ENV,
+                "ADMITTED_ENV"}
+    _readers, _site_ok = None, False
+    try:
+        _tree = _ast.parse(io.open(__file__, encoding="utf-8").read())
+        _readers = set()
+        for _f in _ast.walk(_tree):
+            if not isinstance(_f, _ast.FunctionDef):
+                continue
+            for _c in _ast.walk(_f):
+                _id = (_c.id if isinstance(_c, _ast.Name) else
+                       _c.value if isinstance(_c, _ast.Constant) and isinstance(_c.value, str) else
+                       _c.attr if isinstance(_c, _ast.Attribute) else None)
+                if _id in _tainted:
+                    _readers.add(_f.name)
+            if _f.name == "cmd_prepush":
+                # M6: the report is printed by `for _line in review_report(): print(_line)`, and
+                # `review_report` appears nowhere else in the hook.
+                _uses = [_c for _c in _ast.walk(_f) if isinstance(_c, _ast.Name)
+                         and _c.id == "review_report"]
+                _loops = [_c for _c in _ast.walk(_f) if isinstance(_c, _ast.For)
+                          and isinstance(_c.iter, _ast.Call)
+                          and isinstance(_c.iter.func, _ast.Name)
+                          and _c.iter.func.id == "review_report"
+                          and len(_c.body) == 1 and isinstance(_c.body[0], _ast.Expr)
+                          and isinstance(_c.body[0].value, _ast.Call)
+                          and getattr(_c.body[0].value.func, "id", None) == "print"]
+                _site_ok = len(_uses) == 1 and len(_loops) == 1
+    except (OSError, SyntaxError, ValueError):
+        _readers = None
+    _rev_cases.append(("only the report reads %s" % ADMITTED_ENV,
+                       _readers is not None and _readers <= _allowed))
+    _rev_cases.append(("cmd_prepush prints review_report() once", _site_ok))
+    # The report's attrib step IS the step the attrib leg asks the ledger about.
+    _attrib_ok = False
+    try:
+        for _f in _ast.walk(_tree):
+            if isinstance(_f, _ast.FunctionDef) and _f.name == "check_prior_art_attribution":
+                _attrib_ok = any(isinstance(_c, _ast.Call) and getattr(_c.func, "attr", None)
+                                 == "owing_paths" and _c.args and isinstance(_c.args[0], _ast.Name)
+                                 and _c.args[0].id == "ATTRIB_STEP" for _c in _ast.walk(_f))
+    except NameError:
+        _attrib_ok = False
+    _rev_cases.append(("attrib leg asks the ledger about ATTRIB_STEP",
+                       _attrib_ok and (ATTRIB_STEP, "prior-art attrib") in ENFORCED_REVIEW_LEGS))
+    for label, ok in _rev_cases:
+        print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
+        bad += 0 if ok else 1
+        total += 1
 
     print("\nselftest: %s (%d/%d control(s))"
           % ("PASS" if not bad else "FAIL", total - bad, total))

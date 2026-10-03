@@ -17,7 +17,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview
 **Result: CONFIRMED.** ε₀ is the least fixed point of `α ↦ ω^α` — positionally the FIRST, never a
 "ceiling" or "a large ordinal". ⚠ Least in the FIXED-POINT order, **not** order-adjacency: ordinals sit
-strictly between ⊥ and ε₀. Which order, Veblen's Corollary 1, and the traps: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`.
+strictly between ⊥ and ε₀. Which order, Veblen's Corollary 1 to Theorem 4, and the traps: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`.
 -/
 
 namespace ZeroParadox
@@ -70,6 +70,36 @@ theorem nfp_seed_one_eq_seed_bot :
   rw [nfp_seed_independent_below_epsilon0 1 (Order.one_le_iff_ne_zero.mpr (Ordinal.epsilon_pos 0).ne'),
       nfp_seed_independent_below_epsilon0 ⊥ bot_le]
 
+-- `Statement:` seeds on opposite sides of ε₀ reach different landings.
+example (s t : Ordinal) (hs : s ≤ ε₀) (ht : ε₀ < t) :
+    Ordinal.nfp (fun α => ω ^ α) s ≠ Ordinal.nfp (fun α => ω ^ α) t := by
+  rw [nfp_seed_independent_below_epsilon0 s hs]
+  exact ne_of_lt (lt_of_lt_of_le ht (Ordinal.le_nfp _ t))
+
+/-- **`Statement:` every seed in `(ε_o, ε_(o+1)]` reaches `ε_(o+1)`.** Veblen's Corollary 1 to Theorem 4, clause (B),
+which is strict, together with the trivial endpoint `s = ε_(o+1)` (`Ordinal.nfp_le_fp`);
+see `ZeroParadox/Ordinal/Epsilon0LeastFP.md`. -/
+theorem nfp_seed_successor_cell (o s : Ordinal) (h1 : Ordinal.epsilon o < s)
+    (h2 : s ≤ Ordinal.epsilon (Order.succ o)) :
+    Ordinal.nfp (fun α => ω ^ α) s = Ordinal.epsilon (Order.succ o) := by
+  have hmono := (Ordinal.isNormal_opow Ordinal.one_lt_omega0).strictMono.monotone
+  refine le_antisymm (Ordinal.nfp_le_fp hmono h2 (le_of_eq (omega0_opow_epsilon _))) ?_
+  rw [epsilon_succ_eq_nfp]
+  exact Ordinal.nfp_monotone hmono (Order.succ_le_of_lt h1)
+
+/-- **`Statement:` at a limit index `o`, the only seed reaching `ε_o` is `ε_o` itself.** -/
+theorem seed_eq_of_nfp_eq_epsilon_limit (o s : Ordinal) (ho : Order.IsSuccLimit o)
+    (h : Ordinal.nfp (fun α => ω ^ α) s = Ordinal.epsilon o) : s = Ordinal.epsilon o := by
+  have hmono := (Ordinal.isNormal_opow Ordinal.one_lt_omega0).strictMono.monotone
+  refine le_antisymm (h ▸ Ordinal.le_nfp _ s) (not_lt.mp fun hlt => ?_)
+  have hn : Order.IsNormal Ordinal.epsilon := by
+    rw [show Ordinal.epsilon = Ordinal.deriv (fun b => ω ^ b) from funext epsilon_eq_deriv]
+    exact Ordinal.isNormal_deriv _
+  obtain ⟨p, hp, hsp⟩ := (hn.lt_iff_exists_lt ho).mp hlt
+  have hfp := Ordinal.nfp_le_fp hmono hsp.le (le_of_eq (omega0_opow_epsilon p))
+  rw [h] at hfp
+  exact absurd hfp (not_le.mpr (hn.strictMono hp))
+
 /-- **Invariant — ε₀ ≠ 0.** ε₀ can never be zero, in any reading. It is a fixed point of `α ↦ ω^α`
     (`epsilon0_is_fixedpoint`); were it 0, that would say `ω^0 = 0`, i.e. `1 = 0`. This is the bedrock
     guard beneath every ε₀ characterization. -/
@@ -107,6 +137,8 @@ open ZeroParadox
 #print axioms bot_is_not_a_step
 #print axioms nfp_seed_independent_below_epsilon0
 #print axioms nfp_seed_one_eq_seed_bot
+#print axioms nfp_seed_successor_cell
+#print axioms seed_eq_of_nfp_eq_epsilon_limit
 #print axioms epsilon0_ne_zero
 #print axioms epsilon0_ne_bot
 #print axioms epsilon0_eq_veblen_one_zero

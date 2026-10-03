@@ -43,6 +43,7 @@ import ZeroParadox.Multihomed.HilbertDiagonal
 import ZeroParadox.Reals.MarkovSpectralGap
 import ZeroParadox.Category.Node4Generation
 import ZeroParadox.Multihomed.TwoFacesBot
+import ZeroParadox.Computability.SelfCopyReference
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
 import Mathlib.CategoryTheory.Endofunctor.Algebra
@@ -321,6 +322,11 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 #check @ZeroParadox.freeNat_not_isZero
 -- Statement: the seam satisfies `seam ≅ seam ⊞ seam` and is a zero object.
 #check @ZeroParadox.seam_is_diagonal_fixpoint
+-- Statement: a type is infinite iff it carries a self-map that is one-to-one, not onto, and has
+-- exactly one fixed point (`SelfCopyRef`).
+#check @ZeroParadox.infinite_iff_exists_selfCopyRef
+-- Statement: `boundaryDouble` on the tree boundary is such a map; its fixed point is the all-zeros end `botEnd`.
+#check @ZeroParadox.boundaryDouble_selfCopyRef
 
 /-! ### GENERATION — the floor generates its first step -/
 

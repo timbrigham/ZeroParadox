@@ -17,7 +17,7 @@ section is preserved verbatim in the body named below.
 | Core Objects — Read the Lean First (Hard Rule) | `R-COREOBJ` | `tools/process/core-objects.md` |
 | — Bedrock invariants, formerly inside the section above | `R-BEDROCK` | `tools/process/core-objects.md` |
 | Commitments Go In HYPOTHESES, Data Goes In BRACKETS | `R-COMMIT` | `tools/process/commitments-in-hypotheses.md` |
-| The recurring defect is UNSTATED ADJACENCY | `R-ADJACENT` | `tools/process/unstated-adjacency.md` |
+| The recurring defect is UNSTATED ADJACENCY | `R-ADJACENT` — merged 2026-09-30 into `R-TOLEAN` as its step (1); the ID is named there | `tools/process/unstated-adjacency.md` |
 | Determinism is the SINGLE recurring cost | `R-DETERMINISM` | `tools/process/determinism.md` |
 | The Two-Pole Test — Hard Rule | `R-TWOPOLE` | `tools/process/two-pole-test.md` |
 | Prose that resists correction is a CLAIM defect | `R-REVALIDATE` | `tools/process/claim-revalidation.md` |

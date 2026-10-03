@@ -146,6 +146,25 @@ theorem axb1_gives_unique_target {α : Type*} [LinearOrder α] (bot : α)
   obtain ⟨a, ha⟩ := h
   exact ⟨a, ha, fun b hb => firstStep_unique hb ha⟩
 
+-- `Statement:` the `LinearOrder` hypothesis is load-bearing. On `Set Bool`, `∅` has a first step
+-- (AX-B1 holds) through two distinct covers, and no least element lies strictly above `∅`.
+example : (∅ : Set Bool) ⋖ {true} ∧ (∅ : Set Bool) ⋖ {false} ∧ ({true} : Set Bool) ≠ {false} ∧
+    ¬ ∃ m : Set Bool, IsLeast {x | (∅ : Set Bool) < x} m := by
+  have cov : ∀ b : Bool, (∅ : Set Bool) ⋖ {b} := Set.empty_covBy_singleton
+  refine ⟨cov true, cov false, fun h => absurd (h ▸ Set.mem_singleton true : true ∈ ({false} : Set Bool)) (by simp),
+    fun ⟨m, hm, hlow⟩ => ?_⟩
+  have ht : m ⊆ {true} := hlow (cov true).1
+  have hf : m ⊆ {false} := hlow (cov false).1
+  obtain ⟨x, hx⟩ := Set.nonempty_iff_ne_empty.2 (show m ≠ ∅ from hm.ne')
+  exact absurd ((Set.mem_singleton_iff.1 (ht hx)).symm.trans (Set.mem_singleton_iff.1 (hf hx))) (by decide)
+-- `Statement:` the converse holds in any partial order: a least element strictly above `bot` covers it.
+example {α : Type*} [PartialOrder α] (bot a : α) (h : IsLeast {x | bot < x} a) : bot ⋖ a :=
+  ⟨h.1, fun c hbc hca => absurd hca (not_lt_of_ge (show c ≥ a from h.2 hbc))⟩
+-- `Statement:` and on a linear order a cover of `bot` is the least element strictly above it
+-- (Mathlib's `CovBy.ge_of_gt`); the `Set Bool` example above is why linearity is needed.
+example {α : Type*} [LinearOrder α] (bot a : α) (h : bot ⋖ a) : IsLeast {x | bot < x} a :=
+  ⟨h.1, fun _ hx => h.ge_of_gt hx⟩
+
 /-- **AX-B1 fails exactly where the order is dense — a BICONDITIONAL, and it is Mathlib's.**
 
     `denselyOrdered_iff_forall_not_covBy`. This is stronger than the framework's own statement:

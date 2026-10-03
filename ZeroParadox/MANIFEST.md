@@ -37,6 +37,8 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Order/Snap.lean` - ZP-E: Bridge Document
   - ride-along docs: `ZeroParadox/Order/Snap.md` - ZP-E formal inserts, and what T-SNAP does and does not carry
 - `ZeroParadox/Order/SnapCannotBe.lean` - Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
+- `ZeroParadox/Order/UpAndOver.lean` - The up-and-over shape: a closure operator with a corner and a cover at every non-maximal landing
+  - ride-along docs: `ZeroParadox/Order/UpAndOver.md` - The up-and-over shape: prior art, controls and fences
 
 ### Valuation / number theory (ZP-B, ZP-F)
 
@@ -113,9 +115,10 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Multihomed/Boundary.md` - Two poles of the floor, two sources of choice, and what the toy carrier models
 - `ZeroParadox/Multihomed/BoundaryBridge.lean` - ZPJ — The snap-boundary, QPF bridge (best-effort; Rung C-QPF)
   - ride-along docs: `ZeroParadox/Multihomed/BoundaryBridge.md` - Which theorem carries which direction, and the survey's limits
+- `ZeroParadox/Multihomed/BoundaryOrder.lean` - The boundary model ordered: floor below (`WithBot Ordinal`), floor above (`WithTop Ordinal`)
 - `ZeroParadox/Multihomed/CategoricalBridge.lean` - ZP-H: Categorical Bridge
   - ride-along docs: `ZeroParadox/Multihomed/CategoricalBridge.md` - The categorical bridge: key results, functor witnesses and the OQ-G3 status
-- `ZeroParadox/Multihomed/EigenvectorExists.lean` - Deep cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
+- `ZeroParadox/Multihomed/EigenvectorExists.lean` - Cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
 - `ZeroParadox/Multihomed/HilbertDiagonal.lean` - ZP-H: ⊥ is the unique finite-dimensional fixed point of the biproduct-diagonal
 - `ZeroParadox/Multihomed/InfoFunctor.lean` - ZP-H Info Functor: F_C into the real category `KleisliCat PMF` (MC-1 remediation)
 - `ZeroParadox/Multihomed/MC1Bridge.lean` - ZP-H MC-1 Correspondence: the snap floor realized across the real domain categories
@@ -158,11 +161,13 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Computability/Rice.lean` - Rice's theorem — the computability face's UNDECIDABILITY, from the recursion theorem (probe)
   - ride-along docs: `ZeroParadox/Computability/Rice.md` - The price of ν-existence: one recursion-theorem fixed point read on two axes
 - `ZeroParadox/Computability/SelfApp.lean` - ZPJ — Abstract Self-Application Bridge
+- `ZeroParadox/Computability/SelfCopyReference.lean` - Self-copying self-reference: infinite ⟺ a one-to-one, not-onto self-map with exactly one fixed point
 
 ### Ordinals / proof theory (ZP-L, ZP-M, ZP-N)
 
 - `ZeroParadox/Ordinal/B6_CanonicalCNF.lean` - B6 (pipeline): canonical (CNF / log-ω) ordinal → 2-adic, valuation growth NOT tower-defined
 - `ZeroParadox/Ordinal/CnfBridge.lean` - The CNF/ℤ₂ value bridge, at the construction level (Gentzen.lean item 4)
+  - ride-along docs: `ZeroParadox/Ordinal/CnfBridge.md` - CnfBridge — the CNF/ℤ₂ value bridge, at the construction level
 - `ZeroParadox/Ordinal/ConstructiveOrdinals.lean` - ZP-N: the ε₀ snap, constructively, on ordinal notations (choice-free)
 - `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` - Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
 - `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` - Batch 2 / G1 (pipeline, T6): ε₀ is the LEAST fixed point of α ↦ ωᵅ — the snap sits at minimal closure
@@ -173,6 +178,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Ordinal/Gentzen.md` - The Kleene-ordinal bridge: where the value changes, and why that is not occurrence
 - `ZeroParadox/Ordinal/Goodstein.lean` - Goodstein's theorem (full, hereditary base) — ε₀ ordinal descent
 - `ZeroParadox/Ordinal/Incompleteness.lean` - ZP-M: Kleene–Ordinal Bridge Layer
+  - ride-along docs: `ZeroParadox/Ordinal/Incompleteness.md` - Incompleteness — ride-along documentation
 - `ZeroParadox/Ordinal/KirbyParis.lean` - Kirby–Paris hydra termination (the ε₀ gap) — proved
 - `ZeroParadox/Ordinal/Kruskal.lean` - Kruskal's Tree Theorem (labeled) — finite rose trees are well-quasi-ordered
   - ride-along docs: `ZeroParadox/Ordinal/Kruskal.md` - Where the choice comes from, and which half of the axiom-free proof transfers
@@ -319,6 +325,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Category/SeamLimColim.lean` - The seam diagram-level coincidence (lim = colim at the zero object)
 - `ZeroParadox/Category/SeamNotColimit.lean` - The seam is NOT a colimit (coproduct) apex over the μ-bottoms
 - `ZeroParadox/Category/SeamUniqueness.lean` - Seam uniqueness extended: is any OTHER bottom a zero object?
+  - ride-along docs: `ZeroParadox/Category/SeamUniqueness.md` - Which named bottom is a zero object: the per-bottom obstructions and the fence
 - `ZeroParadox/Category/TopNoGo.lean` - In TopCat the empty space is not isomorphic to the one-point space
 - `ZeroParadox/Category/TreeSeam.lean` - ZP-H tree — the #5 straddle resolved: the Hilbert bottom is the μ=ν seam
 - `ZeroParadox/Category/WellFoundedCoalgebra.lean` - The next time operator: μ/ν as an INTRINSIC property, not a construction
@@ -369,4 +376,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (117 core, 106 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (120 core, 106 experimental.)*

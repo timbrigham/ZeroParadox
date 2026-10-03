@@ -2,6 +2,7 @@ import ZeroParadox.Order.Lattice
 import ZeroParadox.Valuation.Padic
 import ZeroParadox.Information.Surprisal
 import Mathlib.SetTheory.Cardinal.Basic
+import Mathlib.Order.Atoms
 import Mathlib.Tactic
 
 /-!
@@ -50,6 +51,12 @@ instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join_comm  := by intro x y;   cases x <;> cases y              <;> rfl
   join_idem  := by intro x;     cases x                          <;> rfl
   bot_join   := by intro x;     cases x                          <;> rfl
+
+-- `Statement:` this carrier HAS a top: `running` has nothing strictly above it, so ZP-A's optional
+-- hypothesis `HasNoTop` fails here. AX-G1's no-terminal half is therefore not supplied by ZP-A.
+example : ¬ HasNoTop MachinePhase := by
+  intro h; obtain ⟨y, hle, hne⟩ := h MachinePhase.running
+  cases y <;> simp_all [ZPSemilattice.le]
 
 /-! ## I-DA1. DA-1 — Derived Proposition: Instantiation as Execution
 
@@ -170,6 +177,67 @@ example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hS : IsStateSequence S) (
 example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hocc : S 1 ≠ S 0) : Nontrivial L :=
   ⟨⟨S 1, S 0, hocc⟩⟩
 
+/-- ZP-A's induced order D1 (`le x y ↔ join x y = y`) as Mathlib's `SemilatticeSup`, by `SemilatticeSup.mk'`
+    from A1–A3. An `abbrev` (a reducible def), not an instance: a carrier such as ℕ has its own. -/
+abbrev zpSemilatticeSup (L : Type*) [ZPSemilattice L] : SemilatticeSup L :=
+  @SemilatticeSup.mk' L ⟨join⟩ join_comm join_assoc join_idem
+
+/-- `bot` is least in that order, by A4 (`bot_join`). -/
+abbrev zpOrderBot (L : Type*) [ZPSemilattice L] : @OrderBot L (zpSemilatticeSup L).toLE :=
+  @OrderBot.mk L (zpSemilatticeSup L).toLE ⟨bot⟩ bot_join
+
+-- Statement: that order is D1, by definition.
+example {L : Type*} [ZPSemilattice L] (x y : L) : (zpSemilatticeSup L).le x y ↔ le x y := Iff.rfl
+
+/-- T-SNAP with a third commitment, the cover `hcov`: `S 1` covers `S 0` in ZP-A's induced order.
+    With CC-1 (`hcc1`) the step is a cover of `bot`, AX-B1's form (`HasFirstStep`). No binder of
+    `t_snap_given` supplies `hcov` (the ℕ run in `ZeroParadox/Order/SnapCannotBe.lean`).
+    Reading: prior art, Winskel, *Event structures*, LNCS 255 (1987), p. 336: a cover adds one event
+    to a configuration, and each strict inclusion `x ⊂ y` passes through a cover of `x` (Lemma
+    1.1.11, p. 329). A run's step here need not be one, so `hcov` is assumed. -/
+theorem t_snap_given_cover {L : Type*} [ZPSemilattice L] (S : ℕ → L)
+    (hcc1 : S 0 = bot) (hocc : S 1 ≠ S 0) (hcov : letI := zpSemilatticeSup L; S 0 ⋖ S 1) :
+    (S 0 ≠ S 1 ∧ S 1 ≠ S 0 ∧ join (S 0) (S 1) = S 1) ∧
+      letI := zpSemilatticeSup L; (bot : L) ⋖ S 1 :=
+  ⟨t_snap_given S hcc1 hocc, hcc1 ▸ hcov⟩
+
+-- Statement: so `S 1` is an atom, by Mathlib's `bot_covBy_iff` (`[propext, Classical.choice, Quot.sound]`).
+example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hcc1 : S 0 = bot) (hocc : S 1 ≠ S 0)
+    (hcov : letI := zpSemilatticeSup L; S 0 ⋖ S 1) :
+    letI := zpSemilatticeSup L; letI := zpOrderBot L; IsAtom (S 1) := by
+  letI := zpSemilatticeSup L; letI := zpOrderBot L
+  exact bot_covBy_iff.1 (t_snap_given_cover S hcc1 hocc hcov).2
+
+-- Statement: `hcov` implies `hocc`, since a cover is strict. The converse fails: the ℕ run in
+-- `ZeroParadox/Order/SnapCannotBe.lean`.
+example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hcov : letI := zpSemilatticeSup L; S 0 ⋖ S 1) :
+    S 1 ≠ S 0 := by
+  letI := zpSemilatticeSup L; exact hcov.1.ne'
+
+-- Statement: at any step, a cover is an atom of the up-set above the state it leaves, the
+-- iterative bottom `S n` (Mathlib's `covBy_iff_atom_Ici`).
+example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (n : ℕ)
+    (hcov : letI := zpSemilatticeSup L; S n ⋖ S (n + 1)) :
+    letI := zpSemilatticeSup L; IsAtom (⟨S (n + 1), hcov.le⟩ : Set.Ici (S n)) := by
+  letI := zpSemilatticeSup L; exact (covBy_iff_atom_Ici hcov.le).1 hcov
+
+-- Statement: the binders are satisfiable: `t_snap_derived`'s run `c₀, c₁, c₁, …` meets all three.
+example : (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) ∧
+    letI := zpSemilatticeSup MachinePhase; (bot : MachinePhase) ⋖ c₁ := by
+  refine t_snap_given_cover (fun n => if n = 0 then c₀ else c₁) rfl (by decide) ?_
+  letI := zpSemilatticeSup MachinePhase
+  refine ⟨⟨rfl, by decide⟩, fun c h1 h2 => ?_⟩
+  cases c
+  · exact lt_irrefl _ h1
+  · exact lt_irrefl _ h2
+
+-- Statement: the sequence that stays at ⊥ fails `hcov`, and its `S 1` is not an atom.
+example {L : Type*} [ZPSemilattice L] :
+    letI := zpSemilatticeSup L; letI := zpOrderBot L;
+      ¬ ((bot : L) ⋖ bot) ∧ ¬ IsAtom (bot : L) := by
+  letI := zpSemilatticeSup L; letI := zpOrderBot L
+  exact ⟨fun h => lt_irrefl _ h.1, fun h => h.1 rfl⟩
+
 /-- T-SNAP (irreversibility): Algebraic form of ZP-A R1 (no subtraction operator).
     If x ≼ y and x ≠ y, no join from y can return to x.
     Complements c3_irreversible (topological irreversibility in Q₂).
@@ -191,9 +259,9 @@ example {L : Type*} [ZPSemilattice L] (S : ℕ → L) (hocc : S 1 ≠ S 0) : Non
     the first element with a proper part, while its *no-return* face is exactly the snap's
     irreversibility. Directionality needs two comparable points; at ⊥ alone `le` is reflexive only,
     so there is no strict pair. In a carrier that has one, `⊥ ⋖ a` (`HasFirstStep`,
-    `ZeroParadox/Reals/OrderedField.lean`) is that first inhabitant — note the carrier switch:
-    `ZPSemilattice`'s `le` is a def with no `LT` instance, so `⋖` is not available here and the
-    comparison is an analogy, not an instantiation.
+    `ZeroParadox/Reals/OrderedField.lean`) is that first inhabitant — note the order:
+    `ZPSemilattice`'s `le` is a def with no `LT` instance, so `⋖` over it is stated in the order
+    `zpSemilatticeSup` builds (`t_snap_given_cover`).
     Long form: `.claude-local/notes/no_subtraction_is_vacuous_at_bottom_2026-07-31.md`. -/
 theorem t_snap_irreversible {L : Type*} [ZPSemilattice L] {x y : L}
     (hle : le x y) (hne : x ≠ y) :
@@ -351,6 +419,9 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms t_snap_machine
 #print axioms t_snap_derived
 #print axioms t_snap_given
+#print axioms zpSemilatticeSup
+#print axioms zpOrderBot
+#print axioms t_snap_given_cover
 #print axioms t_snap_irreversible
 #print axioms da2_bottom_characterization
 #print axioms c_da2_novelty

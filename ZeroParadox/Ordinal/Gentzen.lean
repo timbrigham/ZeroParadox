@@ -140,32 +140,29 @@ theorem tower_stage_one : fundamentalSeq 1 = 1 := by
 theorem tower_stage_two : fundamentalSeq 2 = Ordinal.omega0 := by
   simp [fundamentalSeq, Ordinal.opow_zero, Ordinal.opow_one]
 
+-- `Statement:` 2 lies below ε₀ and on no finite stage of the tower from 0, so ε₀ is not the least
+-- ordinal the iteration of `α ↦ ω^α` misses. Its minimum property is `epsilonZero_le_fixedPoint`.
+example : (2 : Ordinal) < epsilonZero ∧ ∀ n : ℕ, fundamentalSeq n ≠ 2 := by
+  refine ⟨lt_trans (Ordinal.natCast_lt_omega0 2) (Ordinal.omega0_lt_epsilon 0), fun n => ?_⟩
+  match n with
+  | 0 => rw [tower_stage_zero]; exact two_ne_zero.symm
+  | 1 => rw [tower_stage_one]; exact (by norm_num : (1 : Ordinal) ≠ 2)
+  | k + 2 =>
+    intro h
+    have hle : fundamentalSeq 2 ≤ fundamentalSeq (k + 2) :=
+      (strictMono_nat_of_lt_succ fundamentalSeq_strictMono).monotone (by omega)
+    rw [tower_stage_two, h] at hle
+    exact absurd (Ordinal.natCast_lt_omega0 2) (not_lt.2 hle)
+
 /-! ## § IV. Cantor Normal Form Bridge
 
-Every ordinal below ε₀ has a unique Cantor normal form — a finite expression
-  a₁ · ω^e₁ + a₂ · ω^e₂ + ... + aₙ · ω^eₙ
-with e₁ > e₂ > ... > eₙ and aᵢ < ω. In Lean: `NONote` (the type of ordinals
-below ε₀ in Cantor normal form from Mathlib.SetTheory.Ordinal.Notation).
+The bridge: NONote → ℤ_[2] encodes each CNF term as a 2-adic integer, where `NONote` is
+the type of ordinals below ε₀ in Cantor normal form (Mathlib.SetTheory.Ordinal.Notation).
+The tower stages' encodings converge to 0 = ⊥ in ℤ_[2] (`tower_converges_to_zero`).
+ε₀ itself has no encoding (`NONote` is the ordinals below it); how the ordinal ascent
+and this ℤ₂ descent correspond is `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V.
 
-The bridge: NONote → ℤ_[2] encodes each CNF term as a 2-adic integer where
-the 2-adic valuation tracks the ordinal height. For `ω^e · n + a`:
-  cnfToZp2(ω^e · n + a) = 2^(v₂(cnfToZp2(e)) + 1) · n + cnfToZp2(a)
-
-This recursion ensures that the tower stages get valuation = stage index:
-  cnfToZp2(ω^[0] 0) = 0              (valuation 0 by convention)
-  cnfToZp2(ω^[1] 0) = 2^1 = 2       (valuation 1)
-  cnfToZp2(ω^[2] 0) = 2^2 = 4       (valuation 2)
-  cnfToZp2(ω^[n] 0) = 2^n           (valuation n)
-
-As n → ∞, valuation → +∞, so the sequence converges to 0 = ⊥ in ℤ_[2].
-
-The target identification is that ε₀ is the ordinal whose ZPB encoding is ⊥ —
-the ZPE T-SNAP (⊥ → ε₀) is this limit, viewed in reverse.
-
-The valuation and convergence results in this section are fully in Lean scope:
-- `cnfToZp2` is defined by structural recursion on the underlying ONote
-- `towerNONote n` lifts each fundamentalSeq n to a NONote via NONote.oadd
-- The valuation formula is proved by induction using PadicInt.valuation_pow -/
+Derivation (CNF, recursion, valuation table, Lean scope): `ZeroParadox/Ordinal/Gentzen.md`. -/
 
 private instance : Fact (Nat.Prime 2) := ⟨by decide⟩
 
@@ -281,37 +278,14 @@ theorem tower_converges_to_zero :
 
 /-! ## § V. Ordinal Tower Limit and ZPB Pre-image
 
-What this does NOT claim:
-  - Gentzen's theorem: that ε₀ is the proof-theoretic ordinal of PA (not claimed)
-  - Any statement about formal provability in PA
-  - A "solution" to the continuum hypothesis or other independent questions
-  - Anything outside the structural identification of the snap with the ordinal limit
-  - That ε₀ is the UNIQUE minimal snap boundary: snap_threshold_is_epsilon_zero
-    shows no ordinal below ε₀ works (for maps satisfying the stated hypotheses),
-    but does not rule out maps satisfying those hypotheses that snap at some ordinal
-    strictly above ε₀
-  - That the snap threshold result applies to all maps Ordinal → MachinePhase,
-    regardless of the monotonicity and tower-alignment hypotheses
+The canonical threshold map Ordinal → MachinePhase is order-non-decreasing (`snap_map_mono`);
+no φ : Ordinal → MachinePhase and g : MachinePhase → ℤ_[2] make `g ∘ φ` agree with `cnfToZp2`
+along the tower (the `example` after `c1_epsilon_zero_identification`).
 
-What is proved here (§ III + § IV + §V):
-  - Ordinal: ε₀ = sup{(ω^·)^[n] 0 | n : ℕ}, every finite stage strictly below ε₀
-  - ZPB: cnfToZp2(towerNONote n).valuation = n; for n ≥ 1, cnfToZp2(towerNONote n) = 2^n
-    in ℤ_[2]; norm = ‖2‖^n → 0, so the tower encodings converge to 0 = ⊥ in ℤ_[2]
-    (tower_converges_to_zero)
-  - Cofinality: the fundamental sequence is cofinal in ε₀ — for any α < ε₀,
-    some tower stage exceeds α (fundamentalSeq_cofinal)
-  - Snap lower bound: any order-non-decreasing φ that maps all tower stages to c₀
-    maps every ordinal below ε₀ to c₀ (snap_threshold_is_epsilon_zero). This is a
-    lower bound on the snap threshold, not a uniqueness result. A witness snapping
-    exactly at ε₀ is provided by c1_epsilon_zero_identification.
-
-The remaining gap: connecting ZPE's MachinePhase element c₁ to the ordinal
-epsilonZero via a type bridge. The ordinal and ZPB sides are fully proved.
-The identification requires a morphism Ordinal → MachinePhase, not Gentzen. -/
+What is and is not claimed: `ZeroParadox/Ordinal/Gentzen.md`. -/
 
 /-- Tower-stage bound and fixed-point: every finite stage of the ε₀ tower is
-    strictly below ε₀, and ω^ε₀ = ε₀. The ZPB encoding identification
-    (ε₀ maps to ⊥) is the remaining gap in § IV. -/
+    strictly below ε₀, and ω^ε₀ = ε₀. -/
 theorem zpe_snap_ordinal_correspondence :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero ∧
     Ordinal.omega0 ^ epsilonZero = epsilonZero :=
@@ -319,8 +293,10 @@ theorem zpe_snap_ordinal_correspondence :
 
 /-- Tower-stage bound: every finite stage of the ε₀ fundamental sequence is
     strictly below ε₀. This is the proved ordinal component of the ZPB bridge;
-    the structural correspondence between epsilonZero and ZPE's c₁ is the
-    gap requiring the CNF encoding identification from § IV. -/
+    the canonical threshold map to ZPE's MachinePhase is order-non-decreasing
+    (`snap_map_mono`); no φ : Ordinal → MachinePhase and g : MachinePhase → ℤ_[2] make
+    `g ∘ φ` agree with `cnfToZp2` along the tower (the `example` after
+    `c1_epsilon_zero_identification`). -/
 theorem epsilonZero_tower_bound :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero := fun n => epsilonZero_tower_lt n
 
@@ -331,15 +307,29 @@ theorem epsilonZero_tower_bound :
     fundamentalSeq n < ε₀ (epsilonZero_tower_lt), so maps to c₀. ε₀ itself fails
     the strict inequality (lt_irrefl), so maps to c₁.
 
-    The stronger structural claim — an order-preserving morphism (Ordinal →o MachinePhase)
-    compatible with the CNF→ℤ_[2] encoding — remains outside Lean scope: no type bridge
-    between Ordinal and MachinePhase is defined in this library. -/
+    This map is order-non-decreasing (`snap_map_mono`); no φ : Ordinal → MachinePhase and
+    g : MachinePhase → ℤ_[2] make `g ∘ φ` agree with `cnfToZp2` along the tower (the `example` below). -/
 theorem c1_epsilon_zero_identification :
     ∃ (φ : Ordinal → MachinePhase),
       (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧ φ epsilonZero = c₁ :=
   ⟨fun α => if α < epsilonZero then c₀ else c₁,
    fun n => if_pos (epsilonZero_tower_lt n),
    if_neg (lt_irrefl epsilonZero)⟩
+
+-- `Statement:` no φ : Ordinal → MachinePhase and g : MachinePhase → ℤ_[2] make `g ∘ φ ∘ repr` agree
+-- with `cnfToZp2` along the tower: the images of stages 1, 2, 3 have valuations 1, 2, 3, and MachinePhase has two values.
+example (φ : Ordinal → MachinePhase) (g : MachinePhase → ℤ_[2]) :
+    ¬ ∀ n : ℕ, g (φ (NONote.repr (towerNONote n))) = cnfToZp2 (towerNONote n) := by
+  intro h
+  have hv : ∀ n : ℕ, (g (φ (fundamentalSeq n))).valuation = n := fun n => by
+    rw [← towerNONote_repr, h, cnfToZp2_tower_valuation]
+  have h1 := hv 1
+  have h2 := hv 2
+  have h3 := hv 3
+  clear hv h
+  rcases hφ1 : φ (fundamentalSeq 1) with _ | _ <;> rcases hφ2 : φ (fundamentalSeq 2) with _ | _ <;>
+    rcases hφ3 : φ (fundamentalSeq 3) with _ | _ <;> rw [hφ1] at h1 <;> rw [hφ2] at h2 <;>
+    rw [hφ3] at h3 <;> omega
 
 /-- The fundamental sequence is cofinal in ε₀: for any ordinal below ε₀,
     some tower stage exceeds it.
@@ -379,6 +369,23 @@ theorem snap_threshold_is_epsilon_zero
   -- join (φ α) c₀ = φ α since c₀ = bot (both cases of MachinePhase reduce by rfl)
   have hjoin : join (φ α) (c₀ : MachinePhase) = φ α := by cases (φ α) <;> rfl
   exact hjoin.symm.trans hle
+
+-- `Statement:` the note above, checked. `hmono` and `h0` do not place the snap at ε₀: a map meeting
+-- both can stay at c₀ everywhere, or first reach c₁ at ε₀ + 1. The placement is `hfp` / `hε₀`.
+example : ∃ φ : Ordinal → MachinePhase, (∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β) ∧
+    (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧ ∀ α, φ α = c₀ :=
+  ⟨fun _ => c₀, fun _ _ _ => rfl, fun _ => rfl, fun _ => rfl⟩
+example : ∃ φ : Ordinal → MachinePhase, (∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β) ∧
+    (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧ φ epsilonZero = c₀ ∧ φ (epsilonZero + 1) = c₁ := by
+  classical
+  refine ⟨fun α => if α ≤ epsilonZero then c₀ else c₁, fun α β hab => ?_, fun n => ?_, ?_, ?_⟩
+  · by_cases hb : β ≤ epsilonZero
+    · simp only [hab.trans hb, hb, if_true]; rfl
+    · simp only [hb, if_false]
+      split_ifs <;> rfl
+  · simp only [(epsilonZero_tower_lt n).le, if_true]
+  · simp
+  · simp
 
 /-! ## § VI. Kleene-Ordinal Fixed-Point Bridge
 
@@ -506,9 +513,10 @@ theorem epsilon_zero_snap_canonical :
     (iv)  The canonical map sends ε₀ to c₁
     All four are provable from already-established theorems. The same indexing sequence
     (n : ℕ) drives the ordinal tower (fundamentalSeq n < ε₀ for all n) and the 2-adic
-    tower (cnfToZp2(towerNONote n) → 0). The limits are limits in different types; no
-    type bridge between them is established here. The full structural identification
-    (ε₀ ↔ ⊥ via a type bridge) remains outside Lean scope — see §V. -/
+    tower (cnfToZp2(towerNONote n) → 0). The limits are limits in different types.
+    This is a co-witness, not an identity (cnf_bridge_type_boundary,
+    ZeroParadox/Ordinal/CnfBridge.lean): ε₀ and the ℤ₂ zero live in different types, so an identity
+    between them fails to elaborate. -/
 theorem snap_zp2_correspondence :
     (∀ n : ℕ, fundamentalSeq n < epsilonZero) ∧
     (∀ n : ℕ, (fun α : Ordinal =>

@@ -10,6 +10,7 @@ import ZeroParadox.Computability.ChoicePurityInvariant
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Ordinal.OrdinalChoiceEssential
 import ZeroParadox.Category.LawvereTaboo
+import ZeroParadox.Computability.SelfCopyReference
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -238,6 +239,15 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 -- strictly tighter than the earlier `fix_isEmpty` (`[propext, Quot.sound]`).
 #check @ZeroParadox.fix_isEmpty_constructive
 
+-- Statement: `boundaryDouble` is one-to-one, not onto, with unique fixed point `botEnd`; measured
+-- `[propext, Quot.sound]`.
+#check @ZeroParadox.boundaryDouble_selfCopyRef
+-- Statement: along a GIVEN `α ≃ ℕ`, a `SelfCopyRef` map exists on `α`; measured `[propext, Quot.sound]`.
+#check @ZeroParadox.selfCopyRef_of_equiv_nat
+-- Statement: an ACCIDENTAL case — over `[Fintype] [DecidableEq]` no `SelfCopyRef` map exists, re-proved at
+-- `[propext, Quot.sound]`; Mathlib's `Finite.injective_iff_surjective` route reports `Classical.choice`.
+#check @ZeroParadox.no_selfCopyRef_of_fintype
+
 /-! ## § II. What choice is NOT to be confused with — the excluded-middle boundary
 
 The modality of §I generates classical LOGIC — excluded middle — which is strictly weaker than **full**
@@ -344,6 +354,12 @@ proved about where choice does work. -/
 #check @ZeroParadox.no_snap_closure
 #check @ZeroParadox.no_snap_nucleus
 #check @ZeroParadox.idNucleus
+
+-- Statement: every infinite type carries a `SelfCopyRef` map; measured with `Classical.choice`, UNCLASSIFIED.
+-- Cited, not claimed: in set theory without choice the analogue is unprovable (Banakh,
+-- arXiv:2006.01613v4, Rem. 43.14); dependent choice gives a one-to-one, not-onto self-map
+-- (Prop. 43.12), and the unique fixed point is not in that result.
+#check @ZeroParadox.exists_selfCopyRef_of_infinite
 
 -- The choice fragment is NON-VACUOUS: `Classical.choice` supplies it. Without this, `em_of_choiceFragment`
 -- could be dismissed as an implication with an unsatisfiable hypothesis. Classical by construction —

@@ -25,6 +25,7 @@ section SnapCannotBeIndex
 /-! ### § I. What the snap IS NOT — not an axiom, not reversible, not a return to the same ⊥ -/
 #check @ZeroParadox.t_snap_derived                    -- DERIVED (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) — the shape (AX-1 is retired); that the snap occurs follows from the occurrence commitment together with DA-1, not from this line, and the next line is why
 #check @ZeroParadox.tsnap_holds_but_nothing_moves     -- Statement: T-SNAP's statement holds together with a dynamics `stuckPhase` in which every phase is fixed, so T-SNAP is not an occurrence claim
+-- `Statement:` a state sequence that starts at ⊥ and never steps is the `example` after `t_snap_given` in `ZeroParadox/Order/Snap.lean`.
 #check @ZeroParadox.t_snap_irreversible              -- NOT reversible: no join from ε₀ returns to ⊥
 #check @ZeroParadox.dp2_execution_distinguishability  -- the post-snap null ≠ the pre-snap null (distinct instances)
 #check @ZeroParadox.da1_minimal_path                  -- Statement: the two configurations are DISTINCT while sharing an output value. It does NOT carry that the step is taken, and irrecoverability is not in it — see the fence in its home docstring
@@ -59,6 +60,71 @@ example : (⟨0, Or.inl rfl⟩ : {o : Ordinal | o = 0 ∨ Ordinal.omega0 ^ o = o
   rintro ⟨c, hc | hc⟩ h0 hε
   · exact (ne_of_gt (show (0 : Ordinal) < c from h0)) hc
   · exact ZeroParadox.nothing_between_is_a_step c hε hc
+-- `Statement:` `t_snap_given`'s binders and AX-B1's `HasFirstStep` form do not supply the cover. On ℕ
+-- (join `max`, ⊥ = 0) the run 0, 2, 2, … meets `hcc1`, `hocc` and `HasFirstStep 0`, and `S 1` does not
+-- cover `S 0`: 1 lies between.
+example : let S : ℕ → ℕ := fun n => if n = 0 then 0 else 2
+    S 0 = ZeroParadox.ZPSemilattice.bot ∧ S 1 ≠ S 0 ∧ ZeroParadox.HasFirstStep (0 : ℕ) ∧
+      ¬ (S 0 ⋖ S 1) :=
+  ⟨rfl, by decide, ⟨1, Nat.lt_succ_self 0, fun c h1 h2 => by omega⟩,
+    fun h => h.2 (c := 1) (by decide) (by decide)⟩
+#check @ZeroParadox.t_snap_given_cover               -- Statement: `t_snap_given` with the cover as a third hypothesis `hcov`, in ZP-A's induced order (`zpSemilatticeSup`); concludes `t_snap_given`'s triple and `bot ⋖ S 1`, the latter `hcov` transported along `hcc1`, and `hocc` follows from `hcov`. The run above meets every binder but `hcov`
+-- `Statement:` the run above, in that order: 2 does not cover 0. The order is passed with `@`, since
+-- a `letI` loses to ℕ's own `<`.
+example : ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT 0 2 := fun h =>
+  h.2 (c := 1) ⟨show ZeroParadox.ZPSemilattice.join 0 1 = 1 by decide,
+      show ¬ ZeroParadox.ZPSemilattice.join 1 0 = 0 by decide⟩
+    ⟨show ZeroParadox.ZPSemilattice.join 1 2 = 2 by decide,
+      show ¬ ZeroParadox.ZPSemilattice.join 2 1 = 1 by decide⟩
+-- `Statement:` on `Set Bool` (join `∪`, ⊥ = ∅) `∅` has two distinct covers in that order, with join
+-- `Set.univ`, so `hcov` does not fix the target; on a carrier with its own linear order,
+-- `axb1_gives_unique_target` fixes the cover in that order. Reading: prior art, Winskel, *Event
+-- structures*, LNCS 255 (1987). `Set Bool` is, up to renaming events, the configuration domain of
+-- Example 1.1.6 p. 328, concurrency, the "little square"; Example 1.1.5 p. 327, conflict, is the
+-- contrast, two covers of ∅ with no join; within the class every pair has a join (next example), so
+-- 1.1.5's shape does not arise.
+example : letI : ZeroParadox.ZPSemilattice (Set Bool) :=
+      ⟨(· ∪ ·), ∅, Set.union_assoc, Set.union_comm, Set.union_self, Set.empty_union⟩
+    @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {true} ∧
+      @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {false} ∧
+      ({true} : Set Bool) ≠ {false} ∧ ({true} : Set Bool) ∪ {false} = Set.univ := by
+  letI : ZeroParadox.ZPSemilattice (Set Bool) :=
+    ⟨(· ∪ ·), ∅, Set.union_assoc, Set.union_comm, Set.union_self, Set.empty_union⟩
+  have key : ∀ a b : Set Bool,
+      @LT.lt (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT a b ↔ a ⊂ b := fun _ _ =>
+    and_congr Set.union_eq_right (not_congr Set.union_eq_right)
+  have cov : ∀ b : Bool, @CovBy (Set Bool) (ZeroParadox.zpSemilatticeSup (Set Bool)).toLT ∅ {b} :=
+    fun b => ⟨(key _ _).2 (Set.empty_covBy_singleton b).1,
+      fun _ h1 h2 => (Set.empty_covBy_singleton b).2 ((key _ _).1 h1) ((key _ _).1 h2)⟩
+  exact ⟨cov true, cov false, fun h => absurd (h ▸ Set.mem_singleton true) (by simp),
+    by ext b; cases b <;> simp⟩
+-- `Statement:` in ZP-A's induced order any two states, so any two covers of `bot`, have `join a b` as
+-- least upper bound: the join is total.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (a b : L) :
+    letI := ZeroParadox.zpSemilatticeSup L; IsLUB {a, b} (ZeroParadox.ZPSemilattice.join a b) := by
+  letI := ZeroParadox.zpSemilatticeSup L; exact isLUB_pair
+#check @Set.covBy_iff_exists_insert                   -- Statement: `s ⋖ t ↔ ∃ a ∉ s, insert a s = t`. Reading: the powerset form of Winskel's one-event characterisation of a cover (p. 336)
+-- `Statement:` a two-state carrier does supply the cover: if every state is ⊥ or `a`, a step off ⊥ lands on `a`
+-- and every state is `S 0` or `S 1`. `MachinePhase` is such a carrier, with `a = c₁`.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (a : L)
+    (h2 : ∀ x : L, x = ZeroParadox.ZPSemilattice.bot ∨ x = a) (S : ℕ → L)
+    (hcc1 : S 0 = ZeroParadox.ZPSemilattice.bot) (hocc : S 1 ≠ S 0) :
+    S 1 = a ∧ ∀ x : L, x = S 0 ∨ x = S 1 := by
+  have h1 : S 1 = a := (h2 (S 1)).resolve_left fun h => hocc (h.trans hcc1.symm)
+  exact ⟨h1, fun x => (h2 x).imp (fun h => h.trans hcc1.symm) (fun h => h.trans h1.symm)⟩
+example : ∀ x : ZeroParadox.MachinePhase, x = ZeroParadox.ZPSemilattice.bot ∨ x = ZeroParadox.c₁ := by
+  intro x; cases x; exacts [Or.inl rfl, Or.inr rfl]
+#check @bot_covBy_iff                                 -- Statement: `⊥ ⋖ a ↔ IsAtom a`; an atom's two halves are `a ≠ ⊥` and nothing strictly between, a different pair from the ordinal ε₀'s least fixed point and tower supremum
+#check @covBy_iff_atom_Ici                            -- Statement: `a ⋖ b ↔ IsAtom ⟨b, _⟩ : Set.Ici a`; a cover is an atom measured from the bottom of `Set.Ici a`
+-- `Statement:` the ℕ run's step 0 → 2 lands on an atom one rung up: 2 is not an atom of `Set.Ici 0`,
+-- and it is an atom of `Set.Ici 1`.
+example : ¬ @IsAtom (Set.Ici (0 : ℕ)) _ Set.Ici.orderBot ⟨2, Nat.zero_le 2⟩ ∧
+    @IsAtom (Set.Ici (1 : ℕ)) _ Set.Ici.orderBot ⟨2, (by decide : (1 : ℕ) ≤ 2)⟩ := by
+  have h02 : (0 : ℕ) ≤ 2 := Nat.zero_le 2
+  have h12 : (1 : ℕ) ≤ 2 := by decide
+  have c12 : (1 : ℕ) ⋖ 2 := ⟨by decide, fun c h1 h2 => by omega⟩
+  exact ⟨fun h => ((covBy_iff_atom_Ici h02).2 h).2 (c := 1) (by decide) (by decide),
+    (covBy_iff_atom_Ici h12).1 c12⟩
 
 /-! ### § III. What the snap DOES — it narrows reachability, permanently -/
 #check @ZeroParadox.t_snap_accessible_proper_subset   -- from ε₀ only a proper subset is reachable; ⊥ is foreclosed
@@ -79,6 +145,7 @@ it, `ℝ` lacks it (the examples beside `HasFirstStep`, `ZeroParadox/Reals/Order
 commitment is that the framework's carrier has it. AX-B1 holds at every state with anything above it:
 each has a first distinct state above it, with nothing strictly between. A state with nothing above it
 owes no step. -/
+#check @ZeroParadox.axb1_gives_unique_target          -- Statement: on a LINEAR order, AX-B1 at `bot` gives exactly one cover; the `Set Bool` control beside it in `ZeroParadox/Reals/OrderedField.lean` has two
 #check @ZeroParadox.HasFirstStep                      -- Statement: an ORDER predicate — `∃ a, bot ⋖ a`, Mathlib's covering relation. ⚠ `LT ℚ_[p]` does not synthesize, so this is not statable of ℚ_p; the p-adic line below fences NORM values, a different predicate
 #check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, every positive ε₀ admits a smaller positive δ
 #check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element. No Archimedean hypothesis appears in the binders

@@ -1,6 +1,7 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-as-boundary pivot, worked through from the ground up; mostly re-derivation of existing framework results, kept for transparency. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.PadicTree
 import ZeroParadox.Computability.SelfApp
+import ZeroParadox.Valuation.LocalFloor
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -97,6 +98,68 @@ instance instAbstractSelfAppEnd : AbstractSelfApp End where
   fixed_bot := boundaryDouble_botEnd
   unique_fp := boundaryDouble_unique_fp
 
+/-! ### Iterating the boundary self-application: depth-`k` cells around `botEnd`
+
+The digit form of `2ᵏℤ₂`, the closed ball of radius `2⁻ᵏ` around `0` (Mathlib
+`PadicInt.norm_le_pow_iff_mem_span_pow`). The ball-chart relative
+of `iInter_range_iterate_boundaryDouble` is `fB_bottom_is_limit` (`ZeroParadox/Valuation/TopFunctor.lean`).
+`Reading:` `k` applications of the self-application are the depth-`k` cell around the all-zeros end —
+one map for tower step and cell depth. -/
+
+/-- The depth-`k` cell around the all-zeros end: the ends whose first `k` digits are `0`. -/
+def boundaryCell (k : ℕ) : Set End := {x | ∀ i < k, x i = 0}
+
+/-- `Statement:` `k` applications of `boundaryDouble` put `k` zeros in front. -/
+theorem iterate_boundaryDouble (k : ℕ) (x : End) (n : ℕ) :
+    (boundaryDouble^[k] x) n = if n < k then 0 else x (n - k) := by
+  induction k generalizing n with
+  | zero => rw [if_neg (Nat.not_lt_zero n), Nat.sub_zero]; rfl
+  | succ k ih =>
+    rw [Function.iterate_succ_apply']
+    cases n with
+    | zero => rw [if_pos (Nat.succ_pos k)]; rfl
+    | succ m =>
+      show (boundaryDouble^[k] x) m = _
+      rw [ih m]
+      by_cases h : m < k
+      · rw [if_pos h, if_pos (by omega : m + 1 < k + 1)]
+      · rw [if_neg h, if_neg (by omega : ¬ (m + 1 < k + 1)), show m + 1 - (k + 1) = m - k by omega]
+
+-- `Statement:` dropping the first `k` digits (`shiftEnd`) undoes `k` applications.
+example (k : ℕ) (x : End) : shiftEnd k (boundaryDouble^[k] x) = x := by
+  funext j
+  simp only [shiftEnd, iterate_boundaryDouble]
+  rw [if_neg (by omega)]; congr 1; omega
+
+/-- `Statement:` the image of `k` applications of `boundaryDouble` is exactly `boundaryCell k`. -/
+theorem range_iterate_boundaryDouble (k : ℕ) : Set.range (boundaryDouble^[k]) = boundaryCell k := by
+  ext y
+  constructor
+  · rintro ⟨x, rfl⟩ i hi
+    rw [iterate_boundaryDouble, if_pos hi]
+  · intro hy
+    refine ⟨shiftEnd k y, funext fun n => ?_⟩
+    rw [iterate_boundaryDouble]
+    by_cases h : n < k
+    · rw [if_pos h]; exact (hy n h).symm
+    · rw [if_neg h]; simp only [shiftEnd]; congr 1; omega
+
+/-- `Statement:` the intersection over `k` of those images is `{botEnd}`. -/
+theorem iInter_range_iterate_boundaryDouble :
+    (⋂ k, Set.range (boundaryDouble^[k])) = {botEnd} := by
+  ext y
+  simp only [Set.mem_iInter, range_iterate_boundaryDouble, boundaryCell, Set.mem_setOf_eq,
+    Set.mem_singleton_iff]
+  constructor
+  · intro h; funext n; exact h (n + 1) n (Nat.lt_succ_self n)
+  · rintro rfl k i _; rfl
+
+-- `Statement:` `boundaryDouble` is not constant: it moves the single-`1`-at-`0` end.
+example : boundaryDouble (fun k => if k = 0 then 1 else 0) ≠ fun k => if k = 0 then 1 else 0 := by
+  intro h
+  have := congrFun h 1
+  simp [boundaryDouble] at this
+
 end ZeroParadox
 
 section PurityCheck
@@ -104,4 +167,8 @@ open ZeroParadox
 #print axioms boundaryDouble_botEnd
 #print axioms boundaryDouble_unique_fp
 #print axioms instAbstractSelfAppEnd
+#print axioms boundaryCell
+#print axioms iterate_boundaryDouble
+#print axioms range_iterate_boundaryDouble
+#print axioms iInter_range_iterate_boundaryDouble
 end PurityCheck

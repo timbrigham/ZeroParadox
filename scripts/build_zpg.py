@@ -1,6 +1,11 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.15 | June 2026
+Version 1.20 | September 2026
+v1.20: T2/T3 remark: "0 reaches every object (T2)" dropped T2's uniqueness; now "0 reaches every object in exactly one way (T2)" (Tim ruling 2026-09-29).
+v1.19: Remark R-AX: "the two axioms jointly pick out exactly the non-degenerate case" stated a conditional as a biconditional. Now only the proved direction (a strict initial that is also terminal forces every object isomorphic to it, so AX-G1 rules it out) and the failing converse (in sets, the empty set is strict initial and the one-point set terminal); both checked as examples in AxG2Reduce.lean (copy_editor panel, Tim ruling 2026-09-29).
+v1.18: Remark R-AX: the domain facts behind the four stand-ins now list ZP-A T2 (the lattice stand-in's fact, bot_le) beside ZP-B C3, ZP-C T1b and ZP-D T4 (gate round 1, Tim ruling 2026-09-29).
+v1.17: Remark R-AX: the axioms are not claimed for the three Mathlib categories ZP-H targets (TopCat, KleisliCat PMF, ModuleCat ℂ), each of which has a terminal object; the four stand-ins are one ℕ-order instance. AX-G1 box: the no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top). Tim rulings, 2026-09-29.
+v1.16: Remark R-AX scoped — AX-G2 (not AX-G1) is what holds in many categories; the axioms hold in the four ℕ-indexed depth categories, and AX-G1 fails in TopCat and ModuleCat ℂ, whose bottom is a zero object (initial, not strict).
 v1.15: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.14: R-AX remark — named AX-G2 as the standard strict-initial-object property (Carboni-Lack-Walters 1993) and noted AX-G1+AX-G2 = a non-trivial strict initial; prior-art positioning, paired with the CLAIMS Convergence section.
 v1.12: Rendered version refs removed from BA-G1 compatibility remark ("ZP-G v1.0", "In v1.1") — C1 sweep, no version refs in rendered PDF content.
@@ -27,7 +32,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.20'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -201,7 +206,9 @@ def build():
         [
             'The category C possesses an initial object 0 and no terminal object.',
             'Formally: ∃ 0 ∈ ob(C) satisfying D3. ¬∃ 1 ∈ ob(C) satisfying D4.',
-            'Correspondence: In ZP-A: join-semilattice without &#8868; and without ∧. '
+            'Correspondence: in ZP-A, a join-semilattice with &#8869; and without ∧; a carrier with no top is '
+            'an optional hypothesis there, and ZP-A\'s two-state carriers have a top, so the no-terminal half '
+            'is ZP-G\'s own commitment. '
             'In ZP-B: Q<sub>2</sub> has no element to which all paths converge. '
             'The present axiom is the categorical generalization.',
         ]
@@ -222,22 +229,28 @@ def build():
         'Remark R-AX — On the Non-Triviality of AX-G1 and AX-G2',
         'Status: Remark',
         [
-            'AX-G1 and AX-G2 are satisfied by many categories — they are structural conditions, not exotic ones. '
+            'AX-G2 holds in many categories — it is a structural condition, not an exotic one. '
             'AX-G2 is the standard notion of a <i>strict initial object</i> (Carboni, Lack and Walters, 1993): '
             'an initial object into which every morphism is an isomorphism. Strict initial objects are the norm '
             'in well-behaved categories — the initial object of any topos, extensive category, or cartesian '
             'closed category is strict — so AX-G2 names a recognised structural property, not a ZP-specific '
             'stipulation. Together with AX-G1 (no terminal object) it places C at a <i>non-trivial</i> strict '
-            'initial object: a strict initial that is also terminal (a zero object) forces the category to be '
-            'trivial, so the two axioms jointly pick out exactly the non-degenerate case. '
+            'initial object: a strict initial that is also terminal (a zero object) forces every object to be '
+            'isomorphic to it, so AX-G1 rules that degenerate case out — but not conversely, since a non-trivial '
+            'category can have a strict initial object and still have a terminal one (in the category of sets, '
+            'the empty set is strict initial and the one-point set is terminal). '
             'What distinguishes ZP-G from a trivial application of initial-object asymmetry is that the initial '
             'object here is not an abstract placeholder: it is &#8869;, the algebraically minimal element of '
             'ZP-A\'s lattice. This identification is not asserted in ZP-G; it is demonstrated in ZP-H via '
             'four concrete domain functors (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>), '
-            'each of which maps the natural number depth hierarchy into its domain category and preserves '
-            'the initial object. The axioms are not postulated in isolation; they are shown to hold in each '
-            'of the four domain categories that constitute the framework\'s subject matter. The categorical '
-            'layer generalises a phenomenon that is independently grounded in four distinct mathematical domains.',
+            'each of which maps the natural number depth hierarchy into a stand-in category for its domain and '
+            'preserves the initial object. The axioms are not postulated in isolation; they are shown to hold in '
+            'each of four ℕ-indexed depth categories, one per domain (ZP-H), and are not claimed for the three '
+            'Mathlib categories ZP-H also targets (TopCat, KleisliCat PMF, ModuleCat ℂ) — each of which has a '
+            'terminal object, so AX-G1 fails in every one of them. ModuleCat ℂ\'s bottom is a zero object that '
+            'every object maps into, so it is initial but not strict. The domain facts behind the stand-ins '
+            '(ZP-A T2, ZP-B C3, ZP-C T1b, ZP-D T4) are proved separately in their own layers; the categorical check is '
+            'the same ℕ-order instance each time.',
         ]
     ))
 
@@ -270,7 +283,7 @@ def build():
         'Remark R1 — Structural Inversion — The Categorical Zero Paradox',
         'Status: Remark',
         [
-            'T2 and T3 together constitute the categorical Zero Paradox. 0 reaches every object (T2); '
+            'T2 and T3 together constitute the categorical Zero Paradox. 0 reaches every object in exactly one way (T2); '
             'no non-initial object reaches 0 (T3). This is not a logical contradiction. It is a structural '
             'inversion: the unique universal source is the unique object with no incoming non-trivial morphisms.',
         ]

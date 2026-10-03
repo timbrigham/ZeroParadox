@@ -64,6 +64,17 @@ theorem hilbert_bottom_isZero : Limits.IsZero (fD_functor.obj 0) := by
     exact Fin.elim0 i⟩
   exact ModuleCat.isZero_of_subsingleton (ModuleCat.of ℂ (StateSpace 0))
 
+-- `Statement:` that zero object is NOT a strict initial object: the zero map from `ℂ` into it is not
+-- an isomorphism, since an iso would make `ℂ` a zero object too. The standard instance of "a zero
+-- object is strict initial only in a trivial category" (nLab, *strict initial object*; ZP-G R-AX).
+example : ¬ ∀ (X : ModuleCat ℂ) (f : X ⟶ fD_functor.obj 0), IsIso f := by
+  intro h
+  haveI := h (ModuleCat.of ℂ ℂ) 0
+  have hz : Limits.IsZero (ModuleCat.of ℂ ℂ) :=
+    hilbert_bottom_isZero.of_iso (asIso (0 : ModuleCat.of ℂ ℂ ⟶ fD_functor.obj 0))
+  haveI := ModuleCat.subsingleton_of_isZero hz
+  exact one_ne_zero (Subsingleton.elim (1 : ℂ) 0)
+
 /-- #4 is strictly on the μ side: the Kleisli bottom `Fin 0` is initial but **not terminal** — a
     terminal object would need a morphism into it from `fC_functor.obj 1`, but `fC_no_return` proves
     that hom-set is empty (the snap's irreversibility). -/
@@ -71,6 +82,24 @@ theorem kleisli_bottom_not_terminal :
     IsEmpty (Limits.IsTerminal (fC_functor.obj 0)) := by
   refine ⟨fun hterm => ?_⟩
   exact (fC_no_return (by norm_num : 0 < 1)).false (hterm.from (fC_functor.obj 1))
+
+-- `Statement:` yet each of the three native categories HAS a terminal object: the one-point space in
+-- `TopCat`, the Hilbert bottom in `ModuleCat ℂ`, and the one-point type in `KleisliCat PMF` (every
+-- distribution on it is the point mass). So none of them satisfies AX-G1's no-terminal half. The
+-- Kleisli case: Fritz 2020, § 3 just before Cor. 3.2, p. 17 (for an affine monad the unit is terminal
+-- in the Kleisli category), and Rem. 2.3 for Markov categories generally (the unit is terminal).
+example :
+    Nonempty (Limits.IsTerminal (TopCat.of PUnit.{1}))
+    ∧ Nonempty (Limits.IsTerminal (fD_functor.obj 0))
+    ∧ Nonempty (Limits.IsTerminal (KleisliCat.mk PMF Unit)) := by
+  haveI : Subsingleton (PMF Unit) := ⟨fun p q => by
+    ext x; cases x
+    have hp := p.tsum_coe; have hq := q.tsum_coe
+    rw [tsum_fintype, Fintype.sum_unique] at hp hq; rw [hp, hq]⟩
+  exact ⟨⟨TopCat.isTerminalPUnit⟩, ⟨hilbert_bottom_isZero.isTerminal⟩,
+    ⟨@Limits.IsTerminal.ofUnique _ _ _ (fun _ =>
+      { default := fun _ => PMF.pure ()
+        uniq := fun _ => funext fun _ => Subsingleton.elim (α := PMF Unit) _ _ })⟩⟩
 
 /-- The three categorical bottoms sit at **distinct positions of the μ/ν fork**, all in one statement:
     #5 is a zero object (μ ∧ ν — the seam); #4 is not terminal (strictly μ); #3 is not initial

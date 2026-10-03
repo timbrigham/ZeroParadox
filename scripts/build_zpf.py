@@ -1,5 +1,6 @@
 """
-Build ZP-F: The Counterexamples (v1.8)
+Build ZP-F: The Counterexamples (v1.10)
+v1.9: DEAD LINK AND STALE ABSENCE CLAIM (Tim ruling, 2026-10-01): the Dual Limit Condition remark said no type bridge between the ordinal and p-adic types is established in ZP-L and pointed at "ZP-L §V, Remaining Gap", a heading ZP-L no longer has. cnfToZp2 maps the omega-tower into Z2 (ZeroParadox/Ordinal/CnfBridge.lean); the sentence now reads that the identification is a co-witness, not an identity, that the literal eps0 = 0 is ill-typed (cnf_bridge_type_boundary), and points at ZP-L's "The Bridge: What Is Formal and What Is Assumed".
 v1.8: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15): the opening's 'so that it is taken follows from the occurrence commitment together with DA-1' was a non sequitur (the NO-GO gauge does not give occurrence) and sat in the ordered-field setting where the snap is proved impossible; the clause is removed and the sentence ends at the gauge.
 v1.7: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the opening said occurrence 'is a commitment of the framework rather than one of its theorems'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
 v1.6: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
@@ -22,7 +23,7 @@ v1.2: §VI Remark: Dual Limit Condition extended — squeeze as structurally
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.10'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -250,8 +251,12 @@ def build():
             'snap threshold in the ordinal setting (proved in ZP-L). The structural '
             'identification of these two results &#8212; that &#8484;&#8322;\'s limit at 0 '
             'and the ordinal threshold at &#949;&#8320; reflect the same boundary &#8212; '
-            'has a remaining gap: no type bridge between the ordinal and p-adic types '
-            'is established in ZP-L (see ZP-L §V, Remaining Gap).',
+            'is a co-witness, not an identity (cnf_bridge_type_boundary, '
+            'ZeroParadox/Ordinal/CnfBridge.lean): cnfToZp2 maps the &#969;-tower into '
+            '&#8484;&#8322;, and the literal &#949;&#8320; = 0 is ill-typed with 0 the 2-adic zero, '
+            'failing to elaborate (see ZP-L, '
+            'The Bridge: What Is Formal and What Is Assumed), and well-typed and false with 0 the '
+            'ordinal zero (epsilon0_ne_zero).',
             'This is an observation, not a proved theorem. The blocking result '
             '(F-SNAP-IMPOSSIBLE) is proved here; the threshold and convergence results '
             'are proved in ZP-L. The claim that both conditions reflect a common structural '

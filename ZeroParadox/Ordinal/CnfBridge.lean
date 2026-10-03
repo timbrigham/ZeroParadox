@@ -7,49 +7,12 @@ set_option maxHeartbeats 400000
 /-!
 # The CNF/ℤ₂ value bridge, at the construction level (Gentzen.lean item 4)
 
-`Ordinal/Gentzen.lean` §IV proves two convergences seeded at the same ω-tower:
-
-* the ordinal tower `fundamentalSeq n` ascends to **ε₀** (`epsilonZero_eq_iSup`), which is the
-  *least fixed point* of `α ↦ ω^α` from the ordinal bottom ⊥ (`epsilon0_isLeastFixedPointFrom`,
-  `Order/LeastFixedPoint.lean`);
-* the 2-adic encodings `cnfToZp2 (towerNONote n)` converge in norm to **0 = ⊥** in `ℤ_[2]`
-  (`tower_converges_to_zero`).
-
-Gentzen.lean flags the *identification of these two limits* — ε₀ (∈ `Ordinal`) with 0 (∈ `ℤ_[2]`) —
-as "outside Lean scope: no type bridge." A literal `ε₀ = 0` is a **cross-type identity** (`Ordinal`
-vs `ℤ_[2]`), the same category error the framework RETIRES as ill-typed for MC-1 and fences in ZP-P
-and in `IsLeastFixedPointFrom` (`Order/LeastFixedPoint.lean`). This file does **not** prove it — that
-proposition is not well-formed.
-
-## What this file DOES add (all type-sound, connected by the MAP, never by `=`)
-
-1. **Map-mediated order embedding on the tower** (`tower_valuation_orderEmbedding`,
-   `tower_repr_orderEmbedding`): on the shared index `n`, ordinal order of the tower stages and the
-   2-adic *valuation* order of their `cnfToZp2` images are the same order — `cnfToZp2` is
-   order-reflecting *along the tower*, with valuation exactly tracking ordinal height.
-
-2. **The shared seed maps to the bottom on BOTH sides** (`seed_maps_to_bot_both`): the NONote seed
-   `towerNONote 0` (the NONote bottom `0`) is sent by `NONote.repr` to the `Ordinal` bottom ⊥, and by
-   `cnfToZp2` to the `ℤ_[2]` bottom 0. One seed, two carriers, each carrier's ⊥.
-
-3. **The 2-adic realization is a loop through ⊥** (`tower_image_loops_to_seed`): under `cnfToZp2`
-   the seed's image *and* the tower's norm-limit are both the *value* 0. So the ordinal ascent
-   ⊥ → ε₀ realizes, through the map, as a `ℤ_[2]` path that departs 0 and whose norm returns to 0.
-   This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (never the same; **not** order-adjacent — see
-   `epsilonZero_tower_lt`), and the finite stages are all ≠ 0 (next to the floor, never it); the returned-to ⊥ is a new instance.
-
-4. **The construction-level correspondence** (`mu_construction_correspondence`): ONE sequence
-   `towerNONote : ℕ → NONote` (the μ-ascent seeded at the NONote bottom) has TWO type-specific
-   realizations — `NONote.repr` into `Ordinal` (closing at the least fixed point ε₀) and `cnfToZp2`
-   into `ℤ_[2]` (norm-limit 0) — sharing the seed ⊥. This is the durable resolution of the
-   "ε₀ looks single-carriered" worry: the object being realized is the *construction* (the tower on
-   NONote), not a value; ε₀ and 0 are its two carrier-specific closures, not one number.
-
-5. **The honest fence** (`cnf_bridge_type_boundary`): the ε₀ side is a genuine `IsLeastFixedPointFrom`
-   μ; the `ℤ_[2]` side is a norm-limit of the *same index sequence*, NOT itself a least fixed point
-   (no lattice ascent on `ℤ_[2]` to 0). The two are co-witnessed and connected by `towerNONote` — and
-   the residual literal `ε₀ = 0` stays a **type boundary**, never a Lean `=`. Built in the spirit of
-   `zpm_triangle` (`Ordinal/Incompleteness.lean`), which co-witnesses without a type identity.
+One sequence `towerNONote` has two realizations, connected by maps and never by `=`: `NONote.repr`
+into `Ordinal`, closing at the least fixed point ε₀, and `cnfToZp2` into `ℤ_[2]`, with norm-limit 0
+(`mu_construction_correspondence`). The *identification of these two limits* — ε₀ (∈ `Ordinal`)
+with 0 (∈ `ℤ_[2]`) — is not a well-formed statement: it fails to elaborate (a type mismatch between
+`Ordinal` and `ℤ_[2]`). `cnf_bridge_type_boundary` co-witnesses the two limits instead.
+Long form: `ZeroParadox/Ordinal/CnfBridge.md`.
 
 ## Engineer's Take
 
@@ -107,7 +70,7 @@ theorem seed_maps_to_bot_both :
     *value* 0 in `ℤ_[2]`. So the ordinal ascent ⊥ → ε₀ realizes as a `ℤ_[2]` path departing 0 and
     whose norm returns to 0. This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (ε₀ is the least fixed
     point of `α ↦ ω^α`, never the same as ⊥ — and **not** order-adjacent to it, see
-    `epsilonZero_tower_lt`), and the finite stages are all ≠ 0 (next to the floor, never it). `ε₀ = 0` stays ill-typed (`cnf_bridge_type_boundary`). -/
+    `epsilonZero_tower_lt`), and the images of the finite stages n ≥ 1 are all ≠ 0 (next to the floor, never it; `snap_arc_z2_loop`). `ε₀ = 0` with 0 the 2-adic zero stays ill-typed: it fails to elaborate. -/
 theorem tower_image_loops_to_seed :
     cnfToZp2 (towerNONote 0) = 0 ∧
     Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop
@@ -166,9 +129,9 @@ theorem cnf_bridge_type_boundary :
     The loop closes because the tower's 2-adic **norm** reapproaches 0, landing back on the floor — NOT
     because ⊥ and ε₀ are one point: **⊥ is never ε₀** (ε₀ is the least fixed point of `α ↦ ω^α`), never identical — and **not** order-adjacent, see
     `epsilonZero_tower_lt` — and
-    the finite stages never even reach 0 (always next to, never the same). Honest fence: this is the
-    `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = 0`, which stays ill-typed
-    (`cnf_bridge_type_boundary`, MC-1 / ZP-P). -/
+    the images of the finite stages n ≥ 1 never even reach 0 (always next to, never the same). Honest fence: this is the
+    `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = 0` with 0 the 2-adic zero, which stays ill-typed: it fails
+    to elaborate (MC-1 / ZP-P). -/
 theorem snap_arc_z2_loop :
     cnfToZp2 (towerNONote 0) = 0 ∧
     (∀ n : ℕ, 1 ≤ n → cnfToZp2 (towerNONote n) ≠ 0) ∧

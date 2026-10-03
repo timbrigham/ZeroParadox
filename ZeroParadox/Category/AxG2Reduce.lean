@@ -1,19 +1,15 @@
 import ZeroParadox.Category.Category
+import ZeroParadox.Order.Lattice
+import Mathlib.CategoryTheory.Limits.Types.Products
+import Mathlib.CategoryTheory.Limits.Types.Coproducts
 
 /-!
 # B4 (pipeline): AX-G2 is derivable from strict-initiality (a ZP-G posit collapses)
 
-Experiment B4 (T2 reduce-the-posit): `ZPCategory.ax_g2` (source asymmetry:
-`IsEmpty (X ≅ 0) → IsEmpty (X ⟶ 0)`) is posited. Its own docstring claims it "is the standard notion of a
-strict initial object (Carboni–Lack–Walters 1993): every morphism into 0 is an iso." This experiment tests
-whether that prose claim is a THEOREM — i.e. whether AX-G2 reduces to strict-initiality with no extra
-hypothesis.
-
-**Result: CONFIRMED.** AX-G2 derives from strict-initiality alone (no non-terminal/balancedness needed).
-If every morphism into `zero` is an iso, then a morphism `f : X → zero` makes `X ≅ zero`; contrapositive
-is exactly AX-G2. So ZP-G's AX-G2 is NOT an independent commitment beyond the standard strict-initial
-notion it cites — the docstring claim is a theorem. (The could-fail outcome — "needs more than
-strict-initial" — did not occur.)
+`ax_g2_from_strict_initial`: if every morphism into `zero` is an isomorphism (strict initiality,
+Carboni–Lack–Walters), the AX-G2 shape `IsEmpty (X ≅ zero) → IsEmpty (X ⟶ zero)` follows, with no
+further hypothesis. The converse needs `zero` initial; it is the `example` below, not a declaration, and
+a named scratch copy of the same proof measured `[propext, Classical.choice, Quot.sound]` (2026-09-29).
 
 ## Engineer's Take
 
@@ -37,6 +33,57 @@ theorem ax_g2_from_strict_initial {C : Type*} [Category C] (zero : C)
   intro f
   haveI := hstrict X f
   exact hne.false (asIso f)
+
+-- `Statement:` the converse, given initiality: AX-G2 at an initial `zero` makes every morphism into
+-- `zero` an isomorphism. With the theorem above, the two are equivalent at an initial object.
+-- Folklore: nLab (*strict initial object*) states strictness in AX-G2's form. Mathlib's neighbouring
+-- `IsInitial.ofStrict` (`Mathlib/CategoryTheory/Limits/Shapes/StrictInitial.lean`): a morphism into a
+-- strict initial object makes its source initial.
+example {C : Type*} [Category C] (zero : C) (hi : Limits.IsInitial zero)
+    (hg2 : ∀ X : C, IsEmpty (X ≅ zero) → IsEmpty (X ⟶ zero)) (X : C) (f : X ⟶ zero) : IsIso f := by
+  classical
+  by_cases h : Nonempty (X ≅ zero)
+  · obtain ⟨e⟩ := h
+    obtain rfl : f = e.hom := (hi.ofIso e.symm).hom_ext _ _
+    infer_instance
+  · exact ((hg2 X ⟨fun e => h ⟨e⟩⟩).false f).elim
+
+-- `Statement:` a strict initial object that is also terminal makes every object isomorphic to it:
+-- the unique morphism from each object into it is an isomorphism. So AX-G1 (no terminal object) rules
+-- that degenerate case out of a ZPCategory.
+example {C : Type*} [Category C] (z : C) (hs : ∀ (X : C) (f : X ⟶ z), IsIso f)
+    (ht : Limits.IsTerminal z) (X : C) : Nonempty (X ≅ z) :=
+  haveI := hs X (ht.from X); ⟨asIso (ht.from X)⟩
+
+-- `Statement:` but not conversely: in `Type` the empty type is initial and strict (every map into it
+-- is an isomorphism), the one-point type is terminal, the two are not isomorphic, and so `Type` is a
+-- non-trivial category with a strict initial object that is not a ZPCategory.
+example :
+    Nonempty (Limits.IsInitial (PEmpty : Type)) ∧ (∀ (X : Type) (f : X ⟶ PEmpty), IsIso f)
+    ∧ Nonempty (Limits.IsTerminal (PUnit : Type)) ∧ IsEmpty ((PUnit : Type) ≅ PEmpty)
+    ∧ IsEmpty (ZPCategory Type) :=
+  ⟨⟨Limits.Types.isInitialPEmpty⟩,
+   fun _ f => (isIso_iff_bijective f).mpr ⟨fun x _ _ => (f x).elim, fun e => e.elim⟩,
+   ⟨Limits.Types.isTerminalPUnit⟩, ⟨fun e => (e.hom PUnit.unit).elim⟩,
+   ⟨fun Z => (Z.ax_g1_no_terminal PUnit).false Limits.Types.isTerminalPUnit⟩⟩
+
+-- `Statement:` AX-G2 from antisymmetry: in the poset category of any partial order with a least
+-- element, nothing not isomorphic to `⊥` has a morphism into it (a morphism `X ⟶ ⊥` is `X ≤ ⊥`, so
+-- `X = ⊥`). nLab (*strict initial object*) lists posets among the categories with strict initials.
+example (α : Type) [PartialOrder α] [OrderBot α] :
+    ∀ X : α, IsEmpty (X ≅ (⊥ : α)) → IsEmpty (X ⟶ (⊥ : α)) := by
+  intro X hX
+  refine ⟨fun f => hX.false ?_⟩
+  have h1 : X ≤ ⊥ := leOfHom f
+  have : X = ⊥ := le_antisymm h1 bot_le
+  subst this
+  exact Iso.refl _
+
+-- `Statement:` the same fact in ZP-A's own vocabulary: on any `ZPSemilattice`, an element below `bot`
+-- is `bot` (antisymmetry with T2, `bot_le`).
+example (L : Type) [ZPSemilattice L] (x : L) (hx : ZPSemilattice.le x ZPSemilattice.bot) :
+    x = (ZPSemilattice.bot : L) :=
+  ZPSemilattice.le_antisymm hx (ZPSemilattice.bot_le x)
 
 end ZeroParadox
 
