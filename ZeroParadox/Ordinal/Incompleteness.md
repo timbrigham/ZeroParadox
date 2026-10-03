@@ -11,7 +11,7 @@ This formalizes the embedding: c₁ maps to 0 ∈ ℤ_[2], the 2-adic limit of t
 encodings. Within the ZP framework, 0 here plays the role of ⊥; in the Scale.lean chart (⊥ = 0)
 0 fills ℤ_[2]'s bottom role (a ZPSemilattice on ℤ_[2] with ⊥ = 0 is built in
 `ZeroParadox/Valuation/Scale.lean` § V), and in the multiplicative reading `snapEmbed c₀ = 1` is
-the identity, not a ZPSemilattice ⊥ (multiplication is not idempotent on ℤ_[2]) — the identification is a modelling commitment, not a
+the identity, and that reading is not a ZPSemilattice, since multiplication on ℤ_[2] is not idempotent (2 · 2 ≠ 2) — the identification is a modelling commitment, not a
 ring-theoretic fact.
 
 The morphism property: join on MachinePhase (c₁ is absorbing) corresponds to

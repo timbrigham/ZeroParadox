@@ -169,8 +169,8 @@ ascent, and the irreversible snap are represented. Given that model the theorems
 nontrivially, by ordinal well-founded induction. So "the snap is one crossing" is a faithful, coherent
 MODEL whose content is the two proven endpoints plus the reading of those endpoints as ZP's own ⊥ (the lattice chart's ⊥) and ε₀
 respectively — and that reading is NOT a new commitment: it is a role assignment the framework already
-carries (for the ⊥ endpoint, MC-1 family membership; for the ε₀ endpoint, a theorem about the model
-itself in both of its orderings, floor below as `WithBot Ordinal`
+carries (for the ⊥ endpoint, MC-1 family membership; for the ε₀ endpoint, theorems about the model
+itself in both of its extreme orderings, floor below as `WithBot Ordinal`
 (`phase_epsilon0_isLeast_landing_above_floor`) and floor above as `WithTop Ordinal`
 (`phaseTop_epsilon0_isLeast_landing_above_snap`) (`ZeroParadox/Multihomed/BoundaryOrder.lean`), so no
 cross-type identity is involved). Relative to the ordinals' floor, the bottom role is filled by 0 and the
