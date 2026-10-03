@@ -10,7 +10,8 @@ set_option maxHeartbeats 400000
 One sequence `towerNONote` has two realizations, connected by maps and never by `=`: `NONote.repr`
 into `Ordinal`, closing at the least fixed point ε₀, and `cnfToZp2` into `ℤ_[2]`, with norm-limit 0
 (`mu_construction_correspondence`). The *identification of these two limits* — ε₀ (∈ `Ordinal`)
-with 0 (∈ `ℤ_[2]`) — is not a well-formed statement (`cnf_bridge_type_boundary`).
+with 0 (∈ `ℤ_[2]`) — is not a well-formed statement: it fails to elaborate (a type mismatch between
+`Ordinal` and `ℤ_[2]`). `cnf_bridge_type_boundary` co-witnesses the two limits instead.
 Long form: `ZeroParadox/Ordinal/CnfBridge.md`.
 
 ## Engineer's Take
@@ -69,7 +70,7 @@ theorem seed_maps_to_bot_both :
     *value* 0 in `ℤ_[2]`. So the ordinal ascent ⊥ → ε₀ realizes as a `ℤ_[2]` path departing 0 and
     whose norm returns to 0. This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (ε₀ is the least fixed
     point of `α ↦ ω^α`, never the same as ⊥ — and **not** order-adjacent to it, see
-    `epsilonZero_tower_lt`), and the finite stages are all ≠ 0 (next to the floor, never it). `ε₀ = 0` stays ill-typed (`cnf_bridge_type_boundary`). -/
+    `epsilonZero_tower_lt`), and the images of the finite stages n ≥ 1 are all ≠ 0 (next to the floor, never it; `snap_arc_z2_loop`). `ε₀ = 0` with 0 the 2-adic zero stays ill-typed: it fails to elaborate. -/
 theorem tower_image_loops_to_seed :
     cnfToZp2 (towerNONote 0) = 0 ∧
     Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop
@@ -128,9 +129,9 @@ theorem cnf_bridge_type_boundary :
     The loop closes because the tower's 2-adic **norm** reapproaches 0, landing back on the floor — NOT
     because ⊥ and ε₀ are one point: **⊥ is never ε₀** (ε₀ is the least fixed point of `α ↦ ω^α`), never identical — and **not** order-adjacent, see
     `epsilonZero_tower_lt` — and
-    the finite stages never even reach 0 (always next to, never the same). Honest fence: this is the
-    `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = 0`, which stays ill-typed
-    (`cnf_bridge_type_boundary`, MC-1 / ZP-P). -/
+    the images of the finite stages n ≥ 1 never even reach 0 (always next to, never the same). Honest fence: this is the
+    `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = 0`, which stays ill-typed: it fails
+    to elaborate (MC-1 / ZP-P). -/
 theorem snap_arc_z2_loop :
     cnfToZp2 (towerNONote 0) = 0 ∧
     (∀ n : ℕ, 1 ≤ n → cnfToZp2 (towerNONote n) ≠ 0) ∧

@@ -1,6 +1,6 @@
 # The Kleene-ordinal bridge: where the value changes, and why that is not occurrence
 
-Moved from `ZeroParadox/Ordinal/Gentzen.lean` § VI. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
+Moved from `ZeroParadox/Ordinal/Gentzen.lean` § VI. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** It has since carried corrective edits, but its claims are unverified until a claim review says otherwise.
 
 Two senses of "occurrence" appear below, and both are meant: in the table chart, hε₀ (φ ε₀ = c₁) is the entry the tower does not force; in the dynamics chart, occurrence is the separate commitment that instantiation occurs (`ZeroParadox/Order/Snap.lean`, the NO-GO gauge, `tsnap_holds_but_nothing_moves`).
 
@@ -95,7 +95,7 @@ The valuation and convergence results in this section are fully in Lean scope:
 
 ## § V. Ordinal Tower Limit and ZPB Pre-image
 
-Moved from `ZeroParadox/Ordinal/Gentzen.lean` § V (2026-10-01), carried in the same accepted-defect baseline as § VI, so the warning above applies to it too. The section's last paragraph (the bridge to ZPE's MachinePhase) is new text written 2026-10-01, not moved, and is not covered by that banner.
+Moved from `ZeroParadox/Ordinal/Gentzen.lean` § V (2026-10-01), carried in the same accepted-defect baseline as § VI, so the warning above applies to it too, corrective edits since the move included. The section's last paragraph (the bridge to ZPE's MachinePhase) is new text written 2026-10-01, not moved, and is not covered by that banner.
 
 What this does NOT claim:
   - That ε₀ is the proof-theoretic ordinal of PA (two results, credited in ZP-L Remark R-L.1; not claimed)

@@ -1,6 +1,6 @@
 # CnfBridge — the CNF/ℤ₂ value bridge, at the construction level
 
-Moved from `ZeroParadox/Ordinal/CnfBridge.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
+Moved from `ZeroParadox/Ordinal/CnfBridge.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** It has since carried corrective edits, but its claims are unverified until a claim review says otherwise.
 
 `Ordinal/Gentzen.lean` §IV proves two convergences seeded at the same ω-tower:
 
