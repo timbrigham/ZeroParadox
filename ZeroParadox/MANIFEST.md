@@ -37,7 +37,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Order/Snap.lean` - ZP-E: Bridge Document
   - ride-along docs: `ZeroParadox/Order/Snap.md` - ZP-E formal inserts, and what T-SNAP does and does not carry
 - `ZeroParadox/Order/SnapCannotBe.lean` - Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
-- `ZeroParadox/Order/UpAndOver.lean` - The up-and-over shape: a closure operator with a cover at every non-maximal landing
+- `ZeroParadox/Order/UpAndOver.lean` - The up-and-over shape: a closure operator with a corner and a cover at every non-maximal landing
   - ride-along docs: `ZeroParadox/Order/UpAndOver.md` - The up-and-over shape: prior art, controls and fences
 
 ### Valuation / number theory (ZP-B, ZP-F)
