@@ -246,6 +246,12 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Reason:** Mathlib's least-fixed-point API (`OrderHom.lfp`, `isLeast_lfp`) is fixed to a `CompleteLattice` carrier. This predicate states the SAME mu characterization (least fixed point at or above a seed) over a bare relation, so it applies to the framework's non-lattice carriers — the axiom-clean `ZPSemilattice` L, and `Ordinal`, which is not a complete lattice. It is the order-generic placement schema, grounded back to `OrderHom.lfp` in that file's section II.
 
+### `UpAndOver` — `ZeroParadox/Order/UpAndOver.lean`
+
+**Relationship to Mathlib:** Has a `ClosureOperator` field; no Mathlib analog for the bundle
+
+**Reason:** Mathlib's `ClosureOperator` admits the identity closure and the constant-top closure, and says nothing about covers. This structure bundles one with two fields: `corner`, a closed point with a cover in the carrier order (`CovBy`) that the closure moves, and `cover`, a cover at every non-maximal closed point. That some point moves and some closed point is not maximal are theorems (`UpAndOver.moves`, `UpAndOver.open_landing`). The cover in `corner` refuses every densely ordered carrier (`isEmpty_of_denselyOrdered`), so the ceiling map on ℝ, a closure operator, fails both fields; density is sufficient for that exclusion, not necessary, since `Bool` is refused too. Each of `corner` and `cover` refuses a control in that file's section III that the other passes. The three-point chain `Fin 3` is a member, and `corner` alone gives a three-point chain, so a finite member has at least three points.
+
 ### `ProvabilityLogic` — `ZeroParadox/Settheory/Loeb.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
