@@ -533,7 +533,11 @@ def _attest_url():
 
 
 def index_tree():
-    """The tree the pending commit will carry: `git write-tree` over the index git prepared."""
+    """The tree the pending commit will carry: `git write-tree` over the index git prepared.
+
+    Runs with cwd=REPO, which `common` derives from THIS file's location; the installed shim runs
+    the committing checkout's own copy, so in a worktree commit this is that worktree's index
+    (git's exported GIT_INDEX_FILE is inherited too). Never resolved against the main checkout."""
     rc, out = git_out("write-tree")
     tree = out.strip()
     return tree if rc == 0 and tree else None
@@ -1076,9 +1080,9 @@ def pre_commit():
     #   verdicts. `R-NOCONV`: what still BLOCKS is printed on every run, matched or not.
     status, run_id, tree, detail = consult_attest()
     if status == ATTEST_YES:
-        print("SKIPPED %d pre-commit leg(s): gitRobot attested run %s, tree %s (single-use; its own "
-              "gate ran these legs to green on this exact tree in this run)"
-              % (len(PRE_COMMIT_CHECKS), run_id, tree))
+        print("SKIPPED pre-commit: gitRobot gate %s passed for tree %s" % (run_id, tree))
+        print("  (single-use attestation; that gate ran these %d legs on this exact tree in this run)"
+              % len(PRE_COMMIT_CHECKS))
         print("  BLOCK rows launched: 0 of %d; skipped on attestation %s"
               % (len(PRE_COMMIT_CHECKS), ATTEST_YES))
         return 0
@@ -2040,7 +2044,7 @@ def _say(r, status):
 def _ctl_attest_yes(m):
     r = _simulate_commit(m, env={ENV_RUN_ID: _RUN, ENV_OP: "commit"}, answer=_attest_answer())
     ok = (r["rc"] == 0 and r["launched"] == [] and r["calls"] == [(_RUN, _TREE)]
-          and "SKIPPED 11 pre-commit leg(s): gitRobot attested run %s, tree %s" % (_RUN, _TREE)
+          and "SKIPPED pre-commit: gitRobot gate %s passed for tree %s" % (_RUN, _TREE)
           in r["out"] and "BLOCK rows launched: 0 of 11" in r["out"])
     return ok, "stubbed attested:true for this tree -> rc=%s, %d leg(s) launched, calls=%s" % (
         r["rc"], len(r["launched"]), r["calls"])
@@ -2122,6 +2126,18 @@ def _ctl_attest_tree_echo(m):
 def _ctl_attest_error(m):
     r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=RuntimeError("ctl boom"))
     return _full(m, r, ATTEST_ERROR), "an unclassified exception -> " + _say(r, ATTEST_ERROR)
+
+
+class _ExplodingResponse(dict):
+    """A response the judge cannot read: it raises the moment its keys are inspected."""
+
+    def __contains__(self, key):
+        raise RuntimeError("ctl: unreadable response")
+
+
+def _ctl_attest_judge_raises(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=lambda run_id, t: _ExplodingResponse())
+    return _full(m, r, ATTEST_ERROR), "the judge raised -> " + _say(r, ATTEST_ERROR)
 
 
 def _ctl_attest_index_tree(m):
@@ -2319,8 +2335,29 @@ _CONTROLS = [
     # ⚠ PRE-COMMIT PASS-CACHE (Tim's R10, 2026-10-03). MUST SKIP on a stubbed yes for this tree;
     #   MUST RUN ALL ELEVEN LEGS on every other answer. Each mutant turns one non-yes into a skip.
     ("pc  attested:true for this tree skips", _ctl_attest_yes,
-     '    if status == ATTEST_YES:\n        print("SKIPPED %d pre-commit',
-     '    if False:\n        print("SKIPPED %d pre-commit'),
+     '    if status == ATTEST_YES:\n        print("SKIPPED pre-commit',
+     '    if False:\n        print("SKIPPED pre-commit'),
+    # mcp-mayhem's two named mutants: (1) skip on an exception from the transport/parse path,
+    # (2) skip without checking `attested` (on any ok:true response, or on any response at all).
+    ("pc  M-gr1 skip on a transport exception", _ctl_attest_error,
+     "        return _classify_attest_exception(e), run_id, tree,",
+     "        return ATTEST_YES, run_id, tree,"),
+    ("pc  M-gr1 skip on an exception while judging", _ctl_attest_judge_raises,
+     '        return ATTEST_ERROR, run_id, tree, "judging',
+     '        return ATTEST_YES, run_id, tree, "judging'),
+    ("pc  M-gr2 skip on ok:true without `attested`", _ctl_attest_denied,
+     '    if sc.get("attested") is False:\n'
+     '        return ATTEST_DENIED, "attested: false, why: %s" % (sc.get("why"),)\n'
+     '    if sc.get("attested") is not True:\n'
+     '        return ATTEST_MALFORMED, "attested=%r is not the boolean true" % '
+     '(sc.get("attested"),)\n',
+     ''),
+    ("pc  M-gr2 skip on any response at all", _ctl_attest_denied,
+     "        status, detail = _judge_attest(res, tree)",
+     '        status, detail = ATTEST_YES, "any response"'),
+    ("pc  worktree: write-tree follows the invoking checkout", _ctl_attest_index_tree,
+     '    rc, out = git_out("write-tree")',
+     '    rc, out = git_out("-C", os.path.dirname(REPO), "write-tree")'),
     ("pc  attested:false runs in full, prints why", _ctl_attest_denied,
      '        return ATTEST_DENIED, "attested: false',
      '        return ATTEST_YES, "attested: false'),
