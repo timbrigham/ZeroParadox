@@ -12,9 +12,10 @@ Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
   string, c₀ → c₁ is D7's (T-SNAP Step 3), and DP-2 with `da1_minimal_path` shows the two
   configurations distinct while returning the same output value. The precondition is what the
   occurrence commitment asserts; DA-1 consumes it and does not supply it. Three paths argue for the
-  precondition and none derives it (ZP-E § IV):
+  precondition and none derives it (ZP-E, DA-1 insert § IV):
   - Path 1 (structural, ZP-J T-EXEC + ZP-K): nothing external to ⊥ can execute ⊥, so if ⊥ executes
-    at all, the executor is ⊥ itself. That rules out an external executor, not an inert ⊥. Its Lean
+    at all, the executor is ⊥ itself; the premise "nothing external can execute ⊥" is the framework's
+    requirement, not a theorem. That rules out an external executor, not an inert ⊥. Its Lean
     counterpart is `da1_closed_concrete`, which proves IsQuineAtom (bot : MachinePhase) and nothing
     computational; the self-executing reading is carried by the KleeneStructure commitment.
   - Path 2 (informational, ZP-C L-INF): surprisal at ⊥ is unbounded, so no finite interpreter holds

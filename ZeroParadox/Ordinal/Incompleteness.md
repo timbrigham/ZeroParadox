@@ -27,27 +27,22 @@ it establishes that both exist, not that they are one structural pattern; readin
 the same pattern is the framework's interpretation, and no equation between a `Code` and
 an `Ordinal` is well-formed.
 
-L-INF (ZP-C Lemma L-INF: ⊥ has divergent surprisal — unbounded information content,
-incompressible by any finite description) is structurally analogous. The Kleene and
+L-INF (ZP-C Lemma L-INF: the surprisal of ⊥ is unbounded above) is structurally
+analogous. The Kleene and
 ordinal cases are both textbook instances of the diagonalization schema; whether
 L-INF fits the same schema formally is the open question this remark is tracking.
 
-The formally unconnected instance is L-INF. This gap is DA-1 Path 2 — the
-informational bridge. The reason Path 2 resisted formalization is visible from
-this layer: L-INF is a measure-theoretic statement (Shannon entropy, probability
-distributions over ZP-B's binary space) while the Kleene quine is a
-computability-theoretic statement (partial recursive functions, Gödel encoding).
-The two frameworks share no mathematical machinery. The diagonalization frame
-established here provides the common conceptual ground, but the formal bridge
-requires the Kolmogorov complexity connection: incompressibility is the concept
-that lives in both worlds simultaneously (a string x is incompressible iff K(x) ≥ |x| − O(1) —
-Kolmogorov complexity meets measure theory). That bridge
-is outside the current Lean scope, pending AIT infrastructure not yet available
-in Mathlib.
+The formally unconnected instance is L-INF. L-INF is a measure-theoretic statement
+(surprisal under a probability measure on ZP-B's binary space), while the Kleene quine is
+a computability-theoretic statement (partial recursive functions, Gödel encoding), and
+neither this remark nor `both_fixed_points_exist` links them. ZP-C keeps the surprisal measure and
+Kolmogorov complexity as independent routes (ZP-C Remark R-BRIDGE). Kolmogorov complexity
+itself was not located as a definition in `ZeroParadox/**/*.lean` as of 2026-10-04 (searched
+for declarations named for Kolmogorov, prefix or description-length complexity, and for
+"incompressib"); `ZPSurprisal` in `ZeroParadox/Category/Category.lean` abstracts only its
+skeleton.
 
-In ZP-E and ZP-K, DA-1 Path 2's step from unbounded surprisal to executing is a bridge
-principle of its own, a missing principle and not a missing proof, which the framework does
-not adopt and which is not the occurrence commitment. The diagonalization frame established
-here locates the boundary: the gap is not a skipped proof step but a genuine framework
-separation — measure-theoretic surprisal on one side, computability-theoretic encoding on the
-other, with no shared machinery in current Mathlib.
+DA-1 Path 2 is a different matter. In ZP-E (DA-1 insert § IV) it is the step from
+unbounded surprisal to executing: a bridge principle of its own, a missing principle and not
+a missing proof, which the framework does not adopt and which is not the occurrence
+commitment.

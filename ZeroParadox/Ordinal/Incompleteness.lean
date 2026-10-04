@@ -270,8 +270,8 @@ theorem both_fixed_points_exist :
 
 `both_fixed_points_exist` is a conjunction of two existentials: each diagonalization yields a
 fixed point in its own domain, and no equation between a `Code` and an `Ordinal` is well-formed.
-Where L-INF stands relative to that schema, and why DA-1 Path 2 is a framework separation and
-not a skipped proof step: `ZeroParadox/Ordinal/Incompleteness.md` § Remark R-M.1. -/
+Where L-INF stands relative to that schema, and how that differs from DA-1 Path 2:
+`ZeroParadox/Ordinal/Incompleteness.md` § Remark R-M.1. -/
 
 end ZeroParadox
 

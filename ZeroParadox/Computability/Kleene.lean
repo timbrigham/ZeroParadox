@@ -304,10 +304,10 @@ theorem roger_fixed_point_exists (f : Code → Code) (hf : Computable f) :
     so this statement unpacks the structure's own requirements — it does not derive
     them. Nothing computational appears in the statement or the proof.
 
-    The reading "⊥ is *executing*, not a static description" is the framework's
-    interpretation of `bot_self_mem` under the KleeneStructure commitment; at P₀ it is
-    what the occurrence commitment asserts, which DA-1 consumes (ZP-E). It is meaning
-    attached to the Lean fact, not a separate Lean theorem. -/
+    The reading "if ⊥ executes at all, it is its own executor" (ZP-E, DA-1 Path 1) is the
+    framework's interpretation of `bot_self_mem` under the KleeneStructure commitment.
+    That the configuration reaching P₀ is running is the occurrence commitment, which
+    DA-1 consumes (ZP-E). Neither is a separate Lean theorem. -/
 theorem da1_computational {L : Type*} [ZPSemilattice L] [KleeneStructure L] :
     IsQuineAtom (bot : L) :=
   bot_is_quine_atom
@@ -322,8 +322,8 @@ theorem da1_computational {L : Type*} [ZPSemilattice L] [KleeneStructure L] :
 
     The framework's reading — that Path 1 (AFA: nothing external to ⊥ can execute it)
     and Path 3 (AIT: no shorter external program generates it) are one structural fact
-    expressed in two languages — is DA-1's argument, carried by this pair of witnesses,
-    not proved by it.
+    expressed in two languages — is the framework's argument for DA-1's precondition,
+    carried by this pair of witnesses, not proved by it.
 
     Note also that `IsComputationalQuine` is a *periodicity* condition, satisfied by
     constant codes (`hconst_quine`, in the proof of `infinite_quine_family`). So the
@@ -340,19 +340,19 @@ theorem da1_paths_unified {L : Type*} [ZPSemilattice L] [KleeneStructure L] :
     self-containing element in `L`, nothing more.
 
     The framework's reading — that ⊥ is not a description awaiting an external
-    executor but IS the executor, so DA-1's static-description alternative is closed —
-    is the argument this witness supports. It is DA-1's claim, not this theorem's
-    content, and "no external program is prior to ⊥" is a requirement the framework
-    imposes rather than something derived here. -/
+    executor but IS the executor — is the argument this witness supports. It rules out
+    an external executor, not an inert ⊥: that the configuration reaching P₀ is running
+    is the occurrence commitment, which DA-1 consumes (ZP-E). "No external program is
+    prior to ⊥" is a requirement the framework imposes rather than derives here. -/
 theorem description_instantiation_gap_closed {L : Type*} [ZPSemilattice L]
     [KleeneStructure L] : IsQuineAtom (bot : L) ∧
     ∀ (q : L), IsQuineAtom q → q = bot := by
   exact ⟨bot_is_quine_atom, fun q hq => t_exec q hq⟩
 
-/-! ## § V. MachinePhase — DA-1's Concrete Path 1 Witness
+/-! ## § V. MachinePhase — the Concrete Lean Counterpart of DA-1's Path 1
 
 Provides AFAStructure and KleeneStructure instances for ZP-E's MachinePhase type,
-witnessing DA-1's Path 1 for ZP-E's MachinePhase model.
+the Lean counterpart of DA-1's Path 1 for ZP-E's MachinePhase model.
 
 selfMem is modelled as equality with bot — the CIC-compatible expression of AFA
 self-containment ⊥ = {⊥}. Anti-foundation is not required at the typeclass level:
@@ -366,7 +366,7 @@ open ZeroParadox ZeroParadox
     The unique self-containing element is the initial state — the bottom of the
     semilattice. This is the CIC encoding of ⊥ = {⊥}: bot is self-containing
     and is the only element with this property. -/
--- [ZP-CUSTOM] instance: AFAStructure MachinePhase | reason: selfMem x := x = bot is the CIC-compatible encoding of AFA self-containment (⊥ = {⊥} cannot be stated in Lean's well-founded type theory). Quine uniqueness and bot_self_mem are provable by rfl. This is the concrete Path 1 witness for ZP-E's machine model; DA-1 itself is closed given DP-2 (da1_minimal_path).
+-- [ZP-CUSTOM] instance: AFAStructure MachinePhase | reason: selfMem x := x = bot is the CIC-compatible encoding of AFA self-containment (⊥ = {⊥} cannot be stated in Lean's well-founded type theory). Quine uniqueness and bot_self_mem are provable by rfl. This is the concrete Lean counterpart of Path 1 for ZP-E's machine model; DA-1 itself is closed given DP-2 (da1_minimal_path).
 instance machinePhaseAFA : AFAStructure MachinePhase where
   selfMem x      := x = bot
   quine_unique _ _ hx hy := hx.trans hy.symm
@@ -397,7 +397,7 @@ example : KleeneStructure MachinePhase :=
       simp [selfApply, eval_const]
     bot_self_mem_from_kleene := rfl }
 
-/-- The Path 1 witness (concrete): in the MachinePhase semilattice, ⊥ is a Quine atom.
+/-- Path 1's Lean counterpart (concrete): in the MachinePhase semilattice, ⊥ is a Quine atom.
     Follows from `da1_computational` at the MachinePhase KleeneStructure instance.
 
     **Honest fence — read this before citing the theorem.** What Lean proves is exactly
@@ -408,8 +408,8 @@ example : KleeneStructure MachinePhase :=
     route.
 
     The reading "c₀ is self-**executing** — not a static description awaiting an
-    external interpreter" is DA-1's claim and the framework's requirement on the
-    computational bottom. It is meaning attached to this Lean fact, **not** what the
+    external interpreter" is the framework's: that the configuration reaching P₀ is
+    running is the occurrence commitment, which DA-1 consumes (ZP-E). It is meaning attached to this Lean fact, **not** what the
     statement carries. Two specifics that matter when this theorem is cited as
     computational grounding:
     * The statement mentions no `Code` and no execution.
@@ -442,7 +442,7 @@ theorem quine_period_is_goedel (c : Code) (hc : IsComputationalQuine c) :
   simp only [selfApply] at h
   exact h
 
-/-- Among computational quines, distinct Gödel numbers imply distinct codes.
+/-- Among computational quines, equal Gödel numbers imply equal codes.
 
     **Honest fence.** The proof is `Encodable.encode_inj` — injectivity of the encoding
     on all of `Code`. Both quine hypotheses are bound to `_` and are unused, so this is

@@ -62,7 +62,7 @@ example : ¬ HasNoTop MachinePhase := by
 
 Given its precondition, that the configuration reaching P₀ is a running machine's current
 configuration (Sense B), one act of instantiation moves the machine from c₀ to c₁ with the same
-output value (ZP-E § IV). The precondition is what the occurrence commitment asserts; DA-1
+output value (ZP-E, DA-1 insert § IV). The precondition is what the occurrence commitment asserts; DA-1
 consumes it and does not supply it, and c₀ → c₁ given it is D7's. Formal core: DP-2 and
 `da1_minimal_path` (§ VI), which takes no hypothesis. Paths 1 to 3 argue for the precondition and
 none derives it: `ZeroParadox/Order/Snap.md`. -/
@@ -219,8 +219,8 @@ example {L : Type*} [ZPSemilattice L] :
       down-set is the singleton `{⊥}`: there is nothing below it to subtract.
     * `x := ⊥` — `le ⊥ y` holds for every `y` (`bot_le`), so for any `y ≠ ⊥` the instance is
       **live**, and says no join from `y` returns to the bottom. This is the framework's headline
-      reading, indexed at `ZeroParadox/Order/SnapCannotBe.lean` as *"no join from ε₀ returns to
-      ⊥"* and mirrored topologically by `c3_irreversible` (`ZeroParadox/Valuation/Padic.lean`).
+      reading, indexed at `ZeroParadox/Order/SnapCannotBe.lean` (the `t_snap_irreversible` line)
+      and mirrored topologically by `c3_irreversible` (`ZeroParadox/Valuation/Padic.lean`).
 
     `Reading:` R1 has two faces here — its *subtraction* face is empty at ⊥ and acquires content at
     the first element with a proper part, while its *no-return* face is exactly the snap's
@@ -369,7 +369,7 @@ theorem da1_minimal_path :
     before.value = after.value ∧   -- same output value (both ⊥)
     before.state ≠ after.state ∧   -- distinct machine states
     before.state = c₀ ∧            -- before: pre-execution null
-    after.state  = c₁ :=           -- after: execution occurred (the snap)
+    after.state  = c₁ :=           -- after: the post-instantiation record's state
   ⟨rfl, by decide, rfl, rfl⟩
 
 end ZeroParadox

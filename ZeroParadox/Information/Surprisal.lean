@@ -160,9 +160,9 @@ theorem t2_diverges : ∀ M : ℝ, ∃ n : ℕ, M < circPartial n := by
   obtain ⟨n, hn⟩ := exists_nat_gt M
   exact ⟨n, by rw [t2_partial_eq]; exact_mod_cast hn⟩
 
-/-! ## Section III-B: L-INF — Informational Extremity of the Null State -/
+/-! ## Section III-B: L-INF — Unbounded Surprisal of the Null State -/
 
-/-- L-INF — Informational Extremity of ⊥.
+/-- L-INF — Unbounded Surprisal of ⊥.
 
     The surprisal I(n) = n at ball-hierarchy depth n is unbounded: for any finite
     bound M, there exist depths n with I(n) > M. The null state ⊥ = c₀ corresponds
@@ -170,12 +170,12 @@ theorem t2_diverges : ∀ M : ℝ, ∃ n : ℕ, M < circPartial n := by
     depth. At this limit, surprisal is not finite.
 
     Formal content: surprisal is unbounded above.
-    Semantic content: ⊥ is informationally extreme — it is the compressed limit of
+    Semantic content: ⊥ has unbounded surprisal — it is the compressed limit of
     all possible binary programs. No finite program bounds its informational content,
     so no finite external interpreter can hold ⊥ as a static description. This is
     one argument for DA-1's precondition (ZP-E, Path 2), and it does not derive it.
 
-    Note: the step from informational extremity to executing is not a consequence of
+    Note: the step from unbounded surprisal to executing is not a consequence of
     L-INF and is not DA-1: it is a bridge principle of its own, which the framework
     does not adopt and which is not the occurrence commitment (ZP-E, DA-1 Path 2). -/
 theorem l_inf : ∀ M : ℝ, ∃ n : ℕ, M < surprisal n := by
