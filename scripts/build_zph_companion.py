@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.16)
+Build ZP-H Illustrated Companion (v1.17)
 v1.16: DECISION BATCH REMEDIATION (Tim, 2026-09-15): the T-H3 page said the transition 'was derived as a theorem (T-SNAP), not assumed as an axiom' and called the Binary Snap 'a structural fact that survives translation'; both are scoped to the shape with the canonical AX-1 sentence.
 v1.15: CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. Four sites; the key-result box no longer calls CC-1 'not a free commitment' (ZP-A calls it a modelling choice). ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). Also CC-1 is 'the modelling commitment CC-1', not 'the structural identification CC-1', at three sites.
 v1.13: Scope "any state change" to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix.
@@ -143,7 +143,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -217,7 +217,8 @@ def build():
     E.append(ccaption(
         'ZP-H constructs four functors from the abstract category C (center) into the four '
         'domain frameworks. Each functor F carries objects and morphisms faithfully, '
-        'preserving the initial object and the forward-only structure.'))
+        'preserving the forward-only structure and the initial object (FB in its stand-in; '
+        'see T-H1).'))
     E.append(sp(6))
 
     # ── The structural floor ───────────────────────────────────────────────────
@@ -298,24 +299,41 @@ def build():
         '<b>FB (p-Adic Topology):</b> The initial object 0 maps to the element 0 ∈ ℚ₂. '
         'Each morphism maps to a discrete jump across a clopen boundary — formalized as '
         'antitone depth in Q₂BallDepth. Composition corresponds to sequential jumps. '
-        'The irreversibility of ZP-B C3 (no path returns to 0 in ℚ₂) is the topological '
-        'realization of AX-G2. FB is a full Lean 4 functor (fb_functor, sorry-free) — '
-        'not a proxy witness.'))
+        'In Lean, FB is a sorry-free functor in two forms: fb_functor lands in Q₂BallDepth, '
+        'an ℕ-indexed stand-in that orders the nested balls around 0 by depth, and fB_functor '
+        'lands in TopCat, the category of all topological spaces, where 0 is the limit of the '
+        'shrinking balls. In the stand-in, AX-G2 holds by antisymmetry: a morphism from depth m '
+        'to depth 0 means m ≤ 0, so m = 0. The irreversibility of ZP-B C3 (no continuous path '
+        'returns to 0 in ℚ₂) is the domain analogue of that fact, proved in ZP-B.'))
     E.append(cbody(
         '<b>FC (Information Theory):</b> The initial object 0 maps to the zero distribution '
         'P = (1, 0). Each morphism maps to an informational transition with '
         'a non-negative cost measured in bits. The fundamental transition costs exactly '
         '1 bit (ZP-C T1b). The informational singularity of ZP-G maps to the diverging '
-        'surprisal of ZP-C T2. FC has a concrete ZPCategory categorical witness '
-        '(NNRealZPCat, ℝ≥0 with ≤) grounded by T1b. The full abstract Lean functor '
-        'for the information space codomain remains future work.'))
+        'surprisal of ZP-C T2. In Lean, FC is a sorry-free functor in two forms: fc_functor '
+        'lands in InfoDepth, an ℕ-indexed stand-in, and fC_functor lands in KleisliCat PMF, '
+        'the Kleisli category of the probability monad.'))
     E.append(cbody(
         '<b>FD (Hilbert Space):</b> The initial object 0 maps to the basis vector e₀. '
         'Each morphism maps to an orthogonal extension — a step to a perpendicular basis '
         'vector. The Binary Snap becomes a right-angle turn in state space. The design '
         'commitment DP-1 (orthogonality represents clopen separation) is inherited here. '
-        'FD has a concrete ZPCategory categorical witness (NNRealZPCat) grounded by T4. '
-        'The full abstract Lean functor for the Hilbert space codomain remains future work.'))
+        'In Lean, FD is a sorry-free functor in two forms: fd_functor lands in HilbDimDepth, '
+        'an ℕ-indexed stand-in, and fD_functor lands in ModuleCat ℂ, the category of '
+        'ℂ-modules.'))
+    E.append(cbody(
+        '<b>Where the two axioms hold.</b> ZP-G assumes both axioms of C. In the targets, '
+        'each one holds in some categories and fails in others. AX-G1 says there is an initial '
+        'object and no terminal object (an object that every object maps into by exactly one '
+        'morphism). The ℕ-indexed '
+        'stand-ins have no terminal object, because depth n always has depth n + 1 above it. '
+        'TopCat, ModuleCat ℂ and KleisliCat PMF each have one: the one-point space, the zero '
+        'module and the one-point type. For FA, a lattice has a terminal element exactly when '
+        'it has a top element, so AX-G1 there needs the optional ZP-A hypothesis HasNoTop; '
+        'ZP-A\'s two-state carriers have a top.AX-G2 says nothing other than 0 maps into 0. It holds wherever '
+        'the category is built from a partial order with a least element, by antisymmetry, as in '
+        'ZP-A\'s semilattice and in the three stand-ins. It fails in ModuleCat ℂ: the zero map '
+        'sends every module into the zero module, including modules that are not zero.'))
 
     E.append(example_box('Real-world analogy — Four instruments, one melody', [
         'Imagine the same musical phrase played on four different instruments: violin, '
@@ -329,9 +347,11 @@ def build():
     # ── T-H1: Universal property preserved ─────────────────────────────────────
     E.append(key_result_box('T-H1: Each Functor Preserves the Initial Object',
         'For each of the four functors, the image of 0 is an initial object in the target '
-        'framework — a universal source from which every other object has a unique morphism. '
-        'The privileged status of 0 is not an artifact of the abstract category: it is '
-        'preserved faithfully in every concrete realization.'))
+        'framework (for FB, in its stand-in) — a universal source from which every other object '
+        'has a unique morphism. '
+        'The privileged status of 0 is not an artifact of the abstract category. The FB '
+        'stand-in is Q₂BallDepth. In TopCat the FB leg fails: there the floor {0} is a '
+        'one-point space, which is terminal and not initial.'))
     E.append(sp(6))
 
     # ── T-H2: Singularity compatibility ────────────────────────────────────────

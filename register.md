@@ -11,7 +11,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-D State Layer | v1.15 | ZP-D_State_Layer.pdf | v1.13 | N/— | formal:923468a5 comp:32064117 |
 | ZP-E Bridge Document | v3.50 | ZP-E_Bridge_Document.pdf | v1.23 | Y/Y | formal:b4d794da comp:0bad3417 |
 | ZP-G Category Theory | v1.21 | ZP-G_Category_Theory.pdf | v1.14 | N/— | formal:ce6faf36 comp:c581bda6 |
-| ZP-H Categorical Bridge | v1.24 | ZP-H_Categorical_Bridge.pdf | v1.16 | N/— | formal:431da03e comp:c89777ab |
+| ZP-H Categorical Bridge | v1.24 | ZP-H_Categorical_Bridge.pdf | v1.17 | N/— | formal:431da03e comp:413a0a48 |
 | ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:5c0bb985 |
 | ZP-I Inside Zero | v1.26 | ZP-I_Inside_Zero.pdf | v1.32 | N/— | formal:e2ed66c0 comp:fdeb337f |
 | ZP-J Self-Reference | v2.9 | ZP-J_Self_Reference.pdf | v1.33 | N/— | formal:83f78357 comp:7cfd99e4 |
@@ -28,7 +28,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-Q The Frame-Change | v1.11 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:dcf69119 |
 | Zero Paradox Foreword | v2.32 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:54d4c261 |
 | ZP Philosophical Question | v1.21 | ZP_Philosophical_Question.pdf | N/A | N/A | formal:ed65d90b |
-| ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:8e5875b4 |
+| ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:636cf191 |
 | ZP Choice-Free Core Addendum | v1.10 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:1834c1f5 |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.

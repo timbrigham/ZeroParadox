@@ -191,8 +191,9 @@ def build():
         [
             ['Rocq (Coq)',    'No',  'Not used. No Coq terms, tactics, or proof scripts were written.'],
             ['Lean 4',        'Yes', 'ZP-A: full algebraic verification — NatSLat concrete instance, #print axioms clean. '
-                                     'ZP-B/C/D: concrete proxy witness (NNRealZPCat); domain theorems (C3, T1b, T4) close OQ-G3. '
-                                     'Full abstract functor objects for ZP-B/C/D remain future work. '
+                                     'ZP-B/C/D: sorry-free functors into ℕ-indexed stand-in categories and into the standard '
+                                     'Mathlib categories TopCat, KleisliCat PMF and ModuleCat ℂ, which close OQ-G3; '
+                                     'domain theorems (C3, T1b, T4) ground the snap in each. '
                                      'ZP-E/G/H: sorry-free proofs for key results. Source on illustrated branch. '
                                      'Note: CC-2 (&#8869; = {&#8869;}, ZF+AFA) is a metatheoretic commitment; '
                                      'Lean\'s bot is a structural proxy, not a Quine atom in Lean\'s type theory.'],
@@ -215,9 +216,10 @@ def build():
         'Formal verification in Lean 4 operates at two levels. (1) Full algebraic verification: '
         'ZP-A\'s algebraic layer (A1-A4 and all derived results) is fully machine-checked via NatSLat; '
         '#print axioms confirms the proofs depend only on the ZPSemilattice typeclass fields and '
-        'Lean\'s kernel axioms. (2) Proxy-level verification: for ZP-B, ZP-C, and ZP-D, the '
-        'NNRealZPCat concrete witness closes OQ-G3 and grounds the domain theorems (C3, T1b, T4). '
-        'Full abstract Lean functor objects for these three domains remain future work. '
+        'Lean\'s kernel axioms. (2) Functor-level verification: for ZP-B, ZP-C, and ZP-D, '
+        'sorry-free Lean functors land in ℕ-indexed stand-in categories and in the standard Mathlib '
+        'categories TopCat, KleisliCat PMF and ModuleCat ℂ, which close OQ-G3; the domain theorems '
+        '(C3, T1b, T4) ground the snap in each. '
         'Neither level formalizes CC-2 (&#8869; = {&#8869;}). CC-2 is a metatheoretic commitment '
         'over ZF + AFA — Lean\'s type theory (CIC) is well-founded by construction and cannot '
         'realize a Quine atom as a Lean term. The Lean bot is the structural proxy for the algebraic '
