@@ -630,7 +630,7 @@ def _judge_attest(res, tree, run_id, call_id):
     result = res["result"]
     if not isinstance(result, dict):
         return ATTEST_MALFORMED, "the result is not an object"
-    if result.get("isError"):
+    if "isError" in result and result["isError"] is not False:
         content = result.get("content") or [{}]
         text = content[0].get("text") if isinstance(content[0], dict) else content[0]
         return ATTEST_REFUSED, "the server answered isError: %s" % (text,)
@@ -2006,7 +2006,9 @@ def _attest_answer(attested=True, tree=_ECHO, ok=True, why=None, is_error=False,
                 sc[key] = asked
             elif val is not _ABSENT:
                 sc[key] = val
-        result = {"content": [{"type": "text", "text": json.dumps(sc)}], "isError": is_error}
+        result = {"content": [{"type": "text", "text": json.dumps(sc)}]}
+        if is_error is not _ABSENT:
+            result["isError"] = is_error
         if structured:
             result["structuredContent"] = sc
         resp = {"jsonrpc": "2.0", "id": call_id if rpc_id is _ECHO else rpc_id, "result": result}
@@ -2244,6 +2246,94 @@ def _ctl_attest_rpc_id(m):
     r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(rpc_id="replayed"))
     return (_full(m, r, ATTEST_RPC_ID),
             "a yes answering some other request id -> " + _say(r, ATTEST_RPC_ID))
+
+
+# ⚠ The eight below close the 2026-10-04 `/rely` round 2 (ORDINARY-1, now a CLASS: a fail-closed
+#   protection in the attest transport/judge with no control that fails when it is removed; and
+#   ORDINARY-2, `isError` falsy-but-not-False). `_sweep_attest` below is the class's detector.
+
+def _ctl_attest_http_error(m):
+    import io as _io
+    import urllib.error
+    e = urllib.error.HTTPError("http://ctl/mcp", 500, "ctl", {}, _io.BytesIO(b""))
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=e)
+    return _full(m, r, ATTEST_REFUSED), "HTTP 500 from the transport -> " + _say(r, ATTEST_REFUSED)
+
+
+def _ctl_attest_urlerror_timeout(m):
+    import socket
+    import urllib.error
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         raises=urllib.error.URLError(socket.timeout("timed out")))
+    return (_full(m, r, ATTEST_TIMEOUT),
+            "URLError wrapping a timeout -> " + _say(r, ATTEST_TIMEOUT))
+
+
+def _ctl_attest_bare_oserror(m):
+    r1 = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                          raises=ConnectionResetError(10054, "ctl: reset"))
+    r2 = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=OSError(5, "ctl: io"))
+    return (_full(m, r1, ATTEST_UNREACHABLE) and _full(m, r2, ATTEST_UNREACHABLE),
+            "bare ConnectionResetError -> " + _say(r1, ATTEST_UNREACHABLE)
+            + "; bare OSError -> " + _say(r2, ATTEST_UNREACHABLE))
+
+
+def _ctl_attest_non_dict(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=lambda run_id, t: [1])
+    return _full(m, r, ATTEST_MALFORMED), "a JSON array, not an object -> " + _say(r, ATTEST_MALFORMED)
+
+
+def _ctl_attest_no_result(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         answer=lambda run_id, t: {"jsonrpc": "2.0", "id": _CTL_ID})
+    return _full(m, r, ATTEST_MALFORMED), "no `result`, no `error` -> " + _say(r, ATTEST_MALFORMED)
+
+
+def _ctl_attest_result_not_object(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         answer=lambda run_id, t: {"jsonrpc": "2.0", "id": _CTL_ID, "result": []})
+    return _full(m, r, ATTEST_MALFORMED), "`result` is a list -> " + _say(r, ATTEST_MALFORMED)
+
+
+def _ctl_attest_is_error_falsy(m):
+    """Only an ABSENT `isError` or the boolean False may pass; None, 0, "", [] and {} are refused."""
+    outs = []
+    for v in (None, 0, "", [], {}):
+        r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(is_error=v))
+        outs.append((v, _full(m, r, ATTEST_REFUSED)))
+    r_absent = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(is_error=_ABSENT))
+    absent_skips = r_absent["launched"] == [] and "SKIPPED pre-commit" in r_absent["out"]
+    ok = all(o for _v, o in outs) and absent_skips
+    return ok, "isError %s refused; isError absent still skips=%s" % (
+        ", ".join("%r:%s" % (v, "yes" if o else "NO") for v, o in outs), absent_skips)
+
+
+_PROXY_VARS = ("HTTP_PROXY", "http_proxy", "HTTPS_PROXY", "https_proxy", "ALL_PROXY", "all_proxy",
+               "NO_PROXY", "no_proxy")
+
+
+def _ctl_attest_proxy_env(m):
+    """`/rely` round 2's forge by a second variable: HTTP_PROXY / ALL_PROXY name a loopback stub that
+    says yes. The REAL transport, its seam aimed at a dead port, must not route through the proxy:
+    every leg runs, UNREACHABLE, and the stub sees nothing. NO_PROXY is cleared so the bypass list
+    cannot mask a removed `ProxyHandler({})`."""
+    saved = {k: os.environ.get(k) for k in _PROXY_VARS}
+    try:
+        with _StubGitRobot() as s:
+            for k in _PROXY_VARS:
+                os.environ.pop(k, None)
+            for k in ("HTTP_PROXY", "http_proxy", "ALL_PROXY", "all_proxy"):
+                os.environ[k] = s.url.rsplit("/mcp", 1)[0]
+            r = _simulate_commit(m, env={ENV_RUN_ID: "forged-by-anyone"}, real=True, url=_dead_url())
+            calls = list(s.calls)
+    finally:
+        for k, v in saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+    return (_full(m, r, ATTEST_UNREACHABLE) and calls == [],
+            "HTTP_PROXY/ALL_PROXY=<yes stub> -> " + _say(r, ATTEST_UNREACHABLE) + ", stub saw %s" % calls)
 
 
 def _ctl_attest_index_tree(m):
@@ -2513,7 +2603,7 @@ _CONTROLS = [
      '    sc = result.get("structuredContent") or '
      '__import__("json").loads(result["content"][0]["text"])'),
     ("pc  isError:true runs in full", _ctl_attest_is_error,
-     '    if result.get("isError"):',
+     '    if "isError" in result and result["isError"] is not False:',
      '    if False:'),
     ("pc  ok:false runs in full", _ctl_attest_not_ok,
      '    if sc.get("ok") is not True:',
@@ -2548,7 +2638,7 @@ _CONTROLS = [
      '    if sc.get("ok") is not True:',
      '    if not sc.get("ok"):'),
     ("pc  (iv) isError any truthy value runs in full", _ctl_attest_is_error_truthy,
-     '    if result.get("isError"):',
+     '    if "isError" in result and result["isError"] is not False:',
      '    if result.get("isError") is True:'),
     ("pc  (v) production timeout constant <= 10s", _ctl_attest_timeout_constant,
      "ATTEST_TIMEOUT_S = 4.0",
@@ -2562,7 +2652,162 @@ _CONTROLS = [
     ("pc  (viii) response id mismatch runs in full", _ctl_attest_rpc_id,
      "    if res.get(\"id\") != call_id:",
      "    if False:"),
+    # ⚠ `/rely` 2026-10-04 round 2: ORDINARY-1's seven uncontrolled mutants, verbatim from the
+    #   reviewer's probe_mut.py, then ORDINARY-2 (isError falsy-but-not-False).
+    ("pc  (ix) HTTP_PROXY/ALL_PROXY choose nothing", _ctl_attest_proxy_env,
+     "    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))",
+     "    opener = urllib.request.build_opener()"),
+    ("pc  (x) an HTTPError runs in full", _ctl_attest_http_error,
+     "    if isinstance(e, urllib.error.HTTPError):\n        return ATTEST_REFUSED",
+     "    if isinstance(e, urllib.error.HTTPError):\n        return ATTEST_YES"),
+    ("pc  (xi) a URLError wrapping a timeout runs in full", _ctl_attest_urlerror_timeout,
+     "        if isinstance(e.reason, (socket.timeout, TimeoutError)):\n            return ATTEST_TIMEOUT",
+     "        if isinstance(e.reason, (socket.timeout, TimeoutError)):\n            return ATTEST_YES"),
+    ("pc  (xii) a bare OSError runs in full", _ctl_attest_bare_oserror,
+     "    if isinstance(e, (ConnectionError, OSError)):\n        return ATTEST_UNREACHABLE",
+     "    if isinstance(e, (ConnectionError, OSError)):\n        return ATTEST_YES"),
+    ("pc  (xiii) a non-object response runs in full", _ctl_attest_non_dict,
+     "    if not isinstance(res, dict):\n        return ATTEST_MALFORMED",
+     "    if not isinstance(res, dict):\n        return ATTEST_YES"),
+    ("pc  (xiv) a response with no result runs in full", _ctl_attest_no_result,
+     '        return ATTEST_MALFORMED, "the response carries no result"',
+     '        return ATTEST_YES, "the response carries no result"'),
+    ("pc  (xv) a non-object result runs in full", _ctl_attest_result_not_object,
+     '        return ATTEST_MALFORMED, "the result is not an object"',
+     '        return ATTEST_YES, "the result is not an object"'),
+    ("pc  (xvi) isError None/0/\"\"/[]/{} runs in full", _ctl_attest_is_error_falsy,
+     '    if "isError" in result and result["isError"] is not False:',
+     '    if result.get("isError"):'),
 ]
+
+
+# ------------------------------------------------------------------ class detector (DC: uncontrolled
+# fail-closed protection in the attest path). Its verb is RUN: it mutates every protection and asks
+# whether ANY `pc` control fails, so a protection added later without a control is caught here even
+# though no row above names it.
+#
+#   GENERIC  every `return ATTEST_<anything but YES>` inside the functions in `_SWEEP_FUNCS` is
+#            turned, one at a time, into `return ATTEST_YES`. A new fail-closed return lands in the
+#            sweep with no edit to this table.
+#   EXPLICIT protections that are not a non-yes return (a handler, a keyword argument, a stricter
+#            comparison), as a table; a NEW protection of that shape still needs a row here, which
+#            is the sweep's stated limit.
+_SWEEP_FUNCS = ("_attest_url", "_attest_call", "_classify_attest_exception", "_judge_attest",
+                "consult_attest")
+_SWEEP_EXPLICIT = [
+    ("ProxyHandler({}) removed",
+     "    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))",
+     "    opener = urllib.request.build_opener()"),
+    ("request timeout dropped",
+     "        with opener.open(req, timeout=timeout) as resp:",
+     "        with opener.open(req) as resp:"),
+    ("production timeout constant raised",
+     "ATTEST_TIMEOUT_S = 4.0", "ATTEST_TIMEOUT_S = 600.0"),
+    ("answerer read from the environment",
+     "    return _ATTEST_URL_SEAM or ATTEST_URL",
+     '    return os.environ.get("GITROBOT_URL") or os.environ.get("HTTP_PROXY") '
+     'or _ATTEST_URL_SEAM or ATTEST_URL'),
+    ("transport exception classified as a yes",
+     "        return _classify_attest_exception(e), run_id, tree,",
+     "        return ATTEST_YES, run_id, tree,"),
+    ("isError: falsy accepted",
+     '    if "isError" in result and result["isError"] is not False:',
+     '    if result.get("isError"):'),
+    ("isError: only True refused",
+     '    if "isError" in result and result["isError"] is not False:',
+     '    if result.get("isError") is True:'),
+    ("ok: truthy accepted",
+     '    if sc.get("ok") is not True:', '    if not sc.get("ok"):'),
+    ("attested: truthy accepted",
+     '    if sc.get("attested") is not True:', '    if not sc.get("attested"):'),
+    ("tree echo: absent accepted",
+     '    if sc.get("tree") != tree:', '    if sc.get("tree") is not None and sc.get("tree") != tree:'),
+    ("run echo: absent accepted",
+     '    if sc.get("run_id") != run_id:',
+     '    if sc.get("run_id") is not None and sc.get("run_id") != run_id:'),
+    ("error beside a result accepted",
+     '    if "error" in res:\n        return ATTEST_REFUSED',
+     '    if "error" in res and "result" not in res:\n        return ATTEST_REFUSED'),
+]
+
+
+def _sweep_mutants():
+    """[(name, mutated source or None, why)] — every protection mutant the class detector runs."""
+    import ast
+    import re
+    src_path = os.path.abspath(__file__)
+    if src_path.endswith(".pyc"):
+        src_path = src_path[:-1]
+    with open(src_path, encoding="utf-8") as fh:
+        src = fh.read()
+    head, sep, tail = src.partition(_CONTROLS_MARK)
+    out = []
+    spans = {n.name: (n.lineno, n.end_lineno) for n in ast.parse(head).body
+             if isinstance(n, ast.FunctionDef) and n.name in _SWEEP_FUNCS}
+    for fn in _SWEEP_FUNCS:
+        if fn not in spans:
+            out.append(("%s: function not found" % fn, None, "SWEEP SCOPE MISSING"))
+    lines = head.split("\n")
+    pat = re.compile(r"^(\s*return\s+)(ATTEST_(?!YES\b)[A-Z_]+)\b")
+    for fn, (lo, hi) in sorted(spans.items(), key=lambda kv: kv[1]):
+        for i in range(lo - 1, hi):
+            mt = pat.match(lines[i])
+            if mt:
+                new = lines[:i] + [pat.sub(r"\1ATTEST_YES", lines[i], count=1)] + lines[i + 1:]
+                out.append(("%s:%d %s -> ATTEST_YES" % (fn, i + 1, mt.group(2)),
+                            "\n".join(new) + sep + tail, None))
+    for name, anchor, repl in _SWEEP_EXPLICIT:
+        if head.count(anchor) != 1:
+            out.append((name, None, "MUTATION DID NOT APPLY — anchor found %d time(s)"
+                        % head.count(anchor)))
+        else:
+            out.append((name, head.replace(anchor, repl, 1) + sep + tail, None))
+    return out
+
+
+_SLOW = ("_real_", "index_tree", "env_forge", "proxy_env")   # loopback servers, scratch repos
+
+
+def _pc_controls(exclude=()):
+    """The distinct `pc` controls, cheap stubbed ones first, so a sweep stops early."""
+    out = []
+    for label, ctl, _a, _r in _CONTROLS:
+        if label.startswith("pc") and ctl not in out and ctl not in exclude:
+            out.append(ctl)
+    return sorted(out, key=lambda c: any(s in c.__name__ for s in _SLOW))
+
+
+def _sweep_attest(controls=None, verbose=True, only=None):
+    """Run every protection mutant (or those whose name contains `only`) against the `pc`
+    controls. Returns (mutants, survivors): a survivor is a mutant on which NO control failed (or
+    one that did not apply). A control that raises on a mutant is not counted as catching it, as
+    in `selftest`."""
+    if controls is None:
+        controls = _pc_controls()
+    mutants = [mu for mu in _sweep_mutants() if only is None or only in mu[0]]
+    survivors = []
+    for name, msrc, err in mutants:
+        if msrc is None:
+            survivors.append((name, err))
+            continue
+        mod, merr = _mutant_from_source(msrc)
+        if mod is None:
+            survivors.append((name, merr))
+            continue
+        caught = None
+        for ctl in controls:
+            try:
+                ok, _why = ctl(mod)
+            except Exception:                               # noqa: BLE001 — a crash is not a catch
+                continue
+            if not ok:
+                caught = ctl.__name__
+                break
+        if caught is None:
+            survivors.append((name, "no pc control failed"))
+        if verbose:
+            print("       sweep %-58s %s" % (name, ("caught by " + caught) if caught else "SURVIVED"))
+    return len(mutants), survivors
 
 
 def _mutant(anchor, repl):
@@ -2584,6 +2829,15 @@ def _mutant(anchor, repl):
     mutated = head.replace(anchor, repl, 1) + sep + tail
     if mutated == src:
         return None, "MUTATION DID NOT APPLY — text unchanged"
+    return _mutant_from_source(mutated)
+
+
+def _mutant_from_source(mutated):
+    """(module, None) compiled from a mutated copy of this file's source, or (None, why)."""
+    import types
+    src_path = os.path.abspath(__file__)
+    if src_path.endswith(".pyc"):
+        src_path = src_path[:-1]
     try:
         code = compile(mutated, src_path + ".mutant", "exec")
     except SyntaxError as e:
@@ -2618,6 +2872,24 @@ def selftest():
         bad += 0 if good else 1
         print("  %-4s %-46s live: %s" % ("ok" if good else "FAIL", label, why_live))
         print("       %-46s mutant fired: %s — %s" % ("", "yes" if not ok_mut else "NO", why_mut))
+    # The class detector: every attest-path protection mutant must be caught by SOME pc control.
+    print("\nclass detector: attest-path protection sweep (each mutant MUST be caught by a pc control)")
+    n_mut, survivors = _sweep_attest()
+    total += 1
+    sweep_ok = n_mut > 0 and not survivors
+    bad += 0 if sweep_ok else 1
+    print("  %-4s sweep: %d mutant(s), %d survived%s" % (
+        "ok" if sweep_ok else "FAIL", n_mut, len(survivors),
+        "".join("\n         SURVIVOR %s — %s" % s for s in survivors)))
+    # ...and the detector's own control: with the one control for the response-id check withheld,
+    # the sweep MUST report that check's mutant as a survivor. A sweep that cannot fail is no detector.
+    n2, surv2 = _sweep_attest(controls=_pc_controls(exclude=(_ctl_attest_rpc_id,)), verbose=False,
+                              only="ATTEST_RPC_ID")
+    total += 1
+    det_ok = n2 == 1 and any("RPC_ID" in name for name, _w in surv2)
+    bad += 0 if det_ok else 1
+    print("  %-4s detector control: _ctl_attest_rpc_id withheld -> survivors %s"
+          % ("ok" if det_ok else "FAIL", [name for name, _w in surv2]))
     print("\nhooks advisory-skip selftest: %s (%d/%d control(s))"
           % ("PASS" if not bad else "FAIL", total - bad, total))
     return 1 if bad else 0
