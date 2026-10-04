@@ -1,4 +1,5 @@
 import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Topology.MetricSpace.Ultra.Basic
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Mathlib.Topology.Connected.TotallyDisconnected
@@ -221,20 +222,14 @@ for any 0 < s < d(a,b), giving a clopen partition. -/
 theorem t5_totallyDisconnected : TotallyDisconnectedSpace Q₂ := inferInstance
 
 /-! ## Corollary C3 — The Snap is Topologically Irreversible
-
-No continuous path γ: [0,1] → Q₂ can go from any x ≠ 0 back to 0.
-Proof: γ([0,1]) is a continuous image of the connected set [0,1] in the totally
-disconnected Q₂, hence a singleton; so γ(0) = γ(1), contradicting x ≠ 0.
-
-Note on the role of `(0 : Q₂)`: unlike the `OntologicalStates` refactor (where
-`Fin 2` was replaced by a free inductive because ⊥ = ℕ's 0 was a purely
-conventional label), the use of `0 : Q₂` here is structurally motivated and
-deliberately retained. Q₂'s additive identity is the **unique limit point** of
-the nested clopen ball hierarchy B(0, 2⁻ⁿ) ↘ {0}: no other point in Q₂ sits at
-the base of an infinite convergent nesting of clopen sets. This is what gives C3
-its content — the irreversibility is a theorem of Q₂'s ultrametric geometry, not
-a labelling convention. The identification ⊥ ↦ (0 : Q₂) is warranted by that
-metric structure (T2, T5), not by 0 being the first natural number. -/
+No continuous path γ: [0,1] → Q₂ goes from x ≠ 0 to 0: γ([0,1]) is connected in the totally
+disconnected Q₂, hence a singleton. The proof uses no property of 0, and Q₂ is topologically
+homogeneous (the `example`s after `c3_irreversible`). So topology does not single out `(0 : Q₂)`
+as the occupant of ZP-A's ⊥ role: it is the additive identity (`zero_add`) and the only point of
+valuation ⊤ (`padic_addVal_eq_top_iff`, `ZeroParadox/Valuation/ValuationAFA_Padic.lean`). Whether
+that makes 0 least or greatest depends on the order named; the `example`s after the C3 ones fix it
+for the norm preorder, ascending valuation, and divisibility on ℤ_[2]. `snapEmbed`
+(`ZeroParadox/Ordinal/Incompleteness.lean`) sends c₀, ⊥ of MachinePhase's ZP-A semilattice, to 1. -/
 
 /-- C3: There is no continuous path from x ≠ 0 to 0 in Q₂. -/
 theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :
@@ -250,6 +245,40 @@ theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :
     hsingl (Set.mem_range_self _) (Set.mem_range_self _)
   rw [hγ0, hγ1] at heq
   exact hx heq
+
+-- `Statement:` every point `x` of Q₂, not only 0, is the sole point under its own nested balls
+-- `B(x, 2⁻ⁿ)`, and those balls are clopen.
+example (x : Q₂) : (⋂ n : ℕ, Metric.ball x ((1 / 2 : ℝ) ^ n)) = {x} := by
+  ext y
+  simp only [Set.mem_iInter, Metric.mem_ball, Set.mem_singleton_iff]
+  refine ⟨fun h => ?_, fun hy n => by simp [hy]⟩
+  by_contra hne
+  obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one (dist_pos.mpr hne) (by norm_num : (1 / 2 : ℝ) < 1)
+  exact absurd (h n) (not_lt.mpr hn.le)
+example (x : Q₂) (r : ℝ) : IsClopen (Metric.ball x r) := IsUltrametricDist.isClopen_ball x r
+-- `Statement:` translation is an isometry of Q₂.
+example (a x y : Q₂) : dist (x - a) (y - a) = dist x y := dist_sub_right x y a
+-- `Statement:` `c3_irreversible` with any two distinct endpoints in place of `x` and `0`.
+example (x y : Q₂) (hxy : x ≠ y) :
+    ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂), γ ⟨0, by norm_num⟩ = x ∧ γ ⟨1, by norm_num⟩ = y := by
+  rintro ⟨γ, hγ0, hγ1⟩
+  haveI : PreconnectedSpace (Set.Icc (0 : ℝ) 1) := Subtype.preconnectedSpace isPreconnected_Icc
+  exact hxy (hγ0 ▸ hγ1 ▸ isTotallyDisconnected_of_totallyDisconnectedSpace Set.univ
+    (Set.range _) (Set.subset_univ _) (isPreconnected_range γ.continuous)
+    (Set.mem_range_self _) (Set.mem_range_self _))
+
+-- `Statement:` 0 is the unique least point of the norm preorder, on ℚ_[2] and on ℤ_[2].
+example (x : ℚ_[2]) : ‖(0 : ℚ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ ≤ ‖(0 : ℚ_[2])‖ → x = 0) :=
+  ⟨by simp, fun h => by simpa using h⟩
+example (x : ℤ_[2]) : ‖(0 : ℤ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ ≤ ‖(0 : ℤ_[2])‖ → x = 0) :=
+  ⟨by simp, fun h => by simpa using h⟩
+-- `Statement:` 0 is the unique greatest point under valuation read ascending, on ℚ_[2].
+example (x : ℚ_[2]) : Padic.addValuation x ≤ Padic.addValuation (0 : ℚ_[2]) ∧
+    (Padic.addValuation (0 : ℚ_[2]) ≤ Padic.addValuation x → x = 0) :=
+  ⟨by simp, fun h => by simpa using h⟩
+-- `Statement:` on ℤ_[2] under divisibility, 1 is least and 0 is greatest; 1 has the greatest norm.
+example (x : ℤ_[2]) : (1 : ℤ_[2]) ∣ x ∧ x ∣ 0 ∧ ‖x‖ ≤ ‖(1 : ℤ_[2])‖ :=
+  ⟨one_dvd x, dvd_zero x, by simpa using x.norm_le_one⟩
 
 /-! ## Classification Note: Non-Archimedean Fields and the Snap
 

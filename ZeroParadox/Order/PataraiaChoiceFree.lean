@@ -103,6 +103,14 @@ theorem pataraia_least_prefixedPoint {α : Type*} [CompletePartialOrder α] (f :
     (fun _ _ _ _ => trivial)
   ⟨z, hz⟩
 
+-- `Statement:` the statement of `dcpo_exists_least_fixedPoint`
+-- (`ZeroParadox/Order/PataraiaFromBourbakiWitt.lean`), a fixed point below every fixed point, in one
+-- line from `pataraia_least_prefixedPoint`.
+example {α : Type*} [CompletePartialOrder α] (f : α →o α) :
+    ∃ y, f y = y ∧ ∀ p, f p = p → y ≤ p :=
+  let ⟨y, hfy, hy⟩ := pataraia_least_prefixedPoint f
+  ⟨y, hfy, fun p hp => hy p (le_of_eq hp)⟩
+
 -- The fixed point below every pre-fixed point instantiates the corpus schema from `⊥`.
 example {α : Type*} [CompletePartialOrder α] (f : α →o α) :
     ∃ y, IsLeastFixedPointFrom (· ≤ ·) (⇑f) ⊥ y :=
