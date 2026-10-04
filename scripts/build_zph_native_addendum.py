@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.6 | September 2026
+Version 1.7 | October 2026
 v1.6: MC-1 PREMISE (claim-review gate round 4 bedrock, Tim confirmed, 2026-09-15): both seam_unique_among_named pointers now carry the theorem's premise, reading 'for the named bottoms, in a lattice with no top'; its ZP-A conjunct binds HasNoTop.
 v1.5: ADVERSARY GATE ROUND 3 (bedrock, D1): the MC-1 section body still said the four bottoms being numerically one object 'is a modeling commitment' and 'an interpretive commitment', contradicting the retirement stated on page 1; it now states the same retirement, with the property clause for the named bottoms.
 v1.4: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): MC-1's retired identity is stated as: object equality across categories does not typecheck and is not invariant under equivalence; what separates the members is proved property by property (seam_unique_among_named, for the named bottoms). It replaces 'neither x = y nor x != y is well-formed across categories; the members differ by property'.
@@ -25,7 +25,7 @@ Reads after ZP-H Categorical Bridge.
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.7'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -115,8 +115,11 @@ def build():
         'The native categories are not built for the purpose, and that is the point '
         '&#8212; they also do not satisfy the ZP categorical axioms. A ZPCategory (ZP-G) '
         'requires that no terminal object exist (AX-G1): the snap has nowhere higher to go. '
-        'TopCat and ModuleCat &#8450; both <i>have</i> a terminal object (the one-point '
-        'space; the zero module). So the snap floor cannot be "the initial object of a '
+        'TopCat, ModuleCat &#8450; and the Kleisli category all <i>have</i> a terminal object (the '
+        'one-point space; the zero module; the one-point type, on which the only distribution is the '
+        'point mass &#8212; the example after kleisli_bottom_not_terminal in '
+        'ZeroParadox/Category/TreeSeam.lean). AX-G1 holds only in the depth-proxy categories, where the '
+        'depth index has no maximum. So the snap floor cannot be "the initial object of a '
         'ZPCategory" here. The honest statement is the one each category supports natively: '
         'in TopCat the floor is the limit of the shrinking system, and in ModuleCat &#8450; '
         'and the Kleisli category it is the genuine initial object. Each is stated below.'))
