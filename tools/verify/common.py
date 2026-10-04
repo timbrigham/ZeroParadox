@@ -569,8 +569,65 @@ def differs_from(ref='HEAD'):
     return {p.strip().replace('\\', '/') for p in out.splitlines() if p.strip()}
 
 
+# ⚠⚠ BASIS-EMPTY-1. The hook runs eleven legs over ONE checkout, and each leg used to run its own
+# `write-tree`. A leg that lost `.git/index.lock` got EMPTY stdout, never checked the return code, and
+# sent `basis.value = ""`; only the ledger's refusal caught it, as an exit-2 leg nobody could explain.
+# Two changes, both needed: the hook parent resolves the tree ONCE and pins it here for every leg, so
+# legs never contend and cannot disagree; and an unresolved basis RAISES, so it is never sent.
+INDEX_TREE_ENV = 'ZPLEDGER_INDEX_TREE'
+_SHA40 = re.compile(r'^[0-9a-f]{40}$')
+_BASIS_ATTEMPTS = 5
+_BASIS_BACKOFF = 0.15          # seconds, doubled per retry: 0.15 + 0.3 + 0.6 + 1.2 at most
+
+
+class BasisUnresolved(RuntimeError):
+    """No basis could be resolved. A DIFFERENT OUTCOME, not a different message: a caller that
+    records must refuse to send, and `emit_verdict` turns this into exit 2 (`R-ZERONULL`)."""
+
+
+def _git_write_tree():
+    """`(returncode, stdout, stderr)` of one `write-tree`. A seam, so controls can make it fail."""
+    r = subprocess.run(['git', 'write-tree'], cwd=str(REPO), capture_output=True,
+                       text=True, encoding='utf-8', errors='replace')
+    return r.returncode, r.stdout or '', r.stderr or ''
+
+
+def resolve_index_tree(attempts=None, backoff=None):
+    """`(tree, None)` or `(None, why)`. Retries a failed or malformed `write-tree` with backoff,
+    because the observed failure is lock contention and is transient."""
+    import time
+    attempts = _BASIS_ATTEMPTS if attempts is None else attempts
+    delay = _BASIS_BACKOFF if backoff is None else backoff
+    why = 'write-tree never ran'
+    for i in range(max(1, attempts)):
+        rc, out, err = _git_write_tree()
+        tree = out.strip()
+        if rc == 0 and _SHA40.match(tree):
+            return tree, None
+        why = 'write-tree exit %s, stdout %r, stderr %r' % (rc, tree[:60], err.strip()[:200])
+        if i + 1 < attempts:
+            time.sleep(delay)
+            delay *= 2
+    return None, '%s (after %d attempt(s))' % (why, max(1, attempts))
+
+
+def pin_index_tree():
+    """Resolve the INDEX tree once and pin it in the environment every leg inherits.
+
+    Returns `(tree, None)` or `(None, why)`. ⚠ ASSIGNMENT, AND A FAILURE CLEARS THE PIN: a value
+    inherited from the caller describes some other index, so it must never survive into the legs.
+    Unpinned legs resolve for themselves and fail loud (exit 2) if they cannot."""
+    tree, why = resolve_index_tree()
+    if tree:
+        os.environ[INDEX_TREE_ENV] = tree
+    else:
+        os.environ.pop(INDEX_TREE_ENV, None)
+    return tree, why
+
+
 def ledger_basis(ref='HEAD'):
-    """The `basis` block for a record: a resolved ref, never a symbolic name.
+    """The `basis` block for a record: a resolved ref, never a symbolic name. RAISES
+    `BasisUnresolved` rather than returning an empty or malformed value.
 
     ⚠ `kind` is one of ('range', 'ref', 'scope', 'tree') — the ledger rejects anything else, which
     is how `'index'` was caught on the first wiring attempt.
@@ -578,15 +635,29 @@ def ledger_basis(ref='HEAD'):
     ⚠ INDEX MODE RESOLVES TO THE TREE THE COMMIT WILL CARRY. `write-tree` turns the index into a
     real tree object, which is exactly what the pending commit will point at — so the basis names
     the content being committed rather than the parent it is being committed onto. It writes an
-    object and changes no ref, so it is safe to run before a commit."""
+    object and changes no ref, so it is safe to run before a commit. When the parent pinned the tree
+    (`INDEX_TREE_ENV`) that value is used, so every leg of one run names the SAME basis;
+    `emit_verdict` checks that the pinned tree carries the blobs being recorded."""
     if ref == INDEX:
-        tree = subprocess.run(['git', 'write-tree'], cwd=str(REPO), capture_output=True,
-                              text=True, encoding='utf-8', errors='replace').stdout.strip()
+        pinned = os.environ.get(INDEX_TREE_ENV)
+        if pinned:
+            if not _SHA40.match(pinned):
+                raise BasisUnresolved('basis unresolved (%s=%r is not a tree id)'
+                                      % (INDEX_TREE_ENV, pinned[:60]))
+            tree = pinned
+        else:
+            tree, why = resolve_index_tree()
+            if tree is None:
+                raise BasisUnresolved('basis unresolved (%s)' % why)
         # `resolved_from` is V1's enum ('explicit' | 'upstream' | 'FALLBACK'), not free text — it
         # records HOW the basis was determined, and this one was asked for by name.
         return {'kind': 'tree', 'resolved_from': 'explicit', 'value': tree}
-    sha = subprocess.run(['git', 'rev-parse', ref], cwd=str(REPO), capture_output=True,
-                         text=True, encoding='utf-8', errors='replace').stdout.strip()
+    r = subprocess.run(['git', 'rev-parse', ref], cwd=str(REPO), capture_output=True,
+                       text=True, encoding='utf-8', errors='replace')
+    sha = (r.stdout or '').strip()
+    if r.returncode != 0 or not _SHA40.match(sha):
+        raise BasisUnresolved('basis unresolved (rev-parse %s exit %s, stdout %r, stderr %r)'
+                              % (ref, r.returncode, sha[:60], (r.stderr or '').strip()[:200]))
     return {'kind': 'ref', 'resolved_from': 'explicit', 'value': sha}
 
 
@@ -871,8 +942,26 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     # a verdict produced under a different `common.py` was produced by different code and should not
     # inherit the old one's key. The cost is real: editing this file stales EVERY mechanical step at
     # once. That is the honest bill, and it is why this file should change rarely.
+    # ⚠⚠ BASIS-EMPTY-1: AN UNRESOLVED BASIS IS NEVER SENT. It used to reach the ledger as "" and
+    # come back refused; now it stops here, as exit 2 with the cause named.
+    try:
+        basis = ledger_basis(ref)
+    except BasisUnresolved as e:
+        print('UNDECIDED: %s ran but its %s verdict was NOT SENT: %s' % (step, verdict, e))
+        return 2
+    # ⚠ A tree basis must CARRY the bytes recorded under it. A pin inherited from a parent that
+    # read a different index (or an index restaged after `ledger_subjects`) would otherwise label
+    # these blobs with a tree that does not contain them. One `ls-tree`, no index lock.
+    if basis['kind'] == 'tree':
+        held = ref_blobs(basis['value'])
+        off = [s['path'] for s in subjects if held.get(s['path']) != s['git_blob_id']]
+        if off:
+            print('UNDECIDED: %s ran but its %s verdict was NOT SENT: basis tree %s does not carry '
+                  '%d recorded blob(s), e.g. %s' % (step, verdict, basis['value'][:12], len(off),
+                                                    ', '.join(off[:3])))
+            return 2
     rid = record.emit(step=step, tier=tier, verdict=verdict, subjects=subjects,
-                      basis=ledger_basis(ref), reason=why, failing=bad,
+                      basis=basis, reason=why, failing=bad,
                       evidence=record.module_evidence(*_producer_modules(module)))
     if rid is None:
         print('UNDECIDED: %s ran but its %s verdict was not recorded' % (step, verdict))

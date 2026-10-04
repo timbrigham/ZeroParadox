@@ -1808,6 +1808,10 @@ def _write_pdf_coupling_owed(subjects, owed):
     33 subjects while making them hand-derive 33 blob ids would be the same failure in a new costume.
     Returns a sentence to append to the leg's message, or "" if the dump could not be written -- a
     failure here must never change the VERDICT, only the helpfulness of the refusal."""
+    try:
+        _basis = common.ledger_basis("HEAD")
+    except common.BasisUnresolved:
+        return ""
     payload = {
         "step": PDF_COUPLING_PUSH_STEP,
         # ⚠ `common.ledger_basis`, NOT `record.read_ref`. The first draft used `read_ref("HEAD")`,
@@ -1816,7 +1820,7 @@ def _write_pdf_coupling_owed(subjects, owed):
         # LABEL rather than to a commit, quietly re-applying itself at whatever HEAD became. This is
         # the one function that resolves a basis the way the WRITE path does, and it also supplies
         # `resolved_from`, which V1 requires and a hand-built block forgets.
-        "basis": common.ledger_basis("HEAD"),
+        "basis": _basis,
         "why": ("Each subject is a PDF this push changes with no build script in the push naming "
                 "it. Signing accepts the finding as carried debt at THESE bytes only."),
         "subjects": [s for s in subjects if s.get("path") in set(owed)],
@@ -2747,6 +2751,13 @@ def cmd_precommit():
     os.environ.setdefault("ZPLEDGER_BASIS", "INDEX")
     os.environ.setdefault("ZPLEDGER_RUN", "precommit-%s" % (state.get("bucket") if state
                                                             else "universal"))
+    # ⚠ BASIS-EMPTY-1: resolve the index tree ONCE, before any checker runs, so every one records
+    # the same basis and none contends for `.git/index.lock` (see `common.pin_index_tree`).
+    _pin = ("not pinned — basis is %s, not INDEX" % os.environ["ZPLEDGER_BASIS"])
+    if os.environ["ZPLEDGER_BASIS"] == common.INDEX:
+        _tree, _why = common.pin_index_tree()
+        _pin = (("index tree %s, pinned for every checker" % _tree) if _tree else
+                ("NOT PINNED — %s; each checker resolves its own and exits 2 if it cannot" % _why))
     report.banner("precommit pipeline", [
         ("entry", "batch.py precommit (manual; the pre-commit HOOK runs the checkers)"),
         ("records", "verdicts recorded to verdictLedger against the STAGED content (not HEAD)"),
@@ -2754,6 +2765,7 @@ def cmd_precommit():
                   else "none — universal obligations only, stage ordering skipped"),
         ("scope", "the WORKING TREE as it stands"),
         ("basis", "declarations diffed against decl_baseline.txt on disk, never against git"),
+        ("ledger basis", _pin),
         ("exempt", "vendored: %s" % (", ".join(sorted(vendored.allowlist())) or "(allowlist empty)")
                    + " + anything under Vendored/"),
     ])
@@ -3288,6 +3300,152 @@ DECL_CASES = [
 ]
 
 
+def _basis_controls():
+    """BASIS-EMPTY-1. Returns `(bad, total)`. Every git touch and every send is a seam, so nothing
+    here runs `write-tree` or reaches the ledger. `sent` records what `record.emit` WOULD have sent;
+    the red rows assert it stays EMPTY, because "refused by the ledger" was the old, accidental
+    safety net and must not be what these rows rely on."""
+    import threading
+    print("ledger basis: never sent unresolved; one pinned tree per run (BASIS-EMPTY-1)")
+    T1, T2, STALE = "a" * 40, "b" * 40, "c" * 40
+    P, BLOB = "README.md", "d" * 40
+    saved = {n: getattr(common, n) for n in ("_git_write_tree", "ledger_subjects", "ref_blobs",
+                                             "_BASIS_BACKOFF")}
+    saved_emit, saved_env = record.emit, os.environ.get(common.INDEX_TREE_ENV)
+    sent, calls, lock = [], [], threading.Lock()
+
+    def _wt(seq):
+        """A `write-tree` seam answering from `seq`, its last entry repeating."""
+        def run():
+            with lock:
+                calls.append(1)
+                return seq[min(len(calls), len(seq)) - 1]
+        return run
+
+    def _fake_emit(**kw):
+        with lock:
+            sent.append(kw["basis"]["value"])
+        return "rec-ctl"
+
+    def _leg(capture=True):
+        if not capture:          # threaded legs: the caller holds ONE redirect for all of them
+            return common.emit_verdict("ctl_step", ok_rels=[P], ref=common.INDEX), ""
+        buf, real = io.StringIO(), sys.stdout
+        try:
+            sys.stdout = buf
+            rc = common.emit_verdict("ctl_step", ok_rels=[P], ref=common.INDEX)
+        finally:
+            sys.stdout = real
+        return rc, buf.getvalue()
+
+    def _setup(seq, pin=None, held=None):
+        del sent[:], calls[:]
+        common._git_write_tree = _wt(seq)
+        common._BASIS_BACKOFF = 0
+        common.ledger_subjects = lambda rels, ref="HEAD": ([{"path": P, "git_blob_id": BLOB}], [])
+        common.ref_blobs = lambda ref="HEAD": ({P: BLOB} if held is None else held)
+        record.emit = _fake_emit
+        if pin is None:
+            os.environ.pop(common.INDEX_TREE_ENV, None)
+        else:
+            os.environ[common.INDEX_TREE_ENV] = pin
+
+    LOCKED = (128, "", "fatal: Unable to create '.git/index.lock': File exists.")
+    rows = []
+    try:
+        for label, seq, pin, held, why in [
+                ("write-tree lock loss: NOT sent, exit 2", [LOCKED], None, None, "index.lock"),
+                ("write-tree exit 0, empty stdout: NOT sent", [(0, "", "")], None, None,
+                 "basis unresolved"),
+                ("a malformed pin: NOT sent, exit 2", [(0, T1, "")], "zzz", None,
+                 "not a tree id"),
+                ("pinned tree lacking the blob: NOT sent", [(0, T1, "")], T1, {P: "e" * 40},
+                 "does not carry")]:
+            try:
+                _setup(seq, pin, held)
+                rc, out = _leg()
+                rows.append((label, rc == 2 and not sent and why in out))
+            except Exception:                                  # noqa: BLE001 — a crash is red
+                rows.append((label, False))
+        try:
+            _setup([LOCKED, LOCKED, (0, T1 + "\n", "")])
+            rc, out = _leg()
+            rows.append(("transient lock loss is retried, then sent", rc == 0 and sent == [T1]))
+        except Exception:                                      # noqa: BLE001
+            rows.append(("transient lock loss is retried, then sent", False))
+        # The concurrency property itself: eight legs at once, a write-tree that would answer each
+        # differently, and the parent's pin must be the only value any of them sends.
+        for label, pin_first in [("8 concurrent legs send the PINNED tree only", False),
+                                 ("parent pins once; 8 legs share it, 1 write-tree", True)]:
+            try:
+                _setup([(0, T2, ""), (0, "f" * 40, ""), (0, "9" * 40, "")],
+                       pin=(STALE if pin_first else T1),
+                       held={P: BLOB})
+                if pin_first:
+                    common.pin_index_tree()
+                want = T2 if pin_first else T1
+                rcs = []
+                ths = [threading.Thread(target=lambda: rcs.append(_leg(False)[0]))
+                       for _ in range(8)]
+                _real_out, sys.stdout = sys.stdout, io.StringIO()
+                try:
+                    for th in ths:
+                        th.start()
+                    for th in ths:
+                        th.join()
+                finally:
+                    sys.stdout = _real_out
+                rows.append((label, rcs == [0] * 8 and sent == [want] * 8
+                             and len(calls) == (1 if pin_first else 0)))
+            except Exception:                                  # noqa: BLE001
+                rows.append((label, False))
+        try:
+            _setup([LOCKED], pin=STALE)
+            got = common.pin_index_tree()
+            rows.append(("a failed parent pin CLEARS an inherited pin",
+                         got[0] is None and common.INDEX_TREE_ENV not in os.environ))
+        except Exception:                                      # noqa: BLE001
+            rows.append(("a failed parent pin CLEARS an inherited pin", False))
+    finally:
+        for n, v in saved.items():
+            setattr(common, n, v)
+        record.emit = saved_emit
+        if saved_env is None:
+            os.environ.pop(common.INDEX_TREE_ENV, None)
+        else:
+            os.environ[common.INDEX_TREE_ENV] = saved_env
+    # Both parents pin BEFORE any leg launches: `hooks._pre_commit` before its prefetch and its
+    # leg loop, `cmd_precommit` before `check_suite`. Read from source, since neither can be run here.
+    import ast as _ast
+
+    def _pins_first(path, fn, later):
+        try:
+            with io.open(path, encoding="utf-8") as fh:
+                tree = _ast.parse(fh.read())
+        except (OSError, SyntaxError, ValueError):
+            return False
+        for f in _ast.walk(tree):
+            if isinstance(f, _ast.FunctionDef) and f.name == fn:
+                pin = [c.lineno for c in _ast.walk(f) if isinstance(c, _ast.Call)
+                       and getattr(c.func, "attr", None) == "pin_index_tree"]
+                after = [c.lineno for c in _ast.walk(f) if isinstance(c, _ast.Call)
+                         and (getattr(c.func, "id", None) in later
+                              or getattr(c.func, "attr", None) in later)]
+                return bool(pin) and bool(after) and min(pin) < min(after)
+        return False
+    _here = os.path.dirname(os.path.abspath(__file__))
+    rows.append(("hooks._pre_commit pins before any leg",
+                 _pins_first(os.path.join(_here, "hooks.py"), "_pre_commit",
+                             ("_start_commit_prefetch", "py"))))
+    rows.append(("cmd_precommit pins before check_suite",
+                 _pins_first(os.path.abspath(__file__), "cmd_precommit", ("check_suite",))))
+    b = 0
+    for label, ok in rows:
+        print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
+        b += 0 if ok else 1
+    return b, len(rows)
+
+
 def selftest():
     bad = 0
     # ⚠ `total` EXISTS SO THE SUMMARY CAN BE RE-DERIVED FROM THE ROWS ABOVE IT. Until 2026-09-16
@@ -3734,6 +3892,10 @@ def selftest():
         print("  %-46s %s" % (label, "ok" if ok else "*** WRONG ***"))
         bad += 0 if ok else 1
         total += 1
+
+    _b, _t = _basis_controls()
+    bad += _b
+    total += _t
 
     print("\nselftest: %s (%d/%d control(s))"
           % ("PASS" if not bad else "FAIL", total - bad, total))

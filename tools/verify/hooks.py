@@ -1576,6 +1576,13 @@ def _pre_commit():
     # then reports narrowed coverage WITHOUT blocking. `pre_push` has always used assignment, for
     # the reason stated at its own call site: the environment here could only ever be wrong.
     os.environ.update(_COMMIT_LEDGER_ENV)
+    # ⚠⚠ BASIS-EMPTY-1: ONE `write-tree`, HERE, BEFORE ANY LEG STARTS. Eleven legs each running
+    #   their own lost `.git/index.lock` to one another and sent an empty basis. Pinned, every leg
+    #   names the same tree; unpinned (this failed), each leg retries and fails loud as exit 2.
+    _tree, _why = common.pin_index_tree()
+    print("  basis: %s" % (("index tree %s, pinned for every leg" % _tree) if _tree else
+                           ("NOT PINNED — %s; each leg resolves its own and will report exit 2 "
+                            "if it cannot" % _why)))
     # ⚠ CONCURRENT LAUNCH, SEQUENTIAL DECISION. Every leg here only READS the tree and records its
     #   own distinct step, so all eleven may start now; the loop below still consumes them one by
     #   one, in this order, through `py()`. `ZP_HOOK_JOBS=1` creates no scheduler at all.
@@ -2533,7 +2540,8 @@ def _simulate_commit(m, env=None, answer=None, raises=None, tree=_TREE, real=Fal
         raise ValueError("a real-transport control must name its loopback url")
     names = ("run", "index_tree", "_attest_call", "_ATTEST_URL_SEAM")
     saved = {n: getattr(m, n) for n in names}
-    env_keys = (ENV_RUN_ID, ENV_OP, _FORGE_VAR, "ZPLEDGER_BASIS", "ZPLEDGER_RUN", JOBS_ENV)
+    env_keys = (ENV_RUN_ID, ENV_OP, _FORGE_VAR, "ZPLEDGER_BASIS", "ZPLEDGER_RUN", JOBS_ENV,
+                common.INDEX_TREE_ENV)
     saved_env = {k: os.environ.get(k) for k in env_keys}
     launched, calls = [], []
 
@@ -3014,7 +3022,7 @@ def _simulate_conc(m, jobs, phase="push", script=None, stdin=_REFS, receipt=None
     saved = {n: getattr(m, n) for n in names}
     switch_vars = sorted({var for var, _val in SKIP_SWITCHES.values()})
     env_keys = (ENV_RUN_ID, ENV_OP, "ZPLEDGER_BASIS", "ZPLEDGER_RUN", JOBS_ENV,
-                LEG_TIMEOUT_ENV) + tuple(switch_vars)
+                LEG_TIMEOUT_ENV, common.INDEX_TREE_ENV) + tuple(switch_vars)
     saved_env = {k: os.environ.get(k) for k in env_keys}
     events, streamed, sched_seen = [], [], []
     lock = threading.Lock()
