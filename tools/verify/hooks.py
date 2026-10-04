@@ -485,6 +485,170 @@ def write_green_receipt(key, skipped, child_off):
                           % (RECEIPT_NAME, run_id or "no gitRobot provenance"))
 
 
+# ------------------------------------------------------------------ pre-commit pass-cache
+#
+# ⭐ TIM'S RULING R10, 2026-10-03 (ticket `tooling-precommit-pass-cache-attestation`): gitRobot keeps
+# an in-memory attestation of the pre-commit gate it just ran; the hook asks `attest()`; a single-use
+# yes skips the hook's pre-commit legs; ANYTHING ELSE runs the full pipeline. Measured before
+# building: gitRobot commit run 3ce8b497bf7a (2026-10-04) took 400.4s end to end, of which its own
+# gate phase was 212.2s — the hook's second run inside `git commit` was the other ~188s.
+#
+# ⛔ WHAT IT IS NOT: trust in a caller's claim (ticket fence). `GITROBOT_RUN_ID` only says WHICH
+# attestation to ask about; anyone can export it, and a forged one is answered `attested: false` by
+# gitRobot, which alone decides — keyed on the tree the HOOK computes, never one it was handed.
+# ⚠ `attest()` IS NOT READ-ONLY: a yes CONSUMES the attestation and every answer is audited, so it
+#   is called at most once per hook run, never without a run id, and never from a control.
+#
+# `R-ZERONULL`: one VALUE per state, and only ATTEST_YES skips. "Nobody answered" (UNREACHABLE),
+# "answered too slowly" (TIMEOUT), "answered no" (DENIED), "answered with an error" (REFUSED /
+# NOT_OK), "answered something unreadable" (MALFORMED) and "answered yes about a different tree"
+# (TREE_ECHO_MISMATCH) are different answers, and none of them shares a value with the match.
+ATTEST_YES = "ATTESTED"
+ATTEST_NO_RUN_ID = "NO_RUN_ID"
+ATTEST_NO_TREE = "NO_TREE"
+ATTEST_DENIED = "DENIED"
+ATTEST_REFUSED = "REFUSED"
+ATTEST_NOT_OK = "NOT_OK"
+ATTEST_MALFORMED = "MALFORMED"
+ATTEST_TREE_ECHO = "TREE_ECHO_MISMATCH"
+ATTEST_UNREACHABLE = "UNREACHABLE"
+ATTEST_TIMEOUT = "TIMEOUT"
+ATTEST_ERROR = "ERROR"
+ATTEST_STATUSES = (ATTEST_YES, ATTEST_NO_RUN_ID, ATTEST_NO_TREE, ATTEST_DENIED, ATTEST_REFUSED,
+                   ATTEST_NOT_OK, ATTEST_MALFORMED, ATTEST_TREE_ECHO, ATTEST_UNREACHABLE,
+                   ATTEST_TIMEOUT, ATTEST_ERROR)
+
+# Transport, from the served readme (`GITROBOT_HOST` / `GITROBOT_PORT` = 127.0.0.1 / 8010, "No key,
+# no token, no shared secret") and a parent-session probe 2026-10-04: streamable-HTTP MCP at /mcp,
+# the same handshake `record.py` uses for the ledger. Not imported from `record.py`: that module
+# binds its URL and reconfigures stdout at import, and the hook needs neither.
+ENV_ATTEST_URL = "GITROBOT_URL"
+ATTEST_URL = "http://127.0.0.1:8010/mcp"
+ATTEST_TIMEOUT_S = 4.0            # per request; an answer slower than this is TIMEOUT -> full run
+_ATTEST_TIMEOUT_OVERRIDE = None   # controls only
+
+
+def _attest_url():
+    return os.environ.get(ENV_ATTEST_URL) or ATTEST_URL
+
+
+def index_tree():
+    """The tree the pending commit will carry: `git write-tree` over the index git prepared."""
+    rc, out = git_out("write-tree")
+    tree = out.strip()
+    return tree if rc == 0 and tree else None
+
+
+def _sse_json(body):
+    """The JSON-RPC message in a response body, SSE-framed (`data:` line) or bare."""
+    import json
+    for line in body.splitlines():
+        if line.startswith("data:"):
+            return json.loads(line[5:].strip())
+    return json.loads(body)
+
+
+def _attest_call(run_id, tree):
+    """One MCP round trip to gitRobot's `attest`. Returns the parsed JSON-RPC response; RAISES on
+    any transport or parse failure, which `consult_attest` classifies. No proxy: loopback only."""
+    import json
+    import urllib.request
+    import uuid
+    url = _attest_url()
+    timeout = _ATTEST_TIMEOUT_OVERRIDE or ATTEST_TIMEOUT_S
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    headers = {"Content-Type": "application/json",
+               "Accept": "application/json, text/event-stream"}
+
+    def post(payload, session=None):
+        h = dict(headers)
+        if session:
+            h["Mcp-Session-Id"] = session
+        req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"),
+                                     headers=h, method="POST")
+        with opener.open(req, timeout=timeout) as resp:
+            return resp.headers.get("Mcp-Session-Id"), resp.read().decode("utf-8")
+
+    sid, _body = post({"jsonrpc": "2.0", "id": str(uuid.uuid4()), "method": "initialize",
+                       "params": {"protocolVersion": "2025-06-18", "capabilities": {},
+                                  "clientInfo": {"name": "zp-hooks-attest", "version": "1"}}})
+    post({"jsonrpc": "2.0", "method": "notifications/initialized"}, session=sid)
+    _sid, body = post({"jsonrpc": "2.0", "id": str(uuid.uuid4()), "method": "tools/call",
+                       "params": {"name": "attest",
+                                  "arguments": {"run_id": run_id, "tree": tree}}}, session=sid)
+    return _sse_json(body)
+
+
+def _classify_attest_exception(e):
+    """Exception -> status. Timeout is told apart from refusal-to-connect; neither is ever a yes."""
+    import socket
+    import urllib.error
+    if isinstance(e, (socket.timeout, TimeoutError)):
+        return ATTEST_TIMEOUT
+    if isinstance(e, urllib.error.HTTPError):
+        return ATTEST_REFUSED
+    if isinstance(e, urllib.error.URLError):
+        if isinstance(e.reason, (socket.timeout, TimeoutError)):
+            return ATTEST_TIMEOUT
+        return ATTEST_UNREACHABLE
+    if isinstance(e, ValueError):
+        return ATTEST_MALFORMED
+    if isinstance(e, (ConnectionError, OSError)):
+        return ATTEST_UNREACHABLE
+    return ATTEST_ERROR
+
+
+def _judge_attest(res, tree):
+    """(status, detail) from a parsed JSON-RPC response. ATTEST_YES only on `ok: true`,
+    `attested` exactly the boolean True, and the echoed tree equal to the one this hook sent."""
+    if not isinstance(res, dict):
+        return ATTEST_MALFORMED, "the response is not a JSON object"
+    if "result" not in res:
+        if "error" in res:
+            return ATTEST_REFUSED, "JSON-RPC error: %s" % (res.get("error"),)
+        return ATTEST_MALFORMED, "the response carries no result"
+    result = res["result"]
+    if not isinstance(result, dict):
+        return ATTEST_MALFORMED, "the result is not an object"
+    if result.get("isError"):
+        content = result.get("content") or [{}]
+        text = content[0].get("text") if isinstance(content[0], dict) else content[0]
+        return ATTEST_REFUSED, "the server answered isError: %s" % (text,)
+    sc = result.get("structuredContent")
+    if not isinstance(sc, dict):
+        return ATTEST_MALFORMED, "no structuredContent object in the result"
+    if sc.get("ok") is not True:
+        return ATTEST_NOT_OK, "ok=%r, why=%r" % (sc.get("ok"), sc.get("why"))
+    if sc.get("attested") is False:
+        return ATTEST_DENIED, "attested: false, why: %s" % (sc.get("why"),)
+    if sc.get("attested") is not True:
+        return ATTEST_MALFORMED, "attested=%r is not the boolean true" % (sc.get("attested"),)
+    if sc.get("tree") != tree:
+        return ATTEST_TREE_ECHO, "attested a tree %r, but this hook asked about %r" % (
+            sc.get("tree"), tree)
+    return ATTEST_YES, "attested"
+
+
+def consult_attest():
+    """(status, run_id, tree, detail). Every path but a full yes returns a status other than
+    ATTEST_YES, and the caller then runs every leg."""
+    run_id, _op = _provenance()
+    if not run_id:
+        return ATTEST_NO_RUN_ID, None, None, "no %s in the environment (a hand-run commit)" % ENV_RUN_ID
+    tree = index_tree()
+    if not tree:
+        return ATTEST_NO_TREE, run_id, None, "git write-tree failed, so there is no tree to ask about"
+    try:
+        res = _attest_call(run_id, tree)
+    except Exception as e:                       # noqa: BLE001 — every failure is a full run
+        return _classify_attest_exception(e), run_id, tree, "%s: %s" % (type(e).__name__, e)
+    try:
+        status, detail = _judge_attest(res, tree)
+    except Exception as e:                       # noqa: BLE001 — a judge that crashes is no yes
+        return ATTEST_ERROR, run_id, tree, "judging the answer raised %s: %s" % (type(e).__name__, e)
+    return status, run_id, tree, detail
+
+
 def _emitter_of(argv):
     """Repo-relative module a push row's child records from, or None for an inline row."""
     if not argv:
@@ -904,6 +1068,21 @@ def pre_commit():
         ("not run", "lake build / purity / ssot — stub-first commits incomplete work on purpose"),
     ])
     report.plan(PRE_COMMIT_PLAN)
+
+    # ⚠⚠ THE PASS-CACHE. The ONLY branch that skips is an exact `ATTEST_YES`; every other status —
+    #   no run id, no tree, denied, refused, not ok, malformed, echoed tree differs, unreachable,
+    #   timeout, error — falls through to the full pipeline below. The skip records nothing and
+    #   writes nothing: gitRobot's gate already ran THIS function on THIS tree and recorded its
+    #   verdicts. `R-NOCONV`: what still BLOCKS is printed on every run, matched or not.
+    status, run_id, tree, detail = consult_attest()
+    if status == ATTEST_YES:
+        print("SKIPPED %d pre-commit leg(s): gitRobot attested run %s, tree %s (single-use; its own "
+              "gate ran these legs to green on this exact tree in this run)"
+              % (len(PRE_COMMIT_CHECKS), run_id, tree))
+        print("  BLOCK rows launched: 0 of %d; skipped on attestation %s"
+              % (len(PRE_COMMIT_CHECKS), ATTEST_YES))
+        return 0
+    print("  pass-cache: none — %s: %s; every leg runs." % (status, detail))
 
     failed = []
     # ⚠⚠ RECORDING BELONGS HERE, NOT IN `batch.py precommit` — measured 2026-08-23 and it was a
@@ -1774,6 +1953,290 @@ def _ctl_literal(m):
         sorted(s or ()), sorted(_EXPECTED_SKIPPABLE))
 
 
+# ------------------------------------------------------------------ pass-cache controls
+#
+# `R-NOCONV`: the guard asserting what still BLOCKS lands with the skip. Each control drives the REAL
+# `pre_commit` with every child stubbed and the attest transport STUBBED — never the live gitRobot,
+# whose `attest()` consumes and audits. Only an exact yes about the hook's own tree may skip; every
+# other answer must launch all eleven legs. The `_StubGitRobot` rows run the REAL `_attest_call`
+# against a throwaway loopback server, so a mutation inside the transport is visible too.
+
+_RUN = "ctl-run-attest"
+
+
+def _attest_answer(attested=True, tree=None, ok=True, why=None, is_error=False, structured=True):
+    """A JSON-RPC response shaped like gitRobot's AttestResult. `tree=None` echoes the asked tree."""
+    def answer(run_id, asked_tree):
+        import json
+        sc = {"ok": ok, "op": "attest", "attested": attested, "run_id": run_id,
+              "tree": asked_tree if tree is None else tree, "why": why}
+        result = {"content": [{"type": "text", "text": json.dumps(sc)}], "isError": is_error}
+        if structured:
+            result["structuredContent"] = sc
+        return {"jsonrpc": "2.0", "id": "ctl", "result": result}
+    return answer
+
+
+def _simulate_commit(m, env=None, answer=None, raises=None, tree=_TREE, real=False):
+    """Run `m.pre_commit` with every child stubbed. `answer(run_id, tree)` or `raises` stands in for
+    the transport unless `real` (then `m._attest_call` runs, against `env`'s GITROBOT_URL)."""
+    import io as _io
+    names = ("run", "index_tree", "_attest_call")
+    saved = {n: getattr(m, n) for n in names}
+    env_keys = (ENV_RUN_ID, ENV_OP, ENV_ATTEST_URL, "ZPLEDGER_BASIS", "ZPLEDGER_RUN")
+    saved_env = {k: os.environ.get(k) for k in env_keys}
+    launched, calls = [], []
+
+    def fake_run(*cmd):
+        inv = m._invocation(cmd)
+        launched.append(inv)
+        m.EXECUTED.append((inv, 0))
+        return 0
+
+    def fake_call(run_id, asked_tree):
+        calls.append((run_id, asked_tree))
+        if raises is not None:
+            raise raises
+        return answer(run_id, asked_tree)
+
+    m.run = fake_run
+    m.index_tree = lambda: tree
+    if not real:
+        m._attest_call = fake_call
+    for k in (ENV_RUN_ID, ENV_OP, ENV_ATTEST_URL):
+        os.environ.pop(k, None)
+    for k, v in (env or {}).items():
+        os.environ[k] = v
+    del m.EXECUTED[:]
+    buf, real_out = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        rc = m.pre_commit()
+    finally:
+        sys.stdout = real_out
+        for n, v in saved.items():
+            setattr(m, n, v)
+        for k, v in saved_env.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+        del m.EXECUTED[:]
+    return {"rc": rc, "out": buf.getvalue(), "launched": launched, "calls": calls}
+
+
+def _full(m, r, status):
+    """True when the run launched every leg, exited 0 and reported exactly `status`."""
+    return (r["rc"] == 0 and len(r["launched"]) == len(m.PRE_COMMIT_CHECKS)
+            and "pass-cache: none — %s:" % status in r["out"] and "SKIPPED" not in r["out"])
+
+
+def _say(r, status):
+    return "rc=%s, %d of %d leg(s) launched, %s reported=%s, attest calls=%d" % (
+        r["rc"], len(r["launched"]), len(PRE_COMMIT_CHECKS), status,
+        "none — %s:" % status in r["out"], len(r["calls"]))
+
+
+def _ctl_attest_yes(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN, ENV_OP: "commit"}, answer=_attest_answer())
+    ok = (r["rc"] == 0 and r["launched"] == [] and r["calls"] == [(_RUN, _TREE)]
+          and "SKIPPED 11 pre-commit leg(s): gitRobot attested run %s, tree %s" % (_RUN, _TREE)
+          in r["out"] and "BLOCK rows launched: 0 of 11" in r["out"])
+    return ok, "stubbed attested:true for this tree -> rc=%s, %d leg(s) launched, calls=%s" % (
+        r["rc"], len(r["launched"]), r["calls"])
+
+
+def _ctl_attest_denied(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         answer=_attest_answer(attested=False, why="ctl-why: tree differs"))
+    ok = _full(m, r, ATTEST_DENIED) and "ctl-why: tree differs" in r["out"]
+    return ok, "attested:false -> " + _say(r, ATTEST_DENIED) + ", why printed=%s" % (
+        "ctl-why" in r["out"])
+
+
+def _ctl_attest_unreachable(m):
+    import urllib.error
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         raises=urllib.error.URLError(ConnectionRefusedError(10061, "refused")))
+    return _full(m, r, ATTEST_UNREACHABLE), "connection refused -> " + _say(r, ATTEST_UNREACHABLE)
+
+
+def _ctl_attest_timeout(m):
+    import socket
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=socket.timeout("timed out"))
+    distinct = len(set(m.ATTEST_STATUSES)) == len(m.ATTEST_STATUSES)
+    return (_full(m, r, ATTEST_TIMEOUT) and distinct,
+            "socket timeout -> " + _say(r, ATTEST_TIMEOUT) + ", every status distinct=%s" % distinct)
+
+
+def _ctl_attest_no_env(m):
+    r = _simulate_commit(m, answer=_attest_answer())
+    ok = _full(m, r, ATTEST_NO_RUN_ID) and r["calls"] == []
+    return ok, "no GITROBOT_RUN_ID (stub would say yes) -> " + _say(r, ATTEST_NO_RUN_ID)
+
+
+def _ctl_attest_no_tree(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(), tree=None)
+    ok = _full(m, r, ATTEST_NO_TREE) and r["calls"] == []
+    return ok, "write-tree failed (stub would say yes) -> " + _say(r, ATTEST_NO_TREE)
+
+
+def _ctl_attest_bad_json(m):
+    import json
+    try:
+        json.loads("{ not json")
+        return False, "the malformed-JSON input parsed"
+    except ValueError as e:
+        err = e
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=err)
+    return _full(m, r, ATTEST_MALFORMED), "unparsable body -> " + _say(r, ATTEST_MALFORMED)
+
+
+def _ctl_attest_not_bool(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(attested="true"))
+    return _full(m, r, ATTEST_MALFORMED), 'attested:"true" (a string) -> ' + _say(r, ATTEST_MALFORMED)
+
+
+def _ctl_attest_no_structured(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(structured=False))
+    return (_full(m, r, ATTEST_MALFORMED),
+            "yes in the text content only, no structuredContent -> " + _say(r, ATTEST_MALFORMED))
+
+
+def _ctl_attest_is_error(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(is_error=True))
+    return _full(m, r, ATTEST_REFUSED), "isError:true (body says yes) -> " + _say(r, ATTEST_REFUSED)
+
+
+def _ctl_attest_not_ok(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(ok=False))
+    return _full(m, r, ATTEST_NOT_OK), "ok:false (attested says yes) -> " + _say(r, ATTEST_NOT_OK)
+
+
+def _ctl_attest_tree_echo(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(tree="f" * 40))
+    return (_full(m, r, ATTEST_TREE_ECHO) and r["calls"] == [(_RUN, _TREE)],
+            "yes about a different tree -> " + _say(r, ATTEST_TREE_ECHO))
+
+
+def _ctl_attest_error(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, raises=RuntimeError("ctl boom"))
+    return _full(m, r, ATTEST_ERROR), "an unclassified exception -> " + _say(r, ATTEST_ERROR)
+
+
+def _ctl_attest_index_tree(m):
+    with _ScratchRepo(m) as s:
+        s.put("tools/verify/a.py", b"print(1)\n")
+        s.track("tools/verify")
+        t1 = m.index_tree()
+        s.put("tools/verify/a.py", b"print(2)\n")
+        s.track("tools/verify")
+        t2 = m.index_tree()
+        want = s._git("write-tree")
+    ok = bool(t1) and t1 != t2 and t2 == want
+    return ok, "REAL index_tree, scratch repo: follows the staged index=%s" % (
+        bool(t1) and t1 != t2 and t2 == want)
+
+
+class _StubGitRobot(object):
+    """A throwaway loopback streamable-HTTP MCP server answering `attest` yes for whatever it is
+    asked, SSE-framed, refusing any request after `initialize` that lacks its session id. Never the
+    real gitRobot: the real `attest()` consumes and audits."""
+
+    def __init__(self, delay=0.0):
+        self.delay = delay
+        self.calls = []
+
+    def __enter__(self):
+        import http.server
+        import json
+        import threading
+        import time
+        outer = self
+
+        class Handler(http.server.BaseHTTPRequestHandler):
+            def log_message(self, *a):
+                pass
+
+            def _send(self, code, obj, sid=None):
+                try:
+                    body = b"" if obj is None else (
+                        "event: message\ndata: %s\n\n" % json.dumps(obj)).encode("utf-8")
+                    self.send_response(code)
+                    self.send_header("Content-Type", "text/event-stream")
+                    if sid:
+                        self.send_header("Mcp-Session-Id", sid)
+                    self.send_header("Content-Length", str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
+                except OSError:
+                    pass
+
+            def do_POST(self):
+                n = int(self.headers.get("Content-Length") or 0)
+                msg = json.loads(self.rfile.read(n).decode("utf-8"))
+                method = msg.get("method")
+                if method == "initialize":
+                    return self._send(200, {"jsonrpc": "2.0", "id": msg.get("id"), "result": {
+                        "protocolVersion": "2025-06-18", "capabilities": {},
+                        "serverInfo": {"name": "ctl-stub", "version": "0"}}}, sid="ctl-session")
+                if self.headers.get("Mcp-Session-Id") != "ctl-session":
+                    return self._send(400, None)
+                if method == "notifications/initialized":
+                    return self._send(202, None)
+                args = (msg.get("params") or {}).get("arguments") or {}
+                outer.calls.append((args.get("run_id"), args.get("tree")))
+                if outer.delay:
+                    time.sleep(outer.delay)
+                return self._send(200, _attest_answer()(args.get("run_id"), args.get("tree")))
+
+        self.server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        self.server.daemon_threads = True
+        self.server.block_on_close = False
+        self.server.handle_error = lambda *a: None
+        self.url = "http://127.0.0.1:%d/mcp" % self.server.server_address[1]
+        self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
+        self.thread.start()
+        return self
+
+    def __exit__(self, *exc):
+        self.server.shutdown()
+        self.server.server_close()
+        return False
+
+
+def _ctl_attest_real_yes(m):
+    with _StubGitRobot() as s:
+        r = _simulate_commit(m, env={ENV_RUN_ID: _RUN, ENV_ATTEST_URL: s.url}, real=True)
+    ok = r["rc"] == 0 and r["launched"] == [] and s.calls == [(_RUN, _TREE)]
+    return ok, "REAL transport, SSE-framed yes from a loopback stub -> rc=%s, %d leg(s) launched, " \
+               "stub saw %s" % (r["rc"], len(r["launched"]), s.calls)
+
+
+def _ctl_attest_real_timeout(m):
+    saved = m._ATTEST_TIMEOUT_OVERRIDE
+    m._ATTEST_TIMEOUT_OVERRIDE = 0.3
+    try:
+        with _StubGitRobot(delay=1.5) as s:
+            r = _simulate_commit(m, env={ENV_RUN_ID: _RUN, ENV_ATTEST_URL: s.url}, real=True)
+    finally:
+        m._ATTEST_TIMEOUT_OVERRIDE = saved
+    return (_full(m, r, ATTEST_TIMEOUT),
+            "REAL transport, stub answers yes after 1.5s, timeout 0.3s -> " + _say(r, ATTEST_TIMEOUT))
+
+
+def _ctl_attest_real_refused(m):
+    import socket
+    sock = socket.socket()
+    sock.bind(("127.0.0.1", 0))
+    port = sock.getsockname()[1]
+    sock.close()                                  # nothing listens here now
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN,
+                                 ENV_ATTEST_URL: "http://127.0.0.1:%d/mcp" % port}, real=True)
+    return (_full(m, r, ATTEST_UNREACHABLE),
+            "REAL transport, closed loopback port -> " + _say(r, ATTEST_UNREACHABLE))
+
+
 # (label, control, anchor, replacement). The replacement removes exactly the protection the
 # control exists for; the control must PASS on the real module and FAIL on the mutant.
 _CONTROLS = [
@@ -1853,6 +2316,63 @@ _CONTROLS = [
     ("literal  a batch.py-computed row stays unskippable", _ctl_literal,
      '        rows.append((label, mode, emitter or "tools/verify/batch.py"))',
      '        rows.append((label, mode, emitter or "tools/verify/report.py"))'),
+    # ⚠ PRE-COMMIT PASS-CACHE (Tim's R10, 2026-10-03). MUST SKIP on a stubbed yes for this tree;
+    #   MUST RUN ALL ELEVEN LEGS on every other answer. Each mutant turns one non-yes into a skip.
+    ("pc  attested:true for this tree skips", _ctl_attest_yes,
+     '    if status == ATTEST_YES:\n        print("SKIPPED %d pre-commit',
+     '    if False:\n        print("SKIPPED %d pre-commit'),
+    ("pc  attested:false runs in full, prints why", _ctl_attest_denied,
+     '        return ATTEST_DENIED, "attested: false',
+     '        return ATTEST_YES, "attested: false'),
+    ("pc  unreachable runs in full", _ctl_attest_unreachable,
+     "        return ATTEST_UNREACHABLE\n    if isinstance(e, ValueError):",
+     "        return ATTEST_YES\n    if isinstance(e, ValueError):"),
+    ("pc  timeout runs in full", _ctl_attest_timeout,
+     "    if isinstance(e, (socket.timeout, TimeoutError)):\n        return ATTEST_TIMEOUT",
+     "    if isinstance(e, (socket.timeout, TimeoutError)):\n        return ATTEST_YES"),
+    ("pc  R-ZERONULL timeout is not UNREACHABLE", _ctl_attest_timeout,
+     'ATTEST_TIMEOUT = "TIMEOUT"',
+     'ATTEST_TIMEOUT = "UNREACHABLE"'),
+    ("pc  no GITROBOT_RUN_ID runs in full, no call", _ctl_attest_no_env,
+     "    if not run_id:\n        return ATTEST_NO_RUN_ID",
+     "    if False:\n        return ATTEST_NO_RUN_ID"),
+    ("pc  no write-tree runs in full, no call", _ctl_attest_no_tree,
+     "    if not tree:\n        return ATTEST_NO_TREE",
+     "    if False:\n        return ATTEST_NO_TREE"),
+    ("pc  malformed JSON runs in full", _ctl_attest_bad_json,
+     "    if isinstance(e, ValueError):\n        return ATTEST_MALFORMED",
+     "    if isinstance(e, ValueError):\n        return ATTEST_YES"),
+    ("pc  attested not the boolean true runs in full", _ctl_attest_not_bool,
+     '    if sc.get("attested") is not True:',
+     '    if not sc.get("attested"):'),
+    ("pc  no structuredContent runs in full", _ctl_attest_no_structured,
+     '    sc = result.get("structuredContent")',
+     '    sc = result.get("structuredContent") or '
+     '__import__("json").loads(result["content"][0]["text"])'),
+    ("pc  isError:true runs in full", _ctl_attest_is_error,
+     '    if result.get("isError"):',
+     '    if False:'),
+    ("pc  ok:false runs in full", _ctl_attest_not_ok,
+     '    if sc.get("ok") is not True:',
+     '    if False:'),
+    ("pc  a yes about another tree runs in full", _ctl_attest_tree_echo,
+     '    if sc.get("tree") != tree:',
+     '    if False:'),
+    ("pc  any other exception runs in full", _ctl_attest_error,
+     "    return ATTEST_ERROR\n\n\ndef _judge_attest",
+     "    return ATTEST_YES\n\n\ndef _judge_attest"),
+    ("pc  REAL index_tree follows the staged index", _ctl_attest_index_tree,
+     "    return tree if rc == 0 and tree else None",
+     '    return "e" * 40'),
+    ("pc  REAL transport parses an SSE yes", _ctl_attest_real_yes,
+     '        if line.startswith("data:"):',
+     '        if False:'),
+    ("pc  REAL transport times out short", _ctl_attest_real_timeout,
+     "        with opener.open(req, timeout=timeout) as resp:",
+     "        with opener.open(req) as resp:"),
+    ("pc  REAL transport, closed port runs in full", _ctl_attest_real_refused,
+     "        return ATTEST_UNREACHABLE\n    if isinstance(e, ValueError):",
+     "        return ATTEST_YES\n    if isinstance(e, ValueError):"),
 ]
 
 
@@ -1888,7 +2408,8 @@ def _mutant(anchor, repl):
 def selftest():
     """Every advisory-skip control, each seen to pass on this module and to FAIL on its mutant."""
     me = sys.modules[__name__]
-    print("advisory-skip controls (each: MUST PASS on the live code, MUST FIRE on its mutant)")
+    print("advisory-skip and pre-commit pass-cache (pc) controls "
+          "(each: MUST PASS on the live code, MUST FIRE on its mutant)")
     total = bad = 0
     for label, ctl, anchor, repl in _CONTROLS:
         total += 1
