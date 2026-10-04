@@ -495,7 +495,8 @@ def write_green_receipt(key, skipped, child_off):
 #
 # ⛔ WHAT IT IS NOT: trust in a caller's claim (ticket fence). `GITROBOT_RUN_ID` only says WHICH
 # attestation to ask about; anyone can export it, and a forged one is answered `attested: false` by
-# gitRobot, which alone decides — keyed on the tree the HOOK computes, never one it was handed.
+# gitRobot, which alone decides — keyed on the tree the HOOK computes, never one it was handed. That
+# holds only because the answerer's address is a constant (`ATTEST_URL`), never the environment's.
 # ⚠ `attest()` IS NOT READ-ONLY: a yes CONSUMES the attestation and every answer is audited, so it
 #   is called at most once per hook run, never without a run id, and never from a control.
 #
@@ -514,22 +515,29 @@ ATTEST_TREE_ECHO = "TREE_ECHO_MISMATCH"
 ATTEST_UNREACHABLE = "UNREACHABLE"
 ATTEST_TIMEOUT = "TIMEOUT"
 ATTEST_ERROR = "ERROR"
+ATTEST_RPC_ID = "RPC_ID_MISMATCH"
+ATTEST_RUN_ECHO = "RUN_ID_ECHO_MISMATCH"
 ATTEST_STATUSES = (ATTEST_YES, ATTEST_NO_RUN_ID, ATTEST_NO_TREE, ATTEST_DENIED, ATTEST_REFUSED,
                    ATTEST_NOT_OK, ATTEST_MALFORMED, ATTEST_TREE_ECHO, ATTEST_UNREACHABLE,
-                   ATTEST_TIMEOUT, ATTEST_ERROR)
+                   ATTEST_TIMEOUT, ATTEST_ERROR, ATTEST_RPC_ID, ATTEST_RUN_ECHO)
 
 # Transport, from the served readme (`GITROBOT_HOST` / `GITROBOT_PORT` = 127.0.0.1 / 8010, "No key,
 # no token, no shared secret") and a parent-session probe 2026-10-04: streamable-HTTP MCP at /mcp,
 # the same handshake `record.py` uses for the ledger. Not imported from `record.py`: that module
 # binds its URL and reconfigures stdout at import, and the hook needs neither.
-ENV_ATTEST_URL = "GITROBOT_URL"
+# ⛔ THE ADDRESS IS A CONSTANT. No environment variable and no argv can choose who answers: an
+#   env override let anyone who runs `git commit` point the hook at a stub that says yes, which
+#   skipped every BLOCK leg and printed a gitRobot provenance it never had (`/rely` 2026-10-03,
+#   BLOCKING-1). The selftest substitutes the transport through `_ATTEST_URL_SEAM`, a module
+#   attribute only in-process code can set.
 ATTEST_URL = "http://127.0.0.1:8010/mcp"
 ATTEST_TIMEOUT_S = 4.0            # per request; an answer slower than this is TIMEOUT -> full run
 _ATTEST_TIMEOUT_OVERRIDE = None   # controls only
+_ATTEST_URL_SEAM = None           # controls only; in-process, never read from the environment
 
 
 def _attest_url():
-    return os.environ.get(ENV_ATTEST_URL) or ATTEST_URL
+    return _ATTEST_URL_SEAM or ATTEST_URL
 
 
 def index_tree():
@@ -553,8 +561,9 @@ def _sse_json(body):
 
 
 def _attest_call(run_id, tree):
-    """One MCP round trip to gitRobot's `attest`. Returns the parsed JSON-RPC response; RAISES on
-    any transport or parse failure, which `consult_attest` classifies. No proxy: loopback only."""
+    """One MCP round trip to gitRobot's `attest`. Returns `(request_id, parsed JSON-RPC response)`;
+    RAISES on any transport or parse failure, which `consult_attest` classifies. No proxy: loopback
+    only. The request id travels back so the judge can refuse an answer to some other request."""
     import json
     import urllib.request
     import uuid
@@ -577,10 +586,11 @@ def _attest_call(run_id, tree):
                        "params": {"protocolVersion": "2025-06-18", "capabilities": {},
                                   "clientInfo": {"name": "zp-hooks-attest", "version": "1"}}})
     post({"jsonrpc": "2.0", "method": "notifications/initialized"}, session=sid)
-    _sid, body = post({"jsonrpc": "2.0", "id": str(uuid.uuid4()), "method": "tools/call",
+    call_id = str(uuid.uuid4())
+    _sid, body = post({"jsonrpc": "2.0", "id": call_id, "method": "tools/call",
                        "params": {"name": "attest",
                                   "arguments": {"run_id": run_id, "tree": tree}}}, session=sid)
-    return _sse_json(body)
+    return call_id, _sse_json(body)
 
 
 def _classify_attest_exception(e):
@@ -602,14 +612,20 @@ def _classify_attest_exception(e):
     return ATTEST_ERROR
 
 
-def _judge_attest(res, tree):
-    """(status, detail) from a parsed JSON-RPC response. ATTEST_YES only on `ok: true`,
-    `attested` exactly the boolean True, and the echoed tree equal to the one this hook sent."""
+def _judge_attest(res, tree, run_id, call_id):
+    """(status, detail) from a parsed JSON-RPC response. ATTEST_YES only when ALL hold: the
+    response `id` is the request id this hook sent; it carries no `error`; `isError` is absent or
+    the boolean False; `ok` is exactly True; `attested` is exactly True; and the echoed `run_id`
+    and `tree` both equal the ones this hook sent."""
     if not isinstance(res, dict):
         return ATTEST_MALFORMED, "the response is not a JSON object"
+    if res.get("id") != call_id:
+        return ATTEST_RPC_ID, "the response id %r is not this hook's request id %r" % (
+            res.get("id"), call_id)
+    if "error" in res:
+        return ATTEST_REFUSED, "JSON-RPC error (a result beside it is ignored): %s" % (
+            res.get("error"),)
     if "result" not in res:
-        if "error" in res:
-            return ATTEST_REFUSED, "JSON-RPC error: %s" % (res.get("error"),)
         return ATTEST_MALFORMED, "the response carries no result"
     result = res["result"]
     if not isinstance(result, dict):
@@ -630,6 +646,9 @@ def _judge_attest(res, tree):
     if sc.get("tree") != tree:
         return ATTEST_TREE_ECHO, "attested a tree %r, but this hook asked about %r" % (
             sc.get("tree"), tree)
+    if sc.get("run_id") != run_id:
+        return ATTEST_RUN_ECHO, "attested run %r, but this hook asked about run %r" % (
+            sc.get("run_id"), run_id)
     return ATTEST_YES, "attested"
 
 
@@ -643,11 +662,11 @@ def consult_attest():
     if not tree:
         return ATTEST_NO_TREE, run_id, None, "git write-tree failed, so there is no tree to ask about"
     try:
-        res = _attest_call(run_id, tree)
+        call_id, res = _attest_call(run_id, tree)
     except Exception as e:                       # noqa: BLE001 — every failure is a full run
         return _classify_attest_exception(e), run_id, tree, "%s: %s" % (type(e).__name__, e)
     try:
-        status, detail = _judge_attest(res, tree)
+        status, detail = _judge_attest(res, tree, run_id, call_id)
     except Exception as e:                       # noqa: BLE001 — a judge that crashes is no yes
         return ATTEST_ERROR, run_id, tree, "judging the answer raised %s: %s" % (type(e).__name__, e)
     return status, run_id, tree, detail
@@ -1074,8 +1093,8 @@ def pre_commit():
     report.plan(PRE_COMMIT_PLAN)
 
     # ⚠⚠ THE PASS-CACHE. The ONLY branch that skips is an exact `ATTEST_YES`; every other status —
-    #   no run id, no tree, denied, refused, not ok, malformed, echoed tree differs, unreachable,
-    #   timeout, error — falls through to the full pipeline below. The skip records nothing and
+    #   no run id, no tree, denied, refused, not ok, malformed, echoed tree or run id differs,
+    #   response id differs, unreachable, timeout, error — falls through to the full pipeline below. The skip records nothing and
     #   writes nothing: gitRobot's gate already ran THIS function on THIS tree and recorded its
     #   verdicts. `R-NOCONV`: what still BLOCKS is printed on every run, matched or not.
     status, run_id, tree, detail = consult_attest()
@@ -1968,26 +1987,56 @@ def _ctl_literal(m):
 _RUN = "ctl-run-attest"
 
 
-def _attest_answer(attested=True, tree=None, ok=True, why=None, is_error=False, structured=True):
-    """A JSON-RPC response shaped like gitRobot's AttestResult. `tree=None` echoes the asked tree."""
-    def answer(run_id, asked_tree):
+_ECHO = object()      # echo exactly what the hook asked
+_ABSENT = object()    # leave the key out of the answer altogether
+_CTL_ID = "ctl"       # the request id the stubbed transport reports having sent
+_FORGE_VAR = "GITROBOT_URL"   # the env override `/rely` forged with; it must reach nothing now
+
+
+def _attest_answer(attested=True, tree=_ECHO, ok=True, why=None, is_error=False, structured=True,
+                   run_id=_ECHO, rpc_id=_ECHO, error=None):
+    """A JSON-RPC response shaped like gitRobot's AttestResult. `_ECHO` (the default) echoes what was
+    asked, `_ABSENT` omits the key, any other value is sent as given — so a control can build a yes
+    with NO tree or run id echo, which the earlier `tree=None`-means-echo helper could not."""
+    def answer(asked_run, asked_tree, call_id=_CTL_ID):
         import json
-        sc = {"ok": ok, "op": "attest", "attested": attested, "run_id": run_id,
-              "tree": asked_tree if tree is None else tree, "why": why}
+        sc = {"ok": ok, "op": "attest", "attested": attested, "why": why}
+        for key, val, asked in (("run_id", run_id, asked_run), ("tree", tree, asked_tree)):
+            if val is _ECHO:
+                sc[key] = asked
+            elif val is not _ABSENT:
+                sc[key] = val
         result = {"content": [{"type": "text", "text": json.dumps(sc)}], "isError": is_error}
         if structured:
             result["structuredContent"] = sc
-        return {"jsonrpc": "2.0", "id": "ctl", "result": result}
+        resp = {"jsonrpc": "2.0", "id": call_id if rpc_id is _ECHO else rpc_id, "result": result}
+        if error is not None:
+            resp["error"] = error
+        return resp
     return answer
 
 
-def _simulate_commit(m, env=None, answer=None, raises=None, tree=_TREE, real=False):
+def _dead_url():
+    """A loopback URL nothing listens on."""
+    import socket
+    sock = socket.socket()
+    sock.bind(("127.0.0.1", 0))
+    port = sock.getsockname()[1]
+    sock.close()
+    return "http://127.0.0.1:%d/mcp" % port
+
+
+def _simulate_commit(m, env=None, answer=None, raises=None, tree=_TREE, real=False, url=None):
     """Run `m.pre_commit` with every child stubbed. `answer(run_id, tree)` or `raises` stands in for
-    the transport unless `real` (then `m._attest_call` runs, against `env`'s GITROBOT_URL)."""
+    the transport unless `real`; then `m._attest_call` runs against `url`, set through the
+    in-process seam `m._ATTEST_URL_SEAM`. A real run with no `url` is refused: it would reach the
+    live gitRobot, whose `attest()` consumes and audits."""
     import io as _io
-    names = ("run", "index_tree", "_attest_call")
+    if real and not url:
+        raise ValueError("a real-transport control must name its loopback url")
+    names = ("run", "index_tree", "_attest_call", "_ATTEST_URL_SEAM")
     saved = {n: getattr(m, n) for n in names}
-    env_keys = (ENV_RUN_ID, ENV_OP, ENV_ATTEST_URL, "ZPLEDGER_BASIS", "ZPLEDGER_RUN")
+    env_keys = (ENV_RUN_ID, ENV_OP, _FORGE_VAR, "ZPLEDGER_BASIS", "ZPLEDGER_RUN")
     saved_env = {k: os.environ.get(k) for k in env_keys}
     launched, calls = [], []
 
@@ -2001,13 +2050,15 @@ def _simulate_commit(m, env=None, answer=None, raises=None, tree=_TREE, real=Fal
         calls.append((run_id, asked_tree))
         if raises is not None:
             raise raises
-        return answer(run_id, asked_tree)
+        return _CTL_ID, answer(run_id, asked_tree)
 
     m.run = fake_run
     m.index_tree = lambda: tree
-    if not real:
+    if real:
+        m._ATTEST_URL_SEAM = url
+    else:
         m._attest_call = fake_call
-    for k in (ENV_RUN_ID, ENV_OP, ENV_ATTEST_URL):
+    for k in (ENV_RUN_ID, ENV_OP, _FORGE_VAR):
         os.environ.pop(k, None)
     for k, v in (env or {}).items():
         os.environ[k] = v
@@ -2134,10 +2185,65 @@ class _ExplodingResponse(dict):
     def __contains__(self, key):
         raise RuntimeError("ctl: unreadable response")
 
+    def get(self, *a):
+        raise RuntimeError("ctl: unreadable response")
+
+    def __getitem__(self, key):
+        raise RuntimeError("ctl: unreadable response")
+
 
 def _ctl_attest_judge_raises(m):
     r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=lambda run_id, t: _ExplodingResponse())
     return _full(m, r, ATTEST_ERROR), "the judge raised -> " + _say(r, ATTEST_ERROR)
+
+
+# ⚠ The eight below close the 2026-10-03 `/rely` round (BLOCKING-1, ORDINARY-1, ORDINARY-2): the
+#   env-chosen answerer, and the protections that had no control firing when they were removed.
+
+def _ctl_attest_no_tree_echo(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(tree=_ABSENT))
+    return (_full(m, r, ATTEST_TREE_ECHO),
+            "a yes with NO tree echo -> " + _say(r, ATTEST_TREE_ECHO))
+
+
+def _ctl_attest_ok_truthy(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(ok="yes"))
+    return _full(m, r, ATTEST_NOT_OK), 'ok:"yes" (truthy, not the boolean) -> ' + _say(r, ATTEST_NOT_OK)
+
+
+def _ctl_attest_is_error_truthy(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(is_error="false"))
+    return (_full(m, r, ATTEST_REFUSED),
+            'isError:"false" (a truthy string) -> ' + _say(r, ATTEST_REFUSED))
+
+
+def _ctl_attest_timeout_constant(m):
+    """Tests the PRODUCTION constant, which the real-transport timeout control overrides."""
+    t = m.ATTEST_TIMEOUT_S
+    ok = (isinstance(t, (int, float)) and not isinstance(t, bool) and 0 < t <= 10
+          and m._ATTEST_TIMEOUT_OVERRIDE is None)
+    return ok, "ATTEST_TIMEOUT_S=%r (bound 10s), override at rest=%r" % (t, m._ATTEST_TIMEOUT_OVERRIDE)
+
+
+def _ctl_attest_run_echo(m):
+    r1 = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(run_id="someone-else"))
+    r2 = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(run_id=_ABSENT))
+    return (_full(m, r1, ATTEST_RUN_ECHO) and _full(m, r2, ATTEST_RUN_ECHO),
+            "a yes for another run -> " + _say(r1, ATTEST_RUN_ECHO)
+            + "; a yes with no run echo -> " + _say(r2, ATTEST_RUN_ECHO))
+
+
+def _ctl_attest_error_and_result(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN},
+                         answer=_attest_answer(error={"code": -32000, "message": "ctl"}))
+    return (_full(m, r, ATTEST_REFUSED),
+            "error AND a yes result -> " + _say(r, ATTEST_REFUSED))
+
+
+def _ctl_attest_rpc_id(m):
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, answer=_attest_answer(rpc_id="replayed"))
+    return (_full(m, r, ATTEST_RPC_ID),
+            "a yes answering some other request id -> " + _say(r, ATTEST_RPC_ID))
 
 
 def _ctl_attest_index_tree(m):
@@ -2204,7 +2310,8 @@ class _StubGitRobot(object):
                 outer.calls.append((args.get("run_id"), args.get("tree")))
                 if outer.delay:
                     time.sleep(outer.delay)
-                return self._send(200, _attest_answer()(args.get("run_id"), args.get("tree")))
+                return self._send(200, _attest_answer()(args.get("run_id"), args.get("tree"),
+                                                        msg.get("id")))
 
         self.server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
         self.server.daemon_threads = True
@@ -2223,7 +2330,7 @@ class _StubGitRobot(object):
 
 def _ctl_attest_real_yes(m):
     with _StubGitRobot() as s:
-        r = _simulate_commit(m, env={ENV_RUN_ID: _RUN, ENV_ATTEST_URL: s.url}, real=True)
+        r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, real=True, url=s.url)
     ok = r["rc"] == 0 and r["launched"] == [] and s.calls == [(_RUN, _TREE)]
     return ok, "REAL transport, SSE-framed yes from a loopback stub -> rc=%s, %d leg(s) launched, " \
                "stub saw %s" % (r["rc"], len(r["launched"]), s.calls)
@@ -2234,7 +2341,7 @@ def _ctl_attest_real_timeout(m):
     m._ATTEST_TIMEOUT_OVERRIDE = 0.3
     try:
         with _StubGitRobot(delay=1.5) as s:
-            r = _simulate_commit(m, env={ENV_RUN_ID: _RUN, ENV_ATTEST_URL: s.url}, real=True)
+            r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, real=True, url=s.url)
     finally:
         m._ATTEST_TIMEOUT_OVERRIDE = saved
     return (_full(m, r, ATTEST_TIMEOUT),
@@ -2242,15 +2349,34 @@ def _ctl_attest_real_timeout(m):
 
 
 def _ctl_attest_real_refused(m):
-    import socket
-    sock = socket.socket()
-    sock.bind(("127.0.0.1", 0))
-    port = sock.getsockname()[1]
-    sock.close()                                  # nothing listens here now
-    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN,
-                                 ENV_ATTEST_URL: "http://127.0.0.1:%d/mcp" % port}, real=True)
+    r = _simulate_commit(m, env={ENV_RUN_ID: _RUN}, real=True, url=_dead_url())
     return (_full(m, r, ATTEST_UNREACHABLE),
             "REAL transport, closed loopback port -> " + _say(r, ATTEST_UNREACHABLE))
+
+
+def _ctl_attest_env_forge(m):
+    """The `/rely` forge: GITROBOT_URL in the environment names a loopback stub that says yes. The
+    answerer must stay the constant. Two legs, neither touching the live gitRobot: (1) with the
+    seam at rest `_attest_url()` returns the literal production address despite the variable;
+    (2) the whole REAL hook, its seam aimed at a dead port, runs every leg and the stub named in
+    the environment is never called."""
+    with _StubGitRobot() as s:
+        saved = os.environ.get(_FORGE_VAR)
+        os.environ[_FORGE_VAR] = s.url
+        try:
+            seam_at_rest = m._ATTEST_URL_SEAM
+            chosen = m._attest_url()
+        finally:
+            if saved is None:
+                os.environ.pop(_FORGE_VAR, None)
+            else:
+                os.environ[_FORGE_VAR] = saved
+        r = _simulate_commit(m, env={ENV_RUN_ID: "forged-by-anyone", _FORGE_VAR: s.url},
+                             real=True, url=_dead_url())
+    ok = (seam_at_rest is None and chosen == "http://127.0.0.1:8010/mcp"
+          and _full(m, r, ATTEST_UNREACHABLE) and s.calls == [])
+    return ok, "%s=<yes stub>: answerer=%s; hook -> %s, stub saw %s" % (
+        _FORGE_VAR, chosen, _say(r, ATTEST_UNREACHABLE), s.calls)
 
 
 # (label, control, anchor, replacement). The replacement removes exactly the protection the
@@ -2353,7 +2479,7 @@ _CONTROLS = [
      '(sc.get("attested"),)\n',
      ''),
     ("pc  M-gr2 skip on any response at all", _ctl_attest_denied,
-     "        status, detail = _judge_attest(res, tree)",
+     "        status, detail = _judge_attest(res, tree, run_id, call_id)",
      '        status, detail = ATTEST_YES, "any response"'),
     ("pc  worktree: write-tree follows the invoking checkout", _ctl_attest_index_tree,
      '    rc, out = git_out("write-tree")',
@@ -2410,6 +2536,32 @@ _CONTROLS = [
     ("pc  REAL transport, closed port runs in full", _ctl_attest_real_refused,
      "        return ATTEST_UNREACHABLE\n    if isinstance(e, ValueError):",
      "        return ATTEST_YES\n    if isinstance(e, ValueError):"),
+    # ⚠ `/rely` 2026-10-03. (i) is BLOCKING-1's forge; (ii)-(v) are ORDINARY-1's four uncontrolled
+    #   mutants, verbatim; (vi)-(viii) are ORDINARY-2 and the unchecked response id.
+    ("pc  (i) GITROBOT_URL in the env chooses nothing", _ctl_attest_env_forge,
+     "    return _ATTEST_URL_SEAM or ATTEST_URL",
+     '    return os.environ.get("GITROBOT_URL") or _ATTEST_URL_SEAM or ATTEST_URL'),
+    ("pc  (ii) a yes with no tree echo runs in full", _ctl_attest_no_tree_echo,
+     '    if sc.get("tree") != tree:',
+     '    if sc.get("tree") is not None and sc.get("tree") != tree:'),
+    ("pc  (iii) ok truthy but not True runs in full", _ctl_attest_ok_truthy,
+     '    if sc.get("ok") is not True:',
+     '    if not sc.get("ok"):'),
+    ("pc  (iv) isError any truthy value runs in full", _ctl_attest_is_error_truthy,
+     '    if result.get("isError"):',
+     '    if result.get("isError") is True:'),
+    ("pc  (v) production timeout constant <= 10s", _ctl_attest_timeout_constant,
+     "ATTEST_TIMEOUT_S = 4.0",
+     "ATTEST_TIMEOUT_S = 600.0"),
+    ("pc  (vi) run_id echo mismatch runs in full", _ctl_attest_run_echo,
+     '    if sc.get("run_id") != run_id:',
+     '    if False:'),
+    ("pc  (vii) error beside a result runs in full", _ctl_attest_error_and_result,
+     '    if "error" in res:\n        return ATTEST_REFUSED',
+     '    if "error" in res and "result" not in res:\n        return ATTEST_REFUSED'),
+    ("pc  (viii) response id mismatch runs in full", _ctl_attest_rpc_id,
+     "    if res.get(\"id\") != call_id:",
+     "    if False:"),
 ]
 
 

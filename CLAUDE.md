@@ -657,12 +657,12 @@ RULE     order matters: (1) `register.md` — formal version, filename, companio
          propagation path. GUIDE.md carries NO version numbers, deliberately — never "sync"
          one into it; that is a regression to revert. A build-script change that moves the
          RENDERED PDF takes four steps in ONE commit: edit, bump the internal version, rebuild,
-         recompute the `formal:` / `comp:` token. One SHOWN not to resyncs the token with NO bump
-         and the reason in the commit message: `check_hashes.py --sync-hash` when only comments
-         or docstrings moved, else an empty diff of the extracted PDF text, old against rebuilt.
+         recompute the `formal:` / `comp:` token. One SHOWN not to resyncs it, NO bump, reason in
+         the commit message: `check_hashes.py --sync-hash` if only comments or docstrings moved,
+         else `tools/verify/pdf_same.py` old vs rebuilt exits 0 (pixel-identical pages and text).
          A document's own version appears in exactly ONE rendered place, the subtitle meta line
          — no self-changelogs, no `[new in v1.7]` tags; cross-document citations are exempt.
-COST     a hash mismatch means a SKIPPED bump until a rendered-text diff shows otherwise; never
+COST     a hash mismatch means a SKIPPED bump until that pixel proof shows otherwise; never
          rebuild a visible change without incrementing.
 READ     tools/process/document-workflow.md
 
