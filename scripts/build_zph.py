@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.23 | September 2026
+Version 1.24 | October 2026
 v1.23: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the T-H3 status said 'That the transition is taken remains a framework commitment, not a consequence of any of the four'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from any of the four.
 v1.22: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The ZP-E import line, the Open Items AX-1 row (whose status cell now reads 'the snap occurs given the occurrence commitment and DA-1'), the IR-ZP and IR-2 validation rows and the AX-1 validation row replace 'stated separately, as the occurrence commitment' / 'which ZP-E's DA-1 argues for' / 'occurrence is the occurrence commitment' with that sentence. The Open Items row says 'with no Lean kernel axioms' where it said 'with no axioms' (A4 and AX-B1 are called axioms on the same pages). T-SNAP's readable name 'Binary Snap Causality' is glossed once, at its first use in T-H3: 'Causality' refers to the shape of the step, not to its occurrence.
 v1.21: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). These sites said AX-1 whole was derived or no longer an axiom: the ZP-E import line, the Open Items AX-1 row ("Derived as Theorem T-SNAP ... No longer an axiom"), the IR-ZP and IR-2 validation rows, and the AX-1 validation row. Each now scopes the derivation to the shape half and names the occurrence half as a commitment. T-H3's own row, which says T-SNAP is inherited as a derived theorem, is unchanged: T-SNAP is the shape theorem. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the Open Items AX-1 row credited the shape to 'the P0 / L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
@@ -35,7 +35,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -251,8 +251,12 @@ def build():
             'Preservation of composition: Sequential discrete jumps in Q<sub>2</sub> compose by transitivity of the ball '
             'structure. x<sub>A</sub> &#8594; x<sub>B</sub> &#8594; x<sub>C</sub> is a valid sequence of clopen transitions. <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>B</sub>(id<sub>A</sub>) is the trivial jump x<sub>A</sub> &#8594; x<sub>A</sub>, which is the identity on Q<sub>2</sub>. <font name="DV">&#10003;</font>',
-            'AX-G1 respected: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub> is clopen-separated from all nonzero elements (ZP-B T3). No terminal object exists in '
-            'pTop because Q<sub>2</sub> is totally disconnected (ZP-B T5) — there is no single element to which all paths converge. <font name="DV">&#10003;</font>',
+            'AX-G1 respected in the stand-in category: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub> is clopen-separated from all nonzero elements (ZP-B T3). '
+            'The Lean functor fb_functor lands in Q&#8322;BallDepth, the &#8469;-indexed ball-depth category, which has no terminal object '
+            'because the depth index has no maximum: n + 1 &gt; n (q2BallZPCat, ZeroParadox/Multihomed/CategoricalBridge.lean). '
+            'In TopCat, the category of topological spaces, the answer is the opposite: TopCat has a terminal object, the one-point space '
+            '(the example after kleisli_bottom_not_terminal in ZeroParadox/Category/TreeSeam.lean), so AX-G1 fails there, and the TopCat '
+            'realization fB_functor (ZeroParadox/Valuation/TopFunctor.lean) presents 0 as the limit of the shrinking balls instead. <font name="DV">&#10003;</font>',
             'AX-G2 respected: ZP-B C3 establishes that no continuous path in Q<sub>2</sub> returns to 0 from any '
             'non-zero element. F<sub>B</sub> maps no non-initial morphism to a transition terminating at 0 &#8712; Q<sub>2</sub>. <font name="DV">&#10003;</font>',
         ]
@@ -302,8 +306,12 @@ def build():
             'Preservation of composition: Sequential orthogonal extensions compose by accumulation: T(x<sub>A</sub>) &#8594; T(x<sub>B</sub>) &#8594; '
             'T(x<sub>C</sub>) produces &#8214;T(x<sub>C</sub>)&#8214; &#8805; &#8214;T(x<sub>B</sub>)&#8214; &#8805; &#8214;T(x<sub>A</sub>)&#8214; by ZP-D T5. <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>D</sub>(id<sub>A</sub>) maps to the trivial orthogonal extension T(x<sub>A</sub>) &#8594; T(x<sub>A</sub>), which is the identity on the basis vector e<sub>k</sub>. <font name="DV">&#10003;</font>',
-            'AX-G1 respected: F<sub>D</sub>(0) = e<sub>0</sub> is the anchor vector from which all other state vectors are orthogonal '
-            'extensions (ZP-D T3). No terminal object exists in Hilb under this construction because the orthogonal extension sequence is unbounded in norm (ZP-D T5). <font name="DV">&#10003;</font>',
+            'AX-G1 respected in the stand-in category: F<sub>D</sub>(0) = e<sub>0</sub> is the anchor vector from which all other state vectors are orthogonal '
+            'extensions (ZP-D T3). The Lean functor fd_functor lands in HilbDimDepth, the &#8469;-indexed dimension-depth category, which has no '
+            'terminal object because the depth index has no maximum: n + 1 &gt; n (hilbDimZPCat, ZeroParadox/Multihomed/CategoricalBridge.lean). '
+            'In ModuleCat &#8450; the answer is the opposite: the realization fD_functor (ZeroParadox/State/HilbFunctor.lean) sends 0 to the zero '
+            'space, which is a zero object of ModuleCat &#8450;, initial and terminal at once (hilbert_bottom_isZero, ZeroParadox/Category/TreeSeam.lean), '
+            'so AX-G1 fails there. <font name="DV">&#10003;</font>',
             'AX-G2 respected: ZP-D T4 establishes that the Snap produces an orthogonal shift that cannot be '
             'reversed without violating the additive ontology (ZP-A R1). No orthogonal extension terminates back at e<sub>0</sub> from a non-initial vector. <font name="DV">&#10003;</font>',
             'Design commitment inherited: DP-1 (orthogonality as representation of clopen separation) is a '
@@ -508,7 +516,13 @@ def build():
         ['AX-G2',
          'Axiom —\nnot novel',
          'Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. Inherited from ZP-G. '
-         'Not a novel commitment — follows from ZP-A antisymmetry and ZP-B C3. Not a gap.'],
+         'Not a novel commitment where it holds: in a category built from a partial order with a least element, such as ZP-A\'s '
+         'semilattice order and the &#8469;-indexed depth categories ZP-H\'s Lean functors land in, a morphism X &#8594; 0 means X &#8804; 0, '
+         'so X = 0 by antisymmetry (the two antisymmetry examples at the end of ZeroParadox/Category/AxG2Reduce.lean). ZP-B C3 (no '
+         'continuous path in Q<sub>2</sub> returns to 0) is the domain fact behind the Q<sub>2</sub> stand-in, proved in its own layer. '
+         'AX-G2 does not hold in every category: in ModuleCat &#8450; the bottom is a zero object, every stage has a morphism into it '
+         '(the zero map, fD_has_return, ZeroParadox/Category/Heterogeneous.lean) and stage 1 is not a zero object (leaf_not_isZero), so AX-G2 '
+         'fails there. At an initial object, AX-G2 is equivalent to strict initiality (ax_g2_from_strict_initial and the converse example after it). Not a gap.'],
         ['R-BA',
          'Remark —\nBA-G1 demoted\n(ZP-G v1.1)',
          'Leinster Shannon entropy characterization. BA-G1 demoted from Bridge Axiom '
