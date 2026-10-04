@@ -27,15 +27,26 @@ it edits `ship.py` and `batch.py` in place, and `CLAUDE.md`'s hardest rule is th
 exercising the gates must not touch the caller's tree. Self-provisioning is not convenience here, it
 is the safety property.
 
+**The mutations run CONCURRENTLY across a pool of K worktrees** (`ZP_PROBE_WORKERS`, default
+`DEFAULT_WORKERS`; `1` is the old sequential run). The zero point, both controls and the baseline stay
+sequential in the primary; every other pool worktree is provisioned to the primary's state and must
+read the same baseline before it takes a mutation. See the block above `_execute`.
+
     python tools/verify/probe_routing_behavioural.py
+    python tools/verify/probe_routing_behavioural.py --selftest     # the pool's own controls
 """
+import hashlib
 import io
 import os
+import queue
 import re
 import shutil
 import subprocess
 import sys
 import tempfile
+import threading
+import time
+import traceback
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common                                                    # noqa: E402
@@ -140,16 +151,25 @@ def _prepush_exit(wt):
                        capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=wt,
                        env={**os.environ, "ZP_AGENT_GATE": "0"})
     out = p.stdout + p.stderr
-    _assert_reached(out)
-    m = re.search(r"push check\(s\) failed\s*[—-]\s*(\d+)\s+routing", out)
-    if m:
-        return int(m.group(1)), p.returncode
-    # `prepush PASS` means the enforcement ran and found nothing: zero routing failures, honestly.
-    if _ENFORCE_OK in out:
-        return 0, p.returncode
-    raise SystemExit(
-        "probe could not read a ROUTING COUNT from prepush, and must not fall back to the exit\n"
-        "  code alone — that is the over-determined observable this leg exists to stop using.")
+    try:
+        _assert_reached(out)
+        m = re.search(r"push check\(s\) failed\s*[—-]\s*(\d+)\s+routing", out)
+        if m:
+            return int(m.group(1)), p.returncode
+        # `prepush PASS` means the enforcement ran and found nothing: zero routing failures.
+        if _ENFORCE_OK in out:
+            return 0, p.returncode
+        raise SystemExit(
+            "probe could not read a ROUTING COUNT from prepush, and must not fall back to the exit\n"
+            "  code alone — that is the over-determined observable this leg exists to stop using.")
+    except SystemExit as e:
+        # ⚠ KEEP THE EVIDENCE. An unreadable run used to be reported by its symptom alone, with the
+        # child's output discarded — so the K=13 measurement (2026-10-04) could name WHICH observation
+        # died but not WHY. The raw output goes to a file OUTSIDE the tree and the path rides along.
+        fd, raw = tempfile.mkstemp(prefix="zp_probe_prepush_", suffix=".log")
+        with io.open(fd, "w", encoding="utf-8") as fh:
+            fh.write("cwd: %s\nexit: %d\n\n%s" % (wt, p.returncode, out))
+        raise SystemExit("%s\n  raw prepush output: %s" % (e.code, raw))
 
 
 def _prepush_blocks(wt):
@@ -644,18 +664,342 @@ def mutations(ship, batch):
     ]
 
 
+# -- ⭐ CONCURRENT MUTATIONS (Tim, 2026-10-04: "Tooling speed concurrent checks.") -----------------
+#
+# Each mutation edits `ship.py` or `batch.py` IN PLACE, observes, and restores, so two mutations in
+# ONE worktree would observe each other's bytes. The unit of concurrency is therefore the WORKTREE:
+# a pool of K, one mutation per worktree at a time, never two.
+#
+# ⚠⚠ A POOL WORKTREE IS ONLY A SUBSTITUTE FOR THE PRIMARY IF IT IS IN THE PRIMARY'S STATE, and that
+# state is CONSTRUCTED above, not inherited: detached at HEAD, the whole `tools/verify/` bundle copied
+# from the working tree, B perturbed and RESTORED (index clean), then A perturbed and LEFT STAGED by
+# `_require_fires` — the red baseline every EXIT_NEEDLE case is measured against. `_provision`
+# rebuilds exactly that (A staged by the same `_perturb_and_stage`), and `_pool_problems` then REFUSES
+# (exit 2) unless each pool worktree matches the primary on bytes, index, status AND the observed
+# baseline (every guards row plus the prepush BLOCKS state). A worktree that merely LOOKS provisioned
+# is not trusted with a verdict.
+#
+# ⚠ The zero point and both controls are NOT re-run per pool worktree: they establish that the
+# PRIMARY's construction is attributable, and the pool is then checked to be the same construction.
+#
+# ⭐ R-ZERONULL: a mutation that could not run is `DIED`, its own outcome, never PASS and never a
+# mutation FAIL. A pool that could not be built, a worktree held by two mutations at once, or a
+# mutation that never ran all exit 2. The RESULT denominator is `len(muts)`, never the count that
+# happened to come back.
+WORKERS_ENV = "ZP_PROBE_WORKERS"
+DEFAULT_WORKERS = 8
+_GIT_LOCK = threading.Lock()     # `git worktree add/remove` mutate the shared common dir: serialise
+
+
+class _CannotJudge(Exception):
+    """The probe could not LOOK. Exit 2 — distinct from a mutation escaping (exit 1)."""
+
+
+def _workers(n):
+    """K from `ZP_PROBE_WORKERS`, capped at the mutation count. Malformed input refuses."""
+    raw = os.environ.get(WORKERS_ENV, "").strip()
+    if not raw:
+        return max(1, min(DEFAULT_WORKERS, n))
+    try:
+        k = int(raw)
+    except ValueError:
+        k = 0
+    if k < 1:
+        _cannot_judge("%s=%r is not a positive integer — refusing rather than guessing a pool size."
+                      % (WORKERS_ENV, raw))
+    return min(k, n)
+
+
+def _add_worktree(wt):
+    with _GIT_LOCK:
+        return subprocess.run(["git", "worktree", "add", "--detach", wt, "HEAD"],
+                              capture_output=True, text=True, encoding="utf-8", errors="replace",
+                              cwd=REPO)
+
+
+def _seed(wt):
+    """Copy the WHOLE working-tree `tools/verify/` bundle into `wt`. Returns the file count."""
+    copied = 0
+    for root, dirs, files in os.walk(os.path.join(REPO, "tools", "verify")):
+        dirs[:] = [d for d in dirs if d != "__pycache__"]
+        for f in files:
+            src = os.path.join(root, f)
+            dst = os.path.join(wt, os.path.relpath(src, REPO))
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.copyfile(src, dst)
+            copied += 1
+    return copied
+
+
+def _provision(wt, created):
+    """Build one pool worktree in the primary's mutation-time state (see the block above)."""
+    add = _add_worktree(wt)
+    if add.returncode != 0:
+        raise _CannotJudge("git worktree add failed: %s" % (add.stdout + add.stderr).strip()[:300])
+    created.append(wt)
+    _seed(wt)
+    _perturb_and_stage(wt, _A_SUBJECT)
+
+
+def _tree_state(wt):
+    """What a worktree IS, for comparison with the primary: HEAD, index, status and the bytes of
+    every file the mutations or the observers read from the copied bundle (plus A's subject)."""
+    def g(*args):
+        p = subprocess.run(["git"] + list(args), cwd=wt, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace")
+        return "%d\n%s" % (p.returncode, p.stdout)
+    h = hashlib.sha256()
+    rels = []
+    for root, dirs, files in os.walk(os.path.join(wt, "tools", "verify")):
+        dirs[:] = [d for d in dirs if d != "__pycache__"]
+        rels += [os.path.relpath(os.path.join(root, f), wt).replace("\\", "/") for f in files]
+    for rel in sorted(rels) + [_A_SUBJECT, _B_SUBJECT]:
+        h.update(rel.encode("utf-8") + b"\0")
+        with io.open(os.path.join(wt, *rel.split("/")), "rb") as fh:
+            h.update(hashlib.sha256(fh.read()).digest())
+    return {"head": g("rev-parse", "HEAD"), "staged": _staged_paths(wt),
+            "index": hashlib.sha256(g("ls-files", "-s").encode("utf-8")).hexdigest(),
+            "status": g("status", "--porcelain"), "bytes": h.hexdigest()}
+
+
+def _baseline_obs(wt, needles):
+    """({needle: state}, {guards row: ok|FAIL}) — the unmutated observation every verdict is
+    judged against. Shared by the primary's printed baseline and each pool worktree's check."""
+    _rc, rows = _guards_rows(wt)
+    obs = {}
+    for n in needles:
+        obs[n] = (("BLOCKS" if _prepush_blocks(wt) else "PASSES") if n == EXIT_NEEDLE
+                  else _row_state(rows, n))
+    return obs, rows
+
+
+def _why(e):
+    if isinstance(e, SystemExit):
+        return "exited %r" % (e.code,)
+    return "%s: %s" % (type(e).__name__, e)
+
+
+def _build_pool(paths, provision_one, state_of, created):
+    """Provision every path concurrently and observe each one's state. Returns (states, problems).
+    Judged against the primary by `_pool_problems`, never trusted on its own."""
+    problems, states = [], {}
+    lock = threading.Lock()
+
+    def one(p):
+        try:
+            provision_one(p, created)
+            st = state_of(p)
+        except BaseException as e:                      # noqa: BLE001 — SystemExit included
+            with lock:
+                problems.append("%s: could NOT be provisioned — %s" % (p, _why(e)))
+            return
+        with lock:
+            states[p] = st
+
+    threads = [threading.Thread(target=one, args=(p,)) for p in paths]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    return states, problems
+
+
+def _pool_problems(paths, states, problems, ref):
+    """Every reason the pool may NOT take a mutation. An empty list is the ONLY licence."""
+    problems = list(problems)
+    for p in paths:
+        if p not in states:
+            continue
+        elif states[p] != ref:
+            diff = sorted(k for k in set(ref) | set(states[p]) if ref.get(k) != states[p].get(k))
+            problems.append("%s: does NOT read the primary's baseline (differs in: %s)"
+                            % (p, ", ".join(diff)))
+    return problems
+
+
+def _make_runner(muts_by_wt, observe, pristine):
+    """run_one(wt, i): apply mutation i IN `wt`, observe, restore. Refuses on non-pristine bytes."""
+    def run_one(wt, i):
+        label, path, mutate, needle, _want = muts_by_wt[wt][i]
+        original = _read(path)
+        if original != pristine[path]:
+            raise _CannotJudge("%s is not pristine before %r — another mutation's bytes are in it"
+                               % (path, label.strip()))
+        mutated = mutate(original)
+        if mutated == original:
+            return ("NOAPPLY",)
+        _write(path, mutated)
+        try:
+            got = observe(wt, needle)
+        finally:
+            _write(path, original)
+        return ("GOT", got)
+    return run_one
+
+
+def _observe(wt, needle):
+    """The real observation — exactly what the sequential loop has always done per mutation."""
+    if needle == EXIT_NEEDLE:
+        return "BLOCKS" if _prepush_blocks(wt) else "PASSES"
+    _rc, rows = _guards_rows(wt)
+    return _row_state(rows, needle)
+
+
+def _dispatch(pool, order, run_one):
+    """Run every index in `order` across `pool`, one worker per worktree. Returns
+    (results {i: outcome}, done [completion order], problems)."""
+    if len(set(pool)) != len(pool):
+        return {}, [], ["the pool names a worktree twice: %s" % pool]
+    results, done, problems = {}, [], []
+    lock = threading.Lock()
+    held = set()
+
+    def one(wt, i):
+        with lock:
+            breach = wt in held
+            if not breach:
+                held.add(wt)
+        # ("DIED", code, message, re-observable?). ⚠ An isolation breach or a non-pristine refusal is
+        # a defect in the POOL and is never re-observed — a retry at concurrency 1 would hide exactly
+        # what the ISOLATION control exists to catch. Only an OBSERVATION that died may be retried.
+        if breach:
+            out = ("DIED", 2, "ISOLATION BREACH: %s already holds a mutation" % wt, False)
+        else:
+            try:
+                out = run_one(wt, i)
+            except _CannotJudge as e:
+                out = ("DIED", 2, str(e), False)
+            except SystemExit as e:
+                # A string code is the house `raise SystemExit(msg)` -> exit 1; an int keeps its
+                # code; 0/None mid-mutation is NOT a pass, so it cannot judge.
+                if isinstance(e.code, str):
+                    out = ("DIED", 1, e.code, True)
+                else:
+                    out = ("DIED", e.code if e.code else 2, "exited %r" % (e.code,), True)
+            except BaseException:                       # noqa: BLE001 — a crash is not a verdict
+                out = ("DIED", 1, traceback.format_exc(), True)
+            finally:
+                with lock:
+                    held.discard(wt)
+        with lock:
+            if i in results:
+                problems.append("mutation #%d ran twice" % i)
+            results[i] = out
+            done.append(i)
+
+    if len(pool) == 1:                                  # K=1: inline, in order, no threads
+        for i in order:
+            one(pool[0], i)
+        return results, done, problems
+    q = queue.Queue()
+    for i in order:
+        q.put(i)
+
+    def worker(wt):
+        while True:
+            try:
+                i = q.get_nowait()
+            except queue.Empty:
+                return
+            one(wt, i)
+
+    threads = [threading.Thread(target=worker, args=(wt,)) for wt in pool]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    return results, done, problems
+
+
+def _last(msg):
+    return (msg.strip().splitlines() or [""])[-1].strip()
+
+
+def _judge(muts, results, done, retried=None):
+    """(lines, exit code), in ORIGINAL mutation order whatever the completion order was.
+    `retried` {i: (first death, second outcome)} adds a note under every re-observed line."""
+    lines, fails, died = [], 0, []
+    retried = retried or {}
+    for i in range(len(muts)):
+        label, _path, _m, needle, want = muts[i]
+        out = results.get(i, ("DIED", 2, "this mutation NEVER RAN", False))
+        if out[0] == "NOAPPLY":
+            lines.append("  !! %-52s MUTATION DID NOT APPLY — anchor missing" % label)
+            fails += 1
+        elif out[0] == "DIED":
+            lines.append("  !! %-52s DIED — %s" % (label, _last(out[2])))
+            died.append(out)
+        else:
+            got = out[1]
+            ok = (got == want)
+            fails += 0 if ok else 1
+            lines.append("  %-6s %-52s row[%s]=%s (want %s)"
+                         % ("PASS" if ok else "**FAIL", label, needle, got, want))
+        if i in retried:
+            first, second = retried[i]
+            lines.append("         ^ RE-OBSERVED once at concurrency 1 after it DIED in the pool "
+                         "(%s); second observation: %s"
+                         % (_last(first[2]), "DIED again — " + _last(second[2])
+                            if second[0] == "DIED" else "verdict above"))
+    if died:
+        lines += ["", "  ** %d mutation(s) could NOT be observed — no RESULT is claimed. First:"
+                  % len(died), died[0][2].rstrip()]
+        return lines, died[0][1]
+    lines += ["", "  RESULT: %d of %d behaved as required" % (len(muts) - fails, len(muts))]
+    if fails:
+        lines += ["  ** A behavioural route did not respond to a real neuter. `CLAUDE.md` rung 5 and",
+                  "     the stopping rule in queue/: this is the FOURTH defeat of this control, and",
+                  "     the answer is to GIVE UP THE EXEMPTION, not to write attempt five. **"]
+    return lines, 1 if fails else 0
+
+
+def _execute(muts, pool, order, run_one):
+    """Dispatch, re-observe deaths once, then judge. A pool problem (a mutation missing or run
+    twice) exits 2.
+
+    ⭐ THE RETRY IS FOR THE UNOBSERVABLE, NEVER FOR A VERDICT (2026-10-04). At K=13 two prepush
+    observations died because load made an unrelated leg fail inside the child, which pre-empted the
+    routing count. So a mutation that DIED — and only one whose OBSERVATION died, never a pool
+    defect — is observed ONCE more, after the pool has drained, at concurrency 1, in an idle pool
+    worktree. A mutation that produced a verdict, PASS or FAIL, is never re-run: a retry may make an
+    unreadable run readable and can never overturn what was read. Dying twice leaves DIED standing,
+    and every re-observed line says so beneath it."""
+    results, done, problems = _dispatch(pool, order, run_one)
+    retried = {}
+    redo = [i for i in sorted(results) if results[i][0] == "DIED" and results[i][3]]
+    if redo:
+        again, _done, more = _dispatch([pool[0]], redo, run_one)
+        problems += more
+        for i in redo:
+            second = again.get(i, ("DIED", 2, "the re-observation NEVER RAN", False))
+            retried[i] = (results[i], second)
+            if second[0] != "DIED":
+                results[i] = second
+    missing = [i for i in range(len(muts)) if i not in results]
+    if missing:
+        problems.append("%d of %d mutation(s) never ran: %s"
+                        % (len(missing), len(muts), ", ".join(muts[i][0].strip() for i in missing)))
+    lines, code = _judge(muts, results, done, retried)
+    if problems:
+        lines += ["", "  ** THE POOL COULD NOT JUDGE — refusing (exit 2):"] + \
+                 ["     %s" % p for p in problems]
+        code = 2
+    return lines, code
+
+
 def main():
     tmp = tempfile.mkdtemp(prefix="zp_routing_probe_")
     wt = os.path.join(tmp, "wt")
+    created = []            # every worktree registered, so `finally` removes each one
+    bg = None               # the background pool build, joined before any teardown
     print("%s — mutation control for the behavioural routing routes" % SELF)
-    add = subprocess.run(["git", "worktree", "add", "--detach", wt, "HEAD"],
-                         capture_output=True, text=True, encoding="utf-8", errors="replace",
-                         cwd=REPO)
+    add = _add_worktree(wt)
     if add.returncode != 0:
         print("  cannot provision a worktree — REFUSING to run in the shared tree.")
         print(  (add.stdout + add.stderr).strip()[:500])
         shutil.rmtree(tmp, ignore_errors=True)
         return 2
+    created.append(wt)
     try:
         # The worktree is at HEAD; copy the WORKING copies in, so the control tests what is about to
         # be committed rather than what already was.
@@ -672,16 +1016,7 @@ def main():
         # eighty-nine, and a control whose stated scope is wider than its real one is the third
         # instance of `DC-22` found in this file in three rounds. Copying the directory removes
         # the hand-kept list entirely, so it cannot drift again as files are added.
-        _copied = 0
-        for _root, _dirs, _files in os.walk(os.path.join(REPO, "tools", "verify")):
-            _dirs[:] = [d for d in _dirs if d != "__pycache__"]
-            for _f in _files:
-                _src = os.path.join(_root, _f)
-                _rel = os.path.relpath(_src, REPO)
-                _dst = os.path.join(wt, _rel)
-                os.makedirs(os.path.dirname(_dst), exist_ok=True)
-                shutil.copyfile(_src, _dst)
-                _copied += 1
+        _copied = _seed(wt)
         # ⚠ SAY WHAT WAS COVERED. `probe-red` means something is broken; `probe-green` means only
         # that the copied set enforces. Routed files OUTSIDE this bundle still run from HEAD.
         print("  worktree seeded with %d working-tree file(s) from tools/verify/" % _copied)
@@ -689,6 +1024,31 @@ def main():
               "the bundle)")
         ship = os.path.join(wt, "tools", "verify", "ship.py")
         batch = os.path.join(wt, "tools", "verify", "batch.py")
+        muts = mutations(ship, batch)
+        needles = sorted({m[3] for m in muts})
+
+        # -- the pool, built IN THE BACKGROUND while the primary runs its preconditions ----------
+        # ⚠ Nothing the pool does feeds the zero point, the controls or the baseline below — they
+        # run exactly as before, in the primary, in order. The pool only has to END in the state
+        # the primary reaches, and `_pool_problems` checks that after the baseline, before any
+        # mutation is dispatched. Overlapping saves the pool's own ~60 s baseline.
+        k = _workers(len(muts))
+        paths = [os.path.join(tmp, "pool%d" % j) for j in range(1, k)]
+        pool_box = {"states": {}, "problems": ["the pool build never finished"]}
+
+        def _state_of(p):
+            o, r = _baseline_obs(p, needles)
+            return {"tree": _tree_state(p), "obs": o, "rows": r}
+
+        def _bg():
+            try:
+                pool_box["states"], pool_box["problems"] = _build_pool(
+                    paths, _provision, _state_of, created)
+            except BaseException as e:                  # noqa: BLE001
+                pool_box["problems"] = ["the pool build died — %s" % _why(e)]
+        if paths:
+            bg = threading.Thread(target=_bg)
+            bg.start()
 
         # ⭐⭐ RLY41-1: CONSTRUCT the failing baseline. See the block above `mutations()`.
         # ⚠ B BEFORE A, and the order is load-bearing: B asserts a CLEAN index as its own
@@ -723,9 +1083,7 @@ def main():
             return 2
         _a_path, _a_original = _fired
 
-        muts = mutations(ship, batch)
-        _rc, base = _guards_rows(wt)
-        needles = sorted({m[3] for m in muts})
+        obs, base = _baseline_obs(wt, needles)
         print("  baseline (unmutated):")
         bad = 0
         for n in needles:
@@ -747,7 +1105,7 @@ def main():
                 # ⛔ DO NOT DELETE `_require_fires` AS REDUNDANT. `BLOCKS` below is true only
                 # BECAUSE A staged a perturbation of a routed subject; remove it and every case here
                 # goes vacuous again, which is the exact state this control refused to certify.
-                state = "BLOCKS" if _prepush_blocks(wt) else "PASSES"
+                state = obs[n]
                 print("    %-38s %s (prepush exit)" % (n, state))
                 if state != "BLOCKS":
                     print("    ** BASELINE BROKEN: prepush already exits 0 unmutated, so the")
@@ -761,51 +1119,258 @@ def main():
         if bad:
             return 2
 
+        # -- the pool: K-1 more worktrees, each REQUIRED to match the primary before use --------
+        pool = [wt]
+        if paths:
+            _t0 = time.time()
+            bg.join()
+            bg = None
+            ref = {"tree": _tree_state(wt), "obs": obs, "rows": base}
+            problems = _pool_problems(paths, pool_box["states"], pool_box["problems"], ref)
+            if problems or len(created) != k:
+                print("  ** POOL REFUSED — %d of %d extra worktree(s) unusable; NO mutation runs. **"
+                      % (len(problems), len(paths)))
+                for p in problems:
+                    print("     %s" % p)
+                return 2
+            pool += paths
+            print("  pool: %d worktree(s) provisioned, each matching the primary's tree and baseline"
+                  " (waited %.1fs after the baseline)" % (len(paths), time.time() - _t0))
+        muts_by_wt = {w: mutations(os.path.join(w, "tools", "verify", "ship.py"),
+                                   os.path.join(w, "tools", "verify", "batch.py")) for w in pool}
+        pristine = {m[1]: _read(m[1]) for w in pool for m in muts_by_wt[w]}
+        # The four cheap `batch.py prepush` observations (EXIT_NEEDLE, ~2 s) go FIRST, before the
+        # pool fills with guards.py runs (~35 s each): measured at K=13 (2026-10-04), prepush runs
+        # dispatched LAST overlapped ~9 heavy runs and two died of the load. K=1 keeps the original
+        # order exactly. Output is in ORIGINAL order either way (`_judge`).
+        order = (list(range(len(muts))) if k == 1 else
+                 sorted(range(len(muts)), key=lambda i: muts[i][3] != EXIT_NEEDLE))
         print()
-        fails = 0
-        for label, path, mutate, needle, want in muts:
-            original = _read(path)
-            mutated = mutate(original)
-            if mutated == original:
-                print("  !! %-52s MUTATION DID NOT APPLY — anchor missing" % label)
-                fails += 1
-                continue
-            _write(path, mutated)
-            try:
-                if needle == EXIT_NEEDLE:
-                    # ⚠ THE END-TO-END OBSERVABLE, AND IT IS THE ROUTING COUNT — NOT THE EXIT CODE.
-                    # A `guards.py` row is computed by calling the verdict functions in guards' own
-                    # frame, where the property survives any amount of discarding by `cmd_prepush`,
-                    # so an end-to-end run is still the right shape. But the exit code is
-                    # over-determined: review signals, the pushed-tip leg and a crash all drive it
-                    # non-zero, so it stayed "BLOCKS" with the router deleted outright. The routing
-                    # count is the number that moves if and only if routing enforcement moves —
-                    # but it is only HALF the property, so `_prepush_blocks` requires the exit code
-                    # to agree with it. See its docstring: four attempts, each substituting one
-                    # proxy for another until both halves were watched at once.
-                    got = "BLOCKS" if _prepush_blocks(wt) else "PASSES"
-                else:
-                    _rc, rows = _guards_rows(wt)
-                    got = _row_state(rows, needle)
-            finally:
-                _write(path, original)
-            ok = (got == want)
-            fails += 0 if ok else 1
-            print("  %-6s %-52s row[%s]=%s (want %s)"
-                  % ("PASS" if ok else "**FAIL", label, needle, got, want))
-        print()
-        print("  RESULT: %d of %d behaved as required" % (len(muts) - fails, len(muts)))
-        if fails:
-            print("  ** A behavioural route did not respond to a real neuter. `CLAUDE.md` rung 5 and")
-            print("     the stopping rule in queue/: this is the FOURTH defeat of this control, and")
-            print("     the answer is to GIVE UP THE EXEMPTION, not to write attempt five. **")
-        return 1 if fails else 0
+        _t0 = time.time()
+        lines, code = _execute(muts, pool, order, _make_runner(muts_by_wt, _observe, pristine))
+        for line in lines:
+            print(line)
+        print("  (%d mutation(s) across %d worktree(s), %s=%s: %.1fs)"
+              % (len(muts), len(pool), WORKERS_ENV, os.environ.get(WORKERS_ENV, "<default>"),
+                 time.time() - _t0))
+        return code
     finally:
-        subprocess.run(["git", "worktree", "remove", "--force", wt],
-                       capture_output=True, text=True, cwd=REPO)
-        subprocess.run(["git", "worktree", "prune"], capture_output=True, text=True, cwd=REPO)
+        if bg is not None:          # never tear down while the pool build may still add one
+            bg.join()
+        with _GIT_LOCK:
+            for p in created:
+                subprocess.run(["git", "worktree", "remove", "--force", p],
+                               capture_output=True, text=True, cwd=REPO)
+            subprocess.run(["git", "worktree", "prune"], capture_output=True, text=True, cwd=REPO)
         shutil.rmtree(tmp, ignore_errors=True)
 
 
+# ---------------------------------------------------------------------- pool controls (--selftest)
+# (label, control, anchor, replacement), hooks.py's `_CONTROLS` shape: each control must PASS on
+# the live module and FAIL on the mutant built by replacing ONE anchor ABOVE the marker below. The
+# controls drive the REAL `_execute`/`_build_pool` with stub observers over scratch files, so they
+# test the pool machinery in seconds; the EQUIVALENCE of real verdicts is measured by running the
+# probe at K=1 and K=N and diffing (see the commit that landed this).
+_CONTROLS_MARK = "# " + "-" * 70 + " pool controls (--selftest)"
+
+
+def _stub(mod, n, k, wrong=None, delays=None, dies=None):
+    """Run mod._execute over n stub mutations on k scratch worktrees. Returns (lines, code, overlap).
+    `dies` {i: "loaded"|"always"}: the observation raises (as an unreadable prepush does) when other
+    observations are still in flight, or every time."""
+    tmp = tempfile.mkdtemp(prefix="zp_probe_selftest_")
+    try:
+        pool = []
+        for j in range(k):
+            d = os.path.join(tmp, "w%d" % j)
+            os.makedirs(d)
+            mod._write(os.path.join(d, "f.txt"), "pristine\n")
+            pool.append(d)
+
+        def muts_for(w):
+            return [("STUB-%02d" % i, os.path.join(w, "f.txt"),
+                     (lambda s, i=i: s + "mutation %d\n" % i), "n%d" % i,
+                     "WRONG" if i == wrong else "ok") for i in range(n)]
+        muts_by_wt = {w: muts_for(w) for w in pool}
+        pristine = {m[1]: mod._read(m[1]) for w in pool for m in muts_by_wt[w]}
+        inflight, overlap, lock = {}, [], threading.Lock()
+        total = [0]
+
+        def observe(w, needle):
+            i = int(needle[1:])
+            with lock:
+                inflight[w] = inflight.get(w, 0) + 1
+                total[0] += 1
+                if inflight[w] > 1:
+                    overlap.append(w)
+            time.sleep((delays or {}).get(i, 0.05))
+            body = mod._read(os.path.join(w, "f.txt"))
+            with lock:
+                inflight[w] -= 1
+                loaded = total[0] > 1
+                total[0] -= 1
+            mode = (dies or {}).get(i)
+            if mode == "always" or (mode == "loaded" and loaded):
+                raise SystemExit("stub: no routing count (%s)\n  raw prepush output: <stub %d>"
+                                 % (mode, i))
+            return "ok" if body == "pristine\nmutation %d\n" % i else "TRAMPLED"
+        lines, code = mod._execute(muts_for(pool[0]), pool, list(range(n)),
+                                   mod._make_runner(muts_by_wt, observe, pristine))
+        return lines, code, overlap
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def _ctl_isolation(mod):
+    lines, code, overlap = _stub(mod, 6, 3)
+    ok = code == 0 and not overlap and "  RESULT: 6 of 6 behaved as required" in lines
+    return ok, "K=3: exit %d, overlap seen by the stub on %s" % (code, sorted(set(overlap)) or "none")
+
+
+def _ctl_count(mod):
+    lines, code, _o = _stub(mod, 5, 2)
+    ran = sum(1 for ln in lines if "STUB-" in ln and ln.lstrip().startswith("PASS"))
+    ok = code == 0 and ran == 5 and "  RESULT: 5 of 5 behaved as required" in lines
+    return ok, "K=2: exit %d, %d of 5 mutation lines PASS" % (code, ran)
+
+
+def _ctl_fail_propagates(mod):
+    lines, code, _o = _stub(mod, 5, 3, wrong=3)
+    ok = code == 1 and "  RESULT: 4 of 5 behaved as required" in lines
+    return ok, "K=3 with STUB-03 wanting WRONG: exit %d (must be 1)" % code
+
+
+def _ctl_equivalence(mod):
+    delays = {0: 0.30, 1: 0.20, 2: 0.10, 3: 0.0, 4: 0.0, 5: 0.0}
+    one, c1, _o = _stub(mod, 6, 1, delays=delays)
+    many, cn, _o = _stub(mod, 6, 3, delays=delays)
+    ok = c1 == 0 and cn == 0 and one == many
+    return ok, "K=1 vs K=3 (later jobs finish first): %s" % (
+        "identical" if one == many else "DIFFER: %s" % [ln.strip()[:24] for ln in many if "STUB" in ln])
+
+
+def _ctl_retry_recovers(mod):
+    # STUB-02 is fast and finishes while the others are still in flight, so it dies in the pool;
+    # alone, at concurrency 1, it reads. It must come back PASS, with the re-observation noted.
+    delays = dict((i, 0.3) for i in range(6))
+    delays[2] = 0.02
+    lines, code, _o = _stub(mod, 6, 3, delays=delays, dies={2: "loaded"})
+    noted = [ln for ln in lines if "RE-OBSERVED once at concurrency 1" in ln and "verdict above" in ln]
+    ok = code == 0 and "  RESULT: 6 of 6 behaved as required" in lines and len(noted) == 1
+    return ok, "dies only under load: exit %d, %d re-observation note(s)" % (code, len(noted))
+
+
+def _ctl_retry_never_masks(mod):
+    # STUB-02 dies every time. It must stay DIED (no RESULT, non-zero), AND the note must show it
+    # WAS re-observed and died again — a probe that skipped the retry would not print that.
+    lines, code, _o = _stub(mod, 5, 2, dies={2: "always"})
+    again = [ln for ln in lines if "RE-OBSERVED" in ln and "DIED again" in ln]
+    ok = (code == 1 and not any("RESULT:" in ln for ln in lines) and len(again) == 1
+          and any("STUB-02" in ln and "DIED" in ln for ln in lines))
+    return ok, "always dies: exit %d, %d 'DIED again' note(s), RESULT claimed: %s" % (
+        code, len(again), any("RESULT:" in ln for ln in lines))
+
+
+def _pool_case(mod, fail_at=None, differ_at=None):
+    created, ref = [], {"tree": "same"}
+
+    def prov(p, c):
+        if p == fail_at:
+            raise mod._CannotJudge("stub: git worktree add failed")
+        c.append(p)
+
+    def state_of(p):
+        return {"tree": "DIFFERENT"} if p == differ_at else {"tree": "same"}
+    paths = ["p1", "p2", "p3"]
+    states, problems = mod._build_pool(paths, prov, state_of, created)
+    return mod._pool_problems(paths, states, problems, ref)
+
+
+def _ctl_provision_fails(mod):
+    problems = _pool_case(mod, fail_at="p2")
+    return bool(problems), "one worktree fails to provision -> %d problem(s)" % len(problems)
+
+
+def _ctl_baseline_differs(mod):
+    problems = _pool_case(mod, differ_at="p3")
+    clean = _pool_case(mod)
+    return bool(problems) and not clean, "one worktree reads another baseline -> %d problem(s); " \
+        "identical pool -> %d" % (len(problems), len(clean))
+
+
+_CONTROLS = [
+    ("ISOLATION   two concurrent mutations never share a worktree", _ctl_isolation,
+     "    threads = [threading.Thread(target=worker, args=(wt,)) for wt in pool]",
+     "    threads = [threading.Thread(target=worker, args=(pool[0],)) for wt in pool]"),
+    ("COUNT       a mutation dropped from the pool is caught", _ctl_count,
+     "    for i in order:\n        q.put(i)",
+     "    for i in order[:-1]:\n        q.put(i)"),
+    ("FAIL        a wrong observation still exits 1", _ctl_fail_propagates,
+     "            fails += 0 if ok else 1",
+     "            fails += 0"),
+    ("EQUIVALENCE K=N prints what K=1 prints, in original order", _ctl_equivalence,
+     "    for i in range(len(muts)):\n        label, _path, _m, needle, want = muts[i]",
+     "    for i in done:\n        label, _path, _m, needle, want = muts[i]"),
+    ("PROVISION   a worktree that cannot be built refuses", _ctl_provision_fails,
+     '                problems.append("%s: could NOT be provisioned — %s" % (p, _why(e)))',
+     "                pass"),
+    ("BASELINE    a worktree reading another baseline refuses", _ctl_baseline_differs,
+     "        elif states[p] != ref:",
+     "        elif False:"),
+    ("RETRY       a death under load is re-observed once, and says so", _ctl_retry_recovers,
+     "    if redo:\n        again, _done, more",
+     "    if False:\n        again, _done, more"),
+    ("RETRY       a death that recurs stays DIED after its re-observation", _ctl_retry_never_masks,
+     "    if redo:\n        again, _done, more",
+     "    if False:\n        again, _done, more"),
+]
+
+
+def _mutant(anchor, repl):
+    """(module, None) from this file's source with ONE anchor above the marker replaced, or
+    (None, why) — a mutation that does not apply fails the suite rather than retiring a control."""
+    import types
+    src_path = os.path.abspath(__file__)
+    with io.open(src_path, encoding="utf-8") as fh:
+        src = fh.read()
+    head, sep, tail = src.partition(_CONTROLS_MARK)
+    if head.count(anchor) != 1:
+        return None, "MUTATION DID NOT APPLY — anchor found %d time(s)" % head.count(anchor)
+    mod = types.ModuleType("zp_probe_mutant")
+    mod.__file__ = src_path
+    try:
+        exec(compile(head.replace(anchor, repl, 1) + sep + tail, src_path + ".mutant", "exec"),
+             mod.__dict__)
+    except SyntaxError as e:
+        return None, "MUTATION DID NOT APPLY — mutant does not compile: %s" % (e,)
+    return mod, None
+
+
+def selftest():
+    me = sys.modules[__name__]
+    print("%s --selftest — pool controls (each: MUST PASS live, MUST FIRE on its mutant)" % SELF)
+    bad = 0
+    for label, ctl, anchor, repl in _CONTROLS:
+        try:
+            ok_live, why_live = ctl(me)
+        except Exception as e:                              # noqa: BLE001 — a raise is a failure
+            ok_live, why_live = False, "raised %r" % (e,)
+        mod, err = _mutant(anchor, repl)
+        if mod is None:
+            ok_mut, why_mut = True, err                     # True = the mutant "passed" = FAIL
+        else:
+            try:
+                ok_mut, why_mut = ctl(mod)
+            except Exception as e:                          # noqa: BLE001 — a crash is not a catch
+                ok_mut, why_mut = True, "mutant raised %r, which proves nothing" % (e,)
+        good = ok_live and not ok_mut
+        bad += 0 if good else 1
+        print("  %-4s %-58s live: %s" % ("ok" if good else "FAIL", label, why_live))
+        print("       %-58s mutant fired: %s — %s" % ("", "yes" if not ok_mut else "NO", why_mut))
+    print("  selftest: %d of %d control(s) passed live AND fired on their mutant"
+          % (len(_CONTROLS) - bad, len(_CONTROLS)))
+    return 1 if bad else 0
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(selftest() if "--selftest" in sys.argv[1:] else main())
