@@ -83,8 +83,9 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
   funext m
   simp [ZeroParadox.selfApply, Nat.Partrec.Code.eval_const]
 
--- Statement: distinct Gödel numbers imply distinct codes. Proof is `Encodable.encode_inj`;
---   both quine hypotheses are unused. A fact about the encoding, not about quines.
+-- Statement: equal Gödel numbers imply equal codes (`encode c₁ = encode c₂ → c₁ = c₂`). Proof is
+--   `Encodable.encode_inj`; both quine hypotheses are unused. A fact about the encoding, not about
+--   quines. The converse holds of any function, by `congrArg`.
 #check @ZeroParadox.quine_goedel_injective
 
 -- Statement: `encode c` is *a* period of `eval c` — not shown least, and a constant is
@@ -108,7 +109,8 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 -- Statement: under `[KleeneStructure L]`, any Quine atom `q : L` equals `bot` of the `ZPSemilattice L`.
 --   No `Code` and no Kleene clause appear; the `[KleeneStructure]` hypothesis is inert on the proof
 --   route — though NOT absent from the axiom footprint, since `#print axioms` follows the statement.
--- Reading: "the Kleene quine IS ⊥" — the class's commitment, and not a Lean `=` (`Code` versus `L`).
+-- Reading: the tie of the Kleene quine to `bot` of `L` is the `KleeneStructure` commitment, and not
+--   a Lean `=` (`Code` versus `L`).
 #check @ZeroParadox.kleene_quine_is_bot
 
 -- Statement: the class field — the instance's `botCode` satisfies `IsComputationalQuine`, which the
@@ -118,8 +120,9 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 #check @ZeroParadox.KleeneStructure.botCode_is_quine
 
 -- Statement: `IsQuineAtom (bot : MachinePhase)` — c₀, ⊥ of `MachinePhase`, is its unique
---   self-containing state. Mentions no `Code` and no execution. The self-containment is
---   `machinePhaseAFA`'s field, and the `example` after this theorem in
+--   self-containing state. Mentions no `Code` and no execution. `machinePhaseAFA` defines
+--   `selfMem x := x = bot`, so the statement holds by definition (`Iff.rfl` unfolds it), and the
+--   `example` after this theorem in
 --   `ZeroParadox/Computability/Kleene.lean` proves the same type with no Kleene instance.
 -- Reading: that c₀ is self-EXECUTING is DA-1's claim. DA-1's precondition is the occurrence
 --   commitment, which DA-1 consumes; the `KleeneStructure` commitment adds only that `botCode`
@@ -128,7 +131,8 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 
 -- Statement: c₀ is a Quine atom of `MachinePhase` AND a state sequence in that carrier starts at c₀
 --   and never steps.
--- Reading: CONTROL. Being a Quine atom does not make anything move; that is the occurrence commitment.
+-- Reading: CONTROL. Being a Quine atom does not make anything move; that the snap occurs follows from
+--   the occurrence commitment together with DA-1 (`ZeroParadox/Order/Snap.lean`'s Formal Overview).
 open ZeroParadox ZeroParadox.ZPSemilattice in
 example : IsQuineAtom (bot : MachinePhase) ∧
     ∃ S : ℕ → MachinePhase, S 0 = bot ∧ IsStateSequence S ∧ ∀ n, S (n + 1) = S n :=
@@ -222,7 +226,7 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 #check @ZeroParadox.flipPoles_fixes_progress
 
 -- Statement: a self-looping configuration makes the step relation non-well-founded.
--- Reading: the bridge to `Multihomed/Boundary.lean`'s `floor_not_wellFounded` — the live/dead
+-- Reading: the bridge to `ZeroParadox/Multihomed/Boundary.lean`'s `floor_not_wellFounded` — the live/dead
 --   split has the SHAPE of the ν/μ divide at a different level, never an identity with it.
 --   ONE-DIRECTIONAL: the converse is false, and "dead" does NOT give
 --   a well-founded relation.
@@ -238,11 +242,11 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 
 -- Statement: a non-deterministic relation can self-loop AND reach something else.
 -- Reading: what blocks the snap in § VI is DETERMINISM, not the self-loop —
---   `Miniature.lean`'s `pole_cannot_fan` in machine vocabulary.
+--   `ZeroParadox/Miniature.lean`'s `pole_cannot_fan` in machine vocabulary.
 #check @ZeroParadox.nondeterministic_escapes_the_trap
 
--- Statement: the five faces bundled — no unstarted state, the trichotomy, the pole preserved
---   under swap, the NO-GO, and the inversion.
+-- Statement: the five faces bundled — halted or has a next configuration, the trichotomy, the
+--   pole preserved under swap, the NO-GO, and the inversion (its two halves as two conjuncts).
 #check @ZeroParadox.occurrence_shape
 
 /-! ### § VII. NO-GO gauges — what may NOT be inferred -/
@@ -254,7 +258,7 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 /-! ### § VIII. Ground zero — the bottom as a BEHAVIOUR, not a configuration
 
 `ZeroParadox/Computability/GroundZero.lean`. Reads the step function as a coalgebra for
-`X ↦ 1 + X` and connects it to `NatListRegime.lean`, which the project already carried. -/
+`X ↦ 1 + X` and connects it to `ZeroParadox/Computability/NatListRegime.lean`, which the project already carried. -/
 
 -- Statement: `(stepCoalg f s).1` is `false` or `true`. Axiom-free.
 -- Reading: there is no "exists but has not begun" — the head type is `Bool`, so that state is
@@ -271,13 +275,14 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 
 -- Statement: `¬ EventuallyLeaf x → x = natInfinity`. A behaviour that never reaches a leaf is
 --   uniquely `natInfinity`. A Lean `=` inside one type, by bisimulation.
--- Reading: the computational counterpart of `quine_unique` — the bottom pinned apophatically,
---   by what it never does, with no element-hood in any machine carrier assumed.
+-- Reading: the computational counterpart of `quine_unique` — `natInfinity`, in the final coalgebra
+--   of `X ↦ 1 + X`, pinned apophatically, by what it never does, with no element-hood in any
+--   machine carrier assumed.
 #check @ZeroParadox.notEL_unique
 
 -- Statement: a self-looping configuration's unfolding equals `natInfinity`.
--- Reading: the machine bottom's BEHAVIOUR and the coalgebraic infinity are the same point of the
---   final coalgebra. The `=` is between two `Cofix` elements, within one type; the configuration
+-- Reading: a self-looping configuration's BEHAVIOUR and `natInfinity` are the same point of the
+--   final coalgebra of `X ↦ 1 + X`. The `=` is between two `Cofix` elements, within one type; the configuration
 --   `s : σ` is NOT equated with anything — it lives in a different type. It says nothing about
 --   whether the FRAMEWORK's bottom self-loops — that is the commitment.
 #check @ZeroParadox.loop_unfolds_to_infinity
@@ -298,24 +303,27 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 -- Statement: in `MachinePhase`, T-SNAP's triple (`c₀ ≠ c₁`, `c₁ ≠ c₀`, `join c₀ c₁ = c₁`) holds
 --   together with a dynamics `stuckPhase` under which every phase is fixed. It constrains the SHAPE
 --   of a transition; it does not assert one occurs.
--- Reading: that the snap occurs is the occurrence commitment, which DA-1 consumes.
+-- Reading: that the snap occurs follows from the occurrence commitment together with DA-1, as
+--   stated in `ZeroParadox/Order/Snap.lean`'s Formal Overview, not from this line.
 #check @ZeroParadox.tsnap_holds_but_nothing_moves
 
-/-! ### § IX. Forced self-reference on infinite carriers — a map EXISTS; nothing says it is applied -/
+/-! ### § IX. Self-copy maps on infinite carriers — a map EXISTS, classically; nothing says it is applied -/
 
--- Statement: a type is infinite iff it carries a `SelfCopyRef` map: one-to-one, not onto, with
---   exactly one fixed point.
--- Reading: SCOPE. This is the existence of such a map, not that one is applied; that ⊥ of a
---   `ZPSemilattice` performs one is a commitment (`ZeroParadox/Computability/SelfCopyReference.lean`
---   § IV).
+-- Statement: for `α : Type`, `α` is infinite iff it carries a `SelfCopyRef` map: one-to-one, not
+--   onto, with exactly one fixed point. The infinite-to-map direction is proved with
+--   `Classical.choice` and is not provable in set theory without choice (the `PurityCheck` note in
+--   `ZeroParadox/Computability/SelfCopyReference.lean`).
+-- Reading: SCOPE. This is the existence of such a map, not that one is applied. No carrier of the
+--   framework is claimed here to perform one: `MachinePhase`, which carries `machinePhaseKleene`,
+--   admits none (the `example` below).
 #check @ZeroParadox.infinite_iff_exists_selfCopyRef
 
--- Statement: on a finite carrier no `SelfCopyRef` map exists.
+-- Statement: for finite `α : Type`, no `SelfCopyRef` map exists.
 #check @ZeroParadox.no_selfCopyRef_of_finite
 
 -- Statement: in particular none exists on `MachinePhase`, the two-state carrier of c₀ and c₁.
--- Reading: CARRIER. The forcing above reaches infinite carriers only; the carrier of the computational
---   bottom's Quine atom (§ IV) gets no such map.
+-- Reading: CARRIER. The infinite-to-map direction reaches infinite carriers only; `MachinePhase`,
+--   the carrier of c₀'s Quine atom (§ IV) and of `machinePhaseKleene`, admits no such map.
 example (f : ZeroParadox.MachinePhase → ZeroParadox.MachinePhase) : ¬ ZeroParadox.SelfCopyRef f :=
   haveI : Finite ZeroParadox.MachinePhase :=
     Finite.of_surjective (fun b : Bool => if b then ZeroParadox.c₁ else ZeroParadox.c₀)
