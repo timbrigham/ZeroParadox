@@ -126,9 +126,9 @@ def _prepush_exit(wt):
     return _count_from(*_run_prepush(wt), wt=wt)
 
 
-def _run_prepush(wt):
+def _run_prepush(wt, overlay=None):
     """(combined output, exit code) of ONE nested `batch.py prepush --ranges HEAD~1..HEAD` in `wt`.
-    Every observable below reads this run; none re-implements it."""
+    Every observable below reads this run; none re-implements it. `overlay`: see `_OVERLAY`."""
     # ⭐⭐ THE NESTED RUNS DO NOT PAY THE ADVISORY INTERPRETATION LAYER. Measured 2026-09-07 in a
     # seeded worktree, in the invocation this function actually uses:
     #     prepush --ranges HEAD~1..HEAD, agent gate ON  : 119 s
@@ -153,11 +153,47 @@ def _run_prepush(wt):
     # judgement is novel. ⚠ The 17-of-17 run had the gate off EVERYWHERE — a strictly MORE aggressive
     # configuration than this — so it bounds this change from above and is not a measurement of it.
     # ⚠ The skip is DISCLOSED: `batch.py:436` prints `agent gate skip — interpretation layer NOT run`.
-    p = subprocess.run([sys.executable, os.path.join(wt, "tools", "verify", "batch.py"),
-                        "prepush", "--ranges", "HEAD~1..HEAD"],
-                       capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=wt,
-                       env={**os.environ, "ZP_AGENT_GATE": "0"})
+    real = os.path.join(wt, "tools", "verify", "batch.py")
+    argv = ["prepush", "--ranges", "HEAD~1..HEAD"]
+    made = []
+    try:
+        if overlay is None:
+            cmd = [sys.executable, real] + argv
+        else:
+            # `overlay` is batch.py SOURCE to EXECUTE in place of the bytes on disk — see `_OVERLAY`.
+            for body in (_OVERLAY_LAUNCHER, overlay):
+                fd, p = tempfile.mkstemp(prefix="zp_probe_overlay_", suffix=".py")
+                with io.open(fd, "w", encoding="utf-8", newline="\n") as fh:
+                    fh.write(body)
+                made.append(p)
+            cmd = [sys.executable, made[0], real, made[1]] + argv
+        p = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           cwd=wt, env={**os.environ, "ZP_AGENT_GATE": "0"})
+    finally:
+        for f in made:
+            try:
+                os.remove(f)
+            except OSError:
+                pass
     return p.stdout + p.stderr, p.returncode
+
+
+# ⭐⭐ `_OVERLAY` — RELY-CC-6 (2026-10-04): HOW A MUTATION IS OBSERVED IN THE ROUTING-CLEAN STATE.
+# The agreement check matters ONLY at routing == 0 (above zero the push is refused anyway), and an
+# on-disk edit of `batch.py` can never be observed there: `batch.py` is a routed CHECKER, so editing
+# it makes `moved` fire (red BY ABSENCE unstaged, BY MISMATCH staged). Measured in this change's
+# worktree: unperturbed `prepush PASS`; the same tree with `_SYNTH_FAIL` written to disk,
+# "3 push check(s) failed — 2 routing, 1 other". So the clean-phase rows leave the routed BYTES
+# untouched and EXECUTE the mutated source instead: this launcher runs it as `__main__` with
+# `__file__` and `sys.path[0]` set to the real `batch.py`, which models a weakening that was
+# already reviewed and committed, the state in which nothing but the enforcement stands in the way.
+_OVERLAY_LAUNCHER = (
+    "import io, os, sys\n"
+    "real, src = sys.argv[1], sys.argv[2]\n"
+    "sys.argv = [real] + sys.argv[3:]\n"
+    "sys.path[0] = os.path.dirname(real)\n"
+    "g = {'__name__': '__main__', '__file__': real, '__builtins__': __builtins__}\n"
+    "exec(compile(io.open(src, encoding='utf-8').read(), real, 'exec'), g)\n")
 
 
 class _RefusalUnread(SystemExit):
@@ -208,7 +244,13 @@ def _count_from(out, rc, wt="?"):
 # fires when a NON-routing inline leg FAILS, and then it `die()`s before the `%d routing` line, so the
 # count observable read nothing and recorded DIED — the K=13 deaths, reproduced deterministically.
 # So these cases now CONSTRUCT that state (`_SYNTH_FAIL`) and read WHICH refusal the enforcement
-# reached, conjoined with the exit code (say AND do, the `_prepush_blocks` lesson):
+# reached, conjoined with the exit code (say AND do, the `_prepush_blocks` lesson).
+# ⚠⚠ RELY-CC-6, THE SAME ROOT ONE LEVEL DOWN: read with A staged, every one of those words was a
+# refusal, so the rows told apart WHICH MESSAGE printed and never WHETHER THE PUSH WAS REFUSED, and
+# /rely moved the check inside `if any(_VERDICT.values()):` (V3) with all rows green while the real
+# enforcement let RLYB4-1 through. So REFUSAL_NEEDLE rows now run ONLY in the ROUTING-CLEAN phase
+# (`_clean_phase`: the zero-point tree, index clean, the mutation EXECUTED through `_OVERLAY`), where
+# `PASS` means the push PROCEEDS. The words:
 #     INCONSISTENT · INCOMPLETE · FAILED · PASS   -> the refusal reached, process agreed
 #     <kind>-BUT-EXIT-0 / PASS-BUT-EXIT-<n>       -> the two halves disagree (never a want)
 #     MIXED(...)                                  -> more than one refusal printed (never a want)
@@ -236,8 +278,8 @@ def _refusal_from(out, rc, wt="?"):
         _died(e, out, rc, wt)
 
 
-def _prepush_refusal(wt):
-    return _refusal_from(*_run_prepush(wt), wt=wt)
+def _prepush_refusal(wt, overlay=None):
+    return _refusal_from(*_run_prepush(wt, overlay), wt=wt)
 
 
 def _prepush_blocks(wt):
@@ -600,6 +642,35 @@ _RLYB4_1 = ("        verdict_record(key, 0 if ok else 1)",
             "        verdict_record(key, (0 if ok else 1) * 0)")
 _RLYB4_1B = ("        if not ok:\n            display_fail(key)\n", "        pass\n")
 _NO_AGREE = ("    if _legs != len(_DISPLAYED_FAILS):", "    if False:")
+# The refusal branch itself: the PRECOND row's protection (an honest FAIL refuses only through it).
+_REFUSE_BRANCH = "    if any(_VERDICT.values()):\n"
+_NO_REFUSE = (_REFUSE_BRANCH, "    if False:\n")
+# ⚠ /rely r2's two weakenings, VERBATIM (`rely_concurrency_r2/variants.py`). Each keeps every anchor
+#   above present exactly once and disables the agreement check only where routing == 0.
+_AGREE_BLOCK = (
+    '    _legs = sum(v for k, v in _VERDICT.items() if k != "routing")\n'
+    '    if _legs != len(_DISPLAYED_FAILS):\n'
+    '        die("push verdict INCONSISTENT — %d leg failure(s) RECORDED but %d FAIL row(s) DISPLAYED "\n'
+    '            "(%s). One of the two was tampered with or dropped; a count that disagrees with the "\n'
+    '            "screen cannot be acted on either way, so this refuses rather than picking one."\n'
+    '            % (_legs, len(_DISPLAYED_FAILS), ", ".join(_DISPLAYED_FAILS) or "none displayed"))\n')
+# V3: the check moved INSIDE the refusal branch ("cross-check only when refusing anyway").
+_V3 = ((_AGREE_BLOCK, ""),
+       (_REFUSE_BRANCH, _REFUSE_BRANCH + "".join(("    " + ln if ln.strip() else ln)
+                                                 for ln in _AGREE_BLOCK.splitlines(True))))
+# V4: one inserted statement before the unchanged check.
+_V4 = ((_AGREE_BLOCK,
+        "    if not any(_VERDICT.values()):\n        del _DISPLAYED_FAILS[:]\n" + _AGREE_BLOCK),)
+
+# Row labels named ONCE: `mutations()` and the vacuity table (`_VACUITY`) must name the same rows.
+L_PRE = "PRECOND  _SYNTH_FAIL alone: an honest purity FAIL"
+L_PRE_META = "META     PRECOND with the refusal branch DELETED"
+L_B4_1 = "RLYB4-1  producer annihilates its own recorded count"
+L_B4_1B = "RLYB4-1b the display tally is dropped"
+L_B4_1_META = "META     RLYB4-1 with the agreement check DELETED"
+L_B4_1B_META = "META     RLYB4-1b with the agreement check DELETED"
+L_B4_1_V3 = "META-V3  RLYB4-1, check moved inside the refusal branch"
+L_B4_1_V4 = "META-V4  RLYB4-1, tally cleared when nothing is recorded"
 
 
 def _apply_all(*edits):
@@ -708,25 +779,30 @@ def mutations(ship, batch):
         # 2026-08-23 photograph reproduced against the fix written for it.
         # MUST READ `INCONSISTENT`: `display_fail` tallies what reached the SCREEN, so a recorded zero
         # disagrees with a displayed FAIL and `enforce_prepush_verdict` refuses on the mismatch.
-        # ⚠⚠ ONLY OBSERVABLE WITH A FAILING NON-ROUTING LEG, which `_SYNTH_FAIL` constructs in the same
-        # edit — see the RELY-CC-1 block above `REFUSAL_NEEDLE`. Without it both cases read `FAILED`
-        # (red), so a lost precondition cannot pass vacuously either.
-        ("RLYB4-1  producer annihilates its own recorded count", batch,
-         _apply_all(_SYNTH_FAIL, _RLYB4_1), REFUSAL_NEEDLE, "INCONSISTENT"),
+        # ⚠⚠ ONLY OBSERVABLE WITH A FAILING NON-ROUTING LEG (`_SYNTH_FAIL`, same edit) AND ONLY AT
+        # ROUTING == 0 (RELY-CC-6): every REFUSAL_NEEDLE row runs in `_clean_phase`, never in the pool.
+        # The observable is whether the PUSH IS REFUSED (exit code AND refusal word), so each row
+        # below differs from its PRECOND only through the check it names:
+        #     PRECOND (honest FAIL)        FAILED        refused by the refusal branch
+        #     RLYB4-1 / RLYB4-1b           INCONSISTENT  refused by the agreement check
+        #     META RLYB4-1 (check gone)    PASS          the push PROCEEDS over a displayed FAIL
+        #     META RLYB4-1b (check gone)   FAILED        still refused: the RECORD holds the 1, so
+        #                                                deleting the check costs only the screen
+        (L_PRE, batch, _apply_all(_SYNTH_FAIL), REFUSAL_NEEDLE, "FAILED"),
+        (L_PRE_META, batch, _apply_all(_SYNTH_FAIL, _NO_REFUSE), REFUSAL_NEEDLE, "PASS"),
+        (L_B4_1, batch, _apply_all(_SYNTH_FAIL, _RLYB4_1), REFUSAL_NEEDLE, "INCONSISTENT"),
         # The other half of the same property: drop the DISPLAY tally instead of the record. It must
         # fail closed in this direction too, or the agreement check is a one-way ratchet that a
         # single deletion walks past.
-        ("RLYB4-1b the display tally is dropped", batch,
-         _apply_all(_SYNTH_FAIL, _RLYB4_1B), REFUSAL_NEEDLE, "INCONSISTENT"),
-        # ⭐ THE META-CONTROLS FOR THE TWO ABOVE (RELY-CC-1): the same compositions with the agreement
-        # check DELETED must read `FAILED` — the routing refusal, NOT `INCONSISTENT` — i.e. the case
-        # above would go RED. If either ever reads INCONSISTENT here, the RLYB4 observation is being
-        # satisfied by something other than the check it is named for, which is the vacuity /rely
-        # measured. The edits are the SAME named tuples, so case and meta cannot drift apart.
-        ("META     RLYB4-1 with the agreement check DELETED", batch,
-         _apply_all(_SYNTH_FAIL, _RLYB4_1, _NO_AGREE), REFUSAL_NEEDLE, "FAILED"),
-        ("META     RLYB4-1b with the agreement check DELETED", batch,
-         _apply_all(_SYNTH_FAIL, _RLYB4_1B, _NO_AGREE), REFUSAL_NEEDLE, "FAILED"),
+        (L_B4_1B, batch, _apply_all(_SYNTH_FAIL, _RLYB4_1B), REFUSAL_NEEDLE, "INCONSISTENT"),
+        # ⭐ THE META-CONTROLS (RELY-CC-1, RELY-CC-6): the same compositions with the protection
+        # DELETED or WEAKENED, built from the SAME named tuples so case and meta cannot drift. Each
+        # pair is checked by `_VACUITY` to differ in want and to compose exactly row + deletion.
+        (L_B4_1_META, batch, _apply_all(_SYNTH_FAIL, _RLYB4_1, _NO_AGREE), REFUSAL_NEEDLE, "PASS"),
+        (L_B4_1B_META, batch, _apply_all(_SYNTH_FAIL, _RLYB4_1B, _NO_AGREE), REFUSAL_NEEDLE,
+         "FAILED"),
+        (L_B4_1_V3, batch, _apply_all(_SYNTH_FAIL, _RLYB4_1, *_V3), REFUSAL_NEEDLE, "PASS"),
+        (L_B4_1_V4, batch, _apply_all(_SYNTH_FAIL, _RLYB4_1, *_V4), REFUSAL_NEEDLE, "PASS"),
         # MUST GO RED: deleting the enforcement outright is the one consumer-side move left, and the
         # AST row is what makes it loud. ⚠ Judged on the guards ROW, not the exit code — a deleted
         # enforcement genuinely does let prepush exit 0, so "still blocks" is not achievable here and
@@ -771,6 +847,101 @@ def mutations(ship, batch):
     ]
 
 
+# ⭐ RELY-CC-7: THE ROW COUNT IS PINNED. A deleted row used to shrink the denominator silently
+# ("0 of 0" passed). `_pin_problems` refuses (exit 2) when this or `_EXPECTED_CONTROLS` disagrees with
+# the list, and `hooks.py`'s routing-control plan line states the same number. ⚠ Same-file pinning:
+# it catches an UNCOORDINATED deletion only; one edit changing row and constant together passes.
+_EXPECTED_MUTATIONS = 23
+
+# ⭐⭐ THE VACUITY DETECTOR (DC: "a mutation row observed in a state that masks the property it
+# names"; RELY-CC-1 and RELY-CC-6 are its two instances). A row is VACUOUS when its observation does
+# not change once the protection it names is deleted. For each COVERED row the table names a paired
+# row composing EXACTLY that row's transform plus the deletion; `_ctl_vacuity` asserts, on the real
+# `batch.py` source, that the pair composes so and that the two WANTS DIFFER, and the probe run then
+# requires both observations — so a pair that both PASS is an observed flip. (row, pair, edits)
+_VACUITY = (
+    (L_PRE, L_PRE_META, (_NO_REFUSE,)),
+    (L_B4_1, L_B4_1_META, (_NO_AGREE,)),
+    (L_B4_1B, L_B4_1B_META, (_NO_AGREE,)),
+    (L_B4_1, L_B4_1_V3, _V3),
+    (L_B4_1, L_B4_1_V4, _V4),
+)
+# Rows NOT covered, and why — every row is in exactly one of `_VACUITY` (as row or pair) or here.
+_GUARDS_ROUTE = ("its protection is a guards.py ROUTE (the detector the row reads), another file: "
+                 "no single same-file deletion expresses it; baseline-ok vs want-FAIL only shows the "
+                 "mutation moves the row")
+_STAY_GREEN = "a MUST-STAY-GREEN row: its claim is indifference, not a protection that can be deleted"
+_EXIT_HALF = ("its protection is the probe's own exit conjunct (`_prepush_blocks`); covered at unit "
+              "level by the CONJUNCTION control in --selftest, not end to end")
+_VACUITY_UNCOVERED = {
+    "RLY27-1  one space before the arg list": _STAY_GREEN,
+    "RLY27-3  list(...) wrapper around the call": _STAY_GREEN,
+    "RLY28-1  caller annihilates the return value": _STAY_GREEN,
+    "NEUTER   release gate `if False:`": _GUARDS_ROUTE,
+    "RLY27-7  release gate prints the flag, obeys nothing": _GUARDS_ROUTE,
+    "RLY27-2  release gate as a comprehension with `and False`": _GUARDS_ROUTE,
+    "NEUTER   release gate drops `and blocking`": _GUARDS_ROUTE,
+    "RLY27-4  verdict counts a sequence it did not print": _GUARDS_ROUTE,
+    "NEUTER   cmd_prepush never calls routing_verdict": _GUARDS_ROUTE,
+    "NEUTER   the producer stops recording its count": _GUARDS_ROUTE,
+    "NEUTER   the logic leg downgraded to non-blocking": _GUARDS_ROUTE,
+    "B4       `_EXPECTED` quietly loses a gating leg": _GUARDS_ROUTE,
+    "NEUTER   cmd_prepush discards the enforcement call": _GUARDS_ROUTE,
+    "RLY36-1a consumer swallows the refusal (try/except SystemExit)": _EXIT_HALF,
+    "RLY36-1b the refusal primitive exits 0": _EXIT_HALF,
+}
+
+
+def _vacuity_problems(muts, src):
+    """Every way the vacuity table fails to hold over `muts` and the real `batch.py` source `src`."""
+    by = {m[0]: m for m in muts}
+    out = []
+    named = set(_VACUITY_UNCOVERED)
+    for row, pair, edits in _VACUITY:
+        named |= {row, pair}
+        if row not in by or pair not in by:
+            out.append("vacuity pair names a missing row: %r / %r" % (row, pair))
+            continue
+        r, p = by[row], by[pair]
+        if r[4] == p[4]:
+            out.append("%r and its pair %r WANT the same state (%s): no flip is required"
+                       % (row, pair, r[4]))
+        if (r[1], r[3]) != (p[1], p[3]):
+            out.append("%r and %r differ in file or observable" % (row, pair))
+        rs = r[2](src)
+        if rs == src:
+            out.append("%r does not apply to batch.py" % row)
+        elif p[2](src) != _apply_all(*edits)(rs) or p[2](src) == rs:
+            out.append("%r is not EXACTLY %r plus its deletion" % (pair, row))
+    for m in muts:
+        if m[0] not in named:
+            out.append("row %r is neither covered by a vacuity pair nor listed as uncovered" % m[0])
+    out += ["%r is listed but is not a row" % k for k in sorted(named - set(by))]
+    return out
+
+
+def _pin_problems():
+    """RELY-CC-7: every way the row and control counts disagree with their pins (here and in
+    `hooks.py`'s plan line). Non-empty -> `_cli` refuses with exit 2 before running anything."""
+    out = []
+    n = len(mutations("ship.py", "batch.py"))
+    if n != _EXPECTED_MUTATIONS:
+        out.append("mutations() holds %d row(s), pinned at %d" % (n, _EXPECTED_MUTATIONS))
+    c = len(_CONTROLS)
+    if c != _EXPECTED_CONTROLS:
+        out.append("_CONTROLS holds %d control(s), pinned at %d" % (c, _EXPECTED_CONTROLS))
+    hooks = os.path.join(os.path.dirname(os.path.abspath(__file__)), "hooks.py")
+    try:
+        txt = _read(hooks)
+    except OSError as e:
+        return out + ["cannot read hooks.py to check its stated counts: %s" % e]
+    for phrase in ("%d probe mutation rows" % _EXPECTED_MUTATIONS,
+                   "%d probe controls" % _EXPECTED_CONTROLS):
+        if phrase not in txt:
+            out.append("hooks.py's plan does not state %r" % phrase)
+    return out
+
+
 # -- ⭐ CONCURRENT MUTATIONS (Tim, 2026-10-04: "Tooling speed concurrent checks.") -----------------
 #
 # Each mutation edits `ship.py` or `batch.py` IN PLACE, observes, and restores, so two mutations in
@@ -786,6 +957,8 @@ def mutations(ship, batch):
 # baseline (every guards row plus the prepush BLOCKS state). A worktree that merely LOOKS provisioned
 # is not trusted with a verdict.
 #
+# ⚠ REFUSAL rows never reach the pool (RELY-CC-6): A staged masks them. They run first, in the
+# primary's ROUTING-CLEAN phase (`_clean_phase`), verified against the zero point's own state.
 # ⚠ The zero point and both controls are NOT re-run per pool worktree: they establish that the
 # PRIMARY's construction is attributable, and the pool is then checked to be the same construction.
 #
@@ -838,6 +1011,27 @@ def _seed(wt):
     return copied
 
 
+def _seed_drift(wt):
+    """Repo-relative paths whose bytes in `wt` differ from the `_seed` source (or are missing)."""
+    out = []
+    for root, dirs, files in os.walk(os.path.join(REPO, "tools", "verify")):
+        dirs[:] = [d for d in dirs if d != "__pycache__"]
+        for f in files:
+            src = os.path.join(root, f)
+            rel = os.path.relpath(src, REPO)
+            dst = os.path.join(wt, rel)
+            with io.open(src, "rb") as a:
+                want = a.read()
+            try:
+                with io.open(dst, "rb") as b:
+                    same = b.read() == want
+            except OSError:
+                same = False
+            if not same:
+                out.append(rel.replace("\\", "/"))
+    return sorted(out)
+
+
 def _provision(wt, created):
     """Build one pool worktree in the primary's mutation-time state (see the block above)."""
     add = _add_worktree(wt)
@@ -875,8 +1069,10 @@ def _baseline_obs(wt, needles):
     _rc, rows = _guards_rows(wt)
     obs = {}
     for n in needles:
+        if n == REFUSAL_NEEDLE:
+            raise _CannotJudge("REFUSAL rows are observed only in the routing-clean phase "
+                               "(`_clean_phase`), never with A staged — RELY-CC-6")
         obs[n] = (("BLOCKS" if _prepush_blocks(wt) else "PASSES") if n == EXIT_NEEDLE
-                  else _prepush_refusal(wt) if n == REFUSAL_NEEDLE
                   else _row_state(rows, n))
     return obs, rows
 
@@ -950,9 +1146,71 @@ def _observe(wt, needle):
     if needle == EXIT_NEEDLE:
         return "BLOCKS" if _prepush_blocks(wt) else "PASSES"
     if needle == REFUSAL_NEEDLE:
-        return _prepush_refusal(wt)
+        raise _CannotJudge("a REFUSAL row reached the pool observer; it is observed only in the "
+                           "routing-clean phase (`_clean_phase`) — RELY-CC-6")
     _rc, rows = _guards_rows(wt)
     return _row_state(rows, needle)
+
+
+def _make_overlay_runner(muts, pristine):
+    """run_one(wt, i) for the ROUTING-CLEAN phase: the mutated `batch.py` source is EXECUTED through
+    `_OVERLAY` and never written, so the routed bytes (and therefore routing) stay at the zero point."""
+    def run_one(wt, i):
+        label, path, mutate, needle, _want = muts[i]
+        if needle != REFUSAL_NEEDLE or os.path.basename(path) != "batch.py":
+            raise _CannotJudge("%r is not a batch.py REFUSAL row; the clean phase runs only those"
+                               % label.strip())
+        original = _read(path)
+        if original != pristine[path]:
+            raise _CannotJudge("%s is not pristine before %r" % (path, label.strip()))
+        mutated = mutate(original)
+        if mutated == original:
+            return ("NOAPPLY",)
+        got = _prepush_refusal(wt, overlay=mutated)
+        if _read(path) != original:
+            raise _CannotJudge("the overlay run of %r changed %s ON DISK" % (label.strip(), path))
+        return ("GOT", got)
+    return run_one
+
+
+def _clean_phase(wt, muts, idx, zero_state):
+    """Observe the REFUSAL rows `idx` in the ROUTING-CLEAN state — the zero point's own tree (index
+    clean, bundle bytes as seeded), before A is staged. Returns (results, retried, problems, done), or 2
+    when the state cannot be verified or its baseline is not a clean PASS.
+
+    ⚠ THE STATE IS VERIFIED, NEVER ASSUMED: `_tree_state` must equal the zero point's before AND after,
+    and the unmutated source run through the SAME overlay must read `PASS` (routing 0, exit 0) — so a
+    row's refusal is attributable to its mutation, and the launcher itself is shown to perturb nothing."""
+    def drift():
+        now = _tree_state(wt)
+        out = sorted(k for k in set(zero_state) | set(now) if zero_state.get(k) != now.get(k))
+        if now["staged"]:
+            out.append("index NOT clean: %s" % now["staged"])
+        return out + ["bundle bytes differ from the seed: %s" % r for r in _seed_drift(wt)]
+    d = drift()
+    if d:
+        print("    ** CLEAN PHASE REFUSED — the primary is not in its zero-point state (differs in: %s)"
+              % ", ".join(d))
+        return 2
+    batch = os.path.join(wt, "tools", "verify", "batch.py")
+    try:
+        base = _prepush_refusal(wt, overlay=_read(batch))
+    except SystemExit as e:
+        print("    ** CLEAN PHASE could not read its baseline: %s" % _last(str(e.code)))
+        return 2
+    print("    clean baseline    unmutated source via overlay, index clean  refusal=%s" % base)
+    if base != "PASS":
+        print("    ** CLEAN BASELINE BROKEN: the routing-clean state must PASS unmutated, or no")
+        print("       REFUSAL row below can attribute its refusal to its mutation. **")
+        return 2
+    pristine = {batch: _read(batch)}
+    results, retried, problems, done = _observe_phase([wt], list(idx),
+                                                      _make_overlay_runner(muts, pristine))
+    d = drift()
+    if d:
+        problems.append("the clean phase left the primary out of its zero-point state (differs in: %s)"
+                        % ", ".join(d))
+    return results, retried, problems, done
 
 
 def _attempt(wt, i, run_one, held, lock):
@@ -1072,7 +1330,7 @@ def _judge(muts, results, done, retried=None):
     return lines, 1 if fails else 0
 
 
-def _execute(muts, pool, order, run_one, dispatch=None):
+def _execute(muts, pool, order, run_one, dispatch=None, prior=None):
     """Dispatch, re-observe deaths once, then judge. A pool problem (a mutation missing or run
     twice) exits 2. `dispatch` defaults to `_dispatch`; only a control passes another.
 
@@ -1086,7 +1344,35 @@ def _execute(muts, pool, order, run_one, dispatch=None):
     applied that made the ENFORCEMENT REFUSE (`push verdict INCONSISTENT`) — the one state those
     cases exist for. Re-observing it on an idle machine swapped that state for the vacuous one and
     printed PASS. A death whose raw output carries an enforcement refusal is now `_RefusalUnread`
-    and is never retried; the RLYB4 cases read the refusal directly and do not die on it at all."""
+    and is never retried; the RLYB4 cases read the refusal directly and do not die on it at all.
+
+    `prior`: (results, retried, problems, done) from `_clean_phase`, merged before judging; a mutation
+    observed in BOTH phases is a pool problem."""
+    results, retried, problems, done = _observe_phase(pool, order, run_one, dispatch)
+    if prior is not None:
+        p_results, p_retried, p_problems, p_done = prior
+        done = list(p_done) + list(done)
+        problems += p_problems
+        for i, out in p_results.items():
+            if i in results:
+                problems.append("mutation #%d was observed in both phases" % i)
+            results[i] = out
+        retried.update(p_retried)
+    missing = [i for i in range(len(muts)) if i not in results]
+    if missing:
+        problems.append("%d of %d mutation(s) never ran: %s"
+                        % (len(missing), len(muts), ", ".join(muts[i][0].strip() for i in missing)))
+    lines, code = _judge(muts, results, done, retried)
+    if problems:
+        lines += ["", "  ** THE POOL COULD NOT JUDGE — refusing (exit 2):"] + \
+                 ["     %s" % p for p in problems]
+        code = 2
+    return lines, code
+
+
+def _observe_phase(pool, order, run_one, dispatch=None):
+    """Dispatch `order` across `pool`, re-observing transport-shaped deaths once (see `_execute`).
+    Returns (results, retried, problems, done)."""
     dispatch = dispatch or _dispatch
     results, done, problems = dispatch(pool, order, run_one)
     retried = {}
@@ -1099,16 +1385,7 @@ def _execute(muts, pool, order, run_one, dispatch=None):
             retried[i] = (results[i], second)
             if second[0] != "DIED":
                 results[i] = second
-    missing = [i for i in range(len(muts)) if i not in results]
-    if missing:
-        problems.append("%d of %d mutation(s) never ran: %s"
-                        % (len(missing), len(muts), ", ".join(muts[i][0].strip() for i in missing)))
-    lines, code = _judge(muts, results, done, retried)
-    if problems:
-        lines += ["", "  ** THE POOL COULD NOT JUDGE — refusing (exit 2):"] + \
-                 ["     %s" % p for p in problems]
-        code = 2
-    return lines, code
+    return results, retried, problems, done
 
 
 def main():
@@ -1149,7 +1426,10 @@ def main():
         ship = os.path.join(wt, "tools", "verify", "ship.py")
         batch = os.path.join(wt, "tools", "verify", "batch.py")
         muts = mutations(ship, batch)
-        needles = sorted({m[3] for m in muts})
+        # ⭐ RELY-CC-6: REFUSAL rows run in the ROUTING-CLEAN phase of the primary (`_clean_phase`),
+        # every other row in the A-staged pool. The pool is compared on the pool's needles only.
+        clean_idx = [i for i, m in enumerate(muts) if m[3] == REFUSAL_NEEDLE]
+        needles = sorted({m[3] for m in muts if m[3] != REFUSAL_NEEDLE})
 
         # -- the pool, built IN THE BACKGROUND while the primary runs its preconditions ----------
         # ⚠ Nothing the pool does feeds the zero point, the controls or the baseline below — they
@@ -1200,6 +1480,11 @@ def main():
             print("       that measures from a moving origin is the defect, not the arithmetic.")
             print("       Fix the tree (or the invocation) so the unperturbed run is (0, 0).")
             return 2
+        # ⭐ THE ROUTING-CLEAN PHASE, in the zero point's own state and BEFORE B and A touch the
+        # index: the only state in which the agreement check decides whether the push proceeds.
+        clean = _clean_phase(wt, muts, clean_idx, _tree_state(wt))
+        if isinstance(clean, int):
+            return clean
         if not _require_suppressed(wt, _B_SUBJECT):
             return 2
         _fired = _require_fires(wt, _A_SUBJECT)
@@ -1236,17 +1521,6 @@ def main():
                     print("       consumer-neuter cases below cannot distinguish anything. **")
                     bad += 1
                 continue
-            if n == REFUSAL_NEEDLE:
-                # ⚠ The unmutated tree must reach the ROUTING refusal and nothing else: `FAILED`
-                #   from A alone. Reading INCONSISTENT here would let the RLYB4 cases pass on a state
-                #   no mutation produced; PASS would mean A no longer blocks at all.
-                state = obs[n]
-                print("    %-38s %s (prepush refusal)" % (n, state))
-                if state != "FAILED":
-                    print("    ** BASELINE BROKEN: the unmutated refusal is not the routing one, so")
-                    print("       the RLYB4 cases and their meta-controls cannot attribute it. **")
-                    bad += 1
-                continue
             print("    %-38s %s" % (n, _row_state(base, n)))
             if _row_state(base, n) != "ok":
                 print("    ** BASELINE BROKEN for %r — every verdict below is meaningless **" % n)
@@ -1278,12 +1552,13 @@ def main():
         # pool fills with guards.py runs (~35 s each): measured at K=13 (2026-10-04), prepush runs
         # dispatched LAST overlapped ~9 heavy runs and two died of the load. K=1 keeps the original
         # order exactly. Output is in ORIGINAL order either way (`_judge`).
-        order = (list(range(len(muts))) if k == 1 else
-                 sorted(range(len(muts)),
-                        key=lambda i: muts[i][3] not in (EXIT_NEEDLE, REFUSAL_NEEDLE)))
+        pool_idx = [i for i in range(len(muts)) if i not in clean_idx]
+        order = (pool_idx if k == 1 else
+                 sorted(pool_idx, key=lambda i: muts[i][3] != EXIT_NEEDLE))
         print()
         _t0 = time.time()
-        lines, code = _execute(muts, pool, order, _make_runner(muts_by_wt, _observe, pristine))
+        lines, code = _execute(muts, pool, order, _make_runner(muts_by_wt, _observe, pristine),
+                               prior=clean)
         for line in lines:
             print(line)
         print("  (%d mutation(s) across %d worktree(s), %s=%s: %.1fs)"
@@ -1592,6 +1867,7 @@ def _main_case(mod, failing=None, short=None):
         return o, {n: "ok" for n in needles}
 
     stubs = {"_add_worktree": add_wt, "_seed": lambda wt: files(wt) or 2,
+             "_clean_phase": lambda *a, **k: ({}, {}, [], []),
              "_workers": lambda n: 3, "_provision": provision, "_baseline_obs": obs,
              "_tree_state": lambda wt: {"same": True}, "_prepush_exit": lambda wt: (0, 0),
              "_require_suppressed": lambda wt, rel: True,
@@ -1655,6 +1931,114 @@ def _ctl_tree_bytes(mod):
         "in %s" % (same, differ or "nothing")
 
 
+# -- RELY-CC-6 / RELY-CC-7 (2026-10-04): the routing-clean phase, the vacuity table, the count pins ---
+
+def _ctl_vacuity(mod):
+    # The class detector over the REAL rows and the REAL batch.py source beside this file.
+    src = mod._read(os.path.join(os.path.dirname(os.path.abspath(mod.__file__)), "batch.py"))
+    problems = mod._vacuity_problems(mod.mutations("ship.py", "batch.py"), src)
+    return not problems, "%d vacuity problem(s)%s" % (len(problems),
+                                                        (": " + problems[0]) if problems else "")
+
+
+def _ctl_blocks_conjunction(mod):
+    # Q6 (r2): the EXIT half of `_prepush_blocks` is RLY36-1a/b's protection. A printed refusal with
+    # exit 0 must NOT read BLOCKS.
+    saved = mod._prepush_exit
+    try:
+        got = []
+        for pair in ((3, 0), (3, 1), (0, 1)):
+            mod._prepush_exit = lambda wt, pair=pair: pair
+            got.append(mod._prepush_blocks("ctl"))
+    finally:
+        mod._prepush_exit = saved
+    return got == [False, True, False], "(routing, exit) (3,0) (3,1) (0,1) -> %s" % got
+
+
+def _ctl_overlay_executes(mod):
+    # `_OVERLAY` must EXECUTE the overlay as the real batch.py (argv, __file__, sys.path[0]) and leave
+    # the bytes on disk unrun; a plain run must still run the disk file.
+    tmp = tempfile.mkdtemp(prefix="zp_probe_selftest_")
+    try:
+        d = os.path.join(tmp, "tools", "verify")
+        os.makedirs(d)
+        mod._write(os.path.join(d, "batch.py"), 'print("DISK")\n')
+        ov = ("import os, sys\nprint('OVERLAY', sys.argv[1:], os.path.basename(__file__), "
+              "os.path.basename(sys.path[0]))\nsys.exit(3)\n")
+        out, rc = mod._run_prepush(tmp, overlay=ov)
+        plain, _rc = mod._run_prepush(tmp)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    want = "OVERLAY ['prepush', '--ranges', 'HEAD~1..HEAD'] batch.py verify"
+    ok = want in out and "DISK" not in out and rc == 3 and "DISK" in plain
+    return ok, "overlay run rc=%d, read %r; plain run read %r" % (rc, out.strip()[:70], plain.strip())
+
+
+def _clean_case(mod, zero, now, drift=(), base="PASS"):
+    """Run the REAL `_clean_phase` over one scratch REFUSAL row with every observation stubbed.
+    Returns (outcome: 2 or the results dict, observations made)."""
+    import contextlib
+    tmp = tempfile.mkdtemp(prefix="zp_probe_selftest_")
+    seen = []
+    saved = {k: getattr(mod, k) for k in ("_tree_state", "_seed_drift", "_prepush_refusal")}
+    try:
+        d = os.path.join(tmp, "tools", "verify")
+        os.makedirs(d)
+        b = os.path.join(d, "batch.py")
+        mod._write(b, "x = 1\n")
+        muts = [("STUB-CLEAN", b, lambda s: s + "y = 2\n", mod.REFUSAL_NEEDLE, "INCONSISTENT")]
+        mod._tree_state = lambda wt: dict(now)
+        mod._seed_drift = lambda wt: list(drift)
+        mod._prepush_refusal = lambda wt, overlay=None: (
+            seen.append(overlay) or (base if overlay == "x = 1\n" else "INCONSISTENT"))
+        with contextlib.redirect_stdout(io.StringIO()):
+            res = mod._clean_phase(tmp, muts, [0], dict(zero))
+    finally:
+        for k, v in saved.items():
+            setattr(mod, k, v)
+        shutil.rmtree(tmp, ignore_errors=True)
+    return (res if isinstance(res, int) else res[0]), len(seen)
+
+
+_CLEAN_OK = {"staged": [], "bytes": "b0", "head": "h"}
+
+
+def _ctl_clean_state_verified(mod):
+    # The clean phase refuses BEFORE any observation when the tree is not the zero point's (here: A
+    # left staged), and reads a row when it is.
+    bad, n_bad = _clean_case(mod, _CLEAN_OK, dict(_CLEAN_OK, staged=[mod._A_SUBJECT]))
+    good, n_good = _clean_case(mod, _CLEAN_OK, _CLEAN_OK)
+    ok = bad == 2 and n_bad == 0 and isinstance(good, dict) and good.get(0) == ("GOT", "INCONSISTENT")
+    return ok, "A staged -> %r after %d observation(s); zero-point state -> %r" % (bad, n_bad, good)
+
+
+def _ctl_clean_seed_verified(mod):
+    # Same state record, but the bundle bytes differ from the seed: refuse.
+    res, n = _clean_case(mod, _CLEAN_OK, _CLEAN_OK, drift=["tools/verify/batch.py"])
+    return res == 2 and n == 0, "seed drift -> %r after %d observation(s)" % (res, n)
+
+
+def _ctl_clean_baseline(mod):
+    # The unmutated source through the overlay must read PASS, or no row is attributable.
+    res, n = _clean_case(mod, _CLEAN_OK, _CLEAN_OK, base="FAILED")
+    return res == 2 and n == 1, "baseline FAILED -> %r after %d observation(s)" % (res, n)
+
+
+def _ctl_refusal_not_in_pool(mod):
+    # A REFUSAL row handed to the pool observer (A staged) must refuse to be read there.
+    try:
+        got = mod._observe("ctl", mod.REFUSAL_NEEDLE)
+    except mod._CannotJudge as e:
+        return True, "refused: %s" % str(e)[:60]
+    return False, "the pool observer READ it: %r" % (got,)
+
+
+def _ctl_pins(mod):
+    problems = mod._pin_problems()
+    return not problems, "%d pin problem(s)%s" % (len(problems),
+                                                  (": " + problems[0]) if problems else "")
+
+
 _CONTROLS = [
     ("ISOLATION   two concurrent mutations never share a worktree", _ctl_isolation,
      "    threads = [threading.Thread(target=worker, args=(wt,)) for wt in pool]",
@@ -1710,7 +2094,49 @@ _CONTROLS = [
     ("RETRY       a non-pristine refusal is never re-observed", _ctl_dirty_not_retried,
      '        return ("DIED", 2, str(e), False)',
      '        return ("DIED", 2, str(e), True)'),
+    # ⚠ RELY-CC-6: the class detector. Each mutant breaks the table a different way: a pair that no
+    #   longer requires a flip, a pair that no longer composes row + deletion, a row dropped from
+    #   coverage, an uncovered row dropped from the list.
+    ("VACUITY     a META row wanting its row's state is caught", _ctl_vacuity,
+     '    (L_B4_1_META, batch, _apply_all(_SYNTH_FAIL, _RLYB4_1, _NO_AGREE), REFUSAL_NEEDLE, "PASS"),',
+     '    (L_B4_1_META, batch, _apply_all(_SYNTH_FAIL, _RLYB4_1, _NO_AGREE), REFUSAL_NEEDLE, '
+     '"INCONSISTENT"),'),
+    ("VACUITY     a META row not composing row + deletion is caught", _ctl_vacuity,
+     "        (L_B4_1B_META, batch, _apply_all(_SYNTH_FAIL, _RLYB4_1B, _NO_AGREE), REFUSAL_NEEDLE,",
+     "        (L_B4_1B_META, batch, _apply_all(_SYNTH_FAIL, _RLYB4_1B), REFUSAL_NEEDLE,"),
+    ("VACUITY     a row dropped from its vacuity pair is caught", _ctl_vacuity,
+     "    (L_B4_1B, L_B4_1B_META, (_NO_AGREE,)),\n", ""),
+    ("VACUITY     a row dropped from the uncovered list is caught", _ctl_vacuity,
+     '    "RLY36-1b the refusal primitive exits 0": _EXIT_HALF,\n', ""),
+    ("CONJUNCTION a printed refusal with exit 0 is not BLOCKS (Q6)", _ctl_blocks_conjunction,
+     "    return routing > 0 and returncode != 0",
+     "    return routing > 0"),
+    ("OVERLAY     the clean phase EXECUTES the mutated source", _ctl_overlay_executes,
+     "            cmd = [sys.executable, made[0], real, made[1]] + argv",
+     "            cmd = [sys.executable, real] + argv"),
+    ("CLEAN       the clean phase refuses a tree not at the zero point", _ctl_clean_state_verified,
+     '    if d:\n        print("    ** CLEAN PHASE REFUSED',
+     '    if False:\n        print("    ** CLEAN PHASE REFUSED'),
+    ("CLEAN       the clean phase refuses bundle bytes off the seed", _ctl_clean_seed_verified,
+     '    return out + ["bundle bytes differ from the seed: %s" % r for r in _seed_drift(wt)]',
+     "    return out"),
+    ("CLEAN       the clean phase refuses a baseline that is not PASS", _ctl_clean_baseline,
+     '    if base != "PASS":',
+     "    if False:"),
+    ("CLEAN       a REFUSAL row is never read by the A-staged pool", _ctl_refusal_not_in_pool,
+     '    if needle == REFUSAL_NEEDLE:\n        raise _CannotJudge("a REFUSAL row reached',
+     '    if needle == REFUSAL_NEEDLE:\n        return "INCONSISTENT"\n'
+     '        raise _CannotJudge("a REFUSAL row reached'),
+    # ⚠ RELY-CC-7: a row deleted with its pin left unchanged refuses.
+    ("PINS        a deleted mutation row is caught by the count pin", _ctl_pins,
+     '        ("B4       `_EXPECTED` quietly loses a gating leg", batch,\n'
+     "         lambda s: s.replace(\n"
+     "             '_EXPECTED = (\"routing\", \"purity\", \"ssot\", \"pdf_coupling\", \"prior_art_attrib\")',\n"
+     "             '_EXPECTED = (\"routing\", \"purity\", \"ssot\", \"pdf_coupling\")'),\n"
+     '         "push verdict registry", "FAIL"),\n',
+     ""),
 ]
+_EXPECTED_CONTROLS = 28
 
 
 def _mutant(anchor, repl):
@@ -1763,7 +2189,14 @@ def _cli(argv):
     """`--selftest` runs the pool controls; `--mutations` (or no argument) runs the probe.
     ⚠ The push hook passes `--mutations` EXPLICITLY: `reconcile` matches a launched argv by PREFIX,
     so a bare `probe_routing_behavioural.py` expectation would be satisfied by the `--selftest` run
-    alone, and deleting the probe's own call site would reconcile green. Anything else refuses."""
+    alone, and deleting the probe's own call site would reconcile green. Anything else refuses.
+    ⚠ RELY-CC-7: both modes refuse (exit 2) first when a count disagrees with its pin."""
+    pins = _pin_problems() if argv in ([], ["--mutations"], ["--selftest"]) else []
+    if pins:
+        print("%s: REFUSING — the probe's counts disagree with their pins:" % SELF)
+        for p in pins:
+            print("  %s" % p)
+        return 2
     if argv == ["--selftest"]:
         return selftest()
     if argv in ([], ["--mutations"]):
