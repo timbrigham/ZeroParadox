@@ -60,7 +60,7 @@ inside a gloss is not. `Statement:` restates what a declaration proves; `Reading
 not a claim about the theorem. Where a `Reading:` asserts strength, scope or genericity it should
 carry an `example` that fails to compile if it is wrong; those are the only things proved here, and
 not every such `Reading:` has one yet. Sections: what ⊥ cannot be, must be, and how it is reached.
-⊥ is a ROLE, not one object: the first section names its occupant per carrier and order.
+⊥ is a ROLE, not one object: the first section names its occupant per structure, or its absence.
 
 ## Engineer's Take
 
@@ -72,7 +72,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 section CannotBeIndex
 
-/-! ### ROLE — ⊥ is a position in a carrier and its order, and each carrier has its own occupant -/
+/-! ### ROLE — ⊥ is a position in a structure (a carrier with its order, or a category); a structure has at most one occupant, possibly none -/
 
 -- Statement: in `Ordinal` under its well-order, ⊥ is `0`.
 #check @Ordinal.bot_eq_zero
@@ -81,23 +81,37 @@ example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.MachinePhase) = ZeroParad
 -- Statement: on the tree boundary `End = ℕ → Fin 2` under pointwise max (`instZPSemilatticeEnd`), ⊥
 -- is the all-zeros end `botEnd`.
 example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.End) = ZeroParadox.botEnd := rfl
--- Statement: ℚ₂ carries no order (`LT ℚ_[2]` does not synthesize); under the norm preorder its `0` is
--- least, and the only point of norm `0`.
+-- Statement: Mathlib supplies no order instance on ℚ₂: `LT ℚ_[2]` does not synthesize.
+#check_failure (inferInstance : LT ℚ_[2])
+-- Statement: under the norm preorder ℚ₂'s `0` is least, and the only point of norm `0`.
 example : ∀ x : ℚ_[2], ‖(0 : ℚ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 ↔ x = 0) := fun x => ⟨by simp, norm_eq_zero⟩
+-- Reading: other chart, the valuation order: there `0` is greatest, `v 0 = ⊤` (`addVal_bot`,
+-- § POSITIVE — narrow uniqueness and infinite width).
 -- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,
--- `padic_bottom_not_initial`); `TopCat`'s initial object is the empty space (`TreeObstructions.lean`).
+-- `padic_bottom_not_initial`); `TopCat`'s initial object is the empty space
+-- (`ZeroParadox/Multihomed/TreeObstructions.lean`).
 example : Nonempty (CategoryTheory.Limits.IsTerminal (TopCat.of (↥({(0 : ℚ_[2])} : Set ℚ_[2])))) :=
   ⟨TopCat.isTerminalPUnit.ofIso (TopCat.isoOfHomeo (Homeomorph.homeomorphOfUnique _ _))⟩
--- Statement: one point, two orders, neither THE order. The boundary model's floor is the least
--- element of `WithBot Ordinal`.
+-- Reading: one point, two orders, neither THE order (the next three lines).
+-- Statement: the boundary model's floor is the least element of `WithBot Ordinal`.
 #check @ZeroParadox.phase_floor_isBot
 -- Statement: and the greatest element of `WithTop Ordinal`, which nothing covers.
 #check @ZeroParadox.phaseEquivWithTop_floor_covers_nothing
 -- Statement: the map carrying ⊥ of `WithBot Ordinal` to ⊤ of `WithTop Ordinal`, fixing every `↑o`, is
 -- not monotone.
 #check @ZeroParadox.phaseFloorToTop_apply
--- Statement: INVARIANT within one carrier: in a `ZPSemilattice` the ⊥ role has exactly one occupant
--- (`da2_bottom_characterization`, § POSITIVE). The two controls below make the other readings false.
+-- Statement: INVARIANT within one `ZPSemilattice` structure (carrier and join): the join-identity
+-- `∀ x, join S x = x` holds exactly of `S = bot`.
+#check @ZeroParadox.da2_bottom_characterization
+-- Statement: control, one carrier with two structures has two occupants: on `Bool`, join `||` has ⊥
+-- `false` and join `&&` has ⊥ `true`.
+example :
+    @ZeroParadox.ZPSemilattice.bot Bool
+        ⟨(· || ·), false, Bool.or_assoc, Bool.or_comm, Bool.or_self, Bool.false_or⟩ ≠
+      @ZeroParadox.ZPSemilattice.bot Bool
+        ⟨(· && ·), true, Bool.and_assoc, Bool.and_comm, Bool.and_self, Bool.true_and⟩ :=
+  Bool.false_ne_true
+-- Reading: the next two controls make the other readings false.
 -- Statement: control, the role can be unoccupied: ℤ has no least element.
 example : ¬ ∃ b : ℤ, IsBot b := fun ⟨b, h⟩ => by have := h (b - 1); omega
 -- Statement: control, occupying a bottom singles out no value: every ordinal is ⊥ of its own `Set.Ici`.
@@ -393,8 +407,8 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 -- Statement: `ω^b = b → epsilonZero ≤ b` — ε₀ is below every fixed point of `ω^·`. Wraps Mathlib's
 -- `Ordinal.epsilon_zero_le_of_omega0_opow_le`, which assumes the weaker `ω^b ≤ b`.
 #check @ZeroParadox.epsilonZero_le_fixedPoint
--- Statement: `ω ^ 0 ≠ 0` — the ⊥ of `Ordinal` is not a fixed point of `ω^·`: the base is fed in and is
--- not itself a landing.
+-- Statement: `ω ^ 0 ≠ 0` — the ⊥ of `Ordinal` is not a fixed point of `ω^·`.
+-- Reading: the base is fed in and is not itself a fixed point of the closure it seeds.
 #check @ZeroParadox.bot_is_not_a_step
 -- Statement: Mathlib's Kleene fixed-point theorem: for ωScott-continuous `f`, `lfp f = ⨆ₙ fⁿ(⊥)`.
 -- Reading: CITED prior art for generation, do NOT rebuild. ⚠ `Ordinal` is NOT an instance of it —
