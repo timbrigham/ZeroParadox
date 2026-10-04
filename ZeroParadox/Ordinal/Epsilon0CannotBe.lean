@@ -69,14 +69,16 @@ section Epsilon0CannotBeIndex
 
 /-! ### § I. What ε₀ IS NOT — the invariants (the bedrock guards) -/
 #check @ZeroParadox.epsilon0_ne_zero          -- ε₀ ≠ 0, in every reading — the guard beneath all else
-#check @ZeroParadox.epsilon0_ne_bot           -- ε₀ ≠ ⊥ — the base is never its own closure
+#check @ZeroParadox.epsilon0_ne_bot           -- ε₀ ≠ ⊥ of `Ordinal` — the base is never its own closure
 
-/-! ### § I-b. The ε₀ ROLE is never its floor, at any floor in `Ordinal` (the role, not the value) -/
--- Reading: CARRIER — the ordinal order. The ε₀ role relative to a floor `f` is the least fixed point
--- of `α ↦ ω^α` strictly above `f`; `f` is the bottom of the carrier `Set.Ici f`.
+/-! ### § I-b. The ε₀ ROLE is never its floor, at any floor in `Ordinal` (the role, not the value)
+
+Unlike the rest of this index, this section proves anonymous `example`s, the file's only proofs. -/
+-- Reading: the ε₀ role relative to a floor `f` is the least fixed point of `α ↦ ω^α` strictly above
+-- `f`; `f` is the bottom of the carrier `Set.Ici f`.
 #check @Ordinal.epsilon_succ_eq_nfp           -- Statement: Mathlib, `ε_(succ o) = nfp (ω^·) (succ ε_o)`
--- Statement: at every floor `f`, the least fixed point strictly above the bottom of `Set.Ici f` is
--- `nfp (ω^·) (succ f)`, and it is not that bottom.
+-- Statement: INVARIANT over ordinal floors under `α ↦ ω^α`. At every floor `f`, the least fixed point
+-- strictly above ⊥ of `Set.Ici f` is `nfp (ω^·) (succ f)`, and it is not that ⊥.
 example (f : Ordinal) :
     IsLeast {x : Ordinal | Ordinal.omega0 ^ x = x ∧ ((⊥ : Set.Ici f) : Ordinal) < x}
       (Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ f)) ∧
@@ -87,18 +89,25 @@ example (f : Ordinal) :
   refine ⟨⟨⟨Ordinal.nfp_fp hn _, hlt⟩, ?_⟩, hlt.ne'⟩
   rintro x ⟨hx, hfx⟩
   exact Ordinal.nfp_le_fp hn.strictMono.monotone (Order.succ_le_of_lt hfx) (le_of_eq hx)
--- Statement: at the floor `0`, the bottom of `Ordinal`, that occupant is ε₀.
+-- Statement: at the floor `0`, ⊥ of `Ordinal`, that occupant is ε₀.
 example : Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ 0) = Ordinal.epsilon 0 :=
   ZeroParadox.nfp_seed_independent_below_epsilon0 _ (Order.succ_le_of_lt (Ordinal.epsilon_pos 0))
--- Statement: the at-or-above form returns the floor exactly when the floor is itself a fixed point,
--- which is why the role is taken strictly above.
+-- Statement: in `Ordinal`, the at-or-above form `nfp (ω^·) f` returns the floor `f` exactly when `f`
+-- is itself a fixed point.
+-- Reading: this is why the role is taken strictly above. The strict form differs from the
+-- at-or-above μ schema `IsLeastFixedPointFrom` that § II uses for ε₀: at the floor ε₀ the μ schema
+-- gives ε₀ (this example and the next) and the strict form gives ε₁ (the role-versus-value example).
 example (f : Ordinal) :
     Ordinal.nfp (fun α => Ordinal.omega0 ^ α) f = f ↔ Ordinal.omega0 ^ f = f := by
   refine ⟨fun h => ?_, Ordinal.nfp_eq_self⟩
   have := Ordinal.nfp_fp (Ordinal.isNormal_opow Ordinal.one_lt_omega0) f
   rwa [h] at this
--- Statement: role versus value. The value ε₀ is the bottom of the carrier `Set.Ici ε₀`, and in that
--- carrier the ε₀ role is filled by a different value, ε₁.
+-- Statement: in `Ordinal`, the μ schema seeded at ε₀ closes at ε₀ itself.
+example : ZeroParadox.IsLeastFixedPointFrom (· ≤ ·) (fun α => Ordinal.omega0 ^ α)
+    (Ordinal.epsilon 0) (Ordinal.epsilon 0) :=
+  ⟨le_rfl, Ordinal.omega0_opow_epsilon 0, fun _ _ h => h⟩
+-- Statement: CARRIER, role versus value. The value ε₀ is ⊥ of the carrier `Set.Ici ε₀` (and is not
+-- ⊥ of `Ordinal`, § I), and in that carrier the ε₀ role is filled by a different value, ε₁.
 example :
     ((⊥ : Set.Ici (Ordinal.epsilon 0)) : Ordinal) = Ordinal.epsilon 0 ∧
     IsLeast {x : Ordinal | Ordinal.omega0 ^ x = x ∧ ((⊥ : Set.Ici (Ordinal.epsilon 0)) : Ordinal) < x}
@@ -112,9 +121,12 @@ example :
   · rintro x ⟨hx, hlt⟩
     rw [e]
     exact Ordinal.nfp_le_fp hn.strictMono.monotone (Order.succ_le_of_lt hlt) (le_of_eq hx)
--- Statement: every ordinal is the bottom of its own `Set.Ici`, so occupying a carrier's bottom
--- singles out no value.
+-- Statement: every ordinal is ⊥ of its own `Set.Ici`.
+-- Reading: so occupying a carrier's bottom singles out no value.
 example : ∀ o : Ordinal, ((⊥ : Set.Ici o) : Ordinal) = o := fun _ => rfl
+-- Reading: other chart. In ℤ₂ read by its norm, ℤ₂'s 0 is least (`norm_nonneg`); the tower's images
+-- tend to that 0 (`mu_construction_correspondence`), and ε₀ gets no image: `cnfToZp2` takes `NONote`,
+-- the notations below ε₀ (`cnf_bridge_type_boundary` co-witnesses the two limits, no identity).
 
 /-! ### § II. What ε₀ IS — the construction: first fixed point of the ω-tower from the base ⊥ -/
 #check @ZeroParadox.epsilon0_eq_nfp_bot       -- ε₀ = nfp (ω^·) ⊥ (seeded at the base ⊥)
