@@ -69,9 +69,22 @@ def run(*cmd):
     """Run a child, streaming its output, and return its exit code.
 
     ⚠ Never captures. The whole point of a gate is that the operator SEES why it fired, and a
-    captured-then-reprinted stream loses interleaving with anything else that writes."""
+    captured-then-reprinted stream loses interleaving with anything else that writes.
+
+    ⚠ CONCURRENT MODE KEEPS THAT PROPERTY RATHER THAN BREAKING IT (`ZP_HOOK_JOBS`, 2026-10-04). A
+    leg launched ahead of its turn writes stdout+stderr to its OWN file, and the file is replayed
+    WHOLE, byte for byte, HERE — at the moment this sequential call site is reached, in manifest
+    order. Nothing else writes into a leg's file, so there is no interleaving to lose; and because
+    the replay happens where the stream would have been, the hook's own lines land between legs
+    exactly where they land today. Partial output of a leg that died, timed out or crashed is
+    replayed too. See `_Scheduler`."""
+    sched = _SCHED
+    if sched is not None:
+        job = sched.take(cmd)
+        if job is not None:
+            return _consume(cmd, job)
     try:
-        rc = subprocess.call(list(cmd), cwd=REPO)
+        rc = _child(cmd)
     except OSError as e:
         print("  hook: could not run %s (%s)" % (" ".join(cmd), e))
         return 1
@@ -257,6 +270,427 @@ def git_out(*args):
         return r.returncode, (r.stdout or "")
     except OSError:
         return 1, ""
+
+
+# ------------------------------------------------------------------ concurrent legs
+#
+# ⭐ TIM, 2026-10-04: *"Tooling speed concurrent checks."* Measured that day, a pre-push ran its legs
+# strictly one after another for 842.9 s, of which the routing control alone was 595.4 s.
+#
+# ⚠⚠ THE DECISION CODE IS UNCHANGED, AND THAT IS THE DESIGN. `pre_push` / `pre_commit` still run top
+# to bottom, call `py()` / `run()` in manifest order and decide from each exit code exactly as before.
+# The scheduler only LAUNCHES legs early; `run()` then waits for the leg it was going to start,
+# replays its output whole and returns its exit code. So every exit code, every `EXECUTED` entry (it
+# is appended at CONSUMPTION, after the child finished — R3-1 unchanged), every BLOCK message and the
+# reconcile result come from the same statements as at `ZP_HOOK_JOBS=1`, which does not create a
+# scheduler at all and is today's code path byte for byte.
+#
+# ⚠⚠ THE DEPENDENCY GRAPH (derived from the legs' source 2026-10-04; each edge names its evidence).
+#   MUTATORS — they rewrite shared files in THIS checkout and restore them, so nothing that reads
+#   the tree may overlap them, and they may not overlap each other:
+#     guards           appends to / rewrites ZeroParadox/Order/Snap.lean, vendored_files.txt,
+#                      pov_baseline.txt, prose_baseline.txt, gate_round.json, a probe under
+#                      ZeroParadox/Order/Vendored/, .claude/commands/tag-review.md, and
+#                      tools/verify/record.py + check_briefs.py themselves (guards.py:83-136,
+#                      1589-1905, 2232-2293, 2345-2378). record.py is imported by every --record leg.
+#     check_checkers   runs EVERY checker's --selftest with cwd=REPO (check_checkers.py:118-128, 267),
+#                      among them `guards.py --selftest`, which appends to Snap.lean
+#                      (guards.py:2665-2690), and check_claude_md's, which creates
+#                      tools/verify/check_synthetic_withdrawn.py (check_claude_md.py:329-335).
+#   ORDER  guards -> check_checkers: guards runs before the checkers it protects (the false-zero
+#          argument at its call site below), and check_checkers records a checker verdict.
+#   ORDER  the receipt key (`push_key`: tools/verify bytes + HEAD tree, push_key/tools_digest above)
+#          is computed BEFORE any mutator launches — it reads the files guards rewrites.
+#   PURE   `hooks.py selftest` reads this file, batch.py and required.v2.json (none of which a
+#          mutator writes) plus temp dirs, so it may overlap the mutators. Its verdict still gates
+#          the skip decision, which stays where it is in `pre_push`.
+#   READERS every other leg reads the tree and records a DISTINCT ledger step at the same basis
+#          (no two legs record one step; the routing control's nested runs record nothing: no
+#          `--record`, agent gate forced off at probe_routing_behavioural.py:138-141), so they run
+#          together once the mutators and the pure leg are done. The routing control reads
+#          tools/verify only while seeding its own worktree (probe_routing_behavioural.py:676-684)
+#          and runs everything else inside that worktree, so it is a reader.
+#   batch prepush  needs the skip decision (receipt consulted after the selftest passed; its
+#          env switch, `pre_push` below), and reads the tree (agent gate re-runs three checkers):
+#          submitted at the decision point, after the mutators. Its verdict reads only the review
+#          steps, rely and prior_art (batch.py:2483-2583, 1947), which no leg records.
+#   PRE-COMMIT  the eleven legs are all readers recording distinct steps, with no mutator: all run
+#          together.
+#
+# ⚠ R-ZERONULL: a leg that could not start, raised inside the scheduler, or timed out is its own
+#   OUTCOME and is never read as a pass — see `_consume`.
+
+JOBS_ENV = "ZP_HOOK_JOBS"
+LEG_TIMEOUT_ENV = "ZP_HOOK_LEG_TIMEOUT"
+DEFAULT_JOBS = 8
+TIMEOUT_RC = 124
+
+LEG_EXITED = "EXITED"
+LEG_NOSTART = "NOSTART"
+LEG_TIMEOUT = "TIMEOUT"
+LEG_ERROR = "ERROR"
+
+_QUEUED, _RUNNING, _DONE, _CANCELLED = "QUEUED", "RUNNING", "DONE", "CANCELLED"
+
+# The ledger environment each phase gives its recording legs. ONE definition: `pre_push` /
+# `pre_commit` assign it and the scheduler launches with it, and `_consume` refuses any leg whose
+# launch environment differs from the one the sequential call would have passed.
+_PUSH_LEDGER_ENV = {"ZPLEDGER_BASIS": "HEAD", "ZPLEDGER_RUN": "pre-push"}
+_COMMIT_LEDGER_ENV = {"ZPLEDGER_BASIS": "INDEX", "ZPLEDGER_RUN": "pre-commit"}
+
+# Push rows by role, in the order they must run. See the graph above for the evidence.
+_PUSH_PURE = ("advisory-skip controls",)
+_PUSH_MUTATORS = ("guards", "check_checkers")
+_PUSH_FIRST = ("routing control", "batch prepush")      # longest legs launch first among readers
+
+_SCHED = None
+
+
+class _LegTimeout(Exception):
+    pass
+
+
+def hook_jobs(environ=None):
+    """(jobs, note). 1 means sequential: no scheduler, today's path. `note` is None when there is
+    nothing to say; an unreadable value falls back to the sequential path and SAYS so."""
+    env = os.environ if environ is None else environ
+    raw = env.get(JOBS_ENV)
+    if raw is None or not raw.strip():
+        return DEFAULT_JOBS, None
+    try:
+        n = int(raw.strip())
+    except ValueError:
+        return 1, "%s=%r is not an integer; running SEQUENTIALLY" % (JOBS_ENV, raw)
+    if n < 1:
+        return 1, "%s=%r is below 1; running SEQUENTIALLY" % (JOBS_ENV, raw)
+    return n, None
+
+
+def leg_timeout(environ=None):
+    """(seconds or None, note). Unset means no timeout, as in the sequential path."""
+    env = os.environ if environ is None else environ
+    raw = env.get(LEG_TIMEOUT_ENV)
+    if raw is None or not raw.strip():
+        return None, None
+    try:
+        t = float(raw.strip())
+    except ValueError:
+        return None, "%s=%r is not a number; no per-leg timeout" % (LEG_TIMEOUT_ENV, raw)
+    if t <= 0:
+        return None, "%s=%r is not positive; no per-leg timeout" % (LEG_TIMEOUT_ENV, raw)
+    return t, None
+
+
+def _kill_tree(p):
+    """Kill a timed-out leg AND its children (the routing control spawns nested runs)."""
+    if os.name == "nt":
+        subprocess.run(["taskkill", "/T", "/F", "/PID", str(p.pid)], capture_output=True)
+    try:
+        p.kill()
+    except OSError:
+        pass
+
+
+def _child(cmd, env=None, out=None, timeout=None):
+    """THE one process launch. Returns the exit code; raises OSError when it cannot start and
+    `_LegTimeout` when it outlives `timeout` (the tree is killed first).
+
+    With no `env`, `out` or `timeout` this is exactly the sequential call: the child inherits this
+    process's environment and streams to its stdout."""
+    if env is None and out is None and timeout is None:
+        return subprocess.call(list(cmd), cwd=REPO)
+    p = subprocess.Popen(list(cmd), cwd=REPO, env=env, stdout=out,
+                         stderr=subprocess.STDOUT if out is not None else None)
+    try:
+        return p.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        _kill_tree(p)
+        p.wait()
+        raise _LegTimeout(timeout)
+
+
+def _leg_cmd(argv):
+    """The exact argv `py()` / `run()` passes for a manifest row's argv."""
+    script = argv[0]
+    path = os.path.join(BASE, script)
+    if not os.path.exists(path) and os.path.exists(os.path.join(REPO, "scripts", script)):
+        path = os.path.join(REPO, "scripts", script)
+    return (sys.executable, path) + tuple(argv[1:])
+
+
+class _Job(object):
+    def __init__(self, cmd, env, label, pos, ok_codes, after, prio):
+        self.cmd, self.env, self.label, self.pos = tuple(cmd), env, label, pos
+        self.ok_codes, self.after, self.prio = ok_codes, tuple(after), prio
+        self.state, self.outcome, self.rc, self.error = _QUEUED, None, None, None
+        self.out_path, self.started, self.finished = None, None, None
+        self.consumed = self.replayed = self.lost = False
+
+
+class _Scheduler(object):
+    """Launches submitted legs once their dependencies are DONE, at most `n` at a time.
+
+    `stop_on_red`: a leg is not LAUNCHED once a leg earlier in manifest order finished red, because
+    the sequential path would have returned before reaching it. That only saves work — a leg the
+    decision code still reaches is then run inline, sequentially, by `run()`."""
+
+    def __init__(self, phase, n, timeout, stop_on_red):
+        import tempfile
+        import threading
+        self.phase, self.n, self.timeout, self.stop_on_red = phase, n, timeout, stop_on_red
+        self.cv = threading.Condition()
+        self.by_cmd, self.by_label, self.all = {}, {}, []
+        self.running = 0
+        self.early_key = None
+        self.t0 = _clock()
+        self.tmp = tempfile.mkdtemp(prefix="zp_hooks_legs_")
+
+    def submit(self, cmd, env, label, pos, ok_codes=(0,), after=(), prio=1):
+        with self.cv:
+            cmd = tuple(cmd)
+            if cmd in self.by_cmd or label in self.by_label:
+                raise ValueError("leg %r submitted twice" % (label,))
+            missing = [a for a in after if a not in self.by_label]
+            if missing:
+                # A dependency must be submitted first, which also makes a cycle impossible.
+                raise ValueError("leg %r depends on unsubmitted %s" % (label, missing))
+            job = _Job(cmd, dict(env), label, pos, ok_codes, after, prio)
+            job.out_path = os.path.join(self.tmp, "%02d.out" % len(self.all))
+            self.by_cmd[cmd] = job
+            self.by_label[label] = job
+            self.all.append(job)
+            self._pump()
+
+    def _red(self, job):
+        if job.state == _CANCELLED:
+            return True
+        if job.state != _DONE:
+            return False
+        if job.outcome != LEG_EXITED:
+            return True
+        return job.ok_codes is not None and job.rc not in job.ok_codes
+
+    def _pump(self):
+        """Launch every ready leg. Called with `cv` held, on every submit and every completion."""
+        import threading
+        changed = True
+        while changed:
+            changed = False
+            for job in sorted((j for j in self.all if j.state == _QUEUED),
+                              key=lambda j: (j.prio, j.pos)):
+                deps = [self.by_label[a] for a in job.after]
+                if any(d.state == _CANCELLED for d in deps) or (
+                        self.stop_on_red
+                        and any(self._red(o) for o in self.all if o.pos < job.pos)):
+                    job.state = _CANCELLED
+                    changed = True
+                    continue
+                if any(d.state != _DONE for d in deps) or self.running >= self.n:
+                    continue
+                job.state = _RUNNING
+                self.running += 1
+                job.started = _clock()
+                threading.Thread(target=self._work, args=(job,), daemon=True).start()
+        self.cv.notify_all()
+
+    def _work(self, job):
+        fh = None
+        try:
+            try:
+                fh = open(job.out_path, "wb")
+            except OSError as e:
+                raise RuntimeError("the leg's capture file could not be opened: %s" % (e,))
+            rc = _child(job.cmd, job.env, fh, self.timeout)
+            job.rc = rc
+            job.outcome = LEG_EXITED
+        except _LegTimeout:
+            job.outcome, job.rc, job.error = LEG_TIMEOUT, TIMEOUT_RC, self.timeout
+        except OSError as e:
+            job.outcome, job.error = LEG_NOSTART, e
+        except BaseException as e:                          # noqa: BLE001 — never a pass
+            job.outcome, job.error = LEG_ERROR, e
+        finally:
+            if fh is not None:
+                fh.close()
+            with self.cv:
+                job.finished = _clock()
+                job.state = _DONE
+                self.running -= 1
+                self._pump()
+
+    def take(self, cmd):
+        """The leg this exact argv names, once it has finished; None to run it inline instead."""
+        with self.cv:
+            job = self.by_cmd.get(tuple(cmd))
+            if job is None or job.consumed:
+                return None
+            job.consumed = True
+            while job.state in (_QUEUED, _RUNNING):
+                self.cv.wait(5.0)
+            return None if job.state == _CANCELLED else job
+
+    def finish(self, rc):
+        """End of the run: launch nothing more, wait for every running leg, replay WHOLE the output
+        of every leg the decision code never reached, and refuse a green run that launched one."""
+        import shutil
+        with self.cv:
+            for job in self.all:
+                if job.state == _QUEUED:
+                    job.state = _CANCELLED
+            while self.running:
+                self.cv.wait(5.0)
+        try:
+            unread = [j for j in sorted(self.all, key=lambda j: j.pos) if not j.consumed]
+            ran = [j for j in unread if j.state == _DONE]
+            if ran:
+                print("\n=== concurrent leg(s) this run did not reach — output replayed whole, "
+                      "NOT scored (the run had already decided) ===")
+                for job in ran:
+                    print("--- %s: %s%s ---" % (job.label, job.outcome,
+                                               "" if job.rc is None else " exit %d" % job.rc))
+                    _replay_job(job)
+            never = [j.label for j in unread if j.state == _CANCELLED]
+            if never:
+                print("  concurrency: not launched (an earlier leg was red, or the run had "
+                      "decided): %s" % ", ".join(never))
+            if rc == 0 and unread:
+                print("\n%s BLOCKED — %d concurrent leg(s) were launched or queued that the "
+                      "sequential path never consumed: %s" % (self.phase.upper(), len(unread),
+                                                              ", ".join(j.label for j in unread)))
+                print("The prefetch list and the decision code disagree. That is a wiring defect;")
+                print("it fails CLOSED, because a green run must have read every leg it launched.")
+                rc = 1
+            print("  concurrency: %d leg(s), %d slot(s), wall %.1fs"
+                  % (len(self.all), self.n, _clock() - self.t0))
+        finally:
+            shutil.rmtree(self.tmp, ignore_errors=True)
+        return rc
+
+
+def _clock():
+    import time
+    return time.perf_counter()
+
+
+def _replay_job(job):
+    """Write the leg's captured stdout+stderr to this process's stdout, WHOLE and once."""
+    if job.replayed:
+        return
+    job.replayed = True
+    try:
+        with open(job.out_path, "rb") as fh:
+            data = fh.read()
+    except OSError as e:
+        job.lost = True
+        print("  hook: the captured output of %s could not be read back (%s); the leg is "
+              "counted as FAILED, never a pass." % (job.label, e))
+        return
+    sys.stdout.flush()
+    buf = getattr(sys.stdout, "buffer", None)
+    if buf is not None:
+        buf.write(data)
+        buf.flush()
+    else:
+        sys.stdout.write(data.decode("utf-8", "replace"))
+
+
+def _consume(cmd, job):
+    """The sequential call site's result for a leg that ran early. Every non-EXITED outcome is a
+    failure with its own message, never a pass (R-ZERONULL)."""
+    _replay_job(job)
+    if job.env != dict(os.environ):
+        diff = sorted(k for k in set(job.env) | set(os.environ)
+                      if job.env.get(k) != os.environ.get(k))
+        print("  hook: concurrent leg %s ran with an environment that differs from the one the "
+              "sequential call passes (keys: %s); its result is REFUSED — counted as FAILED."
+              % (job.label, ", ".join(diff)))
+        return 1
+    if job.lost:
+        return 1
+    if job.outcome == LEG_NOSTART:
+        print("  hook: could not run %s (%s)" % (" ".join(cmd), job.error))
+        return 1
+    if job.outcome == LEG_ERROR:
+        print("  hook: concurrent leg %s failed inside the scheduler (%r); counted as FAILED, "
+              "never a pass." % (job.label, job.error))
+        return 1
+    if job.outcome == LEG_TIMEOUT:
+        print("  hook: %s TIMED OUT after %ss and was killed; the output above is all it wrote. "
+              "Counted as exit %d — a failure, never a pass." % (job.label, job.error, TIMEOUT_RC))
+        EXECUTED.append((_invocation(cmd), TIMEOUT_RC))
+        return TIMEOUT_RC
+    EXECUTED.append((_invocation(cmd), job.rc))
+    return job.rc
+
+
+def _start_prefetch(phase, n, timeout, timeout_note):
+    global _SCHED
+    _SCHED = _Scheduler(phase, n, timeout, stop_on_red=(phase == "push"))
+    print("  concurrency: %s=%d — legs run in parallel, output replayed whole in manifest order; "
+          "per-leg timeout %s%s" % (JOBS_ENV, n, "%ss" % timeout if timeout else "none",
+                                    (" (%s)" % timeout_note) if timeout_note else ""))
+    return _SCHED
+
+
+def _start_push_prefetch(n, timeout, timeout_note):
+    """Submit every push leg except `batch prepush` (that one waits for the skip decision)."""
+    sched = _start_prefetch("push", n, timeout, timeout_note)
+    # The receipt key reads tools/verify, which guards rewrites: computed BEFORE anything launches.
+    sched.early_key = push_key(REF_TUPLES)
+    base_env = dict(os.environ)
+    led_env = dict(base_env)
+    led_env.update(_PUSH_LEDGER_ENV)
+    rows = [(i, label, argv, ok) for i, (label, argv, ok) in enumerate(PRE_PUSH_EXPECT)
+            if argv and label != "batch prepush"]
+    for i, label, argv, ok in rows:
+        if label in _PUSH_PURE:
+            sched.submit(_leg_cmd(argv), base_env, label, i, ok, after=(), prio=0)
+    for i, label, argv, ok in rows:
+        if label in _PUSH_MUTATORS:
+            chain = _PUSH_MUTATORS[:_PUSH_MUTATORS.index(label)]
+            sched.submit(_leg_cmd(argv), led_env, label, i, ok, after=chain, prio=0)
+    for i, label, argv, ok in rows:
+        if label not in _PUSH_PURE and label not in _PUSH_MUTATORS:
+            readers_after = _PUSH_MUTATORS + _PUSH_PURE
+            sched.submit(_leg_cmd(argv), led_env, label, i, ok, after=readers_after,
+                         prio=0 if label in _PUSH_FIRST else 1)
+
+
+def _submit_batch_prepush(ranges, skip):
+    """Launch `batch prepush` the moment the skip decision exists, with the environment its
+    sequential call site will give it: the push ledger env plus the skip's own switches."""
+    env = dict(os.environ)
+    env.update(_PUSH_LEDGER_ENV)
+    for leg in skip:
+        var, val = SKIP_SWITCHES[leg]
+        env[var] = val
+    pos = [label for label, _a, _o in PRE_PUSH_EXPECT].index("batch prepush")
+    bp_after = _PUSH_MUTATORS + _PUSH_PURE
+    _SCHED.submit((sys.executable, os.path.join(BASE, "batch.py"), "prepush", "--ranges",
+                   ",".join(ranges)), env, "batch prepush", pos, (0,), after=bp_after, prio=0)
+
+
+def _start_commit_prefetch(n, timeout, timeout_note):
+    sched = _start_prefetch("commit", n, timeout, timeout_note)
+    env = dict(os.environ)
+    for i, (label, argv, ok, _d) in enumerate(PRE_COMMIT_CHECKS):
+        sched.submit(_leg_cmd(tuple(argv) + ("--block", "--record")), env, label, i, ok)
+
+
+def _with_scheduler(body, *args):
+    """Run a phase body; whatever it returns or raises, close the scheduler it may have started."""
+    global _SCHED
+    try:
+        rc = body(*args)
+    except BaseException:
+        sched, _SCHED = _SCHED, None
+        if sched is not None:
+            sched.finish(1)
+        raise
+    sched, _SCHED = _SCHED, None
+    if sched is not None:
+        rc = sched.finish(rc)
+    return rc
 
 
 # ------------------------------------------------------------------ advisory skip
@@ -1071,6 +1505,11 @@ PRE_PUSH_EXPECT = [
 
 
 def pre_commit():
+    """The pre-commit phase. The body is `_pre_commit`; this closes any scheduler it started."""
+    return _with_scheduler(_pre_commit)
+
+
+def _pre_commit():
     """The eleven checkers BLOCK; nothing here warns.
 
     The stub-first protocol commits `sorry`-stubbed files on purpose, so BUILD state must never
@@ -1123,8 +1562,16 @@ def pre_commit():
     # and, under `HEAD`, makes `ledger_subjects` drop exactly the paths just staged — the ledger
     # then reports narrowed coverage WITHOUT blocking. `pre_push` has always used assignment, for
     # the reason stated at its own call site: the environment here could only ever be wrong.
-    os.environ["ZPLEDGER_BASIS"] = "INDEX"
-    os.environ["ZPLEDGER_RUN"] = "pre-commit"
+    os.environ.update(_COMMIT_LEDGER_ENV)
+    # ⚠ CONCURRENT LAUNCH, SEQUENTIAL DECISION. Every leg here only READS the tree and records its
+    #   own distinct step, so all eleven may start now; the loop below still consumes them one by
+    #   one, in this order, through `py()`. `ZP_HOOK_JOBS=1` creates no scheduler at all.
+    _jobs, _note = hook_jobs()
+    if _note:
+        print("  concurrency: %s" % _note)
+    if _jobs > 1:
+        _t, _tnote = leg_timeout()
+        _start_commit_prefetch(_jobs, _t, _tnote)
     for label, argv, ok_codes, _desc in PRE_COMMIT_CHECKS:
         rc = py(*argv, "--block", "--record")
         # ⚠ EXIT 2 IS "COULD NOT BE RECORDED", NOT "FAILED". A checker that ran and could not reach
@@ -1216,6 +1663,11 @@ def parse_refs(stream):
 
 
 def pre_push(stream):
+    """The pre-push phase. The body is `_pre_push`; this closes any scheduler it started."""
+    return _with_scheduler(_pre_push, stream)
+
+
+def _pre_push(stream):
     ranges, quarantined = parse_refs(stream)
     if quarantined:
         for m in quarantined:
@@ -1236,6 +1688,16 @@ def pre_push(stream):
     ])
     report.plan(_bind_push_modes(PRE_PUSH_PLAN, PRE_PUSH_EXPECT))
 
+    # ⚠ CONCURRENT LAUNCH, SEQUENTIAL DECISION — see the dependency graph above `JOBS_ENV`. Every leg
+    #   below is still consumed at its own call site, in this order; `ZP_HOOK_JOBS=1` creates no
+    #   scheduler and is today's path.
+    _jobs, _note = hook_jobs()
+    if _note:
+        print("  concurrency: %s" % _note)
+    if _jobs > 1:
+        _t, _tnote = leg_timeout()
+        _start_push_prefetch(_jobs, _t, _tnote)
+
     # ⚠⚠ THE SKIP'S OWN CONTROLS RUN FIRST, IN A CHILD, BEFORE ANY RECEIPT IS READ. A child, so no
     #   control's stubbing can leak into this process; first, so a skip is never decided by
     #   machinery whose controls did not pass on this very run.
@@ -1250,7 +1712,9 @@ def pre_push(stream):
     # every BLOCK leg below runs whatever the receipt says. Only the derived advisory set can shrink.
     skip = []
     skippable = advisory_skip_set()
-    key, _why = push_key(REF_TUPLES)
+    # ⚠ In concurrent mode the key was taken before any leg launched, because guards rewrites files
+    #   under tools/verify and the key hashes them; sequentially nothing has run yet at this point.
+    key, _why = _SCHED.early_key if _SCHED is not None else push_key(REF_TUPLES)
     if not skippable:
         print("  advisory skip: none — %s; every leg runs."
               % ("the skippable set could not be derived" if skippable is None
@@ -1280,6 +1744,10 @@ def pre_push(stream):
             print("  note: %s=%s was inherited from the caller, so `%s` will not run — a "
                   "pre-existing opt-out, not a receipt match; this run writes no green receipt."
                   % (var, os.environ.get(var), leg))
+    # The skip decision now exists, so `batch prepush` can launch; it is still READ at its own call
+    # site at the end, where `_consume` refuses it unless its launch env equals the one passed there.
+    if _SCHED is not None:
+        _submit_batch_prepush(ranges, skip)
 
     # ⚠ `gatelock` RETIRED 2026-08-23 — deliberately, not dropped. It froze reviewed paths with the
     # read-only bit while a gate round ran. Three reasons it went: the worktree rule makes the
@@ -1301,8 +1769,7 @@ def pre_push(stream):
     # both and pre_push set neither, so every push-time record was refused with
     # "run.id is required ... not the caller's imagination" and the whole point of wiring
     # `--record` here was lost at the first checker.
-    os.environ["ZPLEDGER_BASIS"] = "HEAD"
-    os.environ["ZPLEDGER_RUN"] = "pre-push"
+    os.environ.update(_PUSH_LEDGER_ENV)
 
     print("\n=== Property guards (exemption surface) ===")
     _rc_guards = recorded("guards.py")
@@ -1626,7 +2093,7 @@ def _simulate(m, stdin=_REFS, receipt=None, raw=None, env=None, red=(), digest=_
     names = ("run", "tools_digest", "head_tree", "git_out", "_RECEIPT_PATH_OVERRIDE")
     saved = {n: getattr(m, n) for n in names}
     switch_vars = sorted({var for var, _val in SKIP_SWITCHES.values()})
-    env_keys = (ENV_RUN_ID, ENV_OP, "ZPLEDGER_BASIS", "ZPLEDGER_RUN") + tuple(switch_vars)
+    env_keys = (ENV_RUN_ID, ENV_OP, "ZPLEDGER_BASIS", "ZPLEDGER_RUN", JOBS_ENV) + tuple(switch_vars)
     saved_env = {k: os.environ.get(k) for k in env_keys}
     launched, child_env = [], {}
 
@@ -1647,6 +2114,9 @@ def _simulate(m, stdin=_REFS, receipt=None, raw=None, env=None, red=(), digest=_
     m._RECEIPT_PATH_OVERRIDE = path
     for k in (ENV_RUN_ID, ENV_OP) + tuple(switch_vars):
         os.environ.pop(k, None)
+    # ⚠ SEQUENTIAL, ALWAYS: these controls stub `run`, and only the sequential path goes through
+    #   it for every launch. The concurrent path has its own simulator (`_simulate_conc`).
+    os.environ[JOBS_ENV] = "1"
     for k, v in (env or {}).items():
         os.environ[k] = v
     del m.EXECUTED[:], m.REFS_SEEN[:], m.REF_TUPLES[:]
@@ -2038,7 +2508,7 @@ def _simulate_commit(m, env=None, answer=None, raises=None, tree=_TREE, real=Fal
         raise ValueError("a real-transport control must name its loopback url")
     names = ("run", "index_tree", "_attest_call", "_ATTEST_URL_SEAM")
     saved = {n: getattr(m, n) for n in names}
-    env_keys = (ENV_RUN_ID, ENV_OP, _FORGE_VAR, "ZPLEDGER_BASIS", "ZPLEDGER_RUN")
+    env_keys = (ENV_RUN_ID, ENV_OP, _FORGE_VAR, "ZPLEDGER_BASIS", "ZPLEDGER_RUN", JOBS_ENV)
     saved_env = {k: os.environ.get(k) for k in env_keys}
     launched, calls = [], []
 
@@ -2062,6 +2532,7 @@ def _simulate_commit(m, env=None, answer=None, raises=None, tree=_TREE, real=Fal
         m._attest_call = fake_call
     for k in (ENV_RUN_ID, ENV_OP, _FORGE_VAR):
         os.environ.pop(k, None)
+    os.environ[JOBS_ENV] = "1"          # sequential, always: see `_simulate`
     for k, v in (env or {}).items():
         os.environ[k] = v
     del m.EXECUTED[:]
@@ -2469,9 +2940,409 @@ def _ctl_attest_env_forge(m):
         _FORGE_VAR, chosen, _say(r, ATTEST_UNREACHABLE), s.calls)
 
 
+# ------------------------------------------------------------------ concurrency (cc) controls
+#
+# Each drives the REAL `pre_push` / `pre_commit`, the REAL `run()` and the REAL scheduler, with only
+# the process seam `_child` stubbed — so what is tested is the decision code consuming legs that ran
+# early, exactly as production does. Nothing here launches a checker. Event order is read from a log
+# appended under a lock, never from clocks, so no control depends on timer resolution.
+
+def _cc_label(inv, phase):
+    rows = ([(label, tuple(argv)) for label, argv, _ok in PRE_PUSH_EXPECT if argv]
+            if phase == "push" else
+            [(label, tuple(argv) + ("--block", "--record")) for label, argv, _ok, _d
+             in PRE_COMMIT_CHECKS])
+    for label, argv in rows:
+        if tuple(inv[:len(argv)]) == argv:
+            return label
+    return inv[0] if inv else "?"
+
+
+def _cc_script(red=(), raises=(), partial=(), error=(), sleeps=None):
+    """A stub leg: `(rc, text, sleep)` per label. `error` legs write and then RAISE (a scheduler-side
+    failure), `partial` legs write a line with no newline and die with a crash code."""
+    def script(lab):
+        sl = (sleeps or {}).get(lab, 0)
+        if lab in raises:
+            raise OSError(2, "ctl: cannot start %s" % lab)
+        if lab in error:
+            return "RAISE", "PARTIAL-ERROR-%s" % lab, sl
+        if lab in partial:
+            return 3221225477, "PARTIAL-OUTPUT-%s" % lab, sl
+        return (1 if lab in red else 0), "OUT %s\n  detail of %s\n" % (lab, lab), sl
+    return script
+
+
+def _simulate_conc(m, jobs, phase="push", script=None, stdin=_REFS):
+    """Run `m.pre_push` / `m.pre_commit` with `ZP_HOOK_JOBS=jobs` and only `_child` stubbed."""
+    import io as _io
+    import shutil
+    import tempfile
+    import threading
+    import time
+    script = script or _cc_script()
+    tmp = tempfile.mkdtemp(prefix="zp_hooks_cc_")
+    names = ("_child", "tools_digest", "head_tree", "git_out", "_RECEIPT_PATH_OVERRIDE")
+    saved = {n: getattr(m, n) for n in names}
+    switch_vars = sorted({var for var, _val in SKIP_SWITCHES.values()})
+    env_keys = (ENV_RUN_ID, ENV_OP, "ZPLEDGER_BASIS", "ZPLEDGER_RUN", JOBS_ENV,
+                LEG_TIMEOUT_ENV) + tuple(switch_vars)
+    saved_env = {k: os.environ.get(k) for k in env_keys}
+    events, streamed, sched_seen = [], [], []
+    lock = threading.Lock()
+
+    def fake_child(cmd, env=None, out=None, timeout=None):
+        lab = _cc_label(m._invocation(cmd), phase)
+        with lock:
+            events.append(("start", lab))
+            streamed.append(out is None)
+            sched_seen.append(m._SCHED is not None)
+        try:
+            rc, text, sl = script(lab)
+            if sl:
+                time.sleep(sl)
+            if out is None:
+                sys.stdout.write(text)
+            else:
+                out.write(text.encode("utf-8"))
+                out.flush()
+            if rc == "RAISE":
+                raise RuntimeError("ctl: the leg's worker raised after writing")
+            return rc
+        finally:
+            with lock:
+                events.append(("end", lab))
+
+    def digest():
+        with lock:
+            events.append(("digest", None))
+        return _DIGEST
+
+    m._child = fake_child
+    m.tools_digest = digest
+    m.head_tree = lambda: _TREE
+    m.git_out = lambda *a: (0, "illustrated\n")
+    m._RECEIPT_PATH_OVERRIDE = os.path.join(tmp, m.RECEIPT_NAME)
+    for k in env_keys:
+        os.environ.pop(k, None)
+    os.environ[JOBS_ENV] = str(jobs)
+    del m.EXECUTED[:], m.REFS_SEEN[:], m.REF_TUPLES[:]
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        rc = m.pre_push(_io.StringIO(stdin)) if phase == "push" else m.pre_commit()
+        executed = list(m.EXECUTED)
+        leaked = m._SCHED is not None
+    finally:
+        sys.stdout = real
+        for n, v in saved.items():
+            setattr(m, n, v)
+        for k, v in saved_env.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+        del m.EXECUTED[:], m.REFS_SEEN[:], m.REF_TUPLES[:]
+        m._SCHED = None
+        shutil.rmtree(tmp, ignore_errors=True)
+    return {"rc": rc, "out": buf.getvalue(), "executed": executed, "events": events,
+            "streamed": streamed, "sched_seen": sched_seen, "leaked": leaked}
+
+
+_CC_DRAIN = "=== concurrent leg(s) this run did not reach"
+
+
+def _cc_lines(out):
+    """The output as the operator reads it, minus the scheduler's own `concurrency:` lines and minus
+    the drained-leg block that only a concurrent RED run can print after its decision."""
+    lines = out.splitlines()
+    for i, line in enumerate(lines):
+        if line.startswith(_CC_DRAIN):
+            lines = lines[:i]
+            break
+    lines = [ln for ln in lines if not ln.startswith("  concurrency:")]
+    while lines and not lines[-1].strip():
+        lines.pop()
+    return lines
+
+
+def _cc_fixtures():
+    return [("push green", "push", _cc_script()),
+            ("push one BLOCK red", "push", _cc_script(red=("check_pov",))),
+            ("push one leg cannot start", "push", _cc_script(raises=("check_moved",))),
+            ("commit green", "commit", _cc_script()),
+            ("commit one BLOCK red", "commit", _cc_script(red=("check_pov",))),
+            ("commit one leg cannot start", "commit", _cc_script(raises=("check_modal",)))]
+
+
+def _ctl_cc_equivalence(m):
+    """jobs=4 must equal jobs=1: exit code, EXECUTED (what reconcile reads), and every line printed
+    up to the decision, on green, one-red-BLOCK and one-leg-cannot-start, at both phases."""
+    bad = []
+    for name, phase, script in _cc_fixtures():
+        s = _simulate_conc(m, 1, phase, script)
+        c = _simulate_conc(m, 4, phase, script)
+        same = (s["rc"] == c["rc"] and s["executed"] == c["executed"]
+                and _cc_lines(s["out"]) == _cc_lines(c["out"]) and not c["leaked"]
+                and all(s["streamed"]) and not all(c["streamed"]))
+        if not same:
+            bad.append("%s (rc %s vs %s, executed equal=%s, output equal=%s)" % (
+                name, s["rc"], c["rc"], s["executed"] == c["executed"],
+                _cc_lines(s["out"]) == _cc_lines(c["out"])))
+    return not bad, "%d fixture(s); differing: %s" % (len(_cc_fixtures()), "; ".join(bad) or "none")
+
+
+def _ctl_cc_order(m):
+    """Legs that FINISH in reverse body order are still printed in body order."""
+    body = [label for label, argv, _o in PRE_PUSH_EXPECT if argv and label not in
+            _PUSH_PURE + _PUSH_MUTATORS + ("batch prepush",)]
+    sleeps = {label: 0.004 * (len(body) - i) for i, label in enumerate(body)}
+    s = _simulate_conc(m, 1, "push", _cc_script(sleeps=sleeps))
+    c = _simulate_conc(m, 32, "push", _cc_script(sleeps=sleeps))
+    ends = [lab for kind, lab in c["events"] if kind == "end" and lab in body]
+    reversed_finish = ends != [lab for lab in body if lab in ends]
+    marks = lambda out: [ln[4:] for ln in out.splitlines() if ln.startswith("OUT ")]
+    ok = reversed_finish and marks(c["out"]) == marks(s["out"]) and c["rc"] == s["rc"] == 0
+    return ok, "legs finished out of body order=%s; printed order equals jobs=1=%s" % (
+        reversed_finish, marks(c["out"]) == marks(s["out"]))
+
+
+def _ctl_cc_dependency(m):
+    """No reader (batch prepush included) starts before the mutators and the selftest END; the
+    second mutator starts after the first ends; the receipt key is taken before any mutator."""
+    sleeps = {"advisory-skip controls": 0.03, "guards": 0.05, "check_checkers": 0.15}
+    c = _simulate_conc(m, 32, "push", _cc_script(sleeps=sleeps))
+    ev = c["events"]
+    idx = lambda kind, lab: ev.index((kind, lab)) if (kind, lab) in ev else None
+    viol = []
+    prereq = _PUSH_PURE + _PUSH_MUTATORS
+    for kind, lab in ev:
+        if kind != "start" or lab in prereq:
+            continue
+        for p in prereq:
+            if idx("end", p) is None or idx("end", p) > idx("start", lab):
+                viol.append("%s started before %s ended" % (lab, p))
+    if idx("end", "guards") is None or idx("end", "guards") > idx("start", "check_checkers"):
+        viol.append("check_checkers started before guards ended")
+    d = idx("digest", None)
+    if d is None or d > idx("start", "guards"):
+        viol.append("the receipt key was not taken before guards started")
+    started = sum(1 for kind, _l in ev if kind == "start")
+    return (not viol and c["rc"] == 0 and started == len([a for _l, a, _o in PRE_PUSH_EXPECT if a]),
+            "%d leg(s) launched, rc=%s; edge violations: %s" % (started, c["rc"],
+                                                                  "; ".join(viol[:3]) or "none"))
+
+
+def _ctl_cc_fail(m):
+    """A red BLOCK leg that ran concurrently still exits 1 — a reader, a mutator, and at commit."""
+    r1 = _simulate_conc(m, 8, "push", _cc_script(red=("check_pov",)))
+    r2 = _simulate_conc(m, 8, "push", _cc_script(red=("guards",)))
+    r3 = _simulate_conc(m, 8, "commit", _cc_script(red=("check_pov",)))
+    ok = r1["rc"] == 1 and r2["rc"] == 1 and r3["rc"] == 1
+    return ok, "check_pov red at push -> rc=%s; guards red -> rc=%s; check_pov red at commit -> rc=%s" % (
+        r1["rc"], r2["rc"], r3["rc"])
+
+
+def _ctl_cc_no_loss(m):
+    """A leg that dies mid-output, one whose worker raises, and every leg launched past an early
+    return all have their output on screen; the dying and raising legs count as failed."""
+    r1 = _simulate_conc(m, 8, "push", _cc_script(partial=("check_pov",)))
+    r2 = _simulate_conc(m, 8, "commit", _cc_script(error=("check_modal",)))
+    r3 = _simulate_conc(m, 32, "push", _cc_script(red=("check_paths",)))
+    started = sorted({lab for kind, lab in r3["events"] if kind == "start"})
+    lost = [lab for lab in started if "OUT %s" % lab not in r3["out"]]
+    # ⚠ AND `_consume` ITSELF, not only the run's exit code: `reconcile` also blocks a leg that never
+    #   reached EXECUTED, so a run-level check alone cannot see this first protection removed.
+    import io as _io
+    import shutil
+    import tempfile
+    d = tempfile.mkdtemp(prefix="zp_hooks_cc_")
+    path = os.path.join(d, "leg.out")
+    with open(path, "wb") as fh:
+        fh.write(b"PARTIAL-ERROR-unit")
+    job = m._Job(("x.py",), dict(os.environ), "ctl-leg", 0, (0,), (), 1)
+    job.state, job.outcome, job.error, job.out_path = _DONE, LEG_ERROR, RuntimeError("ctl"), path
+    saved_exec = list(m.EXECUTED)
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        unit_rc = m._consume(("x.py",), job)
+        unit_rec = m.EXECUTED[len(saved_exec):]
+    finally:
+        sys.stdout = real
+        m.EXECUTED[:] = saved_exec
+        shutil.rmtree(d, ignore_errors=True)
+    unit_ok = unit_rc == 1 and not unit_rec and "PARTIAL-ERROR-unit" in buf.getvalue()
+    ok = (r1["rc"] == 1 and "PARTIAL-OUTPUT-check_pov" in r1["out"]
+          and r2["rc"] == 1 and "PARTIAL-ERROR-check_modal" in r2["out"]
+          and r3["rc"] == 1 and not lost and len(started) > 6 and unit_ok)
+    return ok, ("crash mid-line -> rc=%s, partial shown=%s; worker raised -> rc=%s, partial shown=%s; "
+                "red at check_paths: %d launched, output missing for %s; _consume(ERROR) -> rc=%s, "
+                "recorded as launched=%s" % (
+                    r1["rc"], "PARTIAL-OUTPUT-check_pov" in r1["out"], r2["rc"],
+                    "PARTIAL-ERROR-check_modal" in r2["out"], len(started), lost or "none",
+                    unit_rc, bool(unit_rec)))
+
+
+def _ctl_cc_timeout(m):
+    """The REAL `_child` kills a leg that outlives its timeout, keeps what it wrote, and `_consume`
+    turns that into exit 124 — recorded as launched, never a pass."""
+    import io as _io
+    import shutil
+    import tempfile
+    import time
+    d = tempfile.mkdtemp(prefix="zp_hooks_cc_")
+    path = os.path.join(d, "leg.out")
+    cmd = [sys.executable, "-c", "import sys,time; sys.stdout.write('TIMEOUT-PARTIAL'); "
+           "sys.stdout.flush(); time.sleep(2.5)"]
+    t0 = time.time()
+    raised = False
+    try:
+        with open(path, "wb") as fh:
+            try:
+                m._child(cmd, None, fh, 0.4)
+            except m._LegTimeout:
+                raised = True
+        elapsed = time.time() - t0
+        with open(path, "rb") as fh:
+            kept = b"TIMEOUT-PARTIAL" in fh.read()
+        job = m._Job(cmd, dict(os.environ), "ctl-leg", 0, (0,), (), 1)
+        job.state, job.outcome, job.rc, job.error, job.out_path = (
+            _DONE, LEG_TIMEOUT, TIMEOUT_RC, 0.4, path)
+        saved_exec = list(m.EXECUTED)
+        buf, real = _io.StringIO(), sys.stdout
+        try:
+            sys.stdout = buf
+            rc = m._consume(tuple(cmd), job)
+            recorded = m.EXECUTED[len(saved_exec):]
+        finally:
+            sys.stdout = real
+            m.EXECUTED[:] = saved_exec
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+    ok = raised and elapsed < 2.2 and kept and rc == TIMEOUT_RC and recorded and \
+        recorded[0][1] == TIMEOUT_RC and "TIMEOUT-PARTIAL" in buf.getvalue()
+    return ok, "killed after %.1fs=%s, partial kept=%s; consumed -> rc=%s, recorded=%s" % (
+        elapsed, raised, kept, rc, recorded)
+
+
+def _ctl_cc_env_refused(m):
+    """A leg whose launch environment differs from the sequential call's is refused, not read."""
+    import io as _io
+    import shutil
+    import tempfile
+    d = tempfile.mkdtemp(prefix="zp_hooks_cc_")
+    path = os.path.join(d, "leg.out")
+    with open(path, "wb") as fh:
+        fh.write(b"ctl output\n")
+    env = dict(os.environ)
+    env["ZPLEDGER_BASIS"] = "ctl-a-basis-nobody-set"
+    job = m._Job(("x.py",), env, "ctl-leg", 0, (0,), (), 1)
+    job.state, job.outcome, job.rc, job.out_path = _DONE, LEG_EXITED, 0, path
+    saved_exec = list(m.EXECUTED)
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        rc = m._consume(("x.py",), job)
+    finally:
+        sys.stdout = real
+        m.EXECUTED[:] = saved_exec
+        shutil.rmtree(d, ignore_errors=True)
+    ok = rc == 1 and "REFUSED" in buf.getvalue() and "ctl output" in buf.getvalue()
+    return ok, "a green leg launched under another ZPLEDGER_BASIS -> rc=%s, refused=%s" % (
+        rc, "REFUSED" in buf.getvalue())
+
+
+def _ctl_cc_unread(m):
+    """A green run that launched a leg its decision code never read is refused."""
+    import io as _io
+    saved = m._child
+    m._child = lambda cmd, env=None, out=None, timeout=None: 0
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        s = m._Scheduler("push", 2, None, stop_on_red=True)
+        s.submit(("ctl-orphan.py",), dict(os.environ), "ctl orphan", 0)
+        rc = s.finish(0)
+    finally:
+        sys.stdout = real
+        m._child = saved
+    return rc == 1, "green body, one launched leg never consumed -> rc=%s" % rc
+
+
+def _ctl_cc_jobs_one(m):
+    """ZP_HOOK_JOBS=1 creates no scheduler and streams every leg — today's path — at both phases;
+    an unreadable value falls back to it."""
+    p = _simulate_conc(m, 1, "push")
+    c = _simulate_conc(m, 1, "commit")
+    seq = all(p["streamed"] + c["streamed"]) and not any(p["sched_seen"] + c["sched_seen"])
+    parse = (m.hook_jobs({JOBS_ENV: "many"})[0] == 1 and m.hook_jobs({JOBS_ENV: "0"})[0] == 1
+             and m.hook_jobs({JOBS_ENV: "1"})[0] == 1 and m.hook_jobs({})[0] == m.DEFAULT_JOBS)
+    return seq and parse and p["rc"] == c["rc"] == 0, (
+        "jobs=1: %d+%d launch(es), all streamed with no scheduler=%s; unreadable/0 -> 1=%s" % (
+            len(p["streamed"]), len(c["streamed"]), seq, parse))
+
+
 # (label, control, anchor, replacement). The replacement removes exactly the protection the
 # control exists for; the control must PASS on the real module and FAIL on the mutant.
 _CONTROLS = [
+    # ⚠ CONCURRENT LEGS (`ZP_HOOK_JOBS`, 2026-10-04). Each mutant removes one property of the
+    #   scheduler: an equivalence, the replay order, a dependency edge, failure propagation, an
+    #   output path, the timeout, the env fence, the unread-leg refusal, the jobs=1 switch.
+    ("cc  equivalence: NOSTART read as a pass", _ctl_cc_equivalence,
+     '        print("  hook: could not run %s (%s)" % (" ".join(cmd), job.error))\n        return 1',
+     '        print("  hook: could not run %s (%s)" % (" ".join(cmd), job.error))\n        return 0'),
+    ("cc  equivalence: consumed leg never recorded", _ctl_cc_equivalence,
+     "    EXECUTED.append((_invocation(cmd), job.rc))\n    return job.rc",
+     "    return job.rc"),
+    ("cc  order: replayed at completion, not at turn", _ctl_cc_order,
+     "                job.state = _DONE\n",
+     "                job.state = _DONE\n                _replay_job(job)\n"),
+    ("cc  dependency: reader edges dropped", _ctl_cc_dependency,
+     "            readers_after = _PUSH_MUTATORS + _PUSH_PURE",
+     "            readers_after = ()"),
+    ("cc  dependency: batch prepush edges dropped", _ctl_cc_dependency,
+     "    bp_after = _PUSH_MUTATORS + _PUSH_PURE",
+     "    bp_after = ()"),
+    ("cc  dependency: mutator chain dropped", _ctl_cc_dependency,
+     "            chain = _PUSH_MUTATORS[:_PUSH_MUTATORS.index(label)]",
+     "            chain = ()"),
+    ("cc  dependency: receipt key taken after launch", _ctl_cc_dependency,
+     "    sched.early_key = push_key(REF_TUPLES)",
+     "    sched.early_key = (None, \"ctl: deferred\")"),
+    ("cc  fail: a red leg's exit code lost", _ctl_cc_fail,
+     "            job.rc = rc\n",
+     "            job.rc = 0\n"),
+    ("cc  no loss: captured output not replayed", _ctl_cc_no_loss,
+     "            data = fh.read()",
+     '            data = b""'),
+    ("cc  no loss: a raising worker read as a pass", _ctl_cc_no_loss,
+     '              "never a pass." % (job.label, job.error))\n        return 1',
+     '              "never a pass." % (job.label, job.error))\n        return 0'),
+    ("cc  no loss: legs past an early return dropped", _ctl_cc_no_loss,
+     "                    _replay_job(job)\n            never =",
+     "                    pass\n            never ="),
+    ("cc  timeout: the wait has no timeout", _ctl_cc_timeout,
+     "        return p.wait(timeout=timeout)",
+     "        return p.wait()"),
+    ("cc  timeout: a timed-out leg read as a pass", _ctl_cc_timeout,
+     "        return TIMEOUT_RC",
+     "        return 0"),
+    ("cc  env: a leg launched under another env is read", _ctl_cc_env_refused,
+     "    if job.env != dict(os.environ):",
+     "    if False:"),
+    ("cc  unread: a green run that launched an unread leg", _ctl_cc_unread,
+     "            if rc == 0 and unread:",
+     "            if False:"),
+    ("cc  jobs=1 (push) still schedules", _ctl_cc_jobs_one,
+     "    if _jobs > 1:\n        _t, _tnote = leg_timeout()\n        _start_push_prefetch",
+     "    if _jobs >= 1:\n        _t, _tnote = leg_timeout()\n        _start_push_prefetch"),
+    ("cc  jobs=1 (commit) still schedules", _ctl_cc_jobs_one,
+     "    if _jobs > 1:\n        _t, _tnote = leg_timeout()\n        _start_commit_prefetch",
+     "    if _jobs >= 1:\n        _t, _tnote = leg_timeout()\n        _start_commit_prefetch"),
+    ("cc  an unreadable ZP_HOOK_JOBS is not the default", _ctl_cc_jobs_one,
+     '        return 1, "%s=%r is not an integer; running SEQUENTIALLY" % (JOBS_ENV, raw)',
+     '        return DEFAULT_JOBS, "%s=%r is not an integer; running SEQUENTIALLY" % (JOBS_ENV, raw)'),
     ("positive  a matching receipt skips agent gate", _ctl_positive,
      "        os.environ[var] = val",
      "        pass"),
