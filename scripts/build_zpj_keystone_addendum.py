@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.24 | October 2026
+Version 1.25 | October 2026
 v1.20: OQ-E2 POINTER (Tim ruling, 2026-10-02: the type-level identity is ill-typed, not open; extend to all siblings): the Section III "Honest scope" box said the epsilon-0 type bridge was open under OQ-E2. OQ-E2 is the cardinality-semilattice correspondence, and the cross-type identity is not a well-formed statement; the box now says it is ill-typed, not open, the same category error cnf_bridge_type_boundary (ZeroParadox/Ordinal/CnfBridge.lean) fences for Ordinal vs Z2, with the link running through maps.
 v1.19: GATE ROUND 2 ON v1.18 (Tim rulings, 2026-09-29): "machine-checked" is scoped everywhere it still covered the whole document: the preamble calls this a record of two investigations "machine-checked except where marked cited", the introduction says that where a result is cited rather than re-proved the text says so, and the endnote carries the same qualifier. The Section II computability box heading and verdict name the multi-valued form of the Lawvere instance (Bauer Thm 5.2), and the box says excluded middle fails in synthetic computability. The "In Set" box states the measured footprint of the face verdicts nontrivial_lattice_no_witness and q2_no_witness, [propext, Classical.choice, Quot.sound]; the Section IV box says "the same Lean adapter". The v1.16 line's "p. 10", removed in v1.17, is restored: changelog lines record what shipped.
 v1.18: SCOPE OF "MACHINE-CHECKED" (Tim rulings, 2026-09-29): the Section II heading now reads "The Lawvere Face-Split (Set face machine-checked; computability face cited)", and the Section II verdict marks the effective-category instance as cited (Bauer 2017), with Lean proving Rogers' theorem classically; matching CLAIMS.md and README.md. Every box is now kept on one page (a KeepTogether on each, including "What the Zero Paradox adds"), so no box header repeats across a page break.
@@ -34,7 +34,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -122,12 +122,23 @@ def build():
         [
             'Adds: candidate faces outside the classical scheme &#8212; the 2-adic valuation '
             'v<sub>2</sub>(0) = &#8734;, &#949;<sub>0</sub>, the wheel of fractions &#8212; '
-            'each with a machine-checked axiom footprint; and the <i>location</i> claim, that '
-            'each face\'s fixed point sits at a floor (the G&#246;del inversion), a framing: at '
-            '&#8869; for the floor faces; for &#949;<sub>0</sub> at its own floor, where the first '
-            '&#949;-number (succession_zero) fills '
-            'the bottom role as the first iterative bottom, and never at the ordinals\' floor 0 '
-            '(epsilon0_ne_bot).',
+            'each with a machine-checked axiom footprint; and the <i>location</i> claim (the '
+            'G&#246;del inversion), a framing: the Quine-atom and v<sub>2</sub>(0) = &#8734; faces '
+            'each have their fixed point at their carrier\'s bottom: the Quine atom is &#8869; of '
+            'a ZP-A lattice carrying AFAStructure (t_exec), and 0, the unique fixed point of '
+            'doubling on &#8474;<sub>2</sub> (q2_unique_fp), is the least element of '
+            '&#8474;<sub>2</sub> ordered by the 2-adic norm, and the greatest when '
+            '&#8474;<sub>2</sub> is ordered by valuation, where v<sub>2</sub>(0) = &#8734;; the '
+            '&#949;<sub>0</sub> role never sits at a floor: it is the first landing (a fixed point '
+            'of the closure) strictly above one. The value Ordinal.epsilon 0, lifted as '
+            '&#8593;&#949;<sub>0</sub>, fills the &#949;<sub>0</sub> role, the first landing '
+            'strictly above a floor: in WithBot Ordinal, above the boundary model\'s floor placed '
+            'at the bottom (phase_epsilon0_isLeast_landing_above_floor), and in WithTop Ordinal, '
+            'where that floor is placed at the top, the first landing strictly above that order\'s '
+            'least element, the snap &#8593;0 '
+            '(phaseTop_epsilon0_isLeast_landing_above_snap; both '
+            'ZeroParadox/Multihomed/BoundaryOrder.lean). In Ordinal that value differs from the '
+            'bottom role\'s occupant 0 (epsilon0_ne_bot, epsilon0_ne_zero).',
             'Does not add: the unification itself (Lawvere/Yanofsky), nor any identification of '
             'the four faces as one object &#8212; that identity is <b>retired as ill-typed</b> '
             '(object equality across categories does not typecheck and is not invariant under '
@@ -272,10 +283,14 @@ def build():
             'above as WithTop Ordinal (phaseTop_epsilon0_isLeast_landing_above_snap) '
             '(ZeroParadox/Multihomed/BoundaryOrder.lean), so no cross-type identity is involved), '
             'not a fresh one. '
-            'Relative to the ordinals\' floor, the bottom role is filled by 0 and the '
-            '&#949;<sub>0</sub> role by Ordinal.epsilon 0, and the two occupants differ '
-            '(epsilon0_ne_bot); relative to its own floor, that same ordinal, the first '
-            '&#949;-number (succession_zero), fills the bottom role as the first iterative bottom. '
+            'In the carrier Ordinal the bottom role is filled by 0. The value Ordinal.epsilon 0, '
+            'lifted as &#8593;&#949;<sub>0</sub>, fills the &#949;<sub>0</sub> role, the first '
+            'landing strictly above a floor: in WithBot Ordinal, above the boundary model\'s floor '
+            'placed at the bottom (phase_epsilon0_isLeast_landing_above_floor), and in WithTop '
+            'Ordinal, where that floor is placed at the top, the first landing strictly above that '
+            'order\'s least element, the snap &#8593;0 (phaseTop_epsilon0_isLeast_landing_above_snap; both '
+            'ZeroParadox/Multihomed/BoundaryOrder.lean). In Ordinal that value differs from the '
+            'bottom role\'s occupant 0 (epsilon0_ne_bot, epsilon0_ne_zero). '
             'The floor endpoint '
             'is tied to the lattice chart\'s &#8869; (floor_not_wellFounded, axiom-free); the single-carrier '
             'Phase is the illustrative toy model, where non-well-foundedness localizes at the floor by '
