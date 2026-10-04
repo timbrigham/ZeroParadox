@@ -3,13 +3,14 @@ import ZeroParadox.Ordinal.CnfBridge
 import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Valuation.SnapDichotomy
 import ZeroParadox.Reals.OrderedField
+import ZeroParadox.Multihomed.BoundaryOrder
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
 
 The snap leg of the trio with `ZeroParadox/BottomCannotBe.lean` and
-`ZeroParadox/Ordinal/Epsilon0CannotBe.lean`. Every line `#check`s an already-proven **declaration**.
-⚠ The `#check`s cannot overclaim; the glosses can, and §§ I-IV predate § V's label convention.
+`ZeroParadox/Ordinal/Epsilon0CannotBe.lean`. `#check` lines plus anonymous `example`s, its only proofs;
+every gloss is `Statement:` or `Reading:`. ⊥ and ε₀ are roles, each relative to a named structure.
 
 Bedrock: shape **derived**, not an axiom (`t_snap_derived`; AX-1 is retired, and the snap occurs given the occurrence commitment and DA-1); **one-way** (`t_snap_irreversible`); returns to
 a ⊥ read as a successor null, where **the novelty is a commitment** — the § IV glosses carry the fence.
@@ -22,17 +23,17 @@ by the proof assistant during development.
 
 section SnapCannotBeIndex
 
-/-! ### § I. What the snap IS NOT — not an axiom, not reversible, not a return to the same ⊥ -/
-#check @ZeroParadox.t_snap_derived                    -- DERIVED (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) — the shape (AX-1 is retired); that the snap occurs follows from the occurrence commitment together with DA-1, not from this line, and the next line is why
-#check @ZeroParadox.tsnap_holds_but_nothing_moves     -- Statement: T-SNAP's statement holds together with a dynamics `stuckPhase` in which every phase is fixed, so T-SNAP is not an occurrence claim
--- `Statement:` a state sequence that starts at ⊥ and never steps is the `example` after `t_snap_given` in `ZeroParadox/Order/Snap.lean`.
-#check @ZeroParadox.t_snap_irreversible              -- NOT reversible: no join from ε₀ returns to ⊥
-#check @ZeroParadox.dp2_execution_distinguishability  -- the post-snap null ≠ the pre-snap null (distinct instances)
-#check @ZeroParadox.da1_minimal_path                  -- Statement: the two configurations are DISTINCT while sharing an output value. It does NOT carry that the step is taken, and irrecoverability is not in it — see the fence in its home docstring
+/-! ### § I. What the snap IS NOT — not an axiom, not reversible, not a return to the same `TrackedOutput` configuration -/
+#check @ZeroParadox.t_snap_derived                    -- Statement: in `MachinePhase`, `c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁` — the shape (AX-1 is retired); that the snap occurs follows from the occurrence commitment together with DA-1, not from this line, and the next line is why
+#check @ZeroParadox.tsnap_holds_but_nothing_moves     -- Statement: in `MachinePhase`, T-SNAP's statement holds together with a dynamics `stuckPhase` in which every phase is fixed, so T-SNAP is not an occurrence claim
+-- `Statement:` a state sequence in `MachinePhase` that starts at its ⊥ `c₀` and never steps is the `example` after `t_snap_given` in `ZeroParadox/Order/Snap.lean`.
+#check @ZeroParadox.t_snap_irreversible              -- Statement: in any `ZPSemilattice`, for `le x y` and `x ≠ y`, no `z` has `join y z = x`. Reading: at `x := bot` and `y` any state above it (c₁ in `MachinePhase`, which the discrete chart names ε₀), no join from `y` returns to that semilattice's ⊥. The statement mentions neither ⊥ nor the snap
+#check @ZeroParadox.dp2_execution_distinguishability  -- Statement: `preInstantiation` and `postInstantiation` share the output value and differ in machine state. Reading: the post-snap null and the pre-snap null are distinct instances in `TrackedOutput`; in the ℤ₂ chart the arc reapproaches the SAME 0 (`snap_arc_z2_loop`, § IV)
+#check @ZeroParadox.da1_minimal_path                  -- Statement: the two configurations are DISTINCT while sharing an output value, with states `c₀` before and `c₁` after. It does NOT carry that the step is taken, and irrecoverability is not in it — see the fence in its home docstring
 
 /-! ### § II. What the snap IS — the SHAPE of the join transition ⊥ → ε₀; that it occurs follows from the occurrence commitment and DA-1 -/
-#check @ZeroParadox.t_snap_join                       -- the algebraic core: ⊥ ∨ ε₀ = ε₀ (from A4/bot_join)
-#check @ZeroParadox.t_snap_machine                    -- concrete: c₀ ∨ c₁ = c₁ (initial → running)
+#check @ZeroParadox.t_snap_join                       -- Statement: in any `ZPSemilattice`, `join bot x = x` for every `x` (A4, `bot_join`); the binder is named ε₀. Reading: the algebraic core ⊥ ∨ ε₀ = ε₀
+#check @ZeroParadox.t_snap_machine                    -- Statement: in `MachinePhase`, `join c₀ c₁ = c₁` (initial → running)
 #check @ZeroParadox.t_snap_given                      -- Statement: over any ZPSemilattice, `S 0 = bot` (CC-1) and `S 1 ≠ S 0` (occurrence at the first step) give `t_snap_derived`'s shape at S 0, S 1; the inequalities restate `hocc`, and only the join comes from A4. No binder makes `S 1` an atom above `S 0`, and the step is assumed (`hocc`), not forced. Two commitments are the binders; `t_snap_derived` is its MachinePhase instance at a sequence chosen to move, and `MachinePhase` does not discharge `hocc`
 -- Reading: CARRIER. "⊥ → ε₀" in the lines that use c₁ (`t_snap_derived`, `t_snap_machine`) is the
 --   discrete-state chart, where ε₀ names the first state above ⊥ (c₁ in `MachinePhase`), and "atom above
@@ -114,7 +115,7 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] (a : L)
   exact ⟨h1, fun x => (h2 x).imp (fun h => h.trans hcc1.symm) (fun h => h.trans h1.symm)⟩
 example : ∀ x : ZeroParadox.MachinePhase, x = ZeroParadox.ZPSemilattice.bot ∨ x = ZeroParadox.c₁ := by
   intro x; cases x; exacts [Or.inl rfl, Or.inr rfl]
-#check @bot_covBy_iff                                 -- Statement: `⊥ ⋖ a ↔ IsAtom a`; an atom's two halves are `a ≠ ⊥` and nothing strictly between, a different pair from the ordinal ε₀'s least fixed point and tower supremum
+#check @bot_covBy_iff                                 -- Statement: in any partial order with a least element ⊥ (`OrderBot`), `⊥ ⋖ a ↔ IsAtom a`; an atom's two halves are `a ≠ ⊥` and nothing strictly between, a different pair from the ordinal ε₀'s least fixed point and tower supremum
 #check @covBy_iff_atom_Ici                            -- Statement: `a ⋖ b ↔ IsAtom ⟨b, _⟩ : Set.Ici a`; a cover is an atom measured from the bottom of `Set.Ici a`
 -- `Statement:` the ℕ run's step 0 → 2 lands on an atom one rung up: 2 is not an atom of `Set.Ici 0`,
 -- and it is an atom of `Set.Ici 1`.
@@ -127,14 +128,14 @@ example : ¬ @IsAtom (Set.Ici (0 : ℕ)) _ Set.Ici.orderBot ⟨2, Nat.zero_le 2�
     (covBy_iff_atom_Ici h12).1 c12⟩
 
 /-! ### § III. What the snap DOES — it narrows reachability, permanently -/
-#check @ZeroParadox.t_snap_accessible_proper_subset   -- from ε₀ only a proper subset is reachable; ⊥ is foreclosed
-#check @ZeroParadox.da2_bottom_characterization       -- the ⊥ role: (∀ x, join S x = x) ↔ S = ⊥
-#check @ZeroParadox.da3_accessibleCardinality         -- reachable cardinality is position-relative
+#check @ZeroParadox.t_snap_accessible_proper_subset   -- Statement: in any `ZPSemilattice`, for `bot ≠ ε₀` (any such element), the up-set of ε₀ is a proper subset of the up-set of `bot`. Reading: `bot` is not in the smaller set
+#check @ZeroParadox.da2_bottom_characterization       -- Statement: the ⊥ role within one `ZPSemilattice`: `(∀ x, join S x = x) ↔ S = bot`
+#check @ZeroParadox.da3_accessibleCardinality         -- Statement: a definition, the cardinality of the up-set `{x // le p x}` of `p`. Reading: reachable cardinality is position-relative
 
 /-! ### § IV. The snap returns to a ⊥ (read as a successor null — a commitment); its 2-adic realization is a loop -/
-#check @ZeroParadox.c_da2_novelty                     -- contrapositive of the role fact: a non-⊥ state cannot satisfy the join-identity. "Distinct successor instantiation" is the reading, not the statement
-#check @ZeroParadox.snap_arc_z2_loop                  -- the ℤ₂ realization: start 0, depart, reapproach 0
-#check @ZeroParadox.t_iz_limit_is_new_null            -- role half only: (∀ x, join terminal x = x) → terminal = bot. Novelty is NOT in this statement; do not cite it as the novelty witness
+#check @ZeroParadox.c_da2_novelty                     -- Statement: contrapositive of the role fact, in one `ZPSemilattice`: a state `≠ bot` cannot satisfy the join-identity. Reading: "distinct successor instantiation" is the reading, not the statement
+#check @ZeroParadox.snap_arc_z2_loop                  -- Statement: the `cnfToZp2` image of tower stage 0 is ℤ_[2]'s 0, every stage `n ≥ 1` has a nonzero image, and the images tend to that same 0
+#check @ZeroParadox.t_iz_limit_is_new_null            -- Statement: role half only, in any `ZPSemilattice`: (∀ x, join terminal x = x) → terminal = bot of that semilattice. Novelty is NOT in this statement; do not cite it as the novelty witness
 
 /-! ### § V. WHERE the snap is RULED OUT — and what only removes the obstruction
 
@@ -147,12 +148,30 @@ each has a first distinct state above it, with nothing strictly between. A state
 owes no step. -/
 #check @ZeroParadox.axb1_gives_unique_target          -- Statement: on a LINEAR order, AX-B1 at `bot` gives exactly one cover; the `Set Bool` control beside it in `ZeroParadox/Reals/OrderedField.lean` has two
 #check @ZeroParadox.HasFirstStep                      -- Statement: an ORDER predicate — `∃ a, bot ⋖ a`, Mathlib's covering relation. ⚠ `LT ℚ_[p]` does not synthesize, so this is not statable of ℚ_p; the p-adic line below fences NORM values, a different predicate
-#check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, every positive ε₀ admits a smaller positive δ
+#check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, every positive ε₀ admits a smaller positive δ; the binder ε₀ is any positive element of `F`, a candidate first step above `F`'s 0, not the ordinal
 #check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element. No Archimedean hypothesis appears in the binders
 #check @ZeroParadox.axb1_fails_in_ordered_field       -- Statement: `¬ HasFirstStep (0 : F)`. Reading: AX-B1 is what supplies the step; an ordered field lacks it, and that the framework's carrier has it is the commitment
 #check @ZeroParadox.axb1_fails_everywhere_iff_dense   -- Statement: the obstruction CHARACTERIZED, over a bare `Preorder` with no field and no topology — `DenselyOrdered α ↔ ∀ bot, ¬ HasFirstStep bot`. `axb1_fails_in_ordered_field` directly above is an instance of its right-hand side; `f_snap_impossible` is the same fact in the halving vocabulary, not an instance of this statement. Density is what obstructs a first step — connectedness is a separate, topological fence (`real_no_snap`)
 #check @ZeroParadox.real_no_snap                      -- Statement: CARRIER — ℝ is NOT totally disconnected
 #check @ZeroParadox.padic_snaps                       -- Statement: CARRIER — ℚ_p IS totally disconnected. Reading: this removes the obstruction and supplies no first step — norms accumulate at 0 in ANY non-trivially normed field (Mathlib `NormedField.exists_norm_lt`), ℝ included, so that half is not p-adic
-#check @ZeroParadox.snap_dichotomy                    -- Statement: for NONTRIVIAL absolute values on ℚ, real and p-adic are exclusive and exhaustive (Ostrowski). ⚠ SCOPE: completions of ℚ only
+#check @ZeroParadox.snap_dichotomy                    -- Statement: every ℚ_p is totally disconnected and ℝ is not, and for NONTRIVIAL absolute values on ℚ, real and p-adic are exclusive and exhaustive (Ostrowski). ⚠ SCOPE: completions of ℚ only
+
+/-! ### § VI. The up-and-over shape — OVER is a cover, UP is a closure; two orders on one boundary model -/
+#check @ZeroParadox.UpAndOver                         -- Statement: a structure on a partial order: a closure operator `up`, a corner (a closed `y`, a cover `y ⋖ b`, `up b ≠ b`), and a cover at every non-maximal closed point
+-- `Statement:` the `cover` field is `HasFirstStep`, asked at each non-maximal closed point of `up` (a landing).
+example {α : Type} [PartialOrder α] (U : ZeroParadox.UpAndOver α) {y : α} (hy : U.up.IsClosed y)
+    (hmax : ¬ IsMax y) : ZeroParadox.HasFirstStep y := U.cover y hy hmax
+#check @ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered -- Statement: no densely ordered carrier carries the shape; the corner's cover is refused. Reading: as § V refuses ℝ a first step
+example : IsEmpty (ZeroParadox.UpAndOver ℝ) := ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered
+#check @ZeroParadox.ordinalUpAndOver                  -- Statement: `Ordinal` carries it: `up` is `nfp (ω^·)` (`snapNucleus`), covers by `Order.succ`, the corner at ε₀ and `succ ε₀`
+#check @ZeroParadox.phase_floor_covBy_snap            -- Statement: floor-below order, `WithBot Ordinal`: its ⊥ (the boundary model's floor) is covered by the snap `↑0` (OVER)
+#check @ZeroParadox.phaseUp_snap                      -- Statement: floor-below order: `phaseUpAndOver.up` sends `↑0` to `↑ε₀` (UP)
+#check @ZeroParadox.phase_epsilon0_isLeast_landing_above_floor -- Statement: floor-below order: `↑ε₀` is the least closed point (landing) of that `up` strictly above ⊥ of `WithBot Ordinal`
+#check @ZeroParadox.phase_floor_snap_epsilon0_ne      -- Statement: in `WithBot Ordinal`, the snap `↑0` ≠ `↑ε₀`, and its ⊥ differs from both
+#check @ZeroParadox.phaseEquivWithTop_floor_covers_nothing -- Statement: floor-above order, `WithTop Ordinal`: the boundary model's floor is ⊤ and nothing covers it
+#check @ZeroParadox.phaseTop_epsilon0_isLeast_landing_above_snap -- Statement: floor-above order: the snap `↑0` is ⊥ of `WithTop Ordinal`, and `↑ε₀` is the least `snapNucleusTop`-closed point strictly above it
+-- Reading: CARRIER. The two orders are a dichotomy over one boundary model, neither of them THE order.
+--   In each, `↑ε₀` is the first closed point (landing) of the closure above that order's ⊥. On all of `Ordinal`, ⊥ ⋖ ε₀ is false
+--   (§ II); in `WithBot Ordinal`, ⊥ to `↑ε₀` is one OVER (a cover) followed by one UP (the closure).
 
 end SnapCannotBeIndex
