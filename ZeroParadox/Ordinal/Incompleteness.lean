@@ -15,13 +15,13 @@
   `KleeneStructure` commitment, not a theorem, and no equation between a `Code` and a
   `MachinePhase` is well-formed. ZP-L establishes that ε₀ is the *minimal* threshold — **given** that the transition happens,
   it happens nowhere below ε₀. It does not establish that it happens: `snap_unconditional`
-  takes `hε₀ : φ epsilonZero = c₁` as a hypothesis. See the fuller note at § III. The formal path from c₀ = ⊥ through the snap at ε₀ to c₁ (ZP-L), mediated by
-  the 2-adic encoding, is the missing structural triangle: ⊥ → ε₀ → c₁.
+  takes `hε₀ : φ epsilonZero = c₁` as a hypothesis. See the fuller note at § III. The formal path from c₀ = ⊥ through the snap at ε₀ to c₁ (ZP-L), mediated through
+  `ℤ_[2]` by `cnfToZp2` from the ordinal side and `snapEmbed` from `MachinePhase`, is the missing structural triangle: ⊥ → ε₀ → c₁.
 
   The central formal object is:
       snapEmbed : MachinePhase → ℤ_[2]
       snapEmbed c₀ = 1    (pre-snap state maps to 2-adic unit)
-      snapEmbed c₁ = 0    (snap state maps to 2-adic zero = limit of tower encodings)
+      snapEmbed c₁ = 0    (snap state maps to 2-adic zero = limit of tower images)
 
   Engineer's Take:
 
@@ -230,7 +230,7 @@ theorem snap_state_zp2_is_zero :
 /-- The full triangle: all three objects co-occur and are formally connected.
     Left edge  (A ↔ C): tower stages below ε₀ map to c₀; ε₀ maps to c₁.
     Right edge (B ↔ C): snapEmbed maps c₁ to 0 = 2-adic limit.
-    Base edge  (A ↔ B): tower encodings converge to 0 in ℤ_[2] (from ZP-L). -/
+    Base edge  (A ↔ B): tower images converge to 0 in ℤ_[2] (from ZP-L). -/
 theorem zpm_triangle :
     -- A ↔ C: ordinal snap
     (∀ n : ℕ, fundamentalSeq n < epsilonZero) ∧

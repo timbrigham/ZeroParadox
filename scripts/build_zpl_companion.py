@@ -1,6 +1,6 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.17 | October 2026
+Version 1.18 | October 2026
 v1.16: companion sync with ZP-L v1.22, PA-6b (DEFECTS.md PRIOR-ART-DB-ORDINARY, PA-6b; queue corpus-zpl-separate-starting-points). The Convergence section and the Remember box said ZP-L reaches epsilon-0 from 'entirely separate starting points', by an 'independent derivation', in 'separate domains with separate machinery', and that 'two independent formal derivations' meet there. Restated to what was measured: the definition (Mathlib's Ordinal.epsilon 0) and the Cantor normal form notation are SHARED with proof theory; ZP-L's own part is the snap, which fires nowhere below epsilon-0 for a monotone map sending the tower's stages to c0 and fires at epsilon-0 by the hypothesis h-eps0 (ZeroParadox/Ordinal/Incompleteness.lean section II). Gate round 1 (Tim's 2026-10-01 rulings): sentence S now reads that, of the infinitely many admissible firing points monotonicity and tower alignment leave open, h-eps0 selects the least and so fixes phi uniquely (the U1-U3 examples after snap_unconditional, ZeroParadox/Ordinal/Incompleteness.lean section II); Gentzen.md item 4 carries both readings (the tower forces the floor, nothing fires below epsilon-0, which is not occurrence; occurrence is h-eps0); ZP-L Gap box reframed as what the bridge supplies. Gate round 0 findings addressed (AR-1 already in; CRH-1/E2/O1 ZP-E; E3/O2 gloss; O3/O4; E5; CRH-4; ZP-L section VII co-witness). PA-6b folded in. Gate round 1 fixes (2026-10-02): the Upper bound heading and its closing sentence carry the hypothesis hfp, and say a map can stay at c0 everywhere without it (ED1-6); the remember box's 'defined the same way' now reads 'reached by different routes', pointing at epsilon0_min_eq_max for the agreement of the tower-limit and least-fixed-point characterizations (O2/PA-6); the Cantor normal form phrase cites Gentzen 1943 section 1 (PA-5). Gate round 2 fix (Tim's 2026-10-02 ruling, ED2-2/O2-2): the remember box now says only that the same ordinal carries both; both sources build epsilon-0 as the tower limit, so no route attribution is supported.
 v1.15: companion sync with ZP-L v1.21 (DEFECTS.md CNFTOZP2-ANTITONE-OVERCLAIM, companion sites). The Two-Adic Connection section and the Convergence section called cnfToZp2 an "encoding" of ordinals below ε₀ into ℤ₂ at five sites, which reads as injective; cnfToZp2 is a map and is not injective (2 and ω share the image 4). "Encoding" is now "map"/"image" at those five sites (four sites still say "encoding" and are outside this change: the opening overview paragraph, the dual-convergence diagram label, "ZPM relates the two through their 2-adic encodings" in the Kleene Connection section's "Two rooms" box, and the closing summary), and the Two-Adic body carries BOTH charts - valuation climbing toward ∞ and norm falling toward 0 - with the seed stage 0 mapping to 0 itself (snap_arc_z2_loop). ZP-L v1.21 also fixes the ZPI K-ratio row (ZPI-KRATIO-ROW) and the Cantor normal form coefficient order (ZPL-CNF-COEFF-LEFT); neither site appears in this companion. Gate round 1 (editorial@351b3d16…#0, adversary@c9ff0da6…#0, both PASS with ordinary findings): the seed stage 0 was left unscoped at four sites and is now scoped (n ≥ 1, or Lean's convention named). Gate round 2 (both STOP-ORDINARY): v₂ named both Lean's and the standard valuation in the definition box, now one symbol per valuation; the companion credited snap_zp2_correspondence with the values 2ⁿ, which come from Gentzen.lean § IV — that theorem states only the convergence.
 v1.14: GATE ROUND 1 REMEDIATION - TWO RENDERED FIXES IN THE RECAP BOX, AND A FALSE PRESENCE CLAIM INSIDE v1.13's OWN ENTRY (editorial E3-1 / E3-2 / E3-3, adversary and prior_art PA5-1 / PA5-2, 2026-09-23); companion stays with ZP-L v1.20. THREE SITES, AND v1.13 WROTE ALL THREE - defect class DC-58 in its general form, a remediation writing the next round's defect. (1) E3-1, A DANGLING NOUN: the box read "because exhaustion is a two-sided claim" while the clause that INTRODUCED the word had been deleted by that same change. Re-measured here on the rendered companion rather than relayed: before this change exhaust* occurred exactly ONCE in the whole document, at this site, so a general reader met an abstract noun with no antecedent anywhere on the page. It now reads "because pinning a boundary is two-sided", which takes its antecedent from the verb in its own sentence and from "the same ordinal boundary" one sentence earlier. ⛔ THE WARRANT IS NOT DELETED - round 1's E2-3 kill protects the two-sidedness, not the credits-and-dates clauses - so "it needs witnesses below the boundary and a ceiling at it" survives verbatim and both directions are still named. R-TWOPOLE returns INVARIANT here, the ratified null case: this renames the claim, it does not reverse a direction, so there is no second chart to add. (2) E3-2 / PA5-2, RAISED INDEPENDENTLY BY TWO GATES - A PROMISE THE BODY CANNOT KEEP: the box pointed at the Convergence section "with its credit and its date", and of the three results that section states, the below-ε₀ provability carries a credit and NO DATE. That absence is deliberate and fenced - Grundlagen der Mathematik II is not a 1943 publication and no year is asserted for it, because nobody here has opened it - so the BODY cannot be moved to match and the box is the half that must. It now promises "with its credit" and nothing about dates. (3) E3-3 / PA5-1, ALSO RAISED BY TWO GATES - A FALSE PRESENCE CLAIM ABOUT CONTENT THE SAME CHANGE HAD DELETED: v1.13's E2-4 note said the credit reads "which Gentzen reports as already known, crediting Hilbert-Bernays" IN THE BOX, and item (2) of v1.13 is what removed it from the box. Re-measured here on the rendered companion: at this change Bernays occurred exactly ONCE, in the Convergence body, never in the box. ⛔ THE E2-4 RULING ITSELF IS CORRECT AND IS KEPT - what E2-4 requires is that the second-handness still be SAID, and the body says it in plain words; the entry's WARRANT was the false half, and it now names the body and records that the box carries no credit by design. ⚠ R-NOTINLIB, SECOND POLE: a false PRESENCE claim is the same defect as a false absence one, and no word list catches it, because every term on that list is absence vocabulary - the ACTION is what binds, that you are about to write that a surface DOES contain something. Every v1.13 fence is unchanged: Gentzen REPORTS the below-ε₀ result CREDITING Hilbert-Bernays and it is never called Hilbert-Bernays' theorem, no claim is made about what § 2 proves, 1938 is never cited, the count stays TWO and is still stated outright, the 1936 result still stands behind the pair, and the primary source only.
@@ -210,7 +210,7 @@ def dual_convergence_diagram():
                  fontSize=7.5, fontName='DV-I', fillColor=INDIGO))
 
     # Row label (above bottom row, in the inter-row gap)
-    d.add(String(x0, bot_by + bh + 8, '2-adic norm of encoding (converges to 0 = ⊥):',
+    d.add(String(x0, bot_by + bh + 8, '2-adic norm of image (converges to 0 = ⊥):',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
 
     # ── Vertical dashed connectors between rows ───────────────────────────────
@@ -227,14 +227,14 @@ def dual_convergence_diagram():
 
     # Caption
     d.add(String(14, 10,
-                 'Same tower, two perspectives. Teal (top): ordinal stages approach ε-zero. '
-                 'Indigo (bottom): their 2-adic norms approach 0.',
+                 'Same tower, two views. Top: ordinal stages approach ε-zero. '
+                 'Bottom: their images\' 2-adic norms approach 0.',
                  fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
 
     return d
 
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -300,7 +300,7 @@ def build():
         'threshold &#8212; no monotone, tower-aligned map can snap before &#949;&#8320;, and '
         'the canonical map snaps exactly there. ZP-L also establishes the connection to '
         'ZP-B: as the tower stages approach &#949;&#8320; in ordinal order, their '
-        '2-adic encodings converge to 0 = &#8869; in &#8484;&#8322;. The same sequence '
+        '2-adic images converge to 0 = &#8869; in &#8484;&#8322;. The same sequence '
         'witnesses both convergences simultaneously.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy &#8212; the unreachable horizon', [
@@ -388,7 +388,7 @@ def build():
     E.append(cbody(
         'The map (cnfToZp2 in Gentzen.lean) sends the seed stage 0 to 0 itself and, from '
         'stage 1 on, the n-th tower stage to 2<sup>n</sup> in &#8484;&#8322;. Read through '
-        'the valuation, the stages climb: 2<sup>n</sup> has 2-adic valuation n, rising toward '
+        'the valuation, the images climb: 2<sup>n</sup> has 2-adic valuation n, rising toward '
         'the infinite valuation of 0. Read through the norm, they fall: the 2-adic norm of '
         '2<sup>n</sup> is (1/2)<sup>n</sup>, which goes to 0 as n increases. So as the ordinal '
         'tower climbs toward &#949;&#8320; from below, its 2-adic image converges to 0 = &#8869; '
@@ -441,7 +441,8 @@ def build():
         'knows what the other is doing. When they compare notes, they find the same proof '
         'structure: the same diagonal argument, the same kind of fixed-point existence '
         'result.',
-        'ZPM relates the two through their 2-adic encodings; a bridge between the settings '
+        'ZPM maps each side into the 2-adics by its own map, the ordinal notations by cnfToZp2 '
+        'and the two machine phases by snapEmbed; a bridge between the settings '
         'themselves is still open. The two rooms share a floor plan.',
     ]))
     E.append(sp(8))
@@ -525,8 +526,9 @@ def build():
         'and &#949;&#8320; minimal &#8212; with no free hypotheses. '
         'snap_zp2_correspondence co-proves that the same tower witnesses both the '
         'ordinal approach to &#949;&#8320; and the 2-adic convergence to 0 = &#8869;. '
-        'All theorems proved without sorry. ZPM relates the ordinal and machine-phase '
-        'encodings through the 2-adics.'))
+        'All theorems proved without sorry. ZPM places both sides in &#8484;&#8322;: cnfToZp2 '
+        'sends the tower\'s ordinal notations there, snapEmbed sends the machine phases there, '
+        'and the tower\'s images converge to snapEmbed\'s value at c&#8321; (zpm_triangle).'))
 
     print(f'Building: {out_path}')
     doc.build(E)

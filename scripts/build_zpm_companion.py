@@ -1,6 +1,6 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.7 | October 2026
+Version 1.8 | October 2026
 v1.7: ED1-1 (gate round 1, 2026-10-01): §1 'any monotone map that sends tower stages to c0 must send eps0 to c1' was false (the constant-c0 map, ZeroParadox/Ordinal/Gentzen.lean example after snap_threshold_is_epsilon_zero); now states the proved lower bound (nothing fires below eps0) and that firing at eps0 is the hypothesis h-eps0 (ZeroParadox/Ordinal/Incompleteness.lean § II).
 v1.6: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-M v1.4: 'ZP-K proved that the initial state c0 is a Kleene fixed point' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem; 'they were unified in ZP-K' (Paths 1 and 3) now says they were carried together as a conjunction of witnesses (da1_paths_unified), their being one structural fact the framework's reading.
 v1.5: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
@@ -20,7 +20,7 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -195,7 +195,7 @@ def build():
         'to c₀ (snap_threshold_is_epsilon_zero). Firing at ε₀ itself is not forced (the map '
         'that is c₀ everywhere meets both conditions); it is the hypothesis hε₀, that the map '
         'sends ε₀ to c₁ (ZP-M §II), and given it, ε₀ is the least firing point. '
-        'ZP-L also showed that the tower encodings in ℤ₂ converge to 0.'))
+        'ZP-L also showed that the tower images in ℤ₂ converge to 0.'))
     E.append(cbody(
         'ZP-M builds the bridge connecting these: a formal map snapEmbed that sends '
         'c₁ (the snap state) to 0 in ℤ₂, and proves that all three objects '
@@ -251,7 +251,7 @@ def build():
         'The left-side edge is the ordinal snap: below ε₀, the tower stages map '
         'to c₀; at ε₀, the canonical map flips to c₁. '
         'The right-side edge is the type bridge: snapEmbed sends c₁ to 0. '
-        'The bottom edge is the 2-adic convergence proved in ZP-L: the tower encodings '
+        'The bottom edge is the 2-adic convergence proved in ZP-L: the tower images '
         'in ℤ₂ converge to 0 as the ordinal stages approach ε₀.'))
     E.append(cbody(
         'All three edges are theorems, and zpm_triangle assembles them into a single '

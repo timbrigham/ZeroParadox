@@ -1,5 +1,5 @@
 """
-Build ZP-F: The Counterexamples (v1.10)
+Build ZP-F: The Counterexamples (v1.11)
 v1.9: DEAD LINK AND STALE ABSENCE CLAIM (Tim ruling, 2026-10-01): the Dual Limit Condition remark said no type bridge between the ordinal and p-adic types is established in ZP-L and pointed at "ZP-L §V, Remaining Gap", a heading ZP-L no longer has. cnfToZp2 maps the omega-tower into Z2 (ZeroParadox/Ordinal/CnfBridge.lean); the sentence now reads that the identification is a co-witness, not an identity, that the literal eps0 = 0 is ill-typed (cnf_bridge_type_boundary), and points at ZP-L's "The Bridge: What Is Formal and What Is Assumed".
 v1.8: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15): the opening's 'so that it is taken follows from the occurrence commitment together with DA-1' was a non sequitur (the NO-GO gauge does not give occurrence) and sat in the ordered-field setting where the snap is proved impossible; the clause is removed and the sentence ends at the gauge.
 v1.7: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the opening said occurrence 'is a commitment of the framework rather than one of its theorems'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
@@ -23,7 +23,7 @@ v1.2: §VI Remark: Dual Limit Condition extended — squeeze as structurally
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -246,17 +246,24 @@ def build():
             'no limit point at infinity in the order-topology sense; condition (1) fails '
             'informally. (This *&#8469; observation is informal &#8212; not a proved result '
             'of this document or ZP-L.)',
-            'The tower encodings cnfToZp2(towerNONote n) converge to 0 in &#8484;&#8322; '
+            'The tower images cnfToZp2(towerNONote n) converge to 0 in &#8484;&#8322; '
             'as n &#8594; &#8734; (proved in ZP-L), and &#949;&#8320; is the minimal '
             'snap threshold in the ordinal setting (proved in ZP-L). The structural '
             'identification of these two results &#8212; that &#8484;&#8322;\'s limit at 0 '
             'and the ordinal threshold at &#949;&#8320; reflect the same boundary &#8212; '
             'is a co-witness, not an identity (cnf_bridge_type_boundary, '
             'ZeroParadox/Ordinal/CnfBridge.lean): cnfToZp2 maps the &#969;-tower into '
-            '&#8484;&#8322;, and the literal &#949;&#8320; = 0 is ill-typed with 0 the 2-adic zero, '
-            'failing to elaborate (see ZP-L, '
-            'The Bridge: What Is Formal and What Is Assumed), and well-typed and false with 0 the '
-            'ordinal zero (epsilon0_ne_zero).',
+            '&#8484;&#8322;. &#949;&#8320; &#8800; 0, with 0 the ordinal zero, is a theorem in the '
+            'ordinals (epsilon0_ne_zero). An equation between &#949;&#8320; and the 2-adic 0 does '
+            'not type-check, with no coercion between the ordinals and &#8484;&#8322; in either '
+            'direction; a Lean guard in that file detects the failure (MC-1 / ZP-P). Under cnfToZp2 the 2-adic 0 is '
+            'the image of the seed stage towerNONote 0, whose ordinal value is the bottom of the '
+            'ordinals, and the limit of the stages\' images; &#949;&#8320; has no image there, since '
+            'every ordinal notation in the map\'s domain denotes an ordinal below &#949;&#8320; '
+            '(repr_lt_epsilon0, ZeroParadox/Ordinal/PricedInterface.lean). Through another map &#949;&#8320; does land on that 0: the canonical threshold map sends '
+            '&#949;&#8320; to c&#8321; and snapEmbed sends c&#8321; to 0 (snap_state_zp2_is_zero, '
+            'ZP-M), a map value, not an identity (see ZP-L, The Bridge: What Is Formal and What Is '
+            'Assumed).',
             'This is an observation, not a proved theorem. The blocking result '
             '(F-SNAP-IMPOSSIBLE) is proved here; the threshold and convergence results '
             'are proved in ZP-L. The claim that both conditions reflect a common structural '

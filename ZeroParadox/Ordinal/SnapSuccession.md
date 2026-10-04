@@ -13,8 +13,11 @@ That file makes the succession precise.
 are **not** ⊥. `ε₀ ≠ ⊥` is a bedrock invariant (`epsilon0_ne_bot`): ⊥ is the base fed in, ε₀ the
 closure that comes out, and **the base is never its own closure**.
 
-**The standard term for a rung is an ITERATIVE BOTTOM** (ratified 2026-07-19). Each rung serves as
-the base the *next* iteration re-seeds above — a bottom relative to its iteration, never ⊥ itself.
+**The standard term for a rung is an ITERATIVE BOTTOM** (ratified 2026-07-19). One carrier in which
+a rung IS a bottom is its up-set `Set.Ici rung`: the rung is ⊥ of `Set.Ici rung`, and never ⊥ of `Ordinal`
+itself (`Ordinal.epsilon_pos`). The *next* iteration seeds at succ(rung), the least element of
+`Set.Ioi rung`, and closes at the next ε-number, which fills the ε₀ role, the closure, at that
+iteration (`epsilon_succ_eq_nfp`; `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b).
 The qualifier is load-bearing: "iterative bottom" names the role, where the bare noun would assert
 the identity.
 
@@ -49,7 +52,9 @@ So the succession of snap targets is the **ε-hierarchy** `ε₀ < ε₁ < ε₂
   `snapNucleus_isClosed_iff`;
 - it climbs **strictly** — each target is genuinely above the last (`succession_lt_succ`), never the
   same one;
-- its first rung is ε₀ (`succession_zero`) — the target of the snap seeded at ⊥, not a bottom itself.
+- its first rung is ε₀ (`succession_zero`) — the target of the snap seeded at ⊥, not the ordinals'
+  bottom (`ε₀ ≠ ⊥` in `Ordinal`, `epsilon0_ne_bot`): ⊥ = 0 is the base the tower is seeded at, and ε₀
+  is its closure.
 
 This is Tim's "when one instance ends, another begins" as a strictly increasing chain of closed
 points.

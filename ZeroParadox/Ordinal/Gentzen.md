@@ -24,8 +24,8 @@ ZPL has four components:
    it is a fixed point of `α ↦ ω^α`; it is the first such fixed point above 0. Fully in Lean
    scope via Mathlib ordinals.
 4. **Cantor Normal Form Bridge** — `cnfToZp2` maps ordinals below ε₀ (`NONote`) into `ℤ₂` by
-   recursion on their Cantor normal form; as the tower stages approach ε₀ their encodings converge to `0 = ⊥` in
-   `ℤ₂`; ε₀ itself has no encoding, and the two limits correspond as in
+   recursion on their Cantor normal form; as the tower stages approach ε₀ their images converge to `0 = ⊥` in
+   `ℤ₂`; ε₀ itself has no image, and the two limits correspond as in
    `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V. For a map φ : Ordinal → MachinePhase,
    the tower forces the floor of where the value can change: nothing fires below ε₀
    (`snap_threshold_is_epsilon_zero`), which is not occurrence. That φ fires there is
@@ -80,7 +80,7 @@ stage 1 on, the 2-adic valuation of the image tracks ordinal height (`tower_orde
 `ZeroParadox/Ordinal/CnfBridge.lean`). For `ω^e · n + a`:
   cnfToZp2(ω^e · n + a) = 2^(v₂(cnfToZp2(e)) + 1) · n + cnfToZp2(a)
 
-This recursion ensures that the tower stages get valuation = stage index:
+This recursion ensures that the images of the tower stages get valuation = stage index:
   cnfToZp2(ω^[0] 0) = 0              (valuation 0 by convention)
   cnfToZp2(ω^[1] 0) = 2^1 = 2       (valuation 1)
   cnfToZp2(ω^[2] 0) = 2^2 = 4       (valuation 2)
