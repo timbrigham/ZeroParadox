@@ -280,7 +280,7 @@ This rule applies to both directions:
 
 `register.md` records a SHA-256 fingerprint (first 8 chars) of every formal and companion build script in the `formal:XXXXXXXX comp:XXXXXXXX` token embedded in each row's Notes field.
 
-**Line endings are LF, enforced by `.gitattributes`.** Because the fingerprint is a hash of file *bytes*, line endings must be byte-stable across machines or the same script would hash differently (CRLF vs LF). `.gitattributes` declares `* text=auto eol=lf` (all text normalized to LF) and marks PDFs/images `binary` (never converted). Do not commit CRLF in tracked text files, and do not rely on `core.autocrlf` — the attributes override it. `check_hashes.py` hashes the active `.claude-local` scripts (LF); the `scripts/` mirror is the same content under the same LF policy. (Added 2026-06-21 after a CRLF/LF mismatch made the `scripts/` mirror hash differ from the active script for the same content.)
+**Line endings are LF, enforced by `.gitattributes`.** Because the fingerprint is a hash of file *bytes*, line endings must be byte-stable across machines or the same script would hash differently (CRLF vs LF). `.gitattributes` declares `* text=auto eol=lf` (all text normalized to LF) and marks PDFs/images `binary` (never converted). Do not commit CRLF in tracked text files, and do not rely on `core.autocrlf` — the attributes override it. `check_hashes.py` hashes the on-disk bytes of each build script under `scripts/` (`SCRIPT_DIR = REPO/scripts`), which is the scripts' only home; there is no mirror (`R-SCRIPTS`). A CRLF/LF mismatch once made identical content hash differently, which is why the LF policy exists.
 
 **Standing rule — a script change that moves the rendered PDF takes all four steps in the same commit:**
 1. Make the change and bump the internal version number
@@ -290,11 +290,11 @@ This rule applies to both directions:
 
 **A script change that does NOT move the rendered PDF resyncs the token with no version bump** (Tim, ruling R4, 2026-10-03), with the reason stated in the commit message. "Does not move" is SHOWN, never assumed, by one of two routes:
 - **Only comments or docstrings changed:** `python tools/verify/check_hashes.py --sync-hash <KEY>`. It compares the working script against the last committed blob the register token attests to, modulo comments and docstrings, and refuses anything else.
-- **Code changed but the output should not have:** `--sync-hash` refuses this by design. Copy the current PDF to the scratchpad, rebuild, extract the text of both with `pypdf` (the same extraction `check_paths.py --claim` uses; the detector runs on the RENDERED text, `R-DEFECTCLASS`), and diff them. Only an empty diff licenses hand-setting the token; put the diff and its empty result in the commit message. A non-empty diff, a build-date line included, means the four-step rule applies.
+- **Code changed but the output should not have:** `--sync-hash` refuses this by design. Copy the current PDF to the scratchpad, rebuild, and run `python tools/verify/pdf_same.py <old> <new>`. It exits 0 only when both files open, the page counts match, every page renders to identical pixels (pypdfium2, scale 2.0), and the `pypdf` extracted text is identical (the extraction `check_paths.py --claim` uses). Only exit 0 licenses hand-setting the token; put the command and its output in the commit message. Exit 1 (DIFFERENT) or exit 2 (CANNOT-DECIDE) means the four-step rule applies, and a rebuilt meta line carrying a new month is a correct DIFFERENT. An empty text diff alone is not proof: a reversed diagram arrow, a fill colour and bold type all extract to identical text. (Tim, ruling R4 2026-10-03, proof tightened to pixel-identical pages 2026-10-04.)
 
 **Session start check:** Run `python tools/verify/check_hashes.py` at the start of any session that will touch build scripts. A mismatch means a script was modified without completing either route above.
 
-A hash mismatch is not a "rebuild needed" signal — it means a version bump was skipped, until a rendered-text diff shows otherwise. Do not rebuild a visible change without incrementing the version number.
+A hash mismatch is not a "rebuild needed" signal — it means a version bump was skipped, until `pdf_same.py` shows otherwise. Do not rebuild a visible change without incrementing the version number.
 
 ## PDF Build Standards
 
