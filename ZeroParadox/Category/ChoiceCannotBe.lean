@@ -11,6 +11,8 @@ import ZeroParadox.Settheory.Wall
 import ZeroParadox.Ordinal.OrdinalChoiceEssential
 import ZeroParadox.Category.LawvereTaboo
 import ZeroParadox.Computability.SelfCopyReference
+import ZeroParadox.Order.PataraiaChoiceFree
+import ZeroParadox.Order.PataraiaFromBourbakiWitt
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -247,6 +249,24 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 -- Statement: an ACCIDENTAL case — over `[Fintype] [DecidableEq]` no `SelfCopyRef` map exists, re-proved at
 -- `[propext, Quot.sound]`; Mathlib's `Finite.injective_iff_surjective` route reports `Classical.choice`.
 #check @ZeroParadox.no_selfCopyRef_of_fintype
+
+-- Statement: an ACCIDENTAL case — Pataraia's theorem (monotone `f` on `[CompletePartialOrder α]` has a
+-- fixed point below every fixed point), proved via Bourbaki–Witt, measured `[propext, Classical.choice,
+-- Quot.sound]`.
+#check @ZeroParadox.dcpo_exists_least_fixedPoint
+-- Statement: a fixed point below every PRE-fixed point, measured NO axioms; the `example` after it in
+-- its home file derives the statement above from it in one line.
+#check @ZeroParadox.pataraia_least_prefixedPoint
+-- Statement: Pataraia induction, proved via Bourbaki–Witt, measured `[propext, Classical.choice,
+-- Quot.sound]`.
+#check @ZeroParadox.pataraia_induction
+-- Statement: the same signature as `pataraia_induction`, measured NO axioms.
+#check @ZeroParadox.pataraia_induction_constructive
+-- The two classical proofs use choice at two measured places: Mathlib's
+-- `ChainCompletePartialOrder.nonempty_fixedPoints_of_inflationary`, and their own chain-to-directed
+-- step (`eq_or_ne`). Measurement: `.claude-local/notes/editorial_review_2026-09-29_pataraia-choicefree-r3.md`.
+-- Reading: scoped to the ORDER-THEORETIC principle; `⊥` here is the dcpo's least element, and whether a
+-- ZP carrier is a dcpo with a monotone self-map is not claimed.
 
 /-! ## § II. What choice is NOT to be confused with — the excluded-middle boundary
 
