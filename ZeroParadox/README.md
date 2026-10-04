@@ -26,7 +26,7 @@ Lint policy: `weak.linter.mathlibStandardSet` is on, so the build flags genuine 
 |------|------------|------------|
 | `Lattice.lean` | `ZPSemilattice` typeclass (A1–A4); partial order (T1); ⊥ minimum (T2); monotonicity (T3) | — |
 | `Padic.lean` | `OntologicalStates` free inductive (AX-B1 — modelling commitment, not derived); ultrametric (T1); clopen balls (T2); topological irreversibility (C3) | Lattice |
-| `Surprisal.lean` | `BinaryState` free inductive; `MachinePhase`; L-RUN (execution is non-null); TQ-IH (no program avoids non-null state); L-INF (informational extremity at ⊥) | Lattice, Padic |
+| `Surprisal.lean` | `BinaryState` free inductive; `MachinePhase`; L-RUN (execution is non-null); TQ-IH (no program avoids non-null state); L-INF (unbounded surprisal at ⊥) | Lattice, Padic |
 | `StateSpace.lean` | `TransitionMap`; transition operator T: Q₂ → ℂⁿ; orthogonal snap shift (T4); non-decreasing norms (T5) | Lattice, Padic |
 | `Snap.lean` | `MachinePhase` ZPSemilattice instance; **T-SNAP** (`join c₀ c₁ = c₁`); DA-2 (successor null); `da1_minimal_path` (axiom-free) | Lattice–StateSpace |
 | `SetTheoryAFA.lean` | `AFAStructure` typeclass; **T-EXEC** (Quine atom = ⊥, axiom-free); `cc1_derived` (CC-1 as theorem); three-way equivalence: Quine atom = ⊥ = join-identity | Lattice |
