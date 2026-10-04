@@ -173,10 +173,13 @@ carries (for the ⊥ endpoint, MC-1 family membership; for the ε₀ endpoint, t
 itself in both of its extreme orderings, floor below as `WithBot Ordinal`
 (`phase_epsilon0_isLeast_landing_above_floor`) and floor above as `WithTop Ordinal`
 (`phaseTop_epsilon0_isLeast_landing_above_snap`) (`ZeroParadox/Multihomed/BoundaryOrder.lean`), so no
-cross-type identity is involved). Relative to the ordinals' floor, the bottom role is filled by 0 and the
-ε₀ role by `Ordinal.epsilon 0`, and the two occupants differ (`epsilon0_ne_bot`); relative to its own
-floor, that same ordinal, the first ε-number (`succession_zero`), fills the bottom role as the first
-iterative bottom. The floor endpoint is
+cross-type identity is involved). In the carrier `Ordinal` the bottom role is filled by 0. The value
+`Ordinal.epsilon 0`, lifted as `↑ε₀`, fills the ε₀ role, the first landing strictly above a floor: in
+`WithBot Ordinal`, above the boundary model's floor placed at the bottom
+(`phase_epsilon0_isLeast_landing_above_floor`), and in `WithTop Ordinal`, where that floor is placed at
+the top, above the least element, the snap `↑0` (`phaseTop_epsilon0_isLeast_landing_above_snap`; both
+`ZeroParadox/Multihomed/BoundaryOrder.lean`). In `Ordinal` that value differs from the bottom role's
+occupant 0 (`epsilon0_ne_bot`, `epsilon0_ne_zero`). The floor endpoint is
 tied to the lattice chart's ⊥ (`floor_not_wellFounded`, axiom-free); the
 abstract `Phase` carrier is the illustrative toy form, with non-well-foundedness localized at the floor
 by construction. No new commitment is introduced.
