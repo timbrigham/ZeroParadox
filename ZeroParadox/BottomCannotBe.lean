@@ -343,8 +343,9 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 -- Statement: under `[KleeneStructure]`, any Quine atom `q` satisfies `q = bot`. The statement has no
 -- Kleene clause; the quine-atom property is a hypothesis, and what the class supplies is the
 -- inherited `AFAStructure.bot_self_mem`.
--- Reading: the self-EXECUTING reading is the framework's, carried by the class commitment rather
--- than by this theorem. See ZP-K § II and § III.
+-- Reading: this theorem does not carry the self-EXECUTING reading; where that reading sits, and what
+-- `KleeneStructure` adds, is the `da1_closed_concrete` entry of
+-- `ZeroParadox/Computability/ComputationCannotBe.lean` § IV.
 #check @ZeroParadox.kleene_quine_is_bot
 -- Statement: some code `c` is a computational quine.
 #check @ZeroParadox.computational_quine_exists
