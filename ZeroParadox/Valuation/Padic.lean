@@ -223,11 +223,13 @@ theorem t5_totallyDisconnected : TotallyDisconnectedSpace Q₂ := inferInstance
 /-! ## Corollary C3 — The Snap is Topologically Irreversible
 No continuous path γ: [0,1] → Q₂ goes from x ≠ 0 to 0: γ([0,1]) is connected in the totally
 disconnected Q₂, hence a singleton. The proof uses no property of 0, and Q₂ is topologically
-homogeneous (the `example`s after `c3_irreversible`). So `(0 : Q₂)` as the occupant of ZP-A's ⊥
-role is motivated ALGEBRAICALLY, not by 0 being ℕ's first element: it is the additive identity,
-absorbs multiplication (`zero_add`, `zero_mul`; `snapEmbed_mul_morphism` in
-`ZeroParadox/Ordinal/Incompleteness.lean` uses this), and is the only point of valuation ⊤
-(`padic_addVal_eq_top_iff`, `ZeroParadox/Valuation/ValuationAFA_Padic.lean`). -/
+homogeneous (the `example`s after `c3_irreversible`). So topology does not single out `(0 : Q₂)`
+as the occupant of ZP-A's ⊥ role: it is the additive identity (`zero_add`) and the only point of
+valuation ⊤ (`padic_addVal_eq_top_iff`, `ZeroParadox/Valuation/ValuationAFA_Padic.lean`), which
+places it at ⊥ of ℚ_[2] under the valuation order. The role is chart-relative: under `snapEmbed`'s
+join-to-multiplication reading into ℤ_[2] (`snapEmbed_mul_morphism`,
+`ZeroParadox/Ordinal/Incompleteness.lean`), ⊥ of MachinePhase's ZP-A semilattice (c₀) maps to 1 and
+c₁ maps to 0, so that map does not carry ⊥ to 0, ℤ_[2]'s ⊥ under the valuation order. -/
 
 /-- C3: There is no continuous path from x ≠ 0 to 0 in Q₂. -/
 theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :
