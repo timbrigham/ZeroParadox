@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-M: Kleene-Ordinal Bridge PDF Builder
-Version 1.10 | October 2026
+Version 1.11 | October 2026
 v1.8: TYPE-BRIDGE ABSENCE CLAIM RETIRED (Tim ruling, 2026-10-01). The Identification Conjecture remark said ZPSemilattice morphisms between Ordinal and MachinePhase are not defined in this library. The canonical threshold map Ordinal to MachinePhase exists and is order-non-decreasing (snap_map_mono), and no map Ordinal to MachinePhase is compatible with the CNF to Z2 map along the tower: through snapEmbed the square fails at every stage n >= 1 (the examples after c1_epsilon_zero_identification in ZeroParadox/Ordinal/Gentzen.lean, and in ZeroParadox/Ordinal/Incompleteness.lean section II). The remark now says so. Gate round 1 fixes (2026-10-02): the square-fails sentence gains its reason (two values against tower images of pairwise distinct valuation, O4), and the dangling 'deferred to section V (future work)' now routes the choice question to ZeroParadox/Ordinal/SyntacticCollapse.lean as a separate open question (ED1-2/O6). Gate round 2 fixes (Tim's 2026-10-02 rulings): the square-fails reason is now the value check, snapEmbed takes only the values 1 and 0 and stage n >= 1 maps to 2^n, of valuation n >= 1, which is neither, replacing the counting reason that gave failure at all but at most two stages (ED2-1/O2-1). Gate round 3 fix (Tim's 2026-10-02 ruling, R3-O2): the square-fails sentence drops 'of valuation n >= 1', so 'which is neither' binds to 2^n, matching the Lean Statement.
 v1.7: ZPK-BED SWEEP (Tim rulings, 2026-09-19). The Axiom Purity box carried the third rendered statement of the axiom-provenance rule - "Classical.choice is carried by the statements' types" - which ZP-K Section IV stopped stating this same day, because five successive general rules about this one Classical.choice were all measured false. It now names the mechanism it can back (the Denumerable Code instance) and points at Section IV's dated measurement table. ⚠ Line 400's "Classical.choice is load-bearing in the ordinal fixed-point (nfp)" is UNTOUCHED and NOT a defect: it is licensed by ZeroParadox/Ordinal/OrdinalChoiceEssential.lean, a reviewer filed it and WITHDREW it, and the withdrawal is the recorded lesson. Located by an axis-varied sweep of the RENDERED PDFs; two earlier gates saw it and correctly scoped it out.
 v1.6: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Axiom Purity box said the choice in the computability fixed point belongs to ZP-K's instance. Measured: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and a computable constant-code instance carries it too; Classical.choose is what makes machinePhaseKleene noncomputable; essentiality is not measured. The ordinal half of the box is unchanged.
@@ -17,7 +17,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -75,7 +75,7 @@ def build():
     E.append(body(
         'snapEmbed is the canonical type bridge from ZP-E\'s machine-phase state space '
         'to ZP-B\'s 2-adic integers. The pre-snap state c&#8320; maps to 1 (a 2-adic unit); '
-        'the snap state c&#8321; maps to 0 (the 2-adic limit of the tower encodings). '
+        'the snap state c&#8321; maps to 0 (the 2-adic limit of the tower images). '
         'Under multiplication on &#8484;&#8322;, 0 is absorbing — mirroring exactly the '
         'join structure on MachinePhase, where c&#8321; is the absorbing element.'))
     E.append(body(
@@ -249,7 +249,7 @@ def build():
         'ZP-K established: c&#8320; = &#8869; is a Quine atom '
         '(da1_closed_concrete : IsQuineAtom (&#8869; : MachinePhase)). '
         'ZP-L established: the canonical snap map assigns c&#8321; exactly at &#949;&#8320;, '
-        'with tower encodings in &#8484;&#8322; converging to 0. '
+        'with tower images in &#8484;&#8322; converging to 0. '
         'The triangle connects all three objects formally:'))
 
     E.append(data_table(

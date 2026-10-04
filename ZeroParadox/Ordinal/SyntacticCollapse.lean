@@ -185,7 +185,7 @@ def synVal : ONote → ℕ
 /-- The `n`-th ω-tower stage has syntactic valuation exactly `n`.
 
 Numerically this matches `Gentzen.cnfToZp2_tower_valuation` (which computes the 2-adic valuation of
-the tower's encoding to be `n`), but the two are separate computations — no theorem here links them.
+the n-th tower stage's image to be `n`), but the two are separate computations — no theorem here links them.
 -/
 theorem synVal_tower (n : ℕ) : synVal (tower n) = n := by
   induction n with

@@ -28,7 +28,7 @@ does **not** prove it.
    `cnfToZp2` to the `ℤ_[2]` bottom 0. One seed, two carriers, each carrier's ⊥.
 
 3. **The 2-adic realization is a loop through ⊥** (`tower_image_loops_to_seed`): under `cnfToZp2`
-   the seed's image *and* the tower's norm-limit are both the *value* 0. So the ordinal ascent
+   the seed's image *and* the limit of the stages' images are both the *value* 0. So the ordinal ascent
    ⊥ → ε₀ realizes, through the map, as a `ℤ_[2]` path that departs 0 and whose norm returns to 0.
    This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (never the same; **not** order-adjacent — see
    `epsilonZero_tower_lt`), and the images of the finite stages n ≥ 1 are all ≠ 0 (next to the floor, never it). In this realization the
@@ -43,7 +43,16 @@ does **not** prove it.
    NONote), not a value; ε₀ and 0 are its two carrier-specific closures, not one number.
 
 5. **The honest fence** (`cnf_bridge_type_boundary`): the ε₀ side is a genuine `IsLeastFixedPointFrom`
-   μ; the `ℤ_[2]` side is a norm-limit of the *same index sequence*, NOT itself a least fixed point
-   (no lattice ascent on `ℤ_[2]` to 0). The two are co-witnessed and connected by `towerNONote` — and
-   the residual literal `ε₀ = 0` stays a **type boundary**, never a Lean `=`. Built in the spirit of
+   μ; the `ℤ_[2]` side is the norm-limit of the *images* `cnfToZp2 (towerNONote n)`, NOT itself a least
+   fixed point (no lattice ascent on `ℤ_[2]` to 0). The two are co-witnessed and connected by
+   `towerNONote`, and no Lean `=` joins the two closures. `ε₀ ≠ 0`, with 0 the ordinal zero, is a theorem
+   (`epsilon0_ne_zero`, in `Ordinal`). The cross-type `ε₀ = (0 : ℤ_[2])` does not type-check, with no
+   coercion between `Ordinal` and `ℤ_[2]` in either direction; the `#check_failure` guard after the
+   theorem detects that failure (MC-1 / ZP-P). Under `cnfToZp2` the 2-adic 0 is the image of the seed `towerNONote 0`,
+   whose `repr` is ⊥ of `Ordinal` (`seed_maps_to_bot_both`), and the limit of the stages' images; ε₀
+   has no image there, since `cnfToZp2` is defined on `NONote` and every notation denotes an ordinal
+   below ε₀ (`repr_lt_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`). Through another map ε₀
+   does land on that 0: the canonical threshold map sends ε₀ to c₁ and `snapEmbed` sends c₁ to 0
+   (`snap_state_zp2_is_zero`), a map value, not an identity.
+   Built in the spirit of
    `zpm_triangle` (`Ordinal/Incompleteness.lean`), which co-witnesses without a type identity.

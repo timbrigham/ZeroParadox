@@ -114,10 +114,12 @@ the order-reversing `cnfToZp2`:
 1. the InfinitudeFloor floor ⊥ = 0 (in `ℤ_[2]`) has **infinite complexity** `cx = ⊤` — driven by the tower
    images climbing (valuation ↑, norm ↓ to the floor);
 2. the **same** tower ascends on the ordinal side to the **height** `ε₀ = ⨆ fundamentalSeq`;
-3. and `ε₀ ≠ 0` — the height is **not** the floor.
+3. and `ε₀ ≠ 0`, 0 the ordinals' floor (`epsilon0_ne_zero`) — the height is **not** the floor.
 
-The fight between "ascends to ε₀" and "descends to ⊥" is resolved by the map, never by collapse: `ε₀ = 0`
-stays a cross-type boundary, and this theorem *proves* they are distinct while joining them. -/
+The fight between "ascends to ε₀" and "descends to ⊥" is resolved by the map, never by collapse: the 2-adic
+floor 0 is the limit of the tower's `cnfToZp2` images, never a `cnfToZp2` image of ε₀ (ε₀ lies outside
+`NONote`; through the canonical threshold map and `snapEmbed` it does land on 0, `snap_state_zp2_is_zero`),
+and this theorem *proves* `ε₀ ≠ 0` in `Ordinal` while joining the two closures. -/
 theorem tower_height_floor_reconciliation :
     (@InfinitudeFloor.cx ℤ_[2] towerInfinitudeFloor towerInfinitudeFloor.floor = ⊤) ∧
     (epsilonZero = ⨆ n : ℕ, fundamentalSeq n) ∧

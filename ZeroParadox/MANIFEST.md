@@ -171,7 +171,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/ConstructiveOrdinals.lean` - ZP-N: the ε₀ snap, constructively, on ordinal notations (choice-free)
 - `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` - Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
 - `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` - Batch 2 / G1 (pipeline, T6): ε₀ is the LEAST fixed point of α ↦ ωᵅ — the snap sits at minimal closure
-  - ride-along docs: `ZeroParadox/Ordinal/Epsilon0LeastFP.md` - Least in which order, Veblen's Corollary 1, and three traps around the seed range
+  - ride-along docs: `ZeroParadox/Ordinal/Epsilon0LeastFP.md` - Least in which order, Veblen's Corollary 1 to Theorem 4, and three traps around the seed range
 - `ZeroParadox/Ordinal/Epsilon0MinMax.lean` - ε₀ is min ≡ max: the snap ⊥ → ε₀ is one Kleene chain (seed → closure)
   - ride-along docs: `ZeroParadox/Ordinal/Epsilon0MinMax.md` - Least fixed point as a signature, and two fences on the seed
 - `ZeroParadox/Ordinal/Gentzen.lean` - ZP-L: Incomputability Convergence
