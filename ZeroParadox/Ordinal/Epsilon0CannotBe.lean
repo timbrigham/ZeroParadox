@@ -71,6 +71,51 @@ section Epsilon0CannotBeIndex
 #check @ZeroParadox.epsilon0_ne_zero          -- ε₀ ≠ 0, in every reading — the guard beneath all else
 #check @ZeroParadox.epsilon0_ne_bot           -- ε₀ ≠ ⊥ — the base is never its own closure
 
+/-! ### § I-b. The ε₀ ROLE is never its floor, at any floor in `Ordinal` (the role, not the value) -/
+-- Reading: CARRIER — the ordinal order. The ε₀ role relative to a floor `f` is the least fixed point
+-- of `α ↦ ω^α` strictly above `f`; `f` is the bottom of the carrier `Set.Ici f`.
+#check @Ordinal.epsilon_succ_eq_nfp           -- Statement: Mathlib, `ε_(succ o) = nfp (ω^·) (succ ε_o)`
+-- Statement: at every floor `f`, the least fixed point strictly above the bottom of `Set.Ici f` is
+-- `nfp (ω^·) (succ f)`, and it is not that bottom.
+example (f : Ordinal) :
+    IsLeast {x : Ordinal | Ordinal.omega0 ^ x = x ∧ ((⊥ : Set.Ici f) : Ordinal) < x}
+      (Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ f)) ∧
+    Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ f) ≠ ((⊥ : Set.Ici f) : Ordinal) := by
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  have hlt : f < Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ f) :=
+    lt_of_lt_of_le (Order.lt_succ f) (Ordinal.le_nfp _ _)
+  refine ⟨⟨⟨Ordinal.nfp_fp hn _, hlt⟩, ?_⟩, hlt.ne'⟩
+  rintro x ⟨hx, hfx⟩
+  exact Ordinal.nfp_le_fp hn.strictMono.monotone (Order.succ_le_of_lt hfx) (le_of_eq hx)
+-- Statement: at the floor `0`, the bottom of `Ordinal`, that occupant is ε₀.
+example : Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ 0) = Ordinal.epsilon 0 :=
+  ZeroParadox.nfp_seed_independent_below_epsilon0 _ (Order.succ_le_of_lt (Ordinal.epsilon_pos 0))
+-- Statement: the at-or-above form returns the floor exactly when the floor is itself a fixed point,
+-- which is why the role is taken strictly above.
+example (f : Ordinal) :
+    Ordinal.nfp (fun α => Ordinal.omega0 ^ α) f = f ↔ Ordinal.omega0 ^ f = f := by
+  refine ⟨fun h => ?_, Ordinal.nfp_eq_self⟩
+  have := Ordinal.nfp_fp (Ordinal.isNormal_opow Ordinal.one_lt_omega0) f
+  rwa [h] at this
+-- Statement: role versus value. The value ε₀ is the bottom of the carrier `Set.Ici ε₀`, and in that
+-- carrier the ε₀ role is filled by a different value, ε₁.
+example :
+    ((⊥ : Set.Ici (Ordinal.epsilon 0)) : Ordinal) = Ordinal.epsilon 0 ∧
+    IsLeast {x : Ordinal | Ordinal.omega0 ^ x = x ∧ ((⊥ : Set.Ici (Ordinal.epsilon 0)) : Ordinal) < x}
+      (Ordinal.epsilon 1) := by
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  have e : Ordinal.epsilon 1
+      = Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ (Ordinal.epsilon 0)) := by
+    rw [← Ordinal.epsilon_succ_eq_nfp, Order.succ_eq_add_one, zero_add]
+  refine ⟨rfl, ⟨Ordinal.omega0_opow_epsilon 1, ?_⟩, ?_⟩
+  · rw [e]; exact lt_of_lt_of_le (Order.lt_succ _) (Ordinal.le_nfp _ _)
+  · rintro x ⟨hx, hlt⟩
+    rw [e]
+    exact Ordinal.nfp_le_fp hn.strictMono.monotone (Order.succ_le_of_lt hlt) (le_of_eq hx)
+-- Statement: every ordinal is the bottom of its own `Set.Ici`, so occupying a carrier's bottom
+-- singles out no value.
+example : ∀ o : Ordinal, ((⊥ : Set.Ici o) : Ordinal) = o := fun _ => rfl
+
 /-! ### § II. What ε₀ IS — the construction: first fixed point of the ω-tower from the base ⊥ -/
 #check @ZeroParadox.epsilon0_eq_nfp_bot       -- ε₀ = nfp (ω^·) ⊥ (seeded at the base ⊥)
 #check @ZeroParadox.epsilonZero_eq_nfp        -- ε₀ = nfp (ω^·) 0
