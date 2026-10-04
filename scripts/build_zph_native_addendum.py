@@ -157,7 +157,8 @@ def build():
     E.append(sp(4))
     E.append(body(
         'TopCat has both a terminal object (the one-point space) and an initial object (the '
-        'empty space); the snap floor is neither. It is the <i>limit</i> of the ball tower '
+        'empty space). The snap floor {0} is a one-point space, so it is terminal and not initial '
+        '(padic_bottom_not_initial, ZeroParadox/Multihomed/TreeObstructions.lean). It is also the <i>limit</i> of the ball tower '
         '&#8212; the categorical expression a topologist would expect for "the point '
         'everything converges to." This is the honest realization in a category that is not '
         'a ZPCategory: not an initial object, but a limit.'))

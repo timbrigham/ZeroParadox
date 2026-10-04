@@ -228,8 +228,11 @@ def build():
             'Preservation of composition: For f: A &#8594; B and g: B &#8594; C, F<sub>A</sub>(g &#8728; f) = S<sub>A</sub> &#8744; &#945;<sub>f</sub> &#8744; &#945;<sub>g</sub> = '
             'F<sub>A</sub>(g) &#8728; F<sub>A</sub>(f) by associativity of &#8744; (ZP-A A1). <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>A</sub>(id<sub>A</sub>) = S<sub>A</sub> &#8744; &#8869; = S<sub>A</sub> by ZP-A A4 (additive identity). <font name="DV">&#10003;</font>',
-            'AX-G1 respected: F<sub>A</sub>(0) = &#8869; is the global minimum of L (ZP-A T2). No element of SLat is a terminal '
-            'object because L has no top element &#8868; (ZP-A R1). <font name="DV">&#10003;</font>',
+            'AX-G1 respected on a carrier with no top element: F<sub>A</sub>(0) = &#8869; is the global minimum of L (ZP-A T2). '
+            'Having no top element is the optional ZP-A hypothesis HasNoTop (ZeroParadox/Order/Lattice.lean), not a property of every '
+            'carrier: ZP-A\'s two-state carriers have a top. Where it holds, every element has something strictly above it, so no element '
+            'is terminal (the last example of &#167; I-b in ZeroParadox/Category/Category.lean). The Lean witness is &#8469; with &#8804;, '
+            'which has no greatest element (natZPCategory, ZeroParadox/Multihomed/CategoricalBridge.lean). <font name="DV">&#10003;</font>',
             'AX-G2 respected: No join operation in L can return to &#8869; from a strictly larger state (ZP-A T3, '
             'monotonicity). Therefore F<sub>A</sub> sends no non-initial morphism to a map terminating at &#8869;. '
             'Note: this verification depends on CC-1 / DA-2 to identify L\'s &#8869; with C\'s initial object 0. '
@@ -460,7 +463,7 @@ def build():
     trace_rows = [
         ['F<sub>A</sub>(0) = &#8869;',                'ZP-A T2; C-H1',               'None',        'Valid — Derived'],
         ['F<sub>A</sub> preserves composition',        'ZP-A A1; C-H1',               'None',        'Valid — Derived'],
-        ['F<sub>A</sub> respects AX-G1, AX-G2',       'ZP-A T2, T3, R1; C-H1',       'None',        'Valid — Derived'],
+        ['F<sub>A</sub> respects AX-G1, AX-G2',       'ZP-A T2, T3; natZPCategory; C-H1', 'HasNoTop (no-terminal half)', 'Valid on a carrier with no top'],
         ['F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>','ZP-B T3; C-H2',               'None',        'Valid — Derived'],
         ['F<sub>B</sub> preserves composition',        'ZP-B T2; C-H2',               'None',        'Valid — Derived'],
         ['F<sub>B</sub> respects AX-G1, AX-G2',       'q2BallZPCat (stand-in); ZP-B C3; C-H2', 'None', 'Valid in the stand-in — TopCat has a terminal object'],
