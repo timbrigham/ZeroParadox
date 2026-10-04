@@ -85,8 +85,8 @@ theorem th1_fa {L : Type*} [ZPSemilattice L] (x : L) :
     No continuous path returns to 0 from any x ≠ 0 (ZPB C3). This is the key
     irreversibility property that F_B's initial-object claim rests on, grounded in
     ZPB T3 (clopen isolation) and T5 (total disconnectedness).
-    The shared concrete ZPCategory witness for F_B/C/D is nnrealZPCategory (ℝ≥0 with ≤);
-    C3 is the domain analogue of AX-G2 in that category. See nnreal_initial_grounding
+    The shared concrete ZPCategory witness for F_B/C/D is nnrealZPCategory (ℝ≥0 with ≤), where
+    AX-G2 is antisymmetry; C3 is the domain fact behind it. See nnreal_initial_grounding
     in the NNRealZPCat appendix for the categorical grounding. -/
 theorem th1_fb :
     ∀ x : Q₂, x ≠ 0 → ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂),
@@ -308,17 +308,12 @@ end PurityCheckNNRealZPCat
 
 /-! ## Appendix — Q₂BallCat and fb_functor: Full Functor for F_B
 
-The clopen ball hierarchy in Q₂ — the sequence B(0, 2⁰) ⊃ B(0, 2⁻¹) ⊃ ⋯ converging to {0} —
-gives a natural category grounding F_B concretely in Q₂'s topology.
-
-Q₂BallDepth indexes this hierarchy: depth n corresponds to the clopen ball B(0, 2^(-n)).
-A morphism n → m (n ≤ m) descends into a smaller ball — topologically forward, not back.
-AX-G2 (no morphism m → 0 for m ≠ 0) is the categorical encoding of C3: no continuous path
-returns from a non-zero element to 0 in Q₂.
-
-fb_functor : Functor ℕ Q₂BallDepth is the concrete F_B Lean term.
-The snap morphism 0 → 1 in ℕ maps to the depth-0 → depth-1 ball transition;
-fb_snap_q2_grounded connects this to C3. -/
+Q₂BallDepth indexes the clopen balls B(0, 2^(-n)) of Q₂ by depth n; a morphism n → m (n ≤ m)
+descends into a smaller ball. AX-G2 (no morphism m → 0 for m ≠ 0) holds here by antisymmetry of ≤
+on the depth index; C3 (no continuous path returns from a non-zero element to 0 in Q₂) is the
+domain fact it mirrors. In `TopCat`, where `fB_functor` lands, the floor `{0}` is not initial
+(`padic_bottom_not_initial`). fb_functor : Functor ℕ Q₂BallDepth is the concrete F_B Lean term;
+fb_snap_q2_grounded connects its snap morphism 0 → 1 to C3. -/
 
 section Q₂BallFunctor
 
@@ -362,7 +357,7 @@ instance q2BallHom0Unique (n : Q₂BallDepth) : Unique ((0 : Q₂BallDepth) ⟶ 
 
 /-- Q₂BallDepth is a ZPCategory with depth 0 as the initial object.
     AX-G1: depth has no maximum — n + 1 > n always.
-    AX-G2: m.val ≤ 0 forces m = 0, grounded in C3 (no return to 0 in Q₂). -/
+    AX-G2: m.val ≤ 0 forces m = 0 (antisymmetry); C3 (no return to 0 in Q₂) is the domain fact. -/
 noncomputable instance q2BallZPCat : ZPCategory Q₂BallDepth where
   zpInitial         := 0
   zpIsInitial       := IsInitial.ofUnique 0
@@ -568,7 +563,7 @@ instance hilbDimHom0Unique (n : HilbDimDepth) : Unique ((0 : HilbDimDepth) ⟶ n
 
 /-- HilbDimDepth is a ZPCategory with depth 0 as the initial object.
     AX-G1: dimension has no maximum — n + 1 > n always.
-    AX-G2: m.val ≤ 0 forces m = 0; orthogonal transitions cannot be reversed to dimension 0. -/
+    AX-G2: m.val ≤ 0 forces m = 0 (antisymmetry); in `ModuleCat ℂ` it fails (`fD_has_return`). -/
 noncomputable instance hilbDimZPCat : ZPCategory HilbDimDepth where
   zpInitial         := 0
   zpIsInitial       := IsInitial.ofUnique 0
