@@ -330,7 +330,7 @@ def build():
         'TopCat, ModuleCat ℂ and KleisliCat PMF each have one: the one-point space, the zero '
         'module and the one-point type. For FA, a lattice has a terminal element exactly when '
         'it has a top element, so AX-G1 there needs the optional ZP-A hypothesis HasNoTop; '
-        'ZP-A\'s two-state carriers have a top.AX-G2 says nothing other than 0 maps into 0. It holds wherever '
+        'ZP-A\'s two-state carriers have a top. AX-G2 says nothing other than 0 maps into 0. It holds wherever '
         'the category is built from a partial order with a least element, by antisymmetry, as in '
         'ZP-A\'s semilattice and in the three stand-ins. It fails in ModuleCat ℂ: the zero map '
         'sends every module into the zero module, including modules that are not zero.'))

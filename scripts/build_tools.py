@@ -193,7 +193,7 @@ def build():
             ['Lean 4',        'Yes', 'ZP-A: full algebraic verification — NatSLat concrete instance, #print axioms clean. '
                                      'ZP-B/C/D: sorry-free functors into ℕ-indexed stand-in categories and into the standard '
                                      'Mathlib categories TopCat, KleisliCat PMF and ModuleCat ℂ, which close OQ-G3; '
-                                     'domain theorems (C3, T1b, T4) ground the snap in each. '
+                                     'domain theorems (C3, T1b, T4) ground the snap in each stand-in category. '
                                      'ZP-E/G/H: sorry-free proofs for key results. Source on illustrated branch. '
                                      'Note: CC-2 (&#8869; = {&#8869;}, ZF+AFA) is a metatheoretic commitment; '
                                      'Lean\'s bot is a structural proxy, not a Quine atom in Lean\'s type theory.'],
@@ -219,7 +219,7 @@ def build():
         'Lean\'s kernel axioms. (2) Functor-level verification: for ZP-B, ZP-C, and ZP-D, '
         'sorry-free Lean functors land in ℕ-indexed stand-in categories and in the standard Mathlib '
         'categories TopCat, KleisliCat PMF and ModuleCat ℂ, which close OQ-G3; the domain theorems '
-        '(C3, T1b, T4) ground the snap in each. '
+        '(C3, T1b, T4) ground the snap in each stand-in category. '
         'Neither level formalizes CC-2 (&#8869; = {&#8869;}). CC-2 is a metatheoretic commitment '
         'over ZF + AFA — Lean\'s type theory (CIC) is well-founded by construction and cannot '
         'realize a Quine atom as a Lean term. The Lean bot is the structural proxy for the algebraic '

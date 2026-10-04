@@ -354,7 +354,7 @@ def build():
         'Status: Derived — [OQ-G2 closed in ZP-H T-H1]',
         [
             'For each instantiation functor F ∈ {F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>}, '
-            'F(0) is an initial object in the codomain. '
+            'F(0) is an initial object in the codomain (for F<sub>B</sub>, in its stand-in). '
             'Verified by direct universal property check in ZP-H T-H1. ✓',
         ]
     ))

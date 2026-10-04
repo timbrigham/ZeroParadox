@@ -358,7 +358,7 @@ def build():
         'Theorem T-H1 — Each Instantiation Functor Preserves the Initial Object',
         'Status: Derived — OQ-G2 closed',
         [
-            'Claim: For each functor F &#8712; {F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>}, F(0) is an initial object in the codomain category.',
+            'Claim: For each functor F &#8712; {F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>}, F(0) is an initial object in the codomain category (for F<sub>B</sub>, in its stand-in).',
             'Strategy: Rather than proving each functor is a left adjoint in full generality (which would require '
             'establishing adjoint pairs for SLat, pTop, InfoSp, and Hilb), we verify the universal property '
             'directly for each functor. The universal property of the initial object requires: for every object Y in '
@@ -377,7 +377,7 @@ def build():
             'from e<sub>0</sub> to e<sub>k</sub> (the basis vector assigned to x). Uniqueness: T is unique up to unitary equivalence '
             '(ZP-D T3); the orthogonal extension is unique up to the same equivalence. <font name="DV">&#10003;</font>',
             'Conclusion: OQ-G2 is closed. ZP-G T5 is now unconditional for the four instantiation functors '
-            'of this framework, for F<sub>B</sub> in its stand-in. The universal property of 0 &#8712; ob(C) is fully preserved under F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, and F<sub>D</sub>. <font name="DV">&#10003;</font>',
+            'of this framework, for F<sub>B</sub> in its stand-in. The universal property of 0 &#8712; ob(C) is fully preserved under F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, and F<sub>D</sub> (for F<sub>B</sub>, in its stand-in). <font name="DV">&#10003;</font>',
         ]
     ))
 
@@ -516,7 +516,7 @@ def build():
         ['OQ-G2',
          'Closed — T-H1',
          'Left adjoint verification for instantiation functors. Resolved in Section IV by '
-         'direct verification of the universal property for each of the four functors.'],
+         'direct verification of the universal property for each of the four functors (for F<sub>B</sub>, in its stand-in).'],
         ['OQ-G3',
          'Closed — all four\nfunctors (Lean)',
          'PDF-level constructions of all four instantiation functors complete (Section III). '
