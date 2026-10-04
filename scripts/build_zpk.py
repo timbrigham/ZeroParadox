@@ -322,24 +322,27 @@ def build():
 
     E.append(Paragraph('II. The Description-Instantiation Gap', S['h2']))
     E.append(body(  # ZP-NOCHECK: term cited in quotes as a closed informal gap, not a live ZP claim
-        'The remaining informal gap in the DA-1 argument concerned the "description-instantiation '
-        'gap": why does mathematical self-reference imply computational execution? The '
-        'gap assumed the two were different things connected by a philosophical bridge.'))
+        'The "description-instantiation gap" asks whether mathematical self-reference implies '
+        'computational execution: whether a self-referential ⊥ is running (Sense B, ZP-E DA-1 '
+        'insert § II) rather than an inert description (Sense A).'))
     E.append(body(
-        'On the framework\'s reading, they are not different things. ⊥ in the computational instantiation is read as the universal '
-        'Turing machine in its ground state. The universal Turing machine is not a description '
-        'awaiting an external executor — it IS the executor. The question "why does this '
-        'description execute?" is incoherent when applied to U, because U is not a description. '
-        'U is the thing that executes descriptions. The question does not apply to it.'))
+        'On the framework\'s reading, ⊥ in the computational instantiation is read as the universal '
+        'Turing machine in its ground state, which is not a description awaiting an external '
+        'executor: if it executes at all, it executes itself (Path 1, the framework\'s requirement, '
+        'not a theorem). That rules out an external executor, not an inert ⊥: on MachinePhase, ⊥ is '
+        'the Quine atom (da1_closed_concrete), and T-SNAP holds in a dynamics in which nothing leaves '
+        'c₀ (tsnap_holds_but_nothing_moves). That it does execute, so that the configuration reaching '
+        'P₀ is running, is the occurrence commitment, which DA-1 consumes and does not supply (ZP-E).'))
 
     E.append(result_box(
         'Theorem: description_instantiation_gap_closed (Kleene.lean § IV)',
         [
             'In any KleeneStructure lattice:',
             'IsQuineAtom ⊥  ∧  ∀ q : L, IsQuineAtom q → q = ⊥',
-            'On the framework\'s reading, ⊥ is not a description awaiting an external interpreter; '
-            'Lean proves only the Quine-atom statement above. ⊥ is read as the '
-            'executor, the universal machine in its ground state. Lean witnesses ⊥ as the AFA Quine '
+            'On the framework\'s reading, ⊥ is not a description awaiting an external interpreter: '
+            'if it executes, it is its own executor, the universal machine in its ground state. '
+            'Lean proves only the Quine-atom statement above; that ⊥ executes is the occurrence '
+            'commitment, not this theorem. Lean witnesses ⊥ as the AFA Quine '
             'atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a '
             'KleeneStructure requirement (botCode_is_quine); that these are one structural fact is '
             'the framework\'s reading.',
@@ -481,8 +484,9 @@ def build():
             'unique self-containing element of the MachinePhase lattice.',
             '',
             'Interpretation (the framework\'s reading, not a Lean theorem): c₀ is read as the '
-            'executor, the universal Turing machine in its ground state, needing no external '
-            'executor; on that reading "description awaiting execution" is not a coherent state for c₀.',
+            'universal Turing machine in its ground state, needing no external executor: if it '
+            'executes at all, it executes itself (Path 1). That it executes is the occurrence '
+            'commitment, which DA-1 consumes, not a consequence of this theorem.',
             '',
             'Lean: ZeroParadox.da1_closed_concrete. '
             'Purity: standard foundational axioms only (the same statement has an axiom-free '
@@ -586,10 +590,12 @@ def build():
 
     oq_rows = [
         ['DA-1 Path 1 (AFA structural)',
-         'LEAN COUNTERPART PROVED — derives nothing',
-         'IsQuineAtom (⊥ : MachinePhase) — the structural half. The theorem mentions no '
-         'Code and no execution; that ⊥ is self-EXECUTING is a framework commitment, '
-         'not what this declaration proves. da1_closed_concrete is Path 1\'s Lean counterpart. Path 1 rules out an external executor, not an inert ⊥, and does not close DA-1\'s precondition.'],
+         'Lean counterpart proved; derives no execution',
+         'IsQuineAtom (⊥ : MachinePhase) — the structural half, Path 1\'s Lean counterpart. The '
+         'theorem mentions no Code and no execution. Path 1 says that if ⊥ executes, it executes '
+         'itself (the framework\'s requirement, not a theorem): it rules out an external executor, '
+         'not an inert ⊥. That ⊥ executes is the occurrence commitment, which DA-1 consumes; Path 1 '
+         'does not close it.'],
         ['DA-1 Path 3 (computational)',
          'ARGUES FOR THE PRECONDITION — derives nothing',
          'botCode_is_quine is a KleeneStructure class field — assumed at instantiation, not proved. '

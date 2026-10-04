@@ -184,13 +184,14 @@ def build():
         'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is that '
         'commitment, not a theorem.'))
     E.append(cbody(
-        'On the framework\'s reading, the consequence for DA-1 is direct: ⊥ is not a description of a Turing machine; '
-        '⊥ IS an instance of a Turing machine (specifically its ground state, serving as its own program), '
-        'and the "description vs. execution" gap that DA-1 had to close is structurally '
-        'dissolved: there is no gap, because ⊥ in the four formal languages of this framework '
-        'is proved to be the same structural object for three of the four descriptions, the '
-        'computational one being assumed rather than derived — and it is that structural identity, '
-        'as the framework reads it, which dissolves the gap.'))
+        'On the framework\'s reading, ⊥ is not a description of a Turing machine waiting for an '
+        'outside party to run it: ⊥ is read as an instance of a Turing machine (its ground state, '
+        'serving as its own program), so if it runs at all, it runs itself (Path 1, the framework\'s '
+        'requirement, not a theorem). That rules out an outside executor, not an idle ⊥: ⊥ is the '
+        'unique self-containing state of MachinePhase (da1_closed_concrete) even in a dynamics where '
+        'nothing ever leaves c₀ (tsnap_holds_but_nothing_moves). That ⊥ does run is the occurrence '
+        'commitment, which DA-1 uses and does not supply. Three of the four descriptions of ⊥ are '
+        'proved to name the same structural object; the computational one is assumed rather than derived.'))
     E.append(sp(4))
 
     # What Is a Kleene Fixed Point?
@@ -303,10 +304,11 @@ def build():
         'DP-2 (ZP-E) proved that these are distinct machine states even when both '
         'produce the same output value. On the framework\'s reading, ⊥ is not a description '
         'waiting for someone outside to press "run": if it runs at all, it runs itself (Path 1). '
-        'That it does run, so that the machine has left c₀ for c₁, is the occurrence commitment, '
-        'which DA-1 uses and does not supply. ZP-K carries c₀\'s computational face as a '
-        'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is that '
-        'commitment, not a theorem. What T-COMP proves is narrower: '
+        'That it does run is the occurrence commitment, which DA-1 uses and does not supply; '
+        'given it, the machine has left c₀ for c₁, by the definition of the first running '
+        'configuration (D7). ZP-K carries c₀\'s computational face as a '
+        'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is the '
+        'KleeneStructure commitment, not a theorem. What T-COMP proves is narrower: '
         'three of the four descriptions of ⊥ are equivalent to one another. It says nothing '
         'about external agents, and nothing about execution.'))
     E.append(sp(4))
@@ -315,8 +317,10 @@ def build():
         'its own sensor. The image it produces is the state of the sensor; the sensor\'s '
         'state is the image. There is no external scene being captured — the camera IS '
         'the scene. On the framework\'s reading, ⊥ as a Kleene fixed point has exactly this '
-        'structure: the program that runs is the program that describes what runs, so '
-        'description and execution are the same act.',
+        'structure: the program that runs is the program that describes what runs, so if it '
+        'runs, nothing outside it is needed to run it. The analogy stops there: the same camera, '
+        'wired the same way, can also sit switched off. That ⊥ does run is the framework\'s '
+        'occurrence commitment, not something the self-reference supplies.',
     ]))
     E.append(sp(8))
 
@@ -396,7 +400,8 @@ def build():
         'the KleeneStructure field botCode_is_quine. '
         'da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proves the structural half only - '
         'it mentions no code and no execution. '
-        'DA-1 Path 1 (structural) is in Lean scope. Path 3 (computational) shows that executing '
+        'DA-1 Path 1 (structural): its Lean counterpart is proved, and Path 1 rules out an external '
+        'executor, not an inert &#8869;. Path 3 (computational) shows that executing '
         'is not derivable from incompressibility; its Lean counterpart is a class field, assumed '
         'rather than derived.'))
     E.append(sp(6))
