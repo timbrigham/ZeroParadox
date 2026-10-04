@@ -1,5 +1,5 @@
 """
-Build ZP-G Illustrated Companion (v1.13)
+Build ZP-G Illustrated Companion (v1.14)
 v1.13: "What Is a Functor?" — ZP-G states the axioms the stand-in categories are checked against (it does not
 build the category the functors target) (gate round 1, Tim ruling 2026-09-29).
 v1.12: "What Is a Functor?" — ZP-H's four functors run from the natural-number depth order, as in
@@ -156,7 +156,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -278,9 +278,9 @@ def build():
         'ZP-G constructs a single abstract category C whose structure captures everything '
         'essential about the Zero Paradox: there is a privileged starting point (the initial '
         'object), all structure flows forward from it, and no morphism ever returns to it. '
-        'These properties are stated as two axioms within ZP-G. The initial object and the fact that '
-        'nothing returns to it are grounded in structure established in prior layers; that C has no '
-        'terminal object is ZP-G\'s own commitment.'))
+        'These properties are stated as two axioms within ZP-G. The initial object is grounded in structure '
+        'established in prior layers, and so is the fact that nothing returns to it wherever the category is '
+        'built from an order; that C has no terminal object is ZP-G\'s own commitment.'))
     E.append(cbody(
         '<b>AX-G1 (Initial Object):</b> The category C has an initial object, called 0, and no terminal object. '
         'An initial object is an object with exactly one morphism to every object — a '
@@ -293,8 +293,11 @@ def build():
         '<b>AX-G2 (Source Asymmetry):</b> No morphism points from any non-initial object '
         'back to 0. Once you leave the initial object, you cannot return. '
         'This is the categorical expression of irreversibility. '
-        'Not a new assumption: it follows from antisymmetry of the ZP-A partial order '
-        'and is independently confirmed by ZP-B C3 (topological irreversibility in ℚ₂).'))
+        'Where it holds, it is not a new assumption: in a category built from an order with a least element, '
+        'an arrow into 0 would say an object sits at or below 0, and antisymmetry of the order then makes it 0 '
+        'itself. ZP-B C3 (no continuous path back to 0 in ℚ₂) is the matching fact in the p-adic layer. '
+        'It does not hold in every category: in ModuleCat ℂ, the category of complex vector spaces, the bottom '
+        'is a zero object, and every space has an arrow into it, the zero map.'))
     E.append(cbody(
         '<b>The connection to ⊥ = {⊥}:</b> ZP-A CC-2 characterizes ⊥ as a '
         '<i>Quine atom</i> — ⊥ = {⊥}, meaning ⊥ is its own only member. '
