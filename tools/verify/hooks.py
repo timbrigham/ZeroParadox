@@ -1374,16 +1374,19 @@ PRE_PUSH_PLAN = [
                                         "run against a mutant per control, in a child, before any "
                                         "receipt is read; its own output prints the count"),
     ("routing control selftest", "BLOCK", "the routing control's OWN controls (probe --selftest): "
-                                          "its pool, retry and observable machinery, each run "
-                                          "against a mutant; its own output prints the count"),
+                                          "its pool, retry, observable, clean-phase and vacuity "
+                                          "machinery, each run against a mutant; 28 probe controls, "
+                                          "pinned (the probe refuses if its list disagrees)"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
     ("routing control", "BLOCK", "the behavioural mutation probe: mutations of the routing and "
                                  "enforcement routes, each required to turn its named ROW red, move "
-                                 "the prepush EXIT CODE, or reach a named REFUSAL; it prints its own "
-                                 "count (fails CLOSED on a moved anchor). RLY28-1 IS covered. The "
-                                 "recorded VALUE of the four inline non-routing legs is covered "
-                                 "through the agreement check (RLYB4-1/1b, each with a meta-control "
-                                 "deleting that check); the two review-signal legs' site is NOT"),
+                                 "the prepush EXIT CODE, or reach a named REFUSAL; "
+                                 "23 probe mutation rows, pinned (fails CLOSED on a moved anchor or "
+                                 "a changed count). "
+                                 "RLY28-1 IS covered. The recorded VALUE of the four inline "
+                                 "non-routing legs is covered through the agreement check, observed "
+                                 "at ROUTING 0 (RLYB4-1/1b with meta-controls deleting or weakening "
+                                 "that check); the two review-signal legs' site is NOT"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_claude_md", "BLOCK", "CLAUDE.md shape contract: rooted paths resolve, named checkers exist "
                                  "(3 legs still PENDING — it says so on every run)"),
