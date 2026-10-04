@@ -85,8 +85,8 @@ theorem th1_fa {L : Type*} [ZPSemilattice L] (x : L) :
     No continuous path returns to 0 from any x ≠ 0 (ZPB C3). This is the key
     irreversibility property that F_B's initial-object claim rests on, grounded in
     ZPB T3 (clopen isolation) and T5 (total disconnectedness).
-    The shared concrete ZPCategory witness for F_B/C/D is nnrealZPCategory (ℝ≥0 with ≤);
-    C3 is the domain analogue of AX-G2 in that category. See nnreal_initial_grounding
+    The shared concrete ZPCategory witness for F_B/C/D is nnrealZPCategory (ℝ≥0 with ≤), where
+    AX-G2 is antisymmetry; C3 is the domain analogue. See nnreal_initial_grounding
     in the NNRealZPCat appendix for the categorical grounding. -/
 theorem th1_fb :
     ∀ x : Q₂, x ≠ 0 → ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂),
@@ -245,8 +245,7 @@ For any t : ℝ≥0, t + 1 > t, so no terminal object exists (AX-G1). For any x 
 
 `nnreal_initial_grounding` is the single Lean definition establishing this. F_B, F_C, and
 F_D all share this one concrete categorical instance — they are distinguished only by the
-domain-specific theorems proved separately in T-H1 (C3 for F_B, T1b for F_C, T4 for F_D).
-Full abstract functors (Lean Functor terms to pTop / InfoSp / Hilb) remain future work (OQ-G3). -/
+domain-specific theorems proved separately in T-H1 (C3 for F_B, T1b for F_C, T4 for F_D). -/
 
 section NNRealZPCat
 open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
@@ -288,8 +287,7 @@ noncomputable instance nnrealZPCategory : ZPCategory NNReal where
       F_D: th1_fd (T4 — orthogonal snap shift in Hilb)
     This is one concrete witness, not three independent verifications. The domain facts above
     are proved separately; this definition establishes only the shared categorical structure.
-    Full abstract functors (Lean Functor terms to pTop / InfoSp / Hilb) remain future work
-    (OQ-G3). -/
+    OQ-G3 is closed (CLAIMS.md); the real-category functors are in the sibling files. -/
 noncomputable def nnreal_initial_grounding : IsInitial (0 : NNReal) :=
   nnrealZPCategory.zpIsInitial
 
@@ -308,17 +306,12 @@ end PurityCheckNNRealZPCat
 
 /-! ## Appendix — Q₂BallCat and fb_functor: Full Functor for F_B
 
-The clopen ball hierarchy in Q₂ — the sequence B(0, 2⁰) ⊃ B(0, 2⁻¹) ⊃ ⋯ converging to {0} —
-gives a natural category grounding F_B concretely in Q₂'s topology.
-
-Q₂BallDepth indexes this hierarchy: depth n corresponds to the clopen ball B(0, 2^(-n)).
-A morphism n → m (n ≤ m) descends into a smaller ball — topologically forward, not back.
-AX-G2 (no morphism m → 0 for m ≠ 0) is the categorical encoding of C3: no continuous path
-returns from a non-zero element to 0 in Q₂.
-
-fb_functor : Functor ℕ Q₂BallDepth is the concrete F_B Lean term.
-The snap morphism 0 → 1 in ℕ maps to the depth-0 → depth-1 ball transition;
-fb_snap_q2_grounded connects this to C3. -/
+Q₂BallDepth indexes the clopen balls B(0, 2^(-n)) of Q₂ by depth n; a morphism n → m (n ≤ m)
+descends into a smaller ball. AX-G2 (no morphism m → 0 for m ≠ 0) holds here by antisymmetry of ≤
+on the depth index; C3 (no continuous path returns from a non-zero element to 0 in Q₂) is the
+domain fact it mirrors. In `TopCat`, where `fB_functor` lands, the floor `{0}` is not initial
+(`padic_bottom_not_initial`). fb_functor : Functor ℕ Q₂BallDepth is the concrete F_B Lean term;
+fb_snap_q2_grounded connects its snap morphism 0 → 1 to C3. -/
 
 section Q₂BallFunctor
 
@@ -362,7 +355,7 @@ instance q2BallHom0Unique (n : Q₂BallDepth) : Unique ((0 : Q₂BallDepth) ⟶ 
 
 /-- Q₂BallDepth is a ZPCategory with depth 0 as the initial object.
     AX-G1: depth has no maximum — n + 1 > n always.
-    AX-G2: m.val ≤ 0 forces m = 0, grounded in C3 (no return to 0 in Q₂). -/
+    AX-G2: m.val ≤ 0 forces m = 0 (antisymmetry); C3 (no return to 0 in Q₂) is the domain analogue. -/
 noncomputable instance q2BallZPCat : ZPCategory Q₂BallDepth where
   zpInitial         := 0
   zpIsInitial       := IsInitial.ofUnique 0
@@ -390,7 +383,8 @@ theorem q2Ball_antitone {n m : Q₂BallDepth} (h : n.val ≤ m.val) :
 
 /-- Semantic grounding of fb_functor's snap morphism 0 → ⟨1⟩:
     For any x ∈ B(0, 2^(-1)) with x ≠ 0, C3 (ZPB) guarantees no continuous path
-    returns from x to 0 in Q₂. This is the topological content of AX-G2 in Q₂BallDepth. -/
+    returns from x to 0 in Q₂: the topological analogue of AX-G2 in Q₂BallDepth, which `q2BallZPCat`
+    proves by antisymmetry. -/
 theorem fb_snap_q2_grounded :
     ∀ x : Q₂, x ∈ q2BallAt ⟨1⟩ → x ≠ 0 →
       ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂),
@@ -426,17 +420,11 @@ end PurityCheckQ₂BallFunctor
 
 /-! ## Appendix — InfoDepthCat and fc_functor: Full Functor for F_C
 
-The surprisal hierarchy in the information domain — I(0) = 0, I(1) = 1, I(2) = 2, … —
-gives a natural category grounding F_C concretely in ZPC's information structure.
-
-InfoDepth indexes this hierarchy: depth n corresponds to n bits of surprisal.
-A morphism n → m (n ≤ m) advances to higher surprisal — informationally forward, not back.
-AX-G2 (no morphism m → 0 for m ≠ 0) is the categorical encoding of informational
-irreversibility: once surprisal is positive, no morphism reduces it to zero.
-
-fc_functor : Functor ℕ InfoDepth is the concrete F_C Lean term.
-The snap morphism 0 → 1 in ℕ maps to the depth-0 → depth-1 surprisal transition;
-fc_snap_info_grounded connects this to T1b (JSD = log 2). -/
+InfoDepth indexes the surprisal hierarchy (depth n = n bits); a morphism n → m (n ≤ m)
+advances to higher surprisal. AX-G2 (no morphism m → 0 for m ≠ 0) holds here by antisymmetry
+of ≤ on the depth index; informational irreversibility is its domain analogue.
+fc_functor : Functor ℕ InfoDepth is the concrete F_C Lean term; fc_snap_info_grounded
+connects its snap morphism 0 → 1 to T1b (JSD = log 2). -/
 
 section InfoDepthFunctor
 
@@ -486,8 +474,8 @@ noncomputable instance infoDepthZPCat : ZPCategory InfoDepth where
 
 /-- Semantic grounding of fc_functor's snap morphism 0 → ⟨1⟩:
     T1b (ZPC) establishes that the P → Q snap costs exactly log 2 (1 bit of JSD).
-    This is the informational content of AX-G2 in InfoDepth: the snap irreversibly
-    advances from zero surprisal to one bit, and no morphism returns to depth 0. -/
+    This is the informational analogue of AX-G2 in InfoDepth, where no morphism returns to
+    depth 0 (`infoDepthZPCat`, by antisymmetry): the snap advances from zero surprisal to one bit. -/
 theorem fc_snap_info_grounded :
     Nonempty ((0 : InfoDepth) ⟶ ⟨1⟩) ∧ jsdPQ = Real.log 2 :=
   ⟨⟨⟨⟨Nat.zero_le 1⟩⟩⟩, t1b_jsd⟩
@@ -521,19 +509,11 @@ end PurityCheckInfoDepthFunctor
 
 /-! ## Appendix — HilbDimCat and fd_functor: Full Functor for F_D
 
-The state space dimension hierarchy in the Hilbert domain —
-StateSpace 2 ⊂ StateSpace 3 ⊂ ⋯ with orthogonal snap transitions —
-gives a natural category grounding F_D concretely in ZPD's Hilbert structure.
-
-HilbDimDepth indexes this hierarchy: depth n corresponds to the state space of dimension n.
-A morphism n → m (n ≤ m) advances to a larger state space — more distinguishable states,
-higher dimension, forward not back.
-AX-G2 (no morphism m → 0 for m ≠ 0) is the categorical encoding of orthogonal
-irreversibility: an orthogonal transition cannot be undone within the same dimension.
-
-fd_functor : Functor ℕ HilbDimDepth is the concrete F_D Lean term.
-The snap morphism 0 → 1 in ℕ maps to the depth-0 → depth-1 dimension transition;
-fd_snap_hilb_grounded connects this to T4 (⟪T(0), T(ε₀)⟫_ℂ = 0). -/
+HilbDimDepth indexes the state-space dimension hierarchy (depth n = dimension n); a morphism
+n → m (n ≤ m) advances to a larger state space. AX-G2 (no morphism m → 0 for m ≠ 0) holds
+here by antisymmetry of ≤ on the depth index; orthogonal irreversibility is its domain
+analogue. fd_functor : Functor ℕ HilbDimDepth is the concrete F_D Lean term;
+fd_snap_hilb_grounded connects its snap morphism 0 → 1 to T4 (⟪T(0), T(ε₀)⟫_ℂ = 0). -/
 
 section HilbDimFunctor
 
@@ -568,7 +548,9 @@ instance hilbDimHom0Unique (n : HilbDimDepth) : Unique ((0 : HilbDimDepth) ⟶ n
 
 /-- HilbDimDepth is a ZPCategory with depth 0 as the initial object.
     AX-G1: dimension has no maximum — n + 1 > n always.
-    AX-G2: m.val ≤ 0 forces m = 0; orthogonal transitions cannot be reversed to dimension 0. -/
+    AX-G2: m.val ≤ 0 forces m = 0 (antisymmetry). In `ModuleCat ℂ` it fails: every stage maps into
+    the zero module (`fD_has_return`) and stage 1 is not a zero object (`leaf_not_isZero`,
+    `ZeroParadox/Category/SeamNotColimit.lean`). -/
 noncomputable instance hilbDimZPCat : ZPCategory HilbDimDepth where
   zpInitial         := 0
   zpIsInitial       := IsInitial.ofUnique 0

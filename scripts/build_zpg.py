@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.20 | September 2026
+Version 1.21 | October 2026
 v1.20: T2/T3 remark: "0 reaches every object (T2)" dropped T2's uniqueness; now "0 reaches every object in exactly one way (T2)" (Tim ruling 2026-09-29).
 v1.19: Remark R-AX: "the two axioms jointly pick out exactly the non-degenerate case" stated a conditional as a biconditional. Now only the proved direction (a strict initial that is also terminal forces every object isomorphic to it, so AX-G1 rules it out) and the failing converse (in sets, the empty set is strict initial and the one-point set terminal); both checked as examples in AxG2Reduce.lean (copy_editor panel, Tim ruling 2026-09-29).
 v1.18: Remark R-AX: the domain facts behind the four stand-ins now list ZP-A T2 (the lattice stand-in's fact, bot_le) beside ZP-B C3, ZP-C T1b and ZP-D T4 (gate round 1, Tim ruling 2026-09-29).
@@ -32,7 +32,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -209,7 +209,10 @@ def build():
             'Correspondence: in ZP-A, a join-semilattice with &#8869; and without ∧; a carrier with no top is '
             'an optional hypothesis there, and ZP-A\'s two-state carriers have a top, so the no-terminal half '
             'is ZP-G\'s own commitment. '
-            'In ZP-B: Q<sub>2</sub> has no element to which all paths converge. '
+            'In ZP-B\'s stand-in, the &#8469;-indexed ball-depth category that ZP-H\'s fb_functor (ZeroParadox/Multihomed/CategoricalBridge.lean) '
+            'lands in, there is no terminal object because the depth index has no maximum; in TopCat, where the realization fB_functor '
+            '(ZeroParadox/Valuation/TopFunctor.lean) lands, the one-point space '
+            'is a terminal object, so AX-G1 fails there (ZP-H C-H2). '
             'The present axiom is the categorical generalization.',
         ]
     ))
@@ -247,7 +250,7 @@ def build():
             'preserves the initial object. The axioms are not postulated in isolation; they are shown to hold in '
             'each of four ℕ-indexed depth categories, one per domain (ZP-H), and are not claimed for the three '
             'Mathlib categories ZP-H also targets (TopCat, KleisliCat PMF, ModuleCat ℂ) — each of which has a '
-            'terminal object, so AX-G1 fails in every one of them. ModuleCat ℂ\'s bottom is a zero object that '
+            'terminal object, so AX-G1 fails in every one of them. ModuleCat ℂ\'s zero module fD_functor.obj 0 is a zero object that '
             'every object maps into, so it is initial but not strict. The domain facts behind the stand-ins '
             '(ZP-A T2, ZP-B C3, ZP-C T1b, ZP-D T4) are proved separately in their own layers; the categorical check is '
             'the same ℕ-order instance each time.',
@@ -351,7 +354,7 @@ def build():
         'Status: Derived — [OQ-G2 closed in ZP-H T-H1]',
         [
             'For each instantiation functor F ∈ {F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>}, '
-            'F(0) is an initial object in the codomain. '
+            'F(0) is an initial object in the codomain (for F<sub>B</sub>, in its stand-in). '
             'Verified by direct universal property check in ZP-H T-H1. ✓',
         ]
     ))

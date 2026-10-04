@@ -10,9 +10,9 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-C Information Theory | v1.24 | ZP-C_Information_Theory.pdf | v2.9 | N/— | formal:b206f0a9 comp:e98d8d80 |
 | ZP-D State Layer | v1.15 | ZP-D_State_Layer.pdf | v1.13 | N/— | formal:923468a5 comp:32064117 |
 | ZP-E Bridge Document | v3.50 | ZP-E_Bridge_Document.pdf | v1.23 | Y/Y | formal:b4d794da comp:0bad3417 |
-| ZP-G Category Theory | v1.20 | ZP-G_Category_Theory.pdf | v1.13 | N/— | formal:4c05aaff comp:81573f2b |
-| ZP-H Categorical Bridge | v1.23 | ZP-H_Categorical_Bridge.pdf | v1.16 | N/— | formal:cece605b comp:c89777ab |
-| ZP-H Native Categories Addendum | v1.6 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:c9da80f9 |
+| ZP-G Category Theory | v1.21 | ZP-G_Category_Theory.pdf | v1.14 | N/— | formal:f4aab542 comp:c581bda6 |
+| ZP-H Categorical Bridge | v1.24 | ZP-H_Categorical_Bridge.pdf | v1.17 | N/— | formal:ee73cbff comp:612ccd7b |
+| ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:5c0bb985 |
 | ZP-I Inside Zero | v1.26 | ZP-I_Inside_Zero.pdf | v1.32 | N/— | formal:e2ed66c0 comp:fdeb337f |
 | ZP-J Self-Reference | v2.9 | ZP-J_Self_Reference.pdf | v1.33 | N/— | formal:83f78357 comp:7cfd99e4 |
 | ZP-J AFA Addendum | v1.16 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:7e46e9e2 |
@@ -28,7 +28,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-Q The Frame-Change | v1.11 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:dcf69119 |
 | Zero Paradox Foreword | v2.32 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:54d4c261 |
 | ZP Philosophical Question | v1.21 | ZP_Philosophical_Question.pdf | N/A | N/A | formal:ed65d90b |
-| ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:8e5875b4 |
+| ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:3e66cdf5 |
 | ZP Choice-Free Core Addendum | v1.10 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:1834c1f5 |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
