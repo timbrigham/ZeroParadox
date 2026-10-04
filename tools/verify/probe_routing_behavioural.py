@@ -32,8 +32,9 @@ is the safety property.
 sequential in the primary; every other pool worktree is provisioned to the primary's state and must
 read the same baseline before it takes a mutation. See the block above `_execute`.
 
-    python tools/verify/probe_routing_behavioural.py
-    python tools/verify/probe_routing_behavioural.py --selftest     # the pool's own controls
+    python tools/verify/probe_routing_behavioural.py [--mutations]
+    python tools/verify/probe_routing_behavioural.py --selftest     # the probe's own controls
+                                                                    # (a BLOCK leg of every push)
 """
 import hashlib
 import io
@@ -122,6 +123,12 @@ def _prepush_exit(wt):
     check(s) failed — %d routing, %d other" — so the number that answers the question is right
     there in the output the enforcement itself emits. A router that stops enforcing drives it to
     zero; nothing else does."""
+    return _count_from(*_run_prepush(wt), wt=wt)
+
+
+def _run_prepush(wt):
+    """(combined output, exit code) of ONE nested `batch.py prepush --ranges HEAD~1..HEAD` in `wt`.
+    Every observable below reads this run; none re-implements it."""
     # ⭐⭐ THE NESTED RUNS DO NOT PAY THE ADVISORY INTERPRETATION LAYER. Measured 2026-09-07 in a
     # seeded worktree, in the invocation this function actually uses:
     #     prepush --ranges HEAD~1..HEAD, agent gate ON  : 119 s
@@ -150,26 +157,87 @@ def _prepush_exit(wt):
                         "prepush", "--ranges", "HEAD~1..HEAD"],
                        capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=wt,
                        env={**os.environ, "ZP_AGENT_GATE": "0"})
-    out = p.stdout + p.stderr
+    return p.stdout + p.stderr, p.returncode
+
+
+class _RefusalUnread(SystemExit):
+    """The nested prepush REACHED `enforce_prepush_verdict` and it REFUSED, in a form the observable
+    asking could not read. That is a VERDICT, not a transport failure, so `_attempt` marks it NEVER
+    re-observable (RELY-CC-1: a retry replaced exactly such a death with a vacuous pass)."""
+
+
+def _died(e, out, rc, wt):
+    """Re-raise an unreadable observation with the child's raw output saved, TYPED by that output.
+
+    ⚠ KEEP THE EVIDENCE. An unreadable run used to be reported by its symptom alone, with the child's
+    output discarded — so the K=13 measurement (2026-10-04) could name WHICH observation died but not
+    WHY. The raw output goes to a file OUTSIDE the tree and the path rides along.
+    ⚠⚠ AND THE TYPE IS DECIDED BY THE RAW OUTPUT, NOT BY WHICH BRANCH RAISED: if the enforcement's own
+    refusal is anywhere in it, the death is a refusal (`_RefusalUnread`) whatever else went wrong."""
+    fd, raw = tempfile.mkstemp(prefix="zp_probe_prepush_", suffix=".log")
+    with io.open(fd, "w", encoding="utf-8") as fh:
+        fh.write("cwd: %s\nexit: %d\n\n%s" % (wt, rc, out))
+    msg = "%s\n  raw prepush output: %s" % (e.code, raw)
+    if any(n in out for n in _ENFORCE_DIE):
+        raise _RefusalUnread(msg)
+    raise SystemExit(msg)
+
+
+def _count_from(out, rc, wt="?"):
+    """(routing count, exit code) read from one prepush run's output — see `_prepush_exit`."""
     try:
         _assert_reached(out)
         m = re.search(r"push check\(s\) failed\s*[—-]\s*(\d+)\s+routing", out)
         if m:
-            return int(m.group(1)), p.returncode
+            return int(m.group(1)), rc
         # `prepush PASS` means the enforcement ran and found nothing: zero routing failures.
         if _ENFORCE_OK in out:
-            return 0, p.returncode
+            return 0, rc
         raise SystemExit(
             "probe could not read a ROUTING COUNT from prepush, and must not fall back to the exit\n"
             "  code alone — that is the over-determined observable this leg exists to stop using.")
     except SystemExit as e:
-        # ⚠ KEEP THE EVIDENCE. An unreadable run used to be reported by its symptom alone, with the
-        # child's output discarded — so the K=13 measurement (2026-10-04) could name WHICH observation
-        # died but not WHY. The raw output goes to a file OUTSIDE the tree and the path rides along.
-        fd, raw = tempfile.mkstemp(prefix="zp_probe_prepush_", suffix=".log")
-        with io.open(fd, "w", encoding="utf-8") as fh:
-            fh.write("cwd: %s\nexit: %d\n\n%s" % (wt, p.returncode, out))
-        raise SystemExit("%s\n  raw prepush output: %s" % (e.code, raw))
+        _died(e, out, rc, wt)
+
+
+# ⭐⭐ RELY-CC-1 (2026-10-04): THE SECOND OBSERVABLE, AND WHY THE ROUTING COUNT COULD NOT JUDGE RLYB4.
+# `RLYB4-1`/`RLYB4-1b` exist for `enforce_prepush_verdict`'s AGREEMENT CHECK (recorded leg failures
+# must equal displayed FAIL rows, else "push verdict INCONSISTENT"). `/rely` measured them VACUOUS
+# under the count observable: the constructed baseline always has routing > 0, so `BLOCKS` held with
+# the agreement check DELETED (`if _legs != len(_DISPLAYED_FAILS):` -> `if False:`). The check only
+# fires when a NON-routing inline leg FAILS, and then it `die()`s before the `%d routing` line, so the
+# count observable read nothing and recorded DIED — the K=13 deaths, reproduced deterministically.
+# So these cases now CONSTRUCT that state (`_SYNTH_FAIL`) and read WHICH refusal the enforcement
+# reached, conjoined with the exit code (say AND do, the `_prepush_blocks` lesson):
+#     INCONSISTENT · INCOMPLETE · FAILED · PASS   -> the refusal reached, process agreed
+#     <kind>-BUT-EXIT-0 / PASS-BUT-EXIT-<n>       -> the two halves disagree (never a want)
+#     MIXED(...)                                  -> more than one refusal printed (never a want)
+REFUSAL_NEEDLE = "__prepush_refusal__"
+_REFUSAL_KINDS = (("push verdict INCONSISTENT", "INCONSISTENT"),
+                  ("push verdict incomplete", "INCOMPLETE"),
+                  ("push check(s) failed", "FAILED"))
+
+
+def _refusal_from(out, rc, wt="?"):
+    """The refusal one prepush run reached, as a word — see the block above. Unreadable -> raises."""
+    try:
+        _assert_reached(out)
+        kinds = [k for needle, k in _REFUSAL_KINDS if needle in out]
+        if len(kinds) > 1:
+            return "MIXED(%s)" % "+".join(kinds)
+        kind = kinds[0] if kinds else "PASS"      # `_assert_reached` guarantees PASS when no die
+        refused = kind != "PASS"
+        if refused and rc == 0:
+            return kind + "-BUT-EXIT-0"
+        if not refused and rc != 0:
+            return "PASS-BUT-EXIT-%d" % rc
+        return kind
+    except SystemExit as e:
+        _died(e, out, rc, wt)
+
+
+def _prepush_refusal(wt):
+    return _refusal_from(*_run_prepush(wt), wt=wt)
 
 
 def _prepush_blocks(wt):
@@ -518,6 +586,36 @@ def _require_fires(wt, rel):
     return p, original
 
 
+# The RLYB4 surface of `batch.py`, as (anchor, replacement) pairs NAMED ONCE so each case and its
+# meta-control compose the identical edits.
+# ⚠ `_SYNTH_FAIL` IS THE PRECONDITION, NOT A MUTATION: it forces the `purity` inline leg to FAIL at
+#   the print site, so a FAIL row is displayed and a 1 is recorded — the state in which the agreement
+#   check has something to compare. It lives only in the worktree's copy, restored with the rest.
+#   Chosen over a real failing leg because a real one (deleting `ssot.json`, renaming the decl
+#   baseline) would change the worktree STATE every pool member is compared on, for two cases.
+_SYNTH_FAIL = ('        print("  %-18s %-4s %s" % (name, "ok" if ok else "FAIL", why))',
+               '        ok = False if key == "purity" else ok\n'
+               '        print("  %-18s %-4s %s" % (name, "ok" if ok else "FAIL", why))')
+_RLYB4_1 = ("        verdict_record(key, 0 if ok else 1)",
+            "        verdict_record(key, (0 if ok else 1) * 0)")
+_RLYB4_1B = ("        if not ok:\n            display_fail(key)\n", "        pass\n")
+_NO_AGREE = ("    if _legs != len(_DISPLAYED_FAILS):", "    if False:")
+
+
+def _apply_all(*edits):
+    """A transform applying every (anchor, replacement) in order, or NONE of them: if any anchor is
+    not present exactly once at its turn, the source comes back unchanged, which `_make_runner`
+    reports as NOAPPLY. Half a composition is never observed."""
+    def go(s):
+        out = s
+        for a, b in edits:
+            if out.count(a) != 1:
+                return s
+            out = out.replace(a, b, 1)
+        return out
+    return go
+
+
 def mutations(ship, batch):
     """(label, path, transform, row-needle, required state) — see the module docstring."""
     return [
@@ -608,18 +706,27 @@ def mutations(ship, batch):
         # zero it did not earn. Measured: this exact mutation printed `purity FAIL SYNTHETIC`
         # directly above `prepush PASS`, with `guards.py` green on all six registry rows — the
         # 2026-08-23 photograph reproduced against the fix written for it.
-        # MUST STAY BLOCKING: `display_fail` tallies what reached the SCREEN, so a recorded zero now
+        # MUST READ `INCONSISTENT`: `display_fail` tallies what reached the SCREEN, so a recorded zero
         # disagrees with a displayed FAIL and `enforce_prepush_verdict` refuses on the mismatch.
+        # ⚠⚠ ONLY OBSERVABLE WITH A FAILING NON-ROUTING LEG, which `_SYNTH_FAIL` constructs in the same
+        # edit — see the RELY-CC-1 block above `REFUSAL_NEEDLE`. Without it both cases read `FAILED`
+        # (red), so a lost precondition cannot pass vacuously either.
         ("RLYB4-1  producer annihilates its own recorded count", batch,
-         lambda s: s.replace("        verdict_record(key, 0 if ok else 1)",
-                             "        verdict_record(key, (0 if ok else 1) * 0)"),
-         EXIT_NEEDLE, "BLOCKS"),
+         _apply_all(_SYNTH_FAIL, _RLYB4_1), REFUSAL_NEEDLE, "INCONSISTENT"),
         # The other half of the same property: drop the DISPLAY tally instead of the record. It must
         # fail closed in this direction too, or the agreement check is a one-way ratchet that a
         # single deletion walks past.
         ("RLYB4-1b the display tally is dropped", batch,
-         lambda s: s.replace("        if not ok:\n            display_fail(key)\n", "        pass\n"),
-         EXIT_NEEDLE, "BLOCKS"),
+         _apply_all(_SYNTH_FAIL, _RLYB4_1B), REFUSAL_NEEDLE, "INCONSISTENT"),
+        # ⭐ THE META-CONTROLS FOR THE TWO ABOVE (RELY-CC-1): the same compositions with the agreement
+        # check DELETED must read `FAILED` — the routing refusal, NOT `INCONSISTENT` — i.e. the case
+        # above would go RED. If either ever reads INCONSISTENT here, the RLYB4 observation is being
+        # satisfied by something other than the check it is named for, which is the vacuity /rely
+        # measured. The edits are the SAME named tuples, so case and meta cannot drift apart.
+        ("META     RLYB4-1 with the agreement check DELETED", batch,
+         _apply_all(_SYNTH_FAIL, _RLYB4_1, _NO_AGREE), REFUSAL_NEEDLE, "FAILED"),
+        ("META     RLYB4-1b with the agreement check DELETED", batch,
+         _apply_all(_SYNTH_FAIL, _RLYB4_1B, _NO_AGREE), REFUSAL_NEEDLE, "FAILED"),
         # MUST GO RED: deleting the enforcement outright is the one consumer-side move left, and the
         # AST row is what makes it loud. ⚠ Judged on the guards ROW, not the exit code — a deleted
         # enforcement genuinely does let prepush exit 0, so "still blocks" is not achievable here and
@@ -769,6 +876,7 @@ def _baseline_obs(wt, needles):
     obs = {}
     for n in needles:
         obs[n] = (("BLOCKS" if _prepush_blocks(wt) else "PASSES") if n == EXIT_NEEDLE
+                  else _prepush_refusal(wt) if n == REFUSAL_NEEDLE
                   else _row_state(rows, n))
     return obs, rows
 
@@ -841,8 +949,44 @@ def _observe(wt, needle):
     """The real observation — exactly what the sequential loop has always done per mutation."""
     if needle == EXIT_NEEDLE:
         return "BLOCKS" if _prepush_blocks(wt) else "PASSES"
+    if needle == REFUSAL_NEEDLE:
+        return _prepush_refusal(wt)
     _rc, rows = _guards_rows(wt)
     return _row_state(rows, needle)
+
+
+def _attempt(wt, i, run_one, held, lock):
+    """Run mutation `i` on `wt` -> its outcome. A death is ("DIED", code, message, re-observable?).
+
+    ⚠ ONLY AN OBSERVATION THAT COULD NOT BE READ FOR A TRANSPORT-SHAPED REASON IS RE-OBSERVABLE: a
+    crash, a run that never reached the enforcement, an unparsed exit. Three deaths never are:
+      · an ISOLATION BREACH and a non-pristine refusal (`_CannotJudge`) — defects in the POOL, and a
+        retry at concurrency 1 would hide exactly what the isolation control exists to catch;
+      · `_RefusalUnread` — the enforcement RAN and REFUSED (RELY-CC-1). That is the state a case may
+        exist to observe, so re-observing it on an idle machine can only swap it for another state."""
+    with lock:
+        breach = wt in held
+        if not breach:
+            held.add(wt)
+    if breach:
+        return ("DIED", 2, "ISOLATION BREACH: %s already holds a mutation" % wt, False)
+    try:
+        return run_one(wt, i)
+    except _CannotJudge as e:
+        return ("DIED", 2, str(e), False)
+    except _RefusalUnread as e:
+        return ("DIED", 1, str(e.code), False)
+    except SystemExit as e:
+        # A string code is the house `raise SystemExit(msg)` -> exit 1; an int keeps its code;
+        # 0/None mid-mutation is NOT a pass, so it cannot judge.
+        if isinstance(e.code, str):
+            return ("DIED", 1, e.code, True)
+        return ("DIED", e.code if e.code else 2, "exited %r" % (e.code,), True)
+    except BaseException:                               # noqa: BLE001 — a crash is not a verdict
+        return ("DIED", 1, traceback.format_exc(), True)
+    finally:
+        with lock:
+            held.discard(wt)
 
 
 def _dispatch(pool, order, run_one):
@@ -855,32 +999,7 @@ def _dispatch(pool, order, run_one):
     held = set()
 
     def one(wt, i):
-        with lock:
-            breach = wt in held
-            if not breach:
-                held.add(wt)
-        # ("DIED", code, message, re-observable?). ⚠ An isolation breach or a non-pristine refusal is
-        # a defect in the POOL and is never re-observed — a retry at concurrency 1 would hide exactly
-        # what the ISOLATION control exists to catch. Only an OBSERVATION that died may be retried.
-        if breach:
-            out = ("DIED", 2, "ISOLATION BREACH: %s already holds a mutation" % wt, False)
-        else:
-            try:
-                out = run_one(wt, i)
-            except _CannotJudge as e:
-                out = ("DIED", 2, str(e), False)
-            except SystemExit as e:
-                # A string code is the house `raise SystemExit(msg)` -> exit 1; an int keeps its
-                # code; 0/None mid-mutation is NOT a pass, so it cannot judge.
-                if isinstance(e.code, str):
-                    out = ("DIED", 1, e.code, True)
-                else:
-                    out = ("DIED", e.code if e.code else 2, "exited %r" % (e.code,), True)
-            except BaseException:                       # noqa: BLE001 — a crash is not a verdict
-                out = ("DIED", 1, traceback.format_exc(), True)
-            finally:
-                with lock:
-                    held.discard(wt)
+        out = _attempt(wt, i, run_one, held, lock)     # which deaths may be retried: see there
         with lock:
             if i in results:
                 problems.append("mutation #%d ran twice" % i)
@@ -953,22 +1072,27 @@ def _judge(muts, results, done, retried=None):
     return lines, 1 if fails else 0
 
 
-def _execute(muts, pool, order, run_one):
+def _execute(muts, pool, order, run_one, dispatch=None):
     """Dispatch, re-observe deaths once, then judge. A pool problem (a mutation missing or run
-    twice) exits 2.
+    twice) exits 2. `dispatch` defaults to `_dispatch`; only a control passes another.
 
-    ⭐ THE RETRY IS FOR THE UNOBSERVABLE, NEVER FOR A VERDICT (2026-10-04). At K=13 two prepush
-    observations died because load made an unrelated leg fail inside the child, which pre-empted the
-    routing count. So a mutation that DIED — and only one whose OBSERVATION died, never a pool
-    defect — is observed ONCE more, after the pool has drained, at concurrency 1, in an idle pool
-    worktree. A mutation that produced a verdict, PASS or FAIL, is never re-run: a retry may make an
-    unreadable run readable and can never overturn what was read. Dying twice leaves DIED standing,
-    and every re-observed line says so beneath it."""
-    results, done, problems = _dispatch(pool, order, run_one)
+    ⭐ THE RETRY IS FOR THE UNOBSERVABLE, NEVER FOR A VERDICT (2026-10-04). A mutation that DIED of a
+    TRANSPORT-shaped death (`_attempt` decides which) is observed ONCE more, after the pool has
+    drained, at concurrency 1, in an idle pool worktree. A mutation that produced a verdict, PASS or
+    FAIL, is never re-run; dying twice leaves DIED standing; every re-observed line says so.
+    ⚠⚠ NARROWED BY RELY-CC-1. The retry was written for the two K=13 deaths, read then as "load made
+    an unrelated leg fail and pre-empted the routing count". The leg that failed was non-routing (a
+    verdictLedger restart under the run's load, per the supervisor logs), and with an RLYB4 mutation
+    applied that made the ENFORCEMENT REFUSE (`push verdict INCONSISTENT`) — the one state those
+    cases exist for. Re-observing it on an idle machine swapped that state for the vacuous one and
+    printed PASS. A death whose raw output carries an enforcement refusal is now `_RefusalUnread`
+    and is never retried; the RLYB4 cases read the refusal directly and do not die on it at all."""
+    dispatch = dispatch or _dispatch
+    results, done, problems = dispatch(pool, order, run_one)
     retried = {}
     redo = [i for i in sorted(results) if results[i][0] == "DIED" and results[i][3]]
     if redo:
-        again, _done, more = _dispatch([pool[0]], redo, run_one)
+        again, _done, more = dispatch([pool[0]], redo, run_one)
         problems += more
         for i in redo:
             second = again.get(i, ("DIED", 2, "the re-observation NEVER RAN", False))
@@ -1112,6 +1236,17 @@ def main():
                     print("       consumer-neuter cases below cannot distinguish anything. **")
                     bad += 1
                 continue
+            if n == REFUSAL_NEEDLE:
+                # ⚠ The unmutated tree must reach the ROUTING refusal and nothing else: `FAILED`
+                #   from A alone. Reading INCONSISTENT here would let the RLYB4 cases pass on a state
+                #   no mutation produced; PASS would mean A no longer blocks at all.
+                state = obs[n]
+                print("    %-38s %s (prepush refusal)" % (n, state))
+                if state != "FAILED":
+                    print("    ** BASELINE BROKEN: the unmutated refusal is not the routing one, so")
+                    print("       the RLYB4 cases and their meta-controls cannot attribute it. **")
+                    bad += 1
+                continue
             print("    %-38s %s" % (n, _row_state(base, n)))
             if _row_state(base, n) != "ok":
                 print("    ** BASELINE BROKEN for %r — every verdict below is meaningless **" % n)
@@ -1139,12 +1274,13 @@ def main():
         muts_by_wt = {w: mutations(os.path.join(w, "tools", "verify", "ship.py"),
                                    os.path.join(w, "tools", "verify", "batch.py")) for w in pool}
         pristine = {m[1]: _read(m[1]) for w in pool for m in muts_by_wt[w]}
-        # The four cheap `batch.py prepush` observations (EXIT_NEEDLE, ~2 s) go FIRST, before the
+        # The cheap `batch.py prepush` observations (EXIT_NEEDLE / REFUSAL_NEEDLE, ~2 s) go FIRST, before the
         # pool fills with guards.py runs (~35 s each): measured at K=13 (2026-10-04), prepush runs
         # dispatched LAST overlapped ~9 heavy runs and two died of the load. K=1 keeps the original
         # order exactly. Output is in ORIGINAL order either way (`_judge`).
         order = (list(range(len(muts))) if k == 1 else
-                 sorted(range(len(muts)), key=lambda i: muts[i][3] != EXIT_NEEDLE))
+                 sorted(range(len(muts)),
+                        key=lambda i: muts[i][3] not in (EXIT_NEEDLE, REFUSAL_NEEDLE)))
         print()
         _t0 = time.time()
         lines, code = _execute(muts, pool, order, _make_runner(muts_by_wt, _observe, pristine))
@@ -1176,8 +1312,9 @@ _CONTROLS_MARK = "# " + "-" * 70 + " pool controls (--selftest)"
 
 def _stub(mod, n, k, wrong=None, delays=None, dies=None):
     """Run mod._execute over n stub mutations on k scratch worktrees. Returns (lines, code, overlap).
-    `dies` {i: "loaded"|"always"}: the observation raises (as an unreadable prepush does) when other
-    observations are still in flight, or every time."""
+    `dies` {i: "loaded"|"always"|"refused"}: the observation raises (as an unreadable prepush does)
+    when other observations are still in flight, or every time; "refused" raises `_RefusalUnread`
+    (the enforcement refused) when in flight with others, and reads fine alone."""
     tmp = tempfile.mkdtemp(prefix="zp_probe_selftest_")
     try:
         pool = []
@@ -1213,6 +1350,9 @@ def _stub(mod, n, k, wrong=None, delays=None, dies=None):
             if mode == "always" or (mode == "loaded" and loaded):
                 raise SystemExit("stub: no routing count (%s)\n  raw prepush output: <stub %d>"
                                  % (mode, i))
+            if mode == "refused" and loaded:
+                raise mod._RefusalUnread("stub: BLOCKED: push verdict INCONSISTENT (under load)\n"
+                                         "  raw prepush output: <stub %d>" % i)
             return "ok" if body == "pristine\nmutation %d\n" % i else "TRAMPLED"
         lines, code = mod._execute(muts_for(pool[0]), pool, list(range(n)),
                                    mod._make_runner(muts_by_wt, observe, pristine))
@@ -1298,6 +1438,223 @@ def _ctl_baseline_differs(mod):
         "identical pool -> %d" % (len(problems), len(clean))
 
 
+# -- RELY-CC-1 / RELY-CC-2 (2026-10-04): the properties the first eight controls never exercised ---
+
+def _ctl_retry_not_on_refusal(mod):
+    # STUB-02 dies ONLY under load, as `_RefusalUnread` — the enforcement refused. Alone it would read
+    # fine, so a retry WOULD turn it into a PASS. It must stay DIED, un-re-observed, with no RESULT.
+    delays = dict((i, 0.3) for i in range(6))
+    delays[2] = 0.02
+    lines, code, _o = _stub(mod, 6, 3, delays=delays, dies={2: "refused"})
+    noted = [ln for ln in lines if "RE-OBSERVED" in ln]
+    ok = (code == 1 and not noted and not any("RESULT:" in ln for ln in lines)
+          and any("STUB-02" in ln and "DIED" in ln for ln in lines))
+    return ok, "refusal under load: exit %d, %d re-observation(s), RESULT claimed: %s" % (
+        code, len(noted), any("RESULT:" in ln for ln in lines))
+
+
+def _rm_raw(msg):
+    m = re.search(r"raw prepush output: (\S+)", str(msg))
+    if m and os.path.isfile(m.group(1)):
+        os.remove(m.group(1))
+
+
+def _ctl_refusal_typed(mod):
+    # The OBSERVABLE side of the same property: an unreadable run whose raw output carries an
+    # enforcement refusal is typed `_RefusalUnread` (never retried); a crash is a plain death.
+    outs = [("refusal", "ok rows\nBLOCKED: push verdict INCONSISTENT — 0 leg failure(s) RECORDED "
+                        "but 1 FAIL row(s) DISPLAYED (purity)\n", 1),
+            ("crash", "Traceback (most recent call last):\n  File \"x\", line 1\nKeyError: 'x'\n", 1)]
+    got = []
+    for name, out, rc in outs:
+        try:
+            mod._count_from(out, rc, "ctl")
+            got.append((name, "READ"))
+        except mod._RefusalUnread as e:
+            got.append((name, "REFUSAL"))
+            _rm_raw(e.code)
+        except SystemExit as e:
+            got.append((name, "DIED"))
+            _rm_raw(e.code)
+    return got == [("refusal", "REFUSAL"), ("crash", "DIED")], "typed as %s" % got
+
+
+def _ctl_refusal_conjunction(mod):
+    # The RLYB4 observable names the refusal AND requires the process to agree (say AND do).
+    inc = "BLOCKED: push verdict INCONSISTENT — 0 leg failure(s) RECORDED but 1 DISPLAYED\n"
+    fail = "BLOCKED: 3 push check(s) failed — 2 routing, 1 other.\n"
+    got = (mod._refusal_from(inc, 1), mod._refusal_from(inc, 0), mod._refusal_from(fail, 1),
+           mod._refusal_from("prepush PASS\n", 0), mod._refusal_from("prepush PASS\n", 1))
+    want = ("INCONSISTENT", "INCONSISTENT-BUT-EXIT-0", "FAILED", "PASS", "PASS-BUT-EXIT-1")
+    return got == want, "read %s" % (got,)
+
+
+def _mini_pool(mod, n):
+    """One scratch worktree, n trivial mutations whose observation reads "ok". (muts, pool, run_one,
+    tmp) — the caller removes tmp."""
+    tmp = tempfile.mkdtemp(prefix="zp_probe_selftest_")
+    w = os.path.join(tmp, "w0")
+    os.makedirs(w)
+    muts = []
+    for i in range(n):
+        f = os.path.join(w, "f%d.txt" % i)
+        mod._write(f, "pristine\n")
+        muts.append(("STUB-%02d" % i, f, (lambda s: s + "m\n"), "n%d" % i, "ok"))
+    pristine = {m[1]: "pristine\n" for m in muts}
+    return muts, [w], mod._make_runner({w: muts}, lambda wt, needle: "ok", pristine), tmp
+
+
+def _ctl_breach_not_retried(mod):
+    # Q4. A breach cannot be PRODUCED through the live `_dispatch` (that is the point of it), so a
+    # stand-in dispatch hands the REAL `_attempt` a worktree already held, on the first pass only.
+    # Re-observed, the breach would read "ok": it must stay DIED and the run must refuse (exit 2).
+    muts, pool, run_one, tmp = _mini_pool(mod, 3)
+    calls = [0]
+
+    def dispatch(pl, order, ro):
+        calls[0] += 1
+        held, lock, results, done = set(), threading.Lock(), {}, []
+        for i in order:
+            if calls[0] == 1 and i == 0:
+                held.add(pl[0])
+            results[i] = mod._attempt(pl[0], i, ro, held, lock)
+            held.discard(pl[0])
+            done.append(i)
+        return results, done, []
+    try:
+        lines, code = mod._execute(muts, pool, [0, 1, 2], run_one, dispatch=dispatch)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    ok = (code == 2 and not any("RESULT:" in ln for ln in lines)
+          and any("ISOLATION BREACH" in ln for ln in lines))
+    return ok, "breach on the first pass: exit %d, dispatch passes %d, RESULT claimed: %s" % (
+        code, calls[0], any("RESULT:" in ln for ln in lines))
+
+
+def _ctl_dirty_not_retried(mod):
+    # Q5. Through the REAL `_dispatch` and `_make_runner`: STUB-00's file is not pristine when it is
+    # taken, and STUB-01's observation then cleans it — so a retry WOULD read "ok". It must not run.
+    muts, pool, _ro, tmp = _mini_pool(mod, 2)
+    try:
+        f0 = muts[0][1]
+        mod._write(f0, "dirty\n")
+
+        def observe(wt, needle):
+            if needle == "n1":
+                mod._write(f0, "pristine\n")
+            return "ok"
+        run_one = mod._make_runner({pool[0]: muts}, observe, {m[1]: "pristine\n" for m in muts})
+        lines, code = mod._execute(muts, pool, [0, 1], run_one)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    ok = (code == 2 and not any("RESULT:" in ln for ln in lines)
+          and any("not pristine" in ln for ln in lines))
+    return ok, "non-pristine first, clean later: exit %d, RESULT claimed: %s" % (
+        code, any("RESULT:" in ln for ln in lines))
+
+
+class _NoGit(object):
+    """`subprocess` stand-in for `_ctl_main_refuses`: `main()`'s teardown must not reach real git."""
+    class _R(object):
+        returncode, stdout, stderr = 0, "", ""
+
+    def run(self, *a, **k):
+        return self._R()
+
+
+def _main_case(mod, failing=None, short=None):
+    """Run the REAL `mod.main()` with every process and observation stubbed, K=3. One pool worktree
+    either fails to provision (`failing`) or provisions without registering (`short`). Returns
+    (return code, whether any mutation was dispatched)."""
+    import contextlib
+    dispatched = []
+
+    def files(wt):
+        d = os.path.join(wt, "tools", "verify")
+        os.makedirs(d, exist_ok=True)
+        for f in ("ship.py", "batch.py"):
+            mod._write(os.path.join(d, f), "stub\n")
+
+    def add_wt(wt):
+        os.makedirs(wt, exist_ok=True)
+        return _NoGit._R()
+
+    def provision(p, created):
+        files(p)
+        if p.endswith("pool%d" % failing if failing else "\0"):
+            raise mod._CannotJudge("stub: provisioning failed")
+        if not p.endswith("pool%d" % short if short else "\0"):
+            created.append(p)
+
+    def obs(wt, needles):
+        o = {n: ("BLOCKS" if n == mod.EXIT_NEEDLE else "FAILED" if n == mod.REFUSAL_NEEDLE
+                 else "ok") for n in needles}
+        return o, {n: "ok" for n in needles}
+
+    stubs = {"_add_worktree": add_wt, "_seed": lambda wt: files(wt) or 2,
+             "_workers": lambda n: 3, "_provision": provision, "_baseline_obs": obs,
+             "_tree_state": lambda wt: {"same": True}, "_prepush_exit": lambda wt: (0, 0),
+             "_require_suppressed": lambda wt, rel: True,
+             "_require_fires": lambda wt, rel: ("stub", b""),
+             "_execute": lambda *a, **k: (dispatched.append(1), (["  RESULT: stub"], 0))[1],
+             "subprocess": _NoGit()}
+    saved = {k: getattr(mod, k) for k in stubs}
+    try:
+        for k, v in stubs.items():
+            setattr(mod, k, v)
+        with contextlib.redirect_stdout(io.StringIO()):
+            rc = mod.main()
+    finally:
+        for k, v in saved.items():
+            setattr(mod, k, v)
+    return rc, bool(dispatched)
+
+
+def _ctl_main_refuses(mod):
+    # Q1. The REAL `main()`: a pool worktree that could not be provisioned, and a pool that came up
+    # one worktree short, must each refuse (exit 2) BEFORE any mutation is dispatched.
+    a = _main_case(mod, failing=2)
+    b = _main_case(mod, short=2)
+    ok = a == (2, False) and b == (2, False)
+    return ok, "provisioning failed -> rc=%s dispatched=%s; pool short -> rc=%s dispatched=%s" % (
+        a[0], a[1], b[0], b[1])
+
+
+def _ctl_tree_bytes(mod):
+    # Q2. The REAL `_tree_state` on two scratch trees (git cannot climb out: GIT_CEILING_DIRECTORIES):
+    # identical trees compare equal; one byte changed under tools/verify must differ, in `bytes`.
+    tmp = tempfile.mkdtemp(prefix="zp_probe_selftest_")
+    # ⚠ A pre-push hook may export GIT_DIR & co., which would point these git calls at the REAL repo;
+    #   they are removed for the control's lifetime, and the ceiling stops discovery above `tmp`.
+    loc = ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_COMMON_DIR", "GIT_OBJECT_DIRECTORY",
+           "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_NAMESPACE", "GIT_PREFIX")
+    saved_loc = {k: os.environ.pop(k) for k in loc if k in os.environ}
+    saved = os.environ.get("GIT_CEILING_DIRECTORIES")
+    os.environ["GIT_CEILING_DIRECTORIES"] = tmp
+    try:
+        trees = []
+        for j in range(2):
+            d = os.path.join(tmp, "t%d" % j)
+            for rel in ("tools/verify/x.py", mod._A_SUBJECT, mod._B_SUBJECT):
+                p = os.path.join(d, *rel.split("/"))
+                os.makedirs(os.path.dirname(p), exist_ok=True)
+                mod._write(p, "same\n")
+            trees.append(d)
+        same = mod._tree_state(trees[0]) == mod._tree_state(trees[1])
+        mod._write(os.path.join(trees[1], "tools", "verify", "x.py"), "samf\n")
+        s0, s1 = mod._tree_state(trees[0]), mod._tree_state(trees[1])
+        differ = sorted(k for k in set(s0) | set(s1) if s0.get(k) != s1.get(k))
+    finally:
+        if saved is None:
+            os.environ.pop("GIT_CEILING_DIRECTORIES", None)
+        else:
+            os.environ["GIT_CEILING_DIRECTORIES"] = saved
+        os.environ.update(saved_loc)
+        shutil.rmtree(tmp, ignore_errors=True)
+    return same and differ == ["bytes"], "identical -> equal=%s; one tools/verify byte -> differs " \
+        "in %s" % (same, differ or "nothing")
+
+
 _CONTROLS = [
     ("ISOLATION   two concurrent mutations never share a worktree", _ctl_isolation,
      "    threads = [threading.Thread(target=worker, args=(wt,)) for wt in pool]",
@@ -1323,6 +1680,36 @@ _CONTROLS = [
     ("RETRY       a death that recurs stays DIED after its re-observation", _ctl_retry_never_masks,
      "    if redo:\n        again, _done, more",
      "    if False:\n        again, _done, more"),
+    # ⚠ RELY-CC-1: a death that IS the enforcement refusing is never re-observed — dispatch side,
+    #   observable side, and the RLYB4 observable's say-AND-do conjunction in both directions.
+    ("RETRY       a refusal death is never re-observed", _ctl_retry_not_on_refusal,
+     '        return ("DIED", 1, str(e.code), False)',
+     '        return ("DIED", 1, str(e.code), True)'),
+    ("TYPED       an unreadable run that REFUSED is a refusal death", _ctl_refusal_typed,
+     "    if any(n in out for n in _ENFORCE_DIE):\n        raise _RefusalUnread(msg)",
+     "    if False:\n        raise _RefusalUnread(msg)"),
+    ("REFUSAL     a printed refusal with exit 0 is not the refusal", _ctl_refusal_conjunction,
+     "        if refused and rc == 0:",
+     "        if False:"),
+    ("REFUSAL     a printed PASS with a non-zero exit is not PASS", _ctl_refusal_conjunction,
+     "        if not refused and rc != 0:",
+     "        if False:"),
+    # ⚠ RELY-CC-2: the four pool properties `/rely` mutated past all eight controls above (Q1-Q5).
+    ("MAIN        main() refuses a pool that failed to provision", _ctl_main_refuses,
+     "            if problems or len(created) != k:",
+     "            if False:"),
+    ("MAIN        main() refuses a pool one worktree short", _ctl_main_refuses,
+     "            if problems or len(created) != k:",
+     "            if problems:"),
+    ("TREE        _tree_state compares the tools/verify BYTES", _ctl_tree_bytes,
+     '"status": g("status", "--porcelain"), "bytes": h.hexdigest()}',
+     '"status": g("status", "--porcelain")}'),
+    ("RETRY       an isolation breach is never re-observed", _ctl_breach_not_retried,
+     '        return ("DIED", 2, "ISOLATION BREACH: %s already holds a mutation" % wt, False)',
+     '        return ("DIED", 2, "ISOLATION BREACH: %s already holds a mutation" % wt, True)'),
+    ("RETRY       a non-pristine refusal is never re-observed", _ctl_dirty_not_retried,
+     '        return ("DIED", 2, str(e), False)',
+     '        return ("DIED", 2, str(e), True)'),
 ]
 
 
@@ -1372,5 +1759,18 @@ def selftest():
     return 1 if bad else 0
 
 
+def _cli(argv):
+    """`--selftest` runs the pool controls; `--mutations` (or no argument) runs the probe.
+    ⚠ The push hook passes `--mutations` EXPLICITLY: `reconcile` matches a launched argv by PREFIX,
+    so a bare `probe_routing_behavioural.py` expectation would be satisfied by the `--selftest` run
+    alone, and deleting the probe's own call site would reconcile green. Anything else refuses."""
+    if argv == ["--selftest"]:
+        return selftest()
+    if argv in ([], ["--mutations"]):
+        return main()
+    print("%s: unrecognised arguments %r — expected --selftest or --mutations" % (SELF, argv))
+    return 2
+
+
 if __name__ == "__main__":
-    sys.exit(selftest() if "--selftest" in sys.argv[1:] else main())
+    sys.exit(_cli(sys.argv[1:]))

@@ -304,12 +304,16 @@ def git_out(*args):
 #   PURE   `hooks.py selftest` reads this file, batch.py and required.v2.json (none of which a
 #          mutator writes) plus temp dirs, so it may overlap the mutators. Its verdict still gates
 #          the skip decision, which stays where it is in `pre_push`.
+#          `probe_routing_behavioural.py --selftest` reads its own source (`_mutant`) and works only
+#          in temp dirs: stub worktrees, a stubbed `main()` whose git seam is replaced (`_NoGit`),
+#          and `_tree_state` on scratch trees with git location variables removed. Measured
+#          2026-10-04: a whole-tree hash before and after a run is identical. It records nothing.
 #   READERS every other leg reads the tree and records a DISTINCT ledger step at the same basis
 #          (no two legs record one step; the routing control's nested runs record nothing: no
-#          `--record`, agent gate forced off at probe_routing_behavioural.py:138-141), so they run
-#          together once the mutators and the pure leg are done. The routing control reads
-#          tools/verify only while seeding its own worktree (probe_routing_behavioural.py:676-684)
-#          and runs everything else inside that worktree, so it is a reader.
+#          `--record`, and the agent gate forced off by the `ZP_AGENT_GATE=0` override in the
+#          probe's `_run_prepush`), so they run together once the mutators and the pure legs are
+#          done. The routing control reads tools/verify only while seeding its own worktree (the
+#          probe's `_seed`) and runs everything else inside that worktree, so it is a reader.
 #   batch prepush  needs the skip decision (receipt consulted after the selftest passed; its
 #          env switch, `pre_push` below), and reads the tree (agent gate re-runs three checkers):
 #          submitted at the decision point, after the mutators. Its verdict reads only the review
@@ -339,7 +343,7 @@ _PUSH_LEDGER_ENV = {"ZPLEDGER_BASIS": "HEAD", "ZPLEDGER_RUN": "pre-push"}
 _COMMIT_LEDGER_ENV = {"ZPLEDGER_BASIS": "INDEX", "ZPLEDGER_RUN": "pre-commit"}
 
 # Push rows by role, in the order they must run. See the graph above for the evidence.
-_PUSH_PURE = ("advisory-skip controls",)
+_PUSH_PURE = ("advisory-skip controls", "routing control selftest")
 _PUSH_MUTATORS = ("guards", "check_checkers")
 _PUSH_FIRST = ("routing control", "batch prepush")      # longest legs launch first among readers
 
@@ -1369,14 +1373,17 @@ PRE_PUSH_PLAN = [
     ("advisory-skip controls", "BLOCK", "the green-receipt match that may skip an ADVISORY leg is "
                                         "run against a mutant per control, in a child, before any "
                                         "receipt is read; its own output prints the count"),
+    ("routing control selftest", "BLOCK", "the routing control's OWN controls (probe --selftest): "
+                                          "its pool, retry and observable machinery, each run "
+                                          "against a mutant; its own output prints the count"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
-    ("routing control", "BLOCK", "the behavioural mutation probe: 17 mutations of the routing and "
-                                 "enforcement routes, each required to turn its named ROW red or to "
-                                 "move the prepush EXIT CODE (~225s; fails CLOSED on a moved anchor). "
-                                 "RLY28-1 IS covered — the debt this line used to record was paid, "
-                                 "and the line said otherwise for as long as it took a /rely round "
-                                 "to read it. It does NOT cover the recorded VALUE of the six "
-                                 "non-routing legs (RLYB4-1)"),
+    ("routing control", "BLOCK", "the behavioural mutation probe: mutations of the routing and "
+                                 "enforcement routes, each required to turn its named ROW red, move "
+                                 "the prepush EXIT CODE, or reach a named REFUSAL; it prints its own "
+                                 "count (fails CLOSED on a moved anchor). RLY28-1 IS covered. The "
+                                 "recorded VALUE of the four inline non-routing legs is covered "
+                                 "through the agreement check (RLYB4-1/1b, each with a meta-control "
+                                 "deleting that check); the two review-signal legs' site is NOT"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_claude_md", "BLOCK", "CLAUDE.md shape contract: rooted paths resolve, named checkers exist "
                                  "(3 legs still PENDING — it says so on every run)"),
@@ -1477,8 +1484,11 @@ PRE_PUSH_EXPECT = [
     #   pushed green while the manifest printed this row's name.
     ("quarantine", None, None),
     ("advisory-skip controls", ("hooks.py", "selftest"), (0,)),
+    # ⚠ BOTH probe rows name their argument: `_found` matches by PREFIX, so a bare
+    #   `("probe_routing_behavioural.py",)` would be satisfied by the `--selftest` launch alone.
+    ("routing control selftest", ("probe_routing_behavioural.py", "--selftest"), (0,)),
     ("guards", ("guards.py", "--record"), (0,)),
-    ("routing control", ("probe_routing_behavioural.py",), (0,)),
+    ("routing control", ("probe_routing_behavioural.py", "--mutations"), (0,)),
     # ⚠ 3 = scope skipped for want of a built .lake, tolerated at both phases (RLY27-7).
     ("check_paths", ("check_paths.py", "--all", "--warn-private", "--record"), (0, 3)),
     ("check_claude_md", ("check_claude_md.py", "--record"), (0,)),
@@ -1708,6 +1718,18 @@ def _pre_push(stream):
         print("cause; never skip the controls to get the skip.")
         return 1
 
+    # ⚠⚠ THE ROUTING CONTROL'S OWN CONTROLS (RELY-CC-5, 2026-10-04). `--selftest` drives the probe's
+    #   pool, retry and observable machinery against a mutant per control; until this line it had
+    #   no caller, so a defect in the machinery that decides whether a probe verdict may be trusted
+    #   was found only when a human ran it. PURE (temp dirs only), so it runs beside the selftest
+    #   above, BEFORE the ledger environment is set — the environment its concurrent launch carries.
+    print("\n=== Routing control's own controls (probe --selftest) ===")
+    if py("probe_routing_behavioural.py", "--selftest") != 0:
+        print("\nPush blocked: the routing control's own controls did not behave as required.")
+        print("Each FAIL row above names the control and the mutant it had to catch. A probe whose")
+        print("pool or retry cannot be trusted cannot certify the routes; fix the probe, never skip it.")
+        return 1
+
     # The decision. Scope is NOT touched by any of this: `ranges` above came from git's stdin and
     # every BLOCK leg below runs whatever the receipt says. Only the derived advisory set can shrink.
     skip = []
@@ -1803,7 +1825,7 @@ def _pre_push(stream):
     # and deleting the producer's record must go RED. What THIS wiring closes is `RLY29-1`: the
     # control had no caller, so nothing ever ran the one artifact that can falsify the guard.
     print("\n=== Routing control (behavioural mutation probe) ===")
-    _rc_probe = py("probe_routing_behavioural.py")
+    _rc_probe = py("probe_routing_behavioural.py", "--mutations")
     if _rc_probe != 0:
         print("\nPush blocked: the routing control did not behave as required.")
         print("Each row above names the mutation and the ROW that had to go red. A row reading")
@@ -2973,9 +2995,12 @@ def _cc_script(red=(), raises=(), partial=(), error=(), sleeps=None):
     return script
 
 
-def _simulate_conc(m, jobs, phase="push", script=None, stdin=_REFS):
-    """Run `m.pre_push` / `m.pre_commit` with `ZP_HOOK_JOBS=jobs` and only `_child` stubbed."""
+def _simulate_conc(m, jobs, phase="push", script=None, stdin=_REFS, receipt=None, digest_seq=None):
+    """Run `m.pre_push` / `m.pre_commit` with `ZP_HOOK_JOBS=jobs` and only `_child` stubbed.
+    `receipt` is written where the hook reads it; `digest_seq(n)` is the tools/verify digest the
+    n-th read returns (default: always `_DIGEST`)."""
     import io as _io
+    import json
     import shutil
     import tempfile
     import threading
@@ -3016,13 +3041,17 @@ def _simulate_conc(m, jobs, phase="push", script=None, stdin=_REFS):
     def digest():
         with lock:
             events.append(("digest", None))
-        return _DIGEST
+            n = sum(1 for kind, _l in events if kind == "digest")
+        return digest_seq(n) if digest_seq else _DIGEST
 
     m._child = fake_child
     m.tools_digest = digest
     m.head_tree = lambda: _TREE
     m.git_out = lambda *a: (0, "illustrated\n")
     m._RECEIPT_PATH_OVERRIDE = os.path.join(tmp, m.RECEIPT_NAME)
+    if receipt is not None:
+        with open(m._RECEIPT_PATH_OVERRIDE, "w", encoding="utf-8") as fh:
+            json.dump(receipt, fh)
     for k in env_keys:
         os.environ.pop(k, None)
     os.environ[JOBS_ENV] = str(jobs)
@@ -3283,6 +3312,83 @@ def _ctl_cc_jobs_one(m):
             len(p["streamed"]), len(c["streamed"]), seq, parse))
 
 
+def _ctl_cc_lost(m):
+    """RELY-CC-3 M3: a leg whose captured output cannot be read back is FAILED even though it exited
+    0, and is NOT recorded as launched — its output is missing, so its exit code proves nothing."""
+    import io as _io
+    import shutil
+    import tempfile
+    d = tempfile.mkdtemp(prefix="zp_hooks_cc_")
+    job = m._Job(("x.py",), dict(os.environ), "ctl-leg", 0, (0,), (), 1)
+    job.state, job.outcome, job.rc = _DONE, LEG_EXITED, 0
+    job.out_path = os.path.join(d, "never-written", "leg.out")
+    saved_exec = list(m.EXECUTED)
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        rc = m._consume(("x.py",), job)
+        rec = m.EXECUTED[len(saved_exec):]
+    finally:
+        sys.stdout = real
+        m.EXECUTED[:] = saved_exec
+        shutil.rmtree(d, ignore_errors=True)
+    ok = rc == 1 and not rec and job.lost and "could not be read back" in buf.getvalue()
+    return ok, "exit 0, capture unreadable -> rc=%s, lost=%s, recorded as launched=%s" % (
+        rc, job.lost, bool(rec))
+
+
+def _ctl_cc_early_key_used(m):
+    """RELY-CC-3 M6: the skip decision USES the key taken before any leg launched. The tools/verify
+    digest moves after its first read (guards rewrites files there), so a receipt matching the EARLY
+    digest matches only if the early key is the one consulted — the key USED, not merely the first
+    digest call, which `_ctl_cc_dependency` already pins."""
+    c = _simulate_conc(m, 8, "push", receipt=_good_receipt(),
+                       digest_seq=lambda n: _DIGEST if n == 1 else "f" * 64)
+    reads = sum(1 for kind, _l in c["events"] if kind == "digest")
+    ok = c["rc"] == 0 and "SKIPPED agent gate: matched green run ctl-preflight-1" in c["out"]
+    return ok, "digest moved after read 1 of %d; receipt for the early key -> rc=%s, matched=%s" % (
+        reads, c["rc"], "SKIPPED agent gate" in c["out"])
+
+
+def _ctl_probe_selftest_blocks(m):
+    """RELY-CC-5: a red `probe_routing_behavioural.py --selftest` blocks the push at ITS OWN call
+    site, before the probe itself is launched."""
+    st = ("probe_routing_behavioural.py", "--selftest")
+    r = _simulate(m, red=(st,))
+    launched = lambda argv: any(tuple(inv[:len(argv)]) == argv for inv in r["launched"])
+    probe = launched(("probe_routing_behavioural.py", "--mutations"))
+    ok = (r["rc"] == 1 and launched(st) and not probe
+          and "Push blocked: the routing control's own controls" in r["out"])
+    return ok, "probe --selftest exits 1 -> rc=%s, selftest launched=%s, probe launched=%s" % (
+        r["rc"], launched(st), probe)
+
+
+def _ctl_probe_rows_distinct(m):
+    """RELY-CC-5: each probe row is satisfied ONLY by its own launch. `_found` matches by prefix, so
+    with every advertised child recorded except one probe row's, `reconcile` must refuse and name
+    THAT row — measured before the explicit flags: a bare `probe_routing_behavioural.py` expectation
+    was satisfied by the `--selftest` launch, and deleting the probe's call reconciled 23 of 23."""
+    import io as _io
+    named = []
+    for gone in ("routing control", "routing control selftest"):
+        saved = list(m.EXECUTED)
+        buf, real = _io.StringIO(), sys.stdout
+        try:
+            del m.EXECUTED[:]
+            for label, argv, _ok in m.PRE_PUSH_EXPECT:
+                if argv and label != gone:
+                    m.EXECUTED.append((tuple(argv), 0))
+            sys.stdout = buf
+            rc = m.reconcile("push", m.PRE_PUSH_EXPECT)
+        finally:
+            sys.stdout = real
+            m.EXECUTED[:] = saved
+        hit = any(ln.strip().endswith("never ran: %s" % gone) for ln in buf.getvalue().splitlines())
+        named.append((gone, rc, hit))
+    return all(rc == 1 and hit for _g, rc, hit in named), "; ".join(
+        "%s not launched -> rc=%s, named=%s" % n for n in named)
+
+
 # (label, control, anchor, replacement). The replacement removes exactly the protection the
 # control exists for; the control must PASS on the real module and FAIL on the mutant.
 _CONTROLS = [
@@ -3334,6 +3440,23 @@ _CONTROLS = [
     ("cc  unread: a green run that launched an unread leg", _ctl_cc_unread,
      "            if rc == 0 and unread:",
      "            if False:"),
+    # ⚠ RELY-CC-3 (2026-10-04): the two scheduler properties no cc control observed (M3, M6).
+    ("cc  lost: an unreadable capture read as its exit code", _ctl_cc_lost,
+     "    if job.lost:\n        return 1",
+     "    if job.lost:\n        pass"),
+    ("cc  key: the decision recomputes the receipt key", _ctl_cc_early_key_used,
+     "    key, _why = _SCHED.early_key if _SCHED is not None else push_key(REF_TUPLES)",
+     "    key, _why = push_key(REF_TUPLES)"),
+    # ⚠ RELY-CC-5: the probe's own controls are a BLOCK leg; a red one stops the push at its site.
+    ("wiring  a red probe --selftest blocks the push", _ctl_probe_selftest_blocks,
+     '    if py("probe_routing_behavioural.py", "--selftest") != 0:',
+     "    if False:"),
+    ("wiring  the probe run is not satisfied by --selftest", _ctl_probe_rows_distinct,
+     '    ("routing control", ("probe_routing_behavioural.py", "--mutations"), (0,)),',
+     '    ("routing control", ("probe_routing_behavioural.py",), (0,)),'),
+    ("wiring  --selftest is not satisfied by the probe run", _ctl_probe_rows_distinct,
+     '    ("routing control selftest", ("probe_routing_behavioural.py", "--selftest"), (0,)),',
+     '    ("routing control selftest", ("probe_routing_behavioural.py",), (0,)),'),
     ("cc  jobs=1 (push) still schedules", _ctl_cc_jobs_one,
      "    if _jobs > 1:\n        _t, _tnote = leg_timeout()\n        _start_push_prefetch",
      "    if _jobs >= 1:\n        _t, _tnote = leg_timeout()\n        _start_push_prefetch"),
