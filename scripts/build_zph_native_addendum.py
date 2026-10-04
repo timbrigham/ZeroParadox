@@ -118,8 +118,8 @@ def build():
         'TopCat, ModuleCat &#8450; and the Kleisli category all <i>have</i> a terminal object (the '
         'one-point space; the zero module; the one-point type, on which the only distribution is the '
         'point mass &#8212; the example after kleisli_bottom_not_terminal in '
-        'ZeroParadox/Category/TreeSeam.lean). AX-G1 holds only in the depth-proxy categories, where the '
-        'depth index has no maximum. So the snap floor cannot be "the initial object of a '
+        'ZeroParadox/Category/TreeSeam.lean). Of the categories on this page, AX-G1 holds only in the three '
+        'depth-proxy categories, where the depth index has no maximum. So the snap floor cannot be "the initial object of a '
         'ZPCategory" here. The honest statement is the one each category supports natively: '
         'in TopCat the floor is the limit of the shrinking system, and in ModuleCat &#8450; '
         'and the Kleisli category it is the genuine initial object. Each is stated below.'))
@@ -157,8 +157,9 @@ def build():
     E.append(sp(4))
     E.append(body(
         'TopCat has both a terminal object (the one-point space) and an initial object (the '
-        'empty space). The snap floor {0} is a one-point space, so it is terminal and not initial '
-        '(padic_bottom_not_initial, ZeroParadox/Multihomed/TreeObstructions.lean). It is also the <i>limit</i> of the ball tower '
+        'empty space). The snap floor {0} is a one-point space, so it is terminal (the first example after '
+        'padic_bottom_not_initial in ZeroParadox/Multihomed/TreeObstructions.lean) and not initial '
+        '(padic_bottom_not_initial). It is also the <i>limit</i> of the ball tower '
         '&#8212; the categorical expression a topologist would expect for "the point '
         'everything converges to." This is the honest realization in a category that is not '
         'a ZPCategory: not an initial object, but a limit.'))

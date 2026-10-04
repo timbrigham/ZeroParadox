@@ -209,8 +209,9 @@ def build():
             'Correspondence: in ZP-A, a join-semilattice with &#8869; and without ∧; a carrier with no top is '
             'an optional hypothesis there, and ZP-A\'s two-state carriers have a top, so the no-terminal half '
             'is ZP-G\'s own commitment. '
-            'In ZP-B\'s stand-in, the &#8469;-indexed ball-depth category that ZP-H\'s fb_functor lands in, there is no terminal '
-            'object because the depth index has no maximum; in TopCat, where the realization fB_functor lands, the one-point space '
+            'In ZP-B\'s stand-in, the &#8469;-indexed ball-depth category that ZP-H\'s fb_functor (ZeroParadox/Multihomed/CategoricalBridge.lean) '
+            'lands in, there is no terminal object because the depth index has no maximum; in TopCat, where the realization fB_functor '
+            '(ZeroParadox/Valuation/TopFunctor.lean) lands, the one-point space '
             'is a terminal object, so AX-G1 fails there (ZP-H C-H2). '
             'The present axiom is the categorical generalization.',
         ]
@@ -249,7 +250,7 @@ def build():
             'preserves the initial object. The axioms are not postulated in isolation; they are shown to hold in '
             'each of four ℕ-indexed depth categories, one per domain (ZP-H), and are not claimed for the three '
             'Mathlib categories ZP-H also targets (TopCat, KleisliCat PMF, ModuleCat ℂ) — each of which has a '
-            'terminal object, so AX-G1 fails in every one of them. ModuleCat ℂ\'s bottom is a zero object that '
+            'terminal object, so AX-G1 fails in every one of them. ModuleCat ℂ\'s zero module fD_functor.obj 0 is a zero object that '
             'every object maps into, so it is initial but not strict. The domain facts behind the stand-ins '
             '(ZP-A T2, ZP-B C3, ZP-C T1b, ZP-D T4) are proved separately in their own layers; the categorical check is '
             'the same ℕ-order instance each time.',

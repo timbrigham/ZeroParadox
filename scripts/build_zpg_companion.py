@@ -296,8 +296,8 @@ def build():
         'Where it holds, it is not a new assumption: in a category built from an order with a least element, '
         'an arrow into 0 would say an object sits at or below 0, and antisymmetry of the order then makes it 0 '
         'itself. ZP-B C3 (no continuous path back to 0 in ℚ₂) is the matching fact in the p-adic layer. '
-        'It does not hold in every category: in ModuleCat ℂ, the category of complex vector spaces, the bottom '
-        'is a zero object, and every space has an arrow into it, the zero map.'))
+        'It does not hold in every category: in ModuleCat ℂ, the category of complex vector spaces, the zero '
+        'space (the zero module fD_functor.obj 0) is a zero object, and every space has an arrow into it, the zero map.'))
     E.append(cbody(
         '<b>The connection to ⊥ = {⊥}:</b> ZP-A CC-2 characterizes ⊥ as a '
         '<i>Quine atom</i> — ⊥ = {⊥}, meaning ⊥ is its own only member. '

@@ -10,9 +10,9 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-C Information Theory | v1.24 | ZP-C_Information_Theory.pdf | v2.9 | N/— | formal:b206f0a9 comp:e98d8d80 |
 | ZP-D State Layer | v1.15 | ZP-D_State_Layer.pdf | v1.13 | N/— | formal:923468a5 comp:32064117 |
 | ZP-E Bridge Document | v3.50 | ZP-E_Bridge_Document.pdf | v1.23 | Y/Y | formal:b4d794da comp:0bad3417 |
-| ZP-G Category Theory | v1.21 | ZP-G_Category_Theory.pdf | v1.14 | N/— | formal:27c1cbf0 comp:50aa3afb |
-| ZP-H Categorical Bridge | v1.24 | ZP-H_Categorical_Bridge.pdf | v1.16 | N/— | formal:5fed4e86 comp:c89777ab |
-| ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:a0575931 |
+| ZP-G Category Theory | v1.21 | ZP-G_Category_Theory.pdf | v1.14 | N/— | formal:ce6faf36 comp:c581bda6 |
+| ZP-H Categorical Bridge | v1.24 | ZP-H_Categorical_Bridge.pdf | v1.16 | N/— | formal:431da03e comp:c89777ab |
+| ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:5c0bb985 |
 | ZP-I Inside Zero | v1.26 | ZP-I_Inside_Zero.pdf | v1.32 | N/— | formal:e2ed66c0 comp:fdeb337f |
 | ZP-J Self-Reference | v2.9 | ZP-J_Self_Reference.pdf | v1.33 | N/— | formal:83f78357 comp:7cfd99e4 |
 | ZP-J AFA Addendum | v1.16 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:7e46e9e2 |

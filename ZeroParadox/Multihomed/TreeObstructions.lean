@@ -121,6 +121,20 @@ theorem padic_bottom_not_initial :
   have f := hinit.to (TopCat.of Empty)
   exact (f.hom ⟨0, rfl⟩).elim
 
+-- Statement: that one-point space `{0} ⊆ Q₂` IS a terminal object of `TopCat`: Mathlib's
+-- `TopCat.isTerminalPUnit` transported along the homeomorphism between two one-point spaces.
+example : Nonempty (Limits.IsTerminal (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
+  ⟨TopCat.isTerminalPUnit.ofIso (TopCat.isoOfHomeo (Homeomorph.homeomorphOfUnique _ _))⟩
+
+-- Statement: `TopCat`'s initial object is the empty space, and it satisfies the AX-G2 shape: a space
+-- with a map into the empty space is empty, so it is isomorphic to it.
+example : Nonempty (Limits.IsInitial (TopCat.of Empty))
+    ∧ ∀ X : TopCat, IsEmpty (X ≅ TopCat.of Empty) → IsEmpty (X ⟶ TopCat.of Empty) := by
+  refine ⟨⟨TopCat.isInitialPEmpty.ofIso (TopCat.isoOfHomeo Homeomorph.empty)⟩, fun X hX => ?_⟩
+  refine ⟨fun f => hX.false ?_⟩
+  haveI : IsEmpty X := ⟨fun x => (f.hom x).elim⟩
+  exact TopCat.isoOfHomeo Homeomorph.empty
+
 /-- Axis III, in-statement: the Kleisli bottom `fC_functor.obj 0` and the Hilbert bottom
     `fD_functor.obj 0` are **both initial objects**, yet their carriers (`Fin 0`, empty;
     `StateSpace 0`, a singleton) are not in bijection. So initiality (polarity) is not a complete
