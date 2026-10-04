@@ -50,8 +50,8 @@ The snap is also **irreversible**: the p-adic topology layer (ZP-B) establishes,
 
 **P₀** (incompressibility threshold, ZP-C D1)  
 → **the occurrence commitment** (the configuration reaching P₀ is a running machine's current configuration, not an inert string, ZP-E; a commitment, not derived)  
-→ **DA-1** (given that, one act of instantiation moves the machine from c₀ to c₁ with the same output value, ZP-E; closed given DP-2)  
-→ **D7** (machine configuration definition, ZP-C)  
+→ **D7** (machine configuration definition, ZP-C; given the occurrence commitment, a running machine has left c₀ for c₁)  
+→ **DA-1** (DP-2 and `da1_minimal_path` show c₀ and c₁ distinct while returning the same output value, ZP-E; closed given DP-2; it consumes the occurrence commitment and does not supply it)  
 → **L-RUN** (execution is a nonzero state change, ZP-C)  
 → **TQ-IH** (no program outputs ⊥ without a nonzero intermediate state, ZP-C)  
 → **ZP-A D2** (a nonzero state change from ⊥ is a join - the Binary Snap)  
