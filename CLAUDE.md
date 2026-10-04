@@ -655,14 +655,15 @@ TRIGGER  you are bumping any document or companion version, or editing a build s
 RULE     order matters: (1) `register.md` — formal version, filename, companion version;
          (2) README.md's Framework table, the single derived copy. That is the whole
          propagation path. GUIDE.md carries NO version numbers, deliberately — never "sync"
-         one into it; that is a regression to revert. Any build-script change takes all four
-         steps in ONE commit: edit, bump the internal version, rebuild the PDF, recompute the
-         `formal:` / `comp:` hash token in `register.md`. A document's own version appears in
-         exactly ONE rendered place, the subtitle meta line — no self-changelogs, no
-         `[new in v1.7]` tags; cross-document citations are exempt.
-COST     a hash mismatch does not mean "rebuild needed", it means the version bump was
-         SKIPPED — do not rebuild without incrementing. `check_hashes.py` compares
-         `register.md` against README on every run and found five stale rows on its first.
+         one into it; that is a regression to revert. A build-script change that moves the
+         RENDERED PDF takes four steps in ONE commit: edit, bump the internal version, rebuild,
+         recompute the `formal:` / `comp:` token. One SHOWN not to resyncs the token with NO bump
+         and the reason in the commit message: `check_hashes.py --sync-hash` when only comments
+         or docstrings moved, else an empty diff of the extracted PDF text, old against rebuilt.
+         A document's own version appears in exactly ONE rendered place, the subtitle meta line
+         — no self-changelogs, no `[new in v1.7]` tags; cross-document citations are exempt.
+COST     a hash mismatch means a SKIPPED bump until a rendered-text diff shows otherwise; never
+         rebuild a visible change without incrementing.
 READ     tools/process/document-workflow.md
 
 ## R-DIAGRAM  Diagram bounds are build-enforced; internal collisions are not.
