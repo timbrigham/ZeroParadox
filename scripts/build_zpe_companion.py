@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.23 | September 2026
+Version 1.25 | October 2026
 v1.23: INITIAL GLOSS (Tim ruling 2026-09-29): the initial side of v1.22's fix (R-TWOPOLE). "A starting point that reaches everything" glossed a WEAKLY initial object; an initial object reaches every object, itself included, in exactly one way. Now "a starting point that reaches everything in exactly one way".
 v1.22: TERMINAL GLOSS (copy_editor panel, Tim ruling 2026-09-29): the AX-G1 row glossed the absent terminal object as "no end point that everything reaches". Reaching alone glosses a WEAKLY terminal object; a terminal object is reached in exactly one way (panel readers built counter-models: a ZPCategory with no terminal object but an object every object maps into). Now "no end point that everything reaches in exactly one way".
 v1.21: AX-G1 NOVELTY (Tim ruling, 2026-09-29, reading (i)): the no-terminal half of AX-G1 is ZP-G's own commitment; in ZP-A a top-free carrier is an optional hypothesis, which the two-state carriers do not satisfy. v1.20's "rests on ZP-A's premise" is withdrawn. Same wording as the Foreword's AX-G1 row, in this table's register.
@@ -112,10 +112,11 @@ def four_framework_diagram():
     return validate_drawing(d, dh, 'four_framework_diagram')
 
 def tsnap_chain_diagram():
-    """Two rows. Shape: L-RUN -> TQ-IH -> ZP-A D2 -> T-SNAP. Occurrence: P0 -> DA-1 -> the Snap occurs.
+    """Two rows. Shape: L-RUN -> TQ-IH -> ZP-A D2 -> T-SNAP.
+    Occurrence: P0 -> occurrence commitment -> DA-1 -> the Snap occurs.
 
-    DA-1 sits on the occurrence row, matching the caption: that the Snap occurs follows from the
-    occurrence commitment together with DA-1 (closed given DP-2); T-SNAP fixes the shape.
+    The occurrence commitment is drawn before DA-1 because it supplies DA-1's precondition (Sense B
+    at P0) and DA-1 consumes it; T-SNAP fixes the shape.
     Content: top of row-1 boxes at 134pt, lowest sub-label baseline at 14pt; dh = 2.1in (151pt).
     """
     dw, dh = TW, 2.1 * inch   # content spans 12pt .. 134pt
@@ -134,8 +135,9 @@ def tsnap_chain_diagram():
         ]),
         (38, 'Occurrence', [
             ('P₀',          ('Incomp.', 'threshold'), COMP_BLUE),
-            ('DA-1',        ('⊥={⊥}: no', 'extl. interp.'), COMP_BLUE),
-            ('Snap occurs', ('with the occurrence', 'commitment'), COMP_SLATE),
+            ('Sense B',     ('occurrence', 'commitment'), COMP_SLATE),
+            ('DA-1',        ('consumes it,', 'given DP-2'), COMP_BLUE),
+            ('Snap occurs', ('c₀ → c₁', 'by D7'), COMP_SLATE),
         ]),
     ]
     for by, row_label, steps in rows:
@@ -198,7 +200,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.23'
+VERSION = '1.25'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -230,7 +232,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Four frameworks, one event —\nthe causality axiom is retired, and the shape of the snap becomes a theorem',
                     CS['title']),
-          Paragraph('Bridge Document | DA-1 / T-SNAP Update', CS['subtitle']),
+          Paragraph('Bridge Document | DA-1 / T-SNAP Update | &#8220;One event&#8221; is the framework&#8217;s reading, not a theorem', CS['subtitle']),
           Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
@@ -242,8 +244,14 @@ def build():
     E.append(Paragraph('What Is ZP-E Doing?', CS['h1']))
     E.append(cbody(
         'ZP-E is the cross-framework synthesis. Written last — after ZP-A through ZP-D are each '
-        'internally closed — its job is to show that the four independent frameworks all describe '
-        'the same event: the Binary Snap, from four different mathematical vantage points.'))
+        'internally closed — its job is to show how each of the four frameworks describes '
+        'the Binary Snap from its own mathematical vantage point. Each description is proved within its own '
+        'framework, from that framework&#8217;s own premises (ZP-D&#8217;s include its design premise DP-1). ZP-H T-H3 '
+        '(th3_snap_all_functors) is their conjunction, four domain facts joined by &#8220;and&#8221;, with no functor or morphism in '
+        'its statement; ZP-H&#8217;s modelling commitment is the identification, under its functors, of the objects each framework located independently. '
+        'Reading the four as one event is the framework&#8217;s interpretation, not a theorem. The bottoms the four '
+        'descriptions start from form a family (the bottom family, MC-1), not one object: an identity across the '
+        'frameworks is retired as ill-typed, because their objects live in different mathematical types.'))
     E.append(cbody(
         'ZP-E does not re-derive anything. It imports closed results from each sub-document and '
         'shows their consistency. Where a cross-framework connection requires an assumption, '
@@ -251,11 +259,12 @@ def build():
     E.append(sp(4))
 
     # Four Descriptions
-    E.append(Paragraph('The Four Descriptions of the Same Event', CS['h1']))
+    E.append(Paragraph('Four Descriptions of the Binary Snap', CS['h1']))
     E.append(cbody(
         'The Binary Snap — the transition from nothing (⊥) to the first state above it (ε₀, in the discrete state chart) — looks '
         'different depending on which mathematical language you use. ZP-E\'s central result is '
-        'that all four descriptions are consistent: one event, four angles.'))
+        'that the four descriptions are consistent, each proved in its own framework. Reading them as one '
+        'event seen from four angles is the framework&#8217;s interpretation, not a theorem.'))
     E.append(cbody(
         'The symbol ε₀ has two charts, and they are not merged. In the ordinal chart, ε₀ is the '
         'proof-theoretic ordinal of Peano Arithmetic, the minimum ordinal up to which PA '
@@ -270,13 +279,15 @@ def build():
     E.append(four_framework_diagram())
     E.append(ccaption(
         'The Binary Snap (amber center) described simultaneously in all four frameworks. '
-        'Each arrow represents an independent mathematical description of the same event.'))
+        'Each arrow represents one framework\'s mathematical description of the Snap; that the four '
+        'describe one event is the framework\'s reading, not a theorem.'))
     E.append(sp(4))
     E.append(example_box('Real-world example — A car crash described by four witnesses', [
         'An engineer (forces), a doctor (injuries), a lawyer (liability), and a physicist '
         '(energy) each describe the same crash completely within their own discipline. '
-        'ZP-E shows the four mathematical frameworks are in exactly this relationship to '
-        'the Binary Snap.',
+        'ZP-E reads the four mathematical frameworks as standing in this relationship to '
+        'the Binary Snap: each description is proved in its own framework, and that they describe '
+        'one event is the framework&#8217;s interpretation.',
     ]))
     E.append(remember_box(
         'Remember: The car crash illustrates what it means to describe one event in multiple '
@@ -296,8 +307,11 @@ def build():
         'AX-1 is now retired, and its content was split in two: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).'))
     E.append(cbody(
         'The DA-1 insert puts an argument where "Because AX-1 says so" stood, and the occurrence '
-        'commitment stays in place. The argument is now complete: reaching P₀ means a '
-        'live machine configuration exists (DA-1). Any live configuration passes through c₁ '
+        'commitment stays in place. The argument runs as follows. The occurrence commitment says instantiation '
+        'occurs as a running configuration: the configuration reaching P₀ is a running machine&#8217;s current '
+        'configuration, not an inert string. That is a commitment, not a theorem (formal ZP-E, T-SNAP Step 2). '
+        'Given it, the machine has left c₀ and is at c₁, by the definition of the first running configuration (D7); '
+        'DA-1 (closed given DP-2) uses that commitment and does not supply it. Any running configuration passes through c₁ '
         '(definition). c₁ is not ⊥ (L-RUN). No program avoids this (TQ-IH). A state change from '
         '⊥ to any state other than ⊥ is the Binary Snap (ZP-A D2). The Snap is derived, and that sentence has '
         'two true readings. The Lean proof is a fact about a fixed two-state machine type and takes no assumptions: '
@@ -308,51 +322,63 @@ def build():
         'states these premises under Premises of T-SNAP, and the Lean t_snap_given takes two of them as its hypotheses: '
         'the start at ⊥ and the first step being taken.'))
     E.append(cbody(
-        'DA-1 is now a Derived Proposition rather than a freestanding Design Principle. '
-        'Previously DA-1 was an honest but freestanding commitment: "a configuration at P₀ '
-        'is necessarily executing." Now it follows from ZP-A CC-2, ⊥ = {⊥}, which is itself a commitment '
-        '(argued, not proved). The bottom element ⊥ '
-        'is a Quine atom — a self-containing object with no external position from which it '
-        'could be interpreted as a static description. A thing that interprets itself cannot '
-        'be waiting for an external interpreter. So ⊥ at P₀ is necessarily executing. '
-        'The design commitment has become a derivation from that commitment.'))
+        'DA-1 is a Derived Proposition, closed given DP-2, as the next paragraph explains. That a '
+        'configuration at P₀ is executing is not part of what it derives: that is DP-2&#8217;s precondition, '
+        'and it is what the occurrence commitment asserts. ZP-A CC-2, '
+        '⊥ = {⊥}, itself a commitment (argued, not proved), motivates it. The bottom element ⊥ '
+        'is a Quine atom, a self-containing object with no external position from which it '
+        'could be interpreted as a static description. So if ⊥ executes at all, nothing outside '
+        'it can be the executor; the executor is ⊥ itself. That rules out an external executor, '
+        'not an inert ⊥: the two-state machine type in the Lean source has a Quine-atom bottom '
+        'and also admits a dynamics in which nothing moves. That the configuration reaching P₀ is running is the occurrence '
+        'commitment, not a consequence of ⊥ = {⊥}.'))
     E.append(cbody(
         '<b>The two-layer structure of DA-1:</b> DA-1 rests on two explicit layers. '
         'The first is the formal conditional: DP-2 (Execution Distinguishability) establishes '
         'that machine states carry execution history independently of output values. From DP-2, '
-        'Lean 4 can derive <i>da1_minimal_path</i> — a proof that before and after instantiation '
-        'produce the same output value (c₀) while the machine state changes (c₀ → c₁). '
+        'Lean 4 can derive <i>da1_minimal_path</i> — a proof that the configurations before and after instantiation '
+        'produce the same output value (c₀) while their machine states differ (c₀ before, c₁ after). '
+        'It takes no assumption and does not say the step is taken; that comes from the precondition below. '
         '`#print axioms` confirms zero axiom dependencies. This is the first Lean formalization '
         'of the core DA-1 claim, not just the surrounding algebra. '
-        'The second layer asks: does ⊥ actually satisfy DP-2\'s precondition? '
-        'That case rests on three converging arguments.'))
+        'The second layer asks: is DP-2\'s precondition met, that is, is the configuration reaching P₀ '
+        'running rather than inert? That precondition is what the occurrence commitment asserts. Three '
+        'arguments bear on it, and none derives it.'))
     E.append(cbody(
-        '<b>Three paths to the precondition:</b> '
+        '<b>Three arguments for the precondition:</b> '
         '(1) CC-2/R3 (ZP-A): ⊥ = {⊥} is a Quine atom — it interprets itself, leaving no '
-        'external position from which it could be read as a static description (above). '
+        'external position from which it could be read as a static description. As shown above, '
+        'that rules out an external executor, not an inert ⊥. '
         '(2) L-INF (ZP-C): the surprisal of ⊥ diverges to infinity — no finite static '
-        'distribution can represent ⊥. '
-        '(3) AIT bridge: at the incompressibility threshold P₀, the description of ⊥ '
-        'is maximally incompressible — K(c₁|n)/|c₁| = 1. A string that cannot be compressed '
-        'beyond itself must be its own execution; a static-description reading is ruled out by '
-        'information theory alone. '
+        'distribution can represent ⊥. That rules out a finite static description; the step from '
+        'there to executing is a bridge principle of its own, a missing principle and not a missing proof, '
+        'which the framework does not adopt and which is separate from the occurrence commitment. '
+        '(3) Computational (incompressibility as self-description): at the incompressibility threshold P₀, the configuration c₁ '
+        'is maximally incompressible — K(c₁|n)/|c₁| = 1 — so no shorter external program generates it. '
+        'That rules out a shorter external generator, not an inert string: an incompressible string '
+        'written down and never run has no shorter generator and is still not executing. So executing '
+        'is not derivable from incompressibility; that the configuration reaching P₀ '
+        'is running, not inert, is what the occurrence commitment asserts. '
         'All three share D7\'s static/executing dichotomy as background and none is circular '
         'with DP-2.'))
     E.append(cbody(
-        '<b>What Lean witnesses (ZP-K):</b> ZP-K adds a KleeneStructure instance for MachinePhase '
-        '(machinePhaseKleene). Path 1 (AFA self-containment) is witnessed by <i>da1_closed_concrete</i>, '
-        'which proves IsQuineAtom(&#8869; : MachinePhase) and nothing computational; Path 3&#8217;s witness '
-        'is the machinePhaseKleene instance&#8217;s botCode_is_quine field, a KleeneStructure requirement, '
-        'not a second independent proof. The two are carried together by da1_paths_unified as a '
-        'conjunction of witnesses; that they name one structural fact is the framework&#8217;s reading. '
-        'Path 2 (informational bridge — unbounded surprisal → necessarily '
-        'executing) remains a structural claim outside current Lean formalization. '
+        '<b>What Lean checks (ZP-K):</b> ZP-K adds a KleeneStructure instance for MachinePhase '
+        '(machinePhaseKleene). Path 1&#8217;s Lean counterpart (AFA self-containment) is <i>da1_closed_concrete</i>, '
+        'which proves IsQuineAtom(&#8869; : MachinePhase) and nothing computational; Path 3&#8217;s Lean counterpart '
+        'is the machinePhaseKleene instance&#8217;s botCode_is_quine field, a KleeneStructure requirement that '
+        'constant codes also meet, not a witness of execution and not a second independent proof. The two are '
+        'carried together by da1_paths_unified as a conjunction; that they name one structural fact is the '
+        'framework&#8217;s reading. Neither Path 2 (unbounded surprisal) nor Path 3 (incompressibility) derives '
+        'executing: the step from unbounded surprisal to executing is a bridge principle of its own, a missing principle that the '
+        'framework does not adopt and that is separate from the occurrence commitment, and Path 3 shows that '
+        'executing is not derivable from incompressibility. '
         'The formal grounding of DA-1 is therefore DP-2, through da1_minimal_path.'))
     # The caption is kept on the same page as its diagram (it was orphaned onto the next page).
     E.append(KeepTogether([tsnap_chain_diagram(), ccaption(
         'The T-SNAP derivation chain. The chain uses commitments, '
         'among them AX-B1 and CC-1 (S₀ = ⊥), and fixes the shape of the Snap; that the Snap occurs rests further on '
-        'DA-1 (closed given DP-2) and on the commitment that instantiation occurs. AX-1 is retired: its shape is now a '
+        'the occurrence commitment (instantiation occurs), whose content is DA-1&#8217;s precondition, and on DA-1 (closed given DP-2), '
+        'which consumes it. AX-1 is retired: its shape is now a '
         'theorem (T-SNAP, amber), and that the Snap occurs is stated separately, following from that commitment together with DA-1.')]))
     E.append(sp(4))
     E.append(example_box('Real-world example — A legal case proved in part', [
@@ -373,7 +399,7 @@ def build():
     E.append(cbody(
         'AX-1 is not on this list: it is retired, and its shape is Theorem T-SNAP. Further commitments are not axioms and are stated where they are used, '
         'among them the occurrence commitment (that instantiation occurs; together with DA-1 it gives that the Snap happens), CC-1 (S₀ = ⊥, a ZP-A Conditional Claim), the choice of starting point that T-SNAP is derived given, '
-        'and CC-2 (⊥ = {⊥}, a ZP-A Forced Metatheoretic Commitment), which DA-1 follows from. '
+        'and CC-2 (⊥ = {⊥}, a ZP-A Forced Metatheoretic Commitment), which motivates DA-1&#8217;s precondition; DA-1 itself is closed given DP-2. '
         'The framework makes no stronger claim than it has to.'))
     E.append(sp(8))
     E.append(remember_box(
