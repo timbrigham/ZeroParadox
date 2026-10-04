@@ -1,5 +1,5 @@
 """
-Build ZP-C Illustrated Companion (v2.9)
+Build ZP-C Illustrated Companion (v2.10)
 v2.9: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14), companion sync with ZP-C v1.23: the key result box ran the derivation chain through DA-1 ('infinite surprisal -> must be a live computation (DA-1)') before L-RUN, putting DA-1 on the shape side. The shape chain now starts at L-RUN and ends at T-SNAP; the occurrence side is stated after it: the framework commits to instantiation occurring (a configuration reaches P0), DA-1 (closed given DP-2) argues a configuration there is a live computation, and together they give that the Snap happens, which is not a theorem.
 v2.8: AX-1 SPLIT (Tim, 2026-09-14), companion sync with ZP-C v1.22: AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The key result box ended "The Binary Snap is no longer assumed — it is derived.", which denied the assumption that remains; it now says the shape is derived and that the Snap happening is still a commitment. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the key-result heading "The Binary Snap Is a Proven Theorem" was not scoped when its box was; it is now "The Shape of the Binary Snap Is a Proven Theorem", matching the box's last sentence that the Snap happening is still a commitment.
 v2.6:vocab fix: null state → ⊥.
@@ -198,7 +198,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.9'
+VERSION = '2.10'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -310,7 +310,7 @@ def build():
         'structural fact.'))
     E.append(sp(8))
 
-    E.append(Paragraph('Why the Singularity Forces Execution (L-INF)', CS['h1']))
+    E.append(Paragraph('What the Singularity Shows, and What It Does Not (L-INF)', CS['h1']))
     E.append(cbody(
         'The surprisal graph shows that I(x) goes to infinity as x approaches 0. ZP-C '
         'makes this precise with Lemma L-INF (Unbounded Surprisal of ⊥): at the '
@@ -319,10 +319,12 @@ def build():
         'specific configuration at P₀, so I(P₀) = ∞.'))
     E.append(cbody(
         'This matters because infinite surprisal means no finite external program can bound the '
-        'informational content of the configuration. A static stored description always has finite '
-        'content. So a configuration at P₀ cannot be a stored description — it must be something '
-        'actively running. L-INF is the formal reason P₀ forces execution, and it is what connects '
-        'the surprisal singularity to the L-RUN argument below.'))
+        'informational content of the configuration, so no finite external interpreter can hold it '
+        'as a static description. It does not show that the configuration is running. The step from '
+        'unbounded surprisal to executing is a bridge principle of its own, which the framework does '
+        'not adopt (ZP-E, DA-1 Path 2). That the configuration reaching P₀ is a running machine\'s '
+        'current configuration, and not an inert string, is what the framework\'s occurrence '
+        'commitment asserts (ZP-E). Given it, the L-RUN argument below applies.'))
     E.append(remember_box(
         'The branching measure — the way ZP-C assigns probabilities to states in D4 — is a '
         'representational commitment (RP-2 in ZP-C). It is well-motivated by the binary '
@@ -331,8 +333,9 @@ def build():
     E.append(example_box('Analogy — A file that cannot be described', [
         'A truly incompressible file has no pattern — every bit is essential, nothing can be '
         'summarized or shortened. At P₀, the configuration is like this file: no shorter '
-        'description exists. The only way such a thing can "be present" is as something actively '
-        'running — not a stored record waiting to be read.',
+        'description exists. Such a file can still sit on a disk, never opened: having no shorter '
+        'description does not make it run. That is why ZP-E treats "the configuration at P₀ is '
+        'running" as a commitment and not as a consequence of incompressibility (DA-1 Path 3).',
     ]))
     E.append(sp(8))
 
@@ -410,9 +413,12 @@ def build():
         'Binary Snap (ZP-A D2). ZP-E closes the chain as Theorem T-SNAP. '
         'The shape of the Binary Snap is no longer assumed — it is derived. '
         'That the Snap happens is a separate matter. The framework commits to instantiation occurring: '
-        'a configuration reaches the incompressibility threshold P₀, where its surprisal is infinite (L-INF). '
-        'DA-1 (ZP-E, closed given DP-2) is the argument that a configuration there is a live computation, '
-        'not a static stored description. Together they give that the Snap happens, which rests on '
+        'a configuration reaches the incompressibility threshold P₀, where its surprisal is infinite (L-INF), '
+        'as a running machine\'s current configuration and not as an inert stored description. '
+        'That is the occurrence commitment; infinite surprisal does not derive it. '
+        'Given it, the machine has left c₀ and is at c₁, by the definition of the first running '
+        'configuration (D7); DA-1 (ZP-E, closed given DP-2) uses that commitment and does not supply it. '
+        'Together they give that the Snap happens, which rests on '
         'that commitment and is not one of the framework\'s theorems.'
     ))
 
