@@ -257,8 +257,11 @@ def build():
             'In TopCat, the category of topological spaces, the answer is the opposite: TopCat has a terminal object, the one-point space '
             '(the example after kleisli_bottom_not_terminal in ZeroParadox/Category/TreeSeam.lean), so AX-G1 fails there, and the TopCat '
             'realization fB_functor (ZeroParadox/Valuation/TopFunctor.lean) presents 0 as the limit of the shrinking balls instead. <font name="DV">&#10003;</font>',
-            'AX-G2 respected: ZP-B C3 establishes that no continuous path in Q<sub>2</sub> returns to 0 from any '
-            'non-zero element. F<sub>B</sub> maps no non-initial morphism to a transition terminating at 0 &#8712; Q<sub>2</sub>. <font name="DV">&#10003;</font>',
+            'AX-G2 respected in the stand-in category: in Q&#8322;BallDepth a morphism m &#8594; 0 means m &#8804; 0, so m = 0 by antisymmetry '
+            '(q2BallZPCat). ZP-B C3, that no continuous path in Q<sub>2</sub> returns to 0 from any non-zero element, is the domain fact behind '
+            'this stand-in, proved in its own layer. For TopCat an AX-G2 statement was not located in the corpus as of 2026-10-04 (searched: '
+            'ZeroParadox/ for AX-G2, ax_g2 and strict initiality alongside TopCat); the TopCat floor {0} is not an initial object there '
+            '(padic_bottom_not_initial, ZeroParadox/Multihomed/TreeObstructions.lean), so the premise of AX-G2, an initial object, is not met at it. <font name="DV">&#10003;</font>',
         ]
     ))
     E.append(sp(6))
@@ -281,11 +284,13 @@ def build():
             'subadditivity. (Note: JSD subadditivity is an inequality and does not establish this — '
             'the equality holds here as a structural consequence of the binary framework.) <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>C</sub>(id<sub>A</sub>) = JSD(P<sub>A</sub> &#8741; P<sub>A</sub>) = 0. No informational work is done by a trivial transition. <font name="DV">&#10003;</font>',
-            'AX-G1 respected: The Null State P = (1, 0) is the unique distribution of minimum entropy (H(P) = 0 bits). '
-            'No terminal object exists: the shared NNRealZPCat witness (&#8477;&#8805;0 with &#8804;) has no greatest element '
-            '— t + 1 &gt; t for all t &#8805; 0 — so no terminal object can exist in the ordered structure. '
-            'This is the categorical expression of ZP-A R1 (no top element), applied to the concrete model. '
-            'Verified in Lean: ax_g1_no_terminal (nnrealZPCategory). <font name="DV">&#10003;</font>',
+            'AX-G1 respected in the stand-in category: the Null State P = (1, 0) is the unique distribution of minimum entropy (H(P) = 0 bits). '
+            'The Lean functor fc_functor lands in InfoDepth, the &#8469;-indexed surprisal-depth category, which has no terminal object '
+            'because the depth index has no maximum: n + 1 &gt; n (infoDepthZPCat, ZeroParadox/Multihomed/CategoricalBridge.lean). '
+            'In ZP-A, having no top element is the optional hypothesis HasNoTop, which ZP-A\'s two-state carriers do not satisfy. '
+            'In KleisliCat PMF, where the realization fC_functor (ZeroParadox/Multihomed/InfoFunctor.lean) lands, the answer is the opposite: '
+            'the one-point type is a terminal object (the example after kleisli_bottom_not_terminal in ZeroParadox/Category/TreeSeam.lean), '
+            'so AX-G1 fails there. <font name="DV">&#10003;</font>',
             'AX-G2 respected: JSD &#8805; 0. A transition returning to P = (1, 0) from any Q &#8800; P would require JSD(Q &#8741; P) = 0, '
             'which holds only if Q = P. Since Q &#8800; P by assumption, no such transition exists. <font name="DV">&#10003;</font>',
             'Inherited label: The distributions P = (1, 0) and Q = (0, 1) are derived from AX-B1 and RP-1 (ZP-C T1, ZP-E T6). '
@@ -312,8 +317,11 @@ def build():
             'In ModuleCat &#8450; the answer is the opposite: the realization fD_functor (ZeroParadox/State/HilbFunctor.lean) sends 0 to the zero '
             'space, which is a zero object of ModuleCat &#8450;, initial and terminal at once (hilbert_bottom_isZero, ZeroParadox/Category/TreeSeam.lean), '
             'so AX-G1 fails there. <font name="DV">&#10003;</font>',
-            'AX-G2 respected: ZP-D T4 establishes that the Snap produces an orthogonal shift that cannot be '
-            'reversed without violating the additive ontology (ZP-A R1). No orthogonal extension terminates back at e<sub>0</sub> from a non-initial vector. <font name="DV">&#10003;</font>',
+            'AX-G2 respected in the stand-in category: in HilbDimDepth a morphism m &#8594; 0 means m &#8804; 0, so m = 0 by antisymmetry '
+            '(hilbDimZPCat). ZP-D T4, that the Snap produces an orthogonal shift, and ZP-A R1 (no subtraction) are the domain facts behind '
+            'this stand-in, proved in their own layers. In ModuleCat &#8450; AX-G2 fails: the bottom is a zero object, every stage has a '
+            'morphism into it (the zero map, fD_has_return, ZeroParadox/Category/Heterogeneous.lean) and stage 1 is not a zero object '
+            '(leaf_not_isZero). <font name="DV">&#10003;</font>',
             'Design commitment inherited: DP-1 (orthogonality as representation of clopen separation) is a '
             'design commitment in ZP-D v1.2. F<sub>D</sub> inherits this label. T4 and T5 of ZP-D depend on DP-1 as a premise.',
         ]
@@ -455,13 +463,13 @@ def build():
         ['F<sub>A</sub> respects AX-G1, AX-G2',       'ZP-A T2, T3, R1; C-H1',       'None',        'Valid — Derived'],
         ['F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>','ZP-B T3; C-H2',               'None',        'Valid — Derived'],
         ['F<sub>B</sub> preserves composition',        'ZP-B T2; C-H2',               'None',        'Valid — Derived'],
-        ['F<sub>B</sub> respects AX-G1, AX-G2',       'ZP-B T5, C3; C-H2',           'None',        'Valid — Derived'],
+        ['F<sub>B</sub> respects AX-G1, AX-G2',       'q2BallZPCat (stand-in); ZP-B C3; C-H2', 'None', 'Valid in the stand-in — TopCat has a terminal object'],
         ['F<sub>C</sub>(0) = P = (1,0)',               'ZP-C T1; ZP-E T6; C-H3',      'AX-B1, RP-1', 'Valid — from AX-B1, RP-1'],
         ['F<sub>C</sub> preserves composition',        'Q-stability of post-snap codomain; C-H3', 'None', 'Valid — Derived (binary framework; Q-stability, not subadditivity)'],
         ['F<sub>C</sub> respects AX-G1, AX-G2',       'ZP-C T1b; C-H3',              'AX-B1, RP-1', 'Valid — from AX-B1, RP-1'],
         ['F<sub>D</sub>(0) = T(0) = e<sub>0</sub>',   'ZP-D T2, T3; C-H4',           'DP-1',        'Valid — from DP-1'],
         ['F<sub>D</sub> preserves composition',        'ZP-D T5; C-H4',               'DP-1',        'Valid — from DP-1'],
-        ['F<sub>D</sub> respects AX-G1, AX-G2',       'ZP-D T4, T5; C-H4',           'DP-1',        'Valid — from DP-1'],
+        ['F<sub>D</sub> respects AX-G1, AX-G2',       'hilbDimZPCat (stand-in); ZP-D T4; C-H4', 'DP-1', 'Valid in the stand-in, from DP-1 — both fail in ModuleCat &#8450;'],
         ['T-H1: universal property preserved',         'ZP-A T2; ZP-B T3; ZP-C T1b; ZP-D T3', 'None', 'Valid — OQ-G2 closed'],
         ['T-H2: singularity compatibility',            'ZP-G T6; ZP-C T2; C-H3',     'None',        'Valid — OQ-G4 closed'],
         ['T-H3: Snap under all four functors',         'C-H1 through C-H4; ZP-E T4; ZP-E T-SNAP', 'DP-1', 'Valid — T-SNAP derived (ZP-E v2.0)'],
@@ -510,11 +518,15 @@ def build():
          'occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
          '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.) T-H3 inherits T-SNAP as a derived result. Not a gap.'],
         ['AX-G1',
-         'Axiom —\nnot novel',
+         'Axiom —\ninitial half\nnot novel',
          'Asymmetry: initial object 0, no terminal object. Inherited from ZP-G. '
-         'Not a novel commitment — grounded in ⊥ as bottom element of ZP-A semilattice. Not a gap.'],
+         'The initial-object half is not a novel commitment — it is grounded in ⊥ as the bottom element of the ZP-A semilattice. '
+         'The no-terminal half is ZP-G\'s own commitment: in ZP-A, having no top element is the optional hypothesis HasNoTop, which '
+         'ZP-A\'s two-state carriers do not satisfy. It holds in the &#8469;-indexed depth categories ZP-H\'s Lean functors land in, '
+         'and fails in TopCat, ModuleCat &#8450; and KleisliCat PMF, each of which has a terminal object (the example after '
+         'kleisli_bottom_not_terminal in ZeroParadox/Category/TreeSeam.lean). Not a gap.'],
         ['AX-G2',
-         'Axiom —\nnot novel',
+         'Axiom —\nnot novel\nwhere it holds',
          'Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. Inherited from ZP-G. '
          'Not a novel commitment where it holds: in a category built from a partial order with a least element, such as ZP-A\'s '
          'semilattice order and the &#8469;-indexed depth categories ZP-H\'s Lean functors land in, a morphism X &#8594; 0 means X &#8804; 0, '
@@ -586,7 +598,10 @@ def build():
          'T-H3 and all downstream results inherit the derived status for the shape. '
          'That the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).'],
         ['AX-G1, AX-G2',
-         'Not novel commitments — grounded in prior layers (ZP-A and ZP-B). Stated as local axioms in ZP-G for self-containment. Not gaps.'],
+         'AX-G2 and the initial-object half of AX-G1 are grounded, not novel: AX-G2 by antisymmetry in categories built from a partial '
+         'order with a least element, and it fails in ModuleCat &#8450; (see the Open Items register). The no-terminal half of AX-G1 is '
+         'ZP-G\'s own commitment; it holds in the &#8469;-indexed stand-ins and fails in TopCat, ModuleCat &#8450; and KleisliCat PMF. '
+         'Stated as local axioms in ZP-G for self-containment. Not gaps.'],
         ['R-BA, D-H1, DP-1',
          'Compatibility Remark / Design Commitments — intentional. Explicitly stated. Not laundered.'],
     ]
@@ -607,7 +622,8 @@ def build():
             'OQ-G3 fully closed | '
             'T-SNAP inherited as derived theorem | '
             'T-H3 independence-of-discovery note: null-analog in each domain located independently | '
-            'AX-G1 and AX-G2 are grounded in prior layers; AX-B1 is the framework\'s one '
+            'AX-G2 and the initial-object half of AX-G1 are grounded in prior layers where they hold, and the no-terminal half of '
+            'AX-G1 is ZP-G\'s own commitment; AX-B1 is the framework\'s one '
         'substantive modelling commitment &#8212; discrete Boolean existence rather than a '
         'continuum of partial states. The <i>decide</i> proof only checks the two states are '
         'distinct GIVEN the two-element type; it does not verify the commitment</i>',
