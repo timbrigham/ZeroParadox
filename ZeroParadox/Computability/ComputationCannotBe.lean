@@ -2,6 +2,7 @@ import ZeroParadox.Computability.Kleene
 import ZeroParadox.Computability.Rice
 import ZeroParadox.Computability.Occurrence
 import ZeroParadox.Computability.GroundZero
+import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Category.DiagonalWitness
 import ZeroParadox.Settheory.Wall
 
@@ -18,230 +19,307 @@ for a human reader as much as for the machines. Putting all of the pieces togeth
 specifically what this document renders: a list of both positive and negative conditions.
 
 ---
-
+## Formal Overview (AI-assisted)
+The computational face, beside the four other `*CannotBe.lean` indexes: `#check` lines, each glossed
+`Statement:` / `Reading:` above it, and anonymous `example`s, this file's only proofs. Conventions and
+the commitments the glosses name: `ZeroParadox/Computability/ComputationCannotBe.md`.
 -/
 
 section ComputationCannotBeIndex
 
 /-! ### § I. What computation CANNOT do — the walls -/
 
-#check @ZeroParadox.no_self_decider
 -- Statement: for any `g : A → (A → Bool)`, `¬ Function.Surjective g`. Proved from
 --   `lawvere_fixedpoint` and `bool_not_no_fixedpoint` — the Cantor/Lawvere no-surjection fact.
 -- Reading: the halting wall. Turing (1936) enters at the NEXT entry,
 --   `self_halting_undecidable`; this declaration mentions no machine and no halting.
+#check @ZeroParadox.no_self_decider
 
-#check @ZeroParadox.self_halting_undecidable
 -- Statement: `fun c => (eval c (encode c)).Dom` is not a ComputablePred.
+#check @ZeroParadox.self_halting_undecidable
 
+-- Statement: `IsComputationalQuine` is not a ComputablePred — no algorithm decides membership in the
+--   predicate. It does not say no algorithm names a member: the constant codes are members (§ III).
 #check @ZeroParadox.isComputationalQuine_undecidable
--- Statement: `IsComputationalQuine` is not a ComputablePred — no algorithm identifies the quines.
 
-#check @ZeroParadox.no_computable_evalFixedPointFree
 -- Statement: no computable map is EVAL-fixed-point-free — `eval (g c) ≠ eval c` cannot hold for
 -- every c. ⚠ LITERAL fixed-point-freeness is a different property and DOES occur on codes:
 -- `fun c => Code.pair c c` fixes nothing. The qualifier is in the declaration's own name.
+#check @ZeroParadox.no_computable_evalFixedPointFree
 
 /-! ### § II. What computation DOES supply — the floors -/
 
+-- Statement: for partial computable `f : Code → (ℕ →. ℕ)`, some code `c` has `eval c = f c` —
+--   Kleene's second recursion theorem, imported from Mathlib (`fixed_point₂`). Prior art, cited not
+--   claimed.
 #check @ZeroParadox.kleene_fixed_point_exists
--- Statement: Kleene's second recursion theorem, imported from Mathlib (`fixed_point₂`).
---   Prior art, cited not claimed.
 
-#check @ZeroParadox.computational_quine_exists
 -- Statement: a code satisfying `IsComputationalQuine` exists, via the recursion theorem.
+#check @ZeroParadox.computational_quine_exists
 
-#check @ZeroParadox.effective_floor_fixedPoint
 -- Statement: for computable `g : Code → Code`, `∃ c, eval (g c) = eval c` — a fixed point of
 --   `g` up to extensional equality of the evaluated functions.
 -- Reading: "the nontrivial floor in the effective category, where self-reference closes."
 --   Floor/wall is framework vocabulary, not a term in the statement.
+#check @ZeroParadox.effective_floor_fixedPoint
 
+-- Statement: `selfApply` (`c, n ↦ eval c (encode c + n)`) is partial computable. NB this is NOT the
+--   recursion theorem.
 #check @ZeroParadox.selfApply_partrec
--- Statement: self-application is partial computable. NB this is NOT the recursion theorem.
 
 /-! ### § III. The quine family — a FAMILY, not a point -/
 
+-- Statement: for any n a computational quine exists with Gödel number exceeding n. Its proof's
+--   witnesses are the CONSTANT codes, which meet the periodicity condition trivially: both sides
+--   evaluate to the constant (the `example` below).
 #check @ZeroParadox.infinite_quine_family
--- Statement: for any n a computational quine exists with Gödel number exceeding n. Its
---   witnesses are the CONSTANT codes, which satisfy the periodicity condition vacuously.
 
-#check @ZeroParadox.quine_goedel_injective
+-- Statement: every constant code `Code.const k` is a computational quine.
+-- Reading: CONTROL. `IsComputationalQuine` holds of programs that ignore their input, so it is a
+--   periodicity condition and does not by itself pin self-reference.
+example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) := by
+  show Nat.Partrec.Code.eval (Nat.Partrec.Code.const k)
+    = ZeroParadox.selfApply (Nat.Partrec.Code.const k)
+  funext m
+  simp [ZeroParadox.selfApply, Nat.Partrec.Code.eval_const]
+
 -- Statement: distinct Gödel numbers imply distinct codes. Proof is `Encodable.encode_inj`;
 --   both quine hypotheses are unused. A fact about the encoding, not about quines.
+#check @ZeroParadox.quine_goedel_injective
 
-#check @ZeroParadox.quine_period_is_goedel
 -- Statement: `encode c` is *a* period of `eval c` — not shown least, and a constant is
 --   periodic with every period.
 -- Reading: that the (function, index) pair signatures self-reference. Prior art for
 --   index-multiplicity is the Padding Lemma, which gives many indices for the SAME function —
 --   a different fact from this family, which is broad. Do not conflate them.
+#check @ZeroParadox.quine_period_is_goedel
 
 /-! ### § IV. The bottom's computational face — PROVED vs COMMITTED -/
 
+-- Statement: for `q` in a `ZPSemilattice L` carrying `KleeneStructure`,
+--   `IsQuineAtom q ↔ q = bot ∧ ∀ x, join q x = x`: the Quine-atom property is equivalent to the
+--   CONJUNCTION of the order-bottom and join-identity conditions; those two are equivalent to each
+--   other by `da2_bottom_characterization`. Proof term is `t_exec_triple_iff`, a ZP-J result
+--   mentioning no computation.
+-- Reading: that a fourth, computational face joins the three. No clause of this theorem carries it;
+--   `KleeneStructure.botCode_is_quine` below is what the class field supplies.
 #check @ZeroParadox.t_comp
--- Statement: THREE characterisations proved equivalent. Proof term is `t_exec_triple_iff`, a
---   ZP-J result mentioning no computation.
--- Reading: that a fourth, computational face joins them. It enters as the `KleeneStructure`
---   class field `botCode_is_quine`, NOT as a clause of this theorem.
 
+-- Statement: under `[KleeneStructure L]`, any Quine atom `q : L` equals `bot` of the `ZPSemilattice L`.
+--   No `Code` and no Kleene clause appear; the `[KleeneStructure]` hypothesis is inert on the proof
+--   route — though NOT absent from the axiom footprint, since `#print axioms` follows the statement.
+-- Reading: "the Kleene quine IS ⊥" — the class's commitment, and not a Lean `=` (`Code` versus `L`).
 #check @ZeroParadox.kleene_quine_is_bot
--- Statement: any Quine atom equals ⊥. No `Code` and no Kleene clause appear; the
---   `[KleeneStructure]` hypothesis is inert on the proof route — though NOT absent from the
---   axiom footprint, since `#print axioms` follows the statement.
--- Reading: "the Kleene quine IS ⊥" — the class's commitment, and not a Lean `=`.
 
+-- Statement: the class field — the instance's `botCode` satisfies `IsComputationalQuine`, which the
+--   constant codes also satisfy (§ III). No field of `KleeneStructure` relates `botCode` to `bot`.
+-- Reading: that `botCode` is the computational face of `bot` is the `KleeneStructure` commitment. No
+--   theorem states it, and no `=` can: `botCode` is a `Code` and `bot` an element of `L`.
+#check @ZeroParadox.KleeneStructure.botCode_is_quine
+
+-- Statement: `IsQuineAtom (bot : MachinePhase)` — c₀, ⊥ of `MachinePhase`, is its unique
+--   self-containing state. Mentions no `Code` and no execution. The self-containment is
+--   `machinePhaseAFA`'s field, and the `example` after this theorem in
+--   `ZeroParadox/Computability/Kleene.lean` proves the same type with no Kleene instance.
+-- Reading: that c₀ is self-EXECUTING is DA-1's claim. DA-1's precondition is the occurrence
+--   commitment, which DA-1 consumes; the `KleeneStructure` commitment adds only that `botCode`
+--   names ⊥ of `MachinePhase`.
 #check @ZeroParadox.da1_closed_concrete
--- Statement: `IsQuineAtom (bot : MachinePhase)`. Mentions no `Code` and no execution.
--- Reading: that ⊥ is self-EXECUTING rather than a static description. DA-1's claim, carried by
---   the `KleeneStructure` commitment. `l_inf`'s docstring states that the step from unbounded
---   surprisal to forced execution is an ontological bridge, not a consequence.
 
-#check @ZeroParadox.machinePhaseKleene
+-- Statement: c₀ is a Quine atom of `MachinePhase` AND a state sequence in that carrier starts at c₀
+--   and never steps.
+-- Reading: CONTROL. Being a Quine atom does not make anything move; that is the occurrence commitment.
+open ZeroParadox ZeroParadox.ZPSemilattice in
+example : IsQuineAtom (bot : MachinePhase) ∧
+    ∃ S : ℕ → MachinePhase, S 0 = bot ∧ IsStateSequence S ∧ ∀ n, S (n + 1) = S n :=
+  ⟨da1_closed_concrete, fun _ => bot, rfl, ⟨fun _ => bot, fun _ => (bot_join bot).symm⟩,
+    fun _ => rfl⟩
+
 -- Statement: the `KleeneStructure MachinePhase` instance. Its `botCode` is
 --   `Classical.choose computational_quine_exists` — SOME code meeting the predicate, and the
---   predicate is met by constants.
+--   predicate is met by constants. The `example` after it in `ZeroParadox/Computability/Kleene.lean`
+--   builds a computable instance with `Code.const 0`.
+#check @ZeroParadox.machinePhaseKleene
 
-/-! ### § V. The pivot face — the fixed point exists yet is undecidable -/
+/-! ### § V. The pivot face — the fixed point exists, and a semantic property is undecidable -/
 
+-- Statement: for computable `f : Code → Code`, `∃ c, eval (f c) = eval c` — Rogers' fixed point up
+--   to `eval`, the same type as `effective_floor_fixedPoint` (§ II).
+-- Reading: the floor in the Rice setting. That it is the face's bottom is the family's criterion,
+--   as the home docstring says, not this theorem.
 #check @ZeroParadox.rice_face_has_bottom
--- Statement: the floor exists in the Rice setting.
 
+-- Statement: a conjunction, for computable `f` and a non-trivial extensional `C : Set Code`: a fixed
+--   point of `f` up to `eval` exists, AND membership in `C` is not a ComputablePred. The
+--   undecidability is of `C` over all codes; nothing is stated about membership at the fixed point.
 #check @ZeroParadox.quine_exists_yet_rice
--- Statement: the fixed point is present, yet membership at it is undecidable.
 
-/-! ### § VI. Occurrence — what it takes for the bottom to MOVE
+/-! ### § VI. Occurrence — what it takes for a configuration to MOVE
 
-The negative conditions of this index. See `ZeroParadox/Computability/Occurrence.lean`. -/
+Configurations of a step function `f : σ → Option σ`; the computational bottom is the framework's
+reading of one. The negative conditions of this index. See `ZeroParadox/Computability/Occurrence.lean`. -/
 
-#check @ZeroParadox.no_unstarted_state
 -- Statement: in the operational model, not-halted and no-next-configuration cannot both hold.
--- Reading: existence is a machine, so "exists but has not begun" is not a state it can be in.
+-- Reading: "exists but has not begun" is not a state in this model. The next configuration may be
+--   the configuration itself (`LoopsInPlace`), so this supplies no change of state.
+#check @ZeroParadox.no_unstarted_state
 
-#check @ZeroParadox.machine_trichotomy
 -- Statement: at any configuration — halted, looping in place, or stepping onward.
 -- Reading: the middle case is not a third route; it is the self-referential object itself,
---   `s` being a fixed point of its own step.
+--   `s` being a fixed point of its own step. Under a function it shares the halted case's fate:
+--   each reaches only itself (`loop_is_a_trap`).
+#check @ZeroParadox.machine_trichotomy
 
-#check @ZeroParadox.loop_is_a_trap
 -- Statement: everything reachable from a self-looping configuration is that configuration.
+#check @ZeroParadox.loop_is_a_trap
 
-#check @ZeroParadox.machine_snap_impossible
 -- Statement: no configuration of a deterministic machine is both its own fixed point AND
 --   departed from.
 -- Reading: the same SHAPE as `f_snap_impossible` for ordered fields — a resemblance between
 --   two separate no-go results, never an identity or a transfer between them.
--- Reading: the departure must come from outside a single machine's dynamics — which is DA-2,
---   instantiation succession.
+-- Reading: the framework's answer is DA-2, instantiation succession, which denies the
+--   single-machine premise. The other exit is a non-functional step (next entry).
+#check @ZeroParadox.machine_snap_impossible
 
-#check @ZeroParadox.dead_yields_live_withholds
+-- Statement: over a relation `R`, if `R s s` and `R s t` with `t ≠ s`, then `s` has two distinct
+--   `R`-successors.
+-- Reading: the positive form of the NO-GO above: a fixed point that departs is a branch point.
+#check @ZeroParadox.execution_requires_branching
+
 -- Statement: a halted configuration evaluates to itself; a self-looping one has empty
 --   evaluation.
 -- Reading: halting and looping are the 0 and ∞ readings of the computational bottom, and what
 --   each yields is the opposite of what it is. A shared shape, never a Lean identity.
+#check @ZeroParadox.dead_yields_live_withholds
 
-#check @ZeroParadox.occurs_iff_halts
 -- Statement: `∃ k, evaln k c n ≠ none` holds exactly when `(eval c n).Dom`.
--- Reading: that this is the framework's "occurrence". A modelling choice, not a theorem.
+-- Reading: that this is the framework's "occurrence". A modelling choice, not a theorem. Occurrence
+--   is then the halting question: semidecidable, not decidable (the next two entries).
+#check @ZeroParadox.occurs_iff_halts
 
-#check @ZeroParadox.occurrence_undecidable
 -- Statement: `fun c => Occurs c n` is not a ComputablePred. Turing (1936) via Mathlib.
+#check @ZeroParadox.occurrence_undecidable
 
-#check @ZeroParadox.occurrence_semidecidable_nonoccurrence_not
 -- Statement: occurrence is an REPred; non-occurrence is not.
--- Reading: what can be witnessed runs one way only — the same asymmetry as
---   `t_snap_irreversible`, reached information-theoretically.
+-- Reading: what can be witnessed runs one way only. A one-way shape like `t_snap_irreversible`'s,
+--   an order fact there and a recursion-theoretic one here; a resemblance, never an identity.
+#check @ZeroParadox.occurrence_semidecidable_nonoccurrence_not
 
 /-! ### § VI-b. The pole, its swap, and what actually blocks the snap -/
 
-#check @ZeroParadox.flipPoles_involutive
--- Statement: exchanging the halted and self-looping poles twice is the identity.
+-- Statement: exchanging the halted and self-looping poles twice is the identity, pointwise:
+--   `flipPoles (flipPoles g) s = g s`.
 -- Reading: the computational `rInv` / `swap`. **Level fence:** an automorphism of the SPACE of
 --   machines, not of one machine — same shape at a different level, never an identity.
+#check @ZeroParadox.flipPoles_involutive
 
-#check @ZeroParadox.flipPoles_preserves_extremal
 -- Statement: extremal (halted or looping) stays extremal under the swap.
 -- Reading: the pole is preserved as a set while its two elements exchange — `rInv` on {0, ∞}.
+#check @ZeroParadox.flipPoles_preserves_extremal
 
-#check @ZeroParadox.flipPoles_fixes_progress
 -- Statement: a configuration stepping onward to something else is left unchanged by the swap.
 -- Reading: the interior is fixed — the unit circle under `rInv`.
+#check @ZeroParadox.flipPoles_fixes_progress
 
-#check @ZeroParadox.live_step_not_wellFounded
 -- Statement: a self-looping configuration makes the step relation non-well-founded.
 -- Reading: the bridge to `Multihomed/Boundary.lean`'s `floor_not_wellFounded` — the live/dead
 --   split has the SHAPE of the ν/μ divide at a different level, never an identity with it.
 --   ONE-DIRECTIONAL: the converse is false, and "dead" does NOT give
 --   a well-founded relation.
+#check @ZeroParadox.live_step_not_wellFounded
 
-#check @ZeroParadox.loops_not_unique
 -- Statement: a machine can fix two distinct configurations.
 -- Reading: self-loops need not be unique, so the step relation is not QuineHost-shaped and no
 --   argument from ZP-J's uniqueness may be run on it.
+#check @ZeroParadox.loops_not_unique
 
-#check @ZeroParadox.deterministic_has_no_fanout
 -- Statement: a deterministic step admits at most one successor.
+#check @ZeroParadox.deterministic_has_no_fanout
 
-#check @ZeroParadox.nondeterministic_escapes_the_trap
 -- Statement: a non-deterministic relation can self-loop AND reach something else.
 -- Reading: what blocks the snap in § VI is DETERMINISM, not the self-loop —
 --   `Miniature.lean`'s `pole_cannot_fan` in machine vocabulary.
+#check @ZeroParadox.nondeterministic_escapes_the_trap
 
-#check @ZeroParadox.occurrence_shape
 -- Statement: the five faces bundled — no unstarted state, the trichotomy, the pole preserved
 --   under swap, the NO-GO, and the inversion.
+#check @ZeroParadox.occurrence_shape
 
 /-! ### § VII. NO-GO gauges — what may NOT be inferred -/
 
-#check @ZeroParadox.abstractSelfApp_always_inhabited
 -- Statement: every `ZPSemilattice` carries an `AbstractSelfApp`, so no property of the carrier
 --   follows from the bare hypothesis.
+#check @ZeroParadox.abstractSelfApp_always_inhabited
 
 /-! ### § VIII. Ground zero — the bottom as a BEHAVIOUR, not a configuration
 
 `ZeroParadox/Computability/GroundZero.lean`. Reads the step function as a coalgebra for
 `X ↦ 1 + X` and connects it to `NatListRegime.lean`, which the project already carried. -/
 
-#check @ZeroParadox.head_is_leaf_or_step
 -- Statement: `(stepCoalg f s).1` is `false` or `true`. Axiom-free.
 -- Reading: there is no "exists but has not begun" — the head type is `Bool`, so that state is
 --   absent from the type rather than ruled out by argument.
+#check @ZeroParadox.head_is_leaf_or_step
 
-#check @ZeroParadox.not_halted_is_stepping_head
 -- Statement: `f s ≠ none → (stepCoalg f s).1 = true`. Axiom-free.
--- Reading: "already executing at ground zero, by definition." Capability and execution are not
---   separated in this model, so a capability that is not being exercised is not expressible.
---   NOT a claim that anything CAUSES execution.
+-- Reading: "already executing at ground zero, by definition", GIVEN that `s` has not halted. The
+--   head is `true` also for a self-looping configuration (`loop_unfolds_to_infinity`), so
+--   "executing" here is taking a step, possibly to itself, and supplies no change of state.
+--   Capability and execution are not separated in this model, so a capability that is not being
+--   exercised is not expressible. NOT a claim that anything CAUSES execution.
+#check @ZeroParadox.not_halted_is_stepping_head
 
-#check @ZeroParadox.notEL_unique
 -- Statement: `¬ EventuallyLeaf x → x = natInfinity`. A behaviour that never reaches a leaf is
 --   uniquely `natInfinity`. A Lean `=` inside one type, by bisimulation.
 -- Reading: the computational counterpart of `quine_unique` — the bottom pinned apophatically,
 --   by what it never does, with no element-hood in any machine carrier assumed.
+#check @ZeroParadox.notEL_unique
 
-#check @ZeroParadox.loop_unfolds_to_infinity
 -- Statement: a self-looping configuration's unfolding equals `natInfinity`.
 -- Reading: the machine bottom's BEHAVIOUR and the coalgebraic infinity are the same point of the
 --   final coalgebra. The `=` is between two `Cofix` elements, within one type; the configuration
---   `s : σ` is NOT equated with anything — it lives in a different type. (The home file states it
---   correctly: "the BEHAVIOUR of a self-looping machine configuration IS `natInfinity`"; an earlier
---   revision of this gloss dropped those words and asserted the identification was cross-type-free.)
---   It says nothing about whether the FRAMEWORK's bottom self-loops — that is the commitment.
+--   `s : σ` is NOT equated with anything — it lives in a different type. It says nothing about
+--   whether the FRAMEWORK's bottom self-loops — that is the commitment.
+#check @ZeroParadox.loop_unfolds_to_infinity
 
-#check @ZeroParadox.tri_unstarted_state_exists
 -- Statement: with a three-valued head there IS a configuration neither halted nor stepping.
 --   `TriStep` is a deliberate counter-model and must never be used as a framework object.
+#check @ZeroParadox.tri_unstarted_state_exists
 
-#check @ZeroParadox.forcing_needs_the_binary_split
 -- Statement: both halves at once — two-valued, no unstarted state; three-valued, one exists.
--- Reading: what makes execution forced is the CLEANNESS OF THE SPLIT, not the dynamics; and the
---   framework takes that split to be a third encoding of AX-B1, beside `ax_b1_distinct` and
---   `HasFirstStep`. That the three are ONE commitment is an interpretation in the manner of
---   MC-1's bottom family — per-encoding membership is checkable, cross-encoding identity is
---   neither claimed nor well-formed.
+-- Reading: what removes the unstarted state is the CLEANNESS OF THE SPLIT, not the dynamics. Having
+--   no unstarted state is not motion: a self-loop counts as stepping and changes nothing
+--   (`loop_is_a_trap`). The framework takes that split to be a third encoding of AX-B1, beside
+--   `ax_b1_distinct` and `HasFirstStep`. That the three are ONE commitment is an interpretation in
+--   the manner of MC-1's bottom family — per-encoding membership is checkable, cross-encoding
+--   identity is neither claimed nor well-formed.
+#check @ZeroParadox.forcing_needs_the_binary_split
 
+-- Statement: in `MachinePhase`, T-SNAP's triple (`c₀ ≠ c₁`, `c₁ ≠ c₀`, `join c₀ c₁ = c₁`) holds
+--   together with a dynamics `stuckPhase` under which every phase is fixed. It constrains the SHAPE
+--   of a transition; it does not assert one occurs.
+-- Reading: that the snap occurs is the occurrence commitment, which DA-1 consumes.
 #check @ZeroParadox.tsnap_holds_but_nothing_moves
--- Statement: T-SNAP holds in a dynamics where every state is fixed. It constrains the SHAPE of
---   a transition; it does not assert one occurs.
+
+/-! ### § IX. Forced self-reference on infinite carriers — a map EXISTS; nothing says it is applied -/
+
+-- Statement: a type is infinite iff it carries a `SelfCopyRef` map: one-to-one, not onto, with
+--   exactly one fixed point.
+-- Reading: SCOPE. This is the existence of such a map, not that one is applied; that ⊥ of a
+--   `ZPSemilattice` performs one is a commitment (`ZeroParadox/Computability/SelfCopyReference.lean`
+--   § IV).
+#check @ZeroParadox.infinite_iff_exists_selfCopyRef
+
+-- Statement: on a finite carrier no `SelfCopyRef` map exists.
+#check @ZeroParadox.no_selfCopyRef_of_finite
+
+-- Statement: in particular none exists on `MachinePhase`, the two-state carrier of c₀ and c₁.
+-- Reading: CARRIER. The forcing above reaches infinite carriers only; the carrier of the computational
+--   bottom's Quine atom (§ IV) gets no such map.
+example (f : ZeroParadox.MachinePhase → ZeroParadox.MachinePhase) : ¬ ZeroParadox.SelfCopyRef f :=
+  haveI : Finite ZeroParadox.MachinePhase :=
+    Finite.of_surjective (fun b : Bool => if b then ZeroParadox.c₁ else ZeroParadox.c₀)
+      (fun x => by cases x; exacts [⟨false, rfl⟩, ⟨true, rfl⟩])
+  ZeroParadox.no_selfCopyRef_of_finite f
 
 end ComputationCannotBeIndex

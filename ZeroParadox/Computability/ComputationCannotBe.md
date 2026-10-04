@@ -4,23 +4,32 @@ Moved from `ZeroParadox/Computability/ComputationCannotBe.lean`. ⚠ **This cont
 
 ## Formal Overview (AI-assisted)
 
-The fourth `#check`-only index, beside `BottomCannotBe.lean`, `Order/SnapCannotBe.lean` and
-`Ordinal/Epsilon0CannotBe.lean`. Those pin the three core *objects*; this one pins the
-**computational face** — and in particular the proved-versus-committed line, which is where
-this face has historically drifted.
+One of five `*CannotBe.lean` indexes, beside `ZeroParadox/BottomCannotBe.lean`,
+`ZeroParadox/Order/SnapCannotBe.lean`, `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` and
+`ZeroParadox/Category/ChoiceCannotBe.lean`. Those pin the bottom, the snap, ε₀ and the framework's
+relationship to `Classical.choice`; this one pins the **computational face** — and in particular the
+proved-versus-committed line, which is where this face has historically drifted.
 
-Like the others it states no new results and reproduces no logic: every line `#check`s an
-already-proven theorem in its home file, so the `import`s recompile those files and the index
-cannot point at a dead or renamed result.
+Its `#check` lines state no new results: each names an already-proven declaration in its home file,
+so the `import`s recompile those files and the index cannot point at a dead or renamed result. Its
+anonymous `example`s are CONTROLS, each the falsifier of one `Reading:`; they create no declarations.
 
-## The honest status of a `#check`-only index (corrected 2026-07-26)
+## The honest status of a `#check`-only line
 
 The `#check` **lines** cannot overclaim — they create no declarations. The `--` **glosses
-beside them absolutely can**, and in two sibling indexes they did, surviving four adversary
-rounds. So this file is built under the standing convention from the outset:
+beside them can.** So this file is built under the standing convention:
 
 * **`Statement:`** — an accurate restatement of what the declaration proves.
 * **`Reading:`** — the framework's interpretation, explicitly NOT a claim about the theorem.
 
-No gloss is anything else. Where a `Reading:` is load-bearing, the commitment carrying it is
-named.
+No gloss is anything else, and each gloss sits ABOVE the `#check` it describes. Where a `Reading:` is
+load-bearing, the commitment carrying it is named.
+
+## The commitments the glosses name
+
+* **`KleeneStructure`** — that the class's `botCode` is the computational face of `bot`. The field
+  `botCode_is_quine` supplies only a periodicity condition, which constant codes meet.
+* **The occurrence commitment** — that the snap occurs, which DA-1 consumes as its precondition.
+  T-SNAP holds with nothing moving (`tsnap_holds_but_nothing_moves`), and in the computational face
+  occurrence is the halting question (`occurs_iff_halts`).
+* **AX-B1** — the binary split that removes an unstarted state (`forcing_needs_the_binary_split`).
