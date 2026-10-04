@@ -1,8 +1,7 @@
 # Choice and the framework: the long form of the choice index
 
-Moved from `ZeroParadox/Category/ChoiceCannotBe.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
-
-Every § number below (§ I to § IV) refers to `ZeroParadox/Category/ChoiceCannotBe.lean`.
+Long form of `ZeroParadox/Category/ChoiceCannotBe.lean`. Every § number below (§ I to § IV) refers
+to that file.
 
 ## Formal Overview (AI-assisted)
 
@@ -35,10 +34,10 @@ framework's standing temptation. The literature that separates them:
 So *full* choice is strictly stronger than excluded middle, which is in turn strictly stronger than the
 constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
 `ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` has exactly Diaconescu's shape — choice for inhabited
-predicates on `Bool` — so in a topos it would be *equivalent* to excluded middle. In Lean it **appears
-not to be**: the natural construction of the fragment from excluded middle fails to elaborate, dying at
-`Decidable (S true)`, and closes only under `classical`. **That is strong evidence, not a proof of
-unprovability** — a failed elaboration is not a negative result, and a formal independence claim would
+predicates on `Bool` — so in a topos it would be *equivalent* to excluded middle. In Lean, the natural construction of the
+fragment from excluded middle fails to elaborate, dying at `Decidable (S true)`, and closes only under
+`classical`. **That failure measures that construction, not the fragment** — a failed elaboration is not
+a negative result, and a formal independence claim would
 need a metatheoretic argument outside Lean (the home file
 `ZeroParadox/Category/ExcludedMiddleBridge.lean` states this limit explicitly). The apparent gap is a
 fact about **Lean's `Prop`/`Type` stratification**, not about Diaconescu's theorem: the fragment selects
@@ -50,18 +49,19 @@ self-dual split", "reading the pole as the floor is an act of choice" — is a *
 choice-versus-no-choice distinction, never the axiom itself. Where such a reading has been made precise
 (`ZeroParadox/Valuation/PoleChartSelection.lean`), the honest result was that the built object **refutes** the naive
 form: selection there is free, and the non-constructivity in the conditional model is *inserted by
-stipulation* at `poleAdmissible`, not discovered in the pole. Two files carry a written correction of
-record on exactly this error — `ZeroParadox/Category/DoubleNegationNucleus.lean` (once titled "choice as a
-difference-generator"; it is the *excluded-middle* modality) and `ZeroParadox/Category/ExcludedMiddleBridge.lean`
-(once stated unscoped, as though excluded middle made every Heyting algebra Boolean).
+stipulation* at `poleAdmissible`, not discovered in the pole. The same distinction is drawn in
+`ZeroParadox/Category/DoubleNegationNucleus.lean` (the double-negation nucleus is the *excluded-middle*
+modality, not choice) and `ZeroParadox/Category/ExcludedMiddleBridge.lean` (excluded middle does not make
+every Heyting algebra Boolean; the scope is `Prop`).
 
 ### No count is recorded here, deliberately
 
-**This file states no figure for how many declarations carry `Classical.choice`, and none should be added
+**`ChoiceCannotBe.lean` and this long form state no figure for how many declarations carry `Classical.choice`, and none should be added
 to it.** Three reasons, in order of importance.
 
 **A count mostly measures Mathlib, not this framework.** Most choice footprints traced so far come from a
-Mathlib construction — the `Ordinal` type, `NONote.repr`, the recursion-theorem proof,
+Mathlib construction — the `Ordinal` order instance and operations (`Ordinal.instLinearOrder`, `nfp`,
+`omega0`, `epsilon`; the `Ordinal` type itself measures `[propext, Quot.sound]`), `NONote.repr`, the recursion-theorem proof,
 `compl_sup_distrib`, arbitrary-type decidability, a `ℚ` division-ring instance, in one case a single
 tactic call. **Not all: `ZeroParadox/Category/Lawvere.lean`'s bare `classical` in
 `fixedPointFree_of_nontrivial` is the framework's own, and § IV shows it is ESSENTIAL** — the cost is in
@@ -79,23 +79,16 @@ re-proof exists — the entries labelled ACCIDENTAL in § I), two are **ESSENTIA
 meaning nobody has tried. A count collapses those three into one number and loses the only distinction
 that carries information.
 
-**And in practice the number will not stay right.** It has been wrong three times. The first version was
-quoted rather than measured and was off by more than an order of magnitude. The replacement was measured
-correctly and went stale within the same session, because further files landed before it was written
-down; a claim-review referee caught it. The figure that then sat in the project's operating manual was
-stale again by the following review, for the same reason. All three are one error — citing a figure that
-is not being regenerated at the moment of use — and a docstring cannot regenerate anything.
+**And in practice the number will not stay right.** A figure is true of the build it was measured on and
+goes stale as further files land; citing one that is not regenerated at the moment of use is the error,
+and a docstring cannot regenerate anything.
 
 What is true, and is what `ChoiceCannotBe.lean` asserts instead: **the framework is not choice-free; the
 core is (`t_snap_derived`, no axioms at all); examined footprints fall into three classes — accidental,
 essential, unclassified — and § I's ACCIDENTAL entries and § IV name cases in the first two.** No fraction is given, for
 the reason stated above.
 
-**⚠ THE STANDING LESSON, and it is why this paragraph was rewritten.** This sentence used to read
-*"every examined footprint has been removable — that statement does not go stale."* It was falsified
-the next day (§ IV's two cases, committed 2026-07-20), had been copied into `CLAUDE.md` as the
-recommended safe formulation, and was contradicted by `RELEASES.md` for ten days with nothing to
-reconcile them. **A universal negative is the most dangerous sentence shape in a `CannotBe` index:**
+**A universal negative is the most dangerous sentence shape in a `CannotBe` index:**
 the `#check` lines cannot overclaim, but prose quantified over *the whole framework* is falsified by
 any single future commit and nothing mechanical notices.
 **Write "none located as of <date>", never "none exists."**
@@ -127,12 +120,11 @@ per report; the total therefore exceeds the number of distinct declarations. Wha
 fact about the build you just ran, not a fact to carry anywhere.
 
 **The survey is partial, and that is the honest caveat that matters.** Only some footprints have been
-traced to a source and classified; much of the corpus is unexamined. **The hypothesis that every
-footprint is accidental was held here until 2026-08-01 and is REFUTED** — § IV exhibits two that are
-not. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
+traced to a source and classified; much of the corpus is unexamined. **Not every footprint is
+accidental** — § IV exhibits two that are not. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
 has been examined, it has been **assigned** a class* — accidental, essential, or unclassified. (Not
 "classifiable": with `unclassified` among the buckets, classifiability holds of everything and says
-nothing. Corrected 2026-08-01.) Do not
+nothing.) Do not
 upgrade that, and — for the same reason no count is recorded above — **do not quantify the examined
 fraction either**; it moves with every commit.
 

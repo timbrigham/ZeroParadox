@@ -32,10 +32,11 @@ was in order, as a way to organize and reference that object.
 
 section ChoiceCannotBeIndex
 
-/-! ## § I. What choice is NOT — where the framework provably does not need it
+/-! ## § I. What choice is NOT — choice-free proofs, beside the classical proofs they replace
 
-Each entry below is a measured purity result in its home file's `PurityCheck` section. "NO axioms" means
-the fully axiom-free footprint; `[propext]` means propositional extensionality only. -/
+Each `ZeroParadox` entry below has its footprint in its home file's `PurityCheck` section; the two Mathlib
+entries at the end were measured with `#print axioms` directly. "NO axioms" means the fully axiom-free
+footprint; `[propext]` means propositional extensionality only. -/
 
 -- The framework's central theorem. T-SNAP's shape in its `MachinePhase` chart (`c₀ ≠ c₁`,
 -- `join c₀ c₁ = c₁`) depends on NO axioms at all — not choice, not
@@ -55,7 +56,7 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 
 -- Selecting a chart at a two-ended pole: NO axioms. This is the direct refutation of the naive reading
 -- that "viewing the pole as definitely the floor is an act of choice." At every one-point
--- compactification there is a canonical selector, constant on the pole orbit.
+-- compactification a selector exists that is constant on the pole orbit.
 #check @ZeroParadox.chart_selection_is_freeG
 
 -- The metric-collapse content on the syntactic side: `[propext]`. Contrast the measured
@@ -82,7 +83,7 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 #check @ZeroParadox.mixed_cofix_nonempty
 
 -- The μ side of the same fork, emptiness witnessed by the bare inductive `WType` eliminator: NO axioms,
--- strictly tighter than the earlier `fix_isEmpty` (`[propext, Quot.sound]`).
+-- strictly tighter than `fix_isEmpty`'s (`[propext, Quot.sound]`).
 #check @ZeroParadox.fix_isEmpty_constructive
 
 -- Statement: `boundaryDouble` is one-to-one, not onto, and has exactly one fixed point; measured
@@ -122,7 +123,7 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 /-! ## § II. What choice is NOT to be confused with — the excluded-middle boundary
 
 The modality of §I generates classical LOGIC — excluded middle — which is strictly weaker than **full**
-choice (Cohen 1963). The RESTRICTED fragment is a different matter: see `ChoiceCannotBe.md`. This section indexes
+choice (Cohen 1963). The RESTRICTED fragment is a different matter: see `ZeroParadox/Category/ChoiceCannotBe.md`. This section indexes
 the boundary and its scope fence. -/
 
 -- What the modality's closed points actually are: the regular elements `aᶜᶜ = a` — the Boolean core.
@@ -136,7 +137,7 @@ the boundary and its scope fence. -/
 -- result: Diaconescu (1975), "Axiom of choice and complementation"; independently Goodman–Myhill (1978),
 -- "Choice implies excluded middle". The framework contributes only the hypothesis-form packaging (Lean's
 -- kernel realizes the arrow as a derivation, not a reusable theorem).
--- DIRECTION, stated precisely — an earlier version of this comment had it wrong. Diaconescu's theorem is
+-- DIRECTION, stated precisely. Diaconescu's theorem is
 -- an EQUIVALENCE for this restricted shape (choice for inhabited subobjects of a two-element object IS
 -- excluded middle); "the converse fails" belongs to FULL AC and is Cohen 1963, not Diaconescu. That the
 -- fragment nonetheless does not follow from `ExcludedMiddle` *in Lean* is a fact about Lean's
@@ -169,8 +170,6 @@ proved about where choice does work. -/
 -- it with NO axioms.
 -- Reading: the framework therefore attributes this footprint to Mathlib's QPF *quotient layer*
 -- rather than to the mathematics — escaping it means changing the carrier, not cleaning the proof.
--- (An earlier gloss called it "removable in principle". That was an unmeasured inference and is
--- retracted; the measurement above is what supports the artifact reading.)
 -- (Setting: ACS's construction needs only function extensionality, which Lean has; only its
 -- uniqueness half uses univalence. See ZeroParadox/Computability/ChoicePurityInvariant.lean.)
 -- Contrast `strict_cofix_nonempty` (§ I, NO axioms): same phenomenon, different construction,
@@ -180,23 +179,22 @@ proved about where choice does work. -/
 -- THE TWO MODALITIES, side by side — the comparison a reader arrives wanting. `snapNucleus`
 -- (⊥ of `Ordinal` ↦ ε₀) inherits `Classical.choice` from Mathlib's `Ordinal` fixed-point machinery;
 -- `dnegNucleus` (§ I) is `[propext]`. Both are difference-generators seeded at their carrier's ⊥ —
--- negation is DEFINED as `a ⇨ ⊥`, and `HeytingAlgebra` extends `OrderBot`, so ⊥ of the Heyting algebra
--- is required before negation exists at all. Same role, different carriers, opposite footprints, and
+-- negation satisfies `a ⇨ ⊥ = aᶜ` (the class law `himp_bot`), and `HeytingAlgebra` extends `OrderBot`,
+-- so ⊥ of the Heyting algebra is part of the structure negation lives in. Same role, different carriers, opposite footprints, and
 -- opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ of the Heyting algebra (⊥ is always regular),
 -- `snapNucleus` provably moves ⊥ of `Ordinal` (`snapNucleus_bot_ne_bot`). On the footprint difference: `snapNucleus`
 -- has **not been re-proved choice-free as of 2026-08-02**, so do not call it merely representational. What ZP-N
 -- re-proved is the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on
 -- `ONote`), which is suggestive for the nucleus and is not the nucleus. Its `Classical.choice` is
--- UNCLASSIFIED — the honest tier. NOT because "choice is in the `Ordinal` type": that claim was
--- asserted here earlier and is FALSE as measured — `Ordinal` is `[propext, Quot.sound]`. The choice
+-- UNCLASSIFIED — the honest tier. Choice is NOT in the `Ordinal` type: `Ordinal` measures
+-- `[propext, Quot.sound]`. The choice
 -- enters through the order instance and the operations (`Ordinal.instLinearOrder`, `nfp`, `omega0`,
 -- `epsilon`, each `[propext, Classical.choice, Quot.sound]`). UNCLASSIFIED means simply that nobody has
 -- re-proved it choice-free — an open question, not a demonstrated obstruction.
 #check @ZeroParadox.snapNucleus
 #check @ZeroParadox.snapNucleus_bot_ne_bot
 
--- ⭐⭐ THE SAME CORRECTION FOR `Code`, AND IT COST TWO ATTEMPTS AND FOURTEEN BEDROCK FINDINGS
--- BECAUSE THE `Ordinal` ONE DIRECTLY ABOVE NEVER PROPAGATED. Measured 2026-09-19:
+-- THE SAME LOCATION FOR `Code`, measured 2026-09-19:
 -- `Nat.Partrec.Code` is axiom-free and so is `Nat.Partrec.Code.eval`, so the choice is not "in
 -- the `Code` type" either. It enters through Mathlib's `Denumerable Code` instance, reached by
 -- `Encodable.encode` — so the two SPELLINGS of one code's Gödel number differ:
@@ -205,18 +203,15 @@ proved about where choice does work. -/
 -- Home: `ZeroParadox/Computability/Kleene.lean` § VII declares the pair; its `PurityCheck`
 -- section emits the two `#print axioms` lines. ⚠ Prose, not a `#check` — this index does not
 -- import `Kleene.lean`, so read it as unverified here and check it there.
--- ⛔ NO RULE IS STATED FROM THIS, HERE OR IN ZP-K § IV. (That is a claim about those two sites,
--- which were checked; it is not a swept absence claim about the corpus.) Five rules about this footprint
--- were each measured FALSE — "all ZP-K theorems carry…", "the cost rides on the statement's
--- TYPE", "…on the PROOF", "runs a program versus names its index", "the binder and the numbering
--- each spend it". ZP-K § IV holds a DATED MEASUREMENT TABLE instead, which is `ChoiceCannotBe.md`'s
--- § "No count is recorded here" discipline applied to provenance rather than to counts.
--- Post-mortem: `.claude-local/notes/axiom_footprint_measured_2026-09-19.md`.
+-- ⛔ NO RULE about which declarations carry this footprint is stated here or in ZP-K § IV (a claim
+-- about those two sites, not a swept absence claim about the corpus). ZP-K § IV holds a dated
+-- measurement table instead, which is `ZeroParadox/Category/ChoiceCannotBe.md`'s § "No count is
+-- recorded here" discipline applied to provenance rather than to counts.
 
 -- AND THE NATURAL COUNTERPART ROUTE IS BLOCKED — the attempt was made, and it failed provably.
 -- `no_snap_closure`: no idempotent endomap of the notation carrier has the ε-numbers as its closed
--- points. Idempotence alone suffices; `no_snap_nucleus` is the `Nucleus`-typed corollary, non-vacuous
--- because `idNucleus` exhibits nuclei on that carrier.
+-- points. Idempotence alone suffices; `no_snap_nucleus` is the `Nucleus`-typed corollary, and its
+-- quantifier ranges over an inhabited type: `idNucleus` is a nucleus on that carrier.
 -- **READ THE OBSTRUCTION CORRECTLY — it is NOT about choice.** Every proof in that file is `[propext]`.
 -- What blocks the counterpart is EXPRESSIVE REACH: the carrier cannot name what the closure produces,
 -- because ε₀ is the supremum of Cantor normal form rather than a member. So this does NOT make
@@ -264,22 +259,12 @@ proved about where choice does work. -/
 
 /-! ## § IV. The ESSENTIAL cases — where the choice is NOT removable
 
-Added 2026-08-01. Both were committed 2026-07-20, one day after this index was last touched, and the
-index went on asserting the opposite until this section landed. They satisfy § "Accidental versus
-essential"'s own definition of ESSENTIAL: each derives a **taboo** — excluded middle, or its weak form —
-from a classical principle the framework uses.
-
-**Read the logical shape before citing either.** The theorems are themselves *choice-free reductions*:
-the classical content sits entirely in the **hypothesis**, which is what makes each an implication rather
-than a restatement. What is established is about the **principle**, not about any particular proof:
-re-proving that principle constructively would decide a taboo, so no choice-free re-proof is available.
-**The premise that step rests on, named rather than left implicit** (this file demands exactly that at
-§ "the equivocation" above, then used it here without naming it — corrected 2026-08-01): *excluded
-middle, and weak excluded middle, are not derivable in Lean's choice-free fragment.* That is standard
-and is **not** proved here — it is a metatheoretic fact about the ambient type theory, not a Lean
-theorem, and it is the only thing licensing "no choice-free re-proof exists" rather than the weaker
-"none is known".
-Neither says the framework's overall use of choice is essential, and neither is an independence result. -/
+Each case derives a taboo (excluded middle, or its weak form) from a classical principle the framework
+uses: ESSENTIAL as defined in § "Accidental versus essential" of `ZeroParadox/Category/ChoiceCannotBe.md`.
+The theorems are choice-free reductions with the classical content in the hypothesis, so they speak of
+the principle, not of any one proof. "No choice-free re-proof exists" rests on a premise not proved
+here: excluded middle and weak excluded middle are not derivable in Lean's choice-free fragment. Neither
+case says the framework's overall use of choice is essential, nor is either an independence result. -/
 
 -- ESSENTIAL CASE 1 — comparability of well-orders implies EXCLUDED MIDDLE. Mathlib's `le_total` on
 -- `Ordinal` has exactly this shape, which is what puts it in the framework's path.
@@ -314,7 +299,7 @@ Neither says the framework's overall use of choice is essential, and neither is 
 -- rather than obstruct it: they say where it lives and how far it reaches.
 -- SCOPE: how far the escape reaches is UNSURVEYED. Which carriers in this corpus have `DecidableEq`
 -- was unmeasured as of 2026-08-02, so "the restriction covers what we need" is unverified in general — and a
--- universal over every carrier would be the sentence shape `ChoiceCannotBe.md`'s § "No count" warns about.
+-- universal over every carrier would be the sentence shape `ZeroParadox/Category/ChoiceCannotBe.md`'s § "No count" warns about.
 -- The two `#check`ed declarations are what is established; the reach is not.
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
 

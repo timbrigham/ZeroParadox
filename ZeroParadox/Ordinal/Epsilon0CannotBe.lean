@@ -11,8 +11,8 @@ import ZeroParadox.Valuation.SemilatticeInstance
 # Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
 
 An index of established results pinning ε₀, Mathlib `Ordinal.epsilon 0`. Every indexed name is
-`#check`ed, so the `import`s recompile each home file. It creates no named declarations; § I-b
-and § V carry anonymous `example`s, the only things proved here. The `#check`s cannot overclaim; the
+`#check`ed, so the `import`s recompile each home file. It creates no named declarations; § I-b,
+§ IV and § V carry anonymous `example`s, the only things proved here. The `#check`s cannot overclaim; the
 glosses can. Long form: `ZeroParadox/Ordinal/Epsilon0CannotBe.md`.
 
 ## Engineer's Take
@@ -29,9 +29,7 @@ section Epsilon0CannotBeIndex
 #check @ZeroParadox.epsilon0_ne_zero          -- Statement: ε₀ ≠ 0 in `Ordinal`; against ℤ_[2]'s 0 the equation is ill-typed (§ V)
 #check @ZeroParadox.epsilon0_ne_bot           -- Statement: ε₀ ≠ ⊥ of `Ordinal`. Reading: seeded at that ⊥ the base is not its closure; seeded at a fixed point it is (§ I-b, the μ schema at ε₀)
 
-/-! ### § I-b. The ε₀ ROLE is never its floor, at any floor in `Ordinal` (the role, not the value)
-
-This section and § V prove anonymous `example`s, the file's only proofs. -/
+/-! ### § I-b. The ε₀ ROLE is never its floor, at any floor in `Ordinal` (the role, not the value) -/
 -- Reading: the ε₀ role relative to a floor `f` is the least ε-number strictly greater than `f`, the
 -- least fixed point of `α ↦ ω^α` strictly above `f` (Veblen 1908, Corollary 1 to Theorem 4; see
 -- `ZeroParadox/Ordinal/Epsilon0LeastFP.md`); `f` is the bottom of the carrier `Set.Ici f`.
@@ -86,8 +84,8 @@ example : ∀ o : Ordinal, ((⊥ : Set.Ici o) : Ordinal) = o := fun _ => rfl
 -- Reading: other chart. In ℤ_[2] read by its norm, ℤ_[2]'s 0 is least and uniquely least (next
 -- example); the tower's images tend to that 0 (`mu_construction_correspondence`), and ε₀ gets no
 -- image: `cnfToZp2` takes `NONote`, and every notation denotes below ε₀ (`repr_lt_epsilon0`, the
--- example after). `cnf_bridge_type_boundary` pairs ε₀'s least-fixed-point face, not a limit, with
--- that limit; no identity.
+-- example after). `cnf_bridge_type_boundary` pairs ε₀'s least-fixed-point face with that limit;
+-- ε₀ is also the tower's supremum, the other face (`epsilon0_min_eq_max`, § III). No identity.
 -- Statement: in ℤ_[2], `‖0‖ ≤ ‖x‖`, and `‖x‖ = 0` forces `x = 0`.
 example (x : ℤ_[2]) : ‖(0 : ℤ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 → x = 0) :=
   ⟨norm_zero (E := ℤ_[2]) ▸ norm_nonneg x, norm_eq_zero.1⟩
@@ -107,14 +105,17 @@ example (o : NONote) : o.repr < Ordinal.epsilon 0 := ZeroParadox.repr_lt_epsilon
 #check @ZeroParadox.epsilon0_least_fixedpoint -- Statement: the MIN face, lower-bound half only: ε₀ ≤ every fixed point of ω^·
 #check @ZeroParadox.epsilonZero_eq_iSup       -- Statement: the MAX face: ε₀ is the supremum of the ω-tower
 #check @ZeroParadox.nothing_between_is_a_step -- Statement: no ordinal below ε₀ is fixed by ω^·. Reading: the in-between ordinals are stages of the ascent, not landings
-#check @ZeroParadox.bot_is_not_a_step         -- Statement: ω^0 ≠ 0, so ⊥ of `Ordinal` is not fixed and ε₀ is the first landing in the FIXED-POINT order; ⊥ ⋖ ε₀ is false and is not claimed
+#check @ZeroParadox.bot_is_not_a_step         -- Statement: ω^0 ≠ 0: ⊥ of `Ordinal` is not fixed by ω^·. Reading: with the line above, ε₀ is the first landing in the FIXED-POINT order; ⊥ ⋖ ε₀ is false and is not claimed
 
 /-! ### § IV. ε₀ as the snap threshold ⊥ of `Ordinal` → ε₀, co-witnessed with the 2-adic limit and the machine snap -/
 #check @ZeroParadox.epsilonZero_fixedPoint    -- Statement: ω ^ ε₀ = ε₀ (the `epsilonZero` spelling). Reading: the fixed point the snap lands the ascent on
 #check @ZeroParadox.snap_exactly_at_epsilon_zero
 #check @ZeroParadox.c1_epsilon_zero_identification
 #check @ZeroParadox.zpm_triangle              -- Statement: tower stages < ε₀ ∧ the threshold map sends ε₀ to c₁ ∧ the images tend to ℤ_[2]'s 0 ∧ `snapEmbed` sends that c₁ to ℤ_[2]'s 0 (NB no computational conjunct)
-#check @ZeroParadox.both_fixed_points_exist   -- Statement: a Kleene-periodic code exists ∧ a least ordinal fixed by ω^· exists — a conjunction, not a cross-domain identity
+#check @ZeroParadox.both_fixed_points_exist   -- Statement: some code `c` has `eval c n = eval c (encode c + n)` for all `n` ∧ a least ordinal fixed by ω^· exists. The first conjunct is trivially inhabited (example below). A conjunction, not a cross-domain identity
+-- Statement: `Code.zero` meets the first conjunct with period 0, since `encode Code.zero = 0`.
+example : ∃ c : Nat.Partrec.Code, ∀ n, c.eval n = c.eval (Encodable.encode c + n) :=
+  ⟨Nat.Partrec.Code.zero, fun n => by simp [Encodable.encode, Nat.Partrec.Code.encodeCode]⟩
 
 /-! ### § V. The 2-adic realization (along the tower: valuation order agrees, norm order reverses from stage 1; ε₀ ≠ 0 preserved, no identity) -/
 #check @ZeroParadox.snap_arc_z2_loop          -- Statement: the images start at ℤ_[2]'s 0, are ≠ 0 for every stage n ≥ 1, and tend to that 0 (the loop)

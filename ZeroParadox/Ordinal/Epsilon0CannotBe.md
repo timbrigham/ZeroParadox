@@ -1,6 +1,6 @@
 # What ε₀ is and is not: the long form of the ε₀ index
 
-Moved from `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
+Long form of `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`.
 
 ## Formal Overview (AI-assisted)
 
@@ -9,16 +9,15 @@ Moved from `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`. ⚠ **This content was G
 the operator AND the base (`ε₀ = nfp (ω^·) ⊥`, `epsilon0_eq_nfp_bot`; Mathlib `ε₀ = deriv (ω^·) 0`).
 It is *simultaneously* the least fixed point (min) and the supremum of the ascending tower (max)
 (`epsilon0_min_eq_max`); which face is in play is direction- and instance-specific — the two are never
-to be collapsed into one. In the framework's Riemann-sphere reading it is the minimum step directly
-next to the pole 0 = ∞ (Veblen coordinates (1, 0); the reciprocal 1/∞), *adjacent to it, never it*.
-**ε₀ IS the minimum distinct step above ⊥ of `Ordinal`, and that is now witnessed** — but "step" means a
+to be collapsed into one.
+**ε₀ IS the minimum distinct step above ⊥ of `Ordinal`, and that is witnessed** — but "step" means a
 **stable landing**, a fixed point of `α ↦ ω^α`, and the distinction is worth stating because both
 readings are true of different orders:
 * **In the FIXED-POINT order ε₀ is the minimum, and nothing below it is a step at all.**
   `nothing_between_is_a_step` — no ordinal strictly under ε₀ is fixed by the operator;
   `bot_is_not_a_step` — ⊥ of `Ordinal` is not one either, so ε₀ is the FIRST. The ordinals in between (`ω`,
   `ω^ω`, …) are **stages of the ascent, not landings**: the operator fixes none of them, so nothing
-  stops there. This is why `snapNucleus ⊥ = ε₀`, ⊥ of `Ordinal`, reaches it in **one** application — a closure
+  stops there. This is why `snapNucleus` reaches ε₀ from ⊥ of `Ordinal` (`snapNucleus_bot`) in **one** application — a closure
   operator's image *is* its fixed points, so the first landing is the least one.
 * **In the ORDINAL order it is not adjacent, and no covering claim is made.** ⊥ ⋖ ε₀ is false;
   ordinals sit strictly between (`epsilonZero_tower_lt` with `fundamentalSeq_strictMono`), and
@@ -26,14 +25,7 @@ readings are true of different orders:
   `epsilon0_least_fixedpoint` must never be cited as proving a covering relation — and note it is
   only the lower-bound half; the full `IsLeast` is `epsilon0_min_eq_max`.
 
-⚠ **Correction history, because this line was wrong in BOTH directions.** It once read that
-`epsilon0_least_fixedpoint` proves "the minimum step next to the pole", which credited it with an
-adjacency it does not prove. A 2026-08-06 pass then **struck the whole phrase**, which was an
-over-correction — the claim is true in the fixed-point order and is Tim's, and the strike removed a
-grounded reading to buy a precision that a distinction supplies for free. Both errors are recorded so
-neither is repeated.
-
-**The bedrock invariant, stated first because every past error violated it: ε₀ ≠ 0. It cannot be.**
+**The bedrock invariant: ε₀ ≠ 0. It cannot be.**
 ε₀ is a fixed point (`ω^ε₀ = ε₀`); were it 0 that would say `1 = 0`. Since ⊥ of `Ordinal` is 0, also
 `ε₀ ≠ ⊥` there (`epsilon0_ne_bot`): that ⊥ is the *base fed in*, ε₀ the *closure that comes out* —
 never equal. Any prose, figure, or docstring that entertains `ε₀ = 0` (a "fence," a "co-location at
