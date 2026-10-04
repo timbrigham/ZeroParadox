@@ -60,42 +60,12 @@ example : ¬ HasNoTop MachinePhase := by
 
 /-! ## I-DA1. DA-1 — Derived Proposition: Instantiation as Execution
 
-DA-1 states: a machine configuration at the incompressibility threshold P₀ is a
-live execution event, not a static description.
-
-Three paths support this (ZP-E v3.6 framing):
-  Path 1 — Structural (ZP-J T-EXEC + ZP-K): the argument is that nothing external to ⊥
-    can execute ⊥, so ⊥ must execute itself, forcing ⊥ = {⊥}. machinePhaseAFA gives
-    MachinePhase an AFAStructure instance encoding the conclusion as class fields, and
-    da1_closed_concrete : IsQuineAtom (bot : MachinePhase) is the Lean witness.
-    PARTLY IN LEAN SCOPE: the witness is real, and the premise "nothing external can
-    execute ⊥" is the framework's requirement, not a theorem.
-  Path 2 — Informational (ZP-C L-INF): surprisal at ⊥ is unbounded → no finite
-    interpreter can hold ⊥ → static-description state eliminated.
-    OUTSIDE LEAN SCOPE: "unbounded surprisal → necessarily executing" is an ontological
-    bridge claim not derivable in type theory.
-  Path 3 — Computational (ZP-K Kleene): the argument is that no shorter program is prior
-    to ⊥, so ⊥ is its own program. machinePhaseKleene gives MachinePhase a
-    KleeneStructure instance whose botCode field names a code satisfying
-    IsComputationalQuine.
-    A COMMITMENT, NOT A SECOND PROOF: botCode is Classical.choose of an arbitrary such
-    code, and IsComputationalQuine is a periodicity condition that constant codes also
-    satisfy. See ZP-K § II and § VI.
-
-DA-1 Lean scope status:
-  Path 1: witnessed by da1_closed_concrete : IsQuineAtom (bot : MachinePhase) —
-    which proves ⊥ is the unique self-containing state and mentions no Code and no
-    execution. The executional reading rests on the KleeneStructure commitment.
-  Path 3: carried by the KleeneStructure requirement, not by an independent theorem.
-    da1_paths_unified holds both witnesses together as a conjunction; a conjunction
-    of witnesses is not a proof that the two paths are one fact.
-  Path 2: outside Lean scope — informational bridge remains an ontological commitment.
-  T-SNAP derivation: complete independently via l_run, tq_ih, bot_join (see t_snap_derived)
-    — and note T-SNAP does not depend on any of the above.
-
-So DA-1 is closed given its commitments, not closed outright; ZP-K supplies the
-witnesses and names the commitment, and ZP-K § III states exactly which parts are
-proved. -/
+Given its precondition, that the configuration reaching P₀ is a running machine's current
+configuration (Sense B), one act of instantiation moves the machine from c₀ to c₁ with the same
+output value (ZP-E § IV). The precondition is what the occurrence commitment asserts; DA-1
+consumes it and does not supply it, and c₀ → c₁ given it is D7's. Formal core: DP-2 and
+`da1_minimal_path` (§ VI), which takes no hypothesis. Paths 1 to 3 argue for the precondition and
+none derives it: `ZeroParadox/Order/Snap.md`. -/
 
 /-! ## II. T-SNAP — the Shape of the Binary Snap (AX-1 is retired)
 
@@ -125,15 +95,12 @@ theorem t_snap_derived :
 
 /-! ### NO-GO gauge — T-SNAP constrains the SHAPE of a transition, not that one occurs
 
-A permanent guard, added 2026-07-26. `t_snap_derived` is `⟨l_run, tq_ih, rfl⟩`, where `l_run`
-is `by decide`: it proves the two phases are distinct and that the join absorbs. Neither
-asserts that the machine ever moves. The counter-model below makes that checkable rather than
-arguable — T-SNAP is *true* in a dynamics where nothing ever happens.
-
-Occurrence is supplied elsewhere and is a **commitment**: `l_inf`'s docstring states plainly
-that the step from unbounded surprisal to forced execution is an ontological bridge, not a
-mathematical consequence. See `ZeroParadox/Computability/Occurrence.lean` for where that
-question goes in the computational face. -/
+`t_snap_derived` is `⟨l_run, tq_ih, rfl⟩`, where `l_run` is `by decide`: it proves the two
+phases are distinct and that the join absorbs, and neither asserts that the machine ever moves.
+The counter-model below makes that checkable: T-SNAP is *true* in a dynamics where nothing happens.
+Occurrence follows from the occurrence commitment together with DA-1; the step from unbounded
+surprisal to executing is a separate, unadopted bridge principle (ZP-E, DA-1 Path 2). The
+computational face: `ZeroParadox/Computability/Occurrence.lean`. -/
 
 /-- A dynamics on machine phases under which nothing ever changes. -/
 def stuckPhase : MachinePhase → MachinePhase := id
@@ -376,9 +343,9 @@ structure TrackedOutput where
 /-- The pre-instantiation configuration: null value, c₀ machine state. -/
 def preInstantiation : TrackedOutput := ⟨c₀, c₀⟩
 
-/-- The post-instantiation configuration: null value returned, c₁ machine state.
-    This is the "different instance of null" — same output value as preInstantiation,
-    but the machine has executed. The snap occurred; c₀ is not recoverable. -/
+/-- The post-instantiation configuration: null value returned, c₁ machine state — the same
+    output value as preInstantiation in a different machine state. A record of the state after
+    the step; it does not assert the step is taken (`tsnap_holds_but_nothing_moves`). -/
 def postInstantiation : TrackedOutput := ⟨c₀, c₁⟩
 
 /-- DP-2 (formal content): pre- and post-instantiation states are provably distinct
@@ -389,16 +356,13 @@ theorem dp2_execution_distinguishability :
     preInstantiation.state ≠ postInstantiation.state :=
   ⟨rfl, by decide⟩
 
-/-- DA-1 Minimal Path: The act of instantiating ⊥ moves the machine to c₁,
-    even when the operation returns ⊥ as its output value.
-    The "return to null" is postInstantiation — a new null, not preInstantiation.
-    Given DP-2, this is DA-1 at the formally minimal level: instantiation is execution.
-    What the statement carries is that the two configurations are DISTINCT while sharing an
-    output value — the output is irrelevant to whether execution occurred. **It does not carry
-    that the step is taken.** An earlier revision read "structurally unavoidable", which
-    contradicts this file's own NO-GO gauge above (`tsnap_holds_but_nothing_moves`): that the step is
-    taken follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given
-    DP-2), and `l_inf`'s docstring is where the argument for it stops. -/
+/-- DA-1 Minimal Path. `Statement:` the pre-instantiation configuration (state c₀) and the
+    post-instantiation configuration (state c₁) are DISTINCT while sharing an output value, so the
+    output cannot show whether the step was taken. It takes no hypothesis and **does not carry that
+    the step is taken** (`tsnap_holds_but_nothing_moves`). `Reading:` given DA-1's precondition,
+    that the configuration reaching P₀ is a running machine's (Sense B), which is what the
+    occurrence commitment asserts and which DA-1 consumes and does not supply, c₀ → c₁ is D7's
+    (ZP-E, T-SNAP Step 3); this theorem is DA-1's formal core given DP-2. -/
 theorem da1_minimal_path :
     let before := preInstantiation
     let after  := postInstantiation

@@ -304,10 +304,10 @@ theorem roger_fixed_point_exists (f : Code → Code) (hf : Computable f) :
     so this statement unpacks the structure's own requirements — it does not derive
     them. Nothing computational appears in the statement or the proof.
 
-    The reading "⊥ is necessarily *executing*, not a static description" is the
-    framework's interpretation of `bot_self_mem` under the KleeneStructure commitment,
-    and DA-1's central claim. It is meaning attached to the Lean fact, not a separate
-    Lean theorem. -/
+    The reading "⊥ is *executing*, not a static description" is the framework's
+    interpretation of `bot_self_mem` under the KleeneStructure commitment; at P₀ it is
+    what the occurrence commitment asserts, which DA-1 consumes (ZP-E). It is meaning
+    attached to the Lean fact, not a separate Lean theorem. -/
 theorem da1_computational {L : Type*} [ZPSemilattice L] [KleeneStructure L] :
     IsQuineAtom (bot : L) :=
   bot_is_quine_atom

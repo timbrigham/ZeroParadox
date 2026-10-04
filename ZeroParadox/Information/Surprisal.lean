@@ -173,11 +173,11 @@ theorem t2_diverges : ∀ M : ℝ, ∃ n : ℕ, M < circPartial n := by
     Semantic content: ⊥ is informationally extreme — it is the compressed limit of
     all possible binary programs. No finite program bounds its informational content,
     so no finite external interpreter can hold ⊥ as a static description. This is
-    the mathematical premise for DA-1 in ZP-E.
+    one argument for DA-1's precondition (ZP-E, Path 2), and it does not derive it.
 
-    Note: the connection from informational extremity to forced execution is a named
-    design principle (DA-1 in ZP-E), not a mathematical consequence of L-INF alone.
-    L-INF supplies the formal premise; DA-1 supplies the ontological bridge. -/
+    Note: the step from informational extremity to executing is not a consequence of
+    L-INF and is not DA-1: it is a bridge principle of its own, which the framework
+    does not adopt and which is not the occurrence commitment (ZP-E, DA-1 Path 2). -/
 theorem l_inf : ∀ M : ℝ, ∃ n : ℕ, M < surprisal n := by
   intro M
   obtain ⟨n, hn⟩ := exists_nat_gt M
