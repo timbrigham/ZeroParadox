@@ -37,7 +37,8 @@ section ChoiceCannotBeIndex
 Each entry below is a measured purity result in its home file's `PurityCheck` section. "NO axioms" means
 the fully axiom-free footprint; `[propext]` means propositional extensionality only. -/
 
--- The framework's central theorem. The snap ⊥ → ε₀ depends on NO axioms at all — not choice, not
+-- The framework's central theorem. T-SNAP's shape in its `MachinePhase` chart (`c₀ ≠ c₁`,
+-- `join c₀ c₁ = c₁`) depends on NO axioms at all — not choice, not
 -- `propext`, not `Quot.sound`. Whatever else the corpus carries, T-SNAP itself carries nothing.
 #check @ZeroParadox.t_snap_derived
 
@@ -84,8 +85,9 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 -- strictly tighter than the earlier `fix_isEmpty` (`[propext, Quot.sound]`).
 #check @ZeroParadox.fix_isEmpty_constructive
 
--- Statement: `boundaryDouble` is one-to-one, not onto, with unique fixed point `botEnd`; measured
--- `[propext, Quot.sound]`.
+-- Statement: `boundaryDouble` is one-to-one, not onto, and has exactly one fixed point; measured
+-- `[propext, Quot.sound]`. That the point is `botEnd` is `boundaryDouble_botEnd` with
+-- `boundaryDouble_unique_fp` (`ZeroParadox/Valuation/PoleCompletion.lean`), not this type.
 #check @ZeroParadox.boundaryDouble_selfCopyRef
 -- Statement: along a GIVEN `α ≃ ℕ`, a `SelfCopyRef` map exists on `α`; measured `[propext, Quot.sound]`.
 #check @ZeroParadox.selfCopyRef_of_equiv_nat
@@ -106,11 +108,13 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 #check @ZeroParadox.pataraia_induction
 -- Statement: the same signature as `pataraia_induction`, measured NO axioms.
 #check @ZeroParadox.pataraia_induction_constructive
--- Statement: the Mathlib fixed-point lemma both classical proofs above call, measured
--- `[propext, Classical.choice, Quot.sound]`.
+-- Statement: Mathlib, on a nonempty chain-complete partial order every inflationary `f`
+-- (`x ≤ f x`) has a fixed point; measured `[propext, Classical.choice, Quot.sound]`.
+-- Reading: both classical proofs above call it.
 #check @ChainCompletePartialOrder.nonempty_fixedPoints_of_inflationary
--- Statement: the case split in both classical proofs' chain-to-directed step, measured
+-- Statement: for any `x y` of any `Sort`, `x = y ∨ x ≠ y`; measured
 -- `[propext, Classical.choice, Quot.sound]`.
+-- Reading: the case split in both classical proofs' chain-to-directed step.
 #check @eq_or_ne
 -- Reading: scoped to the ORDER-THEORETIC principle; `⊥` here is the dcpo's least element, and whether a
 -- ZP carrier is a dcpo with a monotone self-map is not claimed.
@@ -118,7 +122,7 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 /-! ## § II. What choice is NOT to be confused with — the excluded-middle boundary
 
 The modality of §I generates classical LOGIC — excluded middle — which is strictly weaker than **full**
-choice (Cohen 1963). The RESTRICTED fragment is a different matter: see the header. This section indexes
+choice (Cohen 1963). The RESTRICTED fragment is a different matter: see `ChoiceCannotBe.md`. This section indexes
 the boundary and its scope fence. -/
 
 -- What the modality's closed points actually are: the regular elements `aᶜᶜ = a` — the Boolean core.
@@ -173,12 +177,13 @@ proved about where choice does work. -/
 -- opposite footprint. That contrast is the accidental/essential distinction in one pair.
 #check @ZeroParadox.cofix_nonempty'
 
--- THE TWO MODALITIES, side by side — the comparison a reader arrives wanting. `snapNucleus` (⊥ ↦ ε₀)
--- inherits `Classical.choice` from Mathlib's `Ordinal` fixed-point machinery; `dnegNucleus` (§ I) is
--- `[propext]`. Both are difference-generators seeded at ⊥ — negation is DEFINED as `a ⇨ ⊥`, and
--- `HeytingAlgebra` extends `OrderBot`, so ⊥ is required before negation exists at all. Same seed,
--- opposite footprints, and opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ (⊥ is always regular),
--- `snapNucleus` provably moves it (`snapNucleus_bot_ne_bot`). On the footprint difference: `snapNucleus`
+-- THE TWO MODALITIES, side by side — the comparison a reader arrives wanting. `snapNucleus`
+-- (⊥ of `Ordinal` ↦ ε₀) inherits `Classical.choice` from Mathlib's `Ordinal` fixed-point machinery;
+-- `dnegNucleus` (§ I) is `[propext]`. Both are difference-generators seeded at their carrier's ⊥ —
+-- negation is DEFINED as `a ⇨ ⊥`, and `HeytingAlgebra` extends `OrderBot`, so ⊥ of the Heyting algebra
+-- is required before negation exists at all. Same role, different carriers, opposite footprints, and
+-- opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ of the Heyting algebra (⊥ is always regular),
+-- `snapNucleus` provably moves ⊥ of `Ordinal` (`snapNucleus_bot_ne_bot`). On the footprint difference: `snapNucleus`
 -- has **not been re-proved choice-free as of 2026-08-02**, so do not call it merely representational. What ZP-N
 -- re-proved is the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on
 -- `ONote`), which is suggestive for the nucleus and is not the nucleus. Its `Classical.choice` is
@@ -204,7 +209,7 @@ proved about where choice does work. -/
 -- which were checked; it is not a swept absence claim about the corpus.) Five rules about this footprint
 -- were each measured FALSE — "all ZP-K theorems carry…", "the cost rides on the statement's
 -- TYPE", "…on the PROOF", "runs a program versus names its index", "the binder and the numbering
--- each spend it". ZP-K § IV holds a DATED MEASUREMENT TABLE instead, which is this file's own
+-- each spend it". ZP-K § IV holds a DATED MEASUREMENT TABLE instead, which is `ChoiceCannotBe.md`'s
 -- § "No count is recorded here" discipline applied to provenance rather than to counts.
 -- Post-mortem: `.claude-local/notes/axiom_footprint_measured_2026-09-19.md`.
 
@@ -309,7 +314,7 @@ Neither says the framework's overall use of choice is essential, and neither is 
 -- rather than obstruct it: they say where it lives and how far it reaches.
 -- SCOPE: how far the escape reaches is UNSURVEYED. Which carriers in this corpus have `DecidableEq`
 -- was unmeasured as of 2026-08-02, so "the restriction covers what we need" is unverified in general — and a
--- universal over every carrier would be the sentence shape this file's own § "No count" warns about.
+-- universal over every carrier would be the sentence shape `ChoiceCannotBe.md`'s § "No count" warns about.
 -- The two `#check`ed declarations are what is established; the reach is not.
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
 

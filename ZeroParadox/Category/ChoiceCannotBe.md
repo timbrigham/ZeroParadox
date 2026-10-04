@@ -1,12 +1,14 @@
-# ChoiceCannotBe — ride-along documentation
+# Choice and the framework: the long form of the choice index
 
 Moved from `ZeroParadox/Category/ChoiceCannotBe.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
 
+Every § number below (§ I to § IV) refers to `ZeroParadox/Category/ChoiceCannotBe.lean`.
+
 ## Formal Overview (AI-assisted)
 
-**How this index differs from the other three.** Those index the framework's OWN objects — ⊥, the snap,
-ε₀ — things the framework constructs. `Classical.choice` is **not** a framework object. It is an ambient
-axiom of Lean's kernel, present whether or not this project exists. So this file indexes something
+**How this index differs from the other `*CannotBe` indexes.** Those index the framework's OWN objects
+and faces — the bottom role ⊥, the snap, ε₀, computation. `Classical.choice` is **not** a framework object. It is an ambient
+axiom of Lean's kernel, present whether or not this project exists. So `ChoiceCannotBe.lean` indexes something
 different: **the framework's relationship to choice** — where choice is provably not needed, what choice
 must not be confused with, and what is actually established about it here. Nothing below should be read
 as the framework claiming choice as one of its constructions, or as a claim about choice in general.
@@ -73,7 +75,7 @@ not to record one; but it is not true that the framework contributes none.
 framework is non-constructive." The load-bearing fact is the opposite and much narrower: **T-SNAP, the
 core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`). Beyond it the picture
 is mixed and the categories are what matter, not a total: some footprints are *accidental* (a choice-free
-re-proof exists — two carried out, § I), two are **ESSENTIAL** (§ IV), and others are **UNCLASSIFIED**,
+re-proof exists — the entries labelled ACCIDENTAL in § I), two are **ESSENTIAL** (§ IV), and others are **UNCLASSIFIED**,
 meaning nobody has tried. A count collapses those three into one number and loses the only distinction
 that carries information.
 
@@ -84,9 +86,9 @@ down; a claim-review referee caught it. The figure that then sat in the project'
 stale again by the following review, for the same reason. All three are one error — citing a figure that
 is not being regenerated at the moment of use — and a docstring cannot regenerate anything.
 
-What is true, and is what this file asserts instead: **the framework is not choice-free; the core is
-(`t_snap_derived`, no axioms at all); examined footprints fall into three classes — accidental,
-essential, unclassified — and § I and § IV name the cases in the first two.** No fraction is given, for
+What is true, and is what `ChoiceCannotBe.lean` asserts instead: **the framework is not choice-free; the
+core is (`t_snap_derived`, no axioms at all); examined footprints fall into three classes — accidental,
+essential, unclassified — and § I's ACCIDENTAL entries and § IV name cases in the first two.** No fraction is given, for
 the reason stated above.
 
 **⚠ THE STANDING LESSON, and it is why this paragraph was rewritten.** This sentence used to read

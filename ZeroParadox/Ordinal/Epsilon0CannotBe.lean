@@ -3,6 +3,7 @@ import ZeroParadox.Ordinal.Epsilon0MinMax
 import ZeroParadox.Ordinal.Gentzen
 import ZeroParadox.Ordinal.Incompleteness
 import ZeroParadox.Ordinal.CnfBridge
+import ZeroParadox.Ordinal.PricedInterface
 import ZeroParadox.Order.LeastFixedPoint
 import ZeroParadox.Valuation.SemilatticeInstance
 
@@ -11,7 +12,7 @@ import ZeroParadox.Valuation.SemilatticeInstance
 
 An index of established results pinning ε₀, Mathlib `Ordinal.epsilon 0`. Every indexed name is
 `#check`ed, so the `import`s recompile each home file. It creates no named declarations; § I-b
-carries anonymous `example`s, the only things proved here. The `#check`s cannot overclaim; the
+and § V carry anonymous `example`s, the only things proved here. The `#check`s cannot overclaim; the
 glosses can. Long form: `ZeroParadox/Ordinal/Epsilon0CannotBe.md`.
 
 ## Engineer's Take
@@ -25,14 +26,15 @@ proof assistant during development.
 section Epsilon0CannotBeIndex
 
 /-! ### § I. What ε₀ IS NOT — the invariants (the bedrock guards) -/
-#check @ZeroParadox.epsilon0_ne_zero          -- ε₀ ≠ 0, in every reading — the guard beneath all else
-#check @ZeroParadox.epsilon0_ne_bot           -- ε₀ ≠ ⊥ of `Ordinal` — the base is never its own closure
+#check @ZeroParadox.epsilon0_ne_zero          -- Statement: ε₀ ≠ 0 in `Ordinal`; against ℤ_[2]'s 0 the equation is ill-typed (§ V)
+#check @ZeroParadox.epsilon0_ne_bot           -- Statement: ε₀ ≠ ⊥ of `Ordinal`. Reading: seeded at that ⊥ the base is not its closure; seeded at a fixed point it is (§ I-b, the μ schema at ε₀)
 
 /-! ### § I-b. The ε₀ ROLE is never its floor, at any floor in `Ordinal` (the role, not the value)
 
-Unlike the rest of this index, this section proves anonymous `example`s, the file's only proofs. -/
--- Reading: the ε₀ role relative to a floor `f` is the least fixed point of `α ↦ ω^α` strictly above
--- `f`; `f` is the bottom of the carrier `Set.Ici f`.
+This section and § V prove anonymous `example`s, the file's only proofs. -/
+-- Reading: the ε₀ role relative to a floor `f` is the least ε-number strictly greater than `f`, the
+-- least fixed point of `α ↦ ω^α` strictly above `f` (Veblen 1908, Corollary 1 to Theorem 4; see
+-- `ZeroParadox/Ordinal/Epsilon0LeastFP.md`); `f` is the bottom of the carrier `Set.Ici f`.
 #check @Ordinal.epsilon_succ_eq_nfp           -- Statement: Mathlib, `ε_(succ o) = nfp (ω^·) (succ ε_o)`
 -- Statement: INVARIANT over ordinal floors under `α ↦ ω^α`. At every floor `f`, the least fixed point
 -- strictly above ⊥ of `Set.Ici f` is `nfp (ω^·) (succ f)`, and it is not that ⊥.
@@ -53,7 +55,7 @@ example : Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ 0) = Ordinal.e
 -- is itself a fixed point.
 -- Reading: this is why the role is taken strictly above. The strict form differs from the
 -- at-or-above μ schema `IsLeastFixedPointFrom` that § II uses for ε₀: at the floor ε₀ the μ schema
--- gives ε₀ (this example and the next) and the strict form gives ε₁ (the role-versus-value example).
+-- gives ε₀ (the next example) and the strict form gives ε₁ (the role-versus-value example).
 example (f : Ordinal) :
     Ordinal.nfp (fun α => Ordinal.omega0 ^ α) f = f ↔ Ordinal.omega0 ^ f = f := by
   refine ⟨fun h => ?_, Ordinal.nfp_eq_self⟩
@@ -81,37 +83,59 @@ example :
 -- Statement: every ordinal is ⊥ of its own `Set.Ici`.
 -- Reading: so occupying a carrier's bottom singles out no value.
 example : ∀ o : Ordinal, ((⊥ : Set.Ici o) : Ordinal) = o := fun _ => rfl
--- Reading: other chart. In ℤ₂ read by its norm, ℤ₂'s 0 is least (`norm_nonneg`); the tower's images
--- tend to that 0 (`mu_construction_correspondence`), and ε₀ gets no image: `cnfToZp2` takes `NONote`,
--- the notations below ε₀ (`cnf_bridge_type_boundary` co-witnesses the two limits, no identity).
+-- Reading: other chart. In ℤ_[2] read by its norm, ℤ_[2]'s 0 is least and uniquely least (next
+-- example); the tower's images tend to that 0 (`mu_construction_correspondence`), and ε₀ gets no
+-- image: `cnfToZp2` takes `NONote`, and every notation denotes below ε₀ (`repr_lt_epsilon0`, the
+-- example after). `cnf_bridge_type_boundary` pairs ε₀'s least-fixed-point face, not a limit, with
+-- that limit; no identity.
+-- Statement: in ℤ_[2], `‖0‖ ≤ ‖x‖`, and `‖x‖ = 0` forces `x = 0`.
+example (x : ℤ_[2]) : ‖(0 : ℤ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 → x = 0) :=
+  ⟨norm_zero (E := ℤ_[2]) ▸ norm_nonneg x, norm_eq_zero.1⟩
+#check @ZeroParadox.repr_lt_epsilon0          -- Statement: every `ONote`, in normal form or not, denotes strictly below ε₀
+-- Statement: so every `NONote`, the domain of `cnfToZp2`, denotes strictly below ε₀.
+example (o : NONote) : o.repr < Ordinal.epsilon 0 := ZeroParadox.repr_lt_epsilon0 o.1
 
-/-! ### § II. What ε₀ IS — the construction: first fixed point of the ω-tower from the base ⊥ -/
-#check @ZeroParadox.epsilon0_eq_nfp_bot       -- ε₀ = nfp (ω^·) ⊥ (seeded at the base ⊥)
-#check @ZeroParadox.epsilonZero_eq_nfp        -- ε₀ = nfp (ω^·) 0
-#check @ZeroParadox.epsilon0_is_fixedpoint    -- ω ^ ε₀ = ε₀ (it is a fixed point)
-#check @ZeroParadox.epsilon0_isLeastFixedPointFrom  -- ε₀ = the least fixed point from the base ⊥ (μ schema)
-#check @ZeroParadox.epsilon0_eq_veblen_one_zero     -- ε₀ = veblen 1 0 — coords (1,0), the minimum closure, below Γ₀
+/-! ### § II. What ε₀ IS — the construction: first fixed point of the ω-tower from ⊥ of `Ordinal` -/
+#check @ZeroParadox.epsilon0_eq_nfp_bot       -- Statement: ε₀ = nfp (ω^·) ⊥, seeded at ⊥ of `Ordinal`
+#check @ZeroParadox.epsilonZero_eq_nfp        -- Statement: ε₀ = nfp (ω^·) 0, the same seed written as 0
+#check @ZeroParadox.epsilon0_is_fixedpoint    -- Statement: ω ^ ε₀ = ε₀
+#check @ZeroParadox.epsilon0_isLeastFixedPointFrom  -- Statement: ε₀ is the least fixed point of ω^· at or above ⊥ of `Ordinal` (μ schema)
+#check @ZeroParadox.epsilon0_eq_veblen_one_zero     -- Statement: ε₀ = veblen 1 0, Veblen coordinates (1, 0)
 
 /-! ### § III. ε₀ is BOTH min AND max at once — direction/instance-specific, never collapsed -/
-#check @ZeroParadox.epsilon0_min_eq_max       -- one object: sup of the tower ∧ least fixed point
-#check @ZeroParadox.epsilon0_least_fixedpoint -- the MIN face: least ordinal fixed by ω^·
-#check @ZeroParadox.epsilonZero_eq_iSup       -- the MAX face: supremum of the ω-tower
-#check @ZeroParadox.nothing_between_is_a_step -- sharpens the MIN face: NO ordinal below ε₀ is fixed by ω^· — the in-between ordinals are stages of the ascent, not landings
-#check @ZeroParadox.bot_is_not_a_step         -- and ⊥ is not fixed either, so ε₀ is the FIRST landing. NB: "first" in the FIXED-POINT order; ⊥ ⋖ ε₀ is false and is not claimed
+#check @ZeroParadox.epsilon0_min_eq_max       -- Statement: ε₀ is the sup of the tower ∧ the least fixed point of ω^· (`IsLeast`)
+#check @ZeroParadox.epsilon0_least_fixedpoint -- Statement: the MIN face, lower-bound half only: ε₀ ≤ every fixed point of ω^·
+#check @ZeroParadox.epsilonZero_eq_iSup       -- Statement: the MAX face: ε₀ is the supremum of the ω-tower
+#check @ZeroParadox.nothing_between_is_a_step -- Statement: no ordinal below ε₀ is fixed by ω^·. Reading: the in-between ordinals are stages of the ascent, not landings
+#check @ZeroParadox.bot_is_not_a_step         -- Statement: ω^0 ≠ 0, so ⊥ of `Ordinal` is not fixed and ε₀ is the first landing in the FIXED-POINT order; ⊥ ⋖ ε₀ is false and is not claimed
 
-/-! ### § IV. ε₀ as the snap threshold ⊥ → ε₀, co-witnessed with the 2-adic limit and the machine snap -/
-#check @ZeroParadox.epsilonZero_fixedPoint    -- ε₀ the fixed point the snap lands the ascent on
+/-! ### § IV. ε₀ as the snap threshold ⊥ of `Ordinal` → ε₀, co-witnessed with the 2-adic limit and the machine snap -/
+#check @ZeroParadox.epsilonZero_fixedPoint    -- Statement: ω ^ ε₀ = ε₀ (the `epsilonZero` spelling). Reading: the fixed point the snap lands the ascent on
 #check @ZeroParadox.snap_exactly_at_epsilon_zero
 #check @ZeroParadox.c1_epsilon_zero_identification
-#check @ZeroParadox.zpm_triangle              -- ε₀ ∧ 2-adic limit: tower stages, snap value, convergence, embedding (NB no computational conjunct)
-#check @ZeroParadox.both_fixed_points_exist   -- quine ∧ ε₀ co-witnessed: each diagonalization yields a fixed point in its own domain (a conjunction, not a cross-domain identity)
+#check @ZeroParadox.zpm_triangle              -- Statement: tower stages < ε₀ ∧ the threshold map sends ε₀ to c₁ ∧ the images tend to ℤ_[2]'s 0 ∧ `snapEmbed` sends that c₁ to ℤ_[2]'s 0 (NB no computational conjunct)
+#check @ZeroParadox.both_fixed_points_exist   -- Statement: a Kleene-periodic code exists ∧ a least ordinal fixed by ω^· exists — a conjunction, not a cross-domain identity
 
-/-! ### § V. The 2-adic realization (`cnfToZp2` order-reversing; ε₀ ≠ 0 preserved, no identity) -/
-#check @ZeroParadox.snap_arc_z2_loop          -- start 0, ∀n≥1 ≠0, reapproach 0 (the loop)
-#check @ZeroParadox.mu_construction_correspondence  -- one tower, two carrier closures (ε₀ ; 0)
-#check @ZeroParadox.cnf_bridge_type_boundary  -- co-witness only; ε₀ = 0 never asserted (it fails to elaborate, `Ordinal` vs `ℤ_[2]`)
+/-! ### § V. The 2-adic realization (along the tower: valuation order agrees, norm order reverses from stage 1; ε₀ ≠ 0 preserved, no identity) -/
+#check @ZeroParadox.snap_arc_z2_loop          -- Statement: the images start at ℤ_[2]'s 0, are ≠ 0 for every stage n ≥ 1, and tend to that 0 (the loop)
+#check @ZeroParadox.mu_construction_correspondence  -- Statement: one tower, two carrier closures: ε₀ in `Ordinal`, ℤ_[2]'s 0 as the images' limit
+#check @ZeroParadox.cnf_bridge_type_boundary  -- Statement: ε₀ is the least fixed point at or above ⊥ of `Ordinal` ∧ the images tend to ℤ_[2]'s 0 ∧ each stage's `repr` is its tower stage. Reading: a co-witness; ε₀ = 0 with 0 of ℤ_[2] fails to elaborate, `Ordinal` vs `ℤ_[2]`
+#check @ZeroParadox.tower_orders_agree        -- Statement: on the tower stages, ordinal `<` iff `<` on the 2-adic valuations of the images; at the seed this rests on Mathlib's `valuation 0 = 0`
+-- Statement: DRIFT. Read by the norm, the order reverses only from stage 1 on: at the seed the norm
+-- rises from 0 (first example), and for 1 ≤ m < n it falls (second example).
+example : ‖ZeroParadox.cnfToZp2 (ZeroParadox.towerNONote 0)‖ <
+    ‖ZeroParadox.cnfToZp2 (ZeroParadox.towerNONote 1)‖ := by
+  rw [ZeroParadox.snap_arc_z2_loop.1, norm_zero]
+  exact norm_pos_iff.2 (ZeroParadox.snap_arc_z2_loop.2.1 1 le_rfl)
+example (m n : ℕ) (hm : 1 ≤ m) (hmn : m < n) :
+    ‖ZeroParadox.cnfToZp2 (ZeroParadox.towerNONote n)‖ <
+      ‖ZeroParadox.cnfToZp2 (ZeroParadox.towerNONote m)‖ := by
+  rw [PadicInt.norm_eq_zpow_neg_valuation (ZeroParadox.snap_arc_z2_loop.2.1 n (hm.trans hmn.le)),
+    PadicInt.norm_eq_zpow_neg_valuation (ZeroParadox.snap_arc_z2_loop.2.1 m hm),
+    ZeroParadox.cnfToZp2_tower_valuation, ZeroParadox.cnfToZp2_tower_valuation]
+  exact zpow_lt_zpow_right₀ (by norm_num) (by omega)
 
 /-! ### § VI. The loop returns to a ⊥, never to ε₀ (the *successor* reading is a commitment) -/
-#check @ZeroParadox.t_iz_limit_is_new_null    -- role half only: (∀ x, join terminal x = x) → terminal = bot. No chain, no limit, no novelty in the statement; "a fresh instance" is the framework's reading, not this theorem
+#check @ZeroParadox.t_iz_limit_is_new_null    -- Statement: role half only, in any `ZPSemilattice`: (∀ x, join terminal x = x) → terminal = bot. No chain, no limit, no novelty in the statement; "a fresh instance" is the framework's reading, not this theorem
 
 end Epsilon0CannotBeIndex
