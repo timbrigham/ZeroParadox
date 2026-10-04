@@ -473,7 +473,7 @@ def build():
         'directly to ZP-E\'s machine. The result is concrete.'))
 
     E.append(result_box(
-        'Theorem da1_closed_concrete — the Path 1 witness (Kleene.lean § V)',
+        'Theorem da1_closed_concrete — Path 1\'s Lean counterpart (Kleene.lean § V)',
         [
             'da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase)',
             '',
@@ -496,13 +496,13 @@ def build():
         'ZP-E\'s DA-1 section previously carried the designation "Outside Lean Scope" with '
         'three justifications: Path 1 requires ZF+AFA (incompatible with Lean\'s CIC/MLTT); '
         'Path 3 requires Kolmogorov complexity (uncomputable, absent from Mathlib); Path 2 '
-        'requires an ontological bridge not formalizable in type theory.'))
+        'requires a step from unbounded surprisal to executing that no proof in type theory supplies.'))
     E.append(body(
-        'Path 1 (AFA structural) is witnessed by da1_closed_concrete, which proves '
+        'For Path 1 (AFA structural), the Lean counterpart is da1_closed_concrete, which proves '
         'IsQuineAtom (⊥ : MachinePhase) and nothing computational: in the AFAStructure '
         'typeclass, selfMem encodes ⊥ = {⊥} in CIC-compatible form, and the proof obligation '
         'is discharged by the MachinePhase instance. Path 3 (computational) is NOT resolved '
-        'here. Its witness, botCode_is_quine, is a KleeneStructure class field — an assumption '
+        'here. Its Lean counterpart, botCode_is_quine, is a KleeneStructure class field — an assumption '
         'supplied at instantiation, not a second independent proof — and the condition it '
         'requires, IsComputationalQuine, is a periodicity condition that a constant code '
         'satisfies trivially. The Kolmogorov reading ("no shorter program is prior to ⊥") has '
@@ -518,18 +518,15 @@ def build():
         'bound" to "therefore executing" asks what it means for a mathematical '
         'structure to instantiate rather than merely satisfy conditions. No computability '
         'library answers this question. '
-        'Forward paths: (a) a new axiom explicitly committing to this bridge; '
-        '(b) a connection to Chalmers\' notion of implementation; '
-        '(c) the dissolution argument in The Philosophical Question That Started This — the description-instantiation gap assumes a '
-        'separability that the universality of the framework dissolves. '
         'Importantly, DA-1 does not depend on Path 2: '
         'the formal spine (DP-2 + da1_minimal_path) is proved axiom-free. '
-        'Path 2 is motivational context; its forward resolution is in The Philosophical Question That Started This.'))
+        'Path 2 is motivational context.'))
 
     E.append(callout(
         'DA-1 Lean scope status after ZP-K:\n'
-        'Path 1 (structural, AFA): IN SCOPE — da1_closed_concrete : IsQuineAtom ⊥, nothing\n'
-        'computational; it rules out an external executor, not an inert ⊥.\n'
+        'Path 1 (structural, AFA): Lean counterpart da1_closed_concrete :\n'
+        'IsQuineAtom (⊥ : MachinePhase), nothing computational; it rules out an external\n'
+        'executor, not an inert ⊥.\n'
         'Path 3 (computational, Kleene): botCode_is_quine is a KleeneStructure class field,\n'
         'assumed at instantiation; Path 3 shows executing is not derivable from incompressibility.\n'
         'Path 2 (informational, L-INF): UNADOPTED BRIDGE PRINCIPLE — a missing principle,\n'
@@ -589,10 +586,10 @@ def build():
 
     oq_rows = [
         ['DA-1 Path 1 (AFA structural)',
-         'CLOSED — da1_closed_concrete',
+         'LEAN COUNTERPART PROVED — derives nothing',
          'IsQuineAtom (⊥ : MachinePhase) — the structural half. The theorem mentions no '
          'Code and no execution; that ⊥ is self-EXECUTING is a framework commitment, '
-         'not what this declaration proves. Path 1 rules out an external executor, not an inert ⊥.'],
+         'not what this declaration proves. da1_closed_concrete is Path 1\'s Lean counterpart. Path 1 rules out an external executor, not an inert ⊥, and does not close DA-1\'s precondition.'],
         ['DA-1 Path 3 (computational)',
          'ARGUES FOR THE PRECONDITION — derives nothing',
          'botCode_is_quine is a KleeneStructure class field — assumed at instantiation, not proved. '
@@ -605,7 +602,6 @@ def build():
          'is a bridge principle of its own, a missing principle, not a missing proof; the framework '
          'does not adopt it, and it is not the occurrence commitment or a premise of the Snap. The gap between \'system at P₀\' and '
          '\'system is running\' cannot be closed by any computability library. '
-         'Forward paths: new axiom, Chalmers\' implementation notion, or The Philosophical Question That Started This. '
          'DA-1 does not depend on Path 2.'],
         ['selfApply uniqueness',
          'CLOSED — not attempted (correct)',
@@ -635,7 +631,7 @@ def build():
             'DA-1 structural half: da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase) - no code, no execution | '
             'Four-way equivalence (R-K.0): Quine atom, ⊥ and join identity proved to coincide; '
             'the Kleene fixed point is required by the typeclass, not derived | '
-            'Path 2: an unadopted bridge principle, not a missing proof; forward: The Philosophical Question That Started This | '
+            'Path 2: an unadopted bridge principle, not a missing proof | '
             'All Kleene.lean theorems verified. Axioms: standard Mathlib foundational axioms.</i>',
             S['endnote']),
     ]

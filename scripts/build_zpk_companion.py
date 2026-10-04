@@ -265,7 +265,7 @@ def build():
         '<b>Path 1 (Structural — AFA):</b> Nothing external to ⊥ can execute ⊥, so if ⊥ '
         'executes at all, it executes itself. That rules out an outside executor; it does not rule '
         'out an inert ⊥. ZP-J proved axiom-free that ⊥ is the unique self-containing element (the structural fixed point); that this is the literal ⊥ = {⊥} holds in the ZF+AFA setting. '
-        '<b>What Lean witnesses via ZP-K:</b> Path 1\'s witness is da1_closed_concrete, which proves '
+        '<b>What Lean witnesses via ZP-K:</b> Path 1\'s Lean counterpart is da1_closed_concrete, which proves '
         'IsQuineAtom (⊥ : MachinePhase) from the AFAStructure instance machinePhaseAFA. There '
         'selfMem is defined as x = ⊥, so the content is the uniqueness rather than the membership.'))
     E.append(cbody(
@@ -289,10 +289,11 @@ def build():
     E.append(key_result_box(
         'da1_closed_concrete (Kleene.lean)',
         'IsQuineAtom(&#8869; : MachinePhase) — proved in Lean 4. '
-        'The initial machine state c&#8320; is self-containing; the framework commits that it is '
-        'also self-EXECUTING, which the Lean does not prove — not a '
-        'static description awaiting an external interpreter. '
-        'DA-1 Path 1 (structural): IN LEAN SCOPE. Path 3: the computational witness is a '
+        'The initial machine state c&#8320; is self-containing. The Lean proves nothing about '
+        'execution: that the configuration reaching P&#8320; is running, not an inert description, '
+        'is the framework\'s occurrence commitment (ZP-E). '
+        'DA-1 Path 1 (structural): its Lean counterpart is proved, and Path 1 rules out an external '
+        'executor, not an inert &#8869;. Path 3: its Lean counterpart is a '
         'KleeneStructure assumption, not a derivation. Path 2: outside Lean scope (an unadopted bridge principle).'))
     E.append(sp(6))
     E.append(cbody(
@@ -300,9 +301,10 @@ def build():
         'In ZP-C, the model distinguishes c₀ (the initial configuration, before any '
         'instruction executes) from c₁ (after the first instruction fetch). '
         'DP-2 (ZP-E) proved that these are distinct machine states even when both '
-        'produce the same output value. On the framework\'s reading, c₀ is not '
-        'waiting for someone to press "run": it is already executing, and the execution and '
-        'the description are the same act. ZP-K carries c₀\'s computational face as a '
+        'produce the same output value. On the framework\'s reading, ⊥ is not a description '
+        'waiting for someone outside to press "run": if it runs at all, it runs itself (Path 1). '
+        'That it does run, so that the machine has left c₀ for c₁, is the occurrence commitment, '
+        'which DA-1 uses and does not supply. ZP-K carries c₀\'s computational face as a '
         'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is that '
         'commitment, not a theorem. What T-COMP proves is narrower: '
         'three of the four descriptions of ⊥ are equivalent to one another. It says nothing '

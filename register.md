@@ -7,9 +7,9 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-A Lattice Algebra | v1.30 | ZP-A_Lattice_Algebra.pdf | v1.11 | N/— | formal:d9587d72 comp:8e00c888 |
 | ZP-B p-Adic Topology | v1.18 | ZP-B_pAdic_Topology.pdf | v1.16 | N/— | formal:df43d2f5 comp:79b374cc |
 | ZP-F The Counterexamples | v1.11 | ZP-F_The_Counterexamples.pdf | v1.14 | N/— | formal:caebb48d comp:d6bdb1f7 |
-| ZP-C Information Theory | v1.25 | ZP-C_Information_Theory.pdf | v2.10 | N/— | formal:672e672d comp:6d0c398b |
+| ZP-C Information Theory | v1.25 | ZP-C_Information_Theory.pdf | v2.10 | N/— | formal:68a7612d comp:6d0c398b |
 | ZP-D State Layer | v1.15 | ZP-D_State_Layer.pdf | v1.13 | N/— | formal:923468a5 comp:32064117 |
-| ZP-E Bridge Document | v3.52 | ZP-E_Bridge_Document.pdf | v1.25 | Y/Y | formal:fd53aea3 comp:fa038975 |
+| ZP-E Bridge Document | v3.53 | ZP-E_Bridge_Document.pdf | v1.25 | Y/Y | formal:4a3c4da9 comp:fa038975 |
 | ZP-G Category Theory | v1.21 | ZP-G_Category_Theory.pdf | v1.14 | N/— | formal:f4aab542 comp:c581bda6 |
 | ZP-H Categorical Bridge | v1.24 | ZP-H_Categorical_Bridge.pdf | v1.17 | N/— | formal:ee73cbff comp:612ccd7b |
 | ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:5c0bb985 |
@@ -18,7 +18,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-J AFA Addendum | v1.16 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:7e46e9e2 |
 | ZP-J Wheel Addendum | v1.8 | ZP-J_Wheel_Addendum.pdf | v1.6 | N/— | formal:2be7f9c9 comp:5f817977 |
 | ZP-J Keystone Addendum | v1.25 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:4fd4b585 |
-| ZP-K Computational Grounding | v1.25 | ZP-K_Computational_Grounding.pdf | v1.23 | N/— | formal:200e4547 comp:15fca059 |
+| ZP-K Computational Grounding | v1.25 | ZP-K_Computational_Grounding.pdf | v1.23 | N/— | formal:6ceb06b9 comp:ebc6d80f |
 | ZP-L Incomputability Convergence | v1.25 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:d74032b1 comp:cc1bad38 |
 | ZP-M Kleene-Ordinal Bridge | v1.11 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:14ee8cac comp:a6ff1cab |
 | ZP-N The Constructive Snap | v2.0 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:5011bb68 |
