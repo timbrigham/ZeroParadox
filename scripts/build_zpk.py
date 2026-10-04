@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.24 | September 2026
+Version 1.25 | October 2026
 v1.24: GATE ROUNDS 3-4 REMEDIATION (2026-09-19). Section IV's two load-bearing rows now NAME their witnesses - encodeCode_self and encode_self, minted in this arc - so a reader can re-run a row instead of retyping its statement. ⚠ The v1.23 entry below said "a theorem that RUNS a program reports [propext, Quot.sound] with no choice"; that is true of the named witness eval (Code.const k) n = Part.some k and FALSE as a general claim - roger_fixed_point_exists states there is a code whose evaluation matches, which runs a program, and carries the full triple. Three sites had dropped the witness and kept the generic; all three now name it. The correction also reached ZeroParadox/Category/ChoiceCannotBe.lean SS III, which carried the identical Ordinal correction and had never received the Code one - that non-propagation is what cost this arc two attempts.
 v1.23: ZPK-BED-1 AND ZPK-BED-3, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-19). MEASURED, and the measurement corrects Section IV as well as the defect sites: the axiom does not ride on the type. Nat.Partrec.Code is axiom-free, Nat.Partrec.Code.eval is axiom-free, and a theorem that RUNS a program (eval (Code.const k) n = Part.some k) reports [propext, Quot.sound] with no choice; encode c = encode c, proved by rfl and doing no work, reports the full triple. The axiom enters through Mathlib's Denumerable/Encodable instance, reached by encode - an OPERATION, not a type. Section IV said "statements that mention program codes" and now states no predicate at all - see the table ruling below. Section I said the non-constructive existence "is why all ZP-K theorems carry the standard foundational axioms shared by all Mathlib computability results"; both universals are false as measured, and Section I now points at Section IV instead of restating it. Section II chained a false premise - distinct CODES have distinct Godel numbers "so" each generates a fixed point with a distinct period; injectivity presupposes plurality and cannot produce it, so only the infinitude is given, with the Godel number named as A period rather than the least. ⚠⚠ SECTION IV NOW HOLDS A DATED MEASUREMENT TABLE AND NO GENERAL RULE (Tim ruling, 2026-09-19). Five successive general rules were written about this one Classical.choice and all five were false, the last two in this arc: "a theorem that runs a program carries no choice" is refuted by roger_fixed_point_exists (full triple), and "a statement that names a program's index carries the axiom" is refuted by encodeCode c = encodeCode c, proved by rfl and AXIOM-FREE, against Encodable.encode c = Encodable.encode c, proved by rfl and carrying the triple - two spellings of the same Godel number, opposite footprints, since Mathlib proves encode = encodeCode. A centre holding a rule hands its error to every document pointing at it; a centre holding a measurement inherits nothing. ⚠ The table is DATED and says to re-run rather than cite it - ChoiceCannotBe.lean's "No count is recorded here" records this project getting a cited figure wrong three times. Post-mortem: .claude-local/notes/axiom_footprint_measured_2026-09-19.md.
 v1.22: SET-THEORETIC CLAUSE DELETED (Tim ruling, gate round 6, 2026-09-15): Section IV said 'The order-theoretic and set-theoretic results are unaffected.' IsQuineAtom (bot : MachinePhase) is a set-theoretic result whose Lean theorem da1_closed_concrete lists Classical.choice through machinePhaseKleene; the sentence is deleted. 'The classical axioms are entirely localised to the computational layer.' is kept.
@@ -51,7 +51,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -287,14 +287,18 @@ def build():
     E.append(body(
         'DA-1\'s three informal paths (Path 1: AFA structural, Path 2: informational, '
         'Path 3: Kolmogorov/computational) were previously understood as three separate '
-        'corroborations converging on the same conclusion. In ZP-K, Path 1 is witnessed by '
-        'da1_closed_concrete, which proves IsQuineAtom (⊥ : MachinePhase) and nothing '
-        'computational; Path 3\'s witness is the machinePhaseKleene instance\'s botCode_is_quine '
-        'field, a KleeneStructure requirement, not a second independent proof.'))
+        'corroborations converging on the same conclusion. In ZP-E each argues for DA-1\'s '
+        'precondition, which is what the occurrence commitment asserts, and none derives it. '
+        'Path 1\'s Lean counterpart is da1_closed_concrete, which proves IsQuineAtom (⊥ : MachinePhase) '
+        'and nothing computational; Path 3\'s Lean counterpart is the machinePhaseKleene instance\'s '
+        'botCode_is_quine field, a KleeneStructure requirement that constant codes also meet, not a '
+        'witness of execution and not a second independent proof.'))
     E.append(body(
-        'Path 1 says: nothing external to ⊥ can execute ⊥, so ⊥ must execute itself — '
-        '⊥ = {⊥}. Path 3 says: no shorter external program generates ⊥ — ⊥ is its own '
-        'minimal program. The framework READS these as one claim in two vocabularies. What is '
+        'Path 1 says: nothing external to ⊥ can execute ⊥, so if ⊥ executes at all, the executor '
+        'is ⊥ itself, read as ⊥ = {⊥}; that rules out an external executor, not an inert ⊥. '
+        'Path 3 says: no shorter external program generates ⊥; that rules out a shorter external '
+        'generator, not an inert string, so executing is not derivable from incompressibility. '
+        'The framework READS these as one claim in two vocabularies. What is '
         'proved is weaker and is a conjunction, not an identity: both hold together in any '
         'KleeneStructure. They cannot be equated formally — one is a statement about an element '
         'of the lattice, the other about a Code, and an equation across those types is not a '
@@ -503,12 +507,15 @@ def build():
         'requires, IsComputationalQuine, is a periodicity condition that a constant code '
         'satisfies trivially. The Kolmogorov reading ("no shorter program is prior to ⊥") has '
         'no formal content in ZP-K: Kolmogorov complexity is uncomputable and absent from the '
-        'development. Path 3 therefore stands where Path 2 stands — a foundational commitment.'))
+        'development. Path 3 therefore derives nothing here: in ZP-E it bears on DA-1\'s '
+        'precondition and shows that executing is not derivable from incompressibility, and that '
+        'precondition is what the occurrence commitment asserts.'))
     E.append(body( # ZP-NOCHECK: description-instantiation gap cited in quotes as a closed informal gap, not a live ZP claim
-        'Path 2 (informational bridge: unbounded surprisal → necessarily executing) is a '
-        'foundational commitment — a missing principle, not a missing proof. The mathematics '
+        'Path 2 (informational: unbounded surprisal → executing) is a bridge principle of its '
+        'own — a missing principle, not a missing proof — which the framework does not adopt, '
+        'which is not the occurrence commitment, and which is not a premise of the Snap. The mathematics '
         'of L-INF (l_inf) is proved; but the step from "exceeds every finite informational '
-        'bound" to "therefore necessarily executing" asks what it means for a mathematical '
+        'bound" to "therefore executing" asks what it means for a mathematical '
         'structure to instantiate rather than merely satisfy conditions. No computability '
         'library answers this question. '
         'Forward paths: (a) a new axiom explicitly committing to this bridge; '
@@ -521,11 +528,13 @@ def build():
 
     E.append(callout(
         'DA-1 Lean scope status after ZP-K:\n'
-        'Path 1 (structural, AFA): IN SCOPE — da1_closed_concrete : IsQuineAtom ⊥.\n'
-        'Path 3 (computational, Kleene): FOUNDATIONAL COMMITMENT — botCode_is_quine is a\n'
-        'KleeneStructure class field, assumed at instantiation rather than derived.\n'
-        'Path 2 (informational, L-INF bridge): FOUNDATIONAL COMMITMENT — a missing principle,\n'
-        'not a missing proof. Forward: The Philosophical Question That Started This.',
+        'Path 1 (structural, AFA): IN SCOPE — da1_closed_concrete : IsQuineAtom ⊥, nothing\n'
+        'computational; it rules out an external executor, not an inert ⊥.\n'
+        'Path 3 (computational, Kleene): botCode_is_quine is a KleeneStructure class field,\n'
+        'assumed at instantiation; Path 3 shows executing is not derivable from incompressibility.\n'
+        'Path 2 (informational, L-INF): UNADOPTED BRIDGE PRINCIPLE — a missing principle,\n'
+        'not a missing proof, and not the occurrence commitment.\n'
+        'None derives DA-1\'s precondition, which is what the occurrence commitment asserts.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(8))
@@ -583,16 +592,18 @@ def build():
          'CLOSED — da1_closed_concrete',
          'IsQuineAtom (⊥ : MachinePhase) — the structural half. The theorem mentions no '
          'Code and no execution; that ⊥ is self-EXECUTING is a framework commitment, '
-         'not what this declaration proves.'],
+         'not what this declaration proves. Path 1 rules out an external executor, not an inert ⊥.'],
         ['DA-1 Path 3 (computational)',
-         'FOUNDATIONAL COMMITMENT',
+         'ARGUES FOR THE PRECONDITION — derives nothing',
          'botCode_is_quine is a KleeneStructure class field — assumed at instantiation, not proved. '
          'IsComputationalQuine is a periodicity condition satisfied by constant codes, and no '
-         'Kolmogorov content exists in ZP-K.'],
+         'Kolmogorov content exists in ZP-K. In ZP-E, Path 3 shows that executing is not derivable '
+         'from incompressibility; DA-1\'s precondition is what the occurrence commitment asserts.'],
         ['DA-1 Path 2 (informational)',
-         'FOUNDATIONAL COMMITMENT',
-         'L-INF (l_inf) is proved. The bridge "unbounded surprisal → necessarily executing" '
-         'is a missing principle, not a missing proof. The gap between \'system at P₀\' and '
+         'UNADOPTED BRIDGE PRINCIPLE',
+         'L-INF (l_inf) is proved. The bridge "unbounded surprisal → executing" '
+         'is a bridge principle of its own, a missing principle, not a missing proof; the framework '
+         'does not adopt it, and it is not the occurrence commitment or a premise of the Snap. The gap between \'system at P₀\' and '
          '\'system is running\' cannot be closed by any computability library. '
          'Forward paths: new axiom, Chalmers\' implementation notion, or The Philosophical Question That Started This. '
          'DA-1 does not depend on Path 2.'],
@@ -624,7 +635,7 @@ def build():
             'DA-1 structural half: da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase) - no code, no execution | '
             'Four-way equivalence (R-K.0): Quine atom, ⊥ and join identity proved to coincide; '
             'the Kleene fixed point is required by the typeclass, not derived | '
-            'Path 2 recharacterized: foundational commitment, not missing proof; forward: The Philosophical Question That Started This | '
+            'Path 2: an unadopted bridge principle, not a missing proof; forward: The Philosophical Question That Started This | '
             'All Kleene.lean theorems verified. Axioms: standard Mathlib foundational axioms.</i>',
             S['endnote']),
     ]
