@@ -1,4 +1,5 @@
 import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Topology.MetricSpace.Ultra.Basic
 import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
 import Mathlib.Topology.Connected.TotallyDisconnected
@@ -225,11 +226,10 @@ No continuous path γ: [0,1] → Q₂ goes from x ≠ 0 to 0: γ([0,1]) is conne
 disconnected Q₂, hence a singleton. The proof uses no property of 0, and Q₂ is topologically
 homogeneous (the `example`s after `c3_irreversible`). So topology does not single out `(0 : Q₂)`
 as the occupant of ZP-A's ⊥ role: it is the additive identity (`zero_add`) and the only point of
-valuation ⊤ (`padic_addVal_eq_top_iff`, `ZeroParadox/Valuation/ValuationAFA_Padic.lean`), which
-places it at ⊥ of ℚ_[2] under the valuation order. The role is chart-relative: under `snapEmbed`'s
-join-to-multiplication reading into ℤ_[2] (`snapEmbed_mul_morphism`,
-`ZeroParadox/Ordinal/Incompleteness.lean`), ⊥ of MachinePhase's ZP-A semilattice (c₀) maps to 1 and
-c₁ maps to 0, so that map does not carry ⊥ to 0, ℤ_[2]'s ⊥ under the valuation order. -/
+valuation ⊤ (`padic_addVal_eq_top_iff`, `ZeroParadox/Valuation/ValuationAFA_Padic.lean`). Whether
+that makes 0 least or greatest depends on the order named; the `example`s after the C3 ones fix it
+for the norm preorder, ascending valuation, and divisibility on ℤ_[2]. `snapEmbed`
+(`ZeroParadox/Ordinal/Incompleteness.lean`) sends c₀, ⊥ of MachinePhase's ZP-A semilattice, to 1. -/
 
 /-- C3: There is no continuous path from x ≠ 0 to 0 in Q₂. -/
 theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :
@@ -266,6 +266,19 @@ example (x y : Q₂) (hxy : x ≠ y) :
   exact hxy (hγ0 ▸ hγ1 ▸ isTotallyDisconnected_of_totallyDisconnectedSpace Set.univ
     (Set.range _) (Set.subset_univ _) (isPreconnected_range γ.continuous)
     (Set.mem_range_self _) (Set.mem_range_self _))
+
+-- `Statement:` 0 is the unique least point of the norm preorder, on ℚ_[2] and on ℤ_[2].
+example (x : ℚ_[2]) : ‖(0 : ℚ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ ≤ ‖(0 : ℚ_[2])‖ → x = 0) :=
+  ⟨by simp, fun h => by simpa using h⟩
+example (x : ℤ_[2]) : ‖(0 : ℤ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ ≤ ‖(0 : ℤ_[2])‖ → x = 0) :=
+  ⟨by simp, fun h => by simpa using h⟩
+-- `Statement:` 0 is the unique greatest point under valuation read ascending, on ℚ_[2].
+example (x : ℚ_[2]) : Padic.addValuation x ≤ Padic.addValuation (0 : ℚ_[2]) ∧
+    (Padic.addValuation (0 : ℚ_[2]) ≤ Padic.addValuation x → x = 0) :=
+  ⟨by simp, fun h => by simpa using h⟩
+-- `Statement:` on ℤ_[2] under divisibility, 1 is least and 0 is greatest; 1 has the greatest norm.
+example (x : ℤ_[2]) : (1 : ℤ_[2]) ∣ x ∧ x ∣ 0 ∧ ‖x‖ ≤ ‖(1 : ℤ_[2])‖ :=
+  ⟨one_dvd x, dvd_zero x, by simpa using x.norm_le_one⟩
 
 /-! ## Classification Note: Non-Archimedean Fields and the Snap
 
