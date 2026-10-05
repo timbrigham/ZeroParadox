@@ -22,10 +22,12 @@ The almost-sure result is the infinite monkey theorem, proved here as `fairTape_
 second Borel–Cantelli lemma (`measure_limsup_eq_one`) on disjoint aligned blocks gives `monkey_limsup`.
 
 No periodic tape is disjunctive. Barnsley and Leśniak, pp. 7-8, recall from Muchnik, Semenov and
-Ushakov (their [30]) that a sequence is *almost periodic* when every word occurring in it infinitely
-often occurs in every segment of some fixed length, and note: "Obviously a disjunctive sequence cannot
-be almost periodic." A tape equal to its own shift by some `a > 0` is almost periodic in that sense, so
-`not_disjunctive_of_periodic` (§ V) is a special case of their remark.
+Ushakov (their [30]) that a sequence is *almost periodic* when each finite word occurring in it
+infinitely often has a length `m`, depending on the word, such that every segment of length `m`
+contains the word, and note: "Obviously a disjunctive sequence cannot be almost periodic." A tape
+equal to its own shift by some `a > 0` is almost periodic in that sense, with `m = a + k` for a word
+of length `k` (the `example` after `not_disjunctive_of_periodic`), so `not_disjunctive_of_periodic`
+(§ V) is a special case of their remark.
 
 ## Search record (2026-10-04)
 
@@ -37,9 +39,11 @@ be almost periodic." A tape equal to its own shift by some `a > 0` is almost per
   2026-10-04, case-insensitive regular expressions, one at a time: `kolmogorov complexity`,
   `kolmogorovComplexity`, `Martin-L`, `MartinLof`, `algorithmic(ally)? random`, `incompressib`,
   `prefix-free complexity`, `Chaitin`, `Schnorr`, `randomness test`, `descriptive complexity`. Zero
-  files each. Control: `Kolmogorov` alone hits 10 files, one an author line and the rest probability
-  and measure theory (the extension theorem, the 0-1 law, Chapman–Kolmogorov, the Kolmogorov
-  condition). Not located as of 2026-10-04, searched as above.
+  files each. Control: `Kolmogorov` alone hits 10 files. One is an author line. Three are topology,
+  the T₀ (Kolmogorov) separation axiom and the Kolmogorov quotient. One is a topology file that cites
+  the Kolmogorov–Chentsov theorem and the Kolmogorov condition. Five are probability and measure
+  theory: the Kolmogorov condition, Chapman–Kolmogorov, the 0-1 law, and two on the extension
+  theorem. Not located as of 2026-10-04, searched as above.
 - theoremsearch, three phrasings (definition; "rich sequence"; Martin-Löf random and Champernowne).
   Returned the Barnsley–Leśniak and Barnsley–Vince definitions and Landsman, *Typical = random*
   (arXiv:2306.09226, Thm 4.2, as summarized by the search result: every word occurs infinitely often in
@@ -54,7 +58,14 @@ block (`#print axioms`, 2026-10-04):
 - `Filter.frequently_atTop` and `Filter.Frequently.exists` each carry `Classical.choice`
   (`[propext, Classical.choice, Quot.sound]`). The statement `Disjunctive` measures
   `[propext, Quot.sound]`, so the choice in `champ_disjunctive`, `disjunctive_iff_once` and § V
-  enters through these proofs, not through the definition.
+  enters through their proofs, not through the definition. The constants each proof term references
+  directly that carry choice, each at the same triple:
+  - `disjunctive_iff_once`: `Filter.Frequently.exists`, `Filter.frequently_atTop`,
+    `instIsDirectedOrder`, `IsStrictOrderedRing.toIsOrderedRing`;
+  - `champ_disjunctive`: `disjunctive_iff_once`;
+  - `not_disjunctive_of_periodic`: `Filter.Frequently.exists`, `Fintype.card_le_of_surjective`,
+    `Fintype.card_fun`, `Fintype.card_fin`, and the instances `Pi.instFintype` and `Fin.fintype`;
+  - `disjunctive_not_periodic`: `not_disjunctive_of_periodic`.
 - `Nat.sqrt_add_eq`, `Nat.unpair_pair` and `Nat.left_le_pair` each carry `Classical.choice`. The slot
   layout of `champ` uses `tri` / `untri`, whose lemmas are proved by `omega`.
 - `codeWord` and the § IV theorems carry `Classical.choice` through `Encodable.encode` on `Code` (the
@@ -71,12 +82,13 @@ block (`#print axioms`, 2026-10-04):
    and a Martin-Löf random sequence is disjunctive; the converse fails (`champ`). With PLAIN
    complexity no infinite sequence has all prefixes incompressible (Martin-Löf), so the prefix-free
    form is the one meant.
-3. **The commitment is separate.** `Reading:` Tim's commitment that the framework's ⊥, read as a
-   tape, is maximally complex, in the prefix-free sense of fence 2. Through the standard theorem it
-   would make that tape disjunctive. The framework's ⊥ here is the role, not ⊥ of `ℕ → Bool` under
-   the pointwise order: that occupant is the all-false tape, which is not disjunctive
-   (`allFalse_not_disjunctive`). Neither the commitment nor the standard theorem is in Lean (Search
-   record).
+3. **The commitment is separate.** `Reading:` Tim's commitment concerns the framework's ⊥ role, ⊥ of
+   a `ZPSemilattice`: read as a tape, its occupant is maximally complex, in the prefix-free sense of
+   fence 2, and through the standard theorem it would be disjunctive. No map from a `ZPSemilattice`
+   to `ℕ → Bool` is claimed or constructed, and no order on tapes in which a maximally complex tape is
+   least: the reading is a commitment, not a chart. In `ℕ → Bool` under the pointwise order, ⊥ is the
+   all-false tape, which is not disjunctive (`allFalse_not_disjunctive`). Neither the commitment nor
+   the standard theorem is in Lean (Search record).
 4. **`Code.zero`'s word is empty** (`codeWord_zero_width`), so presence there is vacuous.
 5. **The measure fences of `ZeroParadox/Information/CrossingTrials.lean` stand.** Measure one is not
    necessity, and nothing here says any framework object IS a fair-coin tape.

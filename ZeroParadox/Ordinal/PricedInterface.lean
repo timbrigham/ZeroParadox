@@ -228,40 +228,34 @@ Restricting the carrier to `NF` notations is the standard repair and is **not** 
 defined through `repr` and would import the choice-carrying side into the constructive development.
 `repr_surj_below_epsilon0` uses `NF` on the crossing side only.
 
-⚠ **AND THE SAME FACT READS THE OTHER WAY — added 2026-08-05 (Tim).** A failure of faithfulness is an
-availability of **uncertainty**. The fiber this non-injectivity creates — two notations, one denotation —
-carries a genuinely non-degenerate distribution (`repr_collision`,
-`exists_fiber_supported_non_pure_pmf` below).
+⚠ **AND THE SAME FACT READS THE OTHER WAY (Tim).** A failure of faithfulness is an availability of
+**uncertainty**. The fiber this non-injectivity creates — two notations, one denotation — carries a
+genuinely non-degenerate distribution (`repr_collision`, `exists_fiber_supported_non_pure_pmf` below).
 
-⚠ **State the fiber's role correctly; a first draft did not.** It is NOT that the fiber "lifts
-`pmf_subsingleton_isPure`'s obstruction" — `E0Note` is already non-subsingleton (`⊤` and `e0Coe 0`
-differ), so that obstruction was **never binding here**. What the collision supplies is the strictly
-stronger fact: a spread distribution **confined to a single denotation**. Any two distinct notations
-give a non-degenerate distribution; only a *collision* gives one whose entire support denotes one
-ordinal.
+⚠ **The fiber's role.** It is NOT that the fiber "lifts `pmf_subsingleton_isPure`'s obstruction" —
+`E0Note` is already non-subsingleton (`⊤` and `e0Coe 0` differ), so that obstruction is **not binding
+here**. What the collision supplies is the strictly stronger fact: a spread distribution **confined to
+a single denotation**. Any two distinct notations give a non-degenerate distribution; only a
+*collision* gives one whose entire support denotes one ordinal.
 
-**AND THE COLLISION IS NECESSARY — measured, not assumed.**
-`confined_non_pure_refutes_injective` (`ZeroParadox/Information/Surprisal.lean`) proves the converse:
-under an *injective* map a confined distribution collapses to one support point, so a spread one
-refutes injectivity outright. Measured at round-3 revalidation, after the sentence had been re-worded
-three times without anyone asking whether the claim underneath was true.
+**AND THE COLLISION IS NECESSARY.** `confined_non_pure_refutes_injective`
+(`ZeroParadox/Information/Surprisal.lean`) proves the converse: under an *injective* map a confined
+distribution collapses to one support point, so a spread one refutes injectivity outright.
 
-**The IN-FIELD name is already in the ride-along: `ONote.repr_inj`.** Mathlib's
-`ONote.repr_inj` (`Mathlib/SetTheory/Ordinal/Notation.lean`) requires `NF` on both arguments, and
-`ZeroParadox/Ordinal/PricedInterface.md` § *What is NOT proved here* already says *"restricting to normal forms is the standard fix."*
-That is **stronger** than naming the defect: it characterizes exactly when injectivity is **restored**,
-and the `1 + ω` vs `ω` witness is precisely a non-normal-form term. Use it first.
+**The in-field name: `ONote.repr_inj`.** Mathlib's `ONote.repr_inj`
+(`Mathlib/SetTheory/Ordinal/Notation.lean`) requires `NF` on both arguments, and
+`ZeroParadox/Ordinal/PricedInterface.md` § *What is NOT proved here* says *"restricting to normal
+forms is the standard fix."* It characterizes exactly when injectivity is **restored**, and the
+`1 + ω` vs `ω` witness is a non-normal-form term.
 
-`Reading:` (conjectural, and **an earlier draft asserted this as a flat identification, which was an
-over-reach**) the framework reads the fiber as an instance of the **shape** that statistics calls
-*identifiability* — the parameter-to-observable map failing to be injective. ⚠ **Do not write
+`Reading:` (conjectural) the framework reads the fiber as an instance of the **shape** that statistics
+calls *identifiability* — the parameter-to-observable map failing to be injective. ⚠ **Do not write
 "structural identifiability" for this.** Both sources on disk (Villaverde 2016; Castro & de Boer 2020,
 `.claude-local/papers/`) scope that term to **parametrized dynamic models**, where "structural"
 contrasts with *practical* identifiability limited by data. `e0Repr` has no data, no dynamics and no
-such contrast, so the modifier does no work here. And `CLAIMS.md`'s use of the term is about **ZP-B's
-real-valued threshold** under Buckingham π — a different object, and that row's own 2026-07-30 scope
-correction states the term does *not* apply to ε₀ — so "it had never reached the Lean" claims a
-continuity that is not there.
+such contrast, so the modifier does no work here. `CLAIMS.md`'s use of the term (the Buckingham row)
+is scoped to **ZP-B's real-valued threshold** `2^k`, a different object, and that row states the
+dimensional reading does *not* apply to ε₀.
 
 **NO POV KIND is claimed here, and that is deliberate** — none of the five (COINCIDENCE / INVERSION /
 DRIFT / CARRIER / INVARIANT) describes "two structures share a shape". What is asserted is only the
@@ -349,15 +343,13 @@ theorem exists_fiber_supported_non_pure_pmf :
 observe that the distribution is confined to one denotation, and `confined_non_pure_refutes_injective`
 returns the non-injectivity.
 
-**Why this exists (round-4 gate finding).** The necessity theorems were stated and never *applied*, and
-an unapplied theorem is one whose non-vacuity nobody has exercised. This composition exercises it: the
-implication runs both ways, so the identification of "failure of faithfulness" with "room for a
-confined distribution" is not an interpretation laid over the theorems — it is a round trip through
-them. ⚠ **This consumes its own conclusion and is not an independent second proof** — `repr_collision` is
-itself derived from `e0Repr_not_injective`. What it establishes is exactly that the converse's
-hypotheses are **satisfiable at a concrete `f`**, and nothing further about `e0Repr`. Recorded as
-next-touch debt: an `example` would exercise that identically without minting a second citable
-`theorem` whose statement duplicates one already in this file. -/
+This composition applies the necessity theorem at a concrete map: the implication runs both ways, so
+the identification of "failure of faithfulness" with "room for a confined distribution" is a round
+trip through the theorems, not an interpretation laid over them. ⚠ **This consumes its own conclusion
+and is not an independent second proof** — `repr_collision` is itself derived from
+`e0Repr_not_injective`. What it establishes is exactly that the converse's hypotheses are
+**satisfiable at a concrete `f`**, and nothing further about `e0Repr`. Its statement is
+`e0Repr_not_injective`'s. -/
 theorem e0Repr_not_injective_via_confinement : ¬ Function.Injective e0Repr := by
   obtain ⟨x, y, hne, hxy⟩ := repr_collision
   obtain ⟨p, hx, hy, hsub⟩ := exists_spread_pmf x y
@@ -381,59 +373,14 @@ theorem repr_spread_source_certain_target :
   obtain ⟨o, p, hnp, hconf⟩ := exists_fiber_supported_non_pure_pmf
   exact ⟨o, p, hnp, confined_map_eq_pure e0Repr p o hconf⟩
 
-/-! ### Where the ambiguity ISN'T — both poles are faithful
+/-! ### Where the ambiguity ISN'T — faithful at 0 and at ε₀
 
-**Origin (Tim, 2026-08-06): "almost like the roles of zero and infinity are reversed."** Chasing that
-produced a result, and the result **did not match the prediction** — which is why it is worth stating.
-
-**What holds.** The representation map has a singleton fiber at *each* end and is genuinely ambiguous
-in between: `e0Repr_fiber_at_bot_singleton` below at the bottom, the pre-existing
-`e0Repr_eq_epsilon0_iff` (§ above, same file) at the top, and `repr_collision` between them.
-
-⚠ **At the top, EXISTENCE is stipulated**: `⊤` is *adjoined*, so `e0Repr_top` is `rfl` and there is
-exactly one of it by construction. Nothing at the bottom is adjoined. **No comparative is drawn
-between the two uniqueness proofs** — an earlier draft called the bottom "the earned one" on the
-strength of a positivity argument that is Mathlib's, and restoring that framing after it had been
-retracted in this same file is the error this note now exists to prevent.
-
-⚠ **ONLY THE BOTTOM HALF IS NEW, and a first draft of this block claimed both.** The top half was
-already proved 200 lines above — its docstring says *"the fibre of the map over ε₀ is exactly `{⊤}`"*
-in those words. A duplicate `e0Repr_fiber_at_top_singleton` was written here and **deleted**; the
-Trigger-0 step that would have caught it is *grep your own corpus*, and it was not run against this
-file. Do not re-add it.
-
-⚠ **THE "POLARITY REVERSAL" READING IS NOT WITNESSED HERE, and an earlier draft asserted it as a DRIFT
-against complexity. That was wrong twice over.**
-1. **Cross-carrier.** The complexity results (`infinitude_forces_infinite_complexity`,
-   `member_cx_lt_top`, `ZeroParadox/Valuation/InfinitudeFloor.lean`) are stated over
-   `[InfinitudeFloor α]`. **`E0Note` carries no such instance, and this file does not import that
-   module** — the two citations were not even in scope where they were written. "The same point is
-   extremal in both measures" named a point of one type and a point of another: the MC-1
-   cross-category identity, retired as ill-typed.
-2. **And the measure has no direction to reverse.** Ambiguity here is minimal at **both** ends. A DRIFT
-   needs two measures running *opposite along* a structure; a quantity that is symmetric at the two
-   poles cannot run opposite to anything.
-
-`Reading:` **INVARIANT kind** (conjectural) — fiber cardinality is **one quantity measured at two
-points of one carrier**, and it takes the same value at both, so exchanging the poles gains nothing.
-That is the INVARIANT row, not COINCIDENCE (which needs two readings of one object) and not DRIFT
-(which needs a direction).
-
-⚠ **An earlier draft tagged this COINCIDENCE and borrowed the "shared shape, never an instance-of
-relation" fence from § *What is NOT proved here* above. That fence belongs to a different
-comparison** — `e0Repr` against the identifiability literature, which genuinely is two structures
-sharing a shape and is correctly tagged with no KIND at all. The INVARIANT claim is not of that
-form — it is one quantity at two points of one carrier. (The **retracted** DRIFT paragraph above did
-compare two carriers, which is precisely why it failed.)
-
-⚠ **Two fences.**
-1. **No monotonicity is proved**, and none is claimed: two endpoint values plus one positive instance
-   between them (`repr_collision`, whose witness is exhibited at
-   `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` — the existential statement itself names no
-   value, so do not attribute one to it).
-2. **This closes a door.** Because the fiber at the bottom is a single point, the statistics of the
-   section above lives **strictly between** the poles and cannot be seeded at the bottom by this
-   route. -/
+The fiber of `e0Repr` is a singleton at each end and is ambiguous in between:
+`e0Repr_fiber_at_bot_singleton` below at 0, `e0Repr_eq_epsilon0_iff` above at ε₀, and
+`repr_collision` between them. `Reading:` INVARIANT kind (conjectural): one quantity, fiber
+cardinality, takes the same value at two points of one carrier. No polarity reversal against
+complexity is witnessed here. Argument and fences: `ZeroParadox/Ordinal/PricedInterface.md`
+§ *Where the ambiguity isn't*. -/
 
 /-- **`Statement:` zero is uniquely denoted, and NO normal-form hypothesis is needed.** Structural:
 `repr (oadd e n a) = ω ^ repr e * n + repr a` with `n ≥ 1`, so it is strictly positive.
@@ -441,10 +388,8 @@ compare two carriers, which is precisely why it failed.)
 **Prior art — and the positivity argument is MATHLIB'S, not this file's.** `ONote.oadd_pos (e n a) :
 0 < oadd e n a` together with `ONote.lt_def : x < y ↔ repr x < repr y`
 (`Mathlib/SetTheory/Ordinal/Notation.lean`) *is* `0 < repr (oadd e n a)`, so this derives from the
-library in a few lines. Corpus citations of `oadd_pos` before this one: **none**. The hand proof is
-kept (identical footprint measured, so no purity reason to swap) and the standard lemma is cited —
-the `CovBy` pattern. ⚠ An earlier draft called this result "the earned one" on the strength of *"it
-needs a positivity argument"*; the argument is Mathlib's and was uncited.
+library in a few lines. The hand proof is kept (identical footprint measured, so no purity reason to
+swap) and the standard lemma is cited.
 
 `ONote.repr_inj` gives injectivity but requires `NF` on **both** arguments; no `repr = 0`
 characterization was located in the pin as of `9dffe26` (`exact?` closes neither the iff nor the bare
@@ -492,7 +437,7 @@ The two sides of the interface, measured. Observed: the carrier side is choice-f
 axioms at all up to `[propext, Quot.sound]`; the map side is uniformly
 `[propext, Classical.choice, Quot.sound]`. **The per-declaration numbers live HERE and nowhere else** —
 `ZeroParadox/Ordinal/PricedInterface.md` states only the shape, deliberately, because an enumeration
-duplicated into prose is what went stale once already. If this block ever prints something outside
+duplicated into prose goes stale. If this block ever prints something outside
 that shape, the ride-along is wrong and must be corrected to match the instrument — the instrument is
 the deliverable. -/
 
@@ -531,8 +476,8 @@ open ZeroParadox
 -- The ε₀-producing operations themselves, measured here because this file already imports Veblen.
 -- ZP-N's prose names these (with `typein` and `omega0`, printed in
 -- `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`) as where `Classical.choice` actually enters
--- Mathlib's ordinals. Printed rather than asserted: naming a site without measuring it is exactly
--- the error ZP-N v1.0 made, and a claim about where choice lives should be reproducible.
+-- Mathlib's ordinals. Printed rather than asserted, so a claim about where choice lives is
+-- reproducible.
 #print axioms Ordinal.nfp
 #print axioms Ordinal.deriv
 #print axioms Ordinal.epsilon

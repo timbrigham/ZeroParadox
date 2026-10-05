@@ -36,8 +36,7 @@ does crossing cost*.
 
 ## The measured price of the crossing
 
-Measured by `#print axioms` (the purity check at the bottom of `ZeroParadox/Ordinal/PricedInterface.lean` is the instrument; these are
-the numbers it reported, not the numbers that were hoped for):
+Measured by `#print axioms` (the purity check at the bottom of `ZeroParadox/Ordinal/PricedInterface.lean` is the instrument):
 
 ⚠ **The per-declaration numbers are NOT reproduced here.** A copied list goes stale the moment a
 declaration is added. **The block at the bottom of the `.lean` file is the register — read it, do
@@ -61,11 +60,11 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
   it is `e0Repr_not_injective` plus `Function.not_injective_iff`. It is a **crossing** declaration, it
   belongs exactly where the block files it, and it prices the crossing like every other one.
 
-**The `Quot.sound` on part of the constructive side was not predicted, and is reported rather than
-explained away.** It arrives through Mathlib's `WithTop` order lemmas, not through anything about
-ordinals; it is *not* `Classical.choice`, and the constructive side carries no choice anywhere. The
-prediction that the whole carrier side would come out at exactly `[propext]` was wrong, and the
-measurement, not the prediction, is what stands.
+**The `Quot.sound` on part of the constructive side** arrives through Mathlib's `WithTop` order
+instances and lemmas (`WithTop.instPreorder`, `WithTop.decidableLE`, `WithTop.decidableLT`,
+`WithTop.instOrderTop`, `WithTop.coe_lt_top`, each `[propext, Quot.sound]`), not through anything
+about ordinals: `SynONote`'s own order, `instLinearOrderSynONote`, measures `[propext]`. It is *not*
+`Classical.choice`, and the constructive side carries no choice anywhere.
 
 So the boundary is *priced*: staying on the notation side costs at most `[propext, Quot.sound]` and
 never `Classical.choice`; crossing to `Ordinal` costs `Classical.choice` at every declaration; and the
@@ -113,8 +112,8 @@ the fixed point is by fiat at the added point; uniqueness is a theorem.**
 ε-number closed points, and it is fenced there — explicitly, in that file's own header — to
 `ONote`-shaped notation systems, for exactly this reason. `E0Note` is not `ONote`: it has an extra
 point, and the fixed point lives at that extra point. Neither file's claim reaches the other's carrier,
-and neither should be read as weakening the other. `no_snap_closure` remains exactly as strong as it
-was, on exactly the carrier it was stated for.
+and neither should be read as weakening the other. `no_snap_closure` holds unweakened, on the carrier
+it is stated for.
 
 ## What is NOT proved here, and must not be inferred
 
@@ -134,6 +133,53 @@ defined through `repr`, which is why the constructive development stays off it;
 `repr_surj_below_epsilon0` uses `NF` on the crossing side only. So: **`E0Note` is
 not claimed to be `ON_correct` at ε₀ + 1.** Restricting to normal forms is the standard fix and is not
 done here.
+
+## Where the ambiguity isn't — faithful at 0 and at ε₀
+
+**Origin (Tim): "almost like the roles of zero and infinity are reversed."** What follows is what
+holds, and it is not a reversal.
+
+**What holds.** The representation map has a singleton fiber at *each* end and is genuinely ambiguous
+in between: `e0Repr_fiber_at_bot_singleton` at 0, `e0Repr_eq_epsilon0_iff` at ε₀, and
+`repr_collision` between them, all in `ZeroParadox/Ordinal/PricedInterface.lean`.
+
+⚠ **At the top, EXISTENCE is stipulated**: `⊤` is *adjoined*, so `e0Repr_top` is `rfl` and there is
+exactly one of it by construction. Nothing at 0 is adjoined. **No comparative is drawn
+between the two uniqueness proofs**; the positivity argument at 0 is Mathlib's (the
+`onote_repr_eq_zero_iff` docstring).
+
+⚠ **Only the half at 0 is new.** The half at ε₀ is `e0Repr_eq_epsilon0_iff`, whose docstring states
+that the fibre of the map over ε₀ is exactly `{⊤}`; a separate top-fiber theorem would duplicate it.
+
+⚠ **No "polarity reversal" — a DRIFT against complexity — is witnessed here, for two reasons.**
+1. **Cross-carrier.** The complexity results (`infinitude_forces_infinite_complexity`,
+   `member_cx_lt_top`, `ZeroParadox/Valuation/InfinitudeFloor.lean`) are stated over
+   `[InfinitudeFloor α]`. **`E0Note` carries no such instance, and `InfinitudeFloor` is not in scope
+   in `PricedInterface.lean`.** "The same point is extremal in both measures" would name a point of
+   one type and a point of another: the MC-1 cross-category identity, retired as ill-typed.
+2. **And the measure has no direction to reverse.** Ambiguity here is minimal at **both** ends. A DRIFT
+   needs two measures running *opposite along* a structure; a quantity that is symmetric at the two
+   poles cannot run opposite to anything.
+
+`Reading:` **INVARIANT kind** (conjectural) — fiber cardinality is **one quantity measured at two
+points of one carrier**, and it takes the same value at both, so exchanging the poles gains nothing.
+That is the INVARIANT row, not COINCIDENCE (which needs two readings of one object) and not DRIFT
+(which needs a direction).
+
+⚠ **Not COINCIDENCE, and the "shared shape, never an instance-of relation" fence of the
+`e0Repr_not_injective` docstring does not apply here.** That fence belongs to a different comparison —
+`e0Repr` against the identifiability literature, which genuinely is two structures sharing a shape and
+is tagged with no KIND at all. The INVARIANT claim is not of that form — it is one quantity at two
+points of one carrier.
+
+⚠ **Two fences.**
+1. **No monotonicity is proved**, and none is claimed: two endpoint values plus one positive instance
+   between them (`repr_collision`, whose witness is exhibited at
+   `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` — the existential statement itself names no
+   value, so do not attribute one to it).
+2. **This closes a door.** Because the fiber at 0 is a single point, the statistics of the
+   fiber-supported distribution (`exists_fiber_supported_non_pure_pmf`) lives **strictly between**
+   the poles and cannot be seeded at 0 by this route.
 
 ## Triviality assessment
 

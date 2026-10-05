@@ -221,15 +221,19 @@ about the effort in Lean, never about novelty. Cited here explicitly because sco
 "the carrier and the supremum" would have left this uncredited — the failure mode where a theorem-backed
 layer carries a distinctive construction with its own separate prior art.
 
-**Two further hydra-battles constructions are cited here because a sibling file instantiates them.**
+**Two further hydra-battles constructions are cited here because a sibling file follows their shape.**
 `ZeroParadox/Ordinal/PricedInterface.lean` adjoins a top to `SynONote` and maps the result into
-Mathlib's `Ordinal`. Both moves are Castéran's, and the credit above does not reach them:
+Mathlib's `Ordinal`. Both moves follow Castéran, and the credit above does not reach them:
 `theories/ordinals/OrdinalNotations/ON_plus.v` builds the **sum of two ordinal notation systems**
 generically (`compare_plus`, `plus_comp`, `lt_wf`, `ON_plus`, and `lt_eq_lt_dec` proving that
-decidability of comparison survives the adjunction), of which "notations plus one adjoined point" is the
-one-point instance; and `ON_Generic.v`'s **`ON_correct`** is the canonical statement of "this notation
-system correctly denotes into that classical ordinal" (denotes below the target, onto the segment,
-comparator agrees with the semantic order), **already instantiated at ε₀** in
+decidability of comparison survives the adjunction). "Notations plus one adjoined point" has that
+sum's shape with a one-point right summand and is not an instance of it: `ON_plus` sums two
+well-founded notation systems, and the order on `SynONote`, so on the adjoined carrier `E0Note`, is not
+well-founded (the `example` stating `¬ WellFoundedLT E0Note` in `PricedInterface.lean`). What the
+adjoined carrier does carry is a denotation map onto the ordinals at or below ε₀ (the `example` after
+`e0Repr_eq_epsilon0_iff` there). `ON_Generic.v`'s **`ON_correct`** is the canonical statement of "this
+notation system correctly denotes into that classical ordinal" (denotes below the target, onto the
+segment, comparator agrees with the semantic order), **already instantiated at ε₀** in
 `Schutte/Correctness_E0.v` (`inject`, `inject_lt_epsilon0`, `embedding`, `Instance Epsilon0_correct`).
 Recorded here so that the credit sits with the order construction it extends, rather than only in the
 file that uses it.

@@ -58,14 +58,11 @@ Three formal results capture this structure:
       between computation and self-reference is genuinely non-computable, not merely
       unimplemented; machinePhaseKleene's Classical.choose is this instance's choice of botCode; a
       computable instance with a constant code also satisfies the class (the example after
-      machinePhaseKleene)
+      machinePhaseKleene), so the noncomputable marker belongs to the instance, not to DA-1's
+      computational path
   (3) infinite_quine_family — the quine family is infinite: unboundedly many distinct
       (function, index) pairs exist. Its witnesses are the constant codes, so it bounds
       the family from below without showing those members are instantiation bottoms
-
-The noncomputable marker comes from this instance's choice of botCode; a computable
-instance with a constant code also satisfies the class, so the noncomputable marker belongs
-to the instance, not to DA-1's computational path.
 
 ## § VIII. Infinitely many fixed points, padding, and a self-printing universal code
 
@@ -114,13 +111,15 @@ by `#print axioms` in a scratch file importing this one.
   statement measure no axioms.
 - No proof of it was found without choice. Mathlib's `fixed_point₂` carries choice in its
   statement: its hypothesis `Partrec₂ f` measures the triple, through `Primcodable.prod`, while
-  `Partrec` measures `[propext]` and `Nat.Partrec` none. `fixed_point`, `exists_code`,
-  `eval_part`, `eval_curry`, `primrec₂_curry` and `evaln` each carry it. Mathlib's other
-  recursion theorem, `fixed_point : Computable f → ∃ c, eval (f c) = eval c` for
-  `f : Code → Code`, avoids `Partrec₂` and still carries choice in its statement: that
-  statement, restated as a `Prop`, measures the triple, because `Computable` at `Code`
-  resolves through `Primcodable.ofDenumerable Code`, which measures the triple, while
-  `Computable` itself measures `[propext]`. Not located as of 2026-10-04 by these
+  `Partrec` measures `[propext]` and `Nat.Partrec` none. `exists_code`, `eval_part`,
+  `eval_curry`, `primrec₂_curry` and `evaln` each carry it. Mathlib's other recursion theorem,
+  `fixed_point : Computable f → ∃ c, eval (f c) = eval c` for `f : Code → Code`, avoids
+  `Partrec₂` and still carries choice in its statement: that statement, restated as a `Prop`,
+  measures the triple, while `Computable` itself measures `[propext]`. `Computable` at `Code` uses
+  the instance `Primcodable.ofDenumerable Code` (`#synth Primcodable Code`), and the choice comes
+  from its `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, which measures the
+  triple (as does `ofNatCode`, above). `Primcodable.ofDenumerable` itself measures
+  `[propext, Quot.sound]`. Not located as of 2026-10-04 by these
   measurements: a recursion theorem whose statement is choice-free, and a universal code whose
   correctness is proved without `eval_part`. Neither was attempted here. The footprint stays
   UNCLASSIFIED: a proof's footprint, not a theorem's necessity.
