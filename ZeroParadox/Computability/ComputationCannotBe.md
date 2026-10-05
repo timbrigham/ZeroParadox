@@ -4,11 +4,13 @@ Ride-along for `ZeroParadox/Computability/ComputationCannotBe.lean`.
 
 ## Formal Overview (AI-assisted)
 
-One of five `*CannotBe.lean` indexes, beside `ZeroParadox/BottomCannotBe.lean`,
-`ZeroParadox/Order/SnapCannotBe.lean`, `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` and
-`ZeroParadox/Category/ChoiceCannotBe.lean`. Those pin the bottom, the snap, ε₀ and the framework's
-relationship to `Classical.choice`; this one pins the **computational face**, and in particular the
-line between what is proved and what is committed.
+An index of what this corpus proves, and what it assumes, about computation: Kleene's second
+recursion theorem and its fixed points, the undecidability of halting, Rice's theorem, self-printing
+codes, and halting read as occurrence. It keeps the line between what is proved and what is
+committed. In the framework's terms it is the **computational face**, one of five `*CannotBe.lean`
+indexes, beside `ZeroParadox/BottomCannotBe.lean`, `ZeroParadox/Order/SnapCannotBe.lean`,
+`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` and `ZeroParadox/Category/ChoiceCannotBe.lean`, which
+index the bottom, the snap, ε₀ and the framework's relationship to `Classical.choice`.
 
 Its `#check` lines state no new results: each names an already-proven declaration in its home file,
 so the `import`s recompile those files and the index cannot point at a dead or renamed result. Its

@@ -1,6 +1,6 @@
 # PricedInterface — ride-along documentation
 
-Moved from `ZeroParadox/Ordinal/PricedInterface.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
+Long form of `ZeroParadox/Ordinal/PricedInterface.lean`.
 
 ## What this file is
 
@@ -39,9 +39,8 @@ does crossing cost*.
 Measured by `#print axioms` (the purity check at the bottom of `ZeroParadox/Ordinal/PricedInterface.lean` is the instrument; these are
 the numbers it reported, not the numbers that were hoped for):
 
-⚠ **The per-declaration numbers are NOT reproduced here.** An earlier draft listed every name against
-its footprint; the list then went stale the moment two declarations were added, which is this project's
-most reliably recurring defect. **The block at the bottom of the `.lean` file is the register — read it, do
+⚠ **The per-declaration numbers are NOT reproduced here.** A copied list goes stale the moment a
+declaration is added. **The block at the bottom of the `.lean` file is the register — read it, do
 not copy it.** What is stated here is only the shape it prints, which is the finding:
 
 * **Constructive side — choice-free, and not uniformly `[propext]`.** Footprints range from **no axioms
@@ -49,7 +48,7 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
   declaration on this side carries `Classical.choice`.
 * **The map — `Classical.choice`, uniformly.** Every declaration **in that block** whose statement
   mentions `Ordinal` reports `[propext, Classical.choice, Quot.sound]`, with no exceptions and no
-  gradation among them. ⚠ **Scoped to this block on purpose, and an earlier draft was not.** It is not
+  gradation among them. ⚠ **Scoped to this block on purpose.** It is not
   a fact about `Ordinal`-mentioning statements in general: `order_footprint_eq : ∀ (a : Ordinal), a = a`
   measures `[propext, Quot.sound]`, and § *Why this file exists* above cites that very theorem. Mentioning
   `Ordinal` is not what costs choice; reaching its **order instance** is.
@@ -57,8 +56,8 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
   footprint, but so does `not_pure_of_two_support` — a PMF lemma with no `Ordinal` in its statement at
   all. **Measured**, and that measurement is the exhibited witness the claim needs: its choice is
   inherited from Mathlib's PMF layer and would be there with or without the crossing. It is printed in that block because `PricedInterface.lean` is where it is proved.
-  ⚠ **This does NOT extend to `repr_collision`, and a first draft of this bullet swept it in by calling
-  both "the two PMF declarations".** `repr_collision` contains no `PMF` in its statement or its proof —
+  ⚠ **This does NOT extend to `repr_collision`; the two are not both PMF declarations.**
+  `repr_collision` contains no `PMF` in its statement or its proof —
   it is `e0Repr_not_injective` plus `Function.not_injective_iff`. It is a **crossing** declaration, it
   belongs exactly where the block files it, and it prices the crossing like every other one.
 
@@ -126,7 +125,8 @@ comparator **agrees** with the semantic order. The first is `repr_lt_epsilon0`, 
 
 The third **fails on this carrier as stated**, and that is a fact about raw `ONote`, not an
 omission: `e0Repr_not_injective` exhibits two distinct notations with the same denotation, so
-the comparator cannot agree with the semantic order on raw syntax. Mathlib's positive counterpart
+the comparator cannot agree with the semantic order on raw syntax (the `example` after
+`e0Repr_not_injective`: two points strictly ordered in the carrier with equal denotations). Mathlib's positive counterpart
 (`ONote.repr_inj`) requires the `NF` normal-form predicate on both arguments — and `NF` is itself
 defined through `repr`, which is why the constructive development stays off it;
 `repr_surj_below_epsilon0` uses `NF` on the crossing side only. So: **`E0Note` is
@@ -196,8 +196,12 @@ re-derivation of hydra-battles' `T1.v` order construction, as that file records.
 **The "two faces of one interface" framing is our presentation, not a discovered correspondence.** The
 framework pairs a logic-side modality (`dnegNucleus`, `ZeroParadox/Category/DoubleNegationNucleus.lean`
 — the double-negation nucleus) with the carrier-side map here, and presents the two as two faces of one
-constructive/classical boundary. A prior-art search for that pairing returned **"searched, none found."**
-Each half is separately canonical — the ¬¬-translation is Gödel–Gentzen–Kolmogorov, with Glivenko's
+constructive/classical boundary. No prior work pairing the two was located as of 2026-10-04, searched
+as follows: theoremsearch, three phrasings (the double-negation nucleus with an ordinal-notation
+denotation map; the negative translation compared with interpreting notations into classical ordinals;
+the classical price localized at a denotation map together with the double-negation topology). Each
+returned double-negation or negative-translation results only, and that tool's null is uninformative,
+so this is not a claim that none exists. Each half is separately canonical — the ¬¬-translation is Gödel–Gentzen–Kolmogorov, with Glivenko's
 variant and the CPS transform under Curry–Howard as its recognized computational reading; the
 carrier-side map is `ON_correct` / `repr` per above. **The pairing is a presentational choice of ours.**
 No theorem here relates the two faces, and none is claimed.
