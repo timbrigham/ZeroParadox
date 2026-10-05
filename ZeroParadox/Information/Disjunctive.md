@@ -48,6 +48,8 @@ The almost-sure result is the infinite monkey theorem, proved here by the second
 - `codeWord` and every § IV theorem carry `Classical.choice`, through `Encodable.encode` on `Code`
   (the `Denumerable Code` instance; see `ZeroParadox/Category/ChoiceCannotBe.lean` § III and
   `ZeroParadox/Computability/Kleene.lean` § VII).
+- `not_disjunctive_of_periodic` and `disjunctive_not_periodic` (§ V) carry `Classical.choice`,
+  measured 2026-10-04; the proof uses `Filter.Frequently.exists`, measured with it above.
 
 ## Fences
 

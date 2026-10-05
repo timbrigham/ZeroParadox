@@ -632,7 +632,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1853,
+        "declarations": 1856,
         "files": 156
       },
       "entries": [
@@ -5052,6 +5052,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0ebedff5-512f-4021-8f22-f61fbbdc259f",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_disjunctive_of_periodic",
+            "short": "not_disjunctive_of_periodic"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.not_disjunctive_of_periodic",
+            "short": "not_disjunctive_of_periodic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "lane P: Disjunctive § V, no full self-copy (periodic tape is not disjunctive)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32598,6 +32635,43 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "796e1520-095e-4ce1-a46a-1551dc1a2bfe",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfPrints_universal_address",
+            "short": "selfPrints_universal_address"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfPrints_universal_address",
+            "short": "selfPrints_universal_address",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "lane P: ZP-K § VIII address lemma (replicas differ only on channel 0)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "MC1-cat-valuation"
             ]
@@ -43022,6 +43096,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a1eaa5ba-d2da-4a25-a9ec-8e5791d9f088",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.disjunctive_not_periodic",
+            "short": "disjunctive_not_periodic"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.disjunctive_not_periodic",
+            "short": "disjunctive_not_periodic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "lane P: Disjunctive § V, no full self-copy (periodic tape is not disjunctive)",
           "verify": {
             "axioms": null,
             "sorry_free": true

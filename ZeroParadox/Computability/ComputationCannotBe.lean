@@ -5,6 +5,7 @@ import ZeroParadox.Computability.GroundZero
 import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Category.DiagonalWitness
 import ZeroParadox.Settheory.Wall
+import ZeroParadox.Information.Disjunctive
 
 /-!
 # Machine-checked characterization index of COMPUTATION — what it can and cannot be
@@ -54,6 +55,12 @@ section ComputationCannotBeIndex
 --   claimed.
 #check @ZeroParadox.kleene_fixed_point_exists
 
+-- Statement: for partial computable `F`, the codes `c` with `eval c = F c` form an infinite set.
+#check @ZeroParadox.fixed_points_infinite
+
+-- Statement: the padding lemma: a partial recursive `g` has infinitely many codes `c`, `eval c = g`.
+#check @ZeroParadox.padding
+
 -- Statement: a code satisfying `IsComputationalQuine` exists, via the recursion theorem.
 #check @ZeroParadox.computational_quine_exists
 
@@ -95,6 +102,29 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 --   a different fact from this family, which is broad. Do not conflate them.
 #check @ZeroParadox.quine_period_is_goedel
 
+-- Statement: some code is both `SelfPrints` (channel `0` returns its own Gödel number) and
+--   `Universal` (channel `e + 1` agrees with the code numbered `e`).
+#check @ZeroParadox.selfref_universal_exists
+
+-- Statement: infinitely many codes are both `SelfPrints` and `Universal`.
+#check @ZeroParadox.selfref_universal_infinite
+
+-- Statement: CONTROL, some code is `Universal` and not `SelfPrints`.
+#check @ZeroParadox.universal_not_selfprints
+
+-- Statement: two `SelfPrints` codes with the same `eval` are the same code.
+-- Reading: computational self-reference has a uniqueness, at the level of behaviour.
+#check @ZeroParadox.selfprints_behaviour_injective
+
+-- Statement: two `SelfPrints ∧ Universal` codes agree on every channel `e + 1`, and two distinct
+--   ones differ on channel `0`.
+-- Reading: replicas share everything but the address; the next instance adds only the address.
+#check @ZeroParadox.selfPrints_universal_address
+
+-- Statement: a disjunctive tape `ℕ → Bool` equals its own shift by no `a > 0`.
+-- Reading: a tape carrying every code word holds no full copy of itself at any offset.
+#check @ZeroParadox.disjunctive_not_periodic
+
 /-! ### § IV. The bottom's computational face — PROVED vs COMMITTED -/
 
 -- Statement: for `q` in a `ZPSemilattice L` carrying `KleeneStructure`,
@@ -121,7 +151,7 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 
 -- Statement: `IsQuineAtom (bot : MachinePhase)` — c₀, ⊥ of `MachinePhase`, is its unique
 --   self-containing state. Mentions no `Code` and no execution. `machinePhaseAFA` defines
---   `selfMem x := x = bot`, so the statement holds by definition (`Iff.rfl` unfolds it), and the
+--   `selfMem x := x = bot`, so the statement holds by definition (the term `⟨rfl, fun _ h => h⟩` proves it), and the
 --   `example` after this theorem in
 --   `ZeroParadox/Computability/Kleene.lean` proves the same type with no Kleene instance.
 -- Reading: that c₀ is self-EXECUTING is DA-1's claim. DA-1's precondition is the occurrence
@@ -200,6 +230,10 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 -- Reading: that this is the framework's "occurrence". A modelling choice, not a theorem. Occurrence
 --   is then the halting question: semidecidable, not decidable (the next two entries).
 #check @ZeroParadox.occurs_iff_halts
+
+-- Statement: CONTROL, `Code.zero`, which is not universal, satisfies `Occurs` on every input.
+-- Reading: `Occurs` is a static property of a (code, input) pair.
+#check @ZeroParadox.zero_occurs
 
 -- Statement: `fun c => Occurs c n` is not a ComputablePred. Turing (1936) via Mathlib.
 #check @ZeroParadox.occurrence_undecidable
@@ -284,7 +318,8 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 -- Reading: a self-looping configuration's BEHAVIOUR and `natInfinity` are the same point of the
 --   final coalgebra of `X ↦ 1 + X`. The `=` is between two `Cofix` elements, within one type; the configuration
 --   `s : σ` is NOT equated with anything — it lives in a different type. It says nothing about
---   whether the FRAMEWORK's bottom self-loops — that is the commitment.
+--   whether the framework's ⊥, read as a configuration of a step function `f : σ → Option σ`
+--   (§ VI), self-loops — that is the commitment.
 #check @ZeroParadox.loop_unfolds_to_infinity
 
 -- Statement: with a three-valued head there IS a configuration neither halted nor stepping.
@@ -307,15 +342,16 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 --   stated in `ZeroParadox/Order/Snap.lean`'s Formal Overview, not from this line.
 #check @ZeroParadox.tsnap_holds_but_nothing_moves
 
-/-! ### § IX. Self-copy maps on infinite carriers — a map EXISTS, classically; nothing says it is applied -/
+/-! ### § IX. Self-copy maps on infinite carriers — a map EXISTS, classically; that one is applied is a commitment -/
 
 -- Statement: for `α : Type`, `α` is infinite iff it carries a `SelfCopyRef` map: one-to-one, not
 --   onto, with exactly one fixed point. The infinite-to-map direction is proved with
 --   `Classical.choice` and is not provable in set theory without choice (the `PurityCheck` note in
 --   `ZeroParadox/Computability/SelfCopyReference.lean`).
--- Reading: SCOPE. This is the existence of such a map, not that one is applied. No carrier of the
---   framework is claimed here to perform one: `MachinePhase`, which carries `machinePhaseKleene`,
---   admits none (the `example` below).
+-- Reading: SCOPE. This is the existence of such a map, not that one is applied. That ⊥ on an
+--   infinite carrier performs one is a commitment (`ZeroParadox/Computability/SelfCopyReference.lean`
+--   § IV); `MachinePhase`, the two-phase rounding that carries `machinePhaseKleene`, admits none
+--   (the `example` below).
 #check @ZeroParadox.infinite_iff_exists_selfCopyRef
 
 -- Statement: for finite `α : Type`, no `SelfCopyRef` map exists.
