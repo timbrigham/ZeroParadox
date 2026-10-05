@@ -47,6 +47,8 @@ import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Multihomed.BoundaryOrder
 import ZeroParadox.Valuation.InfinitudeFloor
 import ZeroParadox.Valuation.Scale
+import ZeroParadox.Information.Disjunctive
+import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
 import Mathlib.CategoryTheory.Endofunctor.Algebra
@@ -463,5 +465,41 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 #check @ZeroParadox.fullMix_not_injective
 -- Statement: an eigenmode with `|λ| < 1` has `‖(T f)^[m] v‖ → 0`.
 #check @ZeroParadox.tendsto_norm_iterate_zero
+
+/-! ### The infinitude in two charts: content and self -/
+
+-- Reading: COINCIDENCE, two charts of one tape; the entries below, the Reading at the end.
+-- Statement: Mathlib's `sub_self`: in any additive group, `x - x = 0`.
+#check @sub_self
+-- Statement: in ℤ_[2], every `x` has self-difference ℤ_[2]'s 0, and that 0 has additive valuation ⊤
+-- under the 2-adic multiplicity valuation `AddValuation ℤ_[2] ℕ∞` (`addVal_bot`, § POSITIVE).
+example (x : ℤ_[2]) : x - x = 0 ∧ multiplicity_addValuation PadicInt.prime_p (x - x) = ⊤ :=
+  ⟨sub_self x, by rw [sub_self]; exact ZeroParadox.addVal_bot _⟩
+-- Statement: Mathlib's `dist_eq_norm`: in a seminormed additive commutative group, `dist a b = ‖a - b‖`, so every
+-- comparison of two points is the norm of their difference, measured from 0.
+#check @dist_eq_norm
+-- Statement: a tape `ℕ → Bool` is disjunctive when every finite word occurs in it infinitely often.
+#check @ZeroParadox.Disjunctive
+-- Statement: control, the all-false tape is not disjunctive.
+#check @ZeroParadox.allFalse_not_disjunctive
+-- Statement: in `ℕ → Bool` under the pointwise order, ⊥ is the all-false tape.
+example : (⊥ : ℕ → Bool) = fun _ => false := rfl
+-- Statement: under pointwise exclusive-or, every tape's self-difference is the all-false tape, so
+-- a tape read against itself is never disjunctive.
+example (x : ℕ → Bool) : (fun n => xor (x n) (x n)) = (fun _ => false) ∧
+    ¬ ZeroParadox.Disjunctive (fun n => xor (x n) (x n)) := by
+  have h : (fun n => xor (x n) (x n)) = (fun _ => false) := funext fun n => Bool.xor_self (x n)
+  exact ⟨h, h ▸ ZeroParadox.allFalse_not_disjunctive⟩
+-- Statement: read against the all-false tape, a tape is itself, so `champ` read that way is
+-- disjunctive.
+example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := by
+  simpa only [Bool.xor_false] using ZeroParadox.champ_disjunctive
+-- Reading: COINCIDENCE, Tim's reading: one tape, two charts, neither denied. Content chart: read
+-- against the reference all-false tape, ⊥ of `ℕ → Bool`, a tape is itself, and a disjunctive one
+-- carries every code word (`code_occurs_of_disjunctive`). Self chart: read against itself it is that
+-- all-false tape; in ℤ_[2] the self-difference is ℤ_[2]'s 0, of additive valuation ⊤ (the floor's
+-- `cx = ⊤`, `infinitude_forces_infinite_complexity`, `ZeroParadox/Valuation/InfinitudeFloor.lean`).
+-- That the framework's ⊥ is MAXIMALLY complex is Tim's commitment, stated as no equation with any
+-- one tape; disjunctive is the weaker, proved property (`ZeroParadox/Information/Disjunctive.lean`).
 
 end CannotBeIndex

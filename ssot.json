@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1822,
-        "files": 155
+        "declarations": 1853,
+        "files": 156
       },
       "entries": [
         {
@@ -2767,6 +2767,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "06f81679-c957-4700-8d9e-5e3a5178407d",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBlock_iIndepSet",
+            "short": "wordBlock_iIndepSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBlock_iIndepSet",
+            "short": "wordBlock_iIndepSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0712a9eb-ae4e-4cf1-ba36-549143d81551",
           "new": {
@@ -3010,6 +3047,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "08757dd3-933b-4bc8-aff5-48295380177e",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.untri_tri_add",
+            "short": "untri_tri_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.untri_tri_add",
+            "short": "untri_tri_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5605,6 +5679,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "11c80f96-025c-4822-968f-de8fece58041",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tri",
+            "short": "tri"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tri",
+            "short": "tri",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -8812,6 +8923,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1dd09101-2441-4b45-8241-4322eb33b406",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape",
+            "short": "fairTape"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape",
+            "short": "fairTape",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1df4ac94-e7f7-420c-9128-f9f5c6630383",
           "new": {
             "file": "ZeroParadox/Multihomed/SnapFrameChange.lean",
@@ -8914,6 +9062,44 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1e3f24a9-1aa2-4359-9770-d5116c02ee80",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.code_occurs_of_disjunctive",
+            "short": "code_occurs_of_disjunctive"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.code_occurs_of_disjunctive",
+            "short": "code_occurs_of_disjunctive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9169,6 +9355,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1fea35b0-ce0d-440c-b98e-915a5961c780",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.untriStep",
+            "short": "untriStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.untriStep",
+            "short": "untriStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12088,6 +12311,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "29e5b5d0-faee-4387-9a71-71341e65b87d",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.monkey_limsup",
+            "short": "monkey_limsup"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.monkey_limsup",
+            "short": "monkey_limsup",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2a4f865e-c299-4132-bb7d-346499367389",
           "new": {
@@ -13735,6 +13995,43 @@
             ]
           },
           "reason": "New 2026-09-16. (Part.mk p f).Dom = p by rfl — the structural fact that Part carries an arbitrary Prop, so section II stipulates nothing. Axiom-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "302e9c82-c75e-43fc-9b34-1c1173395871",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.disjunctive_iff_once",
+            "short": "disjunctive_iff_once"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.disjunctive_iff_once",
+            "short": "disjunctive_iff_once",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22028,6 +22325,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "50573fd2-821b-4340-adc0-0c576fe0ca7b",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBlock",
+            "short": "wordBlock"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBlock",
+            "short": "wordBlock",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "509370cb-df55-448c-a15f-2339dc1f4ea6",
           "new": {
             "file": "ZeroParadox/Algebra/Wheel.lean",
@@ -29989,6 +30323,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "70156f0f-1160-48c4-b2bc-4ca5465f7ff9",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeWord",
+            "short": "codeWord"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeWord",
+            "short": "codeWord",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "702de247-221e-4a4d-94a8-8c11d8f85b5f",
           "new": {
@@ -30055,6 +30427,43 @@
             ]
           },
           "reason": "phase-order arc r2 fixes: rename F3, extremal-placement characterization (P2), floor-above epsilon0 landing (P3)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "70f2e94e-1f3c-4ee2-83d3-a38f68a3f54b",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.untri",
+            "short": "untri"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.untri",
+            "short": "untri",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31266,6 +31675,43 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "758a83dd-6580-4458-84e2-16a7276397e0",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.champ_disjunctive",
+            "short": "champ_disjunctive"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.champ_disjunctive",
+            "short": "champ_disjunctive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34443,6 +34889,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "820c2504-46a1-4245-9236-6f5720d1c8a1",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeWord_has_true",
+            "short": "codeWord_has_true"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeWord_has_true",
+            "short": "codeWord_has_true",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39729,6 +40213,44 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "96d0b94b-e2c0-4325-ab5f-eaeec5d17c8c",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.champ",
+            "short": "champ"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.champ",
+            "short": "champ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "node-category"
             ]
@@ -43358,6 +43880,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a67b132f-4183-4c91-85d5-bcbdf212529e",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeWord_determines",
+            "short": "codeWord_determines"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeWord_determines",
+            "short": "codeWord_determines",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a686f421-ef65-4375-9a1a-8a375e39d6dd",
           "new": {
             "file": "ZeroParadox/Ordinal/PricedInterface.lean",
@@ -43418,6 +43978,43 @@
             ]
           },
           "reason": "OutputSeparates.lean: for CONSTANT-ARITY polynomial functors the HEAD type decides whether the final coalgebra is a single point, and the arity does not. Two Lean instances of Rutten TCS 249 (2000) Ex 10.2(5) p.44 (final system of A x S^B is A^{B*}); no new mathematics. RETRACTED FRAMING: an earlier reason on these entries said 'emission, not arity, separates' - false, since natPF_NatListRegime has the same Bool head type and a one-point non-terminating part; it is a dependent-arity functor covered by Rutten 10.2(4)/(6), not by 10.2(5).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a6eba2bf-edbf-47f3-80bb-4a1ba7ab2779",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_wordBlock",
+            "short": "fairTape_wordBlock"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_wordBlock",
+            "short": "fairTape_wordBlock",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43494,6 +44091,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a6fab20f-42ae-4844-870e-fe944ef33750",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.DisjunctiveOnce",
+            "short": "DisjunctiveOnce"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.DisjunctiveOnce",
+            "short": "DisjunctiveOnce",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47871,6 +48505,81 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b6d9a9bc-8e8c-489a-8d5c-46b56bb3e07a",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.allFalse_misses_code",
+            "short": "allFalse_misses_code"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.allFalse_misses_code",
+            "short": "allFalse_misses_code",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b6dd0ef1-7fc4-4de9-bd58-97e8dbb413ea",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.occurs_past_of_once",
+            "short": "occurs_past_of_once"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.occurs_past_of_once",
+            "short": "occurs_past_of_once",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b7211bd9-e0f6-4600-83ac-e1422f68df70",
           "new": {
@@ -48943,6 +49652,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bb23e23c-365a-4a5c-908e-2604b23ed5e5",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitAt",
+            "short": "bitAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitAt",
+            "short": "bitAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bb2a845f-199b-4a32-9e31-97f071ce357b",
           "new": {
             "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
@@ -49112,6 +49858,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bc6fbbc0-ba61-4613-a869-9b6bcf8ad21a",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeWord_zero_width",
+            "short": "codeWord_zero_width"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeWord_zero_width",
+            "short": "codeWord_zero_width",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -51005,6 +51789,43 @@
             ]
           },
           "reason": "Bridge 2: W.dest and M.dest are fixed points in AMM's sense (structure map invertible)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c49664b5-9e6e-4b18-948c-cdbd80641624",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bitAt_ofBits",
+            "short": "bitAt_ofBits"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.bitAt_ofBits",
+            "short": "bitAt_ofBits",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -53275,6 +54096,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cca917f3-f6df-4798-b4e2-141e164f388b",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ofBits",
+            "short": "ofBits"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ofBits",
+            "short": "ofBits",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ccb4209e-e226-48f0-ae09-ba9e4ccf221b",
           "new": {
             "file": "ZeroParadox/Ordinal/NaturalOpsPow.lean",
@@ -54444,6 +55302,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d185928e-fbf7-4ed6-b846-567dda32c094",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.champ_disjunctiveOnce",
+            "short": "champ_disjunctiveOnce"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.champ_disjunctiveOnce",
+            "short": "champ_disjunctiveOnce",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -55814,6 +56709,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d72c2728-5db7-495a-8b02-f418371fc630",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Disjunctive",
+            "short": "Disjunctive"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Disjunctive",
+            "short": "Disjunctive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -57275,6 +58207,43 @@
             ]
           },
           "reason": "The bridge: computational live/dead IS the well-foundedness (nu/mu) divide, joining Occurrence.lean to Multihomed/Boundary.lean's floor_not_wellFounded and Settheory/Wall.lean's wf_no_selfloop.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dbbd190d-2e02-41fe-af7b-1842b8c5637f",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_pi_singleton",
+            "short": "fairTape_pi_singleton"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_pi_singleton",
+            "short": "fairTape_pi_singleton",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -61221,6 +62190,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e9980d8f-aad6-4f2c-aff4-c390f23883cb",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_biInter_wordBlock",
+            "short": "fairTape_biInter_wordBlock"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_biInter_wordBlock",
+            "short": "fairTape_biInter_wordBlock",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e9a0c6e4-966f-42c1-a736-6004b8da0250",
           "new": {
@@ -62470,6 +63476,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f02c5822-8258-4639-b62d-ca7da847d40d",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_disjunctive_ae",
+            "short": "fairTape_disjunctive_ae"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fairTape_disjunctive_ae",
+            "short": "fairTape_disjunctive_ae",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f0369d1b-1b98-4503-93aa-0f3e349f25d3",
           "new": {
@@ -63228,6 +64271,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f3464db6-5a1c-4e96-9248-a7e6a5c2933e",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.allFalse_not_disjunctive",
+            "short": "allFalse_not_disjunctive"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.allFalse_not_disjunctive",
+            "short": "allFalse_not_disjunctive",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -65386,6 +66466,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fa42642b-34b7-45d5-829d-843ac5af9cc2",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.champ_primrec",
+            "short": "champ_primrec"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.champ_primrec",
+            "short": "champ_primrec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fa4743b3-9d35-40b2-bdc2-129a2f5008c0",
           "new": {
@@ -66484,6 +67602,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fd0d83e5-47e3-42c8-9931-15b2781fd8ad",
+          "new": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBlock_measurable",
+            "short": "wordBlock_measurable"
+          },
+          "old": {
+            "file": "ZeroParadox/Information/Disjunctive.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wordBlock_measurable",
+            "short": "wordBlock_measurable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
           "verify": {
             "axioms": null,
             "sorry_free": true
