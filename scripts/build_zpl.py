@@ -708,8 +708,11 @@ def build():
             'bot_self_mem, which measures no axioms.',
             'These are standard Mathlib infrastructure axioms (ordinal theory, p-adic '
             'analysis, computability). They are not ZP-L commitments.',
-            'The footprints are not uniform; ZP-K Section IV tabulates the measurements. '
-            'ZP-K\'s machinePhaseKleene picks botCode with Classical.choose, which is '
+            'The footprints across the ZP layers are not uniform; ZP-K Section IV tabulates the '
+            'measurements. In the computability layer, Rogers\' fixed-point theorem as Mathlib '
+            'states it carries Classical.choice in its statement, through Mathlib\'s numbering of '
+            'program codes (the Denumerable Code instance; ZeroParadox/Computability/Kleene.md '
+            '§ VIII). ZP-K\'s machinePhaseKleene also picks botCode with Classical.choose, which is '
             'what makes that instance noncomputable. The Classical.choice in the Theorem Summary\'s '
             'footprints is expected and documented.',
             'Zero sorry in Gentzen.lean. Verified: lake build, May 2026.',

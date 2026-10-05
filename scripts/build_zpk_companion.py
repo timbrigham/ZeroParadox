@@ -274,8 +274,8 @@ def build():
         'occurrence commitment.'))
     E.append(cbody(
         '<b>Path 3 (Computational — Kleene):</b> No shorter program generates ⊥. That rules out a '
-        'shorter outside generator, not an inert string, so Path 3 shows that executing is not '
-        'derivable from incompressibility. <b>The reading that ⊥ is its own program — a Kleene '
+        'shorter outside generator, not an inert string, so Path 3 does not derive executing '
+        'from incompressibility. <b>The reading that ⊥ is its own program — a Kleene '
         'fixed point of self-application — is not a Lean result.</b> ZP-K supplies botCode_is_quine as a requirement of '
         'the KleeneStructure class, assumed when the structure is built rather than derived; and '
         'the condition it asks for is a periodicity condition that even a constant code meets. '
@@ -477,8 +477,8 @@ def build():
         'da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proves the structural half only - '
         'it mentions no code and no execution. '
         'DA-1 Path 1 (structural): its Lean counterpart is proved, and Path 1 rules out an external '
-        'executor, not an inert &#8869;. Path 3 (computational) shows that executing '
-        'is not derivable from incompressibility; its Lean counterpart is a class field, assumed '
+        'executor, not an inert &#8869;. Path 3 (computational) does not derive executing '
+        'from incompressibility; its Lean counterpart is a class field, assumed '
         'rather than derived.'))
     E.append(sp(6))
 

@@ -139,10 +139,11 @@ the boundary and its scope fence. -/
 -- kernel realizes the arrow as a derivation, not a reusable theorem).
 -- DIRECTION, stated precisely. Diaconescu's theorem is
 -- an EQUIVALENCE for this restricted shape (choice for inhabited subobjects of a two-element object IS
--- excluded middle); "the converse fails" belongs to FULL AC and is Cohen 1963, not Diaconescu. That the
--- fragment nonetheless does not follow from `ExcludedMiddle` *in Lean* is a fact about Lean's
--- `Prop`/`Type` stratification, measured in `ZeroParadox/Category/ExcludedMiddleBridge.lean`, and is the framework's own
--- finding rather than Diaconescu's.
+-- excluded middle); "the converse fails" belongs to FULL AC and is Cohen 1963, not Diaconescu.
+-- Reading: in `ZeroParadox/Category/ExcludedMiddleBridge.lean` the natural construction of the fragment
+-- from `ExcludedMiddle` fails to elaborate without `classical`, and a candidate explanation is Lean's
+-- `Prop`/`Type` stratification. A failed construction is not a non-derivability result, so this is a
+-- candidate, not a finding.
 #check @ZeroParadox.em_of_choiceFragment
 
 -- THE SCOPE FENCE. Excluded middle does NOT make an arbitrary Heyting algebra Boolean: the middle
