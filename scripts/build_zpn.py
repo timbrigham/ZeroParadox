@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-N: The Constructive Snap PDF Builder
-Version 2.0 | July 2026
+Version 2.1 | October 2026
 
 v2.0: Major revision. Corrects v1.0's mechanism and adds the construction it was missing.
 
@@ -17,10 +17,11 @@ layer's genuine content). The classical dependency in the ε₀ results comes fr
 instance and operations, which are genuinely non-constructive — comparability of arbitrary well-orders
 implies excluded middle (em_of_wellOrder_comparable; the taboo is Kraus / Nordvall Forsberg / Xu,
 arXiv:2104.02549 Thm 38(d), cited not claimed) — and genuinely more than ε₀ needs. And here is a
-carrier sized to the job: E0Note = WithTop ONote, whose crossing into Ordinal is one named map with a
-measured price (PricedInterface.lean; carrier choice-free, crossing carries choice at every decl).
-Construction credited to Castéran (hydra-battles ON_plus / ON_correct; those files carry his name
-alone, the library as a whole is his and Contejean's).
+carrier of notations denoting the ordinals up to ε₀: E0Note = WithTop SynONote, whose crossing into
+Ordinal is one named map with a measured price (PricedInterface.lean; carrier choice-free, crossing
+carries choice at every decl). Its shape is credited to Castéran (hydra-battles ON_plus / ON_correct;
+those files carry his name alone, the library as a whole is his and Contejean's); it is not an
+instance of ON_plus, because its order is not well-founded (the example in PricedInterface.lean).
 
 Lean: ConstructiveOrdinals.lean, SnapNucleusConstructive.lean, OrdinalChoiceEssential.lean,
 PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
@@ -29,7 +30,7 @@ PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '2.0'
+VERSION = '2.1'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -50,8 +51,8 @@ def build():
         Paragraph(
             '<i>The constructive companion to ZP-L. The snap-from-below is rebuilt syntactically on '
             'ordinal notations (ONote), where it is choice-free &#8212; [propext] only. Beside it: a '
-            'carrier sized to &#949;<sub>0</sub> whose crossing into Mathlib&#8217;s Ordinal is one '
-            'named map with a measured price, and a proof that the generality ZP-L borrows is '
+            'carrier of notations denoting the ordinals up to &#949;<sub>0</sub>, whose crossing into '
+            'Mathlib&#8217;s Ordinal is one named map with a measured price, and a proof that the generality ZP-L borrows is '
             'genuinely non-constructive. Proved sorry-free in Lean 4.</i>',
             S['note']),
         sp(10),
@@ -73,7 +74,8 @@ def build():
         'here supplies one.'))
     E.append(body(
         'So this layer does two things. It rebuilds the ascent syntactically, where it is choice-free. '
-        'And it builds a carrier sized to &#949;<sub>0</sub> &#8212; ordinal notations with one point '
+        'And it builds a carrier of notations denoting the ordinals up to &#949;<sub>0</sub> &#8212; '
+        'ordinal notations with one point '
         'adjoined on top &#8212; where the crossing into Mathlib&#8217;s semantic ordinals is a single '
         'named map whose cost can be read off directly. Staying on the notation side is free of choice; '
         'crossing is not; and the crossing is one function rather than a diffuse dependency.'))
@@ -220,7 +222,8 @@ def build():
     E.append(sp(6))
 
     E.append(body(
-        'That diagnosis suggests its own remedy: build a carrier sized to the job. E0Note is ordinal '
+        'That diagnosis suggests its own remedy: build a carrier of notations denoting the ordinals up '
+        'to &#949;<sub>0</sub>. E0Note is ordinal '
         'notations with a single point adjoined on top, that point standing for &#949;<sub>0</sub>. '
         'Below the top, comparison is the existing syntactic comparator and stays decidable; the map '
         'e0Repr sends the carrier into Mathlib&#8217;s Ordinal. Measured, the boundary is priced: the '
@@ -235,19 +238,29 @@ def build():
             'operator to fix the adjoined point makes the closure exist by fiat at the added point; '
             'only its uniqueness is a theorem. This does not weaken no_snap_closure, which says no '
             'such closure exists on the notations alone.',
-            'E0Note is a notation system for <b>&#949;<sub>0</sub> + 1</b>, not for &#949;<sub>0</sub>. '
+            'E0Note&#8217;s points denote the ordinals up to &#949;<sub>0</sub>: those below '
+            '&#949;<sub>0</sub>, and &#949;<sub>0</sub> itself at the adjoined top. Its own order is '
+            '<b>not</b> well-founded, so it is not a notation system for &#949;<sub>0</sub> + 1 in the '
+            'well-ordered sense (the example stating not WellFoundedLT E0Note, in '
+            'ZeroParadox/Ordinal/PricedInterface.lean). '
             'The standard alternative is a Veblen system where &#949;<sub>0</sub> is an ordinary term; '
             'the top&#8217;s honest advantage is that it is minimal and leaves the comparator untouched.',
-            'Correctness in Cast&#233;ran&#8217;s sense (ON_correct) is <b>not</b> claimed: on raw '
-            'notations the representation map is not injective, which e0Repr_not_injective proves. '
+            'e0Repr is <b>not</b> a member of Cast&#233;ran&#8217;s ON_correct class, and the first reason '
+            'comes before any field: ON_correct is stated over an ON, whose order must be well-founded '
+            '(ON_wf), and E0Note&#8217;s order is not (the bullet above). Read one by one, its three '
+            'fields go as follows. Two hold: every point denotes at or below &#949;<sub>0</sub> '
+            '(e0Repr_le_epsilon0, from repr_lt_epsilon0), and e0Repr is onto the ordinals at or below '
+            '&#949;<sub>0</sub> (from repr_surj_below_epsilon0). The comparator field fails: on raw '
+            'notations the representation map is not injective (e0Repr_not_injective). See '
+            'ZeroParadox/Ordinal/PricedInterface.md, &#8220;What is NOT proved here&#8221;. '
             'Restricting to normal forms is the standard repair and is not done here, because that '
             'predicate is itself defined through the representation map.',
-            'The construction is <b>not new</b>. The carrier is Cast&#233;ran&#8217;s generic sum of '
-            'notation systems (hydra-battles, ON_plus &#8212; that file carries his name alone, though '
-            'the library as a whole is his and Contejean&#8217;s) instantiated with a one-point right '
-            'summand. The map is an instance of the same <i>notion</i> his ON_correct defines, not a '
-            'member of that class: ON_correct has three fields and only the first is established here, '
-            'as the bullet above records. What is contributed is the measurement.',
+            'The construction is <b>not new</b>. The carrier has the shape of Cast&#233;ran&#8217;s '
+            'generic sum of notation systems (hydra-battles, ON_plus &#8212; that file carries his name '
+            'alone, though the library as a whole is his and Contejean&#8217;s) with a one-point right '
+            'summand, and is not an instance of it: ON_plus sums well-founded notation systems, and this '
+            'carrier&#8217;s order is not well-founded (the second bullet above). The map is likewise '
+            'not an ON_correct member (the bullet above). What is contributed is the measurement.',
         ]
     ))
     E.append(sp(6))
@@ -316,7 +329,7 @@ def build():
             'in the order instance the semantic statement passes through &#8212; where its classical '
             'content is load-bearing. Locating it is not eliminating it: whether those '
             '&#949;<sub>0</sub> results admit a choice-free re-proof is <b>unclassified</b>. Zero '
-            'sorry. Verified: lake build, July 2026.',
+            'sorry. Verified: lake build, October 2026.',
         ]
     ))
     E.append(sp(6))
@@ -328,7 +341,8 @@ def build():
             'choice-free ([propext] only): exp_lt_term, omegaPow_no_fixedpoint, tower_strictMono | '
             'the classical dependency is in Mathlib&#8217;s order instance, where comparing arbitrary '
             'well-orders implies excluded middle (taboo cited to Kraus, Nordvall Forsberg and Xu) | '
-            'a carrier sized to &#949;<sub>0</sub>, with the crossing priced at one named map | '
+            'a carrier of notations denoting the ordinals up to &#949;<sub>0</sub>, with the crossing '
+            'priced at one named map | '
             'minimality (&#949;<sub>0</sub> the least fixed point) open.</i>',
             S['endnote']),
     ]
