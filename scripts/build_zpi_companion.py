@@ -349,8 +349,8 @@ def build():
         Paragraph('Inside Zero', CS['subtitle']),
         Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
-            'This companion explains in plain language how an ascending chain of p-adic '
-            'states converges, in the 2-adic metric, to zero  - and why the framework READS that '
+            'This companion explains in plain language how a 2-adic depth chain S₀, S₁, S₂, ... '
+            'converges, in the 2-adic metric, to zero  - and why the framework READS that '
             'limit as filling the bottom role again. Both that reading and whether the result is a '
             'NEW bottom or the one it started from are commitments of the framework, not things the '
             'chain proves. This is one result in the '
@@ -375,7 +375,7 @@ def build():
         'not, what comes next?'))
     E.append(cbody(
         'ZP-I answers both questions with a single theorem: <b>T-IZ (Inside Zero)</b>. '
-        'Every maximal ascending chain satisfying the IsDepthChain and IsStrictStateSequence conditions converges  - in the '
+        'Every 2-adic depth chain S₀, S₁, S₂, ... with no zero term, satisfying the IsDepthChain and IsStrictStateSequence conditions, converges  - in the '
         '2-adic metric  - to zero, which the framework reads as the bottom role and then as a successor null. '
         'The chain does not go on forever; it reaches its limit at the ordinal limit, and on those '
         'readings the cycle begins again. The '
@@ -493,15 +493,16 @@ def build():
         ['2. ⊥-role identification',
          'Anything satisfying the join-identity condition IS that lattice\'s bottom. '
          'That the Cauchy limit 0 ∈ Q₂ satisfies it is the theorem\'s HYPOTHESIS, not '
-         'its conclusion, and Q₂\'s field structure supplies no join (the corpus defines none), so the condition is not statable '
+         'its conclusion, and Q₂\'s field structure supplies no join (the corpus defines none on Q₂), so the condition is not statable '
          'there — the two are distinct members of the bottom family, not one object (MC-1). Reading the occupant as a NEW null ⊥′ is a further commitment (C-DA2).',
          'ZP-E DA-2  - proved in Lean (t_iz_limit_is_new_null, axiom-free). '
          '✓ (the role only, given the hypothesis; not the novelty)'],
-        ['3. DA-1, given a KleeneStructure',
+        ['3. ⊥ of L′ is its Quine atom, given a KleeneStructure',
          'Given a KleeneStructure on a semilattice L′ (ZP-K), the ⊥ of L′ is its Quine atom '
          '(da1_computational). That L′ is the successor of this limit is the occupancy and C-DA2 reading, not '
-         'established here. DA-1 itself needs DP-2 and DP-2\'s precondition, which the occurrence commitment '
-         'asserts and DA-1 consumes (ZP-E); this step supplies neither.',
+         'established here. DA-1 itself applies only on the limit reaching P₀ (which nothing here establishes), '
+         'and needs DP-2 and DP-2\'s precondition, which the occurrence commitment '
+         'asserts and DA-1 consumes (ZP-E); this step supplies none of these.',
          'da1_computational - proved in Lean, given the KleeneStructure instance ✓'],
         ['4. T-SNAP fires, on the reading that the limit fills the ⊥ role',
          'On that reading, at the computational fixed point T-SNAP fires: '
@@ -646,7 +647,8 @@ def build():
     E.append(cbody(
         '<b>Note on closure:</b> T-IZ does not establish a closed system. In Lean, t_iz_complete is a '
         'conjunction of results, not a chain: the convergence rests on the IsDepthChain modelling commitment, '
-        'the role step takes its property as the hypothesis h_role, which nothing here grounds, and DA-1 '
+        'the role step takes its property as the hypothesis h_role, which nothing here grounds, DA-1 applies '
+        'only on the limit reaching P₀ (which nothing here establishes), and DA-1 '
         'needs DP-2 and DP-2\'s precondition, which the occurrence commitment asserts and DA-1 consumes (above). Reading the limit as filling the ⊥ role is a commitment, and '
         'reading that role-filler as a new null ⊥′ is C-DA2, a further one. '
         'Whether the successor instantiation is part of a single formal structure or requires '
