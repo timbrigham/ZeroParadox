@@ -16,12 +16,30 @@ FIRST_RELEASED = 'April 2026'
 # PDF Rendering Standards require fix() on all rendered text, and the vocabulary gate
 # (prose_check) must see every string that renders, table cells and callout boxes included.
 # Rather than updating every call site, patch Paragraph here so it applies both.
+# Suppression is PER SITE: a `# ZP-NOCHECK: <reason>` on the line that calls Paragraph() (or box())
+# skips the check for that call only. prose_check() itself would resolve its caller to the line
+# below, where a single comment would silence the whole document, so that line is guarded at import.
+import inspect as _inspect
 _Paragraph_orig = Paragraph
 def Paragraph(text, style):
     if isinstance(text, str):
-        prose_check(text)
+        caller = _inspect.stack()[1]
+        site = (caller.code_context or [''])[0]
+        if '# ZP-NOCHECK' not in site:
+            try:
+                prose_check(text)
+            except SystemExit:
+                print(f'  Calling site: {os.path.basename(caller.filename)}:{caller.lineno}')
+                raise
         text = fix(text)
     return _Paragraph_orig(text, style)
+
+def _guard_wrapper_has_no_nocheck():
+    src = _inspect.getsource(Paragraph)
+    if 'ZP-NOCHECK' in ''.join(l for l in src.splitlines(True) if 'prose_check(text)' in l):
+        raise SystemExit('build_foreword.py: a ZP-NOCHECK on the Paragraph wrapper would disable '
+                         'the vocabulary gate for every Foreword string; suppress per call site instead.')
+_guard_wrapper_has_no_nocheck()
 
 # ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
@@ -75,9 +93,11 @@ def commitments_table():
         ('AX-G2', 'Axiom',
          'Source Asymmetry. No morphism returns to the initial object from outside. '
          'Not a novel commitment where the category is built from an order: there a morphism into the bottom '
-         'forces equality by antisymmetry (on the order of ℕ, isEmpty_hom_one_to_zero), and in any category '
-         'whose initial object is strict it follows (ax_g2_from_strict_initial). It is not automatic in every '
-         'category: in the Hilbert-space realization a morphism does return to the initial object (fD_has_return). '
+         'forces equality by antisymmetry (one instance: on the order of ℕ there is no morphism 1 → 0, '
+         'isEmpty_hom_one_to_zero), and in any category whose initial object is strict, every object not '
+         'isomorphic to it has no morphism into it (ax_g2_from_strict_initial). It is not automatic in every '
+         'category: in the Hilbert-space realization the zero morphism runs from each later stage back to the '
+         'zero module at stage 0 (fD_has_return), and stage 1 is not a zero object (leaf_not_isZero). '
          'ZP-B C3 is its topological analogue: no path in Q₂ returns to 0.'),
         ('MP-1',  'Principle',
          'Minimality of Representation. The representational base must be the minimum '
@@ -98,7 +118,7 @@ def commitments_table():
          'ZP-D Hilbert space) form one family, each a member characterized by shared criteria and the '
          'same diagonal fixed-point shape. Membership is proved per domain: mc1_correspondence '
          '(ZeroParadox/Multihomed/MC1Bridge.lean) bundles the realizations in three genuine categories '
-         '(Hilbert space, information, p-adic topology), and ZP-H&#8217;s four functors run into stand-in categories. The former '
+         '(Hilbert space, information, p-adic topology); in ZP-H, F<sub>B</sub>, F<sub>C</sub> and F<sub>D</sub> also have Lean functor terms into stand-in categories, and F<sub>A</sub> is the lattice ℕ under max read as a category. The former '
          'numerical identity — that the four are one object — is retired as ill-typed (object equality across '
          'categories does not typecheck and is not invariant under equivalence); what separates the members is '
          'proved property by property (seam_unique_among_named, ZeroParadox/Category/SeamUniqueness.lean, for the named bottoms, in a lattice with no top).'),
@@ -110,10 +130,11 @@ def commitments_table():
         ('CC-2',  'Forced Metatheoretic Commitment',
          '⊥ = {⊥}. The bottom element is self-containing, read under ZF+AFA as a Quine atom. '
          'Foundation cannot host it: ⊥ = {⊥} is a member of itself, which Foundation (the Axiom of '
-         'Regularity) forbids (no_quine_atom). That half is forced, and it runs one way: a host of a '
-         'self-membered bottom is not well-founded (quineHost_not_wellFounded). Run backwards it selects no '
+         'Regularity) forbids (no_quine_atom). That half is forced, and it runs one way: a host whose '
+         'bottom is its unique self-member is not well-founded (quineHost_not_wellFounded). Run backwards it selects no '
          'theory: which anti-foundation axiom to adopt is a further choice, and the framework adopts AFA as '
-         'the canonical host (ZP-E Remark R-AFA). '
+         'the canonical host (ZP-E Remark R-AFA). What remains a commitment is that a unique Quine atom is the '
+         'right requirement to demand, and the choice of AFA among the axioms meeting it. '
          'Fixed-point content formally verified in ZFC by ZP-J (ScaleBridge). '
          'The set-theoretic interpretation is given in ZF+AFA.'),
     ]
@@ -182,9 +203,9 @@ def build():
             'This raises two questions that are easy to state and surprisingly hard to answer. '
             'The first is structural: what are the properties of that starting element itself? '
             'Not what comes after it — that is the story of mathematics as we know it. '
-            'But the ground floor. The state before any state — called the bottom element (written ⊥). '
+            'But the ground floor. The state before any state — called the bottom element (written ⊥) of the framework&#8217;s state semilattice. '
             'The second question is generative: across all these frameworks, is there a common '
-            'account of what it means to transition from the bottom element to the first non-trivial '
+            'account of what it means to transition from that bottom element to the first non-trivial '
             'state? Can that emergence be given a rigorous, multi-framework description?',
             S['body']),
         Paragraph(
@@ -239,7 +260,7 @@ def build():
             'theory and discrete analysis on Q₂. It introduces the incompressibility '
             'threshold and establishes the informational cost of the zero-to-first-state '
             'transition as exactly one bit. It also establishes that the '
-            'act of execution is itself a state above the bottom element (c₁, the first running '
+            'act of execution is itself a state above c₀, the bottom element of the two-state machine carrier MachinePhase (c₁, the first running '
             'configuration), which allows the shape of the Binary Snap to be derived rather than assumed.',
             S['body']),
         Paragraph(
@@ -262,12 +283,13 @@ def build():
             'structurally different direction.',
             S['body']),
         Paragraph(
-            'ZP-H constructs four instantiation functors F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, '
-            'F<sub>D</sub>, one for each prior layer (lattice algebra, p-adic topology, information theory, '
-            'Hilbert space). Each runs from the depth order on ℕ into a stand-in category for its layer and '
-            'sends 0 to that category&#8217;s initial object. Three of them are also built into genuine '
-            'categories, bundled as mc1_correspondence (ZeroParadox/Multihomed/MC1Bridge.lean): there 0 is '
-            'initial in the Hilbert-space and information realizations and a limit in the p-adic one. That '
+            'ZP-H connects the categorical layer to each prior layer (lattice algebra, p-adic topology, '
+            'information theory, Hilbert space) through four instantiation functors F<sub>A</sub> to F<sub>D</sub>. '
+            'For F<sub>A</sub> the lattice ℕ under max, read as a category, has 0 initial. F<sub>B</sub>, '
+            'F<sub>C</sub> and F<sub>D</sub> have Lean functor terms running from the depth order on ℕ into '
+            'stand-in categories, and genuine-category versions bundled as mc1_correspondence '
+            '(ZeroParadox/Multihomed/MC1Bridge.lean): there the stage-0 object is initial in the Hilbert-space '
+            'and information realizations, and in the p-adic one the nested balls of Q₂ intersect in {0}. That '
             'the layers describe one object is the reading MC-1 retires; what the functors carry is each '
             'layer&#8217;s member of the bottom family.',
             S['body']),
@@ -301,10 +323,12 @@ def build():
             'The computational grounding layer (ZP-K) proves T-COMP: a three-way equivalence '
             'connecting the Quine atom, ⊥, and the join-identity element. Kleene\'s fixed point '
             'is not a fourth clause of it - the computational face enters as an assumption of the '
-            'KleeneStructure class. da1_closed_concrete proves the structural half of DA-1, that '
-            'c₀, the bottom of the two-state carrier MachinePhase, is a Quine atom; it mentions no code '
-            'and no execution. That c₀ is self-executing is DA-1&#8217;s claim, and DA-1&#8217;s '
-            'precondition is the occurrence commitment, which DA-1 consumes rather than proves (ZP-E Section IV).',
+            'KleeneStructure class. da1_closed_concrete, the Lean counterpart of DA-1&#8217;s structural '
+            'Path 1, proves that c₀, the bottom of the two-state carrier MachinePhase, is a Quine atom; it '
+            'mentions no code and no execution. DA-1&#8217;s claim is that, given its precondition, '
+            'instantiation at P<sub>0</sub> is an execution event moving the machine from c₀ to c₁; the '
+            'precondition is what the occurrence commitment asserts, and DA-1 consumes it rather than proves it '
+            '(ZP-E Section IV).',
             S['body']),
         Paragraph(
             'The incomputability convergence layer (ZP-L) establishes ε₀ — the first '
@@ -327,7 +351,7 @@ def build():
             'Every formal system rests on commitments it does not derive. The Zero Paradox '
             'framework is unusually explicit about its own. As of the current version, this '
             'framework introduces one novel axiom clause, and names it. Among the commitments stated explicitly: one substantive modeling '
-            'commitment (AX-B1), two structural commitments (AX-G1, AX-G2) grounded in prior layers except for '
+            'commitment (AX-B1), two structural commitments (AX-G1, AX-G2) grounded in prior layers (AX-G2 where the category is built from an order) except for '
             'AX-G1&#8217;s no-terminal half, which is ZP-G&#8217;s own, '
             'two methodological principles, and one design commitment. CC-1 is a Conditional Claim that ZP-J restates rather than forces, CC-2 '
             'is a Forced Metatheoretic Commitment, and MC-1 names the bottom family rather than a commitment:',
@@ -392,8 +416,9 @@ def build():
             '(⊥ = {⊥}). In computation it is read as the self-reproducing program, the fixed point of '
             'Kleene\'s recursion theorem — a process that runs on its own description. In the '
             '2-adic numbers it is the point infinitely divisible into itself, v₂(0) = ∞. '
-            'In category theory it is the initial object, the source from which every arrow '
-            'departs and to which none return. These are not loose analogies. The framework '
+            'In ZP-G&#8217;s category it is the initial object, the source from which every arrow '
+            'departs and to which none return (AX-G2); in the Hilbert-space realization, where the initial '
+            'object is the zero module, the zero morphism does return to it. These are not loose analogies. The framework '
             'read them as faces of one object: a self-referential fixed point. It proves '
             'the lattice, 2-adic and categorical faces in their own domains and carries the '
             'computational one as a requirement; that they are one object is the reading the next '
@@ -450,7 +475,7 @@ def build():
     ]
 
     story.append(box(
-        'Zero, the bottom element ⊥, remains indescribable by smooth calculus. It becomes fully '
+        'Zero, the bottom element ⊥ of the state semilattice, remains indescribable by smooth calculus. It becomes fully '
         'characterised by discrete calculus. The paradox is the precise boundary between '
         'these two regimes.'
     ))

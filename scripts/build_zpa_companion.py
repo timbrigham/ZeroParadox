@@ -1,16 +1,7 @@
 """
 Build ZP-A Illustrated Companion (v1.12)
-v1.10: FMC uniformity — "why AFA is the minimal required change" → "argued to be the minimal change".
-v1.9: Strip version number from companion footer.
-v1.8: Strip version number from ZP-A cross-reference in CC-2 section.
-v1.6: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
-monotonicity (T3), bottom-as-constituent (T2), four concrete examples.
-New in v1.3: CC-2 self-containment of ⊥ (Quine atom, ZF+AFA); R3 (DA-1 follows from CC-2).
-v1.4: AFA technical note now includes forward reference to ZP-J companion for plain-language
-Foundation/AFA explanation.
-v1.5: Forward reference to ZP-F added after [0,∞) example — ℝ as join-semilattice is fine
-      algebraically, but as a metric substrate for the snap it fails (ZP-F result).
+monotonicity (T3), bottom-as-constituent (T2), four concrete examples, and CC-2.
 """
 
 import os
