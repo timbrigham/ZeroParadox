@@ -155,13 +155,15 @@ def build():
         'Unbounded ascent is exactly the Cauchy convergence condition '
         '&#8214;S<sub>n</sub>&#8214;<sub>2</sub> &#8594; 0. The chain approaches the 2-adic depth of zero by going '
         'deeper into the p-adic structure — not by reversing direction. DA-1 and T-SNAP at the limit '
-        'are CONDITIONAL: on the reading that the limit fills the bottom role, and then on either of two '
-        'premises, neither established here. One is that the limit&#8217;s successor semilattice L&#8242; carries '
-        'a KleeneStructure (t_iz_complete takes the instance as a hypothesis and links L&#8242; to nothing; DA-1 '
-        'as a derived proposition is closed given DP-2 in ZP-E, and firing at this limit is a separate '
-        'question). The other is that the limit meets the incompressibility threshold P<sub>0</sub>, whose only '
-        'route in this document, the valuation-complexity bridge, is refuted (&#167; II.B). Each is a premise taken rather than '
-        'derived, as DA-1&#8217;s own precondition, the occurrence commitment, is. '
+        'are CONDITIONAL: on the reading that the limit fills the bottom role, and then on what DA-1 needs. '
+        'DA-1 needs DP-2 and DP-2&#8217;s precondition, that the configuration reaching the incompressibility '
+        'threshold P<sub>0</sub> is there in Sense B (a running machine&#8217;s current configuration) and not in '
+        'Sense A (an inert string); that precondition is what the occurrence commitment asserts, and DA-1 '
+        'consumes it and does not supply it (ZP-E &#167; IV). Nothing here establishes that the limit reaches '
+        'P<sub>0</sub>: the only route in this document, the valuation-complexity bridge, is refuted (&#167; II.B). '
+        't_iz_complete takes a KleeneStructure on the limit&#8217;s successor semilattice L&#8242; as a hypothesis and '
+        'links L&#8242; to nothing; its DA-1 conjunct, that L&#8242;&#8217;s &#8869; is its Quine atom, is the Lean '
+        'counterpart of DA-1&#8217;s Path 1, which does not derive the precondition. '
         'Calling the result a successor null &#8869;\' is a further commitment (C-DA2).',
         style='bodyI'))
     E.append(hr())
@@ -327,8 +329,8 @@ def build():
         [
             'Claim (REFUTED): v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; &#8658; '
             'K(S<sub>n</sub> | n) / |S<sub>n</sub>| &#8594; 1.',
-            'Counterexample: S<sub>n</sub> = 2<sup>n</sup>. Its 2-adic valuation is n (Mathlib: '
-            'padicValNat.prime_pow), so the premise holds, and the corpus&#8217;s ordinal tower read in '
+            'Counterexample: S<sub>n</sub> = 2<sup>n</sup>. Its 2-adic valuation is n (scaleChain_isDepthChain, '
+            'ZeroParadox/Valuation/ScaleDepthWitness.lean), so the premise holds, and the corpus&#8217;s ordinal tower read in '
             '&#8484;<sub>2</sub> has the same valuation profile (cnfToZp2_tower_valuation, '
             'ZeroParadox/Ordinal/Gentzen.lean). One fixed program computes S<sub>n</sub> from n, so '
             'K(S<sub>n</sub> | n) is bounded by a constant while |S<sub>n</sub>| = n + 1 bits, and the '
@@ -394,13 +396,14 @@ def build():
             'The framework then READS the limit as satisfying the bottom role — a step stated in a '
             'different type and not carried by T-IZ — and DA-2 supplies the one-directional fact '
             'that anything satisfying that role IS the bottom already present. On that reading, DA-1 and then '
-            'T-SNAP fire only CONDITIONALLY, on either of two premises, neither established here: that the '
-            'limit&#8217;s successor semilattice L&#8242; carries a KleeneStructure (t_iz_complete takes the instance as '
-            'a hypothesis, links L&#8242; to nothing, and its DA-1 conjunct is that L&#8242;&#8217;s &#8869; is its Quine atom; '
-            'DA-1 as a derived proposition is closed given DP-2 in ZP-E, and firing at this limit is a separate '
-            'question), or that the limit meets P<sub>0</sub>, whose only route in '
-            'this document, the bridge of &#167; II.B, is refuted. Each is a premise taken rather than derived, '
-            'as DA-1&#8217;s own precondition, the occurrence commitment, is. '
+            'T-SNAP are CONDITIONAL on what DA-1 needs. DA-1 needs DP-2 and DP-2&#8217;s precondition, that the '
+            'configuration reaching P<sub>0</sub> is there in Sense B (a running machine&#8217;s current configuration) '
+            'and not in Sense A (an inert string); that precondition is what the occurrence commitment asserts, '
+            'and DA-1 consumes it and does not supply it (ZP-E &#167; IV). Nothing here establishes that the limit '
+            'reaches P<sub>0</sub>: its only route in this document, the bridge of &#167; II.B, is refuted. '
+            't_iz_complete takes a KleeneStructure on the limit&#8217;s successor semilattice L&#8242; as a hypothesis and '
+            'links L&#8242; to nothing; its DA-1 conjunct, that L&#8242;&#8217;s &#8869; is its Quine atom, is the Lean '
+            'counterpart of DA-1&#8217;s Path 1, which does not derive the precondition. '
             'Reading the occupant as &#8869;\', a successor null for the next instantiation, is C-DA2, '
             'a modelling commitment, since nothing here produces a SECOND bottom.',
         ]
@@ -421,12 +424,15 @@ def build():
            'K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1. Step 2 is this step&#8217;s only route from the chain to that '
            'threshold, and with Step 2 refuted nothing here establishes that the limit meets the threshold.'),
         li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Throughout this document, "fires" narrates the commitment that instantiation occurs - before this note as well as after it - not a consequence of the theorem.'),
-        li('Step 4 — DA-1 fires, CONDITIONALLY: on this informational route, IF P<sub>0</sub> is met, a configuration at '
-           'P<sub>0</sub> would be a live execution event, not a static description. Step 3 does not establish that '
-           'the limit is at P<sub>0</sub>. The Lean route (t_iz_complete) instead takes a KleeneStructure on L&#8242; '
-           'as a hypothesis; neither premise is established here. Given one, DA-1 (ZP-E) applies, with the same three-path argument as in ZP-E § IV. '
+        li('Step 4 — DA-1, CONDITIONALLY: DA-1 needs DP-2 and DP-2&#8217;s precondition, that the configuration '
+           'reaching P<sub>0</sub> is there in Sense B (a running machine&#8217;s current configuration) and not in '
+           'Sense A (an inert string); that precondition is what the occurrence commitment asserts, and DA-1 '
+           'consumes it and does not supply it (ZP-E &#167; IV). Step 3 does not establish that '
+           'the limit is at P<sub>0</sub>. The Lean route (t_iz_complete) takes a KleeneStructure on L&#8242; '
+           'as a hypothesis; its DA-1 conjunct, that L&#8242;&#8217;s &#8869; is its Quine atom, is the Lean counterpart '
+           'of DA-1&#8217;s Path 1, which does not derive the precondition. Given what DA-1 needs, DA-1 (ZP-E) applies. '
            'The TrackedOutput formal core (DP-2, Snap.lean § VI) establishes the machine-state transition.'),
-        li('Step 5 — T-SNAP fires, on the same condition as Step 4: given DA-1, instantiation = execution, and T-SNAP (ZP-E) gives '
+        li('Step 5 — T-SNAP fires, on the same conditions as Step 4: given DA-1, instantiation = execution, and T-SNAP (ZP-E) gives '
            '&#8869; &#8744; &#949;<sub>0</sub> = &#949;<sub>0</sub>. '
            'Lean: t_snap_derived, proved axiom-free in Snap.lean. ✓ &#8212; the checkmark covers '
            'the transition SHAPE only. Reading the limit as a NEW &#8869;\' is a commitment; '
@@ -468,7 +474,7 @@ def build():
          'Follows from strict ascent + T3 — no-top supplies the room, not the growth',
          'Lean: t_iz_valuation_unbounded ✓ (proved; carries Classical.choice, Mathlib p-adic)'],
         ['v<sub>2</sub> → ∞ ⟹ K/|S| → 1 (REFUTED)',
-         'Counterexample S<sub>n</sub> = 2<sup>n</sup>: valuation n (padicValNat.prime_pow), '
+         'Counterexample S<sub>n</sub> = 2<sup>n</sup>: valuation n (scaleChain_isDepthChain), '
          'complexity given n bounded by the length of one fixed program printing 2<sup>n</sup> from n (not Lean)',
          'Not a proof dependency',
          'Refuted (&#167; II.B). Not required: formal spine is Steps 1 + 6; '
@@ -689,12 +695,14 @@ def build():
         'subtraction in (L, &#8744;, &#8869;) — R1 prohibits that. Two carriers carry the reading: the lattice '
         'chain begins at its semilattice&#8217;s &#8869; (CC-1) and ascends under T3, and the 2-adic depth chain, '
         'nowhere zero, converges to 0 &#8712; Q<sub>2</sub>. Reading that limit as filling the bottom role is '
-        'a commitment; on it, and on one of the two premises DA-1 needs (&#167; III), T-IZ + T-SNAP + DA-2 would close the branch. The '
+        'a commitment; on it, and on what DA-1 needs (&#167; III: DP-2 and DP-2&#8217;s precondition, a configuration '
+        'reaching P<sub>0</sub> in Sense B, which the occurrence commitment asserts and DA-1 consumes), '
+        'T-IZ + T-SNAP + DA-2 would close the branch. The '
         'CONVERGENCE is a theorem, given IsDepthChain (a modelling commitment); that the role-filler is a '
         'DISTINCT &#8869;\' rather than the &#8869; it began at is C-DA2, and in the '
         '2-adic realization the arc returns to the same 0 (snap_arc_z2_loop).'))
     E.append(callout(
-        'Null Balance (role-RECOGNITION derived; occupancy and novelty COMMITTED): For every ascending chain '
+        'Null Balance (role-RECOGNITION derived; occupancy and novelty COMMITTED): For every sequence '
         '(S<sub>n</sub>)<sub>n&lt;&#969;</sub> in Q<sub>2</sub>, nowhere zero, with &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> '
         '(derived via t_iz_h_bound_from_depth_chain from IsDepthChain and IsStrictStateSequence on a depth index in &#8469; — R-IZ-A closed): '
         'the chain converges to 0 in Q<sub>2</sub>. CC-1&#8217;s start at &#8869; belongs to the semilattice chain, not to S. '
@@ -726,11 +734,11 @@ def build():
            'which is no-subtraction.'),
         li('T-IZ: The chain converges to 0 at the ordinal limit &#969;. Reading that limit as filling '
            'the bottom role is a commitment, and the role identifies the &#8869; already there '
-           '(t_iz_limit_is_new_null). On that reading, DA-1 and T-SNAP fire again only CONDITIONALLY, given a '
-           'KleeneStructure on the limit&#8217;s successor semilattice (an instance t_iz_complete takes as a hypothesis) '
-           'or the limit meeting P<sub>0</sub> (whose route, &#167; II.B, is refuted); '
-           'neither is established here. Calling the role-occupant a SUCCESSOR '
-           '&#8869;\' rather than the same &#8869; is C-DA2, a further commitment. On those readings and premises, this is the closing of the branch.'),
+           '(t_iz_limit_is_new_null). On that reading, DA-1 and T-SNAP fire again only on what DA-1 needs '
+           '(&#167; III: DP-2 and DP-2&#8217;s precondition, a configuration reaching P<sub>0</sub> in Sense B, which the '
+           'occurrence commitment asserts and DA-1 consumes); nothing here establishes that the limit reaches '
+           'P<sub>0</sub> (&#167; II.B). Calling the role-occupant a SUCCESSOR '
+           '&#8869;\' rather than the same &#8869; is C-DA2, a further commitment. On those readings and conditions, this is the closing of the branch.'),
         li('DA-2 (Instantiation Succession): on the C-DA2 commitment, &#8869;\' is read as the foundation '
            'of the next instantiation. The tree extends. The cycle repeats.'),
         sp(4),
@@ -742,8 +750,10 @@ def build():
         'In Q<sub>2</sub>: the chain converges to Q<sub>2</sub>&#8217;s 0 (t_iz_cauchy), and 0 is the LIMIT, '
         'not a term, since the chain is nowhere zero. Q<sub>2</sub>&#8217;s field structure supplies no join, and the '
         'corpus defines no ZPSemilattice on Q<sub>2</sub>, so the role condition is not statable of the limit here. '
-        '(A join could be chosen: every inhabited carrier admits one, ZeroParadox/Order/Lattice.lean; 0 filling its '
-        'bottom would then be a choice of operation, not something T-IZ derives.) In a ZPSemilattice: the bottom ROLE is the join-identity, and anything filling '
+        '(A join could be chosen: every inhabited carrier admits one, ZeroParadox/Order/Lattice.lean. On &#8484;<sub>2</sub>, '
+        'the 2-adic integers, the corpus supplies one with 0 as its bottom (the example at '
+        'ZeroParadox/Valuation/Scale.lean &#167; V, line 247); 0 filling that bottom is a choice of operation, '
+        'not something T-IZ derives.) In a ZPSemilattice: the bottom ROLE is the join-identity, and anything filling '
         'it IS that semilattice&#8217;s existing &#8869; (t_iz_limit_is_new_null). Reading the 2-adic limit as '
         'filling that role is a READING across the two carriers, and the cross-carrier identity is retired '
         'as ill-typed (MC-1). That the &#8869; so reached is a NEW one is C-DA2, a commitment; in the 2-adic '
@@ -757,8 +767,8 @@ def build():
         'bottom (t_iz_limit_is_new_null). That the limit is a thing playing that role is a '
         'commitment, not a theorem — the role condition is not statable in Q<sub>2</sub>; that the '
         'bottom so reached is a NEW one is a further commitment.',
-        'Closure is not a theorem: the cycle closes only on the occupancy reading, one of the two DA-1 '
-        'premises, and C-DA2. Strict valuation growth is '
+        'Closure is not a theorem: the cycle closes only on the occupancy reading, what DA-1 needs '
+        '(&#167; III, the occurrence commitment among it), and C-DA2. Strict valuation growth is '
         'Lean-derived from IsDepthChain (a modelling commitment) + IsStrictStateSequence (h_strict_from_r1_t3). '
         'Emergence and return are derived as far as the CONVERGENCE and the role-recognition '
         'implication; that the limit is the role\'s occupant is committed, and their novelty '
@@ -799,7 +809,7 @@ def build():
          'The ZP-E route from 2-adic depth to Kolmogorov complexity and DA-1 Path 3. '
          'Its implication v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; &#8658; K(S<sub>n</sub> | n) / |S<sub>n</sub>| &#8594; 1 '
          'fails at S<sub>n</sub> = 2<sup>n</sup> (&#167; II.B): valuation n, complexity given n bounded, '
-         'ratio &#8594; 0. The valuation half is checked (padicValNat.prime_pow); the complexity half is '
+         'ratio &#8594; 0. The valuation half is checked (scaleChain_isDepthChain); the complexity half is '
          'outside Lean scope: one fixed program prints 2<sup>n</sup> from n, which bounds K(2<sup>n</sup> | n) by its length. '
          'Not a proof dependency for T-IZ: formal spine is Steps 1 + 6 (Step 6 axiom-free; Step 1 carries Mathlib p-adic choice); '
          'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.'],
