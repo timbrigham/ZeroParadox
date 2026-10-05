@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1856,
-        "files": 156
+        "declarations": 1862,
+        "files": 157
       },
       "entries": [
         {
@@ -13963,6 +13963,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "300c9811-a9a0-43bd-af90-40bab6b4958c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.successor_cell_width",
+            "short": "successor_cell_width"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.successor_cell_width",
+            "short": "successor_cell_width",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-04, lane Q): cells of nfp (omega^.) as widths — first cell = Iic eps0; successor cell (eps_o, eps_(o+1)) order-isomorphic to Iio eps_(o+1), width eps_(o+1); eps0 countable. From probes_2026-10-04/CellWidth.lean.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "300f53b0-f531-49de-a2f4-e9ebcdf15fc1",
           "new": {
@@ -16637,6 +16676,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "39ede329-404a-4df4-ab07-9647001e421c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cellIso",
+            "short": "cellIso"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cellIso",
+            "short": "cellIso",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-04, lane Q): cells of nfp (omega^.) as widths — first cell = Iic eps0; successor cell (eps_o, eps_(o+1)) order-isomorphic to Iio eps_(o+1), width eps_(o+1); eps0 countable. From probes_2026-10-04/CellWidth.lean.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35900,6 +35978,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "85ffaa1b-637e-4683-ae0f-6ef6eee2f18f",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.repr_surj_below_epsilon0",
+            "short": "repr_surj_below_epsilon0"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.repr_surj_below_epsilon0",
+            "short": "repr_surj_below_epsilon0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "PricedInterface.lean (2026-10-04, lane Q): every ordinal below epsilon-zero is denoted by a normal-form ONote (the onto field of ON_correct on NF notations). From probes_2026-10-04/CellWidth.lean C3.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "dropped",
           "id": "86108115-5cde-4f0b-90e6-7e6811f46e62",
           "new": {
@@ -37331,6 +37448,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8c8a3ac6-a10c-4a12-b12e-51590b731429",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.card_epsilon0",
+            "short": "card_epsilon0"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.card_epsilon0",
+            "short": "card_epsilon0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-04, lane Q): cells of nfp (omega^.) as widths — first cell = Iic eps0; successor cell (eps_o, eps_(o+1)) order-isomorphic to Iio eps_(o+1), width eps_(o+1); eps0 countable. From probes_2026-10-04/CellWidth.lean.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8cb8c208-9132-4981-83a4-090639428747",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -37541,6 +37697,45 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8e3e27f9-9813-49a9-abeb-2b411d5053ff",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.first_cell_eq_Iic",
+            "short": "first_cell_eq_Iic"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.first_cell_eq_Iic",
+            "short": "first_cell_eq_Iic",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-04, lane Q): cells of nfp (omega^.) as widths — first cell = Iic eps0; successor cell (eps_o, eps_(o+1)) order-isomorphic to Iio eps_(o+1), width eps_(o+1); eps0 countable. From probes_2026-10-04/CellWidth.lean.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -53546,6 +53741,45 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "(none) - does not depend on any axioms",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ca7d1079-a945-4e6e-8c4d-87268efae8ca",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon_add_one_add_epsilon_succ",
+            "short": "epsilon_add_one_add_epsilon_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon_add_one_add_epsilon_succ",
+            "short": "epsilon_add_one_add_epsilon_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-04, lane Q): cells of nfp (omega^.) as widths — first cell = Iic eps0; successor cell (eps_o, eps_(o+1)) order-isomorphic to Iio eps_(o+1), width eps_(o+1); eps0 countable. From probes_2026-10-04/CellWidth.lean.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
