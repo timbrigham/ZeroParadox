@@ -89,8 +89,9 @@ with a single point adjoined above everything.
 
 **`E0Note` denotes the ordinals up to ε₀, and its own order is not a well-order.** Its points denote the
 ordinals strictly below ε₀ *together with* ε₀ itself: the segment below ε₀ + 1. Its order is not well-founded:
-on raw notations `oadd 0 1 x < x`, so ω, `oadd 0 1 ω`, … descends forever (the `example` after
-`e0Repr_not_injective`). So it is not a notation system for ε₀ + 1 in the well-ordered sense, and stating it as
+on raw notations `oadd 0 1 x < x` holds at `x = ω` and at each later term of the chain ω, `oadd 0 1 ω`, …
+(it fails at `x = 0` and `x = 1`), so that chain descends forever (the `example` stating
+`¬ WellFoundedLT E0Note`). So it is not a notation system for ε₀ + 1 in the well-ordered sense, and stating it as
 "a constructive carrier for ε₀" would be wrong on the arithmetic and wrong on the credit.
 
 **The standard alternative is to step up the notation system rather than adjoin a top.** In a
@@ -117,9 +118,12 @@ it is stated for.
 
 ## What is NOT proved here, and must not be inferred
 
-`ON_correct` (Castéran; see below) asks three things of a denotation map: that every notation denotes
-below the target ordinal, that the map is **onto** the segment below it, and that the syntactic
-comparator **agrees** with the semantic order. The first is `repr_lt_epsilon0`, lifted to
+`ON_correct` (Castéran, `ON_Generic.v`; see below) is a class stated over an `ON`, a type with a
+comparison whose order is well-founded (`Class ON`'s field `ON_wf`), together with a target ordinal
+and a denotation map. Its three fields ask that every notation denotes below the target ordinal, that
+the map is **onto** the segment below it, and that the syntactic comparator **agrees** with the
+semantic order. `E0Note` is not an `ON` (§ *The carrier*), so the class does not apply to `e0Repr`;
+what can be asked is which of the three properties the map has. The first is `repr_lt_epsilon0`, lifted to
 `e0Repr_le_epsilon0`. The second holds: `repr_surj_below_epsilon0` gives every ordinal below ε₀ an
 `NF` notation, so `e0Repr` is onto the ordinals at or below ε₀ (the `example` after
 `e0Repr_eq_epsilon0_iff` in `ZeroParadox/Ordinal/PricedInterface.lean`).
@@ -130,9 +134,10 @@ the comparator cannot agree with the semantic order on raw syntax (the `example`
 `e0Repr_not_injective`: two points strictly ordered in the carrier with equal denotations). Mathlib's positive counterpart
 (`ONote.repr_inj`) requires the `NF` normal-form predicate on both arguments — and `NF` is itself
 defined through `repr`, which is why the constructive development stays off it;
-`repr_surj_below_epsilon0` uses `NF` on the crossing side only. So: **`E0Note` is
-not claimed to be `ON_correct` at ε₀ + 1.** Restricting to normal forms is the standard fix and is not
-done here.
+`repr_surj_below_epsilon0` uses `NF` on the crossing side only. So **`e0Repr` has the into and onto
+properties, not the comparator property, and is not an `ON_correct` instance at ε₀ + 1**: the class
+needs an `ON`, and the comparator property fails. Restricting to normal forms is the standard fix and
+is not done here.
 
 ## Where the ambiguity isn't — faithful at 0 and at ε₀
 
@@ -159,10 +164,10 @@ that the fibre of the map over ε₀ is exactly `{⊤}`; a separate top-fiber th
    one type and a point of another: the MC-1 cross-category identity, retired as ill-typed.
 2. **And the measure has no direction to reverse.** Ambiguity here is minimal at **both** ends. A DRIFT
    needs two measures running *opposite along* a structure; a quantity that is symmetric at the two
-   poles cannot run opposite to anything.
+   ends cannot run opposite to anything.
 
 `Reading:` **INVARIANT kind** (conjectural) — fiber cardinality is **one quantity measured at two
-points of one carrier**, and it takes the same value at both, so exchanging the poles gains nothing.
+points of one carrier**, and it takes the same value at both, so exchanging the ends gains nothing.
 That is the INVARIANT row, not COINCIDENCE (which needs two readings of one object) and not DRIFT
 (which needs a direction).
 
@@ -179,7 +184,7 @@ points of one carrier.
    value, so do not attribute one to it).
 2. **This closes a door.** Because the fiber at 0 is a single point, the statistics of the
    fiber-supported distribution (`exists_fiber_supported_non_pure_pmf`) lives **strictly between**
-   the poles and cannot be seeded at 0 by this route.
+   the ends, 0 and ε₀, and cannot be seeded at 0 by this route.
 
 ## Triviality assessment
 
@@ -216,10 +221,10 @@ that it is *stated as a price* on a specific named map, rather than left as a ge
 * **The map.** The canonical name for "a notation system correctly denotes into a classical ordinal"
   is **`ON_correct`** (`ON_Generic.v`), with the three fields listed above. It is **already
   instantiated at ε₀**: `theories/ordinals/Schutte/Correctness_E0.v` builds `inject : T1 → Ord` with
-  `inject_lt_epsilon0`, `embedding`, and `Instance Epsilon0_correct`. Our `e0Repr` is an instance of
-  the same notion — Mathlib's `Ordinal` instead of Schütte's axiomatized `Ord`, Lean 4 instead of Coq,
-  and, as fenced above, two of the three `ON_correct` fields established (into and onto), and not the
-  comparator field.
+  `inject_lt_epsilon0`, `embedding`, and `Instance Epsilon0_correct`. Our `e0Repr` has `ON_correct`'s
+  into and onto properties and is not an instance: `ON_correct` is stated over an `ON`, which needs a
+  well-founded order, and the comparator property fails (both fenced above). Its target is Mathlib's
+  `Ordinal` instead of Schütte's axiomatized `Ord`, in Lean 4 instead of Coq.
 * **The price is priced there too.** hydra-battles is constructive except its Schütte module, which
   axiomatizes the classical countable ordinals — so `inject` is exactly where the classical assumptions
   are paid in that development, and the library localizes them there by design. The purity block in `PricedInterface.lean`
@@ -233,8 +238,8 @@ is noncomputable. In computational applications `NONote` can be used exclusively
 constructive-side/classical-side interface, its purpose, and its price, stated by the library.
 
 **Also in the neighbourhood, named but not described:** the `gaia-hydras` package bridges Grimm's Gaia
-(classical, EM + AC) to hydra-battles' constructive notations — a second and larger instance of the same
-interface. Its internals are not read here and nothing about them is claimed.
+(classical, EM + AC) to hydra-battles' constructive notations. Its internals are not read here and
+nothing about them is claimed.
 
 `ONote`, `ONote.cmp`, `ONote.repr`, `WithTop` and its instances, `Ordinal.epsilon`,
 `isPrincipal_add_omega0_opow` and `isPrincipal_mul_omega0_opow_opow` are all Mathlib. `SynONote` and
@@ -251,6 +256,6 @@ the classical price localized at a denotation map together with the double-negat
 returned double-negation or negative-translation results only, and that tool's null is uninformative,
 so this is not a claim that none exists. Each half is separately canonical — the ¬¬-translation is Gödel–Gentzen–Kolmogorov, with Glivenko's
 variant and the CPS transform under Curry–Howard as its recognized computational reading; the
-carrier-side map is `ON_correct` / `repr` per above. **The pairing is a presentational choice of ours.**
+carrier-side map is `repr`, with `ON_correct`'s into and onto properties, per above. **The pairing is a presentational choice of ours.**
 No theorem here relates the two faces, and none is claimed.
 

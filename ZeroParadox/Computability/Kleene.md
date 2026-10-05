@@ -14,7 +14,8 @@ that family a code is recovered from its Gödel number, since encoding is inject
 all of `Code`. That does not make the function and the index mutually determining: the
 index is only *a* period of the function, and constant codes are periodic with every
 period, so the function does not fix the index. Reading that family as the DA-2 instantiation
-succession — one bottom element per instantiation, each with its own code — is the
+succession — one occupant of the ⊥ role, ⊥ of that instantiation's `ZPSemilattice`, per
+instantiation, each with its own code — is the
 framework's interpretation and is NOT what the theorems below establish; see the fence
 immediately following for what actually witnesses the family.
 
@@ -62,7 +63,7 @@ Three formal results capture this structure:
       computational path
   (3) infinite_quine_family — the quine family is infinite: unboundedly many distinct
       (function, index) pairs exist. Its witnesses are the constant codes, so it bounds
-      the family from below without showing those members are instantiation bottoms
+      the family from below without showing those members occupy any instantiation's ⊥ role
 
 ## § VIII. Infinitely many fixed points, padding, and a self-printing universal code
 

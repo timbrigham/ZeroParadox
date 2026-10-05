@@ -325,8 +325,8 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 -- Reading: a self-looping configuration's BEHAVIOUR and `natInfinity` are the same point of the
 --   final coalgebra of `X ↦ 1 + X`. The `=` is between two `Cofix` elements, within one type; the configuration
 --   `s : σ` is NOT equated with anything — it lives in a different type. It says nothing about
---   whether the framework's ⊥, read as a configuration of a step function `f : σ → Option σ`
---   (§ VI), self-loops — that is the commitment.
+--   whether the occupant of the framework's ⊥ role, ⊥ of a `ZPSemilattice`, read as a configuration
+--   of a step function `f : σ → Option σ` (§ VI), self-loops — that is the commitment.
 #check @ZeroParadox.loop_unfolds_to_infinity
 
 -- Statement: with a three-valued head there IS a configuration neither halted nor stepping.

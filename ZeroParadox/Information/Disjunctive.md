@@ -57,9 +57,10 @@ block (`#print axioms`, 2026-10-04):
 
 - `Filter.frequently_atTop` and `Filter.Frequently.exists` each carry `Classical.choice`
   (`[propext, Classical.choice, Quot.sound]`). The statement `Disjunctive` measures
-  `[propext, Quot.sound]`, so the choice in `champ_disjunctive`, `disjunctive_iff_once` and § V
-  enters through their proofs, not through the definition. The constants each proof term references
-  directly that carry choice, each at the same triple:
+  `[propext, Quot.sound]`, so the choice in `allFalse_not_disjunctive`, `champ_disjunctive`,
+  `disjunctive_iff_once` and § V enters through their proofs, not through the definition. The
+  constants each proof term references directly that carry choice, each at the same triple:
+  - `allFalse_not_disjunctive`: `Filter.Frequently.exists`;
   - `disjunctive_iff_once`: `Filter.Frequently.exists`, `Filter.frequently_atTop`,
     `instIsDirectedOrder`, `IsStrictOrderedRing.toIsOrderedRing`;
   - `champ_disjunctive`: `disjunctive_iff_once`;
@@ -84,7 +85,8 @@ block (`#print axioms`, 2026-10-04):
    form is the one meant.
 3. **The commitment is separate.** `Reading:` Tim's commitment concerns the framework's ⊥ role, ⊥ of
    a `ZPSemilattice`: read as a tape, its occupant is maximally complex, in the prefix-free sense of
-   fence 2, and through the standard theorem it would be disjunctive. No map from a `ZPSemilattice`
+   fence 2. Standard theory, not proved here (fence 2): a tape maximally complex in that sense is
+   Martin-Löf random, hence disjunctive. No map from a `ZPSemilattice`
    to `ℕ → Bool` is claimed or constructed, and no order on tapes in which a maximally complex tape is
    least: the reading is a commitment, not a chart. In `ℕ → Bool` under the pointwise order, ⊥ is the
    all-false tape, which is not disjunctive (`allFalse_not_disjunctive`). Neither the commitment nor

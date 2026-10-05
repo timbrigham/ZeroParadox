@@ -55,8 +55,8 @@ footprint; `[propext]` means propositional extensionality only. -/
 #check @ZeroParadox.dneg_inf_distrib
 
 -- Selecting a chart at a two-ended pole: NO axioms. This is the direct refutation of the naive reading
--- that "viewing the pole as definitely the floor is an act of choice." At every one-point
--- compactification a selector exists that is constant on the pole orbit.
+-- that "viewing the pole as definitely the floor is an act of choice." Given `x₀ : X`, on `OnePoint X`
+-- a selector exists that is constant on the pole orbit of `x₀`; empty `X` is not covered.
 #check @ZeroParadox.chart_selection_is_freeG
 
 -- The metric-collapse content on the syntactic side: `[propext]`. Contrast the measured

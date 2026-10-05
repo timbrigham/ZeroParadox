@@ -501,7 +501,8 @@ example : ZeroParadox.Disjunctive (fun n => xor (ZeroParadox.champ n) false) := 
 -- carries every code word (`code_occurs_of_disjunctive`). Self chart: read against itself it is that
 -- all-false tape; in ℤ_[2] the self-difference is ℤ_[2]'s 0, of additive valuation ⊤ (the floor's
 -- `cx = ⊤`, `infinitude_forces_infinite_complexity`, `ZeroParadox/Valuation/InfinitudeFloor.lean`).
--- That the framework's ⊥ is MAXIMALLY complex is Tim's commitment, stated as no equation with any
+-- That the occupant of the framework's ⊥ role, ⊥ of a `ZPSemilattice`, is MAXIMALLY complex is
+-- Tim's commitment, stated as no equation with any
 -- one tape; disjunctive is the weaker, proved property (`ZeroParadox/Information/Disjunctive.lean`).
 
 end CannotBeIndex
