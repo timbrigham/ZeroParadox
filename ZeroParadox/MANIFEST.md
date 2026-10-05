@@ -190,7 +190,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/NaturalOpsPow.lean` - Natural sum on powers of ω — the deferred CNF characterization (ported)
 - `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` - Comparability of well-orders is a constructive taboo
 - `ZeroParadox/Ordinal/P8.lean` - P8 re-attempt: ε₀ → 0 in ℤ₂ via a tower-rank 2-adic encoding
-- `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: a notation system for ε₀ + 1, a map into `Ordinal`, and both sides' axiom footprints
+- `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: notations denoting the ordinals up to ε₀, a map into `Ordinal`, and both sides' axiom footprints
   - ride-along docs: `ZeroParadox/Ordinal/PricedInterface.md` - PricedInterface — ride-along documentation
 - `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity makes the ordinals a frame
 - `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap is a nucleus: ε₀ is the modality generated from the bottom ⊥

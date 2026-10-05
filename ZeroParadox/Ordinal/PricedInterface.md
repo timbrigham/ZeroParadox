@@ -4,7 +4,7 @@ Long form of `ZeroParadox/Ordinal/PricedInterface.lean`.
 
 ## What this file is
 
-A **measurement**, not a construction. The carrier and the map out of it, declared in `ZeroParadox/Ordinal/PricedInterface.lean`, are both instances of
+A **measurement**, not a construction. The carrier and the map out of it, declared in `ZeroParadox/Ordinal/PricedInterface.lean`, both follow
 constructions that already exist in the literature (see "Prior art" — they are Castéran's, and the
 citation is not a courtesy). What is being contributed here is the *price tag*: the axiom footprint of
 each side of the constructive/classical boundary, exhibited on declarations that sit on either side of a
@@ -88,8 +88,10 @@ measurement of the interface, not a verdict on any particular proof's essential 
 because Mathlib's own `Preorder ONote` is `repr`-routed and would drag `Ordinal`'s order instance in),
 with a single point adjoined above everything.
 
-**`E0Note` is a notation system for ε₀ + 1, not for ε₀.** Its points denote the ordinals strictly below
-ε₀ *together with* ε₀ itself, so as a notation system it names the segment below ε₀ + 1. Stating it as
+**`E0Note` denotes the ordinals up to ε₀, and its own order is not a well-order.** Its points denote the
+ordinals strictly below ε₀ *together with* ε₀ itself: the segment below ε₀ + 1. Its order is not well-founded:
+on raw notations `oadd 0 1 x < x`, so ω, `oadd 0 1 ω`, … descends forever (the `example` after
+`e0Repr_not_injective`). So it is not a notation system for ε₀ + 1 in the well-ordered sense, and stating it as
 "a constructive carrier for ε₀" would be wrong on the arithmetic and wrong on the credit.
 
 **The standard alternative is to step up the notation system rather than adjoin a top.** In a
@@ -158,11 +160,11 @@ that it is *stated as a price* on a specific named map, rather than left as a ge
   notation systems** — `t := (A + B)`, everything in `A` below everything in `B`, with the comparator
   `compare_plus`, its correctness `plus_comp`, well-foundedness `lt_wf`, the resulting instance
   `ON_plus`, and crucially `lt_eq_lt_dec` proving that **decidability of comparison is preserved,
-  generically**. `E0Note` is that construction instantiated with a one-point right summand. Castéran
-  does not name the `+1` case separately, but the construction and the decidability-preservation lemma
-  are his, and they are more general than what is used here. The abstraction being instantiated,
-  `Class ON` (`ON_Generic.v`) — a well-founded ordered datatype with a comparison function — is
-  published. Mathlib's `WithBot`/`WithTop` decidability and lattice instances
+  generically**. `E0Note` has that construction's shape with a one-point right summand, and is not an instance of it:
+  `ON_plus` sums two `ON`s, and `SynONote` is not one, because its order is not well-founded (above), so
+  `lt_wf` does not transfer. The decidability-preservation idea is his and is what `WithTop` repeats. The
+  abstraction `ON_plus` is stated over, `Class ON` (`ON_Generic.v`) — a well-founded ordered datatype
+  with a comparison function — is published. Mathlib's `WithBot`/`WithTop` decidability and lattice instances
   (`Mathlib/Order/WithBot.lean`) are the same move at instance level, and are what `PricedInterface.lean` actually
   calls.
 * **The map.** The canonical name for "a notation system correctly denotes into a classical ordinal"
