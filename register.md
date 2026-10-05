@@ -4,7 +4,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.30 | ZP-A_Lattice_Algebra.pdf | v1.11 | N/— | formal:d9587d72 comp:8e00c888 |
+| ZP-A Lattice Algebra | v1.31 | ZP-A_Lattice_Algebra.pdf | v1.12 | N/— | formal:68387105 comp:7cc15b26 |
 | ZP-B p-Adic Topology | v1.18 | ZP-B_pAdic_Topology.pdf | v1.16 | N/— | formal:df43d2f5 comp:79b374cc |
 | ZP-F The Counterexamples | v1.11 | ZP-F_The_Counterexamples.pdf | v1.14 | N/— | formal:caebb48d comp:d6bdb1f7 |
 | ZP-C Information Theory | v1.25 | ZP-C_Information_Theory.pdf | v2.10 | N/— | formal:68a7612d comp:6d0c398b |
@@ -26,7 +26,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-R Cross-Category Fixed Point | v1.6 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:cfe3495f |
 | ZP-R Diagonal Family Addendum | v1.1 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:937a0e90 |
 | ZP-Q The Frame-Change | v1.11 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:dcf69119 |
-| Zero Paradox Foreword | v2.32 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:54d4c261 |
+| Zero Paradox Foreword | v2.33 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:8e1ab0f0 |
 | ZP Philosophical Question | v1.21 | ZP_Philosophical_Question.pdf | N/A | N/A | formal:ed65d90b |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:3e66cdf5 |
 | ZP Choice-Free Core Addendum | v1.10 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:1834c1f5 |

@@ -1,70 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.32, revised September 2026)
-v2.32: INITIAL GLOSS (Tim ruling 2026-09-29): the initial side of v2.31's fix (R-TWOPOLE). "A starting point that reaches every other object" glossed a WEAKLY initial object and left out the object itself; an initial object reaches every object, itself included, in exactly one way. Now "a starting point that reaches every object in exactly one way".
-v2.31: TERMINAL GLOSS (copy_editor panel, Tim ruling 2026-09-29): the AX-G1 row glossed the absent terminal object as "no end point that every object reaches". Reaching alone glosses a WEAKLY terminal object; a terminal object is reached in exactly one way (panel readers built counter-models: a ZPCategory with no terminal object but an object every object maps into). Now "no end point that every object reaches in exactly one way".
-v2.30: COUNT VS ENUMERATION (gate round 1, N-R1-6, Tim ruling 2026-09-29): after the sentence that counts one novel axiom clause, the list of commitments read as complete, but it omits the occurrence commitment and DP-2. It now opens "Among the commitments stated explicitly".
-v2.29: AX-G1 NOVELTY (Tim ruling, 2026-09-29, reading (i)): the no-terminal half of AX-G1 is ZP-G's own commitment, not supplied by ZP-A. In ZP-A a top-free carrier is the optional hypothesis HasNoTop, and the two-state carriers MachinePhase and OntologicalStates do not satisfy it (examples in Snap.lean and OntBridge.lean). The AX-G1 row, the commitments paragraph ("introduces one novel axiom clause, and names it") and the closing paragraph now say so; v2.28's "rests on ZP-A's premise that the semilattice has no top" is withdrawn.
-v2.28: AX-G1 ROW (F1, Tim ruling, 2026-09-29): the commitments-table AX-G1 row stated only the initial object and omitted AX-G1's second half, that there is no terminal object. The row now carries both halves: the starting point comes from the ZP-A bottom element, and the absence of an end point rests on ZP-A's premise that the semilattice has no top. Aligned with CLAIMS.md's AX-G1 row.
-v2.27: ZPKB-4, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-20). The foundations paragraph localised the framework's whole use of Classical.choice to ZP-K: "One exception at the infrastructure level: ZP-K's Kleene computability machinery ... inherited rather than a novel Zero Paradox commitment." Two things are wrong. Provenance: the category-theory layer spends a bare classical written in framework source (fixedPointFree_of_nontrivial, ZeroParadox/Category/Lawvere.lean), so the dependence is not all inherited, and AxiomProfile.lean Section III lists the realizations where it enters, none of them computability. Necessity: "inherited rather than a novel commitment" reads provenance as settling removability, which AxiomProfile.lean Section 0 records as a conflation already corrected once — em_of_wellOrder_comparable shows an INHERITED dependence that is essential. The paragraph now states the choice-free core (t_snap_derived, no Lean kernel axioms at all), names the framework's own classical and its essentiality (wem_of_fixedPointFree), separates the two axes, and POINTS at ZeroParadox/AxiomProfile.lean. ⚠ NO NEW RULE IS STATED. This site was the SIXTH general rule written about this one Classical.choice and the first in the LOCALIZATION grammar (where it comes from) rather than the FOOTPRINT grammar (which theorems carry it), which is why the five sweeps keyed to the earlier five did not reach it. The front page (README "The Result") already carried the correct shape; this aligns the Foreword to it rather than inventing a third wording.
-v2.26: ZPK-BED-1 SECOND HALF (Tim ruling, 2026-09-19). The foundations paragraph said ZP-K's choice dependency is "the same dependency carried by any theorem using Mathlib's computability library". That universal is refuted by two named measurements: Nat.Partrec.Code and Nat.Partrec.Code.eval are both axiom-free, and IsKleeneFixedPoint (type eval c = f c) measures no axioms. It now states the inheritance and POINTS at ZP-K Section IV, which holds a dated measurement table and states no rule. Located by an axis-varied claim sweep over the rendered PDFs, not by the defect row.
-v2.25: ATTRIBUTION (PA-1, prior-art gate 2026-09-15): section IV credited Lawvere's fixed-point theorem (1969) with unifying Cantor's diagonal, Russell's paradox, Godel's fixed-point lemma 'and Kleene's recursion theorem'. Lawvere does not treat it: his introduction names Cantor, Russell, Godel and TARSKI, and the reprint contains no occurrence of Kleene or Rogers. Kleene's recursion theorem and Turing's halting argument are Yanofsky (2003). Lawvere's list now ends at Tarski's undefinability theorem; Yanofsky's sentence carries the other two. Same defect as ATTR-2 (README, 2026-08-29), whose no-further-instances claim is retracted.
-v2.24: DA-1/KLEENE CLASS AND MC-1 PREMISE, GATE ROUND 4 (Tim rulings, 2026-09-15): section IV said the framework 'proves each face in its own domain'; the Kleene face is a KleeneStructure requirement, not proved, so the sentence now reads 'It proves the lattice, 2-adic and categorical faces in their own domains and carries the computational one as a requirement'. 'In computation it is the self-reproducing program' is now 'is read as'. The MC-1 row's seam_unique_among_named pointer now carries its premise: in a lattice with no top.
-v2.23: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim ruling, 2026-09-15): section IV's 'The framework reads them as faces of one object' is past tense, 'read', since the next paragraph retires that reading. Nothing else in the paragraph changed.
-v2.22: DECISION BATCH REMEDIATION AFTER GATE ROUND 2, SECOND PASS (Tim ruling, 2026-09-15): section IV said the framework 'proves several of those faces literally identical', a cross-category identity the next paragraph retires; it now says the framework proves each face in its own domain, and that they are one object is the reading the next paragraph retires.
-v2.21: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): MC-1: 'neither x = y nor x != y is well-formed across categories' is replaced by: object equality across categories does not typecheck and is not invariant under equivalence. The commitments-table MC-1 row keeps a property clause scoped to the named bottoms of seam_unique_among_named; the section IV paragraph, whose faces (Quine atom, Kleene quine, v2(0), initial object) are not that named list, keeps only the retirement.
-v2.20: DECISION BATCH REMEDIATION (Tim, 2026-09-15): MC-1 walls (Tim's confirmed text): the commitments-table MC-1 row and the self-reference paragraph said the members are 'provably distinct (the walls)' and 'the walls between its members are themselves theorems'; the identity and its negation are both retired as ill-typed (neither x = y nor x != y is well-formed across categories), and the members differ by property, each in its own category (seam_unique_among_named).
-v2.19: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The commitments-table AX-1 row carries that sentence in place of 'stated separately, as the occurrence commitment, which ZP-E's DA-1 argues for', its status cell reads 'the snap occurs given the occurrence commitment and DA-1', and 'with no axioms' is 'with no Lean kernel axioms'. The ZP-E layer paragraph said the closing result is that 'the Binary Snap is a theorem, not an axiom', with the split only in the table; it now says the shape is a theorem and the Snap occurring follows from the occurrence commitment together with DA-1. 'Binary Snap Causality' names the retired AX-1 in this document, so T-SNAP's name gloss is not placed here.
-v2.18: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The commitments table row read "Retired axiom -> Theorem T-SNAP ... Previously an axiom; now derived as Theorem T-SNAP", which retired the whole of AX-1; its type cell and statement now carry both halves. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the AX-1 row credited the shape to 'the L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
-v2.17:CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. The commitments table row, the ZP-J summary and both commitment paragraphs; the ZP-J summary also follows the CC-2 role convention (whatever fills the Quine-atom role is bottom), not 'the Quine atom Q = {Q} is provably identical to bottom' in a lattice with 'AFA grounding'. ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). The ZP-J summary now says 'not forced' with that reason. GATE ROUND 2 (ordinary, carried): the 'not forced' reason needs its scope - on a ONE-point lattice every sequence starts at bottom, so the countermodel is stated for a lattice with a second point, and the OntBridge.lean example now also shows the start is not a Quine atom.
-v2.16: OCCUPANCY OVERCLAIM RETRACTED, and a WALL PRESENTED AS A GAP (bedrock; editorial + adversary round 6). Two sites, neither reached by the ZP-I v1.16-v1.18 arc even though this document is a general reader's first contact. (1) "converges, at its limit, to something that fills the bottom role again" asserted OCCUPANCY as reached. T-IZ proves convergence to 0 in Q2; that the limit is a thing filling the bottom role is a COMMITMENT, and not merely unproved - ZPSemilattice Q_[2] does not synthesize, so the join-identity is not statable of the limit at all. The proved half, that anything filling the role IS the bottom already there, is kept and now stands alone. (2) "whether they are all one object in the deepest sense remains, honestly, an identification we make rather than a theorem we have closed" presented a WALL as an open question. An equality across distinct categories is not a well-formed proposition: CLAIMS.md retires that identity as ill-typed and the members are PROVABLY DISTINCT. The question is retired, not outstanding, and the walls between the family's members are themselves theorems.
-v2.14: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
-v2.13: T-COMP overclaim corrected (bedrock). "a four-way equivalence connecting the Quine atom, bottom, the join-identity element, and Kleene's fixed point" -> a three-way equivalence, with Kleene's fixed point named as an assumption of the KleeneStructure class rather than a fourth clause; "DA-1 is closed concretely ... grounding the framework in the theory of computation" -> da1_closed_concrete proves the structural half only, and the step to self-execution is a commitment, not a consequence.
-v2.12: SYNC TO CLAIMS.md + bedrock false-premise fix (release-prep). (1) Struck the false "a well-founded ⊥ would admit an external interpreter" premise (the finite-interpretability fallacy, same class as ZP-E v3.24 / ZP-A v1.20) from the CC-2 row and Section III; ZFC-incompatibility now rests on ⊥={⊥} self-membership (Regularity, no_quine_atom). (2) AX-B1 corrected from "Directly Verifiable / not a novel commitment" to "the one substantive modeling commitment" (discrete over continuum; only ax_b1_distinct's distinctness is decide-checked; f_snap_impossible). (3) Commitment accounting synced to CLAIMS.md: MC-1 = the bottom family (not a commitment; identity retired as ill-typed), CC-1 derived via ZP-J cc1_derived, CC-2 a Forced Metatheoretic Commitment. Supersedes the v2.8 "argued to be ruled out" softening (which left the premise) and the v1.6 "Directly Verifiable" AX-B1 relabel.
-v2.11: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).
-v2.10: §IV — cited Yanofsky (2003) and Lawvere's year (1969) for the diagonal-fixed-point unification; prior-art positioning, paired with the new CLAIMS "Convergence with established work" section.
-v2.9: C8 dual-date templating (Initial/Current meta line; hardcoded month removed).
-v2.8: FMC uniformity — CC-2 metatheoretic row "Foundation is ruled out" → "argued to be ruled out" (matches fmc.md, argued not proved).
-v2.7: §IV — named Lawvere's fixed-point theorem as the recognized unification of the diagonal family
-      (Cantor / Russell / the fixed-point lemma at the heart of Gödel / Kleene); fence firmed —
-      "the bottom IS its diagonal fixed point" → "the Zero Paradox locates this diagonal fixed point at
-      the bottom", so the true-Lawvere-fact and ZP's identification sit on different footings. AR pre-checked.
-v2.6: §IV — added the diagonal fixed point keystone: ⊥ is the same self-referential fixed point
-      across the layers (Quine atom / Kleene quine / v2(0)=inf / categorical initial as four faces);
-      the Goedel inversion (self-reference at the floor, not the ceiling). Honesty fence kept: the full
-      cross-framework unification is stated as an identification, not a closed theorem.
-v2.5: AR fix — "provable fact in standard ZFC" → "standard ZF" in §III porthole passage.
-      AR fix — residual "DA-1 is the bridge" → "connecting argument" (in PhilQ; Foreword unaffected).
-v2.4: fix() guard added via Paragraph override — all rendered text now goes through unicode-to-entity conversion.
-      ER kills: "v1.4" version refs removed; "categorical bridge" → "ZP-H"; CC-1 conditionality qualified;
-      "All 24" → "All 25"; "ZP-A through ZP-I" → "ZP-A through ZP-M" in §VII; "ZFC/AFA" → "ZF+Foundation/ZF+AFA";
-      "binary ontological state" → "binary state"; null state gloss added at first occurrence.
-v2.3: ER/AR fixes — "linearly ordered field" → "densely ordered field" (F-1/F-2).
-      §V "ten layers" → "thirteen" with simplified enumeration (F-6).
-      AR scoping: "formal signature" clauses qualified with "in ZP's reading" (both passages).
-v2.2: §II architecture updated to thirteen layers — ZP-F, ZP-J, ZP-K, ZP-L, ZP-M added.
-      Layer counts corrected throughout (was eleven/ten). "Topological isolation" →
-      "clopen separation" (vocabulary fix). "Seven structures" count corrected.
-      AR fix: "see the same mathematical object" → "share the same arithmetic fact."
-v2.1: §III porthole metaphor — "orthogonal" replaced with porthole image in prose.
-      Wall is solid and opaque; one piece of glass (v₂(0) = ∞) does not open but lets
-      both frameworks see the same object. "Orthogonal" retained in technical contexts.
-v2.0: §III metatheory note extended — orthogonal frameworks / contact point framing.
-      ZF+AFA and ZFC are mutually exclusive but meet at one contact point: v₂(0) = ∞.
-      Clarifies that ZP is not a bridge between them but an identification of that point.
-v1.9: AR fix — callout box "from which every state is reachable by joins" →
-"the element below which no other state exists" — corrects imprecise constructive
-reachability phrasing to match what T2 actually proves.
-v1.8: Adversary-review pass — epigraph removed; Section VIII (WHERE THE FRAMEWORK REACHES)
-cut entirely (applications content belongs in Gen2 document); Planck-scale analogy removed
-from Section VI (ε₀ is a structural threshold, not a physical constant); callout box in
-Section I rewritten ("directly describable by nothing" → precise algebraic description).
-v1.7: Added note to Section III clarifying ZP-K's Classical.choice dependency is a standard
-Lean infrastructure axiom, not a novel framework commitment — addresses 4.7 from outside review.
-v1.6: AX-B1 status changed from "Decidable" to "Directly Verifiable"; plain-language description
-replaces Lean jargon ("decidable equality on finite types"); in-PDF date corrected to May 2026.
-v1.5: Layer count updated throughout — framework now has ten formal layers (ZP-J, ZP-K added).
-v1.4: Metatheoretic note (ZF+AFA) added in Section III before the commitments table.
-v1.3: Fix ∅ rendering — was showing as a rectangle in DejaVuSerif; now forced through DV (DejaVuSans) via <font> tag.
+Zero Paradox — Foreword PDF Builder (v2.33, revised October 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -74,15 +9,19 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.32'
+VERSION = '2.33'
 FIRST_RELEASED = 'April 2026'
 
-# ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
-# PDF Rendering Standards require fix() on all rendered text. Rather than updating
-# every call site, patch Paragraph here so it applies fix() automatically.
+# ── fix() and prose_check() guard on every Paragraph ──
+# PDF Rendering Standards require fix() on all rendered text, and the vocabulary gate
+# (prose_check) must see every string that renders, table cells and callout boxes included.
+# Rather than updating every call site, patch Paragraph here so it applies both.
 _Paragraph_orig = Paragraph
 def Paragraph(text, style):
-    return _Paragraph_orig(fix(text) if isinstance(text, str) else text, style)
+    if isinstance(text, str):
+        prose_check(text)
+        text = fix(text)
+    return _Paragraph_orig(text, style)
 
 # ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
@@ -135,7 +74,11 @@ def commitments_table():
          'an optional hypothesis, which ZP-A&#8217;s two-state carriers do not satisfy.'),
         ('AX-G2', 'Axiom',
          'Source Asymmetry. No morphism returns to the initial object from outside. '
-         'Not a novel commitment — follows from antisymmetry of the ZP-A partial order and ZP-B C3 (topological irreversibility).'),
+         'Not a novel commitment where the category is built from an order: there a morphism into the bottom '
+         'forces equality by antisymmetry (on the order of ℕ, isEmpty_hom_one_to_zero), and in any category '
+         'whose initial object is strict it follows (ax_g2_from_strict_initial). It is not automatic in every '
+         'category: in the Hilbert-space realization a morphism does return to the initial object (fD_has_return). '
+         'ZP-B C3 is its topological analogue: no path in Q₂ returns to 0.'),
         ('MP-1',  'Principle',
          'Minimality of Representation. The representational base must be the minimum '
          'sufficient base for AX-B1. Derives p = 2.'),
@@ -153,24 +96,26 @@ def commitments_table():
         ('MC-1',  'The bottom family (not a commitment)',
          'The four domain bottoms (ZP-A semilattice, ZP-B p-adic topology, ZP-C information theory, '
          'ZP-D Hilbert space) form one family, each a member characterized by shared criteria and the '
-         'same diagonal fixed-point shape. Membership is proved per domain — the categorical '
-         'correspondence is realized in Lean (mc1_correspondence, the four functors in ZP-H). The former '
+         'same diagonal fixed-point shape. Membership is proved per domain: mc1_correspondence '
+         '(ZeroParadox/Multihomed/MC1Bridge.lean) bundles the realizations in three genuine categories '
+         '(Hilbert space, information, p-adic topology), and ZP-H&#8217;s four functors run into stand-in categories. The former '
          'numerical identity — that the four are one object — is retired as ill-typed (object equality across '
          'categories does not typecheck and is not invariant under equivalence); what separates the members is '
          'proved property by property (seam_unique_among_named, ZeroParadox/Category/SeamUniqueness.lean, for the named bottoms, in a lattice with no top).'),
         ('CC-1',  'Conditional Claim (restated in ZP-J, not forced)',
-         'S₀ = ⊥. The initial state equals the null state. T2 establishes ⊥ ≤ S₀ unconditionally; '
+         'S₀ = ⊥. The initial state equals the bottom element ⊥ of the state semilattice. T2 establishes ⊥ ≤ S₀ unconditionally; '
          'the strengthening to equality is a modelling commitment. ZP-J restates it: in any AFAStructure '
          'lattice a sequence starts at a Quine atom exactly when it starts at ⊥ (cc1_derived, t_exec_iff; '
          'axiom-free, Lean), so the choice of starting point is expressed through the Quine-atom role, not removed.'),
         ('CC-2',  'Forced Metatheoretic Commitment',
-         '⊥ = {⊥}. The null state is self-containing — a Quine atom under ZF+AFA. '
-         'The metatheoretic choice of AFA over Foundation is not free: ⊥ = {⊥} is a member of itself, '
-         'which Foundation (the Axiom of Regularity) forbids (no_quine_atom), so Foundation cannot host it. '
-         'Foundation and AFA are dual framings of the same object — '
-         'Foundation excludes the Quine atom; AFA uniquely permits it. '
+         '⊥ = {⊥}. The bottom element is self-containing, read under ZF+AFA as a Quine atom. '
+         'Foundation cannot host it: ⊥ = {⊥} is a member of itself, which Foundation (the Axiom of '
+         'Regularity) forbids (no_quine_atom). That half is forced, and it runs one way: a host of a '
+         'self-membered bottom is not well-founded (quineHost_not_wellFounded). Run backwards it selects no '
+         'theory: which anti-foundation axiom to adopt is a further choice, and the framework adopts AFA as '
+         'the canonical host (ZP-E Remark R-AFA). '
          'Fixed-point content formally verified in ZFC by ZP-J (ScaleBridge). '
-         'Set-theoretic interpretation requires ZF+AFA.'),
+         'The set-theoretic interpretation is given in ZF+AFA.'),
     ]
 
     table_data = [headers]
@@ -237,9 +182,9 @@ def build():
             'This raises two questions that are easy to state and surprisingly hard to answer. '
             'The first is structural: what are the properties of that starting element itself? '
             'Not what comes after it — that is the story of mathematics as we know it. '
-            'But the ground floor. The state before any state — called the null state (written ⊥). '
+            'But the ground floor. The state before any state — called the bottom element (written ⊥). '
             'The second question is generative: across all these frameworks, is there a common '
-            'account of what it means to transition from the null state to the first non-trivial '
+            'account of what it means to transition from the bottom element to the first non-trivial '
             'state? Can that emergence be given a rigorous, multi-framework description?',
             S['body']),
         Paragraph(
@@ -263,7 +208,7 @@ def build():
             'This is true, and it is not in conflict with ZP\'s thesis. '
             'The question ZP is asking is how minimal the framework needs to be before ⊥ '
             'still has non-trivial properties. '
-            'The answer, across thirteen independent layers, is: very minimal. That is the surprise.',
+            'The answer, layer after layer, is: very minimal. That is the surprise.',
             S['body']),
     ]
 
@@ -271,7 +216,7 @@ def build():
     story += [
         Paragraph('II. THE ARCHITECTURE', S['h1']),
         Paragraph(
-            'The framework is built in thirteen layers, each self-contained within its own '
+            'The framework is built in layers, each self-contained within its own '
             'mathematical discipline, each contributing one dimension of the full picture. '
             'No layer is allowed to borrow from another until that other is internally closed.',
             S['body']),
@@ -286,16 +231,16 @@ def build():
             'From the single axiom that the foundational distinction is binary, together with '
             'a minimality principle, it derives that the appropriate field is Q₂, the '
             '2-adic numbers. The field Q₂ forces every ball to be clopen, which forces '
-            'total disconnectedness, which makes the transition from null to first state '
+            'total disconnectedness, which makes the transition from zero to the first state '
             'topologically irreversible. This is proven, not assumed.',
             S['body']),
         Paragraph(
             'The information-theoretic layer (ZP-C) works within algorithmic information '
             'theory and discrete analysis on Q₂. It introduces the incompressibility '
-            'threshold and establishes the informational cost of the null-to-first-state '
+            'threshold and establishes the informational cost of the zero-to-first-state '
             'transition as exactly one bit. It also establishes that the '
-            'act of execution is itself a non-null state, which allows the Binary Snap to be '
-            'derived rather than assumed.',
+            'act of execution is itself a state above the bottom element (c₁, the first running '
+            'configuration), which allows the shape of the Binary Snap to be derived rather than assumed.',
             S['body']),
         Paragraph(
             'The Hilbert space layer (ZP-D) constructs an explicit map T from Q₂ into a '
@@ -317,14 +262,14 @@ def build():
             'structurally different direction.',
             S['body']),
         Paragraph(
-            'ZP-H constructs four instantiation functors connecting '
-            'the categorical framework to each of the prior layers: '
-            'F<sub>A</sub>: C → SLat (lattice algebra), '
-            'F<sub>B</sub>: C → pTop (p-adic topology), '
-            'F<sub>C</sub>: C → InfoSp (information theory), and '
-            'F<sub>D</sub>: C → Hilb (Hilbert space). '
-            'Each functor preserves the initial object and the singularity structure, '
-            'proving that the four constituent frameworks are consistent accounts of the same foundational fact.',
+            'ZP-H constructs four instantiation functors F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, '
+            'F<sub>D</sub>, one for each prior layer (lattice algebra, p-adic topology, information theory, '
+            'Hilbert space). Each runs from the depth order on ℕ into a stand-in category for its layer and '
+            'sends 0 to that category&#8217;s initial object. Three of them are also built into genuine '
+            'categories, bundled as mc1_correspondence (ZeroParadox/Multihomed/MC1Bridge.lean): there 0 is '
+            'initial in the Hilbert-space and information realizations and a limit in the p-adic one. That '
+            'the layers describe one object is the reading MC-1 retires; what the functors carry is each '
+            'layer&#8217;s member of the bottom family.',
             S['body']),
         Paragraph(
             'The closure layer (ZP-I) proves T-IZ — the Inside Zero theorem: every '
@@ -357,14 +302,15 @@ def build():
             'connecting the Quine atom, ⊥, and the join-identity element. Kleene\'s fixed point '
             'is not a fourth clause of it - the computational face enters as an assumption of the '
             'KleeneStructure class. da1_closed_concrete proves the structural half of DA-1, that '
-            'the bottom is a Quine atom; it mentions no code and no execution, and the step from '
-            'there to self-execution is a framework commitment rather than a consequence.',
+            'c₀, the bottom of the two-state carrier MachinePhase, is a Quine atom; it mentions no code '
+            'and no execution. That c₀ is self-executing is DA-1&#8217;s claim, and DA-1&#8217;s '
+            'precondition is the occurrence commitment, which DA-1 consumes rather than proves (ZP-E Section IV).',
             S['body']),
         Paragraph(
             'The incomputability convergence layer (ZP-L) establishes ε₀ — the first '
             'ordinal fixed point of ω^x — as the formal snap threshold. It connects '
             'ordinal arithmetic, p-adic convergence, and Rogers\' fixed-point stability '
-            'in a single canonical snap map. All 25 theorems are Lean-verified.',
+            'in a single canonical snap map. Its Lean development is ZeroParadox/Ordinal/Gentzen.lean.',
             S['body']),
         Paragraph(
             'The Kleene-ordinal bridge (ZP-M) constructs an explicit type bridge '
@@ -429,7 +375,7 @@ def build():
     story += [
         Paragraph('IV. THE PARADOX', S['h1']),
         Paragraph(
-            'Zero — the null state ⊥, the element 0 ∈ Q₂, the vector '
+            'Zero — the bottom element ⊥ of the state semilattice L, the element 0 ∈ Q₂, the vector '
             'T(0) ∈ H, the initial object in C — is the foundational element of every '
             'layer of the framework. '
             'Algebraically, ⊥ ≤ x for all x in L. '
@@ -498,13 +444,13 @@ def build():
             S['body']),
         Paragraph(
             'The framework lives at that boundary intentionally. '
-            'Thirteen independent layers each arrive at the same boundary '
-            'from their own direction. That convergence is the framework\'s central result.',
+            'Each layer arrives at the same boundary '
+            'from its own direction. That convergence is the framework\'s central result.',
             S['body']),
     ]
 
     story.append(box(
-        'The Null State remains indescribable by smooth calculus. It becomes fully '
+        'Zero, the bottom element ⊥, remains indescribable by smooth calculus. It becomes fully '
         'characterised by discrete calculus. The paradox is the precise boundary between '
         'these two regimes.'
     ))
@@ -571,7 +517,7 @@ def build():
             'properties. What is new is the conjunction: the claim that these structures, '
             'independently developed within their own disciplines, converge on the same '
             'foundational point, characterise the same transition, and illuminate the same '
-            'paradox from thirteen different directions.',
+            'paradox from different directions.',
             S['body']),
         Paragraph(
             'The answer, if the framework holds, is that zero is not the absence of everything. '
