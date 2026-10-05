@@ -1,8 +1,7 @@
-# The Gödel-number family: periods, constant codes, and the noncomputable marker
+# The Gödel-number family, infinitely many fixed points, and a self-printing universal code
 
-Argument and fences for § VI of `ZeroParadox/Computability/Kleene.lean`, moved here verbatim from that
-section's module docstring (2026-09-15), and for § VIII below. The Lean file holds the declarations, the Engineer's Take and
-the per-declaration docstrings.
+Ride-along for § VI and § VIII of `ZeroParadox/Computability/Kleene.lean`. The Lean file holds the
+declarations, the Engineer's Take and the per-declaration docstrings.
 
 ## § VI. Function-Gödel-Number Correspondence
 
@@ -79,7 +78,9 @@ Fences and controls for § VIII of `ZeroParadox/Computability/Kleene.lean`.
 modified `F'` that agrees with `F` above the bound and, at or below it, sends each code to a
 constant code computing something different from it at input `0`; no fixed point of `F'` can
 then sit at or below the bound. The arrow runs from the recursion theorem to the infinite
-family, for every `F` at once.
+family, for every `F` at once. That a computable transformation has infinitely many fixed points is
+the standard corollary of the recursion theorem; what is added here is its proof in Lean on
+Mathlib's `Code`.
 
 **Padding.** `padding` is `fixed_points_infinite` at an `F` that ignores the code: every
 partial recursive function has infinitely many codes. This is the Padding Lemma of § VI's
@@ -90,15 +91,16 @@ pin, no lemma stating it was located as of 2026-10-04 (searched in
 and across `Mathlib/` for `padding lemma`, `recursion theorem`, `infinitely many`, and
 `Set.Infinite` with `Code`).
 
-**A self-printing universal code.** `SelfPrints c` says `c` returns its own Gödel number on
-channel `0`; `Universal c` says `c` agrees with the code numbered `e` on channel `e + 1`.
+**A self-printing universal code.** Channel `k` of a code means its inputs `Nat.pair k n`, for
+every `n`. `SelfPrints c` says `c` returns its own Gödel number on channel `0`; `Universal c` says
+`c` agrees with the code numbered `e` on channel `e + 1`.
 `selfref_universal_exists` and `selfref_universal_infinite` get both at once from fixed
 points of `selfPrintOrDelegate`. These are statements about the partial function `eval c`,
 equalities of `Part ℕ` values; they state presence and existence of such codes, and nothing
 here says a code is run.
 
-**Where `Classical.choice` enters `selfref_universal_exists`, measured 2026-10-04.** Not
-removed. The statement as written carries choice, so no proof of it is choice-free; a restated
+**Where `Classical.choice` enters `selfref_universal_exists`, measured 2026-10-04.** The choice
+is not removed. The statement as written carries choice, so no proof of it is choice-free; a restated
 form is choice-free, and no proof of that form without choice was found. Measured as follows,
 by `#print axioms` in a scratch file importing this one.
 - The statement carries choice. `SelfPrints` and `Universal` each measure
@@ -113,10 +115,14 @@ by `#print axioms` in a scratch file importing this one.
 - No proof of it was found without choice. Mathlib's `fixed_point₂` carries choice in its
   statement: its hypothesis `Partrec₂ f` measures the triple, through `Primcodable.prod`, while
   `Partrec` measures `[propext]` and `Nat.Partrec` none. `fixed_point`, `exists_code`,
-  `eval_part`, `eval_curry`, `primrec₂_curry` and `evaln` each carry it. Missing from the
-  route, as located on 2026-10-04 by the measurements above: a recursion theorem stated
-  without `Partrec₂`, and a universal code whose correctness is proved without `eval_part`.
-  Neither was attempted here. The footprint stays
+  `eval_part`, `eval_curry`, `primrec₂_curry` and `evaln` each carry it. Mathlib's other
+  recursion theorem, `fixed_point : Computable f → ∃ c, eval (f c) = eval c` for
+  `f : Code → Code`, avoids `Partrec₂` and still carries choice in its statement: that
+  statement, restated as a `Prop`, measures the triple, because `Computable` at `Code`
+  resolves through `Primcodable.ofDenumerable Code`, which measures the triple, while
+  `Computable` itself measures `[propext]`. Not located as of 2026-10-04 by these
+  measurements: a recursion theorem whose statement is choice-free, and a universal code whose
+  correctness is proved without `eval_part`. Neither was attempted here. The footprint stays
   UNCLASSIFIED: a proof's footprint, not a theorem's necessity.
 
 **Controls.** `universal_not_selfprints`: universality alone does not give self-printing.
@@ -125,22 +131,24 @@ The `example`s beside it: no constant code is universal, so the constant codes, 
 `Code.zero` is self-printing, because its Gödel number is `0`, while not universal. Each half
 of the conjunction is met by some code without the other.
 
-**One code per behaviour.** `selfprints_behaviour_injective`: two self-printing codes with
-the same `eval` are equal, because channel `0` reads the Gödel number back out of the
-behaviour. So the infinite family of self-printing universal codes is not one function
-reached by many codes: any two of them differ on channel `0`. Contrast `padding`, where
-infinitely many codes share one function. Computational self-reference has a uniqueness,
-at the level of behaviour.
+**One code per behaviour, among self-printing codes.** `selfprints_behaviour_injective`: two
+codes that are BOTH self-printing and have the same `eval` are equal, because channel `0` reads
+the Gödel number back out of the behaviour and `Encodable.encode` is one-to-one. The hypothesis
+is cheap: `Code.zero`, the constant-zero code, is self-printing (its Gödel number is `0`). So
+the infinite family of self-printing universal codes is not one function reached by many codes:
+any two of them differ on channel `0`. Contrast `padding`, where infinitely many codes share one
+function. `Reading:` computational self-reference has a uniqueness, at the level of behaviour.
 
-**Replicas differ only by address.** `selfPrints_universal_address`: two self-printing
-universal codes give the same values on every channel `e + 1`, the interpreter channels, and
-two distinct ones give different values on channel `0`, which returns each code's own Gödel
-number; that second half is `Encodable.encode` being one-to-one. The control beside it shows
-that `Universal` carries the first half: `Code.zero` is self-printing and not universal, and
-it disagrees with a self-printing universal code on a channel `e + 1`. `Reading:` replicas
-share everything but the address; the next instance adds only the address. That is a claim
-about relative complexity, and it stays a reading while Kolmogorov complexity is not in Lean
-(not located in the Mathlib pin as of 2026-10-04; searches in
+**Two self-printing universal codes differ only on channel `0`.**
+`selfPrints_universal_address`: two self-printing universal codes give the same values on every
+channel `e + 1`, the interpreter channels, and two distinct ones give different values on
+channel `0`, which returns each code's own Gödel number; that second half is `Encodable.encode`
+being one-to-one. As codes they may differ in any way; the statement is about their values. The
+control beside it shows that `Universal` carries the first half: `Code.zero` is self-printing
+and not universal, and it disagrees with a self-printing universal code on a channel `e + 1`.
+`Reading:` replicas share everything but the address; the next instance adds only the address.
+That is a claim about relative complexity, and it stays a reading while Kolmogorov complexity is
+not in Lean (not located in the Mathlib pin as of 2026-10-04; search record in
 `ZeroParadox/Information/Disjunctive.md`).
 
 **Occurrence controls.** `Occurs` (`ZeroParadox/Computability/Occurrence.lean`) is

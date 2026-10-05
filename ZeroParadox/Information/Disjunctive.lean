@@ -20,7 +20,7 @@ able to have another tape and another program.
 ---
 
 ## Formal Overview (AI-assisted)
-A tape `ℕ → Bool` is DISJUNCTIVE (standard term; also "rich") when every finite word occurs in it.
+A tape `ℕ → Bool` is DISJUNCTIVE (standard term) when every finite word occurs in it.
 The all-false tape fails, a primitive recursive tape passes, the fair coin passes almost surely;
 under the hypothesis every code word is PRESENT, never executed. `ZeroParadox/Information/Disjunctive.md`.
 -/
@@ -364,7 +364,9 @@ theorem allFalse_misses_code {c : Code} (hc : c ≠ Code.zero) :
 /-! ## § V. No full self-copy: a disjunctive tape is not periodic -/
 
 /-- **`Statement:` a tape equal to its own shift by some `a > 0` is not disjunctive:** every
-word of length `a` at position `n` is the one at `n % a`, so at most `a` of the `2 ^ a` occur. -/
+word of length `a` at position `n` is the one at `n % a`, so at most `a` of the `2 ^ a` occur.
+A special case of Barnsley–Leśniak's remark that no disjunctive sequence is almost periodic
+(`ZeroParadox/Information/Disjunctive.md`, Prior art). -/
 theorem not_disjunctive_of_periodic {x : ℕ → Bool} {a : ℕ} (ha : 0 < a)
     (hper : ∀ n, x (n + a) = x n) : ¬ Disjunctive x := by
   intro h
@@ -425,11 +427,14 @@ example : (¬ ∃ a, 0 < a ∧ ∀ n, (fun m => decide (m = 0)) (n + a) = (fun m
 
 /-! ## § VI. What maximal complexity would add
 
-`Reading:` Tim's commitment that the bottom is MAXIMALLY complex (incompressible prefixes, hence
-Martin-Löf random by Levin–Schnorr) implies disjunctive; that is standard theory, not proved here.
-Martin-Löf randomness and Kolmogorov complexity are not located in the Mathlib pin as of
-2026-10-04 (searches recorded in `Disjunctive.md`). The converse fails: `champ` is disjunctive and
-primitive recursive (§ II). -/
+Standard theory, not proved here: Martin-Löf random iff every prefix is incompressible in PREFIX-FREE
+complexity, `K(x↾n) ≥ n − c` (Levin–Schnorr, Chaitin), and Martin-Löf random implies disjunctive.
+With plain complexity no infinite sequence has all prefixes incompressible (Martin-Löf). The converse
+fails: `champ` is disjunctive and primitive recursive (§ II).
+`Reading:` separately, Tim's commitment that the framework's ⊥ (the role, not the all-false ⊥ of
+`ℕ → Bool`) is MAXIMALLY complex in that prefix-free sense; through the standard theorem it would be
+disjunctive. Martin-Löf randomness and Kolmogorov complexity are not located in the Mathlib pin as of
+2026-10-04 (search recorded in `ZeroParadox/Information/Disjunctive.md`). -/
 
 end ZeroParadox
 

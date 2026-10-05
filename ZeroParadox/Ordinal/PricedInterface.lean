@@ -5,7 +5,7 @@ import Mathlib.SetTheory.Ordinal.Veblen
 set_option maxHeartbeats 1000000
 
 /-!
-# A priced interface: a carrier sized to ε₀, a map into `Ordinal`, and both sides' axiom footprints
+# A priced interface: a notation system for ε₀ + 1, a map into `Ordinal`, and both sides' axiom footprints
 
 The axiom price of crossing from ordinal notations into Mathlib's `Ordinal`, measured by the purity
 block at the end. Argument, prior art and fences: `ZeroParadox/Ordinal/PricedInterface.md`.
@@ -278,6 +278,11 @@ theorem e0Repr_not_injective : ¬ Function.Injective e0Repr := by
   obtain ⟨x, y, hne, hrepr⟩ := mathlib_ONote_order_not_antisymm
   exact hne (congrArg ofSyn (WithTop.coe_injective (hinj (a₁ := e0Coe x) (a₂ := e0Coe y) hrepr)))
 
+-- `Statement:` the comparator field fails: two points of the carrier are strictly ordered by its
+-- order and have the same denotation, so `<` on `E0Note` does not track `<` on `Ordinal`.
+example : ∃ x y : E0Note, (x < y ∨ y < x) ∧ e0Repr x = e0Repr y := by
+  obtain ⟨x, y, hxy, hne⟩ := Function.not_injective_iff.1 e0Repr_not_injective
+  exact ⟨x, y, lt_or_gt_of_ne hne, hxy⟩
 
 /-- **`Statement:` the fiber, exhibited.** Two distinct notations with one denotation — the unfolding of
 `e0Repr_not_injective`, with `1 + ω` and `ω` as the underlying witness. -/

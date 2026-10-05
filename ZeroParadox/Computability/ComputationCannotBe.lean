@@ -122,7 +122,9 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 #check @ZeroParadox.selfPrints_universal_address
 
 -- Statement: a disjunctive tape `ℕ → Bool` equals its own shift by no `a > 0`.
--- Reading: a tape carrying every code word holds no full copy of itself at any offset.
+-- Reading: if the framework's ⊥, read as a tape, is maximally complex (Tim's commitment, prefix-free
+--   sense; disjunctive by standard theory, `ZeroParadox/Information/Disjunctive.lean` § VI), it equals
+--   none of its own shifts by `a > 0`: no full copy of itself at any offset.
 #check @ZeroParadox.disjunctive_not_periodic
 
 /-! ### § IV. The bottom's computational face — PROVED vs COMMITTED -/
