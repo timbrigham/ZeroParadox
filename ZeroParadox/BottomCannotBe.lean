@@ -482,6 +482,8 @@ example (x : ℤ_[2]) : x - x = 0 ∧ multiplicity_addValuation PadicInt.prime_p
 #check @ZeroParadox.Disjunctive
 -- Statement: control, the all-false tape is not disjunctive.
 #check @ZeroParadox.allFalse_not_disjunctive
+-- Statement: a tape equal to its own shift by some `a > 0` is not disjunctive.
+#check @ZeroParadox.not_disjunctive_of_periodic
 -- Statement: in `ℕ → Bool` under the pointwise order, ⊥ is the all-false tape.
 example : (⊥ : ℕ → Bool) = fun _ => false := rfl
 -- Statement: under pointwise exclusive-or, every tape's self-difference is the all-false tape, so

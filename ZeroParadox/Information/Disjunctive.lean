@@ -361,7 +361,69 @@ theorem allFalse_misses_code {c : Code} (hc : c ≠ Code.zero) :
   rw [hi] at this
   exact Bool.false_ne_true this
 
-/-! ## § V. What maximal complexity would add
+/-! ## § V. No full self-copy: a disjunctive tape is not periodic -/
+
+/-- **`Statement:` a tape equal to its own shift by some `a > 0` is not disjunctive:** every
+word of length `a` at position `n` is the one at `n % a`, so at most `a` of the `2 ^ a` occur. -/
+theorem not_disjunctive_of_periodic {x : ℕ → Bool} {a : ℕ} (ha : 0 < a)
+    (hper : ∀ n, x (n + a) = x n) : ¬ Disjunctive x := by
+  intro h
+  have hq : ∀ q m, x (m + a * q) = x m := by
+    intro q
+    induction q with
+    | zero => intro m; rfl
+    | succ q ih => intro m; rw [Nat.mul_succ, ← Nat.add_assoc, hper, ih]
+  have hword : ∀ n i, x (n + i) = x (n % a + i) := by
+    intro n i
+    have := Nat.mod_add_div n a
+    calc x (n + i) = x ((n % a + i) + a * (n / a)) := by congr 1; omega
+      _ = x (n % a + i) := hq _ _
+  let f : Fin a → (Fin a → Bool) := fun r i => x (r + i)
+  have hns : ¬ Function.Surjective f := by
+    intro hs
+    have := Fintype.card_le_of_surjective f hs
+    simp only [Fintype.card_fun, Fintype.card_bool, Fintype.card_fin] at this
+    exact absurd this (not_le.2 Nat.lt_two_pow_self)
+  apply hns
+  intro w
+  obtain ⟨n, hn⟩ := (h a w).exists
+  exact ⟨⟨n % a, Nat.mod_lt n ha⟩, funext fun i => (hword n i).symm.trans (hn i)⟩
+
+/-- **`Statement:` a disjunctive tape equals its shift by no `a > 0`.** `Reading:` if the framework's
+⊥ read as a tape is maximally complex (Tim's commitment; disjunctive in standard theory, § VI), it
+holds no full copy of itself at any offset; copies sit side by side, told apart by an address
+(`selfPrints_universal_address`, `ZeroParadox/Computability/Kleene.lean`). -/
+theorem disjunctive_not_periodic {x : ℕ → Bool} (h : Disjunctive x) :
+    ¬ ∃ a, 0 < a ∧ ∀ n, x (n + a) = x n :=
+  fun ⟨_, ha, hper⟩ => not_disjunctive_of_periodic ha hper h
+
+-- Statement: control, the all-false tape is periodic with `a = 1`, and not disjunctive
+-- (`allFalse_not_disjunctive`, § II).
+example : (∀ n, (fun _ : ℕ => false) (n + 1) = (fun _ : ℕ => false) n) ∧
+    ¬ Disjunctive (fun _ => false) := ⟨fun _ => rfl, allFalse_not_disjunctive⟩
+
+-- Statement: control, `0 < a` carries it: every tape equals its shift by `0`, `champ` included.
+example : (∀ n, champ (n + 0) = champ n) ∧ Disjunctive champ := ⟨fun _ => rfl, champ_disjunctive⟩
+
+-- Statement: so `champ`, and almost every fair-coin tape, is periodic at no offset `a > 0`.
+example : ¬ ∃ a, 0 < a ∧ ∀ n, champ (n + a) = champ n := disjunctive_not_periodic champ_disjunctive
+example : ∀ᵐ x ∂fairTape, ¬ ∃ a, 0 < a ∧ ∀ n, x (n + a) = x n :=
+  fairTape_disjunctive_ae.mono fun _ hx => disjunctive_not_periodic hx
+
+-- Statement: the converse fails: the tape `true` only at `0` is periodic at no `a > 0` and is not
+-- disjunctive (`true, true` occurs nowhere).
+example : (¬ ∃ a, 0 < a ∧ ∀ n, (fun m => decide (m = 0)) (n + a) = (fun m => decide (m = 0)) n) ∧
+    ¬ Disjunctive (fun m => decide (m = 0)) := by
+  refine ⟨fun ⟨a, ha, hp⟩ => ?_, fun h => ?_⟩
+  · have := hp 0
+    simp at this
+    omega
+  · obtain ⟨n, hn⟩ := (h 2 (fun _ => true)).exists
+    have h0 := hn 0
+    have h1 := hn 1
+    simp at h0 h1
+
+/-! ## § VI. What maximal complexity would add
 
 `Reading:` Tim's commitment that the bottom is MAXIMALLY complex (incompressible prefixes, hence
 Martin-Löf random by Levin–Schnorr) implies disjunctive; that is standard theory, not proved here.
@@ -405,5 +467,7 @@ open ZeroParadox
 #print axioms codeWord_zero_width
 #print axioms codeWord_has_true
 #print axioms allFalse_misses_code
+#print axioms not_disjunctive_of_periodic
+#print axioms disjunctive_not_periodic
 
 end PurityCheck
