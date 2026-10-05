@@ -190,7 +190,7 @@ def build():
             'show whether the step was taken. It takes no hypothesis and does not carry that the step is taken '
             '(ZeroParadox/Order/SnapCannotBe.lean &#167; I). The returned ⊥ occupies the bottom role again; reading it as a NEW null rather than the prior c<sub>0</sub> is C-DA2, a modelling commitment. The axiom-free result is the role, not the novelty.',
             'Structural motivation (Paths 1 and 2 below): ZP-A CC-2 (⊥ = {⊥}) is a commitment: ZP-J t_exec_iff proves '
-            '⊥ is the only occupant of the Quine-atom role, and that ⊥ is the AFA set Q = {Q}, its own singleton, is argued (R-AFA). '
+            '⊥ is the only occupant of the Quine-atom role, and that ⊥ of a ZPSemilattice is the AFA set Q = {Q}, its own singleton, is argued (R-AFA). '
             'ZP-A R3 reads off that a self-containing object admits no external interpreter position; that rules out an '
             'external executor, not an inert ⊥. ZP-C L-INF gives ⊥ unbounded surprisal, exceeding the capacity of any '
             'finite interpreter, and the step from there to executing is a bridge principle of its own (Path 2), which the '
@@ -221,7 +221,7 @@ def build():
              'self-containing Quine atom (&#8869; = {&#8869;}), and that this atom is unique &#8212; of '
              'which AFA is the canonical example. '
              'ZP-A CC-2 (&#8869; = {&#8869;}) is a Forced Metatheoretic Commitment: on a lattice, T-EXEC proves that '
-             'whatever fills the Quine-atom role is &#8869; (axiom-free, given the field bot_self_mem); in AFA set theory Q = {Q} is a theorem (Aczel 1988, Example 1.3), and that the framework&#8217;s &#8869; is that set is the argued metatheoretic step (see Remark R-AFA).'),
+             'whatever fills the Quine-atom role is &#8869; (axiom-free, given the field bot_self_mem); in AFA set theory Q = {Q} is a theorem (Aczel 1988, Example 1.3), and that the occupant of the framework&#8217;s &#8869; role, &#8869; of a ZPSemilattice, is that set Q is the argued metatheoretic step (see Remark R-AFA).'),
         body('Path 2 — Informational (ZP-C L-INF): The surprisal I(n) = n at ball-hierarchy '
              'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M. ⊥ corresponds '
              'to the limit point 0 ∈ Q<sub>2</sub>; its informational content exceeds every finite bound. '
@@ -233,7 +233,8 @@ def build():
              'commitment, and it is not a premise of the Snap. It asks what it means for a mathematical structure to <i>instantiate</i> '
              'rather than merely <i>satisfy</i> conditions — a question no computability library answers. '
              'It is the implementation problem in the philosophy of computation, which owns the question: '
-             'Putnam (<i>Representation and Reality</i>, 1988, appendix, pp. 120&#8211;125) argued that every '
+             'Putnam (<i>Representation and Reality</i>, 1988, appendix, pp. 120&#8211;125, as cited by '
+             'Chalmers 1996) argued that every '
              'ordinary open system realizes every abstract finite automaton, and Chalmers (Synthese 108, 1996, '
              '309&#8211;333) answered with an account of implementation that requires causal structure. Cited, '
              'not claimed. This document states the question in the state chart, where a configuration is one '
@@ -295,7 +296,7 @@ def build():
                 'Path 2 (informational, L-INF): UNADOPTED BRIDGE PRINCIPLE — a missing principle, not a missing proof, distinct from the occurrence commitment and not a premise of the Snap; Path 2 does not derive the precondition. '
                 'Path 3 (computational, ZP-C D1 + AIT): bears on the precondition and shows that executing is not derivable from incompressibility — incompressibility rules out a shorter external generator, not an inert string; that the configuration reaching P<sub>0</sub> is in Sense B and not Sense A is DP-2&#8217;s precondition, what the occurrence commitment asserts, which DA-1 consumes and does not derive. Its Lean counterpart (ZP-K) is the machinePhaseKleene instance&#8217;s botCode_is_quine field — a KleeneStructure requirement that constant codes also meet, not a witness of execution and not a second independent proof; da1_paths_unified carries it with Path 1 as a conjunction. '
                 'CC-1 (S<sub>0</sub> = &#8869;): restated — ZP-J cc1_derived with t_exec_iff makes a Quine-atom start and a &#8869; start the same condition (axiom-free, Lean) — and not forced: on a carrier with a second point a valid sequence starts elsewhere (ZeroParadox/Settheory/OntBridge.lean). '
-                'CC-2 (&#8869; = {&#8869;}): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role (axiom-free); that &#8869; is the AFA set Q = {Q} is an argued metatheoretic commitment (see R-AFA). '
+                'CC-2 (&#8869; = {&#8869;}): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role (axiom-free); that &#8869; of a ZPSemilattice is the AFA set Q = {Q} is an argued metatheoretic commitment (see R-AFA). '
                 'DP-2 (&#167;III) — explicit. '
                 'T-SNAP&#8217;s premises, in its Lean form and in its prose argument, are stated under Premises of T-SNAP (DA-1 insert, &#167; V). '
                 'AIT (Kolmogorov complexity) outside Lean scope; the Kleene structure is its in-scope counterpart, carried as a KleeneStructure requirement (botCode_is_quine), not a proof of the AIT claim.'),
@@ -368,7 +369,7 @@ def build():
                 'occurrence rest on commitments, among them those named there. '
                 'Dependencies cited in the steps: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B C3; ZP-A D2, R1; ZP-E DA-1; ZP-J T-EXEC. '
                 'CC-1 (S&#8320; = &#8869;): restated — a Quine-atom start and a &#8869; start are one condition (ZP-J cc1_derived, t_exec_iff; axiom-free) — and not forced, since on a carrier with a second point a valid sequence starts elsewhere. '
-                'CC-2 (&#8869; = {&#8869;}): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role (axiom-free); that &#8869; is the AFA set Q = {Q} is argued metatheoretically (see R-AFA). '
+                'CC-2 (&#8869; = {&#8869;}): ZP-J t_exec_iff proves &#8869; is the only occupant of the Quine-atom role (axiom-free); that &#8869; of a ZPSemilattice is the AFA set Q = {Q} is argued metatheoretically (see R-AFA). '
                 'Both remain commitments: CC-1 is a Conditional Claim, expressed through the Quine-atom role and not removed by it; CC-2 is a Forced Metatheoretic Commitment. '
                 'Conceptual correspondence only: ZP-G AX-G2 (downstream of ZP-E; not a formal dependency).'),
     ]

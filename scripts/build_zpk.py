@@ -625,9 +625,12 @@ def build():
         'Kolmogorov complexity, a sequence x has K(first n bits of x) ≥ n − c for some constant c and every n '
         'exactly when it is Martin-Löf random (the Levin–Schnorr theorem; Franklin and Porter, '
         'arXiv:2004.02851, Theorem 2.5, crediting Levin and Schnorr), and Martin-Löf random '
-        'sequences are disjunctive. The prefix-free form is needed: with plain complexity no '
-        'infinite sequence has every prefix incompressible (Martin-Löf, Z. Wahrsch. verw. Geb. 19 '
-        '(1971) 225–230, Theorem 1, at a constant f). Martin-Löf randomness '
+        'sequences are disjunctive. The prefix-free form is needed: with plain complexity C, every '
+        'infinite sequence A has C(first n bits of A) ≤ n − log n for infinitely many n (Franklin and '
+        'Porter, arXiv:2004.02851, § 2.2, p. 15, crediting Martin-Löf). Martin-Löf (Z. Wahrsch. verw. '
+        'Geb. 19 (1971) 225–230, Theorem 1) proves the form conditional on the length n: for every '
+        'sequence x and every recursive f whose series of terms 2^−f(n) diverges, K(first n bits of '
+        'x | n) < n − f(n) for infinitely many n. Martin-Löf randomness '
         'and Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (searches '
         'recorded in ZeroParadox/Information/Disjunctive.md). Disjunctive does not imply random: '
         'champ is disjunctive and computable.'))
@@ -692,8 +695,9 @@ def build():
         'restated with encodeCode for the Gödel number and the channel of code d written '
         'Nat.pair (encodeCode d + 1) n, the statement is axiom-free, and no proof of the restated form '
         'without choice was found. ZeroParadox/Computability/Kleene.md § VIII records the '
-        'measurement (2026-10-04) and what the route lacked as located then. The footprint is '
-        'UNCLASSIFIED.'))
+        'measurement (2026-10-04) and what the route lacked as located then. Every proof of the '
+        'statement as written carries choice; whether the restated statement has a choice-free '
+        'proof is UNCLASSIFIED.'))
 
     E.append(Paragraph('V. The Zero Tape: Reference and Self', S['h2']))
     E.append(body(
@@ -772,7 +776,8 @@ def build():
          'Lean ✓ — infinitely many fixed points for every partially computable F; the Padding Lemma'],
         ['selfref_universal_exists, selfref_universal_infinite',
          'fixed_point₂ (Mathlib) + selfPrintOrDelegate_partrec; fixed_points_infinite',
-         'propext, Classical.choice, Quot.sound (measured 2026-10-04); UNCLASSIFIED, Kleene.md § VIII',
+         'propext, Classical.choice, Quot.sound (measured 2026-10-04), carried by the statement; '
+         'restated form UNCLASSIFIED, Kleene.md § VIII',
          'Lean ✓ — existence of self-printing universal codes; nothing says a code is run'],
         ['selfprints_behaviour_injective',
          'SelfPrints at channel 0 + Encodable.encode_injective',
@@ -863,14 +868,18 @@ def build():
          'numbering of codes (Denumerable Code); restated with encodeCode for the Gödel number and '
          'the channel of code d written Nat.pair (encodeCode d + 1) n, it is axiom-free, and no '
          'proof of the restated form without choice was found. What the route lacked, as located '
-         'then, is recorded in ZeroParadox/Computability/Kleene.md § VIII. Footprint UNCLASSIFIED.'],
+         'then, is recorded in ZeroParadox/Computability/Kleene.md § VIII. Every proof of the '
+         'statement as written carries choice; whether the restated form has a choice-free proof '
+         'is UNCLASSIFIED.'],
         ['Martin-Löf randomness ⇒ disjunctive',
          'OPEN — not in Lean',
          'Standard theory: a Martin-Löf random sequence is disjunctive, and by the Levin–Schnorr '
          'theorem Martin-Löf randomness is incompressibility of every prefix, K(first n bits of x) ≥ '
          'n − c for some constant c and every n, with K the prefix-free complexity (Franklin and '
-         'Porter, arXiv:2004.02851, Theorem 2.5); with plain complexity no infinite sequence has '
-         'every prefix incompressible (Martin-Löf 1971, Theorem 1). Martin-Löf randomness and '
+         'Porter, arXiv:2004.02851, Theorem 2.5); with plain complexity C, every infinite sequence '
+         'A has C(first n bits of A) ≤ n − log n for infinitely many n (Franklin and Porter, § 2.2, '
+         'p. 15, crediting Martin-Löf; Martin-Löf 1971, Theorem 1, proves the form conditional on '
+         'the length n). Martin-Löf randomness and '
          'Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (search record '
          'in Disjunctive.md). Until this bridge is formalised, the framework\'s commitment that the '
          'occupant of its ⊥ role, ⊥ of a ZPSemilattice, read as a tape, is maximally complex reaches '

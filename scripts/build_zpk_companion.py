@@ -183,7 +183,7 @@ def build():
         'need Kolmogorov complexity and plays no formal part in this document.'))
     E.append(cbody(
         'This is not a running computation that might loop forever. Kleene\'s theorem is an '
-        'existence proof — it guarantees the fixed point exists before any execution takes '
+        'existence proof — it guarantees a fixed point exists before any execution takes '
         'place, by a direct construction, not by iterating toward a limit. The question '
         '"will it halt?" does not arise: the fixed point is identified by the theorem '
         'itself, not discovered by running a potentially divergent process.'))
@@ -191,10 +191,10 @@ def build():
     E.append(example_box('Real-world analogy — A self-printing program', [
         'A Quine program in computer science is a program that, when run, outputs its own '
         'source code. It needs no external file to read — the source is baked in. '
-        'Kleene\'s theorem guarantees that every computable transformation of programs has a '
-        'fixed point, a program that computes what the transformation sends it to '
-        '(kleene_fixed_point_exists); a self-printing program of this kind is the fixed point of '
-        'one particular transformation (selfref_universal_exists, below). On the framework\'s reading, the computational Quine is the expression '
+        'Kleene\'s theorem guarantees that every partially computable map f sending each program to '
+        'a partial function has a fixed point, a program c whose behaviour eval c is the function f '
+        'sends it to, eval c = f c (kleene_fixed_point_exists); a self-printing program of this kind '
+        'is a fixed point of one particular such map (selfref_universal_exists, below). On the framework\'s reading, the computational Quine is the expression '
         'of ⊥ = {⊥} in the language of programs: c is its own program, just as ⊥ is its own member. '
         'ZP-K carries that reading as a KleeneStructure requirement (botCode_is_quine), not a theorem.',
     ]))
@@ -206,7 +206,7 @@ def build():
         'channel; a universal one computes what any other program computes, given that '
         'program\'s number, on the remaining channels. Programs that are both exist, and there are infinitely many of them '
         '(selfref_universal_exists, selfref_universal_infinite); no constant program is '
-        'universal. More generally, every computable transformation has infinitely many fixed '
+        'universal. More generally, every partially computable map of that kind has infinitely many fixed '
         'points (fixed_points_infinite), and every computable function has infinitely many '
         'programs (padding).'))
     E.append(cbody(
@@ -412,8 +412,10 @@ def build():
         'prefix is incompressible up to a constant in the prefix-free sense of Kolmogorov '
         'complexity is exactly a Martin-Löf random one (the Levin–Schnorr theorem; Franklin and '
         'Porter, arXiv:2004.02851, Theorem 2.5), and such a sequence is disjunctive. The '
-        'prefix-free sense matters: with plain complexity no infinite sequence has every prefix '
-        'incompressible (Martin-Löf 1971, Theorem 1).'))
+        'prefix-free sense matters: with plain complexity every infinite sequence has infinitely '
+        'many prefixes of length n compressible to at most n − log n bits (Franklin and Porter, '
+        'arXiv:2004.02851, § 2.2, p. 15, crediting Martin-Löf; Martin-Löf 1971, Theorem 1, proves '
+        'the form conditional on the length n).'))
     E.append(cbody(
         '<b>Two self-printing interpreters differ only on channel 0.</b> Two self-printing universal '
         'programs give the same answers on every channel where they compute other programs, and '
