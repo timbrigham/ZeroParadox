@@ -19,9 +19,9 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-J Wheel Addendum | v1.8 | ZP-J_Wheel_Addendum.pdf | v1.6 | N/— | formal:2be7f9c9 comp:5f817977 |
 | ZP-J Keystone Addendum | v1.25 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:4fd4b585 |
 | ZP-K Computational Grounding | v1.25 | ZP-K_Computational_Grounding.pdf | v1.23 | N/— | formal:9ee8e8ae comp:8a1975f6 |
-| ZP-L Incomputability Convergence | v1.25 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:d74032b1 comp:cc1bad38 |
-| ZP-M Kleene-Ordinal Bridge | v1.11 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:14ee8cac comp:a6ff1cab |
-| ZP-N The Constructive Snap | v2.0 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:5011bb68 |
+| ZP-L Incomputability Convergence | v1.26 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:cb98751e comp:cc1bad38 |
+| ZP-M Kleene-Ordinal Bridge | v1.12 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:d8c95827 comp:a6ff1cab |
+| ZP-N The Constructive Snap | v2.1 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:e3d53e77 |
 | ZP-P The Fixed-Point Fork | v1.24 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:4b914ac3 |
 | ZP-R Cross-Category Fixed Point | v1.6 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:cfe3495f |
 | ZP-R Diagonal Family Addendum | v1.1 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:937a0e90 |
