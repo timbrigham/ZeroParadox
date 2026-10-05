@@ -169,9 +169,11 @@ def build():
           Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
-              'document — every claim here restates a result already proved in the technical '
-              'document ZP-K Computational Grounding. Consult that document for the '
-              'authoritative mathematics.', CS['disc'])]
+              'document. Its claims about the Lean development restate results proved in the '
+              'technical document ZP-K Computational Grounding or in the corpus it cites; '
+              'readings and commitments are labelled as such, and the remaining background is '
+              'standard computability theory and logic, named where it is used. Consult that '
+              'document for the authoritative mathematics.', CS['disc'])]
 
     # What Is ZP-K Doing?
     E.append(Paragraph('What Is ZP-K Doing?', CS['h1']))
@@ -198,7 +200,7 @@ def build():
     E.append(Paragraph('What Is a Kleene Fixed Point?', CS['h1']))
     E.append(cbody(
         'Kleene\'s second recursion theorem is a foundational result in computability theory. '
-        'Informally, it says: for any way of transforming programs, there exists a program '
+        'Informally, it says: for any computable way of transforming programs, there exists a program '
         'that is a fixed point of that transformation — a program whose behavior is the same '
         'before and after the transformation is applied.'))
     E.append(cbody(
@@ -347,9 +349,11 @@ def build():
     E.append(Paragraph('A Note on Proof Purity', CS['h1']))
     E.append(cbody(
         'The computability machinery in ZP-K (Kleene\'s theorem, Rogers\' fixed-point theorem) '
-        'requires classical logic, inherited from Mathlib rather than a novel Zero Paradox '
-        'commitment. ZP-K Section IV tabulates the measured axiom footprints. '
-        'What is free of it is the choice-free CORE, and that is narrower than any layer '
+        'is proved in Mathlib with Classical.choice in its measured footprint, inherited from '
+        'Mathlib rather than a novel Zero Paradox commitment. That is what the proofs use, not '
+        'what the theorems need: whether the footprint is essential is unclassified. ZP-K '
+        'Section IV tabulates the measured axiom footprints. '
+        'What is free of Classical.choice is the choice-free CORE, and that is narrower than any layer '
         'name: ZeroParadox/AxiomProfile.lean &#167;I is where the core is listed and each '
         'footprint measured &#8212; T-SNAP, the lattice, the Quine atom. Results elsewhere '
         'in the same layers do carry the dependency: decoration_unique, the AFA '
@@ -426,39 +430,49 @@ def build():
         'is called disjunctive. On such a tape the code of every program appears, infinitely often '
         '(code_occurs_of_disjunctive). That is presence, not execution. It needs no randomness: a '
         'simple counting tape in the style of Champernowne is disjunctive and computable. The '
-        'framework holds that ⊥ is maximally complex; standard theory says a maximally complex '
-        '(Martin-Löf random) sequence is disjunctive, but that step is not proved in Lean.'))
+        'framework holds, as a commitment, that its ⊥ is maximally complex; that is about the '
+        'framework\'s ⊥, not about the all-false tape below. Standard theory, not proved in Lean: '
+        'a sequence whose every prefix is incompressible in the prefix-free sense of Kolmogorov '
+        'complexity is exactly a Martin-Löf random one (the Levin–Schnorr theorem), and such a '
+        'sequence is disjunctive. The prefix-free sense matters: with plain complexity no infinite '
+        'sequence has every prefix incompressible (ZeroParadox/Information/Disjunctive.lean § VI).'))
     E.append(cbody(
-        '<b>Replicas differ only by address.</b> Two self-printing universal programs give the same '
-        'answers on every channel where they compute other programs, and differ only on the '
-        'channel where each prints its own number (selfPrints_universal_address). The reading: '
-        'copies share everything but the address, and each new copy adds only its address.'))
+        '<b>Two self-printing interpreters differ only on channel 0.</b> Two self-printing universal '
+        'programs give the same answers on every channel where they compute other programs, and '
+        'differ only on the channel where each prints its own number '
+        '(selfPrints_universal_address). The framework\'s reading, not a theorem: such programs '
+        'are replicas, sharing everything but the address, and each new one adds only its address.'))
     E.append(cbody(
         '<b>No full copy of itself.</b> A disjunctive tape never equals itself shifted along by '
-        'any positive amount (disjunctive_not_periodic). Copies sit side by side, told apart by '
-        'an address, rather than one tape containing itself whole.'))
+        'any positive amount (disjunctive_not_periodic). The reading: copies sit side by side, '
+        'told apart by an address, rather than one tape containing itself whole.'))
     E.append(cbody(
         '<b>Building an address versus choosing one.</b> Building a self-printing program is a '
-        'computation: the recursion theorem produces it. Choosing a program by what it does is '
-        'harder, because whether a program has a given behaviour is in general undecidable '
-        '(isComputationalQuine_undecidable; Rice\'s theorem). ZeroParadox/Category/ChoiceCannotBe.lean '
-        'places the axiom of choice exactly there: with a decidable test, selection is free; at an '
-        'undecided one, uniform selection is the choice principle. In Lean the footprint is not '
-        'that clean: the existence theorem carries Classical.choice through Mathlib\'s numbering of '
-        'programs, and whether that is essential is unclassified (ZeroParadox/Computability/Kleene.md).'))
+        'computation: the recursion theorem produces it. What Lean has about choosing is about a '
+        'two-way choice, between two charts labelled by Bool '
+        '(ZeroParadox/Valuation/PoleChartSelection.lean): with a decidable test, decidable in '
+        'Lean\'s sense, which is not the same as having an algorithm, picking is done by an if, and picking uniformly for every possible test is, by definition, a fragment of the '
+        'axiom of choice. The framework\'s reading, by analogy and not a theorem about programs: '
+        'choosing a program by what it does is where choice would do its work. In Lean the '
+        'footprint does not draw that line: the existence theorem carries Classical.choice '
+        'through Mathlib\'s numbering of programs, and whether that is essential is unclassified '
+        '(ZeroParadox/Computability/Kleene.md).'))
     E.append(cbody(
         '<b>The zero tape.</b> The all-false tape is ⊥ of the bit-by-bit tape order, carries no '
         'program\'s code except the empty one, and is what any tape becomes when compared with '
         'itself bit by bit. The framework reads it two ways at once: the reference every '
-        'comparison runs through, and every tape\'s difference from itself.'))
+        'comparison runs through, and every tape\'s difference from itself. It is not the '
+        'framework\'s ⊥ that the commitment calls maximally complex.'))
     E.append(cbody(
-        '<b>What replication needs beyond self-reference.</b> Cotler, Hongler and Hudcová build an '
+        '<b>Replication beyond self-reference.</b> Cotler, Hongler and Hudcová build an '
         'automaton that can compute anything and still cannot copy itself, because its machines '
         'may not write into each other\'s territory. As they put it, a quine "produces a '
-        'description of the copying mechanism without replicating the mechanism itself". Seen '
-        'from outside, occurrence is not visible either: the carry example in '
-        'Occurrence.lean (carry_steps_onward_forever_yet_shows_nothing) steps onward forever while showing the same thing at every step, so watching the output cannot '
-        'tell it from a machine that never moves.'))
+        'description of the copying mechanism without replicating the mechanism itself". In one '
+        'example, occurrence is not visible from outside either: the carry example in '
+        'Occurrence.lean (carry_steps_onward_forever_yet_shows_nothing) steps onward forever while '
+        'one observable shows the same thing at every step. The reading: watching that observable '
+        'cannot tell this example from a machine that never moves. Lean shows this for that one '
+        'example and one observable, not for every way of looking.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: presence on a tape, self-printing, and universality are all facts about '
