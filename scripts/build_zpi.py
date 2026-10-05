@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.26 | September 2026
+Version 1.27 | October 2026
 v1.26: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim ruling, 2026-09-15): a ninth site the v1.25 sweep missed said DA-1 is closed given DP-2 'by ZP-K via Kleene's second recursion theorem'. DA-1 is closed given DP-2 by da1_minimal_path, which uses no axioms and no Kleene; the sentence now says so, and that ZP-K witnesses DA-1's Path 1 (da1_closed_concrete).
 v1.25: DA-1 CREDIT (Tim ruling, 2026-09-15): eight sites said ZP-K formally closes DA-1 via Kleene's second recursion theorem ('ZP-K now formally closes DA-1', 'DA-1 is now formally closed by ZP-K', 'DA-1 (formally) closed by ZP-K/Kleene'). DA-1 is closed given DP-2 (ZP-E); ZP-K witnesses Path 1 and carries Path 3 as a KleeneStructure requirement. Each site now says that. Companion reviewed; its differently shaped sentences are left for a ruling.
 v1.24: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2); the Open Items AX-1 row carries the canonical AX-1 sentence and its status cell reads 'the snap occurs given the occurrence commitment and DA-1'. Page 1 said 'where T-SNAP establishes the first transition bottom -> eps0', close to the retracted forcing wording with no occurrence fence; it now says T-SNAP fixes the shape of that transition and not that it is taken, and that T-IZ's trajectory is for a chain that takes every step (its strict-ascent hypothesis). Remark R-II.2 pointed t_iz_limit_is_new_null at ZeroParadox/Order/SnapCannotBe.lean, which only indexes it; it is declared in ZeroParadox/Valuation/SemilatticeInstance.lean, and both are named. 'Binary Snap Causality' names the retired AX-1 in this document, so T-SNAP's name gloss is not placed here.
@@ -45,7 +45,7 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -179,7 +179,10 @@ def build():
     E.append(body(
         'The reasoning is direct. An ascending chain (S<sub>n</sub>)<sub>n&lt;&#969;</sub> in L '
         'is a sequence satisfying S<sub>n</sub> &#8804; S<sub>n+1</sub> for all n (ZP-A T3 — monotonicity). '
-        'Because L has no top element, for every S<sub>N</sub> there EXISTS an S with '
+        'Where L has no top element (HasNoTop is a hypothesis on the carrier, not a law of every '
+        'ZP-A semilattice: the two-state carriers MachinePhase and OntologicalStates have a top, '
+        'by the examples in ZeroParadox/Order/Snap.lean and ZeroParadox/Settheory/OntBridge.lean), '
+        'for every S<sub>N</sub> there EXISTS an S with '
         'S<sub>N</sub> &lt; S — so no chain is ever forced to stabilise for want of somewhere to go. '
         '⚠ That is availability, not occurrence: a CONSTANT chain is still a legitimate state '
         'sequence in a no-top lattice (NO-GO gauge, &#167;Ib). That this chain is strictly ascending '
@@ -234,16 +237,17 @@ def build():
     # ── SECTION II: THE TWO PATHS ─────────────────────────────────────────────
     E += [
         hr(),
-        Paragraph('Section II: The Two Paths to P<sub>0</sub>', S['h1']),
+        Paragraph('Section II: The Topological Path and the Refuted Informational Bridge', S['h1']),
         hr(),
     ]
 
     E.append(body(
-        'The approach from inside can be traced along two parallel paths: one topological '
-        '(through Q<sub>2</sub> and the 2-adic norm), one informational (through ZP-C L-INF and '
-        'the Kolmogorov complexity threshold P<sub>0</sub>). Both paths converge on the same '
-        'condition (P<sub>0</sub> satisfied at &#969;). They '
-        'are not alternatives — they are two descriptions of the same structure.'))
+        'Two paths are set out here. The topological path, through Q<sub>2</sub> and the 2-adic '
+        'norm, is proved (&#167; A). The informational path, through ZP-C L-INF and the Kolmogorov '
+        'complexity threshold P<sub>0</sub>, rests on a valuation-complexity bridge that is REFUTED '
+        '(&#167; B gives the counterexample). So the two are not two descriptions of one structure: '
+        '2-adic depth and Kolmogorov complexity are different measures, and unbounded growth of the '
+        'first does not carry the second to its threshold.'))
 
     E.append(Paragraph('A. Topological Path — Cauchy Convergence in Q<sub>2</sub>', S['h2']))
     E.append(body(
@@ -298,7 +302,7 @@ def build():
         'This is a structural feature of the embedding, not a consequence of the abstract axioms. '
         'With IsDepthChain in place, R-IZ-A is formally closed.'))
 
-    E.append(Paragraph('B. Informational Path — The Valuation-Complexity Bridge', S['h2']))
+    E.append(Paragraph('B. Informational Path — The Valuation-Complexity Bridge (Refuted)', S['h2']))
     E.append(body(
         'ZP-C L-INF establishes that the surprisal I(n) = n at ball-hierarchy depth n is unbounded. '
         '&#8869; corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of '
@@ -306,25 +310,25 @@ def build():
         'gives the informational content of the ascending chain: as v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734;, '
         'the surprisal I(n) &#8594; &#8734; without bound.'))
     E.append(body(
-        'In the framework\'s binary construction — binary alphabet, ball-hierarchy depth equalling '
-        'surprisal (ZP-C D4), and Kolmogorov complexity measuring descriptive incompressibility — '
-        '2-adic valuation depth and Kolmogorov complexity are measuring the same structure from two '
-        'sides. The topological path traces depth-in-Q<sub>2</sub>; the informational path traces '
-        'descriptive incompressibility. As both grow without bound, they converge on the same '
-        'condition: the incompressibility threshold P<sub>0</sub> (ZP-C D1).'))
+        'Surprisal at depth n is a property of POSITION in the ball hierarchy: every point at 2-adic '
+        'depth n has I(n) = n under the branching measure (ZP-C D4). Kolmogorov complexity '
+        'K(x | n) is a property of the particular point x: the length of the shortest program that '
+        'outputs x given n. ZP-C Remark R-BRIDGE states that the two measures diverge away from '
+        'P<sub>0</sub>, and that divergence refutes the bridge below.'))
     E.append(theorem_box(
-        'Bridge Claim — Valuation-Complexity Bridge',
+        'Refuted Claim — Valuation-Complexity Bridge',
         [
-            'Claim: v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; &#8658; '
+            'Claim (REFUTED): v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; &#8658; '
             'K(S<sub>n</sub> | n) / |S<sub>n</sub>| &#8594; 1.',
-            'In the binary framework\'s construction, the 2-adic valuation depth (topological) and '
-            'Kolmogorov complexity (informational) are two descriptions of the same structure. '
-            'At the Cauchy limit, both converge on P<sub>0</sub>: the incompressibility threshold '
-            'K(c<sub>1</sub> | n) / |c<sub>1</sub>| = 1 (ZP-C D1).',
-            'Lean scope: Kolmogorov complexity K is uncomputable and absent from standard proof '
-            'libraries. Bridge is Outside Lean Scope — same category as DA-1 Path 3 (ZP-C D1 + AIT) '
-            'in ZP-E. The topological core (§ A above) is proved in Lean, carrying Classical.choice from Mathlib&#8217;s p-adic analysis (§ III); the bridge follows the '
-            'ZP-E informal argument. See ZP-E § IV for the full DA-1 Path 3 treatment that the bridge extends.',
+            'Counterexample: S<sub>n</sub> = 2<sup>n</sup>. Its 2-adic valuation is n (Mathlib: '
+            'padicValNat.prime_pow), so the premise holds, and the corpus&#8217;s ordinal tower read in '
+            '&#8484;<sub>2</sub> has the same valuation profile (cnfToZp2_tower_valuation, '
+            'ZeroParadox/Ordinal/Gentzen.lean). One fixed program computes S<sub>n</sub> from n, so '
+            'K(S<sub>n</sub> | n) is bounded by a constant while |S<sub>n</sub>| = n + 1 bits, and the '
+            'ratio tends to 0, not 1.',
+            'Lean scope: the valuation half is checked; the complexity half is the standard invariance '
+            'argument of algorithmic information theory and is not in Lean, since Kolmogorov complexity '
+            'is outside Lean scope (same category as DA-1 Path 3 in ZP-E).',
         ],
         color=INDIGO
     ))
@@ -346,8 +350,9 @@ def build():
         'ZP-E informational argument connecting 2-adic depth to Kolmogorov complexity and DA-1 '
         'Path 3. Since DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying '
         'Path 3 as a KleeneStructure requirement — without Kolmogorov complexity — Steps 2–5 are informational context, not a '
-        'proof dependency. The bridge is retained as historical motivation: it documents why '
-        'the framework\'s informational and topological layers converge at P<sub>0</sub>.'))
+        'proof dependency. The bridge in Step 2 is REFUTED (&#167; B): 2-adic depth growing without '
+        'bound does not carry Kolmogorov complexity to the threshold P<sub>0</sub>, so this route does '
+        'not reach P<sub>0</sub>.'))
 
     print('[build_zpi] Building Section III...')
     # ── SECTION III: THEOREM T-IZ ─────────────────────────────────────────────
@@ -386,12 +391,13 @@ def build():
         li('Step 1 — Cauchy convergence: The ascending chain has &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> '
            '(from v<sub>2</sub>(S(n)) &#8805; n — Lean-derived via h_strict_from_r1_t3 given IsDepthChain; R-IZ-A closed). '
            'By T-IZ-A (&#167; II.A), S(n) &#8594; 0 in Q<sub>2</sub>. Proved in Lean: t_iz_cauchy (carries Classical.choice from Mathlib p-adic analysis, &#167; III). ✓'),
-        li('Step 2 — Valuation-complexity bridge (informational context): As v<sub>2</sub>(S(n)) &#8594; &#8734;, '
-           'K(S(n)|n)/|S(n)| &#8594; 1. Original informational route to DA-1 Path 3. '
-           'Not a proof dependency for T-IZ — DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. '
-           'Retained as motivational context connecting the topological and informational layers.'),
-        li('Step 3 — P<sub>0</sub> is satisfied at the limit: ZP-C D1 gives K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 '
-           'at the limit. The configuration is algorithmically incompressible. ZP-C D1 applies.'),
+        li('Step 2 — Valuation-complexity bridge (REFUTED): the claim that v<sub>2</sub>(S(n)) &#8594; &#8734; '
+           'gives K(S(n)|n)/|S(n)| &#8594; 1 fails at S(n) = 2<sup>n</sup>, whose valuation is n and whose '
+           'complexity given n is bounded (&#167; II.B). '
+           'Not a proof dependency for T-IZ — DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.'),
+        li('Step 3 — P<sub>0</sub> at the limit (informational context): ZP-C D1&#8217;s threshold '
+           'K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1. Step 2 is this step&#8217;s only route from the chain to that '
+           'threshold, and with Step 2 refuted nothing here establishes that the limit meets the threshold.'),
         li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Throughout this document, "fires" narrates the commitment that instantiation occurs - before this note as well as after it - not a consequence of the theorem.'),
         li('Step 4 — DA-1 fires: A configuration at P<sub>0</sub> is a live execution event — '
            'not a static description. DA-1 (ZP-E) applies, with the same three-path argument as in ZP-E § IV. '
@@ -401,7 +407,7 @@ def build():
            'Lean: t_snap_derived, proved axiom-free in Snap.lean. ✓ &#8212; the checkmark covers '
            'the transition SHAPE only. Reading the limit as a NEW &#8869;\' is a commitment; '
            'Snap.lean\'s NO-GO gauge holds T-SNAP in a model where nothing moves.'),
-        li("Step 6 — DA-2 licenses &#8869;': DA-2 (ZP-E) establishes that any state satisfying "
+        li("Step 6 — DA-2 role identification: DA-2 (ZP-E) establishes that any state satisfying "
            '&#8704; x, S &#8744; x = x IS the &#8869; of its own lattice. '
            'That the Cauchy limit 0 &#8712; Q<sub>2</sub> satisfies that condition is a HYPOTHESIS, never a result: '
            't_iz_complete takes it as the argument h_role, about a terminal in a separate semilattice L&#8242;, '
@@ -437,11 +443,12 @@ def build():
          'NOT no-top: a chain can satisfy HasNoTop and IsDepthChain with its valuation BOUNDED.',
          'Follows from strict ascent + T3 — no-top supplies the room, not the growth',
          'Lean: t_iz_valuation_unbounded ✓ (proved; carries Classical.choice, Mathlib p-adic)'],
-        ['v<sub>2</sub> → ∞ ⟹ K/|S| → 1',
-         'ZP-C D1 (P<sub>0</sub>) + L-INF + ZP-B (binary construction)',
-         'Informational context — not a proof dependency',
-         'Outside Lean scope. Not required: formal spine is Steps 1 + 6; '
-         'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. Retained as motivational context.'],
+        ['v<sub>2</sub> → ∞ ⟹ K/|S| → 1 (REFUTED)',
+         'Counterexample S<sub>n</sub> = 2<sup>n</sup>: valuation n (padicValNat.prime_pow), '
+         'complexity given n bounded (standard invariance argument, not Lean)',
+         'Not a proof dependency',
+         'Refuted (&#167; II.B). Not required: formal spine is Steps 1 + 6; '
+         'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.'],
         ['P<sub>0</sub> fires DA-1',
          'ZP-C D1 + DA-1 (ZP-E)',
          'Already in framework',
@@ -466,9 +473,12 @@ def build():
     E.append(Paragraph('III. Lean Scope', S['h2']))
     E.append(body(
         'The Lean file SemilatticeInstance.lean formalizes the formal spine of T-IZ: Step 1 (Cauchy convergence, '
-        '§ I) and Step 6 (DA-2 licensing of &#8869;&#8242;, § IV), which are carried together as a CONJUNCTION '
+        '§ I) and Step 6 (DA-2 role identification, § IV), which are carried together as a CONJUNCTION '
         'and are not joined to each other. The two steps sit on different footings, and the document states this honestly: Step 6 '
-        '(t_iz_limit_is_new_null) is proved <i>axiom-free</i> — it is pure DA-2 structure. Step 1 (t_iz_cauchy) '
+        '(t_iz_limit_is_new_null) is proved <i>axiom-free</i> — it is the ROLE half only: in one semilattice, '
+        'anything satisfying the join-identity IS that semilattice&#8217;s &#8869;, the one already there. '
+        'That the &#8869; so reached is a NEW one, &#8869;&#8242;, is a commitment (C-DA2) and not this theorem; '
+        'in the 2-adic realization the arc reapproaches the SAME 0 (snap_arc_z2_loop). Step 1 (t_iz_cauchy) '
         'is proved sorry-free but carries Classical.choice, and NOT because of the analysis. '
         'Measured: (1 : &#8474;<sub>[2]</sub>) &#8800; 0 — no limit, no filter, no convergence '
         'lemma anywhere in the statement — already reports [propext, Classical.choice, Quot.sound]. '
@@ -486,8 +496,8 @@ def build():
         'choice-free; T-SNAP depends on no axioms at all) and ZeroParadox/Ordinal/SyntacticCollapse.lean '
         '(a choice-free syntactic surrogate for the metric collapse, which states of itself that it '
         'settles the standing conjecture in neither direction). Steps 2–5 (the '
-        'valuation-complexity bridge and DA-1/T-SNAP path) describe the original ZP-E '
-        'informational argument and are retained as motivational context. DA-1 is closed given DP-2 '
+        'valuation-complexity bridge and DA-1/T-SNAP path) describe the ZP-E informational '
+        'argument and are not proof dependencies; the bridge in Step 2 is refuted (&#167; II.B). DA-1 is closed given DP-2 '
         '(da1_minimal_path; CLAIMS.md, Tier 5); ZP-K witnesses its Path 1 (da1_closed_concrete: ⊥ is the '
         'unique Quine atom of MachinePhase). The DP-2 commitment is not discharged by either. '
         'The theorems in SemilatticeInstance.lean, '
@@ -528,7 +538,7 @@ def build():
         '(IsStrictStateSequence), one 2-adic depth bridge (IsDepthChain, a modelling commitment), '
         'one nonvanishing condition, and for the complete variant h_role handed in — t_iz_complete '
         'is the canonical theorem. '
-        'Steps 2–5 (valuation-complexity bridge + DA-1/T-SNAP) are informational context — '
+        'Steps 2–5 (valuation-complexity bridge, refuted, + DA-1/T-SNAP) are informational context — '
         'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement, no Kolmogorov complexity required. '
         'No new axioms. ✓'))
 
@@ -736,7 +746,7 @@ def build():
          'Q<sub>2</sub>; reading that limit as the '
          'occupant of the bottom role, and that occupant as a successor null, are commitments. '
          'Formal spine: Step 1 (t_iz_cauchy, carries Mathlib p-adic Classical.choice) + Step 6 '
-         '(t_iz_limit_is_new_null, axiom-free via DA-2). Steps 2–5 are informational context — original ZP-E path; '
+         '(t_iz_limit_is_new_null, axiom-free via DA-2). Steps 2–5 are informational context — the ZP-E path, whose valuation-complexity bridge is refuted (&#167; II.B); '
          'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. No new axioms required.'],
         ['OQ-E2: Cardinality-semilattice correspondence',
          'PARTIALLY CLOSED — &#937; = &#969; forced',
@@ -753,13 +763,14 @@ def build():
          '"&#8722;x" is not subtraction in L — it is the return to that role by forward motion. '
          'That the occupant is a NEW &#8869;\' is the commitment, not the theorem.'],
         ['Valuation-complexity bridge',
-         'CONTEXTUAL — informational layer',
-         'Original ZP-E path connecting 2-adic depth to Kolmogorov complexity and DA-1 Path 3. '
+         'REFUTED — counterexample S<sub>n</sub> = 2<sup>n</sup>',
+         'The ZP-E route from 2-adic depth to Kolmogorov complexity and DA-1 Path 3. '
+         'Its implication v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; &#8658; K(S<sub>n</sub> | n) / |S<sub>n</sub>| &#8594; 1 '
+         'fails at S<sub>n</sub> = 2<sup>n</sup> (&#167; II.B): valuation n, complexity given n bounded, '
+         'ratio &#8594; 0. The valuation half is checked (padicValNat.prime_pow); the complexity half is '
+         'the standard invariance argument, outside Lean scope. '
          'Not a proof dependency for T-IZ: formal spine is Steps 1 + 6 (Step 6 axiom-free; Step 1 carries Mathlib p-adic choice); '
-         'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. '
-         'Retained as motivational context documenting convergence of the topological and '
-         'informational layers at P<sub>0</sub>. Outside Lean scope (Kolmogorov complexity '
-         'absent from standard proof libraries) — but no longer load-bearing.'],
+         'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.'],
         ['T-IZ Lean sorry fill',
          'CLOSED — ZeroParadox/Valuation/SemilatticeInstance.lean',
          't_iz_norm_tendsto_zero and t_iz_conv_zero filled; t_iz_cauchy proved (carries Mathlib p-adic Classical.choice). '
@@ -791,7 +802,7 @@ def build():
          'here. Also ZP-B T5/C3 for the irreversibility comparison only; ZP-C L-INF, D1; '
          'ZP-E DA-1, T-SNAP, DA-2',
          'None',
-         'Role derived — T-IZ ✓ (formal spine Steps 1+6: Step 6 axiom-free, Step 1 carries Mathlib p-adic choice; bridge: contextual). Novelty of the successor bottom: COMMITMENT, not proved.'],
+         'Role derived — T-IZ ✓ (formal spine Steps 1+6: Step 6 axiom-free, Step 1 carries Mathlib p-adic choice; bridge: refuted). Novelty of the successor bottom: COMMITMENT, not proved.'],
         ['Null Balance 0 + x + (&#8722;x) = 0',
          'T-IZ + T-SNAP + DA-2 (ZP-E)',
          'None',
@@ -822,10 +833,10 @@ def build():
          'None',
          'Lean: proved ✓ (C3 holds unmodified; Cauchy sequences &#8800; continuous paths)'],
         ['Valuation-complexity bridge',
-         'ZP-C D1, L-INF; ZP-B T2; AIT (standard)',
+         'ZP-C D1, L-INF, Remark R-BRIDGE; ZP-B T2; AIT (standard)',
          'N/A',
-         'Informational context — not load-bearing. DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. '
-         'Outside Lean scope (Kolmogorov complexity absent from standard proof libraries).'],
+         'REFUTED (&#167; II.B; counterexample S<sub>n</sub> = 2<sup>n</sup>) — not load-bearing. DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. '
+         'The complexity half is outside Lean scope.'],
         ['t_iz_h_bound_from_depth_chain (Lean)',
          'h_strict_from_r1_t3 (&#167;Ib); t_iz_r1_t3_geometric_bound; '
          'Padic.norm_eq_zpow_neg_valuation (depths 0 : &#8469; &#8658; &#8214;S<sub>0</sub>&#8214;<sub>2</sub> &#8804; 1)',
@@ -858,7 +869,7 @@ def build():
             'R-IZ-A closed: strict valuation growth derived from IsDepthChain + IsStrictStateSequence (h_strict_from_r1_t3, &#167;Ib) | '
             'Framework closure: no construction-level hypothesis required | '
             'Formal spine: Step 6 axiom-free (t_iz_limit_is_new_null), Step 1 carries Mathlib p-adic Classical.choice (t_iz_cauchy) | '
-            'Valuation-complexity bridge: informational context, not load-bearing | '
+            'Valuation-complexity bridge: refuted, not load-bearing | '
             'DA-1 closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement | '
             'Remaining axioms: AX-B1, AX-G1, AX-G2 | No new axioms required</i>',
             S['endnote']),

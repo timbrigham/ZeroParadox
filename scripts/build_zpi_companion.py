@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.32 | September 2026
+Version 1.33 | October 2026
 v1.32: DA-1 CREDIT (Tim rulings, 2026-09-15), companion sync with ZP-I v1.25: the step table's step 3 row, the Lean status entry for da1_computational and the ZP-I Summary credited DA-1 at the successor bottom to the computational fixed-point argument and said the Kleene path closes Steps 2-4. da1_computational proves only that the bottom of a KleeneStructure lattice is its Quine atom. The row now says that, given the KleeneStructure instance, and that DA-1 is closed given DP-2 (ZP-E); the Summary says DA-1 is closed given DP-2, with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.
 v1.31: THE CLAIM IS DELETED, NOT REDRAFTED (companion sync with ZP-I v1.22; adversary FAIL-BEDROCK). Three findings landed in this file, one of them the worst kind. (1) The step table's SOURCE cell for step 1 read "R1 + ZP-B completeness ... (t_iz_cauchy)". t_iz_cauchy binds the chain and the norm bound and NO LATTICE AT ALL; it is pure p-adic analysis. Restated to what it consumes. (2) The Lean status box gave t_iz_r1_t3_geometric_bound the binders of its NEIGHBOUR h_strict_from_r1_t3 - IsDepthChain and IsStrictStateSequence, listed correctly one entry above - and dropped the nonvanishing hypothesis the named lemma actually requires. A status box stating a theorem that is not the theorem. (3) Door 1 still credited R1 with leaving the chain somewhere to go, one paragraph from the text reserving R1 for no-subtraction; deleted, see the formal document's v1.22 entry for the counter-model that settles it. Also: "T3 drives ascent" at :294 and :599 - T3 is monotonicity, and the corpus's own compiled gauge shows it permits stalling in any ZPSemilattice - and the dead file name ZPI.lean in the header, which has been ZeroParadox/Valuation/SemilatticeInstance.lean since the reorg. ROUND 3 (adversary FAIL-BEDROCK): the cycle diagram's fourth node was labelled 'eps_(omega-1)' with the sublabel 'last state'. That ordinal DOES NOT EXIST - omega is a limit and has no predecessor - and the paired formal document denies the sublabel four pages earlier at Remark R-I.1, "a countable sequence with NO last element in L". Together they made the limit read as a successor step, the exact misreading this document exists to block. Second Drawing-borne defect in three rounds, after 'T3 (R1 drives)' at comp v1.29: a String inside a Drawing is invisible to every prose checker in this repository, so the only detector is a reviewer reading the drawing code. Also: the arrow labels gave the climb to T3 alone, and T3 is monotonicity, which the corpus's own gauge shows permits stalling; and the step-1 source cell, repaired earlier this round, still led with ZP-B completeness, which t_iz_cauchy does not consume. ROUND 4 (editorial FAIL-BEDROCK, ordinary here): the summary still read "T-IZ is derived from ZP-A through ZP-E and ZP-K" - the five-document range attribution the formal document deleted at v1.22. A range of documents is not a derivation. ROUND 3, SECOND GATE (editorial FAIL-BEDROCK): the section III-C status box made the same "pure ZP-A lattice conditions" claim TWICE in one entry and dropped the nonvanishing hypothesis again - the exact omission the v1.31 entry above records as fixed one entry earlier at the geometric-bound lemma. Third half-applied fix in this arc. Corrected to the three hypotheses the signature actually binds, with only IsStrictStateSequence named as a lattice condition.
 v1.30: ATTRIBUTION CORRECTED (companion sync with ZP-I v1.21; claim-review FAIL-BEDROCK). The comp v1.29 name fix left the false attribution in place. HasNoTop appears in no binder of any declaration in SemilatticeInstance.lean; what h_strict_from_r1_t3 consumes is IsDepthChain and IsStrictStateSequence. Two LEAN STATUS BOXES carried "from R1 + T3" - a status box is the surface a general reader treats as the verified summary, which makes it the worst place for a premise nothing binds.
@@ -287,8 +287,10 @@ def cycle_diagram():
     for i, (nx, lbl, sub, col) in enumerate(zip(xs, node_labels, node_sublabels, node_colors)):
         d.add(Circle(nx, cy, 13, fillColor=col, strokeColor=WHITE, strokeWidth=1.5))
         offset = -len(lbl) * 3.2
+        # STIXTwo-Math (DVS) has no U+2099 subscript n; DejaVuSans (DV) does.
         d.add(String(nx + offset, cy - 5, lbl,
-                     fontSize=9 if len(lbl) == 1 else 8, fontName='DVS', fillColor=WHITE))
+                     fontSize=9 if len(lbl) == 1 else 8,
+                     fontName='DV' if 'ₙ' in lbl else 'DVS', fillColor=WHITE))
         d.add(String(nx - len(sub) * 2.8, cy - 26, sub,
                      fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
 
@@ -302,7 +304,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.32'
+VERSION = '1.33'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -386,7 +388,9 @@ def build():
     # ── The Engine ─────────────────────────────────────────────────────────────
     E.append(Paragraph('What the No-Top Property Does', CS['h1']))
     E.append(cbody(
-        'The state space (L, ∨, ⊥) has no top element: there is no maximum state. Stated on its own '
+        'Where the state space (L, ∨, ⊥) has no top element, there is no maximum state. That is a '
+        'condition on the carrier, not a law of every lattice here: the two-state carriers '
+        'MachinePhase and OntologicalStates have a top. Stated on its own '
         'this looks like a limitation  - the algebra does not close. ZP-I reveals it is the opposite: '
         'it is what gives T-IZ room to run. ⚠ Two cautions. It is NOT ZP-A&#8217;s Remark R1, which is '
         'the no-subtraction restriction (Door 1 below); the order property is HasNoTop, in '
@@ -397,7 +401,7 @@ def build():
         'Here is the logic. Each state in the ascending chain has a 2-adic valuation '
         'depth  - a measure of how many times 2 divides the state. As the chain ascends '
         '(ZP-A T3: every step is a join, every state is at least as large as the last), '
-        'the depth increases. Because L has no top element, the chain never HAS to stop  - there is '
+        'the depth increases. Where L has no top element, the chain never HAS to stop  - there is '
         'always a strictly greater element. Given that it keeps stepping, the depth grows without bound.'))
     E.append(cbody(
         'More than that: each step is a genuine advance. The depth does not merely grow '
@@ -525,8 +529,8 @@ def build():
         'the IsDepthChain and IsStrictStateSequence conditions  - '
         'converges to zero in the 2-adic metric. Reading that limit as filling the bottom '
         'role is a commitment, and reading the occupant as ⊥′ a further one. '
-        'On the first reading: DA-1 fires (the successor semilattice carries a '
-        'KleeneStructure, per ZP-K) and T-SNAP fires. '
+        'On the first reading: DA-1 fires, given a KleeneStructure on the successor semilattice '
+        '(an instance t_iz_complete takes as a hypothesis, not one it derives), and T-SNAP fires. '
         'No axioms beyond those already proved in ZP-A through ZP-K are needed for the '
         'CONVERGENCE; the two readings are commitments rather than consequences of it. '
         'That the chain generates a genuinely NEW bottom, rather than arriving back at the '
@@ -672,7 +676,9 @@ def build():
         'T-IZ requires no new axioms. '
         'All four steps are carried in Lean 4 (ZeroParadox/Valuation/SemilatticeInstance.lean, '
         't_iz_complete) as a conjunction, with the role step\'s property taken as a hypothesis. '
-        'The Kolmogorov complexity route is superseded: DA-1 is closed given DP-2 (ZP-E), '
+        'The Kolmogorov complexity route is refuted: 2-adic depth growing without bound does not '
+        'make a state incompressible, since 2<sup>n</sup> has depth n and is computed from n by one '
+        'short program (ZP-I &#167; II.B). DA-1 is closed given DP-2 (ZP-E), '
         'with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement, '
         'so Steps 2–4 need no Kolmogorov complexity. '
         'The derivation is self-contained: T-SNAP opens each branch; '
