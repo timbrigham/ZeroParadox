@@ -222,6 +222,25 @@ def build():
         'of ⊥ = {⊥} in the language of programs: c is its own program, just as ⊥ is its own member. '
         'ZP-K carries that reading as a KleeneStructure requirement (botCode_is_quine), not a theorem.',
     ]))
+    E.append(sp(4))
+    E.append(cbody(
+        'The periodicity condition that defines a computational Quine is a weak test: a program '
+        'that ignores its input and always prints the same number passes it. A sharper test is '
+        'not passed that way. A self-printing program returns its own code number on one '
+        'channel; a universal one computes what any other program computes, given that '
+        'program\'s number, on the remaining channels. Programs that are both exist, and there are infinitely many of them '
+        '(selfref_universal_exists, selfref_universal_infinite); no constant program is '
+        'universal. More generally, every computable transformation has infinitely many fixed '
+        'points (fixed_points_infinite), and every computable function has infinitely many '
+        'programs (padding).'))
+    E.append(cbody(
+        'Two self-printing programs that behave identically are the same program '
+        '(selfprints_behaviour_injective): the self-printing channel reads the program\'s own '
+        'number back out of its behaviour. The framework\'s reading: computational self-reference '
+        'has a uniqueness, at the level of behaviour. Both halves stand: there are infinitely many '
+        'self-printing programs, and no behaviour belongs to two of them. For the weaker '
+        'periodicity test, "computational Quines are not unique" stays true. None of these results '
+        'says that a program is run; they say that such programs exist.'))
     E.append(sp(8))
 
     # The four-way equivalence
@@ -390,6 +409,63 @@ def build():
         'x = f(x) rather than x = &#172;x &#8212; for the bottom element &#8869;. '
         'Both constructions use x = f(x) rather than x = &#172;x, and both yield '
         'a stable fixed point rather than an oscillating sequence.'))
+    E.append(sp(8))
+
+    # ── Replication ───────────────────────────────────────────────────────────
+    E.append(Paragraph('Replication: Presence, Address, and Selection', CS['h1']))
+    E.append(cbody(
+        'A description can be used in two ways. Cotler, Hongler and Hudcová (2025) describe von '
+        'Neumann\'s self-replicating automaton as using its description twice: once interpreted, '
+        'to build, and once transcribed, to hand to the copy. In ZP-E\'s terms the transcribed '
+        'use is a description sitting as data (Sense A) and the interpreted use is a description '
+        'being run (Sense B). The formal document follows one arc through these ideas, and every '
+        'step in it is about what is written or what a program computes, never about anything '
+        'running.'))
+    E.append(cbody(
+        '<b>Every instruction is present.</b> A tape of bits on which every finite pattern appears '
+        'is called disjunctive. On such a tape the code of every program appears, infinitely often '
+        '(code_occurs_of_disjunctive). That is presence, not execution. It needs no randomness: a '
+        'simple counting tape in the style of Champernowne is disjunctive and computable. The '
+        'framework holds that ⊥ is maximally complex; standard theory says a maximally complex '
+        '(Martin-Löf random) sequence is disjunctive, but that step is not proved in Lean.'))
+    E.append(cbody(
+        '<b>Replicas differ only by address.</b> Two self-printing universal programs give the same '
+        'answers on every channel where they compute other programs, and differ only on the '
+        'channel where each prints its own number (selfPrints_universal_address). The reading: '
+        'copies share everything but the address, and each new copy adds only its address.'))
+    E.append(cbody(
+        '<b>No full copy of itself.</b> A disjunctive tape never equals itself shifted along by '
+        'any positive amount (disjunctive_not_periodic). Copies sit side by side, told apart by '
+        'an address, rather than one tape containing itself whole.'))
+    E.append(cbody(
+        '<b>Building an address versus choosing one.</b> Building a self-printing program is a '
+        'computation: the recursion theorem produces it. Choosing a program by what it does is '
+        'harder, because whether a program has a given behaviour is in general undecidable '
+        '(isComputationalQuine_undecidable; Rice\'s theorem). ZeroParadox/Category/ChoiceCannotBe.lean '
+        'places the axiom of choice exactly there: with a decidable test, selection is free; at an '
+        'undecided one, uniform selection is the choice principle. In Lean the footprint is not '
+        'that clean: the existence theorem carries Classical.choice through Mathlib\'s numbering of '
+        'programs, and whether that is essential is unclassified (ZeroParadox/Computability/Kleene.md).'))
+    E.append(cbody(
+        '<b>The zero tape.</b> The all-false tape is ⊥ of the bit-by-bit tape order, carries no '
+        'program\'s code except the empty one, and is what any tape becomes when compared with '
+        'itself bit by bit. The framework reads it two ways at once: the reference every '
+        'comparison runs through, and every tape\'s difference from itself.'))
+    E.append(cbody(
+        '<b>What replication needs beyond self-reference.</b> Cotler, Hongler and Hudcová build an '
+        'automaton that can compute anything and still cannot copy itself, because its machines '
+        'may not write into each other\'s territory. As they put it, a quine "produces a '
+        'description of the copying mechanism without replicating the mechanism itself". Seen '
+        'from outside, occurrence is not visible either: the carry example in '
+        'Occurrence.lean (carry_steps_onward_forever_yet_shows_nothing) steps onward forever while showing the same thing at every step, so watching the output cannot '
+        'tell it from a machine that never moves.'))
+    E.append(sp(4))
+    E.append(remember_box(
+        'Remember: presence on a tape, self-printing, and universality are all facts about '
+        'descriptions and what programs compute. Two readings are both kept: a complete '
+        'description of a run is the run (history view), and that a configuration is running is '
+        'a further fact (state view), the occurrence commitment, which DA-1 uses and does not '
+        'supply.'))
     E.append(sp(8))
 
     E.append(key_result_box(

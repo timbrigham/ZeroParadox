@@ -101,11 +101,14 @@ def build():
 
     E.append(Paragraph('I. Kleene\'s Second Recursion Theorem', S['h2']))
     E.append(body(
-        'Kleene\'s second recursion theorem is the computational fixed-point theorem. '
-        'For any partially computable transformation f of programs, there exists a program '
-        'e such that e and f(e) compute the same function. Applied to the identity: there '
-        'exists a program whose output at any input n equals its output at its own Gödel '
-        'number plus n — a periodicity fixed point.'))
+        'Kleene\'s second recursion theorem is the computational fixed-point theorem. In the '
+        'form Mathlib states it, for any partially computable F sending each program code to a '
+        'partial function, some code c computes exactly F(c) (kleene_fixed_point_exists). '
+        'Rogers\' fixed-point theorem is the form for a total computable transformation g of '
+        'codes: some code c computes the same function as g(c) (roger_fixed_point_exists). '
+        'Applied to the self-application map of II below, the recursion theorem gives a program '
+        'whose output at any input n equals its output at its own Gödel number plus n — a '
+        'periodicity fixed point.'))
     E.append(body(
         'In Lean 4, this is formalized in Mathlib\'s computability library. '
         'For any partially computable transformation f of codes, '
@@ -119,8 +122,8 @@ def build():
             'there exists c : Code such that eval c = f c.',
             'Applied to the selfApply transformation, this yields a code c satisfying '
             'eval c n = eval c (encode c + n) for all n — a periodicity condition with '
-            'period c\'s own Gödel number, though not necessarily the least. Multiple '
-            'such codes exist.',
+            'period c\'s own Gödel number, though not necessarily the least. For every such '
+            'f the fixed-point codes form an infinite set (fixed_points_infinite, Kleene.lean § VIII).',
         ]
     ))
     E.append(sp(6))
@@ -130,10 +133,12 @@ def build():
         'The self-application map sends each code c to the partial function that runs c on '
         'c\'s own Gödel number plus an offset. A fixed point of self-application satisfies '
         'a periodicity condition: eval c n = eval c (encode c + n) for all n, with period '
-        'equal to c\'s own Gödel number, though not necessarily the least. Non-uniqueness is '
-        'expected: the family of fixed points is infinite, witnessed by the constant codes '
-        '(infinite_quine_family). Kleene.lean § I states what that does and does not imply '
-        'about codes generally.'))
+        'equal to c\'s own Gödel number, though not necessarily the least. The periodicity '
+        'condition is met by codes that ignore their input: every constant code satisfies it, and '
+        'infinite_quine_family witnesses an unbounded family of fixed points with exactly those '
+        'codes. So this predicate alone does not pin self-reference; Kleene.lean § I states what '
+        'that does and does not imply about codes generally, and III below gives the '
+        'non-degenerate case.'))
 
     E.append(def_box(
         'Definition: selfApply and IsComputationalQuine (Kleene.lean § I)',
@@ -158,10 +163,46 @@ def build():
             'Proof: immediate from kleene_fixed_point_exists applied to selfApply, '
             'using selfApply_partrec.',
             'Lean purity: standard foundational axioms only. ✓',
-            'Note on uniqueness: unlike the AFA Quine atom (unique by the AFA decoration '
-            'theorem), computational Quines are not unique. Multiple codes can satisfy the '
-            'fixed-point equation independently. Uniqueness in ZP-K flows from ZP-J T-EXEC '
-            '(on the set-theoretic side), not from the computational definition.',
+            'Note on uniqueness: the Quine atom of an AFAStructure lattice is unique by the class '
+            'field quine_unique (T-EXEC, ZP-J). Codes meeting IsComputationalQuine are not unique: '
+            'the constant codes alone give infinitely many (infinite_quine_family). Self-printing '
+            'codes are unique at the level of behaviour (selfprints_behaviour_injective, III below). '
+            'That the lattice\'s Quine atom is its ⊥, and the only one, flows from ZP-J T-EXEC, not '
+            'from either computational predicate.',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(Paragraph('III. Non-degenerate Self-Reference', S['h2']))
+    E.append(body(
+        'A sharper predicate is not met by constants. A code is self-printing (SelfPrints) when, '
+        'on every input of channel 0, it returns its own Gödel number, and universal (Universal) '
+        'when, on channel e + 1, it computes what the code numbered e computes. A code that is '
+        'both exists (selfref_universal_exists), and infinitely many do '
+        '(selfref_universal_infinite). No constant code is universal (the control example after '
+        'selfref_universal_infinite in Kleene.lean § VIII), and each half is met by some code '
+        'without the other: universal_not_selfprints, and Code.zero, which is self-printing and '
+        'not universal. These are statements about the partial function a code computes; they '
+        'state that such codes exist, and none says that a code is run.'))
+    E.append(body(
+        'Abundance holds for every transformation: for any partially computable F, the codes c '
+        'with eval c = F(c) form an infinite set (fixed_points_infinite), and every partial '
+        'recursive function has infinitely many codes (padding, the Padding Lemma). So the '
+        'fixed points of self-application are many, and so are the codes of any one behaviour.'))
+    E.append(result_box(
+        'Theorem: selfprints_behaviour_injective (Kleene.lean § VIII)',
+        [
+            'For self-printing codes c₁ and c₂: if eval c₁ = eval c₂ then c₁ = c₂.',
+            'Channel 0 reads each code\'s Gödel number back out of its behaviour, and the '
+            'encoding is one-to-one.',
+            'Reading: computational self-reference has a uniqueness, at the level of behaviour. '
+            'For self-printing codes this replaces the statement that computational quines are '
+            'not unique; for the periodicity predicate IsComputationalQuine that statement stays '
+            'true, since constant codes computing different functions all meet it. Both hold: '
+            'infinitely many self-printing codes exist, and no behaviour belongs to two of them. '
+            'Contrast padding, where infinitely many codes share one behaviour.',
+            'Lean: ZeroParadox.selfprints_behaviour_injective. Purity: propext, Classical.choice, '
+            'Quot.sound (measured 2026-10-04); the predicate SelfPrints itself carries the same three.',
         ]
     ))
     E.append(sp(6))
@@ -352,6 +393,40 @@ def build():
     ))
     E.append(sp(6))
 
+    E.append(body(
+        'A description has two uses. Cotler, Hongler and Hudcová (arXiv:2510.08342, 2025, p. 2) '
+        'report von Neumann\'s self-replicating cellular automaton (their ref. [1]) as '
+        '"leveraging the dual use of an organism\'s description – once to be interpreted for '
+        'construction and once to be transcribed to the new offspring". Reading: the transcribed '
+        'use is Sense A, a description copied as data, and the interpreted use is Sense B, a '
+        'description being run (ZP-E, DA-1 insert § II). A description present on a tape supplies '
+        'the first use and not the second.'))
+    E.append(body(
+        'Universality does not give replication. The same authors construct a "non-talking heads" '
+        'cellular automaton that is locally Turing-universal and yet cannot sustain non-trivial '
+        'self-replication (their Theorem 2.8, p. 8): "any head encountering a cell marked by '
+        'another head halts immediately. This blocking of information transfer prevents '
+        'self-replication" (p. 7). Their Theorem 2.9 (p. 8) places self-replication strictly '
+        'between two strengths of universality, GloballyUniversal ⊊ UniversalSelfReplicating '
+        '⊊ LocallyUniversal, and they note that "a quine produces a description of the copying '
+        'mechanism without replicating the mechanism itself" (p. 8). Reading: the self-printing '
+        'universal codes of Section I.III are quines in that sense. Each returns a description of '
+        'itself, its own Gödel number, on channel 0: the description in Sense A.'))
+    E.append(body(
+        'Occurrence is not read off from outside. carry_steps_onward_forever_yet_shows_nothing '
+        '(Occurrence.lean § VI-c): a deterministic step that, at every state, moves to a '
+        'different state and never halts, while its observable stays constant on everything '
+        'reachable. Reading: an observer of that observable sees the same constant trace as from '
+        'a dynamics in which nothing moves (stuckPhase, tsnap_holds_but_nothing_moves), so whether '
+        'a configuration is running cannot be settled by watching what it shows.'))
+    E.append(body(
+        'Reading, in two charts, neither denied. History chart: a complete description of a run, '
+        'every configuration in order, IS the run; nothing further is left to happen. State '
+        'chart: a description, even a complete one, is a configuration, and that it is running is '
+        'a further fact, the occurrence commitment, which DA-1 consumes and does not supply '
+        '(ZP-E). Both are readings.'))
+    E.append(sp(6))
+
     print('[build_zpk] Building Section IV...')
     E += [
         hr(),
@@ -395,6 +470,11 @@ def build():
         'MachinePhase) via machinePhaseKleene carries the triple, and the same statement '
         'via machinePhaseAFA carries nothing. The axioms do not enter through ZPSemilattice '
         'or AFAStructure.'))
+    E.append(body(
+        'The Kleene.lean § VIII and Disjunctive.lean declarations cited in Section I.III and '
+        'Section VI are not in that table. Their #print axioms lines are in those two files\' '
+        'PurityCheck sections, and where Classical.choice enters selfref_universal_exists is recorded in '
+        'ZeroParadox/Computability/Kleene.md § VIII, measured 2026-10-04.'))
     E.append(body(
         'ZP-J T-EXEC and all its corollaries remain axiom-free. The classical axioms are '
         'entirely localised to the computational layer.'))
@@ -500,7 +580,8 @@ def build():
         'ZP-E\'s DA-1 section previously carried the designation "Outside Lean Scope" with '
         'three justifications: Path 1 requires ZF+AFA (incompatible with Lean\'s CIC/MLTT); '
         'Path 3 requires Kolmogorov complexity (uncomputable, absent from Mathlib); Path 2 '
-        'requires a step from unbounded surprisal to executing that no proof in type theory supplies.'))
+        'requires a step from unbounded surprisal to executing, which ZP-E names a bridge '
+        'principle of its own, a missing principle and not a missing proof.'))
     E.append(body(
         'For Path 1 (AFA structural), the Lean counterpart is da1_closed_concrete, which proves '
         'IsQuineAtom (⊥ : MachinePhase) and nothing computational: in the AFAStructure '
@@ -538,6 +619,116 @@ def build():
         'None derives DA-1\'s precondition, which is what the occurrence commitment asserts.',
         bg=GREEN_LITE, border=GREEN
     ))
+    E.append(sp(8))
+
+    print('[build_zpk] Building Section VI...')
+    E += [
+        hr(),
+        Paragraph('Section VI: Replication — Presence, Address, and Selection', S['h1']),
+        hr(),
+    ]
+
+    E.append(body(
+        'This section follows one arc, one declaration per step, from the presence of every '
+        'instruction on a tape to the selection of one replica. Each step is a statement about a '
+        'tape ℕ → Bool or about the partial function a code computes. Presence on a tape is '
+        'Sense A (ZP-E, DA-1 insert § II); that anything runs is the occurrence commitment, as '
+        'in Section III.II.'))
+
+    E.append(Paragraph('I. Presence: Every Instruction Is on the Tape', S['h2']))
+    E.append(body(
+        'A tape is disjunctive (the standard term; also "rich") when every finite word occurs in '
+        'it infinitely often (Disjunctive; Barnsley and Leśniak, arXiv:1203.0481, § 3). On a '
+        'disjunctive tape the binary of every program code occurs infinitely often '
+        '(code_occurs_of_disjunctive). That is presence of the description, Sense A; nothing in '
+        'the statement reads or runs a code. Disjunctive does not need randomness: champ, a '
+        'Champernowne-style tape, is disjunctive and primitive recursive (champ_disjunctive, '
+        'champ_primrec), and almost every fair-coin tape is disjunctive '
+        '(fairTape_disjunctive_ae).'))
+    E.append(body(
+        'Reading: under the framework\'s commitment that ⊥ is maximally complex, ⊥ read as a tape '
+        'ℕ → Bool would have incompressible prefixes, hence be Martin-Löf random (Levin–Schnorr), '
+        'and Martin-Löf random sequences are disjunctive in standard theory, so every instruction '
+        'would be present. That implication is not proved in '
+        'Lean: Martin-Löf randomness and Kolmogorov complexity are not located in the Mathlib pin '
+        'as of 2026-10-04 (searches recorded in ZeroParadox/Information/Disjunctive.md). The '
+        'converse fails: champ is disjunctive and computable.'))
+
+    E.append(Paragraph('II. Replicas Differ Only by Address', S['h2']))
+    E.append(result_box(
+        'Theorem: selfPrints_universal_address (Kleene.lean § VIII)',
+        [
+            'For self-printing universal codes c and d: they agree on every interpreter channel '
+            'e + 1, and if c ≠ d they differ on channel 0, where each returns its own Gödel number.',
+            'The control beside it in Kleene.lean shows that Universal carries the first half: '
+            'Code.zero is self-printing and not universal, and it disagrees with a self-printing '
+            'universal code on a channel e + 1.',
+            'Reading: replicas share everything but the address. Incompressibility is a property of '
+            'each instance, and the next instance adds only its address. That is a claim about '
+            'relative complexity, and it stays a reading while Kolmogorov complexity is not in Lean.',
+            'Lean: ZeroParadox.selfPrints_universal_address. '
+            'Purity: propext, Classical.choice, Quot.sound (measured 2026-10-04).',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(Paragraph('III. No Full Self-Copy on a Disjunctive Tape', S['h2']))
+    E.append(body(
+        'A disjunctive tape equals its own shift by no offset a > 0 (disjunctive_not_periodic; '
+        'not_disjunctive_of_periodic is the same fact read from the periodic side). At offset 0 '
+        'every tape equals its own shift, champ included (the control example beside it in '
+        'Disjunctive.lean § V). Reading: a tape carrying every code word holds no full copy of '
+        'itself at any positive offset; copies sit side by side, told apart by an address (II).'))
+
+    E.append(Paragraph('IV. Constructing an Address, and Selecting One', S['h2']))
+    E.append(body(
+        'Constructing an address is the recursion theorem\'s fixed point of a computable '
+        'transformation: selfref_universal_exists takes its code from Mathlib\'s fixed_point₂ '
+        'applied to a partially computable map (selfPrintOrDelegate_partrec). Selecting a code by '
+        'its behaviour is selection by a predicate that is not decidable: membership in '
+        'IsComputationalQuine is not a ComputablePred (isComputationalQuine_undecidable), and nor '
+        'is membership in any non-trivial extensional set of codes (the second conjunct of '
+        'quine_exists_yet_rice, Rice\'s theorem). ChoiceCannotBe.lean locates where choice does its work: when the predicate is '
+        'decidable, selection is free, computed by if (select_of_decidable), while the uniform '
+        'selection principle at an undetermined pole is the choice fragment, definitionally '
+        '(uniformChartSelection_iff_choiceFragment).'))
+    E.append(body(
+        'Reading: constructing an address is a computation, and selecting one by behaviour is '
+        'where choice works. The Lean footprint does not draw that line, and is stated as '
+        'measured: selfref_universal_exists carries Classical.choice, and so does its statement, '
+        'through Mathlib\'s numbering of codes (Denumerable Code, reached through ofNatCode); '
+        'restated with encodeCode, the statement is axiom-free, and no proof of the restated form '
+        'without choice was found. ZeroParadox/Computability/Kleene.md § VIII records the '
+        'measurement (2026-10-04) and what that route lacked as located then: a recursion theorem '
+        'stated without Partrec₂, and a universal code proved correct without eval_part. The '
+        'footprint is UNCLASSIFIED.'))
+
+    E.append(Paragraph('V. The Zero Tape: Reference and Self', S['h2']))
+    E.append(body(
+        'In ℕ → Bool under the pointwise order, ⊥ is the all-false tape, and that tape is not '
+        'disjunctive (allFalse_not_disjunctive); it carries the word of no code other than '
+        'Code.zero, whose word is empty (allFalse_misses_code, codeWord_zero_width). Under '
+        'pointwise exclusive-or, every tape\'s self-difference is the all-false tape, and read '
+        'against the all-false tape a tape is itself (the examples in BottomCannotBe.lean, '
+        '"The infinitude in two charts: content and self").'))
+    E.append(body(
+        'Reading, in two charts, neither denied: the all-false tape, ⊥ of the pointwise tape '
+        'order, is the reference every comparison runs through (content chart) and every tape\'s '
+        'self-difference (self chart), one object in two charts. That the framework\'s ⊥ is '
+        'maximally complex is a commitment, stated as no equation with any one tape.'))
+
+    E.append(Paragraph('VI. What Replication Needs Beyond Self-Reference', S['h2']))
+    E.append(body(
+        'In Cotler, Hongler and Hudcová\'s setting, replication needs information to cross a '
+        'boundary, "inter-head communication is crucial for replication" (p. 8): their non-talking '
+        'heads automaton blocks that crossing and is locally universal without self-replication '
+        '(Theorem 2.8, p. 8). A second capacity separates the two '
+        'strengths of universality, GloballyUniversal ⊊ LocallyUniversal (their Theorem 2.3, '
+        'p. 5): of the reversible automata, "Some can locally implement reversible universal Turing '
+        'machines but cannot globally simulate irreversible CAs". Reading: these are two different '
+        'overwrite capacities, writing into a cell another head has marked, which replication '
+        'needs, and irreversible erasure, which such a reversible automaton cannot simulate '
+        'globally. This mapping onto the framework is a reading.'))
     E.append(sp(8))
 
     print('[build_zpk] Building registers...')
@@ -578,6 +769,51 @@ def build():
          'Lean: da1_closed_concrete ✓ DA-1 structural half — no Code, no execution (definitionally: under selfMem x := x = &#8869;, '
          'reduces to (&#8869; = &#8869;) &#8743; (&#8704; x, x = &#8869; &#8658; x = &#8869;); '
          'structural closure by typeclass design — see R-K.0)'],
+        ['fixed_points_infinite, padding',
+         'fixed_point₂_unbounded (Kleene.lean § VIII)',
+         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'Lean ✓ — infinitely many fixed points for every partially computable F; the Padding Lemma'],
+        ['selfref_universal_exists, selfref_universal_infinite',
+         'fixed_point₂ (Mathlib) + selfPrintOrDelegate_partrec; fixed_points_infinite',
+         'propext, Classical.choice, Quot.sound (measured 2026-10-04); UNCLASSIFIED, Kleene.md § VIII',
+         'Lean ✓ — existence of self-printing universal codes; nothing says a code is run'],
+        ['selfprints_behaviour_injective',
+         'SelfPrints at channel 0 + Encodable.encode_injective',
+         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'Lean ✓ — Reading: a uniqueness at the level of behaviour'],
+        ['selfPrints_universal_address',
+         'SelfPrints + Universal + Encodable.encode_injective',
+         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'Lean ✓ — Reading: replicas share everything but the address'],
+        ['code_occurs_of_disjunctive',
+         'Disjunctive (Disjunctive.lean § I) at each code word',
+         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'Lean ✓ — presence, Sense A; no code is read or run'],
+        ['champ_disjunctiveOnce, champ_primrec',
+         'tri / untri slot layout + bitAt_ofBits; Mathlib Primrec',
+         'champ_disjunctiveOnce: propext, Quot.sound; champ_primrec: propext, Classical.choice, '
+         'Quot.sound (measured 2026-10-04)',
+         'Lean ✓ — disjunctive without randomness'],
+        ['fairTape_disjunctive_ae',
+         'second Borel–Cantelli (measure_limsup_eq_one) on disjoint aligned blocks',
+         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'Lean ✓ — almost every fair-coin tape is disjunctive'],
+        ['disjunctive_not_periodic',
+         'not_disjunctive_of_periodic (Disjunctive.lean § V)',
+         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'Lean ✓ — no full self-copy at any offset a > 0'],
+        ['carry_steps_onward_forever_yet_shows_nothing',
+         'stutter_obs_const + carry_stutters (Occurrence.lean § VI-c)',
+         'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
+         'Lean ✓ — steps onward forever with a constant observable'],
+        ['Reading: zero tape (Section VI.V)',
+         'BottomCannotBe.lean, "The infinitude in two charts: content and self"',
+         '— (interpretation)',
+         'Reading, not a theorem: the all-false tape as reference and as self-difference'],
+        ['Reading: complete description, two charts (Section III.II)',
+         'occurrence commitment (ZP-E)',
+         '— (interpretation)',
+         'Reading, not a theorem: history chart and state chart, both stated'],
     ]
     E.append(data_table(
         ['Claim', 'Grounded In', 'Axioms', 'Status'],
@@ -611,9 +847,10 @@ def build():
          'DA-1 does not depend on Path 2.'],
         ['selfApply uniqueness',
          'CLOSED — not attempted (correct)',
-         'Computational quines are not unique in general. Uniqueness flows from ZP-J T-EXEC '
-         '(set-theoretic side). No uniqueness theorem for computational quines is needed or '
-         'appropriate.'],
+         'Codes meeting IsComputationalQuine are not unique: the constant codes alone give '
+         'infinitely many (infinite_quine_family). That the Quine atom is ⊥ of the lattice, and the '
+         'only one, flows from ZP-J T-EXEC (set-theoretic side). For self-printing codes, a '
+         'uniqueness at the level of behaviour is proved (selfprints_behaviour_injective).'],
         ['Rogers\' fixed-point theorem',
          'CLOSED — roger_fixed_point_exists',
          'For any computable f : Code → Code, ∃ c, eval (f c) = eval c. '
@@ -622,6 +859,19 @@ def build():
          'OPEN — future work',
          'The 2-adic model from ZP-B (Q₂ structure) has not been given a KleeneStructure '
          'instance. This is a natural extension but not required for T-SNAP or DA-1.'],
+        ['Choice-free recursion theorem',
+         'OPEN — measured negative, 2026-10-04',
+         'The statement of selfref_universal_exists carries Classical.choice through Mathlib\'s '
+         'numbering of codes (Denumerable Code); restated with encodeCode it is axiom-free, and no '
+         'proof of the restated form without choice was found. As located then, the route lacks a '
+         'recursion theorem stated without Partrec₂ and a universal code proved correct without '
+         'eval_part (Kleene.md § VIII). Footprint UNCLASSIFIED.'],
+        ['Martin-Löf randomness ⇒ disjunctive',
+         'OPEN — not in Lean',
+         'Standard theory: a Martin-Löf random sequence is disjunctive. Martin-Löf randomness and '
+         'Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (search record in '
+         'Disjunctive.md). Until this bridge is formalised, the framework\'s commitment that ⊥ is '
+         'maximally complex reaches Disjunctive (Section VI.I) only as a reading.'],
     ]
     E.append(data_table(
         ['Item', 'Status', 'Description'],
