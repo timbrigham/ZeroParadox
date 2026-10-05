@@ -97,6 +97,28 @@ points of `selfPrintOrDelegate`. These are statements about the partial function
 equalities of `Part ℕ` values; they state presence and existence of such codes, and nothing
 here says a code is run.
 
+**Where `Classical.choice` enters `selfref_universal_exists`, measured 2026-10-04.** Not
+removed. The statement as written carries choice, so no proof of it is choice-free; a restated
+form is choice-free, and no proof of that form without choice was found. Measured as follows,
+by `#print axioms` in a scratch file importing this one.
+- The statement carries choice. `SelfPrints` and `Universal` each measure
+  `[propext, Classical.choice, Quot.sound]`. `Universal` names `Denumerable.ofNat Code`, which is
+  `Nat.Partrec.Code.ofNatCode` by `rfl` (`ofNatCode_eq`); `ofNatCode` carries choice, and its
+  well-founded recursion is justified by `Nat.unpair_left_le`, `Nat.unpair_right_le` and
+  `Nat.div2_val`, each carrying it. `Nat.Partrec.Code.instDenumerable` carries it, while
+  `encodeCode`, `eval`, `Nat.pair`, `Nat.unpair` and `Denumerable.ofNat` itself do not.
+- A restated statement is choice-free: with `encodeCode` for the Gödel number and the channel
+  of code `d` written `Nat.pair (encodeCode d + 1) n`, the predicate pair and the existence
+  statement measure no axioms.
+- No proof of it was found without choice. Mathlib's `fixed_point₂` carries choice in its
+  statement: its hypothesis `Partrec₂ f` measures the triple, through `Primcodable.prod`, while
+  `Partrec` measures `[propext]` and `Nat.Partrec` none. `fixed_point`, `exists_code`,
+  `eval_part`, `eval_curry`, `primrec₂_curry` and `evaln` each carry it. Missing from the
+  route, as located on 2026-10-04 by the measurements above: a recursion theorem stated
+  without `Partrec₂`, and a universal code whose correctness is proved without `eval_part`.
+  Neither was attempted here. The footprint stays
+  UNCLASSIFIED: a proof's footprint, not a theorem's necessity.
+
 **Controls.** `universal_not_selfprints`: universality alone does not give self-printing.
 The `example`s beside it: no constant code is universal, so the constant codes, which meet
 `IsComputationalQuine` (`infinite_quine_family`), never meet `SelfPrints ∧ Universal`; and
