@@ -106,6 +106,9 @@ example (o : NONote) : o.repr < Ordinal.epsilon 0 := ZeroParadox.repr_lt_epsilon
 #check @ZeroParadox.epsilonZero_eq_iSup       -- Statement: the MAX face: ε₀ is the supremum of the ω-tower
 #check @ZeroParadox.nothing_between_is_a_step -- Statement: no ordinal below ε₀ is fixed by ω^·. Reading: the in-between ordinals are stages of the ascent, not landings
 #check @ZeroParadox.bot_is_not_a_step         -- Statement: ω^0 ≠ 0: ⊥ of `Ordinal` is not fixed by ω^·. Reading: with the line above, ε₀ is the first landing in the FIXED-POINT order; ⊥ ⋖ ε₀ is false and is not claimed
+-- Reading: ε₀ is the minimum step next to the pole, never the pole: "next to" in the fixed-point order
+-- above, the pole ⊥ = 0 = ∞ a chart claim (`ZeroParadox/BottomCannotBe.lean` § INVERSION), "never"
+-- `epsilon0_ne_bot` (§ I). Scopes: `ZeroParadox/Ordinal/Epsilon0CannotBe.md`.
 
 /-! ### § IV. ε₀ as the snap threshold ⊥ of `Ordinal` → ε₀, co-witnessed with the 2-adic limit and the machine snap -/
 #check @ZeroParadox.epsilonZero_fixedPoint    -- Statement: ω ^ ε₀ = ε₀ (the `epsilonZero` spelling). Reading: the fixed point the snap lands the ascent on

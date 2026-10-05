@@ -35,7 +35,7 @@ open Ordinal
 
 `SynONote` with one point adjoined on top: the shape of Castéran's `ON_plus` (sum of notation systems)
 with a one-point right summand, not an instance of it, because `SynONote`'s order is not well-founded
-(the `example` after `e0Repr_not_injective`). The order, lattice and decidability structure below is all
+(the `example` stating `¬ WellFoundedLT E0Note`). The order, lattice and decidability structure below is all
 Mathlib's `WithTop` machinery, not built here. -/
 
 /-- **The carrier: ordinal notations with a single adjoined top.**
@@ -181,10 +181,11 @@ example : typeLT NONote = ε₀ := by
 /-- **The crossing.** The carrier's denotation map into Mathlib's classical `Ordinal`: notations go by
 `ONote.repr`, and the adjoined top goes to ε₀.
 
-An instance of Castéran's `ON_correct` shape (`Schutte/Correctness_E0.v` is the existing ε₀
-instantiation), with Mathlib's constructed `Ordinal` as the classical target instead of Schütte's
-axiomatized `Ord`. Two of its three fields are established here, the comparator field is not: see
-`ZeroParadox/Ordinal/PricedInterface.md` § *What is NOT proved here*. -/
+It has the into and onto properties of Castéran's `ON_correct` (`Schutte/Correctness_E0.v` is the
+existing ε₀ instantiation), with Mathlib's constructed `Ordinal` as the classical target instead of
+Schütte's axiomatized `Ord`. It is not an instance: `ON_correct` is stated over an `ON`, which needs a
+well-founded order (the `example` stating `¬ WellFoundedLT E0Note`), and the comparator property fails.
+See `ZeroParadox/Ordinal/PricedInterface.md` § *What is NOT proved here*. -/
 noncomputable def e0Repr : E0Note → Ordinal :=
   WithTop.recTopCoe ε₀ fun x => ONote.repr (ofSyn x)
 
@@ -216,9 +217,9 @@ example (o : Ordinal) (ho : o ≤ ε₀) : ∃ a : E0Note, e0Repr a = o := by
     exact ⟨e0Coe x, (e0Repr_coe x).trans hx⟩
   · exact ⟨⊤, rfl⟩
 
-/-- **The fence: the map is not injective, so this carrier is NOT `ON_correct` at ε₀ + 1.**
+/-- **The fence: the map is not injective, so `ON_correct`'s comparator property fails at ε₀ + 1.**
 
-`ON_correct` additionally requires the syntactic comparator to agree with the semantic order. That
+`ON_correct` requires the syntactic comparator to agree with the semantic order. That
 fails on raw `ONote`, because distinct notations that are not in normal form can denote the same
 ordinal — `1 + ω` and `ω` are the smallest witness (the same one used by
 `mathlib_ONote_order_not_antisymm` in `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). Ontoness
@@ -279,8 +280,8 @@ example : ∃ x y : E0Note, (x < y ∨ y < x) ∧ e0Repr x = e0Repr y := by
   obtain ⟨x, y, hxy, hne⟩ := Function.not_injective_iff.1 e0Repr_not_injective
   exact ⟨x, y, lt_or_gt_of_ne hne, hxy⟩
 
--- `Statement:` the carrier's order is not well-founded: on raw notations `oadd 0 1 x < x`, so the
--- sequence `ω, oadd 0 1 ω, oadd 0 1 (oadd 0 1 ω), …` descends forever.
+-- `Statement:` the carrier's order is not well-founded: on raw notations `oadd 0 1 x < x` at `x = ω`
+-- and at each later term, so `ω, oadd 0 1 ω, oadd 0 1 (oadd 0 1 ω), …` descends forever.
 example : ¬ WellFoundedLT E0Note := by
   let c : ℕ → ONote := fun k => Nat.rec (ONote.oadd 1 1 0) (fun _ x => ONote.oadd 0 1 x) k
   have hcmp : ∀ k, ONote.cmp (c (k + 1)) (c k) = .lt := by

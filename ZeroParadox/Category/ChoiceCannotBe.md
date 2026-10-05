@@ -14,8 +14,9 @@ as the framework claiming choice as one of its constructions, or as a claim abou
 
 ### The headline fence — read this before anything else
 
-`Statement:` CARRIER. On every one-point compactification `OnePoint X` a selector constant on the
-pole orbit exists with no axioms (`chart_selection_is_freeG`); at the stipulated undetermined pole a
+`Statement:` CARRIER. On every one-point compactification `OnePoint X` of an inhabited `X`, given a
+point `x₀ : X`, a selector constant on the pole orbit of `x₀` exists with no axioms
+(`chart_selection_is_freeG`, which takes `x₀` as an argument, so empty `X` is not covered); at the stipulated undetermined pole a
 uniform selector is, by definition, the choice fragment (`uniformChartSelection_iff_choiceFragment`).
 
 The ordinary English word "choice" — an act of picking, adopting a point of view, selecting a chart —
@@ -39,11 +40,13 @@ fragment from excluded middle fails to elaborate, dying at `Decidable (S true)`,
 `classical`. **That failure measures that construction, not the fragment** — a failed elaboration is not
 a negative result, and a formal independence claim would
 need a metatheoretic argument outside Lean (the home file
-`ZeroParadox/Category/ExcludedMiddleBridge.lean` states this limit explicitly). The apparent gap is a
-fact about **Lean's `Prop`/`Type` stratification**, not about Diaconescu's theorem: the fragment selects
-into `Bool`, so it is really `∀ p, Decidable p` — data-valued excluded middle — while `ExcludedMiddle` is
-the `Prop`-valued form, and `Or` in `Prop` does not eliminate into `Bool`. A topos has no such split,
-which is why Diaconescu gets an equivalence and we do not. **That reconciliation is the framework's own
+`ZeroParadox/Category/ExcludedMiddleBridge.lean` states this limit explicitly). The apparent gap between
+Diaconescu's equivalence and that failed construction sits in **Lean's `Prop`/`Type` stratification**,
+not in Diaconescu's theorem: the fragment selects into `Bool`, so it is really `∀ p, Decidable p` —
+data-valued excluded middle — while `ExcludedMiddle` is the `Prop`-valued form, and `Or` in `Prop` does
+not eliminate into `Bool`. A topos has no such split, so his equivalence need not carry over to Lean;
+that the fragment is in fact not derivable from `ExcludedMiddle` in Lean is not established here.
+**That reconciliation is the framework's own
 small finding; the equivalence is his.** Every evocative reading in the framework's prose — "choice is which way you view the
 self-dual split", "reading the pole as the floor is an act of choice" — is a **model** of the
 choice-versus-no-choice distinction, never the axiom itself. Where such a reading has been made precise
@@ -141,8 +144,14 @@ fraction either**; it moves with every commit.
   PRINCIPLE, not about any one proof of it: `#print axioms` reports a proof's footprint and can never
   witness necessity, which is exactly why the essential side needs a reduction instead of a measurement.
 
-Prior art for the distinction and its methods: constructive reverse mathematics (Ishihara;
-Diener–Ishihara). Cited, not claimed.
+Prior art for the distinction and its methods: constructive reverse mathematics, which classifies
+theorems ("to classify [over intuitionistic logic] various theorems … by logical principles") and whose
+taboo direction (a theorem
+implying a constructively dubious principle) is the essential test above. Overview read: Hannes Diener,
+*Constructive Reverse Mathematics*, arXiv:1804.05495v3 (2020), pp. 4-6, which quotes that aim from
+Hajime Ishihara, *Reverse mathematics in Bishop's constructive mathematics*, Philosophia Scientiæ
+CS 6 (2006) 43-59 (named; not retrieved). Diener and Ishihara's joint survey: named; not retrieved.
+Cited, not claimed.
 
 ### What this index does NOT do
 

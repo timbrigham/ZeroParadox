@@ -25,6 +25,24 @@ readings are true of different orders:
   `epsilon0_least_fixedpoint` must never be cited as proving a covering relation — and note it is
   only the lower-bound half; the full `IsLeast` is `epsilon0_min_eq_max`.
 
+`Reading:` **ε₀ is the minimum step next to the pole, never the pole.** Each part has its own scope:
+* **The pole** ⊥ = 0 = ∞ is a CHART claim, not a point identity, indexed in
+  `ZeroParadox/BottomCannotBe.lean` § INVERSION with three distinct witnesses: coincidence
+  `infinitude_forces_infinite_complexity`, drift `pole_inversion`, inversion `rInv_swaps`. `rInv_swaps`
+  is never the coincidence witness: it exchanges two points that are provably distinct
+  (`point_and_field_at_the_poles`).
+* **"Next to"** is adjacency in the FIXED-POINT order only, measured from ⊥ of `Ordinal`: ε₀ is the
+  least fixed point of `α ↦ ω^α` (`epsilon0_least_fixedpoint`; the full `IsLeast` is
+  `epsilon0_min_eq_max`), and in the floor-below boundary model `↑ε₀` is the least landing strictly
+  above ⊥ of `WithBot Ordinal` (`phase_epsilon0_isLeast_landing_above_floor`,
+  `ZeroParadox/Order/SnapCannotBe.lean` § VI). Reading that ⊥ as the pole is the chart claim above; no
+  theorem equates points across those carriers.
+* **"Never the pole"**: ε₀ ≠ ⊥ of `Ordinal` (`epsilon0_ne_bot`), and against ℤ_[2]'s 0 the equation is
+  ill-typed (the `cnf_bridge_type_boundary` gloss, § V of the Lean file).
+* **The other chart.** In the ORDINAL order the same ε₀ is the far end of the ascent, its supremum
+  (`epsilon0_min_eq_max`), and covers no ordinal (the limit-ordinal `example` in
+  `ZeroParadox/Order/SnapCannotBe.lean` § II). Both charts hold; neither is denied.
+
 **The bedrock invariant: ε₀ ≠ 0. It cannot be.**
 ε₀ is a fixed point (`ω^ε₀ = ε₀`); were it 0 that would say `1 = 0`. Since ⊥ of `Ordinal` is 0, also
 `ε₀ ≠ ⊥` there (`epsilon0_ne_bot`): that ⊥ is the *base fed in*, ε₀ the *closure that comes out* —

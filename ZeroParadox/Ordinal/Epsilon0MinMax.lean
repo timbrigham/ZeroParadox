@@ -4,7 +4,7 @@ import ZeroParadox.Ordinal.Epsilon0LeastFP
 set_option maxHeartbeats 400000
 
 /-!
-# ε₀ is min ≡ max: the snap ⊥ → ε₀ is one Kleene chain (seed → closure)
+# ε₀ is min ≡ max: the snap from ⊥ of `Ordinal` to ε₀ is one Kleene chain (seed → closure)
 
 ## Engineer's Take
 
