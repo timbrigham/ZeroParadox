@@ -380,9 +380,10 @@ def build():
         'framework is not just a description of emergence. The derivation chain from T-SNAP through T-IZ is self-contained within the framework\'s axioms, and the two readings that carry it to a successor null are commitments stated alongside it.'))
     E.append(cbody(
         'The name "Inside Zero" refers to the geometry of the approach. The chain does '
-        'not reach ⊥′ by turning around and going backward. It reaches ⊥′ by going '
+        'not reach zero by turning around and going backward. It reaches zero by going '
         '<i>deeper</i>  - descending into the 2-adic structure until the depth of zero '
-        'is reached from the inside. Forward motion is the mechanism of return.'))
+        'is reached from the inside. Forward motion is the mechanism of return. (Reading that zero as '
+        'a new null ⊥′ is a commitment, not something the chain proves.)'))
     E.append(sp(4))
 
     # ── The Engine ─────────────────────────────────────────────────────────────
@@ -405,9 +406,9 @@ def build():
         'always a strictly greater element. Given that it keeps stepping, the depth grows without bound.'))
     E.append(cbody(
         'More than that: each step is a genuine advance. The depth does not merely grow '
-        'eventually  - given the IsDepthChain condition, it increases by at least 1 at every transition. This is not an '
-        'assumption about the chain. It follows from the ZP-A lattice axioms together with '
-        'the IsDepthChain condition (which requires the chain\'s 2-adic depth to strictly '
+        'eventually  - given the IsDepthChain condition, it increases by at least 1 at every transition. This is derived, '
+        'not assumed separately: it follows from two stated conditions on the chain, '
+        'IsStrictStateSequence and the IsDepthChain condition (which requires the chain\'s 2-adic depth to strictly '
         'track position): monotonicity, IsDepthChain, and IsStrictStateSequence  - the assumption that every '
         'step is a PROPER ascent  - together give strict depth growth at every step. No-top supplies the room '
         'for that ascent and is not itself a hypothesis of the theorem: <tt>h_strict_from_r1_t3</tt> binds '
@@ -436,8 +437,8 @@ def build():
     E.append(sp(4))
 
     E.append(remember_box(
-        'The no-top property is not a limitation. It is what guarantees the road never ends: there is '
-        'always somewhere further to go, so no chain halts for want of room. What makes a particular '
+        'The no-top property is not a limitation. In a carrier that has it (not every carrier does), it '
+        'guarantees the road never ends: there is always somewhere further to go, so no chain halts for want of room. What makes a particular '
         'chain travel it is the assumption that every step is a proper ascent. No-top buys the '
         'POSSIBILITY; the strict-ascent condition is the OCCURRENCE. Where the road ENDS UP  - inside '
         'the lattice or outside it  - is a separate question no-top does not settle.'))
@@ -525,7 +526,7 @@ def build():
 
     E.append(key_result_box('Theorem T-IZ  - Inside Zero',
         'Every maximal ascending chain (S₀, S₁, S₂, ...) starting at ⊥, '
-        'ascending monotonically by ZP-A T3, in a lattice with no top, and satisfying '
+        'ascending monotonically by ZP-A T3, and satisfying '
         'the IsDepthChain and IsStrictStateSequence conditions  - '
         'converges to zero in the 2-adic metric. Reading that limit as filling the bottom '
         'role is a commitment, and reading the occupant as ⊥′ a further one. '
@@ -585,7 +586,7 @@ def build():
     E.append(Paragraph('The Complete Cycle', CS['h1']))
     E.append(cbody(
         'ZP-E gave us the beginning: T-SNAP (⊥ → ε₀ - shape derived, occurrence committed to). ZP-I gives us '
-        'the end that is also a beginning: T-IZ (the chain → ⊥′). Together, they '
+        'the end that is also a beginning: T-IZ (the chain → 0, read as the bottom role, and as ⊥′ only on a commitment). Together, they '
         'describe a self-contained derivation cycle. ZP-I is not merely an emergence result  - '
         'it is a structural account of a repeating pattern:'))
     E.append(cbody(
@@ -593,7 +594,7 @@ def build():
         '<br/>'
         '2. <b>T3 (monotonicity)</b>: states ascend. Each step adds informational content irreversibly.'
         '<br/>'
-        '3. <b>No top</b>: the chain never has to stop  - there is always a strictly greater state. '
+        '3. <b>No top</b>: in a carrier that has no top, the chain never has to stop  - there is always a strictly greater state. '
         'That it DOES keep ascending through ω state changes is the strict-ascent condition. '
         '(Not ZP-A&#8217;s R1, which is Door 1, no subtraction.)'
         '<br/>'
@@ -604,13 +605,13 @@ def build():
         'limit as filling the ⊥ role  - and then as ⊥′  - are the two commitments; on them, '
         'DA-1 fires, T-SNAP fires again, and the branch closes.'
         '<br/>'
-        '5. <b>DA-2</b>: ⊥′ becomes the foundation of the next instantiation. '
+        '5. <b>DA-2</b>: on the C-DA2 commitment, ⊥′ is read as the foundation of the next instantiation. '
         'The next T-SNAP fires. The cycle repeats.'))
 
     E.append(cycle_diagram())
     E.append(ccaption(
         'The complete cycle: T-SNAP opens the branch, strict ascent climbs it, '
-        'T-IZ closes it at the bottom role; DA-2 licenses reading that occupant as ⊥′, the next null. '
+        'T-IZ closes it at the bottom role; reading that occupant as ⊥′, the next null, is the C-DA2 commitment. '
         'The derivation chain T-SNAP through T-IZ is self-contained within the framework\'s axioms.'))
     E.append(sp(4))
 
@@ -682,8 +683,8 @@ def build():
         'with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement, '
         'so Steps 2–4 need no Kolmogorov complexity. '
         'The derivation is self-contained: T-SNAP opens each branch; '
-        'T-IZ closes it at a limit READ as filling the bottom role; DA-2 licenses reading that '
-        'occupant as the next branch\'s foundation. Emergence and return are derived as far as '
+        'T-IZ closes it at a limit READ as filling the bottom role; reading that '
+        'occupant as the next branch\'s foundation is the C-DA2 commitment. Emergence and return are derived as far as '
         'the CONVERGENCE and the role-recognition implication; that the limit is the role\'s '
         'occupant is a commitment. Their NOVELTY - that each branch ends at a fresh bottom rather '
         'than the one it began at - is assumed, on the same footing as T-SNAP\'s occurrence.'))

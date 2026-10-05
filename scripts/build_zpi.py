@@ -143,9 +143,10 @@ def build():
         '&#8869; &#8594; &#949;<sub>0</sub>, and not that it is taken, T-IZ establishes, for a chain that does take every step, the full trajectory — ascent through &#969; state '
         'changes and convergence back to 0 — as a single Cauchy sequence result.'))
     E.append(body(
-        'The key insight: the no-top property is not an obstacle to T-IZ. It is what makes the '
-        'ascent AVAILABLE — there is always a strictly greater element, so no chain halts for want of '
-        'anywhere to go. (It does NOT follow that the limit lies outside L; whether a limit escapes '
+        'The key insight: the no-top property is not an obstacle to T-IZ. In a carrier that has it '
+        '(HasNoTop is a hypothesis on the carrier; MachinePhase and OntologicalStates have a top), it is '
+        'what makes the ascent AVAILABLE — there is always a strictly greater element, so no chain halts '
+        'for want of anywhere to go. (It does NOT follow that the limit lies outside L; whether a limit escapes '
         'its carrier is a property of the particular lattice — the ordinals under max have no top, and '
         'the chain n &#8614; n has least upper bound &#969; inside them.) What drives the 2-adic '
         'valuation v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; is that the chain actually takes those steps '
@@ -153,9 +154,11 @@ def build():
         'NO-GO gauge in &#167;Ib exhibits a no-top lattice holding a chain that never moves. '
         'Unbounded ascent is exactly the Cauchy convergence condition '
         '&#8214;S<sub>n</sub>&#8214;<sub>2</sub> &#8594; 0. The chain approaches the 2-adic depth of zero by going '
-        'deeper into the p-adic structure — not by reversing direction. Read as reaching maximum '
-        'complexity, DA-1 and T-SNAP apply and the framework calls the result a successor null '
-        '&#8869;\' — both of those steps are readings, not consequences of the convergence.',
+        'deeper into the p-adic structure — not by reversing direction. IF the limit met the '
+        'incompressibility threshold P<sub>0</sub>, DA-1 and T-SNAP would apply. That it does is not '
+        'established here: the only route to it, the valuation-complexity bridge, is refuted (&#167; II.B), '
+        'and it is a premise of the same shape as DA-1&#8217;s own precondition, the occurrence commitment. '
+        'Calling the result a successor null &#8869;\' is a further commitment (C-DA2).',
         style='bodyI'))
     E.append(hr())
 
@@ -313,8 +316,8 @@ def build():
         'Surprisal at depth n is a property of POSITION in the ball hierarchy: every point at 2-adic '
         'depth n has I(n) = n under the branching measure (ZP-C D4). Kolmogorov complexity '
         'K(x | n) is a property of the particular point x: the length of the shortest program that '
-        'outputs x given n. ZP-C Remark R-BRIDGE states that the two measures diverge away from '
-        'P<sub>0</sub>, and that divergence refutes the bridge below.'))
+        'outputs x given n. The two are different measures, and the counterexample in the box below '
+        'refutes the bridge between them.'))
     E.append(theorem_box(
         'Refuted Claim — Valuation-Complexity Bridge',
         [
@@ -326,9 +329,14 @@ def build():
             'ZeroParadox/Ordinal/Gentzen.lean). One fixed program computes S<sub>n</sub> from n, so '
             'K(S<sub>n</sub> | n) is bounded by a constant while |S<sub>n</sub>| = n + 1 bits, and the '
             'ratio tends to 0, not 1.',
-            'Lean scope: the valuation half is checked; the complexity half is the standard invariance '
-            'argument of algorithmic information theory and is not in Lean, since Kolmogorov complexity '
-            'is outside Lean scope (same category as DA-1 Path 3 in ZP-E).',
+            'Lean scope: the valuation half is checked. The complexity half is not in Lean, since '
+            'Kolmogorov complexity is outside Lean scope (same category as DA-1 Path 3 in ZP-E): the '
+            'bound K(2<sup>n</sup> | n) &#8804; c holds because one fixed program prints 2<sup>n</sup> '
+            'from n, and c is the length of that program.',
+            'The same chain meets T-IZ&#8217;s own bound: &#8214;2<sup>n</sup>&#8214;<sub>2</sub> = '
+            '2<sup>-n</sup>, so S<sub>n</sub> = 2<sup>n</sup> satisfies h_bound of t_iz_complete '
+            '(ZeroParadox/Valuation/SemilatticeInstance.lean). That hypothesis therefore does not encode '
+            'incompressibility.',
         ],
         color=INDIGO
     ))
@@ -371,16 +379,21 @@ def build():
             'Reading that limit as an OCCUPANT of the bottom role is a modelling commitment and not '
             'part of the statement — Q<sub>2</sub> carries no join, so the role condition is not '
             'statable of it. Reading that occupant as a SUCCESSOR null is C-DA2, a further commitment.',
-            'Formal hypotheses: S : &#8469; &#8594; Q<sub>2</sub>, with S(0) = &#8869; (CC-1), '
-            'S(n) &#8804; S(n+1) (T3 monotonicity), and v<sub>2</sub>(S(n)) &#8805; n for all n '
-            '(derived from IsDepthChain + IsStrictStateSequence — see Remark R-IZ-A, &#167;Ib).',
+            'Formal hypotheses (t_iz_complete): S : &#8469; &#8594; Q<sub>2</sub> with '
+            '&#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup>, that is v<sub>2</sub>(S(n)) &#8805; n, for all n. '
+            'That bound is derived (t_iz_h_bound_from_depth_chain) from IsStrictStateSequence on a depth '
+            'index in &#8469;, IsDepthChain tying the valuations of S to that index, and S nowhere zero '
+            '(Remark R-IZ-A, &#167;Ib). CC-1&#8217;s start at &#8869; and T3 monotonicity are statements about a '
+            'chain in a ZP-A semilattice, not about S: Q<sub>2</sub> carries no join and no order.',
             'Conclusion: S(n) &#8594; 0 in Q<sub>2</sub>. That is the whole of what is proved here. '
             'The framework then READS the limit as satisfying the bottom role — a step stated in a '
             'different type and not carried by T-IZ — and DA-2 supplies the one-directional fact '
-            'that anything satisfying that role IS the bottom already present. On that reading '
-            'P<sub>0</sub> is satisfied, DA-1 fires and T-SNAP fires. DA-2 licenses reading that occupant as '
-            '&#8869;\', the successor null for the next instantiation &#8212; a modelling '
-            'commitment, since nothing here produces a SECOND bottom.',
+            'that anything satisfying that role IS the bottom already present. IF the limit met the '
+            'incompressibility threshold P<sub>0</sub>, DA-1 would fire and then T-SNAP. That it does is not '
+            'established here (the only route to it, the bridge of &#167; II.B, is refuted); it is a '
+            'premise of the same shape as DA-1&#8217;s own precondition, the occurrence commitment. '
+            'Reading the occupant as &#8869;\', a successor null for the next instantiation, is C-DA2, '
+            'a modelling commitment, since nothing here produces a SECOND bottom.',
         ]
     ))
     E.append(sp(8))
@@ -399,8 +412,9 @@ def build():
            'K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1. Step 2 is this step&#8217;s only route from the chain to that '
            'threshold, and with Step 2 refuted nothing here establishes that the limit meets the threshold.'),
         li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Throughout this document, "fires" narrates the commitment that instantiation occurs - before this note as well as after it - not a consequence of the theorem.'),
-        li('Step 4 — DA-1 fires: A configuration at P<sub>0</sub> is a live execution event — '
-           'not a static description. DA-1 (ZP-E) applies, with the same three-path argument as in ZP-E § IV. '
+        li('Step 4 — DA-1 fires, IF P<sub>0</sub> is met: a configuration at P<sub>0</sub> would be a live '
+           'execution event, not a static description. Step 3 does not establish that the limit is at '
+           'P<sub>0</sub>, so this step is conditional on that premise. Given it, DA-1 (ZP-E) applies, with the same three-path argument as in ZP-E § IV. '
            'The TrackedOutput formal core (DP-2, Snap.lean § VI) establishes the machine-state transition.'),
         li('Step 5 — T-SNAP fires: DA-1 establishes instantiation = execution. T-SNAP (ZP-E) gives '
            '&#8869; &#8744; &#949;<sub>0</sub> = &#949;<sub>0</sub>. '
@@ -445,7 +459,7 @@ def build():
          'Lean: t_iz_valuation_unbounded ✓ (proved; carries Classical.choice, Mathlib p-adic)'],
         ['v<sub>2</sub> → ∞ ⟹ K/|S| → 1 (REFUTED)',
          'Counterexample S<sub>n</sub> = 2<sup>n</sup>: valuation n (padicValNat.prime_pow), '
-         'complexity given n bounded (standard invariance argument, not Lean)',
+         'complexity given n bounded by the length of one fixed program printing 2<sup>n</sup> from n (not Lean)',
          'Not a proof dependency',
          'Refuted (&#167; II.B). Not required: formal spine is Steps 1 + 6; '
          'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.'],
@@ -660,7 +674,7 @@ def build():
         'at the ordinal limit returns to 0 (&#8722;x), read as the bottom role and then as '
         '&#8869;\'. The three terms are strung across &#969; state changes.'))
     E.append(body(
-        'T-IZ establishes that this balance is exact and derived. "Balance" here is not '
+        'What T-IZ supplies to this reading is the convergence; the balance itself stays a reading. "Balance" here is not '
         'subtraction in (L, &#8744;, &#8869;) — R1 prohibits that. It is the completion of an '
         'instantiation branch: the closing of L and the emergence of L\'. Every instantiation '
         'begins at its &#8869;, ascends for &#969; state changes under T3 (monotonicity), '
@@ -698,16 +712,18 @@ def build():
            '&#8869; &#8594; &#949;<sub>0</sub> is irreversible. This is the opening of the branch.'),
         li('T3 (Monotonicity): The state sequence ascends without interruption. Each step '
            'adds informational content irreversibly. The chain climbs.'),
-        li('No Top: There is always a strictly greater element, so no chain halts for want of '
+        li('No Top: In a carrier with HasNoTop (a hypothesis on the carrier, not a law: MachinePhase and '
+           'OntologicalStates have a top) there is always a strictly greater element, so no chain halts for want of '
            'anywhere to go. It supplies the POSSIBILITY of ascent; IsStrictStateSequence is its '
            'OCCURRENCE, and that is the hypothesis T-IZ actually consumes. Not ZP-A&#8217;s R1, '
            'which is no-subtraction.'),
-        li('T-IZ: The chain\'s unbounded forward motion generates the conditions for a null '
-           'at the ordinal limit &#969;. DA-1 fires; T-SNAP fires again; the limit is identified '
-           'as &#8869;\' by its role. Calling that role-occupant a SUCCESSOR rather than the same '
-           '&#8869; is the commitment. This is the closing of the branch.'),
-        li('DA-2 (Instantiation Succession): &#8869;\' becomes the foundation of the next '
-           'instantiation. The tree extends. The cycle repeats.'),
+        li('T-IZ: The chain converges to 0 at the ordinal limit &#969;. Reading that limit as filling '
+           'the bottom role is a commitment, and the role identifies the &#8869; already there '
+           '(t_iz_limit_is_new_null). IF the limit met P<sub>0</sub>, DA-1 would fire and T-SNAP fire again; '
+           'that it does is not established here (&#167; II.B). Calling the role-occupant a SUCCESSOR '
+           '&#8869;\' rather than the same &#8869; is C-DA2, a further commitment. This is the closing of the branch.'),
+        li('DA-2 (Instantiation Succession): on the C-DA2 commitment, &#8869;\' is read as the foundation '
+           'of the next instantiation. The tree extends. The cycle repeats.'),
         sp(4),
     ]
     E.append(body(
@@ -768,7 +784,7 @@ def build():
          'Its implication v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; &#8658; K(S<sub>n</sub> | n) / |S<sub>n</sub>| &#8594; 1 '
          'fails at S<sub>n</sub> = 2<sup>n</sup> (&#167; II.B): valuation n, complexity given n bounded, '
          'ratio &#8594; 0. The valuation half is checked (padicValNat.prime_pow); the complexity half is '
-         'the standard invariance argument, outside Lean scope. '
+         'outside Lean scope: one fixed program prints 2<sup>n</sup> from n, which bounds K(2<sup>n</sup> | n) by its length. '
          'Not a proof dependency for T-IZ: formal spine is Steps 1 + 6 (Step 6 axiom-free; Step 1 carries Mathlib p-adic choice); '
          'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.'],
         ['T-IZ Lean sorry fill',
@@ -806,7 +822,7 @@ def build():
         ['Null Balance 0 + x + (&#8722;x) = 0',
          'T-IZ + T-SNAP + DA-2 (ZP-E)',
          'None',
-         'Role derived — consequence of T-IZ. Exact, not approximated. Novelty: commitment.'],
+         'Role derived — the convergence is T-IZ; the balance is a reading, not a theorem. Novelty: commitment.'],
         ['OQ-E2 partial closure',
          'ZP-C D4 (binary alphabet, I(n)=n); ZP-B (Q<sub>2</sub> separable); T-IZ (&#937; = &#969;)',
          'None',
