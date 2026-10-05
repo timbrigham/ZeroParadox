@@ -366,7 +366,8 @@ theorem allFalse_misses_code {c : Code} (hc : c ≠ Code.zero) :
 /-- **`Statement:` a tape equal to its own shift by some `a > 0` is not disjunctive:** every
 word of length `a` at position `n` is the one at `n % a`, so at most `a` of the `2 ^ a` occur.
 A special case of Barnsley–Leśniak's remark that no disjunctive sequence is almost periodic
-(`ZeroParadox/Information/Disjunctive.md`, Prior art). -/
+(`ZeroParadox/Information/Disjunctive.md`, Prior art): such a tape is almost periodic, the
+`example` after this theorem. -/
 theorem not_disjunctive_of_periodic {x : ℕ → Bool} {a : ℕ} (ha : 0 < a)
     (hper : ∀ n, x (n + a) = x n) : ¬ Disjunctive x := by
   intro h
@@ -391,10 +392,38 @@ theorem not_disjunctive_of_periodic {x : ℕ → Bool} {a : ℕ} (ha : 0 < a)
   obtain ⟨n, hn⟩ := (h a w).exists
   exact ⟨⟨n % a, Nat.mod_lt n ha⟩, funext fun i => (hword n i).symm.trans (hn i)⟩
 
-/-- **`Statement:` a disjunctive tape equals its shift by no `a > 0`.** `Reading:` if the framework's
-⊥ read as a tape is maximally complex (Tim's commitment; disjunctive in standard theory, § VI), it
-holds no full copy of itself at any offset; copies sit side by side, told apart by an address
-(`selfPrints_universal_address`, `ZeroParadox/Computability/Kleene.lean`). -/
+-- Statement: a tape equal to its own shift by `a > 0` is almost periodic in the sense Barnsley and
+-- Leśniak recall from Muchnik, Semenov and Ushakov: for each word occurring infinitely often there
+-- is a length `m`, depending on the word (here `a + k`), such that every segment of length `m`
+-- contains it.
+example {x : ℕ → Bool} {a : ℕ} (ha : 0 < a) (hper : ∀ n, x (n + a) = x n)
+    (k : ℕ) (w : Fin k → Bool) (hocc : ∃ᶠ n in atTop, ∀ i : Fin k, x (n + i) = w i) :
+    ∃ m, 0 < m ∧ ∀ s, ∃ q, s ≤ q ∧ q + k ≤ s + m ∧ ∀ i : Fin k, x (q + i) = w i := by
+  obtain ⟨p, hp⟩ := hocc.exists
+  have hq : ∀ t n, x (n + a * t) = x n := by
+    intro t
+    induction t with
+    | zero => intro n; rfl
+    | succ t ih => intro n; rw [Nat.mul_succ, ← Nat.add_assoc, hper, ih]
+  have hr : ∀ i : Fin k, x (p % a + i) = w i := fun i => by
+    rw [← hp i, show p + (i : ℕ) = (p % a + i) + a * (p / a) by
+      have := Nat.mod_add_div p a; omega, hq]
+  refine ⟨a + k, by omega, fun s => ?_⟩
+  have hpa := Nat.mod_lt p ha
+  have hsa := Nat.mod_lt s ha
+  have hsd := Nat.mod_add_div s a
+  by_cases h : s % a ≤ p % a
+  · refine ⟨p % a + a * (s / a), by omega, by omega, fun i => ?_⟩
+    rw [show p % a + a * (s / a) + (i : ℕ) = (p % a + i) + a * (s / a) by omega, hq, hr]
+  · refine ⟨p % a + a * (s / a + 1), ?_, ?_, fun i => ?_⟩
+    · rw [Nat.mul_succ]; omega
+    · rw [Nat.mul_succ]; omega
+    · rw [show p % a + a * (s / a + 1) + (i : ℕ) = (p % a + i) + a * (s / a + 1) by omega, hq, hr]
+
+/-- **`Statement:` a disjunctive tape equals its shift by no `a > 0`:** no full copy of itself at
+any offset. `Reading:` copies sit side by side, told apart by an address
+(`selfPrints_universal_address`, `ZeroParadox/Computability/Kleene.lean`); the ⊥-role commitment,
+with both sides stated, is § VI. -/
 theorem disjunctive_not_periodic {x : ℕ → Bool} (h : Disjunctive x) :
     ¬ ∃ a, 0 < a ∧ ∀ n, x (n + a) = x n :=
   fun ⟨_, ha, hper⟩ => not_disjunctive_of_periodic ha hper h
@@ -427,14 +456,13 @@ example : (¬ ∃ a, 0 < a ∧ ∀ n, (fun m => decide (m = 0)) (n + a) = (fun m
 
 /-! ## § VI. What maximal complexity would add
 
-Standard theory, not proved here: Martin-Löf random iff every prefix is incompressible in PREFIX-FREE
-complexity, `K(x↾n) ≥ n − c` (Levin–Schnorr, Chaitin), and Martin-Löf random implies disjunctive.
-With plain complexity no infinite sequence has all prefixes incompressible (Martin-Löf). The converse
-fails: `champ` is disjunctive and primitive recursive (§ II).
-`Reading:` separately, Tim's commitment that the framework's ⊥ (the role, not the all-false ⊥ of
-`ℕ → Bool`) is MAXIMALLY complex in that prefix-free sense; through the standard theorem it would be
-disjunctive. Martin-Löf randomness and Kolmogorov complexity are not located in the Mathlib pin as of
-2026-10-04 (search recorded in `ZeroParadox/Information/Disjunctive.md`). -/
+Standard theory, not proved here: a Martin-Löf random sequence, prefix-free incompressible, is
+disjunctive; the converse fails at `champ` (§ II). Statement and search record in the ride-along.
+`Reading:` Tim's commitment concerns the framework's ⊥ role, ⊥ of a `ZPSemilattice`: read as a tape,
+its occupant is MAXIMALLY complex in that sense. No map from a `ZPSemilattice` to `ℕ → Bool` is
+claimed or constructed, and no order on tapes in which a maximally complex tape is least: the reading
+is a commitment, not a chart. In `ℕ → Bool` under the pointwise order, ⊥ is the all-false tape, which
+is not disjunctive (`allFalse_not_disjunctive`). -/
 
 end ZeroParadox
 

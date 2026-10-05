@@ -121,10 +121,15 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 -- Reading: replicas share everything but the address; the next instance adds only the address.
 #check @ZeroParadox.selfPrints_universal_address
 
--- Statement: a disjunctive tape `ℕ → Bool` equals its own shift by no `a > 0`.
--- Reading: if the framework's ⊥, read as a tape, is maximally complex (Tim's commitment, prefix-free
---   sense; disjunctive by standard theory, `ZeroParadox/Information/Disjunctive.lean` § VI), it equals
---   none of its own shifts by `a > 0`: no full copy of itself at any offset.
+-- Statement: a disjunctive tape `ℕ → Bool` equals its own shift by no `a > 0`: no full copy of
+--   itself at any offset.
+-- Reading: Tim's commitment concerns the framework's ⊥ role, ⊥ of a `ZPSemilattice`: read as a tape,
+--   its occupant is maximally complex (prefix-free sense). What that would add, and the standard
+--   theory behind it, is `ZeroParadox/Information/Disjunctive.lean` § VI. No map from a
+--   `ZPSemilattice` to `ℕ → Bool` is claimed or constructed, and no order on tapes in which a
+--   maximally complex tape is least: the reading is a commitment, not a chart. In `ℕ → Bool` under
+--   the pointwise order, ⊥ is the all-false tape, which is not disjunctive
+--   (`allFalse_not_disjunctive`).
 #check @ZeroParadox.disjunctive_not_periodic
 
 /-! ### § IV. The bottom's computational face — PROVED vs COMMITTED -/
