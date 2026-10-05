@@ -294,7 +294,7 @@ def build():
         'Path 1 says: nothing external to ⊥ can execute ⊥, so if ⊥ executes at all, the executor '
         'is ⊥ itself, read as ⊥ = {⊥}; that rules out an external executor, not an inert ⊥. '
         'Path 3 says: no shorter external program generates ⊥; that rules out a shorter external '
-        'generator, not an inert string, so executing is not derivable from incompressibility. '
+        'generator, not an inert string, so Path 3 does not derive executing from incompressibility. '
         'The framework READS these as one claim in two vocabularies. What is '
         'proved is weaker and is a conjunction, not an identity: both hold together in any '
         'KleeneStructure. They cannot be equated formally — one is a statement about an element '
@@ -318,7 +318,7 @@ def build():
     E.append(sp(6))
 
     E.append(Paragraph('II. The Description-Instantiation Gap', S['h2']))
-    E.append(body(  # ZP-NOCHECK: term cited in quotes as a closed informal gap, not a live ZP claim
+    E.append(body(  # ZP-NOCHECK: term cited in quotes as the framework's informal question, not a live ZP claim
         'The "description-instantiation gap" asks whether mathematical self-reference implies '
         'computational execution: whether a self-referential ⊥ is running (Sense B, ZP-E DA-1 '
         'insert § II) rather than an inert description (Sense A).'))
@@ -438,7 +438,7 @@ def build():
     E.append(body(
         'ZP-J T-EXEC and all its corollaries remain axiom-free. Classical.choice is not '
         'confined to the computability rows: in Disjunctive.lean, champ_disjunctive carries it, '
-        'reached through Mathlib\'s Filter.frequently_atTop, while the at-least-once form '
+        'reached through disjunctive_iff_once, while the at-least-once form '
         'champ_disjunctiveOnce measures propext and Quot.sound only (measured 2026-10-04; '
         'ZeroParadox/Information/Disjunctive.md, Footprints).'))
 
@@ -557,9 +557,9 @@ def build():
         'satisfies trivially. The Kolmogorov reading ("no shorter program is prior to ⊥") has '
         'no formal content in ZP-K: Kolmogorov complexity is uncomputable and absent from the '
         'development. Path 3 therefore derives nothing here: in ZP-E it bears on DA-1\'s '
-        'precondition and shows that executing is not derivable from incompressibility, and that '
+        'precondition and does not derive executing from incompressibility, and that '
         'precondition is what the occurrence commitment asserts.'))
-    E.append(body( # ZP-NOCHECK: description-instantiation gap cited in quotes as a closed informal gap, not a live ZP claim
+    E.append(body( # ZP-NOCHECK: description-instantiation gap cited in quotes as an informal question, not a live ZP claim
         'Path 2 (informational: unbounded surprisal → executing) is a bridge principle of its '
         'own — a missing principle, not a missing proof — which the framework does not adopt, '
         'which is not the occurrence commitment, and which is not a premise of the Snap. The mathematics '
@@ -577,7 +577,7 @@ def build():
         'IsQuineAtom (⊥ : MachinePhase), nothing computational; it rules out an external\n'
         'executor, not an inert ⊥.\n'
         'Path 3 (computational, Kleene): botCode_is_quine is a KleeneStructure class field,\n'
-        'assumed at instantiation; Path 3 shows executing is not derivable from incompressibility.\n'
+        'assumed at instantiation; Path 3 does not derive executing from incompressibility.\n'
         'Path 2 (informational, L-INF): UNADOPTED BRIDGE PRINCIPLE — a missing principle,\n'
         'not a missing proof, and not the occurrence commitment.\n'
         'None derives DA-1\'s precondition, which is what the occurrence commitment asserts.',
@@ -628,9 +628,9 @@ def build():
         'sequences are disjunctive. The prefix-free form is needed: with plain complexity C, every '
         'infinite sequence A has C(first n bits of A) ≤ n − log n for infinitely many n (Franklin and '
         'Porter, arXiv:2004.02851, § 2.2, p. 15, crediting Martin-Löf). Martin-Löf (Z. Wahrsch. verw. '
-        'Geb. 19 (1971) 225–230, Theorem 1) proves the form conditional on the length n: for every '
-        'sequence x and every recursive f whose series of terms 2^−f(n) diverges, K(first n bits of '
-        'x | n) < n − f(n) for infinitely many n. Martin-Löf randomness '
+        'Geb. 19 (1971) 225–230, Theorem 1) proves the form conditional on the length n, for plain '
+        'conditional complexity: for every sequence x and every recursive f whose series of terms '
+        '2^−f(n) diverges, C(first n bits of x | n) < n − f(n) for infinitely many n. Martin-Löf randomness '
         'and Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (searches '
         'recorded in ZeroParadox/Information/Disjunctive.md). Disjunctive does not imply random: '
         'champ is disjunctive and computable.'))
@@ -705,8 +705,9 @@ def build():
         'disjunctive (allFalse_not_disjunctive); it carries the word of no code other than '
         'Code.zero, whose word is empty (allFalse_misses_code, codeWord_zero_width). Under '
         'pointwise exclusive-or, every tape\'s self-difference is the all-false tape, and read '
-        'against the all-false tape a tape is itself (the examples in BottomCannotBe.lean, '
-        '"The infinitude in two charts: content and self").'))
+        'against the all-false tape a tape is itself, pointwise by Bool.xor_false (the examples '
+        'in BottomCannotBe.lean, "The infinitude in two charts: content and self", apply it to '
+        'champ).'))
     E.append(body(
         'Reading, in two charts, neither denied: the all-false tape, ⊥ of the pointwise tape '
         'order, is the reference every comparison runs through (content chart) and every tape\'s '
@@ -839,7 +840,7 @@ def build():
          'ARGUES FOR THE PRECONDITION — derives nothing',
          'botCode_is_quine is a KleeneStructure class field — assumed at instantiation, not proved. '
          'IsComputationalQuine is a periodicity condition satisfied by constant codes, and no '
-         'Kolmogorov content exists in ZP-K. In ZP-E, Path 3 shows that executing is not derivable '
+         'Kolmogorov content exists in ZP-K. In ZP-E, Path 3 does not derive executing '
          'from incompressibility; DA-1\'s precondition is what the occurrence commitment asserts.'],
         ['DA-1 Path 2 (informational)',
          'UNADOPTED BRIDGE PRINCIPLE',

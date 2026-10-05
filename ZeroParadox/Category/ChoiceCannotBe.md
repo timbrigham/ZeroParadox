@@ -44,8 +44,9 @@ need a metatheoretic argument outside Lean (the home file
 explanation of the apparent gap between Diaconescu's equivalence and that failed construction is
 **Lean's `Prop`/`Type` stratification**, not anything in Diaconescu's theorem. The fragment's chooser
 returns data, a `Bool` (`ChoiceFragment`), while `ExcludedMiddle` is `Prop`-valued, and Lean's
-stratification does not let `Or` in `Prop` eliminate into `Bool`. A topos has no such split, so his
-equivalence need not carry over to Lean. Whether the fragment is derivable from `ExcludedMiddle` in
+stratification does not let `Or` in `Prop` eliminate into `Bool`. A topos also distinguishes its
+truth-value object from 1 + 1 (they coincide exactly when it is Boolean); there unique choice holds, so
+a decided proposition determines an element of 1 + 1, and his equivalence need not carry over to Lean. Whether the fragment is derivable from `ExcludedMiddle` in
 Lean is not established here, so this explanation is a candidate, not a finding; the equivalence is
 his. Every evocative reading in the framework's prose — "choice is which way you view the
 self-dual split", "reading the pole as the floor is an act of choice" — is a **model** of the

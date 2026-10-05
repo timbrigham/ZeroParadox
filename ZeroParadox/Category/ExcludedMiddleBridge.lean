@@ -151,7 +151,7 @@ independence result, which would need a metatheoretic argument outside Lean.
 **And note what the barrier is and is not.** It is Lean's `Prop`/`Type` stratification: the fragment
 yields data (`Bool`), so it is really `∀ p, Decidable p`, while `ExcludedMiddle` is `Prop`-valued and does
 not eliminate into data. It is **not** a general fact about choice versus excluded middle — in a topos,
-where no such split exists, Diaconescu's theorem makes this very fragment *equivalent* to excluded middle.
+where unique choice holds, Diaconescu's theorem makes this very fragment *equivalent* to excluded middle.
 The gap measured here is a property of the ambient type theory, not of the two principles. -/
 def ChoiceFragment : Prop :=
   ∃ ch : (Bool → Prop) → Bool, ∀ S : (Bool → Prop), (∃ b, S b) → S (ch S)
