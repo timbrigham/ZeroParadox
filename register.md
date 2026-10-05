@@ -18,7 +18,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-J AFA Addendum | v1.16 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:7e46e9e2 |
 | ZP-J Wheel Addendum | v1.8 | ZP-J_Wheel_Addendum.pdf | v1.6 | N/— | formal:2be7f9c9 comp:5f817977 |
 | ZP-J Keystone Addendum | v1.25 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:4fd4b585 |
-| ZP-K Computational Grounding | v1.25 | ZP-K_Computational_Grounding.pdf | v1.23 | N/— | formal:e4f8082f comp:a3e9587e |
+| ZP-K Computational Grounding | v1.25 | ZP-K_Computational_Grounding.pdf | v1.23 | N/— | formal:f52dc73a comp:735a8f34 |
 | ZP-L Incomputability Convergence | v1.25 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:d74032b1 comp:cc1bad38 |
 | ZP-M Kleene-Ordinal Bridge | v1.11 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:14ee8cac comp:a6ff1cab |
 | ZP-N The Constructive Snap | v2.0 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:5011bb68 |

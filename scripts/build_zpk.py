@@ -233,7 +233,7 @@ def build():
             '(inherited) selfMem : L → Prop  — self-membership predicate',
             '(inherited) quine_unique  — AFA uniqueness',
             '(inherited) bot_self_mem  — ⊥ is self-containing',
-            '(new) botCode : Code  — a code selected from the existence proof; not a distinguished code',
+            '(new) botCode : Code  — a code supplied at instantiation; not a distinguished code',
             '(new) botCode_is_quine : IsComputationalQuine botCode  — a CLASS FIELD, not a theorem: '
             'the periodicity condition eval c n = eval c (encode c + n), which constant codes also satisfy',
             '(new) bot_self_mem_from_kleene : selfMem ⊥  — a RESTATEMENT of the inherited AFAStructure '
@@ -413,12 +413,14 @@ def build():
         'universal codes of Section I.III are quines in that sense. Each returns a description of '
         'itself, its own Gödel number, on channel 0: the description in Sense A.'))
     E.append(body(
-        'Occurrence is not read off from outside. carry_steps_onward_forever_yet_shows_nothing '
-        '(Occurrence.lean § VI-c): a deterministic step that, at every state, moves to a '
-        'different state and never halts, while its observable stays constant on everything '
-        'reachable. Reading: an observer of that observable sees the same constant trace as from '
-        'a dynamics in which nothing moves (stuckPhase, tsnap_holds_but_nothing_moves), so whether '
-        'a configuration is running cannot be settled by watching what it shows.'))
+        'In one example, one observable does not show occurrence. '
+        'carry_steps_onward_forever_yet_shows_nothing (Occurrence.lean § VI-c): a deterministic '
+        'step that, at every state, moves to a different state, while its observable, the first '
+        'component of the state, stays constant on everything reachable. Reading: an observer of '
+        'that observable sees the same constant trace as from a dynamics in which nothing moves '
+        '(stuckPhase, tsnap_holds_but_nothing_moves), so for that example watching that observable '
+        'does not settle whether it is running. Lean states this for carry and its one observable, '
+        'not for every observable.'))
     E.append(body(
         'Reading, in two charts, neither denied. History chart: a complete description of a run, '
         'every configuration in order, IS the run; nothing further is left to happen. State '
@@ -476,8 +478,11 @@ def build():
         'PurityCheck sections, and where Classical.choice enters selfref_universal_exists is recorded in '
         'ZeroParadox/Computability/Kleene.md § VIII, measured 2026-10-04.'))
     E.append(body(
-        'ZP-J T-EXEC and all its corollaries remain axiom-free. The classical axioms are '
-        'entirely localised to the computational layer.'))
+        'ZP-J T-EXEC and all its corollaries remain axiom-free. Classical.choice is not '
+        'confined to the computability rows: in Disjunctive.lean, champ_disjunctive carries it, '
+        'reached through Mathlib\'s Filter.frequently_atTop, while the at-least-once form '
+        'champ_disjunctiveOnce measures propext and Quot.sound only (measured 2026-10-04; '
+        'ZeroParadox/Information/Disjunctive.md, Footprints).'))
 
     E.append(remark_box(
         'Remark: Classical Choice in Computability',
@@ -487,9 +492,9 @@ def build():
             'even in a computable instance with a constant code. ZP-K\'s machinePhaseKleene also '
             'picks botCode with Classical.choose, which is what makes that instance '
             'noncomputable. Whether the numbering\'s footprint is essential is not measured. Kleene\'s '
-            'theorem is an existence result, and the code it supplies is selected '
-            'non-constructively. This is standard in computability theory — the '
-            'theorem guarantees existence without giving a canonical construction.',
+            'theorem, as Mathlib states it, is an existence statement (∃ c, eval c = f c), and '
+            'Mathlib\'s proof of it carries Classical.choice (the table above); that is a measured '
+            'footprint of a proof, classified neither as accidental nor as essential.',
             'The MachinePhase instance (§ V) uses Classical.choose to pick botCode from '
             'the existence proof. This makes machinePhaseKleene noncomputable, '
             'which is correct and expected.',
@@ -540,8 +545,9 @@ def build():
             '  botCode_is_quine := Classical.choose_spec computational_quine_exists',
             '  bot_self_mem_from_kleene := rfl',
             '',
-            'botCode is selected non-constructively from the existence proof provided by '
-            'Kleene\'s theorem — an arbitrary witness, not a distinguished code. Reading it as '
+            'botCode is a class field supplied at instantiation; this instance supplies it as '
+            'Classical.choose applied to computational_quine_exists — some witness of that '
+            'existence statement, not a distinguished code. Reading it as '
             '"the program that IS its own program" is the framework\'s commitment carried by the '
             'class, not a property this instance establishes: IsComputationalQuine is a '
             'periodicity condition, strictly weaker than self-reference.',
@@ -630,15 +636,15 @@ def build():
 
     E.append(body(
         'This section follows one arc, one declaration per step, from the presence of every '
-        'instruction on a tape to the selection of one replica. Each step is a statement about a '
+        'instruction on a tape to the selection of one code. Each step is a statement about a '
         'tape ℕ → Bool or about the partial function a code computes. Presence on a tape is '
         'Sense A (ZP-E, DA-1 insert § II); that anything runs is the occurrence commitment, as '
         'in Section III.II.'))
 
     E.append(Paragraph('I. Presence: Every Instruction Is on the Tape', S['h2']))
     E.append(body(
-        'A tape is disjunctive (the standard term; also "rich") when every finite word occurs in '
-        'it infinitely often (Disjunctive; Barnsley and Leśniak, arXiv:1203.0481, § 3). On a '
+        'A tape is disjunctive (the standard term) when every finite word occurs in it '
+        'infinitely often (Disjunctive; Barnsley and Leśniak, arXiv:1203.0481v2, § 3, p. 6). On a '
         'disjunctive tape the binary of every program code occurs infinitely often '
         '(code_occurs_of_disjunctive). That is presence of the description, Sense A; nothing in '
         'the statement reads or runs a code. Disjunctive does not need randomness: champ, a '
@@ -646,15 +652,25 @@ def build():
         'champ_primrec), and almost every fair-coin tape is disjunctive '
         '(fairTape_disjunctive_ae).'))
     E.append(body(
-        'Reading: under the framework\'s commitment that ⊥ is maximally complex, ⊥ read as a tape '
-        'ℕ → Bool would have incompressible prefixes, hence be Martin-Löf random (Levin–Schnorr), '
-        'and Martin-Löf random sequences are disjunctive in standard theory, so every instruction '
-        'would be present. That implication is not proved in '
-        'Lean: Martin-Löf randomness and Kolmogorov complexity are not located in the Mathlib pin '
-        'as of 2026-10-04 (searches recorded in ZeroParadox/Information/Disjunctive.md). The '
-        'converse fails: champ is disjunctive and computable.'))
+        'The commitment, stated on its own: the framework holds that its ⊥ is maximally complex. '
+        'That is a commitment about the framework\'s ⊥, not about any one tape, and in particular '
+        'not about the all-false tape, ⊥ of the pointwise tape order (V below), which carries no '
+        'code word but Code.zero\'s empty one.'))
+    E.append(body(
+        'The standard theory, stated separately and not proved in Lean: with K the prefix-free '
+        'Kolmogorov complexity, a sequence x has K(first n bits of x) ≥ n − c for some constant c and every n '
+        'exactly when it is Martin-Löf random (the Levin–Schnorr theorem), and Martin-Löf random '
+        'sequences are disjunctive. The prefix-free form is needed: with plain complexity no '
+        'infinite sequence has every prefix incompressible (Martin-Löf). Martin-Löf randomness '
+        'and Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (searches '
+        'recorded in ZeroParadox/Information/Disjunctive.md). Disjunctive does not imply random: '
+        'champ is disjunctive and computable.'))
+    E.append(body(
+        'Reading: if the framework\'s ⊥ is read as a tape ℕ → Bool, and maximal complexity in the '
+        'prefix-free sense above, the standard theory would make that tape Martin-Löf random and '
+        'so disjunctive, and every instruction would be present on it.'))
 
-    E.append(Paragraph('II. Replicas Differ Only by Address', S['h2']))
+    E.append(Paragraph('II. Two Self-Printing Interpreters Differ Only on Channel 0', S['h2']))
     E.append(result_box(
         'Theorem: selfPrints_universal_address (Kleene.lean § VIII)',
         [
@@ -677,31 +693,35 @@ def build():
         'A disjunctive tape equals its own shift by no offset a > 0 (disjunctive_not_periodic; '
         'not_disjunctive_of_periodic is the same fact read from the periodic side). At offset 0 '
         'every tape equals its own shift, champ included (the control example beside it in '
-        'Disjunctive.lean § V). Reading: a tape carrying every code word holds no full copy of '
-        'itself at any positive offset; copies sit side by side, told apart by an address (II).'))
+        'Disjunctive.lean § V). Barnsley and Leśniak (arXiv:1203.0481v2, pp. 7-8) note that "a '
+        'disjunctive sequence cannot be almost periodic", almost periodic in their sense meaning '
+        'that each word occurring infinitely often occurs in every segment of some length m, with '
+        'm depending on the word. '
+        'Reading: a tape carrying every code word holds no full copy of itself at any positive '
+        'offset; copies sit side by side, told apart by an address (II).'))
 
     E.append(Paragraph('IV. Constructing an Address, and Selecting One', S['h2']))
     E.append(body(
-        'Constructing an address is the recursion theorem\'s fixed point of a computable '
+        'Constructing an address is the recursion theorem\'s fixed point of a partially computable '
         'transformation: selfref_universal_exists takes its code from Mathlib\'s fixed_point₂ '
-        'applied to a partially computable map (selfPrintOrDelegate_partrec). Selecting a code by '
-        'its behaviour is selection by a predicate that is not decidable: membership in '
-        'IsComputationalQuine is not a ComputablePred (isComputationalQuine_undecidable), and nor '
-        'is membership in any non-trivial extensional set of codes (the second conjunct of '
-        'quine_exists_yet_rice, Rice\'s theorem). ChoiceCannotBe.lean locates where choice does its work: when the predicate is '
-        'decidable, selection is free, computed by if (select_of_decidable), while the uniform '
-        'selection principle at an undetermined pole is the choice fragment, definitionally '
-        '(uniformChartSelection_iff_choiceFragment).'))
+        'applied to a partially computable map (selfPrintOrDelegate_partrec). The selection '
+        'results in the corpus are about two-element charts, Chart = Bool '
+        '(ZeroParadox/Valuation/PoleChartSelection.lean): an inhabited predicate on Bool that '
+        'carries a DecidablePred instance has a witness computed by if (select_of_decidable), and '
+        'a uniform selector for every inhabited predicate on Bool is, definitionally, the choice '
+        'fragment (uniformChartSelection_iff_choiceFragment). A DecidablePred instance is not an '
+        'algorithm: Classical.decPred supplies one for every predicate, through choice. Neither '
+        'result is about selecting a code.'))
     E.append(body(
-        'Reading: constructing an address is a computation, and selecting one by behaviour is '
-        'where choice works. The Lean footprint does not draw that line, and is stated as '
+        'Reading: constructing an address is a computation, and selecting a code by its behaviour '
+        'is where choice would work, by analogy with the two-element results above, which are '
+        'stated for Bool and not for codes. The Lean footprint does not draw that line, and is stated as '
         'measured: selfref_universal_exists carries Classical.choice, and so does its statement, '
         'through Mathlib\'s numbering of codes (Denumerable Code, reached through ofNatCode); '
         'restated with encodeCode, the statement is axiom-free, and no proof of the restated form '
         'without choice was found. ZeroParadox/Computability/Kleene.md § VIII records the '
-        'measurement (2026-10-04) and what that route lacked as located then: a recursion theorem '
-        'stated without Partrec₂, and a universal code proved correct without eval_part. The '
-        'footprint is UNCLASSIFIED.'))
+        'measurement (2026-10-04) and what the route lacked as located then. The footprint is '
+        'UNCLASSIFIED.'))
 
     E.append(Paragraph('V. The Zero Tape: Reference and Self', S['h2']))
     E.append(body(
@@ -715,19 +735,23 @@ def build():
         'Reading, in two charts, neither denied: the all-false tape, ⊥ of the pointwise tape '
         'order, is the reference every comparison runs through (content chart) and every tape\'s '
         'self-difference (self chart), one object in two charts. That the framework\'s ⊥ is '
-        'maximally complex is a commitment, stated as no equation with any one tape.'))
+        'maximally complex is a commitment, stated as no equation with any one tape: it is not '
+        'a statement about this all-false tape, which is not disjunctive and carries no code word '
+        'but Code.zero\'s empty one.'))
 
-    E.append(Paragraph('VI. What Replication Needs Beyond Self-Reference', S['h2']))
+    E.append(Paragraph('VI. Replication Beyond Self-Reference, in Cotler, Hongler and Hudcová\'s '
+                       'Setting', S['h2']))
     E.append(body(
-        'In Cotler, Hongler and Hudcová\'s setting, replication needs information to cross a '
-        'boundary, "inter-head communication is crucial for replication" (p. 8): their non-talking '
+        'In Cotler, Hongler and Hudcová\'s setting, information crossing between heads is, in '
+        'their word, crucial: "inter-head communication is crucial for replication" (p. 8). Their non-talking '
         'heads automaton blocks that crossing and is locally universal without self-replication '
         '(Theorem 2.8, p. 8). A second capacity separates the two '
         'strengths of universality, GloballyUniversal ⊊ LocallyUniversal (their Theorem 2.3, '
         'p. 5): of the reversible automata, "Some can locally implement reversible universal Turing '
         'machines but cannot globally simulate irreversible CAs". Reading: these are two different '
-        'overwrite capacities, writing into a cell another head has marked, which replication '
-        'needs, and irreversible erasure, which such a reversible automaton cannot simulate '
+        'overwrite capacities, writing into a cell another head has marked, the inter-head '
+        'communication the authors call "crucial" for replication, and irreversible erasure, '
+        'which such a reversible automaton cannot simulate '
         'globally. This mapping onto the framework is a reading.'))
     E.append(sp(8))
 
@@ -789,10 +813,11 @@ def build():
          'Disjunctive (Disjunctive.lean § I) at each code word',
          'propext, Classical.choice, Quot.sound (measured 2026-10-04)',
          'Lean ✓ — presence, Sense A; no code is read or run'],
-        ['champ_disjunctiveOnce, champ_primrec',
-         'tri / untri slot layout + bitAt_ofBits; Mathlib Primrec',
-         'champ_disjunctiveOnce: propext, Quot.sound; champ_primrec: propext, Classical.choice, '
-         'Quot.sound (measured 2026-10-04)',
+        ['champ_disjunctive, champ_disjunctiveOnce, champ_primrec',
+         'tri / untri slot layout + bitAt_ofBits; disjunctive_iff_once; Mathlib Primrec',
+         'champ_disjunctive: propext, Classical.choice, Quot.sound; champ_disjunctiveOnce: '
+         'propext, Quot.sound; champ_primrec: propext, Classical.choice, Quot.sound (measured '
+         '2026-10-04)',
          'Lean ✓ — disjunctive without randomness'],
         ['fairTape_disjunctive_ae',
          'second Borel–Cantelli (measure_limsup_eq_one) on disjoint aligned blocks',
@@ -863,15 +888,17 @@ def build():
          'OPEN — measured negative, 2026-10-04',
          'The statement of selfref_universal_exists carries Classical.choice through Mathlib\'s '
          'numbering of codes (Denumerable Code); restated with encodeCode it is axiom-free, and no '
-         'proof of the restated form without choice was found. As located then, the route lacks a '
-         'recursion theorem stated without Partrec₂ and a universal code proved correct without '
-         'eval_part (Kleene.md § VIII). Footprint UNCLASSIFIED.'],
+         'proof of the restated form without choice was found. What the route lacked, as located '
+         'then, is recorded in ZeroParadox/Computability/Kleene.md § VIII. Footprint UNCLASSIFIED.'],
         ['Martin-Löf randomness ⇒ disjunctive',
          'OPEN — not in Lean',
-         'Standard theory: a Martin-Löf random sequence is disjunctive. Martin-Löf randomness and '
-         'Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (search record in '
-         'Disjunctive.md). Until this bridge is formalised, the framework\'s commitment that ⊥ is '
-         'maximally complex reaches Disjunctive (Section VI.I) only as a reading.'],
+         'Standard theory: a Martin-Löf random sequence is disjunctive, and by the Levin–Schnorr '
+         'theorem Martin-Löf randomness is incompressibility of every prefix, K(first n bits of x) ≥ '
+         'n − c for some constant c and every n, with K the prefix-free complexity; with plain complexity no infinite sequence has every prefix '
+         'incompressible (Martin-Löf). Martin-Löf randomness and Kolmogorov complexity are not '
+         'located in the Mathlib pin as of 2026-10-04 (search record in Disjunctive.md). Until '
+         'this bridge is formalised, the framework\'s commitment that its ⊥ is maximally complex '
+         'reaches Disjunctive (Section VI.I) only as a reading.'],
     ]
     E.append(data_table(
         ['Item', 'Status', 'Description'],
