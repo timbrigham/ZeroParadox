@@ -487,14 +487,12 @@ def build():
     E.append(remark_box(
         'Remark: Classical Choice in Computability',
         [
-            'Where the measurements above show Classical.choice, it is reached through '
-            'Mathlib\'s numbering of program codes (Denumerable Code): it is present '
-            'even in a computable instance with a constant code. ZP-K\'s machinePhaseKleene also '
+            'ZP-K\'s machinePhaseKleene '
             'picks botCode with Classical.choose, which is what makes that instance '
-            'noncomputable. Whether the numbering\'s footprint is essential is not measured. Kleene\'s '
+            'noncomputable. Kleene\'s '
             'theorem, as Mathlib states it, is an existence statement (∃ c, eval c = f c), and '
             'Mathlib\'s proof of it carries Classical.choice (the table above); that is a measured '
-            'footprint of a proof, classified neither as accidental nor as essential.',
+            'footprint, classified neither as accidental nor as essential.',
             'The MachinePhase instance (§ V) uses Classical.choose to pick botCode from '
             'the existence proof. This makes machinePhaseKleene noncomputable, '
             'which is correct and expected.',
@@ -635,9 +633,7 @@ def build():
     ]
 
     E.append(body(
-        'This section follows one arc, one declaration per step, from the presence of every '
-        'instruction on a tape to the selection of one code. Each step is a statement about a '
-        'tape ℕ → Bool or about the partial function a code computes. Presence on a tape is '
+        'This section follows one arc, one declaration per step. Presence on a tape is '
         'Sense A (ZP-E, DA-1 insert § II); that anything runs is the occurrence commitment, as '
         'in Section III.II.'))
 
@@ -652,8 +648,8 @@ def build():
         'champ_primrec), and almost every fair-coin tape is disjunctive '
         '(fairTape_disjunctive_ae).'))
     E.append(body(
-        'The commitment, stated on its own: the framework holds that its ⊥ is maximally complex. '
-        'That is a commitment about the framework\'s ⊥, not about any one tape, and in particular '
+        'The commitment, stated on its own: the framework holds that its bottom role is maximally complex. '
+        'That is a commitment about the framework\'s bottom role, not about any one tape, and in particular '
         'not about the all-false tape, ⊥ of the pointwise tape order (V below), which carries no '
         'code word but Code.zero\'s empty one.'))
     E.append(body(
@@ -666,8 +662,8 @@ def build():
         'recorded in ZeroParadox/Information/Disjunctive.md). Disjunctive does not imply random: '
         'champ is disjunctive and computable.'))
     E.append(body(
-        'Reading: if the framework\'s ⊥ is read as a tape ℕ → Bool, and maximal complexity in the '
-        'prefix-free sense above, the standard theory would make that tape Martin-Löf random and '
+        'Reading: if the framework\'s bottom role is read as a tape ℕ → Bool, and maximal complexity in the '
+        'prefix-free sense, the standard theory would make that tape Martin-Löf random and '
         'so disjunctive, and every instruction would be present on it.'))
 
     E.append(Paragraph('II. Two Self-Printing Interpreters Differ Only on Channel 0', S['h2']))
@@ -734,7 +730,7 @@ def build():
     E.append(body(
         'Reading, in two charts, neither denied: the all-false tape, ⊥ of the pointwise tape '
         'order, is the reference every comparison runs through (content chart) and every tape\'s '
-        'self-difference (self chart), one object in two charts. That the framework\'s ⊥ is '
+        'self-difference (self chart), one object in two charts. That the framework\'s bottom role is '
         'maximally complex is a commitment, stated as no equation with any one tape: it is not '
         'a statement about this all-false tape, which is not disjunctive and carries no code word '
         'but Code.zero\'s empty one.'))
@@ -897,7 +893,7 @@ def build():
          'n − c for some constant c and every n, with K the prefix-free complexity; with plain complexity no infinite sequence has every prefix '
          'incompressible (Martin-Löf). Martin-Löf randomness and Kolmogorov complexity are not '
          'located in the Mathlib pin as of 2026-10-04 (search record in Disjunctive.md). Until '
-         'this bridge is formalised, the framework\'s commitment that its ⊥ is maximally complex '
+         'this bridge is formalised, the framework\'s commitment that its bottom role is maximally complex '
          'reaches Disjunctive (Section VI.I) only as a reading.'],
     ]
     E.append(data_table(

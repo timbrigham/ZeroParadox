@@ -350,8 +350,7 @@ def build():
     E.append(cbody(
         'The computability machinery in ZP-K (Kleene\'s theorem, Rogers\' fixed-point theorem) '
         'is proved in Mathlib with Classical.choice in its measured footprint, inherited from '
-        'Mathlib rather than a novel Zero Paradox commitment. That is what the proofs use, not '
-        'what the theorems need: whether the footprint is essential is unclassified. ZP-K '
+        'Mathlib rather than a novel Zero Paradox commitment. Whether the footprint is essential is unclassified. ZP-K '
         'Section IV tabulates the measured axiom footprints. '
         'What is free of Classical.choice is the choice-free CORE, and that is narrower than any layer '
         'name: ZeroParadox/AxiomProfile.lean &#167;I is where the core is listed and each '
@@ -420,22 +419,20 @@ def build():
     E.append(cbody(
         'A description can be used in two ways. Cotler, Hongler and Hudcová (2025) describe von '
         'Neumann\'s self-replicating automaton as using its description twice: once interpreted, '
-        'to build, and once transcribed, to hand to the copy. In ZP-E\'s terms the transcribed '
+        'to build, and once transcribed, to hand to the copy. The framework\'s reading: in ZP-E\'s terms the transcribed '
         'use is a description sitting as data (Sense A) and the interpreted use is a description '
-        'being run (Sense B). The formal document follows one arc through these ideas, and every '
-        'step in it is about what is written or what a program computes, never about anything '
-        'running.'))
+        'being run (Sense B). The formal document follows one arc through these ideas.'))
     E.append(cbody(
         '<b>Every instruction is present.</b> A tape of bits on which every finite pattern appears '
         'is called disjunctive. On such a tape the code of every program appears, infinitely often '
         '(code_occurs_of_disjunctive). That is presence, not execution. It needs no randomness: a '
         'simple counting tape in the style of Champernowne is disjunctive and computable. The '
-        'framework holds, as a commitment, that its ⊥ is maximally complex; that is about the '
-        'framework\'s ⊥, not about the all-false tape below. Standard theory, not proved in Lean: '
+        'framework holds, as a commitment, that its bottom role is maximally complex; that is about the '
+        'framework\'s bottom role, not about the all-false tape below. Standard theory, not proved in Lean: '
         'a sequence whose every prefix is incompressible in the prefix-free sense of Kolmogorov '
         'complexity is exactly a Martin-Löf random one (the Levin–Schnorr theorem), and such a '
         'sequence is disjunctive. The prefix-free sense matters: with plain complexity no infinite '
-        'sequence has every prefix incompressible (ZeroParadox/Information/Disjunctive.lean § VI).'))
+        'sequence has every prefix incompressible.'))
     E.append(cbody(
         '<b>Two self-printing interpreters differ only on channel 0.</b> Two self-printing universal '
         'programs give the same answers on every channel where they compute other programs, and '
@@ -451,18 +448,17 @@ def build():
         'computation: the recursion theorem produces it. What Lean has about choosing is about a '
         'two-way choice, between two charts labelled by Bool '
         '(ZeroParadox/Valuation/PoleChartSelection.lean): with a decidable test, decidable in '
-        'Lean\'s sense, which is not the same as having an algorithm, picking is done by an if, and picking uniformly for every possible test is, by definition, a fragment of the '
-        'axiom of choice. The framework\'s reading, by analogy and not a theorem about programs: '
+        'Lean\'s sense, which is not the same as having an algorithm, picking is done by an if. The framework\'s reading, by analogy and not a theorem about programs: '
         'choosing a program by what it does is where choice would do its work. In Lean the '
-        'footprint does not draw that line: the existence theorem carries Classical.choice '
-        'through Mathlib\'s numbering of programs, and whether that is essential is unclassified '
+        'footprint does not draw that line: the existence theorem carries Classical.choice, '
+        'and whether that is essential is unclassified '
         '(ZeroParadox/Computability/Kleene.md).'))
     E.append(cbody(
         '<b>The zero tape.</b> The all-false tape is ⊥ of the bit-by-bit tape order, carries no '
         'program\'s code except the empty one, and is what any tape becomes when compared with '
         'itself bit by bit. The framework reads it two ways at once: the reference every '
         'comparison runs through, and every tape\'s difference from itself. It is not the '
-        'framework\'s ⊥ that the commitment calls maximally complex.'))
+        'framework\'s bottom role that the commitment calls maximally complex.'))
     E.append(cbody(
         '<b>Replication beyond self-reference.</b> Cotler, Hongler and Hudcová build an '
         'automaton that can compute anything and still cannot copy itself, because its machines '
