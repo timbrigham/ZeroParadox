@@ -5,7 +5,7 @@ import Mathlib.SetTheory.Ordinal.Veblen
 set_option maxHeartbeats 1000000
 
 /-!
-# A priced interface: a notation system for ε₀ + 1, a map into `Ordinal`, and both sides' axiom footprints
+# A priced interface: notations denoting the ordinals up to ε₀, a map into `Ordinal`, and both sides' axiom footprints
 
 The axiom price of crossing from ordinal notations into Mathlib's `Ordinal`, measured by the purity
 block at the end. Argument, prior art and fences: `ZeroParadox/Ordinal/PricedInterface.md`.
@@ -33,8 +33,9 @@ open Ordinal
 
 /-! ### The carrier
 
-`SynONote` with one point adjoined on top. An instance of Castéran's `ON_plus` (sum of notation
-systems) with a one-point right summand; the order, lattice and decidability structure below is all
+`SynONote` with one point adjoined on top: the shape of Castéran's `ON_plus` (sum of notation systems)
+with a one-point right summand, not an instance of it, because `SynONote`'s order is not well-founded
+(the `example` after `e0Repr_not_injective`). The order, lattice and decidability structure below is all
 Mathlib's `WithTop` machinery, not built here. -/
 
 /-- **The carrier: ordinal notations with a single adjoined top.**
@@ -42,8 +43,8 @@ Mathlib's `WithTop` machinery, not built here. -/
 `⊤` is the intended denotation site for ε₀, and `e0Repr` sends it there. Everything below `⊤` is an
 ordinal notation carrying the choice-free comparator order of `SynONote`.
 
-As a notation system this names the ordinals below **ε₀ + 1** (the segment below ε₀, plus ε₀ itself) —
-it is not a notation system for ε₀. -/
+Its denotations are the ordinals below **ε₀ + 1** (the segment below ε₀, plus ε₀ itself). Its own
+order is not a well-order, so it is not a notation system for ε₀ + 1 in the well-ordered sense. -/
 abbrev E0Note : Type := WithTop SynONote
 
 /-- The notations, viewed inside the carrier. -/
@@ -283,6 +284,35 @@ theorem e0Repr_not_injective : ¬ Function.Injective e0Repr := by
 example : ∃ x y : E0Note, (x < y ∨ y < x) ∧ e0Repr x = e0Repr y := by
   obtain ⟨x, y, hxy, hne⟩ := Function.not_injective_iff.1 e0Repr_not_injective
   exact ⟨x, y, lt_or_gt_of_ne hne, hxy⟩
+
+-- `Statement:` the carrier's order is not well-founded: on raw notations `oadd 0 1 x < x`, so the
+-- sequence `ω, oadd 0 1 ω, oadd 0 1 (oadd 0 1 ω), …` descends forever.
+example : ¬ WellFoundedLT E0Note := by
+  let c : ℕ → ONote := fun k => Nat.rec (ONote.oadd 1 1 0) (fun _ x => ONote.oadd 0 1 x) k
+  have hcmp : ∀ k, ONote.cmp (c (k + 1)) (c k) = .lt := by
+    intro k
+    induction k with
+    | zero =>
+      show ONote.cmp (ONote.oadd 0 1 (ONote.oadd 1 1 0)) (ONote.oadd 1 1 0) = .lt
+      decide
+    | succ k ih =>
+      show ONote.cmp (ONote.oadd 0 1 (c (k + 1))) (ONote.oadd 0 1 (c k)) = .lt
+      simp only [ONote.cmp]
+      rw [ih]
+      decide
+  have hne : ∀ k, c (k + 1) ≠ c k := by
+    intro k
+    induction k with
+    | zero =>
+      show ONote.oadd 0 1 (ONote.oadd 1 1 0) ≠ ONote.oadd 1 1 0
+      decide
+    | succ k ih => exact fun h => ih (by injection h)
+  intro h
+  obtain ⟨m, ⟨k, rfl⟩, hmin⟩ := h.wf.has_min (Set.range fun k => e0Coe (c k)) ⟨_, ⟨0, rfl⟩⟩
+  refine hmin _ ⟨k + 1, rfl⟩ (WithTop.coe_lt_coe.2 (lt_iff_le_and_ne.2 ⟨?_, fun h' => hne k h'⟩))
+  show ONote.cmp (c (k + 1)) (c k) ≠ Ordering.gt
+  rw [hcmp]
+  decide
 
 /-- **`Statement:` the fiber, exhibited.** Two distinct notations with one denotation — the unfolding of
 `e0Repr_not_injective`, with `1 + ω` and `ω` as the underlying witness. -/
