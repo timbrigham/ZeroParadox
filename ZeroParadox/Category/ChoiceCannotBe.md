@@ -40,14 +40,14 @@ fragment from excluded middle fails to elaborate, dying at `Decidable (S true)`,
 `classical`. **That failure measures that construction, not the fragment** — a failed elaboration is not
 a negative result, and a formal independence claim would
 need a metatheoretic argument outside Lean (the home file
-`ZeroParadox/Category/ExcludedMiddleBridge.lean` states this limit explicitly). The apparent gap between
-Diaconescu's equivalence and that failed construction sits in **Lean's `Prop`/`Type` stratification**,
-not in Diaconescu's theorem: the fragment selects into `Bool`, so it is really `∀ p, Decidable p` —
-data-valued excluded middle — while `ExcludedMiddle` is the `Prop`-valued form, and `Or` in `Prop` does
-not eliminate into `Bool`. A topos has no such split, so his equivalence need not carry over to Lean;
-that the fragment is in fact not derivable from `ExcludedMiddle` in Lean is not established here.
-**That reconciliation is the framework's own
-small finding; the equivalence is his.** Every evocative reading in the framework's prose — "choice is which way you view the
+`ZeroParadox/Category/ExcludedMiddleBridge.lean` states this limit explicitly). `Reading:` a candidate
+explanation of the apparent gap between Diaconescu's equivalence and that failed construction is
+**Lean's `Prop`/`Type` stratification**, not anything in Diaconescu's theorem. The fragment's chooser
+returns data, a `Bool` (`ChoiceFragment`), while `ExcludedMiddle` is `Prop`-valued, and Lean's
+stratification does not let `Or` in `Prop` eliminate into `Bool`. A topos has no such split, so his
+equivalence need not carry over to Lean. Whether the fragment is derivable from `ExcludedMiddle` in
+Lean is not established here, so this explanation is a candidate, not a finding; the equivalence is
+his. Every evocative reading in the framework's prose — "choice is which way you view the
 self-dual split", "reading the pole as the floor is an act of choice" — is a **model** of the
 choice-versus-no-choice distinction, never the axiom itself. Where such a reading has been made precise
 (`ZeroParadox/Valuation/PoleChartSelection.lean`), the honest result was that the built object **refutes** the naive
@@ -150,7 +150,11 @@ taboo direction (a theorem
 implying a constructively dubious principle) is the essential test above. Overview read: Hannes Diener,
 *Constructive Reverse Mathematics*, arXiv:1804.05495v3 (2020), pp. 4-6, which quotes that aim from
 Hajime Ishihara, *Reverse mathematics in Bishop's constructive mathematics*, Philosophia Scientiæ
-CS 6 (2006) 43-59 (named; not retrieved). Diener and Ishihara's joint survey: named; not retrieved.
+CS 6 (2006) 43-59 (named; not retrieved). Joint chapter: Hannes Diener and Hajime Ishihara,
+*Bishop-Style Constructive Reverse Mathematics*, in *Handbook of Computability and Complexity in
+Analysis*, Theory and Applications of Computability (Springer, 2021) 347-365,
+doi:10.1007/978-3-030-59234-9_10 (bibliographic record checked at Crossref 2026-10-04; text not
+retrieved).
 Cited, not claimed.
 
 ### What this index does NOT do

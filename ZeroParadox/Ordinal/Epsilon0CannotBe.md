@@ -35,8 +35,8 @@ readings are true of different orders:
   least fixed point of `α ↦ ω^α` (`epsilon0_least_fixedpoint`; the full `IsLeast` is
   `epsilon0_min_eq_max`), and in the floor-below boundary model `↑ε₀` is the least landing strictly
   above ⊥ of `WithBot Ordinal` (`phase_epsilon0_isLeast_landing_above_floor`,
-  `ZeroParadox/Order/SnapCannotBe.lean` § VI). Reading that ⊥ as the pole is the chart claim above; no
-  theorem equates points across those carriers.
+  `ZeroParadox/Order/SnapCannotBe.lean` § VI). Reading either floor, ⊥ of `Ordinal` or ⊥ of `WithBot Ordinal`,
+  as the pole is the chart claim above; no theorem equates points across those carriers.
 * **"Never the pole"**: ε₀ ≠ ⊥ of `Ordinal` (`epsilon0_ne_bot`), and against ℤ_[2]'s 0 the equation is
   ill-typed (the `cnf_bridge_type_boundary` gloss, § V of the Lean file).
 * **The other chart.** In the ORDINAL order the same ε₀ is the far end of the ascent, its supremum

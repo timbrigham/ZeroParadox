@@ -122,8 +122,9 @@ by `#print axioms` in a scratch file importing this one.
   triple (as does `ofNatCode`, above). `Primcodable.ofDenumerable` itself measures
   `[propext, Quot.sound]`. Not located as of 2026-10-04 by these
   measurements: a recursion theorem whose statement is choice-free, and a universal code whose
-  correctness is proved without `eval_part`. Neither was attempted here. The footprint stays
-  UNCLASSIFIED: a proof's footprint, not a theorem's necessity.
+  correctness is proved without `eval_part`. Neither was attempted here. Every proof of the
+  statement as written carries choice; whether the restated statement has a choice-free proof is
+  UNCLASSIFIED.
 
 **Controls.** `universal_not_selfprints`: universality alone does not give self-printing.
 The `example`s beside it: no constant code is universal, so the constant codes, which meet
