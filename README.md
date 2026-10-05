@@ -34,8 +34,8 @@ The transition ⊥ → ε₀ - the **Binary Snap**, this project's shorthand - i
 
 - **Information** - ⊥ is the *degenerate* distribution (a point mass, zero information); a non-degenerate state provably needs at least two outcomes, so the minimal non-⊥ structure is binary, with no "half state." *Requires:* states are probability distributions. *Witnesses:* [`pmf_subsingleton_isPure`](ZeroParadox/Information/Surprisal.lean) (fewer than two outcomes forces the point mass), [`binaryState_exhaustive`](ZeroParadox/Information/Surprisal.lean) (no third state, axiom-free); the two point masses are exactly 1 bit apart ([`t1b_jsd`](ZeroParadox/Information/Surprisal.lean)).
 - **Order** - given two distinct states, the transition ⊥ → first atomic state is a join. *Requires:* the bottom-element axiom A4. *Witness:* [`t_snap_derived`](ZeroParadox/Order/Snap.lean).
-- **Self-execution** - nothing external can execute ⊥, so ⊥ must execute itself, and execution is a non-null state change. *Requires:* ⊥ admits no external interpreter, and the step from that to *forced execution*, which is a framework commitment rather than a consequence. *Witness (structural half only):* [`da1_closed_concrete`](ZeroParadox/Computability/Kleene.lean) proves `IsQuineAtom (bot : MachinePhase)` - it mentions no code and no execution.
-- **Incompressibility** - ⊥ has no finite description: its surprisal is unbounded. *Requires:* the information measure. *Witness:* [`l_inf`](ZeroParadox/Information/Surprisal.lean). This is what motivates the self-execution reading - a descriptionless ⊥ cannot be held by any external interpreter - and `l_inf`'s own scope note states that the step from unbounded surprisal to forced execution is an ontological bridge, not a mathematical consequence.
+- **Self-execution** - nothing external can execute ⊥, so if ⊥ executes at all, the executor is ⊥ itself, and execution is a non-null state change. That rules out an external executor, not an inert ⊥. *Requires:* ⊥ admits no external interpreter; that the configuration reaching the incompressibility threshold P₀ is executing is the occurrence commitment, not a consequence, and DA-1 consumes it and does not supply it. *Witness (structural half only):* [`da1_closed_concrete`](ZeroParadox/Computability/Kleene.lean) proves `IsQuineAtom (bot : MachinePhase)` - it mentions no code and no execution.
+- **Incompressibility** - ⊥ has no finite description: its surprisal is unbounded. *Requires:* the information measure. *Witness:* [`l_inf`](ZeroParadox/Information/Surprisal.lean). This is what motivates the self-execution reading - a descriptionless ⊥ cannot be held by any external interpreter - and the step from unbounded surprisal to executing is a bridge principle of its own, which the framework does not adopt and which is not the occurrence commitment (ZP-E, DA-1 Path 2).
 
 These force *different aspects*, not the same proposition four times: incompressibility is what motivates the self-execution reading; the information mechanism fixes its **destination** as the minimal binary state; and A4 gives it a **join** form. Together they constrain every aspect of ⊥ → first-atomic-state except that it fires, which follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). The single substantive commitment underneath is that states are **discrete** - a state exists or it does not, a distribution over atomic outcomes, not a continuum - which is exactly what the reals lack, and why the snap provably fails there ([`f_snap_impossible`](ZeroParadox/Reals/OrderedField.lean)).
 
@@ -49,8 +49,9 @@ The snap is also **irreversible**: the p-adic topology layer (ZP-B) establishes,
 <summary><b>The derivation chain</b> - the step-by-step formal skeleton - click to expand</summary>
 
 **P₀** (incompressibility threshold, ZP-C D1)  
-→ **DA-1** (instantiation of a configuration at P₀ constitutes an execution event, ZP-E)  
-→ **D7** (machine configuration definition, ZP-C)  
+→ **the occurrence commitment** (the configuration reaching P₀ is a running machine's current configuration, not an inert string, ZP-E; a commitment, not derived)  
+→ **D7** (machine configuration definition, ZP-C; given the occurrence commitment, a running machine has left c₀ for c₁)  
+→ **DA-1** (DP-2 and `da1_minimal_path` show c₀ and c₁ distinct while returning the same output value, ZP-E; closed given DP-2; it consumes the occurrence commitment and does not supply it)  
 → **L-RUN** (execution is a nonzero state change, ZP-C)  
 → **TQ-IH** (no program outputs ⊥ without a nonzero intermediate state, ZP-C)  
 → **ZP-A D2** (a nonzero state change from ⊥ is a join - the Binary Snap)  
@@ -80,9 +81,9 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 |------|----------|---------|-------|
 | [Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.30 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
 | [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.18 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
-| [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.24 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
+| [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.25 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.15 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
-| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.52 | The bridge: the snap assembled as a derived theorem across the layers. |
+| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.53 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.11 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.21 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.24 | The categorical bridge: the snap holding under all four domain functors. |
@@ -92,7 +93,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.16 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
 | [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.8 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
 | [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.25 | The diagonal-fixed-point keystone: the Lawvere face-split (Set face machine-checked, computability face cited) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
-| [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.24 | Computational grounding: the bottom's structural self-containment, with the computational reading carried as a commitment. |
+| [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.25 | Computational grounding: the bottom's structural self-containment, with the computational reading carried as a commitment. |
 | [Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.25 | ε₀ as the exact ordinal threshold the snap is keyed to. (That the snap occurs follows from the occurrence commitment together with DA-1, closed given DP-2.) |
 | [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.11 | The bridge between the Kleene quine and the ε₀ fixed point. |
 | [The Constructive Snap](ZP-N_The_Constructive_Snap.pdf) | ZP-N | v2.0 | The constructive companion to ZP-L: the ε₀ snap from below on ordinal notations, choice-free (propext only). Locates ZP-L's classical dependency in Mathlib's order instance and shows it load-bearing - comparing arbitrary well-orders implies excluded middle (a known taboo, cited to Kraus/Nordvall Forsberg/Xu). Adds a carrier sized to ε₀ whose crossing into Ordinal is one named map with a measured price. Whether ZP-L's ε₀ results are eliminable remains UNCLASSIFIED. |

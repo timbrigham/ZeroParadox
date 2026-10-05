@@ -190,7 +190,7 @@ Get-ChildItem ZeroParadox -Recurse -Filter *.lean | Select-String -Pattern '\[ZP
 ### `machinePhaseAFA` — `ZeroParadox/Computability/Kleene.lean`
 `AFAStructure MachinePhase`
 
-`selfMem x := x = bot` is the CIC-compatible encoding of AFA self-containment (`⊥ = {⊥}` cannot be stated in Lean's well-founded type theory). `quine_unique` and `bot_self_mem` are provable by `rfl`. This is the concrete Path 1 witness for ZP-E's machine model; DA-1 itself is closed given DP-2 (`da1_minimal_path`).
+`selfMem x := x = bot` is the CIC-compatible encoding of AFA self-containment (`⊥ = {⊥}` cannot be stated in Lean's well-founded type theory). `quine_unique` and `bot_self_mem` are provable by `rfl`. This is the concrete Lean counterpart of Path 1 for ZP-E's machine model; DA-1 itself is closed given DP-2 (`da1_minimal_path`).
 
 ---
 

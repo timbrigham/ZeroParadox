@@ -1,7 +1,7 @@
 # The Gödel-number family: periods, constant codes, and the noncomputable marker
 
 Argument and fences for § VI of `ZeroParadox/Computability/Kleene.lean`, moved here verbatim from that
-section's module docstring (2026-09-15). The Lean file holds the declarations, the Engineer's Take and
+section's module docstring (2026-09-15), and for § VIII below. The Lean file holds the declarations, the Engineer's Take and
 the per-declaration docstrings.
 
 ## § VI. Function-Gödel-Number Correspondence
@@ -67,3 +67,53 @@ Three formal results capture this structure:
 The noncomputable marker comes from this instance's choice of botCode; a computable
 instance with a constant code also satisfies the class, so the noncomputable marker belongs
 to the instance, not to DA-1's computational path.
+
+## § VIII. Infinitely many fixed points, padding, and a self-printing universal code
+
+Fences and controls for § VIII of `ZeroParadox/Computability/Kleene.lean`.
+
+**Many fixed points for every transformation.** `fixed_point₂_unbounded` strengthens Mathlib's
+`Nat.Partrec.Code.fixed_point₂` (Kleene's second recursion theorem): for partial computable
+`F`, a code `c` with `eval c = F c` exists above any bound on its Gödel number, so
+`fixed_points_infinite` gives an infinite set of them. The proof applies `fixed_point₂` to a
+modified `F'` that agrees with `F` above the bound and, at or below it, sends each code to a
+constant code computing something different from it at input `0`; no fixed point of `F'` can
+then sit at or below the bound. The arrow runs from the recursion theorem to the infinite
+family, for every `F` at once.
+
+**Padding.** `padding` is `fixed_points_infinite` at an `F` that ignores the code: every
+partial recursive function has infinitely many codes. This is the Padding Lemma of § VI's
+prior-art note, the one that gives many indices for the SAME function. It is still not what
+`infinite_quine_family` proves, whose witnesses compute different functions. In the Mathlib
+pin, no lemma stating it was located as of 2026-10-04 (searched in
+`Mathlib/Computability/` for `padd`, `Infinite`, `infinitely`, `unbounded`, `fixed_point`,
+and across `Mathlib/` for `padding lemma`, `recursion theorem`, `infinitely many`, and
+`Set.Infinite` with `Code`).
+
+**A self-printing universal code.** `SelfPrints c` says `c` returns its own Gödel number on
+channel `0`; `Universal c` says `c` agrees with the code numbered `e` on channel `e + 1`.
+`selfref_universal_exists` and `selfref_universal_infinite` get both at once from fixed
+points of `selfPrintOrDelegate`. These are statements about the partial function `eval c`,
+equalities of `Part ℕ` values; they state presence and existence of such codes, and nothing
+here says a code is run.
+
+**Controls.** `universal_not_selfprints`: universality alone does not give self-printing.
+The `example`s beside it: no constant code is universal, so the constant codes, which meet
+`IsComputationalQuine` (`infinite_quine_family`), never meet `SelfPrints ∧ Universal`; and
+`Code.zero` is self-printing, because its Gödel number is `0`, while not universal. Each half
+of the conjunction is met by some code without the other.
+
+**One code per behaviour.** `selfprints_behaviour_injective`: two self-printing codes with
+the same `eval` are equal, because channel `0` reads the Gödel number back out of the
+behaviour. So the infinite family of self-printing universal codes is not one function
+reached by many codes: any two of them differ on channel `0`. Contrast `padding`, where
+infinitely many codes share one function. Computational self-reference has a uniqueness,
+at the level of behaviour.
+
+**Occurrence controls.** `Occurs` (`ZeroParadox/Computability/Occurrence.lean`) is
+`(eval c n).Dom` by `occurs_iff_halts`. `selfprints_occurs` and `zero_occurs` show it holding
+of every self-printing code on channel `0` and of `Code.zero` on every input: it is a static
+property of a (code, input) pair and does not distinguish self-reference from a constant.
+How occurrence is read, and that the identification is a modelling choice, is stated at
+`occurs_iff_halts` and `da1_closed_concrete` in
+`ZeroParadox/Computability/ComputationCannotBe.lean`.
