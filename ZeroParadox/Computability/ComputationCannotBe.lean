@@ -307,15 +307,16 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 --   stated in `ZeroParadox/Order/Snap.lean`'s Formal Overview, not from this line.
 #check @ZeroParadox.tsnap_holds_but_nothing_moves
 
-/-! ### § IX. Self-copy maps on infinite carriers — a map EXISTS, classically; nothing says it is applied -/
+/-! ### § IX. Self-copy maps on infinite carriers — a map EXISTS, classically; that one is applied is a commitment -/
 
 -- Statement: for `α : Type`, `α` is infinite iff it carries a `SelfCopyRef` map: one-to-one, not
 --   onto, with exactly one fixed point. The infinite-to-map direction is proved with
 --   `Classical.choice` and is not provable in set theory without choice (the `PurityCheck` note in
 --   `ZeroParadox/Computability/SelfCopyReference.lean`).
--- Reading: SCOPE. This is the existence of such a map, not that one is applied. No carrier of the
---   framework is claimed here to perform one: `MachinePhase`, which carries `machinePhaseKleene`,
---   admits none (the `example` below).
+-- Reading: SCOPE. This is the existence of such a map, not that one is applied. That ⊥ on an
+--   infinite carrier performs one is a commitment (`ZeroParadox/Computability/SelfCopyReference.lean`
+--   § IV); `MachinePhase`, the two-phase rounding that carries `machinePhaseKleene`, admits none
+--   (the `example` below).
 #check @ZeroParadox.infinite_iff_exists_selfCopyRef
 
 -- Statement: for finite `α : Type`, no `SelfCopyRef` map exists.

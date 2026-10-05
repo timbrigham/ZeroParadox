@@ -193,9 +193,10 @@ theorem doubling_only_periodic_point_zero (x : ℚ_[2]) (p : ℕ) (hp : 0 < p)
 
 /-! ## § IV. Fences
 
-* Proved: the AVAILABILITY of a `SelfCopyRef` map. That the semilattice ⊥ PERFORMS it is a commitment — see
-  `l_inf` (`ZeroParadox/Information/Surprisal.lean`) and `KleeneStructure`
-  (`ZeroParadox/Computability/Kleene.lean`).
+* Proved: the AVAILABILITY of a `SelfCopyRef` map, on infinite carriers only. That the semilattice ⊥ on an
+  INFINITE carrier PERFORMS one is a commitment — see `l_inf` (`ZeroParadox/Information/Surprisal.lean`).
+  `MachinePhase`, the two-phase rounding that carries `machinePhaseKleene`, admits none
+  (`no_selfCopyRef_of_finite`; the `example` in `ZeroParadox/Computability/ComputationCannotBe.lean` § IX).
 * `#print axioms` reports a proof's footprint, never a theorem's necessity. -/
 
 end ZeroParadox
