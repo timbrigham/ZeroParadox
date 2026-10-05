@@ -33,7 +33,7 @@ load-bearing, the commitment carrying it is named.
 * **`KleeneStructure`** — that the class's `botCode` is the computational face of `bot`, the bottom of
   the `ZPSemilattice L`. The field `botCode_is_quine` supplies only a periodicity condition, which
   constant codes meet.
-* **The occurrence commitment** — as stated in `ZeroParadox/Order/Snap.lean`'s Formal Overview, from
+* **The occurrence commitment** (instantiation occurs) — as stated in `ZeroParadox/Order/Snap.lean`'s Formal Overview, from
   which, together with DA-1, the snap occurs. T-SNAP holds with nothing moving
   (`tsnap_holds_but_nothing_moves`). In the computational face the framework reads occurrence as
   halting (`occurs_iff_halts`); that identification is a modelling choice, not a theorem.

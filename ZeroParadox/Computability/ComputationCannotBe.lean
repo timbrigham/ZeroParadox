@@ -151,7 +151,7 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 
 -- Statement: `IsQuineAtom (bot : MachinePhase)` — c₀, ⊥ of `MachinePhase`, is its unique
 --   self-containing state. Mentions no `Code` and no execution. `machinePhaseAFA` defines
---   `selfMem x := x = bot`, so the statement holds by definition (`Iff.rfl` unfolds it), and the
+--   `selfMem x := x = bot`, so the statement holds by definition (the term `⟨rfl, fun _ h => h⟩` proves it), and the
 --   `example` after this theorem in
 --   `ZeroParadox/Computability/Kleene.lean` proves the same type with no Kleene instance.
 -- Reading: that c₀ is self-EXECUTING is DA-1's claim. DA-1's precondition is the occurrence
@@ -318,7 +318,8 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 -- Reading: a self-looping configuration's BEHAVIOUR and `natInfinity` are the same point of the
 --   final coalgebra of `X ↦ 1 + X`. The `=` is between two `Cofix` elements, within one type; the configuration
 --   `s : σ` is NOT equated with anything — it lives in a different type. It says nothing about
---   whether the FRAMEWORK's bottom self-loops — that is the commitment.
+--   whether the framework's ⊥, read as a configuration of a step function `f : σ → Option σ`
+--   (§ VI), self-loops — that is the commitment.
 #check @ZeroParadox.loop_unfolds_to_infinity
 
 -- Statement: with a three-valued head there IS a configuration neither halted nor stepping.
