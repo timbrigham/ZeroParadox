@@ -403,8 +403,9 @@ def build():
         'escapes its carrier depends on the lattice, and the ordinals under max have no top while the '
         'chain n to n has least upper bound omega inside them.'))
     E.append(cbody(
-        'Here is the logic. Each state in the ascending chain has a 2-adic valuation '
-        'depth  - a measure of how many times 2 divides the state. As the chain ascends '
+        'Here is the logic. The IsDepthChain modelling commitment links two carriers: a depth index in ℕ, '
+        'and a chain of 2-adic numbers whose 2-adic valuation depth  - a measure of how many times 2 '
+        'divides the number  - equals that index. As the index ascends '
         '(ZP-A T3: every step is a join, every state is at least as large as the last), '
         'the depth increases. Where L has no top element, the chain never HAS to stop  - there is '
         'always a strictly greater element. Given that it keeps stepping, the depth grows without bound.'))
@@ -436,8 +437,8 @@ def build():
 
     E.append(depth_diagram())
     E.append(ccaption(
-        'The ascending chain S₀, S₁, S₂, ... descends in 2-adic depth as it ascends '
-        'in the lattice. As depth → ∞, the 2-adic norm → 0. The chain converges '
+        'The 2-adic chain S₀, S₁, S₂, ... descends in 2-adic depth as the depth index it is linked to '
+        'by the IsDepthChain modelling commitment ascends. As depth → ∞, the 2-adic norm → 0. The chain converges '
         'to zero from inside, not by reversing direction.'))
     E.append(sp(4))
 
@@ -455,12 +456,12 @@ def build():
         'The 2-adic metric is unusual. In the ordinary real number line, "close to zero" '
         'means "small absolute value." In the 2-adic metric, "close to zero" means '
         '"divisible by a very high power of 2." These are different geometries, '
-        'and in the 2-adic geometry, the natural motion of the ascending chain is '
+        'and in the 2-adic geometry, the natural motion of the depth chain is '
         '<i>toward</i> zero, not away from it.'))
     E.append(cbody(
-        'Think of it this way: each state in the chain is divisible by 2<sup>n</sup> for '
-        'some n. As the chain ascends  - each state "larger" in the lattice sense  - '
-        'it becomes divisible by higher and higher powers of 2. In 2-adic terms, this '
+        'Think of it this way: each number in the 2-adic chain is divisible by 2<sup>n</sup> for '
+        'some n. As the depth index it is linked to ascends  - each index "larger" in the lattice sense  - '
+        'the number becomes divisible by higher and higher powers of 2. In 2-adic terms, this '
         'means it is getting closer to 0. The chain approaches zero by becoming '
         'more and more structured, not by becoming smaller.'))
     E.append(cbody(
@@ -504,8 +505,9 @@ def build():
          'and needs DP-2 and DP-2\'s precondition, which the occurrence commitment '
          'asserts and DA-1 consumes (ZP-E); this step supplies none of these.',
          'da1_computational - proved in Lean, given the KleeneStructure instance ✓'],
-        ['4. T-SNAP fires, on the reading that the limit fills the ⊥ role',
-         'On that reading, at the computational fixed point T-SNAP fires: '
+        ['4. T-SNAP fires, conditionally',
+         'On the reading that the limit fills the ⊥ role, on the limit reaching P₀ (which nothing here '
+         'establishes), and on what DA-1 needs (step 3), at the computational fixed point T-SNAP fires: '
          'join ⊥ ε₀′ = ε₀′. Reading the 2-adic limit as the occupant is one commitment; '
          'calling that occupant a NEW null ⊥′ rather than the same ⊥ is a second.',
          'ZP-A bot_join  - proved in Lean. ✓ (the algebra, given the reading; '
@@ -539,7 +541,8 @@ def build():
         'about the depth index and the lattice chain, not about the 2-adic numbers, which have no order of '
         'that kind. Reading the limit as filling the bottom '
         'role is a commitment, and reading the occupant as ⊥′ a further one. '
-        'On the first reading, DA-1 and then T-SNAP are CONDITIONAL on what DA-1 needs. DA-1 needs DP-2 and '
+        'On the first reading, DA-1 and then T-SNAP are CONDITIONAL on the limit reaching P₀ (which nothing '
+        'here establishes) and on what DA-1 needs. DA-1 needs DP-2 and '
         'DP-2\'s precondition, that the configuration reaching the incompressibility threshold P₀ is a running '
         'machine\'s current configuration and not an inert string; that precondition is what the occurrence '
         'commitment asserts, and DA-1 consumes it and does not supply it (ZP-E &#167; IV). Nothing here establishes '
@@ -618,9 +621,9 @@ def build():
         'any step is taken; a model in which T-SNAP holds and nothing moves is exhibited in the Lean '
         'source. Throughout this document, "fires" narrates the framework&#8217;s commitment that instantiation occurs - before this note as well as after it. '
         '4. <b>T-IZ</b>: the chain\'s unbounded depth forces convergence to 0. Reading that '
-        'limit as filling the ⊥ role  - and then as ⊥′  - are the two commitments. On them, and on what DA-1 '
-        'needs (DP-2 and DP-2\'s precondition, a configuration reaching P₀ as a running machine, which the '
-        'occurrence commitment asserts and DA-1 consumes; nothing here establishes that the limit reaches P₀), '
+        'limit as filling the ⊥ role  - and then as ⊥′  - are the two commitments. On them, on the limit reaching P₀ (which nothing here establishes), '
+        'and on what DA-1 needs (DP-2 and DP-2\'s precondition, that the configuration reaching P₀ is a '
+        'running machine\'s, which the occurrence commitment asserts and DA-1 consumes), '
         'DA-1 fires, T-SNAP fires again, and the branch is read as closed.'
         '<br/>'
         '5. <b>DA-2</b>: on the C-DA2 commitment, ⊥′ is read as the foundation of the next instantiation. '

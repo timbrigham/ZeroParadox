@@ -141,8 +141,8 @@ def build():
         'Reading the bottom so reached as a NEW one '
         'rather than the one already there is a further commitment (C-DA2 in ZP-E), and in the 2-adic '
         'chart the arc returns to the SAME 0 (snap_arc_z2_loop). T-IZ extends T-SNAP: where T-SNAP fixes the shape of the first transition '
-        '&#8869; &#8594; &#949;<sub>0</sub>, and not that it is taken, T-IZ establishes, for a chain that does take every step, the full trajectory — ascent through &#969; state '
-        'changes and convergence back to 0 — as a single Cauchy sequence result.'))
+        '&#8869; &#8594; &#949;<sub>0</sub>, and not that it is taken, T-IZ establishes, for a depth index that climbs at every step, '
+        'that the 2-adic chain the IsDepthChain modelling commitment links to it converges to 0, as a Cauchy sequence result.'))
     E.append(body(
         'The key insight: the no-top property is not an obstacle to T-IZ. In a carrier that has it '
         '(HasNoTop is a hypothesis on the carrier; MachinePhase and OntologicalStates have a top), it is '
@@ -156,7 +156,8 @@ def build():
         'Unbounded ascent is exactly the Cauchy convergence condition '
         '&#8214;S<sub>n</sub>&#8214;<sub>2</sub> &#8594; 0. The chain approaches the 2-adic depth of zero by going '
         'deeper into the p-adic structure — not by reversing direction. DA-1 and T-SNAP at the limit '
-        'are CONDITIONAL: on the reading that the limit fills the bottom role, and then on what DA-1 needs. '
+        'are CONDITIONAL: on the reading that the limit fills the bottom role, on the limit reaching P<sub>0</sub> '
+        '(which nothing here establishes), and then on what DA-1 needs. '
         'DA-1 needs DP-2 and DP-2&#8217;s precondition, that the configuration reaching the incompressibility '
         'threshold P<sub>0</sub> is there in Sense B (a running machine&#8217;s current configuration) and not in '
         'Sense A (an inert string); that precondition is what the occurrence commitment asserts, and DA-1 '
@@ -199,9 +200,10 @@ def build():
         'and unbounded is the separate hypothesis IsStrictStateSequence, and that is the one T-IZ '
         'consumes.'))
     E.append(body(
-        'In the 2-adic model (ZP-B), each element S<sub>n</sub> corresponds to an element of Q<sub>2</sub> '
-        'with 2-adic valuation v<sub>2</sub>(S<sub>n</sub>). Strict ascent in L corresponds to increasing '
-        '2-adic valuation depth. Because the chain is unbounded, v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734;. '
+        'In the 2-adic model (ZP-B), the IsDepthChain modelling commitment links two carriers: a 2-adic '
+        'chain S<sub>n</sub> in Q<sub>2</sub>, and a depth index in &#8469; (a ZP-A semilattice under max) that '
+        'its valuation v<sub>2</sub>(S<sub>n</sub>) equals. Strict ascent of that depth index '
+        '(IsStrictStateSequence) is increasing 2-adic valuation depth. Because the index is unbounded, v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734;. '
         'This follows from the strict-ascent hypothesis, not from the absence of a top element: no-top '
         'leaves room for the ascent, and IsStrictStateSequence is that the chain takes it.'))
 
@@ -397,7 +399,8 @@ def build():
             'The framework then READS the limit as satisfying the bottom role — a step stated in a '
             'different type and not carried by T-IZ — and DA-2 supplies the one-directional fact '
             'that anything satisfying that role IS the bottom already present. On that reading, DA-1 and then '
-            'T-SNAP are CONDITIONAL on what DA-1 needs. DA-1 needs DP-2 and DP-2&#8217;s precondition, that the '
+            'T-SNAP are CONDITIONAL on the limit reaching P<sub>0</sub> (which nothing here establishes) and on '
+            'what DA-1 needs.DA-1 needs DP-2 and DP-2&#8217;s precondition, that the '
             'configuration reaching P<sub>0</sub> is there in Sense B (a running machine&#8217;s current configuration) '
             'and not in Sense A (an inert string); that precondition is what the occurrence commitment asserts, '
             'and DA-1 consumes it and does not supply it (ZP-E &#167; IV). Nothing here establishes that the limit '
@@ -481,10 +484,10 @@ def build():
          'Refuted (&#167; II.B). Not required: formal spine is Steps 1 + 6; '
          'DA-1 is closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.'],
         ['P<sub>0</sub> fires DA-1, CONDITIONALLY: given the limit reaching P<sub>0</sub> '
-         '(which nothing here establishes) and Sense B, which the occurrence commitment asserts',
+         '(which nothing here establishes), DP-2, and DP-2&#8217;s precondition Sense B, which the occurrence commitment asserts',
          'ZP-C D1 + DA-1 (ZP-E)',
-         'No new axiom; both premises are outside this document&#8217;s results',
-         'ZPE formal core: da1_minimal_path, DP-2. No checkmark: neither premise is established here'],
+         'No new axiom; all three premises are outside this document&#8217;s results',
+         'ZPE formal core: da1_minimal_path, DP-2. No checkmark: none of the three premises is established here'],
         ['DA-1 fires T-SNAP',
          'ZP-E T-SNAP',
          'Already in framework',
@@ -548,8 +551,8 @@ def build():
            'ZP-A lattice condition — IsStrictStateSequence, and it is a condition on the DEPTH INDEX. The '
            'other two live in Q<sub>2</sub>: that the chain is nowhere zero, and IsDepthChain, the BRIDGE '
            'saying the 2-adic valuation tracks that index. IsDepthChain takes no ZPSemilattice instance at '
-           'all; &#167;Ib records it as an undischarged modelling commitment, and it is what makes "the '
-           'chain" in the lattice and "the chain" in Q<sub>2</sub> the same object. '
+           'all; &#167;Ib records it as an undischarged modelling commitment, and it links the depth index '
+           'and the chain in Q<sub>2</sub> without identifying them. '
            'Closes the &#8214;S<sub>0</sub>&#8214; factor gap between &#167;Ib and t_iz_complete (optional '
            'transparency lemma; the analytic proof carries Classical.choice).'),
         li('t_iz_complete_from_axioms: T-IZ complete variant taking the three hypotheses above in place of a '
@@ -697,8 +700,8 @@ def build():
         'subtraction in (L, &#8744;, &#8869;) — R1 prohibits that. Two carriers carry the reading: the lattice '
         'chain begins at its semilattice&#8217;s &#8869; (CC-1) and ascends under T3, and the 2-adic depth chain, '
         'nowhere zero, converges to 0 &#8712; Q<sub>2</sub>. Reading that limit as filling the bottom role is '
-        'a commitment; on it, on the limit reaching P<sub>0</sub> (which nothing here establishes), and on what DA-1 needs (&#167; III: DP-2 and DP-2&#8217;s precondition, a configuration '
-        'reaching P<sub>0</sub> in Sense B, which the occurrence commitment asserts and DA-1 consumes), '
+        'a commitment; on it, on the limit reaching P<sub>0</sub> (which nothing here establishes), and on what DA-1 needs (&#167; III: DP-2 and DP-2&#8217;s precondition, that the configuration '
+        'reaching P<sub>0</sub> is there in Sense B, which the occurrence commitment asserts and DA-1 consumes), '
         'T-IZ + T-SNAP + DA-2 would close the branch. The '
         'CONVERGENCE is a theorem, given IsDepthChain (a modelling commitment); that the role-filler is a '
         'DISTINCT &#8869;\' rather than the &#8869; it began at is C-DA2, and in the '
@@ -736,10 +739,10 @@ def build():
            'which is no-subtraction.'),
         li('T-IZ: The 2-adic depth chain converges to 0 &#8712; Q<sub>2</sub> at the ordinal limit &#969;. Reading that limit as filling '
            'the bottom role is a commitment, and the role identifies the &#8869; already there '
-           '(t_iz_limit_is_new_null). On that reading, DA-1 and T-SNAP fire again only on what DA-1 needs '
-           '(&#167; III: DP-2 and DP-2&#8217;s precondition, a configuration reaching P<sub>0</sub> in Sense B, which the '
-           'occurrence commitment asserts and DA-1 consumes); nothing here establishes that the limit reaches '
-           'P<sub>0</sub> (&#167; II.B). Calling the role-occupant a SUCCESSOR '
+           '(t_iz_limit_is_new_null). On that reading, DA-1 and T-SNAP fire again only on the limit reaching '
+           'P<sub>0</sub> (which nothing here establishes, &#167; II.B) and on what DA-1 needs '
+           '(&#167; III: DP-2 and DP-2&#8217;s precondition, that the configuration reaching P<sub>0</sub> is there in Sense B, which the '
+           'occurrence commitment asserts and DA-1 consumes). Calling the role-occupant a SUCCESSOR '
            '&#8869;\' rather than the same &#8869; is C-DA2, a further commitment. On those readings and conditions, this is the closing of the branch.'),
         li('DA-2 (Instantiation Succession): on the C-DA2 commitment, &#8869;\' is read as the foundation '
            'of the next instantiation. The tree extends. The cycle repeats.'),
@@ -824,10 +827,11 @@ def build():
          'Axiom footprint: standard foundational axioms only (propext, Quot.sound, and Classical.choice '
          'from Mathlib p-adic analysis on the convergence theorems; the DA-2 step is axiom-free).'],
         ['AX-1: Binary Snap Causality',
-         'RETIRED — shape proved as T-SNAP (ZP-E); the snap occurs given the occurrence commitment and DA-1',
-         'AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, as Theorem T-SNAP, and that the snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
+         'RETIRED — shape proved as T-SNAP (ZP-E); the first snap occurs given the occurrence commitment and DA-1',
+         'AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, as Theorem T-SNAP, and that the first snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
          'tsnap_holds_but_nothing_moves shows T-SNAP does not carry it. T-SNAP is derived in ZP-E. '
-         'T-IZ extends T-SNAP to the ordinal limit.'],
+         'T-IZ extends T-SNAP to the ordinal limit; there a snap needs, besides those two, the limit reaching '
+         'P<sub>0</sub> (which nothing here establishes).'],
         ['Remaining axioms',
          'INTENTIONAL — AX-B1, AX-G1, AX-G2',
          'These are the named axioms. The occurrence commitment is not on this list because it is a commitment, not a named axiom. T-IZ requires no additions.'],
