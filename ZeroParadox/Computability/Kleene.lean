@@ -827,6 +827,29 @@ theorem selfprints_behaviour_injective {c₁ c₂ : Code} (h₁ : SelfPrints c�
   rw [h₁, h₂] at this
   exact Encodable.encode_injective (Part.some_inj.mp this)
 
+/-- `Statement:` two self-printing universal codes agree on every channel `e + 1`, and two
+    distinct ones differ on channel `0`, where each returns its own Gödel number.
+    `Reading:` replicas share everything but the address (`Kleene.md` § VIII). -/
+theorem selfPrints_universal_address {c d : Code} (hc : SelfPrints c ∧ Universal c)
+    (hd : SelfPrints d ∧ Universal d) :
+    (∀ e n, eval c (Nat.pair (e + 1) n) = eval d (Nat.pair (e + 1) n)) ∧
+      (c ≠ d → ∀ n, eval c (Nat.pair 0 n) ≠ eval d (Nat.pair 0 n)) := by
+  refine ⟨fun e n => by rw [hc.2, hd.2], fun hne n h => hne ?_⟩
+  rw [hc.1, hd.1] at h
+  exact Encodable.encode_injective (Part.some_inj.mp h)
+
+-- `Statement:` CONTROL: `Universal` carries the first half: a self-printing universal code and
+-- `Code.zero`, which is self-printing and not universal, differ on a channel `e + 1`.
+example {c : Code} (hc : SelfPrints c ∧ Universal c) :
+    eval c (Nat.pair (Encodable.encode Code.succ + 1) 0) ≠
+      eval Code.zero (Nat.pair (Encodable.encode Code.succ + 1) 0) := by
+  rw [hc.2, Denumerable.ofNat_encode]
+  intro h
+  have e1 : eval Code.succ 0 = Part.some 1 := rfl
+  have e0 : eval Code.zero (Nat.pair (Encodable.encode Code.succ + 1) 0) = Part.some 0 := rfl
+  rw [e1, e0] at h
+  exact absurd (Part.some_inj.1 h) (by decide)
+
 /-- `Statement:` CONTROL: a self-printing code satisfies `Occurs` on channel `0`.
     `Reading:` `Occurs` is a static property of a (code, input) pair (`Kleene.md` § VIII). -/
 theorem selfprints_occurs (c : Code) (hS : SelfPrints c) (n : ℕ) :
@@ -883,6 +906,7 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms selfref_universal_infinite
 #print axioms universal_not_selfprints
 #print axioms selfprints_behaviour_injective
+#print axioms selfPrints_universal_address
 #print axioms selfprints_occurs
 #print axioms zero_occurs
 

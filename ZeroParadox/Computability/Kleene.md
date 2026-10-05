@@ -110,6 +110,17 @@ reached by many codes: any two of them differ on channel `0`. Contrast `padding`
 infinitely many codes share one function. Computational self-reference has a uniqueness,
 at the level of behaviour.
 
+**Replicas differ only by address.** `selfPrints_universal_address`: two self-printing
+universal codes give the same values on every channel `e + 1`, the interpreter channels, and
+two distinct ones give different values on channel `0`, which returns each code's own Gödel
+number; that second half is `Encodable.encode` being one-to-one. The control beside it shows
+that `Universal` carries the first half: `Code.zero` is self-printing and not universal, and
+it disagrees with a self-printing universal code on a channel `e + 1`. `Reading:` replicas
+share everything but the address; the next instance adds only the address. That is a claim
+about relative complexity, and it stays a reading while Kolmogorov complexity is not in Lean
+(not located in the Mathlib pin as of 2026-10-04; searches in
+`ZeroParadox/Information/Disjunctive.md`).
+
 **Occurrence controls.** `Occurs` (`ZeroParadox/Computability/Occurrence.lean`) is
 `(eval c n).Dom` by `occurs_iff_halts`. `selfprints_occurs` and `zero_occurs` show it holding
 of every self-printing code on channel `0` and of `Code.zero` on every input: it is a static

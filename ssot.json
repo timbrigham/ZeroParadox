@@ -632,7 +632,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1853,
+        "declarations": 1854,
         "files": 156
       },
       "entries": [
@@ -32590,6 +32590,43 @@
             ]
           },
           "reason": "lane K1: ZP-K § VIII (infinitely many fixed points, padding, self-printing universal code, occurrence controls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "796e1520-095e-4ce1-a46a-1551dc1a2bfe",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfPrints_universal_address",
+            "short": "selfPrints_universal_address"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfPrints_universal_address",
+            "short": "selfPrints_universal_address",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "lane P: ZP-K § VIII address lemma (replicas differ only on channel 0)",
           "verify": {
             "axioms": null,
             "sorry_free": true
