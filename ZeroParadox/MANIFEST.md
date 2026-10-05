@@ -191,6 +191,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` - Comparability of well-orders is a constructive taboo
 - `ZeroParadox/Ordinal/P8.lean` - P8 re-attempt: ε₀ → 0 in ℤ₂ via a tower-rank 2-adic encoding
 - `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: a carrier sized to ε₀, a map into `Ordinal`, and both sides' axiom footprints
+  - ride-along docs: `ZeroParadox/Ordinal/PricedInterface.md` - PricedInterface — ride-along documentation
 - `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity makes the ordinals a frame
 - `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap is a nucleus: ε₀ is the modality generated from the bottom ⊥
   - ride-along docs: `ZeroParadox/Ordinal/SnapNucleus.md` - A modality on a chain: the recognized structure, its scope, and what is owed outward

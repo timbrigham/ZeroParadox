@@ -1,4 +1,5 @@
 import Mathlib.SetTheory.Ordinal.Veblen
+import Mathlib.SetTheory.Cardinal.Ordinal
 
 set_option maxHeartbeats 400000
 
@@ -100,6 +101,100 @@ theorem seed_eq_of_nfp_eq_epsilon_limit (o s : Ordinal) (ho : Order.IsSuccLimit 
   rw [h] at hfp
   exact absurd hfp (not_le.mpr (hn.strictMono hp))
 
+/-! ### Cells as widths: order type and count
+`Reading:` a cell is the set of seeds reaching one landing, and its width is the order type of its
+seeds strictly below that landing. ORDER-TYPE chart: a successor cell is as wide as its landing, the
+first ε₀ and the next ε₁ (`successor_cell_width`); a limit-index cell is a singleton
+(`seed_eq_of_nfp_eq_epsilon_limit`). COUNTING chart: the first cell is countable (`card_epsilon0`)
+and a cell past the countable indices is not (the control below). Each address is a finite term
+(`repr_surj_below_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`). Both charts hold. -/
+
+universe u
+
+/-- **`Statement:` the seeds reaching ε₀ are exactly the ordinals at or below ε₀.** `⊇` is
+`nfp_seed_independent_below_epsilon0`, the canonical home; `⊆` is Mathlib's `Ordinal.le_nfp`. -/
+theorem first_cell_eq_Iic :
+    {α : Ordinal | Ordinal.nfp (fun a => ω ^ a) α = ε₀} = Set.Iic ε₀ := by
+  ext α
+  refine ⟨fun h => ?_, fun h => nfp_seed_independent_below_epsilon0 α h⟩
+  exact (show Ordinal.nfp (fun a => ω ^ a) α = ε₀ from h) ▸ Ordinal.le_nfp _ α
+
+-- `Statement:` the seeds strictly below ε₀ have order type ε₀, lifted one universe. This is Mathlib's
+-- `Ordinal.type_lt_Iio`, true of EVERY ordinal, so it singles out nothing about ε₀.
+example : typeLT (Set.Iio (ε₀ : Ordinal.{u})) = Ordinal.lift.{u + 1, u} ε₀ := Ordinal.type_lt_Iio _
+
+/-- **`Statement:` the offset `ε_o + 1` is absorbed: `(ε_o + 1) + ε_(o+1) = ε_(o+1)`.** -/
+theorem epsilon_add_one_add_epsilon_succ (o : Ordinal) :
+    (Ordinal.epsilon o + 1) + Ordinal.epsilon (Order.succ o) = Ordinal.epsilon (Order.succ o) := by
+  have hP : IsPrincipal (· + ·) (Ordinal.epsilon (Order.succ o)) := by
+    rw [← omega0_opow_epsilon (Order.succ o)]; exact isPrincipal_add_omega0_opow _
+  have hlt : Ordinal.epsilon o < Ordinal.epsilon (Order.succ o) :=
+    veblen_right_strictMono 1 (Order.lt_succ o)
+  exact hP.add_eq_right (hP hlt (by exact_mod_cast natCast_lt_epsilon 1 (Order.succ o)))
+
+/-- **`Statement:` the order isomorphism `Iio ε_(o+1) ≃o Ioo ε_o ε_(o+1)`, `x ↦ (ε_o + 1) + x`.** -/
+noncomputable def cellIso (o : Ordinal) :
+    Set.Iio (Ordinal.epsilon (Order.succ o)) ≃o
+      Set.Ioo (Ordinal.epsilon o) (Ordinal.epsilon (Order.succ o)) := by
+  have hc := epsilon_add_one_add_epsilon_succ o
+  refine StrictMono.orderIsoOfSurjective
+    (fun x => ⟨(Ordinal.epsilon o + 1) + x.1, ?_, ?_⟩) ?_ ?_
+  · exact lt_of_lt_of_le (Order.lt_add_one_iff.2 le_rfl) le_self_add
+  · have := (add_lt_add_iff_left (Ordinal.epsilon o + 1)).2 x.2
+    rwa [hc] at this
+  · intro x y hxy
+    show (Ordinal.epsilon o + 1) + x.1 < (Ordinal.epsilon o + 1) + y.1
+    exact (add_lt_add_iff_left _).2 hxy
+  · intro y
+    have hcy : Ordinal.epsilon o + 1 ≤ y.1 := Order.add_one_le_of_lt y.2.1
+    refine ⟨⟨y.1 - (Ordinal.epsilon o + 1), lt_of_le_of_lt (Ordinal.sub_le_self _ _) y.2.2⟩, ?_⟩
+    apply Subtype.ext
+    exact Ordinal.add_sub_cancel_of_le hcy
+
+/-- **`Statement:` the seeds strictly between `ε_o` and `ε_(o+1)` have order type `ε_(o+1)`,
+lifted one universe.** -/
+theorem successor_cell_width (o : Ordinal.{u}) :
+    typeLT (Set.Ioo (Ordinal.epsilon o) (Ordinal.epsilon (Order.succ o))) =
+      Ordinal.lift.{u + 1, u} (Ordinal.epsilon (Order.succ o)) := by
+  rw [← Ordinal.type_lt_Iio]
+  exact ((cellIso o).toRelIsoLT).ordinal_type_eq.symm
+
+-- `Statement:` control, order-type chart: the cell between ε₀ and ε₁ has width ε₁, not ε₀.
+example : typeLT (Set.Ioo (ε₀ : Ordinal.{u}) (Ordinal.epsilon 1)) ≠ Ordinal.lift.{u + 1, u} ε₀ := by
+  have h := successor_cell_width (0 : Ordinal.{u})
+  rw [Order.succ_eq_add_one, zero_add] at h
+  rw [h, Ne, Ordinal.lift_inj]
+  exact (veblen_right_strictMono 1 zero_lt_one).ne'
+
+/-- **`Statement:` ε₀ is countable: its cardinality is `ℵ₀`.** Bounded by the countable supremum of
+the tower stages, each countable by `Ordinal.card_opow_le`; at least `ℵ₀` since `ω < ε₀`. -/
+theorem card_epsilon0 : Ordinal.card (ε₀ : Ordinal.{u}) = Cardinal.aleph0 := by
+  apply le_antisymm
+  · have hit : ∀ n : ℕ, ((fun a : Ordinal.{u} => ω ^ a)^[n] 0).card ≤ Cardinal.aleph0 := by
+      intro n
+      induction n with
+      | zero => simp
+      | succ n ih =>
+        rw [Function.iterate_succ_apply']
+        refine (Ordinal.card_opow_le _ _).trans ?_
+        simp [Ordinal.card_omega0, ih]
+    rw [epsilon_zero_eq_nfp, ← iSup_iterate_eq_nfp]
+    refine (Ordinal.card_iSup_le_sum_card.{0, u} _).trans ?_
+    refine (Cardinal.sum_le_sum _ (fun _ => Cardinal.aleph0) hit).trans ?_
+    simp
+  · rw [← Ordinal.card_omega0]
+    exact Ordinal.card_le_card (omega0_lt_epsilon 0).le
+
+-- `Statement:` control, counting chart: with `ω₁ = (ℵ₁).ord`, `ε_(succ ω₁)`, the width of the cell
+-- below it (`successor_cell_width`), is not countable.
+example : Ordinal.card (Ordinal.epsilon (Order.succ (Cardinal.aleph.{0} 1).ord)) ≠
+    Cardinal.aleph0 := by
+  intro h
+  have hle := Ordinal.card_le_card ((Order.le_succ (Cardinal.aleph.{0} 1).ord).trans
+    (Ordinal.right_le_veblen 1 (Order.succ (Cardinal.aleph.{0} 1).ord)))
+  rw [Cardinal.card_ord, h] at hle
+  exact absurd hle (not_le.mpr Cardinal.aleph0_lt_aleph_one)
+
 /-- **Invariant — ε₀ ≠ 0.** ε₀ can never be zero, in any reading. It is a fixed point of `α ↦ ω^α`
     (`epsilon0_is_fixedpoint`); were it 0, that would say `ω^0 = 0`, i.e. `1 = 0`. This is the bedrock
     guard beneath every ε₀ characterization. -/
@@ -139,6 +234,11 @@ open ZeroParadox
 #print axioms nfp_seed_one_eq_seed_bot
 #print axioms nfp_seed_successor_cell
 #print axioms seed_eq_of_nfp_eq_epsilon_limit
+#print axioms first_cell_eq_Iic
+#print axioms epsilon_add_one_add_epsilon_succ
+#print axioms cellIso
+#print axioms successor_cell_width
+#print axioms card_epsilon0
 #print axioms epsilon0_ne_zero
 #print axioms epsilon0_ne_bot
 #print axioms epsilon0_eq_veblen_one_zero

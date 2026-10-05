@@ -12,7 +12,7 @@ import ZeroParadox.Valuation.SemilatticeInstance
 
 An index of established results pinning ε₀, Mathlib `Ordinal.epsilon 0`. Every indexed name is
 `#check`ed, so the `import`s recompile each home file. It creates no named declarations; § I-b,
-§ IV and § V carry anonymous `example`s, the only things proved here. The `#check`s cannot overclaim; the
+§ IV, § V and § VII carry anonymous `example`s, the only things proved here. The `#check`s cannot overclaim; the
 glosses can. Long form: `ZeroParadox/Ordinal/Epsilon0CannotBe.md`.
 
 ## Engineer's Take
@@ -138,5 +138,24 @@ example (m n : ℕ) (hm : 1 ≤ m) (hmn : m < n) :
 
 /-! ### § VI. The loop returns to a ⊥, never to ε₀ (the *successor* reading is a commitment) -/
 #check @ZeroParadox.t_iz_limit_is_new_null    -- Statement: role half only, in any `ZPSemilattice`: (∀ x, join terminal x = x) → terminal = bot. No chain, no limit, no novelty in the statement; "a fresh instance" is the framework's reading, not this theorem
+
+/-! ### § VII. ε₀ as a WIDTH, not a value — the order type and the count of a cell of seeds -/
+-- Statement: in the lines below ε₀ occurs only as a LANDING (the least fixed point a seed reaches)
+-- and as an ORDER TYPE (a width). None of them places ε₀ at the floor of any carrier; § I stands.
+#check @ZeroParadox.first_cell_eq_Iic          -- Statement: the seeds `α` with `nfp (ω^·) α = ε₀` are exactly `Set.Iic ε₀`
+#check @ZeroParadox.successor_cell_width       -- Statement: the seeds strictly between `ε_o` and `ε_(o+1)` have order type `ε_(o+1)`, lifted one universe. That the seeds strictly below ε₀ have order type ε₀ is Mathlib's `Ordinal.type_lt_Iio`, true of every ordinal
+-- Statement: control, the cell strictly between ε₀ and ε₁ has width ε₁, not ε₀.
+open Ordinal in
+example : typeLT (Set.Ioo (Ordinal.epsilon 0 : Ordinal.{0}) (Ordinal.epsilon 1)) ≠
+    Ordinal.lift.{1, 0} (Ordinal.epsilon 0) := by
+  have h := ZeroParadox.successor_cell_width (0 : Ordinal.{0})
+  rw [Order.succ_eq_add_one, zero_add] at h
+  rw [h, Ne, Ordinal.lift_inj]
+  exact (Ordinal.veblen_right_strictMono 1 zero_lt_one).ne'
+#check @ZeroParadox.card_epsilon0              -- Statement: COUNTING chart, `ε₀.card = ℵ₀`. A cell indexed past the countable ordinals is not countable (the control in `ZeroParadox/Ordinal/Epsilon0LeastFP.lean`)
+#check @ZeroParadox.repr_surj_below_epsilon0   -- Statement: every ordinal below ε₀ is denoted by a normal-form `ONote`, a finite term; ε₀ is denoted by none (`repr_lt_epsilon0`, § I-b)
+-- Reading: CARRIER, two charts of one cell, neither denied. Order type: the first cell's seeds below
+-- its landing are as wide as ε₀, and each successor cell is as wide as its own landing. Count: the
+-- first cell is countable, and each of its addresses is a finite term.
 
 end Epsilon0CannotBeIndex
