@@ -1,50 +1,6 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
 Version 1.25 | October 2026
-v1.24: GATE ROUNDS 3-4 REMEDIATION (2026-09-19). Section IV's two load-bearing rows now NAME their witnesses - encodeCode_self and encode_self, minted in this arc - so a reader can re-run a row instead of retyping its statement. ⚠ The v1.23 entry below said "a theorem that RUNS a program reports [propext, Quot.sound] with no choice"; that is true of the named witness eval (Code.const k) n = Part.some k and FALSE as a general claim - roger_fixed_point_exists states there is a code whose evaluation matches, which runs a program, and carries the full triple. Three sites had dropped the witness and kept the generic; all three now name it. The correction also reached ZeroParadox/Category/ChoiceCannotBe.lean SS III, which carried the identical Ordinal correction and had never received the Code one - that non-propagation is what cost this arc two attempts.
-v1.23: ZPK-BED-1 AND ZPK-BED-3, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-19). MEASURED, and the measurement corrects Section IV as well as the defect sites: the axiom does not ride on the type. Nat.Partrec.Code is axiom-free, Nat.Partrec.Code.eval is axiom-free, and a theorem that RUNS a program (eval (Code.const k) n = Part.some k) reports [propext, Quot.sound] with no choice; encode c = encode c, proved by rfl and doing no work, reports the full triple. The axiom enters through Mathlib's Denumerable/Encodable instance, reached by encode - an OPERATION, not a type. Section IV said "statements that mention program codes" and now states no predicate at all - see the table ruling below. Section I said the non-constructive existence "is why all ZP-K theorems carry the standard foundational axioms shared by all Mathlib computability results"; both universals are false as measured, and Section I now points at Section IV instead of restating it. Section II chained a false premise - distinct CODES have distinct Godel numbers "so" each generates a fixed point with a distinct period; injectivity presupposes plurality and cannot produce it, so only the infinitude is given, with the Godel number named as A period rather than the least. ⚠⚠ SECTION IV NOW HOLDS A DATED MEASUREMENT TABLE AND NO GENERAL RULE (Tim ruling, 2026-09-19). Five successive general rules were written about this one Classical.choice and all five were false, the last two in this arc: "a theorem that runs a program carries no choice" is refuted by roger_fixed_point_exists (full triple), and "a statement that names a program's index carries the axiom" is refuted by encodeCode c = encodeCode c, proved by rfl and AXIOM-FREE, against Encodable.encode c = Encodable.encode c, proved by rfl and carrying the triple - two spellings of the same Godel number, opposite footprints, since Mathlib proves encode = encodeCode. A centre holding a rule hands its error to every document pointing at it; a centre holding a measurement inherits nothing. ⚠ The table is DATED and says to re-run rather than cite it - ChoiceCannotBe.lean's "No count is recorded here" records this project getting a cited figure wrong three times. Post-mortem: .claude-local/notes/axiom_footprint_measured_2026-09-19.md.
-v1.22: SET-THEORETIC CLAUSE DELETED (Tim ruling, gate round 6, 2026-09-15): Section IV said 'The order-theoretic and set-theoretic results are unaffected.' IsQuineAtom (bot : MachinePhase) is a set-theoretic result whose Lean theorem da1_closed_concrete lists Classical.choice through machinePhaseKleene; the sentence is deleted. 'The classical axioms are entirely localised to the computational layer.' is kept.
-v1.21: CLASSICAL.CHOICE PROVENANCE, SCOPED (Tim ruling, gate round 6, 2026-09-15): Section IV said all ZP-K theorems' axioms enter through the types; da1_closed_concrete's statement IsQuineAtom (bot : MachinePhase) depends on no axioms, its choice comes through its proof at machinePhaseKleene, and bot_is_quine_atom proves the same statement with no axioms. The body now says most ZP-K theorems carry the axioms, scopes the types sentence to statements that mention program codes, and names da1_closed_concrete as the exception; the remark's opening is scoped the same way; the da1_closed_concrete box's Purity line names the axiom-free proof.
-v1.20: CLASSICAL.CHOICE PROVENANCE, SECTION IV BODY (Tim ruling, gate round 5, 2026-09-15): 'These enter exclusively through Kleene's theorem and Rogers' theorem, which use classical logic and the axiom of choice' was false (a constant-code instance uses neither theorem and carries Classical.choice); it now says that in the computability layer these enter through the types, via Mathlib's numbering of program codes (Denumerable Code), which Kleene's theorem and Rogers' theorem both use. Measured: Mathlib fixed_point and fixed_point2 both list Classical.choice.
-v1.19: CLASSICAL.CHOICE PROVENANCE (Tim ruling, gate round 5, 2026-09-15): the Section IV remark said the choice belongs to this instance because a computable constant-code instance exists. That fact is about the noncomputable marker, not the axiom footprint: Classical.choice is carried by the statements' types through Mathlib's Denumerable Code, and is present in the computable instance too. The remark now says so, says Classical.choose is what makes machinePhaseKleene noncomputable, and says essentiality is not measured.
-v1.18: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the preamble's 'key insight' and Section II's 'They are not different things' are labelled the framework's reading at the sentence. The T-COMP box listed a fourth clause, botCode existence, under 'the following are equivalent'; t_comp states three, so the box lists those three and states the botCode existence separately as the KleeneStructure requirement. The classical-choice remark said the choice is structurally necessary; ZP-K's instance uses choice to pick botCode, and a computable instance with a constant code also exists (the example after machinePhaseKleene in Kleene.lean). 'satisfies vacuously' is now 'satisfies trivially'.
-v1.17: DA-1 READING FENCED, THIRD PASS (Tim rulings, 2026-09-15): three sentences stated the executor reading as established. The description_instantiation_gap_closed box now says that on the framework's reading bottom is not a description awaiting an external interpreter, and that Lean proves only the Quine-atom statement above it. The da1_closed_concrete box's Interpretation is labelled the framework's reading, not a Lean theorem, with c0 read as the executor. Section II's body says bottom in the computational instantiation is read as the universal Turing machine in its ground state; the general sentences about U are unchanged.
-v1.16: DA-1 PATH 3, SECOND PASS (Tim rulings, 2026-09-15): the Section V heading 'DA-1 Formally Closed', subsection 'II. DA-1 Closed' and the box title 'Theorem da1_closed_concrete - DA-1 Formally Closed' credited the Path 1 witness with closing DA-1, which is closed given DP-2; they are now 'DA-1: what Lean witnesses' and 'the Path 1 witness'. The description_instantiation_gap_closed box said bottom 'IS the executor ... identified structurally with the Kleene fixed point and the AFA Quine atom'; it now says bottom is read as the executor, Lean witnesses it as the AFA Quine atom of MachinePhase (da1_closed_concrete) and carries the Kleene quine as a KleeneStructure requirement (botCode_is_quine), and that these are one structural fact is the framework's reading.
-v1.15: DA-1 PATH 3, INTERNAL CONTRADICTION (pre-existing bedrock, editorial gate round 3 B1, 2026-09-15): 'What Changed for DA-1' opened 'ZP-K resolves Paths 1 and 3' and two sentences later said 'Path 3 (computational) is NOT resolved here'; the Path 2 paragraph and its Open Items row still said 'Paths 1 and 3 are formally closed / closed', and section I said 'Paths 1 and 3 are projections of one structural identity'. Each now carries the CLAIMS.md DA-1 row: Path 1 is witnessed by da1_closed_concrete, which proves IsQuineAtom (bottom : MachinePhase) and nothing computational; Path 3's witness is the machinePhaseKleene botCode_is_quine field, a KleeneStructure requirement, not a second independent proof. 'DA-1 does not depend on Path 2' is kept.
-v1.14: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
-v1.13: BEDROCK - the 2026-07-26 class-field-as-theorem root cause propagated, six sites. botCode described as "the code witnessing bottom's computational self-reference" and botCode_is_quine as "botCode IS its own program" now name it as a CLASS FIELD carrying a periodicity condition that constant codes also satisfy; the preamble no longer says Kleene's theorem "provides the formal witness"; the machinePhaseKleene def-box no longer says "a program that IS its own program". Section III heading and the verification table said "four-way equivalence" while t_comp proves THREE. R-K.0 gains the type-level statement of the gap: (1)-(3) are properties of an element of L, (4) is a property of a Code, and there is NO function or equivalence between Code and L anywhere in the development - the fourth condition is bundled by the class, not connected by a mapping.
-v1.12: witness audit (mechanical corrections). bot_self_mem_from_kleene described as "the Kleene side implies the AFA side" - it is a RESTATEMENT of the inherited AFAStructure field, adding no content, per Kleene.lean's own note. And "required together because they are the same structural fact" now names both as class FIELDS and the sameness as the framework's reading, which is the motivation for the class rather than something derived within it.
-v1.11: DA-1 Path 3 RECLASSIFIED (Tim, 2026-07-27) - from CLOSED / IN SCOPE to FOUNDATIONAL COMMITMENT, the status Path 2 already carries. Its witness botCode_is_quine is a KleeneStructure CLASS FIELD, assumed at instantiation, not a second independent proof; IsComputationalQuine is a periodicity condition a constant code satisfies vacuously; and the Kolmogorov reading ("no shorter program is prior to bottom") has no formal content here, K being uncomputable and absent from the development. Brings ZP-K into line with CLAIMS.md, which already stated this correctly. Three sites: the resolves-Paths prose, the Lean-scope status box, and the Open Items row.
-v1.10: T-COMP overclaim corrected (bedrock, cross-document attribution class). Preamble no longer says the four structural roles "are shown to be the same structural object" - three are PROVED to coincide (T-EXEC), the computational role is a KleeneStructure typeclass field, which is exactly what Remark R-K.0 already said 145 lines later. Footer's chained cross-type identity "Quine atom = bot = join identity = Kleene fixed point" replaced, and "DA-1 closed" narrowed to "DA-1 structural half" (da1_closed_concrete mentions no code and no execution). R-K.0 itself unchanged - it was already correct.
-v1.9: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
-v1.7: Version changelog removed from preamble; stale v1.5 references stripped from section headers and endnote.
-v1.6: Adversary-review pass — "(April 2026)" date removed from PDF body (belongs in
-docstring); "last philosophical vulnerability" → "remaining informal gap in the DA-1 argument".
-v1.5: Precision fixes — periodicity framing throughout (selfApply fixed-point stated
-as periodicity condition eval c n = eval c (encode c + n), not "computes itself");
-typeclass commitment language for KleeneStructure (AFA and Kleene fixed point "taken
-to be" the same structural role, not derived as equivalent); Kolmogorov/AIT claims
-removed from preamble and def_box (those belong to Path 3 as informal motivation,
-not to Kleene's theorem statement); Section II framing updated accordingly.
-v1.4: Four-way equivalence claim scoped to this framework in preamble; version history in
-title block trimmed to brief summary.
-v1.3: Forward references to "ZP-PQ" replaced throughout with "The Philosophical Question That Started This" — that document already contained the dissolution argument; ZP-PQ was always a placeholder label.
-v1.2: DA-1 Path 2 recharacterized in "What Changed for DA-1" section — from "outside Lean
-scope (ontological claim)" to "foundational commitment: a missing principle, not a missing
-proof." The gap between 'system at P₀' and 'system is running' cannot be closed by any
-computability library. Forward paths: new axiom, Chalmers' implementation notion, or
-The Philosophical Question That Started This. Paths 1 and 3 are formally closed; DA-1 does not depend on
-Path 2. Open Items Register updated: Path 2 status changed from OPEN to FOUNDATIONAL COMMITMENT.
-v1.1: Remark R-K.0 added — T-COMP "four-way equivalence" clarified: (1)–(3) are
-equivalent by T-EXEC (ZP-J); (4) is combined by KleeneStructure typeclass requiring
-botCode_is_quine, not derived independently. The equivalence flows through typeclass
-membership, not through independent proofs that AFA self-containment ↔ Kleene
-fixed-point.
-v1.0: Initial release — Four-way equivalence: Quine atom = ⊥ = join identity = Kleene
-fixed point. selfApply_partrec proved (Partrec₂). DA-1 formally closed via
-KleeneStructure MachinePhase instance (da1_closed_concrete : IsQuineAtom (bot :
-MachinePhase)). All ZPK.lean theorems compile; axioms: [propext, Classical.choice,
-Quot.sound] from Mathlib computability infrastructure.
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
@@ -402,7 +358,7 @@ def build():
         'description being run (ZP-E, DA-1 insert § II). A description present on a tape supplies '
         'the first use and not the second.'))
     E.append(body(
-        'Universality does not give replication. The same authors construct a "non-talking heads" '
+        'Local universality does not give replication. The same authors construct a "non-talking heads" '
         'cellular automaton that is locally Turing-universal and yet cannot sustain non-trivial '
         'self-replication (their Theorem 2.8, p. 8): "any head encountering a cell marked by '
         'another head halts immediately. This blocking of information transfer prevents '
@@ -438,8 +394,10 @@ def build():
 
     E.append(body(
         'This section records measurements, not a rule. `#print axioms` traverses a '
-        'declaration&#8217;s statement as well as its proof term, and reports what a proof '
-        'used &#8212; never what a theorem needs. The following were measured on '
+        'declaration&#8217;s statement as well as its proof term and reports every axiom it '
+        'reaches from either. Where the statement reaches an axiom, every proof of that '
+        'statement carries it; where only the proof does, whether another proof avoids it is '
+        'a separate question, and the table does not answer it. The following were measured on '
         '2026-09-19 against the pinned Mathlib; re-run them rather than citing this table '
         'if the answer matters.'))
 
@@ -487,15 +445,17 @@ def build():
     E.append(remark_box(
         'Remark: Classical Choice in Computability',
         [
-            'ZP-K\'s machinePhaseKleene '
-            'picks botCode with Classical.choose, which is what makes that instance '
-            'noncomputable. Kleene\'s '
-            'theorem, as Mathlib states it, is an existence statement (∃ c, eval c = f c), and '
-            'Mathlib\'s proof of it carries Classical.choice (the table above); that is a measured '
-            'footprint, classified neither as accidental nor as essential.',
-            'The MachinePhase instance (§ V) uses Classical.choose to pick botCode from '
-            'the existence proof. This makes machinePhaseKleene noncomputable, '
-            'which is correct and expected.',
+            'Kleene\'s theorem as Mathlib states it, ∀ f, Partrec₂ f → ∃ c, eval c = f c, carries '
+            'Classical.choice in its statement: that statement, measured as a proposition, reports '
+            'propext, Classical.choice and Quot.sound (2026-10-04), and so does the statement of '
+            'Rogers\' theorem, ∀ f, Computable f → ∃ c, eval (f c) = eval c. So every proof of '
+            'either, as stated, carries the triple. Where it enters each statement is recorded in '
+            'ZeroParadox/Computability/Kleene.md § VIII. Whether a restated, choice-free statement '
+            'has a choice-free proof is UNCLASSIFIED (Section VI.IV).',
+            'The MachinePhase instance (§ V) picks botCode with Classical.choose from '
+            'computational_quine_exists, which is what makes machinePhaseKleene noncomputable. A '
+            'computable instance with the constant code Code.const 0 also exists (the example after '
+            'machinePhaseKleene in Kleene.lean § V).',
         ]
     ))
     E.append(sp(6))
@@ -633,14 +593,20 @@ def build():
     ]
 
     E.append(body(
-        'This section follows one arc, one declaration per step. Presence on a tape is '
+        'This section follows one arc: every instruction is present on a disjunctive tape (I), '
+        'self-printing interpreters differ only by an address (II), a disjunctive tape holds no '
+        'full copy of itself (III), and constructing an address is a computation while selecting '
+        'a code by its behaviour is where choice would work (IV, a reading). V adds the zero tape '
+        'and VI the replication setting of Cotler, Hongler and Hudcová. Presence on a tape is '
         'Sense A (ZP-E, DA-1 insert § II); that anything runs is the occurrence commitment, as '
         'in Section III.II.'))
 
     E.append(Paragraph('I. Presence: Every Instruction Is on the Tape', S['h2']))
     E.append(body(
-        'A tape is disjunctive (the standard term) when every finite word occurs in it '
-        'infinitely often (Disjunctive; Barnsley and Leśniak, arXiv:1203.0481v2, § 3, p. 6). On a '
+        'A tape is disjunctive (the standard term) when every finite word occurs in it. Barnsley '
+        'and Leśniak (arXiv:1203.0481v2, § 3, p. 6) define it that way and note that every finite '
+        'word then occurs infinitely often (their remark and Prop. 1, same page); Lean defines the infinitely-often form '
+        '(Disjunctive) and proves the two forms agree (disjunctive_iff_once). On a '
         'disjunctive tape the binary of every program code occurs infinitely often '
         '(code_occurs_of_disjunctive). That is presence of the description, Sense A; nothing in '
         'the statement reads or runs a code. Disjunctive does not need randomness: champ, a '
@@ -648,23 +614,29 @@ def build():
         'champ_primrec), and almost every fair-coin tape is disjunctive '
         '(fairTape_disjunctive_ae).'))
     E.append(body(
-        'The commitment, stated on its own: the framework holds that its bottom role is maximally complex. '
-        'That is a commitment about the framework\'s bottom role, not about any one tape, and in particular '
-        'not about the all-false tape, ⊥ of the pointwise tape order (V below), which carries no '
-        'code word but Code.zero\'s empty one.'))
+        'The commitment, stated on its own: the framework holds that the occupant of its ⊥ role, '
+        '⊥ of a ZPSemilattice, read as a tape, is maximally complex. That is a commitment about '
+        'that occupant, not about any one tape named here, and in particular not about the '
+        'all-false tape, ⊥ of the pointwise tape order (V below), which carries no code word but '
+        'Code.zero\'s empty one. No map from a ZPSemilattice to ℕ → Bool is claimed '
+        '(ZeroParadox/Information/Disjunctive.lean § VI).'))
     E.append(body(
         'The standard theory, stated separately and not proved in Lean: with K the prefix-free '
         'Kolmogorov complexity, a sequence x has K(first n bits of x) ≥ n − c for some constant c and every n '
-        'exactly when it is Martin-Löf random (the Levin–Schnorr theorem), and Martin-Löf random '
+        'exactly when it is Martin-Löf random (the Levin–Schnorr theorem; Franklin and Porter, '
+        'arXiv:2004.02851, Theorem 2.5, crediting Levin and Schnorr), and Martin-Löf random '
         'sequences are disjunctive. The prefix-free form is needed: with plain complexity no '
-        'infinite sequence has every prefix incompressible (Martin-Löf). Martin-Löf randomness '
+        'infinite sequence has every prefix incompressible (Martin-Löf, Z. Wahrsch. verw. Geb. 19 '
+        '(1971) 225–230, Theorem 1, at a constant f). Martin-Löf randomness '
         'and Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (searches '
         'recorded in ZeroParadox/Information/Disjunctive.md). Disjunctive does not imply random: '
         'champ is disjunctive and computable.'))
     E.append(body(
-        'Reading: if the framework\'s bottom role is read as a tape ℕ → Bool, and maximal complexity in the '
-        'prefix-free sense, the standard theory would make that tape Martin-Löf random and '
-        'so disjunctive, and every instruction would be present on it.'))
+        'Reading: if the occupant of the framework\'s ⊥ role is read as a tape ℕ → Bool, and its '
+        'maximal complexity is read as the Levin–Schnorr criterion above, every prefix '
+        'incompressible up to a constant, K(first n bits of x) ≥ n − c, then the standard theory '
+        'would make that tape Martin-Löf random and so disjunctive, and every instruction would be '
+        'present on it.'))
 
     E.append(Paragraph('II. Two Self-Printing Interpreters Differ Only on Channel 0', S['h2']))
     E.append(result_box(
@@ -692,7 +664,10 @@ def build():
         'Disjunctive.lean § V). Barnsley and Leśniak (arXiv:1203.0481v2, pp. 7-8) note that "a '
         'disjunctive sequence cannot be almost periodic", almost periodic in their sense meaning '
         'that each word occurring infinitely often occurs in every segment of some length m, with '
-        'm depending on the word. '
+        'm depending on the word. A tape equal to its own shift by some a > 0 is almost periodic '
+        'in that sense (the example after not_disjunctive_of_periodic in Disjunctive.lean § V), '
+        'so their remark is the stronger statement and disjunctive_not_periodic is its periodic '
+        'special case. '
         'Reading: a tape carrying every code word holds no full copy of itself at any positive '
         'offset; copies sit side by side, told apart by an address (II).'))
 
@@ -714,7 +689,8 @@ def build():
         'stated for Bool and not for codes. The Lean footprint does not draw that line, and is stated as '
         'measured: selfref_universal_exists carries Classical.choice, and so does its statement, '
         'through Mathlib\'s numbering of codes (Denumerable Code, reached through ofNatCode); '
-        'restated with encodeCode, the statement is axiom-free, and no proof of the restated form '
+        'restated with encodeCode for the Gödel number and the channel of code d written '
+        'Nat.pair (encodeCode d + 1) n, the statement is axiom-free, and no proof of the restated form '
         'without choice was found. ZeroParadox/Computability/Kleene.md § VIII records the '
         'measurement (2026-10-04) and what the route lacked as located then. The footprint is '
         'UNCLASSIFIED.'))
@@ -730,9 +706,10 @@ def build():
     E.append(body(
         'Reading, in two charts, neither denied: the all-false tape, ⊥ of the pointwise tape '
         'order, is the reference every comparison runs through (content chart) and every tape\'s '
-        'self-difference (self chart), one object in two charts. That the framework\'s bottom role is '
-        'maximally complex is a commitment, stated as no equation with any one tape: it is not '
-        'a statement about this all-false tape, which is not disjunctive and carries no code word '
+        'self-difference (self chart), one object in two charts. That the occupant of the '
+        'framework\'s ⊥ role, ⊥ of a ZPSemilattice, read as a tape, is maximally complex is a '
+        'commitment, stated as no equation with any one tape: it is not a statement about this '
+        'all-false tape, which is not disjunctive and carries no code word '
         'but Code.zero\'s empty one.'))
 
     E.append(Paragraph('VI. Replication Beyond Self-Reference, in Cotler, Hongler and Hudcová\'s '
@@ -745,10 +722,10 @@ def build():
         'strengths of universality, GloballyUniversal ⊊ LocallyUniversal (their Theorem 2.3, '
         'p. 5): of the reversible automata, "Some can locally implement reversible universal Turing '
         'machines but cannot globally simulate irreversible CAs". Reading: these are two different '
-        'overwrite capacities, writing into a cell another head has marked, the inter-head '
-        'communication the authors call "crucial" for replication, and irreversible erasure, '
-        'which such a reversible automaton cannot simulate '
-        'globally. This mapping onto the framework is a reading.'))
+        'capacities, inter-head communication, which the authors call "crucial" for replication '
+        'and which the non-talking-heads rule blocks by halting any head that encounters a cell '
+        'another head has marked, and irreversible erasure, which such a reversible automaton '
+        'cannot simulate globally. This mapping onto the framework is a reading.'))
     E.append(sp(8))
 
     print('[build_zpk] Building registers...')
@@ -867,7 +844,7 @@ def build():
          '\'system is running\' cannot be closed by any computability library. '
          'DA-1 does not depend on Path 2.'],
         ['selfApply uniqueness',
-         'CLOSED — not attempted (correct)',
+         'CLOSED — two predicates, two answers',
          'Codes meeting IsComputationalQuine are not unique: the constant codes alone give '
          'infinitely many (infinite_quine_family). That the Quine atom is ⊥ of the lattice, and the '
          'only one, flows from ZP-J T-EXEC (set-theoretic side). For self-printing codes, a '
@@ -883,18 +860,21 @@ def build():
         ['Choice-free recursion theorem',
          'OPEN — measured negative, 2026-10-04',
          'The statement of selfref_universal_exists carries Classical.choice through Mathlib\'s '
-         'numbering of codes (Denumerable Code); restated with encodeCode it is axiom-free, and no '
+         'numbering of codes (Denumerable Code); restated with encodeCode for the Gödel number and '
+         'the channel of code d written Nat.pair (encodeCode d + 1) n, it is axiom-free, and no '
          'proof of the restated form without choice was found. What the route lacked, as located '
          'then, is recorded in ZeroParadox/Computability/Kleene.md § VIII. Footprint UNCLASSIFIED.'],
         ['Martin-Löf randomness ⇒ disjunctive',
          'OPEN — not in Lean',
          'Standard theory: a Martin-Löf random sequence is disjunctive, and by the Levin–Schnorr '
          'theorem Martin-Löf randomness is incompressibility of every prefix, K(first n bits of x) ≥ '
-         'n − c for some constant c and every n, with K the prefix-free complexity; with plain complexity no infinite sequence has every prefix '
-         'incompressible (Martin-Löf). Martin-Löf randomness and Kolmogorov complexity are not '
-         'located in the Mathlib pin as of 2026-10-04 (search record in Disjunctive.md). Until '
-         'this bridge is formalised, the framework\'s commitment that its bottom role is maximally complex '
-         'reaches Disjunctive (Section VI.I) only as a reading.'],
+         'n − c for some constant c and every n, with K the prefix-free complexity (Franklin and '
+         'Porter, arXiv:2004.02851, Theorem 2.5); with plain complexity no infinite sequence has '
+         'every prefix incompressible (Martin-Löf 1971, Theorem 1). Martin-Löf randomness and '
+         'Kolmogorov complexity are not located in the Mathlib pin as of 2026-10-04 (search record '
+         'in Disjunctive.md). Until this bridge is formalised, the framework\'s commitment that the '
+         'occupant of its ⊥ role, ⊥ of a ZPSemilattice, read as a tape, is maximally complex reaches '
+         'Disjunctive (Section VI.I) only as a reading.'],
     ]
     E.append(data_table(
         ['Item', 'Status', 'Description'],

@@ -1,34 +1,6 @@
 """
 Build ZP-K Illustrated Companion
 Version 1.23 | October 2026
-v1.22: ZPKB-6, BEDROCK IN A DEPOSITED PDF (Tim ruling, 2026-09-20). The Proof Purity note closed with "The ZP-A, ZP-J, and core ZP-E results remain free of this dependency", which is false as measured: decoration_unique in ZeroParadox/Settheory/APG.lean reports propext, Classical.choice, Quot.sound, as do six siblings in that file, and ZeroParadox/Valuation/ScaleBridge.lean adds thirty more - MANIFEST.md labels both files ZPJ, and both of this document's own layers attribute that content to ZP-J. The true statement is narrower and already exists: AxiomProfile.lean Section I scopes it to the CORE - T-SNAP, the lattice, the Quine atom. The sentence turned "the core" into "the results"; it now names the core, POINTS at ZeroParadox/AxiomProfile.lean, and names decoration_unique as the counterexample inside the same layer. ⚠⚠ THIS ONE SURVIVED THE PRIOR ARC BECAUSE IT IS THE RULE PHRASED AS AN ABSENCE. Two positive-wording fixes to this same box DID land; a third statement, worded as what is FREE OF the dependency, was invisible to every sweep keyed on the positive phrasing (R-NOTINLIB, POLARITY axis). The corrective sweep for this fix was run on "remain free of this dependency" and "free of this dependency" as well as the positive forms, over .md + .lean + tracked .py + the 40 rendered PDFs. ⛔ Lines above this one - the computability machinery "requires classical logic", a necessity claim where ZP-K Section IV says essentiality is not measured - are a separate ORDINARY finding, out of scope for this arc by Tim's decision and deliberately not touched here.
-v1.21: ZPK-BED-1 COMPANION SYNC with ZP-K v1.23 (Tim ruling, 2026-09-19). Two defects, both in the Proof Purity note. (1) "a standard dependency for any theorem that uses Mathlib's computability library" is the same refuted universal as ZP-K Section I: Nat.Partrec.Code and Nat.Partrec.Code.eval are both axiom-free, and IsKleeneFixedPoint, whose type is eval c = f c, measures no axioms. It now states the inheritance and points at ZP-K Section IV rather than restating the rule. ⚠ This companion was reviewed in an earlier round of this work and judged "not materially stale" - that judgement was WRONG and R-COMPANION exists to prevent it; the defect was found by an adversary sweep of the DEPOSITED companion PDF, which had not been rebuilt while its formal document moved. (2) "IVT itself depends on completeness of the reals, which depends on choice" - Dedekind completeness is a ZF theorem. The analogy is kept and the false clause removed.
-v1.20: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15), companion sync with ZP-K v1.18: 'It proves that there is a fourth description of bottom' now says ZP-K carries c0's computational face as a KleeneStructure requirement (botCode_is_quine), reading c0 as the Kleene quine being that commitment, not a theorem. The executor sentences ('bottom IS an instance of a Turing machine', 'It is already executing', 'Description and execution are the same act') are labelled the framework's reading at the sentence. The Path 1 paragraph said 'Now IN LEAN SCOPE via ZP-K ... The AFA self-containment of bottom is not just argued, it is machine-checked'; it now states what Lean witnesses: da1_closed_concrete from machinePhaseAFA, where selfMem is x = bottom, so the content is uniqueness rather than membership.
-v1.19: DA-1 PATH 3, SECOND PASS (Tim ruling, 2026-09-15), companion sync with ZP-K v1.16: the heading 'DA-1 Formally Closed' is 'DA-1: what Lean witnesses'.
-v1.18: DA-1 PATH 3 (pre-existing bedrock, editorial gate round 3 B1, 2026-09-15), companion sync with ZP-K v1.15: the closing Remember box said 'ZP-K closes DA-1 Paths 1 and 3 formally' and that it 'proves, in machine-checked Lean 4, that the structural role bottom plays in the algebra is the same role it plays in AFA set theory and in computability theory', contradicting this companion's own Path 3 paragraph (a foundational commitment). It now carries the CLAIMS.md DA-1 row: Path 1 witnessed by da1_closed_concrete, nothing computational; Path 3's witness a KleeneStructure requirement, not a second independent proof; the one-fact reading is the framework's. The sentences 'The gap was never a gap - bottom in all three settings is the same self-referential fixed point' are removed with it.
-v1.17: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
-v1.16: BEDROCK - two class-field overclaims struck. The four-way table's Computation row asserted "no shorter external generator exists" (Kolmogorov content this same document strikes elsewhere as having no formal part here), and the computational-Quine paragraph asserted it as an "in other words" restatement of the fixed-point definition, which says nothing about minimality. Section heading "The Four-Way Equivalence" corrected - t_comp proves three.
-v1.15: witness audit (mechanical). "proved via da1_closed_concrete" for the Quine atom now records that MachinePhase defines selfMem as x = bottom, so the content of that theorem is the uniqueness rather than the membership.
-v1.14: DA-1 Path 3 reclassified to FOUNDATIONAL COMMITMENT (see ZP-K v1.11) - the companion had it as "Now IN LEAN SCOPE via ZP-K". Also struck a false predicate introduced by the v1.13 fix: "precludes any external initiating agent" had been left attached when "all four" became "three of the four", making it assert preclusion specifically of the order and algebra characterisations. Removed rather than reworded.
-v1.13: T-COMP overclaim corrected (bedrock). The companion had no R-K.0 equivalent and was the most overclaiming document of the set: "establishes that the four descriptions are all equivalent", "each arrow represents a proved equivalence", "they are the same property", "the expressions are provably equivalent". Now states THREE proved and the computational face joined by assumption; the single-structural-identity claim is labelled as the framework's READING and as the motivation for building KleeneStructure, not something ZP-K derives. Key Result box corrected likewise.
-v1.12: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
-v1.10: four_way_diagram — removed the redundant internal caption String that overlapped the bottom "Computation (Kleene)" box (Diagram Rule 4; the external ccaption already captions the diagram).
-v1.9: FMC precision (sweep Step 4) — DA-1 Path 1 line splits the axiom-free structural fixed point (what ZP-J proved) from the literal ⊥ = {⊥} (the ZF+AFA setting).
-v1.8: Strip version number from companion footer.
-v1.7: Fix four_way_diagram String() HTML entity encoding — raw Unicode for ⊥, ≤, ∨.
-v1.6: Add "Self-Reference: Fixed Point vs. Oscillation" section — Gödel diagonal lemma, fixed-point vs. liar-type self-reference, ZPE irreversibility excludes oscillation.
-v1.5: Strip version number from disclaimer cross-reference to ZP-K formal document.
-v1.4: AR fix — "⊥ in every formal language" → "⊥ in the four formal languages of this
-framework" — scopes the cross-framework identity claim to the four ZP languages.
-v1.3: "IS the Turing machine" → "IS an instance of a Turing machine" — preserves the
-direct comparison while distinguishing structural instantiation from literal identity.
-v1.2: Disclaimer updated — "formal ontology" replaced with "formal document".
-v1.0: Initial release. Covers T-COMP (four-way equivalence: Quine atom = bottom = join
-identity = Kleene fixed point), the computational Quine, and da1_closed_concrete
-(DA-1 formally closed — ⊥ instantiates a Turing machine in ground state).
-v1.1: Added explicit note that Kleene's theorem is an existence proof, not a convergent
-iteration — the halting question does not arise.
-Formal doc: ZP-K Computational Grounding v1.0.
 """
 
 import os
@@ -219,8 +191,10 @@ def build():
     E.append(example_box('Real-world analogy — A self-printing program', [
         'A Quine program in computer science is a program that, when run, outputs its own '
         'source code. It needs no external file to read — the source is baked in. '
-        'Kleene\'s theorem guarantees that for any computable transformation, such a fixed '
-        'point always exists. On the framework\'s reading, the computational Quine is the expression '
+        'Kleene\'s theorem guarantees that every computable transformation of programs has a '
+        'fixed point, a program that computes what the transformation sends it to '
+        '(kleene_fixed_point_exists); a self-printing program of this kind is the fixed point of '
+        'one particular transformation (selfref_universal_exists, below). On the framework\'s reading, the computational Quine is the expression '
         'of ⊥ = {⊥} in the language of programs: c is its own program, just as ⊥ is its own member. '
         'ZP-K carries that reading as a KleeneStructure requirement (botCode_is_quine), not a theorem.',
     ]))
@@ -288,8 +262,10 @@ def build():
         'executes at all, it executes itself. That rules out an outside executor; it does not rule '
         'out an inert ⊥. ZP-J proved axiom-free that ⊥ is the unique self-containing element (the structural fixed point); that this is the literal ⊥ = {⊥} holds in the ZF+AFA setting. '
         '<b>What Lean witnesses via ZP-K:</b> Path 1\'s Lean counterpart is da1_closed_concrete, which proves '
-        'IsQuineAtom (⊥ : MachinePhase) from the AFAStructure instance machinePhaseAFA. There '
-        'selfMem is defined as x = ⊥, so the content is the uniqueness rather than the membership.'))
+        'IsQuineAtom (⊥ : MachinePhase) through the KleeneStructure instance machinePhaseKleene, '
+        'whose AFAStructure part is machinePhaseAFA. There selfMem is defined as x = ⊥, so the '
+        'content is the uniqueness rather than the membership, and the same statement has a proof '
+        'from machinePhaseAFA alone (the example after da1_closed_concrete in Kleene.lean).'))
     E.append(cbody(
         '<b>Path 2 (Informational — L-INF):</b> The surprisal of ⊥ is unbounded — no finite '
         'interpreter can hold it as a stored description. '
@@ -348,10 +324,11 @@ def build():
     # Purity note
     E.append(Paragraph('A Note on Proof Purity', CS['h1']))
     E.append(cbody(
-        'The computability machinery in ZP-K (Kleene\'s theorem, Rogers\' fixed-point theorem) '
-        'is proved in Mathlib with Classical.choice in its measured footprint, inherited from '
-        'Mathlib rather than a novel Zero Paradox commitment. Whether the footprint is essential is unclassified. ZP-K '
-        'Section IV tabulates the measured axiom footprints. '
+        'The statements of Kleene\'s theorem and of Rogers\' fixed-point theorem, as Mathlib '
+        'states them, already carry Classical.choice (measured 2026-10-04), so every proof of '
+        'them as stated carries it too. That footprint is inherited from Mathlib rather than a '
+        'Zero Paradox commitment. Whether a restated, choice-free statement has a choice-free '
+        'proof is unclassified. ZP-K Section IV tabulates the measured axiom footprints. '
         'What is free of Classical.choice is the choice-free CORE, and that is narrower than any layer '
         'name: ZeroParadox/AxiomProfile.lean &#167;I is where the core is listed and each '
         'footprint measured &#8212; T-SNAP, the lattice, the Quine atom. Results elsewhere '
@@ -360,11 +337,10 @@ def build():
         'and reports the full triple. Check the artifact for a given result rather than '
         'reading a layer name as a footprint.'))
     E.append(cbody(
-        'This is analogous to a proof that invokes the intermediate value theorem. Reaching '
-        'for a result from the standard, classically built libraries '
-        'does not make your proof "non-constructive" in any meaningful sense — it means '
-        'you are working in the standard mathematical setting. ZP-K\'s classical footprint '
-        'is of the same character.'))
+        'Using a result from the standard, classically built libraries puts a proof in the '
+        'classical setting those libraries are built in. Whether a given footprint is needed is a separate '
+        'question, answered declaration by declaration, and ZP-K Section IV records the '
+        'measurements rather than a rule.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: in ZP-K, DA-1 Path 1\'s Lean counterpart is da1_closed_concrete, which proves '
@@ -421,18 +397,23 @@ def build():
         'Neumann\'s self-replicating automaton as using its description twice: once interpreted, '
         'to build, and once transcribed, to hand to the copy. The framework\'s reading: in ZP-E\'s terms the transcribed '
         'use is a description sitting as data (Sense A) and the interpreted use is a description '
-        'being run (Sense B). The formal document follows one arc through these ideas.'))
+        'being run (Sense B). Section VI of the formal document follows one arc: every instruction '
+        'is present on a tape, self-printing interpreters are told apart only by an address, such a '
+        'tape holds no full copy of itself, and building an address differs from choosing one. The '
+        'paragraphs below take it in that order.'))
     E.append(cbody(
         '<b>Every instruction is present.</b> A tape of bits on which every finite pattern appears '
         'is called disjunctive. On such a tape the code of every program appears, infinitely often '
         '(code_occurs_of_disjunctive). That is presence, not execution. It needs no randomness: a '
         'simple counting tape in the style of Champernowne is disjunctive and computable. The '
-        'framework holds, as a commitment, that its bottom role is maximally complex; that is about the '
-        'framework\'s bottom role, not about the all-false tape below. Standard theory, not proved in Lean: '
-        'a sequence whose every prefix is incompressible in the prefix-free sense of Kolmogorov '
-        'complexity is exactly a Martin-Löf random one (the Levin–Schnorr theorem), and such a '
-        'sequence is disjunctive. The prefix-free sense matters: with plain complexity no infinite '
-        'sequence has every prefix incompressible.'))
+        'framework holds, as a commitment, that the occupant of its ⊥ role, ⊥ of a ZPSemilattice, '
+        'read as a tape, is maximally complex; that commitment is about that occupant, not about '
+        'the all-false tape below. Standard theory, not proved in Lean: a sequence whose every '
+        'prefix is incompressible up to a constant in the prefix-free sense of Kolmogorov '
+        'complexity is exactly a Martin-Löf random one (the Levin–Schnorr theorem; Franklin and '
+        'Porter, arXiv:2004.02851, Theorem 2.5), and such a sequence is disjunctive. The '
+        'prefix-free sense matters: with plain complexity no infinite sequence has every prefix '
+        'incompressible (Martin-Löf 1971, Theorem 1).'))
     E.append(cbody(
         '<b>Two self-printing interpreters differ only on channel 0.</b> Two self-printing universal '
         'programs give the same answers on every channel where they compute other programs, and '
@@ -444,25 +425,32 @@ def build():
         'any positive amount (disjunctive_not_periodic). The reading: copies sit side by side, '
         'told apart by an address, rather than one tape containing itself whole.'))
     E.append(cbody(
-        '<b>Building an address versus choosing one.</b> Building a self-printing program is a '
-        'computation: the recursion theorem produces it. What Lean has about choosing is about a '
-        'two-way choice, between two charts labelled by Bool '
-        '(ZeroParadox/Valuation/PoleChartSelection.lean): with a decidable test, decidable in '
-        'Lean\'s sense, which is not the same as having an algorithm, picking is done by an if. The framework\'s reading, by analogy and not a theorem about programs: '
-        'choosing a program by what it does is where choice would do its work. In Lean the '
-        'footprint does not draw that line: the existence theorem carries Classical.choice, '
-        'and whether that is essential is unclassified '
+        '<b>Building an address versus choosing one.</b> The recursion theorem produces a '
+        'self-printing universal program (selfref_universal_exists). What Lean has about choosing '
+        'is about a two-way choice, between two charts labelled by Bool '
+        '(ZeroParadox/Valuation/PoleChartSelection.lean), and it has two halves. For an inhabited '
+        'test that is decidable in Lean\'s sense, which is not the same as having an algorithm, '
+        'an if picks a witness (select_of_decidable). A picker that works uniformly for every '
+        'inhabited test on Bool is, by definition, a fragment of the axiom of choice '
+        '(uniformChartSelection_iff_choiceFragment). The framework\'s reading, by analogy and not '
+        'a theorem about programs: building a program is a computation, and choosing a program by '
+        'what it does is where choice would do its work. In Lean the footprint does not draw that '
+        'line: the existence theorem\'s statement carries Classical.choice, and whether a restated, '
+        'choice-free statement has a choice-free proof is unclassified '
         '(ZeroParadox/Computability/Kleene.md).'))
     E.append(cbody(
         '<b>The zero tape.</b> The all-false tape is ⊥ of the bit-by-bit tape order, carries no '
         'program\'s code except the empty one, and is what any tape becomes when compared with '
         'itself bit by bit. The framework reads it two ways at once: the reference every '
-        'comparison runs through, and every tape\'s difference from itself. It is not the '
-        'framework\'s bottom role that the commitment calls maximally complex.'))
+        'comparison runs through, and every tape\'s difference from itself. The commitment above '
+        'calls the occupant of the framework\'s ⊥ role, ⊥ of a ZPSemilattice, maximally complex; '
+        'this all-false tape is ⊥ of a different structure, tapes under the bit-by-bit order, and '
+        'the commitment is not about it.'))
     E.append(cbody(
         '<b>Replication beyond self-reference.</b> Cotler, Hongler and Hudcová build an '
-        'automaton that can compute anything and still cannot copy itself, because its machines '
-        'may not write into each other\'s territory. As they put it, a quine "produces a '
+        'automaton that is universal locally and still cannot copy itself, because any of its '
+        'machines that meets a cell another machine has marked halts at once, so no information '
+        'passes between them. As they put it, a quine "produces a '
         'description of the copying mechanism without replicating the mechanism itself". In one '
         'example, occurrence is not visible from outside either: the carry example in '
         'Occurrence.lean (carry_steps_onward_forever_yet_shows_nothing) steps onward forever while '
