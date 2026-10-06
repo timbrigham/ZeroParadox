@@ -12,7 +12,7 @@ import ZeroParadox.Valuation.SemilatticeInstance
 
 An index of established results pinning ε₀, Mathlib `Ordinal.epsilon 0`. Every indexed name is
 `#check`ed, so the `import`s recompile each home file. It creates no named declarations; § I-b,
-§ IV, § V and § VII carry anonymous `example`s, the only things proved here. The `#check`s cannot overclaim; the
+§ I-c, § IV, § V and § VII carry anonymous `example`s, the only things proved here. The `#check`s cannot overclaim; the
 glosses can. Long form: `ZeroParadox/Ordinal/Epsilon0CannotBe.md`.
 
 ## Engineer's Take
@@ -92,6 +92,34 @@ example (x : ℤ_[2]) : ‖(0 : ℤ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 → x =
 #check @ZeroParadox.repr_lt_epsilon0          -- Statement: every `ONote`, in normal form or not, denotes strictly below ε₀
 -- Statement: so every `NONote`, the domain of `cnfToZp2`, denotes strictly below ε₀.
 example (o : NONote) : o.repr < Ordinal.epsilon 0 := ZeroParadox.repr_lt_epsilon0 o.1
+
+/-! ### § I-c. ⊥ and ε₀ as roles relative to a floor: one occupant per carrier, one per seed -/
+-- Reading: a role is a position relative to a floor, a Lean object its occupant; the schema is
+-- Knaster–Tarski's and Veblen's (`ZeroParadox/Order/LeastFixedPoint.md`). Value versus role: § I-b.
+#check @ZeroParadox.da2_bottom_characterization -- Statement: in one `ZPSemilattice`, `(∀ x, join S x = x) ↔ S = bot`
+#check @ZeroParadox.IsLeastFixedPointFrom      -- Statement: `mu` is the least fixed point of `f` at or above `seed` under `r`
+#check @ZeroParadox.IsLeastFixedPointFrom.unique -- Statement: for antisymmetric `r`, one seed has at most one such `mu`
+#check @ZeroParadox.isLeastFixedPointFrom_nfp  -- Statement: for normal `f`, `nfp f a` is that `mu` at the seed `a`
+-- Statement: in `Ordinal`, seeded AT an ε-number floor `ε_o` the schema returns `ε_o`; seeded at
+-- `succ ε_o` it returns `ε_(o+1)`, a different ordinal.
+example (o : Ordinal) :
+    ZeroParadox.IsLeastFixedPointFrom (· ≤ ·) (fun α => Ordinal.omega0 ^ α)
+      (Ordinal.epsilon o) (Ordinal.epsilon o) ∧
+    ZeroParadox.IsLeastFixedPointFrom (· ≤ ·) (fun α => Ordinal.omega0 ^ α)
+      (Order.succ (Ordinal.epsilon o)) (Ordinal.epsilon (Order.succ o)) ∧
+    Ordinal.epsilon o ≠ Ordinal.epsilon (Order.succ o) := by
+  refine ⟨⟨le_rfl, Ordinal.omega0_opow_epsilon o, fun _ _ h => h⟩, ?_, ?_⟩
+  · rw [Ordinal.epsilon_succ_eq_nfp]
+    exact ZeroParadox.isLeastFixedPointFrom_nfp (Ordinal.isNormal_opow Ordinal.one_lt_omega0) _
+  · rw [Ordinal.epsilon_succ_eq_nfp]
+    exact (lt_of_lt_of_le (Order.lt_succ _) (Ordinal.le_nfp _ _)).ne
+-- Statement: at the floor `0`, ⊥ of `Ordinal`, both seeds give ε₀, since `0` is not a fixed point
+-- (`bot_is_not_a_step`, § III).
+example : Ordinal.nfp (fun α => Ordinal.omega0 ^ α) 0 =
+    Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ 0) :=
+  (ZeroParadox.nfp_seed_independent_below_epsilon0 _ (Ordinal.epsilon_pos 0).le).trans
+    (ZeroParadox.nfp_seed_independent_below_epsilon0 _
+      (Order.succ_le_of_lt (Ordinal.epsilon_pos 0))).symm
 
 /-! ### § II. What ε₀ IS — the construction: first fixed point of the ω-tower from ⊥ of `Ordinal` -/
 #check @ZeroParadox.epsilon0_eq_nfp_bot       -- Statement: ε₀ = nfp (ω^·) ⊥, seeded at ⊥ of `Ordinal`

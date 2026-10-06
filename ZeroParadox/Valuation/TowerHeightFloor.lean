@@ -23,33 +23,8 @@ framework already has, and that is fine. The movement of the thought process its
 
 ## Formal Overview (AI-assisted)
 
-The tower ASCENDS (ordinal side) to its height ε₀; an `InfinitudeFloor` DESCENDS (its members climb in
-complexity) to a floor ⊥ of infinite complexity. These orientations *fight* — and that fight is exactly the
-content, because the order-reversing bridge `cnfToZp2` (`Ordinal/CnfBridge.lean`) is what reconciles them
-**without ever asserting `ε₀ = ⊥`** (a cross-type identity, ill-typed per MC-1 / ZP-P). Building the tie is
-required *precisely because* it fights `ε₀ ≠ ⊥`: the map turning ascent-to-ε₀ into descent-to-⊥ is the wall
-that is the spine.
-
-`towerInfinitudeFloor : InfinitudeFloor ℤ_[2]` is a **genuine instance** realizing this:
-* `floor = 0` (= ⊥ in `ℤ_[2]`);
-* `member n = cnfToZp2 (towerNONote (n+1))` — the tower's 2-adic images (the shared construction of
-  `mu_construction_correspondence`), each `≠ 0` (`snap_arc_z2_loop`);
-* `cx x = ↑x.valuation` off 0, `⊤` at 0 — and `cx (member n) = n+1` (`cnfToZp2_tower_valuation`), so the
-  complexities **climb** and drive `cx floor = ⊤` (`infinitude_forces_infinite_complexity`).
-
-The **order-reversal is visible in the numbers**: as `n` rises, the 2-adic *valuation* rises (`= n+1`) while
-the *norm* falls to 0 — valuation-up ⟺ norm-down is `cnfToZp2` being antitone. The SAME index sequence
-ascends on the ordinal side to ε₀.
-
-`tower_height_floor_reconciliation` bundles the reconciliation and **proves `ε₀ ≠ 0` in the same statement
-that connects the two closures**: (1) the InfinitudeFloor floor ⊥ has infinite complexity `cx = ⊤`; (2) the
-shared tower ascends to the height `ε₀ = ⨆ fundamentalSeq`; (3) `ε₀ ≠ 0` — the height is NOT the floor. One
-construction, two carrier-specific closures (ε₀ ; ⊥), opposite orientations, joined by the order-reversing
-map and held apart by it. No cross-type `=`; `ε₀ = 0` stays ill-typed.
-
-**Honest fence.** The floor lives in `ℤ_[2]`, the height in `Ordinal`; they are co-witnessed through the
-shared `towerNONote`, never identified. `towerInfinitudeFloor` is a `def` (an exhibited witness), not a
-registered global instance on `ℤ_[2]`.
+The tower's 2-adic images as an `InfinitudeFloor ℤ_[2]` with floor ℤ_[2]'s 0, beside the ordinal height ε₀
+and `ε₀ ≠ 0` in `Ordinal`, never identified. Argument and fence: `ZeroParadox/Valuation/TowerHeightFloor.md`.
 -/
 
 namespace ZeroParadox
