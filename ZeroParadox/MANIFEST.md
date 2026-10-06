@@ -288,8 +288,8 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/ScaleRealization.lean` - Realizing an abstract scale step as 2-adic doubling: the ZP-I commitment as equivariance, with the valuation law derived and both valuations bridged
   - ride-along docs: `ZeroParadox/Valuation/ScaleRealization.md` - Why the welded form is not statable, the falsifiers, and how the self-supply residue is closed
 - `ZeroParadox/Valuation/StrippedBottom.lean` - ⊥ by inversion of attribute-classes — the "typecast" stand-in (Tim, 2026-06-30)
-- `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the ordinal tower IS an InfinitudeFloor, order-reversed — ε₀ ≠ ⊥ preserved
-  - ride-along docs: `ZeroParadox/Valuation/TowerHeightFloor.md` - Height meets floor — the tower as an InfinitudeFloor, order-reversed
+- `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1 — ε₀ ≠ ⊥ of `Ordinal` preserved
+  - ride-along docs: `ZeroParadox/Valuation/TowerHeightFloor.md` - Height meets floor — the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1
 
 ### State / Hilbert (ZP-D)
 

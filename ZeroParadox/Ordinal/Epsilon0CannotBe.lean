@@ -6,6 +6,7 @@ import ZeroParadox.Ordinal.CnfBridge
 import ZeroParadox.Ordinal.PricedInterface
 import ZeroParadox.Order.LeastFixedPoint
 import ZeroParadox.Valuation.SemilatticeInstance
+import ZeroParadox.Multihomed.BoundaryOrder
 
 /-!
 # Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
@@ -24,6 +25,8 @@ proof assistant during development.
 -/
 
 section Epsilon0CannotBeIndex
+
+universe u
 
 /-! ### § I. What ε₀ IS NOT — the invariants (the bedrock guards) -/
 #check @ZeroParadox.epsilon0_ne_zero          -- Statement: ε₀ ≠ 0 in `Ordinal`; against ℤ_[2]'s 0 the equation is ill-typed (§ V)
@@ -93,33 +96,46 @@ example (x : ℤ_[2]) : ‖(0 : ℤ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 → x =
 -- Statement: so every `NONote`, the domain of `cnfToZp2`, denotes strictly below ε₀.
 example (o : NONote) : o.repr < Ordinal.epsilon 0 := ZeroParadox.repr_lt_epsilon0 o.1
 
-/-! ### § I-c. ⊥ and ε₀ as roles relative to a floor: one occupant per carrier, one per seed -/
--- Reading: a role is a position relative to a floor, a Lean object its occupant; the schema is
--- Knaster–Tarski's and Veblen's (`ZeroParadox/Order/LeastFixedPoint.md`). Value versus role: § I-b.
+/-! ### § I-c. The ⊥ role, one occupant per `ZPSemilattice`; the at-or-above μ schema, at most one per seed and not the ε₀ role -/
+-- Reading: the ⊥ role is a structure's floor and the ε₀ role a position strictly above a floor
+-- (§ I-b); a Lean object fills either as an occupant. The schema is Knaster–Tarski's and Veblen's
+-- (`ZeroParadox/Order/LeastFixedPoint.md`).
 #check @ZeroParadox.da2_bottom_characterization -- Statement: in one `ZPSemilattice`, `(∀ x, join S x = x) ↔ S = bot`
 #check @ZeroParadox.IsLeastFixedPointFrom      -- Statement: `mu` is the least fixed point of `f` at or above `seed` under `r`
 #check @ZeroParadox.IsLeastFixedPointFrom.unique -- Statement: for antisymmetric `r`, one seed has at most one such `mu`
 #check @ZeroParadox.isLeastFixedPointFrom_nfp  -- Statement: for normal `f`, `nfp f a` is that `mu` at the seed `a`
--- Statement: in `Ordinal`, seeded AT an ε-number floor `ε_o` the schema returns `ε_o`; seeded at
--- `succ ε_o` it returns `ε_(o+1)`, a different ordinal.
-example (o : Ordinal) :
-    ZeroParadox.IsLeastFixedPointFrom (· ≤ ·) (fun α => Ordinal.omega0 ^ α)
-      (Ordinal.epsilon o) (Ordinal.epsilon o) ∧
-    ZeroParadox.IsLeastFixedPointFrom (· ≤ ·) (fun α => Ordinal.omega0 ^ α)
-      (Order.succ (Ordinal.epsilon o)) (Ordinal.epsilon (Order.succ o)) ∧
-    Ordinal.epsilon o ≠ Ordinal.epsilon (Order.succ o) := by
-  refine ⟨⟨le_rfl, Ordinal.omega0_opow_epsilon o, fun _ _ h => h⟩, ?_, ?_⟩
-  · rw [Ordinal.epsilon_succ_eq_nfp]
-    exact ZeroParadox.isLeastFixedPointFrom_nfp (Ordinal.isNormal_opow Ordinal.one_lt_omega0) _
-  · rw [Ordinal.epsilon_succ_eq_nfp]
-    exact (lt_of_lt_of_le (Order.lt_succ _) (Ordinal.le_nfp _ _)).ne
--- Statement: at the floor `0`, ⊥ of `Ordinal`, both seeds give ε₀, since `0` is not a fixed point
--- (`bot_is_not_a_step`, § III).
-example : Ordinal.nfp (fun α => Ordinal.omega0 ^ α) 0 =
-    Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ 0) :=
-  (ZeroParadox.nfp_seed_independent_below_epsilon0 _ (Ordinal.epsilon_pos 0).le).trans
-    (ZeroParadox.nfp_seed_independent_below_epsilon0 _
-      (Order.succ_le_of_lt (Ordinal.epsilon_pos 0))).symm
+-- Statement: in `Ordinal` under `α ↦ ω^α`, at every seed `a` the at-or-above closure `nfp (ω^·) a`
+-- equals § I-b's strict form `nfp (ω^·) (succ a)` exactly when `ω^a ≠ a`; at the seed `0`, ⊥ of
+-- `Ordinal`, the two are equal.
+-- Reading: the schema and the ε₀ role part exactly at the fixed points. At a fixed-point floor such
+-- as `ε_o` the schema returns that floor (§ I-b, `nfp f = f`), so the ε₀ role is taken strictly
+-- above it, at `ε_(o+1)` (`Ordinal.epsilon_succ_eq_nfp`, § I-b).
+example : (∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
+      Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ a) ↔ Ordinal.omega0 ^ a ≠ a) ∧
+    Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (0 : Ordinal.{u}) =
+      Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ 0) := by
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  have key : ∀ a : Ordinal.{u}, Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a =
+      Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ a) ↔ Ordinal.omega0 ^ a ≠ a := by
+    intro a
+    constructor
+    · intro h hfix
+      have h2 : a < Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ a) :=
+        lt_of_lt_of_le (Order.lt_succ a) (Ordinal.le_nfp _ _)
+      rw [← h, Ordinal.nfp_eq_self hfix] at h2
+      exact lt_irrefl _ h2
+    · intro hne
+      refine le_antisymm (Ordinal.nfp_le_fp hn.strictMono.monotone
+        ((Order.le_succ a).trans (Ordinal.le_nfp _ _)) (le_of_eq (Ordinal.nfp_fp hn _))) ?_
+      have hlt : a < Ordinal.omega0 ^ a := lt_of_le_of_ne (hn.strictMono.id_le a) (Ne.symm hne)
+      have hs : Order.succ a ≤ Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a :=
+        Order.succ_le_of_lt (lt_of_lt_of_le hlt (by
+          rw [← Ordinal.nfp_fp hn a]; exact hn.strictMono.monotone (Ordinal.le_nfp _ _)))
+      exact Ordinal.nfp_le_fp hn.strictMono.monotone hs (le_of_eq (Ordinal.nfp_fp hn _))
+  exact ⟨key, (key 0).2 ZeroParadox.bot_is_not_a_step⟩
+-- Statement: the strict form in the floor-below boundary model: `↑ε₀` is the least closed point
+-- (landing) of `phaseUpAndOver.up` strictly above ⊥ of `WithBot Ordinal`.
+#check @ZeroParadox.phase_epsilon0_isLeast_landing_above_floor
 
 /-! ### § II. What ε₀ IS — the construction: first fixed point of the ω-tower from ⊥ of `Ordinal` -/
 #check @ZeroParadox.epsilon0_eq_nfp_bot       -- Statement: ε₀ = nfp (ω^·) ⊥, seeded at ⊥ of `Ordinal`
