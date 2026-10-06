@@ -19,7 +19,7 @@ exactly what minimum set of requirements they take.
 ---
 
 ## Formal Overview
-One engine (Lawvere) forking into wall faces (μ, no fixed point) and floor faces (ν, landing at ⊥).
+Lawvere's engine yields the wall faces (μ, no fixed point); the floor faces (ν) are supplied per face (§ III).
 `#check`-only, so it states no new result — that the faces are ONE self-reference is Lawvere/Yanofsky,
 cited prior art and **not** a ZP theorem. Split and fences: `ZeroParadox/DiagonalFixedPoint.md`.
 -/
@@ -43,16 +43,19 @@ object exists and is refused. Standard framing and the full scope note: `ZeroPar
 #check @ZeroParadox.tarski_no_truth_bottom   -- Tarski's bottom: truth is the wall dual — no floor
 #check @ZeroParadox.curry_no_bottom          -- Curry: no naming surjection; pretending otherwise explodes
 
-/-! ### § III. Floor faces (ν) — self-reference CLOSES, and the fixed point lands at ⊥ -/
-#check @ZeroParadox.t_exec                   -- the Quine atom: any self-containing element = ⊥ (self-reference closes at the bottom). "⊥ self-executes" is the framework's reading, not this statement
+/-! ### § III. Floor faces (ν) — self-reference CLOSES; the fixed point fills the self-application role, with an occupant per face
+
+In the fork / AFA face the occupant is ⊥ of the `ZPSemilattice`, a fixed point by class fields (a commitment).
+In the computability face it is a Kleene code (a `Code`), a term of another type. -/
+#check @ZeroParadox.t_exec                   -- the Quine atom: any `q` with `IsQuineAtom q` equals ⊥ of the `ZPSemilattice`, from the `AFAStructure` class fields. "⊥ self-executes" is the framework's reading, not this statement
 #check @ZeroParadox.da1_closed_concrete      -- concrete Quine atom: `IsQuineAtom (bot : MachinePhase)`
-#check @ZeroParadox.kleene_quine_is_bot      -- any Quine atom = ⊥, under `[KleeneStructure]`. NB the statement has no Kleene clause; "the Kleene quine IS ⊥" is ZP-K's commitment, and is not a Lean `=` (Code vs L)
+#check @ZeroParadox.kleene_quine_is_bot      -- any Quine atom = ⊥ of the `ZPSemilattice` `L`, under `[KleeneStructure]`. NB the statement has no Kleene clause; that `botCode` (a `Code`) names ⊥ of `L` is ZP-K's `KleeneStructure` commitment, not a Lean `=` (Code vs L)
 #check @ZeroParadox.t_comp                   -- T-COMP: proves the Quine-atom / order-bottom / join-identity faces equivalent (three). The Kleene face is a `KleeneStructure` class field, not a clause
-#check @ZeroParadox.selfApp_isLeastFixedPointFrom  -- ⊥ is the least fixed point of self-application (the order floor)
+#check @ZeroParadox.selfApp_isLeastFixedPointFrom  -- ⊥ of the `ZPSemilattice` is the least fixed point of self-application (the order floor)
 #check @ZeroParadox.ProvabilityLogic.loeb_sentence_is_fixedpoint  -- Löb: the provability diagonal closes (the Löb sentence is a fixed point)
 #check @ZeroParadox.ProvabilityLogic.godel_two     -- Gödel's second: consistency unprovable — the provability floor
-#check @ZeroParadox.rice_face_has_bottom     -- Rice: the floor exists (the pivot face)
-#check @ZeroParadox.quine_exists_yet_rice    -- Rice pivot: the fixed point is present yet membership at it is undecidable
+#check @ZeroParadox.rice_face_has_bottom     -- Rice: computable f has a fixed point up to eval; reading it as the face's floor is the family's criterion, not the theorem
+#check @ZeroParadox.quine_exists_yet_rice    -- Rice pivot: f's fixed point exists AND a non-trivial extensional C is undecidable over all codes; the second conjunct does not mention f (ComputationCannotBe.lean § V)
 
 /-! ### § IV. The minimum-requirements level (`Category/DiagonalWitness.lean`) — the underlying level beneath the fork
 

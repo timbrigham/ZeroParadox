@@ -163,7 +163,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Computability/Occurrence.md` - The carrier's reach, floor-directed motion, and stutter equivalence
 - `ZeroParadox/Computability/Periodicity.lean` - ZP-K metric: the selfApply periodicity invariant (P5)
 - `ZeroParadox/Computability/Rice.lean` - Rice's theorem — the computability face's UNDECIDABILITY, from the recursion theorem (probe)
-  - ride-along docs: `ZeroParadox/Computability/Rice.md` - The price of ν-existence: one recursion-theorem fixed point read on two axes
+  - ride-along docs: `ZeroParadox/Computability/Rice.md` - ν-existence beside Rice undecidability: two conjuncts, two uses of the recursion theorem
 - `ZeroParadox/Computability/SelfApp.lean` - ZPJ — Abstract Self-Application Bridge
 - `ZeroParadox/Computability/SelfCopyReference.lean` - Self-copying self-reference: infinite ⟺ a one-to-one, not-onto self-map with exactly one fixed point
 

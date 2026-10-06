@@ -192,7 +192,8 @@ example : IsQuineAtom (bot : MachinePhase) ∧
 
 -- Statement: a conjunction, for computable `f` and a non-trivial extensional `C : Set Code`: a fixed
 --   point of `f` up to `eval` exists, AND membership in `C` is not a ComputablePred. The
---   undecidability is of `C` over all codes; nothing is stated about membership at the fixed point.
+--   undecidability is of `C` over all codes, and the second conjunct does not mention `f`; nothing
+--   is stated about membership at `f`'s fixed point.
 #check @ZeroParadox.quine_exists_yet_rice
 
 /-! ### § VI. Occurrence — what it takes for a configuration to MOVE
