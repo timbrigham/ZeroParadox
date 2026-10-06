@@ -695,7 +695,7 @@ DIAGONAL_FAMILY = [
     ("Löb",          "ν floor", "provability of (□A → A) yields A - the provability-logic fixed point", "loeb", "(none)"),
     ("Gödel 2nd",    "ν floor", "no consistent system proves its own consistency", "godel_two", "(none)"),
     ("Kleene quine", "ν floor", "every computable self-map on codes has a fixed point up to eval (Rogers' form of the recursion theorem)", "computability_face_fixedPoint", "`[propext, Classical.choice, Quot.sound]`"),
-    ("Rice",         "ν floor", "a fixed point up to eval exists; every non-trivial semantic property is undecidable over all codes", "rice_face_has_bottom", "`[propext, Classical.choice, Quot.sound]`"),
+    ("Rice",         "ν floor", "a fixed point up to eval exists; every non-trivial semantic property is undecidable over all codes", "rice_face_has_bottom, quine_exists_yet_rice","`[propext, Classical.choice, Quot.sound]`"),
 ]
 
 def render_diagonal_family():
@@ -704,8 +704,9 @@ def render_diagonal_family():
 The classical self-reference arguments are not separate theorems that happen to rhyme; they are one diagonal fixed point seen under different conditions (Lawvere 1969; Yanofsky 2003). The framework maps the faces formalized here, organized by the μ/ν fork. On the **wall** side (μ) self-reference cannot close: each argument is the contrapositive of Lawvere's engine (negation_no_fixedpoint / lawvere_fixedpoint, both axiom-free), a proof that no reflexive object exists. On the **floor** side (ν) it does close, and the fixed point fills the self-application role with an occupant supplied per face, not by the engine: ⊥ of the ZPSemilattice by the class fields in the fork / AFA face (selfApp_pinnable), a hypothesized Löb diagonal in the Löb face, a Kleene code fixed up to eval in the computability face (computable_fixedpoint_up_to_eval), whose reading as a Lawvere instance is cited, not checked. Gödel's first incompleteness sits between the columns and is not formalized here, so it has no row. Cantor, Russell, Turing, Tarski, Curry, Löb, and Gödel's second incompleteness are all **axiom-free**; only the two computability floor faces (the Kleene quine and Rice) carry `Classical.choice`, inherited from Mathlib's recursion theory. These faces are ZP-R (the Cross-Category Fixed Point layer and its Diagonal Family Addendum) - a *placement* of ⊥ among recognized results, not a new theorem; the cross-face identity stays a type boundary, the same walls the map above records.
 
 **See it:** the interactive [Diagonal Family](diagonal-family.html) map draws these faces as walls (μ) and floors (ν), each node linking its Lean witness and axiom footprint."""
-    _WITNESSES.update(w for _f, _s, _g, w, _a in DIAGONAL_FAMILY)
-    rows = [[face, side, gloss, link_witness(w), ax]
+    # A witness cell may name several declarations, separated by ", "; each is linked separately.
+    _WITNESSES.update(n for _f, _s, _g, w, _a in DIAGONAL_FAMILY for n in w.split(", "))
+    rows = [[face, side, gloss, ", ".join(link_witness(n) for n in w.split(", ")), ax]
             for (face, side, gloss, w, ax) in DIAGONAL_FAMILY]
     table = render_table(rows, ["face", "side", "what it says", "witness", "axioms"])
     return link_in_text(intro) + "\n\n" + table

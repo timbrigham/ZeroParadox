@@ -99,13 +99,15 @@ theorem selfApp_lands_on_nu :
     ¬ WellFounded (fun a b : L => AbstractSelfApp.selfApp b = a) :=
   mu_nu_branch_exclusion bot AbstractSelfApp.fixed_bot
 
-/-! ## § VI. The hard bridge — located, not crossed (the wall is Cantor; the escape is the fork)
+/-! ## § VI. The hard bridge — located, not crossed (the wall is Cantor)
 
 Deriving `fixed_bot` rather than assuming it needs a **reflexive object**, and
 `reflexive_object_refuted` shows none exists on any carrier admitting a fixed-point-free self-map —
 and type theory has those (`no_reflexive_object_bool`), so the assumption is forced, not lazy.
-The escape is the monotone/domain regime, where no fixed-point-free maps exist; it is already crossed in
-the computability face. Where to look and why: `ZeroParadox/Settheory/LawvereBridge.md`. -/
+In the monotone/domain regime no MONOTONE map is fixed-point-free, so a monotone witness is unavailable;
+a non-monotone one still refutes `e` on any nontrivial complete lattice (`x ↦ if x = ⊥ then ⊤ else ⊥`).
+Lawvere's hypothesis is met in the computability face. Where to look and why:
+`ZeroParadox/Settheory/LawvereBridge.md`. -/
 
 /-- **The reflexive object is refuted wherever a fixed-point-free map exists.** A point-surjection
 `e : D → (D → D)` would, by Lawvere, force any `f : D → D` to have a fixed point; a fixed-point-free `f`
@@ -128,28 +130,26 @@ theorem no_reflexive_object_bool (e : Bool → (Bool → Bool)) : ¬ Function.Su
 object in Type is negation, and `Not : Prop → Prop` is not monotone — it reverses `False ≤ True`. So the
 obstruction witness simply does not live in the monotone world. Combined with `instance_always_exists`
 (no monotone map on a complete lattice is fixed-point-free), this pins the wall precisely: the
-refutation of the reflexive object is a *non-monotone* phenomenon, absent from the monotone/domain regime
-where the framework's ⊥ lives. The crossing is on the ν side because the obstruction cannot follow it
-there. -/
+refutation of the reflexive object needs a *non-monotone* witness; no monotone map supplies one. -/
 theorem not_monotone_not : ¬ Monotone (Not : Prop → Prop) := by
   intro h
   have hle : (False : Prop) ≤ True := by tauto
   exact (h hle) not_false trivial
 
-/-! ## § VIII. What IS crossed — the monotone regime derives the framework's content -/
+/-! ## § VIII. The monotone regime restates uniqueness as the fork collapse -/
 
-/-- **The crossing, for the framework's `∃!` content.** In the monotone/domain regime the two things
-`AbstractSelfApp` assumes — that a self-application fixed point *exists* and is *unique* — are DERIVED,
-not posited: existence-with-uniqueness is exactly the fork collapsing (`fork_collapse_iff`), and bare
-existence is Knaster-Tarski. So the `∃!` content of the keystone is crossable via the fork
-(`RequirementsGap`/`MetaFork`), with no reflexive object needed. Lawvere's hypothesis, a reflexive
+/-- **Uniqueness as the fork collapse — restated, not derived.** For a monotone `f` on a complete
+lattice, the theorem takes the collapse `f.lfp = f.gfp` as a HYPOTHESIS, which by `fork_collapse_iff` is
+EQUIVALENT to `∃! x, f x = x`; so uniqueness is restated, not derived. Bare existence is Knaster-Tarski
+(`instance_always_exists`); uniqueness is not free: `id` on any nontrivial lattice is monotone with many
+fixed points (`existence_without_uniqueness`). Nothing here connects to `AbstractSelfApp`, where
+existence and uniqueness stay the class-field commitments `fixed_bot` and `unique_fp`. Lawvere's hypothesis, a reflexive
 point-surjection, is met not here but in the computability face
 (`ZeroParadox/Computability/ComputableCrossing.lean`): the universal machine `eval` is point-surjective
 onto the computable functions, and the recursion theorem gives a fixed point there, a Kleene code, a term
-of another type than ⊥ of the `ZPSemilattice` (that it is a Lawvere instance is cited). So the
-order/fork face gives the `∃!` content (above) and the computability face gives the reflexive-object
-realization; a Scott `D∞` domain route (`D ≅ [D → D]`) is a third path, unbuilt in Mathlib and no longer
-needed for the crossing. -/
+of another type than ⊥ of the `ZPSemilattice` (that it is a Lawvere instance is cited). A Scott `D∞`
+domain (`D ≅ [D → D]`) would be a reflexive object in the monotone regime; it was not located in the
+pinned Mathlib as of 2026-10-06 (search record: `ZeroParadox/Settheory/LawvereBridge.md`). -/
 theorem monotone_regime_derives_pinned {α : Type*} [CompleteLattice α] (f : α →o α)
     (hcollapse : f.lfp = f.gfp) : ∃! x, f x = x :=
   (fork_collapse_iff f).mp hcollapse

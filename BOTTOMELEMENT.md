@@ -330,7 +330,7 @@ The classical self-reference arguments are not separate theorems that happen to 
 | Löb | ν floor | provability of (□A → A) yields A - the provability-logic fixed point | [`loeb`](ZeroParadox/Settheory/Loeb.lean) | (none) |
 | Gödel 2nd | ν floor | no consistent system proves its own consistency | [`godel_two`](ZeroParadox/Settheory/Loeb.lean) | (none) |
 | Kleene quine | ν floor | every computable self-map on codes has a fixed point up to eval (Rogers' form of the recursion theorem) | [`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean) | `[propext, Classical.choice, Quot.sound]` |
-| Rice | ν floor | a fixed point up to eval exists; every non-trivial semantic property is undecidable over all codes | [`rice_face_has_bottom`](ZeroParadox/Computability/Rice.lean) | `[propext, Classical.choice, Quot.sound]` |
+| Rice | ν floor | a fixed point up to eval exists; every non-trivial semantic property is undecidable over all codes | [`rice_face_has_bottom`](ZeroParadox/Computability/Rice.lean), [`quine_exists_yet_rice`](ZeroParadox/Computability/Rice.lean) | `[propext, Classical.choice, Quot.sound]` |
 
 ---
 

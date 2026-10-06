@@ -69,11 +69,16 @@ refutation is NOT universal over types: `PUnit` **is** a reflexive object — `P
 singleton, so any `e` into it is surjective — and it admits no fixed-point-free endomap, which is exactly
 the carrier `reflexive_object_refuted` excludes.
 
-**The monotone / domain regime removes the obstruction, not the gap.** On a complete lattice every
-monotone map has a fixed point (`instance_always_exists`, Knaster–Tarski), so no monotone map is
-fixed-point-free and `reflexive_object_refuted` has nothing to fire on. That does not build a reflexive
-object: absence of the obstruction is not presence of a point-surjection, and none is constructed here.
-What this regime does give is the `∃!` content through the fork (`monotone_regime_derives_pinned`). A
+**The monotone / domain regime removes the MONOTONE obstruction, not the gap.** On a complete lattice
+every monotone map has a fixed point (`instance_always_exists`, Knaster–Tarski), so no MONOTONE map can
+serve as `reflexive_object_refuted`'s witness. A non-monotone one still can: on any nontrivial complete
+lattice, `x ↦ if x = ⊥ then ⊤ else ⊥` is fixed-point-free and refutes every `e : D → (D → D)`. Nor does
+the regime build a reflexive object; none is constructed here. On uniqueness,
+`monotone_regime_derives_pinned` takes the fork collapse `lfp f = gfp f` as a hypothesis, which by
+`fork_collapse_iff` is equivalent to `∃! x, f x = x`: uniqueness is restated, not derived, and `id` on a
+nontrivial lattice is monotone with many fixed points (`existence_without_uniqueness`). Nothing there
+connects to `AbstractSelfApp`, where existence and uniqueness stay the class fields `fixed_bot` and
+`unique_fp`. A
 Scott `D∞` domain (`D ≅ [D → D]`) would be a reflexive object in that regime; a Scott `D∞` construction in
 the pinned Mathlib was not located as of 2026-10-06 (case-insensitive search of `Mathlib/` for `D∞`,
 `DInfty`, `D_infty`, "reflexive object" and Scott inverse limits; the four hits are unrelated `∞`
