@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.7 | October 2026
+Version 1.8 | October 2026
 v1.6: BEDROCK, and the correction is to a MECHANISM rather than to a wording. The rendered text said the escape from the Cantor obstruction is that eval lands in the partial functions "not in the codes, so the Set refutation never applied to it". That is false, and one line refutes it: the partial-function type is itself nontrivial, so no_witness_of_nontrivial forbids the Lawvere witness there exactly as it does on Code - example : not (HasLawvereWitness (Nat ->. Nat)) elaborates. Changing the codomain buys nothing. The real escape is a restriction on which MAPS exist: no computable self-map on codes is eval-fixed-point-free (no_computable_evalFixedPointFree), so the diagonal the Set refutation runs has no computable representative and the obstruction cannot fire. That theorem, with this mechanism spelled out in its own docstring, was already in the corpus - the prose asserted a different reason beside it. Found by the adversary gate at FAIL-BEDROCK, round 3, and confirmed by elaboration before the fix. Corrected at five sites across three surfaces in one sweep rather than at the one named.
 v1.0: Initial release. Synthesis / placement layer. Locates and realizes the framework's
 self-application fixed point as a Lawvere fixed point across three categories (faces): refuted in Set
@@ -14,7 +14,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -58,7 +58,7 @@ def build():
         'A recurring role in this framework is a fixed point of self-application &#8212; '
         '"self-referential" in the sense of being defined by pointing at itself. Its occupants differ '
         'by face: a self-containing set (&#8869; of an AFA lattice, &#8869; = {&#8869;}) and a '
-        'self-reproducing program (a Kleene code). This document asks one checkable question: is a fixed point in that role an '
+        'program equal to its own transform up to evaluation (a Kleene code). This document asks one checkable question: is a fixed point in that role an '
         'instance of <b>Lawvere\'s fixed-point theorem</b> (Lawvere 1969) &#8212; the '
         'categorical statement behind the diagonal arguments of Cantor, Russell, G&#246;del and Tarski, '
         'carried to the halting problem and the recursion theorem by Yanofsky (2003) &#8212; and if so, '
@@ -418,8 +418,9 @@ def build():
     E.append(body(
         'Each result box (R1&#8211;R4) and each F1 property is backed by a compiling Lean 4 (+ Mathlib) '
         'theorem, sorry-free, except the one marked cited: that the computability fixed point is an '
-        'instance of Lawvere\'s theorem (Section II). F2\'s mathematical sentence rests on '
-        'reflexive_object_refuted (the R3-neg row); sentences marked Reading are interpretation and '
+        'instance of Lawvere\'s theorem (Section II). F2\'s first mathematical sentence rests on '
+        'reflexive_object_refuted (the R3-neg row), and its second, on the least fixed point of a '
+        'monotone map, on Knaster&#8211;Tarski (Tarski 1955, cited); sentences marked Reading are interpretation and '
         'have no row. The order / '
         'fork material is constructively choice-free; the computability material inherits '
         'Classical.choice from Mathlib\'s computability library (Kleene\'s and Rogers\' theorems use '

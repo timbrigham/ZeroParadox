@@ -33,7 +33,7 @@ section DiagonalFixedPointIndex
 /-! ### § II. Wall faces (μ) — self-reference CANNOT close (no fixed point / no reflexive object)
 
 ⚠ **`wf_no_selfloop` sits here but is NOT an engine face.** The engine faces have a fixed-point-free
-map, so no object forms; `wf_no_selfloop` is a **verdict a HOST renders on the engine's ν output** — the
+map, so no object forms; `wf_no_selfloop` is a **verdict a HOST renders on the ν fixed point** — the
 object exists and is refused. Standard framing and the full scope note: `ZeroParadox/DiagonalFixedPoint.md`. -/
 #check @ZeroParadox.wf_no_selfloop           -- the host verdict, NOT an engine face: a well-founded relation has no self-loop (no x with r x x). Weakest rung — Mathlib's `WellFounded.asymmetric` is stronger
 #check @ZeroParadox.cantor_via_engine        -- Cantor: no surjection A → (A → Prop)

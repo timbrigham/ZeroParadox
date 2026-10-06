@@ -412,7 +412,7 @@ CONSTRUCTION_GLOSS = {
     "#5 Hilbert (zero obj/seam)": "the zero vector space, as the zero object of a linear category (the 'seam')",
     "#3 TopCat ({0} limit)": "the one-point space {0}, obtained as a topological limit of shrinking balls",
     "#2 Markov (attractor)": "the stationary distribution a random walk settles into",
-    "Kleene (quine, ZPK)": "the self-reproducing program (Kleene fixed point) of computability",
+    "Kleene (quine, ZPK)": "a program equal to its own transform up to evaluation (Kleene fixed point) of computability",
     "ε₀ (ordinal, ZPL/M)": "the ordinal ε₀, generated from 0 by iterating omega-to-the-power",
     "selfApp (abstract ⊥)": "the abstract self-application ⊥: the unique fixed point of a self-map",
 }
@@ -671,7 +671,7 @@ def render_rosetta():
 
 One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each coincidence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
-**Proved, with one commitment - the same element.** In any ZP lattice carrying an AFA structure, the *Quine atom* (a set that is its own only member, set theory / AFA), the *order-bottom* ⊥, and the *algebraic join-identity* are proved to be the **same element** - the three-name core, **axiom-free** (t_exec_triple_iff). The fourth name, the *Kleene fixed point* (a program that reproduces itself, computability), is *joined* to the other three by an explicit structural commitment: the KleeneStructure typeclass names the computational fixed point as the same role - the motivating commitment, not a derived theorem. So the set that is its own only member is identified with the program that prints itself by that commitment, not proved equal. The computational witness rests on Mathlib's recursion theorem, which carries `Classical.choice`; the three-name core needs none.
+**Proved, with one commitment - the same element.** In any ZP lattice carrying an AFA structure, the *Quine atom* (a set that is its own only member, set theory / AFA), the *order-bottom* ⊥, and the *algebraic join-identity* are proved to be the **same element** - the three-name core, **axiom-free** (t_exec_triple_iff). The fourth name, the *Kleene fixed point* (a program equal to its own transform up to evaluation, computability), is *joined* to the other three by an explicit structural commitment: the KleeneStructure typeclass names the computational fixed point as the same role - the motivating commitment, not a derived theorem. So the set that is its own only member is identified with that Kleene code by that commitment, not proved equal. The computational witness rests on Mathlib's recursion theorem, which carries `Classical.choice`; the three-name core needs none.
 
 **Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ (padic_addVal_bot); unbounded surprisal, the state with no finite description (t2_diverges); the categorical bottom of each real Mathlib category, an inverse limit or initial object (fD_zero_isInitial, fC_zero_isInitial and fB_bottom_is_limit, collected in mc1_correspondence); and the case where the coincidence *fails*, ℝ vs ℚ₂ by Ostrowski (completions_exhaustive, real_not_equiv_padic). They share a SHAPE (`Statement:` COINCIDENCE, per field's own witness above) - one object carrying both extremal characterisations at once - and a shared shape across distinct structures is a type boundary, never a common theorem. (The order-theoretic form of that shape is fork_collapse_iff, choice-free, but none of these satisfies its hypotheses of a complete lattice and a monotone map, so none is an instance of it.) ε₀ is co-witnessed with the 2-adic limit and the machine snap (zpm_triangle).
 
@@ -690,21 +690,20 @@ DIAGONAL_FAMILY = [
     ("Turing",       "μ wall",  "no machine decides its own halting - no self-decider", "no_self_decider", "(none)"),
     ("Tarski",       "μ wall",  "no internal truth predicate - the liar sentence has no witness", "tarski_no_internal_truth", "(none)"),
     ("Curry",        "μ wall",  "no naming surjection - Curry's paradox forces any conclusion", "curry_no_bottom", "(none)"),
-    ("the wall",     "μ",       "no well-founded relation admits a self-loop (the engine's floor)", "wf_no_selfloop", "(none)"),
-    ("Gödel 1st",    "between", "the undecidable diagonal sentence, built by the shared engine", "lawvere_fixedpoint", "(none)"),
-    ("Quine atom",   "ν floor", "the self-containing set ⊥ = {⊥} - executable self-reference, landing at ⊥", "t_exec", "(none)"),
+    ("the wall",     "μ",       "no well-founded relation admits a self-loop (a host verdict, not an engine face)", "wf_no_selfloop", "(none)"),
+    ("Quine atom",   "ν floor", "⊥ = {⊥}: ⊥ of a ZPSemilattice in the Quine-atom role, from the class fields", "t_exec", "(none)"),
     ("Löb",          "ν floor", "provability of (□A → A) yields A - the provability-logic fixed point", "loeb", "(none)"),
     ("Gödel 2nd",    "ν floor", "no consistent system proves its own consistency", "godel_two", "(none)"),
-    ("Kleene quine", "ν floor", "a program that reproduces itself - the recursion theorem fires", "computability_face_fixedPoint", "`[propext, Classical.choice, Quot.sound]`"),
-    ("Rice",         "ν floor", "the fixed point provably exists, yet its membership is undecidable", "rice_face_has_bottom", "`[propext, Classical.choice, Quot.sound]`"),
+    ("Kleene quine", "ν floor", "every computable self-map on codes has a fixed point up to eval (Rogers' form of the recursion theorem)", "computability_face_fixedPoint", "`[propext, Classical.choice, Quot.sound]`"),
+    ("Rice",         "ν floor", "a fixed point up to eval exists; every non-trivial semantic property is undecidable over all codes", "rice_face_has_bottom", "`[propext, Classical.choice, Quot.sound]`"),
 ]
 
 def render_diagonal_family():
     intro = """## The diagonal family - the self-reference arguments as one fixed point
 
-The classical self-reference arguments are not separate theorems that happen to rhyme; they are one diagonal fixed point seen under different conditions (Lawvere 1969; Yanofsky 2003). The framework maps the full roster against ⊥, organized by the μ/ν fork and built off a single engine - negation_no_fixedpoint / lawvere_fixedpoint, both axiom-free. On the **wall** side (μ) self-reference cannot close: the argument runs as a proof that no reflexive object exists. On the **floor** side (ν) it does close - the fixed point is genuinely produced, and lands at ⊥. Cantor, Russell, Turing, Tarski, Curry, Löb, and Gödel's second incompleteness are all **axiom-free**; only the two computability floor faces (the Kleene quine and Rice's exists-but-undecidable) carry `Classical.choice`, inherited from Mathlib's recursion theory. This roster is ZP-R (the Cross-Category Fixed Point layer and its Diagonal Family Addendum) - a *placement* of ⊥ among recognized results, not a new theorem; the cross-face identity stays a type boundary, the same walls the map above records.
+The classical self-reference arguments are not separate theorems that happen to rhyme; they are one diagonal fixed point seen under different conditions (Lawvere 1969; Yanofsky 2003). The framework maps the faces formalized here, organized by the μ/ν fork. On the **wall** side (μ) self-reference cannot close: each argument is the contrapositive of Lawvere's engine (negation_no_fixedpoint / lawvere_fixedpoint, both axiom-free), a proof that no reflexive object exists. On the **floor** side (ν) it does close, and the fixed point fills the self-application role with an occupant supplied per face, not by the engine: ⊥ of the ZPSemilattice by the class fields in the fork / AFA face (selfApp_pinnable), a hypothesized Löb diagonal in the Löb face, a Kleene code fixed up to eval in the computability face (computable_fixedpoint_up_to_eval), whose reading as a Lawvere instance is cited, not checked. Gödel's first incompleteness sits between the columns and is not formalized here, so it has no row. Cantor, Russell, Turing, Tarski, Curry, Löb, and Gödel's second incompleteness are all **axiom-free**; only the two computability floor faces (the Kleene quine and Rice) carry `Classical.choice`, inherited from Mathlib's recursion theory. These faces are ZP-R (the Cross-Category Fixed Point layer and its Diagonal Family Addendum) - a *placement* of ⊥ among recognized results, not a new theorem; the cross-face identity stays a type boundary, the same walls the map above records.
 
-**See it:** the interactive [Diagonal Family](diagonal-family.html) map renders this roster as one engine forking into walls (μ) and floors (ν), each node linking its Lean witness and axiom footprint."""
+**See it:** the interactive [Diagonal Family](diagonal-family.html) map draws these faces as walls (μ) and floors (ν), each node linking its Lean witness and axiom footprint."""
     _WITNESSES.update(w for _f, _s, _g, w, _a in DIAGONAL_FAMILY)
     rows = [[face, side, gloss, link_witness(w), ax]
             for (face, side, gloss, w, ax) in DIAGONAL_FAMILY]

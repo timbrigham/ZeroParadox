@@ -81,8 +81,9 @@ well-founded (the **μ** branch — the wall: Foundation, Cantor, `wf_no_selfloo
 fixed point / self-loop (the **ν** branch — the self-referential object: the Quine atom, `selfApp`'s
 `fixed_bot`). The diagonal fixed point is exactly what discriminates the two branches of the fork: it
 lands on ν and is refuted on μ. Together with `selfApp_pinnable` (ν: the fixed point exists, uniquely)
-and `lawvere_trigger_refuted` (μ: the engine's trigger is Cantor-blocked), this is the whole μ/ν picture
-in Lawvere terms — one engine, two regimes, discriminated by the self-loop. (The fork's own μ↔ν duality
+and `lawvere_trigger_refuted` (μ: the engine's trigger is Cantor-blocked), this is the μ/ν picture
+in Lawvere terms, discriminated by the self-loop; the ν fixed point is supplied by the class fields
+`fixed_bot` / `unique_fp`, not by the engine (§ II, § IV). (The fork's own μ↔ν duality
 is `fork_is_frameflip`; the concrete ν non-well-foundedness of `selfApp` is `floor_not_wellFounded`.) -/
 theorem mu_nu_branch_exclusion {γ : Type*} {r : γ → γ → Prop} (a : γ) (hself : r a a) :
     ¬ WellFounded r :=
