@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# Height meets floor: the ordinal tower IS an InfinitudeFloor, order-reversed — ε₀ ≠ ⊥ preserved
+# Height meets floor: the tower's 2-adic images as an InfinitudeFloor, norm order reversed from stage 1 — ε₀ ≠ ⊥ of `Ordinal` preserved
 
 ## Engineer's Take
 
@@ -23,33 +23,8 @@ framework already has, and that is fine. The movement of the thought process its
 
 ## Formal Overview (AI-assisted)
 
-The tower ASCENDS (ordinal side) to its height ε₀; an `InfinitudeFloor` DESCENDS (its members climb in
-complexity) to a floor ⊥ of infinite complexity. These orientations *fight* — and that fight is exactly the
-content, because the order-reversing bridge `cnfToZp2` (`Ordinal/CnfBridge.lean`) is what reconciles them
-**without ever asserting `ε₀ = ⊥`** (a cross-type identity, ill-typed per MC-1 / ZP-P). Building the tie is
-required *precisely because* it fights `ε₀ ≠ ⊥`: the map turning ascent-to-ε₀ into descent-to-⊥ is the wall
-that is the spine.
-
-`towerInfinitudeFloor : InfinitudeFloor ℤ_[2]` is a **genuine instance** realizing this:
-* `floor = 0` (= ⊥ in `ℤ_[2]`);
-* `member n = cnfToZp2 (towerNONote (n+1))` — the tower's 2-adic images (the shared construction of
-  `mu_construction_correspondence`), each `≠ 0` (`snap_arc_z2_loop`);
-* `cx x = ↑x.valuation` off 0, `⊤` at 0 — and `cx (member n) = n+1` (`cnfToZp2_tower_valuation`), so the
-  complexities **climb** and drive `cx floor = ⊤` (`infinitude_forces_infinite_complexity`).
-
-The **order-reversal is visible in the numbers**: as `n` rises, the 2-adic *valuation* rises (`= n+1`) while
-the *norm* falls to 0 — valuation-up ⟺ norm-down is `cnfToZp2` being antitone. The SAME index sequence
-ascends on the ordinal side to ε₀.
-
-`tower_height_floor_reconciliation` bundles the reconciliation and **proves `ε₀ ≠ 0` in the same statement
-that connects the two closures**: (1) the InfinitudeFloor floor ⊥ has infinite complexity `cx = ⊤`; (2) the
-shared tower ascends to the height `ε₀ = ⨆ fundamentalSeq`; (3) `ε₀ ≠ 0` — the height is NOT the floor. One
-construction, two carrier-specific closures (ε₀ ; ⊥), opposite orientations, joined by the order-reversing
-map and held apart by it. No cross-type `=`; `ε₀ = 0` stays ill-typed.
-
-**Honest fence.** The floor lives in `ℤ_[2]`, the height in `Ordinal`; they are co-witnessed through the
-shared `towerNONote`, never identified. `towerInfinitudeFloor` is a `def` (an exhibited witness), not a
-registered global instance on `ℤ_[2]`.
+The tower's 2-adic images as an `InfinitudeFloor ℤ_[2]` with floor ℤ_[2]'s 0, beside the ordinal height ε₀
+and `ε₀ ≠ 0` in `Ordinal`, never identified. Argument and fence: `ZeroParadox/Valuation/TowerHeightFloor.md`.
 -/
 
 namespace ZeroParadox
@@ -68,7 +43,7 @@ private theorem iSup_natSucc_top : ⨆ n : ℕ, ((n + 1 : ℕ) : ℕ∞) = ⊤ :
 /-! ### § II. The complexity on `ℤ_[2]` and its value on the tower images. -/
 
 open Classical in
-/-- The 2-adic complexity: the valuation off 0, `⊤` at the floor 0 (= ⊥). -/
+/-- The 2-adic complexity: the valuation off 0, `⊤` at the floor, ℤ_[2]'s 0. -/
 noncomputable def towerCx (x : ℤ_[2]) : ℕ∞ := if x = 0 then ⊤ else (x.valuation : ℕ∞)
 
 /-- The floor has infinite complexity: `towerCx 0 = ⊤`. -/
@@ -87,7 +62,7 @@ theorem towerCx_member (n : ℕ) :
 /-! ### § III. The genuine InfinitudeFloor instance on the tower's 2-adic images. -/
 
 /-- **The tower as an InfinitudeFloor.** The tower's 2-adic images form the infinitude of climbing nulls
-whose floor is ⊥ = 0 with infinite complexity. A def (an exhibited witness), not a global instance. -/
+whose floor is ℤ_[2]'s 0, with infinite complexity. A def (an exhibited witness), not a global instance. -/
 @[reducible] noncomputable def towerInfinitudeFloor : InfinitudeFloor ℤ_[2] where
   floor := 0
   cx := towerCx
@@ -106,17 +81,19 @@ whose floor is ⊥ = 0 with infinite complexity. A def (an exhibited witness), n
       funext towerCx_member]
     exact iSup_natSucc_top.symm
 
-/-! ### § IV. The reconciliation — ε₀ ≠ ⊥ proved inside the statement that connects them. -/
+/-! ### § IV. The reconciliation — ε₀ ≠ 0 in `Ordinal` proved inside the statement that connects them. -/
 
 /-- **Height meets floor, reconciled.** One shared construction, two carrier-specific closures held apart by
-the order-reversing `cnfToZp2`:
+`cnfToZp2` (along the tower: valuation order kept, `tower_orders_agree`; norm order reversed from stage 1,
+`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § V):
 
-1. the InfinitudeFloor floor ⊥ = 0 (in `ℤ_[2]`) has **infinite complexity** `cx = ⊤` — driven by the tower
-   images climbing (valuation ↑, norm ↓ to the floor);
+1. the InfinitudeFloor's floor, ℤ_[2]'s 0, has **infinite complexity** `cx = ⊤`, by the definition of
+   `towerCx` (`towerCx_zero`); the members' climbing complexities have that `⊤` as supremum
+   (`cx_floor_eq_iSup`);
 2. the **same** tower ascends on the ordinal side to the **height** `ε₀ = ⨆ fundamentalSeq`;
 3. and `ε₀ ≠ 0`, 0 the ordinals' floor (`epsilon0_ne_zero`) — the height is **not** the floor.
 
-The fight between "ascends to ε₀" and "descends to ⊥" is resolved by the map, never by collapse: the 2-adic
+The fight between "ascends to ε₀" and "descends to ℤ_[2]'s 0" is resolved by the map, never by collapse: the 2-adic
 floor 0 is the limit of the tower's `cnfToZp2` images, never a `cnfToZp2` image of ε₀ (ε₀ lies outside
 `NONote`; through the canonical threshold map and `snapEmbed` it does land on 0, `snap_state_zp2_is_zero`),
 and this theorem *proves* `ε₀ ≠ 0` in `Ordinal` while joining the two closures. -/
