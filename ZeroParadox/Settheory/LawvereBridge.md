@@ -45,11 +45,9 @@ Lawvere's theorem is an implication: **if** a point-surjection `e : A → (A →
 
 ## Honest status — the fence
 
-None of this claims to *reduce* the framework to Lawvere, or to prove "the keystone is Lawvere" — that
-the framework's keystone IS an instance of the Diagonal Theorem stays a CONJECTURE, never a result. Its
-reading is that each face is an instance of Lawvere's engine run in one direction or the other (a wall face by
-the contrapositive, a floor face forward, where the fixed point exists), not that every face carries a
-Lawvere witness, which Set refutes (`no_witness_of_nontrivial`).
+None of this reduces the framework to Lawvere. How each face formalized here relates to Lawvere's
+theorem is stated once, in ZP-R (Section III, closing box), with Lawvere as the translation key between
+the faces; ZP-R conjectures nothing global.
 
 What is proved: Lawvere's fixed point has the shape of a self-application (`lawvere_fixedpoint_selfApp`);
 the framework's self-application fixed point is `∃!` by its class fields (`selfApp_pinnable`); existence
@@ -77,7 +75,7 @@ every monotone map has a fixed point (`instance_always_exists`, Knaster–Tarski
 serve as `reflexive_object_refuted`'s witness. A non-monotone one still can: on any nontrivial complete
 lattice, `x ↦ if x = ⊥ then ⊤ else ⊥` is fixed-point-free and refutes every `e : D → (D → D)`. Nor does
 the regime build a reflexive object; none is constructed here. Absence of a fixed-point-free monotone
-endomap is necessary for one but not sufficient: the two-element chain is the witness (the `example` after
+endomap does not suffice for one: the two-element chain is the witness (the `example` after
 `not_monotone_not` in `ZeroParadox/Settheory/LawvereBridge.lean`). On uniqueness,
 `monotone_regime_derives_pinned` takes the fork collapse `lfp f = gfp f` as a hypothesis, which by
 `fork_collapse_iff` is equivalent to `∃! x, f x = x`: uniqueness is restated, not derived, and `id` on a

@@ -22,7 +22,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview
 **Lawvere's engine gives the SHAPE `e a a` and, by contrapositive, the WALL faces;** its hypothesis fails on
 a nontrivial `ZPSemilattice` (`nontrivial_lattice_no_witness`); its ⊥ is a fixed point by the class field
-`fixed_bot`, the only one by `unique_fp` (`selfApp_pinnable`). ⚠ Keystone-as-Diagonal-instance stays a CONJECTURE.
+`fixed_bot`, the only one by `unique_fp` (`selfApp_pinnable`). ⚠ How each face relates to Lawvere: ZP-R § III.
 -/
 
 namespace ZeroParadox
@@ -125,9 +125,9 @@ theorem no_reflexive_object_bool (e : Bool → (Bool → Bool)) : ¬ Function.Su
   reflexive_object_refuted (fun b => !b) (fun b => bool_not_no_fixedpoint b) e
 
 -- Statement: in types the converse of `reflexive_object_refuted` holds: a type with no fixed-point-free
---   endomap is a one-element type, and it carries a surjection onto its endomaps.
+--   endomap has exactly one element, and it carries a surjection onto its endomaps.
 example {D : Type*} (hnf : ¬ ∃ f : D → D, ∀ x, f x ≠ x) :
-    ∃ e : D → (D → D), Function.Surjective e := by
+    (∃ d : D, ∀ x : D, x = d) ∧ ∃ e : D → (D → D), Function.Surjective e := by
   classical
   have hne : Nonempty D := by
     by_contra h0
@@ -141,7 +141,7 @@ example {D : Type*} (hnf : ¬ ∃ f : D → D, ∀ x, f x ≠ x) :
       split_ifs with hx
       · subst hx; exact fun h => hab h.symm
       · exact fun h => hx h.symm⟩
-  exact ⟨fun _ => id, fun _ => ⟨d, funext fun _ => hsub _ _⟩⟩
+  exact ⟨⟨d, fun x => hsub x d⟩, fun _ => id, fun _ => ⟨d, funext fun _ => hsub _ _⟩⟩
 
 /-! ## § VII. Why the wall is Set-specific — the obstruction is non-monotone -/
 
@@ -155,18 +155,14 @@ theorem not_monotone_not : ¬ Monotone (Not : Prop → Prop) := by
   have hle : (False : Prop) ≤ True := by tauto
   exact (h hle) not_false trivial
 
--- Statement: on the two-element chain `false ≤ true`, every monotone self-map has a fixed point, and
---   no map from its two points onto its three monotone self-maps is surjective. So in the monotone face
---   the absence of a fixed-point-free endomap is necessary for a reflexive object but not sufficient.
+-- Statement: on the two-element chain `false ≤ true`, every monotone self-map has a fixed point (the
+--   first conjunct is Knaster–Tarski, `OrderHom.lfp`), and no map from its two points onto its monotone
+--   self-maps is surjective.
+-- Reading: so in the monotone face the absence of a fixed-point-free monotone endomap does not suffice
+--   for a reflexive object.
 example : (∀ f : Bool →o Bool, ∃ b, f b = b) ∧
     ¬ ∃ e : Bool → (Bool →o Bool), Function.Surjective e := by
-  refine ⟨fun f => ?_, ?_⟩
-  · by_cases h : f false = false
-    · exact ⟨false, h⟩
-    · have hf : f false = true := by simpa using h
-      have := f.monotone (show false ≤ true from by decide)
-      rw [hf] at this
-      exact ⟨true, by simpa using le_antisymm (by cases (f true) <;> simp_all) this⟩
+  refine ⟨fun f => ⟨OrderHom.lfp f, OrderHom.map_lfp f⟩, ?_⟩
   · rintro ⟨e, he⟩
     let c0 : Bool →o Bool := ⟨fun _ => false, fun _ _ _ => le_rfl⟩
     let c1 : Bool →o Bool := ⟨fun _ => true, fun _ _ _ => le_rfl⟩
