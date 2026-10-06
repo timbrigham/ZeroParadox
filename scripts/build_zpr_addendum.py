@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.3 | October 2026
+Version 1.4 | October 2026
 v1.0: Initial release. Addendum to ZP-R. The faces formalized here of the self-referential / diagonal
 relationship at the bottom element ⊥, organized by the μ/ν fork: wall faces (self-reference cannot
 close — no fixed point) and floor faces (self-reference closes — a fixed point exists). Supersedes the
@@ -16,7 +16,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.4'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -294,8 +294,8 @@ def build():
 
     E.append(callout(
         'The map is a placement, not a new theorem. The unification of the diagonal family is Lawvere '
-        '(1969) and Yanofsky (2003); each face is a classical result (or a direct instance of the '
-        'engine), formalized here axiom-free where the logic is pure and choice-carrying where it '
+        '(1969) and Yanofsky (2003); each face is a classical result (each wall face a direct instance '
+        'of the engine), formalized here axiom-free where the logic is pure and choice-carrying where it '
         'inherits Mathlib\'s recursion theory. What the framework adds is the tie to the '
         'self-application role, for the faces formalized here.',
         bg=BLUE_LITE, border=BLUE
@@ -369,9 +369,10 @@ def build():
     E += [
         hr(),
         Paragraph(
-            '<i>End of ZP-R Addendum | The Diagonal Family | one engine (negation has no fixed point) | '
-            'wall faces &#956; (Cantor, Russell, Turing, Tarski, Curry) | floor faces &#957; (Quine '
-            'atom, Kleene, L&#246;b / G&#246;del 2, Rice) | the faces formalized here, Lean-witnessed '
+            '<i>End of ZP-R Addendum | The Diagonal Family | wall faces &#956; (Cantor, Russell, '
+            'Turing, Tarski, Curry), each the contrapositive of one engine (negation has no fixed '
+            'point) | floor faces &#957; (Quine atom, Kleene, L&#246;b / G&#246;del 2, Rice), each '
+            'fixed point supplied per face | the faces formalized here, Lean-witnessed '
             'except G&#246;del 1st | cross-face identity a type boundary | the map is a placement, not a new '
             'theorem.</i>',
             S['endnote']),

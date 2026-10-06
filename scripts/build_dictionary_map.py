@@ -398,7 +398,7 @@ SLOT_GLOSS = {
     "MEAS":  "**measure** - some quantity becomes infinite at ⊥, and in ℚ₂ exactly there",
     "INV":   "**inversion** - the map z↦1/z swaps ⊥ (which is 0) with infinity (the two poles of a Riemann sphere)",
     "CONC":  "**concurrency** - applying ⊥'s own operation returns ⊥ unchanged (a fixed point: operation and result coincide)",
-    "SELF":  "**self-reference** - ⊥ is defined by referring to itself (a self-reproducing / self-containing object)",
+    "SELF":  "**self-reference** - ⊥ is defined by referring to itself (a self-containing object, x = {x}; in computability, a code fixed by its own self-application up to evaluation)",
     "GEN":   "**generation** - ⊥ generates the structure built above it (for example, the ordinal ε₀ generated from 0)",
     "DYN":   "**dynamics** - how ⊥ is approached and departed, one directional axis with two sub-senses: **↓ inbound** (orbits converge *to* ⊥ - a sink) and **↑ outbound** (structure departs *from* ⊥ irreversibly - a source). ↕ = both, which happens only at a seam (μ=ν). Single-directional, set by whether ⊥ is a sink or a source",
 }
@@ -421,7 +421,7 @@ CONSTRUCTION_GLOSS = {
 TERMS = [
     ("apophatic", "characterizing something by what it is NOT (definition by exclusion)"),
     ("μ / ν", "least fixed point (μ, built up from the floor) vs greatest fixed point (ν, closed down)"),
-    ("Quine atom / Kleene quine", "a self-containing set (x = {x}) / a program that prints itself"),
+    ("Quine atom / Kleene quine", "a self-containing set (x = {x}) / a code whose behaviour equals its own self-application up to evaluation (`IsComputationalQuine`, a Kleene fixed point); a code that outputs its own Gödel number is a further fixed point, of another transformation (`SelfPrints`, `selfref_universal_exists`)"),
     ("the snap", "the framework's discrete jump off ⊥ into the first structured state"),
     ("ε₀", "the fixed point of omega-to-the-power reached from 0 - both min and max at once (`Statement:` COINCIDENCE, epsilon0_min_eq_max): the least such fixed point (the minimum closure, a floor in the fixed-point order) and the supremum of the ascending tower (a ceiling) - never only a ceiling"),
     ("v₂ → ∞", "the 2-adic valuation going to infinity at 0 (0 is infinitely divisible by 2)"),
@@ -475,7 +475,7 @@ POSITIVE = [
     ("concurrency", "hinge",
      "the fixed point where least and greatest coincide (operation = result) - `Statement:` COINCIDENCE",
      ["unique_fp", "selfApp_bot_is_both_extremal"]),
-    ("self-reference", "hinge", "the self-reproducing / self-containing fixed point (Quine / Kleene)",
+    ("self-reference", "hinge", "the self-containing fixed point: the Quine atom (x = {x}), and in computability a code fixed by self-application up to evaluation",
      ["kleene_quine_is_bot", "quine_period_is_goedel"]),
     ("generation", "verb", "the floor generates the tower above it (ε₀ is the least fixed point of α ↦ ω^α seeded at the base, and equally that tower's supremum)",
      ["epsilon0_min_eq_max", "epsilonZero_eq_nfp"]),

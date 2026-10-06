@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.8 | October 2026
+Version 1.9 | October 2026
 v1.6: BEDROCK, and the correction is to a MECHANISM rather than to a wording. The rendered text said the escape from the Cantor obstruction is that eval lands in the partial functions "not in the codes, so the Set refutation never applied to it". That is false, and one line refutes it: the partial-function type is itself nontrivial, so no_witness_of_nontrivial forbids the Lawvere witness there exactly as it does on Code - example : not (HasLawvereWitness (Nat ->. Nat)) elaborates. Changing the codomain buys nothing. The real escape is a restriction on which MAPS exist: no computable self-map on codes is eval-fixed-point-free (no_computable_evalFixedPointFree), so the diagonal the Set refutation runs has no computable representative and the obstruction cannot fire. That theorem, with this mechanism spelled out in its own docstring, was already in the corpus - the prose asserted a different reason beside it. Found by the adversary gate at FAIL-BEDROCK, round 3, and confirmed by elaboration before the fix. Corrected at five sites across three surfaces in one sweep rather than at the one named.
 v1.0: Initial release. Synthesis / placement layer. Locates and realizes the framework's
 self-application fixed point as a Lawvere fixed point across three categories (faces): refuted in Set
@@ -14,7 +14,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -217,7 +217,8 @@ def build():
             'gives every total computable endomap of codes a fixed point <i>up to eval</i> &#8212; two '
             'codes computing the same function.',
             'That is weaker than "no fixed-point-free endomap", and the strong form is false: '
-            'c &#8614; pair(c, c) is total, computable, and returns its own input for no c. The '
+            'c &#8614; pair(c, c) is total and computable and returns its own input for no c (stated '
+            'in the Lean docstrings, not formalized as a declaration). The '
             'obstruction is absent at the level of <i>eval</i>, which is where the reflexive object '
             'lives &#8212; and the reason is that the effective category admits fewer <i>maps</i>, '
             'not that eval lands in a different type: no computable self-map on codes is '

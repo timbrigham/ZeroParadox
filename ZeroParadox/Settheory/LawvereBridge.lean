@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the vertical dereference toward Lawvere — the framework's self-application fixed point as an INSTANCE of Lawvere's general fixed-point engine (existence), with location-at-⊥ and uniqueness as the framework's added content. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the vertical dereference toward Lawvere — what Lawvere's general fixed-point theorem gives the framework's self-application fixed point (the SHAPE e a a, and the wall faces by contrapositive) and what it does not (on a ZPSemilattice with a point other than ⊥ its hypothesis fails, nontrivial_lattice_no_witness, so ⊥'s fixed point is the class field fixed_bot and its uniqueness unique_fp). Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Settheory.FixedPointFork
@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# The Lawvere dereference — selfApp as an instance of the general engine (probe)
+# The Lawvere dereference — what the general engine gives selfApp, and what it does not (probe)
 
 ## Engineer's Take
 
@@ -20,9 +20,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview
-**Lawvere supplies EXISTENCE; the framework supplies the PINNING.** `fixed_bot` + `unique_fp` upgrade
-Lawvere's `∃` to `∃!`, and uniqueness is genuinely extra. ⚠ That the keystone IS an instance of the
-Diagonal Theorem stays a CONJECTURE. Experimental probe, not a finalized layer. Argument and fence: `ZeroParadox/Settheory/LawvereBridge.md`.
+**Lawvere's engine gives the SHAPE `e a a` and, by contrapositive, the WALL faces;** its hypothesis fails on
+a nontrivial `ZPSemilattice` (`nontrivial_lattice_no_witness`), so its ⊥ is a fixed point by the class field
+`fixed_bot`, the only one by `unique_fp` (`selfApp_pinnable`). ⚠ Keystone-as-Diagonal-instance stays a CONJECTURE.
 -/
 
 namespace ZeroParadox
@@ -31,10 +31,10 @@ open ZPSemilattice
 
 /-! ## § I. Lawvere's fixed point is a self-application -/
 
-/-- **Lawvere's fixed point IS self-application.** Refining `lawvere_fixedpoint`: the fixed point it
-produces for any `f` is `e a a` — `e` applied to the diagonal point `a` at itself. Existence of the
-self-referential fixed point (the ν-regime) is delivered by the engine, and delivered *as*
-self-application — the abstract shadow of which is `AbstractSelfApp.selfApp`. -/
+/-- **Lawvere's fixed point IS self-application.** Refining `lawvere_fixedpoint`: given a
+point-surjection `e`, the fixed point it produces for any `f` is `e a a` — `e` applied to the diagonal
+point `a` at itself. The statement mentions no `ZPSemilattice` and no ⊥, and on a `ZPSemilattice` with a
+point other than ⊥ its hypothesis fails (`nontrivial_lattice_no_witness`). -/
 theorem lawvere_fixedpoint_selfApp {A B : Type*} (e : A → (A → B))
     (he : Function.Surjective e) (f : B → B) : ∃ a, f (e a a) = e a a := by
   obtain ⟨a, ha⟩ := he (fun x => f (e x x))
@@ -44,9 +44,10 @@ theorem lawvere_fixedpoint_selfApp {A B : Type*} (e : A → (A → B))
 
 variable {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 
-/-- **The framework's self-application fixed point is pinned (`∃!`).** Where Lawvere gives only
-existence, `AbstractSelfApp` supplies both `fixed_bot` (existence, located at ⊥) and `unique_fp`
-(uniqueness), so the fixed point is unique. This `∃!` is exactly the "instance pinnable" / collapsed-fork
+/-- **The framework's self-application fixed point is pinned (`∃!`).** `AbstractSelfApp` supplies
+both `fixed_bot` (existence, located at ⊥ of the `ZPSemilattice`) and `unique_fp` (uniqueness), so the
+fixed point is unique; neither comes from Lawvere's engine, whose hypothesis fails on a `ZPSemilattice`
+with a point other than ⊥ (`nontrivial_lattice_no_witness`). This `∃!` is exactly the "instance pinnable" / collapsed-fork
 condition of `RequirementsGap` (`instance_pinnable_iff_fork_collapse`), one dereference down. -/
 theorem selfApp_pinnable : ∃! x : L, AbstractSelfApp.selfApp x = x :=
   ⟨bot, AbstractSelfApp.fixed_bot, fun y hy => AbstractSelfApp.unique_fp y hy⟩
@@ -55,8 +56,8 @@ theorem selfApp_pinnable : ∃! x : L, AbstractSelfApp.selfApp x = x :=
 
 omit [AbstractSelfApp L] in
 /-- **Existence does not force uniqueness.** A self-map can have a fixed point yet not a unique one — the
-identity fixes everything. So the framework's `unique_fp` is genuine added content beyond Lawvere's
-existence: it is the fork collapse / `(Z)`, not an automatic consequence of the engine. -/
+identity fixes everything. So the framework's `unique_fp` is content that no existence result
+supplies, whatever its source: it is the fork collapse / `(Z)`. -/
 theorem existence_without_uniqueness [Nontrivial L] :
     ∃ g : L → L, (∃ x, g x = x) ∧ ¬ ∃! x, g x = x := by
   refine ⟨id, ⟨bot, rfl⟩, ?_⟩
@@ -141,10 +142,11 @@ theorem not_monotone_not : ¬ Monotone (Not : Prop → Prop) := by
 `AbstractSelfApp` assumes — that a self-application fixed point *exists* and is *unique* — are DERIVED,
 not posited: existence-with-uniqueness is exactly the fork collapsing (`fork_collapse_iff`), and bare
 existence is Knaster-Tarski. So the `∃!` content of the keystone is crossable via the fork
-(`RequirementsGap`/`MetaFork`), with no reflexive object needed. The *literal Lawvere sourcing* of ⊥ via
-a reflexive object is reached not here but in the computability face
+(`RequirementsGap`/`MetaFork`), with no reflexive object needed. Lawvere's hypothesis, a reflexive
+point-surjection, is met not here but in the computability face
 (`ZeroParadox/Computability/ComputableCrossing.lean`): the universal machine `eval` is point-surjective
-onto the computable functions, and Kleene's recursion theorem sources the fixed point there. So the
+onto the computable functions, and the recursion theorem gives a fixed point there, a Kleene code, a term
+of another type than ⊥ of the `ZPSemilattice` (that it is a Lawvere instance is cited). So the
 order/fork face gives the `∃!` content (above) and the computability face gives the reflexive-object
 realization; a Scott `D∞` domain route (`D ≅ [D → D]`) is a third path, unbuilt in Mathlib and no longer
 needed for the crossing. -/
