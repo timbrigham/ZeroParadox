@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.12 | October 2026
+Version 1.13 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -31,16 +31,16 @@ def build():
             'order-bottom, a fixed point and the only one by the class fields of AbstractSelfApp), in the '
             'computability face by a Kleene code, a term of another type. This document asks where the role is filled by a Lawvere fixed point, '
             'across three categories ("faces"): refuted in '
-            '<b>Set</b> on every carrier with two or more elements (Cantor), obstruction-free with no reflexive object built here in the '
+            '<b>Set</b> on every carrier except a one-element one (Cantor), obstruction-free with no reflexive object built here in the '
             '<b>monotone / domain</b> regime (Knaster&#8211;Tarski; a genuine reflexive object there '
             'needs Scott\'s D<sub>&#8734;</sub>), and realized in the <b>computability</b> face '
             '(Rogers / Kleene). Every theorem used is classical. Each result box (R1&#8211;R4) and each '
             'F1 property is backed by a machine-checked Lean 4 theorem, except one marked cited: that '
             'the computability fixed point is an instance of Lawvere\'s theorem. The rest is cited '
             'background or marked Reading. The contribution is the per-face placement of the '
-            'framework\'s self-application role and the scope result. How each face relates to '
-            'Lawvere\'s theorem is stated once, in the closing box of Section III; ZP-R conjectures '
-            'nothing global.</i>',
+            'framework\'s self-application role and the scope result. How the faces formalized here '
+            'relate to Lawvere\'s theorem is collected in Section III, in the box "Lawvere\'s theorem, '
+            'face by face"; ZP-R conjectures nothing global.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -66,7 +66,7 @@ def build():
         'where the realization fails and where it succeeds. The mathematics is classical and is invoked, not '
         'extended; the contribution is (i) the per-face placement of <i>this framework\'s own</i> '
         'self-application role relative to the Lawvere fixed point &#8212; its Lawvere realization '
-        'refuted in Set on carriers with two or more elements, the obstruction absent in the monotone / domain face with no reflexive object '
+        'refuted in Set on every carrier except a one-element one, the obstruction absent in the monotone / domain face with no reflexive object '
         'built there, the realization achieved in the computability face &#8212; and (ii) a '
         'scope result: the realization is category-relative &#8212; an existence statement in one face '
         'rather than a global identification. The general link between self-reference and Lawvere\'s '
@@ -195,7 +195,7 @@ def build():
         'difference is the point: the monotone regime is free of it <i>literally</i> &#8212; on a '
         '<i>complete lattice</i>, Knaster&#8211;Tarski bans a fixed-point-free monotone endomap, and the '
         'completeness hypothesis is load-bearing, since Nat.succ is a monotone endomap with no fixed '
-        'point at all, and by Davis (1955, p. 311) a lattice on which every increasing function has a '
+        'point at all, and by Davis (1955, Theorem 2, p. 313) a lattice on which every increasing function has a '
         'fixpoint is complete &#8212; while the computable regime is free of it only '
         '<i>up to eval</i> &#8212; literally fixed-point-free total computable endomaps do exist.'))
 
@@ -254,14 +254,15 @@ def build():
         'to. Lawvere (1969) supplies the engine and raises the recursive case as an open question '
         'rather than deriving it (his &#167;2, p. 9 of the 2006 TAC reprint); the '
         'reflexive structure of the computable category is the subject of the Turing-category / '
-        'partial-combinatory-algebra literature (Cockett&#8211;Hofstra 2008; Longley). Collecting the '
+        'partial-combinatory-algebra literature (Cockett&#8211;Hofstra 2008; Longley 1995). Collecting the '
         'three faces:'))
 
     E.append(data_table(
         headers=['Face', 'Reflexive object', 'Mechanism', 'Status'],
         rows_data=[
             ['Set',
-             'refuted on two or more elements (a one-element set is reflexive)',
+             'refuted on every carrier except a one-element one, the empty set included (a '
+             'one-element set is reflexive)',
              'a fixed-point-free map (negation) blocks it &#8212; Cantor; the obstruction is '
              'non-monotone',
              'the wall'],
@@ -353,6 +354,7 @@ def build():
     E.append(sp(6))
 
     E.append(callout(
+        '<b>Lawvere\'s theorem, face by face.</b><br/>'
         'The fences are not hedging. Each per-face result &#8212; the Set wall, the fork, the '
         'computability crossing &#8212; is a full theorem on its own side of them. '
         '<b>Lawvere\'s theorem is the translation key between the faces formalized here, not a '
@@ -362,18 +364,22 @@ def build():
         'contrapositive, which is Lawvere\'s own reading ("The famed &#8216;diagonal argument&#8217; '
         'is of course just the contrapositive of our theorem," p. 5 of the 2006 TAC reprint): a '
         'fixed-point-free endomap rules out every point-surjection (his Corollary 1.2), and Cantor is '
-        'the two-valued case. In Set every carrier with two or more elements has such an endomap; a '
-        'one-element set has none and is the trivial forward case (Section II). The '
+        'the two-valued case. In Set every carrier except a one-element one has such an endomap, the '
+        'empty set included, where the identity is vacuously fixed-point-free; a one-element set has '
+        'none and is the trivial forward case (Section II). The '
         '<b>computability</b> face runs it forward, up to eval: eval is point-surjective onto the '
         'partial computable functions, and every total computable endomap of codes has a fixed point '
         'up to eval (R3-pos); that this is a Lawvere instance is cited (Yanofsky 2003; Bauer 2017). In '
         'the <b>fork / AFA</b> face the self-application fixed point, &#8869; of the ZPSemilattice, is '
         'supplied by the class fields fixed_bot and unique_fp (selfApp_pinnable), not by the engine, '
         'whose hypothesis fails on every ZPSemilattice with an element other than &#8869; '
-        '(nontrivial_lattice_no_witness). That face reaches the engine only through the '
-        'KleeneStructure commitment, which nominates a code as the computational witness for &#8869; '
-        'of the ZPSemilattice, a commitment of the class and not a theorem (Kleene.lean &#167;II). The '
-        '<b>monotone</b> face runs it in neither direction here: on a complete lattice no monotone '
+        '(nontrivial_lattice_no_witness). On every ZPSemilattice with an element other than &#8869;, '
+        'that face\'s only link to the computability face is the KleeneStructure commitment: it '
+        'nominates a code meeting a periodicity condition (one that constant codes also meet) as the '
+        'computational witness of the bottom role, a commitment of the class and not a theorem '
+        '(ZeroParadox/Computability/Kleene.lean &#167;II). On the one-element ZPSemilattice, as for '
+        'the one-element set, the forward case holds trivially. The '
+        '<b>monotone</b> face runs it in neither direction on the two-element chain: on a complete lattice no monotone '
         'endomap is fixed-point-free (Knaster&#8211;Tarski), so the contrapositive has no monotone '
         'input, and on the two-element chain no map onto the monotone endomaps is surjective (Section '
         'II). No occupant is identified with another: an equation between an element of a '
@@ -396,15 +402,16 @@ def build():
         'Cartesian Closed Categories," LNM 92 (1969) 134&#8211;145, cited by page in its reprint, '
         'Reprints in Theory and Applications of Categories 15 (2006); Yanofsky, Bull. Symbolic Logic '
         '9(3) (2003), cited by page in arXiv:math/0305282v1. '
-        'Lattice fixed points: Tarski, "A lattice-theoretical fixpoint theorem," Pacific J. Math 5 '
-        '(1955); Davis, "A characterization of complete lattices," Pacific J. Math. 5(2) (1955) '
-        '311&#8211;319.The computability fixed points: Rogers, <i>Theory of Recursive Functions and '
+        'Lattice fixed points: Tarski, "A lattice-theoretical fixpoint theorem and its applications," '
+        'Pacific J. Math. 5(2) (1955) 285&#8211;309; Davis, "A characterization of complete lattices," '
+        'Pacific J. Math. 5(2) (1955) 311&#8211;319. The computability fixed points: Rogers, <i>Theory of Recursive Functions and '
         'Effective Computability</i> (1967); Kleene\'s second recursion theorem; a version of '
         'Lawvere\'s theorem for multi-valued maps, in synthetic computability, from which the '
         'recursion theorem follows: Bauer, "On fixed-point theorems in synthetic computability," '
         'Tbilisi Math. J. 10(3) (2017). The reflexive '
         'structure of the computable category: Cockett &amp; Hofstra, "Introduction to Turing '
-        'categories," Annals of Pure and Applied Logic 156 (2008) 183&#8211;209; Longley (partial combinatory algebras / realizability). '
+        'categories," Annals of Pure and Applied Logic 156 (2008) 183&#8211;209; Longley, <i>Realizability Toposes and Language Semantics</i>, PhD '
+        'thesis, University of Edinburgh, 1995 (ECS-LFCS-95-332). '
         'Fixed points and reflexive domains: Soto-Andrade and Varela, "Self-reference and fixed '
         'points: a discussion and an extension of Lawvere\'s theorem," Acta Applicandae Mathematicae '
         '2(1) (1984) 1&#8211;19, doi:10.1007/BF01405490, which, as Bj&#246;rner reports, draws '
@@ -418,7 +425,7 @@ def build():
     E.append(body(
         'Against this, the contribution of ZP-R is not a theorem but a <i>placement</i>: the '
         'per-face placement of the framework\'s self-application role relative to the Lawvere fixed '
-        'point (its Lawvere realization refuted in Set on carriers with two or more elements, the '
+        'point (its Lawvere realization refuted in Set on every carrier except a one-element one, the '
         'obstruction absent in the monotone / domain '
         'face, the realization achieved in the computability face), and the scope result of Section '
         'III. That Kleene\'s recursion theorem is a Lawvere instance is due to the sources above, not '
@@ -436,8 +443,9 @@ def build():
     E.append(remark_box(
         'Open items',
         [
-            'ZP-R holds <b>no global conjecture</b>: how each face relates to Lawvere\'s theorem is '
-            'stated once, in the closing box of Section III.',
+            'ZP-R holds <b>no global conjecture</b>: how the faces formalized here relate to '
+            'Lawvere\'s theorem is collected in Section III, in the box "Lawvere\'s theorem, face by '
+            'face".',
             'The <b>domain-face route</b> &#8212; a Scott D<sub>&#8734;</sub> reflexive object &#8212; '
             'is not carried out; the computability face suffices for the existence claim, so it is not '
             'needed, but it would be a second realization.',
@@ -478,7 +486,7 @@ def build():
              'lawvere_fixedpoint_selfApp, selfApp_pinnable, existence_without_uniqueness '
              '(ZeroParadox/Settheory/LawvereBridge.lean); nontrivial_lattice_no_witness '
              '(ZeroParadox/Category/Lawvere.lean)'],
-            ['R3-neg (Set, two or more elements: refuted; obstruction non-monotone)',
+            ['R3-neg (Set, every carrier except a one-element one: refuted; obstruction non-monotone)',
              'reflexive_object_refuted, not_monotone_not (ZeroParadox/Settheory/LawvereBridge.lean)'],
             ['R3-pos monotone',
              'monotone_regime_derives_pinned (ZeroParadox/Settheory/LawvereBridge.lean)'],
@@ -525,7 +533,7 @@ def build():
         hr(),
         Paragraph(
             '<i>End of ZP-R | A Cross-Category Account of the Self-Referential Fixed Point | '
-            'the fork (choice-free) | Set, two or more elements: refuted (Cantor) | monotone / domain: '
+            'the fork (choice-free) | Set, every carrier except a one-element one: refuted (Cantor) | monotone / domain: '
             'fork, no reflexive object built (Scott D<sub>&#8734;</sub> unbuilt) | computability: crossed '
             '(Rogers / Kleene) | F1: per face, what is measured | F2: the self-application role carries '
             'its face | Lawvere the translation key between the faces (Section III) | no global '

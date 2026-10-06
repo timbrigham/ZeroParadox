@@ -22,13 +22,16 @@ The fixed point is machine-checked; that it is an instance of Lawvere's theorem 
 2003, Theorem 5; Bauer 2017, a version of Lawvere's theorem for multi-valued maps, in synthetic
 computability).
 
-Rice uses the recursion theorem again, on the **decidability** axis: the quine *exists*, and *which*
-programs have any non-trivial semantic property is *undecidable*. `quine_exists_yet_rice` states the two
-as a conjunction whose second conjunct does not mention `f`: it is `rice_face C …` exactly. So nothing
-is stated about membership at `f`'s fixed point. Rice's own proof turns on membership at the fixed point
-of a different map, one built from the assumed decider for `C` (Mathlib's `rice` via `fixed_point₂`;
-Yanofsky 2003, p. 19 of arXiv:math/0305282v1). Gloss: `ZeroParadox/Computability/ComputationCannotBe.lean`
-§ V.
+Mathlib's proof of Rice uses the recursion theorem again, on the **decidability** axis: the quine
+*exists*, and *which* programs have any non-trivial semantic property is *undecidable*.
+`quine_exists_yet_rice` states the two as a conjunction whose second conjunct does not mention `f`: it is
+`rice_face C …` exactly. So nothing is stated about membership at `f`'s fixed point. The standard
+recursion-theorem proof of Rice's theorem (Yanofsky 2003, p. 19 of arXiv:math/0305282v1; Mathlib's
+`ComputablePred.rice`, via `fixed_point₂`) turns on membership at the fixed point of a different map, one
+built from the assumed decider for `C`. Rice's 1953 proof instead reduces from the emptiness problem: his
+Theorem 5 shows the unit class of the empty set is not completely recursively enumerable, and his
+Theorem 6 derives the general case from it by a reduction (H. G. Rice, Trans. Amer. Math. Soc. 74(2) (1953) 358–366). Gloss:
+`ZeroParadox/Computability/ComputationCannotBe.lean` § V.
 
 So on the wall map: the total faces (lattice, 2-adic) *posit* the fixed point and it is *refuted* as a
 Lawvere instance in Set (Cantor); the computability face *has* the fixed point (recursion theorem), and
@@ -37,7 +40,7 @@ makes either half depend on the other.
 
 ## Honest delta
 
-Rice itself is Mathlib's (Rice 1953). Its diagonal-family framing is Yanofsky (2003), p. 19 of
+Rice's theorem is Rice's (1953); its Lean proof is Mathlib's. Its diagonal-family framing is Yanofsky (2003), p. 19 of
 arXiv:math/0305282v1, an application of his Theorem 5 (the recursion theorem); Lawvere (1969) does not
 treat it. New here: the framework restatement, a concrete face (the halting problem), and the
 `quine_exists_yet_rice` pairing, which states the ν-existence and the undecidability as two independent

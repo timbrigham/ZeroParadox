@@ -46,8 +46,8 @@ Lawvere's theorem is an implication: **if** a point-surjection `e : A → (A →
 ## Honest status — the fence
 
 None of this reduces the framework to Lawvere. How each face formalized here relates to Lawvere's
-theorem is stated once, in ZP-R (Section III, closing box), with Lawvere as the translation key between
-the faces; ZP-R conjectures nothing global.
+theorem is collected in ZP-R, Section III, in the box "Lawvere's theorem, face by face", with Lawvere as
+the translation key between the faces; ZP-R conjectures nothing global.
 
 What is proved: Lawvere's fixed point has the shape of a self-application (`lawvere_fixedpoint_selfApp`);
 the framework's self-application fixed point is `∃!` by its class fields (`selfApp_pinnable`); existence

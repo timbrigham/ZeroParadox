@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.7 | October 2026
+Version 1.8 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -228,8 +228,10 @@ def build():
             'EXISTS (recursion theorem), AND membership in any non-trivial extensional set C of codes '
             'is UNDECIDABLE (rice_face; Rice 1953, cited from Mathlib). The undecidability is of C '
             'over all codes; the second conjunct does not mention f, so nothing is stated about '
-            'membership at f\'s fixed point. Rice\'s own proof turns on the fixed point of a different '
-            'map, built from the assumed decider for C (Yanofsky 2003). rice_face_has_bottom states '
+            'membership at f\'s fixed point. The standard recursion-theorem proof of Rice\'s theorem '
+            '(Yanofsky 2003, p. 19; Mathlib\'s ComputablePred.rice, via fixed_point&#8322;) turns on the '
+            'fixed point of a different map, built from the assumed decider for C; Rice\'s 1953 proof '
+            'instead reduces from the emptiness problem (his Theorems 5 and 6). rice_face_has_bottom states '
             'the first conjunct alone; reading that fixed point as the face\'s floor is the family\'s '
             'criterion, not the theorem.',
             'halting_undecidable: whether a program halts on input n is not decidable, the concrete '
@@ -311,9 +313,9 @@ def build():
             'nontrivial_lattice_no_witness); in the computability face, a Kleene '
             'code, a fixed point up to eval (that it is a Lawvere instance is cited, Rogers\' form); in '
             'the L&#246;b face, the sentence a hypothesized L&#246;b diagonal supplies. On the wall faces '
-            'the role has no occupant. No occupant is identified with another. How each face relates to '
-            'Lawvere\'s theorem is stated once, in ZP-R (Section III, closing box); nothing global is '
-            'conjectured.',
+            'the role has no occupant. No occupant is identified with another. How the wall, fork / AFA '
+            'and computability faces relate to Lawvere\'s theorem is collected in ZP-R, Section III, '
+            'in the box "Lawvere\'s theorem, face by face"; ZP-R conjectures nothing global.',
         ]
     ))
     E.append(sp(6))
@@ -337,8 +339,9 @@ def build():
         'version of Lawvere\'s theorem for multi-valued maps, in synthetic computability, and derives '
         'the Kleene&#8211;Rogers recursion theorem from it (Theorem 5.2, Corollary 5.3). The '
         'individual faces are classical: Cantor; Russell (1901); G&#246;del (1931); Turing\'s halting '
-        'problem; Tarski (1936); Curry (1942); L&#246;b (1955); Rice (1953); Kleene\'s '
-        'recursion theorem. The '
+        'problem; Tarski (1936); Curry (1942); L&#246;b (1955); Kleene\'s recursion theorem; and '
+        'Rice, "Classes of recursively enumerable sets and their decision problems," Trans. Amer. '
+        'Math. Soc. 74(2) (1953) 358&#8211;366. The '
         'point-surjective theorem is in Mathlib (Function.exists_fixed_point_of_surjective); the '
         'framework\'s engine re-derives it axiom-free for a self-contained family. The contribution of '
         'this addendum is the formalization of the faces formalized here (core choice-free; the computability faces '
