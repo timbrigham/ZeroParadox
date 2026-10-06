@@ -273,7 +273,7 @@ def cycle_diagram():
     node_labels   = ['⊥', 'ε₀', '...', 'Sₙ', '⊥′']
     node_sublabels= ['null', 'first state', 'ascending', 'no last state', 'next null (C-DA2)']
     node_colors   = [COMP_AMBER, COMP_BLUE, COMP_SLATE, COMP_BLUE, COMP_AMBER]
-    arrow_labels  = ['T-SNAP', 'T3 (monotone)', 'strict ascent', 'T-IZ + T-SNAP']
+    arrow_labels  = ['T-SNAP', 'T3 (monotone)', 'strict ascent', 'T-IZ (+ reading)']
     arrow_colors  = [COMP_GREEN, COMP_BLUE, COMP_BLUE, COMP_GREEN]
 
     for i in range(len(xs) - 1):
@@ -297,7 +297,7 @@ def cycle_diagram():
                      fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
 
     # Centered below the arrow-label row (cy+17) so it doesn't overflow the right edge
-    d.add(String(dw / 2 - 52, cy + 28, 'DA-2: cycle repeats',
+    d.add(String(dw / 2 - 52, cy + 28, 'DA-2: cycle (a reading)',
                  fontSize=7, fontName='DV-I', fillColor=COMP_GREEN))
 
     # No internal summary string: the caption below this drawing already carries the cycle in
@@ -377,11 +377,10 @@ def build():
         'ZP-I answers both questions with a single theorem: <b>T-IZ (Inside Zero)</b>. '
         'Every 2-adic depth chain S₀, S₁, S₂, ... with no zero term, satisfying the IsDepthChain and IsStrictStateSequence conditions, converges  - in the '
         '2-adic metric  - to zero, which the framework reads as the bottom role and then as a successor null. '
-        'The chain does not go on forever; it reaches its limit at the ordinal limit, and on those '
-        'readings the cycle begins again. The '
+        'The chain does not go on forever; it reaches its limit at the ordinal limit. The '
         'convergence is proved (given the IsDepthChain modelling commitment), and so, separately, is the fact that '
-        'anything filling the bottom role IS the bottom already there. The cycle does not close as a theorem: '
-        'the readings that carry the limit to the bottom role and to a successor null are commitments stated alongside it.'))
+        'anything filling the bottom role IS the bottom already there. That the cycle begins again at the limit '
+        'is a reading, not a theorem: see the Note on closure.'))
     E.append(cbody(
         'The name "Inside Zero" refers to the geometry of the approach. The chain does '
         'not reach zero by turning around and going backward. It reaches zero by going '
@@ -581,8 +580,8 @@ def build():
         '<b>Door 3  - AX-G2 (No morphism to initial object):</b> ZP-G proved that no '
         'morphism within the categorical structure C leads back to the initial object. '
         'T-IZ is not a morphism within C: it is a convergence statement about 2-adic numbers. Reading '
-        'its limit as the termination of C and the opening of a new C\', with its own ⊥′, is the C-DA2 '
-        'commitment, not a result. AX-G2 quantifies over morphisms within a single '
+        'its limit as the termination of C and the opening of a new C\', with its own ⊥′, is the cycle '
+        'reading, not a result (see the Note on closure). AX-G2 quantifies over morphisms within a single '
         'category; it says nothing about transitions between categories.'))
 
     E.append(three_doors_diagram())
@@ -606,8 +605,8 @@ def build():
     E.append(cbody(
         'ZP-E gave us the beginning: T-SNAP (⊥ → ε₀ - shape derived, occurrence committed to). ZP-I gives us '
         'the convergence: T-IZ (the chain → 0, read as the bottom role, and as ⊥′ only on a commitment). The '
-        'framework reads the two together as a repeating cycle. That cycle is not a theorem: the steps that join '
-        'them are the commitments named below.'))
+        'framework reads the two together as a repeating cycle. That cycle is a reading, not a theorem: see '
+        'the Note on closure below.'))
     E.append(cbody(
         '1. <b>T-SNAP</b> fires: ⊥ and ε₀ emerge. The branch opens.'
         '<br/>'
@@ -620,20 +619,16 @@ def build():
         '<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step and does not establish that '
         'any step is taken; a model in which T-SNAP holds and nothing moves is exhibited in the Lean '
         'source. Throughout this document, "fires" narrates the framework&#8217;s commitment that instantiation occurs - before this note as well as after it. '
-        '4. <b>T-IZ</b>: the chain\'s unbounded depth forces convergence to 0. Reading that '
-        'limit as filling the ⊥ role  - and then as ⊥′  - are the two commitments. On them, on the limit reaching P₀ (which nothing here establishes), '
-        'and on what DA-1 needs (DP-2 and DP-2\'s precondition, that the configuration reaching P₀ is a '
-        'running machine\'s, which the occurrence commitment asserts and DA-1 consumes), '
-        'DA-1 fires, T-SNAP fires again, and the branch is read as closed.'
+        '4. <b>T-IZ</b>: the chain\'s unbounded depth forces convergence to 0. That DA-1 and T-SNAP fire '
+        'again there, closing the branch, is a reading: see the Note on closure.'
         '<br/>'
-        '5. <b>DA-2</b>: on the C-DA2 commitment, ⊥′ is read as the foundation of the next instantiation. '
-        'The next T-SNAP fires. The cycle repeats.'))
+        '5. <b>DA-2</b>: ⊥′ is read as the foundation of the next instantiation, and the cycle repeats; '
+        'this too is a reading: see the Note on closure.'))
 
     E.append(cycle_diagram())
     E.append(ccaption(
-        'The cycle reading: T-SNAP opens the branch, strict ascent climbs it, and T-IZ\'s 2-adic limit is '
-        'read as filling the bottom role (a commitment); reading that role-filler as ⊥′, the next null, is the '
-        'C-DA2 commitment. The cycle is a reading, not a theorem.'))
+        'The cycle reading: T-SNAP opens the branch, strict ascent climbs it, and T-IZ\'s 2-adic chain '
+        'converges to 0. The return to ⊥′ and the cycle are a reading, not a theorem: see the Note on closure.'))
     E.append(sp(4))
 
     E.append(cbody(
@@ -648,12 +643,20 @@ def build():
         '(MC-1). That the ⊥ so reached is a NEW one is the C-DA2 commitment; in the 2-adic picture the arc '
         'comes back to the same 0.'))
     E.append(cbody(
-        '<b>Note on closure:</b> T-IZ does not establish a closed system. In Lean, t_iz_complete is a '
-        'conjunction of results, not a chain: the convergence rests on the IsDepthChain modelling commitment, '
-        'the role step takes its property as the hypothesis h_role, which nothing here grounds, DA-1 applies '
-        'only on the limit reaching P₀ (which nothing here establishes), and DA-1 '
-        'needs DP-2 and DP-2\'s precondition, which the occurrence commitment asserts and DA-1 consumes (above). Reading the limit as filling the ⊥ role is a commitment, and '
-        'reading that role-filler as a new null ⊥′ is C-DA2, a further one. '
+        '<b>Note on closure:</b> T-IZ does not establish a closed system, and the cycle is a reading, not a '
+        'theorem. What T-IZ proves is that the 2-adic depth chain converges to 0 in the 2-adic metric, given '
+        'the IsDepthChain modelling commitment, IsStrictStateSequence and no term being zero; separately, '
+        'anything filling the bottom role IS the bottom already there (t_iz_limit_is_new_null). In Lean, '
+        't_iz_complete is a conjunction of results, not a chain, and its role step takes its property as the '
+        'hypothesis h_role, which nothing here grounds. For the cycle to begin again or close at the limit, it '
+        'needs every one of the following further premises, and none is established here: (a) the reading '
+        'that the limit fills the ⊥ role, a commitment and a reading across two carriers (MC-1); (b) the limit '
+        'reaching the incompressibility threshold P₀, which nothing here establishes, since its only route in '
+        'ZP-I is refuted (ZP-I &#167; II.B); (c) what DA-1 needs: DP-2 and DP-2\'s precondition, that the '
+        'configuration reaching P₀ is a running machine\'s current configuration and not an inert string, which '
+        'the occurrence commitment asserts and DA-1 consumes and does not supply (ZP-E &#167; IV); and (d) for '
+        'the next branch to start from a new null ⊥′ rather than the same ⊥, C-DA2, a further commitment; in '
+        'the 2-adic picture the arc comes back to the same 0. '
         'Whether the successor instantiation is part of a single formal structure or requires '
         'an extended framework is a question about multi-instantiation scope, not about '
         'the derivation itself.'))
@@ -708,15 +711,12 @@ def build():
         't_iz_complete) as a conjunction, with the role step\'s property taken as a hypothesis. '
         'The Kolmogorov complexity route is refuted: 2-adic depth growing without bound does not '
         'make a state incompressible, since 2<sup>n</sup> has depth n and is computed from n by one '
-        'short program (ZP-I &#167; II.B). DA-1 is closed given DP-2 (ZP-E), '
-        'with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement, '
-        'so Steps 2–4 need no Kolmogorov complexity. '
-        'The cycle is a reading, not a theorem: T-SNAP opens each branch; '
-        'T-IZ\'s 2-adic limit is READ as filling the bottom role; reading that '
-        'role-filler as the next branch\'s foundation is the C-DA2 commitment. Emergence and return are derived as far as '
-        'the CONVERGENCE and the role-recognition implication; that the limit is the role\'s '
-        'occupant is a commitment. Their NOVELTY - that each branch ends at a fresh bottom rather '
-        'than the one it began at - is assumed, on the same footing as T-SNAP\'s occurrence.'))
+        'short program (ZP-I &#167; II.B). That route is not load-bearing: the convergence T-IZ proves '
+        'does not pass through it. DA-1 is closed given DP-2 (ZP-E), '
+        'with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement. '
+        'Emergence and return are derived only as far as '
+        'the CONVERGENCE and the role-recognition implication. The cycle is a reading, not a theorem: '
+        'see the Note on closure.'))
 
     print(f'Building: {out_path}')
     doc.build(E)

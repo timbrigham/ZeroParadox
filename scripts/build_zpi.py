@@ -155,18 +155,11 @@ def build():
         'NO-GO gauge in &#167;Ib exhibits a no-top lattice holding a chain that never moves. '
         'Unbounded ascent is exactly the Cauchy convergence condition '
         '&#8214;S<sub>n</sub>&#8214;<sub>2</sub> &#8594; 0. The chain approaches the 2-adic depth of zero by going '
-        'deeper into the p-adic structure — not by reversing direction. DA-1 and T-SNAP at the limit '
-        'are CONDITIONAL: on the reading that the limit fills the bottom role, on the limit reaching P<sub>0</sub> '
-        '(which nothing here establishes), and then on what DA-1 needs. '
-        'DA-1 needs DP-2 and DP-2&#8217;s precondition, that the configuration reaching the incompressibility '
-        'threshold P<sub>0</sub> is there in Sense B (a running machine&#8217;s current configuration) and not in '
-        'Sense A (an inert string); that precondition is what the occurrence commitment asserts, and DA-1 '
-        'consumes it and does not supply it (ZP-E &#167; IV). Nothing here establishes that the limit reaches '
-        'P<sub>0</sub>: the only route in this document, the valuation-complexity bridge, is refuted (&#167; II.B). '
+        'deeper into the p-adic structure — not by reversing direction. That DA-1 and T-SNAP fire again '
+        'at the limit, so that the cycle begins again, is a reading; its premises are stated in &#167; V.III. '
         't_iz_complete takes a KleeneStructure on the limit&#8217;s successor semilattice L&#8242; as a hypothesis and '
         'links L&#8242; to nothing; its DA-1 conjunct, that L&#8242;&#8217;s &#8869; is its Quine atom, is the Lean '
-        'counterpart of DA-1&#8217;s Path 1, which does not derive the precondition. '
-        'Calling the result a successor null &#8869;\' is a further commitment (C-DA2).',
+        'counterpart of DA-1&#8217;s Path 1, which does not derive DA-1&#8217;s precondition (ZP-E &#167; IV).',
         style='bodyI'))
     E.append(hr())
 
@@ -400,7 +393,7 @@ def build():
             'different type and not carried by T-IZ — and DA-2 supplies the one-directional fact '
             'that anything satisfying that role IS the bottom already present. On that reading, DA-1 and then '
             'T-SNAP are CONDITIONAL on the limit reaching P<sub>0</sub> (which nothing here establishes) and on '
-            'what DA-1 needs.DA-1 needs DP-2 and DP-2&#8217;s precondition, that the '
+            'what DA-1 needs. DA-1 needs DP-2 and DP-2&#8217;s precondition, that the '
             'configuration reaching P<sub>0</sub> is there in Sense B (a running machine&#8217;s current configuration) '
             'and not in Sense A (an inert string); that precondition is what the occurrence commitment asserts, '
             'and DA-1 consumes it and does not supply it (ZP-E &#167; IV). Nothing here establishes that the limit '
@@ -629,7 +622,8 @@ def build():
     E.append(body(
         'T-IZ is not a morphism within C: it is a convergence statement in Q<sub>2</sub>, and no arrow of '
         'the category C of the current instantiation is involved. Reading the limit as the termination of C '
-        'and the opening of a successor C\', with its own &#8869;\', is the C-DA2 commitment, not a result. AX-G2 quantifies only over morphisms within a single category; it has nothing to '
+        'and the opening of a successor C\', with its own &#8869;\', is the cycle reading, not a result; its '
+        'premises are stated in &#167; V.III. AX-G2 quantifies only over morphisms within a single category; it has nothing to '
         'say about the transition between categories. The categorical structure is preserved '
         'intact within each instantiation.'))
 
@@ -688,21 +682,19 @@ def build():
 
     E.append(Paragraph('II. The Null Balance', S['h2']))
     E.append(body(
-        'The null balance 0 + x + (&#8722;x) = 0 is an arithmetic READING of the complete cycle of an '
+        'The null balance 0 + x + (&#8722;x) = 0 is an arithmetic READING of the cycle of an '
         'instantiation branch, never a theorem of the structure: a ZPSemilattice carries join and '
-        '&#8869; and no additive inverse, so the identity is not statable there at all. As a reading it '
-        'describes the cycle of an instantiation '
-        'branch: it begins at &#8869; (0), generates &#949;<sub>0</sub> and successors (+x), and '
-        'at the ordinal limit returns to 0 (&#8722;x), read as the bottom role and then as '
-        '&#8869;\'. The three terms are strung across &#969; state changes.'))
+        '&#8869; and no additive inverse, so the identity is not statable there at all. The cycle it reads '
+        'is itself a reading; its premises are stated in &#167; V.III. As a reading the balance strings its '
+        'three terms across &#969; state changes: the branch begins at &#8869; (0), generates '
+        '&#949;<sub>0</sub> and successors (+x), and at the ordinal limit the 2-adic chain converges to '
+        'Q<sub>2</sub>&#8217;s 0 (&#8722;x).'))
     E.append(body(
         'What T-IZ supplies to this reading is the convergence; the balance itself stays a reading. "Balance" here is not '
         'subtraction in (L, &#8744;, &#8869;) — R1 prohibits that. Two carriers carry the reading: the lattice '
         'chain begins at its semilattice&#8217;s &#8869; (CC-1) and ascends under T3, and the 2-adic depth chain, '
-        'nowhere zero, converges to 0 &#8712; Q<sub>2</sub>. Reading that limit as filling the bottom role is '
-        'a commitment; on it, on the limit reaching P<sub>0</sub> (which nothing here establishes), and on what DA-1 needs (&#167; III: DP-2 and DP-2&#8217;s precondition, that the configuration '
-        'reaching P<sub>0</sub> is there in Sense B, which the occurrence commitment asserts and DA-1 consumes), '
-        'T-IZ + T-SNAP + DA-2 would close the branch. The '
+        'nowhere zero, converges to 0 &#8712; Q<sub>2</sub>. That the branch closes there is the cycle '
+        'reading; its premises are stated in &#167; V.III. The '
         'CONVERGENCE is a theorem, given IsDepthChain (a modelling commitment); that the role-filler is a '
         'DISTINCT &#8869;\' rather than the &#8869; it began at is C-DA2, and in the '
         '2-adic realization the arc returns to the same 0 (snap_arc_z2_loop).'))
@@ -711,21 +703,33 @@ def build():
         '(S<sub>n</sub>)<sub>n&lt;&#969;</sub> in Q<sub>2</sub>, nowhere zero, with &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> '
         '(derived via t_iz_h_bound_from_depth_chain from IsDepthChain and IsStrictStateSequence on a depth index in &#8469; — R-IZ-A closed): '
         'the sequence converges to 0 in Q<sub>2</sub>. CC-1&#8217;s start at &#8869; belongs to the semilattice chain, not to S. '
-        'Reading that limit as an occupant of the bottom role, and that occupant as a successor '
-        '&#8869;\', are the two commitments — neither is carried by T-IZ. The balance 0 + x + (&#8722;x) = 0 is a '
-        'READING of that cycle and not a theorem — a ZPSemilattice has no additive inverse, so it is not '
+        'The balance 0 + x + (&#8722;x) = 0 is a '
+        'READING of the cycle of &#167; V.III, whose premises are stated there, and not a theorem — a ZPSemilattice has no additive inverse, so it is not '
         'statable in the structure T-IZ is about — where x '
-        'represents &#969; state changes under T3, and (&#8722;x) represents the return to 0. '
-        'No new axioms required for the convergence; the readings are commitments, not axioms.',
+        'represents &#969; state changes under T3, and (&#8722;x) represents the convergence to Q<sub>2</sub>&#8217;s 0. '
+        'No new axioms required for the convergence.',
         bg=INDIGO_LITE, border=INDIGO
     ))
     E.append(sp(6))
 
     E.append(Paragraph('III. The Cycle Reading', S['h2']))
     E.append(body(
-        'The framework reads the steps below as a cycle. Closure is not a theorem: T-IZ proves the '
-        'convergence (given IsDepthChain) and, separately, the role-recognition implication, and the steps '
-        'that join them are the commitments named in each item:'))
+        'The framework reads the steps below as a cycle. The cycle is a reading, not a theorem. What T-IZ '
+        'proves is that the 2-adic depth chain converges to 0 in Q<sub>2</sub>, given IsDepthChain (a modelling '
+        'commitment), IsStrictStateSequence and the chain being nowhere zero (t_iz_h_bound_from_depth_chain, '
+        't_iz_cauchy), together with the separate implication that anything filling the bottom '
+        'role of a semilattice IS that semilattice&#8217;s &#8869; (t_iz_limit_is_new_null). For the cycle to '
+        'begin again or close at the limit, it needs every one of the following further premises, and none is '
+        'established here: (a) the reading that the limit fills the &#8869; role, a modelling commitment and a '
+        'reading across two carriers, since the role condition is not statable in Q<sub>2</sub> (MC-1); '
+        '(b) the limit reaching the incompressibility threshold P<sub>0</sub>, which nothing here establishes, '
+        'since its only route in this document, the valuation-complexity bridge, is refuted (&#167; II.B); '
+        '(c) what DA-1 needs: DP-2 and DP-2&#8217;s precondition, that the configuration reaching P<sub>0</sub> '
+        'is there in Sense B (a running machine&#8217;s current configuration) and not in Sense A (an inert '
+        'string), which the occurrence commitment asserts and DA-1 consumes and does not supply (ZP-E &#167; IV); '
+        'and (d) for the next branch to start from a NEW null &#8869;\' rather than the &#8869; already there, '
+        'C-DA2, a further commitment; in the 2-adic realization the arc returns to the SAME 0 '
+        '(snap_arc_z2_loop). The steps of the cycle:'))
     E += [
         li('T-SNAP: From &#8869;, existence emerges — the shape of that emergence is derived and its '
            'occurrence is committed to, not proved. The Binary Snap '
@@ -737,15 +741,11 @@ def build():
            'anywhere to go. It supplies the POSSIBILITY of ascent; IsStrictStateSequence is its '
            'OCCURRENCE, and that is the hypothesis T-IZ actually consumes. Not ZP-A&#8217;s R1, '
            'which is no-subtraction.'),
-        li('T-IZ: The 2-adic depth chain converges to 0 &#8712; Q<sub>2</sub> at the ordinal limit &#969;. Reading that limit as filling '
-           'the bottom role is a commitment, and the role identifies the &#8869; already there '
-           '(t_iz_limit_is_new_null). On that reading, DA-1 and T-SNAP fire again only on the limit reaching '
-           'P<sub>0</sub> (which nothing here establishes, &#167; II.B) and on what DA-1 needs '
-           '(&#167; III: DP-2 and DP-2&#8217;s precondition, that the configuration reaching P<sub>0</sub> is there in Sense B, which the '
-           'occurrence commitment asserts and DA-1 consumes). Calling the role-occupant a SUCCESSOR '
-           '&#8869;\' rather than the same &#8869; is C-DA2, a further commitment. On those readings and conditions, this is the closing of the branch.'),
-        li('DA-2 (Instantiation Succession): on the C-DA2 commitment, &#8869;\' is read as the foundation '
-           'of the next instantiation. The tree extends. The cycle repeats.'),
+        li('T-IZ: The 2-adic depth chain converges to 0 &#8712; Q<sub>2</sub> at the ordinal limit &#969;. '
+           'That DA-1 and T-SNAP fire again there, closing the branch, is the reading whose premises are '
+           'stated above.'),
+        li('DA-2 (Instantiation Succession): &#8869;\' is read as the foundation of the next instantiation, '
+           'and the cycle repeats; this too is the reading whose premises are stated above.'),
         sp(4),
     ]
     E.append(body(
@@ -772,14 +772,10 @@ def build():
         'bottom (t_iz_limit_is_new_null). That the limit is a thing playing that role is a '
         'commitment, not a theorem — the role condition is not statable in Q<sub>2</sub>; that the '
         'bottom so reached is a NEW one is a further commitment.',
-        'Closure is not a theorem: the cycle closes only on the occupancy reading, the limit reaching '
-        'P<sub>0</sub> (which nothing here establishes), what DA-1 needs '
-        '(&#167; III, the occurrence commitment among it), and C-DA2. Strict valuation growth is '
+        'The cycle and its closure are a reading, not a theorem; its premises are stated in &#167; V.III. '
+        'Strict valuation growth is '
         'Lean-derived from IsDepthChain (a modelling commitment) + IsStrictStateSequence (h_strict_from_r1_t3). '
-        'Emergence and return are derived as far as the CONVERGENCE and the role-recognition '
-        'implication; that the limit is the role\'s occupant is committed, and their novelty '
-        'is committed, on the same '
-        'footing as T-SNAP\'s occurrence. No new axioms required beyond AX-B1, AX-G1, AX-G2.',
+        'No new axioms required beyond AX-B1, AX-G1, AX-G2.',
     ]))
     E.append(sp(6))
 
@@ -808,8 +804,9 @@ def build():
          '(CC-1) and ascends under T3, and the nowhere-zero 2-adic depth chain converges to 0 &#8712; Q<sub>2</sub>. Reading that '
          'limit as an occupant of the bottom role is a COMMITMENT, not a consequence — the '
          'join-identity is not statable in Q<sub>2</sub>. On that reading, DA-2 identifies the '
-         'occupant with the &#8869; already there (T-IZ + T-SNAP + DA-2). '
-         '"&#8722;x" is not subtraction in L — it is the 2-adic approach to 0 by forward motion, read as a return to that role. '
+         'occupant with the &#8869; already there. '
+         '"&#8722;x" is not subtraction in L — it is the 2-adic approach to 0 by forward motion; reading it as a '
+         'return in the cycle is the reading whose premises are stated in &#167; V.III. '
          'That the occupant is a NEW &#8869;\' is the commitment, not the theorem.'],
         ['Valuation-complexity bridge',
          'REFUTED — counterexample S<sub>n</sub> = 2<sup>n</sup>',
@@ -830,8 +827,8 @@ def build():
          'RETIRED — shape proved as T-SNAP (ZP-E); the first snap occurs given the occurrence commitment and DA-1',
          'AX-1 (Binary Snap Causality) is retired. Its content was split in two: the shape of the snap is proved, as Theorem T-SNAP, and that the first snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
          'tsnap_holds_but_nothing_moves shows T-SNAP does not carry it. T-SNAP is derived in ZP-E. '
-         'T-IZ extends T-SNAP to the ordinal limit; there a snap needs, besides those two, the limit reaching '
-         'P<sub>0</sub> (which nothing here establishes).'],
+         'A snap at the ordinal limit is the cycle reading, not a consequence of T-IZ; its premises are '
+         'stated in &#167; V.III.'],
         ['Remaining axioms',
          'INTENTIONAL — AX-B1, AX-G1, AX-G2',
          'These are the named axioms. The occurrence commitment is not on this list because it is a commitment, not a named axiom. T-IZ requires no additions.'],
@@ -917,9 +914,10 @@ def build():
         Paragraph(
             '<i>End of ZP-I | Theorem T-IZ: Inside Zero | '
             'R-IZ-A closed: strict valuation growth derived from IsDepthChain + IsStrictStateSequence (h_strict_from_r1_t3, &#167;Ib) | '
-            'Framework closure: IsDepthChain remains a modelling commitment; the occupancy and novelty readings are commitments | '
+            'IsDepthChain remains a modelling commitment | '
+            'Framework closure: a reading; its premises are stated in &#167; V.III | '
             'Formal spine: Step 6 axiom-free (t_iz_limit_is_new_null), Step 1 carries Mathlib p-adic Classical.choice (t_iz_cauchy) | '
-            'Valuation-complexity bridge: refuted, not load-bearing | '
+            'Valuation-complexity bridge: refuted; not load-bearing, since the convergence T-IZ proves does not pass through it | '
             'DA-1 closed given DP-2 (ZP-E), with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement | '
             'Remaining axioms: AX-B1, AX-G1, AX-G2 | No new axioms required</i>',
             S['endnote']),
