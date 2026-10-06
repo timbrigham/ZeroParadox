@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.5 | October 2026
+Version 1.6 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -313,8 +313,10 @@ def build():
             'the L&#246;b face, the sentence a hypothesized L&#246;b diagonal supplies. On the wall faces '
             'the role has no occupant. No occupant is identified with another. The global identification '
             '&#8212; that the keystone is Lawvere across all its faces &#8212; is held as a fenced '
-            'conjecture, here as in ZP-R; it is a claim about the role, not an equation between its '
-            'occupants.',
+            'conjecture, here as in ZP-R and in ZP-R\'s reading: each face an instance of Lawvere\'s '
+            'engine run in one direction or the other (a wall face by the contrapositive, a floor face '
+            'forward, where the fixed point exists), not a Lawvere witness in every face, which Set '
+            'refutes. It is a claim about the role, not an equation between its occupants.',
         ]
     ))
     E.append(sp(6))

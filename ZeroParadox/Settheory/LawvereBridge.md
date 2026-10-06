@@ -23,7 +23,7 @@ Lawvere's theorem is an implication: **if** a point-surjection `e : A → (A →
 - **Lawvere gives the SHAPE, where its hypothesis holds.** The fixed point it produces is `e a a`,
   self-application at a diagonal point (`lawvere_fixedpoint_selfApp`). That statement mentions no
   `ZPSemilattice` and no ⊥.
-- **On a ZPSemilattice the hypothesis is false.** On any `ZPSemilattice` with a point other than ⊥,
+- **On a nontrivial ZPSemilattice the hypothesis is false.** On any `ZPSemilattice` with a point other than ⊥,
   no point-surjection into its function space exists (`nontrivial_lattice_no_witness`,
   `ZeroParadox/Category/Lawvere.lean`). So Lawvere's theorem says nothing there, and ⊥ of the
   `ZPSemilattice` is a fixed point of `selfApp` by the class field `fixed_bot`, the only one by the class
@@ -46,7 +46,10 @@ Lawvere's theorem is an implication: **if** a point-surjection `e : A → (A →
 ## Honest status — the fence
 
 None of this claims to *reduce* the framework to Lawvere, or to prove "the keystone is Lawvere" — that
-the framework's keystone IS an instance of the Diagonal Theorem stays a CONJECTURE, never a result.
+the framework's keystone IS an instance of the Diagonal Theorem stays a CONJECTURE, never a result. Its
+reading is that each face is an instance of Lawvere's engine run in one direction or the other (a wall face by
+the contrapositive, a floor face forward, where the fixed point exists), not that every face carries a
+Lawvere witness, which Set refutes (`no_witness_of_nontrivial`).
 
 What is proved: Lawvere's fixed point has the shape of a self-application (`lawvere_fixedpoint_selfApp`);
 the framework's self-application fixed point is `∃!` by its class fields (`selfApp_pinnable`); existence
@@ -73,7 +76,9 @@ the carrier `reflexive_object_refuted` excludes.
 every monotone map has a fixed point (`instance_always_exists`, Knaster–Tarski), so no MONOTONE map can
 serve as `reflexive_object_refuted`'s witness. A non-monotone one still can: on any nontrivial complete
 lattice, `x ↦ if x = ⊥ then ⊤ else ⊥` is fixed-point-free and refutes every `e : D → (D → D)`. Nor does
-the regime build a reflexive object; none is constructed here. On uniqueness,
+the regime build a reflexive object; none is constructed here. Absence of a fixed-point-free monotone
+endomap is necessary for one but not sufficient: the two-element chain is the witness (the `example` after
+`not_monotone_not` in `ZeroParadox/Settheory/LawvereBridge.lean`). On uniqueness,
 `monotone_regime_derives_pinned` takes the fork collapse `lfp f = gfp f` as a hypothesis, which by
 `fork_collapse_iff` is equivalent to `∃! x, f x = x`: uniqueness is restated, not derived, and `id` on a
 nontrivial lattice is monotone with many fixed points (`existence_without_uniqueness`). Nothing there

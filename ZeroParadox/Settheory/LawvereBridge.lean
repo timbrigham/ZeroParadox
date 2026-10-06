@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the vertical dereference toward Lawvere — what Lawvere's general fixed-point theorem gives the framework's self-application fixed point (the SHAPE e a a, and the wall faces by contrapositive) and what it does not (on a ZPSemilattice with a point other than ⊥ its hypothesis fails, nontrivial_lattice_no_witness, so ⊥'s fixed point is the class field fixed_bot and its uniqueness unique_fp). Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the vertical dereference toward Lawvere — what Lawvere's general fixed-point theorem gives the framework's self-application fixed point (the SHAPE e a a, and the wall faces by contrapositive) and what it does not (on a ZPSemilattice with a point other than ⊥ its hypothesis fails, nontrivial_lattice_no_witness; ⊥'s fixed point is the class field fixed_bot and its uniqueness unique_fp). Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Settheory.FixedPointFork
@@ -21,7 +21,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview
 **Lawvere's engine gives the SHAPE `e a a` and, by contrapositive, the WALL faces;** its hypothesis fails on
-a nontrivial `ZPSemilattice` (`nontrivial_lattice_no_witness`), so its ⊥ is a fixed point by the class field
+a nontrivial `ZPSemilattice` (`nontrivial_lattice_no_witness`); its ⊥ is a fixed point by the class field
 `fixed_bot`, the only one by `unique_fp` (`selfApp_pinnable`). ⚠ Keystone-as-Diagonal-instance stays a CONJECTURE.
 -/
 
@@ -124,6 +124,25 @@ fixed-point-free witness (`bool_not_no_fixedpoint`). -/
 theorem no_reflexive_object_bool (e : Bool → (Bool → Bool)) : ¬ Function.Surjective e :=
   reflexive_object_refuted (fun b => !b) (fun b => bool_not_no_fixedpoint b) e
 
+-- Statement: in types the converse of `reflexive_object_refuted` holds: a type with no fixed-point-free
+--   endomap is a one-element type, and it carries a surjection onto its endomaps.
+example {D : Type*} (hnf : ¬ ∃ f : D → D, ∀ x, f x ≠ x) :
+    ∃ e : D → (D → D), Function.Surjective e := by
+  classical
+  have hne : Nonempty D := by
+    by_contra h0
+    exact hnf ⟨id, fun x => (h0 ⟨x⟩).elim⟩
+  obtain ⟨d⟩ := hne
+  have hsub : ∀ a b : D, a = b := by
+    intro a b
+    by_contra hab
+    exact hnf ⟨fun x => if x = a then b else a, fun x => by
+      dsimp only
+      split_ifs with hx
+      · subst hx; exact fun h => hab h.symm
+      · exact fun h => hx h.symm⟩
+  exact ⟨fun _ => id, fun _ => ⟨d, funext fun _ => hsub _ _⟩⟩
+
 /-! ## § VII. Why the wall is Set-specific — the obstruction is non-monotone -/
 
 /-- **The Cantor obstruction is non-monotone.** The fixed-point-free map that refutes the reflexive
@@ -135,6 +154,33 @@ theorem not_monotone_not : ¬ Monotone (Not : Prop → Prop) := by
   intro h
   have hle : (False : Prop) ≤ True := by tauto
   exact (h hle) not_false trivial
+
+-- Statement: on the two-element chain `false ≤ true`, every monotone self-map has a fixed point, and
+--   no map from its two points onto its three monotone self-maps is surjective. So in the monotone face
+--   the absence of a fixed-point-free endomap is necessary for a reflexive object but not sufficient.
+example : (∀ f : Bool →o Bool, ∃ b, f b = b) ∧
+    ¬ ∃ e : Bool → (Bool →o Bool), Function.Surjective e := by
+  refine ⟨fun f => ?_, ?_⟩
+  · by_cases h : f false = false
+    · exact ⟨false, h⟩
+    · have hf : f false = true := by simpa using h
+      have := f.monotone (show false ≤ true from by decide)
+      rw [hf] at this
+      exact ⟨true, by simpa using le_antisymm (by cases (f true) <;> simp_all) this⟩
+  · rintro ⟨e, he⟩
+    let c0 : Bool →o Bool := ⟨fun _ => false, fun _ _ _ => le_rfl⟩
+    let c1 : Bool →o Bool := ⟨fun _ => true, fun _ _ _ => le_rfl⟩
+    let i : Bool →o Bool := OrderHom.id
+    obtain ⟨a0, h0⟩ := he c0
+    obtain ⟨a1, h1⟩ := he c1
+    obtain ⟨a2, h2⟩ := he i
+    have d01 : c0 ≠ c1 := fun h => by
+      have := congrArg (fun g : Bool →o Bool => g false) h; simp [c0, c1] at this
+    have d02 : c0 ≠ i := fun h => by
+      have := congrArg (fun g : Bool →o Bool => g true) h; simp [c0, i] at this
+    have d12 : c1 ≠ i := fun h => by
+      have := congrArg (fun g : Bool →o Bool => g false) h; simp [c1, i] at this
+    cases a0 <;> cases a1 <;> cases a2 <;> simp_all
 
 /-! ## § VIII. The monotone regime restates uniqueness as the fork collapse -/
 

@@ -1,20 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.10 | October 2026
-v1.6: BEDROCK, and the correction is to a MECHANISM rather than to a wording. The rendered text said the escape from the Cantor obstruction is that eval lands in the partial functions "not in the codes, so the Set refutation never applied to it". That is false, and one line refutes it: the partial-function type is itself nontrivial, so no_witness_of_nontrivial forbids the Lawvere witness there exactly as it does on Code - example : not (HasLawvereWitness (Nat ->. Nat)) elaborates. Changing the codomain buys nothing. The real escape is a restriction on which MAPS exist: no computable self-map on codes is eval-fixed-point-free (no_computable_evalFixedPointFree), so the diagonal the Set refutation runs has no computable representative and the obstruction cannot fire. That theorem, with this mechanism spelled out in its own docstring, was already in the corpus - the prose asserted a different reason beside it. Found by the adversary gate at FAIL-BEDROCK, round 3, and confirmed by elaboration before the fix. Corrected at five sites across three surfaces in one sweep rather than at the one named.
-v1.0: Initial release. Synthesis / placement layer. Locates and realizes the framework's
-self-application fixed point as a Lawvere fixed point across three categories (faces): refuted in Set
-(Cantor), obstruction-free but not itself a reflexive object in the monotone/domain regime
-(Knaster-Tarski; a genuine reflexive object needs Scott D-infinity), and realized in the computability
-face (Rogers / Kleene). All theorems classical and Lean-witnessed; the contribution is the placement,
-the cross-face location, and the scope result. The global identification is held as a fenced conjecture.
+Version 1.11 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -47,7 +40,10 @@ def build():
             'background or marked Reading. The contribution is the per-face placement of the '
             'framework\'s self-application role and the scope result. The global identification &#8212; that '
             'the keystone is Lawvere across all its faces &#8212; is held as a fenced conjecture '
-            'throughout.</i>',
+            'throughout, in one reading: each face is an instance of Lawvere\'s engine run in one '
+            'direction or the other, a wall face by the contrapositive (Cantor in Set: a fixed-point-free '
+            'map rules out a point-surjection) and a floor face forward, where the fixed point exists. It '
+            'does not claim a Lawvere witness in every face; Set refutes that (R3-neg).</i>',
             S['note']),
         sp(10),
         hr(),
@@ -71,15 +67,18 @@ def build():
     E.append(body(
         'The answer is: <b>yes in one adequate category, and not globally.</b> We locate precisely '
         'where the realization fails and where it succeeds. The mathematics is classical and is invoked, not '
-        'extended; the contribution is (i) the placement of <i>this framework\'s own</i> '
-        'self-application role relative to the Lawvere fixed point (the general link between self-reference and Lawvere\'s theorem is '
-        'Lawvere\'s (1969) and Yanofsky\'s (2003), not ours), (ii) the per-face placement of that role '
-        '&#8212; refuted in Set, obstruction-free in the monotone / domain face, realized in the '
-        'computability face &#8212; which joins the work of Soto-Andrade and Varela (1984) and '
-        'Bj&#246;rner (1985) on fixed points and reflexive domains rather than originating its '
-        'criterion, and (iii) a '
+        'extended; the contribution is (i) the per-face placement of <i>this framework\'s own</i> '
+        'self-application role relative to the Lawvere fixed point &#8212; its Lawvere realization '
+        'refuted in Set, the obstruction absent in the monotone / domain face with no reflexive object '
+        'built there, the realization achieved in the computability face &#8212; and (ii) a '
         'scope result: the realization is category-relative &#8212; an existence statement in one face '
-        'rather than a global identification.'))
+        'rather than a global identification. The general link between self-reference and Lawvere\'s '
+        'theorem is Lawvere\'s (1969) and Yanofsky\'s (2003), not ours, and so is the obstruction the '
+        'placement uses: that a fixed-point-free endomap rules out every point-surjection onto a '
+        'function space is Lawvere\'s Corollary 1.2 (p. 5 of the 2006 TAC reprint). ZP-R does not '
+        'address the suggestion of Soto-Andrade and Varela (1984), as Bj&#246;rner (1985) reports, that '
+        'every structure with the fixed point property (in Set: no fixed-point-free endomap) is a '
+        'retract of a reflexive domain.'))
     E.append(hr())
 
     # -- Section I: The Fork and the Engine -------------------------------------------
@@ -185,9 +184,15 @@ def build():
 
     E.append(body(
         'Absence of a fixed-point-free endomap is <i>necessary</i> for a reflexive object &#8212; it '
-        'removes Lawvere\'s contradiction. The converse question, whether a structure with the fixed '
-        'point property (no fixed-point-free endomap) is a retract of a reflexive domain, is raised by Soto-Andrade and Varela (1984) '
-        'and taken up by Bj&#246;rner (1985); it is not settled here. Two categories '
+        'removes Lawvere\'s contradiction. Whether it is also sufficient depends on the face. In Set it '
+        'is: a set with no fixed-point-free endomap has exactly one element, and a one-element set is '
+        'a reflexive object. In the monotone face it is not: on the two-element chain false &#8804; true '
+        'every monotone self-map has a fixed point, yet no map from its two points onto its three '
+        'monotone self-maps is surjective. Both are anonymous Lean examples in '
+        'ZeroParadox/Settheory/LawvereBridge.lean. A weaker question, about retracts rather than '
+        'reflexive objects, is the suggestion of Soto-Andrade and Varela (1984), as Bj&#246;rner (1985) '
+        'reports, that every structure with the fixed point property is a retract of a reflexive '
+        'domain; ZP-R does not address it. Two categories '
         'are free of the obstruction, and only one of '
         'them is shown here to furnish a reflexive object. The reasons are <i>not</i> the same, and the '
         'difference is the point: the monotone regime is free of it <i>literally</i> &#8212; on a '
@@ -352,7 +357,10 @@ def build():
         'The fences are not hedging. Each per-face result &#8212; the Set wall, the fork, the '
         'computability crossing &#8212; is a full theorem on its own side of them. What the fences '
         'scope is only the global identification: that the keystone is Lawvere across all its '
-        'faces. That remains a conjecture; ZP-R is the first concrete progress on it (one face '
+        'faces, read as each face being an instance of Lawvere\'s engine run in one direction or the '
+        'other (a wall face by the contrapositive, as Cantor is in Set; a floor face forward, where the '
+        'fixed point exists), not as a Lawvere witness in every face, which Set refutes. That remains '
+        'a conjecture; ZP-R is the first concrete progress on it (one face '
         'realized, the obstruction located), not its proof.',
         bg=BLUE_LITE, border=BLUE
     ))
@@ -386,18 +394,19 @@ def build():
         'attention to the fact that a retract of a reflexive domain in a suitable category has the '
         'fixed point property and suggests the converse, that every structure with the fixed point '
         'property is such a retract; and Bj&#246;rner, "Reflexive domains and fixed points," Acta '
-        'Applicandae Mathematicae 4 (1985) 99&#8211;100, doi:10.1007/BF02293493, which shows that if R '
+        'Applicandae Mathematicae 4(1) (1985) 99&#8211;100, doi:10.1007/BF02293493, which shows that if R '
         'is a retract of a reflexive domain then R<sup>R</sup> has the fixed point property. The '
         'apophatic, characterize-not-construct treatment of self-referential objects: Aczel, '
         '<i>Non-Well-Founded Sets</i> (1988); Barwise &amp; Moss, <i>Vicious Circles</i> (1996).'))
     E.append(body(
         'Against this, the contribution of ZP-R is not a theorem but a <i>placement</i>: the '
-        'placement of the framework\'s self-application role relative to the Lawvere fixed point, its '
-        'per-face placement (refuted in Set, obstruction-free in the monotone / domain face, realized '
-        'in the computability face), and the scope result of Section III. That Kleene\'s recursion '
-        'theorem is a Lawvere instance is due to the sources above, not to this document; the relation '
-        'between the fixed point property and reflexive domains is the subject of Soto-Andrade and '
-        'Varela and of Bj&#246;rner, whose line of work this placement joins rather than originates.'))
+        'per-face placement of the framework\'s self-application role relative to the Lawvere fixed '
+        'point (its Lawvere realization refuted in Set, the obstruction absent in the monotone / domain '
+        'face, the realization achieved in the computability face), and the scope result of Section '
+        'III. That Kleene\'s recursion theorem is a Lawvere instance is due to the sources above, not '
+        'to this document, and so is the obstruction the placement uses (Lawvere\'s Corollary 1.2). '
+        'The retract question, as Bj&#246;rner reports Soto-Andrade and Varela\'s suggestion, sits '
+        'beside the placement and is not addressed here.'))
 
     # -- What Remains Open ------------------------------------------------------------
     E += [
@@ -410,7 +419,10 @@ def build():
         'Open items',
         [
             'The <b>global identification</b> &#8212; that the framework\'s keystone <i>is</i> Lawvere '
-            'across all its faces &#8212; remains a conjecture, not resolved here. ZP-R is the first '
+            'across all its faces, in the reading that each face is an instance of Lawvere\'s engine run '
+            'in one direction or the other (a wall face by the contrapositive, a floor face forward, where '
+            'the fixed point exists), not that every face carries a Lawvere witness, which Set refutes '
+            '&#8212; remains a conjecture, not resolved here. ZP-R is the first '
             'concrete progress on it (one face realized, the obstruction located), not its proof.',
             'The <b>domain-face route</b> &#8212; a Scott D<sub>&#8734;</sub> reflexive object &#8212; '
             'is not carried out; the computability face suffices for the existence claim, so it is not '
@@ -502,7 +514,8 @@ def build():
             'the fork (choice-free) | Set refuted (Cantor) | monotone / domain: fork, no reflexive '
             'object built (Scott D<sub>&#8734;</sub> unbuilt) | computability: crossed (Rogers / Kleene) | '
             'F1: per face, what is measured | F2: the self-application role carries its '
-            'face | global identification held as a fenced conjecture.</i>',
+            'face | global identification (each face an instance of the engine, in either direction) '
+            'held as a fenced conjecture.</i>',
             S['endnote']),
     ]
 

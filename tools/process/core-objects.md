@@ -47,7 +47,7 @@ This is as much for a human reader as for a checker: the label tells you at a gl
 well-foundedness as a "second root," or about how many faces self-reference has. It is ALREADY BUILT — do
 not build it again.** Authoritative sites, all pre-existing: `ZeroParadox/Settheory/LawvereBridge.lean` § V
 ("the μ/ν picture in Lawvere terms … discriminated by the self-loop"), whose
-`mu_nu_branch_exclusion` (`:124`) and `selfApp_lands_on_nu` (`:133`) are the theorems;
+`mu_nu_branch_exclusion` (`:89`) and `selfApp_lands_on_nu` (`:98`) are the theorems;
 `ZeroParadox/Settheory/QuineHost.lean`, whose class is named for the host and already sorts three theories
 by whether they permit the self-loop; `ZeroParadox/DiagonalFixedPoint.lean` § II/§ III, whose spine is the
 wall/floor (μ/ν) carving; and the reframe section of `ZeroParadox/Settheory/Wall.md`.

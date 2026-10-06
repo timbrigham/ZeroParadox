@@ -49,7 +49,7 @@ In the fork / AFA face the occupant is ⊥ of the `ZPSemilattice`, a fixed point
 In the computability face it is a Kleene code (a `Code`), a term of another type. -/
 #check @ZeroParadox.t_exec                   -- the Quine atom: any `q` with `IsQuineAtom q` equals ⊥ of the `ZPSemilattice`, from the `AFAStructure` class fields. "⊥ self-executes" is the framework's reading, not this statement
 #check @ZeroParadox.da1_closed_concrete      -- concrete Quine atom: `IsQuineAtom (bot : MachinePhase)`
-#check @ZeroParadox.kleene_quine_is_bot      -- any Quine atom = ⊥ of the `ZPSemilattice` `L`, under `[KleeneStructure]`. NB the statement has no Kleene clause; that `botCode` (a `Code`) names ⊥ of `L` is ZP-K's `KleeneStructure` commitment, not a Lean `=` (Code vs L)
+#check @ZeroParadox.kleene_quine_is_bot      -- any Quine atom = ⊥ of the `ZPSemilattice` `L`, under `[KleeneStructure]`. NB the statement has no Kleene clause; `KleeneStructure` nominates `botCode` (a `Code`) as the computational witness of the bottom role of `L`, ZP-K's commitment, not a Lean `=` (Code vs L)
 #check @ZeroParadox.t_comp                   -- T-COMP: proves the Quine-atom / order-bottom / join-identity faces equivalent (three). The Kleene face is a `KleeneStructure` class field, not a clause
 #check @ZeroParadox.selfApp_isLeastFixedPointFrom  -- ⊥ of the `ZPSemilattice` is the least fixed point of self-application (the order floor)
 #check @ZeroParadox.ProvabilityLogic.loeb_sentence_is_fixedpoint  -- Löb: the provability diagonal closes (the Löb sentence is a fixed point)
