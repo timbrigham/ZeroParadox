@@ -163,7 +163,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Computability/Occurrence.md` - The carrier's reach, floor-directed motion, and stutter equivalence
 - `ZeroParadox/Computability/Periodicity.lean` - ZP-K metric: the selfApply periodicity invariant (P5)
 - `ZeroParadox/Computability/Rice.lean` - Rice's theorem — the computability face's UNDECIDABILITY, from the recursion theorem (probe)
-  - ride-along docs: `ZeroParadox/Computability/Rice.md` - The price of ν-existence: one recursion-theorem fixed point read on two axes
+  - ride-along docs: `ZeroParadox/Computability/Rice.md` - ν-existence beside Rice undecidability: two conjuncts, two uses of the recursion theorem
 - `ZeroParadox/Computability/SelfApp.lean` - ZPJ — Abstract Self-Application Bridge
 - `ZeroParadox/Computability/SelfCopyReference.lean` - Self-copying self-reference: infinite ⟺ a one-to-one, not-onto self-map with exactly one fixed point
 
@@ -358,8 +358,8 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 - `ZeroParadox/Settheory/ForkFrameChange.lean` - The order-theoretic universal frame-change: duality swaps the fork's ends
   - ride-along docs: `ZeroParadox/Settheory/ForkFrameChange.md` - The fork's two closures under order-duality, and the fences on the shared shape
-- `ZeroParadox/Settheory/LawvereBridge.lean` - The Lawvere dereference — selfApp as an instance of the general engine (probe)
-  - ride-along docs: `ZeroParadox/Settheory/LawvereBridge.md` - Existence from the engine, pinning from the framework, and where the reflexive object lives
+- `ZeroParadox/Settheory/LawvereBridge.lean` - The Lawvere dereference — what the general engine gives selfApp, and what it does not (probe)
+  - ride-along docs: `ZeroParadox/Settheory/LawvereBridge.md` - What Lawvere's theorem gives the self-application fixed point, what it does not, and where its hypothesis holds
 - `ZeroParadox/Settheory/MetaFork.lean` - The meta-level fork — the double dereference (probe)
 - `ZeroParadox/Settheory/RequirementsGap.lean` - The instance-vs-requirements gap as a fork instance (probe)
 

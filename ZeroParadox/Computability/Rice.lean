@@ -15,8 +15,8 @@ everything else in the family.
 
 ## Formal Overview
 Rice is **Mathlib's** (`ComputablePred.rice₂`) and is cited, not re-proved. The content here is the
-pairing: one recursion-theorem fixed point gives the quine (ν-existence) and Rice undecidability at
-once. Why that is the price of ν-existence: `ZeroParadox/Computability/Rice.md`.
+pairing: the quine (ν-existence) and Rice undecidability as two independent conjuncts, each from its
+own use of the recursion theorem. Placement: `ZeroParadox/Computability/Rice.md`.
 -/
 
 set_option maxHeartbeats 400000
@@ -49,14 +49,14 @@ theorem rice_face (C : Set Code)
 theorem halting_undecidable (n : ℕ) : ¬ ComputablePred (fun c => (eval c n).Dom) :=
   ComputablePred.halting_problem n
 
-/-! ## § III. The pairing — ν-existence and Rice undecidability, one fixed point -/
+/-! ## § III. The pairing — ν-existence and Rice undecidability, two conjuncts -/
 
-/-- **The exists-but-undecidable signature.** In the computability setting the recursion theorem gives
-    *both*: every computable self-map on codes has a fixed point **up to `eval`** (the Kleene quine
+/-- **The exists-but-undecidable signature.** In the computability setting the recursion theorem, used
+    twice, gives *both*: every computable self-map on codes has a fixed point **up to `eval`** (the Kleene quine
     exists — ν, via `computability_face_fixedPoint`; NOT a literal fixed point — `fun c => Code.pair c c`
     has none), *and* every non-trivial extensional property is undecidable (Rice).
-    The quine's existence and its undecidability are two faces of one recursion-theorem fixed point — the
-    computability floor stated as a single conjunction. -/
+    The second conjunct does not mention `f`: the undecidability is of `C` over all codes, and nothing
+    is stated about membership at `f`'s fixed point (gloss: `ZeroParadox/Computability/ComputationCannotBe.lean` § V). -/
 theorem quine_exists_yet_rice (C : Set Code)
     (Hext : ∀ cf cg, eval cf = eval cg → (cf ∈ C ↔ cg ∈ C))
     (hne : C ≠ ∅) (huniv : C ≠ Set.univ)
@@ -64,16 +64,19 @@ theorem quine_exists_yet_rice (C : Set Code)
     (∃ c, eval (f c) = eval c) ∧ ¬ ComputablePred (fun c => c ∈ C) :=
   ⟨computability_face_fixedPoint hf, rice_face C Hext hne huniv⟩
 
-/-! ## § IV. The bottom-element relationship — the floor (ν): the bottom exists -/
+/-! ## § IV. The bottom-element relationship — the floor (ν): a fixed point up to `eval` exists -/
 
-/-- **Rice on the family's μ/ν fork: the computability face has a fixed point (Rogers); reading it as the face's bottom is the family's criterion, not this theorem.** Unlike the truth /
-    comprehension walls (Tarski, Curry — μ, no floor), computation reaches a floor: every computable
+/-- **Rice on the family's μ/ν fork: the computability face has a fixed point (Rogers); reading it as the face's bottom is the family's criterion, not this theorem.** Despite the
+    declaration's name, the statement is a fixed point up to `eval` and names no bottom.
+    Unlike the truth / comprehension walls (Tarski, Curry — μ, no floor), computation reaches a floor in
+    the family's sense: every computable
     self-map on codes has a fixed point **up to `eval`** (`computability_face_fixedPoint` — Rogers';
     while `rice_face`, via `ComputablePred.rice₂`, is the one that genuinely routes through
     Kleene's second recursion theorem, `fixed_point₂`),
-    the Kleene quine, a program computing its own code (verb = noun). So on the one-over-infinity-to-bottom
-    map, the computability face is the ν side, where self-reference DOES close on a bottom — and Rice
-    (above) is the price paid for it: the floor exists, but membership at it is undecidable. -/
+    read as the Kleene quine (a program printing its own code needs one further s-m-n step). So on the
+    one-over-infinity-to-bottom map, the computability face is the ν side, where self-reference
+    closes on a Kleene code filling the self-application fixed-point role — and Rice (above) sits beside it: a non-trivial extensional `C` is undecidable
+    over all codes, a conjunct that does not mention `f` (`quine_exists_yet_rice`). -/
 theorem rice_face_has_bottom {f : Code → Code} (hf : Computable f) :
     ∃ c, eval (f c) = eval c :=
   computability_face_fixedPoint hf
