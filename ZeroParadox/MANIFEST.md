@@ -359,7 +359,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Settheory/ForkFrameChange.lean` - The order-theoretic universal frame-change: duality swaps the fork's ends
   - ride-along docs: `ZeroParadox/Settheory/ForkFrameChange.md` - The fork's two closures under order-duality, and the fences on the shared shape
 - `ZeroParadox/Settheory/LawvereBridge.lean` - The Lawvere dereference — what the general engine gives selfApp, and what it does not (probe)
-  - ride-along docs: `ZeroParadox/Settheory/LawvereBridge.md` - Existence from the engine, pinning from the framework, and where the reflexive object lives
+  - ride-along docs: `ZeroParadox/Settheory/LawvereBridge.md` - What Lawvere's theorem gives the self-application fixed point, what it does not, and where its hypothesis holds
 - `ZeroParadox/Settheory/MetaFork.lean` - The meta-level fork — the double dereference (probe)
 - `ZeroParadox/Settheory/RequirementsGap.lean` - The instance-vs-requirements gap as a fork instance (probe)
 
