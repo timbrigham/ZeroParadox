@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.4 | October 2026
+Version 1.5 | October 2026
 v1.0: Initial release. Addendum to ZP-R. The faces formalized here of the self-referential / diagonal
 relationship at the bottom element ⊥, organized by the μ/ν fork: wall faces (self-reference cannot
 close — no fixed point) and floor faces (self-reference closes — a fixed point exists). Supersedes the
@@ -16,7 +16,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -306,12 +306,20 @@ def build():
         'Fence: the cross-face identity is a type boundary',
         [
             'The faces are the same <i>relationship</i>, not the same <i>object</i>. The Quine atom (a '
-            'set), the Kleene quine (a code), the L&#246;b sentence, the 2-adic 0 &#8212; these are terms '
-            'of different types in different categories; "x = y" across them is not false, it is not '
-            'well-formed (ZP-P hard fence; ZP-R F2). What is claimed is that each domain forks at its own '
-            'self-referential contact point, and that &#8869; is the framework\'s name for that point in '
-            'each. The global identification &#8212; that these are one object &#8212; is held as a '
-            'fenced conjecture, here as in ZP-R and ZP-P.',
+            'set), the Kleene quine (a code), the L&#246;b sentence &#8212; these are terms of different '
+            'types in different categories; "x = y" across them is not false, it is not well-formed '
+            '(ZP-P hard fence; ZP-R F2). What is claimed is that each face formalized here forks at its '
+            'own self-referential contact point, and that the self-application fixed point is a '
+            '<i>role</i> filled per face by that face\'s own occupant: in the fork / AFA face, &#8869; of '
+            'the ZPSemilattice, by the AbstractSelfApp class fields fixed_bot and unique_fp (a commitment; '
+            'Lawvere\'s premise is false in any ZPSemilattice with an element other than &#8869;, '
+            'nontrivial_lattice_no_witness); in the computability face, a Kleene '
+            'code, a fixed point up to eval (that it is a Lawvere instance is cited, Rogers\' form); in '
+            'the L&#246;b face, the sentence a hypothesized L&#246;b diagonal supplies. On the wall faces '
+            'the role has no occupant. No occupant is identified with another. The global identification '
+            '&#8212; that the keystone is Lawvere across all its faces &#8212; is held as a fenced '
+            'conjecture, here as in ZP-R; it is a claim about the role, not an equation between its '
+            'occupants.',
         ]
     ))
     E.append(sp(6))

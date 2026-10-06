@@ -24,7 +24,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-N The Constructive Snap | v2.1 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:e3d53e77 |
 | ZP-P The Fixed-Point Fork | v1.24 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:4b914ac3 |
 | ZP-R Cross-Category Fixed Point | v1.9 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:d8284e68 |
-| ZP-R Diagonal Family Addendum | v1.4 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:5dd785eb |
+| ZP-R Diagonal Family Addendum | v1.5 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:6459fd58 |
 | ZP-Q The Frame-Change | v1.11 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:dcf69119 |
 | Zero Paradox Foreword | v2.33 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:cfba69c9 |
 | ZP Philosophical Question | v1.21 | ZP_Philosophical_Question.pdf | N/A | N/A | formal:ed65d90b |
