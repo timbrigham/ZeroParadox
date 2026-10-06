@@ -1,7 +1,7 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
 Version 1.2 | October 2026
-v1.0: Initial release. Addendum to ZP-R. The COMPLETE roster of the self-referential / diagonal
+v1.0: Initial release. Addendum to ZP-R. The faces formalized here of the self-referential / diagonal
 relationship at the bottom element ⊥, organized by the μ/ν fork: wall faces (self-reference cannot
 close — no fixed point) and floor faces (self-reference closes — a fixed point exists). Supersedes the
 private "Zero as a Wall" working draft (ZP-W, never public). Every variant is tied to ⊥ and carries a
