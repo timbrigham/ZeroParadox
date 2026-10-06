@@ -1,18 +1,22 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.2 | October 2026
+Version 1.3 | October 2026
 v1.0: Initial release. Addendum to ZP-R. The faces formalized here of the self-referential / diagonal
 relationship at the bottom element ⊥, organized by the μ/ν fork: wall faces (self-reference cannot
 close — no fixed point) and floor faces (self-reference closes — a fixed point exists). Supersedes the
-private "Zero as a Wall" working draft (ZP-W, never public). Every variant is tied to ⊥ and carries a
+private "Zero as a Wall" working draft (ZP-W, never public). Every entry except the Gödel-first row carries a
 machine-checked Lean 4 witness. The diagonal-family unification is Lawvere (1969) / Yanofsky (2003),
 cited; the delta is the axiom-free formalization and the tie to ⊥. Follows scripts/PDF_Rendering_Standards.md.
+Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
+  (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
+  (b) (theorem|lemma|def)\\s+\\S*(godel|gödel|incomplet)  -> only godel_two (ZeroParadox/Settheory/Loeb.lean)
+  (c) ↔\\s*¬\\s*\\(?\\s*(□|prov|Prov|provable)  -> 0 hits
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -252,9 +256,10 @@ def build():
 
     E.append(body(
         'The faces formalized here, in one table. G&#246;del\'s first incompleteness (G &#8596; '
-        '&#172;Prov(G)) sits between the columns and is not formalized here: no first-incompleteness '
-        'declaration exists in the corpus (searched 2026-10-05), and lawvere_fixedpoint says nothing '
-        'about provability. Every row except the G&#246;del-first row is a machine-checked Lean witness.'))
+        '&#172;Prov(G)) sits between the columns and is not formalized here: a first-incompleteness '
+        'declaration was not located as of 2026-10-06 (searched ZeroParadox/**/*.lean for '
+        'first-incompleteness and G&#246;del-sentence declarations, by name and by statement shape), '
+        'and lawvere_fixedpoint says nothing about provability. Every row except the G&#246;del-first row is a machine-checked Lean witness.'))
 
     E.append(data_table(
         headers=['Variant', 'Face', 'What self-reference does', 'Lean witness'],
