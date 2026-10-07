@@ -28,9 +28,14 @@ Mathlib's proof of Rice uses the recursion theorem again, on the **decidability*
 `rice_face C …` exactly. So nothing is stated about membership at `f`'s fixed point. The standard
 recursion-theorem proof of Rice's theorem (Yanofsky 2003, p. 19 of arXiv:math/0305282v1; Mathlib's
 `ComputablePred.rice`, via `fixed_point₂`) turns on membership at the fixed point of a different map, one
-built from the assumed decider for `C`. Rice's 1953 proof instead reduces from the emptiness problem: his
-Theorem 5 shows the unit class of the empty set is not completely recursively enumerable, and his
-Theorem 6 derives the general case from it by a reduction (H. G. Rice, Trans. Amer. Math. Soc. 74(2) (1953) 358–366). Gloss:
+built from the assumed decider for `C`. Rice's 1953 proof takes another route (H. G. Rice, Trans. Amer.
+Math. Soc. 74(2) (1953) 358–366). His undecidability result is the Corollary B that follows his Theorem 6
+(p. 364), and it rests on his Theorems 4 and 6 through the Corollary A beside it. Theorem 4 (pp. 361–362)
+shows, by a direct construction, that no class containing only infinite sets is completely recursively
+enumerable. Theorem 6 (pp. 363–364) shows that a class containing a finite set but omitting a superset of
+it is not completely recursively enumerable, by a reduction from Theorem 5 (p. 362): the unit class of the
+empty set is not completely recursively enumerable. Theorem 8 (p. 365) gives the same result under his
+weak definition of complete recursiveness. Gloss:
 `ZeroParadox/Computability/ComputationCannotBe.lean` § V.
 
 So on the wall map: the total faces (lattice, 2-adic) *posit* the fixed point and it is *refuted* as a

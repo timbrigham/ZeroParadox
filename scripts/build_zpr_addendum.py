@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.8 | October 2026
+Version 1.9 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -230,8 +230,10 @@ def build():
             'over all codes; the second conjunct does not mention f, so nothing is stated about '
             'membership at f\'s fixed point. The standard recursion-theorem proof of Rice\'s theorem '
             '(Yanofsky 2003, p. 19; Mathlib\'s ComputablePred.rice, via fixed_point&#8322;) turns on the '
-            'fixed point of a different map, built from the assumed decider for C; Rice\'s 1953 proof '
-            'instead reduces from the emptiness problem (his Theorems 5 and 6). rice_face_has_bottom states '
+            'fixed point of a different map, built from the assumed decider for C. Rice\'s 1953 proof '
+            'takes another route: his undecidability result, the Corollary B that follows his Theorem '
+            '6, rests on his Theorems 4 and 6, and Theorem 6 reduces from Theorem 5, that the unit '
+            'class of the empty set is not completely recursively enumerable. rice_face_has_bottom states '
             'the first conjunct alone; reading that fixed point as the face\'s floor is the family\'s '
             'criterion, not the theorem.',
             'halting_undecidable: whether a program halts on input n is not decidable, the concrete '
