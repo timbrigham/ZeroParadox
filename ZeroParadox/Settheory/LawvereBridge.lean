@@ -143,7 +143,7 @@ example {D : Type*} (hnf : ¬ ∃ f : D → D, ∀ x, f x ≠ x) :
       · exact fun h => hx h.symm⟩
   exact ⟨⟨d, fun x => hsub x d⟩, fun _ => id, fun _ => ⟨d, funext fun _ => hsub _ _⟩⟩
 
-/-! ## § VII. Why the Cantor route is Set-specific — on a complete lattice every fixed-point-free endomap is non-monotone -/
+/-! ## § VII. Where completeness blocks the Cantor route — on a complete lattice every fixed-point-free endomap is non-monotone -/
 
 /-- **The Cantor obstruction's witness is non-monotone.** In Cantor's refutation (`cantor_via_engine`)
 the fixed-point-free map is negation, and `Not : Prop → Prop` is not monotone — it reverses
@@ -151,8 +151,7 @@ the fixed-point-free map is negation, and `Not : Prop → Prop` is not monotone 
 monotone (example below). So that witness is not a monotone map.
 `instance_always_exists` says no monotone map on a complete lattice is fixed-point-free, so on a
 complete lattice the refutation needs a non-monotone witness. Off complete lattices a monotone map can
-be fixed-point-free: `Nat.succ`, and the identity on the empty set, whose fixed-point-freeness holds
-only because the empty set has no elements, while the refutation does not (examples below). -/
+be fixed-point-free: `Nat.succ`, and the identity on the empty set (examples below). -/
 theorem not_monotone_not : ¬ Monotone (Not : Prop → Prop) := by
   intro h
   have hle : (False : Prop) ≤ True := by tauto

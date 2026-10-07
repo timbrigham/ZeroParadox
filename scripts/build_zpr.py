@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.18 | October 2026
+Version 1.19 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -181,18 +181,17 @@ def build():
             'is non-monotone. Neither condition suffices alone: Bool with false &#8804; true is a '
             'complete lattice on which negation is fixed-point-free, and Nat.succ is monotone and has '
             'no fixed point, on a carrier that is not a complete lattice. The empty set is not a complete '
-            'lattice; its fixed-point-free endomap is the identity, which is monotone, and only '
-            '"the identity has no fixed point" holds there merely because the empty set has no '
-            'elements. The refutation itself does not: no map from the empty set is onto its '
-            'one-element function space.',
+            'lattice; its identity is monotone and fixed-point-free, and no map from it is onto its '
+            'one-element function space (the &#167; VII examples).',
             'Witnesses: reflexive_object_refuted, not_monotone_not, and the anonymous examples after '
-            'not_monotone_not in &#167; VII, which back the Bool, Nat.succ and empty-set sentences '
-            '(LawvereBridge.lean). Lean purity: reflexive_object_refuted: no axioms; not_monotone_not: '
-            '[propext]; the &#167; VII examples are choice-free except the one exhibiting Bool\'s '
-            'complete-lattice structure, which carries Classical.choice from Mathlib\'s instance. The '
+            'not_monotone_not in LawvereBridge.lean &#167; VII, which back the Bool, Nat.succ and '
+            'empty-set sentences. Lean purity: reflexive_object_refuted: no axioms; not_monotone_not: '
+            '[propext]; the LawvereBridge.lean &#167; VII examples are choice-free except the two that '
+            'use Bool\'s complete-lattice instance (the instance example and the two-element-chain '
+            'example), which carry Classical.choice from Mathlib\'s instance. The '
             'backing table\'s scoped Set statement also rests on the anonymous example after '
-            'no_reflexive_object_bool in &#167; VI and on fixedPointFree_of_nontrivial, and both carry '
-            'Classical.choice. ✓',
+            'no_reflexive_object_bool in LawvereBridge.lean &#167; VI and on fixedPointFree_of_nontrivial, '
+            'and both carry Classical.choice. ✓',
         ]
     ))
     E.append(sp(6))
@@ -506,8 +505,9 @@ def build():
         'instance of Lawvere\'s theorem (Section II). F2\'s first mathematical sentence rests on '
         'reflexive_object_refuted (the R3-neg row), and its second, on the least fixed point of a '
         'monotone map, on Knaster&#8211;Tarski (Tarski 1955, cited); sentences marked Reading are interpretation and '
-        'have no row. The order / '
-        'fork material is constructively choice-free; the computability material inherits '
+        'have no row. The fork schema (R1, monotone_regime_derives_pinned) is choice-free; the Set '
+        'face\'s converse example, fixedPointFree_of_nontrivial and the examples using Bool\'s '
+        'complete-lattice instance carry Classical.choice; the computability material inherits '
         'Classical.choice from Mathlib\'s computability library (Kleene\'s and Rogers\' theorems use '
         'it), which is disclosed and not claimed otherwise.'))
 
