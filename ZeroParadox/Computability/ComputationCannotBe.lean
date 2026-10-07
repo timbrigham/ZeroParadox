@@ -4,6 +4,7 @@ import ZeroParadox.Computability.Occurrence
 import ZeroParadox.Computability.GroundZero
 import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Category.DiagonalWitness
+import ZeroParadox.Category.LawvereTwoAdic
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Information.Disjunctive
 
@@ -47,6 +48,9 @@ section ComputationCannotBeIndex
 -- every c. ⚠ LITERAL fixed-point-freeness is a different property and DOES occur on codes:
 -- `fun c => Code.pair c c` fixes nothing. The qualifier is in the declaration's own name.
 #check @ZeroParadox.no_computable_evalFixedPointFree
+
+-- Statement: on `List Bool`, `partialAddOne w = w ↔ w = []` (`ZeroParadox/Category/LawvereTwoAdic.lean`).
+#check @ZeroParadox.partialAddOne_fixed_iff
 
 /-! ### § II. What computation DOES supply — the floors -/
 
