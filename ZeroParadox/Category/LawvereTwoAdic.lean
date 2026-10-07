@@ -17,11 +17,11 @@ about, almost as if it is the first fixed point itself. Zero itself blossoms out
 up.
 
 ---
-
 ## Formal Overview (AI-assisted)
-
-§ I: add-one on `ℤ_[2]` fixes no point, so no admissible class containing it carries a relativized
-witness. § II: add-one and doubling on finite partial digit streams.
+§ I: add-one on `ℤ_[2]` fixes no point, so no class containing it has a relativized witness. § II:
+add-one and doubling on finite partial digit streams. The Take's dead zero is the all-zeros tape
+`botEnd`, the one tape doubling fixes (`boundaryDouble_botEnd`, `boundaryDouble_unique_fp`); the least
+element of the prefix order here is the empty stream, no digit known: a different object and type.
 -/
 
 /-! ## § I. Add-one on `ℤ_[2]` -/
@@ -34,21 +34,27 @@ witness. § II: add-one and doubling on finite partial digit streams.
 example (M : (ℤ_[2] → ℤ_[2]) → Prop) (h : M (· + 1)) : ¬ ZeroParadox.HasWitnessRel ℤ_[2] M :=
   ZeroParadox.no_witnessRel_of_admissible_fpf h fun _ hx => by simp at hx
 
--- Statement: the continuous maps on `ℤ_[2]` are such a class.
--- Reading: on codes the obstruction is removed by equality up to `eval`
+-- Statement: the continuous maps on `ℤ_[2]` contain add-one, so `¬ HasWitnessRel ℤ_[2] Continuous`.
+-- Reading: on codes, for computable maps compared up to `eval`, the obstruction is removed
 --   (`no_computable_evalFixedPointFree`); on `ℤ_[2]`, with its own equality, add-one keeps it.
 example : ¬ ZeroParadox.HasWitnessRel ℤ_[2] Continuous :=
   ZeroParadox.no_witnessRel_of_admissible_fpf (continuous_add_const 1) fun _ hx => by simp at hx
+
+-- Statement: the proof uses only `x + 1 ≠ x`, so the same proof closes over `ℤ`.
+example (M : (ℤ → ℤ) → Prop) (h : M (· + 1)) : ¬ ZeroParadox.HasWitnessRel ℤ M :=
+  ZeroParadox.no_witnessRel_of_admissible_fpf h fun _ hx => by simp at hx
 
 namespace ZeroParadox
 
 /-! ## § II. Add-one and doubling on finite partial digit streams
 
-A partial stream is a `List Bool`, least-significant digit first, ordered by prefix; the empty stream
-is the least element of that order (`List.nil_prefix`). It lives in a different type from ℤ_[2]'s
-`0`, no `=` relates them, and this file puts no `ZPSemilattice` structure on `List Bool`. Iterating
-from a least element is the schema of Scott, "Data types as lattices", SIAM J. Comput. 5 (1976),
-Thm 1.4, p. 526, stated there on `Pω`; `List Bool` is not claimed an instance of it. -/
+A partial stream is a `List Bool`, least-significant digit first, ordered by prefix; its least element
+is the empty stream (`List.nil_prefix`), in a different type from ℤ_[2]'s `0`, and no `ZPSemilattice`
+structure is put on `List Bool`. Iterating from a least element is Scott, "Data types as lattices",
+SIAM J. Comput. 5 (1976), Thm 1.4, p. 526, on `Pω`; extending a continuous map from a subspace is its
+Thm 1.5, p. 527, and from Cantor space to finite and infinite words, Amorim, Kozen, Mardare, Panangaden
+and Roberts, LICS 2021 (arXiv:2011.13171), Lemma 8(ii), p. 5. `List Bool` is not claimed an instance
+of these, and no supremum or limit is constructed here (`partialDouble_ne_self`). -/
 
 /-- `Statement:` add-one on partial streams: the carry runs through `true` digits and stops at the
     first `false`, or where the known digits end. -/
@@ -85,10 +91,13 @@ theorem partialAddOne_fixed_iff (w : List Bool) : partialAddOne w = w ↔ w = []
 /-- `Statement:` doubling on partial streams prepends the digit `false`. -/
 def partialDouble (w : List Bool) : List Bool := false :: w
 
-/-- `Statement:` `partialDouble` fixes no partial stream. `Reading:` add-one's opposite pair; on ℚ₂,
-    `x ↦ 2x` fixes exactly `0` (`q2_zero_is_fixed`, `q2_unique_fp`). -/
+/-- `Statement:` `partialDouble` fixes no partial stream. -/
 theorem partialDouble_ne_self (w : List Bool) : partialDouble w ≠ w :=
   List.cons_ne_self false w
+
+-- Reading: the crossed pair, carrier by carrier. Add-one fixes no point of `ℤ_[2]` (§ I) and only
+--   `[]` among partial streams (`partialAddOne_fixed_iff`); doubling fixes no partial stream
+--   (`partialDouble_ne_self`) and exactly `0` in `ℚ_[2]` (`q2_zero_is_fixed`, `q2_unique_fp`).
 
 /-- `Statement:` `partialDouble` iterated `n` times from the empty stream. -/
 def partialDoubleStage (n : ℕ) : List Bool := Nat.repeat partialDouble n []

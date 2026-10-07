@@ -50,6 +50,8 @@ section ComputationCannotBeIndex
 #check @ZeroParadox.no_computable_evalFixedPointFree
 
 -- Statement: on `List Bool`, `partialAddOne w = w ↔ w = []` (`ZeroParadox/Category/LawvereTwoAdic.lean`).
+-- Reading: the wall above says no computable map on codes is free of fixed points up to `eval`; add-one
+--   extended to partial digit streams is not free of fixed points either, and rests only at the empty stream.
 #check @ZeroParadox.partialAddOne_fixed_iff
 
 /-! ### § II. What computation DOES supply — the floors -/
