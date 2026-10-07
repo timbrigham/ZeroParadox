@@ -17,7 +17,8 @@ proof body measures `[propext]`. It closes with the correct fence — *"It does 
 version's choice is necessary. `classical` is how the proof was written, and a footprint never
 reports necessity."*
 
-**`LawvereTaboo.lean` answers that open question, and the answer is that the choice is NOT removable.**
+**`LawvereTaboo.lean` answers that open question, and the answer is that the choice is NOT removable** — on the premise
+stated below (`ZeroParadox/Category/ChoiceCannotBe.lean` § IV).
 
 ## The result
 
@@ -35,7 +36,7 @@ which is what makes this an implication rather than a restatement — the same s
 
 So `fixedPointFree_of_nontrivial`'s `classical` is **essential**, not accidental: no rewriting of
 that proof removes it, because a choice-free proof of the general statement would be a choice-free
-proof of weak excluded middle. That step rests on a premise not proved here, stated in
+proof of weak excluded middle. That inference rests on a premise not proved here, stated in
 `ZeroParadox/Category/ChoiceCannotBe.lean` § IV: weak excluded middle is not derivable in Lean's
 choice-free fragment. This is the framework's second located essential case, and unlike the
 first it sits on the keystone (the diagonal engine) rather than on an imported order instance.
@@ -45,7 +46,7 @@ first it sits on the keystone (the diagonal engine) rather than on an imported o
 * **Not full excluded middle.** The taboo landed on is weak excluded middle, which is strictly
   weaker than `ExcludedMiddle` in intuitionistic logic. No attempt was made here to strengthen it,
   and the reader should not assume it can be strengthened.
-* **The converse is not machine-checked here, and in Lean it is open.** Its scope is univalent
+* **The converse is not machine-checked here; in Lean it is left open.** Its scope is univalent
   foundations, the setting of de Jong–Escardó, arXiv:2601.12536: there weak excluded middle gives the
   general statement back, in two steps. The first step is published, Prop 6.4, p. 24, *"If weak
   excluded middle holds and the type X has two distinct points, then X has a decomposition"*, proved
@@ -54,18 +55,19 @@ first it sits on the keystone (the diagonal engine) rather than on an imported o
   The first step is a case split: under weak excluded middle the two mutually exclusive subobjects
   `¬(x = b₀)` and `¬¬(x = b₀)` cover, so a map can be glued from them (Prop 6.4's two cases are
   these two, swapped, by triple negation). An earlier instance of the same case split is Simpson's
-  proof of Booij–Escardó–Lumsdaine–Shulman, arXiv:1701.05617, Thm 5, p. 5, in its direction from
+  proof of Thm 5 of Booij–Escardó–Lumsdaine–Shulman (arXiv:1701.05617), p. 5, in its direction from
   weak excluded middle to a map: *"define f : U → 2 by f(A) = ff if ¬A and f(A) = tt if ¬¬A"*. Its
   other direction, from the map to weak excluded middle via *"Z = ¬A × X + ¬¬A × Y"* (p. 6), runs
   the way `wem_of_fixedPointFree` runs and is credited in the comment above that theorem in
-  `LawvereTaboo.lean`. The converse does not go through in Lean for the same reason recorded in
+  `LawvereTaboo.lean`. The argument does not transfer to Lean, for the same reason recorded in
   `ZeroParadox/Category/ExcludedMiddleBridge.lean` — `Or` in `Prop` does not eliminate into data, so
   a `Prop`-level disjunction cannot construct the function `g`. Whether the two statements are
   equivalent **in Lean** is left open, and a failed elaboration would not settle it either way.
 * **No priority claim.** See the prior-art section; a search was run and is reported as a search.
 * **It does not deprecate `ZeroParadox/Category/Lawvere.lean`.** The general statement stays general
   and stays the keystone. Its `Classical.choice` is classified essential, in the sense of
-  `ZeroParadox/Category/ChoiceCannotBe.lean` § IV and on the premise stated there.
+  `ZeroParadox/Category/ChoiceCannotBe.md` § "Accidental versus essential", and on the premise
+  stated in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
 
 ## Prior art
 
@@ -77,7 +79,7 @@ The mathematics of this genre is not new and is not claimed as new.
   type of ordinals has no non-trivial decidable property unless weak excluded middle holds."* Read
   from source. **This is a close neighbour, and it is a different statement**; Booij–Escardó–
   Lumsdaine–Shulman Thm 3 and Thm 5 (below) are as close, and so is de Jong–Escardó (below) in both
-  directions. Their Prop 6.4, p. 24, runs from weak excluded middle to a decomposition, opposite to
+  directions. De Jong–Escardó Prop 6.4, p. 24, runs from weak excluded middle to a decomposition, opposite to
   `wem_of_fixedPointFree`; their Lemma 6.6, Lemma 6.7 and Thm 6.10, p. 24, run the same way as
   `wem_of_fixedPointFree`, deriving weak excluded middle from a decomposition of the type of
   propositions `Ω_U`, of a type with `Ω`-paths, or of an injective type.
