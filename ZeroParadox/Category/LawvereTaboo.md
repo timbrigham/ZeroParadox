@@ -30,12 +30,14 @@ reports necessity."*
 implies **weak excluded middle** (`¬p ∨ ¬¬p` for every proposition `p`, equivalently De Morgan's
 law), proved with **no `Classical.choice`**. The classical content is entirely in the hypothesis,
 which is what makes this an implication rather than a restatement — the same shape as
-`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`'s `em_of_wellOrder_comparable`, and the file is
-modelled on it.
+`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`'s `em_of_wellOrder_comparable`, and
+`LawvereTaboo.lean` is modelled on it.
 
 So `fixedPointFree_of_nontrivial`'s `classical` is **essential**, not accidental: no rewriting of
 that proof removes it, because a choice-free proof of the general statement would be a choice-free
-proof of weak excluded middle. This is the framework's second located essential case, and unlike the
+proof of weak excluded middle. That step rests on a premise not proved here, stated in
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV: weak excluded middle is not derivable in Lean's
+choice-free fragment. This is the framework's second located essential case, and unlike the
 first it sits on the keystone (the diagonal engine) rather than on an imported order instance.
 
 ## What is NOT claimed
@@ -43,21 +45,27 @@ first it sits on the keystone (the diagonal engine) rather than on an imported o
 * **Not full excluded middle.** The taboo landed on is weak excluded middle, which is strictly
   weaker than `ExcludedMiddle` in intuitionistic logic. No attempt was made here to strengthen it,
   and the reader should not assume it can be strengthened.
-* **The converse is not proved.** Weak excluded middle gives the general statement back in
-  univalent foundations, and that argument is published, not ours: de Jong–Escardó,
-  arXiv:2601.12536, Prop 6.4, p. 24, *"If weak excluded middle holds and the type X has two distinct
-  points, then X has a decomposition"*, proved by sending `x` to 0 if `¬(x ≠ x₀)` and to 1 if
-  `¬¬(x ≠ x₀)`; the decomposition-to-endomap step in the prior-art section below then gives the
-  fixed-point-free map. It is the argument this file had sketched as its own (the two mutually
-  exclusive subobjects `¬(x = b₀)` and `¬¬(x = b₀)` cover, so a map can be glued from them). It
-  does not go through in Lean for the same reason recorded in
+* **The converse is not machine-checked here, and in Lean it is open.** Its scope is univalent
+  foundations, the setting of de Jong–Escardó, arXiv:2601.12536: there weak excluded middle gives the
+  general statement back, in two steps. The first step is published, Prop 6.4, p. 24, *"If weak
+  excluded middle holds and the type X has two distinct points, then X has a decomposition"*, proved
+  by sending `x` to 0 if `¬(x ≠ x₀)` and to 1 if `¬¬(x ≠ x₀)`. The second step, decomposition to
+  fixed-point-free endomap, is the elementary derivation in the prior-art section below, and is ours.
+  The first step is a case split: under weak excluded middle the two mutually exclusive subobjects
+  `¬(x = b₀)` and `¬¬(x = b₀)` cover, so a map can be glued from them (Prop 6.4's two cases are
+  these two, swapped, by triple negation). An earlier instance of the same case split is Simpson's
+  proof of Booij–Escardó–Lumsdaine–Shulman, arXiv:1701.05617, Thm 5, p. 5, in its direction from
+  weak excluded middle to a map: *"define f : U → 2 by f(A) = ff if ¬A and f(A) = tt if ¬¬A"*. Its
+  other direction, from the map to weak excluded middle via *"Z = ¬A × X + ¬¬A × Y"* (p. 6), runs
+  the way `wem_of_fixedPointFree` runs and is credited in the comment above that theorem in
+  `LawvereTaboo.lean`. The converse does not go through in Lean for the same reason recorded in
   `ZeroParadox/Category/ExcludedMiddleBridge.lean` — `Or` in `Prop` does not eliminate into data, so
   a `Prop`-level disjunction cannot construct the function `g`. Whether the two statements are
   equivalent **in Lean** is left open, and a failed elaboration would not settle it either way.
 * **No priority claim.** See the prior-art section; a search was run and is reported as a search.
 * **It does not deprecate `ZeroParadox/Category/Lawvere.lean`.** The general statement stays general
-  and stays the keystone. What changes is only its ledger classification: its `Classical.choice` is
-  no longer unclassified or presumed accidental.
+  and stays the keystone. Its `Classical.choice` is classified essential, in the sense of
+  `ZeroParadox/Category/ChoiceCannotBe.lean` § IV and on the premise stated there.
 
 ## Prior art
 
@@ -68,7 +76,11 @@ The mathematics of this genre is not new and is not claimed as new.
   `Ordinal-decomposition-iff-WEM : decomposition (Ordinal 𝓤) ↔ typal-WEM 𝓤`, glossed there as *"the
   type of ordinals has no non-trivial decidable property unless weak excluded middle holds."* Read
   from source. **This is a close neighbour, and it is a different statement**; Booij–Escardó–
-  Lumsdaine–Shulman Thm 3 and Thm 5 and de Jong–Escardó Prop 6.4 (both below) are as close.
+  Lumsdaine–Shulman Thm 3 and Thm 5 (below) are as close, and so is de Jong–Escardó (below) in both
+  directions. Their Prop 6.4, p. 24, runs from weak excluded middle to a decomposition, opposite to
+  `wem_of_fixedPointFree`; their Lemma 6.6, Lemma 6.7 and Thm 6.10, p. 24, run the same way as
+  `wem_of_fixedPointFree`, deriving weak excluded middle from a decomposition of the type of
+  propositions `Ω_U`, of a type with `Ω`-paths, or of an injective type.
   Decomposability is strictly stronger than what is used in `wem_of_fixedPointFree`: a decomposition
   `f : X → 𝟚` with witnesses `x₀ x₁` yields the fixed-point-free endomap
   `x ↦ if f x = 0 then x₁ else x₀` (it changes the value of `f`, so it cannot fix anything). So a
@@ -93,9 +105,6 @@ The mathematics of this genre is not new and is not claimed as new.
   supplier.
 * Weak excluded middle, and the taboo methodology generally: **constructive reverse mathematics**
   (Ishihara; Diener-Ishihara). Cited, not claimed.
-
-**Searched, none found** for the exact statement of `wem_of_fixedPointFree` — that is a report of one
-search, not a priority claim.
 
 ## Structure of `LawvereTaboo.lean`
 
