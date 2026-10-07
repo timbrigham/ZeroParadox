@@ -16,7 +16,7 @@ everything else in the family.
 ## Formal Overview
 Rice (1953) states his theorem for classes of r.e. sets; cited, not re-proved, is Mathlib's program-code
 form `ComputablePred.rice₂` (sets of codes closed under equal `eval`). The content here is the pairing:
-the quine (ν-existence) and Rice undecidability as two conjuncts, each from its own recursion theorem. Placement: `ZeroParadox/Computability/Rice.md`.
+the quine (ν-existence) and Rice undecidability as two conjuncts, each from its own use of the recursion theorem. Placement: `ZeroParadox/Computability/Rice.md`.
 -/
 
 set_option maxHeartbeats 400000

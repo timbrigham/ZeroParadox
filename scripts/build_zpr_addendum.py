@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.10 | October 2026
+Version 1.11 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -40,7 +40,7 @@ def build():
             'the G&#246;del-first row carries a machine-checked Lean 4 witness. The diagonal-family unification is '
             'Lawvere (1969) / Yanofsky (2003), cited; the contribution is the formalization '
             'and the tie to the self-application role (the engine, the wall faces and the pure-logic '
-            'floor faces choice-free; the computability faces choice-carrying). It supersedes the earlier private "Zero as a Wall" '
+            'floor faces choice-free; the computability floor faces choice-carrying). It supersedes the earlier private "Zero as a Wall" '
             'working draft.</i>',
             S['note']),
         sp(10),
@@ -314,7 +314,8 @@ def build():
             '<i>role</i> filled per face by that face\'s own occupant: in the fork / AFA face, &#8869; of '
             'the ZPSemilattice, by the AbstractSelfApp class fields fixed_bot and unique_fp (a commitment; '
             'Lawvere\'s premise is false in any ZPSemilattice with an element other than &#8869;, '
-            'nontrivial_lattice_no_witness); in the computability face, a Kleene '
+            'nontrivial_lattice_no_witness, which unlike t_exec carries Classical.choice); in the '
+            'computability face, a Kleene '
             'code, a fixed point up to eval (that it is a Lawvere instance is cited, Rogers\' form); in '
             'the L&#246;b face, the sentence a hypothesized L&#246;b diagonal supplies. On the wall faces '
             'the role has no occupant. No occupant is identified with another. How the wall, fork / AFA '
@@ -349,7 +350,7 @@ def build():
         'point-surjective theorem is in Mathlib (Function.exists_fixed_point_of_surjective); the '
         'framework\'s engine re-derives it axiom-free for a self-contained family. The contribution of '
         'this addendum is the formalization of the faces formalized here (the engine, the wall faces and the pure-logic floor faces '
-        'choice-free; the computability faces choice-carrying) and its tie to the self-application role &#8212; a placement, not an extension.'))
+        'choice-free; the computability floor faces choice-carrying) and its tie to the self-application role &#8212; a placement, not an extension.'))
 
     E += [
         hr(),

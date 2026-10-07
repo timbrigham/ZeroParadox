@@ -5,8 +5,11 @@ declarations, the Engineer's Take and the per-declaration glosses.
 
 ## What is cited, not re-proved
 
-Rice (1953): every *non-trivial extensional* (semantic) property of partial computable functions is
-undecidable. Rice's theorem is **already in Mathlib** (`ComputablePred.rice`, `ComputablePred.rice₂`,
+Rice (1953), Corollary B to his Theorem 6 (p. 364): no nontrivial class of recursively enumerable sets
+is completely recursive. In his own gloss (p. 365), no property possessed by some but not all r.e. sets
+can be decided from a partial recursive function enumerating the set. Mathlib states the theorem for
+programs instead: a set of codes closed under equal `eval` is decidable only if it is empty or
+everything (`ComputablePred.rice`, `ComputablePred.rice₂`,
 `Mathlib/Computability/Halting.lean`), and its proof runs through `fixed_point₂` — Kleene's second
 recursion theorem. The Lean file does not re-prove it; it **cites** Mathlib and connects Rice to the
 framework's computability face.

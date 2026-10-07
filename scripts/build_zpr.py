@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.15 | October 2026
+Version 1.16 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -166,23 +166,27 @@ def build():
 
     E.append(result_box(
         'R3-neg &#8212; in Set, no reflexive object on a carrier with a fixed-point-free endomap (Cantor); '
-        'on a nonempty complete lattice the obstruction is non-monotone, on the empty set it is the '
-        'identity, which is monotone',
+        'on a complete lattice the obstruction is non-monotone; on the empty set, which is not a '
+        'complete lattice, it is the identity, which is monotone',
         [
             'A point-surjection e : A &#8594; (A &#8594; B) would, by Lawvere, force <i>every</i> '
             'f : B &#8594; B to have a fixed point. For B two-valued, negation is fixed-point-free '
             '&#8212; a contradiction. This is Cantor\'s theorem, read as the contrapositive of '
             'Lawvere\'s own engine.',
             'The obstruction witness &#8212; negation &#8212; has a structural property worth '
-            'isolating: it is <i>not monotone</i> (it reverses the order False &#8804; True). This is '
-            'what separates the faces. On every nonempty complete lattice a monotone self-map has a '
-            'fixed point (Knaster&#8211;Tarski), so there every fixed-point-free endomap is '
-            'non-monotone. On the empty set the fixed-point-free endomap is the identity, which is '
-            'monotone, and the wall there is vacuous: there is no point for any map to fix.',
+            'isolating: it is <i>not monotone</i> (it reverses the order False &#8804; True). What '
+            'separates the Set face from the monotone face is the direction Knaster&#8211;Tarski runs: '
+            'on a complete lattice every monotone self-map has a fixed point, so there every '
+            'fixed-point-free endomap is non-monotone. Non-monotonicity is that consequence on a '
+            'complete lattice, not the separator in general: Nat.succ is monotone and has no fixed '
+            'point, on a carrier that is not a complete lattice. The empty set is not a complete '
+            'lattice; its fixed-point-free endomap is the identity, which is monotone, and only '
+            '"the identity has no fixed point" holds vacuously there. The refutation itself is not '
+            'vacuous: no map from the empty set is onto its one-element function space.',
             'Witnesses: reflexive_object_refuted, not_monotone_not (LawvereBridge.lean). Lean purity: '
             'both choice-free (reflexive_object_refuted: no axioms; not_monotone_not: [propext]). The '
-            'scoped Set statement in the backing table also uses fixedPointFree_of_nontrivial, which '
-            'carries Classical.choice. ✓',
+            'backing table\'s scoped Set statement also rests on the anonymous Set example and on '
+            'fixedPointFree_of_nontrivial, and both carry Classical.choice. ✓',
         ]
     ))
     E.append(sp(6))
@@ -200,11 +204,14 @@ def build():
         'reports, that every structure with the fixed point property is a retract of a reflexive '
         'domain. In any category a reflexive object is a retract of itself, so wherever every '
         'structure with the fixed point property is a reflexive object, each is also a retract of '
-        'one; the converse is not shown here. In Set the first of those examples answers the '
+        'one. The converse implication, from "every such structure is a retract of a reflexive '
+        'object" to "every such structure is a reflexive object", is not shown here. In Set the first of those examples answers the '
         'question: a set with the fixed point property has exactly one element and carries a '
         'surjection onto its endomaps, so it is a reflexive object and trivially a retract of '
         'itself; being one-element, it is also in bijection with its own function space. ZP-R does '
-        'not address the question in any other category. Two categories '
+        'not address the question in any other category; Bj&#246;rner\'s abstract reports that his '
+        'result leads to counterexamples to the suggestion in the category Po of partially ordered '
+        'sets and monotone maps. Two categories '
         'are free of the obstruction, and only one of '
         'them is shown here to furnish a reflexive object. The reasons are <i>not</i> the same, and the '
         'difference is the point: the monotone regime is free of it <i>literally</i> &#8212; on a '
@@ -278,11 +285,12 @@ def build():
             ['Set',
              'refuted on every carrier except a one-element one, the empty set included (a '
              'one-element set is reflexive)',
-             'a fixed-point-free map blocks it (Cantor): on two or more points, one point b<sub>0</sub> '
-             'sent to a second point b<sub>1</sub> and every other point to b<sub>0</sub> '
-             '(fixedPointFree_of_nontrivial), a swap when there are exactly two points, negation in the '
-             'two-valued case; on the empty set the identity. On a nonempty complete lattice the '
-             'blocking map is non-monotone; on the empty set the identity is monotone',
+             'a fixed-point-free map blocks it (Cantor): on two or more points, the map the proof of '
+             'fixedPointFree_of_nontrivial constructs, one point b<sub>0</sub> sent to a second point '
+             'b<sub>1</sub> and every other point to b<sub>0</sub> (a swap when there are exactly two '
+             'points, negation in the two-valued case); on the empty set the identity. On a complete '
+             'lattice the blocking map is non-monotone; on the empty set, not a complete lattice, the '
+             'identity is monotone',
              'the wall'],
             ['Monotone / domain',
              'not furnished here (route: Scott D<sub>&#8734;</sub>, unbuilt)',
@@ -507,7 +515,8 @@ def build():
              '(ZeroParadox/Settheory/LawvereBridge.lean); nontrivial_lattice_no_witness '
              '(ZeroParadox/Category/Lawvere.lean)'],
             ['R3-neg (Set, every carrier except a one-element one: refuted; obstruction non-monotone on '
-             'every nonempty complete lattice, the identity, which is monotone, on the empty set)',
+             'every complete lattice; on the empty set, not a complete lattice, the identity, which is '
+             'monotone)',
              'reflexive_object_refuted, not_monotone_not, the anonymous Set example '
              '(ZeroParadox/Settheory/LawvereBridge.lean); fixedPointFree_of_nontrivial, which supplies '
              'the fixed-point-free map on two or more points (ZeroParadox/Category/Lawvere.lean)'],
