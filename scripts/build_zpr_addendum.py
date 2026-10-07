@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.9 | October 2026
+Version 1.10 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -39,8 +39,8 @@ def build():
             'point) and the <b>floor</b> faces where it does (a fixed point exists). Every entry except '
             'the G&#246;del-first row carries a machine-checked Lean 4 witness. The diagonal-family unification is '
             'Lawvere (1969) / Yanofsky (2003), cited; the contribution is the formalization '
-            'and the tie to the self-application role (core choice-free; the computability faces '
-            'choice-carrying). It supersedes the earlier private "Zero as a Wall" '
+            'and the tie to the self-application role (the engine, the wall faces and the pure-logic '
+            'floor faces choice-free; the computability faces choice-carrying). It supersedes the earlier private "Zero as a Wall" '
             'working draft.</i>',
             S['note']),
         sp(10),
@@ -226,7 +226,9 @@ def build():
         [
             'quine_exists_yet_rice is a conjunction: for computable f, a fixed point of f up to eval '
             'EXISTS (recursion theorem), AND membership in any non-trivial extensional set C of codes '
-            'is UNDECIDABLE (rice_face; Rice 1953, cited from Mathlib). The undecidability is of C '
+            'is UNDECIDABLE (rice_face, which cites Mathlib\'s ComputablePred.rice&#8322;, Rice\'s '
+            'theorem in its form over program codes; Rice 1953 states it for classes of recursively '
+            'enumerable sets). The undecidability is of C '
             'over all codes; the second conjunct does not mention f, so nothing is stated about '
             'membership at f\'s fixed point. The standard recursion-theorem proof of Rice\'s theorem '
             '(Yanofsky 2003, p. 19; Mathlib\'s ComputablePred.rice, via fixed_point&#8322;) turns on the '
@@ -346,8 +348,8 @@ def build():
         'Math. Soc. 74(2) (1953) 358&#8211;366. The '
         'point-surjective theorem is in Mathlib (Function.exists_fixed_point_of_surjective); the '
         'framework\'s engine re-derives it axiom-free for a self-contained family. The contribution of '
-        'this addendum is the formalization of the faces formalized here (core choice-free; the computability faces '
-        'choice-carrying) and its tie to the self-application role &#8212; a placement, not an extension.'))
+        'this addendum is the formalization of the faces formalized here (the engine, the wall faces and the pure-logic floor faces '
+        'choice-free; the computability faces choice-carrying) and its tie to the self-application role &#8212; a placement, not an extension.'))
 
     E += [
         hr(),

@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.14 | October 2026
+Version 1.15 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -75,7 +75,8 @@ def build():
         'point-surjection A &#8594; Y<sup>A</sup> is Lawvere\'s Corollary 1.2 (p. 5 of the 2006 TAC '
         'reprint). Of the suggestion of Soto-Andrade and Varela (1984), as Bj&#246;rner (1985) '
         'reports, that every structure with the fixed point property is a retract of a reflexive '
-        'domain, ZP-R settles only the Set case, where it holds trivially (Section II).'))
+        'domain, ZP-R answers the question only in Set, where it holds trivially (Section II), and '
+        'makes no claim about the categories they intend.'))
     E.append(hr())
 
     # -- Section I: The Fork and the Engine -------------------------------------------
@@ -164,7 +165,9 @@ def build():
         '<b>presence of a fixed-point-free endomap</b>.'))
 
     E.append(result_box(
-        'R3-neg &#8212; in Set, no reflexive object on a carrier with a fixed-point-free endomap (Cantor); the obstruction is non-monotone',
+        'R3-neg &#8212; in Set, no reflexive object on a carrier with a fixed-point-free endomap (Cantor); '
+        'on a nonempty complete lattice the obstruction is non-monotone, on the empty set it is the '
+        'identity, which is monotone',
         [
             'A point-surjection e : A &#8594; (A &#8594; B) would, by Lawvere, force <i>every</i> '
             'f : B &#8594; B to have a fixed point. For B two-valued, negation is fixed-point-free '
@@ -172,9 +175,14 @@ def build():
             'Lawvere\'s own engine.',
             'The obstruction witness &#8212; negation &#8212; has a structural property worth '
             'isolating: it is <i>not monotone</i> (it reverses the order False &#8804; True). This is '
-            'what separates the faces.',
+            'what separates the faces. On every nonempty complete lattice a monotone self-map has a '
+            'fixed point (Knaster&#8211;Tarski), so there every fixed-point-free endomap is '
+            'non-monotone. On the empty set the fixed-point-free endomap is the identity, which is '
+            'monotone, and the wall there is vacuous: there is no point for any map to fix.',
             'Witnesses: reflexive_object_refuted, not_monotone_not (LawvereBridge.lean). Lean purity: '
-            'choice-free. ✓',
+            'both choice-free (reflexive_object_refuted: no axioms; not_monotone_not: [propext]). The '
+            'scoped Set statement in the backing table also uses fixedPointFree_of_nontrivial, which '
+            'carries Classical.choice. ✓',
         ]
     ))
     E.append(sp(6))
@@ -187,13 +195,16 @@ def build():
         'is not: on the two-element chain false &#8804; true every monotone self-map has a fixed point '
         '(Knaster&#8211;Tarski), yet no map from its two points onto its monotone self-maps is '
         'surjective. Both statements are anonymous Lean examples in '
-        'ZeroParadox/Settheory/LawvereBridge.lean. A different question, about retracts rather than '
+        'ZeroParadox/Settheory/LawvereBridge.lean. A related question, about retracts rather than '
         'reflexive objects, is the suggestion of Soto-Andrade and Varela (1984), as Bj&#246;rner (1985) '
         'reports, that every structure with the fixed point property is a retract of a reflexive '
-        'domain. In Set the first of those examples settles it: a set with the fixed point property has '
-        'exactly one element, is in bijection with its own function space, and is a reflexive '
-        'object, trivially a retract of itself. ZP-R does not address the suggestion in any other '
-        'category. Two categories '
+        'domain. In any category a reflexive object is a retract of itself, so wherever every '
+        'structure with the fixed point property is a reflexive object, each is also a retract of '
+        'one; the converse is not shown here. In Set the first of those examples answers the '
+        'question: a set with the fixed point property has exactly one element and carries a '
+        'surjection onto its endomaps, so it is a reflexive object and trivially a retract of '
+        'itself; being one-element, it is also in bijection with its own function space. ZP-R does '
+        'not address the question in any other category. Two categories '
         'are free of the obstruction, and only one of '
         'them is shown here to furnish a reflexive object. The reasons are <i>not</i> the same, and the '
         'difference is the point: the monotone regime is free of it <i>literally</i> &#8212; on a '
@@ -267,8 +278,11 @@ def build():
             ['Set',
              'refuted on every carrier except a one-element one, the empty set included (a '
              'one-element set is reflexive)',
-             'a fixed-point-free map blocks it (Cantor): on two or more points a swap, negation in '
-             'the two-valued case; on the empty set the identity. Negation is non-monotone',
+             'a fixed-point-free map blocks it (Cantor): on two or more points, one point b<sub>0</sub> '
+             'sent to a second point b<sub>1</sub> and every other point to b<sub>0</sub> '
+             '(fixedPointFree_of_nontrivial), a swap when there are exactly two points, negation in the '
+             'two-valued case; on the empty set the identity. On a nonempty complete lattice the '
+             'blocking map is non-monotone; on the empty set the identity is monotone',
              'the wall'],
             ['Monotone / domain',
              'not furnished here (route: Scott D<sub>&#8734;</sub>, unbuilt)',
@@ -437,7 +451,7 @@ def build():
         'III. That Kleene\'s recursion theorem is a Lawvere instance is due to the sources above, not '
         'to this document, and so is the obstruction the placement uses (Lawvere\'s Corollary 1.2). '
         'The retract question, as Bj&#246;rner reports Soto-Andrade and Varela\'s suggestion, sits '
-        'beside the placement; ZP-R settles only its Set case (Section II).'))
+        'beside the placement; ZP-R answers it only in Set (Section II).'))
 
     # -- What Remains Open ------------------------------------------------------------
     E += [
@@ -492,7 +506,8 @@ def build():
              'lawvere_fixedpoint_selfApp, selfApp_pinnable, existence_without_uniqueness '
              '(ZeroParadox/Settheory/LawvereBridge.lean); nontrivial_lattice_no_witness '
              '(ZeroParadox/Category/Lawvere.lean)'],
-            ['R3-neg (Set, every carrier except a one-element one: refuted; obstruction non-monotone)',
+            ['R3-neg (Set, every carrier except a one-element one: refuted; obstruction non-monotone on '
+             'every nonempty complete lattice, the identity, which is monotone, on the empty set)',
              'reflexive_object_refuted, not_monotone_not, the anonymous Set example '
              '(ZeroParadox/Settheory/LawvereBridge.lean); fixedPointFree_of_nontrivial, which supplies '
              'the fixed-point-free map on two or more points (ZeroParadox/Category/Lawvere.lean)'],

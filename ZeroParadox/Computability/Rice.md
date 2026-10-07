@@ -45,7 +45,8 @@ makes either half depend on the other.
 
 ## Honest delta
 
-Rice's theorem is Rice's (1953); its Lean proof is Mathlib's. Its diagonal-family framing is Yanofsky (2003), p. 19 of
+Rice's theorem is Rice's (1953), stated for classes of r.e. sets; the Lean form cited is Mathlib's form over
+program codes, `ComputablePred.rice₂` (sets of codes closed under equal `eval`). Its diagonal-family framing is Yanofsky (2003), p. 19 of
 arXiv:math/0305282v1, an application of his Theorem 5 (the recursion theorem); Lawvere (1969) does not
 treat it. New here: the framework restatement, a concrete face (the halting problem), and the
 `quine_exists_yet_rice` pairing, which states the ν-existence and the undecidability as two independent
