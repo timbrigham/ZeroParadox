@@ -6,13 +6,15 @@ declarations, the Engineer's Take and the per-declaration glosses.
 ## What is cited, not re-proved
 
 Rice (1953), Corollary B to his Theorem 6 (p. 364): no nontrivial class of recursively enumerable sets
-is completely recursive. In his own gloss (p. 365), no property possessed by some but not all r.e. sets
-can be decided from a partial recursive function enumerating the set. Mathlib states the theorem for
-programs instead: a set of codes closed under equal `eval` is decidable only if it is empty or
-everything (`ComputablePred.rice`, `ComputablePred.rice₂`,
-`Mathlib/Computability/Halting.lean`), and its proof runs through `fixed_point₂` — Kleene's second
-recursion theorem. The Lean file does not re-prove it; it **cites** Mathlib and connects Rice to the
-framework's computability face.
+is completely recursive by his strong definition of complete recursiveness. In his own gloss (p. 365),
+no property possessed by some but not all r.e. sets can be decided from a partial recursive function
+enumerating the set. Mathlib's statements are different ones, about programs
+(`Mathlib/Computability/Halting.lean`): `ComputablePred.rice₂` says a set of codes closed under equal
+`eval` is decidable only if it is empty or everything, and `ComputablePred.rice` says that if it is
+decidable whether a code's function lies in a set of partial functions, that set contains every
+partial recursive function once it contains one. `rice` is proved through `fixed_point₂`, Kleene's
+second recursion theorem, and `rice₂` from `rice`. The Lean file does not re-prove either; it **cites**
+`rice₂` and connects Rice to the framework's computability face.
 
 ## The connection — the genuine content
 
@@ -52,5 +54,5 @@ Rice's theorem is Rice's (1953), stated for classes of r.e. sets; the Lean form 
 program codes, `ComputablePred.rice₂` (sets of codes closed under equal `eval`). Its diagonal-family framing is Yanofsky (2003), p. 19 of
 arXiv:math/0305282v1, an application of his Theorem 5 (the recursion theorem); Lawvere (1969) does not
 treat it. New here: the framework restatement, a concrete face (the halting problem), and the
-`quine_exists_yet_rice` pairing, which states the ν-existence and the undecidability as two independent
+`quine_exists_yet_rice` pairing, which states the ν-existence and the undecidability as two
 conjuncts.

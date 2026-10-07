@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.16 | October 2026
+Version 1.17 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -175,11 +175,12 @@ def build():
             'Lawvere\'s own engine.',
             'The obstruction witness &#8212; negation &#8212; has a structural property worth '
             'isolating: it is <i>not monotone</i> (it reverses the order False &#8804; True). What '
-            'separates the Set face from the monotone face is the direction Knaster&#8211;Tarski runs: '
-            'on a complete lattice every monotone self-map has a fixed point, so there every '
-            'fixed-point-free endomap is non-monotone. Non-monotonicity is that consequence on a '
-            'complete lattice, not the separator in general: Nat.succ is monotone and has no fixed '
-            'point, on a carrier that is not a complete lattice. The empty set is not a complete '
+            'separates the Set face from the monotone face is the class of maps, and what makes that '
+            'restriction remove the obstruction is completeness: on a complete lattice every monotone '
+            'self-map has a fixed point (Knaster&#8211;Tarski), so there every fixed-point-free endomap '
+            'is non-monotone. Neither condition suffices alone: Bool with false &#8804; true is a '
+            'complete lattice on which negation is fixed-point-free, and Nat.succ is monotone and has '
+            'no fixed point, on a carrier that is not a complete lattice. The empty set is not a complete '
             'lattice; its fixed-point-free endomap is the identity, which is monotone, and only '
             '"the identity has no fixed point" holds vacuously there. The refutation itself is not '
             'vacuous: no map from the empty set is onto its one-element function space.',
@@ -204,12 +205,13 @@ def build():
         'reports, that every structure with the fixed point property is a retract of a reflexive '
         'domain. In any category a reflexive object is a retract of itself, so wherever every '
         'structure with the fixed point property is a reflexive object, each is also a retract of '
-        'one. The converse implication, from "every such structure is a retract of a reflexive '
-        'object" to "every such structure is a reflexive object", is not shown here. In Set the first of those examples answers the '
-        'question: a set with the fixed point property has exactly one element and carries a '
+        'one. In Set the first of the two Lean examples above answers the retract question: a set '
+        'with the fixed point property has exactly one element and carries a '
         'surjection onto its endomaps, so it is a reflexive object and trivially a retract of '
-        'itself; being one-element, it is also in bijection with its own function space. ZP-R does '
-        'not address the question in any other category; Bj&#246;rner\'s abstract reports that his '
+        'itself; being one-element, it is also in bijection with its own function space. The '
+        'converse implication, from "every such structure is a retract of a reflexive '
+        'object" to "every such structure is a reflexive object", is not shown here. ZP-R does '
+        'not address the retract question in any other category; Bj&#246;rner\'s abstract reports that his '
         'result leads to counterexamples to the suggestion in the category Po of partially ordered '
         'sets and monotone maps. Two categories '
         'are free of the obstruction, and only one of '
