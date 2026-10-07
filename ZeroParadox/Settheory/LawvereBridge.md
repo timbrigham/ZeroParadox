@@ -75,8 +75,8 @@ every monotone map has a fixed point (`instance_always_exists`, Knaster–Tarski
 serve as `reflexive_object_refuted`'s witness. A non-monotone one still can: on any nontrivial complete
 lattice, `x ↦ if x = ⊥ then ⊤ else ⊥` is fixed-point-free and refutes every `e : D → (D → D)`. Nor does
 the regime build a reflexive object; none is constructed here. Absence of a fixed-point-free monotone
-endomap does not suffice for one: the two-element chain is the witness (the `example` after
-`not_monotone_not` in `ZeroParadox/Settheory/LawvereBridge.lean`). On uniqueness,
+endomap does not suffice for one: the two-element chain is the witness (the last `example` of § VII
+in `ZeroParadox/Settheory/LawvereBridge.lean`). On uniqueness,
 `monotone_regime_derives_pinned` takes the fork collapse `lfp f = gfp f` as a hypothesis, which by
 `fork_collapse_iff` is equivalent to `∃! x, f x = x`: uniqueness is restated, not derived, and `id` on a
 nontrivial lattice is monotone with many fixed points (`existence_without_uniqueness`). Nothing there

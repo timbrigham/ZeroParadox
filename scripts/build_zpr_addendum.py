@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.11 | October 2026
+Version 1.13 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.13'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -39,8 +39,8 @@ def build():
             'point) and the <b>floor</b> faces where it does (a fixed point exists). Every entry except '
             'the G&#246;del-first row carries a machine-checked Lean 4 witness. The diagonal-family unification is '
             'Lawvere (1969) / Yanofsky (2003), cited; the contribution is the formalization '
-            'and the tie to the self-application role (the engine, the wall faces and the pure-logic '
-            'floor faces choice-free; the computability floor faces choice-carrying). It supersedes the earlier private "Zero as a Wall" '
+            'and the tie to the self-application role (the engine, the wall faces, and the Quine-atom '
+            'and L&#246;b / G&#246;del 2nd floor faces choice-free; the computability floor faces choice-carrying). It supersedes the earlier private "Zero as a Wall" '
             'working draft.</i>',
             S['note']),
         sp(10),
@@ -296,8 +296,8 @@ def build():
     E.append(callout(
         'The map is a placement, not a new theorem. The unification of the diagonal family is Lawvere '
         '(1969) and Yanofsky (2003); each face is a classical result (each wall face a direct instance '
-        'of the engine), formalized here axiom-free where the logic is pure and choice-carrying where it '
-        'inherits Mathlib\'s recursion theory. What the framework adds is the tie to the '
+        'of the engine), formalized here axiom-free except the computability floor faces (Kleene, Rice), which '
+        'carry Classical.choice inherited from Mathlib\'s recursion theory. What the framework adds is the tie to the '
         'self-application role, for the faces formalized here.',
         bg=BLUE_LITE, border=BLUE
     ))
@@ -349,8 +349,8 @@ def build():
         'Math. Soc. 74(2) (1953) 358&#8211;366. The '
         'point-surjective theorem is in Mathlib (Function.exists_fixed_point_of_surjective); the '
         'framework\'s engine re-derives it axiom-free for a self-contained family. The contribution of '
-        'this addendum is the formalization of the faces formalized here (the engine, the wall faces and the pure-logic floor faces '
-        'choice-free; the computability floor faces choice-carrying) and its tie to the self-application role &#8212; a placement, not an extension.'))
+        'this addendum is the formalization of the faces formalized here (the engine, the wall faces, and the Quine-atom and '
+        'L&#246;b / G&#246;del 2nd floor faces choice-free; the computability floor faces choice-carrying) and its tie to the self-application role &#8212; a placement, not an extension.'))
 
     E += [
         hr(),
@@ -363,7 +363,7 @@ def build():
         [
             'The engine and the wall faces (negation_no_fixedpoint, lawvere_fixedpoint, '
             'cantor_via_engine, russell_via_engine, no_self_decider, wf_no_selfloop, Tarski, Curry) and '
-            'the pure-logic floor (Quine atom t_exec; L&#246;b, godel_two) are choice-free &#8212; the '
+            'the Quine-atom and L&#246;b / G&#246;del 2nd floor faces (t_exec; L&#246;b, godel_two) are choice-free &#8212; the '
             'faces listed here need no Axiom of Choice.',
             'The computability floor faces (Kleene: computability_face_fixedPoint; Rice: '
             'rice_face_has_bottom, quine_exists_yet_rice, halting_undecidable) carry [propext, '
@@ -381,7 +381,7 @@ def build():
         Paragraph(
             '<i>End of ZP-R Addendum | The Diagonal Family | wall faces &#956; (Cantor, Russell, '
             'Turing, Tarski, Curry), each the contrapositive of one engine (negation has no fixed '
-            'point) | floor faces &#957; (Quine atom, Kleene, L&#246;b / G&#246;del 2, Rice), each '
+            'point) | floor faces &#957; (Quine atom, Kleene, L&#246;b / G&#246;del 2nd, Rice), each '
             'fixed point supplied per face | the faces formalized here, Lean-witnessed '
             'except G&#246;del 1st | cross-face identity a type boundary | the map is a placement, not a new '
             'theorem.</i>',

@@ -104,7 +104,7 @@ theorem selfApp_lands_on_nu :
 Deriving `fixed_bot` rather than assuming it needs a **reflexive object**, and
 `reflexive_object_refuted` shows none exists on any carrier admitting a fixed-point-free self-map —
 and type theory has those (`no_reflexive_object_bool`), so the assumption is forced, not lazy.
-In the monotone/domain regime no MONOTONE map is fixed-point-free, so a monotone witness is unavailable;
+On a complete lattice no MONOTONE map is fixed-point-free (`instance_always_exists`), so a monotone witness is unavailable there;
 a non-monotone one still refutes `e` on any nontrivial complete lattice (`x ↦ if x = ⊥ then ⊤ else ⊥`).
 Lawvere's hypothesis is met in the computability face. Where to look and why:
 `ZeroParadox/Settheory/LawvereBridge.md`. -/
@@ -143,17 +143,47 @@ example {D : Type*} (hnf : ¬ ∃ f : D → D, ∀ x, f x ≠ x) :
       · exact fun h => hx h.symm⟩
   exact ⟨⟨d, fun x => hsub x d⟩, fun _ => id, fun _ => ⟨d, funext fun _ => hsub _ _⟩⟩
 
-/-! ## § VII. Why the wall is Set-specific — the obstruction is non-monotone -/
+/-! ## § VII. Where completeness blocks the Cantor route — on a complete lattice every fixed-point-free endomap is non-monotone -/
 
-/-- **The Cantor obstruction is non-monotone.** The fixed-point-free map that refutes the reflexive
-object in Type is negation, and `Not : Prop → Prop` is not monotone — it reverses `False ≤ True`. So the
-obstruction witness simply does not live in the monotone world. Combined with `instance_always_exists`
-(no monotone map on a complete lattice is fixed-point-free), this pins the wall precisely: the
-refutation of the reflexive object needs a *non-monotone* witness; no monotone map supplies one. -/
+/-- **The Cantor obstruction's witness is non-monotone.** In Cantor's refutation (`cantor_via_engine`)
+the fixed-point-free map is negation, and `Not : Prop → Prop` is not monotone — it reverses
+`False ≤ True`; on `Bool` the witness is Boolean negation (`no_reflexive_object_bool`), also not
+monotone (example below). So that witness is not a monotone map.
+`instance_always_exists` says no monotone map on a complete lattice is fixed-point-free, so on a
+complete lattice the refutation needs a non-monotone witness. Off complete lattices a monotone map can
+be fixed-point-free: `Nat.succ`, and the identity on the empty set (examples below). -/
 theorem not_monotone_not : ¬ Monotone (Not : Prop → Prop) := by
   intro h
   have hle : (False : Prop) ≤ True := by tauto
   exact (h hle) not_false trivial
+
+-- Statement: `Nat.succ` is monotone and fixed-point-free.
+example : Monotone Nat.succ ∧ ∀ n : ℕ, Nat.succ n ≠ n :=
+  ⟨fun _ _ h => Nat.succ_le_succ h, fun n => Nat.succ_ne_self n⟩
+
+-- Statement: `ℕ` under `≤` has no element above every element (a complete lattice has one, `⊤`).
+example : ¬ ∃ t : ℕ, ∀ n : ℕ, n ≤ t := fun ⟨t, h⟩ => by have := h (t + 1); omega
+
+-- Statement: the identity on `Empty` is monotone and fixed-point-free (because `Empty` has no elements).
+example : Monotone (id : Empty → Empty) ∧ ∀ x : Empty, id x ≠ x :=
+  ⟨monotone_id, fun x => x.elim⟩
+
+-- Statement: `Empty` carries no `CompleteLattice` structure (one would need an element `⊥`).
+example : IsEmpty (CompleteLattice Empty) := ⟨fun h => (h.bot : Empty).elim⟩
+
+-- Statement: no map `Empty → (Empty → Empty)` is surjective (`reflexive_object_refuted` at `f = id`).
+example (e : Empty → (Empty → Empty)) : ¬ Function.Surjective e :=
+  reflexive_object_refuted (id : Empty → Empty) (fun x => Empty.elim x) e
+
+-- Statement: the function space `Empty → Empty` has exactly one element.
+example : Nonempty (Unique (Empty → Empty)) := ⟨inferInstance⟩
+
+-- Statement: `Bool` carries a `CompleteLattice` structure (Mathlib's instance; its order is `false ≤ true`).
+example : Nonempty (CompleteLattice Bool) := ⟨inferInstance⟩
+
+-- Statement: on `Bool`, negation is fixed-point-free and not monotone (it reverses `false ≤ true`).
+example : (∀ b : Bool, (!b) ≠ b) ∧ ¬ Monotone (fun b : Bool => !b) :=
+  ⟨fun b => by cases b <;> decide, fun h => absurd (h (show false ≤ true by decide)) (by decide)⟩
 
 -- Statement: on the two-element chain `false ≤ true`, every monotone self-map has a fixed point (the
 --   first conjunct is Knaster–Tarski, `OrderHom.lfp`), and no map from its two points onto its monotone

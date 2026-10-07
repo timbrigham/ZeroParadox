@@ -31,7 +31,7 @@ open Nat.Partrec.Code
 /-- **Rice (framework restatement).** A non-trivial extensional semantic property of programs is
     undecidable: if `C : Set Code` is extensional (`Hext`: depends only on `eval`) and non-trivial
     (`C ≠ ∅` and `C ≠ univ`), then membership in `C` is not a `ComputablePred`. Cites Mathlib's
-    `ComputablePred.rice₂` (whose proof is Kleene's recursion theorem, `fixed_point₂`). -/
+    `ComputablePred.rice₂` (proved from `ComputablePred.rice`, which uses `fixed_point₂`). -/
 theorem rice_face (C : Set Code)
     (Hext : ∀ cf cg, eval cf = eval cg → (cf ∈ C ↔ cg ∈ C))
     (hne : C ≠ ∅) (huniv : C ≠ Set.univ) :
@@ -70,9 +70,10 @@ theorem quine_exists_yet_rice (C : Set Code)
     declaration's name, the statement is a fixed point up to `eval` and names no bottom.
     Unlike the truth / comprehension walls (Tarski, Curry — μ, no floor), computation reaches a floor in
     the family's sense: every computable
-    self-map on codes has a fixed point **up to `eval`** (`computability_face_fixedPoint` — Rogers';
-    while `rice_face`, via `ComputablePred.rice₂`, is the one that genuinely routes through
-    Kleene's second recursion theorem, `fixed_point₂`),
+    self-map on codes has a fixed point **up to `eval`** (`computability_face_fixedPoint` — Rogers',
+    Mathlib's `fixed_point`; `rice_face` also rests on it, through `ComputablePred.rice₂`,
+    `ComputablePred.rice` and Kleene's second recursion theorem `fixed_point₂`, which Mathlib derives
+    from `fixed_point`),
     read as the Kleene quine (a program printing its own code needs one further s-m-n step). So on the
     one-over-infinity-to-bottom map, the computability face is the ν side, where self-reference
     closes on a Kleene code filling the self-application fixed-point role — and Rice (above) sits beside it: a non-trivial extensional `C` is undecidable
