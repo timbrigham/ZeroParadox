@@ -4,6 +4,7 @@ import ZeroParadox.Computability.Occurrence
 import ZeroParadox.Computability.GroundZero
 import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Category.DiagonalWitness
+import ZeroParadox.Category.LawvereTwoAdic
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Information.Disjunctive
 
@@ -47,6 +48,11 @@ section ComputationCannotBeIndex
 -- every c. ⚠ LITERAL fixed-point-freeness is a different property and DOES occur on codes:
 -- `fun c => Code.pair c c` fixes nothing. The qualifier is in the declaration's own name.
 #check @ZeroParadox.no_computable_evalFixedPointFree
+
+-- Statement: on `List Bool`, `partialAddOne w = w ↔ w = []` (`ZeroParadox/Category/LawvereTwoAdic.lean`).
+-- Reading: the wall above says no computable map on codes is free of fixed points up to `eval`; add-one
+--   extended to partial digit streams is not free of fixed points either, and rests only at the empty stream.
+#check @ZeroParadox.partialAddOne_fixed_iff
 
 /-! ### § II. What computation DOES supply — the floors -/
 

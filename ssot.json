@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1862,
-        "files": 157
+        "declarations": 1870,
+        "files": 158
       },
       "entries": [
         {
@@ -2099,6 +2099,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "04ee54eb-8c88-4359-8978-f657b901e176",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne",
+            "short": "partialAddOne"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne",
+            "short": "partialAddOne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "LawvereTwoAdic.lean: partial 2-adic digit streams, add-one and doubling (2026-10-07)",
+          "verify": {
+            "axioms": [],
             "sorry_free": true
           }
         },
@@ -11175,6 +11213,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "25f1081f-576e-4d97-9fb1-34c6901b5895",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne_length",
+            "short": "partialAddOne_length"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne_length",
+            "short": "partialAddOne_length",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "LawvereTwoAdic.lean: partial 2-adic digit streams, add-one and doubling (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "261cfa26-091f-4ee3-a5e4-515fc81f3e6b",
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
@@ -19998,6 +20074,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "470fab4d-d799-4abb-aea2-8a21a51ad094",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialDouble",
+            "short": "partialDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialDouble",
+            "short": "partialDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "LawvereTwoAdic.lean: partial 2-adic digit streams, add-one and doubling (2026-10-07)",
+          "verify": {
+            "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "473756d4-03e1-40e0-8e38-22888f02e2b3",
           "new": {
@@ -24088,6 +24202,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "572e0ee1-a8b7-4189-b2c2-bc39ec3dea76",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialDoubleStage",
+            "short": "partialDoubleStage"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialDoubleStage",
+            "short": "partialDoubleStage",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "LawvereTwoAdic.lean: partial 2-adic digit streams, add-one and doubling (2026-10-07)",
+          "verify": {
+            "axioms": [],
             "sorry_free": true
           }
         },
@@ -31698,6 +31850,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "75338050-5e17-4db6-b29a-7cc8720f3a56",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne_mono",
+            "short": "partialAddOne_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne_mono",
+            "short": "partialAddOne_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "LawvereTwoAdic.lean: partial 2-adic digit streams, add-one and doubling (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "755bcab3-cb02-4140-8b26-5f512d0ea8b7",
           "new": {
@@ -35394,6 +35584,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "831d5ee0-4e71-4ca5-b66a-f25a69c90a11",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialDoubleStage_eq",
+            "short": "partialDoubleStage_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialDoubleStage_eq",
+            "short": "partialDoubleStage_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "LawvereTwoAdic.lean: partial 2-adic digit streams, add-one and doubling (2026-10-07)",
+          "verify": {
+            "axioms": [],
             "sorry_free": true
           }
         },
@@ -57666,6 +57894,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d947fc46-3922-406e-996f-ebfad8cf35a7",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne_fixed_iff",
+            "short": "partialAddOne_fixed_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne_fixed_iff",
+            "short": "partialAddOne_fixed_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "LawvereTwoAdic.lean: partial 2-adic digit streams, add-one and doubling (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d9516620-0a3b-40f3-b112-dbecf0801895",
           "new": {
@@ -68302,6 +68568,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fe1ae017-8505-4008-a323-604c54d64bcf",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialDouble_ne_self",
+            "short": "partialDouble_ne_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialDouble_ne_self",
+            "short": "partialDouble_ne_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "LawvereTwoAdic.lean: partial 2-adic digit streams, add-one and doubling (2026-10-07)",
+          "verify": {
+            "axioms": [],
             "sorry_free": true
           }
         },
