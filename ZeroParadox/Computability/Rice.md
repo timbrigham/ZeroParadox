@@ -14,7 +14,7 @@ enumerating the set. Mathlib's statements are different ones, about programs
 decidable whether a code's function lies in a set of partial functions, that set contains every
 partial recursive function once it contains one. `rice` is proved through `fixed_point₂`, Kleene's
 second recursion theorem, and `rice₂` from `rice`. The Lean file does not re-prove either; it **cites**
-`rice₂` and connects Rice to the framework's computability face.
+`rice₂` (and, for the halting problem, `ComputablePred.halting_problem`) and connects Rice to the framework's computability face.
 
 ## The connection — the genuine content
 

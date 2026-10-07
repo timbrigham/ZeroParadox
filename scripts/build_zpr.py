@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.17 | October 2026
+Version 1.18 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -166,8 +166,8 @@ def build():
 
     E.append(result_box(
         'R3-neg &#8212; in Set, no reflexive object on a carrier with a fixed-point-free endomap (Cantor); '
-        'on a complete lattice the obstruction is non-monotone; on the empty set, which is not a '
-        'complete lattice, it is the identity, which is monotone',
+        'on a complete lattice every fixed-point-free endomap is non-monotone; on the empty set, which '
+        'is not a complete lattice, the identity is fixed-point-free and monotone',
         [
             'A point-surjection e : A &#8594; (A &#8594; B) would, by Lawvere, force <i>every</i> '
             'f : B &#8594; B to have a fixed point. For B two-valued, negation is fixed-point-free '
@@ -182,12 +182,17 @@ def build():
             'complete lattice on which negation is fixed-point-free, and Nat.succ is monotone and has '
             'no fixed point, on a carrier that is not a complete lattice. The empty set is not a complete '
             'lattice; its fixed-point-free endomap is the identity, which is monotone, and only '
-            '"the identity has no fixed point" holds vacuously there. The refutation itself is not '
-            'vacuous: no map from the empty set is onto its one-element function space.',
-            'Witnesses: reflexive_object_refuted, not_monotone_not (LawvereBridge.lean). Lean purity: '
-            'both choice-free (reflexive_object_refuted: no axioms; not_monotone_not: [propext]). The '
-            'backing table\'s scoped Set statement also rests on the anonymous Set example and on '
-            'fixedPointFree_of_nontrivial, and both carry Classical.choice. ✓',
+            '"the identity has no fixed point" holds there merely because the empty set has no '
+            'elements. The refutation itself does not: no map from the empty set is onto its '
+            'one-element function space.',
+            'Witnesses: reflexive_object_refuted, not_monotone_not, and the anonymous examples after '
+            'not_monotone_not in &#167; VII, which back the Bool, Nat.succ and empty-set sentences '
+            '(LawvereBridge.lean). Lean purity: reflexive_object_refuted: no axioms; not_monotone_not: '
+            '[propext]; the &#167; VII examples are choice-free except the one exhibiting Bool\'s '
+            'complete-lattice structure, which carries Classical.choice from Mathlib\'s instance. The '
+            'backing table\'s scoped Set statement also rests on the anonymous example after '
+            'no_reflexive_object_bool in &#167; VI and on fixedPointFree_of_nontrivial, and both carry '
+            'Classical.choice. ✓',
         ]
     ))
     E.append(sp(6))
@@ -210,7 +215,7 @@ def build():
         'surjection onto its endomaps, so it is a reflexive object and trivially a retract of '
         'itself; being one-element, it is also in bijection with its own function space. The '
         'converse implication, from "every such structure is a retract of a reflexive '
-        'object" to "every such structure is a reflexive object", is not shown here. ZP-R does '
+        'object" to "every such structure is a reflexive object", is not shown here outside Set. ZP-R does '
         'not address the retract question in any other category; Bj&#246;rner\'s abstract reports that his '
         'result leads to counterexamples to the suggestion in the category Po of partially ordered '
         'sets and monotone maps. Two categories '
@@ -395,7 +400,7 @@ def build():
         'fixed-point-free endomap of an object Y rules out every point-surjection A &#8594; '
         'Y<sup>A</sup> (his Corollary 1.2), and Cantor is '
         'the two-valued case. In Set every carrier except a one-element one has such an endomap, the '
-        'empty set included, where the identity is vacuously fixed-point-free; a one-element set has '
+        'empty set included, where the identity is fixed-point-free because the set has no elements; a one-element set has '
         'none and is the trivial forward case (Section II). The '
         '<b>computability</b> face runs it forward, up to eval: eval is point-surjective onto the '
         'partial computable functions, and every total computable endomap of codes has a fixed point '
@@ -516,11 +521,12 @@ def build():
              'lawvere_fixedpoint_selfApp, selfApp_pinnable, existence_without_uniqueness '
              '(ZeroParadox/Settheory/LawvereBridge.lean); nontrivial_lattice_no_witness '
              '(ZeroParadox/Category/Lawvere.lean)'],
-            ['R3-neg (Set, every carrier except a one-element one: refuted; obstruction non-monotone on '
-             'every complete lattice; on the empty set, not a complete lattice, the identity, which is '
-             'monotone)',
-             'reflexive_object_refuted, not_monotone_not, the anonymous Set example '
-             '(ZeroParadox/Settheory/LawvereBridge.lean); fixedPointFree_of_nontrivial, which supplies '
+            ['R3-neg (Set, every carrier except a one-element one: refuted; every fixed-point-free '
+             'endomap of a complete lattice is non-monotone; on the empty set, not a complete lattice, '
+             'the identity is fixed-point-free and monotone)',
+             'reflexive_object_refuted, not_monotone_not, the anonymous example after '
+             'no_reflexive_object_bool (&#167; VI) and the anonymous examples after not_monotone_not '
+             '(&#167; VII) (ZeroParadox/Settheory/LawvereBridge.lean); fixedPointFree_of_nontrivial, which supplies '
              'the fixed-point-free map on two or more points (ZeroParadox/Category/Lawvere.lean)'],
             ['R3-pos monotone',
              'monotone_regime_derives_pinned (ZeroParadox/Settheory/LawvereBridge.lean)'],
