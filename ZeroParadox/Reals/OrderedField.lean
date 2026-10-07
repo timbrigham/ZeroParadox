@@ -127,6 +127,44 @@ example : ¬ ∀ a : Bool, HasFirstStep a := by
   obtain ⟨c, hc⟩ := h true
   exact absurd hc.1 (by cases c <;> decide)
 
+-- `Statement:` piece ⇒ cut, in any partial order: if `a < b` and every `c` in `[a, b]` is `a` or `b`,
+-- then `a ⋖ b`.
+example {α : Type*} [PartialOrder α] {a b : α} (hab : a < b)
+    (h : ∀ c, a ≤ c → c ≤ b → c = a ∨ c = b) : a ⋖ b :=
+  ⟨hab, fun c hac hcb => by
+    rcases h c hac.le hcb.le with rfl | rfl
+    · exact lt_irrefl _ hac
+    · exact lt_irrefl _ hcb⟩
+-- `Statement:` cut ⇒ piece, given decidable equality: `a ⋖ b` makes every `c` in `[a, b]` equal to `a`
+-- or to `b`.
+example {α : Type*} [PartialOrder α] [DecidableEq α] {a b : α} (h : a ⋖ b) :
+    ∀ c, a ≤ c → c ≤ b → c = a ∨ c = b := fun c hac hcb =>
+  if hca : c = a then Or.inl hca else if hcb' : c = b then Or.inr hcb' else
+    absurd (lt_of_le_of_ne hcb hcb') (h.2 (lt_of_le_of_ne hac (Ne.symm hca)))
+-- `Statement:` cut ⇒ piece with no decidability, in negative form only: `a ⋖ b` leaves no `c` in
+-- `[a, b]` that is neither `a` nor `b`.
+example {α : Type*} [PartialOrder α] {a b : α} (h : a ⋖ b) :
+    ∀ c, a ≤ c → c ≤ b → ¬ (c ≠ a ∧ c ≠ b) := fun _ hac hcb ⟨hca, hcb'⟩ =>
+  h.2 (lt_of_le_of_ne hac (Ne.symm hca)) (lt_of_le_of_ne hcb hcb')
+-- `Statement:` control, the truth values `Prop` ordered by implication: `False`, ⊥ of `Prop`, is
+-- covered by `True`, and the positive piece there (every `c` in `[False, True]` is `False` or `True`)
+-- is equivalent to excluded middle. Prior art: Bauer, "On fixed-point theorems in synthetic
+-- computability", Tbilisi Math. J. 10(3) (2017), Prop 3.4, p. 173, "Excluded middle states that
+-- 2 = Ω"; per element, de Jong–Escardó
+-- arXiv:2102.08812, Examples 28(i): the pair `(0, P)` of Ω is nontrivial iff `¬¬P`, positive iff `P`.
+example : (False : Prop) ⋖ True ∧
+    ((∀ c : Prop, False ≤ c → c ≤ True → c = False ∨ c = True) ↔ ∀ p : Prop, p ∨ ¬ p) := by
+  refine ⟨⟨⟨fun h => h.elim, fun h => h trivial⟩, fun c h1 h2 => h1.2 fun hc => h2.2 fun _ => hc⟩,
+    ⟨fun h p => ?_, fun h c _ _ => ?_⟩⟩
+  · rcases h p (fun h => h.elim) (fun _ => trivial) with h0 | h1
+    · exact Or.inr fun hp => h0 ▸ hp
+    · exact Or.inl (h1 ▸ trivial)
+  · rcases h c with hp | hn
+    · exact Or.inr (propext ⟨fun _ => trivial, fun _ => hp⟩)
+    · exact Or.inl (propext ⟨hn, False.elim⟩)
+-- `Reading:` AX-B1 is the cut `bot ⋖ a` (`HasFirstStep bot`) with its two-element piece `[bot, a]`, one
+-- commitment; with decidable equality the examples above make them one fact, and on `Prop` they part.
+
 /-- **The first step is unique.** This is Mathlib's `CovBy.unique_right`, and it is cited as
     such — proved here by hand only to keep the footprint at `[propext]`. Mathlib's version
     routes through `LinearOrder` machinery that pulls in `Classical.choice`, and the framework

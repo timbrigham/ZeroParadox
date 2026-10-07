@@ -222,11 +222,10 @@ theorem tri_idle_never_starts (s : Unit) :
     the type. Three-valued: it is inhabited. So what makes execution forced is the CLEANNESS OF
     THE SPLIT, not the dynamics.
 
-    **Reading (not a theorem):** the framework takes this to be a third encoding of AX-B1, its
-    one substantive modelling commitment — beside the two-element carrier (`ax_b1_distinct`) and
-    the order-theoretic predicate (`HasFirstStep`). That the three are *one* commitment is an
-    interpretation in the manner of MC-1's bottom family: per-encoding membership is checkable,
-    and no identity across them is claimed or well-formed. -/
+    **Reading (not a theorem):** the two-valued head is the PIECE side of AX-B1, a carrier choice
+    of decidable data; the cover `HasFirstStep` is its CUT, and locally they are one commitment (the
+    piece/cut examples beside `HasFirstStep`, `ZeroParadox/Reals/OrderedField.lean` § 0). No
+    identity across carriers is claimed or well-formed. -/
 theorem forcing_needs_the_binary_split :
     (∀ (σ : Type) (f : σ → Option σ) (s : σ), ¬ (f s ≠ none ∧ ¬ ∃ s', f s = some s')) ∧
     (∃ (g : Unit → TriStep Unit) (s : Unit), ¬ TriHalted g s ∧ ¬ TriStepping g s) :=

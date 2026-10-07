@@ -154,6 +154,22 @@ the boundary and its scope fence. -/
 -- The Lawvere boundary underneath all of it: logical negation has no fixed point, `¬(p ↔ ¬p)`.
 #check @ZeroParadox.negation_no_fixedpoint
 
+-- Statement: the limited principle of omniscience at ⊥ of `ℕ → Bool` (the all-false tape, pointwise
+-- order): every tape is ⊥ or has a witnessed `true` is equivalent to the weak limited principle of
+-- omniscience (every tape is ⊥ or is not ⊥) together with Markov's principle (a tape that is not ⊥
+-- has a witnessed `true`).
+-- Reading: the standard ladder, not a finding. Ishihara, "Reverse mathematics in Bishop's constructive
+-- mathematics" (Philosophia Scientiae CS 6, 2006), § 6, Prop 10.1, p. 53; Escardó, "Infinite sets
+-- that satisfy the principle of omniscience in any variety of constructive mathematics" (2013), § 3,
+-- restates all three as questions about the point ∞ = 1^ω of ℕ∞; with `true` and `false` exchanged,
+-- that point is this ⊥.
+example :
+    (∀ f : ℕ → Bool, f = ⊥ ∨ ∃ n, f n = true) ↔
+      (∀ f : ℕ → Bool, f = ⊥ ∨ f ≠ ⊥) ∧ (∀ f : ℕ → Bool, f ≠ ⊥ → ∃ n, f n = true) := by
+  refine ⟨fun h => ⟨fun f => (h f).imp id fun ⟨n, hn⟩ heq => ?_, fun f hf => (h f).resolve_left hf⟩,
+    fun ⟨hw, hm⟩ f => (hw f).imp id (hm f)⟩
+  rw [heq] at hn; cases hn
+
 /-! ## § III. What IS established about choice here
 
 Not "what choice is" — that is Lean's, not the framework's. What this corpus has actually measured or

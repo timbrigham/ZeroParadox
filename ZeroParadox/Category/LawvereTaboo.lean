@@ -233,6 +233,16 @@ Both branches are informative, which is the same design requirement as in
 `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` and the reason the witness is glued on both
 sides. -/
 
+-- Prior art, cited not claimed, both read from source.
+-- Bauer, "On fixed-point theorems in synthetic computability", Tbilisi Math. J. 10(3) (2017), Cor 4.3,
+-- p. 175: every endomap on a countably generated ωcppo has a fixed point, and after it, "Because Σ has
+-- the fixed point property but 2 and Ω do not (consider negation), there is a chain of proper
+-- inclusions 2 ⊊ Σ ⊊ Ω." Σ contains 2's two distinct truth values, so in synthetic computability the
+-- hypothesis below fails at Σ: a counter-model for the hypothesis, not for the implication, which runs
+-- from the hypothesis to weak excluded middle.
+-- de Jong–Escardó, arXiv:2102.08812, Cor 39(iii)-(iv), p. 11: a nontrivial locally small sup-lattice
+-- (or bounded complete poset, or dcpo) with decidable equality exists iff weak excluded middle holds,
+-- and a positive one iff excluded middle holds. The same landing principle for a different hypothesis.
 /-- **The general fixed-point-free statement implies weak excluded middle.**
 
 The hypothesis is the ∀-closure of `fixedPointFree_of_nontrivial`

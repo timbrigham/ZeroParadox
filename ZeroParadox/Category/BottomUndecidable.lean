@@ -128,6 +128,12 @@ glued point `gx p` equals `gb0 p` under `p` and `gb1 p` under `¬p`, while `gb0 
 unconditionally. Deciding the single identity `gx p = gb0 p` therefore decides a side of `¬p ∨ ¬¬p`.
 Nothing here is self-referential; the source of the ambiguity is the quotient. -/
 
+-- Prior art, cited not claimed, read from source: de Jong, "Apartness, sharp elements and the Scott
+-- topology of domains", MSCS (2023), arXiv:2106.05064v5, Prop 22, p. 7: "Let D be any pointed dcpo
+-- that is nontrivial in the sense that there exists x ∈ D with x ≠ ⊥. If y = ⊥ is decidable for every
+-- y ∈ D, then weak excluded middle follows." The same kind of taboo on "is this ⊥ of D?", asked
+-- uniformly over D; the implication runs from that decision to weak excluded middle, as here from
+-- the identity decision on `Glue p`. § IV is the per-carrier contrast: given `DecidableEq`, it resolves.
 /-- **The one identity decision suffices for the taboo.** A decision procedure for `gx p = gb0 p`,
 uniform in `p`, yields weak excluded middle. Choice-free: the decision is the hypothesis, and the
 witness facts (`gx_eq_gb0`, `gx_eq_gb1`, `glue_b0_ne_b1`) carry only `[propext, Quot.sound]`. -/
@@ -140,6 +146,11 @@ theorem wem_of_glue_identity (h : ∀ p : Prop, Decidable (gx p = gb0 p)) : Weak
     exact Or.inr fun hnp => glue_b0_ne_b1 p (heq.symm.trans (gx_eq_gb1 p hnp))
 
 /-! ## § II — Decidable equality of the carrier implies weak excluded middle -/
+
+-- Prior art, cited not claimed, read from source: de Jong–Escardó, arXiv:2102.08812, Cor 39(iii),
+-- p. 11: a nontrivial locally small sup-lattice (or bounded complete poset, or dcpo) with decidable
+-- equality exists iff weak excluded middle holds. The order-theoretic form of the implication below,
+-- which runs from decidable equality on one quotient to weak excluded middle.
 
 /-- **Decidable equality on the witness carrier is the taboo.** `DecidableEq (Glue p)` supplies the
 identity decision of § I, so its uniform availability implies weak excluded middle.
