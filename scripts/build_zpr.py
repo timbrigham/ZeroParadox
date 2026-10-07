@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.13 | October 2026
+Version 1.16 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.16'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -71,10 +71,12 @@ def build():
         'scope result: the realization is category-relative &#8212; an existence statement in one face '
         'rather than a global identification. The general link between self-reference and Lawvere\'s '
         'theorem is Lawvere\'s (1969) and Yanofsky\'s (2003), not ours, and so is the obstruction the '
-        'placement uses: that a fixed-point-free endomap rules out every point-surjection onto a '
-        'function space is Lawvere\'s Corollary 1.2 (p. 5 of the 2006 TAC reprint). ZP-R does not '
-        'address the suggestion of Soto-Andrade and Varela (1984), as Bj&#246;rner (1985) reports, that '
-        'every structure with the fixed point property is a retract of a reflexive domain.'))
+        'placement uses: that a fixed-point-free endomap of an object Y rules out, for every A, a '
+        'point-surjection A &#8594; Y<sup>A</sup> is Lawvere\'s Corollary 1.2 (p. 5 of the 2006 TAC '
+        'reprint). Of the suggestion of Soto-Andrade and Varela (1984), as Bj&#246;rner (1985) '
+        'reports, that every structure with the fixed point property is a retract of a reflexive '
+        'domain, ZP-R answers the question only in Set, where it holds trivially (Section II), and '
+        'makes no claim about the categories they intend.'))
     E.append(hr())
 
     # -- Section I: The Fork and the Engine -------------------------------------------
@@ -163,17 +165,28 @@ def build():
         '<b>presence of a fixed-point-free endomap</b>.'))
 
     E.append(result_box(
-        'R3-neg &#8212; in Set, no reflexive object on a carrier with a fixed-point-free endomap (Cantor); the obstruction is non-monotone',
+        'R3-neg &#8212; in Set, no reflexive object on a carrier with a fixed-point-free endomap (Cantor); '
+        'on a complete lattice the obstruction is non-monotone; on the empty set, which is not a '
+        'complete lattice, it is the identity, which is monotone',
         [
             'A point-surjection e : A &#8594; (A &#8594; B) would, by Lawvere, force <i>every</i> '
             'f : B &#8594; B to have a fixed point. For B two-valued, negation is fixed-point-free '
             '&#8212; a contradiction. This is Cantor\'s theorem, read as the contrapositive of '
             'Lawvere\'s own engine.',
             'The obstruction witness &#8212; negation &#8212; has a structural property worth '
-            'isolating: it is <i>not monotone</i> (it reverses the order False &#8804; True). This is '
-            'what separates the faces.',
+            'isolating: it is <i>not monotone</i> (it reverses the order False &#8804; True). What '
+            'separates the Set face from the monotone face is the direction Knaster&#8211;Tarski runs: '
+            'on a complete lattice every monotone self-map has a fixed point, so there every '
+            'fixed-point-free endomap is non-monotone. Non-monotonicity is that consequence on a '
+            'complete lattice, not the separator in general: Nat.succ is monotone and has no fixed '
+            'point, on a carrier that is not a complete lattice. The empty set is not a complete '
+            'lattice; its fixed-point-free endomap is the identity, which is monotone, and only '
+            '"the identity has no fixed point" holds vacuously there. The refutation itself is not '
+            'vacuous: no map from the empty set is onto its one-element function space.',
             'Witnesses: reflexive_object_refuted, not_monotone_not (LawvereBridge.lean). Lean purity: '
-            'choice-free. ✓',
+            'both choice-free (reflexive_object_refuted: no axioms; not_monotone_not: [propext]). The '
+            'backing table\'s scoped Set statement also rests on the anonymous Set example and on '
+            'fixedPointFree_of_nontrivial, and both carry Classical.choice. ✓',
         ]
     ))
     E.append(sp(6))
@@ -186,10 +199,19 @@ def build():
         'is not: on the two-element chain false &#8804; true every monotone self-map has a fixed point '
         '(Knaster&#8211;Tarski), yet no map from its two points onto its monotone self-maps is '
         'surjective. Both statements are anonymous Lean examples in '
-        'ZeroParadox/Settheory/LawvereBridge.lean. A weaker question, about retracts rather than '
+        'ZeroParadox/Settheory/LawvereBridge.lean. A related question, about retracts rather than '
         'reflexive objects, is the suggestion of Soto-Andrade and Varela (1984), as Bj&#246;rner (1985) '
         'reports, that every structure with the fixed point property is a retract of a reflexive '
-        'domain; ZP-R does not address it. Two categories '
+        'domain. In any category a reflexive object is a retract of itself, so wherever every '
+        'structure with the fixed point property is a reflexive object, each is also a retract of '
+        'one. The converse implication, from "every such structure is a retract of a reflexive '
+        'object" to "every such structure is a reflexive object", is not shown here. In Set the first of those examples answers the '
+        'question: a set with the fixed point property has exactly one element and carries a '
+        'surjection onto its endomaps, so it is a reflexive object and trivially a retract of '
+        'itself; being one-element, it is also in bijection with its own function space. ZP-R does '
+        'not address the question in any other category; Bj&#246;rner\'s abstract reports that his '
+        'result leads to counterexamples to the suggestion in the category Po of partially ordered '
+        'sets and monotone maps. Two categories '
         'are free of the obstruction, and only one of '
         'them is shown here to furnish a reflexive object. The reasons are <i>not</i> the same, and the '
         'difference is the point: the monotone regime is free of it <i>literally</i> &#8212; on a '
@@ -254,7 +276,7 @@ def build():
         'to. Lawvere (1969) supplies the engine and raises the recursive case as an open question '
         'rather than deriving it (his &#167;2, p. 9 of the 2006 TAC reprint); the '
         'reflexive structure of the computable category is the subject of the Turing-category / '
-        'partial-combinatory-algebra literature (Cockett&#8211;Hofstra 2008; Longley 1995). Collecting the '
+        'partial-combinatory-algebra literature (Cockett&#8211;Hofstra 2008; Longley 1994). Collecting the '
         'three faces:'))
 
     E.append(data_table(
@@ -263,8 +285,12 @@ def build():
             ['Set',
              'refuted on every carrier except a one-element one, the empty set included (a '
              'one-element set is reflexive)',
-             'a fixed-point-free map (negation) blocks it &#8212; Cantor; the obstruction is '
-             'non-monotone',
+             'a fixed-point-free map blocks it (Cantor): on two or more points, the map the proof of '
+             'fixedPointFree_of_nontrivial constructs, one point b<sub>0</sub> sent to a second point '
+             'b<sub>1</sub> and every other point to b<sub>0</sub> (a swap when there are exactly two '
+             'points, negation in the two-valued case); on the empty set the identity. On a complete '
+             'lattice the blocking map is non-monotone; on the empty set, not a complete lattice, the '
+             'identity is monotone',
              'the wall'],
             ['Monotone / domain',
              'not furnished here (route: Scott D<sub>&#8734;</sub>, unbuilt)',
@@ -355,21 +381,23 @@ def build():
 
     E.append(callout(
         '<b>Lawvere\'s theorem, face by face.</b><br/>'
-        'The fences are not hedging. Each per-face result &#8212; the Set wall, the fork, the '
-        'computability crossing &#8212; is a full theorem on its own side of them. '
+        'The fences F1 and F2 are not hedging: they mark the face each result belongs to. Each '
+        'per-face result &#8212; the Set wall, the fork, the computability crossing &#8212; is a full '
+        'theorem within its own face. '
         '<b>Lawvere\'s theorem is the translation key between the faces formalized here, not a '
-        'mechanism each face instantiates:</b> each face is read against its one arrow, a '
+        'mechanism every face instantiates:</b> each face is read against its one arrow, a '
         'point-surjection onto a function space implies that every endomap has a fixed point, and the '
         'faces differ in which way, if either, they run it. A <b>wall</b> face runs it by the '
         'contrapositive, which is Lawvere\'s own reading ("The famed &#8216;diagonal argument&#8217; '
         'is of course just the contrapositive of our theorem," p. 5 of the 2006 TAC reprint): a '
-        'fixed-point-free endomap rules out every point-surjection (his Corollary 1.2), and Cantor is '
+        'fixed-point-free endomap of an object Y rules out every point-surjection A &#8594; '
+        'Y<sup>A</sup> (his Corollary 1.2), and Cantor is '
         'the two-valued case. In Set every carrier except a one-element one has such an endomap, the '
         'empty set included, where the identity is vacuously fixed-point-free; a one-element set has '
         'none and is the trivial forward case (Section II). The '
         '<b>computability</b> face runs it forward, up to eval: eval is point-surjective onto the '
         'partial computable functions, and every total computable endomap of codes has a fixed point '
-        'up to eval (R3-pos); that this is a Lawvere instance is cited (Yanofsky 2003; Bauer 2017). In '
+        'up to eval (the R3-pos computability box, Section II); that this is a Lawvere instance is cited (Yanofsky 2003; Bauer 2017). In '
         'the <b>fork / AFA</b> face the self-application fixed point, &#8869; of the ZPSemilattice, is '
         'supplied by the class fields fixed_bot and unique_fp (selfApp_pinnable), not by the engine, '
         'whose hypothesis fails on every ZPSemilattice with an element other than &#8869; '
@@ -411,7 +439,7 @@ def build():
         'Tbilisi Math. J. 10(3) (2017). The reflexive '
         'structure of the computable category: Cockett &amp; Hofstra, "Introduction to Turing '
         'categories," Annals of Pure and Applied Logic 156 (2008) 183&#8211;209; Longley, <i>Realizability Toposes and Language Semantics</i>, PhD '
-        'thesis, University of Edinburgh, 1995 (ECS-LFCS-95-332). '
+        'thesis, University of Edinburgh, 1994 (issued as LFCS report ECS-LFCS-95-332). '
         'Fixed points and reflexive domains: Soto-Andrade and Varela, "Self-reference and fixed '
         'points: a discussion and an extension of Lawvere\'s theorem," Acta Applicandae Mathematicae '
         '2(1) (1984) 1&#8211;19, doi:10.1007/BF01405490, which, as Bj&#246;rner reports, draws '
@@ -431,7 +459,7 @@ def build():
         'III. That Kleene\'s recursion theorem is a Lawvere instance is due to the sources above, not '
         'to this document, and so is the obstruction the placement uses (Lawvere\'s Corollary 1.2). '
         'The retract question, as Bj&#246;rner reports Soto-Andrade and Varela\'s suggestion, sits '
-        'beside the placement and is not addressed here.'))
+        'beside the placement; ZP-R answers it only in Set (Section II).'))
 
     # -- What Remains Open ------------------------------------------------------------
     E += [
@@ -486,8 +514,12 @@ def build():
              'lawvere_fixedpoint_selfApp, selfApp_pinnable, existence_without_uniqueness '
              '(ZeroParadox/Settheory/LawvereBridge.lean); nontrivial_lattice_no_witness '
              '(ZeroParadox/Category/Lawvere.lean)'],
-            ['R3-neg (Set, every carrier except a one-element one: refuted; obstruction non-monotone)',
-             'reflexive_object_refuted, not_monotone_not (ZeroParadox/Settheory/LawvereBridge.lean)'],
+            ['R3-neg (Set, every carrier except a one-element one: refuted; obstruction non-monotone on '
+             'every complete lattice; on the empty set, not a complete lattice, the identity, which is '
+             'monotone)',
+             'reflexive_object_refuted, not_monotone_not, the anonymous Set example '
+             '(ZeroParadox/Settheory/LawvereBridge.lean); fixedPointFree_of_nontrivial, which supplies '
+             'the fixed-point-free map on two or more points (ZeroParadox/Category/Lawvere.lean)'],
             ['R3-pos monotone',
              'monotone_regime_derives_pinned (ZeroParadox/Settheory/LawvereBridge.lean)'],
             ['R3-pos computability (the crossing)',
@@ -518,8 +550,9 @@ def build():
             'existence_without_uniqueness, reflexive_object_refuted, mu_nu_branch_exclusion: no axioms.',
             'Set-theoretic location / uniqueness (SetTheoryAFA: t_exec, quine_atom_unique): choice-free '
             '&#8212; derived from the ZPSemilattice / AFAStructure class fields alone.',
-            'nontrivial_lattice_no_witness (Lawvere.lean) carries [propext, Classical.choice, '
-            'Quot.sound], from the classical construction of a fixed-point-free map.',
+            'nontrivial_lattice_no_witness and fixedPointFree_of_nontrivial (Lawvere.lean) carry '
+            '[propext, Classical.choice, Quot.sound], from the classical construction of a '
+            'fixed-point-free map.',
             'Computability face (ComputableCrossing, Kleene): [propext, Classical.choice, Quot.sound] '
             '&#8212; Classical.choice inherited from Mathlib\'s classical recursion theory (Kleene / '
             'Rogers), disclosed and not claimed otherwise.',
