@@ -149,8 +149,9 @@ theorem wem_of_glue_identity (h : ∀ p : Prop, Decidable (gx p = gb0 p)) : Weak
 
 -- Prior art, cited not claimed, read from source: de Jong–Escardó, arXiv:2102.08812, Cor 39(iii),
 -- p. 11: a nontrivial locally small sup-lattice (or bounded complete poset, or dcpo) with decidable
--- equality exists iff weak excluded middle holds. The order-theoretic form of the implication below,
--- which runs from decidable equality on one quotient to weak excluded middle.
+-- equality exists iff weak excluded middle holds. A neighbour of the implication below, with a
+-- different quantifier: its hypothesis is uniform over the family, `∀ p, DecidableEq (Glue p)`,
+-- while Cor 39(iii) needs ONE nontrivial lattice with decidable equality.
 
 /-- **Decidable equality on the witness carrier is the taboo.** `DecidableEq (Glue p)` supplies the
 identity decision of § I, so its uniform availability implies weak excluded middle.

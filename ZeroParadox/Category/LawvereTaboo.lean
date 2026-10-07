@@ -233,7 +233,7 @@ Both branches are informative, which is the same design requirement as in
 `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` and the reason the witness is glued on both
 sides. -/
 
--- Prior art, cited not claimed, both read from source.
+-- Prior art, cited not claimed, all read from source.
 -- Bauer, "On fixed-point theorems in synthetic computability", Tbilisi Math. J. 10(3) (2017), Cor 4.3,
 -- p. 175: every endomap on a countably generated ωcppo has a fixed point, and after it, "Because Σ has
 -- the fixed point property but 2 and Ω do not (consider negation), there is a chain of proper
@@ -243,6 +243,14 @@ sides. -/
 -- de Jong–Escardó, arXiv:2102.08812, Cor 39(iii)-(iv), p. 11: a nontrivial locally small sup-lattice
 -- (or bounded complete poset, or dcpo) with decidable equality exists iff weak excluded middle holds,
 -- and a positive one iff excluded middle holds. The same landing principle for a different hypothesis.
+-- Booij–Escardó–Lumsdaine–Shulman, "Parametricity, automorphisms of the universe, and excluded middle",
+-- arXiv:1701.05617, Thm 3, p. 4: a function `f : ∏ X : U, X → X`, natural under equivalence, with
+-- `f_X(x) ≠ x` for some isolated point `x : X`, gives excluded middle. A different statement: one
+-- uniform natural family moving one isolated point lands on full excluded middle, while the
+-- hypothesis below asks for one fixed-point-free map per two-point type, with no naturality, and
+-- lands on weak excluded middle. Their Thm 5 (Simpson), p. 5: assuming function extensionality for
+-- 0-valued functions, an extensional, strongly non-constant `f : U → 2` exists iff weak excluded
+-- middle holds.
 /-- **The general fixed-point-free statement implies weak excluded middle.**
 
 The hypothesis is the ∀-closure of `fixedPointFree_of_nontrivial`

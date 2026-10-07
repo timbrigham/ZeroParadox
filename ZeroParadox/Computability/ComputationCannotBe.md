@@ -39,7 +39,3 @@ load-bearing, the commitment carrying it is named.
   which, together with DA-1, the snap occurs. T-SNAP holds with nothing moving
   (`tsnap_holds_but_nothing_moves`). In the computational face the framework reads occurrence as
   halting (`occurs_iff_halts`); that identification is a modelling choice, not a theorem.
-* **AX-B1** — the framework takes the binary split that removes an unstarted state
-  (`forcing_needs_the_binary_split`) to be a third encoding of AX-B1, beside `ax_b1_distinct` and
-  `HasFirstStep`. Per-encoding membership is checkable; identity across the encodings is neither
-  claimed nor well-formed.
