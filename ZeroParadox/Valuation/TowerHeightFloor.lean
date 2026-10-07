@@ -12,8 +12,10 @@ set_option maxHeartbeats 400000
 ## Engineer's Take
 
 The height and the floor fight because they point opposite ways. That they fight, with epsilon zero never
-being bottom, is exactly why this needed to be built rather than avoided. The order-reversing map is what
-holds them apart while joining them, and that fight is the whole content.
+being bottom, is exactly why this needed to be built rather than avoided. Chart behaviour can have an
+inversion inside it. Read by the valuation, the tower climbs up to infinity. Read by the norm, it falls down
+to zero, and only from stage one on. The map holds them apart while joining them, and that fight is the
+whole content.
 
 This came from being sure the fight between the height and the floor was the reason to build it, not avoid it.
 Sometimes it helps to work through this from the ground up. Much of what is here re-derives results the
