@@ -128,7 +128,7 @@ example : ¬ ∀ a : Bool, HasFirstStep a := by
   exact absurd hc.1 (by cases c <;> decide)
 
 -- `Statement:` in any partial order, if `a < b` and every `c` in `[a, b]` is `a` or `b`, then `a ⋖ b`.
--- The proof is Mathlib's `covBy_of_eq_or_eq`, this statement exactly.
+-- This is the partial-order case of Mathlib's `covBy_of_eq_or_eq`, which is stated over any preorder.
 example {α : Type*} [PartialOrder α] {a b : α} (hab : a < b)
     (h : ∀ c, a ≤ c → c ≤ b → c = a ∨ c = b) : a ⋖ b :=
   covBy_of_eq_or_eq hab h
@@ -143,7 +143,9 @@ example {α : Type*} [PartialOrder α] [DecidableEq α] {a b : α} (h : a ⋖ b)
 example {α : Type*} [PartialOrder α] {a b : α} (h : a ⋖ b) :
     ∀ c, a ≤ c → c ≤ b → ¬ (c ≠ a ∧ c ≠ b) := fun _ hac hcb ⟨hca, hcb'⟩ =>
   h.2 (lt_of_le_of_ne hac (Ne.symm hca)) (lt_of_le_of_ne hcb hcb')
--- Mathlib's homes: `CovBy.Ioo_eq` (nothing strictly between) and `CovBy.Icc_eq` (`Icc a b = {a, b}`).
+-- `Statement:` Mathlib's homes are `CovBy.Ioo_eq` (nothing strictly between), measured `[propext,
+-- Quot.sound]`, and `CovBy.Icc_eq` (`Icc a b = {a, b}`), measured `[propext, Classical.choice,
+-- Quot.sound]`: the second carries `Classical.choice` and the first does not.
 -- `Statement:` control, the truth values `Prop` ordered by implication: `False`, ⊥ of `Prop`, is
 -- covered by `True`, and "every `c` in `[False, True]` is `False` or `True`" is equivalent to excluded
 -- middle. Prior art: Bauer, "On fixed-point theorems in synthetic computability", Tbilisi Math. J.
@@ -160,7 +162,7 @@ example : (False : Prop) ⋖ True ∧
   · rcases h c with hp | hn
     · exact Or.inr (propext ⟨fun _ => trivial, fun _ => hp⟩)
     · exact Or.inl (propext ⟨hn, False.elim⟩)
--- `Reading:` AX-B1 asks that `bot` be covered (`HasFirstStep bot`) and that `[bot, a]` hold exactly
+-- `Reading:` AX-B1 includes that `bot` be covered (`HasFirstStep bot`) and that `[bot, a]` hold exactly
 -- `bot` and its cover `a`. With decidable equality the second follows from the first (above); on
 -- `Prop` the two differ only in cost: the cover is free, the two-element interval costs excluded
 -- middle, and classically both hold.

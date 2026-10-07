@@ -111,6 +111,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Category/Lawvere.md` - Category-relative verdicts: what each face fails, and what the shared shape is not
 - `ZeroParadox/Category/LawvereDecidable.lean` - Lawvere's engine, priced: the same theorems over decidable equality
 - `ZeroParadox/Category/LawvereTaboo.lean` - The diagonal engine's supplier is a constructive taboo
+  - ride-along docs: `ZeroParadox/Category/LawvereTaboo.md` - The diagonal engine's supplier is a constructive taboo: result, fences and prior art
 
 ### Multi-homed bridges (ZP-H)
 
