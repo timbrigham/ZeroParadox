@@ -337,10 +337,7 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 -- Statement: both halves at once — two-valued, no unstarted state; three-valued, one exists.
 -- Reading: what removes the unstarted state is the CLEANNESS OF THE SPLIT, not the dynamics. Having
 --   no unstarted state is not motion: a self-loop counts as stepping and changes nothing
---   (`loop_is_a_trap`). The framework takes that split to be a third encoding of AX-B1, beside
---   `ax_b1_distinct` and `HasFirstStep`. That the three are ONE commitment is an interpretation in
---   the manner of MC-1's bottom family — per-encoding membership is checkable, cross-encoding
---   identity is neither claimed nor well-formed.
+--   (`loop_is_a_trap`).
 #check @ZeroParadox.forcing_needs_the_binary_split
 
 -- Statement: in `MachinePhase`, T-SNAP's triple (`c₀ ≠ c₁`, `c₁ ≠ c₀`, `join c₀ c₁ = c₁`) holds

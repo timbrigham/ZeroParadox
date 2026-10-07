@@ -127,6 +127,46 @@ example : ¬ ∀ a : Bool, HasFirstStep a := by
   obtain ⟨c, hc⟩ := h true
   exact absurd hc.1 (by cases c <;> decide)
 
+-- `Statement:` in any partial order, if `a < b` and every `c` in `[a, b]` is `a` or `b`, then `a ⋖ b`.
+-- This is the partial-order case of Mathlib's `covBy_of_eq_or_eq`, which is stated over any preorder.
+example {α : Type*} [PartialOrder α] {a b : α} (hab : a < b)
+    (h : ∀ c, a ≤ c → c ≤ b → c = a ∨ c = b) : a ⋖ b :=
+  covBy_of_eq_or_eq hab h
+-- `Statement:` conversely, given decidable equality, `a ⋖ b` makes every `c` in `[a, b]` equal to `a`
+-- or to `b`.
+example {α : Type*} [PartialOrder α] [DecidableEq α] {a b : α} (h : a ⋖ b) :
+    ∀ c, a ≤ c → c ≤ b → c = a ∨ c = b := fun c hac hcb =>
+  if hca : c = a then Or.inl hca else if hcb' : c = b then Or.inr hcb' else
+    absurd (lt_of_le_of_ne hcb hcb') (h.2 (lt_of_le_of_ne hac (Ne.symm hca)))
+-- `Statement:` with no decidability, only the negative form: `a ⋖ b` leaves no `c` in `[a, b]` that is
+-- neither `a` nor `b`.
+example {α : Type*} [PartialOrder α] {a b : α} (h : a ⋖ b) :
+    ∀ c, a ≤ c → c ≤ b → ¬ (c ≠ a ∧ c ≠ b) := fun _ hac hcb ⟨hca, hcb'⟩ =>
+  h.2 (lt_of_le_of_ne hac (Ne.symm hca)) (lt_of_le_of_ne hcb hcb')
+-- `Statement:` Mathlib's homes are `CovBy.Ioo_eq` (nothing strictly between), measured `[propext,
+-- Quot.sound]`, and `CovBy.Icc_eq` (`Icc a b = {a, b}`), measured `[propext, Classical.choice,
+-- Quot.sound]`: the second carries `Classical.choice` and the first does not.
+-- `Statement:` control, the truth values `Prop` ordered by implication: `False`, ⊥ of `Prop`, is
+-- covered by `True`, and "every `c` in `[False, True]` is `False` or `True`" is equivalent to excluded
+-- middle. Prior art: Bauer, "On fixed-point theorems in synthetic computability", Tbilisi Math. J.
+-- 10(3) (2017), Prop 3.4, p. 173, "Excluded middle states that 2 = Ω"; for one element, de
+-- Jong–Escardó arXiv:2102.08812, Examples 28(i), p. 9: "The pair (0_V, P) witnesses nontriviality of
+-- Ω_V if and only if ¬¬P holds, while it witnesses positivity if and only if P holds."
+example : (False : Prop) ⋖ True ∧
+    ((∀ c : Prop, False ≤ c → c ≤ True → c = False ∨ c = True) ↔ ∀ p : Prop, p ∨ ¬ p) := by
+  refine ⟨⟨⟨fun h => h.elim, fun h => h trivial⟩, fun c h1 h2 => h1.2 fun hc => h2.2 fun _ => hc⟩,
+    ⟨fun h p => ?_, fun h c _ _ => ?_⟩⟩
+  · rcases h p (fun h => h.elim) (fun _ => trivial) with h0 | h1
+    · exact Or.inr fun hp => h0 ▸ hp
+    · exact Or.inl (h1 ▸ trivial)
+  · rcases h c with hp | hn
+    · exact Or.inr (propext ⟨fun _ => trivial, fun _ => hp⟩)
+    · exact Or.inl (propext ⟨hn, False.elim⟩)
+-- `Reading:` AX-B1 includes that `bot` be covered (`HasFirstStep bot`) and that `[bot, a]` hold exactly
+-- `bot` and its cover `a`. With decidable equality the second follows from the first (above); on
+-- `Prop` the two differ only in cost: the cover is free, the two-element interval costs excluded
+-- middle, and classically both hold.
+
 /-- **The first step is unique.** This is Mathlib's `CovBy.unique_right`, and it is cited as
     such — proved here by hand only to keep the footprint at `[propext]`. Mathlib's version
     routes through `LinearOrder` machinery that pulls in `Classical.choice`, and the framework

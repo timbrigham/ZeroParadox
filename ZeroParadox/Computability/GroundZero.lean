@@ -220,13 +220,7 @@ theorem tri_idle_never_starts (s : Unit) :
 
 /-- **The gauge, both halves in one statement.** Two-valued: the unstarted state is absent from
     the type. Three-valued: it is inhabited. So what makes execution forced is the CLEANNESS OF
-    THE SPLIT, not the dynamics.
-
-    **Reading (not a theorem):** the framework takes this to be a third encoding of AX-B1, its
-    one substantive modelling commitment — beside the two-element carrier (`ax_b1_distinct`) and
-    the order-theoretic predicate (`HasFirstStep`). That the three are *one* commitment is an
-    interpretation in the manner of MC-1's bottom family: per-encoding membership is checkable,
-    and no identity across them is claimed or well-formed. -/
+    THE SPLIT, not the dynamics. -/
 theorem forcing_needs_the_binary_split :
     (∀ (σ : Type) (f : σ → Option σ) (s : σ), ¬ (f s ≠ none ∧ ¬ ∃ s', f s = some s')) ∧
     (∃ (g : Unit → TriStep Unit) (s : Unit), ¬ TriHalted g s ∧ ¬ TriStepping g s) :=
