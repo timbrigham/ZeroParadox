@@ -230,7 +230,7 @@ example (a b m m' : ℤ) (n : ℕ) (h : streamBits n m = streamBits n m') :
   rw [← hl, e, e']
 -- Reading: this is an instance (p = 2, on integers) of the digit condition that characterizes
 --   1-Lipschitz maps of ℤ_p (Anashin, arXiv:1112.5089, Prop. 2.1, p. 4); ℤ_[2] is not used by
---   `affineExt_sound`.
+--   this example.
 
 /-- `Statement:` `partialAddOne` keeps the lowest `|w|` digits of `streamVal w + 1`. -/
 theorem partialAddOne_eq_streamBits (w : List Bool) :
@@ -461,9 +461,12 @@ example (u : List Bool) (h2 : ([] : List Bool) ≠ u)
 -- Statement: under `List Bool`'s own order, which is lexicographic, `[true]` does not cover `[]`:
 --   `[false]` lies between.
 example : ¬ ([] : List Bool) ⋖ [true] := fun h => h.2 (c := [false]) (by decide) (by decide)
--- Reading: the shape the OVER leg asks for (`UpAndOver.cover`, Mathlib `CovBy`), here in the prefix
---   order, for which no order instance is built; with its two covers and no join it is Winskel's
---   conflict shape (`ZeroParadox/Order/SnapCannotBe.lean` § II).
+-- Statement: Mathlib, the prefix relation is a partial order as a relation class.
+example : IsPartialOrder (List Bool) (· <+: ·) := inferInstance
+-- Reading: `first_digit_covers` gives the shape the OVER leg asks for (`UpAndOver.cover`, Mathlib
+--   `CovBy`), here in the prefix order. Mathlib supplies for `<+:` only that relation class, no `LE`
+--   instance (`List Bool`'s own `≤` is lexicographic), so `CovBy` is not stated for it; with its two
+--   covers and no join it is Winskel's conflict shape (`ZeroParadox/Order/SnapCannotBe.lean` § II).
 
 -- Statement: `w` lies in the up-set `{v | w <+: v}` and is a prefix of each of its members.
 example (w : List Bool) : w <+: w ∧ ∀ v ∈ {v : List Bool | w <+: v}, w <+: v :=
@@ -561,9 +564,22 @@ example (w u : List Bool) (hw : w ≠ []) :
     rcases Nat.lt_or_ge v.length w.length with hl | hl
     · exact Or.inl (h1.eq_of_length (le_antisymm h1.length_le (by omega))).symm
     · exact Or.inr (h2.eq_of_length (le_antisymm h2.length_le hl))
--- Reading: forgetting is single-valued, the one lower cover being the value of the function
---   `List.dropLast`; extending is a choice of digit, and `[]` has two upper covers
---   (`first_digit_covers`).
+-- Statement: every `w` has two distinct upper covers in the prefix order, `w ++ [false]` and
+--   `w ++ [true]`.
+example (w : List Bool) (d : Bool) :
+    (w <+: w ++ [d] ∧ w ≠ w ++ [d] ∧
+      ∀ u : List Bool, w <+: u → u <+: w ++ [d] → u = w ∨ u = w ++ [d]) ∧
+    w ++ [false] ≠ w ++ [true] := by
+  refine ⟨⟨List.prefix_append w [d], by simp, fun u h1 h2 => ?_⟩, by simp⟩
+  rcases Nat.lt_or_ge u.length (w ++ [d]).length with hl | hl
+  · left
+    have : u.length ≤ w.length := by simp at hl; omega
+    exact (h1.eq_of_length (le_antisymm h1.length_le this)).symm
+  · exact Or.inr (h2.eq_of_length (le_antisymm h2.length_le hl))
+-- Reading: a nonempty `w` has exactly one lower cover, `w.dropLast` (its prefixes form a chain), so
+--   one-step forgetting is single-valued and is computed by the function `List.dropLast`; one-step
+--   extending is a choice of digit, between the two upper covers of every `w` (`first_digit_covers`
+--   is the `[]` case).
 
 /-- `Statement:` iterating truncation from `w` reaches `[]` after `|w|` steps. -/
 theorem dropLast_iterate_eq_nil (w : List Bool) : List.dropLast^[w.length] w = [] := by
@@ -585,7 +601,7 @@ theorem addOne_forgets_iff (w : List Bool) : partialAddOne w <+: w ↔ w = [] :=
   · intro h
     exact (partialAddOne_fixed_iff w).1 (h.eq_of_length (partialAddOne_length w))
   · rintro rfl; exact List.nil_prefix
--- Statement: `List.tail` undoes `partialDouble`; truncation does not, and on the all-false streams
+-- Statement: `List.tail` is a left inverse of `partialDouble`; truncation is not, and on the all-false streams
 --   of the climb from `[]` the two agree.
 example (w : List Bool) : (partialDouble w).tail = w := rfl
 example : (partialDouble [true]).dropLast = [false] := rfl
