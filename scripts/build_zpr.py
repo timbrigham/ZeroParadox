@@ -32,9 +32,10 @@ def build():
             'computability face by a Kleene code, a term of another type. This document asks where the role is filled by a Lawvere fixed point, '
             'across three categories ("faces"): refuted in '
             '<b>Set</b> on every carrier except a one-element one (Cantor), in the '
-            '<b>monotone / domain</b> regime free of a monotone obstruction on complete lattices '
+            '<b>monotone / domain</b> regime (a genuine reflexive object there needs Scott\'s '
+            'D<sub>&#8734;</sub>) free of a monotone obstruction on complete lattices '
             '(Knaster&#8211;Tarski), with no reflexive object built here and none on the two-element '
-            'chain (a genuine reflexive object there needs Scott\'s D<sub>&#8734;</sub>), and realized in the <b>computability</b> face '
+            'chain (an instance of Soto-Andrade and Varela, and Trimble), and realized in the <b>computability</b> face '
             '(Rogers / Kleene). Every theorem used is classical. Each result box (R1&#8211;R4) and each '
             'F1 property is backed by a machine-checked Lean 4 theorem, except one marked cited: that '
             'the computability fixed point is an instance of Lawvere\'s theorem. The rest is cited '
@@ -68,14 +69,14 @@ def build():
         'extended; the contribution is (i) the per-face placement of <i>this framework\'s own</i> '
         'self-application role relative to the Lawvere fixed point &#8212; its Lawvere realization '
         'refuted in Set on every carrier except a one-element one, the monotone obstruction absent on complete lattices in the monotone / domain face, with no reflexive object '
-        'built there and none on the two-element chain, the realization achieved in the computability face &#8212; and (ii) a '
+        'built there, the realization achieved in the computability face &#8212; and (ii) a '
         'scope result: the realization is category-relative &#8212; an existence statement in one face '
         'rather than a global identification. The general link between self-reference and Lawvere\'s '
         'theorem is Lawvere\'s (1969) and Yanofsky\'s (2003), not ours, and so is the obstruction the '
         'placement uses: that a fixed-point-free endomap of an object Y rules out, for every A, a '
         'point-surjection A &#8594; Y<sup>A</sup> is Lawvere\'s Corollary 1.2 (p. 5 of the 2006 TAC '
-        'reprint). Of the suggestion of Soto-Andrade and Varela (1984), as Bj&#246;rner (1985) '
-        'reports, that every structure with the fixed point property is a retract of a reflexive '
+        'reprint). Of the suggestion of Soto-Andrade and Varela (1984, pp. 1 and 18) '
+        'that every structure with the fixed point property is a retract of a reflexive '
         'domain, ZP-R answers the question only in Set, where it holds trivially (Section II), and '
         'makes no claim about the categories they intend.'))
     E.append(hr())
@@ -205,9 +206,14 @@ def build():
         'is not: on the two-element chain false &#8804; true every monotone self-map has a fixed point '
         '(Knaster&#8211;Tarski), yet no map from its two points onto its monotone self-maps is '
         'surjective. Both statements are anonymous Lean examples in '
-        'ZeroParadox/Settheory/LawvereBridge.lean. A related question, about retracts rather than '
-        'reflexive objects, is the suggestion of Soto-Andrade and Varela (1984), as Bj&#246;rner (1985) '
-        'reports, that every structure with the fixed point property is a retract of a reflexive '
+        'ZeroParadox/Settheory/LawvereBridge.lean. The second is not new: it is an instance of '
+        'Soto-Andrade and Varela\'s observation that the converse of Lawvere\'s theorem fails for '
+        'lattices with monotone maps (1984, &#167;2.5, p. 15), and the case Y = 2 of Trimble\'s Cantor '
+        'theorem for posets, that no poset map Y &#8594; 2<sup>Y</sup> is surjective (there for poset '
+        'maps; the Lean example allows any map, by counting two points against three monotone '
+        'self-maps). A related question, about retracts rather than '
+        'reflexive objects, is the suggestion of Soto-Andrade and Varela (1984, pp. 1 and 18) '
+        'that every structure with the fixed point property is a retract of a reflexive '
         'domain. In any category a reflexive object is a retract of itself, so wherever every '
         'structure with the fixed point property is a reflexive object, each is also a retract of '
         'one. In Set the first of the two Lean examples above answers the retract question: a set '
@@ -216,12 +222,14 @@ def build():
         'itself; being one-element, it is also in bijection with its own function space. The '
         'converse implication, from "every such structure is a retract of a reflexive '
         'object" to "every such structure is a reflexive object", is not shown here outside Set. ZP-R does '
-        'not address the retract question in any other category; Bj&#246;rner\'s abstract reports that his '
-        'result leads to counterexamples to the suggestion in the category Po of partially ordered '
+        'not address the retract question in any other category; Bj&#246;rner (1985, Corollary, p. 100) '
+        'shows that a finite poset which is a retract in Po of a reflexive domain is dismantlable and, '
+        'citing finite non-dismantlable posets with the fixed point property, concludes that the '
+        'suggestion has counterexamples in the category Po of partially ordered '
         'sets and monotone maps. Two categories '
-        'are free of the obstruction, and only one of '
+        'are free of a restricted form of the obstruction, and only one of '
         'them is shown here to furnish a reflexive object. The reasons are <i>not</i> the same, and the '
-        'difference is the point: the monotone regime is free of it <i>literally</i> &#8212; on a '
+        'difference is the point: the monotone regime is free of its monotone form <i>literally</i> &#8212; on a '
         '<i>complete lattice</i>, Knaster&#8211;Tarski bans a fixed-point-free monotone endomap, and the '
         'completeness hypothesis is load-bearing, since Nat.succ is a monotone endomap with no fixed '
         'point at all, and by Davis (1955, Theorem 2, p. 313) a lattice on which every increasing function has a '
@@ -233,14 +241,18 @@ def build():
         [
             'On a complete lattice every monotone self-map has least and greatest fixed points '
             '(Knaster&#8211;Tarski), so fixed-point-free monotone endomaps are structurally banned '
-            '&#8212; the obstruction is absent. Existence is thereby guaranteed; uniqueness is not '
+            '&#8212; the monotone obstruction is absent. Existence is thereby guaranteed; uniqueness is not '
             '(the interval [lfp, gfp] need not collapse).',
             'No reflexive object is built in this face here: obtaining one in the '
             'order / domain world is the business of Scott\'s D<sub>&#8734;</sub> (Scott-continuous '
             'maps on a directed-complete order, by inverse limits) &#8212; a construction we do not '
             'carry out and do not need, since the computability face below already realizes the '
             'crossing. What this face provides here is the <i>fork</i>.',
-            'Witness: monotone_regime_derives_pinned (LawvereBridge.lean). Lean purity: choice-free. ✓',
+            'Witnesses: monotone_regime_derives_pinned (LawvereBridge.lean), for the fork; the last '
+            'anonymous example of LawvereBridge.lean &#167; VII, for none on the two-element chain (an '
+            'instance of Soto-Andrade and Varela 1984, p. 15, and of Trimble, Section II). Lean purity: '
+            'monotone_regime_derives_pinned choice-free; the two-element-chain example carries '
+            'Classical.choice from Mathlib\'s complete-lattice instance on Bool. ✓',
         ]
     ))
     E.append(sp(4))
@@ -361,7 +373,8 @@ def build():
             'eval (g c) = eval c (computable_fixedpoint_up_to_eval). For partial computable F, the '
             'codes c with eval c = F c form an infinite set (fixed_points_infinite). This does not '
             'exclude a selfApp on Code with a literally unique fixed point.',
-            '&#8226; <b>Monotone / domain face.</b> No claim is made here.',
+            '&#8226; <b>Monotone / domain face.</b> No occupant of the self-application role is '
+            'claimed here; what is measured for this face is in Section II (R3-pos).',
         ]
     ))
     E.append(sp(6))
@@ -414,10 +427,12 @@ def build():
         'computational witness of the bottom role, a commitment of the class and not a theorem '
         '(ZeroParadox/Computability/Kleene.lean &#167;II). On the one-element ZPSemilattice, as for '
         'the one-element set, the forward case holds trivially. The '
-        '<b>monotone</b> face runs it in neither direction on the two-element chain: on a complete lattice no monotone '
+        '<b>monotone</b> face, in posets with monotone maps, runs it in neither direction on the two-element chain: on a complete lattice no monotone '
         'endomap is fixed-point-free (Knaster&#8211;Tarski), so the contrapositive has no monotone '
         'input, and on the two-element chain no map onto the monotone endomaps is surjective (Section '
-        'II). No occupant is identified with another: an equation between an element of a '
+        'II). In chain-complete posets with continuous maps, Soto-Andrade and Varela (1984, '
+        'pp. 15&#8211;16) construct a larger poset isomorphic to its maps into the two-element chain, '
+        'so the domain half of the face differs. No occupant is identified with another: an equation between an element of a '
         'ZPSemilattice and a code is ill-typed (MC-1). ZP-R conjectures nothing global.',
         bg=BLUE_LITE, border=BLUE
     ))
@@ -449,12 +464,18 @@ def build():
         'thesis, University of Edinburgh, 1994 (issued as LFCS report ECS-LFCS-95-332). '
         'Fixed points and reflexive domains: Soto-Andrade and Varela, "Self-reference and fixed '
         'points: a discussion and an extension of Lawvere\'s theorem," Acta Applicandae Mathematicae '
-        '2(1) (1984) 1&#8211;19, doi:10.1007/BF01405490, which, as Bj&#246;rner reports, draws '
-        'attention to the fact that a retract of a reflexive domain in a suitable category has the '
-        'fixed point property and suggests the converse, that every structure with the fixed point '
-        'property is such a retract; and Bj&#246;rner, "Reflexive domains and fixed points," Acta '
+        '2(1) (1984) 1&#8211;19, doi:10.1007/BF01405490, which notes that the converse of Lawvere\'s '
+        'theorem fails for lattices with monotone maps (&#167;2.5, p. 15) and conjectures that every '
+        'structure with the fixed point property is a retract of a higher reflexive domain from which '
+        'it inherits that property (pp. 1 and 18), proving it for chain-complete posets with '
+        'continuous morphisms; Bj&#246;rner, "Reflexive domains and fixed points," Acta '
         'Applicandae Mathematicae 4(1) (1985) 99&#8211;100, doi:10.1007/BF02293493, which shows that if R '
-        'is a retract of a reflexive domain then R<sup>R</sup> has the fixed point property. The '
+        'is a retract of a reflexive domain then R<sup>R</sup> has the fixed point property '
+        '(Proposition, p. 99) and derives counterexamples to the conjecture in Po (Corollary, p. 100); '
+        'and Trimble, "Cantor\'s theorem for posets," nLab personal web (ncatlab.org/toddtrimble), '
+        'revised 5 October 2016, which proves that no poset map Y &#8594; 2<sup>Y</sup> is surjective, '
+        'so Knaster&#8211;Tarski is not a corollary of Lawvere\'s theorem through a reflexive object in '
+        'posets. The '
         'apophatic, characterize-not-construct treatment of self-referential objects: Aczel, '
         '<i>Non-Well-Founded Sets</i> (1988); Barwise &amp; Moss, <i>Vicious Circles</i> (1996).'))
     E.append(body(
@@ -462,10 +483,10 @@ def build():
         'per-face placement of the framework\'s self-application role relative to the Lawvere fixed '
         'point (its Lawvere realization refuted in Set on every carrier except a one-element one, the '
         'monotone obstruction absent on complete lattices in the monotone / domain '
-        'face, the realization achieved in the computability face), and the scope result of Section '
+        'face, with no reflexive object built there, the realization achieved in the computability face), and the scope result of Section '
         'III. That Kleene\'s recursion theorem is a Lawvere instance is due to the sources above, not '
         'to this document, and so is the obstruction the placement uses (Lawvere\'s Corollary 1.2). '
-        'The retract question, as Bj&#246;rner reports Soto-Andrade and Varela\'s suggestion, sits '
+        'The retract question, Soto-Andrade and Varela\'s suggestion, sits '
         'beside the placement; ZP-R answers it only in Set (Section II).'))
 
     # -- What Remains Open ------------------------------------------------------------
@@ -507,8 +528,8 @@ def build():
         'reflexive_object_refuted (the R3-neg row), and its second, on the least fixed point of a '
         'monotone map, on Knaster&#8211;Tarski (Tarski 1955, cited); sentences marked Reading are interpretation and '
         'have no row. The fork schema (R1, monotone_regime_derives_pinned) is choice-free; the anonymous '
-        'example after no_reflexive_object_bool in LawvereBridge.lean &#167; VI, fixedPointFree_of_nontrivial, '
-        'nontrivial_lattice_no_witness and the examples using Bool\'s complete-lattice instance carry Classical.choice; the computability material inherits '
+        'example after no_reflexive_object_bool in LawvereBridge.lean &#167; VI, fixedPointFree_of_nontrivial and '
+        'nontrivial_lattice_no_witness (both in ZeroParadox/Category/Lawvere.lean), and the examples using Bool\'s complete-lattice instance carry Classical.choice; the computability material inherits '
         'Classical.choice from Mathlib\'s computability library (Kleene\'s and Rogers\' theorems use '
         'it), which is disclosed and not claimed otherwise.'))
 
