@@ -11,13 +11,13 @@ set_option maxHeartbeats 400000
 Total ignorance sounds like perfect zero point zero zero zero, with an infinite number of zeros, and I think we are onto something. This running in both directions explains why some charts appear reversed. I think we need to build them.
 
 ## Formal Overview (AI-assisted)
-Streams are `List Bool`, least-significant digit first; tapes are `ℕ → Bool`. `[]`, the all-false tape,
-`botEnd : ℕ → Fin 2` and ℤ_[2]'s `0` lie in four types, with no `=` between them. The Take's zero tape is
-the all-false tape, which reads as 0 in two charts: the binary fraction 0.000… (zeros to the right of the
-point) and the 2-adic digits of ℤ_[2]'s 0 (zeros to the left; `ZeroParadox/Valuation/PadicTree.lean`);
-neither is the reading (neither chart's digit reading is formalized in this file). Filling with `true`
-sends `[]` to the greatest tape (§ I). Complement carries prepend-false to prepend-true by a semiconjugacy
-(§ VI); its order reversal is Mathlib's `compl_antitone`. § VII: local ignorance and local knowledge. -/
+Partial streams are `List Bool`, least-significant digit first; tapes are `ℕ → Bool`. `[]`, the all-false tape,
+`botEnd : ℕ → Fin 2` (`ZeroParadox/Valuation/PadicTree.lean`) and ℤ_[2]'s `0` lie in four types, and no `=` between
+them is stated. The Take's zero tape is the all-false tape, which reads as 0 in two charts: the binary fraction 0.000…
+(zeros to the right of the point) and the 2-adic digits of ℤ_[2]'s 0 (zeros to the left; `ZeroParadox/Valuation/PadicTree.lean`);
+neither is the reading. Neither chart's reading of the tape is formalized in this file. Filling with `false` sends `[]`
+to the least tape and filling with `true` to the greatest (§ I). Complement carries prepend-false to prepend-true by a
+semiconjugacy (§ VI); its order reversal is Mathlib's `compl_antitone`. § VII: local ignorance and local knowledge. -/
 
 namespace ZeroParadox
 
@@ -121,6 +121,11 @@ theorem tapeCons_isFixedPt_iff (d : Bool) (x : ℕ → Bool) :
   | zero => exact (congrFun h 0).symm
   | succ n ih => exact (congrFun h (n + 1)).symm.trans ih
 
+-- Statement: Mathlib, `Stream'.const a = Stream'.cons a (Stream'.const a)`; with `tapeCons = Stream'.cons`
+--   it is the existence half of `tapeCons_isFixedPt_iff`.
+#check @Stream'.const_eq
+example (d : Bool) : Function.IsFixedPt (tapeCons d) (fun _ => d) := (Stream'.const_eq d).symm
+
 /-- `Statement:` fill-with-`d` sends the empty stream to a fixed point of prepend-`e` exactly when `d = e`. -/
 theorem streamFill_nil_isFixedPt_iff (d e : Bool) :
     Function.IsFixedPt (tapeCons e) (streamFill d []) ↔ d = e := by
@@ -187,10 +192,6 @@ theorem affineExt_sound (k : ℕ) (a b : ℤ) (ha : (2 : ℤ) ^ k ∣ a) (w : Li
     rw [pow_add]; ring
   rw [e, streamBits_add_pow_mul]; rfl
 
--- Reading: at `k = 0` this is an instance (p = 2, on integers) of the digit condition that
---   characterizes 1-Lipschitz maps of ℤ_p (Anashin, arXiv:1112.5089, Prop. 2.1, p. 4); ℤ_[2] is not
---   used here.
-
 /-- `Statement:` every integer `m` is `streamVal (streamBits n m)` plus a multiple of `2 ^ n`. -/
 theorem eq_streamVal_streamBits_add (n : ℕ) (m : ℤ) :
     ∃ t : ℤ, m = (streamVal (streamBits n m) : ℤ) + 2 ^ n * t := by
@@ -214,6 +215,22 @@ theorem streamBits_length_eq_iff (w : List Bool) (m : ℤ) :
     have := eq_streamVal_streamBits_add w.length m
     rwa [h] at this
   · rintro ⟨t, rfl⟩; rw [streamBits_add_pow_mul, streamBits_streamVal]
+
+-- Statement: by `affineExt_sound` at `k = 0` and `streamBits_length_eq_iff`, the lowest `n` digits of
+--   `a * m + b` depend only on the lowest `n` digits of `m`.
+example (a b m m' : ℤ) (n : ℕ) (h : streamBits n m = streamBits n m') :
+    streamBits n (a * m + b) = streamBits n (a * m' + b) := by
+  generalize hw : streamBits n m = w at h
+  have hl : w.length = n := hw ▸ streamBits_length n m
+  obtain ⟨t, rfl⟩ := (streamBits_length_eq_iff w m).1 (by rw [hl, hw])
+  obtain ⟨t', rfl⟩ := (streamBits_length_eq_iff w m').1 (by rw [hl, h])
+  have e := affineExt_sound 0 a b (by simp) w t
+  have e' := affineExt_sound 0 a b (by simp) w t'
+  rw [Nat.add_zero] at e e'
+  rw [← hl, e, e']
+-- Reading: this is an instance (p = 2, on integers) of the digit condition that characterizes
+--   1-Lipschitz maps of ℤ_p (Anashin, arXiv:1112.5089, Prop. 2.1, p. 4); ℤ_[2] is not used by
+--   this example.
 
 /-- `Statement:` `partialAddOne` keeps the lowest `|w|` digits of `streamVal w + 1`. -/
 theorem partialAddOne_eq_streamBits (w : List Bool) :
@@ -392,11 +409,12 @@ up-set `{v | w <+: v}`; a motion `F` respects it when `w <+: F w` (a post-fixed 
 digits beyond `w`. Local knowledge at `w` is `w` as the greatest element of `{u | u <+: w}`; `F` only
 forgets at `w` when `F w <+: w` (a pre-fixed point). These are least and greatest elements of such
 sets in the prefix order. No `ZPSemilattice` on `List Bool` induces the prefix order (next `example`),
-and no `=` is stated between them and ⊥ of a `ZPSemilattice`, `MachinePhase`'s `c₀`, or ε₀. -/
+and no `=` is stated between them and ⊥ of a `ZPSemilattice` on any carrier, `c₀` (⊥ of
+`MachinePhase`), or ε₀ of `Ordinal`. -/
 
 -- Statement: no `ZPSemilattice` on `List Bool` induces the prefix order (`join a b = b ↔ a <+: b`):
---   `[false]` and `[true]` have no common extension (the `List (Fin 2)` form of that incomparability is
---   `branches_incomparable`, `ZeroParadox/Valuation/BranchingRequirement.lean`).
+--   `[false]` and `[true]` have no common extension. In `List (Fin 2)`, `branches_incomparable`
+--   (`ZeroParadox/Valuation/BranchingRequirement.lean`) proves only that `[0]` and `[1]` are incomparable.
 example : ¬ ∃ inst : ZPSemilattice (List Bool),
     ∀ a b : List Bool, inst.join a b = b ↔ a <+: b := by
   rintro ⟨inst, h⟩
@@ -443,10 +461,12 @@ example (u : List Bool) (h2 : ([] : List Bool) ≠ u)
 -- Statement: under `List Bool`'s own order, which is lexicographic, `[true]` does not cover `[]`:
 --   `[false]` lies between.
 example : ¬ ([] : List Bool) ⋖ [true] := fun h => h.2 (c := [false]) (by decide) (by decide)
--- Reading: the shape the OVER leg asks for (`UpAndOver.cover`, Mathlib `CovBy`), here in the prefix
---   order, for which no order instance is built (`List Bool`'s own `≤` is lexicographic, under which
---   `[false]` lies between `[]` and `[true]`); with its two covers and no join it is Winskel's
---   conflict shape (`ZeroParadox/Order/SnapCannotBe.lean` § II).
+-- Statement: Mathlib, the prefix relation is a partial order as a relation class.
+example : IsPartialOrder (List Bool) (· <+: ·) := inferInstance
+-- Reading: `first_digit_covers` gives the shape the OVER leg asks for (`UpAndOver.cover`, Mathlib
+--   `CovBy`), here in the prefix order. Mathlib supplies for `<+:` only that relation class, no `LE`
+--   instance (`List Bool`'s own `≤` is lexicographic), so `CovBy` is not stated for it; with its two
+--   covers and no join it is Winskel's conflict shape (`ZeroParadox/Order/SnapCannotBe.lean` § II).
 
 -- Statement: `w` lies in the up-set `{v | w <+: v}` and is a prefix of each of its members.
 example (w : List Bool) : w <+: w ∧ ∀ v ∈ {v : List Bool | w <+: v}, w <+: v :=
@@ -454,8 +474,9 @@ example (w : List Bool) : w <+: w ∧ ∀ v ∈ {v : List Bool | w <+: v}, w <+:
 
 -- Statement: respecting allows digits beyond `w`: the identity respects every `w`, and
 --   `partialDouble` respects `[]` while adding a digit.
-example (w : List Bool) : w <+: id w ∧ ([] : List Bool) <+: partialDouble [] :=
-  ⟨List.prefix_refl w, List.nil_prefix⟩
+example (w : List Bool) : w <+: id w ∧ ([] : List Bool) <+: partialDouble [] ∧
+    partialDouble [] = [false] :=
+  ⟨List.prefix_refl w, List.nil_prefix, rfl⟩
 
 /-- `Statement:` `partialDouble` respects local ignorance at `w` exactly when every digit of `w`
     is `false`. -/
@@ -508,8 +529,57 @@ example (n : ℕ) : List.replicate n false <+: partialNeg (List.replicate n fals
 example (w : List Bool) : w <+: w ∧ ∀ u ∈ {u : List Bool | u <+: w}, u <+: w :=
   ⟨List.prefix_refl w, fun _ h => h⟩
 
+-- Statement: the identity only forgets at every `w`, and a motion that both respects and only forgets
+--   at `w` fixes `w`.
+example (w : List Bool) : id w <+: w := List.prefix_refl w
+example (F : List Bool → List Bool) (w : List Bool) (h1 : w <+: F w) (h2 : F w <+: w) :
+    F w = w := h2.eq_of_length (le_antisymm h2.length_le h1.length_le)
+
 -- Statement: truncation (`List.dropLast`) only forgets, at every `w`.
 example (w : List Bool) : w.dropLast <+: w := List.dropLast_prefix w
+-- Statement: core, `l.dropLast = List.take (l.length - 1) l`.
+#check @List.dropLast_eq_take
+
+-- Statement: the prefixes of `w` form a chain, and a nonempty `w` has exactly one lower cover in the
+--   prefix order, `w.dropLast`.
+example (w u v : List Bool) (hu : u <+: w) (hv : v <+: w) : u <+: v ∨ v <+: u :=
+  List.prefix_or_prefix_of_prefix hu hv
+example (w u : List Bool) (hw : w ≠ []) :
+    (u <+: w ∧ u ≠ w ∧ ∀ v : List Bool, u <+: v → v <+: w → v = u ∨ v = w) ↔
+      u = w.dropLast := by
+  have hlen : w.dropLast.length + 1 = w.length := by
+    rw [List.length_dropLast]; have := List.length_pos_of_ne_nil hw; omega
+  constructor
+  · rintro ⟨hu, hne, hcov⟩
+    have hlt : u.length < w.length :=
+      lt_of_le_of_ne hu.length_le fun h => hne (hu.eq_of_length h)
+    have hud : u <+: w.dropLast :=
+      List.prefix_of_prefix_length_le hu (List.dropLast_prefix w) (by omega)
+    rcases hcov _ hud (List.dropLast_prefix w) with h | h
+    · exact h.symm
+    · exact absurd (congrArg List.length h) (by omega)
+  · rintro rfl
+    refine ⟨List.dropLast_prefix w, fun h => absurd (congrArg List.length h) (by omega),
+      fun v h1 h2 => ?_⟩
+    rcases Nat.lt_or_ge v.length w.length with hl | hl
+    · exact Or.inl (h1.eq_of_length (le_antisymm h1.length_le (by omega))).symm
+    · exact Or.inr (h2.eq_of_length (le_antisymm h2.length_le hl))
+-- Statement: every `w` has two distinct upper covers in the prefix order, `w ++ [false]` and
+--   `w ++ [true]`.
+example (w : List Bool) (d : Bool) :
+    (w <+: w ++ [d] ∧ w ≠ w ++ [d] ∧
+      ∀ u : List Bool, w <+: u → u <+: w ++ [d] → u = w ∨ u = w ++ [d]) ∧
+    w ++ [false] ≠ w ++ [true] := by
+  refine ⟨⟨List.prefix_append w [d], by simp, fun u h1 h2 => ?_⟩, by simp⟩
+  rcases Nat.lt_or_ge u.length (w ++ [d]).length with hl | hl
+  · left
+    have : u.length ≤ w.length := by simp at hl; omega
+    exact (h1.eq_of_length (le_antisymm h1.length_le this)).symm
+  · exact Or.inr (h2.eq_of_length (le_antisymm h2.length_le hl))
+-- Reading: a nonempty `w` has exactly one lower cover, `w.dropLast` (its prefixes form a chain), so
+--   one-step forgetting is single-valued and is computed by the function `List.dropLast`; one-step
+--   extending is a choice of digit, between the two upper covers of every `w` (`first_digit_covers`
+--   is the `[]` case).
 
 /-- `Statement:` iterating truncation from `w` reaches `[]` after `|w|` steps. -/
 theorem dropLast_iterate_eq_nil (w : List Bool) : List.dropLast^[w.length] w = [] := by
@@ -531,8 +601,14 @@ theorem addOne_forgets_iff (w : List Bool) : partialAddOne w <+: w ↔ w = [] :=
   · intro h
     exact (partialAddOne_fixed_iff w).1 (h.eq_of_length (partialAddOne_length w))
   · rintro rfl; exact List.nil_prefix
--- Reading: local ignorance and local knowledge at `w` are the up-set and the prefix set of one `w`;
---   doubling's climb from `[]` and truncation's descent to it are the two directions.
+-- Statement: `List.tail` is a left inverse of `partialDouble`; truncation is not, and on the all-false streams
+--   of the climb from `[]` the two agree.
+example (w : List Bool) : (partialDouble w).tail = w := rfl
+example : (partialDouble [true]).dropLast = [false] := rfl
+example (n : ℕ) : (List.replicate n false).dropLast = (List.replicate n false).tail := by
+  rw [List.dropLast_replicate, List.tail_replicate]
+-- Reading: local ignorance and local knowledge at `w` are one `w`, least in its up-set and greatest
+--   in its prefix set; `partialDouble`'s climb from `[]` run backwards is `List.tail`.
 
 end ZeroParadox
 
