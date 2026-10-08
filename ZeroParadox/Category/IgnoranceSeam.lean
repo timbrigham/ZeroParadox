@@ -1,0 +1,418 @@
+import ZeroParadox.Category.LawvereTwoAdic
+import Mathlib.Dynamics.FixedPoints.Basic
+
+set_option maxHeartbeats 400000
+
+/-!
+# Fills and semiconjugacy (the seam) between partial and complete digit motions
+
+## Engineer's Take
+
+Total ignorance sounds like perfect zero point zero zero zero, with an infinite number of zeros, and I think we are onto something. This running in both directions explains why some charts appear reversed. I think we need to build them.
+
+---
+-/
+
+/-! ## Formal Overview (AI-assisted)
+A partial stream is a `List Bool`, least-significant digit first; a tape is `ℕ → Bool`. § I fills
+streams to tapes, § II carries fixed points across a semiconjugacy, § III prepends, § IV iterates
+affine motions on streams from `[]`, § V negates, § VI complements. The empty stream `[]`, the
+all-false tape, `botEnd : ℕ → Fin 2` (`ZeroParadox/Valuation/PadicTree.lean`) and ℤ_[2]'s `0` lie
+in four types; no `=` between them is stated. The Take's zero tape is the all-false tape, the
+digits of ℤ_[2]'s `0` with zeros running to the left; filling with `true` sends the empty stream to
+the greatest tape (§ I). The reversal is proved here for one instance, complement (§ VI). -/
+
+namespace ZeroParadox
+
+/-! ## § I. The empty stream (ignorance) and fills -/
+
+/-- `Statement:` read a partial stream as a tape, filling every unknown digit with `d`. -/
+def streamFill (d : Bool) (w : List Bool) : ℕ → Bool := fun n => w.getD n d
+
+-- Statement: the empty stream (ignorance) fills with `false` to the least element of the pointwise
+--   order on `ℕ → Bool`, and with `true` to its greatest element.
+example : streamFill false [] = ⊥ ∧ streamFill true [] = ⊤ := ⟨rfl, rfl⟩
+
+/-- `Statement:` a digit known in `w` is known, with the same value, in every extension of `w`;
+    a corollary of core `List.prefix_iff_getElem?`. -/
+theorem getElem?_append_of_known {w t : List Bool} {n : ℕ} {b : Bool} (h : w[n]? = some b) :
+    (w ++ t)[n]? = some b := by
+  rw [List.getElem?_append_left (List.getElem?_eq_some_iff.mp h).1]; exact h
+
+/-- `Statement:` zero-fill is monotone from the prefix order on streams to the pointwise order. -/
+theorem streamFill_false_mono {w v : List Bool} (h : w <+: v) :
+    streamFill false w ≤ streamFill false v := by
+  obtain ⟨t, rfl⟩ := h
+  intro n
+  simp only [streamFill, List.getD_eq_getElem?_getD]
+  cases hw : w[n]? with
+  | some b => rw [getElem?_append_of_known hw]
+  | none => cases (w ++ t)[n]? with
+    | none => exact le_rfl
+    | some c => exact Bool.false_le c
+
+/-- `Statement:` one-fill is antitone from the prefix order on streams to the pointwise order. -/
+theorem streamFill_true_anti {w v : List Bool} (h : w <+: v) :
+    streamFill true v ≤ streamFill true w := by
+  obtain ⟨t, rfl⟩ := h
+  intro n
+  simp only [streamFill, List.getD_eq_getElem?_getD]
+  cases hw : w[n]? with
+  | some b => rw [getElem?_append_of_known hw]
+  | none => cases (w ++ t)[n]? with
+    | none => exact le_rfl
+    | some c => exact Bool.le_true c
+
+-- Statement: the two fills disagree on the empty stream.
+example : streamFill false [] ≠ streamFill true [] := fun h => by
+  simpa [streamFill] using congrFun h 0
+
+/-! ## § II. A fixed point crosses a semiconjugacy, in one direction -/
+
+-- Statement: Mathlib, a semiconjugacy `g ∘ fa = fb ∘ g` carries every fixed point of `fa` to a
+--   fixed point of `fb`.
+#check @Function.IsFixedPt.map
+
+/-- `Statement:` if `A` fixes some point and `B` fixes none, no map semiconjugates `A` to `B`. -/
+theorem no_semiconj_of_fixed_of_fpf {P T : Type*} {A : P → P} {B : T → T} {x : P}
+    (hx : Function.IsFixedPt A x) (hB : ∀ t, B t ≠ t) :
+    ¬ ∃ c : P → T, Function.Semiconj c A B :=
+  fun ⟨_, hc⟩ => hB _ (hx.map hc)
+
+/-- `Statement:` no map `List Bool → ℤ_[2]` semiconjugates `partialAddOne` to add-one on ℤ_[2]. -/
+theorem partialAddOne_no_semiconj :
+    ¬ ∃ c : List Bool → ℤ_[2], Function.Semiconj c partialAddOne (· + 1) :=
+  no_semiconj_of_fixed_of_fpf (x := []) rfl fun _ h => by simp at h
+
+-- Statement: run backwards, the constant map to `[]` semiconjugates add-one on ℤ_[2] to
+--   `partialAddOne`; its content is `partialAddOne [] = []`.
+example : Function.Semiconj (fun _ : ℤ_[2] => ([] : List Bool)) (· + 1) partialAddOne :=
+  fun _ => rfl
+-- Statement: the constant map to a fixed point of `B` semiconjugates every `A` to `B`.
+example {P T : Type*} (A : P → P) (B : T → T) {x : T} (hx : Function.IsFixedPt B x) :
+    Function.Semiconj (fun _ : P => x) A B := fun _ => hx.symm
+
+/-! ## § III. Prepends -/
+
+/-- `Statement:` prepend the digit `e` to a tape. -/
+def tapeCons (e : Bool) (x : ℕ → Bool) : ℕ → Bool := fun n =>
+  match n with
+  | 0 => e
+  | k + 1 => x k
+
+/-- `Statement:` every fill semiconjugates prepend-`e` on streams to prepend-`e` on tapes. -/
+theorem streamFill_semiconj_cons (d e : Bool) :
+    Function.Semiconj (streamFill d) (List.cons e) (tapeCons e) := fun _ => by
+  funext n; cases n <;> rfl
+
+-- Statement: at `d = e = false` the stream side is `partialDouble`.
+example : Function.Semiconj (streamFill false) partialDouble (tapeCons false) :=
+  streamFill_semiconj_cons false false
+
+/-- `Statement:` the constant tape `d` is a fixed point of prepend-`d`. -/
+theorem tapeCons_const (d : Bool) : Function.IsFixedPt (tapeCons d) (fun _ => d) := by
+  funext n; cases n <;> rfl
+
+/-- `Statement:` the constant tape `d` is the only fixed point of prepend-`d`. -/
+theorem tapeCons_isFixedPt_iff (d : Bool) (x : ℕ → Bool) :
+    Function.IsFixedPt (tapeCons d) x ↔ x = fun _ => d := by
+  refine ⟨fun h => funext fun n => ?_, fun h => by subst h; exact tapeCons_const d⟩
+  induction n with
+  | zero => exact (congrFun h 0).symm
+  | succ n ih => exact (congrFun h (n + 1)).symm.trans ih
+
+/-- `Statement:` fill-with-`d` sends the empty stream to a fixed point of prepend-`e` exactly when `d = e`. -/
+theorem streamFill_nil_isFixedPt_iff (d e : Bool) :
+    Function.IsFixedPt (tapeCons e) (streamFill d []) ↔ d = e := by
+  constructor
+  · intro h; simpa [streamFill, tapeCons] using (congrFun h 0).symm
+  · rintro rfl; exact tapeCons_const d
+
+/-! ## § IV. Affine motions on partial streams -/
+
+/-- `Statement:` the natural number a stream denotes, least-significant digit first. -/
+def streamVal : List Bool → ℕ
+  | [] => 0
+  | b :: w => b.toNat + 2 * streamVal w
+
+/-- `Statement:` the lowest `n` binary digits of an integer, least-significant first. -/
+def streamBits : ℕ → ℤ → List Bool
+  | 0, _ => []
+  | n + 1, m => (m % 2 == 1) :: streamBits n (m / 2)
+
+/-- `Statement:` `streamBits n m` has length `n`. -/
+theorem streamBits_length (n : ℕ) (m : ℤ) : (streamBits n m).length = n := by
+  induction n generalizing m with
+  | zero => rfl
+  | succ n ih => simp [streamBits, ih]
+
+/-- `Statement:` the lowest `n` digits of `m` depend only on `m` modulo `2 ^ n`. -/
+theorem streamBits_add_pow_mul (n : ℕ) (m t : ℤ) :
+    streamBits n (m + 2 ^ n * t) = streamBits n m := by
+  induction n generalizing m t with
+  | zero => rfl
+  | succ n ih =>
+    have e : m + 2 ^ (n + 1) * t = m + 2 * (2 ^ n * t) := by ring
+    simp only [streamBits, e, Int.add_mul_emod_self_left,
+      Int.add_mul_ediv_left m (2 ^ n * t) (by norm_num : (2 : ℤ) ≠ 0), ih]
+
+/-- `Statement:` the lowest `|w|` digits of the number `w` denotes are `w`. -/
+theorem streamBits_streamVal (w : List Bool) : streamBits w.length (streamVal w) = w := by
+  induction w with
+  | nil => rfl
+  | cons b w ih =>
+    have e : ((streamVal (b :: w) : ℕ) : ℤ) = (b.toNat : ℤ) + 2 * (streamVal w : ℤ) := by
+      simp [streamVal]
+    cases b <;>
+      simp [streamBits, e, Int.add_mul_emod_self_left, ih,
+        Int.add_mul_ediv_left _ _ (by norm_num : (2 : ℤ) ≠ 0)]
+
+/-- `Statement:` the affine map `x ↦ a * x + b` on a stream `w`, kept to `|w| + k` digits. -/
+def affineExt (k : ℕ) (a b : ℤ) (w : List Bool) : List Bool :=
+  streamBits (w.length + k) (a * (streamVal w : ℤ) + b)
+
+/-- `Statement:` `affineExt k a b` adds exactly `k` digits. -/
+theorem affineExt_length (k : ℕ) (a b : ℤ) (w : List Bool) :
+    (affineExt k a b w).length = w.length + k :=
+  streamBits_length _ _
+
+/-- `Statement:` when `2 ^ k ∣ a`, for every integer `m ≡ streamVal w (mod 2 ^ |w|)`, the lowest
+    `|w| + k` digits of `a * m + b` are `affineExt k a b w`. -/
+theorem affineExt_sound (k : ℕ) (a b : ℤ) (ha : (2 : ℤ) ^ k ∣ a) (w : List Bool) (t : ℤ) :
+    streamBits (w.length + k) (a * ((streamVal w : ℤ) + 2 ^ w.length * t) + b) =
+      affineExt k a b w := by
+  obtain ⟨a', rfl⟩ := ha
+  have e : 2 ^ k * a' * ((streamVal w : ℤ) + 2 ^ w.length * t) + b =
+      (2 ^ k * a' * (streamVal w : ℤ) + b) + 2 ^ (w.length + k) * (a' * t) := by
+    rw [pow_add]; ring
+  rw [e, streamBits_add_pow_mul]; rfl
+
+-- Reading: at `k = 0`, on integers, this is the digit condition that characterizes 1-Lipschitz
+--   maps of ℤ_p (Anashin, arXiv:1112.5089, Prop. 2.1, p. 4); ℤ_[2] is not used here.
+
+/-- `Statement:` every integer `m` is `streamVal (streamBits n m)` plus a multiple of `2 ^ n`. -/
+theorem eq_streamVal_streamBits_add (n : ℕ) (m : ℤ) :
+    ∃ t : ℤ, m = (streamVal (streamBits n m) : ℤ) + 2 ^ n * t := by
+  induction n generalizing m with
+  | zero => exact ⟨m, by simp [streamBits, streamVal]⟩
+  | succ n ih =>
+    obtain ⟨t, ht⟩ := ih (m / 2)
+    refine ⟨t, ?_⟩
+    have hm := Int.emod_add_mul_ediv m 2
+    have hb : (((m % 2 == 1).toNat : ℕ) : ℤ) = m % 2 := by
+      rcases Int.emod_two_eq_zero_or_one m with h | h <;> simp [h]
+    simp only [streamBits, streamVal, Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, hb]
+    linear_combination hm.symm + 2 * ht
+
+/-- `Statement:` the integers whose lowest `|w|` digits are `w` are exactly the integers
+    `streamVal w + 2 ^ |w| * t`, `t : ℤ`. -/
+theorem streamBits_length_eq_iff (w : List Bool) (m : ℤ) :
+    streamBits w.length m = w ↔ ∃ t : ℤ, m = streamVal w + 2 ^ w.length * t := by
+  constructor
+  · intro h
+    have := eq_streamVal_streamBits_add w.length m
+    rwa [h] at this
+  · rintro ⟨t, rfl⟩; rw [streamBits_add_pow_mul, streamBits_streamVal]
+
+/-- `Statement:` `partialAddOne` keeps the lowest `|w|` digits of `streamVal w + 1`. -/
+theorem partialAddOne_eq_streamBits (w : List Bool) :
+    partialAddOne w = streamBits w.length ((streamVal w : ℤ) + 1) := by
+  induction w with
+  | nil => rfl
+  | cons b w ih =>
+    cases b with
+    | true =>
+      have e : ((streamVal (true :: w) : ℕ) : ℤ) + 1 = 0 + 2 * ((streamVal w : ℤ) + 1) := by
+        simp [streamVal]; ring
+      rw [e]
+      simp [partialAddOne, streamBits, ih]
+    | false =>
+      have e : ((streamVal (false :: w) : ℕ) : ℤ) + 1 = 1 + 2 * (streamVal w : ℤ) := by
+        simp [streamVal]; ring
+      rw [e]
+      simp [partialAddOne, streamBits, Int.add_mul_emod_self_left, streamBits_streamVal,
+        Int.add_mul_ediv_left _ _ (by norm_num : (2 : ℤ) ≠ 0)]
+
+-- Statement: so `partialAddOne` is `affineExt 0 1 1`.
+example : partialAddOne = affineExt 0 1 1 := funext fun w => by
+  rw [partialAddOne_eq_streamBits, affineExt, one_mul, Nat.add_zero]
+
+/-- `Statement:` iterating `affineExt k a b` from `[]`, step `n` has exactly `n * k` digits. -/
+theorem affineExt_iterate_length (k : ℕ) (a b : ℤ) (n : ℕ) :
+    ((affineExt k a b)^[n] []).length = n * k := by
+  induction n with
+  | zero => simp
+  | succ n ih => rw [Function.iterate_succ_apply', affineExt_length, ih, Nat.succ_mul]
+
+/-- `Statement:` at `k = 0` every step of that iteration is `[]`. -/
+theorem affineExt_zero_iterate_nil (a b : ℤ) (n : ℕ) : (affineExt 0 a b)^[n] [] = [] :=
+  List.eq_nil_of_length_eq_zero (by rw [affineExt_iterate_length, Nat.mul_zero])
+
+/-- `Statement:` iterating `2x` from `[]`, step `n` is `n` copies of `false`. -/
+theorem affineExt_double_iterate (n : ℕ) :
+    (affineExt 1 2 0)^[n] [] = List.replicate n false := by
+  have hv : ∀ n, streamVal (List.replicate n false) = 0 := fun n => by
+    induction n with
+    | zero => rfl
+    | succ n ih => simp [List.replicate_succ, streamVal, ih]
+  have hz : ∀ n, streamBits n 0 = List.replicate n false := fun n => by
+    induction n with
+    | zero => rfl
+    | succ n ih => simp [streamBits, ih, List.replicate_succ]
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', ih, affineExt, hv, List.length_replicate]
+    simpa using hz (n + 1)
+
+/-- `Statement:` iterating `2x + 1` from `[]`, step `n` is `n` copies of `true`. -/
+theorem affineExt_doubleAddOne_iterate (n : ℕ) :
+    (affineExt 1 2 1)^[n] [] = List.replicate n true := by
+  have hv : ∀ n, (streamVal (List.replicate n true) : ℤ) = 2 ^ n - 1 := fun n => by
+    induction n with
+    | zero => rfl
+    | succ n ih => simp [List.replicate_succ, streamVal, ih]; ring
+  have hm : ∀ n, streamBits n (-1) = List.replicate n true := fun n => by
+    induction n with
+    | zero => rfl
+    | succ n ih => simp [streamBits, ih, List.replicate_succ]
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', ih, affineExt, hv, List.length_replicate]
+    have e : (2 : ℤ) * (2 ^ n - 1) + 1 = -1 + 2 ^ (n + 1) * 1 := by ring
+    rw [e, streamBits_add_pow_mul, hm]
+
+-- Statement: checked by `decide`, step 4 of `2x + 2` is `0111` and step 2 of `4x + 1` is `1010`.
+example : (affineExt 1 2 2)^[4] [] = [false, true, true, true] := by decide
+example : (affineExt 2 4 1)^[2] [] = [true, false, true, false] := by decide
+-- Statement: `3x`, `x + 1` and `-x` (`k = 0`) stay at `[]`.
+example : (affineExt 0 3 0)^[5] [] = [] ∧ (affineExt 0 1 1)^[5] [] = [] ∧
+    (affineExt 0 (-1) 0)^[5] [] = [] :=
+  ⟨affineExt_zero_iterate_nil _ _ _, affineExt_zero_iterate_nil _ _ _,
+    affineExt_zero_iterate_nil _ _ _⟩
+-- Statement: for `affineExt`, each step adds exactly `k` digits.
+#check @affineExt_iterate_length
+
+/-! ## § V. Negation on partial streams -/
+
+/-- `Statement:` negation on partial streams (`partialNeg_eq_streamBits`): the low-order `false`
+    digits and the lowest `true` are kept, and every higher digit is flipped. -/
+def partialNeg : List Bool → List Bool
+  | [] => []
+  | false :: w => false :: partialNeg w
+  | true :: w => true :: w.map not
+
+/-- `Statement:` the lowest `n` digits of `-1 - m` are those of `m`, each flipped. -/
+theorem streamBits_neg_one_sub (n : ℕ) (m : ℤ) :
+    streamBits n (-1 - m) = (streamBits n m).map not := by
+  induction n generalizing m with
+  | zero => rfl
+  | succ n ih =>
+    rcases Int.emod_two_eq_zero_or_one m with h | h
+    · have e : -1 - m = 1 + 2 * (-1 - m / 2) := by omega
+      rw [e]
+      simp [streamBits, h, ih, Int.add_mul_ediv_left _ _ (by norm_num : (2 : ℤ) ≠ 0)]
+    · have e : -1 - m = 0 + 2 * (-1 - m / 2) := by omega
+      rw [e]
+      simp [streamBits, h, ih]
+
+/-- `Statement:` `partialNeg` keeps the lowest `|w|` digits of `-streamVal w`. -/
+theorem partialNeg_eq_streamBits (w : List Bool) :
+    partialNeg w = streamBits w.length (-(streamVal w : ℤ)) := by
+  induction w with
+  | nil => rfl
+  | cons b w ih =>
+    cases b with
+    | false =>
+      have e : -((streamVal (false :: w) : ℕ) : ℤ) = 0 + 2 * (-(streamVal w : ℤ)) := by
+        simp [streamVal]
+      rw [e]
+      simp [partialNeg, streamBits, ih]
+      congr 1; omega
+    | true =>
+      have e : -((streamVal (true :: w) : ℕ) : ℤ) = 1 + 2 * (-1 - (streamVal w : ℤ)) := by
+        simp [streamVal]; ring
+      rw [e]
+      simp [partialNeg, streamBits, streamBits_neg_one_sub, streamBits_streamVal,
+        Int.add_mul_ediv_left _ _ (by norm_num : (2 : ℤ) ≠ 0)]
+
+-- Statement: so `partialNeg` is `affineExt 0 (-1) 0`.
+example : partialNeg = affineExt 0 (-1) 0 := funext fun w => by
+  rw [partialNeg_eq_streamBits]; simp only [affineExt, neg_one_mul, add_zero]
+
+/-- `Statement:` every all-`false` stream is a fixed point of `partialNeg`, `[]` included. -/
+theorem partialNeg_replicate_false (n : ℕ) :
+    partialNeg (List.replicate n false) = List.replicate n false := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [List.replicate_succ, partialNeg, ih]
+
+/-- `Statement:` iterating `partialNeg` from `[]` stays at `[]`. -/
+theorem partialNeg_iterate_nil (n : ℕ) : partialNeg^[n] [] = [] :=
+  Function.iterate_fixed rfl n
+
+/-! ## § VI. Complement, the reversal -/
+
+-- Statement: on tapes, pointwise `not` is the Boolean-algebra complement.
+example : (fun x : ℕ → Bool => fun n => !(x n)) = compl := rfl
+
+/-- `Statement:` complement semiconjugates prepend-`false` to prepend-`true`. -/
+theorem compl_semiconj_tapeCons :
+    Function.Semiconj (compl : (ℕ → Bool) → (ℕ → Bool)) (tapeCons false) (tapeCons true) :=
+  fun _ => by funext n; cases n <;> rfl
+
+-- Statement: by `compl_semiconj_tapeCons` and `Function.IsFixedPt.map`, complement carries the
+--   all-false tape, the only fixed point of prepend-`false` (`tapeCons_isFixedPt_iff`), to a fixed
+--   point of prepend-`true`.
+example : Function.IsFixedPt (tapeCons true) (fun _ => false)ᶜ :=
+  (tapeCons_const false).map compl_semiconj_tapeCons
+
+-- Statement: Mathlib, complement on a Boolean algebra is antitone.
+#check @compl_antitone
+-- Statement: Mathlib, complement sends ⊥ to ⊤ in a Heyting algebra; on `ℕ → Bool` these are ⊥ and
+--   ⊤ of the pointwise order.
+#check @compl_bot
+
+-- Statement: run backwards, complement semiconjugates prepend-`true` to prepend-`false`.
+example : Function.Semiconj (compl : (ℕ → Bool) → (ℕ → Bool)) (tapeCons true) (tapeCons false) :=
+  fun _ => by funext n; cases n <;> rfl
+
+end ZeroParadox
+
+/-! ## Axiom Purity Check -/
+section PurityCheck
+open ZeroParadox
+#print axioms streamFill
+#print axioms getElem?_append_of_known
+#print axioms streamFill_false_mono
+#print axioms streamFill_true_anti
+#print axioms no_semiconj_of_fixed_of_fpf
+#print axioms partialAddOne_no_semiconj
+#print axioms tapeCons
+#print axioms streamFill_semiconj_cons
+#print axioms tapeCons_const
+#print axioms tapeCons_isFixedPt_iff
+#print axioms streamFill_nil_isFixedPt_iff
+#print axioms streamVal
+#print axioms streamBits
+#print axioms streamBits_length
+#print axioms streamBits_add_pow_mul
+#print axioms streamBits_streamVal
+#print axioms affineExt
+#print axioms affineExt_length
+#print axioms affineExt_sound
+#print axioms eq_streamVal_streamBits_add
+#print axioms streamBits_length_eq_iff
+#print axioms partialAddOne_eq_streamBits
+#print axioms affineExt_iterate_length
+#print axioms affineExt_zero_iterate_nil
+#print axioms affineExt_double_iterate
+#print axioms affineExt_doubleAddOne_iterate
+#print axioms partialNeg
+#print axioms streamBits_neg_one_sub
+#print axioms partialNeg_eq_streamBits
+#print axioms partialNeg_replicate_false
+#print axioms partialNeg_iterate_nil
+#print axioms compl_semiconj_tapeCons
+end PurityCheck

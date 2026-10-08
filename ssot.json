@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1870,
-        "files": 158
+        "declarations": 1902,
+        "files": 159
       },
       "entries": [
         {
@@ -6168,6 +6168,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "12e1d375-c921-4463-922e-a9b94ff1ca67",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_length",
+            "short": "streamBits_length"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_length",
+            "short": "streamBits_length",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "12f9e6d2-25cf-48b9-84c6-7a269dfc0076",
           "new": {
             "file": "ZeroParadox/Multihomed/SelfClosureObstruction.lean",
@@ -7372,6 +7409,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "174a2fa2-3001-4f3e-8a95-6f32fd275eca",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialNeg_eq_streamBits",
+            "short": "partialNeg_eq_streamBits"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialNeg_eq_streamBits",
+            "short": "partialNeg_eq_streamBits",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -9738,6 +9812,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "203ef1fa-b937-478e-99ed-6e647f11b727",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialNeg",
+            "short": "partialNeg"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialNeg",
+            "short": "partialNeg",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "204a7f6e-9b41-4e42-bf64-c09bd4d5fa64",
           "new": {
@@ -10666,6 +10777,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "240a21a0-b95f-4a03-ba3d-0d3d6bbe1775",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_neg_one_sub",
+            "short": "streamBits_neg_one_sub"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_neg_one_sub",
+            "short": "streamBits_neg_one_sub",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "245715c7-e3e2-4611-a632-f5d9379ea224",
           "new": {
             "file": "ZeroParadox/Category/SeamFrameChange.lean",
@@ -10877,6 +11025,44 @@
           "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "25535cf9-09bd-4fd8-8e9b-fd8696f04a47",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamFill_true_anti",
+            "short": "streamFill_true_anti"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamFill_true_anti",
+            "short": "streamFill_true_anti",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
             "sorry_free": true
           }
         },
@@ -12612,6 +12798,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2a684ac7-671c-4ec9-a4b6-64933ccd2f5d",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamFill",
+            "short": "streamFill"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamFill",
+            "short": "streamFill",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2a69685b-0059-4ed4-ae81-475c02c3e450",
           "new": {
             "file": "ZeroParadox/Valuation/PoleRegistration.lean",
@@ -14305,6 +14529,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "30540b19-b5f2-4a83-95b5-dfd7ff4a0bc1",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_doubleAddOne_iterate",
+            "short": "affineExt_doubleAddOne_iterate"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_doubleAddOne_iterate",
+            "short": "affineExt_doubleAddOne_iterate",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3063c04d-97d4-4834-94b1-f9a0cf8c3c55",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleBridge.lean",
@@ -14618,6 +14880,43 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "323feb81-5546-45d6-9277-d1af60f3a24a",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_streamVal_streamBits_add",
+            "short": "eq_streamVal_streamBits_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_streamVal_streamBits_add",
+            "short": "eq_streamVal_streamBits_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -16158,6 +16457,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "37dc8a68-6221-4b2c-bdd3-3db1a428925f",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_length_eq_iff",
+            "short": "streamBits_length_eq_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_length_eq_iff",
+            "short": "streamBits_length_eq_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3828c9ce-ab39-4043-b20e-afb8dfbf411e",
           "new": {
@@ -16907,6 +17243,44 @@
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3a98e86a-2861-403d-af65-80defba80eed",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialNeg_replicate_false",
+            "short": "partialNeg_replicate_false"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialNeg_replicate_false",
+            "short": "partialNeg_replicate_false",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
             "sorry_free": true
           }
         },
@@ -20773,6 +21147,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "494226eb-b7e1-4d75-971f-e0546f67fc43",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_streamVal",
+            "short": "streamBits_streamVal"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_streamVal",
+            "short": "streamBits_streamVal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "496bbcec-ade8-47fa-9937-0de651b33ca1",
           "new": {
@@ -21787,6 +22198,44 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4d8040f4-0f6e-4904-a36c-1ce72b72e9a1",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_iterate_length",
+            "short": "affineExt_iterate_length"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_iterate_length",
+            "short": "affineExt_iterate_length",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -23249,6 +23698,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "525c4c32-2b4f-4837-8fe4-c49df58249f9",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamFill_nil_isFixedPt_iff",
+            "short": "streamFill_nil_isFixedPt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamFill_nil_isFixedPt_iff",
+            "short": "streamFill_nil_isFixedPt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -27792,6 +28279,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "65a41569-903e-45e7-a16f-10a505fd1020",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_sound",
+            "short": "affineExt_sound"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_sound",
+            "short": "affineExt_sound",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "65aeb259-1a52-4a8e-8e20-79a841ef5fea",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -28154,6 +28678,44 @@
           "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "67b2e7d9-6bc7-417d-847c-1df947c6a78d",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeCons_const",
+            "short": "tapeCons_const"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeCons_const",
+            "short": "tapeCons_const",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[Quot.sound]",
             "sorry_free": true
           }
         },
@@ -32179,6 +32741,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "76199787-3455-406e-a98d-19484d8b845f",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamFill_semiconj_cons",
+            "short": "streamFill_semiconj_cons"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamFill_semiconj_cons",
+            "short": "streamFill_semiconj_cons",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "76c1bea9-6218-4165-930b-2ca9a56eb644",
           "new": {
@@ -33055,6 +33655,44 @@
           "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "79b14c68-19c8-4538-92bf-e9e25281c06e",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne_no_semiconj",
+            "short": "partialAddOne_no_semiconj"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne_no_semiconj",
+            "short": "partialAddOne_no_semiconj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -34624,6 +35262,44 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f657abd-02fc-40b2-bd6c-7be0c1d03c73",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.compl_semiconj_tapeCons",
+            "short": "compl_semiconj_tapeCons"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.compl_semiconj_tapeCons",
+            "short": "compl_semiconj_tapeCons",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -39599,6 +40275,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "933c582e-a8ec-4346-b609-152f7f707b7b",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne_eq_streamBits",
+            "short": "partialAddOne_eq_streamBits"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialAddOne_eq_streamBits",
+            "short": "partialAddOne_eq_streamBits",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "935e3e03-3332-41ec-8607-6bfa38d76553",
           "new": {
             "file": "ZeroParadox/Valuation/BottomInvariant.lean",
@@ -39694,6 +40407,43 @@
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "93df9a2e-3f85-4cdd-bff7-3089e2163ef9",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamVal",
+            "short": "streamVal"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamVal",
+            "short": "streamVal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": [],
             "sorry_free": true
           }
         },
@@ -40125,6 +40875,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "95940c02-38e5-40ce-bb7a-45a8f4befe56",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialNeg_iterate_nil",
+            "short": "partialNeg_iterate_nil"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialNeg_iterate_nil",
+            "short": "partialNeg_iterate_nil",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": [],
             "sorry_free": true
           }
         },
@@ -52021,6 +52809,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c2d841f2-64c6-41af-b414-9aea42e60f45",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamFill_false_mono",
+            "short": "streamFill_false_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamFill_false_mono",
+            "short": "streamFill_false_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c315b152-8557-4074-9170-399ff676202d",
           "new": {
             "file": "ZeroParadox/Information/CrossingTrials.lean",
@@ -53325,6 +54151,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c726db1d-79b2-41fd-b83a-300d1385fafd",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeCons",
+            "short": "tapeCons"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeCons",
+            "short": "tapeCons",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": [],
             "sorry_free": true
           }
         },
@@ -56980,6 +57843,44 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d54e379b-e456-4c07-b593-ba206fbce4c8",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_zero_iterate_nil",
+            "short": "affineExt_zero_iterate_nil"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_zero_iterate_nil",
+            "short": "affineExt_zero_iterate_nil",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "MC-1-correspondence"
             ]
@@ -57632,6 +58533,44 @@
           "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d86abcd3-9f63-42c9-9d0b-ecda16313561",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeCons_isFixedPt_iff",
+            "short": "tapeCons_isFixedPt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeCons_isFixedPt_iff",
+            "short": "tapeCons_isFixedPt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[Quot.sound]",
             "sorry_free": true
           }
         },
@@ -58408,6 +59347,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "da32c973-0e5d-4b69-906e-a518b5a835cf",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_semiconj_of_fixed_of_fpf",
+            "short": "no_semiconj_of_fixed_of_fpf"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_semiconj_of_fixed_of_fpf",
+            "short": "no_semiconj_of_fixed_of_fpf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "da3f9a45-a275-4be6-90d6-587f72b1baa3",
           "new": {
@@ -58580,6 +59556,43 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dad1cedb-32c6-4004-bed7-8f3a478597e7",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.getElem?_append_of_known",
+            "short": "getElem?_append_of_known"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.getElem?_append_of_known",
+            "short": "getElem?_append_of_known",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
             "sorry_free": true
           }
         },
@@ -58915,6 +59928,43 @@
           "reason": "New 2026-09-16. The hypothesis: a uniform Bool test correct about Part.Dom, stated at Unit so the hypothesis is weaker and em_of_poleDiscriminator is stronger. Axiom-free.",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dc4c3ec8-ec31-4aca-9c62-d4489240eb7a",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_length",
+            "short": "affineExt_length"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_length",
+            "short": "affineExt_length",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
             "sorry_free": true
           }
         },
@@ -61035,6 +62085,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e3ab35f1-bc29-42be-a84e-42c00aec40f9",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits",
+            "short": "streamBits"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits",
+            "short": "streamBits",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e3afae88-46c7-4456-b4c4-5e3ab4c3e3f0",
           "new": {
             "file": "ZeroParadox/Valuation/PoleRegistration.lean",
@@ -62888,6 +63975,43 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e9e83d19-d28f-4b4b-9cf7-64f0abdf7bd3",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_add_pow_mul",
+            "short": "streamBits_add_pow_mul"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_add_pow_mul",
+            "short": "streamBits_add_pow_mul",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": "[propext]",
             "sorry_free": true
           }
         },
@@ -68455,6 +69579,81 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fda4ae8e-bbe9-4ce8-b01e-7b8977f73ab5",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt",
+            "short": "affineExt"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt",
+            "short": "affineExt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
+          "verify": {
+            "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fdca9eb5-c6fa-473c-9e87-f96b8dcd7d98",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_double_iterate",
+            "short": "affineExt_double_iterate"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_double_iterate",
+            "short": "affineExt_double_iterate",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
