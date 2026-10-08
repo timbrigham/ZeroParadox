@@ -70,6 +70,10 @@ doubling stages have no upper bound in its prefix order (the last `example` of �
 --   doubling (`boundaryDouble_botEnd`, `boundaryDouble_unique_fp`,
 --   `ZeroParadox/Valuation/PoleCompletion.lean`). The all-false tape ℕ → Bool carries the same
 --   coincidence (`ZeroParadox/Category/IgnoranceSeam.lean`).
+-- Statement: CARRIER — the least element of the prefix order is the empty stream `[]`, a different
+--   object and type from `botEnd`; zero-fill sends `[]` to the all-false tape, ⊥ of the pointwise order
+--   on `ℕ → Bool` (the zero-fill `example` below, at stage 0).
+-- Reading: that tape is where the two charts meet.
 
 /-- `Statement:` add-one on partial streams: the carry runs through `true` digits and stops at the
     first `false`, or where the known digits end. -/
@@ -146,9 +150,10 @@ example : ¬ ∃ u : List Bool, ∀ n, partialDoubleStage n <+: u := fun ⟨u, h
   rw [partialDoubleStage_eq, List.length_replicate] at this
   omega
 -- Reading: CARRIER — two charts. Among finite words the chain has no supremum (the `example`
---   above); among finite and infinite words its supremum is the all-zeros word, which zero-fill
---   reaches from every stage (the `example` before), the fixed point of prepend-`false`
---   (`tapeCons_isFixedPt_iff`, `ZeroParadox/Category/IgnoranceSeam.lean`).
+--   above); among finite and infinite words, an ω-CPO, its supremum is the all-zeros word, not proved
+--   here (the ω-CPO fixed-point form is Mathlib's
+--   `OmegaCompletePartialOrder.fixedPoints.ωSup_iterate_mem_fixedPoint`). Separately, zero-fill sends
+--   every stage, `[]` included, to the all-false tape (the `example` before).
 
 end ZeroParadox
 
