@@ -51,7 +51,7 @@ section ComputationCannotBeIndex
 #check @ZeroParadox.no_computable_evalFixedPointFree
 
 -- Statement: on `List Bool`, `partialAddOne w = w ↔ w = []` (`ZeroParadox/Category/LawvereTwoAdic.lean`);
---   on `ℤ_[2]`, add-one fixes no point (that file's § I).
+--   on `ℤ_[2]`, add-one fixes no point (that file's first `example` of § I).
 -- Reading: a contrast with the wall above, not an instance of it: a literal fixed point of one map on
 --   `List Bool`, where the wall quantifies over computable maps on codes up to `eval`.
 #check @ZeroParadox.partialAddOne_fixed_iff
