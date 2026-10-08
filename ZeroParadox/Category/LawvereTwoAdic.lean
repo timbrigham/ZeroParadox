@@ -40,7 +40,8 @@ example (M : (ℤ_[2] → ℤ_[2]) → Prop) (h : M (· + 1)) : ¬ ZeroParadox.H
 example : ¬ ZeroParadox.HasWitnessRel ℤ_[2] Continuous :=
   ZeroParadox.no_witnessRel_of_admissible_fpf (continuous_add_const 1) fun _ hx => by simp at hx
 
--- Statement: the proof uses only `x + 1 ≠ x`, so the same proof closes over `ℤ`.
+-- Statement: on `ℤ`, no class `M` containing `x ↦ x + 1` has a relativized witness.
+-- Reading: § I's obstruction is not 2-adic: the `ℤ_[2]` proof term closes unchanged over `ℤ`.
 example (M : (ℤ → ℤ) → Prop) (h : M (· + 1)) : ¬ ZeroParadox.HasWitnessRel ℤ M :=
   ZeroParadox.no_witnessRel_of_admissible_fpf h fun _ hx => by simp at hx
 
@@ -50,11 +51,12 @@ namespace ZeroParadox
 
 A partial stream is a `List Bool`, least-significant digit first, ordered by prefix; its least element
 is the empty stream (`List.nil_prefix`), in a different type from ℤ_[2]'s `0`, and no `ZPSemilattice`
-structure is put on `List Bool`. Iterating from a least element is Scott, "Data types as lattices",
-SIAM J. Comput. 5 (1976), Thm 1.4, p. 526, on `Pω`; extending a continuous map from a subspace is its
-Thm 1.5, p. 527, and from Cantor space to finite and infinite words, Amorim, Kozen, Mardare, Panangaden
-and Roberts, LICS 2021 (arXiv:2011.13171), Lemma 8(ii), p. 5. `List Bool` is not claimed an instance
-of these, and no supremum or limit is constructed here (`partialDouble_ne_self`). -/
+structure is put on `List Bool`. Iterating from a least element is Scott's schema, "Data types as
+lattices", SIAM J. Comput. 5 (1976), Thm 1.4, p. 526, on `Pω`; extending a continuous map into `Pω`
+from a subspace is its Thm 1.5, p. 527; and extending a Cantor-continuous map into a continuous ω-CPO
+with meets, from Cantor space to finite and infinite words, is Amorim, Kozen, Mardare, Panangaden and
+Roberts, LICS 2021, Lemma 8(ii), p. 5 of arXiv:2011.13171v2. `List Bool` is not claimed an instance
+of these; the doubling stages have no upper bound in its prefix order (the last `example` of § II). -/
 
 /-- `Statement:` add-one on partial streams: the carry runs through `true` digits and stops at the
     first `false`, or where the known digits end. -/
@@ -95,9 +97,14 @@ def partialDouble (w : List Bool) : List Bool := false :: w
 theorem partialDouble_ne_self (w : List Bool) : partialDouble w ≠ w :=
   List.cons_ne_self false w
 
--- Reading: the crossed pair, carrier by carrier. Add-one fixes no point of `ℤ_[2]` (§ I) and only
---   `[]` among partial streams (`partialAddOne_fixed_iff`); doubling fixes no partial stream
---   (`partialDouble_ne_self`) and exactly `0` in `ℚ_[2]` (`q2_zero_is_fixed`, `q2_unique_fp`).
+-- Statement: on `ℤ_[2]`, doubling fixes exactly `0`.
+example (x : ℤ_[2]) : 2 * x = x ↔ x = 0 :=
+  ⟨fun h => by linear_combination h, fun h => by rw [h, mul_zero]⟩
+
+-- Statement: so add-one fixes only `[]` among partial streams (`partialAddOne_fixed_iff`) and no
+--   point of `ℤ_[2]` (§ I); doubling fixes no partial stream (`partialDouble_ne_self`) and only
+--   `ℤ_[2]`'s `0` (the `example` above).
+-- Reading: the crossed pair.
 
 /-- `Statement:` `partialDouble` iterated `n` times from the empty stream. -/
 def partialDoubleStage (n : ℕ) : List Bool := Nat.repeat partialDouble n []
@@ -112,6 +119,12 @@ theorem partialDoubleStage_eq (n : ℕ) : partialDoubleStage n = List.replicate 
 example (n : ℕ) : partialDoubleStage n <+: partialDoubleStage (n + 1) := by
   rw [partialDoubleStage_eq, partialDoubleStage_eq]
   exact ⟨[false], by simp [List.replicate_succ']⟩
+
+-- Statement: the stages have no upper bound in the prefix order on `List Bool`.
+example : ¬ ∃ u : List Bool, ∀ n, partialDoubleStage n <+: u := fun ⟨u, h⟩ => by
+  have := (h (u.length + 1)).length_le
+  rw [partialDoubleStage_eq, List.length_replicate] at this
+  omega
 
 end ZeroParadox
 
