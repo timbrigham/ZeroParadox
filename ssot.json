@@ -632,7 +632,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1902,
+        "declarations": 1905,
         "files": 159
       },
       "entries": [
@@ -1218,6 +1218,43 @@
           "reason": "Round 22: emit the printer's own type-walk (two rfl theorems differing only in binder type) and the load-bearing addition premise that was asserted in one file and consumed in another.",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "01fd09c7-0463-408c-bbe3-e98da456a2d9",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.first_digit_covers",
+            "short": "first_digit_covers"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.first_digit_covers",
+            "short": "first_digit_covers",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean § VII local ignorance: first-digit cover, respected local ignorances of doubling and add-one (2026-10-08)",
+          "verify": {
+            "axioms": "[propext]",
             "sorry_free": true
           }
         },
@@ -30781,6 +30818,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6e49bc26-253a-4f4e-a3ea-1df1574e2433",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.addOne_respects_iff",
+            "short": "addOne_respects_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.addOne_respects_iff",
+            "short": "addOne_respects_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean § VII local ignorance: first-digit cover, respected local ignorances of doubling and add-one (2026-10-08)",
+          "verify": {
+            "axioms": "[propext]",
             "sorry_free": true
           }
         },
@@ -68917,6 +68992,44 @@
           "reason": "phase-order arc r2 fixes: rename F3, extremal-placement characterization (P2), floor-above epsilon0 landing (P3)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fbd01efb-73b0-4b48-8d50-6c7360477ac9",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.double_respects_iff",
+            "short": "double_respects_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.double_respects_iff",
+            "short": "double_respects_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean § VII local ignorance: first-digit cover, respected local ignorances of doubling and add-one (2026-10-08)",
+          "verify": {
+            "axioms": "[propext, Quot.sound]",
             "sorry_free": true
           }
         },

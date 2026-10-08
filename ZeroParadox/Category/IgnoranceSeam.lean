@@ -1,5 +1,6 @@
 import ZeroParadox.Category.LawvereTwoAdic
 import Mathlib.Dynamics.FixedPoints.Basic
+import Mathlib.Data.Int.Bitwise
 
 set_option maxHeartbeats 400000
 
@@ -10,17 +11,13 @@ set_option maxHeartbeats 400000
 
 Total ignorance sounds like perfect zero point zero zero zero, with an infinite number of zeros, and I think we are onto something. This running in both directions explains why some charts appear reversed. I think we need to build them.
 
----
--/
-
-/-! ## Formal Overview (AI-assisted)
-A partial stream is a `List Bool`, least-significant digit first; a tape is `ℕ → Bool`. § I fills
-streams to tapes, § II carries fixed points across a semiconjugacy, § III prepends, § IV iterates
-affine motions on streams from `[]`, § V negates, § VI complements. The empty stream `[]`, the
-all-false tape, `botEnd : ℕ → Fin 2` (`ZeroParadox/Valuation/PadicTree.lean`) and ℤ_[2]'s `0` lie
-in four types; no `=` between them is stated. The Take's zero tape is the all-false tape, the
-digits of ℤ_[2]'s `0` with zeros running to the left; filling with `true` sends the empty stream to
-the greatest tape (§ I). The reversal is proved here for one instance, complement (§ VI). -/
+## Formal Overview (AI-assisted)
+Partial streams are `List Bool`, least-significant digit first; tapes are `ℕ → Bool`. `[]`, the
+all-false tape, `botEnd : ℕ → Fin 2` and ℤ_[2]'s `0` lie in four types; no `=` between them is stated.
+The Take's zero tape is the all-false tape, which reads as 0 in two charts: the binary fraction 0.000…
+(zeros to the right of the point) and the 2-adic digits of ℤ_[2]'s 0 (zeros to the left;
+`ZeroParadox/Valuation/PadicTree.lean`); neither is the reading. Complement carries prepend-false to
+prepend-true by a semiconjugacy (§ VI); its order reversal is Mathlib's `compl_antitone`. -/
 
 namespace ZeroParadox
 
@@ -99,6 +96,9 @@ def tapeCons (e : Bool) (x : ℕ → Bool) : ℕ → Bool := fun n =>
   match n with
   | 0 => e
   | k + 1 => x k
+
+-- Statement: `tapeCons` is Mathlib's `Stream'.cons`.
+example (e : Bool) (x : ℕ → Bool) : tapeCons e x = Stream'.cons e x := rfl
 
 /-- `Statement:` every fill semiconjugates prepend-`e` on streams to prepend-`e` on tapes. -/
 theorem streamFill_semiconj_cons (d e : Bool) :
@@ -187,8 +187,8 @@ theorem affineExt_sound (k : ℕ) (a b : ℤ) (ha : (2 : ℤ) ^ k ∣ a) (w : Li
     rw [pow_add]; ring
   rw [e, streamBits_add_pow_mul]; rfl
 
--- Reading: at `k = 0`, on integers, this is the digit condition that characterizes 1-Lipschitz
---   maps of ℤ_p (Anashin, arXiv:1112.5089, Prop. 2.1, p. 4); ℤ_[2] is not used here.
+-- Reading: at `k = 0` this is an instance (p = 2, on integers) of the digit condition that
+--   characterizes 1-Lipschitz maps (Anashin, arXiv:1112.5089, Prop. 2.1, p. 4).
 
 /-- `Statement:` every integer `m` is `streamVal (streamBits n m)` plus a multiple of `2 ^ n`. -/
 theorem eq_streamVal_streamBits_add (n : ℕ) (m : ℤ) :
@@ -292,7 +292,7 @@ example : (affineExt 0 3 0)^[5] [] = [] ∧ (affineExt 0 1 1)^[5] [] = [] ∧
   ⟨affineExt_zero_iterate_nil _ _ _, affineExt_zero_iterate_nil _ _ _,
     affineExt_zero_iterate_nil _ _ _⟩
 -- Statement: for `affineExt`, each step adds exactly `k` digits.
-#check @affineExt_iterate_length
+#check @affineExt_length
 
 /-! ## § V. Negation on partial streams -/
 
@@ -316,6 +316,9 @@ theorem streamBits_neg_one_sub (n : ℕ) (m : ℤ) :
     · have e : -1 - m = 0 + 2 * (-1 - m / 2) := by omega
       rw [e]
       simp [streamBits, h, ih]
+
+-- Statement: Mathlib, the bitwise form: bit `k` of `lnot n` is the negation of bit `k` of `n`.
+#check @Int.testBit_lnot
 
 /-- `Statement:` `partialNeg` keeps the lowest `|w|` digits of `-streamVal w`. -/
 theorem partialNeg_eq_streamBits (w : List Bool) :
@@ -378,6 +381,86 @@ example : Function.IsFixedPt (tapeCons true) (fun _ => false)ᶜ :=
 example : Function.Semiconj (compl : (ℕ → Bool) → (ℕ → Bool)) (tapeCons true) (tapeCons false) :=
   fun _ => by funext n; cases n <;> rfl
 
+/-! ## § VII. Local ignorance
+
+The information order here is the prefix order `<+:` on `List Bool`. Local ignorance at `w` is `w`,
+the least element of the up-set `{v | w <+: v}`: `w` known and nothing beyond. These are least
+elements of up-sets in that order; none is ⊥ of a `ZPSemilattice`, the snap's ⊥ in `MachinePhase`,
+or ε₀. A motion `F` respects local ignorance at `w` when `w <+: F w`, a post-fixed point of `F`. -/
+
+/-- `Statement:` committing one digit is a cover of the empty stream in the prefix order: strictly
+    above it, with nothing strictly between. -/
+theorem first_digit_covers (d : Bool) :
+    ([] : List Bool) <+: [d] ∧ ([] : List Bool) ≠ [d] ∧
+    ∀ u : List Bool, [] <+: u → u <+: [d] → u = [] ∨ u = [d] := by
+  refine ⟨List.nil_prefix, by simp, fun u _ h => ?_⟩
+  rcases u with _ | ⟨b, t⟩
+  · exact Or.inl rfl
+  · obtain ⟨s, hs⟩ := h
+    simp at hs
+    obtain ⟨rfl, rfl, -⟩ := hs
+    exact Or.inr rfl
+
+-- Statement: the empty stream has two such covers, `[false]` and `[true]`.
+example : (([] : List Bool) <+: [false] ∧ ([] : List Bool) ≠ [false] ∧
+      ∀ u : List Bool, [] <+: u → u <+: [false] → u = [] ∨ u = [false]) ∧
+    (([] : List Bool) <+: [true] ∧ ([] : List Bool) ≠ [true] ∧
+      ∀ u : List Bool, [] <+: u → u <+: [true] → u = [] ∨ u = [true]) ∧
+    ([false] : List Bool) ≠ [true] :=
+  ⟨first_digit_covers false, first_digit_covers true, by decide⟩
+-- Reading: the cover is the OVER step of the up-and-over shape
+--   (`ZeroParadox/Order/SnapCannotBe.lean` § VI), read in the information order.
+
+-- Statement: `w` lies in the up-set `{v | w <+: v}` and is a prefix of each of its members.
+example (w : List Bool) : w <+: w ∧ ∀ v ∈ {v : List Bool | w <+: v}, w <+: v :=
+  ⟨List.prefix_refl w, fun _ h => h⟩
+
+/-- `Statement:` `partialDouble` respects local ignorance at `w` exactly when every digit of `w`
+    is `false`. -/
+theorem double_respects_iff (w : List Bool) : w <+: partialDouble w ↔ ∀ b ∈ w, b = false := by
+  show w <+: false :: w ↔ _
+  induction w with
+  | nil => simp
+  | cons b t ih =>
+    rw [List.cons_prefix_cons]
+    constructor
+    · rintro ⟨rfl, h⟩ c hc
+      rcases List.mem_cons.mp hc with rfl | hc
+      · rfl
+      · exact ih.mp h c hc
+    · intro h
+      have hb : b = false := h b (by simp)
+      subst hb
+      exact ⟨rfl, ih.mpr fun c hc => h c (List.mem_cons_of_mem _ hc)⟩
+
+-- Statement: every iterate of `partialDouble` from `List.replicate n false` stays above it.
+example (n m : ℕ) : List.replicate n false <+: partialDouble^[m] (List.replicate n false) := by
+  have h : ∀ m, partialDouble^[m] (List.replicate n false) = List.replicate (m + n) false :=
+    fun m => by
+      induction m with
+      | zero => simp
+      | succ m ih =>
+        rw [Function.iterate_succ_apply', ih]
+        simp [partialDouble, List.replicate_succ, Nat.succ_add]
+  rw [h, Nat.add_comm, List.replicate_add]; exact List.prefix_append _ _
+
+/-- `Statement:` `partialAddOne` respects local ignorance at `w` only at `w = []`. -/
+theorem addOne_respects_iff (w : List Bool) : w <+: partialAddOne w ↔ w = [] := by
+  constructor
+  · intro h
+    have heq : w = partialAddOne w := List.IsPrefix.eq_of_length h (partialAddOne_length w).symm
+    cases w with
+    | nil => rfl
+    | cons b t => cases b <;> simp [partialAddOne] at heq
+  · rintro rfl; exact List.nil_prefix
+-- Reading: add-one has a cover of `[]` available (`first_digit_covers`) and sends `[]` to `[]`,
+--   an analogue of `tsnap_holds_but_nothing_moves` (`ZeroParadox/Order/Snap.lean`).
+
+-- Statement: `partialNeg` respects local ignorance at every all-`false` stream
+--   (`partialNeg_replicate_false`).
+example (n : ℕ) : List.replicate n false <+: partialNeg (List.replicate n false) := by
+  rw [partialNeg_replicate_false]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -415,4 +498,7 @@ open ZeroParadox
 #print axioms partialNeg_replicate_false
 #print axioms partialNeg_iterate_nil
 #print axioms compl_semiconj_tapeCons
+#print axioms first_digit_covers
+#print axioms double_respects_iff
+#print axioms addOne_respects_iff
 end PurityCheck

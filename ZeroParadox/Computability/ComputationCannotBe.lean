@@ -57,8 +57,9 @@ section ComputationCannotBeIndex
 
 -- Statement: no map `List Bool → ℤ_[2]` semiconjugates `partialAddOne` to add-one on ℤ_[2]
 --   (`ZeroParadox/Category/IgnoranceSeam.lean`).
--- Reading: the obstruction is generic, a fixed point on one side and none on the other, carried by
---   Mathlib's `Function.IsFixedPt.map`; unlike the wall above, it is not specific to computation.
+-- Reading: the obstruction is generic (`no_semiconj_of_fixed_of_fpf`): a fixed point on one side
+--   and none on the other, carried by Mathlib's `Function.IsFixedPt.map`; unlike
+--   `no_computable_evalFixedPointFree`, it is not specific to computation.
 #check @ZeroParadox.partialAddOne_no_semiconj
 
 /-! ### § II. What computation DOES supply — the floors -/
