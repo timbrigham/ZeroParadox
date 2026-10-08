@@ -277,8 +277,8 @@ proved about where choice does work. -/
 
 /-! ## § IV. The ESSENTIAL cases — two reductions to taboos, and the premise they rest on
 
-The arrow runs from the principle to the taboo, so each theorem speaks of the principle, not of any one
-proof of it. ESSENTIAL, in the sense of § "Accidental versus essential" of
+The arrow runs from each principle (cases 1 and 2 below) to its taboo, so each theorem speaks of the
+principle, not of any one proof of it. ESSENTIAL, in the sense of § "Accidental versus essential" of
 `ZeroParadox/Category/ChoiceCannotBe.md`, means that no proof of the principle in Lean's choice-free
 fragment (the kernel with `propext` and `Quot.sound` as its only axioms) exists, GIVEN that the taboo
 the case reaches is not derivable in that fragment. That premise is not proved in this corpus; without
@@ -305,9 +305,11 @@ is essential. -/
 
 -- ESSENTIAL CASE 2 — the general fixed-point-free principle implies WEAK excluded middle, and this one
 -- sits on the KEYSTONE (the diagonal engine) rather than on an imported order instance. Its hypothesis
--- is the ∀-closure of `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` at `Type`, and every
--- proof of that theorem's statement instantiates to it (`fixedPointFree_of_classical`), so that theorem's
--- `classical` is essential in the sense of the header above, and on its premise.
+-- is the ∀-closure of `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` at
+-- `Type`, and every proof `P` of that theorem's statement instantiates to it, choice-free, as
+-- `fun _ _ _ hne => P hne` (`fixedPointFree_of_classical` is that instantiation of the classical
+-- proof), so that theorem's `classical` is essential in the sense of the header above, and on its
+-- premise.
 #check @ZeroParadox.wem_of_fixedPointFree
 
 -- Non-vacuity again: `fixedPointFree_of_nontrivial` supplies the hypothesis, classically by
@@ -320,9 +322,9 @@ is essential. -/
 -- equality and the same statement is choice-free — measured `[propext]`, against the general form's
 -- `[propext, Classical.choice, Quot.sound]`. `ZeroParadox/Category/DiagonalWitness.lean`'s `no_witnessRel_top_of_nontrivial`
 -- carries the same audit for the level-set form. **Where a carrier has `DecidableEq`, the essential
--- form is not needed** — the taboo says the general statement cannot be re-proved constructively, and
--- the restriction says it does not have to be *there*. Together they localize the classical content
--- rather than obstruct it: they say where it lives and how far it reaches.
+-- form is not needed** — the taboo makes the general statement non-re-provable constructively, on the
+-- premise in the header above, and the restriction says it does not have to be *there*. Together they
+-- localize the classical content rather than obstruct it: they say where it lives and how far it reaches.
 -- SCOPE: how far the escape reaches is UNSURVEYED. Which carriers in this corpus have `DecidableEq`
 -- was unmeasured as of 2026-08-02, so "the restriction covers what we need" is unverified in general — and a
 -- universal over every carrier would be the sentence shape `ZeroParadox/Category/ChoiceCannotBe.md`'s § "No count" warns about.

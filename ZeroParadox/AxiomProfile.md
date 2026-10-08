@@ -16,14 +16,15 @@ Keep the two tiers apart:
 * `[propext, Quot.sound]` — choice-free, but using propositional extensionality and quotient
   soundness, both Lean 4 standard.
 
-## Where `Classical.choice` enters, and the two claims that were false
+## Where `Classical.choice` enters
 
 It appears in the layers that *realize* these results inside standard analytic structures — p-adic
 topology, Hilbert space, ordinals, computability, category theory — **mostly** inherited from
 Mathlib's classically-built libraries, shown in § II for honest contrast.
 
-⚠ **Not entirely inherited, and not entirely open.** Both halves of the older wording were wrong, and
-each is refuted by a measurement rather than by an argument:
+⚠ **Not entirely inherited (measured), and on the premise in `ZeroParadox/Category/ChoiceCannotBe.lean`
+§ IV not entirely removable (reduced).** The measurements below settle provenance; necessity takes the
+two reductions, as the next paragraphs say:
 
 | measured | footprint |
 |---|---|
@@ -56,7 +57,7 @@ inherited dependence can be essential**, and *inherited* is not a synonym for *r
 | | own | inherited |
 |---|---|---|
 | **essential** (on § IV's premise) | `fixedPointFree_of_nontrivial` | well-order comparability |
-| **unclassified** | — | the remaining analytic layers |
+| **open** | — | the remaining analytic layers |
 
 ⚠ **A footprint measurement can never establish necessity.** `#print axioms` reports what a proof
 used, not what a proof must use. The accidental side needs an **exhibited clean proof**; the essential

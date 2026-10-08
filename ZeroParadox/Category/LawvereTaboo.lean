@@ -207,8 +207,9 @@ statement is available in Lean, and it is available only at the price § III nam
 This is the ledger entry. `ZeroParadox/Category/LawvereDecidable.lean` shows the `Classical.choice`
 on `fixedPointFree_of_nontrivial` **disappears** under `[DecidableEq β]`; this file shows that removing
 it without that instance would prove weak excluded middle without choice, a non-removability result on
-the premise stated in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV. The two together locate the cost exactly: not in the diagonal, and
-not in the two-point swap, but in stating the swap over types where it is not computable. -/
+the premise stated in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV. The two together locate the
+cost exactly: not in the diagonal, and not in the two-point swap, but in stating the swap over types
+where it is not computable. -/
 theorem wem_of_classical_supplier
     (H : ∀ (β : Type) (b₀ b₁ : β), b₀ ≠ b₁ → ∃ g : β → β, ∀ x, g x ≠ x) :
     ∀ p : Prop, ¬p ∨ ¬¬p :=

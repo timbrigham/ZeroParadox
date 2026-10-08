@@ -102,10 +102,9 @@ syntactic valuation.
 This is the property that earns `synVal` the name *valuation* rather than merely *depth counter*. Without
 it, `synVal` would be an arbitrary structural statistic that happened to agree with the tower; with it,
 `synVal` is order-compatible, and `le_synVal_of_tower_le` above is its specialization at the tower.
-Choice-free, by induction on the lexicographic structure of
-`ONote.cmp`, reusing `cmp_exp_ne_gt_of_ne_gt`.
+Choice-free, by induction on the lexicographic structure of `ONote.cmp`, reusing `cmp_exp_ne_gt_of_ne_gt`.
 
-Scope, unchanged: this is monotonicity of the *syntactic* valuation. It is still not claimed to agree
+Scope: this is monotonicity of the *syntactic* valuation. It is not claimed to agree
 with the 2-adic valuation on general notations — see `synVal`. -/
 theorem synVal_mono :
     ∀ (x y : ONote), ONote.cmp x y ≠ Ordering.gt → synVal x ≤ synVal y

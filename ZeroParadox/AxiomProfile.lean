@@ -66,7 +66,7 @@ section FrameworkOwnChoice
 #print axioms ZeroParadox.fixedPointFree_of_nontrivial   -- [propext, Classical.choice, Quot.sound]
 -- NECESSITY: two reductions to taboos, themselves CHOICE-FREE. The first is about the declaration
 -- above; the SECOND is about well-order comparability, whose choice is MATHLIB's — so it witnesses
--- that an INHERITED dependence can be essential too.
+-- that an INHERITED dependence can be essential too, on § IV's premise.
 #print axioms ZeroParadox.wem_of_fixedPointFree          -- [propext, Quot.sound]
 #print axioms ZeroParadox.em_of_wellOrder_comparable     -- [propext, Quot.sound]
 

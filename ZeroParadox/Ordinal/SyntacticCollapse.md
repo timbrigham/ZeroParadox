@@ -21,7 +21,8 @@ establish"). Nothing here settles the conjecture in either direction.
 ## What the Lean file is
 
 An **experiment**, and a **surrogate**. It asks whether the *content* of the ZP-L/Gentzen metric
-collapse — "the ω-tower's 2-adic encodings converge to 0 = ⊥" — is available without
+collapse — "the ω-tower's 2-adic encodings converge to ℤ_[2]'s 0", ⊥ of ℤ_[2] under its norm
+preorder — is available without
 `Classical.choice`, by staying entirely on the syntactic ordinal-notation substrate (`ONote`).
 
 Measured starting point (`ZeroParadox/Ordinal/Gentzen.lean`):

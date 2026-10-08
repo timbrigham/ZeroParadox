@@ -4,24 +4,22 @@ Ride-along documentation for [`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`]
 The Lean file holds the declarations, the Engineer's Take and a statement per declaration; this file holds
 the result, the prior art and the fences. Where the two would overlap, **the Lean is authoritative**.
 
-**Most** `Classical.choice` footprints this framework has examined have turned out **accidental** — a
-choice-free re-proof existed, or plausibly could. **Some do not.** The Lean file records one of those, and
-this file fences what it does and does not license.
+Examined `Classical.choice` footprints fall into three classes, accidental, essential and unclassified
+(`ZeroParadox/Category/ChoiceCannotBe.md`). The Lean file records an essential one, on the premise stated
+in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV, and this file fences what it does and does not license.
 
 `ZeroParadox/Category/ChoiceCannotBe.lean` § IV is the index of the essential cases and is the place
 to count them. **No figure is recorded here** — a count kept at the site of one instance goes stale
-silently the moment another is found, which is exactly what happened to the sentence this paragraph
-replaces. *(Corrected 2026-08-01: this header read "**every** footprint … accidental" and "**the one**
-place examined so far" until then. Both were already false — `wem_of_fixedPointFree`
-(`ZeroParadox/Category/LawvereTaboo.lean`) was committed 2026-07-20 and is a second essential case,
-sitting on the diagonal keystone rather than on an imported order instance.)*
+silently the moment another is found.
 
 The result: **comparability of arbitrary well-orders implies excluded middle**
 (`em_of_wellOrder_comparable`), proved with **no `Classical.choice`**
-(`[propext, Quot.sound]`). Comparability is the mathematical content of `le_total` in Mathlib's
-`LinearOrder Ordinal` instance — "any two ordinals are comparable" — so a choice-free proof of that
-field would be a choice-free proof of excluded middle; that this makes it non-removable rests on the
-premise stated in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
+(`[propext, Quot.sound]`). `Statement:` CARRIER, two charts, neither denied. The principle,
+comparability of well-orders in its `InitialSeg` form, is essential on the premise stated in
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV. Mathlib's `Ordinal` order, whose `le_total` instantiates that principle, is built with choice, and
+the statement itself carries it: a theorem that takes `∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a` as a
+hypothesis and proves `True` by `trivial` reports `[propext, Classical.choice, Quot.sound]` (measured
+2026-10-08; the instance-term trace is the Lean file's § III).
 
 ## PRIOR ART — the mathematics here is KNOWN and is NOT claimed as new
 
@@ -70,9 +68,10 @@ KNX are worth stating precisely, and none is a mathematical advance:
 ## What this DOES establish
 
 The *substrate* is essential in the sense, and on the premise, of
-`ZeroParadox/Category/ChoiceCannotBe.lean` § IV: "Any two well-orders are comparable" — hence
-`Ordinal`'s `LinearOrder`, hence `Ordinal.lt_or_ge`, hence every `sup`/`nfp`/`deriv` argument that
-leans on trichotomy — implies excluded middle by a choice-free reduction.
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV: "any two well-orders are comparable" implies excluded
+middle by a choice-free reduction. `Ordinal`'s `LinearOrder`, `lt_or_ge` on it, and every
+`sup`/`nfp`/`deriv` argument that leans on trichotomy DEPEND on that principle; they do not imply it,
+and on `Ordinal` the order instance carries choice in its own term (the Lean file's § III).
 
 ## What this does NOT establish — read before citing the Lean file
 
@@ -87,7 +86,9 @@ Nothing about ε₀ supplies those.
 
 So the classification splits, and the split is the point:
 
-* **the general order on `Ordinal` — ESSENTIAL** on the premise above (the Lean file);
+* **comparability of well-orders, the principle `Ordinal`'s general order instantiates — ESSENTIAL**
+  on the premise above (`em_of_wellOrder_comparable`); `Ordinal`'s order instance itself carries choice
+  in its term (the Lean file's § III);
 * **the ε₀ results' inheritance of it — still ACCIDENTAL-or-unclassified.** They use a
   general-purpose classically-built order where a decidable fragment would do.
 
