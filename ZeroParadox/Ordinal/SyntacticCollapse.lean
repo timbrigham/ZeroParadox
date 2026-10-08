@@ -35,9 +35,9 @@ set_option maxHeartbeats 400000
 `synVal 0 = 0` and `synVal (ω^e · n + a) = synVal e + 1`.
 
 This mirrors the 2-adic valuation of `Gentzen.cnfToZp2` *on the ω-tower*, where the coefficient is
-`1` and the remainder is `0`. Off the tower it disagrees with the 2-adic valuation, where the
-coefficient and remainder contribute (`example` after `synVal_tower_eq_valuation`,
-`ZeroParadox/Ordinal/CnfBridge.lean`). -/
+`1` and the remainder is `0`. It need not agree with the 2-adic valuation off the tower, where the
+coefficient and remainder contribute (fails at ω+1: the second `example` after
+`synVal_tower_eq_valuation`, `ZeroParadox/Ordinal/CnfBridge.lean`). -/
 def synVal : ONote → ℕ
   | 0 => 0
   | oadd e _ _ => synVal e + 1
@@ -104,8 +104,8 @@ it, `synVal` would be an arbitrary structural statistic that happened to agree w
 `synVal` is order-compatible, and `le_synVal_of_tower_le` above is its specialization at the tower.
 Choice-free, by induction on the lexicographic structure of `ONote.cmp`, reusing `cmp_exp_ne_gt_of_ne_gt`.
 
-Scope: this is monotonicity of the *syntactic* valuation. It disagrees with the 2-adic valuation off
-the tower — see `synVal`. -/
+Scope: this is monotonicity of the *syntactic* valuation. It need not agree with the 2-adic valuation
+off the tower (fails at ω+1: the second `example` after `synVal_tower_eq_valuation`). -/
 theorem synVal_mono :
     ∀ (x y : ONote), ONote.cmp x y ≠ Ordering.gt → synVal x ≤ synVal y
   | 0, _, _ => Nat.zero_le _

@@ -4,8 +4,8 @@ Ride-along documentation for [`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`]
 The Lean file holds the declarations, the Engineer's Take and a statement per declaration; this file holds
 the result, the prior art and the fences. Where the two would overlap, **the Lean is authoritative**.
 
-Examined `Classical.choice` footprints fall into three classes, accidental, essential and unclassified
-(`ZeroParadox/Category/ChoiceCannotBe.md`). The Lean file records an essential one, on the premise stated
+Examined `Classical.choice` footprints fall into four classes, accidental, essential, statement-carried
+and unclassified (`ZeroParadox/Category/ChoiceCannotBe.md`). The Lean file records an essential one, on the premise stated
 in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV, and this file fences what it does and does not license.
 
 `ZeroParadox/Category/ChoiceCannotBe.lean` § IV is the index of the essential cases and is the place
@@ -24,7 +24,8 @@ the second carries choice in its statement. The principle, comparability of well
 `example`s in the Lean file's § III). So it implies excluded middle too, though on `Ordinal` that
 implication is not choice-free.
 Mathlib's `Ordinal` order is
-built with choice, and the statement itself carries it: a theorem that takes
+built with choice, and the statement itself carries it, so `le_total` on `Ordinal.{0}` is
+STATEMENT-CARRIED: a theorem that takes
 `∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a` as a hypothesis and proves `True` by `trivial` reports
 `[propext, Classical.choice, Quot.sound]` (measured 2026-10-08; the instance-term trace is the Lean
 file's § III).
@@ -100,7 +101,8 @@ So the classification splits, and the split is the point:
 * **comparability of well-orders, which `le_total` on `Ordinal.{0}` states at `Type` — ESSENTIAL**
   on the premise above (`em_of_wellOrder_comparable`); `Ordinal`'s order instance itself carries choice
   in its term (the Lean file's § III);
-* **the ε₀ results — UNCLASSIFIED.** They inherit choice from Mathlib's `Ordinal` machinery:
+* **the ε₀ results — STATEMENT-CARRIED** (`ε₀ ≠ 0` as a hypothesis already reports the choice,
+  measured 2026-10-08). They inherit choice from Mathlib's `Ordinal` machinery:
   `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon`, as `ZeroParadox/Ordinal/ConstructiveOrdinals.lean`
   lists, and limit recursion (`SuccOrder.limitRecOn`), measured 2026-10-08.
   ZP-N's `ONote` results (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono`, each

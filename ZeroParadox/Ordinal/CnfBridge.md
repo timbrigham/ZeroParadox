@@ -16,7 +16,7 @@ vs `ℤ_[2]`), the same category error the framework RETIRES as ill-typed for MC
 and in `IsLeastFixedPointFrom` (`Order/LeastFixedPoint.lean`). `ZeroParadox/Ordinal/CnfBridge.lean`
 does **not** prove it.
 
-## What `ZeroParadox/Ordinal/CnfBridge.lean` DOES add (all type-sound, connected by the MAP, never by `=`)
+## What `ZeroParadox/Ordinal/CnfBridge.lean` DOES add (all type-sound, connected by the MAP, never by a cross-carrier `=`)
 
 1. **Map-mediated order embedding on the tower** (`tower_valuation_orderEmbedding`,
    `tower_repr_orderEmbedding`): on the shared index `n`, ordinal order of the tower stages and the
@@ -59,9 +59,10 @@ does **not** prove it.
 
 6. **The syntactic depth meets the 2-adic valuation on the tower** (`towerNONote_val`,
    `synVal_tower_eq_valuation`). `Statement:` TOWER-ONLY. Along the tower `synCollapse_epsN` crosses it
-   (the first `example` after it); off the tower it fails, because `synVal` ignores the coefficient and
-   the remainder (the second: ω + 1 has `synVal` 2 and 2-adic valuation 1). At the seed n = 0 the
-   agreement holds by Mathlib's `valuation 0 = 0`; in the extended valuation 0 has valuation ⊤, the
-   pole. The statement carries
-   `Classical.choice` (`towerNONote` and `cnfToZp2` carry it in their own terms, measured 2026-10-08),
-   so this bridge sits here rather than in the choice-free `ZeroParadox/Ordinal/SyntacticCollapse.lean`.
+   (the first `example` after it); off the tower the two need not agree, because `synVal` ignores the
+   coefficient and the remainder (fails at ω+1, the second: `synVal` 2 and 2-adic valuation 1). At the
+   seed n = 0 the agreement holds by Mathlib's `valuation 0 = 0`; under `Padic.addValuation` on ℚ_[2],
+   0 is the pole point, with valuation ⊤. The statement carries `Classical.choice` (`towerNONote` and
+   `cnfToZp2` carry it in their own terms, measured 2026-10-08), so both declarations are
+   STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md` § "Accidental versus essential") and
+   the bridge sits here rather than in the choice-free `ZeroParadox/Ordinal/SyntacticCollapse.lean`.

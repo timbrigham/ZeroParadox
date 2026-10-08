@@ -181,9 +181,9 @@ example : ∀ k : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → k ≤ (cnfToZp2 (to
   obtain ⟨N, hN⟩ := synCollapse_epsN k
   exact ⟨N, fun n hn => by rw [← synVal_tower_eq_valuation, towerNONote_val]; exact hN n hn⟩
 
--- `Statement:` off the tower the bridge fails, and `le_synVal_of_tower_le` has no `cnfToZp2`
--- counterpart: ω + 1 is not `cmp`-below `tower 2` = ω and has `synVal` 2, but its image is 6, of
--- 2-adic valuation 1.
+-- `Statement:` the bridge need not hold off the tower (fails at ω+1), and `le_synVal_of_tower_le`
+-- has no `cnfToZp2` counterpart: ω + 1 is not `cmp`-below `tower 2` = ω and has `synVal` 2, but its
+-- image is 6, of 2-adic valuation 1.
 example : ∃ x : NONote, ONote.cmp (tower 2) x.1 ≠ Ordering.gt ∧ 2 ≤ synVal x.1 ∧
     (cnfToZp2 x).valuation = 1 := by
   let one : NONote := NONote.oadd 0 1 0 ONote.NFBelow.zero

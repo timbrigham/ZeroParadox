@@ -80,17 +80,18 @@ framework is non-constructive." The load-bearing fact is the opposite and much n
 core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`). Beyond it the picture
 is mixed and the categories are what matter, not a total: some footprints are *accidental* (a choice-free
 re-proof exists — the entries labelled ACCIDENTAL in § I), two are **ESSENTIAL** on § IV's premise
-(§ IV), and others are **UNCLASSIFIED**, meaning nobody has tried. A count collapses those three into one number and loses the only distinction
-that carries information.
+(§ IV), some are **STATEMENT-CARRIED** (the statement itself carries choice), and others are
+**UNCLASSIFIED**, meaning nobody has tried. A count collapses those four into one number and loses the
+only distinction that carries information.
 
 **And in practice the number will not stay right.** A figure is true of the build it was measured on and
 goes stale as further files land; citing one that is not regenerated at the moment of use is the error,
 and a docstring cannot regenerate anything.
 
 What is true, and is what `ChoiceCannotBe.lean` asserts instead: **the framework is not choice-free; the
-core is (`t_snap_derived`, no axioms at all); examined footprints fall into three classes — accidental,
-essential, unclassified — and § I's ACCIDENTAL entries and § IV name cases in the first two.** No fraction is given, for
-the reason stated above.
+core is (`t_snap_derived`, no axioms at all); examined footprints fall into four classes — accidental,
+essential, statement-carried, unclassified — and § I's ACCIDENTAL entries and § IV name cases in the
+first two.** No fraction is given, for the reason stated above.
 
 **A universal negative is the most dangerous sentence shape in a `CannotBe` index:**
 the `#check` lines cannot overclaim, but prose quantified over *the whole framework* is falsified by
@@ -127,7 +128,8 @@ fact about the build you just ran, not a fact to carry anywhere.
 traced to a source and classified; much of the corpus is unexamined. **Not every footprint is
 accidental** — § IV exhibits two reductions to taboos, which make two footprints essential on the
 premise stated there. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
-has been examined, it has been **assigned** a class* — accidental, essential, or unclassified. (Not
+has been examined, it has been **assigned** a class* — accidental, essential, statement-carried, or
+unclassified. (Not
 "classifiable": with `unclassified` among the buckets, classifiability holds of everything and says
 nothing.) Do not
 upgrade that, and — for the same reason no count is recorded above — **do not quantify the examined
@@ -153,6 +155,7 @@ fraction either**; it moves with every commit.
   without choice, essential by showing that re-proving without choice would prove a taboo. Note this is a statement about the
   PRINCIPLE, not about any one proof of it: `#print axioms` reports a proof's footprint and can never
   witness necessity, which is exactly why the essential side needs a reduction instead of a measurement.
+* **STATEMENT-CARRIED** — the statement's own type carries `Classical.choice`: a theorem that only assumes the statement and proves `True` already reports it (the statement control). No proof can remove it, so neither ACCIDENTAL nor ESSENTIAL can be asked of it. What can be asked is whether a restatement, on a carrier whose statements are choice-free, holds without choice. Detected by the statement control; members are listed in § I/§ III where measured.
 
 Prior art for the distinction and its methods: constructive reverse mathematics, which classifies
 theorems ("to classify [over intuitionistic logic] various theorems … by logical principles") and whose

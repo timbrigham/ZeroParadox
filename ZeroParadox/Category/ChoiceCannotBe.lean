@@ -192,7 +192,8 @@ proved about where choice does work. -/
 -- (Setting: ACS's construction needs only function extensionality, which Lean has; only its
 -- uniqueness half uses univalence. See ZeroParadox/Computability/ChoicePurityInvariant.lean.)
 -- Contrast `strict_cofix_nonempty` (§ I, NO axioms): same phenomenon, different construction,
--- opposite footprint. That contrast is the accidental/essential distinction in one pair.
+-- opposite footprint. That contrast is the STATEMENT-CARRIED class in one pair: the statement carries
+-- the choice, and a restatement on a choice-free carrier holds without it (`ChoiceCannotBe.md`).
 #check @ZeroParadox.cofix_nonempty'
 
 -- THE TWO MODALITIES, side by side — the comparison a reader arrives wanting. `snapNucleus`

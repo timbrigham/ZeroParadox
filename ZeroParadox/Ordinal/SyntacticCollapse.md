@@ -26,7 +26,7 @@ in different states. The **snap half is resolved, incidental**:
 `ZeroParadox.t_snap_derived` (`ZeroParadox/Order/Snap.lean`) depends on *no axioms at all*. The **metric
 half** — the half the conjecture actually names — had never been attempted before the Lean file. The Lean file
 moves it, and moves it only as far as *evidence*: `tower_converges_to_zero` itself carries choice,
-and the bridge from what is proved in the Lean file to that statement is proved on the tower only,
+and the bridge from what is proved in the Lean file to its valuation ε-N form is proved on the tower only,
 outside the Lean file (see "What this does NOT establish"). Nothing here settles the conjecture in
 either direction.
 
@@ -55,7 +55,7 @@ Everything in the Lean file is defined by structural recursion on `ONote` constr
 2. `synVal_tower : synVal (tower n) = n`.
 3. `synVal_unbounded : ∀ k, ∃ x : ONote, k ≤ synVal x`.
 4. `le_synVal_of_tower_le` — **the non-trivial one.** *Every* notation that is not `cmp`-below
-   `tower n` has `synVal ≥ n`. So the valuation lower bound is not a property of one hand-picked
+   `tower n` has `synVal ≥ n`. So the syntactic valuation lower bound is not a property of one hand-picked
    sequence: it is forced by position in the syntactic order.
 4b. `synVal_mono` — `synVal` is **monotone** for `ONote.cmp`. This is what earns it the name
    *valuation* rather than *depth counter*, and `le_synVal_of_tower_le` is its specialization at the
@@ -89,10 +89,12 @@ Different carrier, different statement. In particular:
 
 * **The bridge is proved on the tower only, outside the Lean file:** `synVal_tower_eq_valuation`
   (`ZeroParadox/Ordinal/CnfBridge.lean`). Its statement carries choice, so it cannot sit in the
-  choice-free Lean file; off the tower the agreement fails (the second `example` after it).
+  choice-free Lean file; off the tower the two need not agree (fails at ω+1: the second `example`
+  after it).
 * **It does not show the metric collapse is choice-free.** The honest reading is bounded: *the
   convergence content is available choice-free on the syntactic side, which is evidence that the
-  `Classical.choice` in the 2-adic statement is Mathlib-imposed (accidental) rather than forced by
+  `Classical.choice` in the 2-adic statement is Mathlib-imposed (STATEMENT-CARRIED,
+  `ZeroParadox/Category/ChoiceCannotBe.md`) rather than forced by
   the ZP structure.* Evidence, not proof.
 
 ## Triviality assessment
