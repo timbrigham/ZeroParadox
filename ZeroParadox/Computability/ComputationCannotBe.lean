@@ -5,6 +5,7 @@ import ZeroParadox.Computability.GroundZero
 import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Category.DiagonalWitness
 import ZeroParadox.Category.LawvereTwoAdic
+import ZeroParadox.Category.IgnoranceSeam
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Information.Disjunctive
 
@@ -53,6 +54,10 @@ section ComputationCannotBeIndex
 -- Reading: the wall above says no computable map on codes is free of fixed points up to `eval`; add-one
 --   extended to partial digit streams is not free of fixed points either, and rests only at the empty stream.
 #check @ZeroParadox.partialAddOne_fixed_iff
+
+-- Statement: no map `List Bool → ℤ_[2]` semiconjugates `partialAddOne` to add-one on ℤ_[2]
+--   (`ZeroParadox/Category/IgnoranceSeam.lean`).
+#check @ZeroParadox.partialAddOne_no_semiconj
 
 /-! ### § II. What computation DOES supply — the floors -/
 
