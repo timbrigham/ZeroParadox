@@ -19,9 +19,8 @@ up.
 ---
 ## Formal Overview (AI-assisted)
 § I: add-one on `ℤ_[2]` fixes no point, so no class containing it has a relativized witness. § II:
-add-one and doubling on finite partial digit streams. The Take's dead zero is the all-zeros tape
-`botEnd`, the one tape doubling fixes (`boundaryDouble_botEnd`, `boundaryDouble_unique_fp`); the least
-element of the prefix order here is the empty stream, no digit known: a different object and type.
+add-one and doubling on finite partial digit streams. § II fences the Take's dead zero, `botEnd`,
+against the empty stream.
 -/
 
 /-! ## § I. Add-one on `ℤ_[2]` -/
@@ -57,6 +56,12 @@ from a subspace is its Thm 1.5, p. 527; and extending a Cantor-continuous map in
 with meets, from Cantor space to finite and infinite words, is Amorim, Kozen, Mardare, Panangaden and
 Roberts, LICS 2021, Lemma 8(ii), p. 5 of arXiv:2011.13171v2. `List Bool` is not claimed an instance
 of these; the doubling stages have no upper bound in its prefix order (the last `example` of § II). -/
+
+-- `Statement:` COINCIDENCE — the Take's dead zero is the all-zeros tape `botEnd : End = ℕ → Fin 2`
+--   (`ZeroParadox/Valuation/PadicTree.lean`): ⊥ of `End` under pointwise max and the unique fixed point
+--   of boundary doubling (`boundaryDouble_unique_fp`). Its two charts are fenced in
+--   `ZeroParadox/Category/IgnoranceSeam.lean`'s Overview. Partial-stream doubling (§ II) fixes no
+--   stream; the least element of the prefix order is the empty stream, a different object and type.
 
 /-- `Statement:` add-one on partial streams: the carry runs through `true` digits and stops at the
     first `false`, or where the known digits end. -/
