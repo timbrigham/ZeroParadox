@@ -632,7 +632,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1895,
+        "declarations": 1902,
         "files": 159
       },
       "entries": [
@@ -7417,6 +7417,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "174a2fa2-3001-4f3e-8a95-6f32fd275eca",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.partialNeg_eq_streamBits",
+            "short": "partialNeg_eq_streamBits"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.partialNeg_eq_streamBits",
+            "short": "partialNeg_eq_streamBits",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1755e02b-dc44-472d-8a33-f7a3c41cb763",
           "new": {
@@ -10731,6 +10768,43 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "240a21a0-b95f-4a03-ba3d-0d3d6bbe1775",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_neg_one_sub",
+            "short": "streamBits_neg_one_sub"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_neg_one_sub",
+            "short": "streamBits_neg_one_sub",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -14455,6 +14529,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "30540b19-b5f2-4a83-95b5-dfd7ff4a0bc1",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_doubleAddOne_iterate",
+            "short": "affineExt_doubleAddOne_iterate"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_doubleAddOne_iterate",
+            "short": "affineExt_doubleAddOne_iterate",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3063c04d-97d4-4834-94b1-f9a0cf8c3c55",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleBridge.lean",
@@ -14768,6 +14880,43 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "323feb81-5546-45d6-9277-d1af60f3a24a",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_streamVal_streamBits_add",
+            "short": "eq_streamVal_streamBits_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eq_streamVal_streamBits_add",
+            "short": "eq_streamVal_streamBits_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -16300,6 +16449,43 @@
           "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "37dc8a68-6221-4b2c-bdd3-3db1a428925f",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_length_eq_iff",
+            "short": "streamBits_length_eq_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.streamBits_length_eq_iff",
+            "short": "streamBits_length_eq_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -58356,6 +58542,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d86abcd3-9f63-42c9-9d0b-ecda16313561",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeCons_isFixedPt_iff",
+            "short": "tapeCons_isFixedPt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.tapeCons_isFixedPt_iff",
+            "short": "tapeCons_isFixedPt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d873f899-be7c-43df-8773-3f0f477181bc",
           "new": {
             "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
@@ -69392,6 +69616,44 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fdca9eb5-c6fa-473c-9e87-f96b8dcd7d98",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_double_iterate",
+            "short": "affineExt_double_iterate"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.affineExt_double_iterate",
+            "short": "affineExt_double_iterate",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },

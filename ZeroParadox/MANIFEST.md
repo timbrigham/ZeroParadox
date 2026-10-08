@@ -107,7 +107,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Category/DifferenceGeneratesSystem.lean` - Nuclei and sublocales — the home of "a predicated difference generates a system"
 - `ZeroParadox/Category/DoubleNegationNucleus.lean` - The double-negation nucleus: the excluded-middle modality
 - `ZeroParadox/Category/ExcludedMiddleBridge.lean` - The excluded-middle bridge: choice → excluded middle → the `Prop` nucleus is trivial
-- `ZeroParadox/Category/IgnoranceSeam.lean` - Ignorance, fills, and the seam between partial and complete digit motions
+- `ZeroParadox/Category/IgnoranceSeam.lean` - Fills and semiconjugacy (the seam) between partial and complete digit motions
 - `ZeroParadox/Category/Lawvere.lean` - ZPJ — The Lawvere bridge (keystone Tier-6 upgrade probe)
   - ride-along docs: `ZeroParadox/Category/Lawvere.md` - Category-relative verdicts: what each face fails, and what the shared shape is not
 - `ZeroParadox/Category/LawvereDecidable.lean` - Lawvere's engine, priced: the same theorems over decidable equality
