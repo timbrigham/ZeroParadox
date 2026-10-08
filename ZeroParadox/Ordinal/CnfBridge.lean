@@ -1,4 +1,5 @@
 import ZeroParadox.Ordinal.Gentzen
+import ZeroParadox.Ordinal.SyntacticCollapse
 import ZeroParadox.Order.LeastFixedPoint
 import Mathlib.Tactic
 
@@ -155,6 +156,24 @@ theorem snap_arc_z2_loop :
 example : Filter.Tendsto (fun n => ‖cnfToZp2 (towerNONote n)‖) Filter.atTop (nhds 0) :=
   tendsto_zero_iff_norm_tendsto_zero.1 tower_converges_to_zero
 
+/-! ## § VII. The syntactic depth and the 2-adic valuation agree on the tower -/
+
+/-- `Statement:` the underlying notation of each Gentzen tower stage is ZP-N's syntactic tower stage:
+`(towerNONote n).1 = tower n` (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`). -/
+theorem towerNONote_val (n : ℕ) : (towerNONote n).1 = tower n := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    show ONote.oadd (towerNONote n).1 1 0 = omegaPow (tower n)
+    rw [ih]
+    rfl
+
+/-- `Statement:` on each tower stage, the syntactic depth `synVal` of the notation equals the 2-adic
+valuation of its `cnfToZp2` image. Tower-only; scope and footprint: `CnfBridge.md` item 6. -/
+theorem synVal_tower_eq_valuation (n : ℕ) :
+    synVal (towerNONote n).1 = (cnfToZp2 (towerNONote n)).valuation := by
+  rw [towerNONote_val, synVal_tower, cnfToZp2_tower_valuation]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -170,5 +189,7 @@ open ZeroParadox
 #print axioms mu_construction_correspondence
 #print axioms cnf_bridge_type_boundary
 #print axioms snap_arc_z2_loop
+#print axioms towerNONote_val
+#print axioms synVal_tower_eq_valuation
 
 end PurityCheck

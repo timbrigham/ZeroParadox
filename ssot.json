@@ -632,8 +632,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1908,
-        "files": 159
+        "declarations": 1910,
+        "files": 160
       },
       "entries": [
         {
@@ -12903,6 +12903,46 @@
           "reason": "New 2026-09-16 with ZeroParadox/Valuation/PoleRegistration.lean. Option.isNone separates the two ends of a registered pole. Footprint [propext].",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2a9f6337-d029-4044-bd45-9b42865eacbc",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synVal_tower_eq_valuation",
+            "short": "synVal_tower_eq_valuation"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.synVal_tower_eq_valuation",
+            "short": "synVal_tower_eq_valuation",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "essential-claim arc part 1 round 4: tower bridge synVal = 2-adic valuation (Tim 2026-10-08)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -48412,6 +48452,45 @@
           "reason": "Round-2 gate fixes: the converse is now proved, so the class is characterised exactly",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b1e5612f-1036-4829-b700-82c932298e3e",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.towerNONote_val",
+            "short": "towerNONote_val"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.towerNONote_val",
+            "short": "towerNONote_val",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "essential-claim arc part 1 round 4: tower bridge synVal = 2-adic valuation (Tim 2026-10-08)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },

@@ -172,6 +172,27 @@ theorem order_footprint_le (a : Ordinal) : a ≤ a := le_refl a
 Compare `order_footprint_le`. -/
 theorem order_footprint_eq (a : Ordinal) : a = a := rfl
 
+-- `Statement:` totality of `≤` on `Ordinal.{0}` gives comparability of well-orders at `Type`, through
+-- `Ordinal.type_le_iff` (`Iff.rfl`).
+example (h : ∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a) :
+    ∀ (α β : Type) (r : α → α → Prop) (s : β → β → Prop)
+      [IsWellOrder α r] [IsWellOrder β s], Nonempty (r ≼i s) ∨ Nonempty (s ≼i r) :=
+  fun _ _ r s _ _ => h (Ordinal.type r) (Ordinal.type s)
+
+-- `Statement:` and comparability of well-orders at `Type` gives totality of `≤` on `Ordinal.{0}`,
+-- through `Ordinal.inductionOn`.
+example (H : ∀ (α β : Type) (r : α → α → Prop) (s : β → β → Prop)
+      [IsWellOrder α r] [IsWellOrder β s], Nonempty (r ≼i s) ∨ Nonempty (s ≼i r)) :
+    ∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a := by
+  intro a b
+  induction a using Ordinal.inductionOn with
+  | type α r =>
+    induction b using Ordinal.inductionOn with
+    | type β s =>
+      rcases H α β r s with h | h
+      · exact Or.inl (Ordinal.type_le_iff.mpr h)
+      · exact Or.inr (Ordinal.type_le_iff.mpr h)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check

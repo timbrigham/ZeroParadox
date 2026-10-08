@@ -12,24 +12,27 @@ collapse**, rather than merely imposed by Mathlib. Inside Mathlib that cannot be
 `tower_converges_to_zero`: its statement itself carries `Classical.choice` (a theorem that takes
 `Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0)` as a hypothesis and proves
 `True` by `trivial` reports `[propext, Classical.choice, Quot.sound]`, measured 2026-10-08). So the
-test is posed on a carrier whose statement is choice-free, such as ZP-N's `ONote`: can the snap and the
-ordinal tower's collapse be proved choice-free there? If yes, the choice is incidental; if no, that is
-evidence only, since essential needs a reduction to a taboo (`ZeroParadox/Category/ChoiceCannotBe.lean`
-§ IV).
+test is posed on ZP-N's `ONote`, whose statements can be choice-free, and both outcomes are evidence.
+A choice-free result on `ONote`, carried to the 2-adic statement along the tower by
+`synVal_tower_eq_valuation` (`ZeroParadox/Ordinal/CnfBridge.lean`), is evidence that the convergence
+content does not need choice, with choice entering only through the 2-adic packaging; a failure would
+be evidence the other way. Neither settles it, because the 2-adic statement, and the bridge's own
+statement, carry choice in Mathlib. Essential needs a reduction to a taboo
+(`ZeroParadox/Category/ChoiceCannotBe.lean` § IV).
 
 That test has two halves, and they are in different states. The **snap half is resolved, incidental**:
 `ZeroParadox.t_snap_derived` (`ZeroParadox/Order/Snap.lean`) depends on *no axioms at all*. The **metric
 half** — the half the conjecture actually names — had never been attempted before the Lean file. The Lean file
-moves it, and moves it only as far as *evidence*: `tower_converges_to_zero` itself still carries choice,
-and the bridge from what is proved in the Lean file to that statement is not proved (see "What this does NOT
-establish"). Nothing here settles the conjecture in either direction.
+moves it, and moves it only as far as *evidence*: `tower_converges_to_zero` itself carries choice,
+and the bridge from what is proved in the Lean file to that statement is proved on the tower only,
+outside the Lean file (see "What this does NOT establish"). Nothing here settles the conjecture in
+either direction.
 
 ## What the Lean file is
 
 An **experiment**, and a **surrogate**. It asks whether the *content* of the ZP-L/Gentzen metric
 collapse — "the ω-tower's 2-adic encodings converge to ℤ_[2]'s 0", ⊥ of ℤ_[2] under its norm
-preorder and, read in the valuation order on ℚ_[2], its unique greatest point
-(`ZeroParadox/Valuation/Padic.lean`) — is available without
+preorder and greatest under divisibility (`ZeroParadox/Valuation/Padic.lean`) — is available without
 `Classical.choice`, by staying entirely on the syntactic ordinal-notation substrate (`ONote`).
 
 Measured starting point (`ZeroParadox/Ordinal/Gentzen.lean`):
@@ -82,14 +85,9 @@ discharge it. That theorem is a statement about `Filter.Tendsto` of `cnfToZp2 : 
 in the 2-adic topology; the Lean file proves statements about a `ℕ`-valued function on raw `ONote`.
 Different carrier, different statement. In particular:
 
-* **The bridge is not verified in Lean here.** That `synVal x` agrees with
-  `(cnfToZp2 x).valuation` is *not* proved in the Lean file, and cannot be without importing the very
-  stack whose choice-dependence is under investigation. Gentzen's `cnfToZp2_tower_valuation`
-  computes the 2-adic valuation of the tower to be `n`, and `synVal_tower` computes the syntactic
-  depth of the tower to be `n`; the two agree numerically on the tower. That agreement is an
-  observation about two separate computations, not a theorem linking them. On general notations
-  `synVal` is *not* claimed to equal the 2-adic valuation at all — it ignores the coefficient and
-  the remainder, which contribute in general.
+* **The bridge is proved on the tower only, outside the Lean file:** `synVal_tower_eq_valuation`
+  (`ZeroParadox/Ordinal/CnfBridge.lean`). Its statement carries choice, so it cannot sit in the
+  choice-free Lean file; on general notations no bridge is claimed (`synVal`'s docstring).
 * **It does not show the metric collapse is choice-free.** The honest reading is bounded: *the
   convergence content is available choice-free on the syntactic side, which is evidence that the
   `Classical.choice` in the 2-adic statement is Mathlib-imposed (accidental) rather than forced by
