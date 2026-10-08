@@ -632,7 +632,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1905,
+        "declarations": 1908,
         "files": 159
       },
       "entries": [
@@ -30864,6 +30864,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6e51d24b-27d3-44c8-9b7d-47d7e7002ebf",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dropLast_iterate_eq_nil",
+            "short": "dropLast_iterate_eq_nil"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.dropLast_iterate_eq_nil",
+            "short": "dropLast_iterate_eq_nil",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean § VII mirror chart: local knowledge, truncation descent, doubling and add-one forgetting (2026-10-08)",
+          "verify": {
+            "axioms": "[propext, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6e795d49-9ac7-4ff6-9b1d-7ffd6a0f70f0",
           "new": {
@@ -32846,6 +32883,44 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": "[propext, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "767e2b66-594e-4708-8d1a-4cac6c2f31a7",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.double_never_forgets",
+            "short": "double_never_forgets"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.double_never_forgets",
+            "short": "double_never_forgets",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean § VII mirror chart: local knowledge, truncation descent, doubling and add-one forgetting (2026-10-08)",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -39244,6 +39319,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9053deb1-4462-4d4c-b49c-cb5369d2602a",
+          "new": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.addOne_forgets_iff",
+            "short": "addOne_forgets_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/IgnoranceSeam.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.addOne_forgets_iff",
+            "short": "addOne_forgets_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "IgnoranceSeam.lean § VII mirror chart: local knowledge, truncation descent, doubling and add-one forgetting (2026-10-08)",
+          "verify": {
+            "axioms": "[propext]",
             "sorry_free": true
           }
         },
