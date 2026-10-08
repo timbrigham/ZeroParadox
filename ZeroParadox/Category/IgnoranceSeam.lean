@@ -1,26 +1,23 @@
 import ZeroParadox.Category.LawvereTwoAdic
 import Mathlib.Dynamics.FixedPoints.Basic
+import Mathlib.Data.Int.Bitwise
 
 set_option maxHeartbeats 400000
 
 /-!
 # Fills and semiconjugacy (the seam) between partial and complete digit motions
-
 ## Engineer's Take
 
 Total ignorance sounds like perfect zero point zero zero zero, with an infinite number of zeros, and I think we are onto something. This running in both directions explains why some charts appear reversed. I think we need to build them.
 
----
--/
-
-/-! ## Formal Overview (AI-assisted)
-A partial stream is a `List Bool`, least-significant digit first; a tape is `ℕ → Bool`. § I fills
-streams to tapes, § II carries fixed points across a semiconjugacy, § III prepends, § IV iterates
-affine motions on streams from `[]`, § V negates, § VI complements. The empty stream `[]`, the
-all-false tape, `botEnd : ℕ → Fin 2` (`ZeroParadox/Valuation/PadicTree.lean`) and ℤ_[2]'s `0` lie
-in four types; no `=` between them is stated. The Take's zero tape is the all-false tape, the
-digits of ℤ_[2]'s `0` with zeros running to the left; filling with `true` sends the empty stream to
-the greatest tape (§ I). The reversal is proved here for one instance, complement (§ VI). -/
+## Formal Overview (AI-assisted)
+Streams are `List Bool`, least-significant digit first; tapes are `ℕ → Bool`. `[]`, the all-false tape,
+`botEnd : ℕ → Fin 2` and ℤ_[2]'s `0` lie in four types, with no `=` between them. The Take's zero tape is
+the all-false tape, which reads as 0 in two charts: the binary fraction 0.000… (zeros to the right of the
+point) and the 2-adic digits of ℤ_[2]'s 0 (zeros to the left; `ZeroParadox/Valuation/PadicTree.lean`);
+neither is the reading (neither chart's digit reading is formalized in this file). Filling with `true`
+sends `[]` to the greatest tape (§ I). Complement carries prepend-false to prepend-true by a semiconjugacy
+(§ VI); its order reversal is Mathlib's `compl_antitone`. § VII: local ignorance and local knowledge. -/
 
 namespace ZeroParadox
 
@@ -99,6 +96,9 @@ def tapeCons (e : Bool) (x : ℕ → Bool) : ℕ → Bool := fun n =>
   match n with
   | 0 => e
   | k + 1 => x k
+
+-- Statement: `tapeCons` is Mathlib's `Stream'.cons`.
+example (e : Bool) (x : ℕ → Bool) : tapeCons e x = Stream'.cons e x := rfl
 
 /-- `Statement:` every fill semiconjugates prepend-`e` on streams to prepend-`e` on tapes. -/
 theorem streamFill_semiconj_cons (d e : Bool) :
@@ -187,8 +187,9 @@ theorem affineExt_sound (k : ℕ) (a b : ℤ) (ha : (2 : ℤ) ^ k ∣ a) (w : Li
     rw [pow_add]; ring
   rw [e, streamBits_add_pow_mul]; rfl
 
--- Reading: at `k = 0`, on integers, this is the digit condition that characterizes 1-Lipschitz
---   maps of ℤ_p (Anashin, arXiv:1112.5089, Prop. 2.1, p. 4); ℤ_[2] is not used here.
+-- Reading: at `k = 0` this is an instance (p = 2, on integers) of the digit condition that
+--   characterizes 1-Lipschitz maps of ℤ_p (Anashin, arXiv:1112.5089, Prop. 2.1, p. 4); ℤ_[2] is not
+--   used here.
 
 /-- `Statement:` every integer `m` is `streamVal (streamBits n m)` plus a multiple of `2 ^ n`. -/
 theorem eq_streamVal_streamBits_add (n : ℕ) (m : ℤ) :
@@ -291,8 +292,6 @@ example : (affineExt 0 3 0)^[5] [] = [] ∧ (affineExt 0 1 1)^[5] [] = [] ∧
     (affineExt 0 (-1) 0)^[5] [] = [] :=
   ⟨affineExt_zero_iterate_nil _ _ _, affineExt_zero_iterate_nil _ _ _,
     affineExt_zero_iterate_nil _ _ _⟩
--- Statement: for `affineExt`, each step adds exactly `k` digits.
-#check @affineExt_iterate_length
 
 /-! ## § V. Negation on partial streams -/
 
@@ -316,6 +315,14 @@ theorem streamBits_neg_one_sub (n : ℕ) (m : ℤ) :
     · have e : -1 - m = 0 + 2 * (-1 - m / 2) := by omega
       rw [e]
       simp [streamBits, h, ih]
+
+-- Statement: Mathlib, the bitwise form: bit `k` of `lnot n` is the negation of bit `k` of `n`.
+#check @Int.testBit_lnot
+-- Statement: `Int.lnot m` is `-1 - m`.
+example (m : ℤ) : Int.lnot m = -1 - m := by
+  cases m with
+  | ofNat n => simp only [Int.lnot, Int.ofNat_eq_natCast]; omega
+  | negSucc n => simp only [Int.lnot]; omega
 
 /-- `Statement:` `partialNeg` keeps the lowest `|w|` digits of `-streamVal w`. -/
 theorem partialNeg_eq_streamBits (w : List Bool) :
@@ -378,6 +385,155 @@ example : Function.IsFixedPt (tapeCons true) (fun _ => false)ᶜ :=
 example : Function.Semiconj (compl : (ℕ → Bool) → (ℕ → Bool)) (tapeCons true) (tapeCons false) :=
   fun _ => by funext n; cases n <;> rfl
 
+/-! ## § VII. Local ignorance and local knowledge
+
+In the prefix order `<+:` on `List Bool`, local ignorance at `w` is `w` as the least element of the
+up-set `{v | w <+: v}`; a motion `F` respects it when `w <+: F w` (a post-fixed point), which allows
+digits beyond `w`. Local knowledge at `w` is `w` as the greatest element of `{u | u <+: w}`; `F` only
+forgets at `w` when `F w <+: w` (a pre-fixed point). These are least and greatest elements of such
+sets in the prefix order. No `ZPSemilattice` on `List Bool` induces the prefix order (next `example`),
+and no `=` is stated between them and ⊥ of a `ZPSemilattice`, `MachinePhase`'s `c₀`, or ε₀. -/
+
+-- Statement: no `ZPSemilattice` on `List Bool` induces the prefix order (`join a b = b ↔ a <+: b`):
+--   `[false]` and `[true]` have no common extension (the `List (Fin 2)` form of that incomparability is
+--   `branches_incomparable`, `ZeroParadox/Valuation/BranchingRequirement.lean`).
+example : ¬ ∃ inst : ZPSemilattice (List Bool),
+    ∀ a b : List Bool, inst.join a b = b ↔ a <+: b := by
+  rintro ⟨inst, h⟩
+  have h1 : [false] <+: inst.join [false] [true] := (h _ _).1 (by
+    rw [← inst.join_assoc, inst.join_idem])
+  have h2 : [true] <+: inst.join [false] [true] := (h _ _).1 (by
+    rw [inst.join_comm [false] [true], ← inst.join_assoc, inst.join_idem])
+  rcases hj : inst.join [false] [true] with _ | ⟨b, t⟩
+  · rw [hj] at h1; simp at h1
+  · rw [hj] at h1 h2
+    simp [List.cons_prefix_cons] at h1 h2
+    exact Bool.noConfusion (h1.symm.trans h2)
+
+/-- `Statement:` committing one digit is a cover of the empty stream in the prefix order: strictly
+    above it, with nothing strictly between. -/
+theorem first_digit_covers (d : Bool) :
+    ([] : List Bool) <+: [d] ∧ ([] : List Bool) ≠ [d] ∧
+    ∀ u : List Bool, [] <+: u → u <+: [d] → u = [] ∨ u = [d] := by
+  refine ⟨List.nil_prefix, by simp, fun u _ h => ?_⟩
+  rcases u with _ | ⟨b, t⟩
+  · exact Or.inl rfl
+  · obtain ⟨s, hs⟩ := h
+    simp at hs
+    obtain ⟨rfl, rfl, -⟩ := hs
+    exact Or.inr rfl
+
+-- Statement: the empty stream has two distinct covers, `[false]` and `[true]`.
+example : (([] : List Bool) <+: [false] ∧ ([] : List Bool) ≠ [false] ∧
+      ∀ u : List Bool, [] <+: u → u <+: [false] → u = [] ∨ u = [false]) ∧
+    (([] : List Bool) <+: [true] ∧ ([] : List Bool) ≠ [true] ∧
+      ∀ u : List Bool, [] <+: u → u <+: [true] → u = [] ∨ u = [true]) ∧
+    ([false] : List Bool) ≠ [true] :=
+  ⟨first_digit_covers false, first_digit_covers true, by decide⟩
+
+-- Statement: they are its only covers.
+example (u : List Bool) (h2 : ([] : List Bool) ≠ u)
+    (h3 : ∀ v : List Bool, [] <+: v → v <+: u → v = [] ∨ v = u) : u = [false] ∨ u = [true] := by
+  rcases u with _ | ⟨b, t⟩
+  · exact absurd rfl h2
+  · rcases h3 [b] List.nil_prefix ⟨t, rfl⟩ with h | h
+    · simp at h
+    · cases b <;> simp_all
+
+-- Statement: under `List Bool`'s own order, which is lexicographic, `[true]` does not cover `[]`:
+--   `[false]` lies between.
+example : ¬ ([] : List Bool) ⋖ [true] := fun h => h.2 (c := [false]) (by decide) (by decide)
+-- Reading: the shape the OVER leg asks for (`UpAndOver.cover`, Mathlib `CovBy`), here in the prefix
+--   order, for which no order instance is built (`List Bool`'s own `≤` is lexicographic, under which
+--   `[false]` lies between `[]` and `[true]`); with its two covers and no join it is Winskel's
+--   conflict shape (`ZeroParadox/Order/SnapCannotBe.lean` § II).
+
+-- Statement: `w` lies in the up-set `{v | w <+: v}` and is a prefix of each of its members.
+example (w : List Bool) : w <+: w ∧ ∀ v ∈ {v : List Bool | w <+: v}, w <+: v :=
+  ⟨List.prefix_refl w, fun _ h => h⟩
+
+-- Statement: respecting allows digits beyond `w`: the identity respects every `w`, and
+--   `partialDouble` respects `[]` while adding a digit.
+example (w : List Bool) : w <+: id w ∧ ([] : List Bool) <+: partialDouble [] :=
+  ⟨List.prefix_refl w, List.nil_prefix⟩
+
+/-- `Statement:` `partialDouble` respects local ignorance at `w` exactly when every digit of `w`
+    is `false`. -/
+theorem double_respects_iff (w : List Bool) : w <+: partialDouble w ↔ ∀ b ∈ w, b = false := by
+  show w <+: false :: w ↔ _
+  induction w with
+  | nil => simp
+  | cons b t ih =>
+    rw [List.cons_prefix_cons]
+    constructor
+    · rintro ⟨rfl, h⟩ c hc
+      rcases List.mem_cons.mp hc with rfl | hc
+      · rfl
+      · exact ih.mp h c hc
+    · intro h
+      have hb : b = false := h b (by simp)
+      subst hb
+      exact ⟨rfl, ih.mpr fun c hc => h c (List.mem_cons_of_mem _ hc)⟩
+
+-- Statement: every iterate of `partialDouble` from `List.replicate n false` stays above it.
+example (n m : ℕ) : List.replicate n false <+: partialDouble^[m] (List.replicate n false) := by
+  have h : ∀ m, partialDouble^[m] (List.replicate n false) = List.replicate (m + n) false :=
+    fun m => by
+      induction m with
+      | zero => simp
+      | succ m ih =>
+        rw [Function.iterate_succ_apply', ih]
+        simp [partialDouble, List.replicate_succ, Nat.succ_add]
+  rw [h, Nat.add_comm, List.replicate_add]; exact List.prefix_append _ _
+
+/-- `Statement:` `partialAddOne` respects local ignorance at `w` exactly at `w = []`. -/
+theorem addOne_respects_iff (w : List Bool) : w <+: partialAddOne w ↔ w = [] := by
+  constructor
+  · intro h
+    have heq : w = partialAddOne w := List.IsPrefix.eq_of_length h (partialAddOne_length w).symm
+    cases w with
+    | nil => rfl
+    | cons b t => cases b <;> simp [partialAddOne] at heq
+  · rintro rfl; exact List.nil_prefix
+-- Reading: the prefix order has a cover of `[]` (`first_digit_covers`) and add-one, which preserves
+--   length, fixes `[]`; an analogue of `tsnap_holds_but_nothing_moves` (`ZeroParadox/Order/Snap.lean`),
+--   where `stuckPhase` fixes every phase.
+
+-- Statement: `partialNeg` respects local ignorance at every all-`false` stream
+--   (`partialNeg_replicate_false`).
+example (n : ℕ) : List.replicate n false <+: partialNeg (List.replicate n false) := by
+  rw [partialNeg_replicate_false]
+
+-- Statement: `w` lies in `{u | u <+: w}` and each of its members is a prefix of `w`.
+example (w : List Bool) : w <+: w ∧ ∀ u ∈ {u : List Bool | u <+: w}, u <+: w :=
+  ⟨List.prefix_refl w, fun _ h => h⟩
+
+-- Statement: truncation (`List.dropLast`) only forgets, at every `w`.
+example (w : List Bool) : w.dropLast <+: w := List.dropLast_prefix w
+
+/-- `Statement:` iterating truncation from `w` reaches `[]` after `|w|` steps. -/
+theorem dropLast_iterate_eq_nil (w : List Bool) : List.dropLast^[w.length] w = [] := by
+  have h : ∀ n, (List.dropLast^[n] w).length = w.length - n := fun n => by
+    induction n with
+    | zero => rfl
+    | succ n ih => rw [Function.iterate_succ_apply', List.length_dropLast, ih]; omega
+  exact List.eq_nil_of_length_eq_zero (by rw [h, Nat.sub_self])
+
+/-- `Statement:` `partialDouble w` is never a prefix of `w`: doubling only forgets at no `w`. -/
+theorem double_never_forgets (w : List Bool) : ¬ partialDouble w <+: w := fun h => by
+  have := h.length_le
+  simp [partialDouble] at this
+
+/-- `Statement:` `partialAddOne` only forgets exactly at `w = []`; it preserves length, so forgetting
+    is fixing (`partialAddOne_fixed_iff`). -/
+theorem addOne_forgets_iff (w : List Bool) : partialAddOne w <+: w ↔ w = [] := by
+  constructor
+  · intro h
+    exact (partialAddOne_fixed_iff w).1 (h.eq_of_length (partialAddOne_length w))
+  · rintro rfl; exact List.nil_prefix
+-- Reading: local ignorance and local knowledge at `w` are the up-set and the prefix set of one `w`;
+--   doubling's climb from `[]` and truncation's descent to it are the two directions.
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -415,4 +571,10 @@ open ZeroParadox
 #print axioms partialNeg_replicate_false
 #print axioms partialNeg_iterate_nil
 #print axioms compl_semiconj_tapeCons
+#print axioms first_digit_covers
+#print axioms double_respects_iff
+#print axioms addOne_respects_iff
+#print axioms dropLast_iterate_eq_nil
+#print axioms double_never_forgets
+#print axioms addOne_forgets_iff
 end PurityCheck
