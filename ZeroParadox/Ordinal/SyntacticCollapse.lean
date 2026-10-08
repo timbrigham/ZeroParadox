@@ -3,144 +3,6 @@ import ZeroParadox.Ordinal.ConstructiveOrdinals
 /-!
 # Syntactic surrogate for the 2-adic metric collapse (choice-free)
 
-## The conjecture under test
-
-The framework carries a standing conjecture: **`Classical.choice` is structurally forced by the ZP metric
-collapse**, rather than merely imposed by Mathlib. Its own stated test is whether the snap and
-`tower_converges_to_zero` can be proved without choice — if yes, choice is incidental; if no, it is forced.
-
-That test has two halves, and they are in different states. The **snap half is resolved, incidental**:
-`ZeroParadox.t_snap_derived` (`ZeroParadox/Order/Snap.lean`) depends on *no axioms at all*. The **metric
-half** — the half the conjecture actually names — had never been attempted before this file. This file
-moves it, and moves it only as far as *evidence*: `tower_converges_to_zero` itself still carries choice,
-and the bridge from what is proved here to that statement is not proved (see "What this does NOT
-establish"). Nothing here settles the conjecture in either direction.
-
-## What this file is
-
-An **experiment**, and a **surrogate**. It asks whether the *content* of the ZP-L/Gentzen metric
-collapse — "the ω-tower's 2-adic encodings converge to 0 = ⊥" — is available without
-`Classical.choice`, by staying entirely on the syntactic ordinal-notation substrate (`ONote`).
-
-Measured starting point (`ZeroParadox/Ordinal/Gentzen.lean`):
-
-* `ZeroParadox.tower_converges_to_zero` — `[propext, Classical.choice, Quot.sound]`
-* `ZeroParadox.cnfToZp2_valuation_unbounded` — `[propext, Classical.choice, Quot.sound]`
-
-The diagnosis under test is that the choice enters *before any topology*, through `NONote`/`NF`,
-which Mathlib defines via `ONote.repr` — the syntax→semantics bridge into the classically-built
-`Ordinal` type. If so, the convergence content should be reachable choice-free on the raw-syntax side.
-
-Everything below is defined by structural recursion on `ONote` constructors. Nothing here calls
-`ONote.repr`, mentions `NONote` or `NF`, or imports the 2-adic / topology stack.
-
-## What is actually proved here
-
-1. `synVal : ONote → ℕ` — the **leading-exponent depth** of a notation, purely syntactic.
-2. `synVal_tower : synVal (tower n) = n`.
-3. `synVal_unbounded : ∀ k, ∃ x : ONote, k ≤ synVal x`.
-4. `le_synVal_of_tower_le` — **the non-trivial one.** *Every* notation that is not `cmp`-below
-   `tower n` has `synVal ≥ n`. So the valuation lower bound is not a property of one hand-picked
-   sequence: it is forced by position in the syntactic order.
-4b. `synVal_mono` — `synVal` is **monotone** for `ONote.cmp`. This is what earns it the name
-   *valuation* rather than *depth counter*, and `le_synVal_of_tower_le` is its specialization at the
-   tower. Added after a verification pass challenged whether the definition was faithful; the check
-   was worth running, and this is what it produced.
-5. `synCollapse_epsN` / `synCollapse_norm_bound` — the ε-N statement, written out directly
-   (`∀ k, ∃ N, ∀ n ≥ N, …`) rather than through `Filter.Tendsto`/`Metric`, since that API is where
-   the classical dependencies sit. The norm form is stated in `ℕ` as `2 ^ k ≤ 2 ^ synVal ·`, which
-   is exactly "norm `≤ 2 ^ (-k)`" for an element of valuation `synVal ·`, with no division ring.
-
-## Result
-
-Every theorem in this file reports `[propext]` or cleaner. Two secondary findings about *where* the
-choice actually was:
-
-* The first version of `le_synVal_of_tower_le` (item 4) closed with `simpa`, and reported
-  `[propext, Classical.choice, Quot.sound]`. Replacing that one tactic call with an explicit
-  `show` + `Nat.succ_le_succ` made it `[propext]`. The choice was a tactic artifact, not structure.
-* Stating the norm bound over `ℚ` as `1 / 2 ^ v ≤ 1 / 2 ^ k` also reported choice — and so does
-  `(1 : ℚ) / 2 ^ n = 1 / 2 ^ n` proved by `rfl`, which is mathematically vacuous. Mathlib's `ℚ`
-  division-ring instance is choice-tainted at the instance level. Restating in `ℕ` removed it.
-
-Both are cases of choice arriving through Mathlib packaging rather than through the mathematics —
-the same shape as the diagnosis under test, at a smaller scale.
-
-## What this does NOT establish
-
-This is **not** a re-proof of `tower_converges_to_zero`, and it does not replace, supersede, or
-discharge it. That theorem is a statement about `Filter.Tendsto` of `cnfToZp2 : NONote → ℤ_[2]`
-in the 2-adic topology; this file proves statements about a `ℕ`-valued function on raw `ONote`.
-Different carrier, different statement. In particular:
-
-* **The bridge is not verified in Lean here.** That `synVal x` agrees with
-  `(cnfToZp2 x).valuation` is *not* proved in this file, and cannot be without importing the very
-  stack whose choice-dependence is under investigation. Gentzen's `cnfToZp2_tower_valuation`
-  computes the 2-adic valuation of the tower to be `n`, and `synVal_tower` computes the syntactic
-  depth of the tower to be `n`; the two agree numerically on the tower. That agreement is an
-  observation about two separate computations, not a theorem linking them. On general notations
-  `synVal` is *not* claimed to equal the 2-adic valuation at all — it ignores the coefficient and
-  the remainder, which contribute in general.
-* **It does not show the metric collapse is choice-free.** The honest reading is bounded: *the
-  convergence content is available choice-free on the syntactic side, which is evidence that the
-  `Classical.choice` in the 2-adic statement is Mathlib-imposed (accidental) rather than forced by
-  the ZP structure.* Evidence, not proof.
-
-## Triviality assessment
-
-Items 1, 2, 3 and 5 are, honestly, close to trivial (4b is elementary too — the same lexicographic
-induction as item 4, generalized): `synVal (tower n) = n` is "the depth of an
-`n`-fold nesting is `n`", and unboundedness/ε-N follow immediately. An unbounded-valuation claim of
-that shape holds of any sequence built by iterating a depth-increasing constructor, so on its own it
-is weak evidence.
-
-Item 4 is what carries the weight. It is an order→valuation implication quantified over *all*
-notations: not "some sequence has growing valuation", but "nothing sitting at or above `tower n` in
-the syntactic order can have depth below `n`". That is the statement which, transported across the
-bridge, would say the 2-adic collapse is forced by ordinal position rather than exhibited by a
-lucky choice of sequence. It is still elementary — it is lexicographic induction on `cmp` — but it
-is not vacuous, and it is the piece that is choice-free here.
-
-## Prior art
-
-**Adjacent literature, and the delta stated precisely (read from source).** Syntactic complexity measures
-on ordinal notations are an established subject: Buchholz, Cichon and Weiermann, *A Uniform Approach to
-Fundamental Sequences and Hierarchies*, MLQ 40 (1994) 273-286, builds fundamental sequences from the
-interplay between Bachmann systems and a term-complexity function they call a **norm**.
-
-**`synVal` is NOT a norm in their sense, and the reason is the delta.** Their Definition 1(6) (p. 275)
-fixes a norm by a *finite-fibre* condition, not by counting anything:
-
-  `N` is a norm on `τ` iff `∀ α n, card {β < α : N β ≤ n} < ω`.
-
-`synVal` fails this outright. Every finite ordinal notation `oadd 0 n 0` has `synVal = 1`, so
-`{β < ω : synVal β ≤ 1}` is infinite. `synVal` reads only the leading-exponent depth and discards the
-coefficient — and it is exactly that discarded data which would keep the fibres finite. So this file's
-measure is a *depth function*, deliberately coarser than a norm, adequate for the tower (where the
-coefficient is always `1`) and inadequate as a norm in general.
-
-Their Lemma 2 is the near neighbour: it defines an iteration-depth function `G α := min {i : α[0]^i = 0}`
-— structurally the same idea as `synVal`. **On a Bachmann system, G IS a norm**, unconditionally: Lemma
-2(a)'s proof (p. 276) concludes "Thus (τ, ·[·], G) is a normed Bachmann system. By Lemma 1(b) G is a
-norm." Lemma 2(b) is a *separate sufficient condition* for the weaker bare-fundamental-sequences setting,
-not an extra hypothesis (an earlier draft of this paragraph said otherwise and was wrong; corrected
-2026-07-19 against the paper).
-
-**That correction sharpens the delta rather than softening it.** Iteration depth is not inherently too
-coarse to be a norm — in their setting it satisfies the finite-fibre condition. `synVal` fails it for a
-reason specific to *this* carrier: `ONote`'s `oadd e n a` carries a coefficient slot, so infinitely many
-notations (`oadd 0 n 0` for every `n`) share depth 1. Their fundamental-sequence setting has no such slot
-below a given point. So the gap is not "depth is a weak measure" but "this carrier lets a coefficient
-hide inside a depth class" — which is exactly the information `synVal` discards, and exactly why it
-suffices for the tower (where the coefficient is pinned at 1) and nowhere else.
-
-`ONote` / `NONote` and `ONote.cmp` are Mathlib (`Mathlib.SetTheory.Ordinal.Notation`). The technique
-of working on the syntactic substrate to avoid the choice inherited from Mathlib's `Ordinal` is not
-new here either — it is ZP-N's (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`), which established
-it for the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono`). This file
-extends that same technique to the valuation/metric side. The contribution is the instance, not the
-method.
-
 ## Engineer's Take
 
 The snap is a one way operator away from zero to epsilon zero, and eventually that value sequence that is
@@ -150,6 +12,13 @@ the whole for the duration, and it eventually returns to a new bottom.
 It is definitely a separate instance that you return to, versus where you left from. It is still part of
 the entire family, so the question becomes whether you are looking at it from the family or the instance
 point of view.
+
+---
+
+`synVal`, a syntactic depth on `ONote`, and the ε-N form of the ω-tower's collapse
+(`synCollapse_epsN`, `synCollapse_norm_bound`), each at `[propext]` or cleaner. The conjecture under
+test, what is and is not established, the triviality assessment and the prior art are in
+`ZeroParadox/Ordinal/SyntacticCollapse.md`, beside this file.
 -/
 
 namespace ZeroParadox
@@ -233,12 +102,11 @@ syntactic valuation.
 This is the property that earns `synVal` the name *valuation* rather than merely *depth counter*. Without
 it, `synVal` would be an arbitrary structural statistic that happened to agree with the tower; with it,
 `synVal` is order-compatible, and `le_synVal_of_tower_le` above is its specialization at the tower.
-Added after a verification pass questioned whether the definition was faithful — the check was worth
-running, and this is what it produced. Choice-free, by induction on the lexicographic structure of
+Choice-free, by induction on the lexicographic structure of
 `ONote.cmp`, reusing `cmp_exp_ne_gt_of_ne_gt`.
 
 Scope, unchanged: this is monotonicity of the *syntactic* valuation. It is still not claimed to agree
-with the 2-adic valuation on general notations — see the header. -/
+with the 2-adic valuation on general notations — see `synVal`. -/
 theorem synVal_mono :
     ∀ (x y : ONote), ONote.cmp x y ≠ Ordering.gt → synVal x ≤ synVal y
   | 0, _, _ => Nat.zero_le _

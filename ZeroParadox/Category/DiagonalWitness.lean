@@ -107,9 +107,10 @@ theorem no_witnessRel_top_of_nontrivial {β : Type u} [DecidableEq β] [Nontrivi
   -- Choice-free: with `DecidableEq β` the swap needs no classical decision (constructive-footprint audit,
   -- 2026-07-18). This is the base-level, choice-free form; the `DecidableEq` restriction is what buys
   -- the purity. The construction inlined below is the one that
-  -- `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` produces, and THAT theorem is
-  -- essentially classical — `ZeroParadox/Category/LawvereTaboo.lean`'s `wem_of_fixedPointFree` reduces
-  -- weak excluded middle from it. **That is a fact about that theorem, not about this one:
+  -- `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` produces, and THAT theorem's
+  -- `classical` is essential in the sense, and on the premise, of
+  -- `ZeroParadox/Category/ChoiceCannotBe.lean` § IV (`wem_of_fixedPointFree` derives weak excluded
+  -- middle from its ∀-closure). **That is a fact about that theorem, not about this one:
   -- essentiality does not transfer, and there is no dependency here — the swap is inlined, and this
   -- statement measures `[propext]`, which is what proves the independence.**
   -- (Corrected 2026-08-01, found independently by all three round-4 gates: an earlier revision called

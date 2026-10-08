@@ -192,6 +192,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Ordinal/Kruskal.md` - Where the choice comes from, and which half of the axiom-free proof transfers
 - `ZeroParadox/Ordinal/NaturalOpsPow.lean` - Natural sum on powers of ω — the deferred CNF characterization (ported)
 - `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` - Comparability of well-orders is a constructive taboo
+  - ride-along docs: `ZeroParadox/Ordinal/OrdinalChoiceEssential.md` - Comparability of well-orders is a constructive taboo: result, prior art and fences
 - `ZeroParadox/Ordinal/P8.lean` - P8 re-attempt: ε₀ → 0 in ℤ₂ via a tower-rank 2-adic encoding
 - `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: notations denoting the ordinals up to ε₀, a map into `Ordinal`, and both sides' axiom footprints
   - ride-along docs: `ZeroParadox/Ordinal/PricedInterface.md` - PricedInterface — ride-along documentation
@@ -203,6 +204,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/SnapSuccession.lean` - The succession as a chain: the ε-numbers are the snap's successive targets, strictly climbing
   - ride-along docs: `ZeroParadox/Ordinal/SnapSuccession.md` - SnapSuccession — the ε-numbers as the snap's successive targets
 - `ZeroParadox/Ordinal/SyntacticCollapse.lean` - Syntactic surrogate for the 2-adic metric collapse (choice-free)
+  - ride-along docs: `ZeroParadox/Ordinal/SyntacticCollapse.md` - Syntactic surrogate for the 2-adic metric collapse: the conjecture, the result and its fences
 - `ZeroParadox/Ordinal/WeakGoodstein.lean` - Weak Goodstein termination (second-domain depth test: ordinals / proof theory)
 
 ### Algebra / wheel (ZP-J)

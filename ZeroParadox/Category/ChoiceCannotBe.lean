@@ -64,7 +64,7 @@ footprint; `[propext]` means propositional extensionality only. -/
 -- statements on DIFFERENT carriers, not one statement rephrased** — the bridge `synVal` = 2-adic
 -- valuation is NOT proved, and cannot be without importing the stack under investigation. So this is
 -- EVIDENCE that the choice in the ℚ₂ statement is Mathlib-imposed, not a demonstration that the metric
--- collapse is choice-free. See `ZeroParadox/Ordinal/SyntacticCollapse.lean`'s "What this does NOT establish".
+-- collapse is choice-free. See `ZeroParadox/Ordinal/SyntacticCollapse.md`'s "What this does NOT establish".
 #check @ZeroParadox.synCollapse_epsN
 #check @ZeroParadox.synVal_mono
 
@@ -275,14 +275,21 @@ proved about where choice does work. -/
 #check @Prop.instHeytingAlgebra
 #check @Prop.instBooleanAlgebra
 
-/-! ## § IV. The ESSENTIAL cases — where the choice is NOT removable
+/-! ## § IV. The ESSENTIAL cases — two reductions to taboos, and the premise they rest on
 
-Each case derives a taboo (excluded middle, or its weak form) from a classical principle the framework
-uses: ESSENTIAL as defined in § "Accidental versus essential" of `ZeroParadox/Category/ChoiceCannotBe.md`.
-The theorems are choice-free reductions with the classical content in the hypothesis, so they speak of
-the principle, not of any one proof. "No choice-free re-proof exists" rests on a premise not proved
-here: excluded middle and weak excluded middle are not derivable in Lean's choice-free fragment. Neither
-case says the framework's overall use of choice is essential, nor is either an independence result. -/
+The arrow runs from the principle to the taboo, so each theorem speaks of the principle, not of any one
+proof of it. ESSENTIAL, in the sense of § "Accidental versus essential" of
+`ZeroParadox/Category/ChoiceCannotBe.md`, means that no proof of the principle in Lean's choice-free
+fragment (the kernel with `propext` and `Quot.sound` as its only axioms) exists, GIVEN that the taboo
+the case reaches is not derivable in that fragment. That premise is not proved in this corpus; without
+it, what is proved is that a choice-free proof of the principle would be a choice-free proof of the
+taboo. Neither case is an independence result, and neither says the framework's overall use of choice
+is essential. -/
+
+-- Each case is a reduction proved without `Classical.choice` (`[propext, Quot.sound]`), from a classical
+-- principle the framework uses to a constructive taboo: case 1 from comparability of well-orders to
+-- excluded middle, case 2 from the fixed-point-free principle over arbitrary `Type` to weak excluded
+-- middle.
 
 -- ESSENTIAL CASE 1 — comparability of well-orders implies EXCLUDED MIDDLE. Mathlib's `le_total` on
 -- `Ordinal` has exactly this shape, which is what puts it in the framework's path.
@@ -298,8 +305,9 @@ case says the framework's overall use of choice is essential, nor is either an i
 
 -- ESSENTIAL CASE 2 — the general fixed-point-free principle implies WEAK excluded middle, and this one
 -- sits on the KEYSTONE (the diagonal engine) rather than on an imported order instance. Its hypothesis
--- is the ∀-closure of `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` at `Type`, so that
--- theorem's `classical` is essential, not accidental: no rewriting of the proof removes it.
+-- is the ∀-closure of `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` at `Type`, and every
+-- proof of that theorem's statement instantiates to it (`fixedPointFree_of_classical`), so that theorem's
+-- `classical` is essential in the sense of the header above, and on its premise.
 #check @ZeroParadox.wem_of_fixedPointFree
 
 -- Non-vacuity again: `fixedPointFree_of_nontrivial` supplies the hypothesis, classically by

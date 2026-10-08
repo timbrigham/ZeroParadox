@@ -50,16 +50,15 @@ required in places... the heart of what we're trying to prove is choice free.
 
 A **checkable artifact** (`lake build ZeroParadox.AxiomProfile`): the `#print axioms` output reports
 each result's complete axiom dependency. **The core is choice-free; T-SNAP depends on no axioms at
-all.** Choice appears in the realization layers — mostly inherited from Mathlib, but not only there
-and not everywhere open. Argument and measurements: `ZeroParadox/AxiomProfile.md`.
+all.** Choice appears in the realization layers — mostly inherited from Mathlib, but not only there;
+where it is essential, and on what premise, is § 0. Argument: `ZeroParadox/AxiomProfile.md`.
 -/
 
-/-! ## 0. Choice that is NOT removable — two settled cases
+/-! ## 0. Two choice-free reductions to taboos — essential on the premise in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV
 
-⚠ PROVENANCE and NECESSITY are independent axes, and the first version of this heading conflated
-them. `fixedPointFree_of_nontrivial` spends the framework's OWN `classical`; well-order comparability
-spends MATHLIB's, in `InitialSeg.total` — and both are essential. The two reductions below are
-choice-free, which is what makes them reductions rather than measurements. Full argument:
+⚠ PROVENANCE and NECESSITY are independent axes. `fixedPointFree_of_nontrivial` spends the framework's
+OWN `classical`; well-order comparability spends MATHLIB's, in `InitialSeg.total`. The two reductions
+below are choice-free, which is what makes them reductions rather than measurements. Full argument:
 `ZeroParadox/AxiomProfile.md`. -/
 section FrameworkOwnChoice
 

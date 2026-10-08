@@ -68,7 +68,7 @@ Mathlib construction — the `Ordinal` order instance and operations (`Ordinal.i
 `omega0`, `epsilon`; the `Ordinal` type itself measures `[propext, Quot.sound]`), `NONote.repr`, the recursion-theorem proof,
 `compl_sup_distrib`, arbitrary-type decidability, a `ℚ` division-ring instance, in one case a single
 tactic call. **Not all: `ZeroParadox/Category/Lawvere.lean`'s bare `classical` in
-`fixedPointFree_of_nontrivial` is the framework's own, and § IV shows it is ESSENTIAL** — the cost is in
+`fixedPointFree_of_nontrivial` is the framework's own, and § IV classifies it ESSENTIAL, on the premise stated there** — the cost is in
 stating the swap over types **whose equality is not decidable** (the swap is `if x = b₀ then b₁ else b₀`;
 decidable equality is exactly what the § IV escape restores), which is the framework's chosen
 generality, not Mathlib's. So a corpus-wide
@@ -79,7 +79,7 @@ not to record one; but it is not true that the framework contributes none.
 framework is non-constructive." The load-bearing fact is the opposite and much narrower: **T-SNAP, the
 core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`). Beyond it the picture
 is mixed and the categories are what matter, not a total: some footprints are *accidental* (a choice-free
-re-proof exists — the entries labelled ACCIDENTAL in § I), two are **ESSENTIAL** (§ IV), and others are **UNCLASSIFIED**,
+re-proof exists — the entries labelled ACCIDENTAL in § I), two are **ESSENTIAL** on § IV's premise (§ IV), and others are **UNCLASSIFIED**,
 meaning nobody has tried. A count collapses those three into one number and loses the only distinction
 that carries information.
 
@@ -125,7 +125,8 @@ fact about the build you just ran, not a fact to carry anywhere.
 
 **The survey is partial, and that is the honest caveat that matters.** Only some footprints have been
 traced to a source and classified; much of the corpus is unexamined. **Not every footprint is
-accidental** — § IV exhibits two that are not. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
+accidental** — § IV exhibits two reductions to taboos, which make two footprints essential on the
+premise stated there. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
 has been examined, it has been **assigned** a class* — accidental, essential, or unclassified. (Not
 "classifiable": with `unclassified` among the buckets, classifiability holds of everything and says
 nothing.) Do not
@@ -138,8 +139,13 @@ fraction either**; it moves with every commit.
   demonstration available: `dneg_inf_distrib` (§ I) is the worked example — Mathlib's route through
   `compl_sup_distrib` reports `Classical.choice`; staying on the meet side drops it to `[propext]`.
   `ZeroParadox/Ordinal/SyntacticCollapse.lean` records another: a single tactic call was the whole footprint.
-* **ESSENTIAL** — the theorem implies excluded middle, or a choice fragment, over an intuitionistic
-  base. **Two are located: § IV.** Detected by *reducing* — deriving a taboo from the principle — which
+* **ESSENTIAL** — the PRINCIPLE (the theorem's statement, not one proof of it) implies a constructive
+  taboo by a choice-free reduction, and so has no choice-free proof GIVEN that the taboo is not derivable
+  without choice. A taboo here is a principle not provable over an intuitionistic base: excluded middle;
+  a choice fragment, which implies it (`em_of_choiceFragment`); or a strictly weaker one such as weak
+  excluded middle, which excluded middle implies (`wem_of_excludedMiddle`) and which does not imply
+  excluded middle intuitionistically. Reaching a weaker taboo is a weaker implication and needs a
+  stronger premise. **Two are located, and the premise is stated, in § IV.** Detected by *reducing* — deriving a taboo from the principle — which
   is the mirror image of the accidental test: accidental is shown by re-proving without choice, essential
   by showing that re-proving without choice would decide a taboo. Note this is a statement about the
   PRINCIPLE, not about any one proof of it: `#print axioms` reports a proof's footprint and can never
@@ -162,7 +168,8 @@ Cited, not claimed.
 
 It does **not** claim the framework is choice-free — it is not. It does **not** claim any
 footprint is provably removable beyond the specific cases actually re-proved. **On the negative side it
-claims exactly two non-removability results, and neither comes from a measurement** — § IV's cases are
+claims exactly two reductions to taboos — non-removability results given § IV's premise — and neither
+comes from a measurement** — § IV's cases are
 **reductions**, and that is the only route available: `#print axioms` reports **a proof's** footprint,
 never **a theorem's** necessity. A choice-carrying proof is evidence about how the proof was written,
 and nothing more; to show a principle *needs* choice you must derive a taboo from it.

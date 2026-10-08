@@ -40,30 +40,29 @@ framework source (`ZeroParadox/Category/Lawvere.lean`), not from Mathlib.
 It is not a purer proof of the same statement — it *takes* a fixed-point-free map as a hypothesis,
 where `fixedPointFree_of_nontrivial` *constructs* one. Purity of the consumer says nothing about the
 supplier, and composing them returns `[propext, Classical.choice, Quot.sound]`. `LawvereTaboo.lean`
-§ III settles it the other way: the `classical` there is **essential**.
+§ III reduces the general statement to weak excluded middle, so the `classical` there is
+**essential** in the sense, and on the premise, of `ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
 
-**Not open:** for two principles the question is *settled*. `wem_of_fixedPointFree` and
-`em_of_wellOrder_comparable` are **reductions to taboos**, and — this is the load-bearing detail —
-they are themselves choice-free. A reduction that used choice would establish nothing. Re-proving
-either principle constructively would decide a taboo, so no choice-free re-proof exists.
+**Reductions, not measurements:** `wem_of_fixedPointFree` and `em_of_wellOrder_comparable` reduce
+two principles to taboos, and they are themselves choice-free — a reduction that used choice would
+establish nothing. What they make essential, and the premise it rests on, is stated once in
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
 
-⚠⚠ **PROVENANCE AND NECESSITY ARE INDEPENDENT AXES, and collapsing them is the error this document
-has made in four successive rounds.** The two settled cases sit on *opposite* sides of provenance:
-`fixedPointFree_of_nontrivial` spends the framework's own bare `classical`, while well-order
-comparability spends **Mathlib's**, in `InitialSeg.total` — and `OrdinalChoiceEssential.lean` states
-outright that *"Mathlib's use of choice there is forced."* **So an inherited dependence can be
-essential.** That is a stronger result than "the framework's own choice is essential", and it is why
-*inherited* was never a synonym for *removable*.
+⚠⚠ **Provenance and necessity are independent axes.** The two reductions sit on *opposite* sides
+of provenance: `fixedPointFree_of_nontrivial` spends the framework's own bare `classical`, while
+well-order comparability spends **Mathlib's**, in `InitialSeg.total`. **So, on § IV's premise, an
+inherited dependence can be essential**, and *inherited* is not a synonym for *removable*.
 
 | | own | inherited |
 |---|---|---|
-| **essential** | `fixedPointFree_of_nontrivial` | well-order comparability |
-| **open** | — | the remaining analytic layers |
+| **essential** (on § IV's premise) | `fixedPointFree_of_nontrivial` | well-order comparability |
+| **unclassified** | — | the remaining analytic layers |
 
 ⚠ **A footprint measurement can never establish necessity.** `#print axioms` reports what a proof
 used, not what a proof must use. The accidental side needs an **exhibited clean proof**; the essential
 side needs a **reduction**. That asymmetry is why the table above is evidence for "not inherited" and
-the two reductions are the only evidence for "not removable".
+the two reductions are the evidence on the necessity side, which becomes "not removable" only on
+§ IV's premise.
 
 Whether the *remaining* analytic-layer dependence is removable is genuinely open — see the README
 Question Register and the `choice-probe` experiment, which found it mostly incidental in the one layer
