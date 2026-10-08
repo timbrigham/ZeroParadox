@@ -58,7 +58,10 @@ does **not** prove it.
    `zpm_triangle` (`Ordinal/Incompleteness.lean`), which co-witnesses without a type identity.
 
 6. **The syntactic depth meets the 2-adic valuation on the tower** (`towerNONote_val`,
-   `synVal_tower_eq_valuation`). `Reading:` TOWER-ONLY: on general notations `synVal` ignores the
-   coefficient and the remainder, so no agreement is claimed there. The statement carries
+   `synVal_tower_eq_valuation`). `Statement:` TOWER-ONLY. Along the tower `synCollapse_epsN` crosses it
+   (the first `example` after it); off the tower it fails, because `synVal` ignores the coefficient and
+   the remainder (the second: ω + 1 has `synVal` 2 and 2-adic valuation 1). At the seed n = 0 the
+   agreement holds by Mathlib's `valuation 0 = 0`; in the extended valuation 0 has valuation ⊤, the
+   pole. The statement carries
    `Classical.choice` (`towerNONote` and `cnfToZp2` carry it in their own terms, measured 2026-10-08),
    so this bridge sits here rather than in the choice-free `ZeroParadox/Ordinal/SyntacticCollapse.lean`.

@@ -64,7 +64,7 @@ footprint; `[propext]` means propositional extensionality only. -/
 -- statements on DIFFERENT carriers, not one statement rephrased** — the bridge `synVal` = 2-adic
 -- valuation is proved on the tower only (`synVal_tower_eq_valuation`,
 -- `ZeroParadox/Ordinal/CnfBridge.lean`), and its statement carries choice. So this is
--- EVIDENCE that the choice in the ℚ₂ statement is Mathlib-imposed, not a demonstration that the metric
+-- EVIDENCE that the choice in the ℤ_[2] statement is Mathlib-imposed, not a demonstration that the metric
 -- collapse is choice-free. See `ZeroParadox/Ordinal/SyntacticCollapse.md`'s "What this does NOT establish".
 #check @ZeroParadox.synCollapse_epsN
 #check @ZeroParadox.synVal_mono

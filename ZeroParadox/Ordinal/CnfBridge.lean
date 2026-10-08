@@ -174,6 +174,46 @@ theorem synVal_tower_eq_valuation (n : ℕ) :
     synVal (towerNONote n).1 = (cnfToZp2 (towerNONote n)).valuation := by
   rw [towerNONote_val, synVal_tower, cnfToZp2_tower_valuation]
 
+-- `Statement:` along the tower, the choice-free `synCollapse_epsN` carries across the bridge to the
+-- ε-N valuation form of the 2-adic collapse.
+example : ∀ k : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → k ≤ (cnfToZp2 (towerNONote n)).valuation := by
+  intro k
+  obtain ⟨N, hN⟩ := synCollapse_epsN k
+  exact ⟨N, fun n hn => by rw [← synVal_tower_eq_valuation, towerNONote_val]; exact hN n hn⟩
+
+-- `Statement:` off the tower the bridge fails, and `le_synVal_of_tower_le` has no `cnfToZp2`
+-- counterpart: ω + 1 is not `cmp`-below `tower 2` = ω and has `synVal` 2, but its image is 6, of
+-- 2-adic valuation 1.
+example : ∃ x : NONote, ONote.cmp (tower 2) x.1 ≠ Ordering.gt ∧ 2 ≤ synVal x.1 ∧
+    (cnfToZp2 x).valuation = 1 := by
+  let one : NONote := NONote.oadd 0 1 0 ONote.NFBelow.zero
+  have hb : NONote.below one one := by
+    show ONote.NFBelow (ONote.oadd 0 1 0) (ONote.oadd 0 1 0).repr
+    exact ONote.NFBelow.oadd ONote.NF.zero ONote.NFBelow.zero (by simp [ONote.repr])
+  have h2 : (2 : ℤ_[2]).valuation = 1 := by
+    rw [show (2 : ℤ_[2]) = ((2 : ℕ) : ℤ_[2]) from Nat.cast_ofNat.symm]
+    exact PadicInt.valuation_p
+  have h1 : cnfToZp2 one = 2 := by
+    show (2 : ℤ_[2]) ^ ((cnfToZp2 (0 : NONote)).valuation + 1) * ((1 : ℕ+) : ℤ_[2]) +
+      cnfToZp2 0 = 2
+    simp
+  have h6 : cnfToZp2 (NONote.oadd one 1 one hb) = 6 := by
+    show (2 : ℤ_[2]) ^ ((cnfToZp2 one).valuation + 1) * ((1 : ℕ+) : ℤ_[2]) + cnfToZp2 one = 6
+    rw [h1, h2]; norm_num
+  refine ⟨NONote.oadd one 1 one hb, ?_, ?_, ?_⟩
+  · show ONote.cmp (tower 2) (ONote.oadd (ONote.oadd 0 1 0) 1 (ONote.oadd 0 1 0)) ≠ Ordering.gt
+    decide
+  · show 2 ≤ synVal (ONote.oadd (ONote.oadd 0 1 0) 1 (ONote.oadd 0 1 0))
+    decide
+  have hq : ((cnfToZp2 (NONote.oadd one 1 one hb) : ℤ_[2]) : ℚ_[2]).valuation = 1 := by
+    rw [h6, show ((6 : ℤ_[2]) : ℚ_[2]) = ((6 : ℕ) : ℚ_[2]) by push_cast; rfl,
+      Padic.valuation_natCast, show (6 : ℕ) = 2 * 3 from rfl,
+      padicValNat.mul (by norm_num) (by norm_num), padicValNat_self,
+      padicValNat.eq_zero_of_not_dvd (by norm_num)]
+    rfl
+  rw [PadicInt.valuation_coe] at hq
+  exact_mod_cast hq
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/

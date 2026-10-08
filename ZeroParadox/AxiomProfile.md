@@ -62,9 +62,9 @@ inherited dependence can be essential**, and *inherited* is not a synonym for *r
 
 ⚠ **A footprint measurement can never establish necessity.** `#print axioms` reports what a proof
 used, not what a proof must use. The accidental side needs an **exhibited clean proof**; the essential
-side needs a **reduction**. That asymmetry is why provenance ("not inherited") is settled by the
-footprint table above read against the source, and the two reductions are the evidence on the
-necessity side, which becomes "not removable" only on § IV's premise.
+side needs a **reduction**. So the two reductions are the evidence on the necessity side, which
+becomes "not removable" only on § IV's premise. Provenance ("not inherited") is a separate question,
+settled by the footprint table above read against the source.
 
 Whether the *remaining* analytic-layer dependence is removable is genuinely open — see the README
 Question Register and the `choice-probe` experiment, which found it mostly incidental in the one layer
