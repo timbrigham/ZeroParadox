@@ -32,10 +32,11 @@ def build():
             'computability face by a Kleene code, a term of another type. This document asks where the role is filled by a Lawvere fixed point, '
             'across three categories ("faces"): refuted in '
             '<b>Set</b> on every carrier except a one-element one (Cantor), in the '
-            '<b>monotone / domain</b> regime (a genuine reflexive object there needs Scott\'s '
-            'D<sub>&#8734;</sub>) free of a monotone obstruction on complete lattices '
-            '(Knaster&#8211;Tarski), with no reflexive object built here and none on the two-element '
-            'chain (an instance of Soto-Andrade and Varela, and Trimble), and realized in the <b>computability</b> face '
+            '<b>monotone / domain</b> regime (a genuine reflexive object there is the business of Scott\'s '
+            'D<sub>&#8734;</sub> and its generalizations) free of a monotone obstruction on complete lattices '
+            '(Knaster&#8211;Tarski), with no reflexive object built here and no map from the two-element '
+            'chain onto its monotone self-maps (the first finite stage of Soto-Andrade and Varela\'s '
+            'two-element example; Trimble; Bergman), and realized in the <b>computability</b> face '
             '(Rogers / Kleene). Every theorem used is classical. Each result box (R1&#8211;R4) and each '
             'F1 property is backed by a machine-checked Lean 4 theorem, except one marked cited: that '
             'the computability fixed point is an instance of Lawvere\'s theorem. The rest is cited '
@@ -206,12 +207,14 @@ def build():
         'is not: on the two-element chain false &#8804; true every monotone self-map has a fixed point '
         '(Knaster&#8211;Tarski), yet no map from its two points onto its monotone self-maps is '
         'surjective. Both statements are anonymous Lean examples in '
-        'ZeroParadox/Settheory/LawvereBridge.lean. The second is not new: it is an instance of '
-        'Soto-Andrade and Varela\'s observation that the converse of Lawvere\'s theorem fails for '
-        'lattices with monotone maps (1984, &#167;2.5, p. 15), and the case Y = 2 of Trimble\'s Cantor '
-        'theorem for posets, that no poset map Y &#8594; 2<sup>Y</sup> is surjective (there for poset '
-        'maps; the Lean example allows any map, by counting two points against three monotone '
-        'self-maps). A related question, about retracts rather than '
+        'ZeroParadox/Settheory/LawvereBridge.lean. The second is not new: it is the first finite stage '
+        'of Soto-Andrade and Varela\'s two-element example (1984, &#167;2.5, pp. 15&#8211;16), which '
+        'follows their remark that the converse of Lawvere\'s theorem fails for lattices with '
+        'monotone maps; it is the case Y = 2 of Trimble\'s Cantor theorem for posets, that no poset '
+        'map Y &#8594; 2<sup>Y</sup> is surjective, and the case P = 2 of Bergman\'s Corollary 7 '
+        '(2008), that no isotone map from a poset to its lattice of downsets is surjective (both '
+        'there for order-preserving maps; the Lean example allows any map, by counting two points '
+        'against three monotone self-maps). A related question, about retracts rather than '
         'reflexive objects, is the suggestion of Soto-Andrade and Varela (1984, pp. 1 and 18) '
         'that every structure with the fixed point property is a retract of a reflexive '
         'domain. In any category a reflexive object is a retract of itself, so wherever every '
@@ -237,7 +240,7 @@ def build():
         '<i>up to eval</i> &#8212; literally fixed-point-free total computable endomaps do exist.'))
 
     E.append(result_box(
-        'R3-pos (monotone / domain) &#8212; no monotone obstruction on complete lattices; no reflexive object built here, none on the two-element chain',
+        'R3-pos (monotone / domain) &#8212; no monotone obstruction on complete lattices; no reflexive object built here; no map from the two-element chain onto its monotone self-maps',
         [
             'On a complete lattice every monotone self-map has least and greatest fixed points '
             '(Knaster&#8211;Tarski), so fixed-point-free monotone endomaps are structurally banned '
@@ -249,10 +252,13 @@ def build():
             'carry out and do not need, since the computability face below already realizes the '
             'crossing. What this face provides here is the <i>fork</i>.',
             'Witnesses: monotone_regime_derives_pinned (LawvereBridge.lean), for the fork; the last '
-            'anonymous example of LawvereBridge.lean &#167; VII, for none on the two-element chain (an '
-            'instance of Soto-Andrade and Varela 1984, p. 15, and of Trimble, Section II). Lean purity: '
-            'monotone_regime_derives_pinned choice-free; the two-element-chain example carries '
-            'Classical.choice from Mathlib\'s complete-lattice instance on Bool. ✓',
+            'anonymous example of LawvereBridge.lean &#167; VII, for the two-element chain (the first '
+            'finite stage of Soto-Andrade and Varela\'s two-element example, 1984, &#167;2.5, '
+            'pp. 15&#8211;16; Trimble, "No surjective map Y &#8594; 2<sup>Y</sup>"; Bergman 2008, '
+            'Corollary 7). Lean purity: monotone_regime_derives_pinned choice-free; in the '
+            'two-element-chain example the no-surjection half is [propext], and Classical.choice enters '
+            'through the Knaster&#8211;Tarski half (OrderHom.lfp on Mathlib\'s complete-lattice instance '
+            'on Bool). ✓',
         ]
     ))
     E.append(sp(4))
@@ -430,9 +436,11 @@ def build():
         '<b>monotone</b> face, in posets with monotone maps, runs it in neither direction on the two-element chain: on a complete lattice no monotone '
         'endomap is fixed-point-free (Knaster&#8211;Tarski), so the contrapositive has no monotone '
         'input, and on the two-element chain no map onto the monotone endomaps is surjective (Section '
-        'II). In chain-complete posets with continuous maps, Soto-Andrade and Varela (1984, '
-        'pp. 15&#8211;16) construct a larger poset isomorphic to its maps into the two-element chain, '
-        'so the domain half of the face differs. No occupant is identified with another: an equation between an element of a '
+        'II). In chain-complete posets, Soto-Andrade and Varela (1984, pp. 15&#8211;16) construct a '
+        'larger poset isomorphic to its maps into the two-element chain; ZP-R reads that construction '
+        'with continuous maps, their category CCPo (&#167;2.2, p. 9), since with all monotone maps '
+        'Trimble\'s theorem excludes it. So the domain half differs: there the two-element chain is '
+        'labelled by a larger object, not by itself. No occupant is identified with another: an equation between an element of a '
         'ZPSemilattice and a code is ill-typed (MC-1). ZP-R conjectures nothing global.',
         bg=BLUE_LITE, border=BLUE
     ))
@@ -472,10 +480,13 @@ def build():
         'Applicandae Mathematicae 4(1) (1985) 99&#8211;100, doi:10.1007/BF02293493, which shows that if R '
         'is a retract of a reflexive domain then R<sup>R</sup> has the fixed point property '
         '(Proposition, p. 99) and derives counterexamples to the conjecture in Po (Corollary, p. 100); '
-        'and Trimble, "Cantor\'s theorem for posets," nLab personal web (ncatlab.org/toddtrimble), '
+        'Trimble, "Cantor\'s theorem for posets," nLab personal web (ncatlab.org/toddtrimble), '
         'revised 5 October 2016, which proves that no poset map Y &#8594; 2<sup>Y</sup> is surjective, '
-        'so Knaster&#8211;Tarski is not a corollary of Lawvere\'s theorem through a reflexive object in '
-        'posets. The '
+        'so Knaster&#8211;Tarski is not a corollary of Lawvere\'s theorem through a surjection onto a '
+        'function space in posets; and Bergman, "On lattices and their ideal lattices, and posets and '
+        'their ideal posets," Tbilisi Math. J. 1 (2008) 89&#8211;103 (arXiv:0801.0751), whose Corollary 7 '
+        'states that no isotone map from a subset of a poset P to the lattice of all downsets of P is '
+        'surjective. The '
         'apophatic, characterize-not-construct treatment of self-referential objects: Aczel, '
         '<i>Non-Well-Founded Sets</i> (1988); Barwise &amp; Moss, <i>Vicious Circles</i> (1996).'))
     E.append(body(
@@ -551,7 +562,8 @@ def build():
              '(&#167; VII) (ZeroParadox/Settheory/LawvereBridge.lean); fixedPointFree_of_nontrivial, which supplies '
              'the fixed-point-free map on two or more points (ZeroParadox/Category/Lawvere.lean)'],
             ['R3-pos monotone',
-             'monotone_regime_derives_pinned (ZeroParadox/Settheory/LawvereBridge.lean)'],
+             'monotone_regime_derives_pinned and the last anonymous example of &#167; VII, the '
+             'two-element chain (ZeroParadox/Settheory/LawvereBridge.lean)'],
             ['R3-pos computability (the crossing)',
              'eval_point_surjective, computable_fixedpoint_up_to_eval, '
              'selfref_fixedpoint_exists_computable (ZeroParadox/Computability/ComputableCrossing.lean)'],
@@ -597,7 +609,7 @@ def build():
         Paragraph(
             '<i>End of ZP-R | A Cross-Category Account of the Self-Referential Fixed Point | '
             'the fork (choice-free) | Set, every carrier except a one-element one: refuted (Cantor) | monotone / domain: '
-            'fork, no reflexive object built, none on the two-element chain (Scott D<sub>&#8734;</sub> unbuilt) | computability: crossed '
+            'fork, no reflexive object built, no map from the two-element chain onto its monotone self-maps (Scott D<sub>&#8734;</sub> unbuilt) | computability: crossed '
             '(Rogers / Kleene) | F1: per face, what is measured | F2: the self-application role carries '
             'its face | Lawvere the translation key between the faces (Section III) | no global '
             'conjecture.</i>',
