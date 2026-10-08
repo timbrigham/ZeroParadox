@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.13 | October 2026
+Version 1.14 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -296,7 +296,7 @@ def build():
     E.append(callout(
         'The map is a placement, not a new theorem. The unification of the diagonal family is Lawvere '
         '(1969) and Yanofsky (2003); each face is a classical result (each wall face a direct instance '
-        'of the engine), formalized here axiom-free except the computability floor faces (Kleene, Rice), which '
+        'of the engine), formalized here choice-free except the computability floor faces (Kleene, Rice), which '
         'carry Classical.choice inherited from Mathlib\'s recursion theory. What the framework adds is the tie to the '
         'self-application role, for the faces formalized here.',
         bg=BLUE_LITE, border=BLUE

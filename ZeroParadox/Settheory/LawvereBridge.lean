@@ -143,7 +143,7 @@ example {D : Type*} (hnf : ¬ ∃ f : D → D, ∀ x, f x ≠ x) :
       · exact fun h => hx h.symm⟩
   exact ⟨⟨d, fun x => hsub x d⟩, fun _ => id, fun _ => ⟨d, funext fun _ => hsub _ _⟩⟩
 
-/-! ## § VII. Where completeness blocks the Cantor route — on a complete lattice every fixed-point-free endomap is non-monotone -/
+/-! ## § VII. Where completeness blocks a monotone Cantor route — on a complete lattice every fixed-point-free endomap is non-monotone -/
 
 /-- **The Cantor obstruction's witness is non-monotone.** In Cantor's refutation (`cantor_via_engine`)
 the fixed-point-free map is negation, and `Not : Prop → Prop` is not monotone — it reverses
