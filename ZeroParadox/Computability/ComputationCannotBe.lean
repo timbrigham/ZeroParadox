@@ -50,9 +50,10 @@ section ComputationCannotBeIndex
 -- `fun c => Code.pair c c` fixes nothing. The qualifier is in the declaration's own name.
 #check @ZeroParadox.no_computable_evalFixedPointFree
 
--- Statement: on `List Bool`, `partialAddOne w = w ↔ w = []` (`ZeroParadox/Category/LawvereTwoAdic.lean`).
--- Reading: the wall above says no computable map on codes is free of fixed points up to `eval`; add-one
---   extended to partial digit streams is not free of fixed points either, and rests only at the empty stream.
+-- Statement: on `List Bool`, `partialAddOne w = w ↔ w = []` (`ZeroParadox/Category/LawvereTwoAdic.lean`);
+--   on `ℤ_[2]`, add-one fixes no point (that file's first `example` of § I).
+-- Reading: a contrast with the wall above, not an instance of it: a literal fixed point of one map on
+--   `List Bool`, where the wall quantifies over computable maps on codes up to `eval`.
 #check @ZeroParadox.partialAddOne_fixed_iff
 
 -- Statement: no map `List Bool → ℤ_[2]` semiconjugates `partialAddOne` to add-one on ℤ_[2]

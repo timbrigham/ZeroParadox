@@ -113,7 +113,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Category/LawvereDecidable.lean` - Lawvere's engine, priced: the same theorems over decidable equality
 - `ZeroParadox/Category/LawvereTaboo.lean` - The diagonal engine's supplier is a constructive taboo
   - ride-along docs: `ZeroParadox/Category/LawvereTaboo.md` - The diagonal engine's supplier is a constructive taboo: result, fences and prior art
-- `ZeroParadox/Category/LawvereTwoAdic.lean` - The 2-adic face of the relativized Lawvere witness, and add-one on partial digit streams
+- `ZeroParadox/Category/LawvereTwoAdic.lean` - Add-one, doubling and the relativized Lawvere witness: on ℤ, ℤ_[2] and partial digit streams
 
 ### Multi-homed bridges (ZP-H)
 

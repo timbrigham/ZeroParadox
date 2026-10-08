@@ -1,7 +1,7 @@
 import ZeroParadox.Category.DiagonalWitness
 
 /-!
-# The 2-adic face of the relativized Lawvere witness, and add-one on partial digit streams
+# Add-one, doubling and the relativized Lawvere witness: on ℤ, ℤ_[2] and partial digit streams
 
 ## Engineer's Take
 
@@ -18,10 +18,9 @@ up.
 
 ---
 ## Formal Overview (AI-assisted)
-§ I: add-one on `ℤ_[2]` fixes no point, so no class containing it has a relativized witness. § II:
-add-one and doubling on finite partial digit streams. The Take's dead zero is the all-zeros tape
-`botEnd`, the one tape doubling fixes (`boundaryDouble_botEnd`, `boundaryDouble_unique_fp`); the least
-element of the prefix order here is the empty stream, no digit known: a different object and type.
+§ I: add-one on `ℤ_[2]`, and on `ℤ`, fixes no point, so no class containing it has a relativized
+witness. § II: add-one and doubling on finite partial digit streams. § II fences the Take's dead zero,
+`botEnd`, against the empty stream.
 -/
 
 /-! ## § I. Add-one on `ℤ_[2]` -/
@@ -29,6 +28,9 @@ element of the prefix order here is the empty stream, no digit known: a differen
 -- Statement: if an endomap in the class `M` fixes no point, there is no relativized witness
 --   `HasWitnessRel β M`.
 #check @ZeroParadox.no_witnessRel_of_admissible_fpf
+
+-- Statement: on `ℤ_[2]`, add-one fixes no point.
+example (x : ℤ_[2]) : x + 1 ≠ x := fun hx => by simp at hx
 
 -- Statement: on `ℤ_[2]`, no class `M` containing `x ↦ x + 1` has a relativized witness.
 example (M : (ℤ_[2] → ℤ_[2]) → Prop) (h : M (· + 1)) : ¬ ZeroParadox.HasWitnessRel ℤ_[2] M :=
@@ -40,7 +42,8 @@ example (M : (ℤ_[2] → ℤ_[2]) → Prop) (h : M (· + 1)) : ¬ ZeroParadox.H
 example : ¬ ZeroParadox.HasWitnessRel ℤ_[2] Continuous :=
   ZeroParadox.no_witnessRel_of_admissible_fpf (continuous_add_const 1) fun _ hx => by simp at hx
 
--- Statement: the proof uses only `x + 1 ≠ x`, so the same proof closes over `ℤ`.
+-- Statement: on `ℤ`, no class `M` containing `x ↦ x + 1` has a relativized witness.
+-- Reading: § I's obstruction is not 2-adic: the `ℤ_[2]` proof script closes unchanged over `ℤ`.
 example (M : (ℤ → ℤ) → Prop) (h : M (· + 1)) : ¬ ZeroParadox.HasWitnessRel ℤ M :=
   ZeroParadox.no_witnessRel_of_admissible_fpf h fun _ hx => by simp at hx
 
@@ -48,13 +51,29 @@ namespace ZeroParadox
 
 /-! ## § II. Add-one and doubling on finite partial digit streams
 
-A partial stream is a `List Bool`, least-significant digit first, ordered by prefix; its least element
-is the empty stream (`List.nil_prefix`), in a different type from ℤ_[2]'s `0`, and no `ZPSemilattice`
-structure is put on `List Bool`. Iterating from a least element is Scott, "Data types as lattices",
-SIAM J. Comput. 5 (1976), Thm 1.4, p. 526, on `Pω`; extending a continuous map from a subspace is its
-Thm 1.5, p. 527, and from Cantor space to finite and infinite words, Amorim, Kozen, Mardare, Panangaden
-and Roberts, LICS 2021 (arXiv:2011.13171), Lemma 8(ii), p. 5. `List Bool` is not claimed an instance
-of these, and no supremum or limit is constructed here (`partialDouble_ne_self`). -/
+A partial stream is a `List Bool`, least-significant digit first, ordered by prefix; its least element is
+the empty stream (`List.nil_prefix`), in a different type from ℤ_[2]'s `0`, and no `ZPSemilattice`
+structure is put on `List Bool`. Iterating from a least element is Scott's schema, "Data types as
+lattices", SIAM J. Comput. 5 (1976), Thm 1.4, p. 526, on `Pω` (in general, the `#check` below); extending
+a continuous map into `Pω` from a subspace is its Thm 1.5, p. 527; and extending a Cantor-continuous map
+into a continuous ω-CPO with meets, from Cantor space to finite and infinite words, is Amorim et al.,
+LICS 2021, Lemma 8(ii), p. 5 of arXiv:2011.13171v2. `List Bool` is not claimed an instance of these; the
+doubling stages have no upper bound in its prefix order (the last `example` of § II). -/
+
+-- Statement: Mathlib, Kleene's fixed-point theorem: on a complete lattice, for monotone
+--   ω-Scott-continuous `f`, `lfp f = ⨆ n, f^[n] ⊥`.
+#check @fixedPoints.lfp_eq_sSup_iterate
+
+-- Reading: the Take's dead zero is the all-zeros tape, in either carrier. Here it is
+--   `botEnd : End = ℕ → Fin 2`.
+-- Statement: COINCIDENCE — `botEnd` is ⊥ of `End` under pointwise max and the fixed point of boundary
+--   doubling (`boundaryDouble_botEnd`, `boundaryDouble_unique_fp`,
+--   `ZeroParadox/Valuation/PoleCompletion.lean`). The all-false tape ℕ → Bool carries the same
+--   coincidence (`ZeroParadox/Category/IgnoranceSeam.lean`).
+-- Statement: CARRIER — the least element of the prefix order is the empty stream `[]`, a different
+--   object and type from `botEnd`; zero-fill sends `[]` to the all-false tape, ⊥ of the pointwise order
+--   on `ℕ → Bool` (the zero-fill `example` below, at stage 0).
+-- Reading: that tape is where the two charts meet.
 
 /-- `Statement:` add-one on partial streams: the carry runs through `true` digits and stops at the
     first `false`, or where the known digits end. -/
@@ -95,9 +114,15 @@ def partialDouble (w : List Bool) : List Bool := false :: w
 theorem partialDouble_ne_self (w : List Bool) : partialDouble w ≠ w :=
   List.cons_ne_self false w
 
--- Reading: the crossed pair, carrier by carrier. Add-one fixes no point of `ℤ_[2]` (§ I) and only
---   `[]` among partial streams (`partialAddOne_fixed_iff`); doubling fixes no partial stream
---   (`partialDouble_ne_self`) and exactly `0` in `ℚ_[2]` (`q2_zero_is_fixed`, `q2_unique_fp`).
+-- Statement: on `ℤ_[2]`, doubling fixes exactly `0`.
+-- Reading: as with § I's `ℤ` note, this cell is not 2-adic: the proof script is ring arithmetic.
+example (x : ℤ_[2]) : 2 * x = x ↔ x = 0 :=
+  ⟨fun h => by linear_combination h, fun h => by rw [h, mul_zero]⟩
+
+-- Statement: cell by cell, add-one fixes only `[]` among partial streams (`partialAddOne_fixed_iff`)
+--   and no point of `ℤ_[2]` (the first `example` of § I); doubling fixes no partial stream
+--   (`partialDouble_ne_self`) and only `ℤ_[2]`'s `0` (the `example` above).
+-- Reading: the crossed pair.
 
 /-- `Statement:` `partialDouble` iterated `n` times from the empty stream. -/
 def partialDoubleStage (n : ℕ) : List Bool := Nat.repeat partialDouble n []
@@ -108,10 +133,27 @@ theorem partialDoubleStage_eq (n : ℕ) : partialDoubleStage n = List.replicate 
   | zero => rfl
   | succ n ih => show partialDouble (partialDoubleStage n) = _; rw [ih]; rfl
 
--- `Statement:` each stage is a prefix of the next: the stages form a chain in the prefix order.
+-- Statement: each stage is a prefix of the next: the stages form a chain in the prefix order.
 example (n : ℕ) : partialDoubleStage n <+: partialDoubleStage (n + 1) := by
   rw [partialDoubleStage_eq, partialDoubleStage_eq]
   exact ⟨[false], by simp [List.replicate_succ']⟩
+
+-- Statement: every stage, its unknown digits filled with `false`, is the all-false tape.
+example (n : ℕ) : (fun k => (partialDoubleStage n).getD k false) = fun _ => false := by
+  funext k
+  rw [partialDoubleStage_eq, List.getD_eq_getElem?_getD, List.getElem?_replicate]
+  split <;> rfl
+
+-- Statement: the stages have no upper bound in the prefix order on `List Bool`.
+example : ¬ ∃ u : List Bool, ∀ n, partialDoubleStage n <+: u := fun ⟨u, h⟩ => by
+  have := (h (u.length + 1)).length_le
+  rw [partialDoubleStage_eq, List.length_replicate] at this
+  omega
+-- Reading: CARRIER — two charts. Among finite words the chain has no supremum (the `example`
+--   above); among finite and infinite words, an ω-CPO, its supremum is the all-zeros word, not proved
+--   here (the ω-CPO fixed-point form is Mathlib's
+--   `OmegaCompletePartialOrder.fixedPoints.ωSup_iterate_mem_fixedPoint`). Separately, zero-fill sends
+--   every stage, `[]` included, to the all-false tape (the `example` before).
 
 end ZeroParadox
 
