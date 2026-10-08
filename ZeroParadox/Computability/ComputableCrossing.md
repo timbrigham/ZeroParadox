@@ -11,8 +11,9 @@ are indexed in `ZeroParadox/MANIFEST.md`.
 Sourcing ⊥ as a genuine Lawvere fixed point needs a **reflexive object** — a point-surjection onto a
 function space — and Set refutes it (`reflexive_object_refuted`,
 `ZeroParadox/Settheory/LawvereBridge.lean`), because Set has fixed-point-free maps (negation). The
-escape is any regime with *no* fixed-point-free endomap. The monotone/domain regime is one
-(Knaster–Tarski). This records the OTHER, which the framework already contains: the **computable**
+escape is any regime with *no* fixed-point-free endomap. On complete lattices the monotone/domain
+regime has no fixed-point-free MONOTONE endomap (Knaster–Tarski), which removes the monotone witness
+only. This records the OTHER, which the framework already contains: the **computable**
 regime.
 
 ## Why the computable regime crosses it

@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.19 | October 2026
+Version 1.20 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -31,9 +31,10 @@ def build():
             'order-bottom, a fixed point and the only one by the class fields of AbstractSelfApp), in the '
             'computability face by a Kleene code, a term of another type. This document asks where the role is filled by a Lawvere fixed point, '
             'across three categories ("faces"): refuted in '
-            '<b>Set</b> on every carrier except a one-element one (Cantor), obstruction-free with no reflexive object built here in the '
-            '<b>monotone / domain</b> regime (Knaster&#8211;Tarski; a genuine reflexive object there '
-            'needs Scott\'s D<sub>&#8734;</sub>), and realized in the <b>computability</b> face '
+            '<b>Set</b> on every carrier except a one-element one (Cantor), in the '
+            '<b>monotone / domain</b> regime free of a monotone obstruction on complete lattices '
+            '(Knaster&#8211;Tarski), with no reflexive object built here and none on the two-element '
+            'chain (a genuine reflexive object there needs Scott\'s D<sub>&#8734;</sub>), and realized in the <b>computability</b> face '
             '(Rogers / Kleene). Every theorem used is classical. Each result box (R1&#8211;R4) and each '
             'F1 property is backed by a machine-checked Lean 4 theorem, except one marked cited: that '
             'the computability fixed point is an instance of Lawvere\'s theorem. The rest is cited '
@@ -66,8 +67,8 @@ def build():
         'where the realization fails and where it succeeds. The mathematics is classical and is invoked, not '
         'extended; the contribution is (i) the per-face placement of <i>this framework\'s own</i> '
         'self-application role relative to the Lawvere fixed point &#8212; its Lawvere realization '
-        'refuted in Set on every carrier except a one-element one, the obstruction absent in the monotone / domain face with no reflexive object '
-        'built there, the realization achieved in the computability face &#8212; and (ii) a '
+        'refuted in Set on every carrier except a one-element one, the monotone obstruction absent on complete lattices in the monotone / domain face, with no reflexive object '
+        'built there and none on the two-element chain, the realization achieved in the computability face &#8212; and (ii) a '
         'scope result: the realization is category-relative &#8212; an existence statement in one face '
         'rather than a global identification. The general link between self-reference and Lawvere\'s '
         'theorem is Lawvere\'s (1969) and Yanofsky\'s (2003), not ours, and so is the obstruction the '
@@ -182,7 +183,7 @@ def build():
             'complete lattice on which negation is fixed-point-free, and Nat.succ is monotone and has '
             'no fixed point, on a carrier that is not a complete lattice. The empty set is not a complete '
             'lattice; its identity is monotone and fixed-point-free, and no map from it is onto its '
-            'one-element function space (the &#167; VII examples).',
+            'one-element function space (the LawvereBridge.lean &#167; VII examples).',
             'Witnesses: reflexive_object_refuted, not_monotone_not, and the anonymous examples after '
             'not_monotone_not in LawvereBridge.lean &#167; VII, which back the Bool, Nat.succ and '
             'empty-set sentences. Lean purity: reflexive_object_refuted: no axioms; not_monotone_not: '
@@ -228,7 +229,7 @@ def build():
         '<i>up to eval</i> &#8212; literally fixed-point-free total computable endomaps do exist.'))
 
     E.append(result_box(
-        'R3-pos (monotone / domain) &#8212; obstruction absent; no reflexive object built here',
+        'R3-pos (monotone / domain) &#8212; no monotone obstruction on complete lattices; no reflexive object built here, none on the two-element chain',
         [
             'On a complete lattice every monotone self-map has least and greatest fixed points '
             '(Knaster&#8211;Tarski), so fixed-point-free monotone endomaps are structurally banned '
@@ -300,7 +301,7 @@ def build():
              'the wall'],
             ['Monotone / domain',
              'not furnished here (route: Scott D<sub>&#8734;</sub>, unbuilt)',
-             'obstruction absent (Knaster&#8211;Tarski); existence via the fork, uniqueness = fork '
+             'monotone obstruction absent on complete lattices (Knaster&#8211;Tarski); existence via the fork, uniqueness = fork '
              'collapse',
              'fork story; no Lawvere realization built here'],
             ['Computability',
@@ -460,7 +461,7 @@ def build():
         'Against this, the contribution of ZP-R is not a theorem but a <i>placement</i>: the '
         'per-face placement of the framework\'s self-application role relative to the Lawvere fixed '
         'point (its Lawvere realization refuted in Set on every carrier except a one-element one, the '
-        'obstruction absent in the monotone / domain '
+        'monotone obstruction absent on complete lattices in the monotone / domain '
         'face, the realization achieved in the computability face), and the scope result of Section '
         'III. That Kleene\'s recursion theorem is a Lawvere instance is due to the sources above, not '
         'to this document, and so is the obstruction the placement uses (Lawvere\'s Corollary 1.2). '
@@ -505,9 +506,9 @@ def build():
         'instance of Lawvere\'s theorem (Section II). F2\'s first mathematical sentence rests on '
         'reflexive_object_refuted (the R3-neg row), and its second, on the least fixed point of a '
         'monotone map, on Knaster&#8211;Tarski (Tarski 1955, cited); sentences marked Reading are interpretation and '
-        'have no row. The fork schema (R1, monotone_regime_derives_pinned) is choice-free; the Set '
-        'face\'s converse example, fixedPointFree_of_nontrivial and the examples using Bool\'s '
-        'complete-lattice instance carry Classical.choice; the computability material inherits '
+        'have no row. The fork schema (R1, monotone_regime_derives_pinned) is choice-free; the anonymous '
+        'example after no_reflexive_object_bool in LawvereBridge.lean &#167; VI, fixedPointFree_of_nontrivial, '
+        'nontrivial_lattice_no_witness and the examples using Bool\'s complete-lattice instance carry Classical.choice; the computability material inherits '
         'Classical.choice from Mathlib\'s computability library (Kleene\'s and Rogers\' theorems use '
         'it), which is disclosed and not claimed otherwise.'))
 
@@ -575,7 +576,7 @@ def build():
         Paragraph(
             '<i>End of ZP-R | A Cross-Category Account of the Self-Referential Fixed Point | '
             'the fork (choice-free) | Set, every carrier except a one-element one: refuted (Cantor) | monotone / domain: '
-            'fork, no reflexive object built (Scott D<sub>&#8734;</sub> unbuilt) | computability: crossed '
+            'fork, no reflexive object built, none on the two-element chain (Scott D<sub>&#8734;</sub> unbuilt) | computability: crossed '
             '(Rogers / Kleene) | F1: per face, what is measured | F2: the self-application role carries '
             'its face | Lawvere the translation key between the faces (Section III) | no global '
             'conjecture.</i>',
