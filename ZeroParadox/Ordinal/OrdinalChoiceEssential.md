@@ -14,12 +14,17 @@ silently the moment another is found.
 
 The result: **comparability of arbitrary well-orders implies excluded middle**
 (`em_of_wellOrder_comparable`), proved with **no `Classical.choice`**
-(`[propext, Quot.sound]`). `Statement:` CARRIER, two charts, neither denied. The principle,
-comparability of well-orders in its `InitialSeg` form, is essential on the premise stated in
-`ZeroParadox/Category/ChoiceCannotBe.lean` § IV. Mathlib's `Ordinal` order, whose `le_total` instantiates that principle, is built with choice, and
-the statement itself carries it: a theorem that takes `∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a` as a
-hypothesis and proves `True` by `trivial` reports `[propext, Classical.choice, Quot.sound]` (measured
-2026-10-08; the instance-term trace is the Lean file's § III).
+(`[propext, Quot.sound]`).
+
+`Statement:` comparability of well-orders and `le_total` on `Ordinal.{0}` are interderivable, and only
+the second carries choice in its statement. The principle, comparability of well-orders in its
+`InitialSeg` form, is essential on the premise stated in `ZeroParadox/Category/ChoiceCannotBe.lean`
+§ IV. Mathlib's `le_total` on `Ordinal.{0}` is that principle at `Type`, in both directions
+(`Ordinal.type_le_iff` is `Iff.rfl`), so it implies excluded middle too. Mathlib's `Ordinal` order is
+built with choice, and the statement itself carries it: a theorem that takes
+`∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a` as a hypothesis and proves `True` by `trivial` reports
+`[propext, Classical.choice, Quot.sound]` (measured 2026-10-08; the instance-term trace is the Lean
+file's § III).
 
 ## PRIOR ART — the mathematics here is KNOWN and is NOT claimed as new
 
@@ -69,9 +74,11 @@ KNX are worth stating precisely, and none is a mathematical advance:
 
 The *substrate* is essential in the sense, and on the premise, of
 `ZeroParadox/Category/ChoiceCannotBe.lean` § IV: "any two well-orders are comparable" implies excluded
-middle by a choice-free reduction. `Ordinal`'s `LinearOrder`, `lt_or_ge` on it, and every
-`sup`/`nfp`/`deriv` argument that leans on trichotomy DEPEND on that principle; they do not imply it,
-and on `Ordinal` the order instance carries choice in its own term (the Lean file's § III).
+middle by a choice-free reduction. `le_total` on `Ordinal.{0}` is that principle at `Type`
+(`Ordinal.type_le_iff` is `Iff.rfl`), and `lt_or_ge` on it implies it through `le_of_lt`, so both
+imply the principle as well as follow from it; every `sup`/`nfp`/`deriv` argument that leans on
+trichotomy uses it. On `Ordinal` the order instance carries choice in its own term (the Lean file's
+§ III), so neither direction is choice-free there.
 
 ## What this does NOT establish — read before citing the Lean file
 
@@ -86,11 +93,13 @@ Nothing about ε₀ supplies those.
 
 So the classification splits, and the split is the point:
 
-* **comparability of well-orders, the principle `Ordinal`'s general order instantiates — ESSENTIAL**
+* **comparability of well-orders, which `le_total` on `Ordinal.{0}` states at `Type` — ESSENTIAL**
   on the premise above (`em_of_wellOrder_comparable`); `Ordinal`'s order instance itself carries choice
   in its term (the Lean file's § III);
-* **the ε₀ results' inheritance of it — still ACCIDENTAL-or-unclassified.** They use a
-  general-purpose classically-built order where a decidable fragment would do.
+* **the ε₀ results — UNCLASSIFIED.** They inherit choice from `Ordinal`'s order instance. ZP-N's
+  `ONote` results (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono`, each `[propext]`) are
+  evidence that the ε₀ content does not need it, not a re-proof: they are statements on a different
+  carrier.
 
 Nothing in the Lean file is declared `axiom`, and nothing there uses `sorry`.
 

@@ -8,8 +8,14 @@ Lean is authoritative**.
 ## The conjecture under test
 
 The framework carries a standing conjecture: **`Classical.choice` is structurally forced by the ZP metric
-collapse**, rather than merely imposed by Mathlib. Its own stated test is whether the snap and
-`tower_converges_to_zero` can be proved without choice — if yes, choice is incidental; if no, it is forced.
+collapse**, rather than merely imposed by Mathlib. Inside Mathlib that cannot be tested on
+`tower_converges_to_zero`: its statement itself carries `Classical.choice` (a theorem that takes
+`Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0)` as a hypothesis and proves
+`True` by `trivial` reports `[propext, Classical.choice, Quot.sound]`, measured 2026-10-08). So the
+test is posed on a carrier whose statement is choice-free, such as ZP-N's `ONote`: can the snap and the
+ordinal tower's collapse be proved choice-free there? If yes, the choice is incidental; if no, that is
+evidence only, since essential needs a reduction to a taboo (`ZeroParadox/Category/ChoiceCannotBe.lean`
+§ IV).
 
 That test has two halves, and they are in different states. The **snap half is resolved, incidental**:
 `ZeroParadox.t_snap_derived` (`ZeroParadox/Order/Snap.lean`) depends on *no axioms at all*. The **metric
@@ -22,7 +28,8 @@ establish"). Nothing here settles the conjecture in either direction.
 
 An **experiment**, and a **surrogate**. It asks whether the *content* of the ZP-L/Gentzen metric
 collapse — "the ω-tower's 2-adic encodings converge to ℤ_[2]'s 0", ⊥ of ℤ_[2] under its norm
-preorder — is available without
+preorder and, read in the valuation order on ℚ_[2], its unique greatest point
+(`ZeroParadox/Valuation/Padic.lean`) — is available without
 `Classical.choice`, by staying entirely on the syntactic ordinal-notation substrate (`ONote`).
 
 Measured starting point (`ZeroParadox/Ordinal/Gentzen.lean`):

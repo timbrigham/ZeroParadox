@@ -23,8 +23,9 @@ topology, Hilbert space, ordinals, computability, category theory — **mostly**
 Mathlib's classically-built libraries, shown in § II for honest contrast.
 
 ⚠ **Not entirely inherited (measured), and on the premise in `ZeroParadox/Category/ChoiceCannotBe.lean`
-§ IV not entirely removable (reduced).** The measurements below settle provenance; necessity takes the
-two reductions, as the next paragraphs say:
+§ IV not entirely removable (reduced).** The measurements below name the axioms each proof uses, and
+reading the source settles where they come from; necessity rests on the two reductions, as the next
+paragraphs say:
 
 | measured | footprint |
 |---|---|
@@ -61,9 +62,9 @@ inherited dependence can be essential**, and *inherited* is not a synonym for *r
 
 ⚠ **A footprint measurement can never establish necessity.** `#print axioms` reports what a proof
 used, not what a proof must use. The accidental side needs an **exhibited clean proof**; the essential
-side needs a **reduction**. That asymmetry is why the table above is evidence for "not inherited" and
-the two reductions are the evidence on the necessity side, which becomes "not removable" only on
-§ IV's premise.
+side needs a **reduction**. That asymmetry is why the footprint table above is evidence for "not
+inherited" and the two reductions are the evidence on the necessity side, which becomes "not
+removable" only on § IV's premise.
 
 Whether the *remaining* analytic-layer dependence is removable is genuinely open — see the README
 Question Register and the `choice-probe` experiment, which found it mostly incidental in the one layer
