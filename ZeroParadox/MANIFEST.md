@@ -105,8 +105,11 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Category/ChoiceCannotBe.md` - Choice and the framework: the long form of the choice index
 - `ZeroParadox/Category/DiagonalWitness.lean` - The minimum requirements to be a diagonal fixed point — the relativized Lawvere witness
 - `ZeroParadox/Category/DifferenceGeneratesSystem.lean` - Nuclei and sublocales — the home of "a predicated difference generates a system"
+  - ride-along docs: `ZeroParadox/Category/DifferenceGeneratesSystem.md` - Double negation as the canonical predicated difference: Glivenko's core, and logic versus choice
 - `ZeroParadox/Category/DoubleNegationNucleus.lean` - The double-negation nucleus: the excluded-middle modality
+  - ride-along docs: `ZeroParadox/Category/DoubleNegationNucleus.md` - The excluded-middle modality: its credit, its choice-free footprint, and what it is not
 - `ZeroParadox/Category/ExcludedMiddleBridge.lean` - The excluded-middle bridge: choice → excluded middle → the `Prop` nucleus is trivial
+  - ride-along docs: `ZeroParadox/Category/ExcludedMiddleBridge.md` - Why the arrow is scoped to `Prop`, how the instance is pinned, and whose argument it is
 - `ZeroParadox/Category/IgnoranceSeam.lean` - Fills and semiconjugacy (the seam) between partial and complete digit motions
 - `ZeroParadox/Category/Lawvere.lean` - ZPJ — The Lawvere bridge (keystone Tier-6 upgrade probe)
   - ride-along docs: `ZeroParadox/Category/Lawvere.md` - Category-relative verdicts: what each face fails, and what the shared shape is not
