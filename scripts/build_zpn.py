@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-N: The Constructive Snap PDF Builder
-Version 2.1 | October 2026
+Version 2.2 | October 2026
 
 v2.0: Major revision. Corrects v1.0's mechanism and adds the construction it was missing.
 
@@ -30,7 +30,7 @@ PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '2.1'
+VERSION = '2.2'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -52,8 +52,8 @@ def build():
             '<i>The constructive companion to ZP-L. The snap-from-below is rebuilt syntactically on '
             'ordinal notations (ONote), where it is choice-free &#8212; [propext] only. Beside it: a '
             'carrier of notations denoting the ordinals up to &#949;<sub>0</sub>, whose crossing into '
-            'Mathlib&#8217;s Ordinal is one named map with a measured price, and a proof that the generality ZP-L borrows is '
-            'genuinely non-constructive. Proved sorry-free in Lean 4.</i>',
+            'Mathlib&#8217;s Ordinal is one named map with a measured price, and a proof that the generality ZP-L borrows '
+            'implies excluded middle. Proved sorry-free in Lean 4.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -68,10 +68,14 @@ def build():
         'a fixed point of x &#8614; &#969;<sup>x</sup> &#8212; is genuinely constructive, provable '
         'with no Axiom of Choice. But the machinery ZP-L reaches for to state that structure '
         'semantically is not: comparing arbitrary well-orders implies excluded middle. So the choice '
-        'is not a mere artifact of how a proof was written. It is the price of a tool stronger than '
-        'the job requires. Whether ZP-L&#8217;s &#949;<sub>0</sub> results could be re-proved without '
-        'it remains <b>unclassified</b> &#8212; no choice-free re-proof of them exists, and nothing '
-        'here supplies one.'))
+        'is not a mere artifact of how a proof was written. ZP-L&#8217;s &#949;<sub>0</sub> results, '
+        'as stated, already carry Classical.choice in their statements (the statement control, '
+        'measured 2026-10-08), so no proof of those statements can drop it. For the ascent below '
+        '&#949;<sub>0</sub> it is the price of a tool stronger than the job requires: the ascent is '
+        'restated choice-free here, on notations. For the results that name &#949;<sub>0</sub>, a '
+        'choice-free Lean restatement exists with the fixed point set by definition (E0Note, below); '
+        'one that derives it on a well-founded carrier was not located as of 2026-10-08 '
+        '(ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint, records the search).'))
     E.append(body(
         'So this layer does two things. It rebuilds the ascent syntactically, where it is choice-free. '
         'And it builds a carrier of notations denoting the ordinals up to &#949;<sub>0</sub> &#8212; '
@@ -203,10 +207,12 @@ def build():
         'sharper than it first sounds; it is also the form Mathlib&#8217;s le_total actually takes. '
         'This is a known taboo in constructive mathematics, not a result of this framework: it is '
         'Theorem 38(d) of Kraus, Nordvall Forsberg and Xu, stated there in the data form, and their '
-        'witnesses are the ones used here. So the generality Mathlib&#8217;s order provides &#8212; '
-        'comparing '
-        '<i>any</i> two well-orders &#8212; genuinely requires the classical assumption. '
-        '&#949;<sub>0</sub> never needed that generality.'))
+        'witnesses are the ones used here. So a choice-free proof of the generality Mathlib&#8217;s '
+        'order provides &#8212; comparing <i>any</i> two well-orders &#8212; would be a choice-free '
+        'proof of excluded middle, which this corpus takes to be impossible in Lean but does not prove '
+        '(ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV). '
+        'The ascent below &#949;<sub>0</sub> never needed that generality: its counterpart on '
+        'notations (Section II) uses propext alone.'))
 
     E.append(remark_box(
         'Remark: even well-formedness inherits choice (the bridge, made visible)',
@@ -326,10 +332,13 @@ def build():
             '[propext, Classical.choice, Quot.sound]. The carrier side carries no choice anywhere.',
             'Together these locate the Classical.choice in ZP-L&#8217;s &#949;<sub>0</sub> results: it '
             'is not in the Ordinal type, and not in the ascent (which is proved choice-free here), but '
-            'in the order instance the semantic statement passes through &#8212; where its classical '
-            'content is load-bearing. Locating it is not eliminating it: whether those '
-            '&#949;<sub>0</sub> results admit a choice-free re-proof is <b>unclassified</b>. Zero '
-            'sorry. Verified: lake build, October 2026.',
+            'in the order instance the semantic statement passes through, whose comparability implies '
+            'excluded middle. Locating it is not eliminating it: those &#949;<sub>0</sub> '
+            'results, as stated, are <b>statement-carried</b> (their statements carry choice); for '
+            'the ones that name &#949;<sub>0</sub>, the choice-free Lean restatement on E0Note sets '
+            'the fixed point by definition, and one that derives it on a well-founded carrier was not '
+            'located as of 2026-10-08 (ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint). '
+            'Zero sorry. Verified: lake build, October 2026.',
         ]
     ))
     E.append(sp(6))

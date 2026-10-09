@@ -18,7 +18,8 @@ A choice-free result on `ONote`, carried to the 2-adic valuation form along the 
 evidence that the convergence content does not need choice, with choice entering through the notation
 type (`NONote`, `ONote.NF`) and `ℤ_[2]` rather than through the mathematics; a failure would
 be evidence the other way. Neither settles it, because the 2-adic statement, and the bridge's own
-statement, carry choice in Mathlib. Essential needs a reduction to a taboo
+statement, carry choice in Mathlib: they are STATEMENT-CARRIED, so ESSENTIAL cannot be asked of them
+(`ZeroParadox/Category/ChoiceCannotBe.md`). For a principle, essential needs a reduction to a taboo
 (`ZeroParadox/Category/ChoiceCannotBe.lean` § IV).
 
 The conjecture's original test, on the snap and on the metric collapse, had two halves, and they are
@@ -147,7 +148,9 @@ suffices for the tower (where the coefficient is pinned at 1) and nowhere else.
 
 `ONote` / `NONote` and `ONote.cmp` are Mathlib (`Mathlib.SetTheory.Ordinal.Notation`). The technique
 of working on the syntactic substrate to avoid the choice inherited from Mathlib's `Ordinal` is not
-new here either — it is ZP-N's (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`), which established
-it for the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono`). The Lean file
+new here either. ZP-N (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) used it for the ordinal *ascent*
+(`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono`), and outside this corpus Castéran and
+Contejean's *hydra-battles* (Coq, `theories/ordinals/Epsilon0/T1.v`) works on the same raw-syntax
+substrate, as `ZeroParadox/Ordinal/SnapNucleusConstructive.md` records. The Lean file
 extends that same technique to the valuation/metric side. The contribution is the instance, not the
 method.

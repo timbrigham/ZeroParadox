@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.53 | October 2026
+Version 3.54 | October 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.53'
+VERSION = '3.54'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -556,7 +556,7 @@ def build():
                 '(every tower stage sent to c<sub>0</sub>) leave open, h&#949;<sub>0</sub> selects the least, and so fixes '
                 '&#966; uniquely (ZeroParadox/Ordinal/Incompleteness.lean &#167; II). '
                 'Whether Classical.choice is forced by the metric collapse is a separate open question '
-                '(ZeroParadox/Ordinal/SyntacticCollapse.lean). The rungs are the iterative bottoms; '
+                '(ZeroParadox/Ordinal/SyntacticCollapse.md). The rungs are the iterative bottoms; '
                 'none of them is &#8869; (epsilon0_ne_bot; for every rung, Ordinal.epsilon_pos). On an arbitrary lattice no step is '
                 'selected: 0, 2, 4, &#8230; on the natural numbers satisfies A1&#8211;A4 and AX-B1.',
                 'Iteration. No step is guaranteed. A state sequence moves only upward (T3) and never returns (R1, t_snap_irreversible). '
@@ -830,7 +830,7 @@ def build():
     oq_rows = [
         ['AX-1: Binary Snap Causality',
          'RETIRED — shape proved as T-SNAP; the snap occurs given the occurrence commitment and DA-1',
-         'Its content was split in two: the shape of the Snap is proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean kernel axioms), '
+         'Its content was split in two: the shape of the Snap is proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean axioms), '
          'and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
          'Premises under Premises of T-SNAP (DA-1 insert, &#167; V); given CC-1, the first-step form of the Snap occurring is the hypothesis hocc of t_snap_given.'],
         ['DA-1: Derived Proposition (DP-2 formal grounding)',

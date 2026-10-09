@@ -20,7 +20,7 @@ point `x₀ : X`, a selector constant on the pole orbit of `x₀` exists with no
 uniform selector is, by definition, the choice fragment (`uniformChartSelection_iff_choiceFragment`).
 
 The ordinary English word "choice" — an act of picking, adopting a point of view, selecting a chart —
-and the kernel axiom `Classical.choice` are **not the same thing**, and conflating them is this
+and the Lean axiom `Classical.choice` are **not the same thing**, and conflating them is this
 framework's standing temptation. The literature that separates them:
 
 > **Diaconescu (1975)** (independently Goodman–Myhill 1978): in a topos, the axiom of choice implies

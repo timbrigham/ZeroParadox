@@ -66,3 +66,5 @@ does **not** prove it.
    `cnfToZp2` carry it in their own terms, measured 2026-10-08), so both declarations are
    STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md` § "Accidental versus essential") and
    the bridge sits here rather than in the choice-free `ZeroParadox/Ordinal/SyntacticCollapse.lean`.
+   In the restatement chart, the syntactic side has a choice-free statement: `synCollapse_epsN`
+   (`ZeroParadox/Ordinal/SyntacticCollapse.md`).

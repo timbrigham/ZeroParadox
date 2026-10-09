@@ -281,10 +281,10 @@ end ZeroParadox
 
 Target: `[propext]` or cleaner on everything, including the `LinearOrder`/`SemilatticeInf` structure.
 Contrast the measured `[propext, Classical.choice, Quot.sound]` on `snapNucleus` in
-`ZeroParadox/Ordinal/SnapNucleus.lean`. That footprint is **UNCLASSIFIED, not irreducible** — an earlier
-version of this line called it irreducible on the grounds that "choice is in the `Ordinal` type," which is
-FALSE as measured: `Ordinal` is `[propext, Quot.sound]`. Choice enters via `Ordinal.instLinearOrder`,
-`nfp`, `omega0` and `epsilon`. Whether it is removable is open; not attempted in this corpus as of 2026-08-02. -/
+`ZeroParadox/Ordinal/SnapNucleus.lean`. That footprint is STATEMENT-CARRIED (statement control, measured
+2026-10-08; `ZeroParadox/Category/ChoiceCannotBe.md`), though the choice is not in the `Ordinal` type
+(`[propext, Quot.sound]`): it enters via `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon`. The
+open question is a restatement on a choice-free carrier; on this one it is blocked by naming (above). -/
 
 section PurityCheck
 open ZeroParadox

@@ -17,7 +17,7 @@ import ZeroParadox.Order.PataraiaFromBourbakiWitt
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
 
-An index of the framework's relationship to `Classical.choice`, an ambient kernel axiom and not a
+An index of the framework's relationship to `Classical.choice`, an ambient Lean axiom and not a
 framework object. Every indexed name is `#check`ed, so the `import`s recompile each home file; it
 creates no declarations. The `#check`s cannot overclaim; the comments can, so read every line that
 is not a `#check` as unverified prose. Long form: `ZeroParadox/Category/ChoiceCannotBe.md`.
@@ -239,7 +239,8 @@ proved about where choice does work. -/
 -- What blocks the counterpart is EXPRESSIVE REACH: the carrier cannot name what the closure produces,
 -- because ε₀ is the supremum of Cantor normal form rather than a member. So this does NOT make
 -- `snapNucleus`'s footprint accidental, does NOT make it essential, and does NOT show the snap nucleus
--- is constructively impossible in general — a notation system extending past ε₀ is untouched and open.
+-- is constructively impossible in general — the obstruction concerns `ONote` only, and a carrier that
+-- reaches ε₀ is not affected by it (`ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint").
 -- It is the current state of the restatement question: blocked on `ONote` by naming, not by choice;
 -- `snapNucleus` as stated stays STATEMENT-CARRIED.
 #check @ZeroParadox.no_snap_closure

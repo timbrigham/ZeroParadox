@@ -216,7 +216,7 @@ def build():
         'Formal verification in Lean 4 operates at two levels. (1) Full algebraic verification: '
         'ZP-A\'s algebraic layer (A1-A4 and all derived results) is fully machine-checked via NatSLat; '
         '#print axioms confirms the proofs depend only on the ZPSemilattice typeclass fields and '
-        'Lean\'s kernel axioms. (2) Functor-level verification: for ZP-B, ZP-C, and ZP-D, '
+        'Lean\'s standard axioms (propext, Classical.choice, Quot.sound). (2) Functor-level verification: for ZP-B, ZP-C, and ZP-D, '
         'sorry-free Lean functors land in ℕ-indexed stand-in categories and in the standard Mathlib '
         'categories TopCat, KleisliCat PMF and ModuleCat ℂ, which close OQ-G3; the domain theorems '
         '(C3, T1b, T4) ground the snap in each stand-in category. '

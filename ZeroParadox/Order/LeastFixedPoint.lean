@@ -159,14 +159,12 @@ end ZeroParadox
 
 The schema's `selfApp_*` instances and `IsLeastFixedPointFrom.unique` are axiom-free (no axioms at
 all); the Mathlib-`lfp` grounding `lfp_isLeastFixedPointFrom` is choice-free `[propext, Quot.sound]`.
-The ordinal faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) inherit
-`Classical.choice` from Mathlib's `Ordinal`/`nfp` fixed-point theory. **Status: UNCLASSIFIED.**
-⚠ **Do NOT call it "representational, not intrinsic"** — that is an **eliminability claim**, which no
-footprint measurement can establish, and **no choice-free re-proof of these faces was located as of
-2026-08-02**. The choice is not in the `Ordinal` type (`[propext, Quot.sound]`) but in the order
-instance and the operations. ZP-N's choice-free
-snap-from-below is suggestive, not a re-proof. The Kleene face inherits
-`[propext, Classical.choice, Quot.sound]` from the `Code`/`Partrec` machinery. Recorded honestly. -/
+The ordinal faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) and the Kleene face are
+STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`): each statement, only assumed, already
+reports `Classical.choice` (statement control, measured 2026-10-08), from Mathlib's `Ordinal`/`nfp` and
+`Code`/`Partrec` machinery. The open question is a restatement on a choice-free carrier; ZP-N proves the
+snap-from-below (the ascent) choice-free on `ONote`, which is evidence for that question, not a
+restatement of these faces. -/
 
 section PurityCheck
 open ZeroParadox

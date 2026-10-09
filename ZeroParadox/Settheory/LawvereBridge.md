@@ -76,7 +76,12 @@ serve as `reflexive_object_refuted`'s witness. A non-monotone one still can: on 
 lattice, `x ↦ if x = ⊥ then ⊤ else ⊥` is fixed-point-free and refutes every `e : D → (D → D)`. Nor does
 the regime build a reflexive object; none is constructed here. Absence of a fixed-point-free monotone
 endomap does not suffice for one: the two-element chain is the witness (the last `example` of § VII
-in `ZeroParadox/Settheory/LawvereBridge.lean`). On uniqueness,
+in `ZeroParadox/Settheory/LawvereBridge.lean`). That example is not new: it is the first finite stage of
+Soto-Andrade and Varela's two-element example ("Self-reference and fixed points", Acta Applicandae
+Mathematicae 2(1), 1984, §2.5, pp. 15–16), the case Y = 2 of Trimble's "Cantor's theorem for posets"
+(nLab personal web, ncatlab.org/toddtrimble), and the case P = 2 of Bergman 2008, Corollary 7 (Tbilisi
+Math. J. 1, 89–103; arXiv:0801.0751). Trimble and Bergman state it for order-preserving maps; the Lean
+example allows any map, by counting two points against three monotone self-maps. On uniqueness,
 `monotone_regime_derives_pinned` takes the fork collapse `lfp f = gfp f` as a hypothesis, which by
 `fork_collapse_iff` is equivalent to `∃! x, f x = x`: uniqueness is restated, not derived, and `id` on a
 nontrivial lattice is monotone with many fixed points (`existence_without_uniqueness`). Nothing there

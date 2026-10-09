@@ -15,8 +15,10 @@ ZPL has four components:
    layers tabulated in §I. The footprints are not uniform:
    `ZeroParadox/Computability/Kleene.lean` §V proves one statement both ways with opposite
    footprints, and ZP-K §IV tabulates the measurements. Not a Lean proposition — and
-   `#print axioms` measures a proof's dependencies, never a theorem's need; necessity takes a
-   reduction to a taboo (`ZeroParadox/Category/ChoiceCannotBe.lean` §IV).
+   `#print axioms` on a proof measures that proof's dependencies, never a principle's need;
+   necessity takes a reduction to a taboo (`ZeroParadox/Category/ChoiceCannotBe.lean` §IV), and
+   whether a statement as written carries choice is the statement control (STATEMENT-CARRIED,
+   `ZeroParadox/Category/ChoiceCannotBe.md`).
 2. **Rogers' Fixed-Point Stability** — for any computable `f`, some code is behaviourally
    fixed by `f` (`eval (f c) = eval c`). In Lean scope; follows from ZPK's
    `roger_fixed_point_exists`.
@@ -34,7 +36,7 @@ ZPL has four components:
    and tower alignment (every tower stage sent to c₀) leave open, hε₀ selects the least, and
    so fixes φ uniquely (`ZeroParadox/Ordinal/Incompleteness.lean` § II, the examples after
    `snap_unconditional`). Whether Classical.choice is forced by the metric collapse is a
-   separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.lean`).
+   separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.md`).
    Proof partially in Lean scope.
 
 Axiom footprint: `[propext, Classical.choice, Quot.sound]` throughout `Gentzen.lean`, measured.
@@ -53,8 +55,8 @@ Non-constructibility appears across the layers tabulated below. The axiom footpr
 uniform — the ZPJ/K row names a witness on each side, `AFAStructure.bot_self_mem` measuring no
 axioms and `botCode` carrying them — and ZP-K § IV tabulates the measured footprints.
 Whether any of that dependence is necessary (forced by ZP geometry rather than incidental)
-is the open Classical.choice inversion conjecture (ZeroParadox/Ordinal/SyntacticCollapse.lean): #print axioms shows
-dependence, not necessity.
+is the open Classical.choice inversion conjecture (`ZeroParadox/Ordinal/SyntacticCollapse.md`): #print axioms on a
+proof shows dependence, not a principle's necessity.
 
 | Layer | Formal Language | Expression of non-constructibility |
 |-------|----------------|--------------------------------------|

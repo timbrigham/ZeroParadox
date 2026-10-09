@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.33, revised October 2026)
+Zero Paradox — Foreword PDF Builder (v2.34, revised October 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.33'
+VERSION = '2.34'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -110,7 +110,7 @@ def commitments_table():
          'in H. Chosen, not derived. Stated explicitly.'),
         ('AX-1',  'Retired: shape → Theorem T-SNAP; the snap occurs given the occurrence commitment and DA-1',
          'Binary Snap Causality. Previously an axiom, now retired. Its content was split in two: the shape of the Snap '
-         'is proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean kernel axioms), and that the Snap occurs '
+         'is proved, as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean axioms), and that the Snap occurs '
          'is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
          '(tsnap_holds_but_nothing_moves shows T-SNAP does not carry occurrence.)'),
         ('MC-1',  'The bottom family (not a commitment)',
@@ -366,13 +366,15 @@ def build():
             'Regularity forbids (no set is self-membered, no_quine_atom), so a Foundation universe '
             'cannot host it. The Axiom of Choice is not assumed '
             'as a framework commitment, and the core does not use it: T-SNAP (t_snap_derived) '
-            'depends on no Lean kernel axioms at all. Classical.choice does reach the realization '
+            'depends on no Lean axioms at all (#print axioms is empty). Classical.choice does reach the realization '
             'layers, and not only by inheritance from Mathlib — the category-theory layer spends a '
             'bare classical written in framework source (fixedPointFree_of_nontrivial, in '
-            'ZeroParadox/Category/Lawvere.lean), and that one is essential rather than incidental, '
-            'since wem_of_fixedPointFree derives weak excluded middle from the general '
-            'fixed-point-free principle. Where a dependence comes from and whether it can be '
-            'removed are independent questions: an inherited dependence can be essential too '
+            'ZeroParadox/Category/Lawvere.lean), and that one is essential rather than incidental given a '
+            'premise not proved in this corpus (that weak excluded middle is not derivable in Lean without choice; '
+            'ZeroParadox/Category/ChoiceCannotBe.lean, Section IV), since wem_of_fixedPointFree derives '
+            'weak excluded middle from the general fixed-point-free principle. Where a dependence comes '
+            'from and whether it can be removed are independent questions: an inherited dependence can '
+            'be essential too, on the corresponding premise for excluded middle '
             '(em_of_wellOrder_comparable, on Mathlib\'s InitialSeg.total). The measured footprints '
             'are a checkable artifact — ZeroParadox/AxiomProfile.lean, with ZP-K Section IV '
             'holding a dated measurement table for the computability layer.',

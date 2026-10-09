@@ -400,7 +400,9 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-Expected result: T0 results depend only on decidability (no kernel axioms beyond propext).
+Measured 2026-10-08 (the output below is authoritative): `ax_b1_distinct` depends on no Lean
+axioms; the T0 results do not share one footprint — `t0_no_prime_below_two` reaches only `propext`,
+while `t0_two_is_prime` and `t0_redundancy` reach `[propext, Classical.choice, Quot.sound]`.
 T1–C3 depend on Mathlib's p-adic and topology instances — any classical axioms used
 by those instances will appear here and are inherited from standard Mathlib, not ZP-B. -/
 

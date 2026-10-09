@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.11 | September 2026
+Version 1.12 | October 2026
 v1.11: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim rulings, 2026-09-15): the computability realization said 'the bottom is the unique fixed point of self-application (ZP-K; AbstractSelfApp.unique_fp)'. unique_fp is a class field of AbstractSelfApp (ZP-J), and ZP-K carries the computational face as a KleeneStructure requirement; the sentence now says both.
 v1.10: NOVELTY OVERCLAIM RETRACTED (bedrock). Two sites attributed novelty to a NAMED theorem - "resolves onto a new bottom" and "converging to a new bottom, cnf_encode_tower_tendsto_zero" - in the one chart where the corpus proves the opposite. The encodings converge to the floor they started from; snap_arc_z2_loop and tower_image_loops_to_seed both state it.
 v1.9: same universal negative as ZP-P v1.24 - "choice enters only in the analytic realisations" - corrected to "mostly ... not only there", naming the category-theory face as the framework's own. No other claim changed.
@@ -30,7 +30,7 @@ rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -236,8 +236,8 @@ def build():
 
     E.append(callout(
         'The frame-flip schema is choice-free. fork_is_frameflip and both duality lemmas depend only '
-        'on [propext, Quot.sound] &#8212; propositional extensionality and quotient soundness, the '
-        'benign kernel axioms used throughout Mathlib. None depends on the Axiom of Choice. As in '
+        'on [propext, Quot.sound] &#8212; propositional extensionality and quotient soundness, two '
+        'of Lean&#8217;s standard axioms, used throughout Mathlib. None depends on the Axiom of Choice. As in '
         'ZP-P, the conceptual skeleton needs no choice; choice enters mostly in the analytic '
         'realisations (Section II) &#8212; not only there, since the category-theory face carries the '
         'framework&#8217;s own. See AxiomProfile.lean.',

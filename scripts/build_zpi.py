@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.27 | October 2026
+Version 1.28 | October 2026
 v1.26: DA-1/KLEENE CLASS, GATE ROUND 4 (Tim ruling, 2026-09-15): a ninth site the v1.25 sweep missed said DA-1 is closed given DP-2 'by ZP-K via Kleene's second recursion theorem'. DA-1 is closed given DP-2 by da1_minimal_path, which uses no axioms and no Kleene; the sentence now says so, and that ZP-K witnesses DA-1's Path 1 (da1_closed_concrete).
 v1.25: DA-1 CREDIT (Tim ruling, 2026-09-15): eight sites said ZP-K formally closes DA-1 via Kleene's second recursion theorem ('ZP-K now formally closes DA-1', 'DA-1 is now formally closed by ZP-K', 'DA-1 (formally) closed by ZP-K/Kleene'). DA-1 is closed given DP-2 (ZP-E); ZP-K witnesses Path 1 and carries Path 3 as a KleeneStructure requirement. Each site now says that. Companion reviewed; its differently shaped sentences are left for a ruling.
 v1.24: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2); the Open Items AX-1 row carries the canonical AX-1 sentence and its status cell reads 'the snap occurs given the occurrence commitment and DA-1'. Page 1 said 'where T-SNAP establishes the first transition bottom -> eps0', close to the retracted forcing wording with no occurrence fence; it now says T-SNAP fixes the shape of that transition and not that it is taken, and that T-IZ's trajectory is for a chain that takes every step (its strict-ascent hypothesis). Remark R-II.2 pointed t_iz_limit_is_new_null at ZeroParadox/Order/SnapCannotBe.lean, which only indexes it; it is declared in ZeroParadox/Valuation/SemilatticeInstance.lean, and both are named. 'Binary Snap Causality' names the retired AX-1 in this document, so T-SNAP's name gloss is not placed here.
@@ -45,7 +45,7 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.28'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -520,8 +520,8 @@ def build():
         'counterexample here: v2_bot is [propext] because v2 : &#8469; &#8594; &#8469;&#8734; is stated over '
         'the NATURALS, so that contrast is between two carriers and not between algebra and analysis. '
         'The footprint reports the library this development is built on. Where choice enters this corpus, '
-        'and what is settled about it, is recorded at ZeroParadox/AxiomProfile.lean (the core is '
-        'choice-free; T-SNAP depends on no axioms at all) and ZeroParadox/Ordinal/SyntacticCollapse.lean '
+        'and what is established about it, is recorded at ZeroParadox/AxiomProfile.lean (the core is '
+        'choice-free; T-SNAP depends on no axioms at all) and ZeroParadox/Ordinal/SyntacticCollapse.md '
         '(a choice-free syntactic surrogate for the metric collapse, which states of itself that it '
         'settles the standing conjecture in neither direction). Steps 2–5 (the '
         'valuation-complexity bridge and DA-1/T-SNAP path) describe the ZP-E informational '
