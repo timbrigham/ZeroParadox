@@ -176,6 +176,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/CnfBridge.lean` - The CNF/ℤ₂ value bridge, at the construction level (Gentzen.lean item 4)
   - ride-along docs: `ZeroParadox/Ordinal/CnfBridge.md` - CnfBridge — the CNF/ℤ₂ value bridge, at the construction level
 - `ZeroParadox/Ordinal/ConstructiveOrdinals.lean` - ZP-N: the ε₀ snap, constructively, on ordinal notations (choice-free)
+  - ride-along docs: `ZeroParadox/Ordinal/ConstructiveOrdinals.md` - ZP-N, the ε₀ snap on ordinal notations: the probe, the result and its fences
 - `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` - Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
   - ride-along docs: `ZeroParadox/Ordinal/Epsilon0CannotBe.md` - What ε₀ is and is not: the long form of the ε₀ index
 - `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` - Batch 2 / G1 (pipeline, T6): ε₀ is the LEAST fixed point of α ↦ ωᵅ — the snap sits at minimal closure
