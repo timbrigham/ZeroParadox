@@ -369,7 +369,8 @@ transparency blockquote (or, for a PDF, an amber callout). It is gone.** It boun
 and exactly one honoured it, for months, with nothing noticing — which is past this file's own
 *fix the trigger* rung and into *discipline will not work here*.
 
-**Measured the day it was retired.** Unlinked from both indexes: `ABOUTME.md`,
+**Measured the day it was retired.** Unlinked from both indexes: `ABOUTME.md` (no longer
+tracked — moved to the private folder on 2026-10-09; the measurement stands as recorded),
 `BOTTOMELEMENT_findings.md` (which no longer exists — folded into the generated `BOTTOMELEMENT.md`
 on 2026-08-29, so its stale hand-written legend became computed; the measurement below stands as
 recorded on the day), `CLAUDE.md`, `LEAN_CUSTOM_REGISTRY.md`, `RELEASES.md`,
@@ -388,8 +389,7 @@ was wrong, not that it needed one more exception.
 **What replaces it: nothing mechanical, and that is deliberate.** Disclosure lives in
 § *WHERE THINGS LIVE* and § *Private Working Folder* — pages a human reads. Where a document's
 STATUS could mislead (speculative, superseded, a development artifact), say so in its own
-opening because it is true, not because a linkage rule fired. `ABOUTME.md` keeps its note on
-exactly that basis.
+opening because it is true, not because a linkage rule fired.
 
 **Also retired with it: § *README.md Link Restrictions*,** whose table named the same two files
 and was stale the same way. Nothing is being *hidden* — if a file should not be in the index,

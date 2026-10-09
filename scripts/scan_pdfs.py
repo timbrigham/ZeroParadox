@@ -22,13 +22,12 @@ BUILD_SCRIPTS = [
     'build_zpa_companion.py', 'build_zpb_companion.py', 'build_zpc_companion.py',
     'build_zpd_companion.py', 'build_zpe_companion.py', 'build_zpf_companion.py',
     'build_zpg_companion.py', 'build_zph_companion.py', 'build_zpi_companion.py',
-    'build_zpj_companion.py', 'build_zpk_companion.py', 'build_zp_philosophical_question.py',
+    'build_zpj_companion.py', 'build_zpk_companion.py',
 ]
 
 EXPECTED_PDFS = [
     'Zero_Paradox_Foreword.pdf',
     'ZP_Tools_and_Methods.pdf',
-    'ZP_Philosophical_Question.pdf',
     'ZP-A_Lattice_Algebra.pdf',         'ZP-A_Illustrated_Companion.pdf',
     'ZP-B_pAdic_Topology.pdf',          'ZP-B_Illustrated_Companion.pdf',
     'ZP-C_Information_Theory.pdf',      'ZP-C_Illustrated_Companion.pdf',

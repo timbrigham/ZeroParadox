@@ -21,9 +21,11 @@ all, so no grep of any tracked generator could see them. A source-only sweep rep
 published page still carries the sentence. `R-DEFECTCLASS` records the same lesson one layer over:
 a claim-sweep's unit is the extracted PDF, because a claim can span two adjacent string literals.
 
-⚠ HTML ENTITIES ARE DECODED BEFORE MATCHING. The published interactive maps encode every
-mathematical glyph numerically - infinity is `&#8734;`, bottom is `&#8869;` - so a pattern written in
-glyphs scores ZERO against the raw bytes and eleven against the decoded text. Measured 2026-08-29.
+⚠ HTML ENTITIES ARE DECODED BEFORE MATCHING. Glyphs are often encoded numerically - infinity is
+`&#8734;`, bottom is `&#8869;` - so a pattern written in glyphs scores ZERO against the raw bytes and
+eleven against the decoded text (measured 2026-08-29 on the root `.html` pages, since retired). The
+PDF build scripts still carry glyphs as entities inside ReportLab `Paragraph` strings
+(`build_zpj.py` writes `&#8869; = {&#8869;}`), so the decoding stays load-bearing for `.py`.
 
 WHAT IT IS NOT. It does not judge whether a sentence is true; it reports that two files disagree
 about one, which is a question for a reader. It is a READING LIST, and it prints its count on every
@@ -52,6 +54,9 @@ SELF = common.self_rel(__file__)
 # note, and three `∅` cell reasons cited a criterion nothing defined any more. This checker could
 # not see one of them, having been given the wrong extension list by its own author on the same day
 # he diagnosed exactly that blindness in `check_poles`.
+# `.html` STAYS although no root page is left: `_layouts/default.html` wraps every rendered `.md`
+# page, and dropping the extension would make any page added later arrive UNSCANNED. A scan of an
+# extension with few files costs nothing; a removed one is a coverage hole nobody sees open.
 SCAN_EXT = (".md", ".html", ".lean", ".py")
 SKIP_DIRS = {".lake", ".git", "__pycache__", ".claude-local", "node_modules", "historical"}
 SKIP_RELDIRS = {"tools/verify", "tools/process"}
