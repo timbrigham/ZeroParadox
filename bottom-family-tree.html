@@ -248,8 +248,9 @@ layout: null
       <circle cx="500" cy="558" r="4.5" fill="var(--seamnode)" filter="url(#nodeglow)"/>
       <circle cx="500" cy="558" r="4.5" fill="var(--seamnode)"/>
       <text class="seam-name" x="500" y="542" text-anchor="middle" style="font-size:16px">the seam &#183; t_exec_triple_iff</text>
-      <text class="seam-inst" x="500" y="581" text-anchor="middle">Quine atom &#8869;={&#8869;} = order &#8869; = join-identity &#183; axiom-free</text>
-      <text class="seam-inst" x="500" y="595" text-anchor="middle" style="fill:var(--seamnode); opacity:.9">&#956; = &#957; &#183; the diagonal fixed point every field instantiates</text>
+      <text class="seam-inst" x="500" y="581" text-anchor="middle">in any ZPSemilattice with AFAStructure: Quine atom = &#8869; = join-identity element</text>
+      <text class="seam-inst" x="500" y="595" text-anchor="middle">t_exec_triple_iff + da2_bottom_characterization &#183; no axioms</text>
+      <text class="seam-inst" x="500" y="609" text-anchor="middle" style="fill:var(--seamnode); opacity:.9">&#956; = &#957; &#183; the diagonal fixed point every field instantiates</text>
 
       <!-- ================= LEVEL-1 hub labels ================= -->
       <text class="hub-label" x="264" y="506" text-anchor="end" style="fill:var(--mu)">&#956;</text>
@@ -310,7 +311,7 @@ layout: null
     <div class="lg"><span class="sw dash"></span><span class="t">The withered branch<small>the reals &#8212; where the snap provably fails</small></span></div>
   </div>
 
-  <p class="fence"><b>Three levels, tip to root.</b> <b>Level 1</b> is dynamics: a bottom is a source (&#956;, structure departs from it) or a sink (&#957;, orbits settle into it). <b>Level 2</b> is the shape of its wall &#8212; self-application, limit-from-below, or cross-frame identity. Each wall-shape appears on <em>both</em> the &#956; and &#957; side, which is what makes it a real second axis and not a re-drawing of the first. <b>Level 3</b> is the field itself. VOID and SELF &#8212; empty &#8709; against self-containing &#8869;={&#8869;} &#8212; are the Foundation/AFA fork, a local mark, not a level; they coincide only at the Hilbert seam. At the <b>root</b> sits <b>t_exec_triple_iff</b> &#8212; the identity self-containing element = order &#8869; = join-identity, axiom-free in the kernel and holding within a single carrier whose <code>AFAStructure</code> instance supplies the self-containment, the diagonal fixed point every field instantiates. It is the seam the whole tree grows from, deeper than any single field's zero object; that it is the one seam everything runs on is the interpretation, the axiom-free identity is the proof.</p>
+  <p class="fence"><b>Three levels, tip to root.</b> <b>Level 1</b> is dynamics: a bottom is a source (&#956;, structure departs from it) or a sink (&#957;, orbits settle into it). <b>Level 2</b> is the shape of its wall &#8212; self-application, limit-from-below, or cross-frame identity. Each wall-shape appears on <em>both</em> the &#956; and &#957; side, which is what makes it a real second axis and not a re-drawing of the first. <b>Level 3</b> is the field itself. VOID and SELF &#8212; empty &#8709; against self-containing &#8869;={&#8869;} &#8212; are the Foundation/AFA fork, a local mark, not a level; they coincide only at the Hilbert seam. At the <b>root</b> sits <b>t_exec_triple_iff</b>, with <b>da2_bottom_characterization</b> &#8212; the identity self-containing element = order &#8869; = join-identity, with no axioms and holding within a single <code>ZPSemilattice</code> whose <code>AFAStructure</code> instance supplies the self-containment, the diagonal fixed point every field instantiates. It is the seam the whole tree grows from, deeper than any single field's zero object; that it is the one seam everything runs on is the interpretation, the axiom-free identity is the proof.</p>
 
   <p class="fence"><b>What is drawn vs. what is claimed.</b> Every placement is checkable: the branches are a bottom's dynamics direction and the proved shape of its wall. The trunk &#8212; the infinitude, 0 = &#8734; &#8212; is the interpretation: apophatic, never grasped un-shaped, so it is drawn as light that fades before it resolves. The tree claims one thing past a flat family &#8212; a common root &#8212; and that root lives only here.</p>
 
@@ -324,7 +325,7 @@ layout: null
       ['&#956; source &#8593;','&#8869; departs to the first structured state &mdash; <code>t_snap_derived</code>'],
       ['self-application wall','the lattice has no diagonal self-witness &mdash; <code>nontrivial_lattice_no_witness</code>'],
       ['what it is','the order floor: least element = join-identity'],
-      ['identity','order &#8869; = the self-containing element = join-identity &mdash; <code>t_exec_triple_iff</code>, axiom-free in the kernel, with the self-containment supplied by the <code>AFAStructure</code> instance']],
+      ['identity','order &#8869; = the self-containing element = join-identity &mdash; <code>t_exec_triple_iff</code> with <code>da2_bottom_characterization</code>, no axioms, in one <code>ZPSemilattice</code> whose <code>AFAStructure</code> instance supplies the self-containment']],
       chk:'t_snap_derived'},
     information: {t:'information', c:'--limit', why:[
       ['&#956; source &#8593;','snaps off the machine&#8217;s zero state c&#8320; (ZP-E bridge) &mdash; <code>t_snap_derived</code>'],
@@ -339,8 +340,8 @@ layout: null
     computability: {t:'computability', c:'--self', why:[
       ['&#957; sink &#8595;','self-encodings approach it &mdash; <code>quine_encodings_approach_bot</code>'],
       ['self-application wall','a machine run on its own code is undecidable &mdash; <code>self_halting_undecidable</code>'],
-      ['what it is','the Kleene quine: a program that prints itself &mdash; <code>quine_period_is_goedel</code>'],
-      ['identity','carried as a <code>KleeneStructure</code> requirement (<code>botCode_is_quine</code>), not a clause of <code>t_comp</code>; reading &#8869; as the Kleene quine is that commitment, not a theorem']],
+      ['what it is','a computational quine: a code whose behaviour equals its own self-application up to evaluation, a periodicity condition (<code>quine_period_is_goedel</code>) that every constant code meets (the control in <code>ZeroParadox/Computability/ComputationCannotBe.lean</code> &#167; III)'],
+      ['identity','<code>botCode_is_quine</code> is a <code>KleeneStructure</code> requirement, not a clause of <code>t_comp</code>; reading it as the computational face of &#8869; of the <code>ZPSemilattice</code> is the commitment']],
       chk:'kleene_quine_is_bot'},
     topology: {t:'topology', c:'--limit', why:[
       ['&#957; sink &#8595;','topological no-return &mdash; <code>c3_irreversible</code>'],
@@ -359,7 +360,7 @@ layout: null
       chk:'no_mp_attractor_to_markov'},
     seam: {t:'the seam &#183; t_exec_triple_iff', c:'--seamnode', why:[
       ['&#956; = &#957; (the root)','source and sink coincide: the diagonal fixed point &mdash; <code>selfApp_bot_is_both_extremal</code> (the coincidence itself; <code>selfApp_fp_set_eq_singleton</code> gives uniqueness of the fixed point, which is a different claim)'],
-      ['the identity','the self-containing element = order &#8869; = join-identity &mdash; <code>t_exec_triple_iff</code>, no Lean axioms (<code>#print axioms</code> is empty); the self-containment is a field of the <code>AFAStructure</code> instance, and the literal &#8869;={&#8869;} is proved nowhere'],
+      ['the identity','the self-containing element = order &#8869; = join-identity &mdash; <code>t_exec_triple_iff</code> with <code>da2_bottom_characterization</code>, no axioms, in one <code>ZPSemilattice</code>; the self-containment is the <code>AFAStructure</code> field <code>bot_self_mem</code>, and reading it as the ZF+AFA set &#8869; = {&#8869;} is CC-2&#8217;s commitment'],
       ['why the root','the purest self-reference; everything else is built on it, with more axioms'],
       ['interpretation','&#8220;the one seam everything runs on&#8221; is the diagonal-fixed-point reading, not a proved unification']],
       chk:'t_exec_triple_iff'},
