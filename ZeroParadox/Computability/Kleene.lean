@@ -167,9 +167,13 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
 
 /- Note on computational quine uniqueness (why it is not stated here):
     Unlike the AFA quine (ZP-J quine_unique), computational fixed points of
-    selfApply are NOT unique in general. AFA uniqueness follows from the unique
-    decoration theorem: there is literally only one set satisfying x = {x}. The
-    computational setting is richer. A fixed point c of selfApply satisfies:
+    selfApply are NOT unique in general. In ZF + AFA that uniqueness is the axiom's own
+    content: AFA is "Every graph has a unique decoration" (Aczel, Non-Well-Founded Sets,
+    1988, ch. 1, p. 6), whence exactly one set satisfies x = {x} (p. 6, Example 1.3).
+    The unique-decoration lemma, Mostowski's Collapsing Lemma (p. 4), covers only
+    well-founded graphs, so it does not reach x = {x}. In Lean the uniqueness is the
+    `AFAStructure` field `quine_unique`, which each instance supplies. The computational
+    setting is richer. A fixed point c of selfApply satisfies:
       eval c n = eval c (Encodable.encode c + n)  for all n
     This is a periodicity condition on eval c, not a global identity constraint.
     Multiple programs can satisfy it independently — including the constant codes,

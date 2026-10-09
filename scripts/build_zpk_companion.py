@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.23 | October 2026
+Version 1.24 | October 2026
 """
 
 import os
@@ -107,7 +107,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -154,7 +154,7 @@ def build():
         '(order-theoretic minimum) are the same object. ZP-K adds a fourth language: '
         'computability theory. It adds a fourth description of ⊥, this time in terms of '
         'Turing machines and Kleene\'s second recursion theorem. THREE of the four descriptions '
-        'are proved to name the same structural role. ZP-K carries c₀\'s computational face as a '
+        'are proved equivalent (T-COMP). ZP-K carries c₀\'s computational face as a '
         'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is that '
         'commitment, not a theorem.'))
     E.append(cbody(
@@ -165,7 +165,7 @@ def build():
         'unique self-containing state of MachinePhase (da1_closed_concrete) even in a dynamics where '
         'nothing ever leaves c₀ (tsnap_holds_but_nothing_moves). That ⊥ does run is the occurrence '
         'commitment, which DA-1 uses and does not supply. Three of the four descriptions of ⊥ are '
-        'proved to name the same structural object; the computational one is assumed rather than derived.'))
+        'proved equivalent (T-COMP); the computational one is assumed rather than derived.'))
     E.append(sp(4))
 
     # What Is a Kleene Fixed Point?
@@ -326,15 +326,17 @@ def build():
     E.append(cbody(
         'The statements of Kleene\'s theorem and of Rogers\' fixed-point theorem, as Mathlib '
         'states them, already carry Classical.choice (measured 2026-10-04), so every proof of '
-        'them as stated carries it too. That footprint is inherited from Mathlib rather than a '
-        'Zero Paradox commitment. Whether a restated, choice-free statement has a choice-free '
-        'proof is unclassified. ZP-K Section IV tabulates the measured axiom footprints. '
+        'them as stated carries it too: the STATEMENT-CARRIED class of '
+        'ZeroParadox/Category/ChoiceCannotBe.md. That footprint is inherited from Mathlib rather '
+        'than a Zero Paradox commitment. Whether a restated, choice-free statement has a '
+        'choice-free proof is unclassified in that document\'s sense. ZP-K Section IV tabulates the measured axiom footprints. '
         'What is free of Classical.choice is the choice-free CORE, and that is narrower than any layer '
         'name: ZeroParadox/AxiomProfile.lean &#167;I is where the core is listed and each '
         'footprint measured &#8212; T-SNAP, the lattice, the Quine atom. Results elsewhere '
-        'in the same layers do carry the dependency: decoration_unique, the AFA '
-        'decoration-uniqueness theorem in ZeroParadox/Settheory/APG.lean, is a ZP-J result '
-        'and reports the full triple. Check the artifact for a given result rather than '
+        'in the same layers do carry the dependency: decoration_unique in '
+        'ZeroParadox/Settheory/APG.lean, a ZP-J theorem that two decorations of a finite '
+        'accessible pointed graph into a DecorationUniverse are equal, reports the full triple. AFA itself is an axiom, '
+        '\"Every graph has a unique decoration\" (Aczel 1988, p. 6), not a theorem. Check the artifact for a given result rather than '
         'reading a layer name as a footprint.'))
     E.append(cbody(
         'Using a result from the standard, classically built libraries puts a proof in the '
@@ -437,9 +439,10 @@ def build():
         '(uniformChartSelection_iff_choiceFragment). The framework\'s reading, by analogy and not '
         'a theorem about programs: building a program is a computation, and choosing a program by '
         'what it does is where choice would do its work. In Lean the footprint does not draw that '
-        'line: the existence theorem\'s statement carries Classical.choice, and whether a restated, '
-        'choice-free statement has a choice-free proof is unclassified '
-        '(ZeroParadox/Computability/Kleene.md).'))
+        'line: the existence theorem\'s statement carries Classical.choice (STATEMENT-CARRIED in '
+        'the sense of ZeroParadox/Category/ChoiceCannotBe.md), and whether a restated, '
+        'choice-free statement has a choice-free proof is unclassified in that sense '
+        '(ZeroParadox/Computability/Kleene.md § VIII).'))
     E.append(cbody(
         '<b>The zero tape.</b> The all-false tape is ⊥ of the bit-by-bit tape order, carries no '
         'program\'s code except the empty one, and is what any tape becomes when compared with '
