@@ -222,7 +222,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 |----------|-------------|----------|-------|
 | ZP-A Lattice Algebra | [Lattice.lean](ZeroParadox/Order/Lattice.lean) | Partial order, ⊥ as the minimum, monotonicity of state change | Clean - April 2026 |
 | ZP-B p-Adic Topology | [Padic.lean](ZeroParadox/Valuation/Padic.lean) | p = 2 forced; Q₂ ultrametric, clopen balls, total disconnectedness, snap irreversibility | Clean - April 2026 |
-| ZP-C Information Theory | [Surprisal.lean](ZeroParadox/Information/Surprisal.lean) | Distinct state distributions, 1-bit divergence, execution as a nonzero change, unbounded surprisal at ⊥ | Clean - April 2026 |
+| ZP-C Information Theory | [Surprisal.lean](ZeroParadox/Information/Surprisal.lean) | Distinct state distributions, 1-bit divergence, execution as a state change off ⊥ of `MachinePhase`, unbounded surprisal at ⊥ | Clean - April 2026 |
 | ZP-D State Layer | [StateSpace.lean](ZeroParadox/State/StateSpace.lean) | Transition operator into Hilbert space: existence, uniqueness up to unitary, orthogonality under the snap | Clean - April 2026 |
 | ZP-E Bridge Document | [Snap.lean](ZeroParadox/Order/Snap.lean) | The snap as a derived theorem (T-SNAP); instantiation succession; axiom-free minimal path | Clean - April 2026 |
 | ZP-F The Counterexamples | [OrderedField.lean](ZeroParadox/Reals/OrderedField.lean) | The snap cannot occur in any ordered field (ℝ, ℚ as instances) | Clean - May 2026 |

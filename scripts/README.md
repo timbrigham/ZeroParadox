@@ -92,7 +92,6 @@ build's own exit code and reports what the machine actually checked.
 |------|---------------|
 | [build_foreword.py](build_foreword.py) | `Zero_Paradox_Foreword.pdf` |
 | [build_tools.py](build_tools.py) | `ZP_Tools_and_Methods.pdf` |
-| [build_zp_philosophical_question.py](build_zp_philosophical_question.py) | `ZP_Philosophical_Question.pdf` |
 
 ### Reference document generators (markdown, not PDF)
 

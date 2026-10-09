@@ -27,7 +27,6 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-R Diagonal Family Addendum | v1.14 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:a635a1ed |
 | ZP-Q The Frame-Change | v1.12 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:c2838be3 |
 | Zero Paradox Foreword | v2.34 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:2e2db6d3 |
-| ZP Philosophical Question | v1.22 | ZP_Philosophical_Question.pdf | N/A | N/A | formal:be2fc7e7 |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:bfebb710 |
 | ZP Choice-Free Core Addendum | v1.11 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:dc1bca4e |
 
