@@ -150,7 +150,8 @@ reviews will flag ZP-specific language anyway, so preempt it everywhere in this 
 
 Worked examples from ZP-W: *"the wall"* → "the class of impossibility theorems for self-referential
 fixed points at a structure's least element; within this document, the shorthand is *the wall*".
-*"the snap"* → "the forced transition from the least element to ε₀; … the shorthand is *the snap*".
+*"the snap"* → "the step from the bottom element ⊥ of a two-state carrier to the state above it (named
+ε₀ in that chart); … the shorthand is *the snap*".
 Cross-framework ⊥ → "the least or initial element of each structure; within this document ⊥ denotes
 that shared structural position — a notational shorthand, not a cross-framework identity."
 

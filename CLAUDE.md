@@ -228,11 +228,11 @@ RULE     LOAD THE SUBJECT'S WHOLE ROW BELOW — every file on it — and ground 
                        `ZeroParadox/DiagonalFixedPoint.lean` (the keystone fixed point)
            snap        `ZeroParadox/Order/SnapCannotBe.lean` · `ZeroParadox/Order/Snap.lean`
            eps-0       `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`
-           choice      `ZeroParadox/Category/ChoiceCannotBe.lean` (choice as an OBJECT, a face of
-                       the bottom) · `ZeroParadox/AxiomProfile.lean` (the core/realization split;
-                       T-SNAP at no axioms at all) · `ZeroParadox/Ordinal/SyntacticCollapse.lean`
-                       (the choice-free surrogate; the standing conjecture's two halves; Mathlib's
-                       ℚ instances choice-tainted at the INSTANCE level)
+           choice      `ZeroParadox/Category/ChoiceCannotBe.lean` · `ZeroParadox/Category/ChoiceCannotBe.md`
+                       (choice as an OBJECT, a face of the bottom; the classification classes) ·
+                       `ZeroParadox/AxiomProfile.lean` (the core/realization split; T-SNAP at no axioms at all) ·
+                       `ZeroParadox/Ordinal/SyntacticCollapse.lean` · `ZeroParadox/Ordinal/SyntacticCollapse.md` (the
+                       choice-free surrogate; the standing conjecture's two halves; Mathlib's ℚ instances choice-tainted at the INSTANCE level)
            computation `ZeroParadox/Computability/Kleene.lean`
            a claim's status  `ZeroParadox/ClaimsMirror.lean` · `CLAIMS.md`
          Every gloss carries `Statement:` (what it proves, best form an elaborating `example`)
