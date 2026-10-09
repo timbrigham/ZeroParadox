@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.21 | October 2026
+Version 1.22 | October 2026
 v1.20: T2/T3 remark: "0 reaches every object (T2)" dropped T2's uniqueness; now "0 reaches every object in exactly one way (T2)" (Tim ruling 2026-09-29).
 v1.19: Remark R-AX: "the two axioms jointly pick out exactly the non-degenerate case" stated a conditional as a biconditional. Now only the proved direction (a strict initial that is also terminal forces every object isomorphic to it, so AX-G1 rules it out) and the failing converse (in sets, the empty set is strict initial and the one-point set terminal); both checked as examples in AxG2Reduce.lean (copy_editor panel, Tim ruling 2026-09-29).
 v1.18: Remark R-AX: the domain facts behind the four stand-ins now list ZP-A T2 (the lattice stand-in's fact, bot_le) beside ZP-B C3, ZP-C T1b and ZP-D T4 (gate round 1, Tim ruling 2026-09-29).
@@ -32,7 +32,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -298,7 +298,7 @@ def build():
         'Status: Remark — connecting note to ZP-A CC-2',
         [
             'R1 frames the structural inversion of 0. This remark connects that structure to ZP-A CC-2: '
-            '⊥ = {⊥}. The null state is its own extension — a Quine atom. A self-containing object has '
+            '⊥ = {⊥}: read this way, ⊥ is its own extension — a Quine atom. A self-containing object has '
             'no external interpreter by structure; it IS its own interpretation.',
             'In categorical terms, this corresponds to two conditions together: (1) AX-G2: '
             'hom(X, 0) = ∅ for all X ≠ 0 — no morphism can reach inside 0 from outside; and '

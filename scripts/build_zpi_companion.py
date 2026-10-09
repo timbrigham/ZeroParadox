@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.33 | October 2026
+Version 1.34 | October 2026
 v1.32: DA-1 CREDIT (Tim rulings, 2026-09-15), companion sync with ZP-I v1.25: the step table's step 3 row, the Lean status entry for da1_computational and the ZP-I Summary credited DA-1 at the successor bottom to the computational fixed-point argument and said the Kleene path closes Steps 2-4. da1_computational proves only that the bottom of a KleeneStructure lattice is its Quine atom. The row now says that, given the KleeneStructure instance, and that DA-1 is closed given DP-2 (ZP-E); the Summary says DA-1 is closed given DP-2, with ZP-K witnessing Path 1 and carrying Path 3 as a KleeneStructure requirement.
 v1.31: THE CLAIM IS DELETED, NOT REDRAFTED (companion sync with ZP-I v1.22; adversary FAIL-BEDROCK). Three findings landed in this file, one of them the worst kind. (1) The step table's SOURCE cell for step 1 read "R1 + ZP-B completeness ... (t_iz_cauchy)". t_iz_cauchy binds the chain and the norm bound and NO LATTICE AT ALL; it is pure p-adic analysis. Restated to what it consumes. (2) The Lean status box gave t_iz_r1_t3_geometric_bound the binders of its NEIGHBOUR h_strict_from_r1_t3 - IsDepthChain and IsStrictStateSequence, listed correctly one entry above - and dropped the nonvanishing hypothesis the named lemma actually requires. A status box stating a theorem that is not the theorem. (3) Door 1 still credited R1 with leaving the chain somewhere to go, one paragraph from the text reserving R1 for no-subtraction; deleted, see the formal document's v1.22 entry for the counter-model that settles it. Also: "T3 drives ascent" at :294 and :599 - T3 is monotonicity, and the corpus's own compiled gauge shows it permits stalling in any ZPSemilattice - and the dead file name ZPI.lean in the header, which has been ZeroParadox/Valuation/SemilatticeInstance.lean since the reorg. ROUND 3 (adversary FAIL-BEDROCK): the cycle diagram's fourth node was labelled 'eps_(omega-1)' with the sublabel 'last state'. That ordinal DOES NOT EXIST - omega is a limit and has no predecessor - and the paired formal document denies the sublabel four pages earlier at Remark R-I.1, "a countable sequence with NO last element in L". Together they made the limit read as a successor step, the exact misreading this document exists to block. Second Drawing-borne defect in three rounds, after 'T3 (R1 drives)' at comp v1.29: a String inside a Drawing is invisible to every prose checker in this repository, so the only detector is a reviewer reading the drawing code. Also: the arrow labels gave the climb to T3 alone, and T3 is monotonicity, which the corpus's own gauge shows permits stalling; and the step-1 source cell, repaired earlier this round, still led with ZP-B completeness, which t_iz_cauchy does not consume. ROUND 4 (editorial FAIL-BEDROCK, ordinary here): the summary still read "T-IZ is derived from ZP-A through ZP-E and ZP-K" - the five-document range attribution the formal document deleted at v1.22. A range of documents is not a derivation. ROUND 3, SECOND GATE (editorial FAIL-BEDROCK): the section III-C status box made the same "pure ZP-A lattice conditions" claim TWICE in one entry and dropped the nonvanishing hypothesis again - the exact omission the v1.31 entry above records as fixed one entry earlier at the geometric-bound lemma. Third half-applied fix in this arc. Corrected to the three hypotheses the signature actually binds, with only IsStrictStateSequence named as a lattice condition.
 v1.30: ATTRIBUTION CORRECTED (companion sync with ZP-I v1.21; claim-review FAIL-BEDROCK). The comp v1.29 name fix left the false attribution in place. HasNoTop appears in no binder of any declaration in SemilatticeInstance.lean; what h_strict_from_r1_t3 consumes is IsDepthChain and IsStrictStateSequence. Two LEAN STATUS BOXES carried "from R1 + T3" - a status box is the surface a general reader treats as the verified summary, which makes it the worst place for a premise nothing binds.
@@ -306,7 +306,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.33'
+VERSION = '1.34'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -368,7 +368,7 @@ def build():
     # ── What ZP-I Is Doing ─────────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-I Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-E proved that the transition from ⊥ to the minimum nonzero state (ε₀) '
+        'ZP-E proved that the transition from ⊥ to the minimum state off ⊥ (ε₀) '
         'has its SHAPE fixed by the lattice axioms  - derived, not assumed; that the transition is taken is a further commitment. But '
         'ZP-E left a question open: what happens '
         'after the Snap? The chain of states ascends  - but does it ascend forever? And if '

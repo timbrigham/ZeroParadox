@@ -35,9 +35,9 @@ open ZeroParadox
 
 The formal cross-framework bridge. ZPC's MachinePhase (two-element type: initial,
 running) satisfies all four ZPA axioms A1–A4. Under this instance:
-- bot  = initial = c₀  (the Null State, ⊥)
+- bot  = initial = c₀  (⊥ of `MachinePhase`)
 - join = the binary maximum (running absorbs; initial is identity)
-- ε₀   = running = c₁  (the First Atomic State)
+- ε₀   = running = c₁  (the state off ⊥ of `MachinePhase`)
 This makes T-SNAP type-theoretically grounded: ⊥ ∨ ε₀ = ε₀ is definitional. -/
 
 -- [ZP-CUSTOM] instance: ZPSemilattice MachinePhase | reason: The cross-framework bridge. MachinePhase is one of two two-element inductives in ZeroParadox/Information/Surprisal.lean (the other is BinaryState); giving it a ZPSemilattice instance makes T-SNAP (bot_join applied to MachinePhase) a direct consequence of ZP-A's A4. AX-1 is retired: its shape is proved as T-SNAP, and that the snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). No Mathlib lattice instance exists for MachinePhase.
@@ -84,8 +84,8 @@ theorem t_snap_join {L : Type*} [ZPSemilattice L] (ε₀ : L) :
 theorem t_snap_machine : join c₀ c₁ = c₁ := rfl
 
 /-- T-SNAP (derived): Assembly theorem.
-    (1) c₀ ≠ c₁  — ZPC L-RUN: execution is a non-null state change.
-    (2) c₁ ≠ c₀  — ZPC TQ-IH: no execution avoids a non-null configuration.
+    (1) c₀ ≠ c₁  — ZPC L-RUN: execution is a state change off ⊥ of `MachinePhase`.
+    (2) c₁ ≠ c₀  — ZPC TQ-IH: no execution avoids a configuration off ⊥ of `MachinePhase`.
     (3) join c₀ c₁ = c₁  — the snap is a valid join transition (A4/bot_join).
     Conclusion: the Binary Snap's shape is derived; that it occurs follows from the occurrence
     commitment together with DA-1. -/

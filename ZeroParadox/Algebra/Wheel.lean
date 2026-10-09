@@ -219,7 +219,7 @@ end WheelBasic
 
     - `bot`:    0 · /0 — the absorbing undefined element (ZP: the porthole; the algebraic counterpart
                 of the Quine-atom role, not an identity with it — different types)
-    - `fin q`:  a finite rational (ZP: nonzero states; q = 0 is the semilattice ⊥)
+    - `fin q`:  a finite rational (ZP: for q ≠ 0, a state off ⊥; q = 0 is the semilattice ⊥)
     - `inf`:    /0 = ∞ — the infinite element (ZP: v₂(0) = ∞)
 
     The porthole is the identification fin(0) ↔ inf via winv:

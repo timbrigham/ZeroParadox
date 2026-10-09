@@ -48,10 +48,10 @@ inductive BinaryState where
   | exist : BinaryState
   deriving DecidableEq, Fintype
 
-/-- Null State: non-existence, ⊥. -/
+/-- Non-existence: the state AX-B1 reads as ⊥. -/
 def nullSt : BinaryState := .null
 
-/-- First Atomic State: existence. -/
+/-- Existence: the other constructor of `BinaryState`. -/
 def firstSt : BinaryState := .exist
 
 /-- Unfold finite sums over BinaryState (replaces Fin.sum_univ_two). -/
@@ -63,10 +63,10 @@ def firstSt : BinaryState := .exist
 
 /-! ## Section II: State Representations and JSD -/
 
-/-- P: The Null State distribution — point mass at 0 (non-existence). -/
+/-- P: the point mass at 0 (non-existence). -/
 noncomputable def distP : PMF BinaryState := PMF.pure nullSt
 
-/-- Q: The First Atomic State distribution — point mass at 1 (existence). -/
+/-- Q: the point mass at 1 (existence). -/
 noncomputable def distQ : PMF BinaryState := PMF.pure firstSt
 
 /-- T1: P and Q are distinct distributions.
@@ -160,12 +160,12 @@ theorem t2_diverges : ∀ M : ℝ, ∃ n : ℕ, M < circPartial n := by
   obtain ⟨n, hn⟩ := exists_nat_gt M
   exact ⟨n, by rw [t2_partial_eq]; exact_mod_cast hn⟩
 
-/-! ## Section III-B: L-INF — Unbounded Surprisal of the Null State -/
+/-! ## Section III-B: L-INF — Unbounded Surprisal at ⊥ -/
 
 /-- L-INF — Unbounded Surprisal of ⊥.
 
     The surprisal I(n) = n at ball-hierarchy depth n is unbounded: for any finite
-    bound M, there exist depths n with I(n) > M. The null state ⊥ = c₀ corresponds
+    bound M, there exist depths n with I(n) > M. ⊥ of `MachinePhase` (c₀) corresponds
     to the limit point 0 ∈ Q₂ — the limit of the binary ball hierarchy at infinite
     depth. At this limit, surprisal is not finite.
 
@@ -197,15 +197,16 @@ def c₀ : MachinePhase := .initial
 /-- c₁: the first running configuration. -/
 def c₁ : MachinePhase := .running
 
-/-- L-RUN: c₀ ≠ c₁ — the transition from initial to running is a non-null,
-    irreducible state change. Derived from AX-B1 and D7. -/
+/-- L-RUN: c₀ ≠ c₁ — the transition from initial to running is an irreducible
+    state change off ⊥ of `MachinePhase` (c₀ under `machinePhaseZPS`, `Order/Snap.lean`).
+    Derived from AX-B1 and D7. -/
 theorem l_run : c₀ ≠ c₁ := by decide
 
 /-! ## Section V: TQ-IH -/
 
-/-- TQ-IH: c₁ is not the null (initial) configuration.
-    Any execution passes through c₁; by L-RUN c₁ ≠ c₀ (≠ ⊥).
-    No program can produce ⊥ without a non-null intermediate state. -/
+/-- TQ-IH: c₁ is not the initial configuration c₀, ⊥ of `MachinePhase`.
+    Any execution passes through c₁; by L-RUN c₁ ≠ c₀.
+    No program can produce ⊥ without an intermediate state off ⊥ of `MachinePhase`. -/
 theorem tq_ih : c₁ ≠ c₀ := Ne.symm l_run
 
 /-! ## Section VI: The Binary Alphabet is Forced — the minimal non-degenerate distribution

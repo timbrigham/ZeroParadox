@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.25 | October 2026
+Version 1.26 | October 2026
 v1.23: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the T-H3 status said 'That the transition is taken remains a framework commitment, not a consequence of any of the four'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from any of the four.
 v1.22: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The ZP-E import line, the Open Items AX-1 row (whose status cell now reads 'the snap occurs given the occurrence commitment and DA-1'), the IR-ZP and IR-2 validation rows and the AX-1 validation row replace 'stated separately, as the occurrence commitment' / 'which ZP-E's DA-1 argues for' / 'occurrence is the occurrence commitment' with that sentence. The Open Items row says 'with no Lean kernel axioms' where it said 'with no axioms' (A4 and AX-B1 are called axioms on the same pages). T-SNAP's readable name 'Binary Snap Causality' is glossed once, at its first use in T-H3: 'Causality' refers to the shape of the step, not to its occurrence.
 v1.21: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). These sites said AX-1 whole was derived or no longer an axiom: the ZP-E import line, the Open Items AX-1 row ("Derived as Theorem T-SNAP ... No longer an axiom"), the IR-ZP and IR-2 validation rows, and the AX-1 validation row. Each now scopes the derivation to the shape half and names the occurrence half as a commitment. T-H3's own row, which says T-SNAP is inherited as a derived theorem, is unchanged: T-SNAP is the shape theorem. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the Open Items AX-1 row credited the shape to 'the P0 / L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
@@ -35,7 +35,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -149,8 +149,8 @@ def build():
             'Clopen separation of 0 from all nonzero elements (T3). Snap irreversibility (C3).',
             'From ZP-C: Incompressibility threshold P<sub>0</sub> (D1). RP-1 (representation principle). '
             'State representations derived from AX-B1 (T1). JSD = 1 bit (T1b). Discrete surprisal operator DF (D5, D6). '
-            'Non-conservatism of DF on infinite sequences approaching 0 (T2). L-RUN (execution is non-null state change). '
-            'TQ-IH (no program outputs &#8869; without non-null intermediate state). '
+            'Non-conservatism of DF on infinite sequences approaching 0 (T2). L-RUN (execution is a state change off &#8869; of MachinePhase). '
+            'TQ-IH (no program outputs &#8869; without an intermediate state off &#8869; of MachinePhase). '
             'T-BUF / T-SNAP: Binary Snap derived as theorem.',
             'From ZP-D: H = &#8450;<sup>n</sup> (D1). T: Q<sub>2</sub> &#8594; H constructed by basis assignment (T2). '
             'T unique up to unitary equivalence (T3). Snap produces orthogonal shift (T4). '
@@ -280,7 +280,7 @@ def build():
         'Status: PDF construction complete — Lean: full functor (fc_functor, sorry-free)',
         [
             'Object map: F<sub>C</sub> sends each object X &#8712; ob(C) to a probability distribution P<sub>X</sub> over {0, 1}. The initial '
-            'object 0 maps to the Null State distribution: F<sub>C</sub>(0) = P = (1, 0) (derived from AX-B1 and RP-1 in ZP-C T1). InfoSp is '
+            'object 0 maps to the point mass at non-existence: F<sub>C</sub>(0) = P = (1, 0) (derived from AX-B1 and RP-1 in ZP-C T1). InfoSp is '
             'the informal name of the target: in Lean, F<sub>C</sub> is realized in KleisliCat PMF, the Kleisli category of the probability monad '
             '(fC_functor, ZeroParadox/Multihomed/InfoFunctor.lean), and its &#8469;-indexed stand-in is InfoDepth (fc_functor, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean).',
@@ -295,7 +295,7 @@ def build():
             'subadditivity. (Note: JSD subadditivity is an inequality and does not establish this — '
             'the equality holds here as a structural consequence of the binary framework.) <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>C</sub>(id<sub>A</sub>) = JSD(P<sub>A</sub> &#8741; P<sub>A</sub>) = 0. No informational work is done by a trivial transition. <font name="DV">&#10003;</font>',
-            'The Null State P = (1, 0) is the unique distribution of minimum entropy (H(P) = 0 bits).',
+            'The point mass P = (1, 0) has minimum entropy (H(P) = 0 bits), as does Q = (0, 1).',
             'AX-G1 respected in the stand-in category: the Lean functor fc_functor lands in InfoDepth, the &#8469;-indexed surprisal-depth '
             'category, which has no terminal object because the depth index has no maximum: n + 1 &gt; n (infoDepthZPCat, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean). <font name="DV">&#10003;</font>',

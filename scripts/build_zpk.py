@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.25 | October 2026
+Version 1.26 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -317,9 +317,9 @@ def build():
     ))
     E.append(sp(6))
 
-    E.append(Paragraph('II. The Description-Instantiation Gap', S['h2']))
-    E.append(body(  # ZP-NOCHECK: term cited in quotes as the framework's informal question, not a live ZP claim
-        'The "description-instantiation gap" asks whether mathematical self-reference implies '
+    E.append(Paragraph('II. Description versus Execution', S['h2']))
+    E.append(body(
+        'This section asks whether mathematical self-reference implies '
         'computational execution: whether a self-referential ⊥ is running (Sense B, ZP-E DA-1 '
         'insert § II) rather than an inert description (Sense A).'))
     E.append(body(
