@@ -26,75 +26,10 @@ why I keep coming back to it.
 
 ---
 
-## Formal Overview (AI-assisted)
-
-Relates four structural roles of ⊥, of which three are proved equivalent:
-
-  (1) Quine atom       — set-theoretic self-reference (ZF + AFA)
-  (2) Bottom element   — order-theoretic minimum (ZP-A)
-  (3) Join identity    — algebraic generator (ZP-A A4)
-  (4) Kleene fixed point — computational self-reference (Mathlib: fixed_point₂)
-
-The central result (T-COMP) establishes (1) ↔ (2) ↔ (3) via T-EXEC. Its proof term is
-`t_exec_triple_iff`, a ZP-J result that does not mention computation; ⊥ is then the
-element those three pick out. **(4) is not a clause of that theorem** — it is present
-by typeclass requirement, as the class field `botCode_is_quine`. The KleeneStructure
-typeclass taking (1)–(4) to name the same structural role in four formal languages is
-the motivating commitment, not a consequence derived by the theorems. Note the two
-sides also differ in shape: (1)–(3) pick out a unique element, while the computational
-fixed points form an infinite family (§ VI).
-
-## Structure
-
-- § I   The Kleene fixed point — statement and computational Quine definition
-- § II  KleeneStructure typeclass — the commitment bridging AFAStructure to computability
-- § III T-COMP: three proved equivalent, and where the fourth face sits
-- § IV  DA-1 closure — the witnesses the description-instantiation argument rests on
-- § V   MachinePhase instance — DA-1's concrete witness for ZP-E's machine
-- § VI  Function-Gödel-number correspondence — period = index, non-computability boundary
-
-## Key insight (April 26, 2026)
-
-This is the framework's reading, and it is a commitment throughout — no theorem in this
-file establishes it. On that reading, ⊥ in the computational instantiation (ZP-C D7) is
-not a state OF a Turing machine: ⊥ IS the universal Turing machine in its ground state,
-and U is not a description awaiting an external executor but IS the executor.
-
-What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
-Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
-computable transformation. The KleeneStructure typeclass then takes the AFA Quine atom
-(⊥ = {⊥}) and the Kleene computational quine (∃ c, eval c = f c) to be the same
-structural property. That identification is the motivating commitment, not a theorem
-proved here, and it cannot be stated as an equation — `Code` and `L` are different
-types.
-
-## Dependencies
-
-ZP-J (T-EXEC: IsQuineAtom q ↔ q = ⊥, bot_self_mem).
-Mathlib: Nat.Partrec.Code.fixed_point₂ (Kleene's second recursion theorem).
-Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
-
-## Axiom footprint (verified)
-
-All proved ZP-K theorems depend on [propext, Classical.choice, Quot.sound].
-Source: Mathlib computability infrastructure — Kleene's theorem (fixed_point₂) and
-Rogers' theorem (fixed_point) themselves use classical logic and choice.
-ZP-J T-EXEC (axiom-free) is preserved as a ZP-J result; the classical axioms enter
-through Code/Partrec machinery, not through the ZPSemilattice or AFAStructure fields.
-
-Note a distinction that is easy to get backwards. Several results here are ZP-J
-theorems restated under a stronger hypothesis — `t_comp` (proof term
-`t_exec_triple_iff`), `kleene_quine_is_bot` (`t_exec`), `da1_computational`
-(`bot_is_quine_atom`). The `[KleeneStructure L]` hypothesis is inert *on those proof
-routes*, and the fences below say so. It is **not** absent from their axiom footprints:
-`#print axioms` traverses the statement, and the hypothesis reaches
-`IsComputationalQuine` → `selfApply` → Mathlib `eval`. So all three report the full
-triple, as the block at the end of this file shows. Inert-in-the-proof and
-absent-from-the-footprint are different properties; do not infer either from the other.
-
-§ VI theorems: all fully proved — self_halting_undecidable, isComputationalQuine_undecidable,
-quine_period_is_goedel, quine_goedel_injective, and infinite_quine_family.
-No sorry stubs remain in ZPK.
+## Formal Overview
+T-COMP proves three roles of ⊥ equivalent; the Kleene fixed point is the class field
+`botCode_is_quine`, a commitment. `encodeCode_self` has no axioms, so not every theorem here
+carries `Classical.choice`. Overview and footprints: `ZeroParadox/Computability/Kleene.md`.
 -/
 
 namespace ZeroParadox

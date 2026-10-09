@@ -1,7 +1,81 @@
 # The Gödel-number family, infinitely many fixed points, and a self-printing universal code
 
-Ride-along for § VI and § VIII of `ZeroParadox/Computability/Kleene.lean`. The Lean file holds the
-declarations, the Engineer's Take and the per-declaration docstrings.
+Ride-along for `ZeroParadox/Computability/Kleene.lean`: its long header, § VI and § VIII. The Lean
+file holds the declarations, the Engineer's Take and the per-declaration docstrings.
+
+The sections from "Formal Overview" to the § VI status line are the long header of the Lean file.
+In them, "this file", "below", "the end of this file" and every § number refer to
+`ZeroParadox/Computability/Kleene.lean`.
+
+## Formal Overview (AI-assisted)
+
+Relates four structural roles of ⊥, of which three are proved equivalent:
+
+  (1) Quine atom       — set-theoretic self-reference (ZF + AFA)
+  (2) Bottom element   — order-theoretic minimum (ZP-A)
+  (3) Join identity    — algebraic generator (ZP-A A4)
+  (4) Kleene fixed point — computational self-reference (Mathlib: fixed_point₂)
+
+The central result (T-COMP) establishes (1) ↔ (2) ↔ (3) via T-EXEC. Its proof term is
+`t_exec_triple_iff`, a ZP-J result that does not mention computation; ⊥ is then the
+element those three pick out. **(4) is not a clause of that theorem** — it is present
+by typeclass requirement, as the class field `botCode_is_quine`. The KleeneStructure
+typeclass taking (1)–(4) to name the same structural role in four formal languages is
+the motivating commitment, not a consequence derived by the theorems. Note the two
+sides also differ in shape: (1)–(3) pick out a unique element, while the computational
+fixed points form an infinite family (§ VI).
+
+## Structure
+
+- § I   The Kleene fixed point — statement and computational Quine definition
+- § II  KleeneStructure typeclass — the commitment bridging AFAStructure to computability
+- § III T-COMP: three proved equivalent, and where the fourth face sits
+- § IV  DA-1 closure — the witnesses the description-instantiation argument rests on
+- § V   MachinePhase instance — DA-1's concrete witness for ZP-E's machine
+- § VI  Function-Gödel-number correspondence — period = index, non-computability boundary
+
+## Key insight (April 26, 2026)
+
+This is the framework's reading, and it is a commitment throughout — no theorem in this
+file establishes it. On that reading, ⊥ in the computational instantiation (ZP-C D7) is
+not a state OF a Turing machine: ⊥ IS the universal Turing machine in its ground state,
+and U is not a description awaiting an external executor but IS the executor.
+
+What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
+Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
+computable transformation. The KleeneStructure typeclass then takes the AFA Quine atom
+(⊥ = {⊥}) and the Kleene computational quine (∃ c, eval c = f c) to be the same
+structural property. That identification is the motivating commitment, not a theorem
+proved here, and it cannot be stated as an equation — `Code` and `L` are different
+types.
+
+## Dependencies
+
+ZP-J (T-EXEC: IsQuineAtom q ↔ q = ⊥, bot_self_mem).
+Mathlib: Nat.Partrec.Code.fixed_point₂ (Kleene's second recursion theorem).
+Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
+
+## Axiom footprint (measured 2026-10-09; the `PurityCheck` block at the end re-measures it)
+
+Not every proved theorem here carries `Classical.choice`: `encodeCode_self` has no axioms.
+A carried footprint is a fact about the statement or proof as written, never evidence that
+choice is needed (`ZeroParadox/Category/ChoiceCannotBe.md`). `Code` and `eval` are axiom-free;
+`selfApply` reaches choice through `Encodable.encode` (§ VII). Routes into Kleene's and Rogers'
+statements: `ZeroParadox/Computability/Kleene.md` § VIII. ZP-J's `t_exec` has no axioms.
+
+Note a distinction that is easy to get backwards. Several results here are ZP-J
+theorems restated under a stronger hypothesis — `t_comp` (proof term
+`t_exec_triple_iff`), `kleene_quine_is_bot` (`t_exec`), `da1_computational`
+(`bot_is_quine_atom`). The `[KleeneStructure L]` hypothesis is inert *on those proof
+routes*, and the fences below say so. It is **not** absent from their axiom footprints:
+`#print axioms` traverses the statement, and the hypothesis reaches
+`IsComputationalQuine` → `selfApply` → `Encodable.encode`. So all three report the full
+triple, as the block at the end of this file shows. Inert-in-the-proof and
+absent-from-the-footprint are different properties; do not infer either from the other.
+
+§ VI theorems: all fully proved — self_halting_undecidable, isComputationalQuine_undecidable,
+quine_period_is_goedel, quine_goedel_injective, and infinite_quine_family.
+No sorry stubs remain in ZPK.
 
 ## § VI. Function-Gödel-Number Correspondence
 
