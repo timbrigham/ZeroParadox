@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.25 | October 2026
+Version 1.26 | October 2026
 v1.20: OQ-E2 POINTER (Tim ruling, 2026-10-02: the type-level identity is ill-typed, not open; extend to all siblings): the Section III "Honest scope" box said the epsilon-0 type bridge was open under OQ-E2. OQ-E2 is the cardinality-semilattice correspondence, and the cross-type identity is not a well-formed statement; the box now says it is ill-typed, not open, the same category error cnf_bridge_type_boundary (ZeroParadox/Ordinal/CnfBridge.lean) fences for Ordinal vs Z2, with the link running through maps.
 v1.19: GATE ROUND 2 ON v1.18 (Tim rulings, 2026-09-29): "machine-checked" is scoped everywhere it still covered the whole document: the preamble calls this a record of two investigations "machine-checked except where marked cited", the introduction says that where a result is cited rather than re-proved the text says so, and the endnote carries the same qualifier. The Section II computability box heading and verdict name the multi-valued form of the Lawvere instance (Bauer Thm 5.2), and the box says excluded middle fails in synthetic computability. The "In Set" box states the measured footprint of the face verdicts nontrivial_lattice_no_witness and q2_no_witness, [propext, Classical.choice, Quot.sound]; the Section IV box says "the same Lean adapter". The v1.16 line's "p. 10", removed in v1.17, is restored: changelog lines record what shipped.
 v1.18: SCOPE OF "MACHINE-CHECKED" (Tim rulings, 2026-09-29): the Section II heading now reads "The Lawvere Face-Split (Set face machine-checked; computability face cited)", and the Section II verdict marks the effective-category instance as cited (Bauer 2017), with Lean proving Rogers' theorem classically; matching CLAIMS.md and README.md. Every box is now kept on one page (a KeepTogether on each, including "What the Zero Paradox adds"), so no box header repeats across a page break.
@@ -34,7 +34,7 @@ import os
 from zp_utils import *
 from reportlab.platypus import KeepTogether
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -85,8 +85,11 @@ def build():
         'theory, the Kleene quine in computation, the point v<sub>2</sub>(0) = &#8734; in '
         'valuation, and the initial object in category theory. Their shared membership in that '
         'family (MC-1) is proved per domain for the Quine atom, 2-adic and categorical faces; the '
-        'Kleene face is carried as a requirement, its witness computability_face_fixedPoint a fixed '
-        'point of a computable map, not tied to &#8869;; the choice of criteria is a design principle; and '
+        'Kleene face is carried as a requirement: its occupant is a Kleene code, a program equal to '
+        'its own transform up to evaluation (computability_face_fixedPoint) and a term of another type '
+        'than &#8869; of the ZPSemilattice, and reading such a code as the computational face of that '
+        '&#8869; is the KleeneStructure commitment (ZeroParadox/Computability/Kleene.lean); the '
+        'choice of criteria is a design principle; and '
         'the claim that the faces are <i>numerically one object</i> is <b>retired as '
         'ill-typed</b> (object equality across categories does not typecheck and is not invariant under '
         'equivalence). This addendum is a thin, '
@@ -258,7 +261,7 @@ def build():
     )))
     E.append(sp(4))
     E.append(KeepTogether(result_box(
-        'Categorical bridge (BoundaryBridge.lean)',
+        'Category-theoretic level (BoundaryBridge.lean)',
         [
             'snap_boundary_two_registers &#8212; the crossing witnessed in two registers at '
             'once: the relation/carrier level above, and ZP-P\'s categorical &#956;/&#957; '
