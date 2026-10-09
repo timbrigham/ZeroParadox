@@ -239,7 +239,8 @@ proved about where choice does work. -/
 -- What blocks the counterpart is EXPRESSIVE REACH: the carrier cannot name what the closure produces,
 -- because ε₀ is the supremum of Cantor normal form rather than a member. So this does NOT make
 -- `snapNucleus`'s footprint accidental, does NOT make it essential, and does NOT show the snap nucleus
--- is constructively impossible in general — a notation system extending past ε₀ is untouched and open.
+-- is constructively impossible in general — the obstruction concerns `ONote` only, and a carrier that
+-- reaches ε₀ is not affected by it (`ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint").
 -- It is the current state of the restatement question: blocked on `ONote` by naming, not by choice;
 -- `snapNucleus` as stated stays STATEMENT-CARRIED.
 #check @ZeroParadox.no_snap_closure

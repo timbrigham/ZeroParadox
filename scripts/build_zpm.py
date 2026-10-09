@@ -409,7 +409,9 @@ def build():
             'All theorems carry axiom footprint: [propext, Classical.choice, Quot.sound].',
             'These are standard Mathlib infrastructure axioms, inherited from ordinal theory '
             '(ZP-L), 2-adic analysis (ZP-B), and computability theory (ZP-K).',
-            'Classical.choice is load-bearing in the ordinal fixed-point (nfp) and present in '
+            'Classical.choice is carried by the statements of the ordinal fixed-point (nfp) results as '
+            'written (statement control, measured 2026-10-08; ZeroParadox/Category/ChoiceCannotBe.md), '
+            'and present in '
             'the computability fixed-point (Kleene\'s theorem). ZP-K Section IV tabulates the '
             'per-declaration measurements.',
             'Zero sorry in Incompleteness.lean. Verified: lake build, May 2026.',

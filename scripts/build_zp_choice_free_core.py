@@ -99,11 +99,14 @@ def build():
         '<i>realize</i> the snap inside standard analytic structures (p-adic topology, Hilbert space, '
         'ordinals), where the dependence is inherited from those libraries. The category-theory face '
         'is the exception: its choice is the framework\'s own bare classical, and Section III shows '
-        'it essential rather than <i>incidental</i>, given a premise stated there &#8212; a separate '
-        'axis from provenance, on which Section III places an inherited dependence too. It is '
+        'it essential rather than <i>incidental</i>, given a premise stated there. Necessity is a '
+        'separate axis from provenance: Section III shows an inherited dependence essential too, '
+        'on its own premise. It is '
         'not used by the core results above. <b>And dependence is not necessity:</b> that those '
-        'realizations <i>use</i> choice as written does not show choice is <i>required</i> there, '
-        'though several of their statements carry it as written (Section III).'))
+        'realizations <i>use</i> choice as written does not show the mathematics <i>requires</i> it. '
+        'Several of their statements carry it as written (Section III), so no proof of those '
+        'statements can drop it; whether a restatement on a choice-free carrier holds is a '
+        'separate question.'))
     E.append(hr())
 
     # ── Section I ─────────────────────────────────────────────────────────────────
@@ -212,8 +215,9 @@ def build():
         'classically-proved connectivity API (routable by a path-uniqueness reformulation); and '
         '`sInf` on a complete lattice (routable by a redefinition). The verdict for that layer was '
         '"mostly not structurally required." Whether this generalizes &#8212; and whether the snap '
-        'geometry forces choice anywhere &#8212; is an open question, tracked for the constructive '
-        'validation layer (ONote/NONote, future ZP-N).'))
+        'geometry forces choice anywhere &#8212; is an open question. On ordinal notations, ZP-N '
+        'restates the ordinal ascent choice-free; the state of the restatement question is in '
+        'ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint.'))
     E.append(remark_box(
         'Remark &#8212; Why this matters',
         [
@@ -258,18 +262,22 @@ def build():
             'The claim is exactly: the framework\'s central results &#8212; T-SNAP, the lattice, the '
             'Quine-atom self-reference &#8212; are choice-free, and T-SNAP is axiom-free. NOT claimed: '
             'that the whole framework is choice-free (it is not), nor that the analytic-layer choice '
-            'is removable or necessary (open, though several of its statements carry it as written, '
-            'Section III). The fact surfaced here is the verified one.',
+            'is removable or necessary. Where a statement carries it as written (Section III), no '
+            'proof of that statement can drop it and the open question is a restatement on a '
+            'choice-free carrier; elsewhere necessity is open. The fact surfaced here is the '
+            'verified one.',
         ]
     ))
     E.append(sp(6))
 
     E.append(Paragraph(
-        'Endnote: This is a framework-wide note, machine-verified as of June 2026. The central '
+        'Endnote: This is a framework-wide note, machine-verified as of October 2026 (lake build; '
+        'statement control measured 2026-10-08). The central '
         'theorem T-SNAP depends on no axioms; the conceptual core is free of the Axiom of Choice; '
         '`Classical.choice` appears mostly where the framework builds on Mathlib\'s classical analysis, '
-        'order, and computability libraries, where several statements carry it as written and '
-        'elsewhere whether it is necessary remains open. It is not only there: the category-theory '
+        'order, and computability libraries, where several statements carry it as written (for '
+        'those, the open question is a restatement) and elsewhere whether it is necessary remains '
+        'open. It is not only there: the category-theory '
         'face carries the framework\'s own bare classical, and Section III\'s two reductions settle '
         'necessity for the principles they cover, given the premise stated there. All of this is '
         'checkable in ZeroParadox/AxiomProfile.lean.',

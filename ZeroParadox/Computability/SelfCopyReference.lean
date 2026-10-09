@@ -212,7 +212,7 @@ open ZeroParadox
 -- Measured: the three below carry `Classical.choice` (Mathlib routes). For the ⟹ half it enters
 -- turning bare `Infinite α` into a counting — `Cardinal.aleph0_le_mk`, `Cardinal.mul_aleph0_eq`,
 -- `Cardinal.add_one_eq`, `Cardinal.mk_option` (and `Infinite.natEmbedding`) each report it;
--- `Cardinal.eq` does not. A proof's footprint, not a theorem's necessity: UNCLASSIFIED. In set theory
+-- `Cardinal.eq` does not. A proof's footprint, never a principle's necessity: UNCLASSIFIED. In set theory
 -- without choice the ⟹ half is unprovable: infinite Dedekind-finite sets, with no one-to-one, not-onto
 -- self-map, are consistent there (Banakh, arXiv:2006.01613v4, Rem. 43.14, citing Jech 1973 § 4.6).
 -- Dependent choice gives every infinite set such a self-map (Prop. 43.12); the unique fixed point is not

@@ -52,8 +52,8 @@ def build():
             '<i>The constructive companion to ZP-L. The snap-from-below is rebuilt syntactically on '
             'ordinal notations (ONote), where it is choice-free &#8212; [propext] only. Beside it: a '
             'carrier of notations denoting the ordinals up to &#949;<sub>0</sub>, whose crossing into '
-            'Mathlib&#8217;s Ordinal is one named map with a measured price, and a proof that the generality ZP-L borrows is '
-            'genuinely non-constructive. Proved sorry-free in Lean 4.</i>',
+            'Mathlib&#8217;s Ordinal is one named map with a measured price, and a proof that the generality ZP-L borrows '
+            'implies excluded middle. Proved sorry-free in Lean 4.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -71,8 +71,10 @@ def build():
         'is not a mere artifact of how a proof was written. It is the price of a tool stronger than '
         'the job requires: ZP-L&#8217;s &#949;<sub>0</sub> results, as stated, already carry '
         'Classical.choice in their statements (the statement control, measured 2026-10-08), so no '
-        'proof of those statements can drop it. Whether a restatement on a choice-free carrier holds '
-        'is open; none is located, and nothing here supplies one.'))
+        'proof of those statements can drop it. The ascent below &#949;<sub>0</sub> is restated '
+        'choice-free here, on notations. For the results that name &#949;<sub>0</sub>, a choice-free '
+        'restatement in Lean remains open (ZeroParadox/Ordinal/SnapNucleus.md, section Axiom '
+        'footprint, records what is located elsewhere and how it was searched).'))
     E.append(body(
         'So this layer does two things. It rebuilds the ascent syntactically, where it is choice-free. '
         'And it builds a carrier of notations denoting the ordinals up to &#949;<sub>0</sub> &#8212; '
@@ -328,10 +330,10 @@ def build():
             '[propext, Classical.choice, Quot.sound]. The carrier side carries no choice anywhere.',
             'Together these locate the Classical.choice in ZP-L&#8217;s &#949;<sub>0</sub> results: it '
             'is not in the Ordinal type, and not in the ascent (which is proved choice-free here), but '
-            'in the order instance the semantic statement passes through &#8212; where its classical '
-            'content is load-bearing. Locating it is not eliminating it: those &#949;<sub>0</sub> '
-            'results, as stated, are <b>statement-carried</b> (their statements carry choice), and a '
-            'choice-free restatement is open. Zero '
+            'in the order instance the semantic statement passes through, whose comparability implies '
+            'excluded middle. Locating it is not eliminating it: those &#949;<sub>0</sub> '
+            'results, as stated, are <b>statement-carried</b> (their statements carry choice); for '
+            'the ones that name &#949;<sub>0</sub>, a choice-free restatement in Lean remains open. Zero '
             'sorry. Verified: lake build, October 2026.',
         ]
     ))

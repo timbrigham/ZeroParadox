@@ -21,7 +21,7 @@ The justification is false as measured: `#print axioms Ordinal` reports `[propex
 is no choice in the type. And the conclusion overreaches its evidence by one step: everything ZP-N proved
 choice-free (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) is a fact about the *ascent*, while ε₀ is
 past what the notation system can name (`tower_cofinal`,
-`ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). Note the weaker verb: the ε₀ results, as stated, are
+`ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). What can be said instead: the ε₀ results, as stated, are
 **STATEMENT-CARRIED** (statement control, measured 2026-10-08; `ZeroParadox/Category/ChoiceCannotBe.md`),
 and whether a restatement on a choice-free carrier holds is open, not refuted.
 
@@ -72,9 +72,10 @@ never `Classical.choice`; crossing to `Ordinal` costs `Classical.choice` at ever
 crossing is one named map rather than a diffuse correspondence.
 
 **What that measurement does and does not license.** It locates where the classical assumption is paid
-on this pair of carriers. It does **not** show that Mathlib's ε₀ results are eliminable — that would
-require re-proving them, on this carrier, and no such re-proof was present in this
-repository as of 2026-08-02. This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.md` records. The honest
+on this pair of carriers. It does **not** show that Mathlib's ε₀ results are eliminable: as stated they
+are STATEMENT-CARRIED, so no proof of them can drop the choice, and the open question is a restatement
+on a choice-free carrier. Its state (the ascent restated, the results that name ε₀ not) is in
+`ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint". This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.md` records. The honest
 sentence remains: *the ε₀ results borrow a tool far stronger than they need.* Note also the standing
 caveat from `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` — `Classical.choice` sits in
 `Ordinal`'s order *instance term*, so a choice footprint on any `Ordinal`-mentioning statement is

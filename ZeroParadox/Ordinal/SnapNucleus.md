@@ -53,13 +53,28 @@ enters through the *order instance and the operations*: `Ordinal.instLinearOrder
 `Ordinal.omega0` and `Ordinal.epsilon` each measure `[propext, Classical.choice, Quot.sound]`, and
 `snapNucleus` is built from `nfp` over `omega0 ^ ·` on that order.
 
-The open question is a restatement on a notation carrier whose statements are choice-free. What ZP-N
-re-proved choice-free is the ordinal *ascent* on `ONote` (`exp_lt_term`, `omegaPow_no_fixedpoint`,
-`tower_strictMono`), which is evidence for that question and is not the nucleus.
-`ZeroParadox/Ordinal/SnapNucleusConstructive.lean` shows the natural counterpart route on `ONote` is
-**blocked** — no idempotent endomap of the notation carrier can have the ε-numbers as closed points —
-and that obstruction is about **expressive reach, not choice** (its own proofs are `[propext]`). A
-notation system extending past ε₀ is untouched.
+The open question is a restatement on a carrier whose statements are choice-free. Its state, part by
+part (measured 2026-10-08):
+
+* **The ascent below ε₀ is restated, choice-free.** On `ONote`, ZP-N proves the ascent (`exp_lt_term`,
+  `omegaPow_no_fixedpoint`, `tower_strictMono`, the counterpart of `fundamentalSeq_strictMono`), and
+  `synCollapse_epsN` (`ZeroParadox/Ordinal/SyntacticCollapse.md`) restates the tower's convergence
+  content. The statement and the proof of `tower_strictMono` and of `synCollapse_epsN` each measure
+  `[propext]`. That is the ascent, not the nucleus.
+* **The results that name ε₀ cannot be stated on `ONote`.**
+  `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` shows the natural counterpart route there is
+  **blocked** (`no_snap_closure`: no idempotent endomap of the notation carrier has the ε-numbers as
+  closed points), and that obstruction is about **expressive reach, not choice** (its own proofs are
+  `[propext]`). It concerns `ONote` only and says nothing about a carrier that reaches ε₀. One such
+  carrier is constructive and outside Lean: Kraus, Nordvall Forsberg and Xu (MFCS 2021,
+  arXiv:2104.02549) build Brouwer trees with exponentiation at every base (Thm 18), and their cubical
+  Agda development defines ε₀ as the limit of the ω-tower and proves ε₀ = ω^ε₀; every Cantor normal
+  form lies below it (Thm 22). A lemma that ε₀ is the *least* fixed point of `ω^·` was not located
+  there as of 2026-10-08 (searched: the paper, and the Agda module
+  `BrouwerTree.Arithmetic.Properties`).
+* **Open: a choice-free restatement in Lean of the results that name ε₀, leastness included.** None
+  located as of 2026-10-08, searched in this corpus, by three `theoremsearch` phrasings and by one web
+  search.
 
 ## Credit outward
 

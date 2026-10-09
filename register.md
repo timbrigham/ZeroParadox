@@ -20,16 +20,16 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-J Keystone Addendum | v1.25 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:4fd4b585 |
 | ZP-K Computational Grounding | v1.25 | ZP-K_Computational_Grounding.pdf | v1.23 | N/— | formal:e91ed70f comp:44e886f8 |
 | ZP-L Incomputability Convergence | v1.27 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:da5d2533 comp:cc1bad38 |
-| ZP-M Kleene-Ordinal Bridge | v1.13 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:dcf883fa comp:a6ff1cab |
-| ZP-N The Constructive Snap | v2.2 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:2f68443b |
+| ZP-M Kleene-Ordinal Bridge | v1.13 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:82707b27 comp:a6ff1cab |
+| ZP-N The Constructive Snap | v2.2 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:707fc4b4 |
 | ZP-P The Fixed-Point Fork | v1.24 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:4b914ac3 |
 | ZP-R Cross-Category Fixed Point | v1.20 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:b73d52ec |
 | ZP-R Diagonal Family Addendum | v1.14 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:a635a1ed |
 | ZP-Q The Frame-Change | v1.11 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:dcf69119 |
-| Zero Paradox Foreword | v2.34 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:d02d6992 |
+| Zero Paradox Foreword | v2.34 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:ceee5062 |
 | ZP Philosophical Question | v1.21 | ZP_Philosophical_Question.pdf | N/A | N/A | formal:ed65d90b |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:3e66cdf5 |
-| ZP Choice-Free Core Addendum | v1.11 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:a8ef2c5e |
+| ZP Choice-Free Core Addendum | v1.11 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:dc1bca4e |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
