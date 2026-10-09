@@ -4,12 +4,12 @@ Ride-along for `ZeroParadox/Category/ExcludedMiddleBridge.lean`: its long header
 the declarations, the Engineer's Take and the per-declaration docstrings; where the two overlap, the
 Lean is authoritative.
 
-Everything below is the Lean file's long header, moved. In it, "this file", "here", "below", "the
-bottom" and every § number refer to `ZeroParadox/Category/ExcludedMiddleBridge.lean`.
+Everything below is the Lean file's long header, moved, with edits at the attribution sites. In it,
+"this file", "here", "below" and every § number refer to `ZeroParadox/Category/ExcludedMiddleBridge.lean`.
 
 ## Formal Overview (AI-assisted)
 
-`Category/DoubleNegationNucleus.lean` builds `dnegNucleus X : Nucleus X`, the map `a ↦ aᶜᶜ` on any
+`ZeroParadox/Category/DoubleNegationNucleus.lean` builds `dnegNucleus X : Nucleus X`, the map `a ↦ aᶜᶜ` on any
 Heyting algebra, choice-free (`[propext]`), whose closed points are the regular elements
 (`dnegNucleus_isClosed_iff`). It is the **excluded-middle** modality, not the choice modality.
 
@@ -36,11 +36,11 @@ is the load-bearing part of the file rather than a footnote. Recorded rather tha
 would silently pick up choice and the whole point — that the choice → excluded middle arrow is a real
 implication and not an identity — would be lost. Every `Prop`-scoped statement below therefore **pins the
 instance explicitly** as `@… Prop Prop.instHeytingAlgebra`. The measured footprints of both instances are
-recorded in the purity-check section at the bottom.
+recorded in the purity-check section at the end of this file.
 
 **Prior art — the framework claims only the packaging.** § II is Diaconescu's theorem (Diaconescu 1975,
-"Axiom of choice and complementation"; adapted to intuitionistic set theory by Goodman-Myhill 1978,
-"Choice implies excluded middle"). It is not a new result and is not claimed as one. A search of Mathlib and the other `.lake`
+"Axiom of choice and complementation"; the analogue in intuitionistic set theory is Goodman-Myhill
+1978, "Choice implies excluded middle"). It is not a new result and is not claimed as one. A search of Mathlib and the other `.lake`
 dependencies found **no** hypothesis-form statement of it (no `Diaconescu`, no `em_of_choice`); Lean's own
 kernel realizes the arrow concretely — `Classical.em` is *derived* from `Classical.choice`
 (`Init/Classical.lean`, whose docstring calls it "Diaconescu's theorem") by the two-predicate argument
@@ -52,13 +52,15 @@ with § I. § I and § IV are elementary and equally not new; the contribution i
 proved "choice ⇒ excluded middle, one direction only, converse fails." That is wrong twice over. First,
 Diaconescu's theorem is an **equivalence** — a coequalizer of two nonintersecting monomorphisms has a
 section *iff* subobjects have complements (1975, p. 176), the choice direction being his corollary
-(p. 178). The two-element restriction is Goodman-Myhill's (1978, p. 461: choice "for sets B, C of at
-most two elements"); read as an equivalence, choice for inhabited subobjects of a two-element object
-**is** excluded middle, a gloss stated on neither page.
+(p. 178). The theorem already concerns a two-point shape: such a coequalizer has fibres of at most two
+points, and its proof runs over pp. 176-177. Goodman-Myhill state the restriction explicitly, choice
+"for sets B, C of at most two elements" (1978, p. 461). With unique choice into `Bool`, `ChoiceFragment`
+and `ExcludedMiddle` are inter-derivable (the `example` after `em_of_choiceFragment`).
 Second, that *full* AC is strictly stronger than excluded middle is **Cohen 1963** / Fraenkel–Mostowski
 independence, not Diaconescu.
-**This matters here because `ChoiceFragment` has exactly that two-element restricted shape** — choice for
-inhabited predicates on `Bool` — so in a topos it would be equivalent to `ExcludedMiddle`, and the
+**This matters here because `ChoiceFragment` is a choice principle into the two-element `Bool`** — a
+chooser on every inhabited predicate on `Bool` — so in a topos, where unique choice holds, it would be
+equivalent to `ExcludedMiddle`, and the
 faithfulness check below would have to fail. It does not fail. The reason is that Lean stratifies `Prop`
 and `Type`: `ChoiceFragment` selects into `Bool`, making it data-valued excluded middle
 (`∀ p, Decidable p`), while `ExcludedMiddle` is the `Prop`-valued form, and `Or` in `Prop` does not

@@ -68,9 +68,9 @@ theorem em_iff_dnegNucleus_trivial :
 Prior art: Diaconescu (1975); Goodman-Myhill (1978). Stated as a hypothesis, never an axiom. -/
 
 /-- **A choice fragment**, in operator form: a function selecting, from every inhabited predicate on
-`Bool`, an element satisfying it. This is the axiom of choice restricted to `Bool`-indexed subsets, which
-is all `em_of_choiceFragment` consumes; Goodman-Myhill (1978, p. 461) likewise use choice only for sets
-of at most two elements.
+`Bool`, an element satisfying it. This is the axiom of choice for inhabited subsets of `Bool`, a global
+chooser bounded only in its codomain, and it is all `em_of_choiceFragment` consumes. Goodman-Myhill
+(1978, p. 461) bound both sides, choice "for sets B, C of at most two elements".
 
 Two things make this the faithful fragment rather than a weakened stand-in. First, the chooser is a
 *function of the predicate*, so extensionally equal predicates receive equal choices — that is precisely
@@ -92,8 +92,8 @@ independence result, which would need a metatheoretic argument outside Lean.
 **And note what the barrier is and is not.** It is Lean's `Prop`/`Type` stratification: the fragment
 yields data (`Bool`), so it is really `∀ p, Decidable p`, while `ExcludedMiddle` is `Prop`-valued and does
 not eliminate into data. It is **not** a general fact about choice versus excluded middle — in a topos,
-where unique choice holds, this very fragment would be *equivalent* to excluded middle (the two-element
-gloss in `ZeroParadox/Category/ExcludedMiddleBridge.md`, not a statement of Diaconescu's).
+where unique choice holds, this very fragment is *equivalent* to excluded middle (the `example` after
+`em_of_choiceFragment` proves it from unique choice into `Bool`).
 The gap measured here is a property of the ambient type theory, not of the two principles. -/
 def ChoiceFragment : Prop :=
   ∃ ch : (Bool → Prop) → Bool, ∀ S : (Bool → Prop), (∃ b, S b) → S (ch S)
@@ -110,8 +110,8 @@ theorem choiceFragment_of_classical : ChoiceFragment := by
 /-- **Theorem (§ II) — Diaconescu.** The choice fragment implies excluded middle.
 
 The argument (the two-predicate form of Lean core's `Classical.em`, `Init/Classical.lean`, which uses
-`True`/`False` in `Prop` where this uses `Bool`; the set-theoretic version is Goodman-Myhill 1978,
-p. 461): given `p`, form the two predicates on `Bool`
+`True`/`False` in `Prop` where this uses `Bool`; Goodman-Myhill 1978, p. 461 argue element-wise with
+one chooser on a two-element set): given `p`, form the two predicates on `Bool`
 `A b := (b = true ∨ p)` and `B b := (b = false ∨ p)`. Both are inhabited, so the chooser returns
 `ch A` and `ch B`. Decide `ch A = ch B` — decidable, because `Bool` has decidable equality, with no
 classical input. If they differ, `p` must fail: `p` would force `A = B` (by `funext` and `propext`) and
@@ -141,6 +141,26 @@ theorem em_of_choiceFragment (h : ChoiceFragment) : ExcludedMiddle := by
       · exact absurd (hAt ▸ hBf ▸ heq) (by decide)
       · exact Or.inl hp
     · exact Or.inl hp
+
+/-- Statement: with unique choice into `Bool` as a hypothesis, the choice fragment and excluded middle
+are inter-derivable; the forward leg is `em_of_choiceFragment`. -/
+example (uc : ∀ P : Bool → Prop, (∃! b, P b) → {b : Bool // P b}) :
+    ChoiceFragment ↔ ExcludedMiddle := by
+  refine ⟨em_of_choiceFragment, fun hem => ?_⟩
+  have hR : ∀ S : Bool → Prop, ∃! b, (S true ∧ b = true) ∨ (¬ S true ∧ b = false) := by
+    intro S
+    rcases hem (S true) with h | h
+    · exact ⟨true, Or.inl ⟨h, rfl⟩, fun y hy => hy.elim And.right (fun hn => absurd h hn.1)⟩
+    · exact ⟨false, Or.inr ⟨h, rfl⟩, fun y hy => hy.elim (fun hs => absurd hs.1 h) And.right⟩
+  refine ⟨fun S => (uc _ (hR S)).1, fun S hS => ?_⟩
+  show S (uc _ (hR S)).1
+  rcases (uc _ (hR S)).2 with ⟨hs, he⟩ | ⟨hn, he⟩
+  · rw [he]; exact hs
+  · rw [he]
+    obtain ⟨b, hb⟩ := hS
+    cases b with
+    | true => exact absurd hb hn
+    | false => exact hb
 
 /-! ## § III — Composition -/
 
