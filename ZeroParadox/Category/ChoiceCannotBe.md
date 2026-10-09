@@ -159,10 +159,16 @@ fraction either**; it moves with every commit.
   side needs a reduction instead of a measurement.
 * **STATEMENT-CARRIED** — the statement's own type carries `Classical.choice`: a theorem that only assumes the statement and proves `True` already reports it (the statement control). No proof can remove it, so neither ACCIDENTAL nor ESSENTIAL can be asked of it. What can be asked is whether a restatement, on a carrier whose statements are choice-free, holds without choice. Detected by the statement control; members are listed in § I/§ III where measured.
 
+"The statement" in STATEMENT-CARRIED is the term as written, which is what the statement control
+measures; a definitionally equal respelling whose own statement is choice-free is a restatement in
+the bin's sense (example: `le_total` on `Ordinal.{0}` versus its respelling over the bare `le`
+relation, `ZeroParadox/Ordinal/OrdinalChoiceEssential.md`).
+
 The same split between a statement's and a proof's reach of `Classical.choice` is drawn across Mathlib
-by V. Gonzalez, "Where Formal Libraries Spend Their Axioms", Zenodo 2026, doi:10.5281/zenodo.21769846,
-§ 4 (p. 8) and § 8 (p. 14): a theorem whose statement mentions something choice-dependent "cannot be
-made choice-free however it is proved". Cited, not claimed.
+by V. Gonzalez, "Where Formal Libraries Spend Their Axioms", Zenodo 2026, doi:10.5281/zenodo.21769846
+(page numbers from v1.0.3, doi:10.5281/zenodo.21866855), § 4 (p. 8) and § 8 (p. 14): a theorem whose
+statement mentions something choice-dependent "cannot be made choice-free however it is proved".
+Cited, not claimed.
 
 Prior art for the distinction and its methods: constructive reverse mathematics, which classifies
 theorems ("to classify [over intuitionistic logic] various theorems … by logical principles") and whose

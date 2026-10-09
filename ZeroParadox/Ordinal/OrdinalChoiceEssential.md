@@ -24,8 +24,9 @@ the second carries choice in its statement. The principle, comparability of well
 `example`s in the Lean file's § III). So it implies excluded middle too, though on `Ordinal` that
 implication is not choice-free.
 Mathlib's `Ordinal` order is
-built with choice, and the statement itself carries it, so `le_total` on `Ordinal.{0}` is
-STATEMENT-CARRIED: a theorem that takes
+built with choice, and the statement as written carries it, so `le_total` on `Ordinal.{0}`, as Mathlib
+spells it, is STATEMENT-CARRIED (its bare-relation respelling is not; see the classification below): a
+theorem that takes
 `∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a` as a hypothesis and proves `True` by `trivial` reports
 `[propext, Classical.choice, Quot.sound]` (measured 2026-10-08; the instance-term trace is the Lean
 file's § III).
@@ -99,8 +100,11 @@ Nothing about ε₀ supplies those.
 So the classification splits, and the split is the point:
 
 * **the `InitialSeg` comparability principle (`em_of_wellOrder_comparable`'s hypothesis) — ESSENTIAL**
-  on the premise above. `le_total` on `Ordinal.{0}`, which states it at `Type`, is STATEMENT-CARRIED
-  instead: `Ordinal`'s order instance carries choice in its term (the Lean file's § III);
+  on the premise above. `le_total` on `Ordinal.{0}`, which states it at `Type`, has both charts: as
+  Mathlib spells it, through the order instance, it is STATEMENT-CARRIED (the Lean file's § III); its
+  respelling over the bare `le` relation is, by `rfl`, the same proposition, its own statement is
+  choice-free, and it implies excluded middle choice-free, so that respelling is ESSENTIAL on the same
+  premise (the last two `example`s of the Lean file's § III);
 * **the ε₀ results — STATEMENT-CARRIED** (`ε₀ ≠ 0` as a hypothesis already reports the choice,
   measured 2026-10-08). They inherit choice from Mathlib's `Ordinal` machinery:
   `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon` (each measured with `Classical.choice`,

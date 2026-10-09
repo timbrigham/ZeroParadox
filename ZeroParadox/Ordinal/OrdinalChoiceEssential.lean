@@ -164,7 +164,7 @@ never print it. Split, the purity block below exhibits it — the same statement
 differing only in whether it mentions the `Ordinal.partialOrder` instance term. Both proofs are
 immediate; the difference is not in the proofs. -/
 
-/-- Reflexivity of `≤` on `Ordinal`. Mentions the order instance, and therefore carries
+/-- Reflexivity of `≤` on `Ordinal`. Mentions the order instance, and therefore, as written, carries
 `Classical.choice` however it is proved. Compare `order_footprint_eq`. -/
 theorem order_footprint_le (a : Ordinal) : a ≤ a := le_refl a
 
@@ -192,6 +192,26 @@ example (H : ∀ (α β : Type) (r : α → α → Prop) (s : β → β → Prop
       rcases H α β r s with h | h
       · exact Or.inl (Ordinal.type_le_iff.mpr h)
       · exact Or.inr (Ordinal.type_le_iff.mpr h)
+
+-- `Statement:` the same totality respelled over the bare `le` relation of `Ordinal.partialOrder`
+-- (no instance term) is, by `rfl`, the proposition `∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a`.
+-- Reading: "every statement mentioning that order inherits it" above is about the TERM AS WRITTEN;
+-- this respelling's own statement measures `[propext, Quot.sound]` (statement control, 2026-10-08).
+example : let ordLe : Ordinal.{0} → Ordinal.{0} → Prop := fun a b =>
+      (Quotient.liftOn₂ a b (fun ⟨_, r, _⟩ ⟨_, s, _⟩ => Nonempty (r ≼i s))
+        fun _ _ _ _ ⟨f⟩ ⟨g⟩ => propext
+          ⟨fun ⟨h⟩ => ⟨f.symm.toInitialSeg.trans <| h.trans g.toInitialSeg⟩, fun ⟨h⟩ =>
+            ⟨f.toInitialSeg.trans <| h.trans g.symm.toInitialSeg⟩⟩)
+    (∀ a b, ordLe a b ∨ ordLe b a) = (∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a) := rfl
+
+-- `Statement:` and that respelled totality implies excluded middle, by `em_of_wellOrder_comparable`.
+example : let ordLe : Ordinal.{0} → Ordinal.{0} → Prop := fun a b =>
+      (Quotient.liftOn₂ a b (fun ⟨_, r, _⟩ ⟨_, s, _⟩ => Nonempty (r ≼i s))
+        fun _ _ _ _ ⟨f⟩ ⟨g⟩ => propext
+          ⟨fun ⟨h⟩ => ⟨f.symm.toInitialSeg.trans <| h.trans g.toInitialSeg⟩, fun ⟨h⟩ =>
+            ⟨f.toInitialSeg.trans <| h.trans g.symm.toInitialSeg⟩⟩)
+    (∀ a b, ordLe a b ∨ ordLe b a) → ExcludedMiddle :=
+  fun h => em_of_wellOrder_comparable fun _ _ r s _ _ => h (Ordinal.type r) (Ordinal.type s)
 
 end ZeroParadox
 
