@@ -20,9 +20,10 @@ machine-checked impossibility rather than a failed attempt.
   (`#print axioms Ordinal` reports `[propext, Quot.sound]`); it enters through the order instance and
   the operations (`Ordinal.instLinearOrder`, `Ordinal.nfp`, `Ordinal.omega0`, `Ordinal.epsilon`). As
   stated, `snapNucleus` and its results are STATEMENT-CARRIED (statement control, measured 2026-10-08;
-  `ZeroParadox/Category/ChoiceCannotBe.md`), so no proof of those statements can drop the choice. The
-  open question is a restatement on a carrier whose statements are choice-free; on `ONote` it is
-  blocked by naming, not by choice (below).
+  `ZeroParadox/Category/ChoiceCannotBe.md`), so no proof of those statements can drop the choice. On
+  `ONote` a choice-free restatement is blocked by naming, not by choice (below); for its state on other
+  carriers, including the defined reading on `E0Note`, see `ZeroParadox/Ordinal/SnapNucleus.md`
+  § Axiom footprint.
 * **This is a different declaration on a different carrier.** Everything here lives on `ONote` (raw
   Cantor-normal-form syntax) and on `SynONote`, the type synonym carrying the comparator-derived
   order. `ONote` is not `Ordinal` and `SynONote` is not `Ordinal`. Exactly one theorem mentions
@@ -32,8 +33,8 @@ machine-checked impossibility rather than a failed attempt.
   systems of this shape* — Cantor normal form, whose terms name exactly the ordinals below ε₀. It says
   nothing about notation systems that extend past ε₀ (Veblen / Bachmann-Howard style), none of which
   is in this Mathlib pin as of 2026-08-02 (the pin's `Veblen.lean` is semantic, not a notation system
-  — see the scope note below). Whether some richer constructive substrate supports a snap nucleus is
-  open, and untouched in this corpus as of 2026-08-02.
+  — see the scope note below). For richer carriers, with a dated search,
+  see `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 * **The impossibility is not "no nucleus exists on `ONote`."** Nuclei on `SynONote` exist in
   abundance — `id` is one. What is proved impossible is the *snap property*: that a nucleus's closed
   points be ε-numbers.
@@ -136,8 +137,8 @@ Both halves are measured here, and they split:
 * **The counterpart route via this carrier is blocked — for a different reason than choice.** What
   blocks it is **expressive reach**: *this* carrier cannot name the object the closure produces.
   **Scope, narrowly:** the result is about `ONote`-shaped notation systems, not about constructive
-  mathematics in general. A system extending past ε₀ (Veblen, Bachmann-Howard) is not ruled out here —
-  it is open and untouched here. **Say which sense, because the pin does ship Veblen:**
+  mathematics in general. A system extending past ε₀ (Veblen, Bachmann-Howard) is not ruled out here
+  (for its state, see `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint). **Say which sense, because the pin does ship Veblen:**
   `Mathlib/SetTheory/Ordinal/Veblen.lean` defines `veblen`, `ε_` and `Γ_`, but *semantically* — they
   are `noncomputable` functions on `Ordinal`, not a computable **notation system** of the
   `ONote`/`NONote` kind this file's argument is about. **The ε₀ ceiling is a fact about the NOTATION
