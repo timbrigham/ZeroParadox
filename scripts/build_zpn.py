@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-N: The Constructive Snap PDF Builder
-Version 2.2 | October 2026
+Version 2.3 | October 2026
 
 v2.0: Major revision. Corrects v1.0's mechanism and adds the construction it was missing.
 
@@ -30,7 +30,7 @@ PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '2.2'
+VERSION = '2.3'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -221,9 +221,11 @@ def build():
             'tower_NF &#8212; the statement that each tower stage is in normal form &#8212; DOES carry '
             'Classical.choice ([propext, Classical.choice, Quot.sound]), because Mathlib&#8217;s NF '
             'predicate is defined through repr into Ordinal. The snap facts (Section II) do not depend '
-            'on NF, so they stay choice-free; but the fact that even &#8220;this notation is '
-            'well-formed&#8221; inherits choice pins the location precisely: choice lives at the '
-            'syntax&#8594;semantics bridge, exactly where ZP-L crosses it and ZP-N does not.',
+            'on NF, so they stay choice-free; but even &#8220;this notation is well-formed&#8221; '
+            'inherits choice, through NF&#8217;s definition. That is one site where choice enters, not '
+            'the only one: ZP-L&#8217;s least-fixed-point results are not routed through tower_NF, and '
+            'their choice is carried by their own statements, through Ordinal&#8217;s order instance '
+            'and operations (ZeroParadox/Ordinal/SnapNucleus.md &#167; Axiom footprint).',
         ]
     ))
     E.append(sp(6))
