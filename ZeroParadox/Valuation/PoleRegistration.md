@@ -15,8 +15,8 @@ the two `example`s in § II prove that, both directions:
   in § II. So § II's hypothesis and the one already in
   `ZeroParadox/Category/ExcludedMiddleBridge.lean` are **inter-derivable**, not two principles.
 
-**The return leg runs on the chooser's DATA, and uses no excluded middle at all.** Diaconescu's two
-predicates are each constructively inhabited, so `decide (ch A = ch B)` is already data.
+**The return leg runs on the chooser's DATA, and uses no excluded middle at all.** The two predicates of
+`em_of_choiceFragment` are each constructively inhabited, so `decide (ch A = ch B)` is already data.
 `em_of_choiceFragment` plays no part: it runs `ChoiceFragment → ExcludedMiddle`, forward, and
 composing it with the first bullet would run forward twice and never return.
 

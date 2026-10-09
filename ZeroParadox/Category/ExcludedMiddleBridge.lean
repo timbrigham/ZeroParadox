@@ -6,63 +6,6 @@ import Mathlib.Order.Fin.Basic
 /-!
 # The excluded-middle bridge: choice → excluded middle → the `Prop` nucleus is trivial
 
-`Category/DoubleNegationNucleus.lean` builds `dnegNucleus X : Nucleus X`, the map `a ↦ aᶜᶜ` on any
-Heyting algebra, choice-free (`[propext]`), whose closed points are the regular elements
-(`dnegNucleus_isClosed_iff`). It is the **excluded-middle** modality, not the choice modality.
-
-This file builds the arrow that separates those two, in three steps and a fence.
-
-**The scope constraint — read this before reading any statement below.** Excluded middle does **not**
-make an arbitrary Heyting algebra Boolean. It makes the **`Prop`** Heyting algebra Boolean. Every
-statement in §§ I-III is therefore scoped to `Prop`, and § IV machine-checks that the general claim
-fails: a concrete Heyting algebra, exhibited inside Mathlib's classical metatheory (so with excluded
-middle fully available), carrying an element with `aᶜᶜ ≠ a`. The nucleus stays nontrivial there. The
-general statement "excluded middle collapses the double-negation nucleus" is FALSE and is not asserted
-anywhere in this file.
-
-**Correction of record.** This file was first drafted in exactly that general (wrong) form — "choice →
-excluded middle → the double-negation nucleus is trivial", unscoped — and the `Prop`-vs-arbitrary-Heyting
-distinction was caught before it was built. § IV exists because of that near-miss, which is why the fence
-is the load-bearing part of the file rather than a footnote. Recorded rather than quietly avoided.
-
-**The instance hazard, and how it is handled.** `Prop` carries two relevant instances:
-`Prop.instHeytingAlgebra` (Mathlib/Order/Heyting/Basic.lean) and `Prop.instBooleanAlgebra`
-(Mathlib/Order/BooleanAlgebra/Defs.lean). The Boolean one discharges its `top_le_sup_compl` field with
-`Classical.em`, so **it carries `Classical.choice` in its own term**. If `dnegNucleus Prop` or
-`Heyting.IsRegular (p : Prop)` were allowed to resolve through the Boolean instance, every theorem here
-would silently pick up choice and the whole point — that the choice → excluded middle arrow is a real
-implication and not an identity — would be lost. Every `Prop`-scoped statement below therefore **pins the
-instance explicitly** as `@… Prop Prop.instHeytingAlgebra`. The measured footprints of both instances are
-recorded in the purity-check section at the bottom.
-
-**Prior art — the framework claims only the packaging.** § II is Diaconescu's theorem (Diaconescu 1975,
-"Axiom of choice and complementation"; independently Goodman-Myhill 1978, "Choice implies excluded
-middle"). It is not a new result and is not claimed as one. A search of Mathlib and the other `.lake`
-dependencies found **no** hypothesis-form statement of it (no `Diaconescu`, no `em_of_choice`); Lean's own
-kernel realizes the arrow concretely — `Classical.em` is *derived* from `Classical.choice` by exactly
-Diaconescu's argument — but as a derivation of the classical axioms, not as a reusable theorem taking the
-choice principle as a hypothesis. This file supplies that hypothesis form so the arrow can be composed
-with § I. § I and § IV are elementary and equally not new; the contribution is the assembly.
-
-**A correction to how this file first stated its prior art (2026-07-19).** It originally said Diaconescu
-proved "choice ⇒ excluded middle, one direction only, converse fails." That is wrong twice over. First,
-Diaconescu's theorem is an **equivalence** — a coequalizer of two nonintersecting monomorphisms has a
-section *iff* subobjects have complements (1975, p. 176), the choice direction being his corollary
-(p. 178); in modern terms, choice for inhabited subobjects of a two-element object **is** excluded middle.
-Second, that *full* AC is strictly stronger than excluded middle is **Cohen 1963** / Fraenkel–Mostowski
-independence, not Diaconescu.
-**This matters here because `ChoiceFragment` has exactly Diaconescu's restricted shape** — choice for
-inhabited predicates on `Bool` — so in a topos it would be equivalent to `ExcludedMiddle`, and the
-faithfulness check below would have to fail. It does not fail. The reason is that Lean stratifies `Prop`
-and `Type`: `ChoiceFragment` selects into `Bool`, making it data-valued excluded middle
-(`∀ p, Decidable p`), while `ExcludedMiddle` is the `Prop`-valued form, and `Or` in `Prop` does not
-eliminate into `Bool`. A topos has no such split. **So the one-way-ness measured below is a fact about
-Lean's stratification, and is this file's own small finding — not, as first written, a restatement of
-Diaconescu.**
-
-**No new axioms.** The choice principle in § II is a `def ... : Prop` hypothesis, discharged by the caller.
-Nothing here is declared `axiom`, and nothing here uses `sorry`.
-
 ## Engineer's Take
 
 Choice itself is a representation based on a constructed model here. My point of interest is whether in
@@ -73,12 +16,9 @@ false, are point of view specific. And point of view is a selection choice.
 
 ---
 
-## Structure
-
-- § I   Excluded middle ↔ every `Prop` is regular ↔ the `Prop` double-negation nucleus is the identity
-- § II  Diaconescu: a choice fragment (as a hypothesis) implies excluded middle
-- § III Composition: the choice fragment collapses the `Prop` nucleus
-- § IV  The fence: a concrete Heyting algebra that is NOT Boolean, in the classical metatheory
+`em_of_choiceFragment` (§ II) is the arrow from a choice fragment to excluded middle, composed in
+§ III with § I's `Prop` nucleus and fenced by § IV's `fin3_middle_not_closed_point`. Scope, the
+instance hazard, prior art and the section map: `ZeroParadox/Category/ExcludedMiddleBridge.md`.
 -/
 
 namespace ZeroParadox
@@ -86,7 +26,7 @@ namespace ZeroParadox
 /-! ## § I — The landing: excluded middle and the `Prop` nucleus
 
 All three statements here are choice-free. The instance is pinned to `Prop.instHeytingAlgebra`
-throughout; see the file header on the instance hazard. -/
+throughout; see `ZeroParadox/Category/ExcludedMiddleBridge.md` on the instance hazard. -/
 
 /-- **Excluded middle**, as a hypothesis rather than an axiom. -/
 def ExcludedMiddle : Prop := ∀ p : Prop, p ∨ ¬p
@@ -128,12 +68,13 @@ theorem em_iff_dnegNucleus_trivial :
 Prior art: Diaconescu (1975); Goodman-Myhill (1978). Stated as a hypothesis, never an axiom. -/
 
 /-- **A choice fragment**, in operator form: a function selecting, from every inhabited predicate on
-`Bool`, an element satisfying it. This is the axiom of choice restricted to `Bool`-indexed subsets, which
-is all Diaconescu's argument consumes.
+`Bool`, an element satisfying it. This is the axiom of choice for inhabited subsets of `Bool`, a global
+chooser bounded only in its codomain, and it is all `em_of_choiceFragment` consumes. Goodman-Myhill
+(1978, p. 461) bound both sides, choice "for sets B, C of at most two elements".
 
 Two things make this the faithful fragment rather than a weakened stand-in. First, the chooser is a
 *function of the predicate*, so extensionally equal predicates receive equal choices — that is precisely
-the leverage Diaconescu's argument uses. Second, it is genuinely implied by Lean's `Classical.choice`
+the leverage `em_of_choiceFragment` uses. Second, it is genuinely implied by Lean's `Classical.choice`
 (`choiceFragment_of_classical` below), so the hypothesis is not vacuous.
 
 **Faithfulness check (run 2026-07-19).** The worry worth taking seriously is the converse: if
@@ -151,7 +92,9 @@ independence result, which would need a metatheoretic argument outside Lean.
 **And note what the barrier is and is not.** It is Lean's `Prop`/`Type` stratification: the fragment
 yields data (`Bool`), so it is really `∀ p, Decidable p`, while `ExcludedMiddle` is `Prop`-valued and does
 not eliminate into data. It is **not** a general fact about choice versus excluded middle — in a topos,
-where unique choice holds, Diaconescu's theorem makes this very fragment *equivalent* to excluded middle.
+which always has unique choice, this very fragment is *equivalent* to excluded middle (the standard
+Diaconescu–Goodman–Myhill theorem); in Lean the equivalence holds with unique choice into `Bool` as a
+hypothesis (the `example` after `em_of_choiceFragment`).
 The gap measured here is a property of the ambient type theory, not of the two principles. -/
 def ChoiceFragment : Prop :=
   ∃ ch : (Bool → Prop) → Bool, ∀ S : (Bool → Prop), (∃ b, S b) → S (ch S)
@@ -167,7 +110,9 @@ theorem choiceFragment_of_classical : ChoiceFragment := by
 
 /-- **Theorem (§ II) — Diaconescu.** The choice fragment implies excluded middle.
 
-The argument (Diaconescu 1975): given `p`, form the two predicates on `Bool`
+The argument (the two-predicate form of Lean core's `Classical.em`, `Init/Classical.lean`, which uses
+`True`/`False` in `Prop` where this uses `Bool`; Goodman-Myhill 1978, p. 461 argue element-wise with
+one chooser on a set of at most two elements): given `p`, form the two predicates on `Bool`
 `A b := (b = true ∨ p)` and `B b := (b = false ∨ p)`. Both are inhabited, so the chooser returns
 `ch A` and `ch B`. Decide `ch A = ch B` — decidable, because `Bool` has decidable equality, with no
 classical input. If they differ, `p` must fail: `p` would force `A = B` (by `funext` and `propext`) and
@@ -197,6 +142,26 @@ theorem em_of_choiceFragment (h : ChoiceFragment) : ExcludedMiddle := by
       · exact absurd (hAt ▸ hBf ▸ heq) (by decide)
       · exact Or.inl hp
     · exact Or.inl hp
+
+/-- Statement: with unique choice into `Bool` as a hypothesis, the choice fragment and excluded middle
+are inter-derivable; the forward leg is `em_of_choiceFragment`. -/
+example (uc : ∀ P : Bool → Prop, (∃! b, P b) → {b : Bool // P b}) :
+    ChoiceFragment ↔ ExcludedMiddle := by
+  refine ⟨em_of_choiceFragment, fun hem => ?_⟩
+  have hR : ∀ S : Bool → Prop, ∃! b, (S true ∧ b = true) ∨ (¬ S true ∧ b = false) := by
+    intro S
+    rcases hem (S true) with h | h
+    · exact ⟨true, Or.inl ⟨h, rfl⟩, fun y hy => hy.elim And.right (fun hn => absurd h hn.1)⟩
+    · exact ⟨false, Or.inr ⟨h, rfl⟩, fun y hy => hy.elim (fun hs => absurd hs.1 h) And.right⟩
+  refine ⟨fun S => (uc _ (hR S)).1, fun S hS => ?_⟩
+  show S (uc _ (hR S)).1
+  rcases (uc _ (hR S)).2 with ⟨hs, he⟩ | ⟨hn, he⟩
+  · rw [he]; exact hs
+  · rw [he]
+    obtain ⟨b, hb⟩ := hS
+    cases b with
+    | true => exact absurd hb hn
+    | false => exact hb
 
 /-! ## § III — Composition -/
 
@@ -250,8 +215,8 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-The two `Prop` instances are measured first — this is the instance-hazard measurement referred to in the
-file header. `Prop.instBooleanAlgebra` discharges `top_le_sup_compl` with `Classical.em`, so it carries
+The two `Prop` instances are measured first — this is the instance-hazard measurement referred to in
+`ZeroParadox/Category/ExcludedMiddleBridge.md`. `Prop.instBooleanAlgebra` discharges `top_le_sup_compl` with `Classical.em`, so it carries
 `Classical.choice`; `Prop.instHeytingAlgebra` does not. Every `Prop`-scoped statement in §§ I-III pins the
 Heyting instance explicitly for that reason.
 

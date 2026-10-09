@@ -99,7 +99,7 @@ example : PoleDiscriminator → ChoiceFragment := by
 -- Statement: and back again, so the two hypotheses are inter-derivable.
 -- The content is not the inter-derivability — both sides are theorems here — it is that BOTH LEGS
 -- ARE CHOICE-FREE: this one measures `[propext, Quot.sound]`, and it uses no excluded middle at
--- all. Diaconescu's two predicates are each constructively inhabited, so `decide (ch A = ch B)`
+-- all. The two predicates of `em_of_choiceFragment` are each constructively inhabited, so `decide (ch A = ch B)`
 -- is already data and the chooser alone supplies it.
 example : ChoiceFragment → PoleDiscriminator := by
   intro h

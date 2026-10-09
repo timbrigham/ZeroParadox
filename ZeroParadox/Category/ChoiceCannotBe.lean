@@ -136,12 +136,16 @@ the boundary and its scope fence. -/
 #check @ZeroParadox.em_iff_dnegNucleus_trivial
 
 -- DIACONESCU, hypothesis form: a choice fragment implies excluded middle. PRIOR ART, not a framework
--- result: Diaconescu (1975), "Axiom of choice and complementation"; independently Goodman–Myhill (1978),
--- "Choice implies excluded middle". The framework contributes only the hypothesis-form packaging (Lean's
--- kernel realizes the arrow as a derivation, not a reusable theorem).
--- DIRECTION, stated precisely. Diaconescu's theorem is
--- an EQUIVALENCE for this restricted shape (choice for inhabited subobjects of a two-element object IS
--- excluded middle); "the converse fails" belongs to FULL AC and is Cohen 1963, not Diaconescu.
+-- result: Diaconescu (1975), "Axiom of choice and complementation"; the analogue in intuitionistic set
+-- theory is Goodman–Myhill (1978), "Choice implies excluded middle". The framework contributes only the
+-- hypothesis-form packaging (Lean's kernel realizes the arrow as a derivation, not a reusable theorem).
+-- DIRECTION, stated precisely. Diaconescu's theorem is an EQUIVALENCE between two topos properties
+-- (p. 176), with choice implying complements as its corollary (p. 178). It already concerns a two-point
+-- shape: his construction (pp. 176-177) is a coequalizer of two disjoint monomorphisms, and such a
+-- coequalizer has fibres of at most two points. Goodman–Myhill state the restriction explicitly, choice "for sets B, C of at most two
+-- elements" (p. 461). With unique choice into `Bool`, `ChoiceFragment` and `ExcludedMiddle` are
+-- inter-derivable (the `example` after `em_of_choiceFragment` in its home file). "The converse fails"
+-- belongs to FULL AC and is Cohen 1963, not Diaconescu.
 -- Reading: in `ZeroParadox/Category/ExcludedMiddleBridge.lean` the natural construction of the fragment
 -- from `ExcludedMiddle` fails to elaborate without `classical`, and a candidate explanation is Lean's
 -- `Prop`/`Type` stratification. A failed construction is not a non-derivability result, so this is a
