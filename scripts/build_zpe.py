@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.54 | October 2026
+Version 3.55 | October 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.54'
+VERSION = '3.55'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -50,7 +50,7 @@ def build():
         'DA-3 (Perspective-Relative Cardinality). AX-1 (Binary Snap Causality) is retired. Its content was split in two: '
         'the shape of the snap is proved, as Theorem T-SNAP, and that the snap occurs is stated separately: it follows from '
         'the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). '
-        'tsnap_holds_but_nothing_moves shows T-SNAP does not carry it. With DA-2, the directed instantiation tree is formally licensed. With DA-3, '
+        'tsnap_holds_but_nothing_moves shows T-SNAP does not carry it. With DA-2 and the commitment C-DA2, the directed instantiation tree is formally licensed. With DA-3, '
         'cardinality is shown to be position-dependent within the instantiation structure.'))
     E.append(body(
         'Illustrated Companion: A paired ZP-E Illustrated Companion document provides accessible '
@@ -103,9 +103,9 @@ def build():
     E.append(Paragraph('I. The Gap at T-BUF Step 2', S['h2']))
     E.append(body('The T-BUF chain from ZP-C states three results:'))
     E += [
-        li('L-RUN: The transition c<sub>0</sub> → c<sub>1</sub> is a nonzero state transition. (ZP-C — Derived)'),
-        li('TQ-IH: No program outputs ⊥ without a nonzero intermediate configuration state. (ZP-C — Derived by L-RUN)'),
-        li('T-BUF: At P<sub>0</sub>, the Binary Snap &#8869; &#8594; ε<sub>0</sub> is a structural consequence of execution: an executing configuration is non-null, and that state is ε<sub>0</sub> in the semilattice. (ZP-C — Candidate Theorem; its Step 2, that the configuration at P<sub>0</sub> is executing, is the occurrence commitment, below, not a derived step)'),
+        li('L-RUN: The transition c<sub>0</sub> → c<sub>1</sub> is a state change off ⊥. (ZP-C — Derived)'),
+        li('TQ-IH: No program outputs ⊥ without a non-bottom intermediate configuration state. (ZP-C — Derived by L-RUN)'),
+        li('T-BUF: At P<sub>0</sub>, the Binary Snap &#8869; &#8594; ε<sub>0</sub> is a structural consequence of execution: an executing configuration is non-bottom, and that state is ε<sub>0</sub> in the semilattice. (ZP-C — Candidate Theorem; its Step 2, that the configuration at P<sub>0</sub> is executing, is the occurrence commitment, below, not a derived step)'),
         sp(4),
     ]
     E.append(body(
@@ -355,7 +355,7 @@ def build():
         li('Step 1 — P<sub>0</sub> identifies the incompressibility threshold. ZP-C &#167; I takes x to be a binary string of length n, so n = |x| and K(x|n)/n = K(x|n)/|x|. ZP-C D1 defines P<sub>0</sub> as the limit of K(x|n)/n as n grows, the algorithmic entropy rate of x, and the threshold is that rate at its maximum, 1. The steps below use the finite-string form ZP-C also uses (&#167; I), not the limit: K(x|n)/|x| = 1 for one configuration string x of length n, so x is algorithmically incompressible at its length. (ZP-C &#167; I, D1)'),
         li('Step 2 — The configuration reaching P<sub>0</sub> is in Sense B, not Sense A (the occurrence commitment): At P<sub>0</sub>, K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 (Step 1 at x = c<sub>1</sub>) — c<sub>1</sub> is incompressible, so no shorter external generator exists. That rules out a shorter external generator, not an inert string; that the configuration reaching P<sub>0</sub> is a running machine&#8217;s current configuration (Sense B) and not an inert string (Sense A) is what the occurrence commitment asserts, not a derived step. Arguments for it, none deriving it: ⊥ = {&#8869;} (ZP-A CC-2/R3); unbounded surprisal (ZP-C L-INF); DA-1 Path 3. (The occurrence commitment, whose content is DP-2&#8217;s precondition. DA-1, closed given DP-2, consumes this step and does not supply it)'),
         li('Step 3 — Any instantiated execution passes through c<sub>1</sub>. (ZP-C D7 — definitional; c<sub>1</sub> is the first running configuration)'),
-        li('Step 4 — c<sub>1</sub> ≠ ⊥. (ZP-C L-RUN — Derived; c<sub>1</sub> has gained execution context not present in c<sub>0</sub> = ⊥; by AX-B1 this is a distinct, nonzero state)'),
+        li('Step 4 — c<sub>1</sub> ≠ ⊥. (ZP-C L-RUN — Derived; c<sub>1</sub> has gained execution context not present in c<sub>0</sub> = ⊥; by AX-B1 this is a distinct, non-bottom state)'),
         li('Step 5 — No program that executes produces only ⊥ configuration states. (ZP-C TQ-IH — Derived; execution trace τ(p) contains c<sub>1</sub> for any executing program p)'),
         li('Step 6 — In (L, ∨, ⊥), c<sub>1</sub> is an element strictly above ⊥. By ZP-A D2, the transition ⊥ → c<sub>1</sub> is a valid state transition: c<sub>1</sub> = ⊥ ∨ ε<sub>0</sub> for some ε<sub>0</sub> ∈ L with ε<sub>0</sub> > ⊥. This transition is the Binary Snap.'),
         li('Step 7 — The transition is irreversible: algebraically, no join from c<sub>1</sub> returns to ⊥ (t_snap_irreversible, the no-return form of ZP-A R1; that the signature has no subtraction operator makes an inverse inexpressible, which is a different fact); topologically by ZP-B C3 (no continuous return path to 0 in Q<sub>2</sub>). These two grounds are sufficient. Conceptual correspondence: ZP-G AX-G2 (hom(X, 0) = ∅ for X ≠ 0) expresses the same irreversibility in categorical language — ZP-G is downstream of ZP-E and is not a formal dependency of this proof.'),
@@ -577,7 +577,7 @@ def build():
     E += [
         hr(),
         Paragraph('Formal Insert DA-2: Instantiation Succession — The Multiple-&#8869; Result', S['h1']),
-        Paragraph('<i>Formally licenses the directed instantiation tree</i>', S['note']),
+        Paragraph('<i>Formally licenses the directed instantiation tree, together with the commitment C-DA2</i>', S['note']),
         hr(),
     ]
 
@@ -591,9 +591,11 @@ def build():
         li('ZP-B R1 distinguishes universal structure from universe-contingent parameters. ε<sub>0</sub> is '
            'contingent per instantiation. Whether ⊥ is similarly contingent is not addressed in ZP-A through ZP-D.'),
         li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Every "fires" below narrates the commitment that instantiation occurs, not a consequence of the theorem.'),
-        li('T-SNAP fires wherever P<sub>0</sub> conditions are met. If the terminal state of instantiation I<sub>n</sub> '
-           'satisfies P<sub>0</sub> conditions, T-SNAP should apply — but this requires formally connecting that '
-           'terminal state to a ⊥ role-occupant, read as a new ⊥ under C-DA2. DA-2 provides this connection.'),
+        li('Whether T-SNAP&#8217;s shape applies at the terminal state of instantiation I<sub>n</sub>, read as the '
+           'starting ⊥ of I<sub>n+1</sub>. That needs the terminal state connected to a ⊥ role-occupant. DA-2 provides '
+           'the role half only: what plays the ⊥ role of a ZP-A semilattice is that ⊥ (da2_bottom_characterization). '
+           'Reading it as a new ⊥ is C-DA2, a commitment. Nothing here places that terminal state at P<sub>0</sub>: the '
+           'valuation-complexity bridge offered for it is refuted (ZP-I &#167; II.B).'),
         sp(4),
     ]
 
@@ -628,7 +630,7 @@ def build():
              'satisfied by any state meeting A4\'s algebraic conditions — not only by a cosmologically '
              'primitive ⊥. The identity condition is structural, not historical: what matters is the '
              'algebraic role a state plays in the subsequent semilattice, not where it came from.'),
-        body('The terminal state of I<sub>n</sub> arrives at I<sub>n+1</sub> carrying the accumulated join of everything in I<sub>n</sub>\'s '
+        body('On the framework&#8217;s reading, a commitment and not a theorem, the terminal state of I<sub>n</sub> arrives at I<sub>n+1</sub> carrying the accumulated join of everything in I<sub>n</sub>\'s '
              'sequence. It is structurally ⊥ to I<sub>n+1</sub> — contributing nothing to subsequent joins — while '
              'being informationally rich relative to I<sub>n</sub>. This is the Zero Paradox instantiated at the '
              'inter-instantiation level: the terminal state is simultaneously a terminus and a foundation.'),
@@ -686,13 +688,16 @@ def build():
         sp(4),
     ]
     E.append(body(
-        'Remark R-DA2: T-SNAP fires wherever P<sub>0</sub> conditions are met. DA-2 establishes that the terminal '
-        'state of I<sub>n</sub> satisfies those conditions for I<sub>n+1</sub>. T-SNAP therefore applies across instantiation '
-        'boundaries without modification. No new axiom is required. The multiverse is not the claim that '
+        'Remark R-DA2: T-SNAP&#8217;s shape holds at ⊥ of any ZP-A semilattice (t_snap_join), so it needs no '
+        'modification across instantiation boundaries. DA-2 supplies the role half only: what plays the ⊥ role of '
+        'the semilattice of I<sub>n+1</sub> is that ⊥ (da2_bottom_characterization). That the terminal state of '
+        'I<sub>n</sub> plays that role, and that the return is to a NEW bottom, is a commitment (C-DA2), not a theorem; '
+        'in the 2-adic realization the arc tends back to the same 0 of &#8484;<sub>2</sub> (snap_arc_z2_loop). Nothing '
+        'here places that terminal state at P<sub>0</sub> (ZP-I &#167; II.B). No new axiom is required. The multiverse is not the claim that '
         'T-SNAP fires in all directions simultaneously: it is the claim that ⊥ = {⊥} (ZP-A CC-2) has no '
         'internal differentiation and therefore no preferred direction for ε<sub>0</sub>. The multiverse of '
         'instantiations is the full set of all minimal differentiations available from the single '
-        'self-containing ⊥ — a structural consequence of CC-2 + T-SNAP + DA-2 jointly.'))
+        'self-containing ⊥ — a structural consequence of CC-2 + T-SNAP + DA-2 jointly, given C-DA2.'))
 
 
     E.append(Paragraph('VI. The Zero Paradox Iterated', S['h2']))
@@ -719,10 +724,10 @@ def build():
              'establish that the transition is taken: that the Snap occurs follows from the occurrence commitment (instantiation occurs) '
              'together with DA-1 (closed given DP-2), and the NO-GO '
              'gauge tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. '
-             'DA-2 establishes that any terminal state satisfying P₀ '
-             'conditions acts as ⊥ for a successor instantiation, generating a forward-directed branching '
-             'tree. The branching comes from CC-2\'s undifferentiated ⊥ and the succession from DA-2, '
-             'both conditional on instantiation occurring. Note: T-SNAP alone does '
+             'DA-2 supplies the role half only: a terminal state that plays the ⊥ role in a successor '
+             'instantiation&#8217;s semilattice is that ⊥. That it does, and that it is a NEW ⊥, so that the '
+             'instantiations form a forward-directed branching tree, is the commitment C-DA2. The branching comes '
+             'from CC-2\'s undifferentiated ⊥ and the succession from DA-2 with C-DA2, all conditional on instantiation occurring. Note: T-SNAP alone does '
              'not establish that it fires on all outbound vectors simultaneously — that universality is the '
              'scope of DA-2, not a direct consequence of the snap theorem itself.'),
         body('<b>Monotonicity and Path Irrecoverability.</b> Within an instantiation, state sequences are monotone — no state '
@@ -758,7 +763,7 @@ def build():
 
     E.append(Paragraph('I. The Gap DA-3 Closes', S['h2']))
     E.append(body(
-        'DA-2 establishes that instantiations form a directed tree and that branching at each ⊥ node '
+        'DA-2 with the commitment C-DA2 gives a directed tree of instantiations, and branching at each ⊥ node '
         'produces multiple successor instantiations. This raises a question about the cardinality of '
         'branching: is the fan at each node countably or uncountably infinite? The answer, which DA-3 '
         'formalises, is that this question is perspective-dependent — and DA-3 further conjectures '
@@ -841,7 +846,7 @@ def build():
          'Arguments for the precondition, which is what the occurrence commitment asserts, none deriving it: ZP-A CC-2 + R3 (structural); ZP-C L-INF (informational); AIT incompressibility (Path 3).'],
         ['DA-2: Instantiation Succession',
          'CLOSED — Definitional',
-         'Terminal state of I<sub>n</sub> satisfies A4 role of ⊥ for I<sub>n+1</sub>. C-DA2 COMMITS to the novelty of each ⊥; it does not establish it.'],
+         'Role half only: a terminal state of I<sub>n</sub> that satisfies the A4 role of ⊥ for I<sub>n+1</sub> is that ⊥. C-DA2 COMMITS to the novelty of each ⊥; it does not establish it.'],
         ['DA-3: Perspective-Relative Cardinality',
          'CLOSED (definitional) / CANDIDATE (DA-3-C1)',
          'DA-3-D1 establishes accessible cardinality is position-dependent within the instantiation structure. '
@@ -861,9 +866,9 @@ def build():
          'CLOSED — ZP-C T1',
          'Derived from AX-B1 and RP-1.'],
         ['OQ-E1: Sequence vs. tree',
-         'CLOSED given the occurrence commitment — DA-2',
+         'CLOSED given the occurrence commitment and C-DA2 — DA-2',
          'The structure is a forward-directed tree, not a linear sequence. Given that instantiation occurs — the '
-         'occurrence commitment, not a consequence of T-SNAP — DA-2 supplies the succession and the '
+         'occurrence commitment, not a consequence of T-SNAP — DA-2 with C-DA2 supplies the succession and the '
          'branching follows. '
          'Countable vs. uncountable branching is perspective-dependent (DA-3).'],
         ['OQ-E2: Cardinality-semilattice correspondence',
@@ -926,9 +931,9 @@ def build():
          'None',
          'On an arbitrary lattice no step is selected. No step is guaranteed.'],
         ['Multiverse — structural implication',
-         'T-SNAP + DA-2 jointly',
+         'T-SNAP + DA-2 + C-DA2 jointly',
          'None',
-         'Structural implication given the occurrence commitment — T-SNAP gives the snap\'s shape, CC-2\'s undifferentiated ⊥ the branching, DA-2 the succession'],
+         'Structural implication given the occurrence commitment — T-SNAP gives the snap\'s shape, CC-2\'s undifferentiated ⊥ the branching, DA-2 with C-DA2 the succession'],
         ['OQ-E2: Cardinality correspondence',
          'DA-3',
          'N/A',
@@ -977,9 +982,9 @@ def build():
          'snap_arc_z2_loop measures against it — the 2-adic arc returns to the same 0. Must not '
          'be cited as derived.'],
         ['Directed instantiation tree',
-         'Valid given the occurrence commitment — structural consequence of T-SNAP + DA-2. Once instantiation is taken to occur, branching follows and is not optional. Forward edges only.'],
+         'Valid given the occurrence commitment — structural consequence of T-SNAP + DA-2 + the commitment C-DA2. Once instantiation is taken to occur, branching follows and is not optional. Forward edges only.'],
         ['Branching tree structure',
-         'Valid given the occurrence commitment — T-SNAP + DA-2 jointly. T-SNAP fixes the snap’s SHAPE and does NOT establish that it occurs; DA-2 establishes the branching tree structure. Universality (all outbound vectors) is DA-2\'s scope, not T-SNAP alone.'],
+         'Valid given the occurrence commitment — T-SNAP + DA-2 + C-DA2 jointly. T-SNAP fixes the snap’s SHAPE and does NOT establish that it occurs; DA-2 with C-DA2 gives the branching tree structure. Universality (all outbound vectors) is DA-2\'s scope, not T-SNAP alone.'],
         ['Monotonicity and path irrecoverability',
          'Valid — Structural consequence. Monotonicity (T3) constrains direction; additive ontology (R1) prohibits reduction. Path choice is undetermined by algebra.'],
         ['Ordinal direction of state sequences',

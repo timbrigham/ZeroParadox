@@ -1,5 +1,5 @@
 """
-Build ZP-C Illustrated Companion (v2.10)
+Build ZP-C Illustrated Companion (v2.11)
 v2.9: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14), companion sync with ZP-C v1.23: the key result box ran the derivation chain through DA-1 ('infinite surprisal -> must be a live computation (DA-1)') before L-RUN, putting DA-1 on the shape side. The shape chain now starts at L-RUN and ends at T-SNAP; the occurrence side is stated after it: the framework commits to instantiation occurring (a configuration reaches P0), DA-1 (closed given DP-2) argues a configuration there is a live computation, and together they give that the Snap happens, which is not a theorem.
 v2.8: AX-1 SPLIT (Tim, 2026-09-14), companion sync with ZP-C v1.22: AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The key result box ended "The Binary Snap is no longer assumed — it is derived.", which denied the assumption that remains; it now says the shape is derived and that the Snap happening is still a commitment. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the key-result heading "The Binary Snap Is a Proven Theorem" was not scoped when its box was; it is now "The Shape of the Binary Snap Is a Proven Theorem", matching the box's last sentence that the Snap happening is still a commitment.
 v2.6:vocab fix: null state → ⊥.
@@ -184,13 +184,13 @@ def lrun_diagram():
     d.add(String(xs[0] - 16, cy - r - 14, 'c', fontSize=8, fontName='DV-B', fillColor=COMP_AMBER))
     d.add(String(xs[0] - 8,  cy - r - 20, '0', fontSize=6, fontName='DV-B', fillColor=COMP_AMBER))
     d.add(String(xs[0] - 4,  cy - r - 14, ' = ⊥', fontSize=8, fontName='DV-B', fillColor=COMP_AMBER))
-    d.add(String(xs[0] - 12, cy - r - 27, '(null)', fontSize=7.5,
+    d.add(String(xs[0] - 12, cy - r - 27, '(bottom)', fontSize=7.5,
                  fontName='DV-I', fillColor=colors.HexColor('#666666')))
 
     d.add(String(xs[1] - 16, cy - r - 14, 'c', fontSize=8, fontName='DV-B', fillColor=COMP_BLUE))
     d.add(String(xs[1] - 8,  cy - r - 20, '1', fontSize=6, fontName='DV-B', fillColor=COMP_BLUE))
     d.add(String(xs[1] - 4,  cy - r - 14, ' ≠ ⊥', fontSize=8, fontName='DV-B', fillColor=COMP_BLUE))
-    d.add(String(xs[1] - 18, cy - r - 27, '(non-null!)', fontSize=7.5,
+    d.add(String(xs[1] - 18, cy - r - 27, '(non-bottom!)', fontSize=7.5,
                  fontName='DV-I', fillColor=colors.HexColor('#666666')))
 
     # Vertical dashed line above c1 node
@@ -198,7 +198,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.10'
+VERSION = '2.11'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -252,8 +252,8 @@ def build():
     E.append(Paragraph('What Is ZP-C Doing?', CS['h1']))
     E.append(cbody(
         'ZP-C establishes that zero is an informational singularity — a point where the cost '
-        'of describing or reaching it becomes unbounded, no matter how you measure it. '
-        'Two completely independent measures arrive at the same conclusion from different starting points.'))
+        'of describing or reaching it becomes unbounded. '
+        'ZP-C uses two independent measures, as two separate arguments.'))
     E.append(cbody(
         '<b>Route 1 — Kolmogorov complexity (algorithmic):</b> How long must a program be to '
         'describe a configuration? At the incompressibility threshold P₀, no shorter description '
@@ -264,13 +264,14 @@ def build():
         'its surprisal I(x) = −log₂ P(x) approaches infinity. Informational cost is unbounded.'))
     E.append(cbody(
         'Neither measure knows about the other. K counts program lengths; I(x) counts probability. '
-        'Both go to infinity at the same threshold. ZP-C operates in ℚ₂ (from ZP-B) throughout — '
+        'They do not meet at one threshold: the bridge claiming they do is refuted (counterexample '
+        'S<sub>n</sub> = 2<super>n</super>, ZP-I &#167; II.B). ZP-C operates in ℚ₂ (from ZP-B) throughout — '
         'smooth calculus tools are not valid on a totally disconnected space.'))
     E.append(example_box('Real-world example — ZIP compression hitting a wall', [
         'Some files compress a lot; others barely at all. A file that cannot be compressed further '
-        'has hit its incompressibility threshold — Route 1. A truly random file also has maximum '
-        'surprisal: every bit is equally likely, nothing is predictable — Route 2. '
-        'Both descriptions identify the same extreme: the point where no shortcut exists.',
+        'has hit its incompressibility threshold — Route 1. Route 2 measures something else: a file '
+        'holding 2<super>n</super> in binary, a 1 followed by n zeros, is 2-adically deep (2 divides it n times), '
+        'yet a short program prints it. Deep is not the same as incompressible.',
     ]))
     E.append(sp(8))
 
@@ -288,12 +289,13 @@ def build():
         CS['caption']))
     E.append(example_box('Real-world example — A perfectly random password', [
         'To describe a truly random password, you have to send every character — you can\'t '
-        'summarize it. That\'s maximum surprisal: the information content equals the full length '
-        'of the string. Zero in ℚ₂ is the limit of this — infinite depth, infinite surprisal.',
+        'summarize it. That is Route 1: the string is incompressible. Route 2 measures depth '
+        'instead: zero in ℚ₂ is the limit of ever-deeper states, with infinite depth and infinite '
+        'surprisal, and a state can be deep while still easy to summarize.',
     ]))
     E.append(sp(6))
 
-    E.append(Paragraph('Where the Two Routes Converge', CS['h1']))
+    E.append(Paragraph('Where the Two Routes Part', CS['h1']))
     E.append(cbody(
         'Kolmogorov complexity K and 2-adic surprisal I(x) are genuinely different tools. '
         'K measures how long a program must be to reproduce a string — it is a property of '
@@ -301,26 +303,22 @@ def build():
         'distributions. They share no common definition and were developed in entirely separate '
         'branches of mathematics.'))
     E.append(remember_box(
-        'Yet both diverge to infinity at the same point: zero. K(x|n)/n &#8594; 1 as '
-        'configurations approach the incompressibility threshold. I(x) &#8594; &#8734; as '
-        'states approach 0 in &#8474;&#8322;. The convergence is not engineered — it reflects '
-        'something structurally real about &#8869;. Kolmogorov complexity and Shannon surprisal '
-        'were developed in separate branches of mathematics with no shared definition, yet both '
-        'hit the same barrier at zero. ZP-C uses both as independent confirmation of the same '
-        'structural fact.'))
+        'They do not meet at one point. The claim that 2-adic depth growing without bound carries '
+        'K to its threshold is refuted (counterexample S<sub>n</sub> = 2<super>n</super>, ZP-I &#167; II.B); T-IZ '
+        'never depended on it (it goes through t_iz_cauchy). ZP-C uses K and I as two separate '
+        'arguments, not as confirmation of one fact.'))
     E.append(sp(8))
 
     E.append(Paragraph('What the Singularity Shows, and What It Does Not (L-INF)', CS['h1']))
     E.append(cbody(
         'The surprisal graph shows that I(x) goes to infinity as x approaches 0. ZP-C '
-        'makes this precise with Lemma L-INF (Unbounded Surprisal of ⊥): at the '
-        'incompressibility threshold P₀, the configuration\'s surprisal is not just very large — '
-        'it is formally infinite. The branching measure assigns probability approaching zero to any '
-        'specific configuration at P₀, so I(P₀) = ∞.'))
+        'makes this precise with Lemma L-INF (Unbounded Surprisal of ⊥, Lean l_inf): surprisal at '
+        'depth n of the binary ball hierarchy exceeds every finite bound. It is about 2-adic depth, '
+        'not about the incompressibility threshold P₀; the bridge between the two is refuted '
+        '(ZP-I &#167; II.B).'))
     E.append(cbody(
-        'This matters because infinite surprisal means no finite external program can bound the '
-        'informational content of the configuration, so no finite external interpreter can hold it '
-        'as a static description. It does not show that the configuration is running. The step from '
+        'This matters because unbounded surprisal means no finite external interpreter can hold ⊥ '
+        'as a static description. It does not show that anything is running. The step from '
         'unbounded surprisal to executing is a bridge principle of its own, which the framework does '
         'not adopt (ZP-E, DA-1 Path 2). That the configuration reaching P₀ is a running machine\'s '
         'current configuration, and not an inert string, is what the framework\'s occurrence '
@@ -341,8 +339,8 @@ def build():
 
     E.append(Paragraph('The Binary Snap Costs Exactly 1 Bit', CS['h1']))
     E.append(cbody(
-        'The Jensen-Shannon Divergence (JSD) between the zero distribution P = (1,0) and the minimum '
-        'nonzero state &#949;<sub>0</sub>, Q = (0,1), is exactly 1 bit. These distributions are derived from AX-B1 - '
+        'The Jensen-Shannon Divergence (JSD) between the bottom state ⊥, P = (1,0), and the minimum '
+        'non-bottom state &#949;<sub>0</sub>, Q = (0,1), is exactly 1 bit. These distributions are derived from AX-B1 - '
         'not assumed. The Snap is the minimum informational event possible.'))
     E.append(jsd_diagram())
     E.append(Paragraph(
@@ -352,14 +350,14 @@ def build():
 
     E.append(Paragraph('Turning On Is a State (L-RUN)', CS['h1']))
     E.append(cbody(
-        'Can a program output ⊥ without passing through any nonzero intermediate '
+        'Can a program output ⊥ without passing through any non-bottom intermediate '
         'state? The answer is no — because the act of turning on is itself a state.'))
     E.append(cbody(
         'Any program that executes must pass through a "first instruction fetched" configuration '
         '(c₁). That configuration is distinct from the not-yet-running state (c₀). By AX-B1 it is '
-        'non-null. The output being null does not mean the intermediate states were null.'))
+        'non-bottom. The output being ⊥ does not mean the intermediate states were ⊥.'))
     E.append(remember_box(
-        'The identification of c₀ with the null state ⊥ is a modeling commitment (CC-2 in '
+        'The identification of c₀ with the bottom state ⊥ is a modeling commitment (CC-2 in '
         'ZP-C) — a choice made explicit in the formal document, parallel to CC-1 in ZP-A '
         '(which identifies the initial state S₀ with ⊥). It is not derived from the machine '
         'definition; it is chosen. Labeling it CC-2 keeps that choice visible.'))
@@ -367,13 +365,13 @@ def build():
     # ── Page 3 ─────────────────────────────────────────────────────────────────
     E.append(lrun_diagram())
     E.append(Paragraph(
-        'L-RUN: the transition c₀ → c₁ is a non-null state change. Execution itself is a state '
+        'L-RUN: the transition c₀ → c₁ is a state change off ⊥. Execution itself is a state '
         '— independent of output.',
         CS['caption']))
 
     E.append(example_box('Real-world example — Booting a computer', [
         'When you press the power button, the machine doesn\'t jump from "off" to "showing your '
-        'desktop." It passes through BIOS, POST, bootloader, kernel — each a distinct non-null '
+        'desktop." It passes through BIOS, POST, bootloader, kernel — each a distinct non-bottom '
         'configuration state. Even if programmed to immediately wipe itself and show nothing, it '
         'still passed through those intermediate states.',
     ]))
@@ -407,15 +405,15 @@ def build():
     E.append(key_result_box(
         'Key Result: T-SNAP — The Shape of the Binary Snap Is a Proven Theorem',
         'The derivation chain for the shape: any live computation must execute a first instruction, '
-        'and that execution is a non-null state (L-RUN). '
-        'No Turing machine program can produce any output without passing through such a non-null '
-        'intermediate state. And any non-null state change starting from ⊥ is precisely the '
+        'and that execution is a non-bottom state (L-RUN). '
+        'No Turing machine program can produce any output without passing through such a non-bottom '
+        'intermediate state. And any state change off ⊥ is precisely the '
         'Binary Snap (ZP-A D2). ZP-E closes the chain as Theorem T-SNAP. '
         'The shape of the Binary Snap is no longer assumed — it is derived. '
         'That the Snap happens is a separate matter. The framework commits to instantiation occurring: '
-        'a configuration reaches the incompressibility threshold P₀, where its surprisal is infinite (L-INF), '
+        'a configuration reaches the incompressibility threshold P₀, '
         'as a running machine\'s current configuration and not as an inert stored description. '
-        'That is the occurrence commitment; infinite surprisal does not derive it. '
+        'That is the occurrence commitment; neither incompressibility nor unbounded surprisal derives it. '
         'Given it, the machine has left c₀ and is at c₁, by the definition of the first running '
         'configuration (D7); DA-1 (ZP-E, closed given DP-2) uses that commitment and does not supply it. '
         'Together they give that the Snap happens, which rests on '

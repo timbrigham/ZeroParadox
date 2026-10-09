@@ -63,7 +63,7 @@ proof shows dependence, not a principle's necessity.
 | ZPB   | Topology        | C3: no continuous path ⊥ → x ≠ ⊥   |
 | ZPC   | Information     | L-INF: infinite surprisal at ⊥       |
 | ZPJ/K | Set + Compute  | bot_self_mem (AFA); botCode (Kleene) |
-| ZPI   | Algorithmic IT  | K uncomputable; the K-ratio bridge is superseded (ZeroParadox/Valuation/SemilatticeInstance.lean § II) |
+| ZPI   | Algorithmic IT  | K uncomputable; the K-ratio bridge is refuted (counterexample Sₙ = 2ⁿ, ZP-I § II.B); T-IZ never depended on it (it goes through `t_iz_cauchy`) |
 
 K is not computed in Lean in this framework. The AFA/Kleene route reaches the same
 fixed-point structure via a path whose Kleene step is a KleeneStructure requirement.
