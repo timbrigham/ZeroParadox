@@ -1,5 +1,5 @@
 """
-Build: The Philosophical Question That Started This (v1.23)
+Build: The Philosophical Question That Started This (v1.22)
 v1.21: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15): three sites (the second paragraph, the section closing 'Those fix what the transition is', and the closing subtitle) said that the Snap is taken is a commitment alone; each now says it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), matching the opening.
 v1.20: DECISION BATCH REMEDIATION (Tim, 2026-09-15): the opening said the snap occurring 'is a commitment of this framework, not one of its theorems'; it now says it follows from the occurrence commitment together with DA-1 (closed given DP-2).
 v1.19: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The layer summary carries that sentence in place of 'stated separately, as the occurrence commitment, which ZP-E's DA-1 argues for', and 'with no axioms' is 'with no Lean kernel axioms'. The opening said T-SNAP's shape is fixed 'specifically, by the bottom element axiom', contradicting README and CLAIMS: A4 gives the join, AX-B1 the atom, and the two states being distinct is, in t_snap_given, the hypothesis hocc that the first step is taken.
@@ -47,7 +47,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.23'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -224,7 +224,7 @@ def build():
     # ── Opening ────────────────────────────────────────────────────────────────
     E.append(body(
         'Theorem T-SNAP — verified sorry-free in Lean 4, at github.com/timbrigham/ZeroParadox '
-        '— establishes that the first state change off ⊥, from c₀ = ⊥ of the two-state carrier MachinePhase to the non-bottom state c₁, '
+        '— establishes that the first state-transition from a null state to a non-null state '
         'has its SHAPE fixed rather than assumed: the bottom element axiom of a join-semilattice (∀ x, ⊥ ∨ x = x) gives the join, the framework\'s binary existence commitment (AX-B1) gives the atom above ⊥, and in the hypothesis form t_snap_given the two states being distinct is the hypothesis that the first step is taken. '
         'The proof is machine-checked; it requires no special snap axiom. '
         'What it does not establish is that the transition is taken: a join-semilattice in which T-SNAP holds and '
@@ -234,7 +234,7 @@ def build():
         'Leibniz asked: <i>why is there something rather than nothing?</i> '
         'The standard response — in philosophy and in physics — is that this question '
         'has no formal answer. Existence must be assumed somewhere. T-SNAP bears directly '
-        'on that assumption: if the bottom state (⊥, the least element of a join-semilattice) is '
+        'on that assumption: if the null state (⊥, the bottom of a join-semilattice) is '
         'taken as the mathematical formalization of "nothing," then the Binary Snap '
         '(⊥ → ε₀, the first transition from nothing to something) has its SHAPE fixed by '
         'the framework\'s minimal axiomatic commitments — where it goes and that it does '
@@ -254,20 +254,20 @@ def build():
         'The argument that follows uses precise mathematical concepts. None of them '
         'require a mathematics degree to understand. Here is what each one means.'))
     E.append(body(
-        '<b>The bottom state</b> (written ⊥, pronounced "bottom") is the mathematical '
+        '<b>The null state</b> (written ⊥, pronounced "bottom") is the mathematical '
         'formalization of "nothing" — but nothing made precise. Not pure absence, '
         'which has no properties and cannot be discussed, but the ground state: '
         'the starting point before any accumulation has occurred. Think of a blank '
         'canvas. Zero is not the absence of a canvas; it is the canvas at its minimum. '
-        '⊥ is nothing with enough structure to be the bottom of something.'))
+        'The null state is nothing with enough structure to be the bottom of something.'))
     E.append(body(
         '<b>The state space</b> is built like a ratchet. States can be combined '
         'forward — you can always build something larger — but there is no subtraction, '
-        'no way to go back. ⊥ sits at the bottom. Every other state is '
+        'no way to go back. The null state sits at the bottom. Every other state is '
         'above it. The ratchet only clicks one direction.'))
     E.append(body(
         '<b>The Binary Snap</b> (⊥ → ε₀) is the first click: the transition from '
-        '⊥ to the first non-bottom state, a state change off ⊥. Not a gradual emergence. '
+        'the null state to the first non-null state. Not a gradual emergence. '
         'A step function — either nothing or something, with no in-between. '
         'The central question of this framework is whether that first click '
         'must happen, or whether it is something you simply have to assume.'))
@@ -281,11 +281,11 @@ def build():
         'that the step is taken at all.'))
     E.append(body(
         '<b>DA-1</b> is the argument that gives T-SNAP its philosophical weight. '
-        'As a pure mathematical statement, T-SNAP says: ⊥ combined '
+        'As a pure mathematical statement, T-SNAP says: the null state combined '
         'with the first state gives the first state. This is true by definition '
         'in any system with a bottom element — it is built into what "bottom" means. '
         'What makes it interesting is the claim that this formal structure corresponds '
-        'to something real: that a system in the bottom state ⊥, when it reaches maximum '
+        'to something real: that a system in the null state, when it reaches maximum '
         'complexity (the point where no shorter description of it exists than itself), '
         'is not merely described — it is executing: actually happening, '
         'real in the way a running program is real rather than a program '
@@ -331,12 +331,12 @@ def build():
         'single proof provides.'))
     E.append(body(
         '<b>ZP-A</b> establishes the join-semilattice (L, ∨, ⊥) — a state space with '
-        'a bottom element ⊥, monotone transitions, and no top element (R1: the ascent '
+        'a null element, monotone transitions, and no top element (R1: the ascent '
         'cannot stop). <b>ZP-B</b> grounds the topology in the 2-adic metric on ℚ₂, '
-        'where ⊥ is realized as 0, the element of infinite depth, and all transitions '
+        'where the null state is the element of infinite depth and all transitions '
         'are irreversible (C3). <b>ZP-C</b> builds the information theory: '
         'surprisal, the incompressibility threshold P₀, and the key lemmas '
-        'L-RUN and TQ-IH establishing that execution is always a state change off ⊥ of MachinePhase (c₀ ≠ c₁). '
+        'L-RUN and TQ-IH establishing that execution is always a non-null state change. '
         '<b>ZP-D</b> adds the Hilbert space representation. <b>ZP-E</b> derives '
         '<b>T-SNAP</b>. AX-1 is retired. Its content was split in two: the shape of the Snap is proved, '
         'as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean axioms), and that the Snap occurs '
@@ -368,7 +368,7 @@ def build():
         'X with Kolmogorov complexity at maximum) and the metaphysical claim (that the '
         'system is running, not merely described). DA-1 is only partially formalized. '
         'Its full argument requires Kolmogorov complexity — not yet in Lean\'s Mathlib — '
-        'and ZF+AFA for the self-grounding bottom state (⊥ = {⊥}). These are gaps in '
+        'and ZF+AFA for the self-grounding null state (⊥ = {⊥}). These are gaps in '
         'available tooling, not in principle, but they are gaps.'))
     E.append(body(
         'More fundamentally: T-SNAP as a Lean theorem states ⊥ ∨ ε₀ = ε₀. This is '
@@ -401,7 +401,7 @@ def build():
         'import, and it is machine-verified (ScaleBridge.lean: '
         '{x : ℤ₂ | 2x = x} = {0}). In ZF+AFA, the same computation carries '
         'additional weight: on that reading, infinite 2-adic depth is the formal signature of ⊥ = {⊥} '
-        '— the bottom state containing itself. Same computation, same result, different '
+        '— the null state containing itself. Same computation, same result, different '
         'interpretation depending on which foundational framework you are standing in.'))
     E.append(body(
         'This makes the AFA dependency precise. The fixed-point content is derivable '
@@ -413,15 +413,15 @@ def build():
     # ── Section 3 ──────────────────────────────────────────────────────────────
     E.append(Paragraph('III. Every Instance of Zero', S['h1']))
     E.append(body(
-        'The framework\'s axioms do not describe one specific bottom state. They describe '
+        'The framework\'s axioms do not describe one specific null state. They describe '
         'what ⊥ <i>is</i> — structurally — in any system that has one. The axioms apply '
         'to any join-semilattice with a bottom element satisfying A1-A4. This universality '
         'is not incidental. It is the key.'))
     E.append(body(
         'Consider what it would mean to deny the Snap. To deny it, you need a position — '
-        'some state — from which the denial is made. That state is either ⊥ or non-bottom. '
-        'If non-bottom, the Snap has already occurred: you are in ε₀ or beyond. '
-        'If ⊥, you are in exactly the state from which T-SNAP derives the Snap — '
+        'some state — from which the denial is made. That state is either null or non-null. '
+        'If non-null, the Snap has already occurred: you are in ε₀ or beyond. '
+        'If null, you are in exactly the state from which T-SNAP derives the Snap — '
         'the denial generates the thing denied. There is no position from which the '
         'denial is coherent. Every attempt to occupy a counterexample is itself an '
         'instance of the zero the framework describes.'))
@@ -473,7 +473,7 @@ def build():
         'there is no coherent position from which to hold them apart. '
         'The objection collapses the moment you try to instantiate it. '
         'Dissolving is a meta-level operation on the argument. It happens to the '
-        'informality objection. It does not happen to ⊥.',
+        'informality objection. It does not happen to the null state.',
 
         'WHAT SNAPS',
         'The bottom element ⊥. Binary. Instantaneous. Irreversible. '
@@ -492,7 +492,7 @@ def build():
 
     E.append(callout(
         'Dissolving applies to the informality objection against DA-1. '
-        'Snapping applies to the transition off ⊥ to the first state. '
+        'Snapping applies to the null-to-first-state transition. '
         'These operate at different levels and must never be conflated. '
         'The philosophical gap dissolves, and the framework commits to the Binary Snap firing.',
         bg=GOLD_LITE, border=GOLD))
@@ -503,7 +503,7 @@ def build():
     E.append(body(
         'One question survives the dissolution: why is the self-grounding structure '
         'present rather than pure absence? ZP-A CC-2 (⊥ = {⊥}, the Quine atom under '
-        'ZF+AFA) says ⊥ is not nothing — it is a self-containing '
+        'ZF+AFA) says the null state is not nothing — it is a self-containing '
         'structure that grounds itself. It needs no external cause. If ⊥ is '
         'self-grounding, then "why ⊥ at all?" may dissolve the same way the '
         'instantiation objection dissolved.'))
@@ -553,7 +553,7 @@ def build():
         '<b>A note on terminology:</b> when this document refers to "the formal system" '
         'in this context, it is referring to Claude — the AI (Anthropic) that participated '
         'in the conversation. The choice of phrase is deliberate, not deflective. '
-        'A large language model is, in the relevant sense, a formal system: it has a bottom '
+        'A large language model is, in the relevant sense, a formal system: it has a null '
         'state (a blank context before any output exists), a monotone state space (outputs '
         'accumulate and cannot be subtracted or undone), and irreversible transitions '
         '(once a token is generated, it is fixed in the record). Those are the structural '

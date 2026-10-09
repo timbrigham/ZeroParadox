@@ -81,14 +81,17 @@ def build():
     print('[build_zpj_keystone_addendum] Building preamble...')
     E.append(body(
         'The keystone of the Zero Paradox is that &#8869; plays the same self-referential '
-        '(diagonal) fixed-point role in every framework: the Quine atom &#8869; = {&#8869;} in set '
-        'theory, the Kleene quine in computation, the point v<sub>2</sub>(0) = &#8734; in '
-        'valuation, and the initial object in category theory. Their shared membership in that '
+        '(diagonal) fixed-point role in every framework, its occupant supplied per face: the Quine '
+        'atom &#8869; = {&#8869;} in set theory; filled in computation by a Kleene code (a '
+        'commitment, not a theorem); the point v<sub>2</sub>(0) = &#8734; in '
+        'valuation; and the initial object in category theory. Their shared membership in that '
         'family (MC-1) is proved per domain for the Quine atom, 2-adic and categorical faces; the '
-        'Kleene face is carried as a requirement: its occupant is a Kleene code, a program equal to '
-        'its own transform up to evaluation (computability_face_fixedPoint) and a term of another type '
-        'than &#8869; of the ZPSemilattice, and reading such a code as the computational face of that '
-        '&#8869; is the KleeneStructure commitment (ZeroParadox/Computability/Kleene.lean); the '
+        'Kleene face is carried as a requirement: its occupant is a code from the Rogers / Kleene '
+        'fixed-point theorem (for every computable transform f of codes there is a code c with '
+        'eval (f c) = eval c; Rogers\' form, computability_face_fixedPoint), a term of another type '
+        'than &#8869; of the ZPSemilattice; the KleeneStructure class requires a code meeting a '
+        'periodicity condition (botCode_is_quine), and reading that code as the computational face of '
+        '&#8869; is the commitment (ZeroParadox/Computability/Kleene.lean); the '
         'choice of criteria is a design principle; and '
         'the claim that the faces are <i>numerically one object</i> is <b>retired as '
         'ill-typed</b> (object equality across categories does not typecheck and is not invariant under '
@@ -261,7 +264,7 @@ def build():
     )))
     E.append(sp(4))
     E.append(KeepTogether(result_box(
-        'Category-theoretic level (BoundaryBridge.lean)',
+        'Both levels at once (BoundaryBridge.lean)',
         [
             'snap_boundary_two_registers &#8212; the crossing witnessed in two registers at '
             'once: the relation/carrier level above, and ZP-P\'s categorical &#956;/&#957; '
