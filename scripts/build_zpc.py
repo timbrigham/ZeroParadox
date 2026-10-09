@@ -220,7 +220,7 @@ def build():
     E.append(label_box('Remark R-TQ — External Confirmation of TQ-IH (April 2026)', [
         'TQ-IH was independently reviewed by an external PhD mathematician.',
         'Confirmation: "As long as you have c₁ ≠ c₀, this implies cᵢ ≠ c₀ for some 1 ≤ i &lt; n, at least for n ≥ 2. This has nothing to do with computation or anything at all, it\'s a triviality."',
-        'This confirms two things. First, TQ-IH holds. Second, and more significantly, the result is domain-independent: it does not depend on any Turing-specific machinery, any Kolmogorov complexity argument, or any property of the semilattice. It holds in any setting where a first step off ⊥, c₁ ≠ c₀, is given. The derivation from L-RUN alone is complete and unassailable.',
+        'This confirms two things. First, TQ-IH holds. Second, and more significantly, the result is domain-independent: it does not depend on any Turing-specific machinery, any Kolmogorov complexity argument, or any property of the semilattice. It holds in any setting where a first step c₁ ≠ c₀ is given. The derivation from L-RUN alone is complete and unassailable.',
         'Status: EXTERNALLY CONFIRMED — April 2026.',
     ]))
     E.append(sp(4))

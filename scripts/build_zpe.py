@@ -111,8 +111,9 @@ def build():
     E.append(body(
         'T-BUF was labelled Candidate because Step 2 asserts that a configuration at P<sub>0</sub> is a '
         'live machine state — that instantiation at P<sub>0</sub> constitutes an execution event, not a static '
-        'description. ZP-C L-INF supplies one mathematical premise: &#8869; at P<sub>0</sub> has unbounded '
-        'surprisal — no finite external interpreter can hold it as a static description. ZP-A CC-2 '
+        'description. ZP-C L-INF supplies one mathematical premise: surprisal is unbounded at &#8869;, the '
+        'limit point 0 of the binary ball hierarchy, and not at P<sub>0</sub> (the valuation-complexity bridge is '
+        'refuted, ZP-I &#167; II.B); no finite external interpreter can hold &#8869; as a static description. ZP-A CC-2 '
         'supplies a second, structural basis: &#8869; = {&#8869;} is a self-containing object with no external '
         'interpreter by structure. Neither derives T-BUF Step 2: it is DP-2&#8217;s precondition, and it is what the '
         'occurrence commitment asserts (&#167; IV). DA-1 (&#167; IV below) consumes it and does not supply it: given it, '
@@ -688,10 +689,11 @@ def build():
         sp(4),
     ]
     E.append(body(
-        'Remark R-DA2: T-SNAP&#8217;s shape holds at ⊥ of any ZP-A semilattice (t_snap_join), so it needs no '
+        'Remark R-DA2: T-SNAP&#8217;s algebraic core, ⊥ ∨ ε<sub>0</sub> = ε<sub>0</sub>, holds at ⊥ of any ZP-A semilattice (t_snap_join), so it needs no '
         'modification across instantiation boundaries. DA-2 supplies the role half only: what plays the ⊥ role of '
         'the semilattice of I<sub>n+1</sub> is that ⊥ (da2_bottom_characterization). That the terminal state of '
-        'I<sub>n</sub> plays that role, and that the return is to a NEW bottom, is a commitment (C-DA2), not a theorem; '
+        'I<sub>n</sub> plays that role is a commitment of its own (occupancy), not a theorem; that the return is to a '
+        'NEW bottom is a further commitment (C-DA2); '
         'in the 2-adic realization the arc tends back to the same 0 of &#8484;<sub>2</sub> (snap_arc_z2_loop). Nothing '
         'here places that terminal state at P<sub>0</sub> (ZP-I &#167; II.B). No new axiom is required. The multiverse is not the claim that '
         'T-SNAP fires in all directions simultaneously: it is the claim that ⊥ = {⊥} (ZP-A CC-2) has no '
@@ -725,8 +727,9 @@ def build():
              'together with DA-1 (closed given DP-2), and the NO-GO '
              'gauge tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. '
              'DA-2 supplies the role half only: a terminal state that plays the ⊥ role in a successor '
-             'instantiation&#8217;s semilattice is that ⊥. That it does, and that it is a NEW ⊥, so that the '
-             'instantiations form a forward-directed branching tree, is the commitment C-DA2. The branching comes '
+             'instantiation&#8217;s semilattice is that ⊥. That it does is a commitment of its own (occupancy); that it '
+             'is a NEW ⊥, so that the instantiations form a forward-directed branching tree, is the further commitment '
+             'C-DA2. The branching comes '
              'from CC-2\'s undifferentiated ⊥ and the succession from DA-2 with C-DA2, all conditional on instantiation occurring. Note: T-SNAP alone does '
              'not establish that it fires on all outbound vectors simultaneously — that universality is the '
              'scope of DA-2, not a direct consequence of the snap theorem itself.'),

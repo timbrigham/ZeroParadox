@@ -251,20 +251,21 @@ def build():
     # ── Page 1 ─────────────────────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-C Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-C establishes that zero is an informational singularity — a point where the cost '
-        'of describing or reaching it becomes unbounded. '
-        'ZP-C uses two independent measures, as two separate arguments.'))
+        'ZP-C establishes that zero is an informational singularity: in ℚ₂, the surprisal of states '
+        'approaching zero grows without bound (Route 2 below). ZP-C also uses a second, separate measure, '
+        'Kolmogorov complexity (Route 1), which is not an argument for the singularity at zero.'))
     E.append(cbody(
         '<b>Route 1 — Kolmogorov complexity (algorithmic):</b> How long must a program be to '
         'describe a configuration? At the incompressibility threshold P₀, no shorter description '
-        'exists — the string must be specified in full, every bit. Algorithmic depth is unbounded.'))
+        'exists — the string must be specified in full, every bit. This route is about one string at '
+        'P₀, not about zero in ℚ₂.'))
     E.append(cbody(
         '<b>Route 2 — 2-adic surprisal (probabilistic):</b> How much probability mass does a '
         'state carry? As a state approaches zero in ℚ₂, its probability approaches zero, and '
         'its surprisal I(x) = −log₂ P(x) approaches infinity. Informational cost is unbounded.'))
     E.append(cbody(
         'Neither measure knows about the other. K counts program lengths; I(x) counts probability. '
-        'They do not meet at one threshold: the bridge claiming they do is refuted (counterexample '
+        'Depth does not imply incompressibility: the bridge claiming it does is refuted (counterexample '
         'S<sub>n</sub> = 2<super>n</super>, ZP-I &#167; II.B). ZP-C operates in ℚ₂ (from ZP-B) throughout — '
         'smooth calculus tools are not valid on a totally disconnected space.'))
     E.append(example_box('Real-world example — ZIP compression hitting a wall', [
@@ -295,7 +296,7 @@ def build():
     ]))
     E.append(sp(6))
 
-    E.append(Paragraph('Where the Two Routes Part', CS['h1']))
+    E.append(Paragraph('Where the Two Routes Differ', CS['h1']))
     E.append(cbody(
         'Kolmogorov complexity K and 2-adic surprisal I(x) are genuinely different tools. '
         'K measures how long a program must be to reproduce a string — it is a property of '
@@ -303,7 +304,7 @@ def build():
         'distributions. They share no common definition and were developed in entirely separate '
         'branches of mathematics.'))
     E.append(remember_box(
-        'They do not meet at one point. The claim that 2-adic depth growing without bound carries '
+        'Depth does not imply incompressibility. The claim that 2-adic depth growing without bound carries '
         'K to its threshold is refuted (counterexample S<sub>n</sub> = 2<super>n</super>, ZP-I &#167; II.B); T-IZ '
         'never depended on it (it goes through t_iz_cauchy). ZP-C uses K and I as two separate '
         'arguments, not as confirmation of one fact.'))
@@ -312,8 +313,8 @@ def build():
     E.append(Paragraph('What the Singularity Shows, and What It Does Not (L-INF)', CS['h1']))
     E.append(cbody(
         'The surprisal graph shows that I(x) goes to infinity as x approaches 0. ZP-C '
-        'makes this precise with Lemma L-INF (Unbounded Surprisal of ⊥, Lean l_inf): surprisal at '
-        'depth n of the binary ball hierarchy exceeds every finite bound. It is about 2-adic depth, '
+        'makes this precise with Lemma L-INF (Unbounded Surprisal of ⊥, Lean l_inf): for every finite '
+        'bound there is a depth n of the binary ball hierarchy whose surprisal exceeds it. It is about 2-adic depth, '
         'not about the incompressibility threshold P₀; the bridge between the two is refuted '
         '(ZP-I &#167; II.B).'))
     E.append(cbody(
