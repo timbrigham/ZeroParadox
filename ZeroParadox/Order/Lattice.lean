@@ -266,7 +266,7 @@ end ZeroParadox
 
 `#print axioms` reports every foundational axiom a theorem depends on.
 Clean ZP-A proofs should depend only on the ZPSemilattice typeclass fields
-and Lean's kernel axioms (propext, Classical.choice, Quot.sound).
+and Lean's axioms (propext, Classical.choice, Quot.sound).
 No Mathlib-specific axioms should appear.
 -/
 

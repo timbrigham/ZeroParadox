@@ -17,7 +17,7 @@ import ZeroParadox.Order.PataraiaFromBourbakiWitt
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
 
-An index of the framework's relationship to `Classical.choice`, an ambient kernel axiom and not a
+An index of the framework's relationship to `Classical.choice`, an ambient Lean axiom and not a
 framework object. Every indexed name is `#check`ed, so the `import`s recompile each home file; it
 creates no declarations. The `#check`s cannot overclaim; the comments can, so read every line that
 is not a `#check` as unverified prose. Long form: `ZeroParadox/Category/ChoiceCannotBe.md`.

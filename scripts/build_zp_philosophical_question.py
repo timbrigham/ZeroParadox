@@ -1,5 +1,5 @@
 """
-Build: The Philosophical Question That Started This (v1.21)
+Build: The Philosophical Question That Started This (v1.22)
 v1.21: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15): three sites (the second paragraph, the section closing 'Those fix what the transition is', and the closing subtitle) said that the Snap is taken is a commitment alone; each now says it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), matching the opening.
 v1.20: DECISION BATCH REMEDIATION (Tim, 2026-09-15): the opening said the snap occurring 'is a commitment of this framework, not one of its theorems'; it now says it follows from the occurrence commitment together with DA-1 (closed given DP-2).
 v1.19: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The layer summary carries that sentence in place of 'stated separately, as the occurrence commitment, which ZP-E's DA-1 argues for', and 'with no axioms' is 'with no Lean kernel axioms'. The opening said T-SNAP's shape is fixed 'specifically, by the bottom element axiom', contradicting README and CLAIMS: A4 gives the join, AX-B1 the atom, and the two states being distinct is, in t_snap_given, the hypothesis hocc that the first step is taken.
@@ -47,7 +47,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -339,7 +339,7 @@ def build():
         'L-RUN and TQ-IH establishing that execution is always a non-null state change. '
         '<b>ZP-D</b> adds the Hilbert space representation. <b>ZP-E</b> derives '
         '<b>T-SNAP</b>. AX-1 is retired. Its content was split in two: the shape of the Snap is proved, '
-        'as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean kernel axioms), and that the Snap occurs '
+        'as Theorem T-SNAP (from L-RUN, TQ-IH and the bottom law, with no Lean axioms), and that the Snap occurs '
         'is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2). <b>ZP-G</b> and <b>ZP-H</b> extend the result categorically: '
         'four functors show that all four frameworks are realizations of one abstract '
         'structure. <b>ZP-I</b> proves T-IZ — every maximal ascending chain converges '
