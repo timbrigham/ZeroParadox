@@ -21,7 +21,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-K Computational Grounding | v1.25 | ZP-K_Computational_Grounding.pdf | v1.23 | N/— | formal:e91ed70f comp:44e886f8 |
 | ZP-L Incomputability Convergence | v1.27 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:da5d2533 comp:cc1bad38 |
 | ZP-M Kleene-Ordinal Bridge | v1.13 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:82707b27 comp:a6ff1cab |
-| ZP-N The Constructive Snap | v2.2 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:707fc4b4 |
+| ZP-N The Constructive Snap | v2.2 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:2808d0c2 |
 | ZP-P The Fixed-Point Fork | v1.25 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:3fb93a76 |
 | ZP-R Cross-Category Fixed Point | v1.20 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:b73d52ec |
 | ZP-R Diagonal Family Addendum | v1.14 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:a635a1ed |

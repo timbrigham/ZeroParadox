@@ -68,13 +68,14 @@ def build():
         'a fixed point of x &#8614; &#969;<sup>x</sup> &#8212; is genuinely constructive, provable '
         'with no Axiom of Choice. But the machinery ZP-L reaches for to state that structure '
         'semantically is not: comparing arbitrary well-orders implies excluded middle. So the choice '
-        'is not a mere artifact of how a proof was written. It is the price of a tool stronger than '
-        'the job requires: ZP-L&#8217;s &#949;<sub>0</sub> results, as stated, already carry '
-        'Classical.choice in their statements (the statement control, measured 2026-10-08), so no '
-        'proof of those statements can drop it. The ascent below &#949;<sub>0</sub> is restated '
-        'choice-free here, on notations. For the results that name &#949;<sub>0</sub>, a choice-free '
-        'restatement in Lean remains open (ZeroParadox/Ordinal/SnapNucleus.md, section Axiom '
-        'footprint, records what is located elsewhere and how it was searched).'))
+        'is not a mere artifact of how a proof was written. ZP-L&#8217;s &#949;<sub>0</sub> results, '
+        'as stated, already carry Classical.choice in their statements (the statement control, '
+        'measured 2026-10-08), so no proof of those statements can drop it. For the ascent below '
+        '&#949;<sub>0</sub> it is the price of a tool stronger than the job requires: the ascent is '
+        'restated choice-free here, on notations. For the results that name &#949;<sub>0</sub>, a '
+        'choice-free Lean restatement exists with the fixed point set by definition (E0Note, below); '
+        'one that derives it on a well-founded carrier was not located as of 2026-10-08 '
+        '(ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint, records the search).'))
     E.append(body(
         'So this layer does two things. It rebuilds the ascent syntactically, where it is choice-free. '
         'And it builds a carrier of notations denoting the ordinals up to &#949;<sub>0</sub> &#8212; '
@@ -210,7 +211,8 @@ def build():
         'order provides &#8212; comparing <i>any</i> two well-orders &#8212; would be a choice-free '
         'proof of excluded middle, which this corpus takes to be impossible in Lean but does not prove '
         '(ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV). '
-        '&#949;<sub>0</sub> never needed that generality.'))
+        'The ascent below &#949;<sub>0</sub> never needed that generality: its counterpart on '
+        'notations (Section II) uses propext alone.'))
 
     E.append(remark_box(
         'Remark: even well-formedness inherits choice (the bridge, made visible)',
@@ -333,8 +335,10 @@ def build():
             'in the order instance the semantic statement passes through, whose comparability implies '
             'excluded middle. Locating it is not eliminating it: those &#949;<sub>0</sub> '
             'results, as stated, are <b>statement-carried</b> (their statements carry choice); for '
-            'the ones that name &#949;<sub>0</sub>, a choice-free restatement in Lean remains open. Zero '
-            'sorry. Verified: lake build, October 2026.',
+            'the ones that name &#949;<sub>0</sub>, the choice-free Lean restatement on E0Note sets '
+            'the fixed point by definition, and one that derives it on a well-founded carrier was not '
+            'located as of 2026-10-08 (ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint). '
+            'Zero sorry. Verified: lake build, October 2026.',
         ]
     ))
     E.append(sp(6))

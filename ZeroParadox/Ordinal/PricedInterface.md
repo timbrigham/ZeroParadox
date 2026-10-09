@@ -74,13 +74,19 @@ crossing is one named map rather than a diffuse correspondence.
 **What that measurement does and does not license.** It locates where the classical assumption is paid
 on this pair of carriers. It does **not** show that Mathlib's ε₀ results are eliminable: as stated they
 are STATEMENT-CARRIED, so no proof of them can drop the choice, and the open question is a restatement
-on a choice-free carrier. Its state (the ascent restated, the results that name ε₀ not) is in
-`ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint". This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.md` records. The honest
-sentence remains: *the ε₀ results borrow a tool far stronger than they need.* Note also the standing
-caveat from `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` — `Classical.choice` sits in
-`Ordinal`'s order *instance term*, so a choice footprint on any `Ordinal`-mentioning statement is
-partly an artifact of the ambient instance rather than of the proof. The purity block is a
-measurement of the interface, not a verdict on any particular proof's essential needs.
+on a choice-free carrier. Its state is in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint":
+the ascent is restated; for the results that name ε₀, this file's carrier gives the defined reading
+(the fixed point at ⊤ by definition, its uniqueness a theorem, on an order that is not well-founded),
+and the derived reading is open there. This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.md` records. Scoped to
+what is measured: *the ascent below ε₀ borrows a tool far stronger than it needs*, because its
+counterpart on notations measures `[propext]`; whether the same holds for the results that name ε₀,
+leastness included, on a carrier where the fixed point is derived, is the open question, not a
+finding. Note also the standing caveat from
+`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` — `Classical.choice` sits in `Ordinal`'s order
+*instance term*, so a statement that reaches that instance carries the choice whatever its proof, and
+a statement that mentions `Ordinal` without reaching it does not (`order_footprint_le` against
+`order_footprint_eq`, as in § *The measured price* above). The purity block is a measurement of the
+interface, not a verdict on any particular proof's essential needs.
 
 ## The carrier, and what it actually is
 
