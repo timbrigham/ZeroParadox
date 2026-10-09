@@ -1,9 +1,9 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.10 | September 2026
+Version 1.11 | October 2026
 v1.10: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the page-1 overview said T-SNAP's occurrence 'stays a framework commitment'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
 v1.9: the page-1 overview said Section III shows it "essential rather than INHERITED" while Section III itself says both cases are essential and one of them IS inherited - the same document, opposite framings, and the overview misdescribing the section it cites. Corrected to "essential rather than INCIDENTAL", which is the axis the sentence is actually on. Found by `check_paths.py --claim`, built this session as DC-24's mechanical half; it printed this site and the matching README one on its first real run.
-v1.8: PROVENANCE AND NECESSITY ARE INDEPENDENT AXES, and v1.5-v1.7 collapsed them. The text said Section III locates two principles "where the choice is the framework's own and provably essential" - false for the second. `wem_of_fixedPointFree` reduces a principle whose choice IS the framework's own (a bare classical in Category/Lawvere.lean); `em_of_wellOrder_comparable` reduces well-order comparability, whose choice is MATHLIB's, spent in InitialSeg.total - and OrdinalChoiceEssential.lean states that Mathlib's use there is forced. So an INHERITED dependence can be essential, which is a STRONGER result than the one the prose was claiming, and it is why "inherited" never meant "removable". Found by the adversary gate keying on the POSITIVE assertion ("the framework's own") - four earlier rounds all keyed on the universal negative ("only ... Mathlib") and no search for that polarity could reach it.
+v1.8: PROVENANCE AND NECESSITY ARE INDEPENDENT AXES, and v1.5-v1.7 collapsed them. The text said Section III locates two principles "where the choice is the framework's own and provably essential" - false for the second. `wem_of_fixedPointFree` reduces a principle whose choice IS the framework's own (a bare classical in Category/Lawvere.lean); `em_of_wellOrder_comparable` reduces well-order comparability, whose choice is MATHLIB's, spent in InitialSeg.total. So an INHERITED dependence can be essential, which is a STRONGER result than the one the prose was claiming, and it is why "inherited" never meant "removable". Found by the adversary gate keying on the POSITIVE assertion ("the framework's own") - four earlier rounds all keyed on the universal negative ("only ... Mathlib") and no search for that polarity could reach it.
 v1.7: THE v1.6 FIX REACHED THE ENDNOTE AND MISSED THE FRONT MATTER. Section III has named both taboo reductions since v1.5; v1.6 corrected the endnote; the PREAMBLE on page 1 and the Section II opener still said choice appears in "every place ... where the framework builds on Mathlib's libraries" and listed CATEGORY THEORY as one of them - the exact case corrected everywhere else. Both prose gates returned FAIL-BEDROCK, independently, on the two places a skimmer lands FIRST. That is the fourth consecutive version of this document fixing one site of one claim: v1.5 fixed Section III and left the endnote, v1.6 fixed the endnote and left the preamble. Corrected here at all four rendered sites at once. Also struck a claim v1.6 INTRODUCED - that the axiom-free sibling shows the choice is "not forced by the shape of the result" - which is the inversion of what LawvereTaboo section III proves: the cost IS the generality over arbitrary types, and it disappears under [DecidableEq beta].
 v1.6: THE ENDNOTE CONTRADICTED SECTION III. Section III has named both taboo reductions since v1.5 - `wem_of_fixedPointFree` and `em_of_wellOrder_comparable`, each choice-free (`[propext, Quot.sound]`), which is the only shape that can establish necessity. The endnote still said choice "appears only where the framework builds on Mathlib's ... libraries, and whether it is necessary there remains open" - both halves false, in the two places a skimmer lands. Measured: `fixedPointFree_of_nontrivial` carries choice from a bare `classical` in framework source (`Category/Lawvere.lean`), not from Mathlib, while its sibling `no_witness_of_fixedPointFree` is axiom-free - so the dependence is not inherited - the `classical` is the framework's own, and per LawvereTaboo section III the cost IS the generality over arbitrary types (it disappears under [DecidableEq beta]). Found by sweeping the CLAIM after both prose gates returned FAIL-BEDROCK on the same universal in README.
 v1.5: BEDROCK - Section III asserted THE FRAMEWORK HAS NO PROVEN-NECESSITY CASE ANYWHERE, a universal
@@ -38,7 +38,7 @@ Framework-wide note; reads after the Foreword.
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -99,10 +99,11 @@ def build():
         '<i>realize</i> the snap inside standard analytic structures (p-adic topology, Hilbert space, '
         'ordinals), where the dependence is inherited from those libraries. The category-theory face '
         'is the exception: its choice is the framework\'s own bare classical, and Section III shows '
-        'it essential rather than <i>incidental</i> &#8212; a separate axis from provenance, and one that Section III also settles for a dependence that IS inherited. It is '
+        'it essential rather than <i>incidental</i>, given a premise stated there &#8212; a separate '
+        'axis from provenance, on which Section III places an inherited dependence too. It is '
         'not used by the core results above. <b>And dependence is not necessity:</b> that those '
-        'realizations <i>use</i> choice as written does not show choice is <i>required</i> there '
-        '(Section III).'))
+        'realizations <i>use</i> choice as written does not show choice is <i>required</i> there, '
+        'though several of their statements carry it as written (Section III).'))
     E.append(hr())
 
     # ── Section I ─────────────────────────────────────────────────────────────────
@@ -161,12 +162,13 @@ def build():
     ))
     E.append(sp(4))
     E.append(body(
-        'The pattern is clean: the core <i>states</i> the result; the analytic layers <i>realize</i> '
+        'The pattern: the core <i>states</i> the result; the analytic layers <i>realize</i> '
         'it inside the standard frameworks, and that is where the library\'s classical foundations '
-        'enter. For those layers the choice is in the plumbing, not in the claim &#8212; but not '
-        'for all of it: Section III locates two principles that are provably essential. Their '
-        'provenance differs, and that is the point: one spends the framework\'s own bare classical, '
-        'the other spends Mathlib\'s &#8212; and both are essential. Inherited never meant removable.'))
+        'enter. For several of those layers the choice is already in the statement as written '
+        '(Section III), and Section III locates two principles that are essential given a premise '
+        'stated there. Their provenance differs, and that is the point: one spends the framework\'s '
+        'own bare classical, the other spends Mathlib\'s &#8212; and both are essential on that '
+        'premise. Inherited never meant removable.'))
     E.append(sp(6))
 
     # ── Section III ──────────────────────────────────────────────────────────────
@@ -177,8 +179,8 @@ def build():
         hr(),
     ]
     E.append(body(
-        '`#print axioms` proves <i>dependence</i> &#8212; that the proof as written uses an axiom. It '
-        'does not prove <i>necessity</i> &#8212; that no choice-free proof exists. Necessity has to be '
+        '`#print axioms` on a proof shows <i>dependence</i> &#8212; that the proof as written uses an '
+        'axiom. It does not show a principle\'s <i>necessity</i> &#8212; that no choice-free proof exists. Necessity has to be '
         'shown a different way, by a <i>reduction</i>: derive a recognised constructive taboo from the '
         'principle itself.'))
     E.append(body(
@@ -188,14 +190,21 @@ def build():
         '`wem_of_fixedPointFree` derives <i>weak</i> excluded middle from the general fixed-point-free '
         'principle &#8212; the latter sitting on the keystone rather than on an imported order '
         'instance. Each is a statement about the <b>principle</b>: re-proving it constructively would '
-        'decide a taboo, so no choice-free re-proof exists. Neither is an independence result, and '
+        'prove a taboo constructively, so no choice-free re-proof exists GIVEN that the taboo is not '
+        'derivable in Lean without Classical.choice &#8212; a premise this corpus does not prove '
+        '(ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV). Neither is an independence result, and '
         'neither is established by a footprint measurement &#8212; which is precisely why the '
         'accidental side needs a measurement and the essential side needs a reduction.'))
     E.append(body(
-        'So the analytic-layer dependence may be removable, and that is a different question from '
-        'the two cases above. It is also not settled by measuring a proof: where an axiom sits in a '
-        '<i>type</i> rather than a proof, no proof of any statement mentioning that type can be clean, '
-        'and removability there means changing the statement, not cleaning the argument.'))
+        'So the remaining analytic-layer dependence may be removable, and that is a different question '
+        'from the two cases above. It is also not settled by measuring a proof: where an axiom sits in '
+        'a <i>type</i> rather than a proof, no proof of any statement mentioning that type can be '
+        'clean, and removability there means changing the statement, not cleaning the argument. That '
+        'case is measured: the statements of c3_irreversible, t4_snap_orthogonal, fD_functor and '
+        'fC_functor, each only assumed, already report Classical.choice (the statement control, '
+        '2026-10-08), so they are statement-carried, and the open question for them is a restatement '
+        'on a carrier whose statements are choice-free. fB_functor\'s statement is choice-free; its '
+        'dependence stays open.'))
     E.append(body(
         'One layer has been classified directly. In the "choice-probe" experiment, the '
         '`Classical.choice` in the 2-adic tree construction (PadicTree) decomposed into three '
@@ -217,7 +226,8 @@ def build():
             'foundation showing through the realizations rather than an assumption of the argument. '
             'Section III\'s two cases are the exception on a different axis: they are about '
             '<i>necessity</i>, not provenance. One of them is the framework\'s own and one is '
-            'Mathlib\'s, and both are essential &#8212; so "inherited" is not a synonym for '
+            'Mathlib\'s, and both are essential on the premise stated in Section III &#8212; so "inherited" '
+            'is not a synonym for '
             '"removable", and neither case is absorbed into the generalization.',
         ]
     ))
@@ -248,7 +258,8 @@ def build():
             'The claim is exactly: the framework\'s central results &#8212; T-SNAP, the lattice, the '
             'Quine-atom self-reference &#8212; are choice-free, and T-SNAP is axiom-free. NOT claimed: '
             'that the whole framework is choice-free (it is not), nor that the analytic-layer choice '
-            'is removable or necessary (open). The fact surfaced here is the verified one.',
+            'is removable or necessary (open, though several of its statements carry it as written, '
+            'Section III). The fact surfaced here is the verified one.',
         ]
     ))
     E.append(sp(6))
@@ -257,10 +268,11 @@ def build():
         'Endnote: This is a framework-wide note, machine-verified as of June 2026. The central '
         'theorem T-SNAP depends on no axioms; the conceptual core is free of the Axiom of Choice; '
         '`Classical.choice` appears mostly where the framework builds on Mathlib\'s classical analysis, '
-        'order, and computability libraries, where whether it is necessary remains open. It is not '
-        'only there, and not everywhere open: the category-theory face carries the framework\'s own '
-        'bare classical, and Section III\'s two reductions settle necessity for the principles they '
-        'cover. All of this is checkable in ZeroParadox/AxiomProfile.lean.',
+        'order, and computability libraries, where several statements carry it as written and '
+        'elsewhere whether it is necessary remains open. It is not only there: the category-theory '
+        'face carries the framework\'s own bare classical, and Section III\'s two reductions settle '
+        'necessity for the principles they cover, given the premise stated there. All of this is '
+        'checkable in ZeroParadox/AxiomProfile.lean.',
         S['endnote']))
 
     print(f'[build_zp_choice_free_core] Assembling document ({len(E)} elements)...')

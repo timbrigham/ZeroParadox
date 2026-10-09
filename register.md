@@ -29,7 +29,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | Zero Paradox Foreword | v2.33 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:cfba69c9 |
 | ZP Philosophical Question | v1.21 | ZP_Philosophical_Question.pdf | N/A | N/A | formal:ed65d90b |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:3e66cdf5 |
-| ZP Choice-Free Core Addendum | v1.10 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:1834c1f5 |
+| ZP Choice-Free Core Addendum | v1.11 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:a8ef2c5e |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
