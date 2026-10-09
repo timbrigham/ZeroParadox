@@ -38,7 +38,9 @@ framework's standing temptation. The literature that separates them:
 So *full* choice is strictly stronger than excluded middle, which is in turn strictly stronger than the
 constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
 `ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` is a choice principle into the two-element `Bool` — a
-chooser on every inhabited predicate on `Bool` — so in a topos, where unique choice holds, it is *equivalent* to excluded middle. In Lean, the natural construction of the
+chooser on every inhabited predicate on `Bool` — so in a topos, which always has unique choice, it is *equivalent* to excluded middle (the standard
+Diaconescu–Goodman–Myhill theorem); in Lean the equivalence holds with unique choice into `Bool` as a
+hypothesis (the `example` after `em_of_choiceFragment`). In Lean, the natural construction of the
 fragment from excluded middle fails to elaborate, dying at `Decidable (S true)`, and closes only under
 `classical`. **That failure measures that construction, not the fragment** — a failed elaboration is not
 a negative result, and a formal independence claim would

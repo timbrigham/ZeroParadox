@@ -141,8 +141,8 @@ the boundary and its scope fence. -/
 -- hypothesis-form packaging (Lean's kernel realizes the arrow as a derivation, not a reusable theorem).
 -- DIRECTION, stated precisely. Diaconescu's theorem is an EQUIVALENCE between two topos properties
 -- (p. 176), with choice implying complements as its corollary (p. 178). It already concerns a two-point
--- shape: a coequalizer of two disjoint monomorphisms has fibres of at most two points (proof
--- pp. 176-177). Goodman–Myhill state the restriction explicitly, choice "for sets B, C of at most two
+-- shape: his construction (pp. 176-177) is a coequalizer of two disjoint monomorphisms, and such a
+-- coequalizer has fibres of at most two points. Goodman–Myhill state the restriction explicitly, choice "for sets B, C of at most two
 -- elements" (p. 461). With unique choice into `Bool`, `ChoiceFragment` and `ExcludedMiddle` are
 -- inter-derivable (the `example` after `em_of_choiceFragment` in its home file). "The converse fails"
 -- belongs to FULL AC and is Cohen 1963, not Diaconescu.

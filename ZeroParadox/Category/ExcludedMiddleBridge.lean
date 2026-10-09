@@ -92,8 +92,9 @@ independence result, which would need a metatheoretic argument outside Lean.
 **And note what the barrier is and is not.** It is Lean's `Prop`/`Type` stratification: the fragment
 yields data (`Bool`), so it is really `∀ p, Decidable p`, while `ExcludedMiddle` is `Prop`-valued and does
 not eliminate into data. It is **not** a general fact about choice versus excluded middle — in a topos,
-where unique choice holds, this very fragment is *equivalent* to excluded middle (the `example` after
-`em_of_choiceFragment` proves it from unique choice into `Bool`).
+which always has unique choice, this very fragment is *equivalent* to excluded middle (the standard
+Diaconescu–Goodman–Myhill theorem); in Lean the equivalence holds with unique choice into `Bool` as a
+hypothesis (the `example` after `em_of_choiceFragment`).
 The gap measured here is a property of the ambient type theory, not of the two principles. -/
 def ChoiceFragment : Prop :=
   ∃ ch : (Bool → Prop) → Bool, ∀ S : (Bool → Prop), (∃ b, S b) → S (ch S)
@@ -111,7 +112,7 @@ theorem choiceFragment_of_classical : ChoiceFragment := by
 
 The argument (the two-predicate form of Lean core's `Classical.em`, `Init/Classical.lean`, which uses
 `True`/`False` in `Prop` where this uses `Bool`; Goodman-Myhill 1978, p. 461 argue element-wise with
-one chooser on a two-element set): given `p`, form the two predicates on `Bool`
+one chooser on a set of at most two elements): given `p`, form the two predicates on `Bool`
 `A b := (b = true ∨ p)` and `B b := (b = false ∨ p)`. Both are inhabited, so the chooser returns
 `ch A` and `ch B`. Decide `ch A = ch B` — decidable, because `Bool` has decidable equality, with no
 classical input. If they differ, `p` must fail: `p` would force `A = B` (by `funext` and `propext`) and
