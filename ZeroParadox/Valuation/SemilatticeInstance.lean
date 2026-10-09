@@ -317,47 +317,29 @@ example {L : Type*} [ZPSemilattice L] (x : L) :
     IsStateSequence (fun _ : ℕ => x) ∧ ¬ IsStrictStateSequence (fun _ : ℕ => x) :=
   ⟨⟨fun _ => x, fun _ => (join_idem x).symm⟩, fun h => h.2 0 rfl⟩
 
-/-! ## II. Valuation-Complexity Bridge — SUPERSEDED
+/-! ## II. Valuation-Complexity Bridge — REFUTED
 
-This section described the informal route: v₂(Sₙ) → ∞ ⟹ K(Sₙ|n)/|Sₙ| → 1 ⟹ DA-1 fires.
-It was Outside Lean Scope because Kolmogorov complexity K is uncomputable and absent from Mathlib.
-
-**This bridge is not needed for the Lean route.** The reason is narrower than it once read here:
-step 4 of `t_iz_complete` is `IsQuineAtom (bot : L')`, discharged from `AFAStructure` fields alone,
-so no Kolmogorov complexity enters the proof. It is NOT that ZP-K showed the two paths to be one
-thing — `da1_paths_unified` is a *conjunction* of two witnesses, and ZP-K states explicitly that a
-conjunction is not an identity and that the two sides cannot be equated in Lean (different types).
-Reading the AFA/Kleene path and the K/AIT path as the same structural property is the framework's
-interpretation, and it is not what retires this bridge.
-
-Steps 2–6 of T-IZ are formalized in § III-B without computing Kolmogorov complexity. The K
-bridge is bypassed, not shown closed, and is retained here as a record of the original
-motivating argument. -/
+The informal route v₂(Sₙ) → ∞ ⟹ K(Sₙ|n)/|Sₙ| → 1 is refuted (counterexample Sₙ = 2ⁿ); T-IZ never
+depended on it (it goes through `t_iz_cauchy`). Counterexample: ZP-I § II.B; its valuation half is
+`scaleChain_isDepthChain` (`ZeroParadox/Valuation/ScaleDepthWitness.lean`); its complexity half is outside Lean scope.
+Why `t_iz_complete` computes no K either, and the `da1_paths_unified` fence: `SemilatticeInstance.md`. -/
 
 /-! ## III. T-IZ — Inside Zero Theorem -/
 
-/-- T-IZ: Every maximal ascending chain in Q₂ with unbounded 2-adic valuation
-    converges to 0; reading that as generating its own successor null is the framework's.
-
-    The theorem has six steps (see ZP-I PDF § III):
-    (1) Cauchy convergence to 0: t_iz_cauchy — proved in § I.
-    (2) Valuation-complexity bridge: outside Lean scope — see § II.
-    (3) P₀ satisfied at limit: ZP-C D1 (informal; same route as DA-1 Path 3).
-    (4) DA-1 fires: ZP-E (TrackedOutput formal core; Path 3 informal).
-    (5) T-SNAP fires, generating ⊥': ZP-E t_snap_derived.
-    (6) DA-2 licenses ⊥' as successor null: ZP-E da2_bottom_characterization.
-
-    Steps (2)–(6) are formalized in § III-B without computing Kolmogorov complexity —
-    see t_iz_complete. Step 2's K bridge is bypassed rather than shown closed: the
-    remaining steps route through AFAStructure fields. -/
+/-- T-IZ (convergence): this IS `t_iz_cauchy`, with an unused start guard. Six-step outline:
+    ZP-I § III. Step 2, the valuation-complexity bridge, is refuted (counterexample Sₙ = 2ⁿ,
+    ZP-I § II.B); T-IZ never depended on it. Step 6 cites `da2_bottom_characterization` for the
+    role half only: what plays the ⊥ role of a `ZPSemilattice` is that ⊥. That the return is to a
+    NEW bottom is a commitment (C-DA2), not a theorem; in ℤ_[2] the arc tends back to the same 0
+    (`snap_arc_z2_loop`). Conjunction form: `t_iz_complete`. -/
 theorem t_inside_zero
     (S : ℕ → Q₂)
     (_h_start : S 0 ≠ 0)
     (h_bound : ∀ n : ℕ, ‖S n‖ ≤ (2⁻¹ : ℝ) ^ n) :
     Filter.Tendsto S Filter.atTop (nhds 0) :=
-  -- _h_start: semantic guard — chain begins away from null (unused in convergence proof)
+  -- _h_start: semantic guard — chain begins away from 0 (unused in convergence proof)
   -- h_bound: v₂(Sₙ) ≥ n — the ascending chain has unbounded valuation
-  -- Complete formal statement: t_iz_complete (§ III-B) — all six steps formal.
+  -- Conjunction form: t_iz_complete (§ III-B); it does not link the limit to the ⊥ role.
   t_iz_cauchy S h_bound
 
 /-! ## IV. Successor Null and Framework Closure -/
@@ -421,11 +403,11 @@ theorem t_iz_complete
     (h_role : ∀ x : L', join terminal x = x) :
     -- Step 1: chain converges to 0 in Q₂
     Filter.Tendsto S Filter.atTop (nhds 0) ∧
-    -- Steps 3/6: terminal plays the ⊥ role, hence IS bot (DA-2); "successor" is the reading
+    -- Step 6: terminal plays the ⊥ role, hence IS bot (role half only); "successor" is C-DA2
     terminal = bot ∧
     -- Step 4: the Lean counterpart of DA-1's Path 1 in a KleeneStructure (da1_computational) — no K required
     ZeroParadox.IsQuineAtom (bot : L') ∧
-    -- Step 5: T-SNAP fires from ⊥' to ε₀' (A4 = bot_join, definitional)
+    -- Step 5: T-SNAP's shape at L''s bot (A4 = bot_join, definitional); shape, not occurrence
     join (bot : L') ε₀' = ε₀' :=
   ⟨t_iz_cauchy S h_bound,
    t_iz_limit_is_new_null terminal h_role,

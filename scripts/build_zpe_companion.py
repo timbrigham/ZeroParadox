@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.25 | October 2026
+Version 1.26 | October 2026
 v1.23: INITIAL GLOSS (Tim ruling 2026-09-29): the initial side of v1.22's fix (R-TWOPOLE). "A starting point that reaches everything" glossed a WEAKLY initial object; an initial object reaches every object, itself included, in exactly one way. Now "a starting point that reaches everything in exactly one way".
 v1.22: TERMINAL GLOSS (copy_editor panel, Tim ruling 2026-09-29): the AX-G1 row glossed the absent terminal object as "no end point that everything reaches". Reaching alone glosses a WEAKLY terminal object; a terminal object is reached in exactly one way (panel readers built counter-models: a ZPCategory with no terminal object but an object every object maps into). Now "no end point that everything reaches in exactly one way".
 v1.21: AX-G1 NOVELTY (Tim ruling, 2026-09-29, reading (i)): the no-terminal half of AX-G1 is ZP-G's own commitment; in ZP-A a top-free carrier is an optional hypothesis, which the two-state carriers do not satisfy. v1.20's "rests on ZP-A's premise" is withdrawn. Same wording as the Foreword's AX-G1 row, in this table's register.
@@ -128,8 +128,8 @@ def tsnap_chain_diagram():
     bh = 28
     rows = [
         (106, 'Shape', [
-            ('L-RUN',   ('Exec =', 'non-null'), COMP_BLUE),
-            ('TQ-IH',   ('No null-only', 'trace'), COMP_BLUE),
+            ('L-RUN',   ('Exec =', 'non-bottom'), COMP_BLUE),
+            ('TQ-IH',   ('No ⊥-only', 'trace'), COMP_BLUE),
             ('ZP-A D2', ('State change', '= Snap'), COMP_BLUE),
             ('T-SNAP',  ('Derived', 'theorem'), COMP_AMBER),
         ]),
@@ -200,7 +200,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'April 2026'
 
 
