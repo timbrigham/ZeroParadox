@@ -295,7 +295,8 @@ def build():
             #   ⚠ AND IT SURVIVED THE v1.12 SWEEP BY THREE LINES: that round changed `accessible`
             #   on the line above FOR THIS EXACT REASON and left this one. Same box, same defect,
             #   one line apart — the half-applied sweep at its smallest possible radius.
-            'apg_children v = { w | Nonempty (v &#10230; w) }   (immediate successors)',
+            'children(v) := apg_children v = { w | Nonempty (v &#10230; w) }   '
+            '(immediate successors)',
             'Reach(v)    = { w : V | Nonempty (Quiver.Path v w) }  (reachable from v)',
             '',
             'In a finite APG (Fintype V), every Reach(v) is a finite set. '
@@ -587,20 +588,23 @@ def build():
             'runs on Set.ncard, and Set.ncard_lt_ncard and Set.ncard_pos are each '
             'independently choice-tainted. &#8212; And the OLD attribution could not have been right for a reason stronger than absence: Finset and Fintype each report [propext, Quot.sound], so neither has any choice to supply. Fintype IS a hypothesis of decoration_unique, printed in its own box above; what it buys is the termination measure, not the axiom.',
             'Quot.sound       &#8212; quotient soundness (standard in Lean 4)',
-            '&#8226; A RESPELLING CLEARS IT FOR THE CLASS; NO PROOF CAN CLEAR IT FOR THE '
-            'THEOREM &#8212; and the difference is the whole claim. '
+            '&#8226; A RESTATEMENT CLEARS IT FOR THE CLASS; NO PROOF CAN CLEAR IT FOR THE '
+            'THEOREM AS STATED &#8212; and the difference is the whole claim. '
             'ZeroParadox/Valuation/Scale.lean transcribes the class twice, as _VSlit and '
             '_VScast, differing only in route (a)&#8217;s numeral, which _VScast writes '
             '((1 : &#8469;) : &#8469;&#8734;): _VSlit reports [propext, Classical.choice, '
-            'Quot.sound] and _VScast reports no axioms. That is a clean transcription, not a '
-            'proof. decoration_unique&#8217;s STATEMENT carries the axiom: a theorem that only '
+            'Quot.sound] and _VScast reports no axioms. The declared class still reports the '
+            'axiom; _VScast is a respelling of it, not a proof. '
+            'decoration_unique&#8217;s STATEMENT carries the axiom: a theorem that only '
             'assumes that statement and proves True reports [propext, Classical.choice, '
             'Quot.sound] (the statement control, measured 2026-10-09), so no proof of '
             'decoration_unique as stated can remove it &#8212; the STATEMENT-CARRIED class of '
             'ZeroParadox/Category/ChoiceCannotBe.md, recorded at DecorationUniverse in '
-            'ZeroParadox/Settheory/APG.lean. A restatement over choice-free spellings of the '
-            'classes is a separate question, and routes (b) and (c) lie in the proof, where no '
-            'respelling reaches.',
+            'ZeroParadox/Settheory/APG.lean. Routes (b) and (c) lie in the proof, not the '
+            'statement. Measured 2026-10-09: the same statement restated over clean spellings of '
+            'both classes reports only [propext, Quot.sound] under the statement control, and '
+            'route (b)&#8217;s edge step, re-proved with obtain in place of .some, reports no '
+            'axioms; route (c) was not re-proved in that measurement.',
             'No ZP-specific AXIOM is declared anywhere in this chain; the footprint above is '
             'what the Lean reports, not a commitment the framework makes.',
             'No Dependent Choice. No additional set-theoretic assumptions.',
