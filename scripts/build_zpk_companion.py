@@ -154,7 +154,9 @@ def build():
         '(order-theoretic minimum) are the same object. ZP-K adds a fourth language: '
         'computability theory. It adds a fourth description of ⊥, this time in terms of '
         'Turing machines and Kleene\'s second recursion theorem. THREE of the four descriptions '
-        'are proved equivalent (T-COMP). ZP-K carries c₀\'s computational face as a '
+        'are proved equivalent: T-COMP shows that being a Quine atom is equivalent to being ⊥ '
+        'together with the join identity, and da2_bottom_characterization shows those two '
+        'equivalent. ZP-K carries c₀\'s computational face as a '
         'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is that '
         'commitment, not a theorem.'))
     E.append(cbody(
@@ -164,8 +166,9 @@ def build():
         'requirement, not a theorem). That rules out an outside executor, not an idle ⊥: ⊥ is the '
         'unique self-containing state of MachinePhase (da1_closed_concrete) even in a dynamics where '
         'nothing ever leaves c₀ (tsnap_holds_but_nothing_moves). That ⊥ does run is the occurrence '
-        'commitment, which DA-1 uses and does not supply. Three of the four descriptions of ⊥ are '
-        'proved equivalent (T-COMP); the computational one is assumed rather than derived.'))
+        'commitment, which DA-1 uses and does not supply. Three of the four descriptions of ⊥, the '
+        'least element of a ZPSemilattice carrying KleeneStructure, are proved equivalent (T-COMP '
+        'with da2_bottom_characterization); the computational one is assumed rather than derived.'))
     E.append(sp(4))
 
     # What Is a Kleene Fixed Point?
@@ -222,7 +225,7 @@ def build():
     # The four-way equivalence
     E.append(Paragraph('T-COMP: The Three-Way Equivalence, and What Computation Adds', CS['h1']))
     E.append(cbody(
-        'ZP-K\'s central theorem, T-COMP (Computational Grounding), proves that THREE of the '
+        'ZP-K\'s central theorem, T-COMP (Computational Grounding), with da2_bottom_characterization, proves that THREE of the '
         'four descriptions below are equivalent - self-containment, order, and algebra all '
         'identify the same object. The fourth, the computational one, is not a clause of the '
         'theorem: it is supplied as an assumption when the structure is built. The framework '
@@ -305,7 +308,7 @@ def build():
         'given it, the machine has left c₀ for c₁, by the definition of the first running '
         'configuration (D7). ZP-K carries c₀\'s computational face as a '
         'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is the '
-        'KleeneStructure commitment, not a theorem. What T-COMP proves is narrower: '
+        'KleeneStructure commitment, not a theorem. What T-COMP, with da2_bottom_characterization, proves is narrower: '
         'three of the four descriptions of ⊥ are equivalent to one another. It says nothing '
         'about external agents, and nothing about execution.'))
     E.append(sp(4))
@@ -474,7 +477,8 @@ def build():
     E.append(key_result_box(
         'Key Result — ZP-K',
         'T-COMP: IsQuineAtom(q) ↔ q = &#8869; ∧ (∀ x, q &#8744; x = x). '
-        'THREE characterisations are proved equivalent - self-containment (AFA), order, and algebra. '
+        'THREE characterisations are proved equivalent - self-containment (AFA), order, and algebra '
+        '(the last two by da2_bottom_characterization). '
         'The computational face is NOT a fourth clause of this theorem: it enters as an assumption, '
         'the KleeneStructure field botCode_is_quine. '
         'da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proves the structural half only - '

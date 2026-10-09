@@ -27,9 +27,9 @@ why I keep coming back to it.
 ---
 
 ## Formal Overview
-T-COMP proves three roles of ⊥ equivalent; the Kleene fixed point is the class field
-`botCode_is_quine`, a commitment. `encodeCode_self` has no axioms, so not every theorem here
-carries `Classical.choice`. Overview and footprints: `ZeroParadox/Computability/Kleene.md`.
+For `q` in a `ZPSemilattice L` with `KleeneStructure L`, T-COMP: Quine atom ↔ (`q = bot` ∧ join identity);
+`da2_bottom_characterization` makes the last two equivalent. `botCode_is_quine` is a requirement; reading
+it as the computational face of ⊥ of `L` is the commitment. Footprints: `ZeroParadox/Computability/Kleene.md`.
 -/
 
 namespace ZeroParadox
@@ -218,8 +218,8 @@ theorem t_comp {L : Type*} [ZPSemilattice L] [KleeneStructure L] (q : L) :
     computational fixed point; the proof term is `t_exec`, a pure ZP-J result. The
     `KleeneStructure` hypothesis is inert *on this proof route* — it supplies the
     `AFAStructure` this inherits from, and nothing else is used. It is not absent from
-    the axiom footprint, which follows the statement (see the footprint note in the
-    header). That the Kleene fixed point and the AFA Quine atom
+    the axiom footprint, which follows the statement (see the footprint note in
+    `ZeroParadox/Computability/Kleene.md`). That the Kleene fixed point and the AFA Quine atom
     "identify the same element" is the class's motivating commitment (header, § II),
     not what this theorem shows. -/
 theorem kleene_quine_is_bot {L : Type*} [ZPSemilattice L] [KleeneStructure L]

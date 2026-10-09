@@ -55,12 +55,14 @@ ZP-J (T-EXEC: IsQuineAtom q ↔ q = ⊥, bot_self_mem).
 Mathlib: Nat.Partrec.Code.fixed_point₂ (Kleene's second recursion theorem).
 Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
 
-## Axiom footprint (measured 2026-10-09; the `PurityCheck` block at the end re-measures it)
+## Axiom footprint (measured 2026-10-09)
 
 Not every proved theorem here carries `Classical.choice`: `encodeCode_self` has no axioms.
 A carried footprint is a fact about the statement or proof as written, never evidence that
 choice is needed (`ZeroParadox/Category/ChoiceCannotBe.md`). `Code` and `eval` are axiom-free;
-`selfApply` reaches choice through `Encodable.encode` (§ VII). Routes into Kleene's and Rogers'
+`selfApply` reaches choice through `Nat.Partrec.Code.instDenumerable`, the instance from which
+`Encodable.encode` is resolved at `Code`; the `Encodable.encode` projection itself has no axioms
+(§ VII). Routes into Kleene's and Rogers'
 statements: `ZeroParadox/Computability/Kleene.md` § VIII. ZP-J's `t_exec` has no axioms.
 
 Note a distinction that is easy to get backwards. Several results here are ZP-J
@@ -69,7 +71,7 @@ theorems restated under a stronger hypothesis — `t_comp` (proof term
 (`bot_is_quine_atom`). The `[KleeneStructure L]` hypothesis is inert *on those proof
 routes*, and the fences below say so. It is **not** absent from their axiom footprints:
 `#print axioms` traverses the statement, and the hypothesis reaches
-`IsComputationalQuine` → `selfApply` → `Encodable.encode`. So all three report the full
+`IsComputationalQuine` → `selfApply` → `Nat.Partrec.Code.instDenumerable`. So all three report the full
 triple, as the block at the end of this file shows. Inert-in-the-proof and
 absent-from-the-footprint are different properties; do not infer either from the other.
 
