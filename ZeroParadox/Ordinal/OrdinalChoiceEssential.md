@@ -98,13 +98,14 @@ Nothing about ε₀ supplies those.
 
 So the classification splits, and the split is the point:
 
-* **comparability of well-orders, which `le_total` on `Ordinal.{0}` states at `Type` — ESSENTIAL**
-  on the premise above (`em_of_wellOrder_comparable`); `Ordinal`'s order instance itself carries choice
-  in its term (the Lean file's § III);
+* **the `InitialSeg` comparability principle (`em_of_wellOrder_comparable`'s hypothesis) — ESSENTIAL**
+  on the premise above. `le_total` on `Ordinal.{0}`, which states it at `Type`, is STATEMENT-CARRIED
+  instead: `Ordinal`'s order instance carries choice in its term (the Lean file's § III);
 * **the ε₀ results — STATEMENT-CARRIED** (`ε₀ ≠ 0` as a hypothesis already reports the choice,
   measured 2026-10-08). They inherit choice from Mathlib's `Ordinal` machinery:
-  `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon`, as `ZeroParadox/Ordinal/ConstructiveOrdinals.lean`
-  lists, and limit recursion (`SuccOrder.limitRecOn`), measured 2026-10-08.
+  `Ordinal.instLinearOrder`, `nfp`, `omega0` and `epsilon` (each measured with `Classical.choice`,
+  `ZeroParadox/Category/ChoiceCannotBe.lean` § III) and limit recursion (`SuccOrder.limitRecOn`),
+  measured 2026-10-08.
   ZP-N's `ONote` results (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono`, each
   `[propext]`) are evidence that the ascent content does not need it, not a re-proof: they are
   statements on a different carrier.

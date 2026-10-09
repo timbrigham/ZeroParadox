@@ -81,7 +81,7 @@ theorem cmp_exp_ne_gt_of_ne_gt {e₁ e₂ a₁ a₂ : ONote} {n₁ n₂ : ℕ+}
 /-- **Position in the syntactic order forces the valuation.** Any notation `x` that is not strictly
 `cmp`-below `tower n` has syntactic valuation at least `n`.
 
-This is the statement doing real work: the valuation lower bound is not a feature of one chosen
+This is the statement doing real work: the syntactic valuation lower bound is not a feature of one chosen
 sequence, it is forced for *every* notation at or above the tower stage. Choice-free — the proof is
 induction on `n` using only the lexicographic structure of `ONote.cmp`. -/
 theorem le_synVal_of_tower_le :

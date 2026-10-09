@@ -88,10 +88,11 @@ only distinction that carries information.
 goes stale as further files land; citing one that is not regenerated at the moment of use is the error,
 and a docstring cannot regenerate anything.
 
-What is true, and is what `ChoiceCannotBe.lean` asserts instead: **the framework is not choice-free; the
-core is (`t_snap_derived`, no axioms at all); examined footprints fall into four classes — accidental,
+What is true, and is what this long form asserts instead (the members are labelled in
+`ZeroParadox/Category/ChoiceCannotBe.lean`): **the framework is not choice-free; the core is
+(`t_snap_derived`, no axioms at all); examined footprints fall into four classes — accidental,
 essential, statement-carried, unclassified — and § I's ACCIDENTAL entries and § IV name cases in the
-first two.** No fraction is given, for the reason stated above.
+first two, § I and § III in the third.** No fraction is given, for the reason stated above.
 
 **A universal negative is the most dangerous sentence shape in a `CannotBe` index:**
 the `#check` lines cannot overclaim, but prose quantified over *the whole framework* is falsified by
@@ -152,10 +153,16 @@ fraction either**; it moves with every commit.
   over to it. Reaching a weaker taboo is a weaker implication and needs a stronger premise. **Two are
   located, and the premise is stated, in § IV.** Detected by *reducing* — deriving a taboo from the
   principle — which is the mirror image of the accidental test: accidental is shown by re-proving
-  without choice, essential by showing that re-proving without choice would prove a taboo. Note this is a statement about the
-  PRINCIPLE, not about any one proof of it: `#print axioms` reports a proof's footprint and can never
-  witness necessity, which is exactly why the essential side needs a reduction instead of a measurement.
+  without choice, essential by showing that re-proving without choice would prove a taboo. Note this is
+  a statement about the PRINCIPLE, not about any one proof of it: `#print axioms` on a proof reports that
+  proof's footprint and can never witness the principle's necessity, which is exactly why the essential
+  side needs a reduction instead of a measurement.
 * **STATEMENT-CARRIED** — the statement's own type carries `Classical.choice`: a theorem that only assumes the statement and proves `True` already reports it (the statement control). No proof can remove it, so neither ACCIDENTAL nor ESSENTIAL can be asked of it. What can be asked is whether a restatement, on a carrier whose statements are choice-free, holds without choice. Detected by the statement control; members are listed in § I/§ III where measured.
+
+The same split between a statement's and a proof's reach of `Classical.choice` is drawn across Mathlib
+by V. Gonzalez, "Where Formal Libraries Spend Their Axioms", Zenodo 2026, doi:10.5281/zenodo.21769846,
+§ 4 (p. 8) and § 8 (p. 14): a theorem whose statement mentions something choice-dependent "cannot be
+made choice-free however it is proved". Cited, not claimed.
 
 Prior art for the distinction and its methods: constructive reverse mathematics, which classifies
 theorems ("to classify [over intuitionistic logic] various theorems … by logical principles") and whose
@@ -173,9 +180,11 @@ Cited, not claimed.
 ### What this index does NOT do
 
 It does **not** claim the framework is choice-free — it is not. It does **not** claim any
-footprint is provably removable beyond the specific cases actually re-proved. **On the negative side it
-claims exactly two reductions to taboos — non-removability results given § IV's premise — and neither
-comes from a measurement** — § IV's cases are
-**reductions**, and that is the only route available: `#print axioms` reports **a proof's** footprint,
-never **a theorem's** necessity. A choice-carrying proof is evidence about how the proof was written,
-and nothing more; to show a principle *needs* choice you must derive a taboo from it.
+footprint is provably removable beyond the specific cases actually re-proved. **On the negative side,
+for the necessity of a PRINCIPLE, it claims exactly two reductions to taboos — non-removability results
+given § IV's premise — and neither comes from a measurement** — § IV's cases are **reductions**, and
+for a principle that is the only route available: `#print axioms` on a proof reports **that proof's**
+footprint, never **the principle's** necessity. A choice-carrying proof is evidence about how the proof
+was written, and nothing more; to show a principle *needs* choice you must derive a taboo from it.
+STATEMENT-CARRIED is a different question, decided by measuring the statement (the statement control),
+not any proof of it.

@@ -60,7 +60,8 @@ footprint; `[propext]` means propositional extensionality only. -/
 #check @ZeroParadox.chart_selection_is_freeG
 
 -- The metric-collapse content on the syntactic side: `[propext]`. Contrast the measured
--- `[propext, Classical.choice, Quot.sound]` on `tower_converges_to_zero`. **These are DIFFERENT
+-- `[propext, Classical.choice, Quot.sound]` on `tower_converges_to_zero`, which is STATEMENT-CARRIED
+-- (statement control, measured 2026-10-08). **These are DIFFERENT
 -- statements on DIFFERENT carriers, not one statement rephrased** — the bridge `synVal` = 2-adic
 -- valuation is proved on the tower only (`synVal_tower_eq_valuation`,
 -- `ZeroParadox/Ordinal/CnfBridge.lean`), and its statement carries choice. So this is
@@ -193,7 +194,8 @@ proved about where choice does work. -/
 -- uniqueness half uses univalence. See ZeroParadox/Computability/ChoicePurityInvariant.lean.)
 -- Contrast `strict_cofix_nonempty` (§ I, NO axioms): same phenomenon, different construction,
 -- opposite footprint. That contrast is the STATEMENT-CARRIED class in one pair: the statement carries
--- the choice, and a restatement on a choice-free carrier holds without it (`ChoiceCannotBe.md`).
+-- the choice, and a restatement on a choice-free carrier holds without it
+-- (`ZeroParadox/Category/ChoiceCannotBe.md`).
 #check @ZeroParadox.cofix_nonempty'
 
 -- THE TWO MODALITIES, side by side — the comparison a reader arrives wanting. `snapNucleus`
@@ -202,15 +204,16 @@ proved about where choice does work. -/
 -- negation satisfies `a ⇨ ⊥ = aᶜ` (the class law `himp_bot`), and `HeytingAlgebra` extends `OrderBot`,
 -- so ⊥ of the Heyting algebra is part of the structure negation lives in. Same role, different carriers, opposite footprints, and
 -- opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ of the Heyting algebra (⊥ is always regular),
--- `snapNucleus` provably moves ⊥ of `Ordinal` (`snapNucleus_bot_ne_bot`). On the footprint difference: `snapNucleus`
--- has **not been re-proved choice-free as of 2026-08-02**, so do not call it merely representational. What ZP-N
--- re-proved is the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on
--- `ONote`), which is suggestive for the nucleus and is not the nucleus. Its `Classical.choice` is
--- UNCLASSIFIED — the honest tier. Choice is NOT in the `Ordinal` type: `Ordinal` measures
+-- `snapNucleus` provably moves ⊥ of `Ordinal` (`snapNucleus_bot_ne_bot`). On the footprint difference:
+-- `snapNucleus` is STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`): `Nonempty (Nucleus
+-- Ordinal.{0})` and `snapNucleus ⊥ ≠ ⊥`, each only assumed, already report the choice (statement control,
+-- measured 2026-10-08), so no proof of these statements can drop it. What ZP-N re-proved is the ordinal
+-- *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on `ONote`), which is suggestive
+-- for the nucleus and is not the nucleus. Choice is NOT in the `Ordinal` type: `Ordinal` measures
 -- `[propext, Quot.sound]`. The choice
 -- enters through the order instance and the operations (`Ordinal.instLinearOrder`, `nfp`, `omega0`,
--- `epsilon`, each `[propext, Classical.choice, Quot.sound]`). UNCLASSIFIED means simply that nobody has
--- re-proved it choice-free — an open question, not a demonstrated obstruction.
+-- `epsilon`, each `[propext, Classical.choice, Quot.sound]`). The open question is a restatement on a
+-- notation carrier whose statements are choice-free; its current state is the entry below.
 #check @ZeroParadox.snapNucleus
 #check @ZeroParadox.snapNucleus_bot_ne_bot
 
@@ -237,7 +240,8 @@ proved about where choice does work. -/
 -- because ε₀ is the supremum of Cantor normal form rather than a member. So this does NOT make
 -- `snapNucleus`'s footprint accidental, does NOT make it essential, and does NOT show the snap nucleus
 -- is constructively impossible in general — a notation system extending past ε₀ is untouched and open.
--- It closes one route and leaves the classification exactly where it was: UNCLASSIFIED.
+-- It is the current state of the restatement question: blocked on `ONote` by naming, not by choice;
+-- `snapNucleus` as stated stays STATEMENT-CARRIED.
 #check @ZeroParadox.no_snap_closure
 #check @ZeroParadox.no_snap_nucleus
 #check @ZeroParadox.idNucleus

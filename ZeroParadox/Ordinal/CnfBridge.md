@@ -60,9 +60,9 @@ does **not** prove it.
 6. **The syntactic depth meets the 2-adic valuation on the tower** (`towerNONote_val`,
    `synVal_tower_eq_valuation`). `Statement:` TOWER-ONLY. Along the tower `synCollapse_epsN` crosses it
    (the first `example` after it); off the tower the two need not agree, because `synVal` ignores the
-   coefficient and the remainder (fails at ω+1, the second: `synVal` 2 and 2-adic valuation 1). At the
-   seed n = 0 the agreement holds by Mathlib's `valuation 0 = 0`; under `Padic.addValuation` on ℚ_[2],
-   0 is the pole point, with valuation ⊤. The statement carries `Classical.choice` (`towerNONote` and
+   coefficient and the remainder (fails at ω+1, the second `example`: `synVal` 2 and 2-adic valuation
+   1). At the seed n = 0 the agreement holds by Mathlib's `valuation 0 = 0`; in the other charts 0 has
+   norm 0, and valuation ⊤ under `Padic.addValuation` on ℚ_[2]. The statement carries `Classical.choice` (`towerNONote` and
    `cnfToZp2` carry it in their own terms, measured 2026-10-08), so both declarations are
    STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md` § "Accidental versus essential") and
    the bridge sits here rather than in the choice-free `ZeroParadox/Ordinal/SyntacticCollapse.lean`.

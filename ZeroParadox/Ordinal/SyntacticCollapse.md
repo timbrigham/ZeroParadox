@@ -91,11 +91,11 @@ Different carrier, different statement. In particular:
   (`ZeroParadox/Ordinal/CnfBridge.lean`). Its statement carries choice, so it cannot sit in the
   choice-free Lean file; off the tower the two need not agree (fails at ω+1: the second `example`
   after it).
-* **It does not show the metric collapse is choice-free.** The honest reading is bounded: *the
-  convergence content is available choice-free on the syntactic side, which is evidence that the
-  `Classical.choice` in the 2-adic statement is Mathlib-imposed (STATEMENT-CARRIED,
-  `ZeroParadox/Category/ChoiceCannotBe.md`) rather than forced by
-  the ZP structure.* Evidence, not proof.
+* **It does not show the metric collapse is choice-free.** The 2-adic statement is STATEMENT-CARRIED
+  (`ZeroParadox/Category/ChoiceCannotBe.md`; measured by the statement control above), so no proof of
+  it can drop the choice. The honest reading of the restatement is bounded: *the convergence content
+  is available choice-free on the syntactic side, which is evidence that the `Classical.choice` in
+  the 2-adic statement is Mathlib-imposed rather than forced by the ZP structure.* Evidence, not proof.
 
 ## Triviality assessment
 

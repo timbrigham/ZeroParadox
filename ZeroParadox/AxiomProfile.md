@@ -58,7 +58,8 @@ inherited dependence can be essential**, and *inherited* is not a synonym for *r
 | | own | inherited |
 |---|---|---|
 | **essential** (on § IV's premise) | `fixedPointFree_of_nontrivial` | well-order comparability |
-| **open** | — | the remaining analytic layers |
+| **statement-carried** (statement control, measured 2026-10-08) | — | `c3_irreversible`, `t4_snap_orthogonal`, `fD_functor`, `fC_functor`, `snap_dichotomy`, `quine_dichotomy` |
+| **open** | — | the remaining analytic layers (e.g. `fB_functor`, whose statement is choice-free) |
 
 ⚠ **A footprint measurement can never establish necessity.** `#print axioms` reports what a proof
 used, not what a proof must use. The accidental side needs an **exhibited clean proof**; the essential
@@ -66,7 +67,9 @@ side needs a **reduction**. So the two reductions are the evidence on the necess
 becomes "not removable" only on § IV's premise. Provenance ("not inherited") is a separate question,
 settled by the footprint table above read against the source.
 
-Whether the *remaining* analytic-layer dependence is removable is genuinely open — see the README
+For the statement-carried rows no proof can drop the choice (`ZeroParadox/Category/ChoiceCannotBe.md`,
+STATEMENT-CARRIED); the open question there is a restatement on a carrier whose statements are
+choice-free. Whether the *remaining* analytic-layer dependence is removable is genuinely open — see the README
 Question Register and the `choice-probe` experiment, which found it mostly incidental in the one layer
 classified so far. None of it is load-bearing for any ZP *claim*: what the framework asserts is proved
 without choice.
