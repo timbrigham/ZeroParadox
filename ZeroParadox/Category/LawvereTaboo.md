@@ -17,8 +17,8 @@ proof body measures `[propext]`. It closes with the correct fence — *"It does 
 version's choice is necessary. `classical` is how the proof was written, and a footprint never
 reports necessity."*
 
-**`LawvereTaboo.lean` answers that open question, and the answer is that the choice is NOT removable** — on the premise
-stated below (`ZeroParadox/Category/ChoiceCannotBe.lean` § IV).
+**`LawvereTaboo.lean` answers that open question: the choice is essential, on the premise stated in
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV.**
 
 ## The result
 
@@ -34,12 +34,10 @@ which is what makes this an implication rather than a restatement — the same s
 `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`'s `em_of_wellOrder_comparable`, and
 `LawvereTaboo.lean` is modelled on it.
 
-So `fixedPointFree_of_nontrivial`'s `classical` is **essential**, not accidental: no rewriting of
-that proof removes it, because a choice-free proof of the general statement would be a choice-free
-proof of weak excluded middle. That inference rests on a premise not proved here, stated in
-`ZeroParadox/Category/ChoiceCannotBe.lean` § IV: weak excluded middle is not derivable in Lean's
-choice-free fragment. This is the framework's second located essential case, and unlike the
-first it sits on the keystone (the diagonal engine) rather than on an imported order instance.
+So a choice-free proof of the general statement would be a choice-free proof of weak excluded
+middle, and `fixedPointFree_of_nontrivial`'s `classical` is essential in the sense, and on the
+premise, of `ZeroParadox/Category/ChoiceCannotBe.lean` § IV. Unlike § IV's first case it sits on the
+keystone (the diagonal engine) rather than on an imported order instance.
 
 ## What is NOT claimed
 
@@ -59,15 +57,14 @@ first it sits on the keystone (the diagonal engine) rather than on an imported o
   weak excluded middle to a map: *"define f : U → 2 by f(A) = ff if ¬A and f(A) = tt if ¬¬A"*. Its
   other direction, from the map to weak excluded middle via *"Z = ¬A × X + ¬¬A × Y"* (p. 6), runs
   the way `wem_of_fixedPointFree` runs and is credited in the comment above that theorem in
-  `LawvereTaboo.lean`. The argument does not transfer to Lean, for the same reason recorded in
+  `LawvereTaboo.lean`. The converse argument does not transfer to Lean, for the same reason recorded in
   `ZeroParadox/Category/ExcludedMiddleBridge.lean` — `Or` in `Prop` does not eliminate into data, so
   a `Prop`-level disjunction cannot construct the function `g`. Whether the two statements are
   equivalent **in Lean** is left open, and a failed elaboration would not settle it either way.
 * **No priority claim.** See the prior-art section; a search was run and is reported as a search.
 * **It does not deprecate `ZeroParadox/Category/Lawvere.lean`.** The general statement stays general
-  and stays the keystone. Its `Classical.choice` is classified essential, in the sense of
-  `ZeroParadox/Category/ChoiceCannotBe.md` § "Accidental versus essential", and on the premise
-  stated in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
+  and stays the keystone. Its `Classical.choice` is essential in the sense, and on the premise, of
+  `ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
 
 ## Prior art
 
@@ -79,8 +76,8 @@ The mathematics of this genre is not new and is not claimed as new.
   type of ordinals has no non-trivial decidable property unless weak excluded middle holds."* Read
   from source. **This is a close neighbour, and it is a different statement**; Booij–Escardó–
   Lumsdaine–Shulman Thm 3 and Thm 5 (below) are as close, and so is de Jong–Escardó (below) in both
-  directions. De Jong–Escardó Prop 6.4, p. 24, runs from weak excluded middle to a decomposition, opposite to
-  `wem_of_fixedPointFree`; their Lemma 6.6, Lemma 6.7 and Thm 6.10, p. 24, run the same way as
+  directions. De Jong–Escardó Prop 6.4, p. 24, runs from weak excluded middle to a decomposition,
+  opposite to `wem_of_fixedPointFree`; their Lemma 6.6, Lemma 6.7 and Thm 6.10, p. 24, run the same way as
   `wem_of_fixedPointFree`, deriving weak excluded middle from a decomposition of the type of
   propositions `Ω_U`, of a type with `Ω`-paths, or of an injective type.
   Decomposability is strictly stronger than what is used in `wem_of_fixedPointFree`: a decomposition

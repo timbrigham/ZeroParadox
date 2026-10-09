@@ -23,9 +23,9 @@ I am leaving the design question open. The answer is the Lean itself.
 ---
 
 `wem_of_fixedPointFree`: the ∀-closed general form of `fixedPointFree_of_nontrivial`
-(`ZeroParadox/Category/Lawvere.lean`) implies weak excluded middle, with no `Classical.choice`, so that
-theorem's `classical` is essential. The result, what is not claimed, the prior art and the section map
-are in `ZeroParadox/Category/LawvereTaboo.md`, beside this file.
+(`ZeroParadox/Category/Lawvere.lean`) implies weak excluded middle, with no `Classical.choice`; its
+consequence is stated in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV. The result, what is not
+claimed, the prior art and the section map are in `ZeroParadox/Category/LawvereTaboo.md`, beside this file.
 -/
 
 namespace ZeroParadox
@@ -205,9 +205,11 @@ theorem fixedPointFree_of_classical :
 statement is available in Lean, and it is available only at the price § III names.
 
 This is the ledger entry. `ZeroParadox/Category/LawvereDecidable.lean` shows the `Classical.choice`
-on `fixedPointFree_of_nontrivial` **disappears** under `[DecidableEq β]`; this file shows it
-**cannot** disappear without it. The two together locate the cost exactly: not in the diagonal, and
-not in the two-point swap, but in stating the swap over types where it is not computable. -/
+on `fixedPointFree_of_nontrivial` **disappears** under `[DecidableEq β]`; this file shows that removing
+it without that instance would prove weak excluded middle without choice, a non-removability result on
+the premise stated in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV. The two together locate the
+cost exactly: not in the diagonal, and not in the two-point swap, but in stating the swap over types
+where it is not computable. -/
 theorem wem_of_classical_supplier
     (H : ∀ (β : Type) (b₀ b₁ : β), b₀ ≠ b₁ → ∃ g : β → β, ∀ x, g x ≠ x) :
     ∀ p : Prop, ¬p ∨ ¬¬p :=

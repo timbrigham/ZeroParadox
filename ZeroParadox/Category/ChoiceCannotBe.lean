@@ -60,11 +60,13 @@ footprint; `[propext]` means propositional extensionality only. -/
 #check @ZeroParadox.chart_selection_is_freeG
 
 -- The metric-collapse content on the syntactic side: `[propext]`. Contrast the measured
--- `[propext, Classical.choice, Quot.sound]` on `tower_converges_to_zero`. **These are DIFFERENT
+-- `[propext, Classical.choice, Quot.sound]` on `tower_converges_to_zero`, which is STATEMENT-CARRIED
+-- (statement control, measured 2026-10-08). **These are DIFFERENT
 -- statements on DIFFERENT carriers, not one statement rephrased** — the bridge `synVal` = 2-adic
--- valuation is NOT proved, and cannot be without importing the stack under investigation. So this is
--- EVIDENCE that the choice in the ℚ₂ statement is Mathlib-imposed, not a demonstration that the metric
--- collapse is choice-free. See `ZeroParadox/Ordinal/SyntacticCollapse.lean`'s "What this does NOT establish".
+-- valuation is proved on the tower only (`synVal_tower_eq_valuation`,
+-- `ZeroParadox/Ordinal/CnfBridge.lean`), and its statement carries choice. So this is
+-- EVIDENCE that the choice in the ℤ_[2] statement is Mathlib-imposed, not a demonstration that the metric
+-- collapse is choice-free. See `ZeroParadox/Ordinal/SyntacticCollapse.md`'s "What this does NOT establish".
 #check @ZeroParadox.synCollapse_epsN
 #check @ZeroParadox.synVal_mono
 
@@ -191,7 +193,9 @@ proved about where choice does work. -/
 -- (Setting: ACS's construction needs only function extensionality, which Lean has; only its
 -- uniqueness half uses univalence. See ZeroParadox/Computability/ChoicePurityInvariant.lean.)
 -- Contrast `strict_cofix_nonempty` (§ I, NO axioms): same phenomenon, different construction,
--- opposite footprint. That contrast is the accidental/essential distinction in one pair.
+-- opposite footprint. That contrast is the STATEMENT-CARRIED class in one pair: the statement carries
+-- the choice, and a restatement on a choice-free carrier holds without it
+-- (`ZeroParadox/Category/ChoiceCannotBe.md`).
 #check @ZeroParadox.cofix_nonempty'
 
 -- THE TWO MODALITIES, side by side — the comparison a reader arrives wanting. `snapNucleus`
@@ -200,15 +204,16 @@ proved about where choice does work. -/
 -- negation satisfies `a ⇨ ⊥ = aᶜ` (the class law `himp_bot`), and `HeytingAlgebra` extends `OrderBot`,
 -- so ⊥ of the Heyting algebra is part of the structure negation lives in. Same role, different carriers, opposite footprints, and
 -- opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ of the Heyting algebra (⊥ is always regular),
--- `snapNucleus` provably moves ⊥ of `Ordinal` (`snapNucleus_bot_ne_bot`). On the footprint difference: `snapNucleus`
--- has **not been re-proved choice-free as of 2026-08-02**, so do not call it merely representational. What ZP-N
--- re-proved is the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on
--- `ONote`), which is suggestive for the nucleus and is not the nucleus. Its `Classical.choice` is
--- UNCLASSIFIED — the honest tier. Choice is NOT in the `Ordinal` type: `Ordinal` measures
+-- `snapNucleus` provably moves ⊥ of `Ordinal` (`snapNucleus_bot_ne_bot`). On the footprint difference:
+-- `snapNucleus` is STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`): `Nonempty (Nucleus
+-- Ordinal.{0})` and `snapNucleus ⊥ ≠ ⊥`, each only assumed, already report the choice (statement control,
+-- measured 2026-10-08), so no proof of these statements can drop it. What ZP-N re-proved is the ordinal
+-- *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on `ONote`), which is suggestive
+-- for the nucleus and is not the nucleus. Choice is NOT in the `Ordinal` type: `Ordinal` measures
 -- `[propext, Quot.sound]`. The choice
 -- enters through the order instance and the operations (`Ordinal.instLinearOrder`, `nfp`, `omega0`,
--- `epsilon`, each `[propext, Classical.choice, Quot.sound]`). UNCLASSIFIED means simply that nobody has
--- re-proved it choice-free — an open question, not a demonstrated obstruction.
+-- `epsilon`, each `[propext, Classical.choice, Quot.sound]`). The open question is a restatement on a
+-- notation carrier whose statements are choice-free; its current state is the entry below.
 #check @ZeroParadox.snapNucleus
 #check @ZeroParadox.snapNucleus_bot_ne_bot
 
@@ -235,7 +240,8 @@ proved about where choice does work. -/
 -- because ε₀ is the supremum of Cantor normal form rather than a member. So this does NOT make
 -- `snapNucleus`'s footprint accidental, does NOT make it essential, and does NOT show the snap nucleus
 -- is constructively impossible in general — a notation system extending past ε₀ is untouched and open.
--- It closes one route and leaves the classification exactly where it was: UNCLASSIFIED.
+-- It is the current state of the restatement question: blocked on `ONote` by naming, not by choice;
+-- `snapNucleus` as stated stays STATEMENT-CARRIED.
 #check @ZeroParadox.no_snap_closure
 #check @ZeroParadox.no_snap_nucleus
 #check @ZeroParadox.idNucleus
@@ -275,14 +281,21 @@ proved about where choice does work. -/
 #check @Prop.instHeytingAlgebra
 #check @Prop.instBooleanAlgebra
 
-/-! ## § IV. The ESSENTIAL cases — where the choice is NOT removable
+/-! ## § IV. The ESSENTIAL cases — two reductions to taboos, and the premise they rest on
 
-Each case derives a taboo (excluded middle, or its weak form) from a classical principle the framework
-uses: ESSENTIAL as defined in § "Accidental versus essential" of `ZeroParadox/Category/ChoiceCannotBe.md`.
-The theorems are choice-free reductions with the classical content in the hypothesis, so they speak of
-the principle, not of any one proof. "No choice-free re-proof exists" rests on a premise not proved
-here: excluded middle and weak excluded middle are not derivable in Lean's choice-free fragment. Neither
-case says the framework's overall use of choice is essential, nor is either an independence result. -/
+The arrow runs from each principle (cases 1 and 2 below) to its taboo, so each theorem speaks of the
+principle, not of any one proof of it. ESSENTIAL, in the sense of § "Accidental versus essential" of
+`ZeroParadox/Category/ChoiceCannotBe.md`, means that no proof of the principle in Lean's choice-free
+fragment (the kernel with `propext` and `Quot.sound` as its only axioms) exists, GIVEN that the taboo
+the case reaches is not derivable in that fragment. That premise is not proved in this corpus; without
+it, what is proved is that a choice-free proof of the principle would be a choice-free proof of the
+taboo. Neither case is an independence result, and neither says the framework's overall use of choice
+is essential. -/
+
+-- Each case is a reduction proved without `Classical.choice` (`[propext, Quot.sound]`), from a classical
+-- principle the framework uses to a constructive taboo: case 1 from comparability of well-orders to
+-- excluded middle, case 2 from the fixed-point-free principle over arbitrary `Type` to weak excluded
+-- middle.
 
 -- ESSENTIAL CASE 1 — comparability of well-orders implies EXCLUDED MIDDLE. Mathlib's `le_total` on
 -- `Ordinal` has exactly this shape, which is what puts it in the framework's path.
@@ -298,8 +311,11 @@ case says the framework's overall use of choice is essential, nor is either an i
 
 -- ESSENTIAL CASE 2 — the general fixed-point-free principle implies WEAK excluded middle, and this one
 -- sits on the KEYSTONE (the diagonal engine) rather than on an imported order instance. Its hypothesis
--- is the ∀-closure of `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` at `Type`, so that
--- theorem's `classical` is essential, not accidental: no rewriting of the proof removes it.
+-- is the ∀-closure of `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` at
+-- `Type`, and every proof `P` of that theorem's statement instantiates to it, choice-free, as
+-- `fun _ _ _ hne => P hne` (`fixedPointFree_of_classical` is that instantiation of the classical
+-- proof), so that theorem's `classical` is essential in the sense of the header above, and on its
+-- premise.
 #check @ZeroParadox.wem_of_fixedPointFree
 
 -- Non-vacuity again: `fixedPointFree_of_nontrivial` supplies the hypothesis, classically by
@@ -312,9 +328,9 @@ case says the framework's overall use of choice is essential, nor is either an i
 -- equality and the same statement is choice-free — measured `[propext]`, against the general form's
 -- `[propext, Classical.choice, Quot.sound]`. `ZeroParadox/Category/DiagonalWitness.lean`'s `no_witnessRel_top_of_nontrivial`
 -- carries the same audit for the level-set form. **Where a carrier has `DecidableEq`, the essential
--- form is not needed** — the taboo says the general statement cannot be re-proved constructively, and
--- the restriction says it does not have to be *there*. Together they localize the classical content
--- rather than obstruct it: they say where it lives and how far it reaches.
+-- form is not needed** — the taboo makes the general statement non-re-provable constructively, on the
+-- premise in the header above, and the restriction says it does not have to be *there*. Together they
+-- localize the classical content rather than obstruct it: they say where it lives and how far it reaches.
 -- SCOPE: how far the escape reaches is UNSURVEYED. Which carriers in this corpus have `DecidableEq`
 -- was unmeasured as of 2026-08-02, so "the restriction covers what we need" is unverified in general — and a
 -- universal over every carrier would be the sentence shape `ZeroParadox/Category/ChoiceCannotBe.md`'s § "No count" warns about.

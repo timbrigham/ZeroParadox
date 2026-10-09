@@ -16,7 +16,7 @@ vs `ℤ_[2]`), the same category error the framework RETIRES as ill-typed for MC
 and in `IsLeastFixedPointFrom` (`Order/LeastFixedPoint.lean`). `ZeroParadox/Ordinal/CnfBridge.lean`
 does **not** prove it.
 
-## What `ZeroParadox/Ordinal/CnfBridge.lean` DOES add (all type-sound, connected by the MAP, never by `=`)
+## What `ZeroParadox/Ordinal/CnfBridge.lean` DOES add (all type-sound, connected by the MAP, never by a cross-carrier `=`)
 
 1. **Map-mediated order embedding on the tower** (`tower_valuation_orderEmbedding`,
    `tower_repr_orderEmbedding`): on the shared index `n`, ordinal order of the tower stages and the
@@ -56,3 +56,13 @@ does **not** prove it.
    (`snap_state_zp2_is_zero`), a map value, not an identity.
    Built in the spirit of
    `zpm_triangle` (`Ordinal/Incompleteness.lean`), which co-witnesses without a type identity.
+
+6. **The syntactic depth meets the 2-adic valuation on the tower** (`towerNONote_val`,
+   `synVal_tower_eq_valuation`). `Statement:` TOWER-ONLY. Along the tower `synCollapse_epsN` crosses it
+   (the first `example` after it); off the tower the two need not agree, because `synVal` ignores the
+   coefficient and the remainder (fails at ω+1, the second `example`: `synVal` 2 and 2-adic valuation
+   1). At the seed n = 0 the agreement holds by Mathlib's `valuation 0 = 0`; in the other charts 0 has
+   norm 0, and valuation ⊤ under `Padic.addValuation` on ℚ_[2]. The statement carries `Classical.choice` (`towerNONote` and
+   `cnfToZp2` carry it in their own terms, measured 2026-10-08), so both declarations are
+   STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md` § "Accidental versus essential") and
+   the bridge sits here rather than in the choice-free `ZeroParadox/Ordinal/SyntacticCollapse.lean`.
