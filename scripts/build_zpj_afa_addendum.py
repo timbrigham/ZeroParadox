@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.16 | September 2026
+Version 1.17 | October 2026
 v1.16: THE v1.15 FIX INTRODUCED A REGRESSION INTO THE BOX IT WAS FIXING (editorial FAIL-BEDROCK, round 5). v1.15 restored the underscore in the decoration_unique binder by ADDING a line reading (_G : APG V) and never removing the old (G : APG V), so the rendered box declared TWO APG binders where the theorem has one, and placed the survivor BEFORE the {U} block instead of after it. Elaborated this round with lake env lean: @ZeroParadox.decoration_unique takes exactly one, (_G : APG V), following [DecorationUniverse U], with [Fintype V] ahead of the {U} block. The box is transcribed from the elaborated signature now rather than edited toward it. Every mechanical gate passed and check_codebox reported 0, because that checker resolves IDENTIFIERS and a duplicated binder is a well-formed identifier used twice - the defect is in the SHAPE, which nothing mechanical reads. Also: "AFA's central theorem" survived at two further sites in this document, the section IV preamble and the scope note after the theorem box. Aczel ch.1 p.6 states AFA as an AXIOM - "The Anti-Foundation Axiom, AFA: Every graph has a unique decoration" - and this document's own Remark R-J.A said so on page 8 while these two contradicted it; both now point at the Remark rather than restating the claim a third time. And v1.15's "sites five and six" is SCOPED, not closed: it counted within this document, and a four-axis sweep of the rendered text on 2026-09-02 found the class live at five further sites across three deposited PDFs, filed as ZPJ-AFA-THM. That sweep ran over the delta domain, 33 files and 6 rendered PDFs; --full was not taken, so five is a FLOOR and not a total. v1.15: THE v1.14 FIX OVER-CORRECTED, AND BOTH PROSE GATES CAUGHT IT (editorial FAIL-BEDROCK, adversary concurring as ordinary). Editorial's sentence is the finding: v1.13 made a REMOVABLE cost look UNAVOIDABLE, v1.14 makes an UNMEASURED one look REMOVABLE. Same conflation, opposite sign, and v1.14's was the flattering direction. The class-level measurement was true and both gates reproduced it; what was wrong is the SCOPE, because the box was headed "all results in this document". Measured this round: decoration_unique reports [propext, Classical.choice, Quot.sound]; Set.ncard_lt_ncard and Set.ncard_pos are each independently tainted; and Nonempty.some unfolds to `fun h => Classical.choice h`, so the proof does not inherit choice through packaging, it CALLS it. Fintype is not absent either - this PDF prints [Fintype V] in the decoration_unique box and says decoration_unique requires it, one page before v1.14's line denied it. The box now names three routes, scopes ACCIDENTAL to the class where _VScast exhibits the clean proof, and states the theorem's removability as UNMEASURED - R-REVALIDATE: accidental is earned by exhibiting a clean proof or not at all. The exclusion is now MEASURED rather than asserted, which is the adversary's improvement: Finset and Fintype each report [propext, Quot.sound], so neither has any choice to supply. Also: the Remark's own TITLE still said "Relationship to Aczel's Theorem" three words above its body's "an axiom, not a theorem", and the preamble called the unique-decoration content a theorem - sites five and six of that claim within this document; the decoration_unique box dropped the underscore from (_G : APG V), erasing the signal that accessibility is never consumed; and Scale.lean's "val_bot is consumed nowhere" is true of section I and false three rendered pages later at val_iterate, so it is scoped now. 
 v1.14: TWO BEDROCK ON PAGE 8, BOTH UNTOUCHED BY EVERY ROUND SINCE v1.9 (adversary round 5, FAIL-BEDROCK 2). (1) The axiom-footprint box attributed Classical.choice to "Mathlib Finset and Fintype machinery". Measured with lake env lean: ValuationStructure - a BARE TYPECLASS mentioning neither - reports [propext, Classical.choice, Quot.sound], and so does instAddMonoidWithOneENat, the instance the numeral 1 in val_scale reaches for. Scale.lean's _VSlit/_VScast pair proves that numeral is THE route rather than one of several: respelling it as ((1 : N) : Ninf) and nothing else makes the class report no axioms. This mattered beyond a citation slip because the next line read "No ZP-specific axioms beyond", so naming a library turned a REMOVABLE cost into an UNAVOIDABLE one - the exact conflation AxiomProfile.lean section 0 warns about, PROVENANCE and NECESSITY being independent axes. The corrected text keeps them apart: the tainted INSTANCE is Mathlib's, the SPELLING that reaches for it is this framework's, and the dependence is accidental. (2) Remark R-J.A called AFA "Aczel's decoration theorem ... every APG ... universe of non-well-founded sets". Three errors: it is an AXIOM (ch.1 p.6, the book is in this repository and was opened), over every GRAPH not every APG, into the universe of SETS - the book's own example decorates with 0, {0} and 3, all well-founded. The decoration THEOREM is Mostowski's Collapsing Lemma, for WELL-FOUNDED graphs. CLAIMS.md and APG.lean already said this correctly and this document's preamble calls it an axiom eight pages earlier. The claim was swept, not the site: FOUR sites, and the fourth said "Aczel's theorem" with no "decoration", so a source grep for the longer phrase never reached it - only the rendered check did. Also closes E5-1: the four Lean-statement lines that printed the bottom as a glyph with no global notation now spell it as the Lean does, and tools/verify/check_codebox.py - written this session because R-NOCONV says a loop that will not settle changes SHAPE - reports 0 where it reported 4. Fifth consecutive version to touch this class, and the first whose fix is MEASURED rather than believed. 
 v1.13: BEDROCK, AND THE v1.12 SWEEP MISSED IT BY THREE LINES. The APG box defined Reach(v) = { w : V | Reachable v w }. `Reachable` is NOT LOCATED in APG.lean as of 2026-09-02 - zero occurrences, searched by identifier - and the only resolution located that day, over ZeroParadox/**/*.lean and the tracked build scripts, was SimpleGraph.Reachable, which is SYMMETRIC - and section IV.2's induction terminates ONLY because reachability here runs one way: from an acyclic v to a child w, v is not reachable back, so Reach(w) is a STRICT subset and the cardinality decreases. Under a symmetric relation the two sets are equal, the descent never shrinks, and the proof this document narrates does not terminate. A false definition carrying the main theorem's termination argument. v1.12 changed the `accessible` line directly above it FOR THIS EXACT REASON and left this one - the half-applied sweep at its smallest possible radius, inside the version whose subject was half-applied sweeps. Found by the adversary gate running the rendered BOX as a unit; a source reader sees a diff touching the line the changelog names and reads it as done. Also: two inherited counts in register.md replaced by pointers - "four sites" stood over an enumeration of five, and "all fifteen corrections" was v1.11's numeral carried into v1.12 over six of its own (R-ADJACENT: never enumerate in prose what an artifact defines). 
 v1.12: ROUND 4 — the v1.11 sweep was applied to two code boxes of four, and its own write-up claimed more than it did. Adversary FAIL-BEDROCK (2, both in OTHER ZP-J documents and filed, not touched here) + 5 ordinary; editorial STOP-ORDINARY 0/4; all four v1.11 remediations HELD under both gates, and the AddValuation.top_iff replacement was settled by ELABORATION in both directions - the emultiplicity_eq_top + FiniteMultiplicity.of_prime_left route compiles on Z_[2], and the control AddValuation.top_iff fails to elaborate there, as it must. Corrected in this version: the AbstractSelfApp and AFAStructure boxes still rendered Lean's `bot` as the bottom glyph, and there is no global notation for ZPSemilattice.bot - only a LOCAL one in Lattice.lean - so compiling either box as displayed gave 'failed to synthesize Bot L'; the APG box showed `Reachable root v` where the field is `Nonempty (Quiver.Path root v)`, and Reachable is SimpleGraph's, not a quiver notion; 'Z_[2] is NOT a ValuationStructure instance' shipped bare while three sources changed in the same commit hedge exactly that sentence, so it now says no such instance is REGISTERED, which is the checkable claim; funext was credited to Fintype, where function extensionality needs no finiteness at all and finiteness is consumed earlier by the acyclic descent (DC-32); and the note marker U+22EE, which means elided material, became the house U+2022.
 v1.11: THE v1.10 REMEDY WAS APPLIED TO ONE BOX AND THE OTHERS KEPT THE DEFECT (adversary FAIL-BEDROCK, 4 bedrock; editorial STOP-ORDINARY concurring on the first). v1.10 established that "a box that paraphrases is prose wearing a code block" and fixed toAFAStructure only. Corrected here: (1) page 1 credited "val_bot and val_scale" with giving finiteness for x != bot - val_finite_of_ne_bot is `fun h => hx (val_unique x h)`, the contrapositive of val_unique ALONE, which Scale.lean's module doc and LEAN_CUSTOM_REGISTRY.md already recorded with a Bool counterexample; "the four axioms are minimal" went with it, since an axiom consumed nowhere on the argument is what minimality would deny. (2) Section IV.1 said the decoration equation iterated k times gives d(v) = scale^k(d(v)); collect reduces to scale only through collect_singleton, i.e. only at single-child vertices, and cyclic_decoration_eq_bot does not do this - it chains collect_val_ge and path_val_chain as INEQUALITIES and never forms scale^[k]. The preamble restated the same overclaim and was swept with it. (3) The source-files box called ScaleBridge.lean "Z2 as ValuationStructure instance"; it declares instZ2ValBridge : ValBridge Z_[2], and that file says twice that Z_[2] is not a ValuationStructure. (4) AddValuation.top_iff was cited as the standard name for the val_bot + val_unique pair beside a sentence about Z_[2]; top_iff is stated over a [DivisionRing K] and Z_[2] is a DVR, so it does not apply - the stock route is emultiplicity_eq_top with FiniteMultiplicity.of_prime_left. Both prose gates found (4) independently and one compiled the failure. Also: the ValuationStructure and DecorationUniverse boxes rendered Lean's top as infinity and restated binders, so they did not typecheck as displayed, and are transcribed literally now; the set image `d '' children v` was encoded as U+201C followed by U+2032 at five sites, invisible as a defect in the source and visibly broken on the page; every box header and four rendered citations moved to full repository paths per R-LEANPDF; and the v1.9 changelog entry here still carried the "both rendered into a deposited PDF" overclaim that register.md corrected the same day.
 v1.10: THE RENDERED BOX PARAPHRASED THE LEAN IT CLAIMED TO SHOW, and the page contradicted its own vocabulary. Found by the adversary gate reading the EXTRACTED PDF rather than the builder source. Three bindings in the toAFAStructure box were paraphrases - selfMem rendered as an anonymous lambda in Lean 3 comma syntax inside a Lean 4 corpus, bot_self_mem as "fixed_bot", quine_unique as "derived from unique_fp" - so a reader could not resolve the def selfMemDerived citation this document had just added against a box that never names it. Transcribed literally now, with each field marked DATA or LAW. Separately: the prose called bot_self_mem "supplied", a word this section reserves for data, two paragraphs after drawing that distinction; bot_self_mem is a law discharged by a theorem and now says so.
-v1.9: CITE BY DECLARATION, NOT BY LINE. Both Lean citations in this file were line numbers and BOTH had drifted: SelfApp.lean:83 pointed at AbstractSelfApp.fixed_bot and :113 at a proof body, neither at the definition being cited. CORRECTED 2026-09-01: this entry originally added "and both rendered into a deposited PDF". Only :113 did - :83 lived in this module docstring, which reaches no rendered page, since no builder renders its own changelog and the extracted v1.9 text carries none. register.md's copy of this entry was corrected the same day and THIS one was missed, which is the half-applied duplicate (DC-28) the correction was itself about. A line number is a copy of a location, so it goes stale silently while reading as precise - the same defect one level down from the field-discipline claim it was citing. Now cited as ZeroParadox/Computability/SelfApp.lean, def selfMemDerived, which the reader can resolve and which cannot drift with an edit above it.
+v1.9: CITE BY DECLARATION, NOT BY LINE. Both Lean citations in this file were line numbers and BOTH had drifted: SelfApp.lean:83 pointed at AbstractSelfApp.fixed_bot and :113 at a proof body, neither at the definition being cited. CORRECTED 2026-09-01: this entry originally added "and both rendered into a deposited PDF". Only :113 did - :83 lived in this module docstring, which reaches no rendered page, since no builder renders its own changelog and the extracted v1.9 text carries none. Another copy of this entry was corrected the same day and THIS one was missed, which is the half-applied duplicate (DC-28) the correction was itself about. A line number is a copy of a location, so it goes stale silently while reading as precise - the same defect one level down from the field-discipline claim it was citing. Now cited as ZeroParadox/Computability/SelfApp.lean, def selfMemDerived, which the reader can resolve and which cannot drift with an edit above it.
 v1.8: FIELD-DISCIPLINE CORRECTION (bedrock). The abstraction-chain prose said "at each step, the fields of the target typeclass are proved as theorems from the source" and "inherits the full AFAStructure as a chain of theorems". False at BOTH steps: a Lean typeclass field is either a LAW you discharge with a proof or DATA you supply, and this chain supplies data at each step - selfApp := scale is an assignment (the box six lines below prints it), and selfMem is supplied by def selfMemDerived. TWO of AFAStructure's three fields become theorems, not three. This was the THIRD ZP-J surface carrying the claim; the other two were corrected in ZP-J v2.6 and comp v1.30 and this one was missed because its sentence contains no numeral. Found by editorial round 5 and now covered mechanically by tools/verify/check_fields.py, which tests the Lean binding rather than the wording.
 v1.7: Lean Source Files box now lists SetTheoryAFA.lean (the AFAStructure typeclass home, cited by the def_box); "seven"→"eight" source files; stripped the "as of May 2026" dated qualifier from the endnote.
 v1.6: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
@@ -27,7 +27,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -141,7 +141,7 @@ def build():
     E.append(result_box(
         'Theorem: scale_unique_fp (ZeroParadox/Valuation/Scale.lean)',
         [
-            '&#8704; x : L, scale x = x &#8594; x = bot',
+            '&#8704; x : L, ValuationStructure.scale x = x &#8594; x = bot',
             '&#8869; is the only fixed point of scale.',
             'Proof: suppose scale x = x and x &#8800; &#8869;. By val_scale, '
             'val(scale x) = val(x) + 1. But scale x = x gives val(x) = val(x) + 1, '
@@ -283,8 +283,9 @@ def build():
             '',
             'Every vertex is reachable from root by following directed edges.',
             '',
-            # ⚠⚠ `Reachable` DOES NOT EXIST IN APG.lean — zero occurrences — and the only symbol
-            #   that name could resolve to is `SimpleGraph.Reachable`, which is SYMMETRIC. That is
+            # ⚠⚠ `Reachable` is NOT LOCATED in APG.lean as of 2026-10-09 (searched by identifier),
+            #   and the only resolution located for that name is `SimpleGraph.Reachable`, which is
+            #   SYMMETRIC. That is
             #   not a naming nit: § IV.2's induction terminates ONLY because reachability here runs
             #   ONE WAY. From an acyclic v to a child w, v is not reachable back from w, so
             #   Reach(w) is a STRICT subset of Reach(v) and |Reach| decreases. Under a symmetric
@@ -294,11 +295,14 @@ def build():
             #   ⚠ AND IT SURVIVED THE v1.12 SWEEP BY THREE LINES: that round changed `accessible`
             #   on the line above FOR THIS EXACT REASON and left this one. Same box, same defect,
             #   one line apart — the half-applied sweep at its smallest possible radius.
-            'children(v) = { w : V | v &#8594; w }   (immediate successors)',
+            'children(v) := apg_children v = { w | Nonempty (v &#10230; w) }   '
+            '(immediate successors)',
             'Reach(v)    = { w : V | Nonempty (Quiver.Path v w) }  (reachable from v)',
             '',
             'In a finite APG (Fintype V), every Reach(v) is a finite set. '
-            '|Reach(v)| is the cardinality used in the induction of §IV.',
+            '|Reach(v)| is the cardinality used in the induction of '
+            'ZeroParadox/Settheory/APG.lean &#167; IX '
+            '(this document&#8217;s &#167;IV.2).',
         ]
     ))
     E.append(sp(4))
@@ -380,7 +384,8 @@ def build():
         'Lemma: val_iterate (ZeroParadox/Settheory/APG.lean &#167; III)',
         [
             '&#8704; (x : U) (hx : x &#8800; bot) (k : &#8469;),',
-            '  val (scale^[k] x) = val x + k',
+            '  ValuationStructure.val (ValuationStructure.scale^[k] x) =',
+            '    ValuationStructure.val x + k',
             'For any x &#8800; &#8869;, applying scale k times increases depth by exactly k.',
             'Proof: induction on k; val_scale applies at each step because '
             'scale^[n](x) &#8800; &#8869; follows from the induction hypothesis '
@@ -396,7 +401,8 @@ def build():
     E.append(result_box(
         'Lemma: scale_iterate_unique_fp (ZeroParadox/Settheory/APG.lean §IV)',
         [
-            '&#8704; (k : &#8469;) (hk : 0 < k) (x : U), scale^[k] x = x &#8594; x = bot',
+            '&#8704; (k : &#8469;) (hk : 0 < k) (x : U),',
+            '  ValuationStructure.scale^[k] x = x &#8594; x = bot',
             '&#8869; is the only element fixed by any k-fold iteration of scale (k &#8805; 1).',
             'Proof: if scale^[k] x = x and x &#8800; &#8869;, then val_iterate gives '
             'val(x) = val(x) + k with k &#8805; 1 &#8212; contradiction.',
@@ -582,15 +588,23 @@ def build():
             'runs on Set.ncard, and Set.ncard_lt_ncard and Set.ncard_pos are each '
             'independently choice-tainted. &#8212; And the OLD attribution could not have been right for a reason stronger than absence: Finset and Fintype each report [propext, Quot.sound], so neither has any choice to supply. Fintype IS a hypothesis of decoration_unique, printed in its own box above; what it buys is the termination measure, not the axiom.',
             'Quot.sound       &#8212; quotient soundness (standard in Lean 4)',
-            '&#8226; ACCIDENTAL FOR THE CLASS, UNMEASURED FOR THE THEOREM &#8212; and the '
-            'difference is the whole claim. Scale.lean&#8217;s _VSlit / _VScast pair '
-            'respells route (a)&#8217;s numeral as ((1 : &#8469;) : &#8469;&#8734;) and '
-            'nothing else, and the class then reports no axioms at all: that EXHIBITS a '
-            'clean proof, which is the only thing that earns the word accidental. No such '
-            'witness exists for decoration_unique, whose routes (b) and (c) are untouched by '
-            'any respelling, and whose STATEMENT mentions ValuationStructure &#8212; so its '
-            'type would carry the axiom even with a pristine proof. Its removability is '
-            'therefore UNMEASURED, not established either way.',
+            '&#8226; A RESTATEMENT CLEARS IT FOR THE CLASS; NO PROOF CAN CLEAR IT FOR THE '
+            'THEOREM AS STATED &#8212; and the difference is the whole claim. '
+            'ZeroParadox/Valuation/Scale.lean transcribes the class twice, as _VSlit and '
+            '_VScast, differing only in route (a)&#8217;s numeral, which _VScast writes '
+            '((1 : &#8469;) : &#8469;&#8734;): _VSlit reports [propext, Classical.choice, '
+            'Quot.sound] and _VScast reports no axioms. The declared class still reports the '
+            'axiom; _VScast is a respelling of it, not a proof. '
+            'decoration_unique&#8217;s STATEMENT carries the axiom: a theorem that only '
+            'assumes that statement and proves True reports [propext, Classical.choice, '
+            'Quot.sound] (the statement control, measured 2026-10-09), so no proof of '
+            'decoration_unique as stated can remove it &#8212; the STATEMENT-CARRIED class of '
+            'ZeroParadox/Category/ChoiceCannotBe.md, recorded at DecorationUniverse in '
+            'ZeroParadox/Settheory/APG.lean. Routes (b) and (c) lie in the proof, not the '
+            'statement. Measured 2026-10-09: the same statement restated over clean spellings of '
+            'both classes reports only [propext, Quot.sound] under the statement control, and '
+            'route (b)&#8217;s edge step, re-proved with obtain in place of .some, reports no '
+            'axioms; route (c) was not re-proved in that measurement.',
             'No ZP-specific AXIOM is declared anywhere in this chain; the footprint above is '
             'what the Lean reports, not a commitment the framework makes.',
             'No Dependent Choice. No additional set-theoretic assumptions.',
