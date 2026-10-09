@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.33, revised October 2026)
+Zero Paradox — Foreword PDF Builder (v2.34, revised October 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.33'
+VERSION = '2.34'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -369,10 +369,12 @@ def build():
             'depends on no Lean kernel axioms at all. Classical.choice does reach the realization '
             'layers, and not only by inheritance from Mathlib — the category-theory layer spends a '
             'bare classical written in framework source (fixedPointFree_of_nontrivial, in '
-            'ZeroParadox/Category/Lawvere.lean), and that one is essential rather than incidental, '
-            'since wem_of_fixedPointFree derives weak excluded middle from the general '
-            'fixed-point-free principle. Where a dependence comes from and whether it can be '
-            'removed are independent questions: an inherited dependence can be essential too '
+            'ZeroParadox/Category/Lawvere.lean), and that one is essential rather than incidental given an '
+            'unproved premise (that weak excluded middle is not derivable in Lean without choice; '
+            'ZeroParadox/Category/ChoiceCannotBe.lean, Section IV), since wem_of_fixedPointFree derives '
+            'weak excluded middle from the general fixed-point-free principle. Where a dependence comes '
+            'from and whether it can be removed are independent questions: an inherited dependence can '
+            'be essential too, on the corresponding premise for excluded middle '
             '(em_of_wellOrder_comparable, on Mathlib\'s InitialSeg.total). The measured footprints '
             'are a checkable artifact — ZeroParadox/AxiomProfile.lean, with ZP-K Section IV '
             'holding a dated measurement table for the computability layer.',
