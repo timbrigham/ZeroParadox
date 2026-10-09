@@ -9,18 +9,18 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-F The Counterexamples | v1.11 | ZP-F_The_Counterexamples.pdf | v1.14 | N/— | formal:caebb48d comp:d6bdb1f7 |
 | ZP-C Information Theory | v1.25 | ZP-C_Information_Theory.pdf | v2.10 | N/— | formal:68a7612d comp:6d0c398b |
 | ZP-D State Layer | v1.15 | ZP-D_State_Layer.pdf | v1.13 | N/— | formal:923468a5 comp:32064117 |
-| ZP-E Bridge Document | v3.53 | ZP-E_Bridge_Document.pdf | v1.25 | Y/Y | formal:90c7e450 comp:fa038975 |
+| ZP-E Bridge Document | v3.54 | ZP-E_Bridge_Document.pdf | v1.25 | Y/Y | formal:acd1f2bf comp:fa038975 |
 | ZP-G Category Theory | v1.21 | ZP-G_Category_Theory.pdf | v1.14 | N/— | formal:f4aab542 comp:c581bda6 |
 | ZP-H Categorical Bridge | v1.24 | ZP-H_Categorical_Bridge.pdf | v1.17 | N/— | formal:ee73cbff comp:612ccd7b |
 | ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:5c0bb985 |
-| ZP-I Inside Zero | v1.27 | ZP-I_Inside_Zero.pdf | v1.33 | N/— | formal:2495a75b comp:5da576c8 |
+| ZP-I Inside Zero | v1.28 | ZP-I_Inside_Zero.pdf | v1.33 | N/— | formal:59cd2314 comp:5da576c8 |
 | ZP-J Self-Reference | v2.9 | ZP-J_Self_Reference.pdf | v1.33 | N/— | formal:83f78357 comp:7cfd99e4 |
 | ZP-J AFA Addendum | v1.16 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:7e46e9e2 |
 | ZP-J Wheel Addendum | v1.8 | ZP-J_Wheel_Addendum.pdf | v1.6 | N/— | formal:2be7f9c9 comp:5f817977 |
 | ZP-J Keystone Addendum | v1.25 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:4fd4b585 |
 | ZP-K Computational Grounding | v1.25 | ZP-K_Computational_Grounding.pdf | v1.23 | N/— | formal:e91ed70f comp:44e886f8 |
-| ZP-L Incomputability Convergence | v1.26 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:706d1ddf comp:cc1bad38 |
-| ZP-M Kleene-Ordinal Bridge | v1.12 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:d8c95827 comp:a6ff1cab |
+| ZP-L Incomputability Convergence | v1.27 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:da5d2533 comp:cc1bad38 |
+| ZP-M Kleene-Ordinal Bridge | v1.13 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:dcf883fa comp:a6ff1cab |
 | ZP-N The Constructive Snap | v2.2 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:2f68443b |
 | ZP-P The Fixed-Point Fork | v1.24 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:4b914ac3 |
 | ZP-R Cross-Category Fixed Point | v1.20 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:b73d52ec |
