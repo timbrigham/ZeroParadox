@@ -84,10 +84,10 @@ part (measured 2026-10-08):
   (`e0OmegaPow_top`, `rfl`), and ⊤ is its **only** fixed point by a theorem
   (`e0OmegaPow_fixedpoint_iff`). The statement and the proof of each measure `[propext]` (measured
   2026-10-08). So this is a choice-free Lean restatement of the fixed-point equation and its
-  uniqueness, with existence set by definition rather than derived, on an order that is not
+  uniqueness on `E0Note`, with existence set by definition rather than derived, on an order that is not
   well-founded (the `example` stating `¬ WellFoundedLT E0Note`). That file states no leastness
   declaration. Its crossing into `Ordinal`, `e0Repr`, carries `Classical.choice` (its purity block).
-* **Open: the derived reading.** A well-founded Lean carrier on which ε₀'s fixed point is derived
+* **Open: the derived reading.** A well-founded Lean carrier whose statements are choice-free, on which ε₀'s fixed point is derived
   rather than set by definition, leastness included, was not located as of 2026-10-08. Searched: this
   corpus (`ZeroParadox/**/*.lean` for carriers built over ordinal notations; `E0Note` is the only one
   reaching ε₀), three `theoremsearch` phrasings and one web search. The crossing of any such result

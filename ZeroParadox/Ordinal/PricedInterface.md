@@ -65,9 +65,11 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
 instances and lemmas (`WithTop.instPreorder`, `WithTop.decidableLE`, `WithTop.decidableLT`,
 `WithTop.instOrderTop`, `WithTop.coe_lt_top`, each `[propext, Quot.sound]`), not through anything
 about ordinals: `SynONote`'s own order, `instLinearOrderSynONote`, measures `[propext]`. It is *not*
-`Classical.choice`, and the constructive side carries no choice anywhere.
+`Classical.choice`, and no declaration on the constructive side carries choice. The one proof here
+that does is the `example` stating `¬ WellFoundedLT E0Note`, through `WellFounded.has_min`; its
+statement does not.
 
-So the boundary is *priced*: staying on the notation side costs at most `[propext, Quot.sound]` and
+So the boundary is *priced*: the notation side's declarations cost at most `[propext, Quot.sound]` and
 never `Classical.choice`; crossing to `Ordinal` costs `Classical.choice` at every declaration; and the
 crossing is one named map rather than a diffuse correspondence.
 

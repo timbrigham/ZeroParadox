@@ -72,9 +72,10 @@ def build():
         'as stated, already carry Classical.choice in their statements (the statement control, '
         'measured 2026-10-08), so no proof of those statements can drop it. For the ascent below '
         '&#949;<sub>0</sub> it is the price of a tool stronger than the job requires: the ascent is '
-        'restated choice-free here, on notations. For the results that name &#949;<sub>0</sub>, a '
-        'choice-free Lean restatement exists with the fixed point set by definition (E0Note, below); '
-        'one that derives it on a well-founded carrier was not located as of 2026-10-08 '
+        'restated choice-free here, on notations. For &#949;<sub>0</sub> itself, a choice-free Lean '
+        'restatement of the fixed-point equation and its uniqueness on E0Note exists, with existence '
+        'set by definition (E0Note, below); a choice-free derivation in Lean of the fixed point on a '
+        'well-founded carrier, leastness included, was not located as of 2026-10-08 '
         '(ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint, records the search).'))
     E.append(body(
         'So this layer does two things. It rebuilds the ascent syntactically, where it is choice-free. '
@@ -233,7 +234,7 @@ def build():
         'notations with a single point adjoined on top, that point standing for &#949;<sub>0</sub>. '
         'Below the top, comparison is the existing syntactic comparator and stays decidable; the map '
         'e0Repr sends the carrier into Mathlib&#8217;s Ordinal. Measured, the boundary is priced: the '
-        'carrier side carries no Classical.choice anywhere, and the map carries it at every '
+        'carrier side&#8217;s declarations carry no Classical.choice, and the map carries it at every '
         'declaration. Staying constructive is free; crossing costs the classical assumption; and the '
         'crossing is one named function.'))
 
@@ -280,7 +281,9 @@ def build():
             '<i>minimality</i> &#8212; that &#949;<sub>0</sub> is the LEAST fixed point of '
             'x &#8614; &#969;<sup>x</sup> &#8212; is a separate, harder target: it quantifies over the '
             'limit, which no notation names, so it cannot be stated purely syntactically on ONote. '
-            'That direction remains open; what is proved here is the from-below half, choice-free.',
+            'Leastness is proved on Ordinal (epsilon0_min_eq_max, with choice); a choice-free proof of '
+            'it on a well-founded carrier was not located as of 2026-10-08. What is proved here is the '
+            'from-below half, choice-free.',
         ]
     ))
     E.append(sp(6))
@@ -329,14 +332,15 @@ def build():
             'converse (comparable_of_classical) carries Classical.choice, as it must.',
             'The carrier (E0Note, e0Coe): no axioms at all; its decidable-order instances '
             '[propext, Quot.sound]. The crossing (e0Repr and every lemma about it): '
-            '[propext, Classical.choice, Quot.sound]. The carrier side carries no choice anywhere.',
+            '[propext, Classical.choice, Quot.sound]. No declaration on the carrier side carries choice.',
             'Together these locate the Classical.choice in ZP-L&#8217;s &#949;<sub>0</sub> results: it '
             'is not in the Ordinal type, and not in the ascent (which is proved choice-free here), but '
             'in the order instance the semantic statement passes through, whose comparability implies '
             'excluded middle. Locating it is not eliminating it: those &#949;<sub>0</sub> '
             'results, as stated, are <b>statement-carried</b> (their statements carry choice); for '
-            'the ones that name &#949;<sub>0</sub>, the choice-free Lean restatement on E0Note sets '
-            'the fixed point by definition, and one that derives it on a well-founded carrier was not '
+            '&#949;<sub>0</sub> itself, a choice-free Lean restatement of the fixed-point equation and '
+            'its uniqueness on E0Note sets existence by definition, and a choice-free derivation in '
+            'Lean of the fixed point on a well-founded carrier, leastness included, was not '
             'located as of 2026-10-08 (ZeroParadox/Ordinal/SnapNucleus.md, section Axiom footprint). '
             'Zero sorry. Verified: lake build, October 2026.',
         ]
@@ -352,7 +356,8 @@ def build():
             'well-orders implies excluded middle (taboo cited to Kraus, Nordvall Forsberg and Xu) | '
             'a carrier of notations denoting the ordinals up to &#949;<sub>0</sub>, with the crossing '
             'priced at one named map | '
-            'minimality (&#949;<sub>0</sub> the least fixed point) open.</i>',
+            'leastness of &#949;<sub>0</sub> is proved on Ordinal (epsilon0_min_eq_max, with choice); '
+            'a choice-free proof of it on a well-founded carrier was not located as of 2026-10-08.</i>',
             S['endnote']),
     ]
 
