@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.34, revised October 2026)
+Zero Paradox — Foreword PDF Builder (v2.35, revised October 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.34'
+VERSION = '2.35'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -412,11 +412,16 @@ def build():
             'element of it.',
             S['body']),
         Paragraph(
-            'There is a deeper unity here than shared position. In each layer ⊥ is not merely '
-            'the starting element — it is the same kind of element: the one that refers to '
-            'itself. In set theory it is the Quine atom, the set whose only member is itself '
-            '(⊥ = {⊥}). In computation it is read as the self-reproducing program, the fixed point of '
-            'Kleene\'s recursion theorem — a process that runs on its own description. In the '
+            'There is a deeper unity here than shared position. In each layer ⊥ plays the same '
+            'role, beyond being the starting element: the role of the element that refers to '
+            'itself, with its occupant supplied per layer. In set theory it is the Quine atom, the set whose only member is itself '
+            '(⊥ = {⊥}). In computation the role is filled by a code from the Rogers / Kleene '
+            'fixed-point theorem: for every computable transform f of codes there is a code c with '
+            'eval (f c) = eval c (Rogers\' form, computability_face_fixedPoint, '
+            'ZeroParadox/Category/Lawvere.lean). Such a code is a term of another type than ⊥ of the '
+            'ZPSemilattice. The KleeneStructure class requires a code meeting a periodicity condition '
+            '(botCode_is_quine); reading that code as the computational face of ⊥ is the commitment, '
+            'not a theorem (ZeroParadox/Computability/Kleene.lean). In the '
             '2-adic numbers it is the point infinitely divisible into itself, v₂(0) = ∞. '
             'In ZP-G&#8217;s category it is the initial object, the source from which every arrow '
             'departs and to which none return (AX-G2); in the Hilbert-space realization, where the initial '
@@ -437,9 +442,9 @@ def build():
             'its location. '
             'Self-reference is normally a ceiling phenomenon: it appears at the limits of a '
             'system, in the sentences a theory cannot prove about itself. Here it sits at the '
-            'floor. The Zero Paradox locates this diagonal fixed point at the bottom of every '
-            'framework. The framework formalises these faces as instances of a single '
-            'self-application structure and proves membership per domain. Whether they are '
+            'floor. For the faces formalized in ZP-R (Section III), Lawvere\'s theorem is the '
+            'translation key between them, not a mechanism every face instantiates, and the '
+            'self-application role is filled per face. Whether the faces are '
             'all one object is not an open question but a retired one: it is retired as ill-typed '
             '(object equality across categories does not typecheck and is not invariant under '
             'equivalence). What survives is the family.',
