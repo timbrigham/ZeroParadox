@@ -205,8 +205,6 @@ This is a **reference** for the framework's central transition, the **snap** - t
 
 It is a **beginning, not a resolution.** What is *proved* is that the snap's shape is derived rather than assumed (that it occurs follows from the occurrence commitment together with DA-1, closed given DP-2), one-way, takes its first step from below, and that the domain snaps form one **family** (MC-1, membership proved per domain); what is *retired* is the reading that they are numerically one object (ill-typed: object equality across categories does not typecheck and is not invariant under equivalence); and what stays *open* is a choice-free proof of ε₀'s leastness on a well-founded carrier, not located as of 2026-10-08 (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint). The frame-change faces are proved theorems that compose known results, so no new theorem is claimed there; what stays a conjecture is only the abstract cross-domain reading (`Reading:` INVERSION, conjectural) - that they are literally one change of frame (a type boundary) - written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
 
-> **See it - [The Snap Loop](snap-loop.html).** The snap-arc from ⊥ (= 0) of `Ordinal` to ε₀ as one interactive loop in the 2-adic integers ℤ_[2]: a single discrete step off the 0 of ℤ_[2] and a return toward it (`snap_arc_z2_loop`). What plays the ⊥ role of a `ZPSemilattice` is that ⊥ (proved, `t_iz_limit_is_new_null`). That the return is to a NEW bottom is a commitment, not a theorem; in this 2-adic realization the arc tends back to the same 0 of ℤ_[2]. Hover any point for the checkable Lean witness.
-
 ---
 
 {rosetta}

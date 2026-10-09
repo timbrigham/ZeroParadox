@@ -8,12 +8,6 @@ For a dictionary and map of ⊥ - the object the whole framework is built on - s
 
 > **Start here - [The Minimal Core](MINIMAL_CORE.md).** The whole shape the framework is built on - engine, wall, floor, the snap in both directions, and the fan-out - in one self-contained Lean file, on the smallest objects that can carry it. Written to be read either way: plain-language idea first, checkable file behind it. The shortest path to what the project is about.
 
-> **Interactive - [The Bottom Family tree](bottom-family-tree.html).** A single visual map of ⊥ across the fields: hover any node to see why it lands where it does, with the checkable Lean witness. The clearest one-picture view of what the framework assembles.
-
-> **Interactive - [The Diagonal Family](diagonal-family.html).** The self-reference arguments - Cantor, Russell, Gödel, Tarski, Turing, the recursion theorem - as one diagonal fixed point, forked by whether self-reference can close: walls (it cannot) and floors (it does). Hover any node for the checkable Lean witness.
-
-> **Interactive - [The Snap Loop](snap-loop.html).** The whole object in one picture: the snap-arc from ⊥ (= 0) of `Ordinal` to ε₀, realized as a loop in the 2-adic integers ℤ_[2], a single discrete step off the 0 of ℤ_[2] and a return toward it. In this 2-adic realization floor and ceiling are the same 0 of ℤ_[2]: the arc leaves that 0 and tends back to it (`snap_arc_z2_loop`). What plays the ⊥ role of a `ZPSemilattice` is that ⊥ (proved, `t_iz_limit_is_new_null`). That the return is to a NEW bottom is a commitment, not a theorem; in this 2-adic realization the arc tends back to the same 0 of ℤ_[2]. One tower has two closures: in `Ordinal` it closes at ε₀, and in ℤ_[2] its images tend to that 0 (`mu_construction_correspondence`). ε₀ is the first fixed point of ω^· above ⊥ (= 0) of `Ordinal`, and equally the supremum of the tower 0, 1, ω, ω^ω, … that climbs to it; it is not the next ordinal above ⊥ of `Ordinal`, which is 1. ε₀ is never ⊥ (= 0) of `Ordinal`, though, like every ordinal, it is ⊥ of the ordinals at or above itself (`Set.Ici ε₀`). It maps the trajectory as a whole, not the route between - that runs through internal state with no external description. Hover any point for the checkable Lean witness.
-
 ---
 
 ## What This Is
