@@ -7,7 +7,7 @@ authoritative**.
 
 ## The probe
 
-The probe (2026-06-15; its measurements are reprinted by the purity blocks of
+The probe (2026-06-15; its `Ordinal`-side measurements are reprinted by the purity blocks of
 `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` and `ZeroParadox/Ordinal/PricedInterface.lean`)
 showed that ZP-L's `Classical.choice` at ε₀ is *inherited* from Mathlib's classically-built `Ordinal` machinery — the order
 instance and the operations, NOT the type, which measures `[propext, Quot.sound]` — but the
@@ -89,8 +89,9 @@ Read from the arXiv v2 PDF:
   set to 1.
 * **Theorem 22** (p. 13): every `Cnf`, embedded into their Brouwer trees `Brw`, lies below
   `limit (λk. ω↑↑k)`, which they call ε₀. `Brw`'s order is well-founded (their Theorem 4, p. 7), so `Brw`
-  names ε₀ on a well-founded carrier, in Agda rather than Lean; whether ω^ε₀ = ε₀ is a stated theorem
-  there was not checked.
+  names ε₀ on a well-founded carrier, in Agda rather than Lean. Their Agda module `BrouwerTree.Arithmetic.Properties`
+  states `ε₀≡ω^ε₀ : ε₀ ≡ ω^ ε₀`, and the proof of Theorem 22 (p. 26) uses ε₀ = ω^ε₀; a leastness
+  lemma was not located there (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint).
 
 The Coq precedent on the same carrier is Castéran and Contejean's *hydra-battles*; its credit, including
 the comparator and the order construction, is in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`
