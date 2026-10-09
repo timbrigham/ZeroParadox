@@ -15,8 +15,10 @@ ZPL has four components:
    layers tabulated in §I. The footprints are not uniform:
    `ZeroParadox/Computability/Kleene.lean` §V proves one statement both ways with opposite
    footprints, and ZP-K §IV tabulates the measurements. Not a Lean proposition — and
-   `#print axioms` measures a proof's dependencies, never a theorem's need; necessity takes a
-   reduction to a taboo (`ZeroParadox/Category/ChoiceCannotBe.lean` §IV).
+   `#print axioms` on a proof measures that proof's dependencies, never a principle's need;
+   necessity takes a reduction to a taboo (`ZeroParadox/Category/ChoiceCannotBe.lean` §IV), and
+   whether a statement as written carries choice is the statement control (STATEMENT-CARRIED,
+   `ZeroParadox/Category/ChoiceCannotBe.md`).
 2. **Rogers' Fixed-Point Stability** — for any computable `f`, some code is behaviourally
    fixed by `f` (`eval (f c) = eval c`). In Lean scope; follows from ZPK's
    `roger_fixed_point_exists`.
