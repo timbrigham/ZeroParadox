@@ -97,7 +97,7 @@ theorem snapEmbed_c1_dvd (n : ℕ) : (2 : ℤ_[2])^n ∣ snapEmbed c₁ := by
 taken as a hypothesis: of the infinitely many admissible firing points that monotonicity and
 tower alignment (every tower stage sent to c₀) leave open, `hε₀` selects the least, and so fixes φ
 uniquely (the examples after `snap_unconditional` below). Whether `Classical.choice` is forced by
-the metric collapse is a separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.lean`).
+the metric collapse is a separate open question (`ZeroParadox/Ordinal/SyntacticCollapse.md`).
 -/
 
 /-- Given φ ε₀ = c₁ and monotonicity, every ordinal fixed point of ω^· maps to c₁.
