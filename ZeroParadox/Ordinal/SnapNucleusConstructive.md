@@ -16,15 +16,13 @@ machine-checked impossibility rather than a failed attempt.
 
 * **`snapNucleus` is not made choice-free here.** Nothing in the Lean file is a re-proof, replacement, or discharge
   of `snapNucleus`, `snapNucleus_bot`, or any result in `ZeroParadox/Ordinal/SnapNucleus.lean`. Those
-  stand exactly as they are, with the footprint they have.
-  **Correction of record (2026-07-19):** this bullet previously read "and cannot be," justified by
-  "Mathlib's `Ordinal` is a quotient of well-ordered types; `Classical.choice` sits in the *type*." That
-  is **false as measured** — `#print axioms Ordinal` reports `[propext, Quot.sound]`, no choice. Choice
-  enters through the order instance and the operations (`Ordinal.instLinearOrder`, `Ordinal.nfp`,
-  `Ordinal.omega0`, `Ordinal.epsilon`). The claim was reasoning from a quotient construction instead of
-  measuring it, and the "cannot be" conclusion drawn from it does not stand. Whether `snapNucleus` is
-  re-provable choice-free is **open, and untried in this corpus as of 2026-08-02**; its footprint
-  is UNCLASSIFIED.
+  stand exactly as they are, with the footprint they have. Choice is not in the `Ordinal` type
+  (`#print axioms Ordinal` reports `[propext, Quot.sound]`); it enters through the order instance and
+  the operations (`Ordinal.instLinearOrder`, `Ordinal.nfp`, `Ordinal.omega0`, `Ordinal.epsilon`). As
+  stated, `snapNucleus` and its results are STATEMENT-CARRIED (statement control, measured 2026-10-08;
+  `ZeroParadox/Category/ChoiceCannotBe.md`), so no proof of those statements can drop the choice. The
+  open question is a restatement on a carrier whose statements are choice-free; on `ONote` it is
+  blocked by naming, not by choice (below).
 * **This is a different declaration on a different carrier.** Everything here lives on `ONote` (raw
   Cantor-normal-form syntax) and on `SynONote`, the type synonym carrying the comparator-derived
   order. `ONote` is not `Ordinal` and `SynONote` is not `Ordinal`. Exactly one theorem mentions
@@ -132,9 +130,9 @@ Both halves are measured here, and they split:
   `SynONote` — is choice-free. **The one exception is deliberate and disclosed:**
   `mathlib_ONote_order_not_antisymm` measures `[propext, Classical.choice, Quot.sound]` because it is a
   statement *about* Mathlib's `repr`-based order, not part of the constructive development.
-  **This does NOT classify `snapNucleus`'s own footprint as accidental** — that would be
-  an eliminability claim, and no re-proof of `snapNucleus` was located as of 2026-08-02. Its status is **UNCLASSIFIED**
-  (`ZeroParadox/Ordinal/SnapNucleus.lean` records the same).
+  **This does NOT classify `snapNucleus`'s own footprint as accidental** — as stated it is
+  **STATEMENT-CARRIED** (statement control, measured 2026-10-08), so neither accidental nor essential
+  can be asked of it (`ZeroParadox/Ordinal/SnapNucleus.md` records the same).
 * **The counterpart route via this carrier is blocked — for a different reason than choice.** What
   blocks it is **expressive reach**: *this* carrier cannot name the object the closure produces.
   **Scope, narrowly:** the result is about `ONote`-shaped notation systems, not about constructive

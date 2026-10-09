@@ -423,8 +423,8 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 The named declarations of §§ I-II measure `[propext, Quot.sound]`. § IV inherits
-`Classical.choice` from `snapNucleus` and Mathlib's `Ordinal` fixed-point theory, UNCLASSIFIED as in
-`ZeroParadox/Ordinal/SnapNucleus.lean`. -/
+`Classical.choice` from `snapNucleus` and Mathlib's `Ordinal` fixed-point theory, STATEMENT-CARRIED as in
+`ZeroParadox/Ordinal/SnapNucleus.lean` (statement control on each, measured 2026-10-08). -/
 
 section PurityCheck
 open ZeroParadox

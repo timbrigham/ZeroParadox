@@ -21,12 +21,13 @@ The justification is false as measured: `#print axioms Ordinal` reports `[propex
 is no choice in the type. And the conclusion overreaches its evidence by one step: everything ZP-N proved
 choice-free (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) is a fact about the *ascent*, while ε₀ is
 past what the notation system can name (`tower_cofinal`,
-`ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). Note the weaker verb: the ε₀ results' status is
-**unclassified**, not refuted — no choice-free re-proof was located either way as of 2026-08-02.
+`ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). Note the weaker verb: the ε₀ results, as stated, are
+**STATEMENT-CARRIED** (statement control, measured 2026-10-08; `ZeroParadox/Category/ChoiceCannotBe.md`),
+and whether a restatement on a choice-free carrier holds is open, not refuted.
 
 Worse, the claim was **not measurable by the instrument used to support it.** `Classical.choice` sits in
-the `Ordinal.partialOrder` *instance term*, so every statement mentioning that order inherits it however
-it is proved — `a ≤ a` carries choice while `a = a` does not (`order_footprint_le` and
+the `Ordinal.partialOrder` *instance term*, so every statement written through that instance inherits it,
+as written, however it is proved — `a ≤ a` carries choice while `a = a` does not (`order_footprint_le` and
 `order_footprint_eq`, `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`, stated as two theorems
 precisely so that file's purity block *prints* the contrast rather than asserting it). Axiom footprints
 on ε₀ results measure the ambient instance, not the proofs.
@@ -73,7 +74,7 @@ crossing is one named map rather than a diffuse correspondence.
 **What that measurement does and does not license.** It locates where the classical assumption is paid
 on this pair of carriers. It does **not** show that Mathlib's ε₀ results are eliminable — that would
 require re-proving them, on this carrier, and no such re-proof was present in this
-repository as of 2026-08-02. This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.lean` records. The honest
+repository as of 2026-08-02. This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.md` records. The honest
 sentence remains: *the ε₀ results borrow a tool far stronger than they need.* Note also the standing
 caveat from `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` — `Classical.choice` sits in
 `Ordinal`'s order *instance term*, so a choice footprint on any `Ordinal`-mentioning statement is

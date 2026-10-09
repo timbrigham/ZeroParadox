@@ -44,6 +44,23 @@ is a CHART claim about two measurements of one object, never a point identity: i
 and `∞` are provably distinct, which is what makes the swap non-trivial.
 Completing the meta-lattice by that boundary is a separate construction, not attempted here.
 
+## Axiom footprint
+
+`snapNucleus` and the results about it are STATEMENT-CARRIED (`ZeroParadox/Category/ChoiceCannotBe.md`):
+each statement, only assumed, already reports `Classical.choice` (statement control, measured 2026-10-08).
+The choice is **not** in the `Ordinal` type — `#print axioms Ordinal` reports `[propext, Quot.sound]`. It
+enters through the *order instance and the operations*: `Ordinal.instLinearOrder`, `Ordinal.nfp`,
+`Ordinal.omega0` and `Ordinal.epsilon` each measure `[propext, Classical.choice, Quot.sound]`, and
+`snapNucleus` is built from `nfp` over `omega0 ^ ·` on that order.
+
+The open question is a restatement on a notation carrier whose statements are choice-free. What ZP-N
+re-proved choice-free is the ordinal *ascent* on `ONote` (`exp_lt_term`, `omegaPow_no_fixedpoint`,
+`tower_strictMono`), which is evidence for that question and is not the nucleus.
+`ZeroParadox/Ordinal/SnapNucleusConstructive.lean` shows the natural counterpart route on `ONote` is
+**blocked** — no idempotent endomap of the notation carrier can have the ε-numbers as closed points —
+and that obstruction is about **expressive reach, not choice** (its own proofs are `[propext]`). A
+notation system extending past ε₀ is untouched.
+
 ## Credit outward
 
 `nfp`-as-closure/nucleus is textbook fixed-point theory (Knaster–Tarski / Kleene; nuclei = point-free

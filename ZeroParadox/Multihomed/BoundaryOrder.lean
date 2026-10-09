@@ -389,8 +389,9 @@ end ZeroParadox
 
 `phaseEquivWithBot`, `phaseEquivWithTop`, `phaseFloorToTop`, `withBotClosure` and
 `withBotClosure_apply` measure `[propext, Quot.sound]`.
-The rest inherit `Classical.choice` from Mathlib's `Ordinal` order and fixed-point theory,
-UNCLASSIFIED as in `ZeroParadox/Ordinal/SnapNucleus.lean`. -/
+The rest inherit `Classical.choice` from Mathlib's `Ordinal` order and fixed-point theory, and are
+STATEMENT-CARRIED as in `ZeroParadox/Ordinal/SnapNucleus.lean` (statement control, measured 2026-10-08),
+except `phaseTower`, whose statement is choice-free: it stays UNCLASSIFIED. -/
 
 section PurityCheck
 open ZeroParadox

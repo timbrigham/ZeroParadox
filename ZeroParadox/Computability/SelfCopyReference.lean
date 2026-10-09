@@ -197,7 +197,8 @@ theorem doubling_only_periodic_point_zero (x : ℚ_[2]) (p : ℕ) (hp : 0 < p)
   INFINITE carrier PERFORMS one is a commitment — see `l_inf` (`ZeroParadox/Information/Surprisal.lean`).
   `MachinePhase`, the two-phase rounding that carries `machinePhaseKleene`, admits none
   (`no_selfCopyRef_of_finite`; the `example` in `ZeroParadox/Computability/ComputationCannotBe.lean` § IX).
-* `#print axioms` reports a proof's footprint, never a theorem's necessity. -/
+* `#print axioms` on a proof reports that proof's footprint, never a principle's necessity; whether a
+  statement as written carries choice is a separate measurement (`ZeroParadox/Category/ChoiceCannotBe.md`). -/
 
 end ZeroParadox
 
