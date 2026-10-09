@@ -74,6 +74,7 @@ a successor null, are further COMMITMENTS. Overview and fences: `SemilatticeInst
 
 Key results: t_iz_cauchy (topological core; inherits Classical.choice from Mathlib analysis), t_iz_complete (all steps formal).
 -/
+-- The syntactic-depth → 2-adic-valuation bridge is proved on the tower only (`synVal_tower_eq_valuation`, `ZeroParadox/Ordinal/CnfBridge.lean`), not on general notations (fails at ω+1).
 
 namespace ZeroParadox
 
