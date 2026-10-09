@@ -12,7 +12,7 @@ stub-first rationale and the full SJV sync sequence are here.
 
 ## Framework Structure (for context)
 
-The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap (⊥ → ε₀) as a theorem. The dependency order of the formal layers is:
+The Zero Paradox is a multi-layer mathematical ontology whose central theorem T-SNAP proves the shape of the Binary Snap, the step from the bottom element ⊥ of a two-state carrier to the state above it (named ε₀ in that chart), and not that the step occurs: occurrence rests on the occurrence commitment (with DA-1). The dependency order of the formal layers is:
 
 **ZP-A** (lattice algebra) → **ZP-B** (p-adic topology) → **ZP-C** (information theory) → **ZP-D** (state layer) → **ZP-E** (DA-1/T-SNAP derivation)
 
