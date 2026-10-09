@@ -201,8 +201,8 @@ def build():
         'corresponds to orthogonality in H. States with no continuous path between them are '
         'represented as perpendicular vectors.'))
     E.append(cbody(
-        'ZP-D works with exactly two foundational states: ⊥ (non-existence) '
-        'and the minimum state off ⊥ (ε₀, existence). This is not a simplifying assumption — '
+        'ZP-D works with exactly two foundational states: ⊥ of OntologicalStates (non-existence) '
+        'and ε₀, the state off ⊥ of OntologicalStates (existence). This is not a simplifying assumption — '
         'it is the irreducible minimum. The core question is whether any transition from ⊥ to '
         'a first state is possible, and for that question n=2 is the smallest meaningful case. '
         'No claim in ZP-D requires n > 2. Binary is the logical ground floor, not a placeholder '
@@ -217,7 +217,7 @@ def build():
         'Think of it as a coordinate system where every axis is perpendicular to every other '
         'and all axes are the same length.'))
     E.append(cbody(
-        'The element 0 maps to e₀; the first state off ⊥, ε₀, maps to e₁; and so on. Because '
+        'The element 0 maps to e₀; the nonzero element ε₀ of ℚ₂ maps to e₁; and so on. Because '
         'clopen balls are completely separated (ZP-B), their images under T are orthogonal in H.'))
     E.append(t_map_diagram())
     E.append(ccaption(

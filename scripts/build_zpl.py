@@ -267,7 +267,7 @@ def build():
             'and by Tarski\'s completeness theorem for the theory of real-closed fields, '
             'every first-order sentence in the language of ordered fields that holds in '
             '&#8477; also holds in No, and vice versa.',
-            'ZP-F (The Counterexamples) proves that the Binary Snap &#8212; the transition from &#8869; to the ordinal threshold (&#949;&#8320;, '
+            'ZP-F (The Counterexamples) proves that the Binary Snap &#8212; the transition from &#8869; to the first fixed point of &#969;<super>&#183;</super> above &#8869; of Ordinal (&#949;&#8320;, '
             'established in §V&#8211;§VII above) &#8212; cannot occur in any linearly ordered '
             'field. This result applies directly to No considered as a linearly ordered field. '
             'Note the scope: what is derived is the transition&#8217;s SHAPE and its impossibility in an ordered field.',

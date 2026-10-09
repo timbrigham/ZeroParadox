@@ -252,7 +252,7 @@ def build():
         'In ZP-A, ⊥ is the bottom of the lattice and the axioms forbid any non-trivial return. '
         'In ZP-C, the informational cost of approaching ⊥ diverges — infinite '
         'cost means no finite path reaches it. In ZP-D, the basis vector e₀ is orthogonal to '
-        'every state off ⊥ — a right-angle separation that cannot be gradually closed.'))
+        'e₁, the image of ε₀ (T4) — a right-angle separation that cannot be gradually closed.'))
     E.append(remember_box(
         'The power set example shows that the structural floor property is not exotic: it appears '
         'in the most elementary object in set theory. What is non-trivial about the ZP framework '
@@ -403,7 +403,7 @@ def build():
     E.append(ccaption(
         'All four frameworks describe the Binary Snap (T-SNAP) in their own language. '
         'The vertical line marks the moment of the Snap. '
-        'Left: ⊥. Right: the minimum state off ⊥.'))
+        'Left: ⊥. Right: ε₀.'))
     E.append(sp(6))
 
     E.append(remember_box(

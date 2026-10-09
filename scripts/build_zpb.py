@@ -43,7 +43,7 @@ def build():
     E.append(Paragraph('1.1  The Binary Existence Axiom', S['h2']))
     E.append(label_box('Axiom AX-B1 — Binary Existence', [
         'The foundational distinction of the Zero Paradox framework is binary: a state either exists or it does not. There is no third option at this level.',
-        '0 — non-existence (&#8869; of OntologicalStates, the Lean encoding below)',
+        '0 — non-existence (&#8869; in ZP-A; in Lean, &#8869; of OntologicalStates under instOntZPS)',
         '1 — existence (&#949;<sub>0</sub>, the state off &#8869; of OntologicalStates)',
         'AX-B1 holds at every state with anything above it: each has a first distinct state above it, with nothing strictly between. A state with nothing above it owes no step. (In this two-state chart, 1 is the top.)',
         'Status: AXIOM. This is the only non-topological commitment in ZP-B. It precedes p-adic analysis and is the premise from which the field selection is derived.',

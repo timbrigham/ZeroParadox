@@ -200,7 +200,7 @@ def build():
         'What it measures in this framework: depth of binary structure — how many times 2 divides x.',
         'The crucial point: 0 and any nonzero element lie in disjoint clopen sets of ℚ₂. '
         'No continuous path connects them — the geometry enforces the binary gap.',
-        'Note on ε₀: the first state off ⊥ is not a specific number you can look up in ℚ₂ — '
+        'Note on ε₀: ε₀ is not a specific nonzero element of ℚ₂ that you can look up — '
         'the 2-adic number system has no smallest nonzero element. ε₀ is the framework\'s name '
         'for the minimum viable departure from null, defined by structural constraints. '
         'The geometry provides the right topology; it does not fix the specific value.',
@@ -286,8 +286,8 @@ def build():
 
     E.append(nested_balls_diagram())
     E.append(ccaption(
-        'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold (the first state off ⊥ in '
-        'the framework) marks the Snap boundary. '
+        'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold (a framework threshold, not a '
+        'specific nonzero element of ℚ₂) marks the Snap boundary. '
         '0 is clopen-separated — no continuous path from outside ever reaches it.'))
 
     E.append(key_result_box('Key Result: Total Disconnectedness (T5)',
@@ -322,7 +322,7 @@ def build():
     E.append(remember_box(
         'Remember: The 2-adic structure — ultrametric, clopen balls, clopen separation of 0 — is '
         'fixed by the framework\'s axioms. ε₀ (the Snap threshold) is a structural concept: '
-        'the minimum state off ⊥ required by those axioms, not a specific physical constant. '
+        'the minimum step required by those axioms, not a specific nonzero element of ℚ₂ and not a specific physical constant. '
         'The Zero Paradox is a structural argument, not a physical theory of our particular universe.'))
 
     print(f'Building: {out_path}')

@@ -149,8 +149,8 @@ def build():
             'Clopen separation of 0 from all nonzero elements (T3). Snap irreversibility (C3).',
             'From ZP-C: Incompressibility threshold P<sub>0</sub> (D1). RP-1 (representation principle). '
             'State representations derived from AX-B1 (T1). JSD = 1 bit (T1b). Discrete surprisal operator DF (D5, D6). '
-            'Non-conservatism of DF on infinite sequences approaching 0 (T2). L-RUN (execution is a state change off &#8869; of MachinePhase). '
-            'TQ-IH (no program outputs &#8869; without an intermediate state off &#8869; of MachinePhase). '
+            'Non-conservatism of DF on infinite sequences approaching 0 (T2). L-RUN (c<sub>0</sub> &#8800; c<sub>1</sub>, so a step from &#8869; of MachinePhase is a state change off it). '
+            'TQ-IH (the same fact read from c<sub>1</sub>). '
             'T-BUF / T-SNAP: Binary Snap derived as theorem.',
             'From ZP-D: H = &#8450;<sup>n</sup> (D1). T: Q<sub>2</sub> &#8594; H constructed by basis assignment (T2). '
             'T unique up to unitary equivalence (T3). Snap produces orthogonal shift (T4). '
@@ -287,7 +287,7 @@ def build():
             'Morphism map: F<sub>C</sub> sends each morphism f: A &#8594; B to the informational transition from P<sub>A</sub> to P<sub>B</sub>, '
             'with informational work E = JSD(P<sub>A</sub> &#8741; P<sub>B</sub>) &#8805; 0. The fundamental transition (0 &#8594; first non-initial '
             'object) maps to JSD(P &#8741; Q) = 1 bit (ZP-C T1b).',
-            'Preservation of composition: In the binary framework (two outcome states), only two non-trivial distributions exist: '
+            'Preservation of composition: In the binary framework (two outcome states), only two point-mass distributions exist: '
             'P = (1, 0) and Q = (0, 1). The snap f: 0 &#8594; &#949;<sub>0</sub> is the unique morphism mapping P &#8594; Q at cost '
             'JSD(P &#8741; Q) = 1 bit. All successor morphisms g: &#949;<sub>n</sub> &#8594; &#949;<sub>n+1</sub> map Q &#8594; Q (Q-stability of the '
             'post-snap codomain), giving F<sub>C</sub>(g) = JSD(Q &#8741; Q) = 0. Therefore F<sub>C</sub>(g &#8728; f) = 1 bit = '
@@ -295,7 +295,7 @@ def build():
             'subadditivity. (Note: JSD subadditivity is an inequality and does not establish this — '
             'the equality holds here as a structural consequence of the binary framework.) <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>C</sub>(id<sub>A</sub>) = JSD(P<sub>A</sub> &#8741; P<sub>A</sub>) = 0. No informational work is done by a trivial transition. <font name="DV">&#10003;</font>',
-            'The point mass P = (1, 0) has minimum entropy (H(P) = 0 bits), as does Q = (0, 1).',
+            'The point masses P = (1, 0) and Q = (0, 1) are exactly the distributions of zero entropy (Mathlib Real.binEntropy_eq_zero: binEntropy p = 0 &#8596; p = 0 &#8744; p = 1).',
             'AX-G1 respected in the stand-in category: the Lean functor fc_functor lands in InfoDepth, the &#8469;-indexed surprisal-depth '
             'category, which has no terminal object because the depth index has no maximum: n + 1 &gt; n (infoDepthZPCat, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean). <font name="DV">&#10003;</font>',

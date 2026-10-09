@@ -48,7 +48,7 @@ inductive BinaryState where
   | exist : BinaryState
   deriving DecidableEq, Fintype
 
-/-- Non-existence: the state AX-B1 reads as ⊥. -/
+/-- Non-existence: the `null` constructor of `BinaryState`. -/
 def nullSt : BinaryState := .null
 
 /-- Existence: the other constructor of `BinaryState`. -/
@@ -160,7 +160,7 @@ theorem t2_diverges : ∀ M : ℝ, ∃ n : ℕ, M < circPartial n := by
   obtain ⟨n, hn⟩ := exists_nat_gt M
   exact ⟨n, by rw [t2_partial_eq]; exact_mod_cast hn⟩
 
-/-! ## Section III-B: L-INF — Unbounded Surprisal at ⊥ -/
+/-! ## Section III-B: L-INF — Unbounded Surprisal -/
 
 /-- L-INF — Unbounded Surprisal of ⊥.
 
@@ -197,16 +197,13 @@ def c₀ : MachinePhase := .initial
 /-- c₁: the first running configuration. -/
 def c₁ : MachinePhase := .running
 
-/-- L-RUN: c₀ ≠ c₁ — the transition from initial to running is an irreducible
-    state change off ⊥ of `MachinePhase` (c₀ under `machinePhaseZPS`, `Order/Snap.lean`).
-    Derived from AX-B1 and D7. -/
+/-- L-RUN: c₀ ≠ c₁, so a step from ⊥ of `MachinePhase` is a state change off it
+    (c₀ is that ⊥ under `machinePhaseZPS`, `Order/Snap.lean`). Derived from AX-B1 and D7. -/
 theorem l_run : c₀ ≠ c₁ := by decide
 
 /-! ## Section V: TQ-IH -/
 
-/-- TQ-IH: c₁ is not the initial configuration c₀, ⊥ of `MachinePhase`.
-    Any execution passes through c₁; by L-RUN c₁ ≠ c₀.
-    No program can produce ⊥ without an intermediate state off ⊥ of `MachinePhase`. -/
+/-- TQ-IH: the same fact read from c₁ (`Ne.symm l_run`). -/
 theorem tq_ih : c₁ ≠ c₀ := Ne.symm l_run
 
 /-! ## Section VI: The Binary Alphabet is Forced — the minimal non-degenerate distribution

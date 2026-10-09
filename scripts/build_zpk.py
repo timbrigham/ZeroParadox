@@ -559,7 +559,7 @@ def build():
         'development. Path 3 therefore derives nothing here: in ZP-E it bears on DA-1\'s '
         'precondition and does not derive executing from incompressibility, and that '
         'precondition is what the occurrence commitment asserts.'))
-    E.append(body( # ZP-NOCHECK: description-instantiation gap cited in quotes as an informal question, not a live ZP claim
+    E.append(body(
         'Path 2 (informational: unbounded surprisal → executing) is a bridge principle of its '
         'own — a missing principle, not a missing proof — which the framework does not adopt, '
         'which is not the occurrence commitment, and which is not a premise of the Snap. The mathematics '

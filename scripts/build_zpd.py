@@ -64,7 +64,7 @@ def build():
     E.append(label_box('Definition D1 — State Layer H', [
         'H = &#8450;<super>n</super> is a complex Hilbert space with orthonormal basis {e<sub>0</sub>, e<sub>1</sub>, &#8230;}.',
         'The foundational minimum is n = 2, corresponding to the two ontological states of the framework: '
-        '&#8869; (the bottom state, mapped to e<sub>0</sub>) and &#949;<sub>0</sub> (the minimum state off &#8869;, mapped to e<sub>1</sub>). '
+        '&#8869; of OntologicalStates (mapped to e<sub>0</sub>) and &#949;<sub>0</sub>, the state off &#8869; of OntologicalStates (mapped to e<sub>1</sub>). '
         'These two orthogonal vectors express the binary existence/non-existence distinction that is the '
         'framework\'s central object. All further states are derived from this pair as joins in (L, &#8744;, &#8869;) '
         '&#8212; they require no additional foundational dimension.',
