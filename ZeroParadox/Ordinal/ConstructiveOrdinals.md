@@ -9,7 +9,7 @@ authoritative**.
 
 The probe (2026-06-15; its `Ordinal`-side measurements are reprinted by the purity blocks of
 `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` and `ZeroParadox/Ordinal/PricedInterface.lean`;
-`ONote.cmp` is printed in neither, and re-measured `[propext]` on 2026-10-09) showed that ZP-L's `Classical.choice` at ε₀ is *inherited* from Mathlib's classically-built `Ordinal` machinery — the order
+`ONote.cmp` is printed in neither; its definition re-measured `[propext]` on 2026-10-09) showed that ZP-L's `Classical.choice` at ε₀ is *inherited* from Mathlib's classically-built `Ordinal` machinery — the order
 instance and the operations, NOT the type, which measures `[propext, Quot.sound]` — but the
 syntactic notation substrate (`ONote.cmp`) is choice-free (`propext`-only). ZP-N rebuilds the
 snap-from-below **syntactically**, never touching `repr`/`Ordinal`, so the three ascent results below are
@@ -59,8 +59,9 @@ suggestive for the ε₀ results without being a re-proof of them.
 
 Side finding: `tower_NF` (well-formedness) *does* carry `Classical.choice` — because Mathlib's `NF`
 predicate is defined through `repr` into `Ordinal`. The snap facts do not depend on `NF`, so they stay
-choice-free; but even "this notation is well-formed" inherits choice in Mathlib, through `NF`'s statement
-(statement control, `[propext, Classical.choice, Quot.sound]`, measured 2026-10-09). That is one site
+choice-free; but even "this notation is well-formed" inherits choice in Mathlib, through `NF`'s definition
+(`#print axioms ONote.NF` reports `[propext, Classical.choice, Quot.sound]`, while its type `ONote → Prop`
+reports none; measured 2026-10-09). That is one site
 where choice enters, not the only one: ε₀'s leastness is not routed through `tower_NF`, and its choice
 is carried by its own statement (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint).
 
