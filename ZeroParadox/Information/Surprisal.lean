@@ -197,7 +197,7 @@ def c₀ : MachinePhase := .initial
 /-- c₁: the first running configuration. -/
 def c₁ : MachinePhase := .running
 
-/-- L-RUN: c₀ ≠ c₁, so a step from ⊥ of `MachinePhase` is a state change off it
+/-- L-RUN: c₀ ≠ c₁, so the step from ⊥ of `MachinePhase` (c₀) to c₁ is a state change off it
     (c₀ is that ⊥ under `machinePhaseZPS`, `Order/Snap.lean`). Derived from AX-B1 and D7. -/
 theorem l_run : c₀ ≠ c₁ := by decide
 

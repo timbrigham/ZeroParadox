@@ -84,7 +84,7 @@ theorem t_snap_join {L : Type*} [ZPSemilattice L] (ε₀ : L) :
 theorem t_snap_machine : join c₀ c₁ = c₁ := rfl
 
 /-- T-SNAP (derived): Assembly theorem.
-    (1) c₀ ≠ c₁  — ZPC L-RUN: c₀ ≠ c₁, so a step from ⊥ of `MachinePhase` is a state change off it.
+    (1) c₀ ≠ c₁  — ZPC L-RUN: c₀ ≠ c₁, so the step from ⊥ of `MachinePhase` (c₀) to c₁ is a state change off it.
     (2) c₁ ≠ c₀  — ZPC TQ-IH: the same fact read from c₁.
     (3) join c₀ c₁ = c₁  — the snap is a valid join transition (A4/bot_join).
     Conclusion: the Binary Snap's shape is derived; that it occurs follows from the occurrence

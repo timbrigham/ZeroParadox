@@ -149,7 +149,7 @@ def build():
             'Clopen separation of 0 from all nonzero elements (T3). Snap irreversibility (C3).',
             'From ZP-C: Incompressibility threshold P<sub>0</sub> (D1). RP-1 (representation principle). '
             'State representations derived from AX-B1 (T1). JSD = 1 bit (T1b). Discrete surprisal operator DF (D5, D6). '
-            'Non-conservatism of DF on infinite sequences approaching 0 (T2). L-RUN (c<sub>0</sub> &#8800; c<sub>1</sub>, so a step from &#8869; of MachinePhase is a state change off it). '
+            'Non-conservatism of DF on infinite sequences approaching 0 (T2). L-RUN (c<sub>0</sub> &#8800; c<sub>1</sub>, so the step from &#8869; of MachinePhase (c<sub>0</sub>) to c<sub>1</sub> is a state change off it). '
             'TQ-IH (the same fact read from c<sub>1</sub>). '
             'T-BUF / T-SNAP: Binary Snap derived as theorem.',
             'From ZP-D: H = &#8450;<sup>n</sup> (D1). T: Q<sub>2</sub> &#8594; H constructed by basis assignment (T2). '
