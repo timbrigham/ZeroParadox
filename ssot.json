@@ -133,7 +133,21 @@
             "bottom"
           ],
           "reason": null,
-          "statement": "In information theory, ⊥ is realized as the null state of maximal informational extremity (L-INF).",
+          "restatements": [
+            {
+              "by": "Tim — R4 ruling 2026-10-09 (state-change word / null-state replacement)",
+              "date": "2026-10-13",
+              "prior_statement": "In information theory, ⊥ is realized as the null state of maximal informational extremity (L-INF).",
+              "reason": "R4: replace the null-state wording and the banned term \"informational extremity\" with what l_inf / info_bottom_diverges prove (∀ M, ∃ n, M < surprisal n)."
+            },
+            {
+              "by": "agent restatement under Tim's R4 ruling 2026-10-09; wording not Tim's",
+              "date": "2026-10-13",
+              "prior_statement": "In information theory, ⊥ is realized at the floor where surprisal is unbounded (L-INF): the surprisal I(n) = n at ball depth n exceeds every finite bound.",
+              "reason": "Gate fix: prior wording read as ∃n∀M (false), left ⊥ bare, and stated the ⊥ realization as if l_inf proved it. Now follows l_inf's quantifier order (∀ M, ∃ n, M < surprisal n) and marks the ⊥ reading as interpretation."
+            }
+          ],
+          "statement": "In information theory, L-INF gives unbounded surprisal: for every bound M some ball depth n has surprisal I(n) = n > M. Reading that unbounded floor as ⊥ of MachinePhase is the framework's reading, not part of l_inf.",
           "status": "proved",
           "to": null
         },

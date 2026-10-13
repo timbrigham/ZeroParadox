@@ -100,8 +100,9 @@ theorem claim_T_SNAP : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁
 
 /-! ## § II. Floor domains (information, valuation) -/
 
-/-- Claim `node-information` (proved). Statement: "In information theory, ⊥ is realized as the null
-    state of maximal informational extremity (L-INF)." Exact representation: the surprisal is unbounded
+/-- Claim `node-information` (proved). Statement: "In information theory, L-INF gives unbounded
+    surprisal: for every bound M some ball depth n has surprisal I(n) = n > M. Reading that unbounded
+    floor as ⊥ of MachinePhase is the framework's reading, not part of l_inf." Exact representation: the surprisal is unbounded
     (no finite bound holds), the L-INF divergence (`l_inf`: ∀ M, ∃ n, M < surprisal n). Backing: `info_bottom_diverges`. -/
 theorem claim_node_information : ∀ M : ℝ, ∃ n : ℕ, M < surprisal n :=
   info_bottom_diverges
