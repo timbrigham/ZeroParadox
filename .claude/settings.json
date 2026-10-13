@@ -79,6 +79,12 @@
             "command": "& tools\\verify\\claude_hooks\\block_checker_truncation.ps1",
             "shell": "powershell",
             "statusMessage": "Checking for truncated checker output..."
+          },
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\block_dotnet_relative_write.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking for a relative-path .NET file write..."
           }
         ]
       },
@@ -96,6 +102,12 @@
             "command": "& tools\\verify\\claude_hooks\\block_checker_truncation.ps1",
             "shell": "powershell",
             "statusMessage": "Checking for truncated checker output..."
+          },
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\block_dotnet_relative_write.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking for a relative-path .NET file write..."
           }
         ]
       },
