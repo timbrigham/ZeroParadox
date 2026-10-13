@@ -2,46 +2,6 @@
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
 Version 1.14 | May 2026
-v1.14: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. Section IV heading 'Finite Precision Forces the Snap' -> 'Makes the Snap Possible': finite precision supplies a smallest representable positive, i.e. availability, not occurrence.
-v1.12: vocab fix: null state → ⊥.
-v1.11: Hash sync — script was modified without full workflow; rebuilt to bring
-hash into alignment with register.md.
-v1.5: Renamed to ZP-F Illustrated Companion; disclaimer updated to cite ZP-F
-      Lean verification (F-SNAP-IMPOSSIBLE and general ordered field result).
-v1.6: Section V retitled "The Coach and the Players" — reframed around zero's
-      membership status rather than "wrong kind of zero"; directionality argument
-      added: return paths are structurally blocked only when zero is categorically
-      off the field, not a peer member of the space.
-v1.7: Section IV phrasing naturalised — "Below δ you cannot go" replaced with
-      "Below that, there's nowhere to go."
-v1.8: Multiple fixes following reviewer feedback: (1) Section II "cleanly getting
-      away" rewritten for clarity; (2) Section V "membership status" and
-      "topologically identical" language replaced throughout — zero is valuatively
-      distinguished in Q₂, not topologically isolated; (3) asymptotic limit
-      sentence direction clarified; (4) Section III Riemann sphere analogy added;
-      (5) closing "topologically isolated" replaced with correct valuative framing;
-      (6) scope note added: ZP-F targets ordered fields as comparison class, not
-      the most general setting where the phenomenon occurs.
-v1.9: Four-fingerprint scan pass — precision review of all sections; no
-      structural changes.
-v1.10: New Section VIII "Two Approaches to the Same Boundary" — the density
-       argument and the ordinal threshold argument are formally dual, approaching
-       the same structural boundary from opposite directions; the squeeze pattern
-       explained as structurally necessary rather than an optional proof technique.
-v1.0: Initial release.
-v1.1: Three clarifications following reviewer feedback (density/rationals,
-      Planck/geometry, pi/algorithm length).
-v1.2: Section V geometry note revised — floor tile / sqrt(2) argument
-      correctly scoped to macroscopic scales; at the minimum unit itself,
-      discrete geometry applies and irrational multiples cannot be realised.
-v1.3: Section V Planck paragraph replaced with single sentence — prior
-      framing overclaimed discrete geometry and integer multiples; correct
-      framing is that current models break down at that scale, and the
-      argument does not depend on what replaces them.
-v1.4: Section V renamed "The Wrong Kind of Zero" — new structural argument
-      that R models zero as a reachable point while any state-change domain
-      requires zero to be an unrealizable asymptotic floor; Q2 is more
-      honest because valuation +inf encodes this structurally.
 """
 
 import os, math

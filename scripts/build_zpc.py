@@ -1,32 +1,5 @@
 """
 Build ZP-C: Information Theory (v1.26)
-v1.24: DECISION BATCH REMEDIATION (Tim, 2026-09-15): DA-1's status matched to Remark R5 at three sites: L-INF's note, T-BUF Step 2 and T-BUF's status called DA-1 a design principle; each now says a Derived Proposition closed given DP-2 (ZP-E), not a mathematical consequence of L-INF alone.
-v1.23: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). Remark R5's body carries the canonical AX-1 sentence, and the Open Items AX-1 row and validation rows R1 and R5 say 'the snap occurs given the occurrence commitment and DA-1'. Tense residue: R5's 'Remaining work: DA-1 (Definitional Alignment) must formally tie instantiation of P0 to an execution event' now says DA-1 is ZP-E's Derived Proposition, closed given DP-2, and bears on whether the Snap occurs, not on its shape; TQ-IH's 'AX-1 derivability pathway now open' now says TQ-IH is one of the results ZP-E derives the Snap's shape from. 'Binary Snap Causality' names the retired AX-1 in this document, so T-SNAP's name gloss is not placed here.
-v1.22: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). Remark R5's status label ("Closed in ZP-E DA-1 insert") and the Open Items AX-1 row ("Closed as T-SNAP in ZP-E DA-1 insert") closed AX-1 whole; both now close the shape half and name the occurrence half as a commitment. ZP-C's own Candidate Theorem label is unchanged. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): Remark R5's body, its status label, the Open Items AX-1 status cell and validation rows R1 and R5 gave "Candidate Theorem" as AX-1's CURRENT status beside its retirement. Each now says AX-1 was a Candidate Theorem in ZP-C and is now retired, with the shape proved as T-SNAP and occurrence stated separately as the occurrence commitment. T-BUF's own Candidate Theorem label is untouched.
-v1.21:Self-containment note names the ZP-A cross-layer dependency — T-BUF (Section V) invokes ZP-A D2 (state-transition, f(x)=x∨α; Lean: Order/Lattice.lean) to identify ⊥∨ε₀ as the Binary Snap, closure deferred to ZP-E DA-1.
-v1.20: Rendered Lean citations synced to post-reorg files/namespaces (SSOT-driven).
-v1.18: Rendered self-version refs removed — P₀ note ("Version 1.4 updates this") and Open Items row ("from v1.2") (C1 sweep).
-v1.17: Version references removed from Remark R5 label_box and T-BUF li() call (Gemini catch — build gate does not cover li()/label_box()).
-v1.16: Vocabulary fixes — "null state" → "⊥"; "non-null state" → "nonzero state"; "first atomic state" → "minimum nonzero state (ε₀)" throughout body prose. Palette rebuild.
-v1.15: K-19/K-21 vocab fixes — "First Atomic State" -> "Minimum Nonzero State" in T1; "Informational Extremity" -> "Unbounded Surprisal" in L-INF section header, label, and status lines.
-v1.14: Version number removed from Open Items Register section header.
-v1.13: Adversary-review pass — "forcing result" terminology replaced with "structural
-constraint" (avoids incorrect borrowing of set-theoretic forcing vocabulary).
-v1.12: Encoding commitment and information-theoretic failure mode added to preamble — makes
-the conditionality of the 1-bit claim (T1b) visible before the result appears, and states the
-unbounded-surprisal failure mode at ⊥ (L-INF) upfront as the information-theoretic instance of
-the foundational claim.
-v1.11: L-INF semantic content corrected — "compressed limit of all possible binary programs"
-replaced with "limit point of the binary ball hierarchy under the 2-adic metric"; stays within
-what the proof actually establishes (ball-hierarchy depth, not Kolmogorov programs).
-v1.10: R-BRIDGE "not a coincidence" clause given cross-reference to ZP-E R-AFA, where the
-structural argument for why K and I(n) converge at the same threshold is made explicitly.
-v1.9: Remark R-TQ added after TQ-IH — external expert confirmation that TQ-IH holds and is
-domain-independent: holds in any setting with a non-null first step, independent of any
-Turing-specific or Kolmogorov machinery.
-v1.8: Remark R-BRIDGE added after L-INF — explicit statement of the relationship between
-Kolmogorov complexity K and 2-adic surprisal I(n): distinct measures that converge at P₀;
-used as independent routes to the same conclusion, not as a unified measure.
 """
 
 import os

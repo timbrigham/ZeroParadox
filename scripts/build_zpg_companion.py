@@ -1,24 +1,7 @@
 """
 Build ZP-G Illustrated Companion (v1.14)
-v1.13: "What Is a Functor?" — ZP-G states the axioms the stand-in categories are checked against (it does not
-build the category the functors target) (gate round 1, Tim ruling 2026-09-29).
-v1.12: "What Is a Functor?" — ZP-H's four functors run from the natural-number depth order, as in
-"What comes next" (Tim ruling, 2026-09-29).
-v1.11: AX-G1's no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top);
-"What comes next": functors from the natural-number depth order, the stand-ins are one order under
-four names, and each of the three standard categories has a terminal object (Tim rulings, 2026-09-29).
-v1.10: AX-G1 paragraph carries the no-terminal half (resting on ZP-A's no-top premise); "What comes
-next" scoped to what ZP-H proves: the axioms hold on four ℕ-indexed stand-in categories, and two of
-the standard categories do have a terminal object (Tim ruling, 2026-09-29).
-v1.8: category_diagram — fix overlapping text: use fixed cy=68, dh=2.2in, remove redundant internal title string.
-v1.7: vocab fix: null state → ⊥; categorical bridge → ZP-H.
-v1.6: Strip version number from companion footer.
-v1.4: Title "Structure without substance" → "Structure independent of domain" — removes
-philosophical framing; "independent of domain" states the actual categorical property.
-v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Standalone companion for ZP-G Category Theory only.
 ZP-H gets its own companion (build_zph_companion.py).
-Changes from v1.1: plain-language explanation of ⊥ = {⊥} connection added (R2).
 
 Accessibility target: 2 years of college math (calculus, some linear algebra).
 No prior category theory assumed.

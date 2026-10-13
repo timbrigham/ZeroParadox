@@ -1,32 +1,6 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
 Version 1.22 | October 2026
-v1.20: T2/T3 remark: "0 reaches every object (T2)" dropped T2's uniqueness; now "0 reaches every object in exactly one way (T2)" (Tim ruling 2026-09-29).
-v1.19: Remark R-AX: "the two axioms jointly pick out exactly the non-degenerate case" stated a conditional as a biconditional. Now only the proved direction (a strict initial that is also terminal forces every object isomorphic to it, so AX-G1 rules it out) and the failing converse (in sets, the empty set is strict initial and the one-point set terminal); both checked as examples in AxG2Reduce.lean (copy_editor panel, Tim ruling 2026-09-29).
-v1.18: Remark R-AX: the domain facts behind the four stand-ins now list ZP-A T2 (the lattice stand-in's fact, bot_le) beside ZP-B C3, ZP-C T1b and ZP-D T4 (gate round 1, Tim ruling 2026-09-29).
-v1.17: Remark R-AX: the axioms are not claimed for the three Mathlib categories ZP-H targets (TopCat, KleisliCat PMF, ModuleCat ℂ), each of which has a terminal object; the four stand-ins are one ℕ-order instance. AX-G1 box: the no-terminal half is ZP-G's own commitment (ZP-A's two-state carriers have a top). Tim rulings, 2026-09-29.
-v1.16: Remark R-AX scoped — AX-G2 (not AX-G1) is what holds in many categories; the axioms hold in the four ℕ-indexed depth categories, and AX-G1 fails in TopCat and ModuleCat ℂ, whose bottom is a zero object (initial, not strict).
-v1.15: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
-v1.14: R-AX remark — named AX-G2 as the standard strict-initial-object property (Carboni-Lack-Walters 1993) and noted AX-G1+AX-G2 = a non-trivial strict initial; prior-art positioning, paired with the CLAIMS Convergence section.
-v1.12: Rendered version refs removed from BA-G1 compatibility remark ("ZP-G v1.0", "In v1.1") — C1 sweep, no version refs in rendered PDF content.
-v1.11: Version line style fixed (bodyI → subtitle); local make_doc override removed.
-v1.10: Hash sync — script was modified without full workflow; rebuilt to bring
-hash into alignment with register.md.
-v1.9: Version number removed from Open Items Register section header.
-v1.8: "Internal Working Document" marker removed from footer and endnote — not a working
-document; removing public-facing scaffolding label.
-v1.7: Remark R-AX added after AX-G2 — addresses non-triviality of the axioms; explains that
-the initial object is not an abstract placeholder but is grounded in ZP-H via four concrete
-domain functors; distinguishes categorical generalisation from trivial initial-object renaming.
-v1.6: D7' well-definedness note corrected — invariance scoped to what ZP-G claims
-(finite/zero/undefined), not asserted as a general AIT property.
-v1.5: T6-b/T6-c Lean scope disclosure strengthened — Lean proofs verify only
-Nat.zero_le _ (non-negativity by type); K-theoretic content not Lean-verified.
-v1.4: Lean scope note added after T6-c.
-v1.3: Remark R2 added (Categorical Expression of Self-Containment).
-v1.2: Theorem/Proposition/Lemma hierarchy applied throughout.
-v1.1: D7 replaced by D7' (native Kolmogorov surprisal); BA-G1 demoted to Remark.
-v1.0: Initial release.
 """
 
 import os

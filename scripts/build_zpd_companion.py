@@ -1,24 +1,5 @@
 """
 Build ZP-D Illustrated Companion (v1.14)
-v1.11: vocab fix: null state → ⊥.
-v1.10: K-12 vocab fix — "topological isolation" -> "clopen separation" in DP-1 body text.
-v1.9: Strip version number from companion footer.
-v1.7: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
-Changes from v1.5:
-- t_map_diagram: dh increased (2.2 → 2.8 in), cy changed to fixed value 108 so bottom
-  labels (cy - r_outer - 30 = 8) no longer overflow below y=0; internal title string removed
-  (redundant with caption); "isolation → orthogonality" label corrected to
-  "clopen separation → orthogonality".
-Changes from v1.4:
-- "topologically isolated in ℚ₂" replaced with "clopen-separated in ℚ₂" in body text and
-  diagram caption — 0 is not a topologically isolated point in ℚ₂; the correct property is
-  clopen-ball separation (total disconnectedness). DP-1 formal name references unchanged.
-Changes from v1.3:
-- T5-b added: every genuine state transition produces an orthogonal shift
-  (not just the Binary Snap). Key result box added after T4.
-Changes from v1.2:
-- n=2 foundational minimum explained in "What Is ZP-D Doing?"
-- R3 (T locally constant and continuous) noted near the T operator key results
 """
 
 import os
