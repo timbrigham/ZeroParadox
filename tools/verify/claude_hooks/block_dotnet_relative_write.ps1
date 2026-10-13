@@ -24,11 +24,15 @@
 # directory ON drive C) - both still resolve against process state. A variable is followed through
 # assignments made EARLIER IN THE SAME COMMAND (`$p = 'C:\x'`, `$p = Join-Path $wt x`,
 # `[IO.Path]::Combine(...)`), `$env:NAME`, `$HOME` and `$PWD` (the PowerShell location, which is
-# rooted - writing "$PWD\x" is the CORRECT fix, so it must pass).
+# rooted - writing "$PWD\x" is the CORRECT fix, so it must pass). Two further idioms are ALLOWED
+# because they resolve against the PowerShell LOCATION and always yield a full path (measured by
+# /rely, 2026-10-13, O1 - both were lifted from real transcripts and were being falsely denied):
+# `(Resolve-Path X).Path` / `.ProviderPath`, and any expression ending in `.FullName`
+# (`$_.FullName`, `$f.FullName`, `(Get-Item x).FullName` - a FileSystemInfo's FullName is absolute).
 #
 # NOT followed, on purpose: `[IO.Path]::GetFullPath("x")` resolves against the SAME process
-# directory and is the same bug; `Resolve-Path`, `$(...)` subexpressions, function parameters and
-# anything assigned in an earlier tool call. All of those are UNRESOLVED, and unresolved DENIES.
+# directory and is the same bug - it stays DENIED. Also `$(...)` subexpressions, function
+# parameters and anything assigned in an earlier tool call. All are UNRESOLVED, and unresolved DENIES.
 #
 # IT FAILS CLOSED, matching block_git_gh.ps1 and block_corpus_edit.ps1. Empty stdin, unparseable
 # JSON, an argument list with no closing parenthesis, or a variable it cannot follow -> DENY. The
@@ -66,13 +70,17 @@ the PowerShell location. Three agents have dirtied the shared checkout this way 
 
 DO INSTEAD, any one of:
   * pass a FULLY QUALIFIED path:   [IO.File]::WriteAllText('C:\...\wt\x.txt', $s)
+  * resolve it against your PowerShell location first:
+        $p = (Resolve-Path x.txt).Path; [IO.File]::WriteAllText($p, $s)
+  * use `.FullName` from Get-ChildItem / Get-Item:
+        Get-ChildItem *.md | ForEach-Object { [IO.File]::WriteAllText($_.FullName, $s) }
   * build it from a rooted base in the SAME command:
         $wt = 'C:\...\wt'; [IO.File]::WriteAllText((Join-Path $wt 'x.txt'), $s)
   * use the Write / Edit tools, or `Set-Content -LiteralPath <absolute>`.
 
+NOT a fix: `[IO.Path]::GetFullPath('x')` resolves against the same PROCESS directory - same bug.
 A variable this hook cannot follow (assigned in an earlier call, a function parameter, a
-`$(...)` subexpression, `[IO.Path]::GetFullPath`) is DENIED, because it cannot tell where the
-write lands. Assign it from a literal rooted path in the same command.
+`$(...)` subexpression) is DENIED, because it cannot tell where the write lands.
 '@
 
 if ([string]::IsNullOrWhiteSpace($raw)) {
@@ -91,7 +99,10 @@ $cmd = [string]$cmd
 if ($cmd -notmatch '(?i)IO\.(File|Directory|StreamWriter)\b') { exit 0 }
 
 # A Bash tool call usually carries the PowerShell as `powershell -Command "...\"x.txt\"..."`.
-if ($data.tool_name -eq 'Bash') { $cmd = $cmd.Replace('\"', '"') }
+# Undo bash's double-quote escapes - `\"`, `\$`, `\\`, `` \` `` - in ONE pass, so `\"\$env:TEMP\\x\"`
+# becomes `"$env:TEMP\x"`. (Only `\"` was undone before, which left `\$env:TEMP` resolving to
+# `\C:\...` and falsely denied: /rely O3, 2026-10-13.)
+if ($data.tool_name -eq 'Bash') { $cmd = [regex]::Replace($cmd, '\\(["$\\`])', '$1') }
 
 # ---------------------------------------------------------------------------------------------
 # Split a parenthesised argument list starting at $open (the index of '('). Returns the argument
@@ -157,6 +168,9 @@ function Resolve-Expr([string]$e, [int]$depth) {
         if ($null -eq $inner -or $inner.Count -ne 1 -or ($inner[0].Length + 2) -ne $e.Length) { break }
         $e = $inner[0].Trim()
     }
+    # O1: these resolve against the PowerShell LOCATION and always yield a full path.
+    if ($e -match '^(?i)\(\s*Resolve-Path\b.*\)\.(Path|ProviderPath)$') { return 'C:\__resolve_path__' }
+    if ($e -match '^(?i)\S.*\.FullName$') { return 'C:\__fullname__' }
     if ($e -match "^'((?:[^']|'')*)'$") { return $Matches[1].Replace("''", "'") }
     if ($e -match '^"([^"]*)"$') {
         $body = $Matches[1]
