@@ -152,7 +152,6 @@ MOVED	\.claude-local[\\/]build_manifest\.py	scripts/build_manifest.py
 MOVED	\.claude-local[\\/]build_snap_map\.py	scripts/build_snap_map.py
 MOVED	\.claude-local[\\/]build_tools\.py	scripts/build_tools.py
 MOVED	\.claude-local[\\/]build_zp_choice_free_core\.py	scripts/build_zp_choice_free_core.py
-MOVED	\.claude-local[\\/]build_zp_philosophical_question\.py	scripts/build_zp_philosophical_question.py
 MOVED	\.claude-local[\\/]build_zpa\.py	scripts/build_zpa.py
 MOVED	\.claude-local[\\/]build_zpa_companion\.py	scripts/build_zpa_companion.py
 MOVED	\.claude-local[\\/]build_zpb\.py	scripts/build_zpb.py
@@ -226,7 +225,6 @@ _MOVED_BUILDS	build_manifest.py
 _MOVED_BUILDS	build_snap_map.py
 _MOVED_BUILDS	build_tools.py
 _MOVED_BUILDS	build_zp_choice_free_core.py
-_MOVED_BUILDS	build_zp_philosophical_question.py
 _MOVED_BUILDS	build_zpa.py
 _MOVED_BUILDS	build_zpa_companion.py
 _MOVED_BUILDS	build_zpb.py
