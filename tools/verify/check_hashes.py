@@ -7,8 +7,8 @@ Tracks four tiers:
   Formal-only  ZP-N ZP-P ZP-Q       formal-only layers (no companion); formal: hash
                ZP-R (+addendum)      verified vs register by Doc-name prefix (added 2026-07-20;
                                      previously UNVERIFIED)
-  Standalone   Foreword PhilQ       hash tracked in ar_status.json only
-               Tools
+  Standalone   Foreword Tools       hash verified vs register.md formal:XXXXXXXX; AR in
+                                    ar_status.json
 
 SESSION START (read-only validation):
     python check_hashes.py
@@ -113,7 +113,6 @@ FORMAL_SCRIPTS = {
 
 STANDALONE_SCRIPTS = {
     'Foreword': 'build_foreword.py',
-    'PhilQ':    'build_zp_philosophical_question.py',
     'Tools':    'build_tools.py',
     # 'Reals' retired 2026-06-21 — standalone reals companion superseded by ZP-F
     # (content merged into the formal Counterexamples layer); output PDF removed.
@@ -413,8 +412,7 @@ def register_formal_token(key):
     register tokens were unguarded - the same hole just closed for FORMAL_ONLY_SCRIPTS, one tier up.
     """
     import re as _re
-    label = {'Foreword': 'Zero Paradox Foreword', 'PhilQ': 'ZP Philosophical Question',
-             'Tools': 'ZP Tools'}.get(key)
+    label = {'Foreword': 'Zero Paradox Foreword', 'Tools': 'ZP Tools'}.get(key)
     if not label:
         return None
     try:
@@ -731,7 +729,7 @@ def parse_mark_args(args):
             if i + 1 < len(args) and not args[i + 1].startswith('--'):
                 key = args[i + 1]
                 # normalise ZP-x → ZP-X; ZP-x-formal → ZP-X-formal
-                # standalone keys (Foreword, PhilQ, etc.) preserve their canonical case
+                # standalone keys (Foreword, Tools) preserve their canonical case
                 if '-formal' in key.lower():
                     base = key.replace('-formal', '').replace('-FORMAL', '').upper()
                     key = f'{base}-formal'
@@ -1760,7 +1758,7 @@ def main():
         # ⛔⛔ REFUSE TO CREATE THE TRACKER FROM NOTHING. Measured 2026-09-21 (/rely), reproduced in a
         # clean worktree: `--mark-remediated Foreword` created BOTH `.claude-local/` and
         # `ar_status.json`, wrote a ONE-KEY file, and the very next plain run reported
-        # `PhilQ: hash=MISMATCH` and `Tools: hash=MISMATCH` with `stored: ?  *** re-mark required ***`
+        # `hash=MISMATCH` for every other standalone document, with `stored: ?  *** re-mark required ***`
         # and exit 1 — on a tree nobody had touched. The checker blamed two documents for its own
         # write, and it is a PRE-PUSH leg, so that is a manufactured push block.
         #
@@ -1803,7 +1801,7 @@ def main():
                 failed.append(key)
         # ⚠ ONLY PERSIST IF SOMETHING WAS MARKED. This ran unconditionally, so a FAILED mark wrote
         # `{}` over ar_status.json, flipped `AR_AVAILABLE`, and made the next plain run report three
-        # false MISMATCHes (Foreword, PhilQ, Tools) on an UNMODIFIED tree - re-creating the exact
+        # false MISMATCHes (one per standalone document) on an UNMODIFIED tree - re-creating the exact
         # false positives fixed on 2026-08-15. It compounded with `RLY4-6` above: the natural trigger
         # was the very command that fix was meant to enable. (/rely round 5.)
         if marked:
@@ -1881,7 +1879,7 @@ def main():
         ar_label     = compute_ar_label(key, current_hash, ar_data)
         # Added 2026-07-31: standalone docs were compared ONLY against ar_status.json, never against
         # register.md - so a standalone register token could go stale forever and --mark-remediated
-        # would clear the push block without touching it. PhilQ was stale exactly this way.
+        # would clear the push block without touching it. A standalone token was found stale exactly this way.
         reg_tok = register_formal_token(key)
         # ⚠⚠ AN ABSENT TOKEN IS A FINDING, NOT A SKIP (CHECKHASHES-ARBASIS-1 round 3, /rely
         # BLOCKING:1, 2026-09-28). `if reg_tok and ...` treated `None` the same as `False`, so a

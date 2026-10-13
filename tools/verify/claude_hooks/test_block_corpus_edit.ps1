@@ -81,10 +81,12 @@ $cases = @(
     @{ want='DENY';  why='notebook in the corpus';   tool='NotebookEdit'; key='notebook_path'; path="$repo\ZeroParadox\probe.ipynb" }
 
     # --- MUST DENY: the published site. Same reader, same domain, and all six were ALLOWED -----
-    # until 2026-09-20. `README.md` was denied while `bottom-family-tree.html` beside it was not.
-    @{ want='DENY';  why='published page (family tree)'; tool='Edit'; key='file_path'; path="$repo\bottom-family-tree.html" }
-    @{ want='DENY';  why='published page (diagonal)';    tool='Edit'; key='file_path'; path="$repo\diagonal-family.html" }
-    @{ want='DENY';  why='published page (snap loop)';   tool='Edit'; key='file_path'; path="$repo\snap-loop.html" }
+    # until 2026-09-20. `README.md` was denied while a root `.html` page beside it was not.
+    # The hook judges the PATH, never existence (`Get-Refusal` normalises without Resolve-Path), so
+    # a root `.html` is a pattern control: no page need exist for a Write that would create one to
+    # be denied. One row re-creates a retired page by name; one creates a page nobody has named.
+    @{ want='DENY';  why='root .html page, re-created';  tool='Write'; key='file_path'; path="$repo\snap-loop.html" }
+    @{ want='DENY';  why='root .html page, brand new';   tool='Write'; key='file_path'; path="$repo\some-new-page.html" }
     @{ want='DENY';  why='LAYOUT wrapping every page';   tool='Edit'; key='file_path'; path="$repo\_layouts\default.html" }
     @{ want='DENY';  why='site configuration';           tool='Edit'; key='file_path'; path="$repo\_config.yml" }
     @{ want='DENY';  why='the published domain';         tool='Write';key='file_path'; path="$repo\CNAME" }
@@ -231,7 +233,7 @@ $naming = @(
        path="$repo\ZeroParadoxNotes.txt";        expect='an unclassified file' }
     @{ why='an UNTRACKED new file is not called tracked'
        path="$repo\some-future-surface.xyz";     expect='an unclassified file' }
-    @{ why='published page names the page';      path="$repo\snap-loop.html";          expect='a published web page' }
+    @{ why='a root .html names the page';        path="$repo\some-new-page.html";      expect='a published web page' }
     @{ why='DOI record names the DOI record';    path="$repo\.zenodo.json";            expect='the permanent DOI record' }
 )
 foreach ($n in $naming) {
