@@ -566,7 +566,7 @@ noncomputable instance hilbDimZPCat : ZPCategory HilbDimDepth where
 /-- Semantic grounding of fd_functor's snap morphism 0 → ⟨1⟩:
     T4 (ZPD) establishes that the snap produces an orthogonal shift in StateSpace n (n ≥ 2):
     ⟪T(0), T(ε₀)⟫_ℂ = 0. The dimension advance 0 → 1 in HilbDimDepth corresponds to
-    the transition from the null state to the first orthogonal post-snap state. -/
+    the step from the vector `transitionOp n ⟨0⟩` = T(0) to the orthogonal `transitionOp n ⟨1⟩`. -/
 theorem fd_snap_hilb_grounded (n : ℕ) (hn : 2 ≤ n) :
     Nonempty ((0 : HilbDimDepth) ⟶ ⟨1⟩) ∧
     @inner ℂ (StateSpace n) _

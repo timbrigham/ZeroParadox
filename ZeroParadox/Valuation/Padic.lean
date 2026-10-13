@@ -54,13 +54,13 @@ inductive OntologicalStates where
   | exist : OntologicalStates
   deriving DecidableEq, Fintype
 
-/-- The Null State: non-existence, ⊥ in ZP-A. -/
+/-- Non-existence: ⊥ of `OntologicalStates` under `instOntZPS` (`Settheory/OntBridge.lean`). -/
 def nullState : OntologicalStates := .null
 
-/-- The First Atomic State: existence. -/
+/-- Existence: the state off ⊥ of `OntologicalStates`. -/
 def firstAtomicState : OntologicalStates := .exist
 
-/-- AX-B1: null and first atomic states are distinct.
+/-- AX-B1: the two states are distinct.
     Proved by decidable equality — no classical axioms required. -/
 theorem ax_b1_distinct : nullState ≠ firstAtomicState := by decide
 
@@ -84,26 +84,10 @@ theorem t0_redundancy (p : ℕ) (_hp : Nat.Prime p) (hgt : 2 < p) :
 
 /-! ## Why Q₂ Rather Than a Discrete Two-Point Space
 
-T0 fixes the representational base at p = 2. The full Q₂ structure (p-adic field,
-ultrametric, clopen ball hierarchy) is not uniquely forced by AX-B1 alone — a
-discrete two-point space {0, 1} would also satisfy the binary distinction. Q₂ is
-chosen for three motivated reasons beyond the binary count:
-
-- **Hierarchical approximation**: Q₂ contains nested clopen balls B(0, 2⁻ⁿ) ↘ {0}
-  — a countably infinite depth hierarchy converging to the null state 0. A two-point
-  discrete space has no such hierarchy. This is the geometric substrate for ZPC's
-  surprisal field (depth n ↦ n bits) and for L-INF (informational extremity of ⊥).
-- **Ultrametric geometry**: The strong triangle inequality (T1) and clopen ball
-  structure (T2) give non-trivial topology — disjoint balls cannot be continuously
-  connected (C2). Discrete spaces make this claim vacuous (no non-constant paths exist).
-- **Irreversibility content**: C3 (no continuous path from x ≠ 0 to 0) uses the
-  genuine total disconnectedness of Q₂ via the ultrametric; in a finite discrete
-  space the argument carries no structural weight.
-
-The formal connection from Q₂'s topology to ZPC's surprisal field and ZPD's basis
-assignment is a design identification — those layers do not import ZPB as a Lean
-dependency. The choice of Q₂ is a motivated modelling commitment, not a uniquely
-forced consequence of AX-B1. -/
+T0 fixes the representational base at p = 2. The full Q₂ structure is not uniquely
+forced by AX-B1 alone: a discrete two-point space {0, 1} would also satisfy the binary
+distinction. The choice of Q₂ is a motivated modelling commitment; its three reasons are
+in `ZeroParadox/Valuation/Padic.md`. -/
 
 /-! ## II. The 2-Adic Field
 

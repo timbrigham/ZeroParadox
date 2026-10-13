@@ -1,5 +1,5 @@
 """
-Build ZP-B Illustrated Companion (v1.16)
+Build ZP-B Illustrated Companion (v1.17)
 v1.16: GATE ROUND 4 DEFAULT (2026-09-15): companion sync with ZP-B v1.18: AX-B1's lead clause drops ', the bottom included'.
 v1.15: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim defaults, 2026-09-15): companion sync with ZP-B v1.17: AX-B1's lead clause is aligned with its gloss (AX-B1 holds at every state with anything above it, the bottom included).
 v1.14: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): companion sync with ZP-B v1.16: AX-B1's scope sentence is the conditional form (every state with anything above it; a state with nothing above it owes no step), and the derivation of the field cites AX-B1's two states (T0 Step 1), not the scope sentence.
@@ -123,7 +123,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -183,9 +183,9 @@ def build():
     E.append(cbody(
         'The 2-adic numbers take a different route. As a number system, &#8474;&#8322; also has no '
         'smallest nonzero element — you can always find something smaller. What changes is the '
-        '<i>topology</i>: in &#8474;&#8322;, zero is still a limit of nonzero states — they can '
+        '<i>topology</i>: in &#8474;&#8322;, zero is still a limit of nonzero elements — they can '
         'converge on it as closely as you like, so it is not isolated. What &#8474;&#8322; forbids is a '
-        'continuous path: there is no continuous route from any nonzero state back to zero (Corollary '
+        'continuous path: there is no continuous route from any nonzero element back to zero (Corollary '
         'C3). The space is totally disconnected, so the only way to reach zero is a discrete jump across '
         'a clopen gap, never a continuous slide — and that discrete jump is the Binary Snap. '
         'The gap is not enforced by the number system running out of small values. It is built into '
@@ -198,9 +198,9 @@ def build():
     E.append(example_box('The key property', [
         'Mathematical object: 2-adic valuation v₂(x).',
         'What it measures in this framework: depth of binary structure — how many times 2 divides x.',
-        'The crucial point: 0 and the first nonzero state lie in separate clopen components of ℚ₂. '
+        'The crucial point: 0 and any nonzero element lie in disjoint clopen sets of ℚ₂. '
         'No continuous path connects them — the geometry enforces the binary gap.',
-        'Note on ε₀: the first nonzero state is not a specific number you can look up in ℚ₂ — '
+        'Note on ε₀: ε₀ is not a specific nonzero element of ℚ₂ that you can look up — '
         'the 2-adic number system has no smallest nonzero element. ε₀ is the framework\'s name '
         'for the minimum viable departure from null, defined by structural constraints. '
         'The geometry provides the right topology; it does not fix the specific value.',
@@ -212,8 +212,8 @@ def build():
         'ZP-B puts the Zero Paradox on a specific geometric foundation: the 2-adic number field '
         'ℚ₂. This is not standard Euclidean geometry. In ℚ₂, closeness is 2-adic: two numbers are '
         'close when their difference is divisible by 2 many times over. The 2-adic valuation of zero, '
-        'v₂(0), is infinite, which places zero in a clopen class distinct from every nonzero state. It '
-        'is not that zero is infinitely far away — 2-adic distances stay finite, and nonzero states lie '
+        'v₂(0), is infinite, which places zero in a clopen class distinct from every nonzero element. It '
+        'is not that zero is infinitely far away — 2-adic distances stay finite, and nonzero elements lie '
         'arbitrarily close to it — but that zero is cleanly walled off in its own clopen class, so any '
         'return would have to jump the gap rather than cross it continuously.'))
     E.append(cbody(
@@ -286,8 +286,8 @@ def build():
 
     E.append(nested_balls_diagram())
     E.append(ccaption(
-        'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold (the first nonzero state in '
-        'the framework) marks the Snap boundary. '
+        'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold (a framework threshold, not a '
+        'specific nonzero element of ℚ₂) marks the Snap boundary. '
         '0 is clopen-separated — no continuous path from outside ever reaches it.'))
 
     E.append(key_result_box('Key Result: Total Disconnectedness (T5)',
@@ -314,7 +314,7 @@ def build():
     E.append(example_box('Real-world example — Crossing a river with no bridge', [
         'Imagine a world where rivers have no bridges and no fords. Once you\'re on one bank, '
         'there is literally no continuous path to the other. That\'s total disconnectedness. '
-        '0 is on one side; every non-zero state is on the other. The Snap is the only crossing, '
+        '0 is on one side; every nonzero element is on the other. The Snap is the only crossing, '
         'and it only goes one way.',
     ]))
     E.append(sp(8))
@@ -322,7 +322,7 @@ def build():
     E.append(remember_box(
         'Remember: The 2-adic structure — ultrametric, clopen balls, clopen separation of 0 — is '
         'fixed by the framework\'s axioms. ε₀ (the Snap threshold) is a structural concept: '
-        'the minimum nonzero state required by those axioms, not a specific physical constant. '
+        'the minimum step required by those axioms, not a specific nonzero element of ℚ₂ and not a specific physical constant. '
         'The Zero Paradox is a structural argument, not a physical theory of our particular universe.'))
 
     print(f'Building: {out_path}')

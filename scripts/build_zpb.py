@@ -1,5 +1,5 @@
 """
-Build ZP-B: p-Adic Topology (v1.18)
+Build ZP-B: p-Adic Topology (v1.19)
 v1.18: GATE ROUND 4 DEFAULT (2026-09-15): AX-B1's lead clause drops ', the bottom included', which presupposes the bottom has something above it and fails on a one-point carrier; the conditional form (every state with anything above it) already covers the bottom wherever something is above it.
 v1.17: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim defaults, 2026-09-15): AX-B1's lead clause is aligned with its gloss: AX-B1 holds at every state with anything above it, the bottom included, each having a first distinct state above it with nothing strictly between; a state with nothing above it owes no step. The box adds '(In this two-state chart, 1 is the top.)'; state 1 and the definition are unchanged.
 v1.16: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): AX-B1's scope sentence is conditional: AX-B1 holds at the bottom and at every iterative bottom, every state with anything above it having a first distinct state above it with nothing strictly between; a state with nothing above it owes no step. The previous every-state reading had no model among the two-state encodings (the top state has nothing above it).
@@ -24,7 +24,7 @@ distinguish pure topology (the theorem statement) from ZP-specific framing (the 
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -43,8 +43,8 @@ def build():
     E.append(Paragraph('1.1  The Binary Existence Axiom', S['h2']))
     E.append(label_box('Axiom AX-B1 — Binary Existence', [
         'The foundational distinction of the Zero Paradox framework is binary: a state either exists or it does not. There is no third option at this level.',
-        '0 — non-existence (the Null State, corresponding to &#8869; in ZP-A)',
-        '1 — existence (the minimum nonzero state, &#949;<sub>0</sub>)',
+        '0 — non-existence (&#8869; in ZP-A; in Lean, &#8869; of OntologicalStates under instOntZPS)',
+        '1 — existence (&#949;<sub>0</sub>, the state off &#8869; of OntologicalStates)',
         'AX-B1 holds at every state with anything above it: each has a first distinct state above it, with nothing strictly between. A state with nothing above it owes no step. (In this two-state chart, 1 is the top.)',
         'Status: AXIOM. This is the only non-topological commitment in ZP-B. It precedes p-adic analysis and is the premise from which the field selection is derived.',
         'Scope: AX-B1 asserts the structure of the ontological distinction, not its physical realisation. It is invariant across all instantiations.',
@@ -54,7 +54,7 @@ def build():
         'neither is absent from the formal structure. The set is not a collection of things '
         'that happen to exist; it is a model of an ontological situation. '
         '0 names the null condition: the state in which nothing has been instantiated. '
-        '1 names the first non-null condition: the state in which something has. '
+        '1 names the first non-bottom condition: the state in which something has. '
         'Existence in AX-B1 is a property the states represent, not a statement about set membership.'))
     E.append(body(
         '<i>Lean encoding: AX-B1 is encoded as <b>OntologicalStates</b> — a free inductive type '

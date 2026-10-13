@@ -102,7 +102,7 @@ theorem claim_T_SNAP : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁
 
 /-- Claim `node-information` (proved). Statement: "In information theory, ⊥ is realized as the null
     state of maximal informational extremity (L-INF)." Exact representation: the surprisal is unbounded
-    (no finite bound holds), the L-INF divergence at the null state. Backing: `info_bottom_diverges`. -/
+    (no finite bound holds), the L-INF divergence (`l_inf`: ∀ M, ∃ n, M < surprisal n). Backing: `info_bottom_diverges`. -/
 theorem claim_node_information : ∀ M : ℝ, ∃ n : ℕ, M < surprisal n :=
   info_bottom_diverges
 

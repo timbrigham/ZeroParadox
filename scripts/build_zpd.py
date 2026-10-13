@@ -1,5 +1,5 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.15)
+Build ZP-D: State Layer (Hilbert Space) (v1.16)
 v1.14: R-PA added — prior-art note: T is the standard p-adic ball-indicator ONB (van der Put basis), refined to Kozyrev's p-adic wavelet basis of L2(Q2) (Kozyrev 2002); p-adic-QM / p-adic-qubit context. Prior-art positioning, paired with the CLAIMS Convergence row.
 v1.12: Rendered self-version refs removed — DP-1 title tag and T2 "R3 (v1.6)" ref (C1 sweep).
 v1.11: K-11/K-18 vocab fixes — "topological isolation" -> "clopen separation" throughout DP-1; "first atomic state" -> "minimum nonzero state" in D1.
@@ -20,7 +20,7 @@ v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -64,7 +64,7 @@ def build():
     E.append(label_box('Definition D1 — State Layer H', [
         'H = &#8450;<super>n</super> is a complex Hilbert space with orthonormal basis {e<sub>0</sub>, e<sub>1</sub>, &#8230;}.',
         'The foundational minimum is n = 2, corresponding to the two ontological states of the framework: '
-        '&#8869; (null state, mapped to e<sub>0</sub>) and &#949;<sub>0</sub> (minimum nonzero state, mapped to e<sub>1</sub>). '
+        '&#8869; of OntologicalStates (mapped to e<sub>0</sub>) and &#949;<sub>0</sub>, the state off &#8869; of OntologicalStates (mapped to e<sub>1</sub>). '
         'These two orthogonal vectors express the binary existence/non-existence distinction that is the '
         'framework\'s central object. All further states are derived from this pair as joins in (L, &#8744;, &#8869;) '
         '&#8212; they require no additional foundational dimension.',
@@ -91,7 +91,7 @@ def build():
     E.append(Paragraph('3.2  The Construction Target', S['h2']))
     E.append(label_box('Definition D2 — Transition Operator T (Requirements)', [
         'T: Q<sub>2</sub> &#8594; H must satisfy:',
-        '(i)   T(0) = e<sub>0</sub>   (null state maps to the designated base vector)',
+        '(i)   T(0) = e<sub>0</sub>   (0 of Q<sub>2</sub>, read as &#8869;, maps to the designated base vector)',
         '(ii)  T(&#949;<sub>0</sub>) = e<sub>1</sub>   (minimum deviation maps to the first non-base vector)',
         '(iii) T is injective on the clopen ball partition',
         '(iv)  If x and y are in disjoint clopen balls, then &#10216;T(x), T(y)&#10217; = 0   (DP-1)',
