@@ -2,27 +2,6 @@
 Zero Paradox — ZP-N: The Constructive Snap PDF Builder
 Version 2.3 | October 2026
 
-v2.0: Major revision. Corrects v1.0's mechanism and adds the construction it was missing.
-
-v1.0 claimed ZP-L's Classical.choice at ε₀ was "representational, not intrinsic," on the grounds that
-Mathlib's Ordinal type is "choice-saturated." That justification is false as measured — #print axioms
-Ordinal reports [propext, Quot.sound], no choice in the type — and the conclusion overreached its
-evidence: everything v1.0 proved choice-free is a fact about the ASCENT, while ε₀ is past what the
-notation system can name (tower_cofinal). The claim was also not measurable by the instrument used:
-Classical.choice sits in the Ordinal.partialOrder INSTANCE TERM, so every statement mentioning that
-order inherits it however proved (order_footprint_le vs order_footprint_eq).
-
-v2.0 says something sharper and true. The ascent is constructive (unchanged from v1.0, and still the
-layer's genuine content). The classical dependency in the ε₀ results comes from Mathlib's order
-instance and operations, which are genuinely non-constructive — comparability of arbitrary well-orders
-implies excluded middle (em_of_wellOrder_comparable; the taboo is Kraus / Nordvall Forsberg / Xu,
-arXiv:2104.02549 Thm 38(d), cited not claimed) — and genuinely more than ε₀ needs. And here is a
-carrier of notations denoting the ordinals up to ε₀: E0Note = WithTop SynONote, whose crossing into
-Ordinal is one named map with a measured price (PricedInterface.lean; carrier choice-free, crossing
-carries choice at every decl). Its shape is credited to Castéran (hydra-battles ON_plus / ON_correct;
-those files carry his name alone, the library as a whole is his and Contejean's); it is not an
-instance of ON_plus, because its order is not well-founded (the example in PricedInterface.lean).
-
 Lean: ConstructiveOrdinals.lean, SnapNucleusConstructive.lean, OrdinalChoiceEssential.lean,
 PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
 """

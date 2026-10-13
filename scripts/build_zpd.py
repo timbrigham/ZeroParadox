@@ -1,20 +1,5 @@
 """
 Build ZP-D: State Layer (Hilbert Space) (v1.16)
-v1.14: R-PA added — prior-art note: T is the standard p-adic ball-indicator ONB (van der Put basis), refined to Kozyrev's p-adic wavelet basis of L2(Q2) (Kozyrev 2002); p-adic-QM / p-adic-qubit context. Prior-art positioning, paired with the CLAIMS Convergence row.
-v1.12: Rendered self-version refs removed — DP-1 title tag and T2 "R3 (v1.6)" ref (C1 sweep).
-v1.11: K-11/K-18 vocab fixes — "topological isolation" -> "clopen separation" throughout DP-1; "first atomic state" -> "minimum nonzero state" in D1.
-v1.10: Version number removed from Open Items Register section header.
-v1.9: Adversary-review pass — Import I-B stale reference "Topological isolation of 0"
-corrected to "Clopen gap at 0" to match ZP-B v1.7+ terminology throughout.
-v1.8: T5 strengthened — T5-b (t5_strict_orthogonal) added in Lean and PDF. T5-b is the
-      non-trivial content of T5: distinct consecutive states map to orthogonal T-images via
-      DP-1. T5 norm result disclosed as tautology of construction (all norms = 1).
-v1.7: T5 DP-1 dependency made explicit — status line, Open Items Register, and Validation
-      Status table now consistently state "given DP-1" for T5, matching T4's treatment.
-v1.6: R3 added — topological type of T stated explicitly: locally constant, continuous from
-      (Q2, 2-adic topology) to H; connected-space concern addressed.
-v1.5: D1 updated — n = 2 foundational minimum; higher n derived, not foundational.
-v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 """
 
 import os

@@ -1,43 +1,5 @@
 """
 Build ZP-B Illustrated Companion (v1.17)
-v1.16: GATE ROUND 4 DEFAULT (2026-09-15): companion sync with ZP-B v1.18: AX-B1's lead clause drops ', the bottom included'.
-v1.15: DECISION BATCH REMEDIATION AFTER GATE ROUND 3 (Tim defaults, 2026-09-15): companion sync with ZP-B v1.17: AX-B1's lead clause is aligned with its gloss (AX-B1 holds at every state with anything above it, the bottom included).
-v1.14: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (Tim ruling, 2026-09-15): companion sync with ZP-B v1.16: AX-B1's scope sentence is the conditional form (every state with anything above it; a state with nothing above it owes no step), and the derivation of the field cites AX-B1's two states (T0 Step 1), not the scope sentence.
-v1.13: DECISION BATCH REMEDIATION (Tim, 2026-09-15): companion sync with ZP-B v1.15: AX-B1's iterative-bottom scope sentence added where the companion introduces AX-B1.
-v1.12: PRECISION FIX (release-prep), grounded in the formal ZP-B claims (C3, T5). Corrected two review-flagged overclaims: (1) the "entirely disjoint / 0 unreachable" framing — zero is a genuine LIMIT of nonzero states (not isolated; the v1.4/v1.7 correction), and the true barrier is C3 (no continuous PATH from a nonzero state to zero), the only crossing being a discrete jump (the Binary Snap); (2) "infinite valuation distance" (category error) — v₂(0) is an infinite VALUATION, not a distance (2-adic distances stay finite); it places zero in a clopen class distinct from every nonzero state. Kept the general-reader register (accessible, not jargon).
-v1.10: vocab fix: null state → ⊥.
-v1.9: Strip version number from companion footer.
-v1.8: Dan feedback (2026-05-21): "dense" → "densely ordered"; rewrite para 2 of "Why p-Adic
-      Geometry?" to acknowledge ℚ₂ also has no minimum nonzero element — difference is topology
-      (clopen), not field arithmetic; add ε₀ note in key property box clarifying ε₀ is a
-      framework threshold, not a specific 2-adic number.
-v1.7: Dan feedback (2026-05-17) — PhD in metrics:
-      (1) removed "halfway between existing and not existing" (category error — existence
-          is not a quantity that can be averaged); replaced with density argument
-          (ε/2 always exists in ℝ; no first nonzero step possible);
-      (2) "first atomic state (1)" replaced with "ε₀" throughout to avoid confusion
-          with the rational number 1 in ℚ₂;
-      (3) "no point between them in the 2-adic topology" — topology does not deal with
-          betweenness; replaced with clopen ball separation language;
-      (4) "0 itself remains isolated" (line missed by v1.4 fix) corrected to
-          "clopen-separated";
-      (5) added sequences-vs-paths note box: sequences can converge to 0 in ℚ₂
-          (e.g. (2/3)ⁿ has 2-adic norm 2⁻ⁿ → 0), but continuous paths cannot reach 0
-          (total disconnectedness). These are different objects.
-v1.6: nested_balls_diagram cy fixed (was dh*0.42=90.7; ry_outer=101.2 → min_y=-10.5 overflow);
-      dh 3.0→3.2 in, cy fixed at 112 (min_y=10.8, top label=218 < dh-10=220.4)
-v1.5: nested_balls_diagram height increased (2.6 → 3.0 in) and cy lowered so outermost
-      ellipse and labels no longer overflow the drawing box; internal title string removed
-      (redundant with caption); caption "0 is isolated" corrected to match v1.4 terminology.
-v1.4: "isolation of 0" and "0 is isolated" corrected to "clopen separation of 0"
-throughout — 0 in Q2 is not a topologically isolated point; the correct claim is
-clopen-ball separation (v2(0) = +inf places 0 in its own clopen class, distinct
-from all non-zero elements). Diagram caption and remember box updated.
-v1.3: "Why p-Adic Geometry?" section added as the opening section — Conceptual Rosetta Stone
-mapping 2-adic valuation to ontological function; explains why the real line fails for binary
-existence and why ℚ₂ is the natural language for AX-B1. Key property example box added.
-v1.2: "Non-Archimedean" defined in plain language near the top.
-"2-adic valuation" briefly explained when isolation of 0 is discussed.
 """
 
 import os

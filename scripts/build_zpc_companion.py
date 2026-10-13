@@ -1,26 +1,5 @@
 """
 Build ZP-C Illustrated Companion (v2.11)
-v2.9: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14), companion sync with ZP-C v1.23: the key result box ran the derivation chain through DA-1 ('infinite surprisal -> must be a live computation (DA-1)') before L-RUN, putting DA-1 on the shape side. The shape chain now starts at L-RUN and ends at T-SNAP; the occurrence side is stated after it: the framework commits to instantiation occurring (a configuration reaches P0), DA-1 (closed given DP-2) argues a configuration there is a live computation, and together they give that the Snap happens, which is not a theorem.
-v2.8: AX-1 SPLIT (Tim, 2026-09-14), companion sync with ZP-C v1.22: AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). The key result box ended "The Binary Snap is no longer assumed — it is derived.", which denied the assumption that remains; it now says the shape is derived and that the Snap happening is still a commitment. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the key-result heading "The Binary Snap Is a Proven Theorem" was not scoped when its box was; it is now "The Shape of the Binary Snap Is a Proven Theorem", matching the box's last sentence that the Snap happening is still a commitment.
-v2.6:vocab fix: null state → ⊥.
-v2.5: "First Atomic State Q = (0,1)" → "minimum nonzero state ε₀, Q = (0,1)" in JSD section body prose.
-v2.4: K-20 continued — "Lemma L-INF (Informational Extremity of ⊥)" → "Lemma L-INF (Unbounded Surprisal of ⊥)" in body prose (missed by K-20 diagram-only fix).
-v2.3: K-20 vocabulary fix — "First Atomic State" → "ε₀" in section III diagram label.
-v2.2: Strip version number from companion footer.
-v2.1: Strip version numbers from in-document cross-references; "New in v1.6" section header simplified.
-v1.8: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
-v1.7: Dual-route framing added — "What Is ZP-C Doing?" rewritten to name both routes
-      (Kolmogorov complexity and 2-adic surprisal) explicitly upfront as independent measures
-      that converge at the same threshold. "Where the Two Routes Converge" callout box added
-      between the surprisal graph and L-INF section to make the convergence explicit and explain
-      why it is not a coincidence.
-v1.6: CC-2 and RP-2 added — c0 = bottom labeled as modeling commitment (CC-2, parallel to CC-1
-      in ZP-A); branching measure labeled as representational commitment (RP-2). Plain-language
-      explanations of both added to companion.
-v1.5: L-INF section added — plain-language explanation of Informational Extremity of bottom;
-      key result box updated to reflect T-SNAP as proven theorem (not merely Candidate).
-v1.4: closing key result box replaced technical labels (TQ-IH, ZP-A D2) with
-      plain-language descriptions for general readers.
 """
 
 import os

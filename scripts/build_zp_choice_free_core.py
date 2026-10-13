@@ -1,37 +1,6 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
 Version 1.11 | October 2026
-v1.10: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the page-1 overview said T-SNAP's occurrence 'stays a framework commitment'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
-v1.9: the page-1 overview said Section III shows it "essential rather than INHERITED" while Section III itself says both cases are essential and one of them IS inherited - the same document, opposite framings, and the overview misdescribing the section it cites. Corrected to "essential rather than INCIDENTAL", which is the axis the sentence is actually on. Found by `check_paths.py --claim`, built this session as DC-24's mechanical half; it printed this site and the matching README one on its first real run.
-v1.8: PROVENANCE AND NECESSITY ARE INDEPENDENT AXES, and v1.5-v1.7 collapsed them. The text said Section III locates two principles "where the choice is the framework's own and provably essential" - false for the second. `wem_of_fixedPointFree` reduces a principle whose choice IS the framework's own (a bare classical in Category/Lawvere.lean); `em_of_wellOrder_comparable` reduces well-order comparability, whose choice is MATHLIB's, spent in InitialSeg.total. So an INHERITED dependence can be essential, which is a STRONGER result than the one the prose was claiming, and it is why "inherited" never meant "removable". Found by the adversary gate keying on the POSITIVE assertion ("the framework's own") - four earlier rounds all keyed on the universal negative ("only ... Mathlib") and no search for that polarity could reach it.
-v1.7: THE v1.6 FIX REACHED THE ENDNOTE AND MISSED THE FRONT MATTER. Section III has named both taboo reductions since v1.5; v1.6 corrected the endnote; the PREAMBLE on page 1 and the Section II opener still said choice appears in "every place ... where the framework builds on Mathlib's libraries" and listed CATEGORY THEORY as one of them - the exact case corrected everywhere else. Both prose gates returned FAIL-BEDROCK, independently, on the two places a skimmer lands FIRST. That is the fourth consecutive version of this document fixing one site of one claim: v1.5 fixed Section III and left the endnote, v1.6 fixed the endnote and left the preamble. Corrected here at all four rendered sites at once. Also struck a claim v1.6 INTRODUCED - that the axiom-free sibling shows the choice is "not forced by the shape of the result" - which is the inversion of what LawvereTaboo section III proves: the cost IS the generality over arbitrary types, and it disappears under [DecidableEq beta].
-v1.6: THE ENDNOTE CONTRADICTED SECTION III. Section III has named both taboo reductions since v1.5 - `wem_of_fixedPointFree` and `em_of_wellOrder_comparable`, each choice-free (`[propext, Quot.sound]`), which is the only shape that can establish necessity. The endnote still said choice "appears only where the framework builds on Mathlib's ... libraries, and whether it is necessary there remains open" - both halves false, in the two places a skimmer lands. Measured: `fixedPointFree_of_nontrivial` carries choice from a bare `classical` in framework source (`Category/Lawvere.lean`), not from Mathlib, while its sibling `no_witness_of_fixedPointFree` is axiom-free - so the dependence is not inherited - the `classical` is the framework's own, and per LawvereTaboo section III the cost IS the generality over arbitrary types (it disappears under [DecidableEq beta]). Found by sweeping the CLAIM after both prose gates returned FAIL-BEDROCK on the same universal in README.
-v1.5: BEDROCK - Section III asserted THE FRAMEWORK HAS NO PROVEN-NECESSITY CASE ANYWHERE, a universal
-negative that is FALSE and was live in the published PDF. Two taboo reductions exist and are named in
-CLAUDE.md: em_of_wellOrder_comparable (comparability of well-orders implies excluded middle; prior art
-Kraus-Nordvall Forsberg-Xu arXiv:2104.02549 Thm 38(d)) and wem_of_fixedPointFree (the general
-fixed-point-free principle implies WEAK excluded middle, on the keystone). Neither was named anywhere
-in this document (0 rendered hits for either, 0 for taboo). A 2026-08-01 sweep recorded both universal
-negatives as removed from the corpus - it grepped .lean and missed this Python build script, so the
-claim survived in RENDERED PUBLIC PROSE. Found 2026-08-03 by the new modal-claim sweep. Section III now
-states the reduction/measurement distinction and names both cases. Also: the type-vs-proof point added
-(an axiom in a TYPE cannot be removed by any proof; removability there means changing the statement).
-Docstring header said 1.3 while VERSION said 1.4 - corrected.
-v1.4: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
-v1.3: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
-v1.1: WheelFrac.* citation updated to ZPJ_WheelFrac.* (Lean namespace standardization).
-v1.0: Initial release. Surfaces the machine-verified fact that the conceptual core of the
-      framework is free of the Axiom of Choice. The central theorem T-SNAP (the Binary Snap)
-      depends on NO axioms at all; the lattice algebra (ZP-A) and the Quine-atom self-reference
-      (ZP-J) are choice-free. Classical.choice appears mostly where the framework builds on Mathlib's
-      classically-built analysis/order/computability libraries (the analytic realization layers) - but
-      NOT only there: the category-theory face carries the framework's own bare `classical`.
-      Anchored on the checkable artifact ZeroParadox/AxiomProfile.lean (a file of #print axioms
-      commands). Honest fences throughout: not the whole framework is choice-free; choice is
-      mostly inherited from Mathlib in the analytic layers; whether the REMAINING dependence is
-      *necessary* there is open (the one layer classified, ZPB_PadicTree, found it mostly
-      incidental/routable) - but two taboo reductions already settle it for the principles they
-      cover, and the rendered Section III has named them since v1.5.
 Framework-wide note; reads after the Foreword.
 """
 

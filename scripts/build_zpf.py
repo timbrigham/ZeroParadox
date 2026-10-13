@@ -1,23 +1,5 @@
 """
 Build ZP-F: The Counterexamples (v1.11)
-v1.9: DEAD LINK AND STALE ABSENCE CLAIM (Tim ruling, 2026-10-01): the Dual Limit Condition remark said no type bridge between the ordinal and p-adic types is established in ZP-L and pointed at "ZP-L §V, Remaining Gap", a heading ZP-L no longer has. cnfToZp2 maps the omega-tower into Z2 (ZeroParadox/Ordinal/CnfBridge.lean); the sentence now reads that the identification is a co-witness, not an identity, that the literal eps0 = 0 is ill-typed (cnf_bridge_type_boundary), and points at ZP-L's "The Bridge: What Is Formal and What Is Assumed".
-v1.8: DECISION BATCH REMEDIATION AFTER GATE ROUND 2 (2026-09-15): the opening's 'so that it is taken follows from the occurrence commitment together with DA-1' was a non sequitur (the NO-GO gauge does not give occurrence) and sat in the ordered-field setting where the snap is proved impossible; the clause is removed and the sentence ends at the gauge.
-v1.7: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the opening said occurrence 'is a commitment of the framework rather than one of its theorems'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).
-v1.6: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
-v1.4: Vocabulary fix — "departure from the null state" → "departure from ⊥" in preamble. Palette rebuild.
-v1.3: K-16 vocabulary fix — "topological isolation of zero" → "valuative gap at zero
-(v_p(0) = +∞)" in §VI body prose.
-v1.0: Initial release. Establishes formally that any linearly ordered field —
-      notably ℝ and ℚ — is structurally incapable of hosting the Binary Snap.
-      General case ([Field F] [LinearOrder F] [IsStrictOrderedRing F]) proved
-      first; ℝ given as the canonical instance.
-v1.1: Added §VI — philosophical note on why ℝ is the wrong setting: the
-      inversion of richness, the Ostrowski forcing argument, and zero as limit
-      point versus structural origin.
-v1.2: §VI Remark: Dual Limit Condition extended — squeeze as structurally
-      necessary (recurrence across ZPL/ZPM); surreal numbers as boundary test
-      case; theorem development pathway noted. Vocabulary fix: 'topologically
-      isolated' → 'valuatively distinguished' in §VI body.
 """
 
 import os
