@@ -49,6 +49,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Valuation/InversionValuation.lean` - An elementary fact: 2-adic inversion reverses the valuation filtration
 - `ZeroParadox/Valuation/Ostrowski.lean` - ZP-P instance: the number-system fork (ℝ vs ℚ_p), via Ostrowski
 - `ZeroParadox/Valuation/Padic.lean` - ZP-B: p-Adic Topology
+  - ride-along docs: `ZeroParadox/Valuation/Padic.md` - Why Q₂ rather than a discrete two-point space
 - `ZeroParadox/Valuation/PadicPerfect.lean` - M11 (re-attempt): the 2-adic ball is perfect — Cantor–Bendixson rank 0
 - `ZeroParadox/Valuation/PadicTree.lean` - A rooted 2-adic tree as a `SimpleGraph`
 - `ZeroParadox/Valuation/PlaceAllPrimes.lean` - ZP-H Direction A, Cycle A5 (depth c) — the framework's OWN bottom family = all places of ℚ

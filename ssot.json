@@ -133,7 +133,15 @@
             "bottom"
           ],
           "reason": null,
-          "statement": "In information theory, ⊥ is realized as the null state of maximal informational extremity (L-INF).",
+          "restatements": [
+            {
+              "by": "Tim — R4 ruling 2026-10-09 (state-change word / null-state replacement)",
+              "date": "2026-10-13",
+              "prior_statement": "In information theory, ⊥ is realized as the null state of maximal informational extremity (L-INF).",
+              "reason": "R4: replace the null-state wording and the banned term \"informational extremity\" with what l_inf / info_bottom_diverges prove (∀ M, ∃ n, M < surprisal n)."
+            }
+          ],
+          "statement": "In information theory, ⊥ is realized at the floor where surprisal is unbounded (L-INF): the surprisal I(n) = n at ball depth n exceeds every finite bound.",
           "status": "proved",
           "to": null
         },
