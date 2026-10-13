@@ -37,6 +37,8 @@ $cases = @(
     @{ want = 'DENY';  why = 'gh api delete';          cmd = 'gh api -X DELETE /repos/x/y' }
     @{ want = 'DENY';  why = 'gh pr merge';            cmd = 'gh pr merge 12' }
     @{ want = 'DENY';  why = 'both at once';           cmd = 'git log; gh pr list' }
+    # INC-0001 (2026-08-22): an agent ran this through a shell on the shared tree. Replayed verbatim.
+    @{ id = 'GIT-INC0001'; want = 'DENY'; why = 'reset --hard (INC-0001)'; cmd = 'git reset --hard' }
 
     # --- MUST ALLOW: the word is inside another word, or is a .git/ path read --
     @{ want = 'ALLOW'; why = 'the digit is legitimate'; cmd = 'echo "the digit is legitimate"' }
@@ -64,7 +66,8 @@ foreach ($c in $cases) {
     $ok  = ($got -eq $c.want)
     if (-not $ok) { $fails++ }
     $mark = if ($ok) { 'ok  ' } else { 'FAIL' }
-    "{0}  want={1,-5} got={2,-5}  {3}" -f $mark, $c.want, $got, $c.why | Write-Host
+    $label = if ($c.id) { "$($c.id)  $($c.why)" } else { $c.why }
+    "{0}  want={1,-5} got={2,-5}  {3}" -f $mark, $c.want, $got, $label | Write-Host
 }
 
 # --- fail-closed controls: the hook must DENY when it cannot tell -----------
@@ -76,7 +79,51 @@ foreach ($bad in @(@{ why = 'empty stdin'; p = '' }, @{ why = 'malformed json'; 
     "{0}  want=DENY  got={1,-5}  fail-closed: {2}" -f $mark, $got, $bad.why | Write-Host
 }
 
+# --- MUTATION (DC-71 suite style): remove the deny branch; GIT-INC0001 must go ALLOW -------------
+# The final Deny call is replaced literally by `exit 0`. The SHA is compared first, so a missed
+# anchor reports FAIL rather than a false pass. GIT-MUT0 then shows the unmutated copy still denies.
 ""
-if ($fails -eq 0) { "ALL {0} CONTROLS BEHAVED" -f ($cases.Count + 2) | Write-Host; exit 0 }
-"{0} CONTROL(S) MISBEHAVED" -f $fails | Write-Host
+$src = Get-Content $hook -Raw -Encoding UTF8
+$mutDir = Join-Path ([System.IO.Path]::GetTempPath()) ("zp-gitgh-mut-" + [guid]::NewGuid().ToString('N').Substring(0, 8))
+New-Item -ItemType Directory -Path $mutDir -Force | Out-Null
+function Get-Sha([string]$path) { return (Get-FileHash -Algorithm SHA256 -Path $path).Hash }
+function Invoke-HookAt([string]$hookPath, [string]$command) {
+    $payload = @{ tool_name = 'PowerShell'; tool_input = @{ command = $command } } | ConvertTo-Json -Compress -Depth 5
+    $out = $payload | powershell -NoProfile -File $hookPath 2>&1 | Out-String
+    if ($out -match '"permissionDecision"\s*:\s*"deny"') { return 'DENY' }
+    return 'ALLOW'
+}
+$inc = @($cases | Where-Object { $_.id -eq 'GIT-INC0001' })[0]
+
+$baseCopy = Join-Path $mutDir 'base.ps1'
+Set-Content -Path $baseCopy -Value $src -Encoding UTF8 -NoNewline
+$baseSha = Get-Sha $baseCopy
+$mutPath = Join-Path $mutDir 'mut1.ps1'
+$find = 'Deny "BLOCKED: this command invokes $which.'
+$repl = 'exit 0; "BLOCKED: this command invokes $which.'
+Set-Content -Path $mutPath -Value ($src.Replace($find, $repl)) -Encoding UTF8 -NoNewline
+$mutSha = Get-Sha $mutPath
+$mutCount = 2
+if ($mutSha -eq $baseSha) {
+    $fails++
+    "FAIL  GIT-MUT1  MUTATION DID NOT APPLY (sha unchanged {0}) - anchor not found" -f $baseSha.Substring(0, 12) | Write-Host
+} else {
+    $got = Invoke-HookAt $mutPath $inc.cmd
+    $ok = ($got -eq 'ALLOW')
+    if (-not $ok) { $fails++ }
+    $mark = if ($ok) { 'ok  ' } else { 'FAIL' }
+    "{0}  GIT-MUT1  sha {1}->{2}  want=ALLOW got={3,-5}  mutation: deny branch removed -> GIT-INC0001 goes red" -f `
+        $mark, $baseSha.Substring(0, 8), $mutSha.Substring(0, 8), $got | Write-Host
+}
+$ctl = Invoke-HookAt $baseCopy $inc.cmd
+$ctlOk = ($ctl -eq 'DENY')
+if (-not $ctlOk) { $fails++ }
+$mark = if ($ctlOk) { 'ok  ' } else { 'FAIL' }
+"{0}  GIT-MUT0  want=DENY  got={1,-5}  unmutated copy, same process, after the mutation" -f $mark, $ctl | Write-Host
+Remove-Item -Recurse -Force $mutDir
+
+""
+$total = $cases.Count + 2 + $mutCount
+if ($fails -eq 0) { "ALL {0} CONTROLS BEHAVED" -f $total | Write-Host; exit 0 }
+"{0} of {1} CONTROL(S) MISBEHAVED" -f $fails, $total | Write-Host
 exit 1
