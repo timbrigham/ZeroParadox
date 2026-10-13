@@ -52,7 +52,7 @@ The snap is also **irreversible**: the p-adic topology layer (ZP-B) establishes,
 → **D7** (machine configuration definition, ZP-C; given the occurrence commitment, a running machine has left c₀ for c₁)  
 → **DA-1** (DP-2 and `da1_minimal_path` show c₀ and c₁ distinct while returning the same output value, ZP-E; closed given DP-2; it consumes the occurrence commitment and does not supply it)  
 → **L-RUN** (execution is a state change off ⊥ of `MachinePhase`, c₀ ≠ c₁, ZP-C)  
-→ **TQ-IH** (no program outputs ⊥ without an intermediate state off ⊥ of `MachinePhase`, c₁ ≠ c₀, ZP-C)  
+→ **TQ-IH** (c₁ ≠ c₀: the same fact read from c₁, ZP-C)  
 → **ZP-A D2** (a state change off ⊥ of `MachinePhase` is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap derived: A4, the standard bottom element axiom, gives its join, AX-B1 supplies the atom, and `t_snap_given` takes the start at ⊥ and occurrence at the first step as hypotheses; AX-1 is retired: the snap's shape is this theorem, and that the snap occurs is stated separately: it follows from the occurrence commitment, that instantiation occurs, together with DA-1, closed given DP-2)
 
