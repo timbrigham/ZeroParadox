@@ -1,11 +1,6 @@
 """
 Build ZP-E Illustrated Companion
 Version 1.26 | October 2026
-Citation fence (Gentzen): the credits follow CLAIMS.md's Gentzen row and are cited from the primary
-source only (Gentzen 1943, Math. Annalen 119, p. 140 and its footnote 3). Provability below epsilon-0
-is what Gentzen reports, crediting Hilbert-Bernays; it is never called Hilbert-Bernays' theorem, and
-no year is given for Grundlagen der Mathematik II, which this project has not read (not located among
-its filed sources as of 2026-10-13). Gentzen's 1938 Neue Fassung is not cited.
 """
 
 import os

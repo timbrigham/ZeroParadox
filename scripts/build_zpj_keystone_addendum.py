@@ -2,7 +2,7 @@
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
 Version 1.26 | October 2026
 Taylor (Well-founded coalgebras and recursion) is cited without year or venue: the copy on file
-carries neither, and none is supplied without a verified bibliographic record.
+carries neither. The gap stays open until a verified bibliographic record supplies them.
 Reads after ZP-J Self-Reference.
 """
 

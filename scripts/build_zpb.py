@@ -1,7 +1,7 @@
 """
 Build ZP-B: p-Adic Topology (v1.19)
-D5 makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21) ruled that
-analogy a crank signal, because it reads as physics grand theory.
+This document makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21)
+flagged that analogy because it makes a document read as a physics grand theory.
 """
 
 import os

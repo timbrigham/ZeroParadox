@@ -1,8 +1,6 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
 Version 1.12 | October 2026
-Vocabulary: "instance" means only the instance-of-a-theorem relation; a per-domain realization is a
-"realization" or a "face".
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 

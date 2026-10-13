@@ -1,11 +1,13 @@
 """
 Build ZP-L Illustrated Companion
 Version 1.18 | October 2026
-Citation fence (Gentzen): the credits follow CLAIMS.md's Gentzen row and are cited from the primary
-source only (Gentzen 1943, Math. Annalen 119, p. 140 and its footnote 3). Provability below epsilon-0
-is what Gentzen reports, crediting Hilbert-Bernays; it is never called Hilbert-Bernays' theorem, and
-no year is given for Grundlagen der Mathematik II, which this project has not read (not located among
-its filed sources as of 2026-10-13). Gentzen's 1938 Neue Fassung is not cited.
+Citation fence (Gentzen): the Convergence section's credits follow CLAIMS.md's Gentzen rows and are
+taken from the primary papers, never from a secondary source's labels. Provability of transfinite
+induction below epsilon-0 is what Gentzen 1943 (p. 140 and its footnote 3) reports, crediting
+Hilbert-Bernays; it is never called Hilbert-Bernays' theorem, and no year is given for Grundlagen der
+Mathematik II (no copy among this project's filed papers, searched by file name, 2026-10-13). Not
+cited: p. 140's announcement of the presentations in Gentzen 1943 section 2 (pp. 145-155 not checked
+against the text), and the 1938 Neue Fassung.
 """
 
 import os
