@@ -115,14 +115,12 @@ theorem godel_two {falsum : S} (psi : S)
     (hcon : ¬ Thm falsum) : ¬ Thm (imp (box falsum) falsum) :=
   fun h => hcon (loeb psi hfix1 hfix2 h)
 
-/-! ## § V. The bottom-element relationship — the floor (ν): the Löb sentence is the bottom -/
+/-! ## § V. The bottom-element relationship: an assumed Löb sentence is a provability fixed point -/
 
-/-- **Löb on the family's μ/ν fork: the provability face HAS a bottom element.** The Löb sentence `ψ` is
-    provably equivalent to `□ψ → A` (`⊢ ψ ↔ (□ψ → A)`) — the diagonal fixed point of the provability map
-    `p ↦ (□p → A)`. Where Tarski's truth face hits the wall (μ, no floor), the provability face reaches a
-    bottom: `ψ` is that floor, and Löb (§ III) is what it forces. So on the one-over-infinity-to-bottom
-    map, provability is a ν side, with a genuine self-referential fixed point, the same structure the rest
-    of the family carries. -/
+/-- **Given a Löb sentence `ψ` (the hypotheses `hfix1`, `hfix2`), `ψ` is a fixed point, up to
+    provability, of `p ↦ (□p → A)`; reading it as the face's bottom is the family's criterion, not
+    this theorem.** `⊢ ψ` iff `⊢ (□ψ → A)`; with `⊢ □A → A` it yields `⊢ A` (`loeb`, § III). The
+    statement names no bottom. -/
 theorem loeb_sentence_is_fixedpoint {A : S} (psi : S)
     (hfix1 : Thm (imp psi (imp (box psi) A)))
     (hfix2 : Thm (imp (imp (box psi) A) psi)) :

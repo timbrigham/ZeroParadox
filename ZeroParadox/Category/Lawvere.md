@@ -36,7 +36,7 @@ where the fixed-point-free **diagonal** `fun x => g (e x x)` is not ADMISSIBLE.
 ⚠ **That is NOT the claim that no fixed-point-free computable endomap exists.** One does:
 `fun c => Code.pair c c` is total, computable, and returns its own input for no `c`. What fails is the
 diagonal CONSTRUCTION, not the existence of fixed-point-free maps — and per
-`ZeroParadox/Category/DiagonalWitness.lean`, removing the obstruction **does not by itself supply the
+`ZeroParadox/Category/DiagonalWitness.md`, removing the obstruction **does not by itself supply the
 witness**; the implication runs one way, and the fixed point on that side is Rogers' theorem, cited
 rather than derived.
 

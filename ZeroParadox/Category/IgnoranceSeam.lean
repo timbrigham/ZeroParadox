@@ -464,9 +464,9 @@ example : ¬ ([] : List Bool) ⋖ [true] := fun h => h.2 (c := [false]) (by deci
 -- Statement: Mathlib, the prefix relation is a partial order as a relation class.
 example : IsPartialOrder (List Bool) (· <+: ·) := inferInstance
 -- Reading: `first_digit_covers` gives the shape the OVER leg asks for (`UpAndOver.cover`, Mathlib
---   `CovBy`), here in the prefix order. Mathlib supplies for `<+:` only that relation class, no `LE`
---   instance (`List Bool`'s own `≤` is lexicographic), so `CovBy` is not stated for it; with its two
---   covers and no join it is Winskel's conflict shape (`ZeroParadox/Order/SnapCannotBe.lean` § II).
+--   `CovBy`), here in the prefix order, stated directly because `⋖` on `List Bool` reads its
+--   lexicographic `<` (the lexicographic `example` above). With its two covers and no join it is
+--   Winskel's conflict shape (`ZeroParadox/Order/SnapCannotBe.lean` § II).
 
 -- Statement: `w` lies in the up-set `{v | w <+: v}` and is a prefix of each of its members.
 example (w : List Bool) : w <+: w ∧ ∀ v ∈ {v : List Bool | w <+: v}, w <+: v :=
@@ -576,10 +576,22 @@ example (w : List Bool) (d : Bool) :
     have : u.length ≤ w.length := by simp at hl; omega
     exact (h1.eq_of_length (le_antisymm h1.length_le this)).symm
   · exact Or.inr (h2.eq_of_length (le_antisymm h2.length_le hl))
+-- Statement: they are its only upper covers.
+example (w u : List Bool) (h1 : w <+: u) (h2 : w ≠ u)
+    (h3 : ∀ v : List Bool, w <+: v → v <+: u → v = w ∨ v = u) :
+    u = w ++ [false] ∨ u = w ++ [true] := by
+  obtain ⟨t, rfl⟩ := h1
+  rcases t with _ | ⟨b, s⟩
+  · simp at h2
+  · rcases h3 (w ++ [b]) (List.prefix_append w [b]) (by simp) with h | h
+    · simp at h
+    · have hs : s = [] := by simpa using h
+      subst hs
+      cases b <;> simp
 -- Reading: a nonempty `w` has exactly one lower cover, `w.dropLast` (its prefixes form a chain), so
 --   one-step forgetting is single-valued and is computed by the function `List.dropLast`; one-step
---   extending is a choice of digit, between the two upper covers of every `w` (`first_digit_covers`
---   is the `[]` case).
+--   extending is a choice of digit, between the two upper covers of every `w` (the two `example`s
+--   above; `first_digit_covers` is the `[]` case).
 
 /-- `Statement:` iterating truncation from `w` reaches `[]` after `|w|` steps. -/
 theorem dropLast_iterate_eq_nil (w : List Bool) : List.dropLast^[w.length] w = [] := by
@@ -601,10 +613,11 @@ theorem addOne_forgets_iff (w : List Bool) : partialAddOne w <+: w ↔ w = [] :=
   · intro h
     exact (partialAddOne_fixed_iff w).1 (h.eq_of_length (partialAddOne_length w))
   · rintro rfl; exact List.nil_prefix
--- Statement: `List.tail` is a left inverse of `partialDouble`; truncation is not, and on the all-false streams
---   of the climb from `[]` the two agree.
-example (w : List Bool) : (partialDouble w).tail = w := rfl
-example : (partialDouble [true]).dropLast = [false] := rfl
+-- Statement: `List.tail` is a left inverse of `partialDouble`; truncation is not, and on the
+--   all-false streams of the climb from `[]` the two agree.
+example : Function.LeftInverse List.tail partialDouble := fun _ => rfl
+example : ¬ Function.LeftInverse List.dropLast partialDouble := fun h =>
+  absurd (h [true]) (by decide)
 example (n : ℕ) : (List.replicate n false).dropLast = (List.replicate n false).tail := by
   rw [List.dropLast_replicate, List.tail_replicate]
 -- Reading: local ignorance and local knowledge at `w` are one `w`, least in its up-set and greatest
