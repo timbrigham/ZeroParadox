@@ -12,7 +12,7 @@ FMC is a disciplined, falsifiable form of the "intrinsic justification" of axiom
 
 ## How and Why We Use It
 
-We try to avoid project-specific vernacular. FMC names a status the framework genuinely needs and no existing label fit.
+We try to avoid project-specific vernacular. FMC names a status the framework genuinely needs.
 
 It is stronger than a free modeling choice (the alternatives are argued away, not merely declined). By definition it is weaker than a theorem: the ruling-out is a metatheoretic "squeeze" argument, not a derivation in the formal system. As such, it sits between a Conditional Claim and a Theorem.
 
