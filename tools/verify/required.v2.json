@@ -38,8 +38,10 @@
       "reason": "its property is tracked TEXT files; a BOM test on a font or a published PDF is meaningless. Stated as an exclusion rather than an extension allow-list on purpose: a new text extension must NOT silently fall out of scope, which is the direction an allow-list fails in",
       "module": "tools/verify/check_encoding.py",
       "approved_modules": [
-        "f5cb6a6b620e98c5f24c65325a5d62fe12903cce"
-      ]
+        "f5cb6a6b620e98c5f24c65325a5d62fe12903cce",
+        "84c127fe8de4054992ae3df3dfd083bba113dcca"
+      ],
+      "_rollout_window_2026_10_14b": "TWO-BLOB ROLLOUT WINDOW, Tim-approved route (the 2026-10-14 tooling-big batch: one batch, one window, the local /rely routing leg deleted in favour of the ledger). `84c127fe…` is tools/verify/check_encoding.py from worktree tooling-big (/rely PASS `rely@ead05f9e…#0`, 45 subjects, BLOCKING:0); `f5cb6a6b…` is the current build. EXPIRES when the tooling-big commit merges: the next main-checkout commit NARROWS every list carrying this key to its new blob and deletes the key. Blobs re-derived with `record.module_evidence(<module>, repo='.')` in the worktree."
     },
     "check_paths": {
       "family": "mechanical",
@@ -48,8 +50,10 @@
       ],
       "module": "tools/verify/check_paths.py",
       "approved_modules": [
-        "194cb554bc6063afabcbcde276de87a7e9b7bf8a"
-      ]
+        "194cb554bc6063afabcbcde276de87a7e9b7bf8a",
+        "c0588e6303f39361a691650aec14bec2f78d9443"
+      ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `c0588e63…` is the tooling-big build of tools/verify/check_paths.py; `194cb554…` is the current build."
     },
     "check_frozen": {
       "family": "mechanical",
@@ -81,8 +85,10 @@
       ],
       "module": "tools/verify/check_prose.py",
       "approved_modules": [
-        "6857f14f6ab5c6eefdd89f10aae37d5c95e375cd"
+        "6857f14f6ab5c6eefdd89f10aae37d5c95e375cd",
+        "4c24c5e38525f45ffe4ae3b2376a56f0603d8f40"
       ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `4c24c5e3…` is the tooling-big build of tools/verify/check_prose.py; `6857f14f…` is the current build.",
       "scope": [
         "ZeroParadox/*.lean"
       ],
@@ -96,8 +102,10 @@
       ],
       "module": "tools/verify/check_pov.py",
       "approved_modules": [
-        "8de53c1dcfa06056eccaff436492972d9476c8c5"
-      ]
+        "8de53c1dcfa06056eccaff436492972d9476c8c5",
+        "9cf3c19015425248112f057f6d7bef849689bcbf"
+      ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `9cf3c190…` is the tooling-big build of tools/verify/check_pov.py; `8de53c1d…` is the current build."
     },
     "check_modal": {
       "family": "mechanical",
@@ -161,8 +169,10 @@
       ],
       "module": "tools/verify/check_hashes.py",
       "approved_modules": [
-        "8275bc47caff57857e308ed61379343cb5aa402b"
+        "8275bc47caff57857e308ed61379343cb5aa402b",
+        "26f738ad69fc006780ca9f172fdc3dc4a8914e7f"
       ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `26f738ad…` is the tooling-big build of tools/verify/check_hashes.py; `8275bc47…` is the current build.",
       "_repinned_2026_10_14": "`8275bc47…` REPLACES `ecbc2e62…`, closing the two-blob rollout window opened in 0f0ff48 (Tim-approved route). check_hashes no longer prints 'All hashes match' over a printed hash=MISMATCH row; it prints the count and keeps exit 0 (Tim's ruling 2026-10-14, DEFECTS `HASHES-MISMATCH-EXIT0-1`); the recorded verdict still depends only on tracked content (/rely PASS `rely@bc3f7fb2…#0`). Narrowed after the tooling-b2 merge.",
       "_repinned_2026_09_28": "`a23459f8…` REPLACES `53303add…`, per the top-level `_approved_modules` rule -- never appended. CHECKHASHES-ARBASIS-1 (DEFECTS.md): `ar_stale`, the untracked `.claude-local/ar_status.json` legacy tracker, was gating `all_ok` (both the exit code and the recorded ledger verdict), so two `--record` runs at IDENTICAL tracked content could disagree solely because `ar_status.json` changed underneath them -- and since this checker's `record_if_asked` call site threads no `--revision`, the second run collided with V11 instead of superseding the first. Three /rely rounds on one diff, each finding and fixing a genuine issue before the next round's independent sweep: round 1 (`rely@80d15a24…#0`, FAIL, BLOCKING:1) removed `ar_stale` from `all_ok` but missed that STANDALONE_SCRIPTS documents (Foreword/PhilQ/Tools) fed the identical untracked comparison into `hash_mismatches` under a different name; round 2 (`rely@884ebf0e…#0`, FAIL, BLOCKING:1) found that closing THAT hole left `Tools` (no `register.md` token) with no tracked-content check at all, since the untracked comparison had been the only thing accidentally covering for it; round 3 (`rely@c8b8d17c…#0`, PASS, BLOCKING:0 ORDINARY:1) ported the already-correct `reg is None` handling from this file's own `all_hash_mismatches()` (the release gate) into `main()`'s gating loop, re-syncing two independent implementations of the same property that had drifted apart. Net effect: the recorded verdict and exit code now depend only on tracked content (register.md, build scripts, zp_utils.py) -- `ar_status.json` is still surfaced (an unconditional, non-gating `AR STALE` line) but can never again flip a PASS/FAIL pair at one basis. KNOWN, ACCEPTED CONSEQUENCE, confirmed live and approved by Tim before this repin: `Tools` has genuinely never had a `register.md` token (`SEED-40TH-1`'s own item 2, never completed -- 'exempt by accident rather than by decision'), so `check_hashes` now permanently reports `HASH MISMATCHES: Tools (no register token)` until a token is added or a deliberate exemption is recorded. This does not change today's push -- `check_hashes` already FAILs at the tip for the separate, already-parked ZP-E arc-basis collision this repin's own motivating defect describes -- but it will gate every future push/tag until the Tools gap is addressed on its own terms.",
       "actions": [
@@ -180,8 +190,10 @@
       "module": "tools/verify/check_moved.py",
       "_repinned_2026_09_24": "`03f87ad7...` REPLACES `27dd4db6...`, same rule and same arc as `check_modal` above. REGDESC-1: this one is NOT comment-only -- `register.md` was REMOVED from `EXEMPT_FILES`, which WIDENS what the checker scans. Widening is the safe direction and it is now pinned: `register.md` was added to `scope_baseline.txt` under `[check_moved]` in the same change, so re-granting the exemption fails `--selftest` on both legs (`*** 1 DROPPED ***` and `*** 1 ADDED and unrecorded ***`), verified by execution in rounds 1 and 2. Measured: zero new findings, `check_moved --block` exit 0. Reviewed by `/rely` rounds 1 and 2 (`rely@e7f2103d...#0`, `rely@fc38ee3c...#0`); Tim authorised the repin 2026-09-24.",
       "approved_modules": [
-        "03f87ad72712d8cf03b847b49d7890423f218191"
-      ]
+        "03f87ad72712d8cf03b847b49d7890423f218191",
+        "d9f5a5765ce53a716f0b606b476fd0fa928c3e4b"
+      ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `d9f5a576…` is the tooling-big build of tools/verify/check_moved.py; `03f87ad7…` is the current build."
     },
     "check_negatives": {
       "family": "mechanical",
@@ -192,8 +204,10 @@
       "module": "tools/verify/check_negatives.py",
       "_repinned_2026_09_24": "`00d075a3...` REPLACES `c65a993c...`, same rule and same arc as the two above. REGDESC-1: comment-only -- line 182 enumerated `register.md` among the shared skips in `common.SKIP_NAMES` and no longer does, matching the live set. ⚠ THIS MODULE WAS THE SEVENTH SURFACE AND THE FIRST SWEEP MISSED IT, because that sweep was keyed to the six surfaces the defect row named rather than to the property -- [[DC-62]], found by `/rely` round 1. `check_negatives` does not record at precommit (`batch.check_suite` covers the five GATING_CHECKERS only) but DOES at push via `hooks.py`, so omitting this repin would have surfaced as a V16c refusal one gate later. Reviewed by `/rely` rounds 1 and 2 (`rely@e7f2103d...#0`, `rely@fc38ee3c...#0`); Tim authorised the repin 2026-09-24.",
       "approved_modules": [
-        "00d075a3a429262daf76671251637d2299589d49"
-      ]
+        "00d075a3a429262daf76671251637d2299589d49",
+        "0202e9be830e2f734b76579688d5bb40862fb759"
+      ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `0202e9be…` is the tooling-big build of tools/verify/check_negatives.py; `00d075a3…` is the current build."
     },
     "check_figures": {
       "family": "mechanical",
@@ -223,8 +237,10 @@
       ],
       "module": "tools/verify/check_checkers.py",
       "approved_modules": [
-        "30efcb77951e8ae4b99fc9331f125e5f1cdcfd8c"
-      ]
+        "30efcb77951e8ae4b99fc9331f125e5f1cdcfd8c",
+        "eb77cd786db484c8200382fd761cf637c2e1cfd1"
+      ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `eb77cd78…` is the tooling-big build of tools/verify/check_checkers.py; `30efcb77…` is the current build."
     },
     "guards": {
       "min_coverage": 1.0,
@@ -236,8 +252,10 @@
       "module": "tools/verify/guards.py",
       "_repinned_2026_10_14": "`3457bdf3…` REPLACES `7dbd4741…`, closing the 0f0ff48 window. `_enum_config_at` turns a SyntaxError into a failing row (fail CLOSED), DEFECTS `RLY56-3`. Narrowed after the tooling-b2 merge.",
       "approved_modules": [
-        "3457bdf3ed827ae52c37c56d7cedef17f1d8e5b3"
+        "3457bdf3ed827ae52c37c56d7cedef17f1d8e5b3",
+        "ef3cc80a88c0a0c36c4994da6edb8cb267834bdb"
       ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `ef3cc80a…` is the tooling-big build of tools/verify/guards.py; `3457bdf3…` is the current build.",
       "_repinned_2026_09_26d": "`7dbd4741…` REPLACES `66b7f355…`. FOURTH pin today, and the LAST of this arc, because this is the round that gave [[DC-64]] a blocking leg with SUBJECTS. ⛔⛔ WHAT ROUND 3 MEASURED, AND IT CONDEMNED THE PREVIOUS THREE ROUNDS AT ONCE: the askable × declared-scope intersection is **ZERO, STRUCTURALLY** — the steps that declare a `scope` are exactly the ones that enumerate privately and expose no `targets()`, and the ones that can be asked are exactly the ones whose surface is the shared one and so declare none. **Anti-correlated by construction.** `/rely` proved the consequence by re-creating `HEALWT-1` in process (`register.md` back into `common.SKIP_NAMES`, exactly `ce32401a`) and getting **`bad = 0`: the leg did not block on the one measured instance it exists to catch.** ⚠ AND IT WAS PRE-EXISTING — rounds 1 and 2 both shipped with the intersection at zero and neither computed it, which is `RLY64-1`'s *'the inverse was never computed'* surviving a full redesign. ⭐⭐ THE FIX IS `DC-64`'s OWN DETECTOR, which the row prescribed from the start and which round 1 deferred: `check_enumeration_widening_strands` asks whether a WIDENING strands an earlier unpushed commit — for each commit in `@{u}..HEAD`, does today's scope demand a path THAT commit's checker build would skip. It reads the enumeration CONFIG (`GLOBS`/`SKIP_DIRS`/`SKIP_NAMES`) at each commit rather than checking out and running an old build. ⛔ ITS SELF-CHECK BLOCKS AND IS WHAT MAKES IT TRUSTWORTHY: the model must reproduce TODAY's surface exactly — where the true answer is known because `common.targets()` can simply be run — or every historical surface is wrong the same way and the leg REFUSES. Live: **427 paths, exact agreement.** ⭐ CONTROLLED AGAINST THE REAL INSTANCE: with an in-range commit whose config still skips `register.md`, the leg reports **18 steps stranded**, `check_hashes` among them — one of the four that actually went STALE at `ce32401a` — and with an identical config it reports nothing. The 18 independently matches `/rely`'s own count of steps whose scope selects that path. ⚠ REACH STATED: it compares the SHARED config across the range; a checker narrowing its OWN private skip list is a different question and is not covered. ⭐ AND THE OLD LEG WAS RESTATED RATHER THAN PATCHED A FOURTH TIME, which is `R-REVALIDATE`'s instruction and `/rely`'s recommendation: it now says in its own row that it blocks nothing and is not claimed to, naming the leg that does. `R-NOCONV` is satisfied — the downgrade and its blocking replacement land in the SAME change.",
       "_repinned_2026_09_26c": "`66b7f355…` REPLACES `43c3ef94…`. THIRD pin today on this module, and the reason is a REDESIGN rather than another patch — Tim's ruling after `/rely` round 2 returned FAIL with both BLOCKING findings again inside the [[DC-64]] leg, none of them pre-existing. ⭐⭐ WHAT CHANGED, AND IT IS A CHANGE OF METHOD: the leg no longer asks WHO CALLS `common.targets()`, it asks EACH PRODUCER WHAT IT SCANS. `_producer_surfaces` imports every registry step's declared `.py` module, calls its zero-argument `targets()` if it exposes one, and compares that step's registry scope against ITS OWN measured surface. **The hand-maintained classification list, the self-granting waiver and the AST matcher are all DELETED**, and the 'shared enumerator' concept leaves this leg entirely. ⛔ WHY ALL THREE HAD TO GO, because two rounds died on them: round 1 printed `len()` of a tuple as a measurement (`RLY64-1`); round 2's fix added `_TARGETS_CALLERS_ACKNOWLEDGED`, **a waiver the blocked party grants itself by editing one tuple in the same file** — the reviewer executed the route the row's own remediation text recommended and reached a leg judging ZERO steps while printing ok, with the disclosure rows gone and no count (BLOCKING-1) — and its AST matcher recognised ONE call syntax of five, **failing OPEN where the substring scan it replaced failed closed** (BLOCKING-2). ⭐ `CLAUDE.md` states the principle this lands on: *prefer a detector whose verb is RUN over one whose verb is READ*. A called function needs no syntax parsed, no judgement recorded and nothing waived. ⛔ THE FLOOR IS NOW ASSERTED DIRECTLY AND BLOCKS: if no producer can be asked, the leg FAILS rather than passing over an empty set — round 2's vacuity route, closed by a property of the CODE instead of a property of the configuration. ⚠ THE MEASUREMENT IS ALSO STRICTLY MORE ACCURATE: each producer yields **426**, not the shared enumerator's 427, because each passes its own `skip_names` and therefore skips its own source file. Live at this commit: 3 producers measured, 536 tracked, 110 unreachable per step (103 by file type, 7 by a skip), 19 steps out of reach and NAMED with the reason asking each one failed. ⭐ CONTROLLED BY EXECUTION, three ways, mutating nothing: the empty-measured floor fires (`bad=1`); a planted declared scope naming an unenumerable path blocks and names the 3 paths; a planted scope inside the producer's surface does NOT block. ⚠ Blob RE-DERIVED with `record.module_evidence` from the repo root, never relayed (`RELAY-2`).",
       "_repinned_2026_09_26b": "`43c3ef94…` REPLACES `b6e81935…` from earlier the SAME DAY, because `/rely` returned **FAIL, BLOCKING:2**, and both blocking findings were in the new [[DC-64]] leg rather than anywhere else in the bundle. ⭐ **RLY64-1 — a CONSTANT PRESENTED AS A MEASUREMENT.** The reach row printed `len()` of a hand-written 3-tuple as *'N of the registry's steps use `common.targets()`'*, in the row whose stated job is to stop narrowness reading as coverage, and it named `check_poles`, which is not one of the registry's types at all. The inverse direction was never computed, so a FOURTH checker adopting the shared enumerator would have silently received no subset test — `HEALWT-1`'s own shape, reproduced inside the guard written for it. **Now DERIVED and BLOCKING**: `_unlisted_targets_callers` walks each producer's AST for a real `common.targets()` CALL and fails on any unclassified caller. ⚠⚠ THE FIRST DRAFT OF THAT FIX WAS A SUBSTRING SCAN AND IT WAS WRONG ON ITS FIRST RUN — it reported `check_pov` and `check_prose`, whose every hit is a comment saying they deliberately do NOT use the shared enumerator. A text scan cannot tell a call from prose about a call; it parses now. Control-tested in process, both directions: drop `check_modal` from the classification and it is named; drop `guards.py` from the acknowledged list and it is named. ⭐ **RLY64-2 — A VACUOUS PASS.** A declared scope expanding to ZERO paths returned the SATISFIED value with the affirmative wording *'0 in-scope path(s), every one enumerable'*, and suppressed the leg's own honesty row by making the step count as a declared subject. `R-ZERONULL`: same value as the satisfied branch, differing only in a message nobody reads. `/rely` reached it three ways by execution. Zero is now a THIRD answer and it REFUSES, with its own must-fire control exercising `scope_exclude`. ⚠ Also fixed from the ORDINARY set: the must-fire control now prefers a SKIP-stranded subject (it was drawing `.claude/settings.json`, stranded by TYPE, so the half that is actually `HEALWT-1`'s shape went untested); `_ENUM_TYPES` is derived from the surface rather than hardcoded; and `fnmatch` → `fnmatchcase`, because on Windows the case-folding form made a mis-cased scope select 221 paths that git matches none of.",
@@ -274,8 +292,10 @@
       "family": "mechanical",
       "module": "tools/verify/batch.py",
       "approved_modules": [
-        "5daf912e2222005c21b421192ff41683a6cf9db7"
+        "5daf912e2222005c21b421192ff41683a6cf9db7",
+        "2a7fb63754a77711547c075444dca8e232bcbbed"
       ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `2a7fb637…` is the tooling-big build of tools/verify/batch.py; `5daf912e…` is the current build.",
       "_repinned_2026_10_14": "`5daf912e…` REPLACES `58ed751d…`, closing the 0f0ff48 window. Comments and one printed string only (hard-coded admission counts replaced by a pointer to `gitRobot admission`'s live `count`, DEFECTS `RLY56-1`); AST-equal otherwise per /rely. Narrowed after the tooling-b2 merge.",
       "_repinned_2026_10_04": "`58ed751d…` REPLACES `8e3aa9e3…`, closing the two-blob rollout window opened in 9224772 (Tim-approved). batch.py now resolves the INDEX tree once per hook run and never sends an empty basis (DEFECTS `BASIS-EMPTY-1`, lane T, /rely PASS `rely@69bad69e…`). Narrowed after every lane worktree of the 2026-10-04 batch had merged, so no worktree still needed the old build. Blob re-derived with `record.module_evidence('tools/verify/batch.py', repo='.')` in the main checkout after the merge.",
       "_repinned_2026_09_26f": "`3ac4334f…` REPLACES `0a200cb2…`. ⛔⛔ THE TOMBSTONE DID NOT CLEAR THE PUSH, IT MOVED THE DEADLOCK — measured by the `/rely` re-sign, `RS-1`, graded BEDROCK. Adding `admission.v1.json` to `CHECKERS` satisfied `_unhashed` and handed the block straight to `_stale_at_tip`, **which had no `UNVERIFIABLE_ROUTED` carve at all.** ⭐ FOUR STATES WERE RUN, and the third is the one that matters: with the tombstone the push blocks at the tip, and it blocks there EVEN IF `_unhashed` is later taught to skip absent paths — because putting the name in `CHECKERS` is precisely what makes the tip leg's `key` lookup RESOLVE instead of `continue`. **So the 'cleaner fix' deferred twice could never have worked while the tombstone stood, and the deletion blocked its own deletion at two legs in turn.** ⭐ THE FIX IS `SH-3`, NOT NEW POLICY: `UNVERIFIABLE_ROUTED` states one property — a tombstoned entry can never be a ledger subject, because no index blob exists for a file that is gone — and it was implemented at ONE of TWO routes. The tip leg now honours the same carve, narrowly: `h == ABSENT` **AND** the name is tombstoned, never one or the other. ⛔ THE MUST-FIRE PROPERTY IS PRESERVED AND WAS THE WHOLE RISK: a push DELETING a gating checker still blocks, because that checker is not in `UNVERIFIABLE_ROUTED` — verified after the change with `check_prose.py`, `guards.py` and `required.v2.json` absent at the tip, all still blocking. ⚠ Also carried: `RS-4`, a quotation of a `batch.py` comment that this arc itself rewrote in `8192e54`, now marked HISTORICAL at both sites rather than read as current. ⚠ Blob re-derived with `record.module_evidence` from the repo root (`RELAY-2`).",
@@ -298,8 +318,10 @@
       "reason": "only meaningful when a PDF changed",
       "module": "tools/verify/batch.py",
       "approved_modules": [
-        "5daf912e2222005c21b421192ff41683a6cf9db7"
+        "5daf912e2222005c21b421192ff41683a6cf9db7",
+        "2a7fb63754a77711547c075444dca8e232bcbbed"
       ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `2a7fb637…` is the tooling-big build of tools/verify/batch.py; `5daf912e…` is the current build.",
       "_repinned_2026_10_14": "Same repin as `decls._repinned_2026_10_14`, same blob.",
       "_repinned_2026_10_04": "Same repin as `decls._repinned_2026_10_04`, same blob, same cause.",
       "_repinned_2026_09_26f": "Same repin as `decls` above, same blob, same cause — the `_stale_at_tip` carve that `RS-1` showed was missing. See `decls._repinned_2026_09_26f` rather than a second copy.",
@@ -446,8 +468,10 @@
       "reason": "a removal is a removal FROM those baselines",
       "module": "tools/verify/check_frozen.py",
       "approved_modules": [
-        "ad0345a1494da35e4d94ed1b1537100fdeb5695a"
-      ]
+        "ad0345a1494da35e4d94ed1b1537100fdeb5695a",
+        "1925fce6a773bd966f359d16e17209e5f24e0edf"
+      ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `1925fce6…` is the tooling-big build of tools/verify/check_frozen.py; `ad0345a1…` is the current build."
     },
     "agent_gate": {
       "family": "mechanical",
@@ -473,8 +497,10 @@
       "when": "CLAUDE.md",
       "module": "tools/verify/check_claude_md.py",
       "approved_modules": [
-        "6763e2d088f36f56c46d4717fb2fecfbee3e7088"
+        "6763e2d088f36f56c46d4717fb2fecfbee3e7088",
+        "e44a5789cddf11aa5e76fbea7652e38d77afb41f"
       ],
+      "_rollout_window_2026_10_14b": "Same two-blob window as `check_encoding._rollout_window_2026_10_14b`, same expiry. `e44a5789…` is the tooling-big build of tools/verify/check_claude_md.py; `6763e2d0…` is the current build.",
       "scope": [
         "CLAUDE.md"
       ],
