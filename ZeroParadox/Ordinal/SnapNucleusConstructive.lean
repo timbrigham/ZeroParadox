@@ -164,20 +164,15 @@ instance instLinearOrderSynONote : LinearOrder SynONote :=
     · exact eq_of_cmp_eq hc
     · exact (syn_cmp_gt_iff_lt _ _).mp hc
 
-/-! ### Why Mathlib's own order on `ONote` cannot be used here
+/-! ### Why Mathlib's own order on `ONote` cannot be used here (`mathlib_ONote_order_not_antisymm`)
 
-Recorded separately from the constructive development above, because it is a statement *about* the
-choice-carrying order rather than part of that development.
-
-Mathlib declares `Preorder ONote` with `le x y := repr x ≤ repr y`, and declares it as a `Preorder`
-and not a `PartialOrder` for a reason: antisymmetry genuinely fails, because notations that are not in
-normal form can denote the same ordinal. `1 + ω` and `ω` are the smallest witness. Mathlib's positive
-counterpart is `ONote.repr_inj`, and it requires `NF` on both arguments — the hypothesis this example
-violates.
-
-So Mathlib's order on `ONote` is unusable here on two independent counts: it routes through `repr`
-into `Ordinal`'s classically-built order machinery, and it is not a partial order, let alone a `SemilatticeInf`. That
-is why `SynONote` above builds its order from `ONote.cmp` instead. -/
+A statement *about* the choice-carrying order, kept apart from the constructive development above.
+Mathlib declares `Preorder ONote` with `le x y := repr x ≤ repr y`, and not as a `PartialOrder`:
+notations not in normal form can denote the same ordinal (`1 + ω` and `ω` are the smallest witness),
+and Mathlib's positive counterpart `ONote.repr_inj` requires `NF` on both arguments. So that order is
+unusable here on two independent counts: it routes through `repr` into `Ordinal`'s classically-built
+order machinery, and it is not a partial order, let alone a `SemilatticeInf`. That is why `SynONote`
+above builds its order from `ONote.cmp` instead. -/
 
 /-- **Mathlib's `repr`-based order on `ONote` is not antisymmetric.** Two distinct notations —
 `1 + ω` and `ω` — denote the same ordinal, so each is `≤` the other without being equal.

@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.10 | October 2026
+Version 2.11 | October 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.10'
+VERSION = '2.11'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -113,8 +113,10 @@ def build():
     E.append(Paragraph('I. The Anti-Foundation Axiom', S['h2']))
     E.append(body(
         'Standard set theory (ZF) includes the Foundation Axiom: every non-empty set S contains '
-        'an element disjoint from S. A consequence is that no set can contain itself: x &#8712; x '
-        'is impossible in ZF. This rules out self-referential sets by fiat.'))
+        'an element disjoint from S. A consequence is that no set can contain itself: Foundation '
+        'rules out x &#8712; x in ZF, excluding self-referential sets by fiat. In Lean, Mathlib&#8217;s '
+        'ZFSet, a model of ZFC, contains no such set (no_quine_atom), because its membership relation '
+        'is well-founded.'))
     E.append(body(
         'The Anti-Foundation Axiom (AFA, Aczel 1988, ch. 1 p. 6) replaces Foundation with an '
         'axiom asserting existence and uniqueness: every graph has a unique decoration. As a '

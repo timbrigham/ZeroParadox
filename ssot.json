@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1910,
-        "files": 160
+        "declarations": 1911,
+        "files": 161
       },
       "entries": [
         {
@@ -21453,6 +21453,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4a6f890b-9365-4a48-b98f-0976e4c4adee",
+          "new": {
+            "file": "ZeroParadox/Order/PowerSet.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ps_descent_reaches_floor",
+            "short": "ps_descent_reaches_floor"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/PowerSet.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ps_descent_reaches_floor",
+            "short": "ps_descent_reaches_floor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "MODAL-2 pass 1: finite descent to ∅ in a finite power set, cited by the ZP-H companion (Tim 2026-10-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true

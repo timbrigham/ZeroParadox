@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.18 | October 2026
+Version 1.19 | October 2026
 Reads after ZP-J Self-Reference.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -125,7 +125,8 @@ def build():
             '&#8869; is the only fixed point of scale.',
             'Proof: suppose scale x = x and x &#8800; &#8869;. By val_scale, '
             'val(scale x) = val(x) + 1. But scale x = x gives val(x) = val(x) + 1, '
-            'which is impossible in &#8469;&#8734; for any finite value. Contradiction.',
+            'which has no finite solution in &#8469;&#8734;, and val(x) is finite by val_unique. '
+            'So scale x &#8800; x for every x &#8800; &#8869; (scale_ne_fixed), a contradiction.',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
         ]
     ))

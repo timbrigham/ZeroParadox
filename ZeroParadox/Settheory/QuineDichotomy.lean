@@ -63,8 +63,8 @@ theorem quine_dichotomy :
 theorem quine_self_members_eq_bot {L : Type*} [ZPSemilattice L] [AbstractSelfApp L] :
     {x : L | selfMemDerived x} = ({bot} : Set L) := selfMem_eq_singleton_bot
 
-/-- **Cantor obstruction (no literal Quine atom).** A nontrivial lattice face admits no Lawvere witness:
-    the literal self-singleton, which would require `T ≃ Set T`, cannot be built (Cantor). -/
+/-- **Cantor obstruction (no literal Quine atom).** A nontrivial lattice face has no Lawvere witness; a literal
+    self-singleton needs `T ≃ Set T`, which cannot be built (Cantor, `cantor_via_engine`). -/
 theorem quine_no_literal {L : Type*} [ZPSemilattice L] (a : L) (ha : a ≠ bot) :
     ¬ HasLawvereWitness L := nontrivial_lattice_no_witness a ha
 

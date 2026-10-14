@@ -94,7 +94,7 @@ theorem root_cut_strict_asymmetric :
 
 /-- **No equivalence across the root cut.** As an immediate consequence, the two roots are not
     equivalent (no bijection): an equivalence would supply a function `Cofix → Fix`, which is
-    impossible. This is the cleanest "not a relabeling" statement — the root cut is not a cosmetic
+    impossible (`root_cut_no_map_nu_to_mu`). This is the cleanest "not a relabeling" statement — the root cut is not a cosmetic
     renaming of a single object. -/
 theorem root_cut_no_equiv :
     IsEmpty (Cofix idPF_Coalgebra.Obj ≃ Fix idPF_Coalgebra.Obj) := by
