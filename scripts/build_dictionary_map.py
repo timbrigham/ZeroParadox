@@ -451,7 +451,7 @@ APOPHATIC = [
      ["strict_fix_isEmpty", "fix_isEmpty_constructive"]),
     ("D5", "recovered by mapping the least fixed point onto the greatest: the comparison map is not onto",
      ["fixToCofix_not_surjective"]),
-    ("D6", "reached by a non-contracting orbit: unit-norm and swap orbits provably do not converge to ⊥",
+    ("D6", "reached by a non-contracting orbit",
      ["unit_orbit_not_tendsto_zero", "swap_orbit_not_convergent"]),
 ]
 

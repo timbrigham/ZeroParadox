@@ -1,6 +1,6 @@
 # Zero Paradox Version Registry
 
-Update this file first on any version bump. README.md Framework table and GUIDE.md Reading Paths are verified against this register.
+Update this file first on any version bump. README.md Framework table is verified against this register.
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|

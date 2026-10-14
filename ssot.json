@@ -145,9 +145,15 @@
               "date": "2026-10-13",
               "prior_statement": "In information theory, ⊥ is realized at the floor where surprisal is unbounded (L-INF): the surprisal I(n) = n at ball depth n exceeds every finite bound.",
               "reason": "Gate fix: prior wording read as ∃n∀M (false), left ⊥ bare, and stated the ⊥ realization as if l_inf proved it. Now follows l_inf's quantifier order (∀ M, ∃ n, M < surprisal n) and marks the ⊥ reading as interpretation."
+            },
+            {
+              "by": "agent deletion (wave 4 lane Z) under Tim's W4-R1 fix rule 2026-10-13; no new wording",
+              "date": "2026-10-13",
+              "prior_statement": "In information theory, L-INF gives unbounded surprisal: for every bound M some ball depth n has surprisal I(n) = n > M. Reading that unbounded floor as ⊥ of MachinePhase is the framework's reading, not part of l_inf.",
+              "reason": "CARRYW3-1, wave 4 lane Z, pointer-or-delete rule W4-R1: deleted the Reading clause, which named the wrong carrier for the floor (the limit point 0 of Q2, not bottom of MachinePhase), had no antecedent for \"that unbounded floor\", and sat inside the Statement slot. What remains is what l_inf states."
             }
           ],
-          "statement": "In information theory, L-INF gives unbounded surprisal: for every bound M some ball depth n has surprisal I(n) = n > M. Reading that unbounded floor as ⊥ of MachinePhase is the framework's reading, not part of l_inf.",
+          "statement": "In information theory, L-INF gives unbounded surprisal: for every bound M some ball depth n has surprisal I(n) = n > M.",
           "status": "proved",
           "to": null
         },
