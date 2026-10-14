@@ -237,7 +237,7 @@ design habit, not five incidents** — writing a class without asking what it EX
 | `AbstractSelfApp` | `trivialSelfApp` inhabits it, so *"L carries it, therefore…"* is vacuous |
 | `InfinitudeFloor` | characterised 2026-08-07 as **exactly** `Infinite α` — nothing more |
 | `SeparatedSuccession` | `Unit` + the always-true relation discharges every field (2026-08-07) |
-| `KleeneStructure` | bundles a `Code` (data) with the assertion that it names ⊥ (commitment) |
+| `KleeneStructure` | no field asserts that `botCode` names ⊥ of `L`; the `Code.const 0` instance shows it (the NO-GO gauge in `ZeroParadox/Computability/Kleene.lean` § II) |
 
 **⚠ THIS IS NOT A NEW RULE — IT IS TIM'S OWN 2026-06-29 NO-GO GAUGES, FINALLY ENFORCED AND FINALLY
 POINTED AT THE RIGHT OBJECT.** `.claude-local/notes/nogo_gauges_2026-06-29.md` already specifies

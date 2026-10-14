@@ -12,8 +12,8 @@ measured failure rather than a design preference.
 **Before any check runs, `hooks.py pre_commit`, `hooks.py pre_push`, `batch.py precommit` and
 `batch.py prepush` each print a manifest**: what is about to run, in what order, which checks BLOCK
 and which only warn, what scope they apply to, what is exempt, and what is deliberately NOT run.
-`prepush` additionally names each required review — its purpose, its trigger, its signal file, and
-**the recorded verdict line from that signal**, so *"cleared"* is never read as *"clean"*.
+`prepush` additionally names each required review — its purpose, its trigger, and **what the
+verdictLedger records for it at the bytes in hand**, so *"cleared"* is never read as *"clean"*.
 
 One formatter, `tools/verify/report.py`, so the four entry points cannot drift into describing
 themselves differently. **Run the command; do not maintain a second copy of its answer in prose.**
@@ -36,21 +36,20 @@ manifest printed *after* everything it announced, and section headers landed und
 sections. Fixed with `line_buffering=True` alongside `encoding="utf-8"` — the Windows console
 otherwise mangles an em-dash. Both live in `report.py`, so every entry point inherits them.
 
-## 2. Why each obligation gates where it does
+## 2. Where each obligation gates — ask the services
 
-`precommit` is a **manual** command, so until 2026-08-09 three of the four universal obligations
-could be skipped simply by not running it. Tim's call that day moved them onto the hooks:
+**What must be green for an action is served, not written here.** `gitRobot admission(action='commit')`
+and `gitRobot admission(action='push')` return the admission set, which is what the gate reads;
+`gitRobot requirements(action=...)` carries why each excluded step is excluded. `verdictLedger
+requirements(action=...)` is a different object, the type registry: what may be RECORDED, not what
+must be GREEN. The local hooks' own legs, with their BLOCK/WARN modes, are in the manifests of § 1.
+None of these answers is copied into this file, because each moves.
 
-- **The four checkers BLOCK AT COMMIT.** `pre-commit` runs each with `--block`; it previously ran
-  them and then `exit 0`'d unconditionally. **This does not reopen the 2026-07-30 warn-only
-  decision** — that argument protects **build state**, because stub-first commits `sorry`-stubbed
-  files deliberately, and none of the four checkers looks at `sorry`, the build, or completeness.
-  They are baselined, sit at zero new, and **already blocked at push**, so nothing newly unpushable
-  became uncommittable. The identical failure just arrives earlier, where the fix is cheap.
-- **Purity and SSOT BLOCK AT PUSH** (`pre-push` § 3b-f, via `batch.py decls --block`). Before this
-  they were the only two obligations with **no automatic enforcement anywhere**.
-- **`lake build` deliberately gates NEITHER.** It is the one genuinely in tension with stub-first.
-  CI at the PR to `main` is its backstop.
+**One argument the tools do not print: moving a check earlier must not break stub-first.** Stub-first
+development commits `sorry`-stubbed files deliberately as rollback points
+(`tools/process/lean-development.md`). A check may block at commit without conflicting with that only
+if what it inspects is something a correct stub commit already satisfies. Settle that for the specific
+check, by running it on a stub commit, before moving it earlier.
 
 ## 3. The hooks are three-line shims, and that was not free
 

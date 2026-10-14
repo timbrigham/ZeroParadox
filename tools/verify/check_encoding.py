@@ -50,8 +50,9 @@ defends against that. Argument and the safe write recipes: `tools/process/file-e
 Usage — the tool NEVER writes its own invocation path down; `SELF` is derived:
 
     python tools/verify/check_encoding.py                 # scan every tracked text file
-    python tools/verify/check_encoding.py <path> [...]    # pass/fail specific files, after writing
-    python tools/verify/check_encoding.py --block         # non-zero exit on any violation
+    python tools/verify/check_encoding.py <path> [...]    # pass/fail specific files, after writing:
+                                                          # exit 1 on a BOM or undecodable file
+    python tools/verify/check_encoding.py --block         # whole tree, exit 1 on a BLOCK finding
     python tools/verify/check_encoding.py --selftest      # controls, both directions
 """
 import io
@@ -372,9 +373,33 @@ _MUST_SUPPRESS = [
 ]
 
 
+def _exit_for_explicit(text, bom):
+    """Run `main` on one temp file named on the command line, WITHOUT `--block`; return its rc."""
+    import contextlib
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        p = os.path.join(d, 'probe.md')
+        with open(p, 'wb') as fh:
+            fh.write((BOM if bom else b'') + text.encode('utf-8'))
+        with contextlib.redirect_stdout(io.StringIO()):
+            return main([p])
+
+
 def selftest():
-    return common.fire_suppress(_MUST_FIRE, _MUST_SUPPRESS,
-                                double_encoded_runs, 'double-encoded text')
+    bad = common.fire_suppress(_MUST_FIRE, _MUST_SUPPRESS,
+                               double_encoded_runs, 'double-encoded text')
+    # ⚠ THE NAMED-FILE ROUTE IS A GATE (`ARC-2b` F6). R-GATED tells every writer to run this on the
+    # file it just wrote and read the exit code, and that route exited 0 on a BOM unless `--block`
+    # was also typed. A BLOCK-tier finding in a file named on the command line exits 1.
+    print('\nNAMED-FILE EXIT, no --block (MUST FIRE / MUST SUPPRESS)')
+    for label, bom, want in (('a BOM in a named file exits 1', True, 1),
+                             ('a clean named file exits 0', False, 0)):
+        got = _exit_for_explicit('# heading\nplain text\n', bom)
+        ok = got == want
+        bad += 0 if ok else 1
+        print('  %-34s %s' % (label, 'ok' if ok else '*** got exit %s, want %s ***' % (got, want)))
+    print('\nselftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
+    return 1 if bad else 0
 
 
 def main(argv):
@@ -476,7 +501,11 @@ def main(argv):
     if blocking:
         print('\nA file was written through a codepage that is not UTF-8, or could not be read.')
         print('Safe write recipes: tools/process/file-encoding.md')
-        return 1 if '--block' in argv else 0
+        # A file NAMED on the command line is the R-GATED "verify every file written" route, and its
+        # caller reads the exit code: a BLOCK-tier finding there is a failure with or without
+        # `--block`. The whole-tree scan keeps its warn-by-default exit for the pipelines that
+        # pass `--block` themselves.
+        return 1 if ('--block' in argv or explicit) else 0
     if not warning:
         print('OK: every file in scope is clean UTF-8, no BOM, no double-encoding.')
     return 0

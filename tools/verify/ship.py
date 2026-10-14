@@ -69,12 +69,8 @@ GATES = {
     "editorial": ("editorial-review.md", "editorial", "/editorial-review"),
     "adversary": ("adversary-review.md", "adversary", "/adversary-review"),
     "prior-art": ("prior-art-review.md", "prior_art", "/prior-art-review"),
-    # ⚠ `/rely` WROTE `rely_cleared.txt` FROM 2026-08-10 TO 2026-08-24, AND NOW WRITES NOTHING BUT A
-    # RECORD. The file was a hash manifest the routing legs compared against; both legs and the cap
-    # read the `rely` record's subjects instead, so the last of the `*_cleared.txt` scheme is gone.
-    # `tools/verify/README.md` had already named this as the only real fix: the signal *"can be
-    # edited, its verdict changes, and no subject moves… only making `rely` a record instead of a
-    # file can"* close it.
+    # `/rely` records a `rely` verdict in the ledger and writes no signal file; what it owes is
+    # `coverage_gap(step='rely')`, and it gates at TAG through gitRobot's admission set.
     "rely":      ("rely.md",             "rely", "/rely"),
 }
 
@@ -102,9 +98,10 @@ def refuse_if_scope_unknown(ranges, who):
 
 
 def required_gates(ranges):
-    """WHICH gates this change owes and WHY — the same predicates the hook enforces.
+    """WHICH review agents this change should spawn and WHY — the PLAN, not the verdict.
 
-    Decidable, so it lives here rather than in anyone's memory. Returns (scope, [(key, why)])."""
+    Returns (scope, [(key, why)]). Whether the action may proceed is `cmd_verify`'s question, and it
+    is answered by the services, never from this list."""
     scope = batch.reviewable_changed(ranges)
     fires, ins, newfile = batch.check_trigger5(ranges)
     need = []
@@ -116,28 +113,10 @@ def required_gates(ranges):
         need.append(("prior-art",
                      "trigger 5 fires: %d inserted .lean line(s), new .lean file=%s"
                      % (ins, newfile)))
-    # ⚠ SECOND CONSUMER OF `check_routing`, AND THE WARRANT IS BLIND TO BOTH. `batch.py`'s prepush
-    # site is the other. A `guards.py` route asserting the router still BLOCKS has to cover this one
-    # too, or half the enforcement can be removed with the control still green.
-    # ⚠ A non-blocking row does not raise a requirement here. `need` is what `ship.py` will refuse to
-    # proceed without, and a leg deliberately downgraded to WARN is by definition not that — carrying
-    # it would re-impose at release the block that was lifted at push, which is the `rely_capped()`
-    # deadlock in a new place.
-    for agent, ran, why, blocking in batch.check_routing({}, ranges):
-        if agent == "/rely" and not ran and blocking:
-            base = why.split("—")[0].strip()
-            capped, reason = rely_capped()
-            # ⚠ A CAP NEVER MAKES THE HOOK LENIENT. This used to DROP the requirement when capped,
-            # so `ship.py post` reported PASS exit 0 for a push `batch.py prepush` refused exit 1 —
-            # and the only way out of that deadlock was hand-writing the hash lines, i.e. the caller
-            # certifying its own work, which is the exact thing the routing exists to prevent.
-            # The project's own scheme already says how this resolves: a capped reviewer WRITES ITS
-            # SIGNAL, and the hook then clears on its own merits. So the cap governs what the next
-            # pass is FOR — re-signing the current hashes rather than hunting further findings —
-            # never whether a signal is owed. Found by /rely pass 6.
-            need.append(("rely", base + (
-                " — CAPPED (%s). This pass RE-SIGNS the current hashes; do not iterate on findings."
-                % reason if capped else "")))
+    # ⚠ `/rely` IS NOT DERIVED HERE. Which paths it still owes is verdictLedger's
+    # `coverage_gap(step='rely')`, and whether it gates an action is gitRobot's admission set
+    # (`rely` is admitted at TAG). `cmd_verify` asks both; a local routing predicate is the control
+    # plane leaking out of the services, and `guards.py` asserts none is left here.
     return scope, need
 
 
@@ -278,7 +257,8 @@ def cmd_plan(ranges):
     ])
     report.plan([("mechanical", "BLOCK", "build green, purity, ssot, 4 gating checkers")] +
                 [(GATES[k][2], "BLOCK", w) for k, w in need] +
-                [("signals", "BLOCK", "every required signal fresh and covering the scope")])
+                [("signals", "BLOCK", "verdictLedger reports gitRobot's %s admission set "
+                                      "satisfied (`post`)" % VERIFY_ACTION)])
     if need:
         print("\n  Gates to spawn (one fresh agent each, brief read from its command file):")
         for k, w in need:
@@ -332,32 +312,95 @@ def cmd_check():
     return batch.sh(sys.executable, os.path.join(BASE, "batch.py"), "precommit")[0]
 
 
+# ⚠ THE TWO QUESTIONS `post` ASKS, AND WHO ANSWERS THEM. What must be green for the action is
+# gitRobot's admission set; whether it IS green is verdictLedger's — `can_push(rev_range)` for a
+# committed range, `inventory(ref)` for the staged tree. Seams, so controls never reach a service.
+VERIFY_ACTION = "tag"
+_ASK_GITROBOT = None      # controls only: callable(tool, arguments) -> payload
+_ASK_LEDGER = None        # controls only: callable(tool, arguments) -> payload
+
+
+def _ask(which, tool, arguments):
+    import record
+    seam = _ASK_GITROBOT if which == "gitrobot" else _ASK_LEDGER
+    if seam is not None:
+        return seam(tool, arguments)
+    return (record.gitrobot_call if which == "gitrobot" else record._call)(tool, arguments)
+
+
+def served_verdict(ranges):
+    """`(allowed, lines)` — the services' answer for `VERIFY_ACTION`, or `(None, lines)` when it
+    could not be asked. Three values, never two (`R-ZERONULL`): `None` is not a refusal.
+
+    Nothing here decides which steps gate or whether one is satisfied: the admission set is passed
+    through as gitRobot gave it, and `allowed` / `complete` are read as the ledger computed them.
+    (`RLY28-2` was a hard-coded `/rely` refusal here; `SIGSTALE-1` a local re-derivation of
+    editorial/adversary staleness at the tips. Both are the servers' questions.)"""
+    try:
+        adm = _ask("gitrobot", "admission", {"action": VERIFY_ACTION})
+    except Exception as e:                                # noqa: BLE001 — any failure is "not asked"
+        return None, ["gitRobot admission(action=%r) could not be asked: %s" % (VERIFY_ACTION, e)]
+    admitted = adm.get("admitted") if isinstance(adm, dict) and adm.get("ok") is True else None
+    if not isinstance(admitted, list):
+        return None, ["gitRobot admission(action=%r) gave no admission set: %r"
+                      % (VERIFY_ACTION, str(adm)[:300])]
+    lines = ["admission (%s, from gitRobot): %s" % (VERIFY_ACTION, ", ".join(admitted))]
+    # ⚠⚠ AN EMPTY ADMISSION SET IS A REFUSAL, NEVER A PASS (`G1-5`, `R-ZERONULL`). Measured: given
+    #   `admitted: []` the ledger's `can_push` returns `allowed: true` with `admission_state: EMPTY`,
+    #   while its own `line` says "Treated as REFUSED because an unconfigured gate fails closed".
+    #   "Nothing gates" and "everything passed" must not be one value, so this does not ask at all.
+    if not admitted:
+        return False, lines + ["gitRobot admission(action=%r) is EMPTY — an unconfigured gate fails "
+                               "CLOSED; REFUSED, not a pass" % VERIFY_ACTION]
+    if ranges:
+        asks = [("can_push", {"rev_range": r, "action": VERIFY_ACTION, "admission": admitted},
+                 "allowed", r) for r in ranges]
+    else:
+        # The staged tree, resolved here exactly as recording resolves it (`record.read_ref`).
+        try:
+            tree = common.ledger_basis(common.INDEX)["value"]
+        except common.BasisUnresolved as e:
+            return None, lines + ["the staged tree could not be resolved: %s" % e]
+        asks = [("inventory", {"action": VERIFY_ACTION, "ref": tree, "admission": admitted},
+                 "complete", "staged tree %s" % tree[:12])]
+    allowed = True
+    for tool, args, key, what in asks:
+        try:
+            out = _ask("ledger", tool, args)
+        except Exception as e:                            # noqa: BLE001
+            return None, lines + ["verdictLedger %s for %s could not be asked: %s" % (tool, what, e)]
+        if not isinstance(out, dict) or out.get("ok") is not True or not isinstance(
+                out.get(key), bool):
+            return None, lines + ["verdictLedger %s for %s gave no `%s` answer: %r"
+                                  % (tool, what, key, str(out)[:300])]
+        lines.append("verdictLedger %s %s -> %s=%s" % (tool, what, key, out[key]))
+        lines.extend("  " + l for l in str(out.get("line") or "").splitlines())
+        # ⚠ The ledger's own EMPTY marker overrides its boolean, by its own stated rule (`G1-5`).
+        if out.get("admission_state") == "EMPTY":
+            lines.append("  admission_state EMPTY — an unconfigured gate fails CLOSED; REFUSED")
+            allowed = False
+            continue
+        allowed = allowed and out[key]
+    return allowed, lines
+
+
 def cmd_verify(ranges):
     refuse_if_scope_unknown(ranges, 'a signal verdict')
     scope, need = required_gates(ranges)
     keys = {k for k, _w in need}
-    bad = 0
     report.banner("ship — verify", [
         ("scope", "%d reviewable file(s)" % len(scope)),
-        ("expect", ", ".join(sorted(keys)) or "no gates required"),
+        ("spawned", ", ".join(sorted(keys)) or "no review agents planned"),
     ])
-    # ⚠ STEP NAMES, NOT FILENAMES. `check_signals` asks the LEDGER now; the prose signal files are
-    # retired (`tools/process/review-gates.md`) and `signal_verdict` has nothing to read. Keeping
-    # the old filename key here would have compared `"editorial" != "pa_cleared.txt"` — always true,
-    # so prior-art would have been demanded on every release regardless of trigger 5.
-    for name, valid, why in batch.check_signals(ranges):
-        needed = (name != "prior_art") or ("prior-art" in keys)
-        ok = valid or not needed
-        print("  %-20s %-4s %s" % (name, "ok" if ok else "FAIL", why))
-        print("      ledger   step `%s`" % name)
-        bad += 0 if ok else 1
-    if "rely" in keys:
-        print("  %-20s %-4s %s" % ("/rely", "FAIL",
-                                   "verification layer changed since /rely last signed it"))
-        bad += 1
-    report.done("ship verify", bad == 0,
-                "all required signals present and covering" if bad == 0
-                else "%d outstanding" % bad)
+    allowed, lines = served_verdict(ranges)
+    for l in lines:
+        print("  " + l)
+    bad = 0 if allowed is True else 1
+    report.done("ship verify", allowed is True,
+                "the ledger reports the %s admission set satisfied" % VERIFY_ACTION
+                if allowed is True else
+                ("UNDECIDED — a service could not be asked; this is not a pass"
+                 if allowed is None else "the ledger reports the admission set NOT satisfied"))
 
     # Answer the standing question at the END of a run as well as the start. Tim, 2026-08-10:
     # *"what should we be doing here and now to make the next run better? that's the question that
@@ -382,11 +425,90 @@ def cmd_verify(ranges):
     else:
         print("  self-heal: NO REPORT (selfheal.py exit %s) — advisory, and NOT a clean bill"
               % sh_rc)
+    # 2 when a service could not be asked, never 1: an outage is not a finding about the work.
+    return 2 if allowed is None else (1 if bad else 0)
+
+
+def selftest():
+    """Controls for `served_verdict`: the services' answer is carried, never re-derived, and every
+    way of not getting one is `None`. Seams only — no service is reached. Returns 1 on failure."""
+    global _ASK_GITROBOT, _ASK_LEDGER
+    ADM = ["adversary", "editorial", "rely"]
+    asked = []
+
+    def gr(answer):
+        def f(tool, args):
+            if isinstance(answer, Exception):
+                raise answer
+            return answer
+        return f
+
+    def led(answers):
+        def f(tool, args):
+            asked.append((tool, args))
+            a = answers[min(len(asked), len(answers)) - 1]
+            if isinstance(a, Exception):
+                raise a
+            return a
+        return f
+
+    ok_adm = {"ok": True, "admitted": ADM}
+    yes = {"ok": True, "allowed": True, "line": "ALLOWED"}
+    no = {"ok": True, "allowed": False, "line": "REFUSED  tag  1/1 commit(s) short"}
+    cases = [
+        ("the ledger's ALLOWED is carried", ok_adm, [yes], ["a..b"], True),
+        ("the ledger's REFUSED is carried", ok_adm, [no], ["a..b"], False),
+        ("one refused range of two refuses", ok_adm, [yes, no], ["a..b", "b..c"], False),
+        ("gitRobot unreachable is UNDECIDED", OSError("refused (control)"), [yes], ["a..b"], None),
+        ("no admission set is UNDECIDED", {"ok": True}, [yes], ["a..b"], None),
+        ("ledger unreachable is UNDECIDED", ok_adm, [OSError("down (control)")], ["a..b"], None),
+        ("a ledger answer with no verdict is UNDECIDED", ok_adm, [{"ok": True}], ["a..b"], None),
+        ("a ledger refusal body is UNDECIDED", ok_adm,
+         [{"ok": False, "error_type": "x", "allowed": True}], ["a..b"], None),
+        # G1-5: the live reply shape for an empty admission set — `allowed: true` — must REFUSE.
+        ("an EMPTY admission set refuses, never passes", {"ok": True, "admitted": []},
+         [{"ok": True, "allowed": True, "admission_state": "EMPTY",
+           "line": "Treated as REFUSED because an unconfigured gate fails closed"}], ["a..b"], False),
+        ("an EMPTY admission set refuses even if the ledger omits its marker",
+         {"ok": True, "admitted": []}, [yes], ["a..b"], False),
+        ("the ledger's admission_state EMPTY refuses", ok_adm,
+         [{"ok": True, "allowed": True, "admission_state": "EMPTY", "line": "x"}], ["a..b"], False),
+    ]
+    rows = []
+    saved = _ASK_GITROBOT, _ASK_LEDGER
+    try:
+        for label, adm, answers, ranges, want in cases:
+            del asked[:]
+            _ASK_GITROBOT, _ASK_LEDGER = gr(adm), led(answers)
+            got, _lines = served_verdict(ranges)
+            rows.append((label, got is want))
+        del asked[:]
+        _ASK_GITROBOT, _ASK_LEDGER = gr(ok_adm), led([yes])
+        served_verdict(["a..b"])
+        rows.append(("the admission set is passed through as given (rely included)",
+                     bool(asked) and asked[0][1].get("admission") == ADM
+                     and asked[0][1].get("action") == VERIFY_ACTION))
+        del asked[:]
+        _ASK_LEDGER = led([{"ok": True, "complete": True, "line": "SATISFIED"}])
+        got, _lines = served_verdict(None)
+        rows.append(("no range asks inventory at the staged TREE",
+                     got is True and bool(asked) and asked[0][0] == "inventory"
+                     and bool(re.match(r"^[0-9a-f]{40}$", str(asked[0][1].get("ref"))))))
+    finally:
+        _ASK_GITROBOT, _ASK_LEDGER = saved
+    bad = 0
+    print("SERVED VERDICT (ship post asks gitRobot + verdictLedger; decides nothing)")
+    for label, ok in rows:
+        print("  %-62s %s" % (label, "ok" if ok else "*** FAILED ***"))
+        bad += 0 if ok else 1
+    print("\nselftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
     return 1 if bad else 0
 
 
 def main():
     a = sys.argv[1:]
+    if a == ["--selftest"]:
+        return selftest()
     what = a[0] if a else "pre"
     ranges = None
     if "--ranges" in a:

@@ -30,10 +30,15 @@ box introduces, or a Mathlib name the file inherits by import is JUDGEMENT, and 
 guessed would manufacture the false-positive work this project has measured twice. `R-NOCONV`:
 an LLM screen may replace the ENUMERATION, never the VERDICT — this is the enumeration.
 
+⚠ WHAT IT READS AND WHAT IT DOES NOT. Identifiers, unbound glyphs, and one SHAPE property — a
+declaration that binds one name twice (`W4K-7`). It does not compare a box's binder list against
+the ELABORATED signature, so a box that drops, adds or reorders a distinct binder passes.
+
 Usage:
     python tools/verify/check_codebox.py                 # every tracked build script
     python tools/verify/check_codebox.py --selftest      # controls, both halves
 """
+import ast
 import html
 import io
 import os
@@ -58,8 +63,7 @@ def _rel(p):
 
 
 # A box header names its source: 'Typeclass: ValuationStructure (ZeroParadox/Valuation/Scale.lean)'
-# or with a section marker after it. R-LEANPDF requires the FULL repository path in a checkable
-# surface, so a bare basename is out of scope here by construction — it is `check_paths`' job.
+# or with a section marker after it.
 # ⚠⚠⚠ ACCEPT A BARE BASENAME TOO, OR THE ZERO IS A LIE — `RLY46-1`, measured 2026-09-02.
 #   The first version required a full repository path and therefore parsed **12 of 148** box
 #   calls. 72 boxes cite `(Kleene.lean § III)` style, **14 of them in `build_zpj.py` — the very
@@ -68,25 +72,25 @@ def _rel(p):
 #   docstring warns about, produced by this file, on its first day.
 #   ⚠ A bare basename is separately a defect (R-LEANPDF wants the full path in a checkable
 #   surface) but that is `check_paths`' job; refusing to PARSE it just hides the box.
-HEADER = re.compile(
-    # ⚠ ZERO OR MORE directory levels, not "one or more". The first form required at least two
-    #   (`ZeroParadox/Valuation/Scale.lean` matched, `ZeroParadox/T.lean` did not), so the
-    #   selftest fixture — a one-level path — was invisible and both MUST-FIRE halves went red
-    #   for a reason unrelated to the property. Same class as the cache: a control failing on
-    #   its own scaffolding rather than its subject.
-    r"['\"][^'\"]{0,200}?\(((?:(?:ZeroParadox|scripts)/(?:\w+/)*)?\w+\.lean)")
+# ⚠ ZERO OR MORE directory levels, and no kind word. `HEADER_SHAPES` in the selftest holds one
+#   fixture per header shape the corpus writes, and the control asserts EVERY one parses and the
+#   parsed count equals the fixture count (`RLY47-1`): narrowing this pattern to a directory slash
+#   or a kind-word list turns a named shape red, where `parsed >= 1` admitted a 94 -> 1 collapse.
+HEADER = re.compile(r"\(((?:(?:ZeroParadox|scripts)/(?:\w+/)*)?\w+\.lean)")
 # ⚠⚠ A PROPERTY, NOT A LIST OF KIND WORDS — and the list version cost 33 more boxes.
 #   The first pattern required `Typeclass:`/`Theorem:`/`Lemma:`… and the corpus writes
 #   `'Functor: fB_functor : ...'`, `'AFAStructure Typeclass (SetTheoryAFA.lean § I)'`,
 #   `'J_self Theorems (AczelConn.lean § I)'`, `'Derived Results from AbstractSelfApp (...)'`.
-#   Every one of those is a box header citing a Lean file; none matched. Widening the list again
-#   would repeat the shape (`check_paths._CLAIM_MARKER` records the identical lesson: five of ten
-#   line-start markers were blind because someone enumerated instead of naming the property).
 #   **The property is: a header string that names a .lean file in parentheses.** The kind word is
 #   decoration.
-# Resolving a bare basename needs a search; ambiguity is REPORTED, never guessed.
-_LEAN_INDEX = None
-BOX_CALL = re.compile(r'\b(?:def_box|result_box)\s*\(', re.M)
+# Resolving a bare basename needs a search; ambiguity is REPORTED, never guessed. The index is
+# keyed on the repository root it was built from (`RLY47-5`): a cache that answers for a root
+# nobody asked about returns a verdict on a file the checker never opened.
+_LEAN_INDEX = (None, None)
+BOX_FUNCS = ('def_box', 'result_box')
+# A path cited INSIDE the body, e.g. 'Instance toAbstractSelfApp (ZeroParadox/Valuation/Scale.lean):'
+# or 'Witnesses: fork_collapse_iff (RequirementsGap.lean)'.
+INLINE_SRC = re.compile(r"(?<![\w/])((?:(?:ZeroParadox|scripts)/(?:\w+/)*)?\w+\.lean)")
 
 # ⚠ GLYPHS WITH NO GLOBAL BINDING IN THIS CORPUS. Each maps to what the Lean actually writes.
 #   This list is SHORT and every entry was a live defect, never a guess — `R-CONTROLS`' rule that
@@ -111,7 +115,11 @@ CORE = set("""class structure instance theorem lemma def where with fun by intro
     forall exists if then else let in do match deriving open namespace end
     variable universe noncomputable private protected partial mutual""".split())
 
-TOKEN = re.compile(r"[A-Za-z_][A-Za-z0-9_'.]*")
+# ⚠ A DOT MUST BE FOLLOWED BY AN IDENTIFIER CHARACTER (`RLY47-6`). The first form ended in
+#   `[A-Za-z0-9_'.]*`, so a sentence-final period joined the word and the English `naturals.`
+#   qualified as a dotted identifier — every sentence-final word of four or more letters in a
+#   veto-passing row was a candidate.
+TOKEN = re.compile(r"[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z0-9_']+)*")
 
 
 def _resolve_lean(cited):
@@ -127,58 +135,65 @@ def _resolve_lean(cited):
         return p
     if '/' in cited:
         return None
-    if _LEAN_INDEX is None:
-        _LEAN_INDEX = {}
+    root, index = _LEAN_INDEX
+    if root != common.REPO:
+        index = {}
         for q in (common.REPO / 'ZeroParadox').rglob('*.lean'):
-            _LEAN_INDEX.setdefault(q.name, []).append(q)
-    hits = _LEAN_INDEX.get(cited, [])
+            index.setdefault(q.name, []).append(q)
+        _LEAN_INDEX = (common.REPO, index)
+    hits = index.get(cited, [])
     return hits[0] if len(hits) == 1 else None
 
 
-def _boxes(src_text):
-    """[(header_line_no, cited_lean_path, [body strings])] for each box naming a .lean file."""
+def _const_str(node):
+    return node.value if isinstance(node, ast.Constant) and isinstance(node.value, str) else None
+
+
+def _boxes(src_text, stats=None):
+    """[(call_line_no, title_citation_or_None, [body strings])] — one entry per box call.
+
+    ⚠⚠⚠ THE CALL IS PARSED, NOT WINDOWED (`RLY47-2`). The first form searched a fixed 4000-character
+    window after `def_box(` for the first `(X.lean)`, so a box citing nothing took a LATER box's
+    citation, and a box citing only in a body row lost every row above that one. `ast` gives the
+    call's own arguments: implicit string concatenation is already welded (the split-literal header
+    that bit four times is gone by construction) and entities stay literal for `html.unescape`.
+    """
     out = []
-    for m in BOX_CALL.finditer(src_text):
-        seg = src_text[m.end():m.end() + 4000]
-        # ⚠⚠⚠ WELD ADJACENT STRING LITERALS BEFORE MATCHING THE HEADER. A box title and its cited
-        #   path are routinely written as two literals — `'Theorem: cyclic_decoration_eq_bot '`
-        #   then `'(ZeroParadox/Settheory/APG.lean § VII′)'` — and a pattern requiring both in ONE
-        #   literal cannot see that box AT ALL. Measured: the checker reported 3 sites where the
-        #   editorial gate had named 4, and the missing one was the box whose header wraps.
-        #   ⚠ THIS IS THE FOURTH TIME TONIGHT THE SPLIT-LITERAL SHAPE HAS BITTEN, and this time
-        #   inside the checker written to end the class it belongs to. `check_paths` already
-        #   carries `_CLAIM_JOIN` for it, and the lesson did not travel — which is the
-        #   half-applied defect one level up: a rule learned in one file and not in the next.
-        seg = re.sub(r"'\s*\n\s*'|\"\s*\n\s*\"", '', seg)
-        h = HEADER.search(seg)
-        if not h:
+    for node in ast.walk(ast.parse(src_text)):
+        if not isinstance(node, ast.Call):
             continue
-        # ⚠ START AFTER THE HEADER'S OWN LINE, not at `h.end()`. The header pattern finishes
-        #   INSIDE its string literal (it stops at the cited path), so slicing from there begins
-        #   mid-quote and every subsequent quote pairs off by one — the body came back as the
-        #   punctuation BETWEEN the rows. Measured on the selftest fixture: rows = [",\n    [\n"].
-        #   ⚠⚠ AND IT WENT UNNOTICED BECAUSE THREE OF FIVE CONTROLS PASSED VACUOUSLY: with `scan`
-        #   returning nothing, every MUST-SUPPRESS case is satisfied for the wrong reason. Only
-        #   the two MUST-FIRE halves exposed it — which is exactly why `check_checkers` rule 3
-        #   requires both halves, and why a must-suppress-only control set proves nothing.
-        nl = seg.find('\n', h.end())
-        body = seg[nl + 1:] if nl > 0 else seg[h.end():]
-        stop = re.search(r'^\s*\]\s*\)?', body, re.M)
-        if stop:
-            body = body[:stop.start()]
-        rows = re.findall(r"'([^']*)'|\"([^\"]*)\"", body)
-        # ⚠⚠⚠ DECODE THE ENTITIES, OR THIS CHECKER IS VACUOUS BY CONSTRUCTION — and it WAS, on its
-        #   first live run: **0 findings** while four sites were known live. The builder writes
-        #   `&#8869;`, and `⊥` exists only after rendering, so a source scan looking for the glyph
-        #   can never see it. That is `R-DEFECTCLASS`'s own rule — *for prose that ships, the
-        #   detector runs on the RENDERED text, never the source* — arriving inside the checker
-        #   built to enforce it, and producing exactly the clean zero it exists to prevent.
-        #   Decoding is the cheap way to get the rendered form without a PDF: the entity IS the
-        #   glyph, one substitution apart. What it does NOT reach is a claim split across two
-        #   adjacent string literals; that still needs the extracted PDF, and `check_paths
-        #   --claim` is the tool for it.
-        rows = [html.unescape(a or b) for a, b in rows]
-        out.append((src_text[:m.start()].count('\n') + 1, h.group(1), rows))
+        f = node.func
+        name = f.id if isinstance(f, ast.Name) else (f.attr if isinstance(f, ast.Attribute) else None)
+        if name not in BOX_FUNCS:
+            continue
+        if stats is not None:
+            stats['calls'] = stats.get('calls', 0) + 1
+        # `build_zpg.py` overrides the signature as (title, status, rows): the rows are the first
+        # list argument, and every string argument before it is header text.
+        title, rows_node = '', None
+        for a in node.args:
+            if isinstance(a, (ast.List, ast.Tuple)):
+                rows_node = a
+                break
+            title += (_const_str(a) or '') + ' '
+        rows, unread = [], 0
+        for e in (rows_node.elts if rows_node is not None else ()):
+            v = _const_str(e)
+            if v is None:
+                unread += 1
+            else:
+                # ⚠⚠⚠ DECODE THE ENTITIES, OR THIS CHECKER IS VACUOUS BY CONSTRUCTION — and it WAS,
+                #   on its first live run: **0 findings** while four sites were known live. The
+                #   builder writes `&#8869;`, and `⊥` exists only after rendering, so a source scan
+                #   looking for the glyph can never see it (`R-DEFECTCLASS`: for prose that ships,
+                #   the detector runs on the RENDERED text). An entity-encoded MUST-FIRE case
+                #   controls it (`RLY47-3`).
+                rows.append(html.unescape(v))
+        if stats is not None:
+            stats['rows'] = stats.get('rows', 0) + len(rows)
+            stats['rows_unread'] = stats.get('rows_unread', 0) + unread + (rows_node is None)
+        h = HEADER.search(html.unescape(title))
+        out.append((node.lineno, h.group(1) if h else None, rows))
     return out
 
 
@@ -227,8 +242,6 @@ def _claim_part(row):
 def _is_code_row(row):
     """A transcription claim, not a gloss. Both tests, because either alone is wrong."""
     return bool(CODE_ROW.search(row)) and len(PROSE_WORDS.findall(row)) < 2
-# A path cited INSIDE the body, e.g. 'Instance toAbstractSelfApp (ZeroParadox/Valuation/Scale.lean):'
-INLINE_SRC = re.compile(r'((?:ZeroParadox|scripts)/[\w/]+\.lean)')
 
 
 def _idents(text):
@@ -245,46 +258,93 @@ def _idents(text):
             yield t
 
 
+# ⚠ A GLOSS LABEL IS NOT A FIELD (`RLY47-6`). `Proof: case split; simp [snapEmbed].` passed
+#   `CODE_ROW` on its `Word:` shape and the prose veto on having one listed word, so `Proof` was
+#   reported absent at six sites. A leading capitalised English word followed by `:` labels the
+#   row; it is stripped before either test, so the row is judged on what follows the label.
+GLOSS_LABEL = re.compile(r"^\s*[A-Z][a-z]+(?:\s+[a-z]+)?\s*:(?!=)\s*")
+
+# ⚠⚠ THE SHAPE LEG (`W4K-7`). A duplicated binder is two well-formed identifiers, so the identifier
+#   legs above cannot see it: a rendered `decoration_unique` box declared `(_G : APG V)` beside the
+#   `(G : APG V)` it was meant to replace and this checker reported 0. One declaration whose
+#   explicit, implicit or instance binders repeat a name — up to a leading `_` — is reported.
+#   ⚠ ARITY IS NOT CHECKED: comparing a box's binders against the ELABORATED signature needs Lean,
+#   and nothing here runs it. A box that drops or adds a distinct binder passes this leg.
+DECL_START = re.compile(r"^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+)*"
+                        r"(?:theorem|lemma|def|abbrev|example|instance|structure|class)\b")
+BINDER = re.compile(r"[({\[⦃]\s*([^\s:(){}\[\]⦃⦄]+(?:\s+[^\s:(){}\[\]⦃⦄]+)*)\s*:[^(){}\[\]⦃⦄]+[)}\]⦄]")
+
+
+def _duplicate_binders(rows):
+    """[(declaration head, repeated name)] across each declaration the box's code rows spell."""
+    out, names, head = [], {}, None
+    for row in rows:
+        if DECL_START.match(row):
+            names, head = {}, row.strip()[:60]
+        elif head is None or not _is_code_row(row):
+            continue
+        for grp in BINDER.findall(row):
+            for n in grp.split():
+                key = n.lstrip('_')
+                if not key:
+                    continue
+                if key in names:
+                    out.append((head, '%s / %s' % (names[key], n)))
+                names.setdefault(key, n)
+    return out
+
+
 def scan(paths=None, stats=None):
     """[(script, line, cited, kind, token, note)] — pure, prints nothing.
 
-    ⚠ `stats` is filled with the DENOMINATOR: how many box calls exist, how many were parsed.
-    A finding count with no denominator is unreadable — `RLY46-1` measured this file reporting
-    **0 findings** while parsing 12 of 148 box calls, and nothing on the page said so. The count
-    is the difference between "clean" and "barely looked".
+    ⚠ `stats` is filled with the DENOMINATOR (`RLY46-1`, `RLY47-2`): box calls found, boxes judged
+    against a resolved file, boxes citing no .lean anywhere, rows read and code rows judged, rows
+    that are not string literals, and scripts that could not be read or parsed. A finding count
+    with no denominator is unreadable, and a denominator that counts BOXES says nothing about ROWS.
     """
     findings = []
+    st = stats if stats is not None else {}
     scripts = paths if paths is not None else sorted(
         (common.REPO / 'scripts').glob('build_*.py'))
     for s in scripts:
         try:
             text = io.open(s, encoding='utf-8').read()
-        except OSError:
+            boxes = _boxes(text, st)
+        except (OSError, SyntaxError, ValueError) as e:
+            # R-ZERONULL: an unreadable script is COUNTED and NAMED, never a silent zero.
+            st.setdefault('unreadable', []).append('%s (%s)' % (_rel(s), type(e).__name__))
             continue
-        if stats is not None:
-            stats['calls'] = stats.get('calls', 0) + len(BOX_CALL.findall(text))
-        for line, cited, rows in _boxes(text):
-            if stats is not None:
-                stats['parsed'] = stats.get('parsed', 0) + 1
-            src = _resolve_lean(cited)
-            if src is None:
-                findings.append((_rel(s), line, cited, 'unresolvable-citation', cited,
-                                 'cited file not found, or the basename is ambiguous'))
-                continue
+        for line, cited, rows in boxes:
             # ⚠ RESOLVE AGAINST EVERY FILE THE BOX CITES, not only its header. A box may name a
             #   second source inline — `Instance toAbstractSelfApp (ZeroParadox/Valuation/Scale
             #   .lean):` sits inside a box headed `SelfApp.lean` — and checking those rows against
             #   the header alone reported `scale_bot` and `scale_unique_fp` ABSENT while both are
             #   plainly in the file the row itself names. A wrong domain, one level down: the same
             #   defect `RLY45-1` named in the claim sweep, arriving in the checker built after it.
-            cited_all = {cited}
+            cited_all = {cited} if cited else set()
             for row in rows:
                 cited_all.update(INLINE_SRC.findall(row))
+            if not cited_all:
+                st['uncited'] = st.get('uncited', 0) + 1
+                continue
+            label = cited or ', '.join(sorted(cited_all))
+            if cited and _resolve_lean(cited) is None:
+                findings.append((_rel(s), line, cited, 'unresolvable-citation', cited,
+                                 'cited file not found, or the basename is ambiguous'))
+                continue
             lean = ''
             for c in sorted(cited_all):
                 p = _resolve_lean(c)
                 if p is not None:
                     lean += io.open(p, encoding='utf-8').read()
+            if not lean:
+                findings.append((_rel(s), line, label, 'unresolvable-citation', label,
+                                 'no cited file found, or every basename is ambiguous'))
+                continue
+            st['parsed'] = st.get('parsed', 0) + 1
+            for head, pair in _duplicate_binders(rows):
+                findings.append((_rel(s), line, label, 'duplicate-binder', pair,
+                                 'one declaration binds this name twice: %s' % head))
             for row in rows:
                 for pat, (g, real) in UNBOUND_GLYPH.items():
                     if not (pat.search(row) and _is_code_row(row)):
@@ -294,24 +354,23 @@ def scan(paths=None, stats=None):
                     #   unbound", because ZPSemilattice supplies the bottom as a STRUCT FIELD
                     #   named `bot` with nothing for the pretty glyph to dispatch on. The
                     #   CONVERSE is false: wherever a carrier implements Mathlib's `Bot`/
-                    #   `OrderBot`, the glyph is genuine imported notation — measured, **785
-                    #   occurrences across 98 of 218 tracked .lean files**. Of the 22 glyph rows
-                    #   a widened domain surfaces, 20 cite a file that itself writes that glyph,
-                    #   so the note would have been FALSE about that file 20 times in 22.
-                    #   The cheap, correct discriminator: if the CITED FILE writes the glyph
-                    #   itself, it is bound there and this checker has nothing to say.
+                    #   `OrderBot`, the glyph is genuine imported notation. The cheap, correct
+                    #   discriminator: if the CITED FILE writes the glyph itself, it is bound
+                    #   there and this checker has nothing to say.
                     if g in lean:
                         continue
-                    findings.append((_rel(s), line, cited, 'unbound-glyph', g,
+                    findings.append((_rel(s), line, label, 'unbound-glyph', g,
                                      'no notation bound in the cited file; it writes `%s`'
                                      % real))
+                row = GLOSS_LABEL.sub('', row, count=1)
                 if not _is_code_row(row):
                     continue
-                row = _claim_part(row)   # judge the claim, not the sentence after it                    # gloss, not a transcription claim
+                st['code_rows'] = st.get('code_rows', 0) + 1
+                row = _claim_part(row)   # judge the claim, not the sentence after it
                 for tok in _idents(row):
                     base = tok.split('.')[0]
                     if tok not in lean and base not in lean:
-                        findings.append((_rel(s), line, cited, 'absent-identifier', tok,
+                        findings.append((_rel(s), line, label, 'absent-identifier', tok,
                                          'not located in the cited file'))
     return findings
 
@@ -328,16 +387,18 @@ def main():
     print('  CODE-BOX IDENTIFIER CHECK')
     print('  entry      python %s' % SELF)
     print('  property   every identifier in a published code box exists in the file it cites,')
-    print('             and every glyph it prints has a notation bound to it')
+    print('             every glyph it prints has a notation bound to it, and no declaration')
+    print('             binds one name twice (binder ARITY against Lean is not checked)')
     print('  mode       ADVISORY — never blocks. The enumeration is mechanical; the verdict')
     print('             is judgement, and a checker that guessed would manufacture noise.')
-    # ⚠ THE DENOMINATOR, ON EVERY RUN. Without it a 0 reads as coverage.
-    # ⚠ THREE NUMBERS, NOT TWO. An earlier version printed 'the rest cite no .lean', which
-    #   was FALSE - 34 unparsed boxes cited one. A denominator that misdescribes its own
-    #   remainder is worse than none, because it closes the question it should open.
-    print('  coverage   %d box call(s); %d parsed. The remainder either cite no .lean'
-          % (st.get('calls', 0), st.get('parsed', 0)))
-    print('             or use a header shape this pattern does not reach — both UNJUDGED.')
+    # ⚠ THE DENOMINATOR, ON EVERY RUN, AND EVERY REMAINDER NAMED. Without it a 0 reads as coverage.
+    print('  coverage   %d box call(s): %d judged against a resolved file, %d cite no .lean'
+          % (st.get('calls', 0), st.get('parsed', 0), st.get('uncited', 0)))
+    print('             anywhere (UNJUDGED); %d row(s) read, %d judged as code, %d not a string'
+          % (st.get('rows', 0), st.get('code_rows', 0), st.get('rows_unread', 0)))
+    print('             literal (UNJUDGED)')
+    for u in st.get('unreadable', []):
+        print('  UNREAD     %s — every box in it is UNJUDGED' % u)
     print('=' * 78)
     for kind in sorted(by_kind):
         print('\n  %s — %d' % (kind, len(by_kind[kind])))
@@ -355,6 +416,42 @@ def main():
     return 0
 
 
+def _run_fixture(d, files, script):
+    """Write `files` ({repo-relative path: text}) and one build script under `d`, point the checker
+    at `d`, and return (findings, stats). The real root is restored whatever happens."""
+    from pathlib import Path
+    for rel, text in files.items():
+        p = Path(d) / rel
+        os.makedirs(p.parent, exist_ok=True)
+        io.open(p, 'w', encoding='utf-8').write(text + '\n')
+    sp = Path(d) / 'build_t.py'
+    io.open(sp, 'w', encoding='utf-8').write(script)
+    real = common.REPO
+    try:
+        common.REPO = Path(d)
+        st = {}
+        return scan([sp], st), st
+    finally:
+        common.REPO = real
+
+
+def _box(title, *rows):
+    return "def_box(\n    %s,\n    [\n%s    ]\n)\n" % (title, ''.join('        %s\n' % r for r in rows))
+
+
+# One fixture per header shape the corpus writes (`RLY47-1`). Every one must PARSE, so each box
+# carries an absent identifier and must fire, and the parsed count must EQUAL the fixture count —
+# a counter that double-counts or a pattern that narrows both turn this red.
+HEADER_SHAPES = [
+    ('two directory levels', "'Typeclass: C (ZeroParadox/Valuation/V.lean)'"),
+    ('one directory level', "'Theorem: t (ZeroParadox/T.lean)'"),
+    ('bare basename', "'Kleene recursion (T.lean § III)'"),
+    ('no kind word before', "'AFAStructure Typeclass (T.lean § I)'"),
+    ('kind word with a colon', "'Functor: fB_functor (T.lean)'"),
+    ('split literal', "'Theorem: cyclic_decoration_eq_bot '\n    '(ZeroParadox/T.lean § VII′)'"),
+]
+
+
 def selftest():
     """Both halves. A must-fire alone would also pass against a checker that flags everything."""
     import tempfile
@@ -362,71 +459,125 @@ def selftest():
     bad = 0
     print('== code-box identifier check - CONTROLS ==\n')
 
+    def report(name, must, got, detail=''):
+        nonlocal bad
+        ok = got == must
+        bad += 0 if ok else 1
+        print('  %-38s %-13s %s%s' % (name, 'MUST FIRE' if must else 'MUST SUPPRESS',
+                                      'ok' if ok else '*** FAIL (got %s) ***' % got, detail))
+
+    T = "'Theorem: t (ZeroParadox/T.lean)'"
     CASES = [
-        # (name, box body row, lean content, must_fire)
+        # (name, box body rows, lean content, kind that must fire or None for must-suppress)
         ('clean: identifier present',
-         "'  val_bot    : val bot = &#8868;',", 'theorem val_bot : val bot = 0', False),
+         ["'  val_bot    : val bot = &#8868;',"], 'theorem val_bot : val bot = 0', None),
         ('absent identifier fires',
-         "'  accessible : Reachable root v',", 'structure APG where root : V', True),
+         ["'  accessible : Reachable root v',"], 'structure APG where root : V', 'absent-identifier'),
         ('unbound glyph fires',
-         "'  fixed_bot : selfApp ⊥ = ⊥',", 'theorem fixed_bot : selfApp bot = bot', True),
+         ["'  fixed_bot : selfApp ⊥ = ⊥',"], 'theorem fixed_bot : selfApp bot = bot', 'unbound-glyph'),
+        # RLY47-3: the builder writes the ENTITY; only decoding makes the glyph visible.
+        ('unbound glyph fires as an ENTITY',
+         ["'  fixed_bot : selfApp &#8869; = &#8869;',"], 'theorem fixed_bot : selfApp bot = bot',
+         'unbound-glyph'),
         ('short binders are not flagged',
-         "'  scale : L → L',", 'class C where scale : L -> L', False),
+         ["'  scale : L → L',"], 'class C where scale : L -> L', None),
         ('core vocabulary is not flagged',
-         "'  x : Nonempty (Quiver.Path root v)',",
-         'structure APG where accessible : Nonempty (Quiver.Path root v)', False),
+         ["'  x : Nonempty (Quiver.Path root v)',"],
+         'structure APG where accessible : Nonempty (Quiver.Path root v)', None),
+        # RLY47-6: a gloss label is not an identifier, and a sentence-final period is not a dot.
+        ('a Proof: label is not an identifier',
+         ["'Proof: case split ↦ simp [snapEmbed].',"], 'def snapEmbed := 0', None),
+        ('a sentence-final word is not dotted',
+         ["'(2) val : L &#8594; X  &#8212; valuation into the extended naturals.',"],
+         'def val := 0', None),
+        # W4K-7: the SHAPE leg. A replaced binder left beside its replacement.
+        ('duplicated binder fires',
+         ["'theorem decoration_unique (G : APG V) (_G : APG V) : True',"],
+         'theorem decoration_unique : True\nstructure APG', 'duplicate-binder'),
+        ('one name in two declarations is fine',
+         ["'theorem decoration_unique (G : APG V) : True',",
+          "'theorem decoration_eq (G : APG V) : True',"],
+         'theorem decoration_unique\ntheorem decoration_eq\nstructure APG', None),
     ]
+    for name, rows, lean, kind in CASES:
+        with tempfile.TemporaryDirectory() as d:
+            f, _ = _run_fixture(d, {'ZeroParadox/T.lean': lean}, _box(T, *rows))
+        kinds = {x[3] for x in f}
+        report(name, kind is not None, (kind in kinds) if kind else bool(f),
+               '' if kind is None else '  [%s]' % kind)
+
+    # RLY47-2: the call is parsed, not windowed. A box citing nothing must not BORROW the next box's
+    # citation, and a box citing only in a body row must not LOSE the rows above that one.
     with tempfile.TemporaryDirectory() as d:
-        for name, row, lean, must in CASES:
-            lp = Path(d) / 'T.lean'
-            io.open(lp, 'w', encoding='utf-8').write(lean + '\n')
-            sp = Path(d) / 'build_t.py'
-            io.open(sp, 'w', encoding='utf-8').write(
-                "def_box(\n    'Theorem: t (ZeroParadox/T.lean)',\n    [\n        %s\n        ]\n"
-                % row)
-            # point the resolver at the temp lean file
-            real = common.REPO
-            try:
-                # ⚠ RESET THE BASENAME CACHE. `_LEAN_INDEX` is module-level and is built from
-                #   `common.REPO`; the fixture repoints REPO, so a cache warmed by an earlier
-                #   case (or by a live scan in the same process) still answers for the real
-                #   repository and the fixture's file is never found. Both MUST-FIRE cases went
-                #   red for that reason and not for the property they test -- `DC-22`, in the
-                #   control, again. A cache keyed on a value someone else can change must be
-                #   invalidated wherever that value changes.
-                global _LEAN_INDEX
-                _LEAN_INDEX = None
-                common.REPO = Path(d)
-                os.makedirs(Path(d) / 'ZeroParadox', exist_ok=True)
-                io.open(Path(d) / 'ZeroParadox' / 'T.lean', 'w', encoding='utf-8').write(lean)
-                fired = bool(scan([sp]))
-            finally:
-                common.REPO = real
-                _LEAN_INDEX = None
-            ok = fired == must
-            bad += 0 if ok else 1
-            print('  %-34s %-13s %s' % (name, 'MUST FIRE' if must else 'MUST SUPPRESS',
-                                        'ok' if ok else '*** FAIL (got %s) ***' % fired))
+        f, st = _run_fixture(d, {'ZeroParadox/T.lean': 'theorem present_one : True'},
+                             _box("'Theorem: uncited'", "'  absent_one : Reachable root v',")
+                             + _box(T, "'  present_one : True',"))
+    report('uncited box does not borrow a citation', False, bool(f),
+           '  (uncited=%d, want 1)' % st.get('uncited', 0))
+    bad += 0 if st.get('uncited', 0) == 1 else 1
+    with tempfile.TemporaryDirectory() as d:
+        f, _ = _run_fixture(d, {'ZeroParadox/T.lean': 'theorem present_one : True'},
+                            _box("'Theorem: t'", "'  absent_one : Reachable root v',",
+                                 "'Witness: present_one (ZeroParadox/T.lean).',"))
+    report('rows above a body citation are judged', True, bool(f))
+    # R-ZERONULL: a script that does not parse is NAMED as unread, never a silent zero.
+    with tempfile.TemporaryDirectory() as d:
+        f, st = _run_fixture(d, {}, "def_box(\n    'Theorem: t (ZeroParadox/T.lean)',\n")
+    report('an unparsable script is reported unread', True, len(st.get('unreadable', [])) == 1)
+
+    # RLY47-1: every header shape parses, and the count is exact.
+    with tempfile.TemporaryDirectory() as d:
+        lean = {'ZeroParadox/T.lean': 'theorem t', 'ZeroParadox/Valuation/V.lean': 'theorem t'}
+        script = ''.join(_box(title, "'  absent_%d : Reachable root v'," % i)
+                         for i, (_, title) in enumerate(HEADER_SHAPES))
+        f, st = _run_fixture(d, lean, script)
+    fired = {int(x[4].split('_')[1]) for x in f
+             if x[3] == 'absent-identifier' and x[4].startswith('absent_')}
+    for i, (shape, _) in enumerate(HEADER_SHAPES):
+        report('header shape parses: %s' % shape, True, i in fired)
+    exact = st.get('parsed', 0) == len(HEADER_SHAPES) == st.get('calls', 0)
+    bad += 0 if exact else 1
+    print('  %-38s %-13s %s' % ('parsed count is exact', 'MUST HOLD',
+                                'ok (%d of %d)' % (st.get('parsed', 0), len(HEADER_SHAPES)) if exact
+                                else '*** FAIL: parsed %d, calls %d, fixtures %d ***'
+                                % (st.get('parsed', 0), st.get('calls', 0), len(HEADER_SHAPES))))
+
+    # RLY47-5: the basename index. Ambiguity is reported, and the cache answers for the root it was
+    # built from — warm it on one root, repoint, and the other root's file must be the one found.
+    with tempfile.TemporaryDirectory() as d:
+        f, _ = _run_fixture(d, {'ZeroParadox/A/D.lean': 'theorem t', 'ZeroParadox/B/D.lean': 'theorem t'},
+                            _box("'Theorem: t (D.lean)'", "'  t_t : True',"))
+    report('ambiguous basename is unresolvable', True,
+           any(x[3] == 'unresolvable-citation' for x in f))
+    with tempfile.TemporaryDirectory() as d1, tempfile.TemporaryDirectory() as d2:
+        real = common.REPO
+        try:
+            for d, sub in ((d1, 'One'), (d2, 'Two')):
+                os.makedirs(Path(d) / 'ZeroParadox' / sub)
+                io.open(Path(d) / 'ZeroParadox' / sub / 'Q.lean', 'w', encoding='utf-8').write('x')
+            common.REPO = Path(d1)
+            _resolve_lean('Q.lean')
+            common.REPO = Path(d2)
+            got = _resolve_lean('Q.lean')
+        finally:
+            common.REPO = real
+    report('basename cache answers for the current root', True,
+           got is not None and str(got).startswith(str(d2)))
 
     # ⚠⚠ THE PRODUCTION ENUMERATION, WHICH NO CONTROL ABOVE REACHES — `RLY46-2`. Every case above
     #   passes `paths=[...]`, so `scan()`'s default glob never executes under test: emptying it
-    #   left `--selftest` BYTE-IDENTICAL and PASS. That is `RLY45-1` one file over, inside the
-    #   checker whose docstring cites `RLY45-1` — the lesson did not travel from `_claim_domain`,
-    #   which had just been extracted for exactly this reason.
-    #   ⚠ AND THIS CONTROL WAS CLAIMED FIXED ONCE BEFORE IT EXISTED: the patch that "added" it
-    #   used a bare `str.replace` with an anchor belonging to ANOTHER FILE, matched nothing, and
-    #   reported success. A replace without a match count is a silent no-op wearing a fix's
-    #   clothes; every other patch in this session verifies its anchors and refuses on a miss.
-    print('  MUST HOLD  (the production enumeration is non-empty)')
+    #   left `--selftest` BYTE-IDENTICAL and PASS.
+    print('  MUST HOLD  (the production enumeration is non-empty and fully read)')
     _prod = sorted((common.REPO / 'scripts').glob('build_*.py'))
     _st = {}
     scan(stats=_st)
-    _ok = len(_prod) >= 10 and _st.get('calls', 0) >= 100 and _st.get('parsed', 0) >= 1
+    _ok = (len(_prod) >= 10 and _st.get('calls', 0) >= 100 and _st.get('parsed', 0) >= 1
+           and not _st.get('unreadable'))
     bad += 0 if _ok else 1
-    print('    %-40s %s (%d script(s), %d call(s), %d parsed)'
+    print('    %-40s %s (%d script(s), %d call(s), %d parsed, %d unreadable)'
           % ('default glob finds boxes to judge',
-             'ok' if _ok else '*** VACUOUS — scan() sees nothing ***',
-             len(_prod), _st.get('calls', 0), _st.get('parsed', 0)))
+             'ok' if _ok else '*** VACUOUS OR UNREAD ***',
+             len(_prod), _st.get('calls', 0), _st.get('parsed', 0), len(_st.get('unreadable', []))))
 
     print('\n  controls: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0

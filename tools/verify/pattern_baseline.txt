@@ -79,7 +79,8 @@ SKIP_NAMES	figures_baseline.txt
 [check_pov]
 ALLOW	check_pov\.py|vocabulary_reference|^\s*--\s*\[ZP-CUSTOM\]|CORRECTED|corrected 20|an earlier revision|v1\.\d+:|v2\.\d+:
 CITES_DECL	`[a-z][A-Za-z0-9_]*_[A-Za-z0-9_]+`|`[A-Z][A-Za-z]+\.[a-z]
-DENIAL	(NOT the snap|NOT of the snap|NOT that the snap|is not the snap|never the same map|were never the same map)
+DENIAL	(NOT the snap|NOT of the snap|(?-i:NOT) that the snap|is not the snap|never the same map|were never the same map)
+DENIAL_ALLOW	check_pov\.py|^\s*--\s*\[ZP-CUSTOM\]|CORRECTED|corrected 20|an earlier revision|v1\.\d+:|v2\.\d+:
 KINDS	\b(COINCIDENCE|INVERSION|DRIFT|CARRIER|INVARIANT)\b
 LABEL	\b(Statement:|Reading:)
 POV_TERMS	(point of view|change of frame|frame[- ]change|frame[- ]flip|frameflip|pole exchange|both poles|two chart|chart[- ]reading|reads as both|swaps? the poles|min\s*≡\s*max|both min and max|both extremal|initial AND terminal|least AND greatest|totally disconnected|total disconnectedness|domain of validity|totally separated|total separatedness|zero[- ]dimensional|range of applicability|ultrametric.{0,30}(suffic|forc|yield|give|suppl)|carrier requirement)
@@ -103,11 +104,15 @@ TAKE_RE	#+\s*Engineer'?s\s+Take
 [check_poles]
 APPLIED	(?:(?:rInv|rInvHomeo|winv|wmul|swap|cornerId|poleToSphere|cnfToZp2|snapNucleus|shiftEnd|localCx|endVal|cx|val|v_2|v₂)|(?<![A-Za-z])[a-z])\s+$
 CHAIN	((?:0|∞|⊥))(?:\s*=\s*((?:0|∞|⊥)))+
-EMPHASIS_BEFORE	(?:^|(?<=[\s(\[\"']))[*_]+$
+CONTINUED	[=+\-·*/^]\s*[\w)\]}∞⊥]+\s*$
+EMPHASIS_BEFORE	\*+$
+EMPHASIS_PAIR	(?:^|(?<=[\s(\[\"'|:—–>]))(\*+)\S(?:.*?\S)?\1\s+$
 EXPR_BEFORE	[+\-·*/^]\s*$
 GRACE	24
 IDIOM	\bIdiom:
-LIST_MARKER	^\s*(?:>\s*)*(?:[-*+]|\d+[.)])\s+$
+LINE_START_MARKER	^\s*[-*+]\s+$
+LIST_ITEM	^\s*(?:>\s*)*[-*+]\s
+LIST_MARKER	(?:^|(?:--|#+|//|/--?|/-!|[|>\"'(\[]))\s*(?:[-*+]\s+)?$
 MAPS	cnfToZp2
 MAPS	cornerId
 MAPS	cx
@@ -125,8 +130,10 @@ MAPS	v₂
 MAPS	winv
 MAPS	wmul
 NEGATED	≠|!=|\\ne\b|not equal
+OPERAND_END	(?:[\d)\]}∞⊥=]|(?<![\w.'])[A-Za-z]|[A-Za-z_][\w.']*[\d_.'][\w.']*)\s*$
 OPERATION	[/·*]\s*0|0\s*[·*]\s*/|winv|wmul|wheelBot|wheelInf
-REJECTED	meadow|collapse|field is a wheel|degenerate
+REJECTED	(?<!non)(?<!non-)(?:trivial|degenerate)\b|one-element
+SPACED_DASH	(?<![\w.'])[A-Za-z]{2,}\s+-\s+$
 
 [check_moved]
 EXEMPT_DIRS	/.git/

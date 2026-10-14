@@ -35,6 +35,11 @@ lets this run inside the hooks, where it is worth having.
 
 ⚠ If the process is KILLED mid-route the mutation survives — visibly: the checkers fire and
 `git status` shows the probe file. It is not silent, and re-running restores nothing on its own.
+
+⚠ CONCURRENCY CONTRACT: for the length of a run this file OWNS every path in `TOUCHED`. Do not run
+it while anything else writes those paths, in the same checkout. An unrestored tree is reported
+and withheld from the ledger rather than recorded as a FAIL (`_record_args`); `--selftest` writes
+only the probe file and `vendored_files.txt`.
 """
 import fnmatch
 import ast
@@ -207,9 +212,11 @@ EXEMPTION_SURFACE = [
     ("exact path (CLAUDE.md)", _EXEMPT_PATH, True, None,
      "the operating manual; its own header exempts it, and it is routed NOWHERE by design"),
     ("directory prefix (tools/verify/)", _EXEMPT_PREFIX, True, "/rely",
-     "operating machinery; /rely reviews this layer and BLOCKS"),
+     "operating machinery; /rely answers for this layer, owed paths per the ledger's "
+     "coverage_gap(step='rely')"),
     ("directory prefix (tools/process/)", _EXEMPT_PROCESS, True, "/rely",
-     "CLAUDE.md's routed body; declared in its header and routed to /rely, which BLOCKS"),
+     "CLAUDE.md's routed body; declared in its header and routed to /rely, owed paths per the "
+     "ledger's coverage_gap(step='rely')"),
     ("data extension (a .ttf)", _EXEMPT_DATA, True, None,
      "a binary carries no prose for a prose gate to read"),
     # ⚠ THESE TWO WERE EXEMPT AND UNREGISTERED, and the completeness check found them the first
@@ -1094,7 +1101,78 @@ def _enum_config_at(ref):
     missing = {"GLOBS", "SKIP_DIRS", "SKIP_NAMES"} - set(cfg)
     if missing:
         raise ValueError("common.py at %s: could not read %s" % (ref, ", ".join(sorted(missing))))
+    # ⚠ THE VENDORED EXEMPTION IS PART OF THE CONFIGURATION (`RLY56-2`). `common.targets()` drops
+    # every vendored path, so a commit whose allowlist differs from today's enumerated a different
+    # surface even with identical literals above. Carried as text (`None` when the file is absent at
+    # `ref`, which is a value of its own) so a change to either input counts as a config change.
+    for key, rel in (("VENDORED_PY", "tools/verify/vendored.py"),
+                     ("VENDORED_ALLOW", "tools/verify/vendored_files.txt")):
+        rc_v, txt = sh("git", "show", "%s:%s" % (ref, rel))
+        cfg[key] = txt if rc_v == 0 else None
     return cfg
+
+
+def _vendored_for(cfg, cfg_now):
+    """`is_vendored` as it stood under `cfg`, built from `vendored.py`'s OWN code.
+
+    Same `vendored.py` and same allowlist as today: today's function. Same `vendored.py`, different
+    allowlist: today's function reading that commit's allowlist, parsed by `vendored._allowlist()`
+    itself. A different `vendored.py` cannot be modelled without re-implementing it, which its
+    header forbids, so that raises `ValueError` and the caller fails CLOSED with a named row."""
+    import tempfile
+    import vendored
+    if cfg.get("VENDORED_PY") != cfg_now.get("VENDORED_PY"):
+        raise ValueError("vendored.py differs from HEAD's, and its rule cannot be reconstructed "
+                         "without re-implementing it")
+    if cfg.get("VENDORED_ALLOW") == cfg_now.get("VENDORED_ALLOW"):
+        return vendored.is_vendored
+    saved_path = vendored.ALLOWLIST
+    tmp = None
+    try:
+        if cfg.get("VENDORED_ALLOW") is None:
+            vendored.ALLOWLIST = os.path.join(tempfile.gettempdir(), "guards-absent-allowlist-%d"
+                                              % os.getpid())
+        else:
+            fd, tmp = tempfile.mkstemp(suffix=".txt")
+            with io.open(fd, "w", encoding="utf-8") as fh:
+                fh.write(cfg["VENDORED_ALLOW"])
+            vendored.ALLOWLIST = tmp
+        then = vendored._allowlist()
+    finally:
+        vendored.ALLOWLIST = saved_path
+        if tmp:
+            os.remove(tmp)
+
+    def is_vendored_then(path, rel=None):
+        saved = vendored._CACHE
+        vendored._CACHE = then
+        try:
+            return vendored.is_vendored(path, rel)
+        finally:
+            vendored._CACHE = saved
+    return is_vendored_then
+
+
+def _scope_dialect_rows(types):
+    """`RLY56-4`: refuse a scope pattern the two halves of this property read differently.
+
+    `_scope_paths` matches registry scopes with `fnmatchcase` (the registry's own dialect: `*`
+    crosses `/`), and `_surface_from_config` reads `common.GLOBS` with `_pglob` (pathlib's: `**/`
+    spans ZERO directories). They agree on every construct except `**`: `ZeroParadox/**/*.lean`
+    reaches the top-level `ZeroParadox/*.lean` files on the surface side only. A demand computed
+    under a pattern the two sides disagree on is a guess, so this leg will not compute one."""
+    hits = sorted((step, p) for step, e in (types or {}).items() if isinstance(e, dict)
+                  for key in ("scope", "scope_exclude") for p in (e.get(key) or [])
+                  if isinstance(p, str) and "**" in p)
+    if hits:
+        return [("registry scope dialect", False,
+                 "*** %d scope pattern(s) use `**` (%s) — the scope side (fnmatchcase) and the "
+                 "surface side (pathlib) select different paths under it, so any stranding computed "
+                 "here would be wrong in a direction nobody chose. Write the scope without `**` ***"
+                 % (len(hits), ", ".join("%s: %s" % h for h in hits[:4])))]
+    return [("registry scope dialect", True,
+             "no registry scope uses `**`, the one construct the scope side and the surface side "
+             "read differently")]
 
 
 def _surface_from_config(cfg, universe, is_vendored):
@@ -1142,8 +1220,11 @@ def check_enumeration_widening_strands():
     *belongs at the moment of widening*; the pre-push hook is the last moment that is still true.
 
     ⚠ ITS REACH, STATED: it compares the SHARED configuration (`common.GLOBS`, `SKIP_DIRS`,
-    `SKIP_NAMES`) across the range. A checker that narrows its OWN private skip list is a
-    different question and is NOT covered here — say so rather than let the row imply otherwise."""
+    `SKIP_NAMES`, and the vendored exemption — `vendored_files.txt` modelled through `vendored.py`'s
+    own parser, a changed `vendored.py` refused rather than modelled) across the range. A checker
+    that narrows its OWN private skip list is a different question and is NOT covered here — say
+    so rather than let the row imply otherwise. A registry scope using `**` is refused
+    (`_scope_dialect_rows`), because the two halves of the comparison read it differently."""
     import vendored
     rows, bad = [], 0
 
@@ -1182,6 +1263,20 @@ def check_enumeration_widening_strands():
         "the config model and the live `common.targets()` agree exactly on %d path(s), so a "
         "surface computed for an older commit is computed the same way" % len(surface_now))
 
+    try:
+        with io.open(os.path.join(BASE, "required.v2.json"), encoding="utf-8") as fh:
+            types = json.load(fh)["types"]
+        if not isinstance(types, dict):
+            raise TypeError("types is %s, not an object" % type(types).__name__)
+    except (OSError, ValueError, KeyError, TypeError) as e:
+        row("registry readable", False,
+            "*** could not read types from required.v2.json (%s) — fails closed ***" % e)
+        return rows, bad
+    for _r in _scope_dialect_rows(types):
+        row(*_r)
+    if bad:
+        return rows, bad
+
     # THE RANGE. `@{u}` is the branch's own upstream, never a hardcoded name — a pinned `origin/…`
     # would be a second copy of the branch's configuration and would be wrong in a worktree.
     rc, out = sh("git", "rev-list", "@{u}..HEAD")
@@ -1219,17 +1314,18 @@ def check_enumeration_widening_strands():
 
     # THE PROPERTY ITSELF. For every commit whose config differs, which paths does TODAY enumerate
     # that THAT commit would skip — and does any step's scope demand one of them?
-    try:
-        with io.open(os.path.join(BASE, "required.v2.json"), encoding="utf-8") as fh:
-            types = json.load(fh)["types"]
-    except (OSError, ValueError, KeyError, TypeError) as e:
-        row("registry readable", False,
-            "*** could not read types from required.v2.json (%s) — fails closed ***" % e)
-        return rows, bad
-
     stranded_total = 0
     for c in changed:
-        surf_then = _surface_from_config(_enum_config_at(c), universe, vendored.is_vendored)
+        cfg_c = _enum_config_at(c)
+        try:
+            is_vendored_then = _vendored_for(cfg_c, cfg_now)
+        except ValueError as e:
+            row("vendored exemption modelable at %s" % c[:8], False,
+                "*** %s — so this commit's surface cannot be computed, and an unmodelled vendored "
+                "exemption must not read as an unchanged one. Review the range by hand or land the "
+                "vendored.py change in a commit no earlier one has to satisfy ***" % e)
+            return rows, bad
+        surf_then = _surface_from_config(cfg_c, universe, is_vendored_then)
         widened = surface_now - surf_then
         if not widened:
             continue
@@ -1257,24 +1353,157 @@ def check_enumeration_widening_strands():
     return rows, bad
 
 
-def check_routing_enforcement():
-    """Does the `/rely` router still BLOCK — the property the exemption is PRICED on?
+# The names of the retired local `/rely` routing BLOCK leg. `/rely` is not in the push admission
+# set (`gitRobot admission(action='push')`), and which paths `/rely` still owes is the ledger's
+# answer — `verdictLedger coverage_gap(step='rely')` — never a local re-derivation of it.
+RETIRED_RELY_LEG = ("check_routing", "routing_verdict", "routing_bad", "rely_reviewed_blobs",
+                    "rely_all_records")
+# The modules the leg lived in or was consumed from. A consumer left behind would raise at run time
+# or, worse, keep a local predicate alive under the old name.
+RETIRED_RELY_SITES = ("tools/verify/batch.py", "tools/verify/hooks.py", "tools/verify/ship.py")
 
-    ⚠⚠ WHY THIS EXISTS, AND IT WAS MEASURED RATHER THAN REASONED. `tools/verify/**` and
-    `tools/process/**` skip editorial and adversary *because* `/rely` covers them and BLOCKS. The
-    warrant leg in `check_exemption_surface` tests that the ROUTING pattern reaches every path under
-    the prefix — a COVERAGE claim — and stops there. On 2026-08-21 a `DC-25` probe neutered the
-    enforcement in a detached worktree, leaving the pattern untouched, and this file exited 0 with
-    the warrant row still reading `ok`. Fifth instance of warrant-satisfied-while-empty in this same
-    code; the first four were sampling, narrowing, a three-probe set and unchecked regex flags.
 
-    The exemption is priced on COVERAGE **and** ENFORCEMENT. Only the first was ever checked.
+def _retired_rely_hits(src):
+    """Where `src` still DEFINES or REFERENCES the retired leg. Pure: source text in, findings out.
 
-    ⚠ WHAT THIS DOES NOT CATCH, STATED SO NOBODY OVER-TRUSTS IT. It does not run the pre-push hook end
-    to end, so it cannot prove a push actually stops; the standing control for that is
-    `.claude-local/tools_wip/probe_warrant_blocks.py`, which neuters enforcement and requires this
-    file to go red. These rows are the cheap always-on layer, not a replacement for the probe."""
+    A definition, a `Name` load or an attribute access (`batch.check_routing`) is a hit, and so is a
+    `"routing"` entry in `_EXPECTED` — that is the push-verdict registry demanding the leg's row.
+    Strings and comments are not hits: a sentence ABOUT the retired leg is not the leg. An
+    unparsable source is reported as a hit, because a file this cannot read is a file it cannot
+    clear (`R-ZERONULL`).
+
+    ⚠ ITS REACH, STATED: this is a NAME tripwire. A local predicate re-written under a new name is
+    not caught here; what it does catch is the leg being restored, or left half-deleted, under the
+    names it had."""
+    try:
+        tree = ast.parse(src)
+    except SyntaxError as e:
+        return ["does not parse (%s, line %s)" % (e.msg, e.lineno)]
+    hits = []
+    for n in ast.walk(tree):
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name in RETIRED_RELY_LEG:
+            hits.append("defines %s() at line %d" % (n.name, n.lineno))
+        elif isinstance(n, ast.Name) and n.id in RETIRED_RELY_LEG:
+            hits.append("references %s at line %d" % (n.id, n.lineno))
+        elif isinstance(n, ast.Attribute) and n.attr in RETIRED_RELY_LEG:
+            hits.append("references .%s at line %d" % (n.attr, n.lineno))
+        elif isinstance(n, (ast.Assign, ast.AugAssign)):
+            tgts = n.targets if isinstance(n, ast.Assign) else [n.target]
+            if any(isinstance(t, ast.Name) and t.id == "_EXPECTED" for t in tgts) and any(
+                    isinstance(c, ast.Constant) and c.value == "routing" for c in ast.walk(n.value)):
+                hits.append("_EXPECTED still demands a 'routing' row at line %d" % n.lineno)
+    return hits
+
+
+def check_rely_leg_retired(sources=None):
+    """The local `/rely` routing BLOCK leg is GONE, and nothing under its names re-implements it.
+
+    The property the leg used to carry — *a changed checker does not escape `/rely`* — is served:
+    `/rely` is admitted at TAG, and the paths it owes are `verdictLedger coverage_gap(step='rely')`.
+    A local copy of that predicate is the control plane leaking out of the services, so the row
+    that matters here is that no local copy is left. `sources` maps a repo-relative path to its
+    text and exists for the controls; by default each site is read from disk."""
+    rows, bad = [], 0
+    for rel in RETIRED_RELY_SITES:
+        if sources is not None:
+            if rel not in sources:
+                continue
+            src = sources[rel]
+        else:
+            try:
+                with io.open(os.path.join(REPO, *rel.split("/")), encoding="utf-8") as fh:
+                    src = fh.read()
+            except OSError as e:
+                bad += 1
+                rows.append(("retired /rely leg absent: %s" % rel, False,
+                             "*** could not read %s (%s) — a file this cannot read is a file it "
+                             "cannot clear ***" % (rel, e)))
+                continue
+        hits = _retired_rely_hits(src)
+        if hits:
+            bad += 1
+        rows.append(("retired /rely leg absent: %s" % rel, not hits,
+                     "none of %s defined or referenced" % ", ".join(RETIRED_RELY_LEG) if not hits
+                     else "*** %d hit(s): %s. The /rely obligation is the ledger's "
+                          "(coverage_gap(step='rely')); delete the local leg, do not restore it ***"
+                          % (len(hits), "; ".join(hits[:4]))))
+    return rows, bad
+
+
+class _exit_trap(object):
+    """Turn `os._exit(code)` into `SystemExit(code)` while batch code runs IN THIS PROCESS (`R2-O1`).
+
+    `os._exit` ends the interpreter without unwinding, so a `die()` rewritten to `os._exit(0)` used
+    to end guards itself at exit 0 with no verdict line — "nothing ran" reading as "nothing wrong".
+    Trapped, it becomes an ordinary SystemExit whose code the rows read. Other ways to kill a process
+    (signals, `os.kill`) are not trapped; the subprocess row is isolated from all of them."""
+    def __enter__(self):
+        self._real = os._exit
+
+        def _raise(code):
+            raise SystemExit(code)
+        os._exit = _raise
+        return self
+
+    def __exit__(self, *exc):
+        os._exit = self._real
+        return False
+
+
+PREPUSH_FORCED_LEG = "ssot"
+PREPUSH_FORCED_NEEDLE = "FORCED FAIL by ZP_PREPUSH_FORCE_FAIL"
+
+
+def prepush_subprocess_check(cmd=None, timeout=300):
+    """(ok, why): the program the HOOK runs, as a separate process, with one leg forced to FAIL.
+
+    `python tools/verify/batch.py prepush --ranges HEAD~1..HEAD`, `ZP_PREPUSH_FORCE_FAIL=ssot`
+    (batch's fail-only test seam) and the agent gate off. It passes only on a NON-ZERO return code
+    AND the seam's own words in the output, so a crash is not read as enforcement. This is the one
+    row that sees what the hook sees: a swallowed SystemExit in batch's `__main__`, or a `die()`
+    that exits 0 by any means, turns it red. `cmd` exists for the mutation controls."""
+    rc, out = sh("git", "rev-parse", "--verify", "--quiet", "HEAD~1")
+    if rc != 0:
+        return False, ("*** HEAD~1 does not resolve here, so the range this row drives does not "
+                       "exist and the push gate was NOT exercised. Fails closed; run from a "
+                       "checkout with at least two commits ***")
+    cmd = cmd or [sys.executable, os.path.join(BASE, "batch.py"), "prepush", "--ranges",
+                  "HEAD~1..HEAD"]
+    env = dict(os.environ, ZP_AGENT_GATE="0", ZP_PREPUSH_FORCE_FAIL=PREPUSH_FORCED_LEG)
+    try:
+        r = subprocess.run(cmd, cwd=REPO, env=env, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=timeout)
+    except subprocess.TimeoutExpired:
+        return False, "*** batch.py prepush did not finish in %ds — no exit code to read ***" % timeout
+    except OSError as e:
+        return False, "*** could not launch batch.py prepush (%s) ***" % e
+    out = (r.stdout or "") + (r.stderr or "")
+    seen = PREPUSH_FORCED_NEEDLE in out
+    blocked = [l.strip() for l in out.splitlines() if l.startswith("BLOCKED")][:1]
+    if r.returncode != 0 and seen:
+        return True, ("exit %d with the forced %s FAIL displayed (%s)"
+                      % (r.returncode, PREPUSH_FORCED_LEG, blocked[0][:120] if blocked else "-"))
+    return False, ("*** exit %d, forced-FAIL text %s — %s. Last lines: %s ***"
+                   % (r.returncode, "SEEN" if seen else "ABSENT",
+                      "the hook would let a FAILING push through" if r.returncode == 0 else
+                      "it exited non-zero without running the forced leg, so a crash or an earlier "
+                      "refusal cannot be told apart from enforcement",
+                      " | ".join(out.strip().splitlines()[-3:])[:240]))
+
+
+def check_push_verdict_registry():
+    """The push verdict is written by the PRODUCER and enforced in one unit (`RLY28-1`).
+
+    Each RUN rather than read where it can be: an empty registry reports every expected step
+    MISSING (never zero failures); a producer's recorded count survives its caller discarding the
+    return value; `enforce_prepush_verdict` passes a clean registry and refuses, in its own words,
+    a missing leg, a failed leg, and a record that disagrees with the FAIL rows displayed; the real
+    `cmd_prepush`, legs stubbed, exits non-zero with one failing leg and 0 with none; the program
+    the hook runs, as a subprocess with one leg forced to FAIL, exits non-zero; and `cmd_prepush`
+    still names the call."""
     import importlib
+    import inspect
+    import textwrap
     import batch
     importlib.reload(batch)
     rows, bad = [], 0
@@ -1285,300 +1514,206 @@ def check_routing_enforcement():
             bad += 1
         rows.append((label, ok, why))
 
-    # ROUTE 1 — the fail-open legs are declared blocking. `logic` is executable checker code and
-    # `switch` is the baselines/whitelists/pins, where one appended line silences a site permanently
-    # with every control still green. Neither may ever be downgraded; only the `docs` enumeration may.
-    for leg in ("logic", "switch"):
-        got = batch._LEG_BLOCKING.get(leg)
-        row("fail-open leg still BLOCKS: %s" % leg, got is True,
-            "declared blocking" if got is True else
-            "*** %s IS NOT BLOCKING (%r) — this is a FAIL-OPEN surface and CLAUDE.md rung 5 forbids "
-            "downgrading it. The editorial/adversary exemption for tools/verify/** and "
-            "tools/process/** is priced on this and is now UNPAID ***" % (leg, got))
-
-    # ROUTE 2 — the table is not decorative: `check_routing` must actually emit those flags.
-    # Behavioural, and deterministic — the hashes are synthetic, so this does not depend on whether
-    # the working tree happens to be dirty. Asserting the table alone would be a claim about a
-    # constant; this is a claim about the function.
-    # ⚠⚠ PATCHES `checker_blobs` AND `rely_reviewed_blobs`, NOT `checker_hashes`. This route
-    # patched `checker_hashes` for months after `check_routing` stopped calling it — the
-    # `checker_hashes`→`checker_blobs` migration left the monkeypatch behind, so the synthetic
-    # data was IGNORED and this "behavioural" control asserted nothing at all. Measured inert by
-    # /rely 2026-08-25. `checker_hashes` still exists (the batch freeze uses it), which is exactly
-    # why the stale patch kept working and kept proving nothing.
-    real_blobs, real_reviewed = batch.checker_blobs, batch.rely_reviewed_blobs
+    # ⚠⚠ THE DUPLICATION IS THE CONTROL. `prepush_verdict` computes `missing` BY ITERATING
+    # `_EXPECTED`, so comparing against `_EXPECTED` alone is tautological — it would pass with the
+    # tuple emptied. The expected set is written out INDEPENDENTLY here, every entry a literal, and
+    # the two are required to agree. A legitimate change to the gating legs turns this row red:
+    # that is the row working, so update it deliberately in the same change.
+    _need = ("purity", "ssot", "pdf_coupling", "prior_art_attrib",
+             "signal:editorial", "signal:adversary")
     try:
-        batch.checker_blobs = lambda: {"check_prose.py": "0" * 40,
-                                       "pov_baseline.txt": "0" * 40,
-                                       "tools/process/README.md": "0" * 40}
-        # An EMPTY dict, never None: None means "could not ask the ledger" and takes the
-        # fail-closed branch, which would make every leg fire for the wrong reason.
-        batch.rely_reviewed_blobs = lambda: {}
-        emitted = {}
-        for _agent, _ran, why, blocking in batch.check_routing({}, None):
-            for leg in ("logic", "switch", "docs"):
-                if why.startswith("[%s]" % leg):
-                    emitted[leg] = blocking
-    finally:
-        batch.checker_blobs, batch.rely_reviewed_blobs = real_blobs, real_reviewed
-    for leg in ("logic", "switch"):
-        got = emitted.get(leg)
-        row("check_routing EMITS blocking: %s" % leg, got is True,
-            "row carries blocking=True" if got is True else
-            "*** check_routing emitted %r for the %s leg (expected True) — the table says one thing "
-            "and the function does another, so _LEG_BLOCKING is decorative ***" % (got, leg))
-
-    # ROUTE 3 — THE RELEASE GATE ACTUALLY RAISES THE REQUIREMENT. Behavioural: hand
-    # `ship.required_gates` a synthetic routing row and read back what it demands.
-    #
-    # ⚠⚠ THREE VERSIONS OF THIS ROW READ THE SOURCE AND ALL THREE WERE DEFEATED. A whole-file
-    # substring matched comments (`RLY26-2`); a 12-line window contained the token by construction,
-    # because the anchor line BINDS `blocking`; an AST walk over call sites then lost the consumer to
-    # a single space before the argument list (`RLY27-1`), to a list comprehension (`RLY27-2`), to a
-    # `list(...)` wrapper (`RLY27-3`), and passed a `print(blocking)` that reads the flag and obeys
-    # nothing (`RLY27-7`). Every one of those is a fact about SYNTAX, and every repair was a closer
-    # approximation of a semantic property that cannot be approximated.
-    #
-    # ⭐ THE DIAGNOSIS IS IN THIS FUNCTION'S OWN SCOREBOARD. ROUTES 1, 2 and 4 — which RUN something —
-    # survived every attack. ROUTES 3 and 5 — which READ something — were defeated six ways between
-    # them. `CLAUDE.md`: *prefer a detector whose verb is RUN over one whose verb is READ.* So this
-    # route stops asking what the call site LOOKS LIKE and calls the function. Spacing,
-    # comprehensions, wrappers, aliases and decorative reads are invisible to it, because none of
-    # them changes what `required_gates` RETURNS.
-    #
-    # ⚠ THE THREE CASES ARE THE WHOLE DECISION and the middle one is not padding: a WARN row must NOT
-    # raise a requirement, or the downgrade is undone at release and the deadlock it removed returns
-    # at the one end that cannot be amended — a minted DOI is permanent.
-    #
-    # ⚠ WHAT THIS DELIBERATELY NO LONGER CLAIMS: it does not enumerate consumers. "Is there a THIRD
-    # consumer nobody registered" is an enumeration question, it has been defeated four times, and it
-    # is now carried by `agent_gate.py` as an advisory screen that writes a defect file and returns no
-    # verdict (`CLAUDE.md` rung 5). The two surfaces below are NAMED, not discovered — which is also
-    # why the old "an enumerator that finds nothing must never read as ok" row is gone: it was
-    # unreachable, because `guards.py` counted itself as a consumer (`RLY27-6`).
-    import importlib as _il
-    try:
-        import ship as _ship
-        _il.reload(_ship)
-    except Exception as _e:                                   # noqa: BLE001 — reported, not raised
-        _ship = None
-        row("release gate raises /rely from a blocking row", False,
-            "*** cannot import ship.py (%r) — the RELEASE consumer of check_routing is unverifiable, "
-            "and half the enforcement lives there ***" % (_e,))
-    if _ship is not None:
-        _saved = (batch.check_routing, batch.reviewable_changed, batch.check_trigger5)
-        _cases = [
-            (("/rely", False, "[logic] synthetic control row", True), True,
-             "a BLOCKING row makes the release gate require /rely"),
-            (("/rely", False, "[docs] synthetic control row", False), False,
-             "a WARN row does NOT require /rely"),
-            (("/rely", True, "[logic] synthetic control row", True), False,
-             "an `ok` row requires nothing"),
-        ]
-        try:
-            # Stubbed so this measures the ROUTING decision only, and does not depend on whether the
-            # working tree happens to be dirty — the same discipline as ROUTE 2's synthetic hashes.
-            batch.reviewable_changed = lambda *_a, **_k: []
-            batch.check_trigger5 = lambda *_a, **_k: (False, 0, False)
-            for _synth, _want, _label in _cases:
-                batch.check_routing = lambda *_a, _s=_synth, **_k: [_s]
-                try:
-                    _scope, _need = _ship.required_gates(None)
-                    _got = "rely" in [k for k, _w in _need]
-                    _err = None
-                except Exception as _e:                       # noqa: BLE001
-                    _got, _err = None, _e
-                row("release gate: %s" % _label, _got is _want,
-                    "required_gates returned rely=%r as expected" % _got if _got is _want else
-                    "*** required_gates returned rely=%r, expected %r%s — ship.py is the RELEASE "
-                    "gate and it is no longer deciding from the blocking flag ***"
-                    % (_got, _want, "" if _err is None else " (raised %r)" % (_err,)))
-        finally:
-            (batch.check_routing, batch.reviewable_changed, batch.check_trigger5) = _saved
-
-    # ROUTE 4 — THE ARITHMETIC ITSELF IS CORRECT. Behavioural and total: a blocking FAIL counts, a
-    # non-blocking FAIL does not, and an `ok` row never counts whatever its flag says.
-    cases = [([("/rely", False, "w", True)], 1, "a blocking FAIL counts"),
-             ([("/rely", False, "w", False)], 0, "a WARN row does not count"),
-             ([("/rely", True, "w", True)], 0, "an ok row never counts"),
-             ([("/rely", False, "w", True), ("/rely", False, "w", False)], 1, "mixed rows")]
-    for r, want, label in cases:
-        got = batch.routing_bad(r)
-        row("routing_bad: %s" % label, got == want,
-            "%d as expected" % got if got == want else
-            "*** routing_bad returned %d, expected %d — the enforcement arithmetic is wrong, so "
-            "every row above is testing a decision that is not the one being made ***" % (got, want))
-
-    # ROUTE 5 — AND THE PUSH GATE'S VERDICT RESPONDS TO THE FLAG. Behavioural, same reason as
-    # ROUTE 3, and this is the route that was walked end to end on 2026-08-22.
-    #
-    # ⚠⚠ THE SHAPE TEST THIS REPLACES WAS SATISFIABLE BY CONSTRUCTION. It required an `AugAssign` to
-    # `bad` whose value was a bare `Call` to `routing_bad` — and never looked at the ARGUMENT, so
-    # `bad += routing_bad([])` passed it while four `/rely FAIL` rows printed on screen and the push
-    # exited 0 (`RLY27-4`, and composed with `RLY27-3` into a complete silent neuter, `RLY27-5`).
-    # Asserting the shape of an expression is not asserting what it computes.
-    #
-    # `batch.routing_verdict` now builds, prints and counts the rows in ONE unit, so "the rows the
-    # reader saw" and "the rows the counter counted" are the same object and cannot be separated by a
-    # caller. That makes the property directly callable: feed it a row, read the number back, and
-    # confirm the row reached the screen.
-    _saved_cr = batch.check_routing
-    _v_cases = [
-        (("/rely", False, "[logic] synthetic control row", True), 1,
-         "a BLOCKING row raises the push verdict"),
-        (("/rely", False, "[docs] synthetic control row", False), 0,
-         "a WARN row does not raise it"),
-        (("/rely", True, "[logic] synthetic control row", True), 0,
-         "an `ok` row never raises it"),
-    ]
-    try:
-        for _synth, _want, _label in _v_cases:
-            batch.check_routing = lambda *_a, _s=_synth, **_k: [_s]
-            _buf = io.StringIO()
-            try:
-                _real_stdout, sys.stdout = sys.stdout, _buf
-                try:
-                    _got = batch.routing_verdict({}, None)
-                finally:
-                    sys.stdout = _real_stdout
-                _err = None
-            except Exception as _e:                           # noqa: BLE001
-                _got, _err = None, _e
-            _printed = "synthetic control row" in _buf.getvalue()
-            row("push verdict: %s" % _label, _got == _want and _printed,
-                "returned %d and printed the row" % _got if _got == _want and _printed else
-                "*** routing_verdict returned %r (expected %d)%s%s — the push gate is counting "
-                "something other than the rows it displays, which is the RLY27-4 neuter ***"
-                % (_got, _want, "" if _printed else "; the row was NEVER PRINTED",
-                   "" if _err is None else " (raised %r)" % (_err,)))
-    finally:
-        batch.check_routing = _saved_cr
-
-    # ⚠⚠ THE REGISTRY ROUTE — this is what actually closes `RLY28-1`, and it is BEHAVIOURAL.
-    #
-    # The source tripwire below could never see `bad += routing_verdict(...) * 0`: the identifier is
-    # still there, in a Load position, inside `cmd_prepush`. The caller simply discarded the number.
-    # Four successive source tests were defeated that way. So the producer now records its own count
-    # in `batch`'s verdict registry and `prepush_verdict()` reads it, which makes the annihilation
-    # INERT rather than merely detectable — and these three cases are what say so out loud.
-    #
-    # ⚠ THE SECOND CASE IS THE LOAD-BEARING ONE. An empty registry must report the step as MISSING,
-    # never as zero failures: "nothing ran" and "nothing wrong" render identically otherwise, which
-    # is the single defect shape this whole layer keeps producing.
-    _r_cases = []
-    try:
-        batch.check_routing = lambda *_a, **_k: [("/rely", False, "[logic] synthetic row", True)]
-        batch.verdict_reset()
-        _buf = io.StringIO()
-        _real_stdout, sys.stdout = sys.stdout, _buf
-        try:
-            batch.routing_verdict({}, None)
-        finally:
-            sys.stdout = _real_stdout
-        _tot, _miss = batch.prepush_verdict()
-        # ⚠ `B4`: ASSERT ABOUT `routing`, NOT ABOUT EMPTINESS. This read `not _miss`, which was right
-        # while `_EXPECTED` held one name. It now holds seven, and this frame deliberately exercises
-        # ONLY the routing producer — so the other six are absent for the correct reason, and
-        # demanding an empty `missing` here would fail a healthy registry. The property under test is
-        # "the producer wrote its own row", which is exactly `routing not in missing`.
-        _r_cases.append(("the producer records its own count",
-                         _tot == 1 and "routing" not in _miss,
-                         "registry reports %d, routing recorded (other legs not exercised in this "
-                         "frame: %r)" % (_tot, _miss)))
-
         batch.verdict_reset()
         _tot0, _miss0 = batch.prepush_verdict()
-        # ⚠⚠ `B4`, AND THE DUPLICATION BELOW IS DELIBERATE — IT IS THE CONTROL, NOT A MIRROR DEFECT.
-        # This used to assert `_miss0 == ("routing",)`, which was correct while `_EXPECTED` held one
-        # name and six other gating legs rode an annihilable local total in `cmd_prepush`. Comparing
-        # against `batch._EXPECTED` alone would be TAUTOLOGICAL: `prepush_verdict` computes `missing`
-        # BY ITERATING `_EXPECTED`, so an empty registry always reports exactly it — the assertion
-        # would still pass if someone emptied the tuple. So the expected set is written out
-        # INDEPENDENTLY here and required to agree. Two statements of one list, and the disagreement
-        # is the signal; that is the only shape that catches a bar being quietly lowered.
-        # ⚠⚠ EVERY ENTRY IS A LITERAL — `RLYB4-2`, AND THE FIRST VERSION OF THIS LINE GOT IT HALF
-        # RIGHT, WHICH WAS WORSE THAN OBVIOUS. It read `... + tuple("signal:%%s" %% _s for _s in
-        # batch.REVIEW_STEPS)`, deriving the signal half from THE SAME SOURCE `_EXPECTED` derives it
-        # from — so for exactly the two entries `B4` added it was tautological and asserted nothing.
-        # Measured: `REVIEW_STEPS = ()` drops two gating legs, `_EXPECTED` goes 7 -> 5, and this row
-        # reported "empty registry reports all 5 expected step(s) missing" and called it **ok**.
-        # Not a hypothetical edit — `prior_art` was removed from that tuple earlier the same day.
-        #
-        # ⭐ THE DUPLICATION IS THE CONTROL. A second, independently-written statement of the
-        # expected set is the only thing that can disagree with the first; a derived copy agrees by
-        # construction and therefore checks nothing. If a legitimate change to `REVIEW_STEPS` turns
-        # this row red, THAT IS THE ROW WORKING — update it deliberately, in the same commit, and do
-        # not re-derive it to make the red go away.
-        _need = ("routing", "purity", "ssot", "pdf_coupling", "prior_art_attrib",
-                 "signal:editorial", "signal:adversary")
-        _r_cases.append(("an unreported step is MISSING, not zero",
-                         _miss0 == tuple(batch._EXPECTED) and set(_need) == set(_miss0),
-                         "empty registry reports all %d expected step(s) missing: %r"
-                         % (len(_miss0), _miss0)))
+        row("push verdict registry: an unreported step is MISSING, not zero",
+            _tot0 == 0 and _miss0 == tuple(batch._EXPECTED) and set(_need) == set(_miss0),
+            "empty registry reports all %d expected step(s) missing: %r" % (len(_miss0), _miss0)
+            if set(_need) == set(_miss0) else
+            "*** empty registry reports %r missing, the independent statement is %r — a gating "
+            "leg was added or dropped without updating both ***" % (_miss0, _need))
 
         batch.verdict_reset()
-        _ = batch.routing_verdict({}, None) * 0          # the RLY28-1 neuter, verbatim
-        _tot2, _miss2 = batch.prepush_verdict()
-        # ⚠ Same `B4` correction as the first case: `routing` is the leg this frame exercises.
-        _r_cases.append(("discarding the return value is INERT",
-                         _tot2 == 1 and "routing" not in _miss2,
-                         "registry still reports %d after the caller annihilated it" % (_tot2,)))
-    except Exception as _e:                                   # noqa: BLE001
-        _r_cases.append(("the verdict registry is reachable", False, "raised %r" % (_e,)))
+        batch.verdict_record("purity", 1)
+        _ = batch.verdict_record("ssot", 1) * 0           # the RLY28-1 neuter, verbatim shape
+        _tot, _miss = batch.prepush_verdict()
+        row("push verdict registry: discarding the return value is INERT",
+            _tot == 2 and "purity" not in _miss and "ssot" not in _miss,
+            "registry reports %d after the caller annihilated one count" % _tot if _tot == 2 else
+            "*** registry reports %d (expected 2) — the push verdict can be discarded at the call "
+            "site again (RLY28-1) ***" % _tot)
+    except Exception as _e:                                   # noqa: BLE001 — reported, not raised
+        row("push verdict registry: reachable", False, "*** raised %r ***" % (_e,))
     finally:
-        batch.check_routing = _saved_cr
-        batch.verdict_reset()
-    for _label, _ok, _why in _r_cases:
-        row("push verdict registry: %s" % _label, _ok,
-            _why if _ok else
-            "*** %s — the push verdict can be discarded at the call site again (RLY28-1) ***" % _why)
+        try:
+            batch.verdict_reset()
+        except Exception:                                     # noqa: BLE001
+            pass
 
-    # ⚠ AND THE VERDICT IS STILL ON THE PUSH PATH. `routing_verdict` can be perfect and simply not
-    # called. This leg remains a source test and is deliberately the NARROWEST possible one: the
-    # name must appear, in a Load position, inside the function the hook actually runs. It is a
-    # tripwire, not a proof — and since the registry route above now carries the property, this is
-    # belt-and-braces rather than the only thing standing between a neuter and a green push.
-    import inspect
-    import textwrap
-    import ast as _ast
+    # THE ENFORCEMENT, RUN. `enforce_prepush_verdict` reads the registry and the display tally and
+    # dies (`BLOCKED: …`, exit 1) or returns. Each case builds one registry state and asserts the
+    # verdict AND the refusal's own words, because every refusal shares exit 1. The two INCONSISTENT
+    # cases are the `RLYB4-1` pair: a FAIL row displayed and a zero recorded (the record annihilated),
+    # and a failure recorded with no FAIL row (the display tally dropped).
+    def _enforce(setup):
+        batch.verdict_reset()
+        setup()
+        _buf = io.StringIO()
+        _real, sys.stdout = sys.stdout, _buf
+        try:
+            with _exit_trap():
+                batch.enforce_prepush_verdict()
+            died = False
+        except SystemExit as _x:
+            # ⚠ THE EXIT CODE IS THE VERDICT, NOT THE EXCEPTION. `die()` exiting 0 raises SystemExit
+            # too, and the hook reads only the code — so a death that exits 0 is not a refusal.
+            died = _x.code not in (0, None)
+        finally:
+            sys.stdout = _real
+            batch.verdict_reset()
+        return died, _buf.getvalue()
+
+    def _all(fail=None, shown=None, skip=None):
+        def setup():
+            for k in batch._EXPECTED:
+                if k != skip:
+                    batch.verdict_record(k, 1 if k == fail else 0)
+            for k in (shown or ()):
+                batch.display_fail(k)
+        return setup
+
+    _e_cases = [
+        ("every leg ok passes", _all(), False, None),
+        ("a leg that never reported refuses", _all(skip="ssot"), True, "push verdict incomplete"),
+        ("a displayed, recorded failure refuses", _all(fail="purity", shown=["purity"]), True,
+         "push check(s) failed"),
+        ("FAIL displayed, zero recorded refuses", _all(shown=["purity"]), True,
+         "push verdict INCONSISTENT"),
+        ("failure recorded, none displayed refuses", _all(fail="purity"), True,
+         "push verdict INCONSISTENT"),
+    ]
+    for _label, _setup, _want_die, _needle in _e_cases:
+        try:
+            _died, _out = _enforce(_setup)
+            _ok = _died is _want_die and (_needle is None or ("BLOCKED: " in _out and _needle in _out))
+            _why = ("died=%s%s as expected" % (_died, "" if _needle is None else ", said %r" % _needle)
+                    if _ok else "*** died=%s (expected %s); output %r ***"
+                    % (_died, _want_die, _out.strip()[:200]))
+        except Exception as _e:                               # noqa: BLE001
+            _ok, _why = False, "*** raised %r ***" % (_e,)
+        row("enforcement: %s" % _label, _ok, _why)
+
+    # ⚠⚠ END TO END, IN-PROCESS — `cmd_prepush` ITSELF (`G1-1` / `B1`). The rows above call
+    # `enforce_prepush_verdict` in this frame, where it really does die; they cannot see a caller
+    # that swallows the death, a `die()` that exits 0, or a leg site that records 0 and displays
+    # nothing. So run the real `cmd_prepush` with the expensive legs stubbed — ONE leg forced to FAIL
+    # and the rest clean — and read its SystemExit code. Both directions.
+    # ⚠ IN-PROCESS IS NOT THE HOOK'S VIEW: the hook runs `batch.py prepush --ranges …` as a separate
+    # process and reads ITS exit code, so a swallow in batch's `__main__` is invisible here
+    # (`R2-B1`). The subprocess row below is the one that reads the code the hook reads; these keep
+    # the stubbed both-directions and per-loop coverage the seam-forced subprocess run cannot give.
+    # ⚠ A stub that names a function `batch` no longer has is a harness that silently stopped
+    # stubbing, so a missing name is a failing row, never a skip.
+    # Two failing cases because there are two leg loops: the inline legs (purity) and the review
+    # signals print and record at separate sites, and a `verdict_record(key, 0)` neuter at either one
+    # is only visible from a case that fails THERE.
+    for _label, _purity_ok, _signal_ok, _want_block in (
+            ("cmd_prepush with one FAILING inline leg exits non-zero", False, True, True),
+            ("cmd_prepush with one FAILING review signal exits non-zero", True, False, True),
+            ("cmd_prepush with every leg clean exits 0", True, True, False)):
+        _stubs = {
+            "unjudgeable_scope": lambda *a, **k: None,
+            "check_trigger5": lambda *a, **k: (False, 0, False),
+            "added_decls": lambda *a, **k: [],
+            "check_purity": (lambda d, _o=_purity_ok:
+                             (_o, "stub" if _o else "SYNTHETIC purity failure (guards control)")),
+            "check_ssot": lambda d: (True, "stub"),
+            "check_pdf_coupling": lambda *a, **k: (True, "stub"),
+            "check_prior_art_attribution": lambda *a, **k: (True, "stub"),
+            "prose_shrank_unpaired": lambda *a, **k: [],
+            "reviewable_changed": lambda *a, **k: [],
+            "review_report": lambda *a, **k: [],
+            "check_signals": (lambda *a, _o=_signal_ok, **k:
+                              [(s, _o or i > 0, "stub" if (_o or i > 0) else
+                                "SYNTHETIC signal failure (guards control)")
+                               for i, s in enumerate(batch.REVIEW_STEPS)]),
+            "_recurrence_note": lambda *a, **k: None,
+            "load": lambda *a, **k: None,
+        }
+        _absent = sorted(n for n in _stubs if not hasattr(batch, n))
+        if _absent or not hasattr(getattr(batch, "agent_gate", None), "run"):
+            row("end to end (in-process): %s" % _label, False,
+                "*** cannot stub %s — the prepush legs moved, so this harness would run the real "
+                "ones or none. Update the stub table to the current leg functions ***"
+                % (", ".join(_absent) or "agent_gate.run"))
+            continue
+        _saved = {n: getattr(batch, n) for n in _stubs}
+        _saved_ag = batch.agent_gate.run
+        _saved_env = os.environ.get("ZP_AGENT_GATE")
+        _buf = io.StringIO()
+        _real = sys.stdout
+        try:
+            for n, f in _stubs.items():
+                setattr(batch, n, f)
+            batch.agent_gate.run = lambda *a, **k: 0
+            os.environ["ZP_AGENT_GATE"] = "0"
+            sys.stdout = _buf
+            try:
+                with _exit_trap():
+                    batch.cmd_prepush(["HEAD~1..HEAD"])
+                _code = 0
+            except SystemExit as _x:
+                _code = 0 if _x.code is None else _x.code
+            _err = None
+        except Exception as _e:                               # noqa: BLE001
+            _code, _err = None, _e
+        finally:
+            sys.stdout = _real
+            for n, f in _saved.items():
+                setattr(batch, n, f)
+            batch.agent_gate.run = _saved_ag
+            if _saved_env is None:
+                os.environ.pop("ZP_AGENT_GATE", None)
+            else:
+                os.environ["ZP_AGENT_GATE"] = _saved_env
+            try:
+                batch.verdict_reset()
+            except Exception:                                 # noqa: BLE001
+                pass
+        _blocked = (_code not in (0, None)) if _err is None else None
+        _ok = _blocked is _want_block
+        _tail = " | ".join(l.strip() for l in _buf.getvalue().splitlines()
+                           if l.startswith("BLOCKED") or "prepush PASS" in l)[:200]
+        row("end to end (in-process): %s" % _label, _ok,
+            "exit %s as expected (%s)" % (_code, _tail or "no verdict line") if _ok else
+            "*** exit %r (expected %s)%s — the hook reads this code, so the push gate is %s. Last "
+            "verdict line(s): %s ***"
+            % (_code, "non-zero" if _want_block else "0",
+               "" if _err is None else " (raised %r)" % (_err,),
+               "OFF for a failing push" if _want_block else "refusing a clean push",
+               _tail or "none"))
+
+    _sp_ok, _sp_why = prepush_subprocess_check()
+    row("end to end (subprocess): batch.py prepush with a forced FAIL exits non-zero",
+        _sp_ok, _sp_why)
+
+    # A source tripwire, and only that: the name must appear, in a Load position, inside the
+    # function the hook runs. It names the deleted call directly; a WRAPPED call keeps the name and
+    # passes here, which is what the end-to-end rows above exist to catch.
     try:
         _src = inspect.getsource(batch.cmd_prepush)
-    except (OSError, TypeError):
+    except (OSError, TypeError, AttributeError):
         _src = ""
-    _wired = False
-    if _src:
-        try:
-            for _n in _ast.walk(_ast.parse(textwrap.dedent(_src))):
-                if isinstance(_n, _ast.Name) and _n.id == "routing_verdict" and \
-                        isinstance(_n.ctx, _ast.Load):
-                    _wired = True
-        except SyntaxError:
-            _wired = False
-    # ⚠ AND THE ENFORCEMENT CALL, WHICH IS A SEPARATE NAME AND A SEPARATE HOLE. `routing_verdict`
-    # can be called faithfully and its verdict still never acted on: attempt five died exactly there,
-    # with `cmd_prepush` rebinding the result of `prepush_verdict()` to zero. The value is gone now
-    # (`enforce_prepush_verdict` dies rather than returning), so the only remaining consumer-side
-    # move is to DELETE the call — which this row makes loud.
     _enforced = False
     if _src:
         try:
-            for _n in _ast.walk(_ast.parse(textwrap.dedent(_src))):
-                if isinstance(_n, _ast.Name) and _n.id == "enforce_prepush_verdict" and \
-                        isinstance(_n.ctx, _ast.Load):
-                    _enforced = True
+            _enforced = any(isinstance(_n, ast.Name) and _n.id == "enforce_prepush_verdict"
+                            and isinstance(_n.ctx, ast.Load)
+                            for _n in ast.walk(ast.parse(textwrap.dedent(_src))))
         except SyntaxError:
             _enforced = False
     row("prepush enforces the verdict", _enforced,
         "`enforce_prepush_verdict` is read in cmd_prepush" if _enforced else
-        "*** cmd_prepush never mentions enforce_prepush_verdict — the routing legs are computed, "
-        "recorded, and then nothing acts on them. This is RLY28-1's fifth defeat one hop up: the "
-        "verdict is correct and unenforced ***")
-
-    row("prepush still calls routing_verdict", _wired,
-        "`routing_verdict` is read in cmd_prepush" if _wired else
-        "*** cmd_prepush never mentions routing_verdict — the routing legs are computed and their "
-        "verdict discarded. The editorial/adversary exemption for tools/verify/** and "
-        "tools/process/** is priced on this router blocking, and is UNPAID while it holds ***")
+        "*** cmd_prepush never mentions enforce_prepush_verdict — the gating legs are computed, "
+        "recorded, and then nothing acts on them ***")
     return rows, bad
 
 
@@ -1776,8 +1911,7 @@ r_negative_round.attacks = ROUND_STATE
 # A nitpicker will always find a knit to pick."* The cap releases at BLOCKING:0 once passes >=
 # RELY_CAP. Every route below defeated it silently before this registry existed.
 
-# ⚠⚠ `RELY_SIG` IS GONE. `rely_cleared.txt` was RETIRED 2026-08-24 — the last `*_cleared.txt`.
-# Coverage and the cap both read the `rely` LEDGER RECORD now, so these fixtures are RECORDS and the
+# ⚠⚠ NO SIGNAL FILE. Coverage and the cap both read the `rely` LEDGER RECORD now, so these fixtures are RECORDS and the
 # control INJECTS them rather than planting a file. An in-process fixture cell is not a production
 # switch: nothing outside this module can reach it, and `rely_capped` has no file to fall back to.
 _CAPPED_REC = {"verdict": "PASS",
@@ -2106,7 +2240,7 @@ def check_prepush_scope_refusal():
 
     ⚠ THE LAST TWO ROWS ARE NOT DERIVED FROM THE CODE THEY TEST. `guards.py` has already measured
     that a control re-deriving its expectation from the producer's own source agrees by
-    construction and asserts nothing (see the `_need` tuple in `check_routing_enforcement`). So
+    construction and asserts nothing (see the `_need` tuple in `check_push_verdict_registry`). So
     the declared session-state set is compared against an INDEPENDENTLY WRITTEN literal. If a
     legitimate change to `session_state.txt` turns that row red, the row is working: update it
     deliberately, in the same commit, rather than re-deriving it to clear the red."""
@@ -2629,6 +2763,19 @@ TOUCHED = [
 ]
 
 
+def _record_args(bad, clean, n_moved):
+    """`(failing, withheld)` for `record_if_asked` (`GUARD-CONC-1`).
+
+    A misbehaving route over a restored tree is a BEHAVIOURAL failure and is recorded as one. An
+    unrestored tree is ENVIRONMENTAL — another writer, a killed run — and it makes every row of the
+    run unattributable, a failing one included, so nothing is recorded: the key stays MISSING, the
+    action still blocks, and the exit code is still 1. Two causes, two values, never one FAIL."""
+    if not clean:
+        return False, ("the tree was not restored (%d hashed path(s) moved), so no row of this run "
+                       "can be attributed to the routes — re-run on a quiet checkout" % n_moved)
+    return bool(bad), None
+
+
 def snapshot():
     import hashlib
     out = {}
@@ -2711,7 +2858,11 @@ def selftest():
 
     Real properties are not used here: their verdicts depend on the corpus, and a control that moves
     when the corpus moves is not a control. Each synthetic property has a detector whose behaviour is
-    known in advance, so what is being tested is `run_property`, not the tree."""
+    known in advance, so what is being tested is `run_property`, not the tree.
+
+    ⚠ ONE `run_controls` CALL, SO ONE VERDICT LINE AND IT IS THE LAST. Every group below is a
+    control group, including restoration, registry coverage and the enumeration cases, so the shared
+    harness prints `selftest: PASS` only after all of them ran — never between two groups."""
     must_fire = [
         ("a route that mutates nothing", _syn_prop("no-op route", _noop_route)),
         # COM-3: writes a hashed path, but not the one it declares it attacks.
@@ -2724,47 +2875,54 @@ def selftest():
         rows = run_property(prop)
         return any("ROUTE INERT" in verdict for _l, verdict, _ok in rows)
 
-    before = snapshot()
-    bad = common.run_controls([
-        ("MUST FIRE (the inert-route control notices)", must_fire, _reports_inert, True, "MISSED"),
-        ("MUST SUPPRESS (a live route is not called inert)", must_suppress, _reports_inert,
-         False, "FALSE POSITIVE"),
-    ], width=42)
-
     # The restoration proof must itself be honest: after running synthetic properties that mutated a
-    # real file, every hashed path is back. A guard that cannot restore cannot be run in a hook.
-    after = snapshot()
-    moved = [p for p in TOUCHED if before[p] != after[p]]
-    print("RESTORATION")
-    print("  %-42s %s" % ("synthetic routes left no residue",
-                          "ok" if not moved else "*** %d PATH(S) MOVED ***" % len(moved)))
-    bad += 0 if not moved else 1
+    # real file, every path they can write is back. A guard that cannot restore cannot be run in a
+    # hook. Evaluated when its group runs, which is after the two groups that mutate.
+    # ⚠ HASHED OVER THE PATHS THE SYNTHETIC ROUTES WRITE, not all of `TOUCHED`. `TOUCHED` also holds
+    # `record.py`, `check_briefs.py` and the round state, which nothing here writes and which other
+    # work in the same checkout legitimately edits — hashing them made this row report a concurrent
+    # edit as this selftest's residue.
+    _mine = [PROBE_FILE, os.path.join(BASE, "vendored_files.txt"),
+             os.path.join(BASE, "pov_baseline.txt")]
+    before = {p: snapshot()[p] for p in _mine}
+    _moved = []
+
+    def _restored(_):
+        after = snapshot()
+        _moved[:] = [os.path.relpath(p, REPO) for p in _mine if before[p] != after[p]]
+        return not _moved
 
     # Coverage: every route in the registry must be reachable and callable. A factory that raises is
     # a route nobody is testing, which is the failure this whole file exists to prevent.
-    n_routes = sum(len(p["routes"]) for p in PROPERTIES) + len(EXEMPTION_SURFACE)
-    print("REGISTRY")
-    print("  %-42s %s (%d)" % ("every route has a callable factory",
-                               "ok" if n_routes else "*** EMPTY REGISTRY ***", n_routes))
-    bad += 0 if n_routes else 1
+    def _registry_nonempty(_):
+        return bool(sum(len(p["routes"]) for p in PROPERTIES) + len(EXEMPTION_SURFACE))
 
-    # `RLY56-3`: a malformed historical config must FAIL CLOSED with a named row, through the real
-    # `check_enumeration_widening_strands`. `sh` is wrapped so one synthetic unpushed commit exists
-    # and its `common.py` is whatever the case supplies; the universe is pinned to one path so the
-    # reconstruction self-check does not depend on the tree. Every other git call is real.
-    print("ENUMERATION CONFIG")
+    # `RLY56-2`/`RLY56-3`: the widening leg run through the real `check_enumeration_widening_strands`.
+    # `sh` is wrapped so one synthetic unpushed commit exists; its `common.py` is whatever the case
+    # supplies and any other path it is asked for is `extra[path]` (None = absent), else HEAD's. The
+    # universe is pinned to one path so the reconstruction self-check does not depend on the tree.
+    # Every other git call is real.
     _fake = "deadbeef" * 5
     _real_sh, _real_tp, _real_es = sh, _tracked_paths, _enumerator_surface
     _head_src = _real_sh("git", "show", "HEAD:tools/verify/common.py")[1]
+    _head_allow = _real_sh("git", "show", "HEAD:tools/verify/vendored_files.txt")
+    _head_allow = _head_allow[1] if _head_allow[0] == 0 else ""
+    _last = {}
 
-    def _strands_with(src):
+    def _strands_with(src, extra=None):
         import vendored
+        extra = extra or {}
 
         def _sh(*a):
             if a[:2] == ("git", "rev-list"):
                 return 0, _fake + "\n"
             if a[:2] == ("git", "show") and a[2].startswith(_fake):
-                return 0, src
+                path = a[2].split(":", 1)[1]
+                if path == "tools/verify/common.py":
+                    return 0, src
+                if path in extra:
+                    return (1, "absent") if extra[path] is None else (0, extra[path])
+                return _real_sh("git", "show", "HEAD:" + path)
             return _real_sh(*a)
         g = globals()
         try:
@@ -2772,28 +2930,102 @@ def selftest():
             g["_tracked_paths"] = lambda: ["probe.md"]
             g["_enumerator_surface"] = lambda: _surface_from_config(
                 _enum_config_at("HEAD"), ["probe.md"], vendored.is_vendored)
-            return check_enumeration_widening_strands()
+            out = check_enumeration_widening_strands()
         except SyntaxError as e:
-            return [("escaped", False, "SyntaxError escaped: %s" % e)], None
+            out = [("escaped", False, "SyntaxError escaped: %s" % e)], None
         finally:
             g["sh"], g["_tracked_paths"], g["_enumerator_surface"] = _real_sh, _real_tp, _real_es
+        _last["rows"] = out
+        return out
 
-    _rows, _b = _strands_with("GLOBS = [\n")
-    _ok = bool(_b) and any(lbl.startswith("config readable at") and not ok and "does not parse" in v
-                           for lbl, ok, v in _rows)
-    print("  %-42s %s" % ("malformed config fails CLOSED, named",
-                          "ok" if _ok else "*** %r ***" % (_rows,)))
-    bad += 0 if _ok else 1
-    _rows, _b = _strands_with(_head_src)
-    _ok = _b == 0 and any(lbl == "shared enumeration config across the range" and ok
-                          for lbl, ok, _v in _rows)
-    print("  %-42s %s" % ("a well-formed unchanged config passes",
-                          "ok" if _ok else "*** %r ***" % (_rows,)))
-    bad += 0 if _ok else 1
+    def _malformed_fails_closed(_):
+        _rows, _b = _strands_with("GLOBS = [\n")
+        return bool(_b) and any(lbl.startswith("config readable at") and not ok
+                                and "does not parse" in v for lbl, ok, v in _rows)
 
-    if bad:
-        print("\nselftest: FAIL (%d)" % bad)
-    return 1 if bad else 0
+    def _unchanged_passes(_):
+        _rows, _b = _strands_with(_head_src)
+        return _b == 0 and any(lbl == "shared enumeration config across the range" and ok
+                               for lbl, ok, _v in _rows)
+
+    # The commit's allowlist names `probe.md`, today's does not: that commit's checker skipped the
+    # path and today's enumerates it — a widening driven by the allowlist alone, which compared
+    # with TODAY's `is_vendored` on both sides cancelled to nothing.
+    def _allowlist_widening_strands(_):
+        _rows, _b = _strands_with(
+            _head_src, {"tools/verify/vendored_files.txt": _head_allow + "\nprobe.md\n"})
+        return bool(_b) and any(lbl.startswith("stranded at") and not ok for lbl, ok, _v in _rows)
+
+    def _vendored_py_change_refused(_):
+        _rows, _b = _strands_with(
+            _head_src, {"tools/verify/vendored.py": "# a different rule\n"})
+        return bool(_b) and any(lbl.startswith("vendored exemption modelable") and not ok
+                                for lbl, ok, _v in _rows)
+
+    def _enum_detail(_):
+        return "  %r" % (_last.get("rows"),)
+
+    _DIALECT_FIRE = {"probe": {"scope": ["ZeroParadox/**/*.lean"]}}
+    _DIALECT_QUIET = {"probe": {"scope": ["ZeroParadox/*.lean"], "scope_exclude": ["*.md"]}}
+
+    def _dialect_refuses(types):
+        return any(not ok for _l, ok, _v in _scope_dialect_rows(types))
+
+    # The retired `/rely` leg: synthetic sources, so nothing here depends on today's batch.py.
+    _LEG_FIRE = [
+        ("a restored definition", "def routing_verdict(state, ranges):\n    return 0\n"),
+        ("a left-behind consumer", "def cmd_prepush():\n    batch.check_routing({}, None)\n"),
+        ("a bare-name call", "def f():\n    return rely_reviewed_blobs()\n"),
+        ("_EXPECTED still demanding 'routing'", "_EXPECTED = ('routing', 'purity')\n"),
+        ("an unparsable site", "def f(:\n"),
+    ]
+    _LEG_QUIET = [
+        ("the enforced registry alone",
+         "def cmd_prepush():\n    enforce_prepush_verdict()\n_EXPECTED = ('purity',)\n"),
+        ("a docstring naming the retired leg",
+         "def f():\n    '''check_routing and routing_verdict are retired.'''\n    return 1\n"),
+        ("a 'routing' string outside _EXPECTED", "ROUTING_NOTE = 'routing'\n"),
+    ]
+
+    # `GUARD-CONC-1`: an unrestored tree withholds; a misbehaving route on a restored tree records.
+    _REC_CASES = [
+        ("restored + misbehaving route: recorded FAIL", ((1, True, 0), (True, False))),
+        ("restored + clean: recorded PASS", ((0, True, 0), (False, False))),
+        ("unrestored + clean: WITHHELD, no FAIL", ((0, False, 2), (False, True))),
+        ("unrestored + misbehaving: WITHHELD, no FAIL", ((1, False, 2), (False, True))),
+    ]
+
+    def _record_ok(case):
+        _args, (want_fail, want_withheld) = case
+        failing, withheld = _record_args(*_args)
+        return failing is want_fail and bool(withheld) is want_withheld
+
+    return common.run_controls([
+        ("MUST FIRE (the inert-route control notices)", must_fire, _reports_inert, True, "MISSED"),
+        ("MUST SUPPRESS (a live route is not called inert)", must_suppress, _reports_inert,
+         False, "FALSE POSITIVE"),
+        ("RESTORATION", [("synthetic routes left no residue", None)], _restored, True,
+         "PATH(S) MOVED", lambda _: "  %s" % ", ".join(_moved)),
+        ("REGISTRY", [("every route has a callable factory", None)], _registry_nonempty, True,
+         "EMPTY REGISTRY"),
+        ("ENUMERATION CONFIG", [
+            ("malformed config fails CLOSED, named", 1),
+            ("a well-formed unchanged config passes", 2),
+            ("allowlist-only widening strands (RLY56-2)", 3),
+            ("changed vendored.py fails CLOSED, named", 4),
+        ], lambda k: {1: _malformed_fails_closed, 2: _unchanged_passes,
+                      3: _allowlist_widening_strands, 4: _vendored_py_change_refused}[k](k),
+         True, "WRONG", _enum_detail),
+        ("SCOPE DIALECT (RLY56-4) MUST FIRE", [("a `**` scope is refused", _DIALECT_FIRE)],
+         _dialect_refuses, True, "MISSED"),
+        ("SCOPE DIALECT MUST SUPPRESS", [("a plain scope is not refused", _DIALECT_QUIET)],
+         _dialect_refuses, False, "FALSE POSITIVE"),
+        ("RETIRED /rely LEG MUST FIRE", _LEG_FIRE, lambda s: bool(_retired_rely_hits(s)), True,
+         "MISSED"),
+        ("RETIRED /rely LEG MUST SUPPRESS", _LEG_QUIET, lambda s: bool(_retired_rely_hits(s)),
+         False, "FALSE POSITIVE"),
+        ("RECORDING (GUARD-CONC-1)", _REC_CASES, _record_ok, True, "WRONG"),
+    ], width=46)
 
 
 def main():
@@ -2835,11 +3067,8 @@ def main():
         for label, ok, verdict in _rows:
             print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
         bad += _bad
-        # ⚠⚠ AND THAT THE ROUTER IT WARRANTS STILL BLOCKS. The warrant above tests COVERAGE (does the
-        # pattern reach the whole prefix) and is blind to ENFORCEMENT — measured 2026-08-21, a probe
-        # stopped the router blocking and this file still exited 0.
-        # ⚠⚠ AND THAT THE LEDGER IS ACCOUNTABLE FOR WHAT THE ROUTER SENDS IT. The two rows above
-        # prove the prefix is registered as exempt and that the router still blocks — and BOTH pass
+        # ⚠⚠ AND THAT THE LEDGER IS ACCOUNTABLE FOR WHAT THE ROUTER SENDS IT. The rows above prove
+        # the prefix is registered as exempt and that the router reaches all of it — and both pass
         # while the step's declared scope omits the prefix entirely, which is exactly what happened
         # to `tools/process/` for eleven days. Coverage and enforcement were tested; accountability
         # was not.
@@ -2869,8 +3098,13 @@ def main():
         for label, ok, verdict in _rows:
             print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
         bad += _bad
-        print("\n  PROPERTY: the router the exemption is priced on still BLOCKS")
-        _rows, _bad = check_routing_enforcement()
+        print("\n  PROPERTY: the local /rely routing leg is retired; the ledger owns /rely")
+        _rows, _bad = check_rely_leg_retired()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
+        print("\n  PROPERTY: the push verdict is written by its producer and enforced")
+        _rows, _bad = check_push_verdict_registry()
         for label, ok, verdict in _rows:
             print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
         bad += _bad
@@ -2927,7 +3161,7 @@ def main():
     # dependency are just no longer confused for each other.
     _guarded = [
         "tools/verify/guards.py",      # the routes themselves
-        "tools/verify/batch.py",       # check_routing, prepush_verdict, checker_blobs, cmd_prepush
+        "tools/verify/batch.py",       # ROUTING, prepush_verdict, cmd_prepush, reviewable_from
         "tools/verify/ship.py",        # the /rely cap
         "tools/verify/common.py",      # record_if_asked, ledger_subjects
         "tools/verify/report.py",      # the manifest every entry point announces itself with
@@ -2946,11 +3180,11 @@ def main():
     _switches = sorted({os.path.relpath(p, REPO).replace("\\", "/") for p in TOUCHED
                         if os.path.basename(p) != os.path.basename(PROBE_FILE)}
                        | {"tools/verify/session_state.txt"})
+    _failing, _withheld = _record_args(bad, clean, len(moved))
     _rc = common.record_if_asked("guards", _subjects,
-                                 set(_subjects) if (bad or not clean) else set(),
-                                 "a route to a guarded property misbehaved, or the tree was "
-                                 "not restored",
-                                 switches=_switches)
+                                 set(_subjects) if _failing else set(),
+                                 "a route to a guarded property misbehaved",
+                                 switches=_switches, withheld=_withheld)
     if _rc:
         return _rc
 

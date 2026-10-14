@@ -124,34 +124,6 @@ CHECKS = [
             "An undated artifact count in prose is printed with its file:line and exits 1. A genuine "
             "clean run reports a NON-ZERO 'sites found' count and 'NEW undated figures : 0'.",
     },
-    # ⭐ THE FIRST ENTRY REGISTERED BECAUSE A MECHANICAL CHECK WAS GIVEN UP, RATHER THAN BECAUSE ONE
-    # EXISTED AND WANTED INTERPRETING. `guards.py` asked "does EVERY consumer of the routing decision
-    # honour the blocking flag?" in three successive source-reading versions and was defeated six
-    # ways (`RLY27-1..6`). The question splits: "do the two KNOWN enforcement surfaces obey the
-    # flag?" is finite and stayed in `guards.py` as a BLOCKING behavioural test, and "is there a
-    # THIRD consumer nobody registered?" is an unbounded enumeration whose own repairs re-arm it.
-    # That second half is this entry. `CLAUDE.md` rung 5: the screen may replace the ENUMERATION, it
-    # may never replace the VERDICT — and here it replaces nothing at all, because the verdict it
-    # would have carried was surrendered deliberately rather than quietly downgraded.
-    #
-    # ⚠ WHY THIS IS SAFE, STATED SO NOBODY HAS TO RECONSTRUCT IT: enforcement is not a vote among
-    # consumers. The push path is fixed (`hooks.py` -> `batch.py prepush` -> `cmd_prepush`) and the
-    # release path is `ship.required_gates`; both are behaviourally pinned and both still BLOCK. An
-    # unregistered consumer is ADDITIVE — it can fail to enforce, it cannot dis-enforce those two.
-    {
-        "name": "scan_routing_consumers",
-        "cmd": [sys.executable, str(common.HERE / "scan_routing_consumers.py")],
-        "expected_failure":
-            "A reference to check_routing / routing_verdict / routing_bad / _LEG_BLOCKING from a "
-            "file that is NOT on the PINNED allowlist prints as 'UNREGISTERED <path>:<line>' "
-            "followed by the source line, and exits 1; an unreadable .py does the same as "
-            "'UNREADABLE'. A genuine clean run reports a NON-ZERO count of scanned .py files, a "
-            "NON-ZERO 'reference sites' count, lists every PINNED surface with a NON-ZERO site "
-            "count beside it, and ends with 'UNREGISTERED: 0'. ** A PINNED surface showing 0 "
-            "site(s) is a real finding even though the run exits 0: it means either that surface "
-            "was neutered or the allowlist is stale. ** This check NEVER blocks a push -- it has no "
-            "verdict to contribute, and its exit code is consumed here and nowhere else.",
-    },
 ]
 
 SCHEMA = {

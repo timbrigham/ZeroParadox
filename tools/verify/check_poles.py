@@ -2,10 +2,10 @@
 """DC-16 - pole equalities written with `=`.
 
 THE CLASS. Writing `0 = ∞`, `∞ = ⊥` or `0 = ∞ = ⊥` as a plain equality asserts that two poles are
-ONE POINT. That is the quotient which identifies them - which is the MEADOW, the structure this
-project explicitly rejected and disproved: `inf_ne_bot` proves ∞ ≠ ⊥ in the wheel of fractions,
-choice-free, and `wheelFrac_fork_open` proves 0 ≠ ∞. So the notation is not loose phrasing; it
-asserts the refuted alternative.
+ONE POINT. In a wheel that identification forces every element equal (Carlström Prop. 4.4; the
+anonymous `example` after `zpw_inf_ne_bot` in `ZeroParadox/Algebra/Wheel.lean`), and `inf_ne_bot`
+proves ∞ ≠ ⊥ in the wheel of fractions, choice-free, while `wheelFrac_fork_open` proves 0 ≠ ∞. So
+the notation is not loose phrasing; it asserts the refuted alternative.
 
 THE DISCRIMINATOR, and it is the whole design. An equality chain is suspect only when ∞ appears in
 it. `⊥ = 0` alone is fine and usually true - the bottom of a lattice genuinely IS the number zero in
@@ -18,7 +18,7 @@ WHAT IS LEGITIMATE, so the allowlist is principled rather than fitted:
   * an APPLICATION - `rInv 0 = ∞`. The left side is a function applied to a pole. Note the contrast
     with `0 = ∞ under rInv`, which is bare and IS the defect: a map that SWAPS two points is
     evidence they are DIFFERENT, so citing it for an identity inverts its content.
-  * describing the REJECTED case - a line naming the meadow/field collapse on purpose.
+  * describing the REJECTED case - a line saying the identification forces a trivial wheel.
   * a NEGATED claim - `∞ ≠ ⊥`.
 
 SCOPE covers .lean, .md AND .py. The 2026-08-01 sweep that removed two false universal negatives
@@ -88,28 +88,62 @@ EXPR_BEFORE = re.compile(r"[+\-·*/^]\s*$")
 # ⚠ MARKUP IS NOT AN OPERATOR, and `*` and `-` are both (`POLE-1`). A bold or italic opener
 # (`**⊥ = 0 = ∞`) and a list bullet (`- ⊥ = 0 = ∞`) each presented a trailing operator character to
 # EXPR_BEFORE and excused the chain as arithmetic - and a list item is the most ordinary shape a
-# claim takes. Stripped from `before` ONLY for the EXPR_BEFORE test. The discriminator is ADJACENCY:
-# an emphasis run touches the chain and follows whitespace, a quote or a bracket, so `0 * ∞ = ⊥`
-# (spaced) and `0*∞ = ⊥` (an operand before it) still read as an expression's value. A bullet must
-# be followed by whitespace, so `-∞ = 0` stays a negation.
-EMPHASIS_BEFORE = re.compile(r"(?:^|(?<=[\s(\[\"']))[*_]+$")
-LIST_MARKER = re.compile(r"^\s*(?:>\s*)*(?:[-*+]|\d+[.)])\s+$")
+# claim takes. Stripped from `before` ONLY for the EXPR_BEFORE test. THE DISCRIMINATOR IS WHAT
+# SITS BEFORE THE MARKER: an OPERAND (a digit, a one-letter name, a closing bracket, a pole, an
+# identifier carrying a digit, `_`, `.` or `'`, or an `=`) makes the character an operator - `0*∞`,
+# `x *∞`, `a - ∞`, `x = *∞`; anything else (line start, an English word, punctuation, a comment or
+# quote leader) makes it markup. Four shapes are markup:
+#   * an emphasis OPENER touching the chain - `**⊥ = 0 = ∞`, `Claim:**⊥`, `the claim *⊥`;
+#   * a CLOSED emphasis pair followed by whitespace - `**The pole** ⊥ = 0 = ∞`;
+#   * a list marker (`-`, `*`, `+`) followed by whitespace, at line start or after a comment,
+#     quote, table or blockquote leader - `-- `, `# - `, `"- `, `| - `, `> - `; a leader with no
+#     marker (`-- ⊥ = 0 = ∞`, a Lean line comment) is markup too;
+#   * a spaced dash after an English word - `foo - ⊥ = 0 = ∞`, this house's ` - ` dash.
+# A marker must be followed by whitespace, so `-∞ = 0` stays a negation. A line-start marker is an
+# operator after all when the PREVIOUS line ends in an operand: ` * ∞ = ⊥` continuing `x = 0`.
+# Only `*`, `-`, `+` are handled: `_`, `1.` and `2)` are not operator characters, so they never
+# reach EXPR_BEFORE, and stripping `_` could only EXPOSE an operator behind it (`foo - _⊥`).
+OPERAND_END = re.compile(r"(?:[\d)\]}∞⊥=]|(?<![\w.'])[A-Za-z]|[A-Za-z_][\w.']*[\d_.'][\w.']*)\s*$")
+EMPHASIS_BEFORE = re.compile(r"\*+$")
+EMPHASIS_PAIR = re.compile(r"(?:^|(?<=[\s(\[\"'|:—–>]))(\*+)\S(?:.*?\S)?\1\s+$")
+LEADER = r"(?:--|#+|//|/--?|/-!|[|>\"'(\[])"
+LIST_MARKER = re.compile(r"(?:^|%s)\s*(?:[-*+]\s+)?$" % LEADER)
+LINE_START_MARKER = re.compile(r"^\s*[-*+]\s+$")
+SPACED_DASH = re.compile(r"(?<![\w.'])[A-Za-z]{2,}\s+-\s+$")
+# ⚠ THE LINE ABOVE MUST END IN AN EXPRESSION, NOT MERELY IN AN OPERAND CHARACTER (`/rely` g5 O2).
+# Ending in `)`, `]`, a digit or a pole excused the next bullet, and a citation-terminated list item
+# (`- the swap (`rInv_swaps`)`) is the ordinary shape of the line before a claim. Now the last token
+# must follow an operator or `=`, and a line that is itself a list item never continues into one.
+CONTINUED = re.compile(r"[=+\-·*/^]\s*[\w)\]}∞⊥]+\s*$")
+LIST_ITEM = re.compile(r"^\s*(?:>\s*)*[-*+]\s")
 
-def _strip_markup(before):
-    before = EMPHASIS_BEFORE.sub("", before)
-    return "" if LIST_MARKER.match(before) else before
+def _strip_markup(before, prev=""):
+    m = EMPHASIS_BEFORE.search(before)
+    if m and not OPERAND_END.search(before[:m.start()]):
+        before = before[:m.start()]
+    elif EMPHASIS_PAIR.search(before):
+        return ""
+    if LINE_START_MARKER.match(before) and CONTINUED.search(prev) and not LIST_ITEM.match(prev):
+        return before                    # ` * ∞ = ⊥` continuing an expression on the line above
+    if LIST_MARKER.search(before) or SPACED_DASH.search(before):
+        return ""
+    return before
 # An operation on either side means the `=` is not between two bare poles.
 # ⚠ `rInv` and `1/` were listed here at first. Both are WRONG: a map that SWAPS two points is
 # evidence they are DIFFERENT, so its presence beside a bare `0 = ∞` INDICTS the line rather than
 # excusing it - which is precisely the misuse this class exists to catch. Application is handled
 # above, by position; mere mention of an inversion legitimates nothing.
 OPERATION = re.compile(r"[/·*]\s*0|0\s*[·*]\s*/|winv|wmul|wheelBot|wheelInf")
-REJECTED = re.compile(r"meadow|collapse|field is a wheel|degenerate", re.I)
+# ⚠ NARROWED TO THE TRUE STATEMENT OF THE REJECTED CASE (`CPOLE-1`). Identifying ∞ with ⊥ forces
+# the TRIVIAL wheel, and that is the vocabulary a deliberate description uses. `meadow`, `collapse`
+# and `field is a wheel` were here, and they are the vocabulary of the FALSE claim `WMEAD-1`
+# (identification yields a meadow) - so the one gate reading those sentences excused that claim.
+REJECTED = re.compile(r"(?<!non)(?<!non-)(?:trivial|degenerate)\b|one-element", re.I)
 NEGATED = re.compile(r"≠|!=|\\ne\b|not equal")
 
 GRACE = 24   # chars either side of the chain that count as "beside it"
 
-def classify(line, m):
+def classify(line, m, prev=""):
     """Return None if legitimate, else a one-line reason.
 
     ⚠ OPERATION is scoped to the chain's NEIGHBOURHOOD, not the whole line. Line-scoping let a
@@ -123,7 +157,7 @@ def classify(line, m):
     before = line[:m.start()]
     if APPLIED.search(before):
         return None                      # `rInv 0 = ∞` - an application, not an identity
-    if EXPR_BEFORE.search(_strip_markup(before)):
+    if EXPR_BEFORE.search(_strip_markup(before, prev)):
         return None                      # `0 · ∞ = ⊥`, `∞ + ∞ = ⊥`, `/∞ = 0` - an expression's VALUE
     near = line[max(0, m.start() - GRACE): m.end() + GRACE]
     if OPERATION.search(near):
@@ -131,7 +165,7 @@ def classify(line, m):
     if NEGATED.search(line):
         return None                      # the line is asserting distinctness
     if REJECTED.search(line):
-        return None                      # naming the meadow collapse on purpose
+        return None                      # saying the identification forces a trivial wheel
     return "pole chain `%s` written as a plain equality" % chain.strip()
 
 # `Idiom:` - the THIRD label, beside `Statement:` and `Reading:`. It marks text that NAMES the
@@ -151,7 +185,7 @@ def scan_text(text, path="<str>"):
     lines = text.splitlines()
     for i, line in enumerate(lines, 1):
         for m in CHAIN.finditer(line):
-            why = classify(line, m)
+            why = classify(line, m, lines[i - 2] if i >= 2 else "")
             if not why:
                 continue
             above = lines[i - 2] if i >= 2 else ""
@@ -213,6 +247,36 @@ MUST_FIRE = [
     ("bullet (POLE-1)", "- ⊥ = 0 = ∞ is the pole identity"),
     ("bullet + bold (POLE-1)", "  * **⊥ = 0 = ∞** is the pole identity"),
     ("bold mid-sentence (POLE-1)", "the claim **⊥ = 0 = ∞** is the pole identity"),
+    # CPOLE-1: the WMEAD-1 vocabulary (identification yields a meadow) is the false claim, not an
+    # excuse. This line was a MUST_SUPPRESS fixture, so the control carried the falsehood.
+    ("meadow named (CPOLE-1)", "In a meadow the two collapse: ∞ = ⊥. The wheel refuses this."),
+    ("field collapse (CPOLE-1)", "a field is a wheel where ∞ = ⊥, the collapse gives a meadow"),
+    # POLE-1 O1: a CLOSED emphasis pair before the chain is markup; the live shape is
+    # `Epsilon0CannotBe.md:29`. And an opener after punctuation rather than whitespace.
+    ("closed bold label (O1)", "* **The pole** ⊥ = 0 = ∞ is the pole identity"),
+    ("opener after colon (O1)", "Claim:**⊥ = 0 = ∞** is the pole identity"),
+    ("opener after dash (O1)", "the pole —**⊥ = 0 = ∞**"),
+    # O2: a bullet after a comment, string, table or blockquote leader; a bare Lean comment; a dash.
+    ("Lean comment (O2)", "-- ⊥ = 0 = ∞ is the pole identity"),
+    ("Python comment bullet (O2)", "# - ⊥ = 0 = ∞ is the pole identity"),
+    ("string bullet (O2)", '    "- ⊥ = 0 = ∞ is the pole identity",'),
+    ("table cell bullet (O2)", "| row | - ⊥ = 0 = ∞ |"),
+    ("spaced dash (O2)", "the pole foo - ⊥ = 0 = ∞ is the identity"),
+    # O3: the blockquote and `+` rows guard live alternatives; the numbered and `_` rows guard that
+    # a marker which is not an operator character never excuses a chain.
+    ("numbered dot (O3)", "1. ⊥ = 0 = ∞ is the pole identity"),
+    ("numbered paren (O3)", "2) ⊥ = 0 = ∞ is the pole identity"),
+    ("blockquote bullet (O3)", "> - ⊥ = 0 = ∞ is the pole identity"),
+    ("plus bullet (O3)", "+ ⊥ = 0 = ∞ is the pole identity"),
+    ("underscore italic (O3)", "_⊥ = 0 = ∞ is the pole identity_"),
+    # O4: an underscore opener must not expose a dash as an operator.
+    ("dash + underscore (O4)", "foo - _⊥ = 0 = ∞_ holds"),
+    ("non-trivial is no excuse", "in a non-trivial wheel ∞ = ⊥ holds"),
+    ("trivially is no excuse", "⊥ = 0 = ∞ is trivially the pole identity"),
+    # /rely g5 O2: a bullet after a citation-terminated line is a claim, not a continuation.
+    ("bullet after a citation (O2)", "- the swap (`rInv_swaps`)\n- ⊥ = 0 = ∞ is the pole identity"),
+    ("bullet after a list item ending in a digit", "- x = 3\n- ⊥ = 0 = ∞ is the pole identity"),
+    ("bullet after prose ending in a digit", "the count is 3\n* ∞ = ⊥ is the pole identity"),
 ]
 MUST_SUPPRESS = [
     ("Idiom-labelled", "Idiom: the 0 = ∞ inversion - a NAME for the phenomenon, not an assertion"),
@@ -220,13 +284,18 @@ MUST_SUPPRESS = [
     ("operation form", "the two derived elements ∞ = /0 and ⊥ = 0·/0"),
     ("application", "Under the inversion the poles are exchanged: rInvHomeo 0 = ∞"),
     ("negated", "Wheel vs meadow diagram (∞ ≠ ⊥), division by zero made total"),
-    ("rejected case named", "In a meadow the two collapse: ∞ = ⊥. The wheel refuses this."),
+    ("rejected case named", "Identifying them gives ∞ = ⊥ only in the trivial wheel."),
     ("example lattice", "Take the lattice [0, ∞) with ⊥ = 0 and join = max"),
     # POLE-1's other side: stripping markup must not eat a real operator.
     ("spaced product", "the wheel bottom is defined by 0 * ∞ = ⊥ in this carrier"),
     ("tight product", "the wheel bottom is defined by 0*∞ = ⊥ in this carrier"),
     ("bullet, arithmetic", "- 0 · ∞ = ⊥ is the wheel bottom's defining equation"),
     ("line-start negation", "-∞ = 0 is not a bullet: no space follows the minus"),
+    # POLE-1 O4: an operand before the marker keeps it an operator, with or without a space.
+    ("spaced opener-shape (O4)", "the bottom is x *∞ = ⊥ in this carrier"),
+    ("operator after = (O4)", "so x = *∞ = ⊥ in this carrier"),
+    ("dash after a name (O4)", "subtracting gives a - ∞ = ⊥ here"),
+    ("continuation line (O4)", "the product is x = 0\n * ∞ = ⊥ by the absorption law"),
 ]
 
 def selftest():

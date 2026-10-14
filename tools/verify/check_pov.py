@@ -194,17 +194,22 @@ LABEL = re.compile(r'\b(Statement:|Reading:)')
 # denial exactly as it mutes a tag check.** Measured: prefixing a planted denial with `CORRECTED`,
 # `v1.4:`, `vocabulary_reference` or `check_pov.py` takes it from reported to silent.
 #
-# That coupling is DELIBERATE and the corpus needs it — a recorded correction QUOTES the wording it
-# retracts, and flagging the retraction as if it were making the claim is the cry-wolf shape. The one
-# corpus line this currently mutes is a build-script docstring changelog recording a past adversary
-# round; making the check unconditional would fire on an honest historical record, so do not simply
-# invert the boolean.
+# That coupling is DELIBERATE — a recorded correction QUOTES the wording it retracts, and flagging
+# the retraction as if it were making the claim is the cry-wolf shape, so do not simply invert the
+# boolean. Run `DENIAL` over `TARGETS` to see what it mutes today; there is no live example to name
+# here, and a named example goes stale the day its line is edited (`W4K-9`).
+# ⚠ `vocabulary_reference` IS NOT IN `DENIAL_ALLOW` (`TOOLING-2026-09-30`). It exempts a line from the
+# TAG check because the vocabulary guide is discussed by name; a line that names the guide AND
+# denies a reading is still a denial, so the denial check uses the narrower allowlist below.
 # **The cost is real and is the thing to know: an author can mute a genuine denial by typing one
 # allowlisted token on the line.** Narrowing `ALLOW` (it exempts hundreds of lines in scope, many by
 # the ordinary English word "corrected") is the fix, and it is tracked in the defect ledger rather
 # than done here, because narrowing it changes what the TAG check sees as well.
+# ⚠ `NOT that the snap` IS CASE-SENSITIVE (`TOOLING-2026-09-30`). Case-folded, it also matched the
+# SCOPE clause "…, not that the snap occurs", which limits a claim and denies no reading. The
+# capitalised NOT is the denial shape this alternative exists for.
 DENIAL = re.compile(
-    r'(NOT the snap|NOT of the snap|NOT that the snap|is not the snap'
+    r'(NOT the snap|NOT of the snap|(?-i:NOT) that the snap|is not the snap'
     r'|never the same map|were never the same map)',
     re.IGNORECASE,
 )
@@ -218,6 +223,13 @@ ALLOW = re.compile(
     r'|^\s*--\s*\[ZP-CUSTOM\]'             # registry tags
     r'|CORRECTED|corrected 20|an earlier revision'   # recorded corrections quote the old wording
     r'|v1\.\d+:|v2\.\d+:',                 # docstring changelogs are history, not claims
+    re.IGNORECASE,
+)
+DENIAL_ALLOW = re.compile(
+    r'check_pov\.py'
+    r'|^\s*--\s*\[ZP-CUSTOM\]'
+    r'|CORRECTED|corrected 20|an earlier revision'
+    r'|v1\.\d+:|v2\.\d+:',
     re.IGNORECASE,
 )
 
@@ -240,7 +252,7 @@ def verdict(line, window):
     paying for. `scan()` now calls this, so the controls test what actually runs.
 
     Returns (is_denial, status) where status is 'skip' | 'tagged' | 'untagged'."""
-    is_denial = bool(DENIAL.search(line) and not ALLOW.search(line))
+    is_denial = bool(DENIAL.search(line) and not DENIAL_ALLOW.search(line))
     if not POV_TERMS.search(line) or ALLOW.search(line):
         return is_denial, 'skip'
     if not CITES_DECL.search(window):
@@ -290,6 +302,14 @@ MUST_SUPPRESS = [                   # must NOT be reported
 MUST_DENY = [                       # must be reported as a DENIAL — never baselined
     ('explicit denial of a reading',
      _W + 'the pole exchange (NOT of the snap) is what the theorem shows.'),
+    # TOOLING-2026-09-30: naming the vocabulary guide does not license a denial.
+    ('a denial beside vocabulary_reference',
+     _W + 'per vocabulary_reference, this is NOT the snap.'),
+    ('the capitalised NOT-that form', _W + 'the exchange, NOT that the snap occurs, is shown.'),
+]
+_not_deny = [                      # must NOT be reported as a DENIAL (lower-case: a fixture, not vocabulary)
+    ('a scope clause in lower case', _W + 'the map is shown to exist, not that the snap occurs.'),
+    ('a recorded correction', _W + 'CORRECTED 2026-07-30: an earlier draft said NOT the snap.'),
 ]
 
 
@@ -304,6 +324,8 @@ def selftest():
          lambda line: verdict(line, line)[1] == 'untagged', False, 'FALSE POSITIVE'),
         ('MUST DENY (never baselined)', MUST_DENY,
          lambda line: verdict(line, line)[0], True, 'DENIAL NOT DETECTED'),
+        ('MUST SUPPRESS (not a denial)', _not_deny,
+         lambda line: verdict(line, line)[0], False, 'FALSE DENIAL'),
     ], width=32)
     # ⚠ THE SCOPE PIN (SCOPE-3). This checker enumerates its own `TARGETS` deliberately — folding it
     # into `common.targets()` would WIDEN a gate baselined at ~78 grandfathered sites. But a private

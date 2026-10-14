@@ -27,8 +27,11 @@
 # rooted - writing "$PWD\x" is the CORRECT fix, so it must pass). Two further idioms are ALLOWED
 # because they resolve against the PowerShell LOCATION and always yield a full path (measured by
 # /rely, 2026-10-13, O1 - both were lifted from real transcripts and were being falsely denied):
-# `(Resolve-Path X).Path` / `.ProviderPath`, and any expression ending in `.FullName`
-# (`$_.FullName`, `$f.FullName`, `(Get-Item x).FullName` - a FileSystemInfo's FullName is absolute).
+# `(Resolve-Path X).Path` / `.ProviderPath`, and an expression ending in `.FullName`
+# (`$_.FullName`, `$f.FullName`, `(Get-Item x).FullName` - a FileSystemInfo the provider built has an
+# absolute FullName). EXCEPT a FileInfo/DirectoryInfo CONSTRUCTED from a string (`[IO.FileInfo]"x"`,
+# `[IO.FileInfo]::new("x")`, `New-Object IO.FileInfo x`, inline or via a variable): .NET resolves
+# that string against the process directory, so its argument is judged like any path argument.
 #
 # NOT followed, on purpose: `[IO.Path]::GetFullPath("x")` resolves against the SAME process
 # directory and is the same bug - it stays DENIED. Also `$(...)` subexpressions, function
@@ -170,7 +173,7 @@ function Resolve-Expr([string]$e, [int]$depth) {
     }
     # O1: these resolve against the PowerShell LOCATION and always yield a full path.
     if ($e -match '^(?i)\(\s*Resolve-Path\b.*\)\.(Path|ProviderPath)$') { return 'C:\__resolve_path__' }
-    if ($e -match '^(?i)\S.*\.FullName$') { return 'C:\__fullname__' }
+    if ($e -match '^(?i)\S.*\.FullName$') { return (Resolve-FullName $e $depth) }
     if ($e -match "^'((?:[^']|'')*)'$") { return $Matches[1].Replace("''", "'") }
     if ($e -match '^"([^"]*)"$') {
         $body = $Matches[1]
@@ -210,6 +213,34 @@ function Resolve-Expr([string]$e, [int]$depth) {
     }
     if ($e -match '^[\w.\-\\/:]+$') { return $e }   # a bareword path, e.g. x.txt or C:\x
     return $null
+}
+
+# `<x>.FullName` is absolute for a FileSystemInfo that came from the file system (Get-Item,
+# Get-ChildItem, `$_`), because the provider built it against the PowerShell location. A FileInfo or
+# DirectoryInfo CONSTRUCTED from a string is the exception (CARRYW3-13 r2 O1): .NET resolves that
+# string against the PROCESS directory, so `([IO.FileInfo]"x.txt").FullName` is the DC-71 path in
+# disguise. So the constructor's argument is judged exactly like a direct path argument - inline,
+# or through a variable assigned earlier in the same command.
+function Resolve-FullName([string]$e, [int]$depth) {
+    $base = $e.Substring(0, $e.Length - '.FullName'.Length).Trim()
+    while ($base.StartsWith('(') -and $base.EndsWith(')')) {
+        $inner = Split-Args $base 0
+        if ($null -eq $inner -or $inner.Count -ne 1 -or ($inner[0].Length + 2) -ne $base.Length) { break }
+        $base = $inner[0].Trim()
+    }
+    if ($base -match '^\$(\w+)$' -and $VARS.ContainsKey($Matches[1].ToLower())) { $base = $VARS[$Matches[1].ToLower()].Trim() }
+    $ctorArg = $null
+    if ($base -match '^(?i)\[(System\.)?IO\.(File|Directory)Info\]::new\s*\(') {
+        $parts = Split-Args $base $base.IndexOf('(')
+        if ($null -eq $parts -or $parts.Count -lt 1) { return $null }
+        $ctorArg = $parts[0]
+    } elseif ($base -match '^(?i)\[(System\.)?IO\.(File|Directory)Info\]\s*(.+)$') {
+        $ctorArg = $Matches[3]
+    } elseif ($base -match '^(?i)New-Object\s+(?:-TypeName\s+)?(?:System\.)?IO\.(?:File|Directory)Info\s+(?:-ArgumentList\s+)?(.+)$') {
+        $ctorArg = $Matches[1]
+    }
+    if ($null -eq $ctorArg) { return 'C:\__fullname__' }
+    return (Resolve-Expr $ctorArg ($depth + 1))
 }
 
 # Collect `$name = <rhs>` assignments that appear BEFORE $limit, in order (later wins).

@@ -79,6 +79,11 @@
 # residual section below. If any of them should be the main instance's to edit, the remedy is one
 # more line in the carve list, and it is Tim's line to write, not this hook's to assume.
 #
+# ** THE ONE PATH OUTSIDE THE CHECKOUT THAT IS DENIED: THE DIRECTORY ABOVE IT. ** It holds the MCP
+# server projects, whose source constrains this session; block_git_gh.ps1 denies the shell route
+# there and this hook denies the Edit/Write/NotebookEdit route (GUARD-2's write half). See
+# Get-Refusal for the three container tests.
+#
 # ** WHAT IS DELIBERATELY NOT COVERED - stated so nobody mistakes this for a seal. **
 #   - tools/** and CLAUDE.md are NOT denied. Tim was offered a wider scope that added "the rule file
 #     and the checkers" and declined it, choosing "Corpus + published surfaces only".
@@ -179,7 +184,8 @@ this checkout everything else is denied by default:
   - .claude-local/**  - notes, queue tickets, DEFECTS.md, DEFECT_CLASSES.md, the handoff
   - tools/**          - the checkers and hooks
   - CLAUDE.md         - the rule file
-  - the session scratchpad, and ANY path outside this checkout (which is where worktrees live)
+  - the session scratchpad, and any path outside this checkout (which is where worktrees live)
+    EXCEPT the directory above it, which holds the MCP server projects and is denied
 
 If a task genuinely needs a direct edit here - a one-character fix you have been asked for by name -
 STOP and say so, and let Tim decide. Do not route around this with the shell, a script on disk, or
@@ -203,12 +209,40 @@ $targets = @()
 foreach ($t in @($data.tool_input.file_path, $data.tool_input.notebook_path)) {
     if (-not [string]::IsNullOrWhiteSpace($t)) { $targets += $t }
 }
-if ($targets.Count -eq 0) { exit 0 }
+if ($targets.Count -eq 0) {
+    # The three registered tools ALWAYS carry a path, so one of them arriving without any is the
+    # unknown case, and it is denied (R-ZERONULL: "no path" must not answer like "a path I allow").
+    if ("$($data.tool_name)" -in @('Edit', 'Write', 'NotebookEdit', 'MultiEdit')) {
+        Deny "BLOCKED (fail-closed): a $($data.tool_name) call arrived with no file_path or notebook_path, so the hook cannot tell what it would write.`n`n$GUIDANCE"
+    }
+    exit 0
+}
 
 # The repo root is this script's own location, three levels up - derived, never hard-coded, so a
 # clone or a move cannot leave the guard pointing at a directory that no longer exists.
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..')).Path.TrimEnd('\')
 $cmp = [StringComparison]::OrdinalIgnoreCase
+$repoParent = (Split-Path -Parent $repoRoot).TrimEnd('\')
+# A linked worktree carries `.git` as a FILE; only a checkout that is not one guards its own parent.
+$guardOwnParent = -not (Test-Path -LiteralPath (Join-Path $repoRoot '.git') -PathType Leaf) -and
+                  -not [string]::IsNullOrWhiteSpace($repoParent)
+
+function Get-ContainerRefusal([string]$target, [string]$why) {
+    return @"
+BLOCKED: this would write OUTSIDE the repository - $why.
+
+  $target
+
+The directory above this repository also holds the MCP SERVER PROJECTS - gitRobot and
+verdictLedger, the enforcement code that constrains this session. An agent able to edit them can
+switch off its own guard, so a ZeroParadox session does not write there. The guard denies the
+CONTAINER rather than a list of names, so a sibling added later is covered too.
+
+  - to USE the servers   -> mcp__gitRobot__* and mcp__verdictLedger__*
+  - to CHANGE them       -> an MCP-development session, scoped to that work. Not this one.
+  - to write a scratch file -> the session scratchpad or a gitRobot worktree.
+"@
+}
 
 # ** FIVE NAMES FOR ONE FILE, MEASURED (GUARD-2). ** `GetFullPath` PRESERVES the `\\?\` and `\\.\`
 # device prefixes by design - that is what they mean - so a prefixed corpus path never started with
@@ -304,6 +338,24 @@ function Get-Refusal([string]$target) {
         }
     } catch {
         return "BLOCKED (fail-closed): the hook could not resolve the target path '$target', so it cannot tell whether it is in the corpus.`n`n$GUIDANCE"
+    }
+
+    # THE CONTAINER ABOVE THE CHECKOUT -> deny (GUARD-2, the write half of block_git_gh.ps1's
+    # container leg). The directory holding this repository also holds the MCP server projects,
+    # whose source is the enforcement code constraining this session; an Edit/Write there can switch
+    # the guard off. The unit is the CONTAINER, not a list of server names, so a sibling added later
+    # is covered on arrival. Three tests, each a property:
+    #   - a path component named for the server projects, wherever it sits;
+    #   - the main checkout's known container, `<drive>:\Workspace\`, minus the repository itself;
+    #   - this script's OWN container, derived, unless this copy sits in a linked worktree (`.git`
+    #     is a file there, and its parent is the worktree area, not the server projects' home).
+    if ($full -match '(?i)\\mcp-mayhem(\\|$)') { return (Get-ContainerRefusal $target 'it names the MCP server projects') }
+    if ($full -match '(?i)^[A-Za-z]:\\Workspace\\' -and $full -notmatch '(?i)^[A-Za-z]:\\Workspace\\ZeroParadox\\') {
+        return (Get-ContainerRefusal $target 'it is in the directory ABOVE the main checkout')
+    }
+    if ($guardOwnParent -and $full.StartsWith($repoParent + '\', $cmp) -and
+        -not $full.StartsWith($repoRoot + [System.IO.Path]::DirectorySeparatorChar, $cmp)) {
+        return (Get-ContainerRefusal $target 'it is in the directory ABOVE this checkout')
     }
 
     # OUTSIDE the shared checkout -> allow. This is the worktree route, and the scratchpad, and is
