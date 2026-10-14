@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.11 | October 2026
+Version 1.12 | October 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -162,7 +162,7 @@ def build():
         '`wem_of_fixedPointFree` derives <i>weak</i> excluded middle from the general fixed-point-free '
         'principle &#8212; the latter sitting on the keystone rather than on an imported order '
         'instance. Each is a statement about the <b>principle</b>: re-proving it constructively would '
-        'prove a taboo constructively, so no choice-free re-proof exists GIVEN that the taboo is not '
+        'prove a taboo constructively, so no choice-free re-proof exists <i>given</i> that the taboo is not '
         'derivable in Lean without Classical.choice &#8212; a premise this corpus does not prove '
         '(ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV). Neither is an independence result, and '
         'neither is established by a footprint measurement &#8212; which is precisely why the '

@@ -82,6 +82,12 @@ theorem isLeastFixedPointFrom_nfp {f : Ordinal → Ordinal} (H : Order.IsNormal 
   fixed := Ordinal.nfp_fp H a
   least := fun _b hb hab => Ordinal.nfp_le_fp H.strictMono.monotone hab (le_of_eq hb)
 
+-- `Statement:` for a normal `f`, the supremum of the finite iterates from `a` is that least fixed point.
+example {f : Ordinal → Ordinal} (H : Order.IsNormal f) (a : Ordinal) :
+    IsLeastFixedPointFrom (· ≤ ·) f a (⨆ n, f^[n] a) := by
+  rw [Ordinal.iSup_iterate_eq_nfp]
+  exact isLeastFixedPointFrom_nfp H a
+
 /-! ## § IV. The ε₀ face — genuine ascent μ (seed ⊥ ≠ closure ε₀)
 
 ⚠ **THE ASCENT IS GENUINE; THE SEED IS NOT DISTINGUISHED WITHIN `[0, ε₀]`.**

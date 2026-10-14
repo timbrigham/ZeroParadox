@@ -75,9 +75,12 @@ part (measured 2026-10-08):
   and says nothing about a carrier that reaches ε₀. One such carrier is constructive and outside
   Lean: Kraus, Nordvall Forsberg and Xu (MFCS 2021, arXiv:2104.02549) build Brouwer trees with
   exponentiation at every base (Thm 18), and their cubical Agda development defines ε₀ as the limit
-  of the ω-tower and proves ε₀ = ω^ε₀; every Cantor normal form lies below it (Thm 22). A lemma that
+  of the ω-tower and proves ε₀ = ω^ε₀ (the development uses Agda's `{-# TERMINATING #-}` pragma to work
+  around one known Agda bug and one termination-checker limitation, KNX p. 3, which does not say which
+  results use it); every Cantor normal form lies below it (Thm 22). A lemma that
   ε₀ is the *least* fixed point of `ω^·` was not located there as of 2026-10-08 (searched: the paper,
-  and the Agda module `BrouwerTree.Arithmetic.Properties`).
+  and the Agda module `BrouwerTree.Arithmetic.Properties`, pinned to a commit in
+  `ZeroParadox/Ordinal/ConstructiveOrdinals.md` § Prior art).
 * **The defined reading, in Lean: `E0Note`.** `ZeroParadox/Ordinal/PricedInterface.lean` adjoins one
   point ⊤ above the notations (`E0Note := WithTop SynONote`), and `e0Repr` sends ⊤, and only ⊤, to ε₀
   (`e0Repr_eq_epsilon0_iff`). There the tower operator fixes ⊤ **by definition**
@@ -88,15 +91,23 @@ part (measured 2026-10-08):
   well-founded (the `example` stating `¬ WellFoundedLT E0Note`). That file states no leastness
   declaration. Its crossing into `Ordinal`, `e0Repr`, carries `Classical.choice` (its purity block).
 * **Open: the derived reading.** A well-founded Lean carrier whose statements are choice-free, on which ε₀'s fixed point is derived
-  rather than set by definition, leastness included, was not located as of 2026-10-08. Searched: this
-  corpus (`ZeroParadox/**/*.lean` for carriers built over ordinal notations; `E0Note` is the only one
-  reaching ε₀), three `theoremsearch` phrasings and one web search. The crossing of any such result
+  rather than set by definition, leastness included, was not located as of 2026-10-13. Searched: this
+  corpus, 2026-10-08 and again 2026-10-13 (`ZeroParadox/**/*.lean` for carriers built over ordinal notations; `E0Note` is the
+  only one reaching ε₀); and on 2026-10-13, `theoremsearch` on "epsilon zero is the least fixed point of omega
+  exponentiation on a well-founded ordinal notation system, constructive proof" (formal and
+  informal), "no ordinal below epsilon_0 satisfies omega^a = a, and omega^epsilon_0 = epsilon_0,
+  proved for a notation type with a well-founded order" (formal) and "intuitionistic ordinal notation
+  reaching epsilon_0 as a term: well-foundedness and the fixed point of the omega map without
+  excluded middle" (informal), and one web search, "Lean 4 constructive ordinal notation epsilon_0
+  fixed point well-founded without Classical.choice"; each returned Mathlib's `Ordinal` and
+  `ONote` material (its well-foundedness `NONote.lt_wf` goes through `repr`), or work outside Lean. The crossing of any such result
   into Mathlib's `Ordinal` carries choice, because the target statements are STATEMENT-CARRIED
   (above).
 
 ## Credit outward
 
-`nfp`-as-closure/nucleus is textbook fixed-point theory (Knaster–Tarski / Kleene; nuclei = point-free
+`nfp`-as-closure/nucleus is textbook fixed-point theory (its classical ordinal form is Veblen 1908, credited in
+`ZeroParadox/Order/LeastFixedPoint.md`; nuclei = point-free
 Lawvere–Tierney), which Mathlib happens not to package for `nfp`. The framework contribution is the
 **instance** — its own ⊥ / snap / ε₀ triad exhibited as this modality — and the **placement** (seeded at
 the self-dual pole), not a new theorem of the general theory.

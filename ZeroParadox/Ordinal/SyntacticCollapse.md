@@ -75,7 +75,7 @@ choice actually was:
   `[propext, Classical.choice, Quot.sound]`. Replacing that one tactic call with an explicit
   `show` + `Nat.succ_le_succ` made it `[propext]`. The choice was a tactic artifact, not structure.
 * Stating the norm bound over `ℚ` as `1 / 2 ^ v ≤ 1 / 2 ^ k` also reported choice — and so does
-  `(1 : ℚ) / 2 ^ n = 1 / 2 ^ n` proved by `rfl`, which is mathematically vacuous. Mathlib's `ℚ`
+  `(1 : ℚ) / 2 ^ n = 1 / 2 ^ n` proved by `rfl`. Mathlib's `ℚ`
   division-ring instance is choice-tainted at the instance level. Restating in `ℕ` removed it.
 
 Both are cases of choice arriving through Mathlib packaging rather than through the mathematics —
@@ -106,7 +106,7 @@ induction as item 4, generalized): `synVal (tower n) = n` is "the depth of an
 that shape holds of any sequence built by iterating a depth-increasing constructor, so on its own it
 is weak evidence.
 
-Item 4 is the non-vacuous statement on the syntactic side. It is an order→valuation implication
+Item 4 is the non-trivial statement on the syntactic side. It is an order→valuation implication
 quantified over *all* notations: not "some sequence has growing valuation", but "nothing sitting at
 or above `tower n` in the syntactic order can have depth below `n`". It is elementary (lexicographic
 induction on `cmp`) and choice-free. It does **not** cross to the 2-adic side: the bridge holds on the

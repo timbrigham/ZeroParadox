@@ -23,7 +23,12 @@ choice-free (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) is a fact about th
 past what the notation system can name (`tower_cofinal`,
 `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). What can be said instead: the ε₀ results, as stated, are
 **STATEMENT-CARRIED** (statement control, measured 2026-10-08; `ZeroParadox/Category/ChoiceCannotBe.md`),
-and whether a restatement on a choice-free carrier holds is open, not refuted.
+and a restatement on a choice-free carrier has two readings. The defined one is `E0Note`: a choice-free
+Lean restatement where uniqueness of the fixed point is proved and its existence is set by definition, on
+an order that is not well-founded (§ *The carrier, and what it actually is* and § *The closure at the top is STIPULATED, not
+discovered* below). The derived one, a well-founded Lean carrier on which the fixed point is derived,
+leastness included, was not located as of 2026-10-13 (`ZeroParadox/Ordinal/SnapNucleus.md`
+§ "Axiom footprint"); and the crossing into `Ordinal`, `e0Repr`, carries choice (the purity block).
 
 Worse, the claim was **not measurable by the instrument used to support it.** `Classical.choice` sits in
 the `Ordinal.partialOrder` *instance term*, so every statement written through that instance inherits it,
@@ -51,7 +56,8 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
   gradation among them. ⚠ **Scoped to this block on purpose.** It is not
   a fact about `Ordinal`-mentioning statements in general: `order_footprint_eq : ∀ (a : Ordinal), a = a`
   measures `[propext, Quot.sound]`, and § *Why this file exists* above cites that very theorem. Mentioning
-  `Ordinal` is not what costs choice; reaching its **order instance** is.
+  `Ordinal` is not what costs choice; reaching a choice-carrying constant, such as its **order instance**
+  or `Ordinal.omega0` (`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`'s purity block), is.
 * **⚠ `exists_fiber_supported_non_pure_pmf` is not evidence about the crossing.** It prints the same
   footprint, but so does `not_pure_of_two_support` — a PMF lemma with no `Ordinal` in its statement at
   all. **Measured**, and that measurement is the exhibited witness the claim needs: its choice is
@@ -65,9 +71,7 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
 instances and lemmas (`WithTop.instPreorder`, `WithTop.decidableLE`, `WithTop.decidableLT`,
 `WithTop.instOrderTop`, `WithTop.coe_lt_top`, each `[propext, Quot.sound]`), not through anything
 about ordinals: `SynONote`'s own order, `instLinearOrderSynONote`, measures `[propext]`. It is *not*
-`Classical.choice`, and no declaration on the constructive side carries choice. The one proof here
-that does is the `example` stating `¬ WellFoundedLT E0Note`, through `WellFounded.has_min`; its
-statement does not.
+`Classical.choice`, and no declaration on the constructive side carries choice.
 
 So the boundary is *priced*: the notation side's declarations cost at most `[propext, Quot.sound]` and
 never `Classical.choice`; crossing to `Ordinal` costs `Classical.choice` at every declaration; and the
@@ -76,18 +80,14 @@ crossing is one named map rather than a diffuse correspondence.
 **What that measurement does and does not license.** It locates where the classical assumption is paid
 on this pair of carriers. It does **not** show that Mathlib's ε₀ results are eliminable: as stated they
 are STATEMENT-CARRIED, so no proof of them can drop the choice, and the open question is a restatement
-on a choice-free carrier. Its state is in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint":
-the ascent is restated; for the results that name ε₀, this file's carrier gives the defined reading
-(the fixed point at ⊤ by definition, its uniqueness a theorem, on an order that is not well-founded),
-and the derived reading is open there. This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.md` records. Scoped to
+on a choice-free carrier, with the two readings of § *Why this file exists — a correction of record*:
+the defined one on `E0Note`, and the derived one, not located in Lean. Its state is in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint".
+This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.md` records. Scoped to
 what is measured: *the ascent below ε₀ borrows a tool far stronger than it needs*, because its
-counterpart on notations measures `[propext]`; whether the same holds for the results that name ε₀,
-leastness included, on a carrier where the fixed point is derived, is the open question, not a
-finding. Note also the standing caveat from
+counterpart on notations measures `[propext]`. Note also the standing caveat from
 `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` — `Classical.choice` sits in `Ordinal`'s order
-*instance term*, so a statement that reaches that instance carries the choice whatever its proof, and
-a statement that mentions `Ordinal` without reaching it does not (`order_footprint_le` against
-`order_footprint_eq`, as in § *The measured price* above). The purity block is a measurement of the
+*instance term*, so a statement that reaches that instance carries the choice whatever its proof
+(`order_footprint_le` against `order_footprint_eq`, as in § *The measured price* above). The purity block is a measurement of the
 interface, not a verdict on any particular proof's essential needs.
 
 ## The carrier, and what it actually is
