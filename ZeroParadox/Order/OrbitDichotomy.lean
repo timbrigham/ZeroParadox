@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the "1-or-∞, no finite middle" dichotomy as an orbit argument — the provable "trunk" behind self-referential fixed-point counts; the framework's scale map is a checkable branch, the λ-calculus (TLCA #25) the open one. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the "1-or-∞, no finite middle" dichotomy as an orbit argument — a sufficient condition for that shape, which is not universal (§ fpp below); the framework's scale map is a checkable branch, the λ-calculus (TLCA #25) the open one. Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import Mathlib.Tactic
 
@@ -28,6 +28,13 @@ elementary; the point is that it is the *trunk* of which the framework's scale/v
 *checkable* branch, while the λ-calculus fixed-point-count question (TLCA Open Problem #25) is the branch
 where the hypothesis is open. No new mathematics; a placement.
 -/
+
+/-! ## § fpp — the λ-calculus name for the shape, and where it fails
+Reading: there the shape is the **fixed point property (fpp)**: Manzonetto, Polonsky, Saurin & Simonsen,
+*The fixed point property and a technique to harness double fixed point combinators*, J. Logic and
+Computation (2019), doi:10.1093/logcom/exz013, Def. 2.15. TLCA #25 is their Problem 2, "Does λβ satisfy
+the fixed point property?". No sensible λ-theory satisfies it (their Thm 5.4), and in each one, for every
+k > 0, some closed term has exactly k fixed points modulo that theory (their Prop. 5.6). -/
 
 namespace ZeroParadox
 

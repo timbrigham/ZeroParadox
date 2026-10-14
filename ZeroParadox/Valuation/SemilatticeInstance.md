@@ -63,7 +63,8 @@ framework's own `InfinitudeFloor` declares `floor : α` and `member : ℕ → α
 defines the floor's complexity as the supremum of the climbers'. `tower_height_floor_reconciliation`
 (`ZeroParadox/Valuation/TowerHeightFloor.lean`) carries the account this folder uses: two
 carrier-specific closures — ε₀ in `Ordinal`, 0 in `ℤ_[2]` — co-witnessed by one construction and
-held apart by the antitone map `cnfToZp2`, never identified.
+held apart by the map `cnfToZp2` (its order behaviour along the tower: the docstring of
+`tower_height_floor_reconciliation`), never identified.
 
 **The chain approaches the 2-adic depth of zero by its own forward motion, not by reversing
 direction.** No inverse operation is used, and none is available in the lattice — the signature has

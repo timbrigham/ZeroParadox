@@ -91,9 +91,9 @@ fields which do not admit non-trivial places are precisely the algebraic extensi
 ⚠ The *setting* here is more general; the *results* are incomparable, since `F̄_p` is infinite and this
 says nothing about it. Credit points outward.
 
-For the degenerate half: a trivial algebra satisfies every positive axiom, so only a negated atom
-excludes it — Burris & Sankappanavar, *A Course in Universal Algebra*, p. 251. That is why a
-non-degeneracy condition must be an inequation rather than a further equation. ⚠ Their neighbouring
+For the degenerate half, why a non-degeneracy condition must be an inequation rather than a further
+equation: Burris & Sankappanavar, *A Course in Universal Algebra*, each passage with its own page, as
+cited in `ZeroParadox/Valuation/InfinitudeFloor.md` § *Prior art*. ⚠ Their neighbouring
 "trivial algebras satisfy any quasi-identity" does **not** apply here: `val_scale`'s antecedent
 `x ≠ bot` is a negated atom, and a quasi-identity admits only positive ones.
 

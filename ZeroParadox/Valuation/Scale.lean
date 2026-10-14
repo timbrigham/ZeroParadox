@@ -166,10 +166,16 @@ theorem val_selfMem_singleton :
     every axiom over it. ⭐ PRIOR ART — these theorems DUPLICATE it:
     `multiplicity_addValuation PadicInt.prime_p : AddValuation ℤ_[2] ℕ∞` discharges all four
     from stock Mathlib at the same axiom footprint, its `val_scale` STRICTLY STRONGER (unguarded,
-    holding at 0 as well). The ℕ∞-target rationale, the classical names, the neighbour
-    `BottomValuation`, and the synthesis fence are in `ZeroParadox/Valuation/Scale.md` § V. -/
+    holding at 0 as well), stated over the cast prime of the example below. The ℕ∞-target rationale,
+    the classical names, the neighbour `BottomValuation`, and the synthesis fence are in
+    `ZeroParadox/Valuation/Scale.md` § V. -/
 
 section PadicParallel
+
+-- Statement: the stock prime `PadicInt.prime_p` is the cast `((2 : ℕ) : ℤ_[2])`; one `Nat.cast_ofNat`
+-- rewrite reaches the numeral `2` that `q2Val_scale` uses.
+example : Prime (2 : ℤ_[2]) := by
+  rw [← Nat.cast_ofNat (R := ℤ_[2]) (n := 2)]; exact PadicInt.prime_p
 
 noncomputable instance instDecidableEqZ2 : DecidableEq ℤ_[2] := Classical.decEq _
 
@@ -235,10 +241,9 @@ set_option linter.flexible false in
     in it, tainted anyway. ⚠ The class's own
     numeral is a SEPARATE cost, and an ACCIDENTAL one in the sense
     `ZeroParadox/Category/ChoiceCannotBe.lean` defines and sources: respelling the successor as a
-    cast from ℕ clears the class outright. ⚠ Two INDEPENDENT reasons to read the numeral half as
-    pin-relative: Brasca and Clemente (arXiv:2603.17457, §2.2) record the same `OfNat` route being
-    tainted and then repaired upstream, and `ZeroParadox/Valuation/PricedPadicInterface.lean` § I
-    dates its own measurements for that reason. The CARRIER half is not pin-relative in the same
+    cast from ℕ clears the class outright. ⚠ The numeral half is pin-relative; its routes, its
+    dated measurements and the Brasca–Clemente prior art are in
+    `ZeroParadox/Valuation/PricedPadicInterface.lean` § I (`enat_add_choice`). The CARRIER half is not pin-relative in the same
     way — it follows from the printer walking the TYPE, so it holds of any statement mentioning
     `ℤ_[2]` for as long as `PadicInt` is built with choice. ⚠ The two counterfactual PAIRS below emit exactly that — carrier,
     then numeral. ⚠ The UNIVERSALS here (any lawful join serves; ruled out for every spelling)
