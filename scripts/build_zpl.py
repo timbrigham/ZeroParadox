@@ -540,7 +540,7 @@ def build():
             '  if &#946; < &#949;&#8320; then c&#8320; else c&#8321;',
             'The canonical map is order-non-decreasing.',
             'Proof: four cases (&#945;/&#946; vs &#949;&#8320;). The case &#945; &#8805; &#949;&#8320; '
-            'with &#946; < &#949;&#8320; is impossible by &#945; &#8804; &#946; (closed inside snap_map_mono). '
+            'with &#946; < &#949;&#8320; contradicts &#945; &#8804; &#946;. '
             'Each live case closes by rfl from the MachinePhase join definition.',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
         ]
