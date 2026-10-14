@@ -594,6 +594,43 @@ def emit_ex(step, tier, verdict, subjects, basis, reason=None,
 # STALE for ever, because the validator accepted a 64-hex digest while the comparator resolved a
 # 40-hex object id.
 
+# ⚠⚠ `panel` IS M-OF-N, AND BOTH NUMBERS ARE CONSTANTS BY RULING, NOT BY TASTE. Tim, 2026-10-14:
+# all three readers must have RUN (R5a), and the threshold is fixed at 2 of 3 with no flag to choose
+# it and no policy key to tune it (R5d). A threshold the caller supplies is a threshold the caller
+# can lower; one written here can only be changed by a reviewed edit to this file.
+# ⚠ THE SERVER'S FLOOR IS ALSO 2 (`policy.panel.min_threshold`, served default — `policy()` exposes
+# no `panel` key, measured 2026-10-13). Equal today; if the server floor ever rises above this, V23
+# refuses every panel record, loudly, which is the safe direction for the two to disagree in.
+PANEL_PASSES = 3
+PANEL_THRESHOLD = 2
+# The two values a panel finding's `shift` may take (R5c). The FIELD NAME is shared with
+# `.claude/commands/copy-editor.md`, which tells each reader to write it; renaming it here strands
+# the brief. ⚠ The ledger stores the key without judging it (V18 reads `severity` only; validated
+# 2026-10-14 with `shift: wording` on a PASS, `ok:true`), so THIS FILE is the only reader of it.
+PANEL_SHIFTS = ("meaning", "wording")
+# The two values a copy_editor finding's `vote` may take: the vote of the READER WHO MADE IT, copied
+# as given. It is what lets this file see whether a panel PASS carries its dissent at all. ⚠ The
+# ledger stores the key without judging it (validated 2026-10-14 with `vote` on a panel PASS,
+# `ok:true`), so, like `shift`, THIS FILE is the only reader of it.
+PANEL_VOTES = ("pass", "divergent")
+# The one step `panel` belongs to (R5d puts the constant in the copy-editor path). The meaning /
+# wording vocabulary is the copy-editor brief's; no other gate's readers are asked to write it.
+PANEL_STEP = "copy_editor"
+
+
+def decided_for(how, passes, agreed, who):
+    """The `decided` dict, built in ONE place so `--selftest` can read its bytes.
+
+    ⚠ `threshold` IS WRITTEN ONLY UNDER `panel`. V23 requires it ON a panel record (*"requires
+    integer decided.passes, decided.agreed and decided.threshold"*), while every other route's
+    record must stay byte-identical to what it was — an `agreement` record growing a key it never
+    carried would be a new payload under V11 and conflict with its own earlier copy."""
+    d = {"how": how, "passes": passes, "agreed": agreed, "who": who}
+    if how == "panel":
+        d["threshold"] = PANEL_THRESHOLD
+    return d
+
+
 def _cli(argv):
     import argparse
     import io
@@ -640,11 +677,14 @@ def _cli(argv):
                     help="A = an agent gate actually ran; H = a human decided. 'M' is mechanical "
                          "and belongs to common.record_if_asked, not here.")
     ap.add_argument("--how", required=True,
-                    choices=["delegated", "agreement", "signature", "override"],
+                    choices=["delegated", "agreement", "panel", "signature", "override"],
                     help="delegated = ONE agent round, no consensus claimed (the normal route for "
                          "a gate brief); agreement = 3+ independent passes concurred and the round "
-                         "RAN; signature = a PERSON accepted a verdict the round did not produce; "
-                         "override = a regrade, the gate erred. 'mechanical' is REFUSED here.")
+                         "RAN; panel = --step copy_editor only, exactly 3 passes ran and at least 2 "
+                         "concurred, the dissent "
+                         "CARRIED on the record and never outvoted when it is bedrock or says the "
+                         "meaning moved; signature = a PERSON accepted a verdict the round did not "
+                         "produce; override = a regrade, the gate erred. 'mechanical' is REFUSED here.")
     # ⚠⚠ THE BRIEF, NOT THE AGENT — AND THIS IS WHY `delegated` NEEDED NO NEW MECHANISM.
     # Attribution is not authentication: `sign` already concedes that, and no key material exists
     # here, so "prove you are that agent" was never on the table. What IS checkable is WHICH
@@ -654,7 +694,8 @@ def _cli(argv):
     # review rather than at checkers.
     ap.add_argument("--evidence", nargs="+", default=None,
                     help="path(s) to the BRIEF this round ran under, e.g. "
-                         ".claude/commands/adversary-review.md. REQUIRED for a delegated PASS. "
+                         ".claude/commands/adversary-review.md. REQUIRED for a delegated PASS, "
+                         "and for every agreement or panel verdict. "
                          "Not the checker module — the instructions.")
     # ⚠ A FILE, NOT ARGV. Findings carry prose notes, and prose on a command line breaks on
     # length, quoting and encoding — the same reason `--reason-file` exists. JSON list of
@@ -678,7 +719,11 @@ def _cli(argv):
                     help="JSON file of findings to carry ON the record (V18). Use when the round "
                          "reached its ORDINARY cap and R-LOOPCAP says stop-and-push: the verdict "
                          "admits, and these ride with it so they do not evaporate. Only severity "
-                         "'ordinary' may accompany a PASS.")
+                         "'ordinary' may accompany a PASS. Under --how panel it is REQUIRED on a "
+                         "split PASS. On a --step copy_editor PASS under agreement or panel, every "
+                         "finding needs `shift` set to 'meaning' or 'wording' ('meaning' is "
+                         "refused) and `vote` set to 'pass' or 'divergent'; a panel PASS needs at "
+                         "least one 'divergent' finding and an agreement PASS may carry none.")
     # ⚠⚠ `subjects` IS COVERAGE; `failing` IS INDICTMENT — AND UNTIL 2026-09-06 THIS CLI COULD ONLY
     # EXPRESS THE FIRST. `emit()` has taken `failing` since 2026-09-02 and `common.emit_verdict`
     # passes it, so every MECHANICAL step has named its indicted subset since 09-03. The review
@@ -702,9 +747,13 @@ def _cli(argv):
                          "blocking verdict: absent `failing` indicts EVERY subject, so omitting it "
                          "on a FAIL over 40 files condemns 39 that passed.")
     ap.add_argument("--passes", type=int, default=1,
-                    help="how many independent passes ran (agreement only)")
-    ap.add_argument("--agreed", type=int, default=1,
-                    help="how many of them concurred (agreement only)")
+                    help="how many independent passes ran (agreement: 3 or more; panel: exactly 3)")
+    # ⚠ DEFAULT `None`, RESOLVED TO 1 BELOW FOR EVERY ROUTE EXCEPT `panel`. A panel's agreed count
+    # IS its verdict, so it must be STATED; a default of 1 would let an omitted flag read as "one
+    # reader concurred". Every other route still records 1 when the flag is absent, byte for byte.
+    ap.add_argument("--agreed", type=int, default=None,
+                    help="how many of them concurred (agreement: all of them; panel: REQUIRED, "
+                         "at least 2 for a PASS)")
     ap.add_argument("--who", default=None, help="who decided it (agent id, or a person)")
     ap.add_argument("--reason", default=None, help="one line, recorded on a FAIL")
     # ⚠⚠ CONTENT NEVER TRAVELS ON A COMMAND LINE, AND HERE IT IS NOT A STYLE POINT. The PreToolUse
@@ -781,6 +830,40 @@ def _cli(argv):
                     print(opt)
         return 0
     a = ap.parse_args(argv)
+    # ⚠ `panel` IS THE COPY-EDITOR PANEL AND NOTHING ELSE (R5d). Its threshold, its passes and its
+    # `shift` vocabulary were ruled for that gate's three readers; on another step the record would
+    # claim a 2-of-3 vote no brief ever ran.
+    if a.how == "panel" and a.step != PANEL_STEP:
+        ap.error("--how panel is the copy-editor panel's route only (--step %s, R5d); got --step "
+                 "%s. Another gate's single round is --how delegated, and three unanimous passes "
+                 "are --how agreement." % (PANEL_STEP, a.step))
+    # ⛔⛔ A COPY_EDITOR PASS MUST NOT BE RECORDABLE WITHOUT ITS DISSENT, AND THE GUARD IS ON THE
+    # PROPERTY, SO EVERY `--how` IS ACCOUNTED FOR HERE:
+    #   delegated  — one round, no headcount, no outstanding required: a 2-1 split with a MEANING
+    #                dissent lands as a clean PASS. REFUSED below, on every verdict: the brief never
+    #                records this way, and a delegated record at the panel's basis would also take
+    #                revision 0 and leave the carrier's real record refused by V11.
+    #   agreement  — PASS needs 3 of 3 (V3 mirror, below), and any finding it carries needs `shift`
+    #                and `vote`, may not be 'meaning', and may not carry a 'divergent' vote
+    #                (outstanding loop, below). A carrier who writes `--agreed 3` over a split and
+    #                tags every finding 'pass' cannot be detected by any client; that is the residual.
+    #   panel      — PASS needs 2 of 3, never 3, and an outstanding file whose every finding is
+    #                tagged and ordinary wording, at least one with vote 'divergent'. Completeness
+    #                and faithful copying of the tags are not checkable.
+    #   signature, override — Tim's routes: a PERSON accepts or regrades. Left open by design.
+    #   mechanical — not in `choices`; refused by argparse.
+    if a.step == PANEL_STEP and a.how == "delegated":
+        ap.error("--step %s refuses --how delegated: a single round records no headcount and no "
+                 "dissent, so a 2-1 split would land as a clean verdict. The carrier records ONE "
+                 "record for the three readers: --how agreement (3 of 3), --how panel (2 of 3, every "
+                 "reader's findings on --outstanding-file), or --verdict undecided. See "
+                 ".claude/commands/copy-editor.md." % PANEL_STEP)
+    if a.agreed is None:
+        if a.how == "panel":
+            ap.error("--agreed is required with --how panel: how many of the %d readers concurred "
+                     "IS the verdict, so it is stated, never defaulted. An omitted count would "
+                     "record one concurring reader the round never reported." % PANEL_PASSES)
+        a.agreed = 1
 
     if a.reason_file:
         if a.reason:
@@ -870,8 +953,39 @@ def _cli(argv):
                      "verdict that names no blob, because staleness is computed by watching a "
                      "named blob move. Only --how signature and --how override are exempt, and "
                      "they are exempt because a human decision has no producing file at all.")
+    elif a.how == "panel":
+        # ⚠⚠ THE `panel` CONTRACT (Tim's R5, 2026-10-03; follow-ups R5a-d, 2026-10-14). A 2-of-3
+        # copy-editor split used to be recordable only as UNDECIDED, routed to his signature, and
+        # wave 4 measured the price: two of his decisions re-asked and ~10 of 13 extra gate rounds
+        # downstream of a split (`CARRYW4-X-1`). `panel` lets a split whose dissent is WORDING
+        # admit, while a dissent that is bedrock or says the meaning moved still blocks.
+        #
+        # ⚠ EVERY REQUIREMENT HERE IS ON EVERY panel VERDICT, NOT ONLY THE PASS. V23 refuses a panel
+        # record with no `who` and V21 one with no blob, PASS and UNDECIDED alike (measured
+        # 2026-10-13); refusing locally names the remedy instead of spending a round trip on it.
+        if not a.who:
+            ap.error("--who is required with --how panel: name the GATE whose readers sat on the "
+                     "panel (e.g. --who copy_editor). V23 refuses a panel record without it.")
+        if a.tier != "A":
+            ap.error("--how panel requires --tier A: it records that three AGENT readers actually "
+                     "ran. 'H' claims a human decided, which is --how signature.")
+        if not a.evidence:
+            ap.error("--evidence is required for --how panel: give the path to the BRIEF the "
+                     "readers ran under. Three readers following one brief have ONE producer, as "
+                     "under --how agreement, and V21 refuses any verdict that names no blob.")
+        # ⚠ R5a — ALL THREE READERS RAN. Not "at least 3": a panel of four with a 2-vote threshold
+        # is a minority verdict, and the ruling fixed both numbers together.
+        if a.passes != PANEL_PASSES:
+            ap.error("--how panel requires --passes %d (R5a: all three readers must have run); got "
+                     "passes=%d. A panel with a reader missing is not a 2-of-3 split — it is a "
+                     "round that did not finish. Run the missing reader, or record --verdict "
+                     "undecided under a route that does not claim a panel."
+                     % (PANEL_PASSES, a.passes))
+        if not 0 <= a.agreed <= a.passes:
+            ap.error("--agreed must lie between 0 and --passes (%d); got %d. More readers cannot "
+                     "concur than ran." % (a.passes, a.agreed))
     elif a.evidence:
-        ap.error("--evidence belongs to --how delegated or --how agreement — both are produced by "
+        ap.error("--evidence belongs to --how delegated, agreement or panel — all are produced by "
                  "a BRIEF, and a panel of three reading one brief still has one producer. "
                  "--how signature (a human accept) and --how override (a regrade) have no "
                  "producing file at all, which is a difference in KIND rather than headcount.")
@@ -905,6 +1019,42 @@ def _cli(argv):
                  "A FAIL needs none of this: one agent's finding stands on its own."
                  % (a.passes, a.agreed))
 
+    # ⚠⚠ THE panel PASS, AND THE V3 MIRROR ABOVE IS DELIBERATELY UNTOUCHED BY IT. `agreement` stays
+    # unanimous; `panel` is a SEPARATE route with its own threshold, never a relaxed `agreement`.
+    if a.verdict == "pass" and a.how == "panel":
+        if a.agreed < PANEL_THRESHOLD:
+            ap.error("a PASS under --how panel needs --agreed >= %d of %d (R5d, a constant in this "
+                     "file, no flag and no policy key); got agreed=%d. A split below threshold is "
+                     "recorded honestly as --verdict undecided, and goes to Tim."
+                     % (PANEL_THRESHOLD, PANEL_PASSES, a.agreed))
+        # ⚠ R-ZERONULL: A SPLIT MUST NOT RECORD THE VALUE A UNANIMOUS ROUND RECORDS. Unanimity has a
+        # route already, the stronger one. Two spellings of one fact means a reader of the ledger
+        # can no longer tell "all three concurred" from "two did and the third was carried".
+        if a.agreed == a.passes:
+            ap.error("all %d readers concurred, so this is --how agreement, not --how panel. "
+                     "`panel` records a SPLIT; a unanimous round recorded under it would make a "
+                     "split and a unanimous verdict indistinguishable in the ledger." % a.passes)
+        # ⚠⚠ WHAT IS ENFORCED, AND WHAT CANNOT BE. Enforced here: a split PASS needs a non-empty
+        # outstanding file; every finding on it has its `severity`, `shift` and `vote` checked; and
+        # at least one finding must carry `vote: 'divergent'` (outstanding loop, below), so a file
+        # holding only the PASS voters' findings is refused. NOT enforceable by any client: that the
+        # list holds EVERY finding the dissenting reader wrote, and that each tag, `vote` included,
+        # is the one the reader gave. This file never sees the readers' raw output, only what the
+        # carrier copied, so a carrier who leaves out the one MEANING finding, relabels it
+        # 'wording', or marks a PASS voter's finding 'divergent', is accepted. That half
+        # rests on the brief's copy-verbatim instruction and on the raw outputs in the carrier's
+        # report, which a human can audit against the record.
+        # ⚠ THIS MAKES THE CLIENT STRICTER THAN THE SERVER, the direction that hides a refusal from
+        # the ledger's call log; accepted for the same reason as the evidence fence below — the
+        # ledger reads only what rides on the record, so it has no half that could see an absent one.
+        if not a.outstanding_file:
+            ap.error("a split PASS under --how panel (%d of %d) needs --outstanding-file carrying "
+                     "every reader's findings, the dissenting reader's among them. The ledger can "
+                     "refuse a bedrock dissent only if it rides on the record, so a dropped dissent "
+                     "is an outvoted one that nothing could see. Carry each finding with its "
+                     "reader's own severity, `shift` ('meaning' or 'wording') and `vote` ('pass' or "
+                     "'divergent')." % (a.agreed, a.passes))
+
     # ⚠⚠ NO CHECK CAN DECIDE WHETHER A NAME BELONGS TO A PERSON, SO IT IS STATED INSTEAD OF TESTED.
     # `agreement` refuses a single agent round, which makes the tempting fix `signature` with the
     # AGENT as `who` — and that is the anonymous-approval hole V5 closes, with a robot's name written
@@ -937,7 +1087,13 @@ def _cli(argv):
     # an agent might read as "the ledger is down".
     outstanding = ()
     if a.outstanding_file:
-        outstanding = json.loads(io.open(a.outstanding_file, encoding="utf-8").read())
+        # ⚠ A USAGE ERROR, NOT A TRACEBACK: exit 1 is this layer's "finding" code, and a missing or
+        # unparseable file is a mistake in the command, which argparse reports as exit 2.
+        try:
+            outstanding = json.loads(io.open(a.outstanding_file, encoding="utf-8").read())
+        except (IOError, OSError, ValueError) as exc:
+            ap.error("--outstanding-file %r could not be read as JSON: %s"
+                     % (a.outstanding_file, exc))
         if not isinstance(outstanding, list) or not outstanding:
             ap.error("--outstanding-file must hold a non-empty JSON list of findings; omit the "
                      "flag entirely for a genuinely clean pass")
@@ -951,6 +1107,54 @@ def _cli(argv):
                          "R-LOOPCAP's stop-and-push at the ORDINARY cap and must NEVER become a "
                          "way to ship a bedrock or blocking finding — BEDROCK gets 5 rounds and "
                          "must not ship. Record the FAIL instead." % f.get("severity"))
+            # ⚠⚠ R5c — A "THE MEANING MOVED" DISSENT ALWAYS BLOCKS, WHATEVER ITS SEVERITY TAG. A panel
+            # outvotes only wording and expression. The severity is the DISSENTING READER'S own grade
+            # (R5b) and this file never rewrites it; it reads `shift` beside it instead, so a reader
+            # who tags a meaning change 'ordinary' still cannot be outvoted on it. ⚠ The check above
+            # already refuses a bedrock dissent on any PASS; this is the half V18 cannot see,
+            # because the server reads `severity` and nothing else.
+            # ⚠ ON BOTH AGENT ROUTES OF THE STEP, NOT ONLY `panel`: under the union rule a finding is
+            # not owned by the vote it came with, so a MEANING finding from a reader who voted PASS
+            # blocks a 3/3 `agreement` PASS too. `shift` and `vote` are REQUIRED on a PASS, or
+            # omitting a key would walk a finding past the refusal it feeds. ⚠ ON A PASS ONLY: a
+            # FAIL or UNDECIDED blocks whatever its findings say, and a client guard must never be
+            # the thing that stops a real blocking verdict from landing. `signature` and `override`
+            # are Tim's, and a person accepting a split may carry what he accepted.
+            if a.step == PANEL_STEP and a.how in ("agreement", "panel") and a.verdict == "pass":
+                if f.get("shift") not in PANEL_SHIFTS:
+                    ap.error("every finding on a --step %s PASS under --how %s needs `shift` set "
+                             "to one of %s; got %r. It is what decides whether a finding may ride "
+                             "on a PASS at all (R5c), so an unmarked finding cannot be weighed — "
+                             "ask the reader which it was, never guess."
+                             % (PANEL_STEP, a.how, ", ".join(PANEL_SHIFTS), f.get("shift")))
+                if f.get("vote") not in PANEL_VOTES:
+                    ap.error("every finding on a --step %s PASS under --how %s needs `vote` set to "
+                             "one of %s, the vote of the reader who made it, copied as given; got "
+                             "%r. Without it nothing can show whether the dissent was carried."
+                             % (PANEL_STEP, a.how, ", ".join(PANEL_VOTES), f.get("vote")))
+                if f.get("shift") == "meaning":
+                    ap.error("a %s PASS (--how %s) cannot carry a finding whose `shift` is "
+                             "'meaning' (R5c): a \"the meaning moved\" finding from ANY reader "
+                             "ALWAYS blocks, whatever its severity tag (here %r) and whatever its "
+                             "reader voted. Record --verdict undecided; it goes to Tim."
+                             % (PANEL_STEP, a.how, f.get("severity")))
+        # ⚠⚠ THE DISSENT, READ OFF THE `vote` TAGS (every finding has one by now, checked above).
+        # A panel PASS is a split, so its dissenting reader's findings must be on it; a file holding
+        # only PASS voters' findings is a dropped dissent. An agreement PASS is unanimous, so a
+        # 'divergent' finding on it contradicts its own headcount. Both read only the tags the
+        # carrier copied; whether they were copied faithfully is not checkable here.
+        if a.step == PANEL_STEP and a.verdict == "pass":
+            votes = [f.get("vote") for f in outstanding]
+            if a.how == "panel" and "divergent" not in votes:
+                ap.error("a %s panel PASS must carry at least one finding with `vote` 'divergent': "
+                         "the lone DIVERGENT reader's own findings. None is marked so, which means "
+                         "the dissent was not carried, or it reported no findings (then the round "
+                         "is UNDECIDED, never a panel PASS)." % PANEL_STEP)
+            if a.how == "agreement" and "divergent" in votes:
+                ap.error("a %s agreement PASS records three PASS votes, so it cannot carry a finding "
+                         "with `vote` 'divergent'. A DIVERGENT reader means a split: --how panel "
+                         "if its findings are all WORDING and ORDINARY, otherwise --verdict "
+                         "undecided." % PANEL_STEP)
     # ⚠⚠ VALIDATED AGAINST THE POST-FENCE `subjects`, NEVER AGAINST `--files`. `ledger_subjects`
     # DROPS paths absent from the ref or differing from the index, so `--files` is what the caller
     # asked for and `subjects` is what is actually being recorded. Indicting a path that was fenced
@@ -1133,9 +1337,13 @@ def _cli(argv):
     kw = dict(step=a.step, tier=a.tier, verdict=a.verdict.upper(), subjects=subjects,
               basis=common.ledger_basis(a.ref), reason=a.reason, evidence=ev,
               outstanding=outstanding, revision=a.revision, failing=failing,
-              decided={"how": a.how, "passes": a.passes, "agreed": a.agreed, "who": a.who})
+              decided=decided_for(a.how, a.passes, a.agreed, a.who))
 
     if a.dry_run:
+        # ⚠ PRINTED BEFORE THE LEDGER IS ASKED, so the bytes are readable even when it cannot be.
+        # `decided` is the one field whose SHAPE differs by route (`threshold` under panel only),
+        # and a dry run that hid it would certify a record nobody could inspect.
+        print("  decided  %s" % json.dumps(kw["decided"]))
         verdict = check(**kw)
         # ⚠⚠ `None` IS NOT `(False, [])`. Unreachable is exit 2 and prints nothing about the record's
         # quality, because nothing was learned about it. `check` already printed the outage line.
