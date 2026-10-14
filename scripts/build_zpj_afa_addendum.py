@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.17 | October 2026
+Version 1.18 | October 2026
 Reads after ZP-J Self-Reference.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -363,9 +363,10 @@ def build():
     E.append(result_box(
         'Lemma: val_iterate (ZeroParadox/Settheory/APG.lean &#167; III)',
         [
-            '&#8704; (x : U) (hx : x &#8800; bot) (k : &#8469;),',
+            '&#8704; {U : Type*} [ZPSemilattice U] [ValuationStructure U] (x : U),',
+            '  x &#8800; ZPSemilattice.bot &#8594; &#8704; (k : &#8469;),',
             '  ValuationStructure.val (ValuationStructure.scale^[k] x) =',
-            '    ValuationStructure.val x + k',
+            '    ValuationStructure.val x + &#8593;k',
             'For any x &#8800; &#8869;, applying scale k times increases depth by exactly k.',
             'Proof: induction on k; val_scale applies at each step because '
             'scale^[n](x) &#8800; &#8869; follows from the induction hypothesis '
@@ -381,8 +382,9 @@ def build():
     E.append(result_box(
         'Lemma: scale_iterate_unique_fp (ZeroParadox/Settheory/APG.lean §IV)',
         [
-            '&#8704; (k : &#8469;) (hk : 0 < k) (x : U),',
-            '  ValuationStructure.scale^[k] x = x &#8594; x = bot',
+            '&#8704; {U : Type*} [ZPSemilattice U] [ValuationStructure U] (k : &#8469;),',
+            '  0 < k &#8594; &#8704; (x : U), ValuationStructure.scale^[k] x = x &#8594;',
+            '  x = ZPSemilattice.bot',
             '&#8869; is the only element fixed by any k-fold iteration of scale (k &#8805; 1).',
             'Proof: if scale^[k] x = x and x &#8800; &#8869;, then val_iterate gives '
             'val(x) = val(x) + k with k &#8805; 1 &#8212; contradiction.',
@@ -395,8 +397,9 @@ def build():
         'Theorem: cyclic_decoration_eq_bot '
         '(ZeroParadox/Settheory/APG.lean &#167; VII&#8242;)',
         [
-            '&#8704; (d : V &#8594; U) (hd : IsDecoration d) (v : V),',
-            '  HasSelfCycle v &#8594; d v = bot',
+            '&#8704; {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U]',
+            '  [ValuationStructure U] [DecorationUniverse U] (d : V &#8594; U),',
+            '  IsDecoration d &#8594; &#8704; (v : V), HasSelfCycle v &#8594; d v = ZPSemilattice.bot',
             'Consequence: d&#8321; v = d&#8322; v = &#8869; for every cyclic vertex v.',
             'Proof route, as written: collect_val_ge across one edge gives '
             'val(d v) &#8805; val(d w) + 1, path_val_chain around the cycle gives '
@@ -557,16 +560,21 @@ def build():
             #   *"PROVENANCE and NECESSITY are independent axes, and the first version of this
             #   heading conflated them"* — and the corrected text keeps them apart: the tainted
             #   INSTANCE is Mathlib's, the SPELLING that reaches for it is this framework's, and
-            #   the dependence is accidental because a respelling clears it.
-            'Classical.choice &#8212; AT LEAST THREE ROUTES, and they are not the same '
-            'claim. (a) THE CLASS: the numeral `1` in val_scale needs Mathlib&#8217;s '
+            #   a respelling clears it from the class.
+            'Classical.choice &#8212; AT LEAST FOUR ROUTES, and they are not the same '
+            'claim. (a) THE CLASSES: the numeral `1` in val_scale needs Mathlib&#8217;s '
             'AddMonoidWithOne &#8469;&#8734; instance, choice-tainted at the INSTANCE '
             'level, so ValuationStructure carries the axiom as a bare typeclass before any '
-            'theorem. (b) A DIRECT CALL: decoration_unique&#8217;s proof takes an edge out '
+            'theorem; DecorationUniverse&#8217;s own `+ 1` in collect_val_ge reaches the same '
+            'instance. (b) A DIRECT CALL: decoration_unique&#8217;s proof takes an edge out '
             'of a Nonempty via hw.some, and Nonempty.some IS Classical.choice &#8212; not '
             'inherited through packaging, invoked. (c) CARDINALITY: the termination measure '
             'runs on Set.ncard, and Set.ncard_lt_ncard and Set.ncard_pos are each '
-            'independently choice-tainted. &#8212; And the OLD attribution could not have been right for a reason stronger than absence: Finset and Fintype each report [propext, Quot.sound], so neither has any choice to supply. Fintype IS a hypothesis of decoration_unique, printed in its own box above; what it buys is the termination measure, not the axiom.',
+            'independently choice-tainted. (d) THE CASE SPLIT: the proof&#8217;s by_cases on '
+            'HasSelfCycle u is decided by Classical.propDecidable, one of the three classical-instance '
+            'gateways through which, jointly, 55.4% of Mathlib&#8217;s choice-dependence flows '
+            '(L. J. Close, The Axiom Profile of Mathlib, Zenodo 2026, doi:10.5281/zenodo.20710921, '
+            'pp. 5&#8211;6; cited, not claimed).',
             'Quot.sound       &#8212; quotient soundness (standard in Lean 4)',
             '&#8226; A RESTATEMENT CLEARS IT FOR THE CLASS; NO PROOF CAN CLEAR IT FOR THE '
             'THEOREM AS STATED &#8212; and the difference is the whole claim. '
@@ -580,11 +588,11 @@ def build():
             'Quot.sound] (the statement control, measured 2026-10-09), so no proof of '
             'decoration_unique as stated can remove it &#8212; the STATEMENT-CARRIED class of '
             'ZeroParadox/Category/ChoiceCannotBe.md, recorded at DecorationUniverse in '
-            'ZeroParadox/Settheory/APG.lean. Routes (b) and (c) lie in the proof, not the '
+            'ZeroParadox/Settheory/APG.lean. Routes (b), (c) and (d) lie in the proof, not the '
             'statement. Measured 2026-10-09: the same statement restated over clean spellings of '
             'both classes reports only [propext, Quot.sound] under the statement control, and '
             'route (b)&#8217;s edge step, re-proved with obtain in place of .some, reports no '
-            'axioms; route (c) was not re-proved in that measurement.',
+            'axioms; routes (c) and (d) were not re-proved in that measurement.',
             'No ZP-specific AXIOM is declared anywhere in this chain; the footprint above is '
             'what the Lean reports, not a commitment the framework makes.',
             'No Dependent Choice. No additional set-theoretic assumptions.',
