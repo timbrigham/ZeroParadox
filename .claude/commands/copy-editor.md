@@ -1,6 +1,6 @@
 **ISOLATION REQUIRED: Do not run this review inline. Use the Agent tool to spawn a fresh instance with no conversation context.**
 
-**⚠⚠ AND SPAWN THREE OF THEM, IN ONE MESSAGE, WITH IDENTICAL PROMPTS.** This gate is `D9`: three copy editors, unanimity to proceed — any split escalates and blocks, with no majority path (this line read *"2-of-3 to proceed"* until Tim ruled otherwise 2026-09-27, `COPYEDITOR-ESCALATION-1`). One is not a cheaper version of this gate — it is a different gate with no divergence signal at all.
+**⚠⚠ AND SPAWN THREE OF THEM, IN ONE MESSAGE, WITH IDENTICAL PROMPTS.** This gate is `D9`: three copy editors. A unanimous PASS with no BEDROCK or MEANING finding from any reader proceeds. A 2-of-3 split proceeds only when the lone DIVERGENT vote states its ground as EXPRESSION and reports at least one finding, every one of them WORDING and graded ORDINARY by its own reader, no Stage 2 pair that reader reported differs, and no reader reported a BEDROCK or MEANING finding — the dissent then rides on the record. Every other outcome blocks: three DIVERGENT votes record FAIL, and everything else records UNDECIDED and escalates. One is not a cheaper version of this gate — it is a different gate with no divergence signal at all.
 
 Read `$ARGUMENTS` to determine the two states and the references, then spawn three Agents using the Agent tool with `subagent_type` omitted (general-purpose). Pass the prompt below verbatim to each, substituting `ARGUMENTS_VALUE` for the actual value of `$ARGUMENTS`. None of them may have knowledge of the current session, or of each other.
 
@@ -8,7 +8,7 @@ Read `$ARGUMENTS` to determine the two states and the references, then spawn thr
 
 ## CALLER PRE-FLIGHT — this is the CARRIER's job, not the copy editor's
 
-**You are the CARRIER (`D3`), not the author.** You move work between agents and you write no content here. The three copy editors judge; you union, you tally, and you escalate.
+**You are the CARRIER (`D3`), not the author.** You move work between agents and you write no content here. The three copy editors judge and grade their own findings; you union, you tally, you carry each grade exactly as given, and you escalate.
 
 **⛔ DO NOT BUMP THE ROUND COUNTER.** `gate_round.py` counts LOOP iterations, and three parallel readers are not three rounds.
 
@@ -33,24 +33,27 @@ Read `$ARGUMENTS` to determine the two states and the references, then spawn thr
 
 **⭐ FINDINGS UNION. ONLY THE VERDICT IS VOTED (`D10`).**
 
-- **Findings: take the UNION.** A lone reader who catches a meaning shift the other two missed **must not be outvoted** — measured this week, the reviewer who found seven sites saw four the others did not. Majority decides *"may this proceed"*; it never decides *"did anyone find something"*. Same rule as `outstanding`, which unions across every covering record.
-- **Verdict: unanimity. All three agreeing it survived is a PASS; all three agreeing it moved is a `FAIL`; anything else is `UNDECIDED`.** This line read *"2 of 3 must agree the meaning survived"* until 2026-09-27, when Tim ruled on `COPYEDITOR-ESCALATION-1`: on a copy-editor split, unanimity is required for a PASS — there is no "2-of-3 with a written justification" alternative, that option was offered and not chosen. The ledger's own V3 rule (quoted in full below, § Recording) already refused a non-unanimous PASS; the ruling raises the ESCALATION half of this brief to match the RECORDING half, which was unanimous from the start.
+- **Findings: take the UNION.** A lone reader who catches a meaning shift the other two missed **must not be outvoted** — measured this week, the reviewer who found seven sites saw four the others did not. Majority decides *"may this proceed"*; it never decides *"did anyone find something"*. Same rule as `outstanding`, which unions across every covering record. **So the `--outstanding-file` on ANY `copy_editor` PASS — `agreement` or `panel` — carries EVERY finding from all three readers**, each with its own reader's severity, shift and vote.
+- **Verdict: tally the readers' VOTES (`PASS` | `DIVERGENT`) and their findings' tags — never a count of who "said it survived".** Three outcomes decide, and everything else is `UNDECIDED`. All three vote PASS and no reader reported a BEDROCK or MEANING finding: a PASS under `--how agreement`. All three vote DIVERGENT: a `FAIL`. Two vote PASS, and the lone DIVERGENT states its ground as EXPRESSION, reports at least one finding, every one WORDING and graded ORDINARY by that reader, no Stage 2 pair that reader reported differs, and no reader reported a BEDROCK or MEANING finding: a PASS under `--how panel`. Every finding goes on the record with the marker, grade and vote its reader gave it — you never regrade or relabel one. **Anything else is `UNDECIDED`:** a DIVERGENT with any MEANING finding, whatever its grade; any BEDROCK finding; a DIVERGENT that reports no findings at all (nothing on the record could show what it objected to); a DIVERGENT whose stated ground is MEANING, or whose Stage 2 pairs differ, while its findings are all WORDING (an inconsistent report: never relabel it, record `UNDECIDED` and carry the raw output to Tim); two DIVERGENT votes; or fewer than three readers having run. **A BEDROCK or MEANING finding from ANY reader blocks, including one from a reader who voted PASS: under the union rule a finding is not owned by the vote it came with, so the record is never a PASS: `UNDECIDED` unless all three voted DIVERGENT, which is `FAIL`.** A lone "the meaning moved" is exactly what the first bullet protects, so the panel outvotes a wording dissent and never a meaning one. The ledger's V3 rule (quoted in full below, § Recording) keeps `agreement` unanimous; `panel` is the separate value for the 2-of-3 case.
 
-**On a split — 1 or 2 of 3 saying the meaning survived — record `UNDECIDED` and escalate.** ⚠ **When ALL THREE say the mathematics moved, that is `FAIL`, not `UNDECIDED`** (AR8-1): unanimity is not a contested answer, and filing the panel's strongest finding as a disagreement misdescribes it. Both block; only one is true. ⚠ **And "which BLOCKS" is true of the VERDICT CLASS and, as of 2026-09-26, of this gate too.** This line read *"`copy_editor` is in no admission set today, `inventory(tag)` renders it NOT_APPLICABLE, and there are 0 records ever, so the fence exists downstream and is not wired here"* until today (2026-09-27) — re-derived live rather than trusted: `gitRobot admission(action='push')` and `admission(action='tag')` both list `copy_editor` among the admitted steps (`registered_not_admitted` only at commit), and the ledger holds exactly one `copy_editor` record, `copy_editor@f08e7ec9...#0`, `UNDECIDED` from 2026-09-22 (3 readers, 0 agreed). Do not describe this gate as fail-closed regardless (AR8-2) — a step with no record at all is `MISSING`, a status distinct from `FAIL`/`UNDECIDED`, and admission does not turn silence into a block; it means a record that has run and split blocks. ⚠ **Escalation goes to YOU, and you carry it to the author (`D4`). Gates never report to the author directly** — one channel up, and the carrier holds it. **A split IS the signal**, and it is no longer hypothetical: the one record on file already blocks a real push or tag.
+**On any split that `panel` does not cover, record `UNDECIDED` and escalate.** ⚠ **When ALL THREE vote DIVERGENT, that is `FAIL`, not `UNDECIDED`** (AR8-1): unanimity is not a contested answer, and filing the panel's strongest finding as a disagreement misdescribes it. Both block; only one is true. ⚠ **And "which BLOCKS" is true of the VERDICT CLASS and, as of 2026-09-26, of this gate too.** This line read *"`copy_editor` is in no admission set today, `inventory(tag)` renders it NOT_APPLICABLE, and there are 0 records ever, so the fence exists downstream and is not wired here"* until today (2026-09-27) — re-derived live rather than trusted: `gitRobot admission(action='push')` and `admission(action='tag')` both list `copy_editor` among the admitted steps (`registered_not_admitted` only at commit), and the ledger holds exactly one `copy_editor` record, `copy_editor@f08e7ec9...#0`, `UNDECIDED` from 2026-09-22 (3 readers, 0 agreed). Do not describe this gate as fail-closed regardless (AR8-2) — a step with no record at all is `MISSING`, a status distinct from `FAIL`/`UNDECIDED`, and admission does not turn silence into a block; it means a record that has run and come back `UNDECIDED` blocks. ⚠ **Escalation goes to YOU, and you carry it to the author (`D4`). Gates never report to the author directly** — one channel up, and the carrier holds it. **An `UNDECIDED` split IS the signal**, and it is no longer hypothetical: the one record on file already blocks a real push or tag.
 
-⛔⛔ **AND YOU EMIT THE RECORD — ONE, FOR THE PANEL. THE COPY EDITORS DO NOT RECORD.** Changed
-2026-09-08. The command and the full reasoning are in **§ Recording** below; read it before you
-tally, because the shape constrains what you can say. In one line: **`--how agreement --passes 3
---agreed <how many said the meaning survived>`**, and V3 refuses a non-unanimous PASS, so a 2-1
-split is recorded as `UNDECIDED` with `--agreed 2` and `--failing-file` naming the contested sites.
-⚠ That is the RECORD. Your ESCALATION decision now follows the SAME unanimity threshold (Tim,
-2026-09-27) — a split escalates and blocks, full stop, with no proceed-anyway path. What the panel
-found and what happens next remain different questions — the RECORD narrows a blocking verdict to
-the contested sites via `--failing-file`, and the ESCALATION carries the whole split to the author
-— but the two no longer disagree about HOW MUCH AGREEMENT IS ENOUGH.
+⛔⛔ **AND YOU EMIT THE RECORD — ONE, FOR THE PANEL. THE COPY EDITORS DO NOT RECORD.** The command
+and the full reasoning are in **§ Recording** below; read it before you tally, because the shape
+constrains what you can say. In one line: three PASS votes with no BEDROCK or MEANING finding, or
+three DIVERGENT votes, are **`--how agreement --passes 3 --agreed 3`** (`pass` or `fail`); two PASS
+votes against a lone DIVERGENT whose ground is EXPRESSION and whose findings are all WORDING and
+ORDINARY is **`--how panel --passes 3 --agreed 2`**; every PASS carries all three readers' findings on `--outstanding-file`;
+everything else is `--verdict undecided` with `--failing-file` naming the contested sites.
+⚠ That is the RECORD, and your ESCALATION decision follows the SAME threshold: whatever records
+`UNDECIDED` escalates and blocks, with no proceed-anyway path, and a `panel` PASS proceeds with its
+dissent carried up to the author in your report. What the panel found and what happens next remain
+different questions — the RECORD narrows a blocking verdict to the contested sites via
+`--failing-file`, and the ESCALATION carries the whole split to the author — but the two agree
+about HOW MUCH AGREEMENT IS ENOUGH.
 
 ⚠⚠ **ESCALATED-AND-BLOCKED IS NOT A DEAD END — TWO ROUTES THROUGH, AND RE-RUNNING THE SAME PANEL
-IS NEITHER** (Tim, 2026-09-27, `COPYEDITOR-ESCALATION-1`). Once a split reaches you and you carry
+IS NEITHER** (Tim, `COPYEDITOR-ESCALATION-1`). Once a blocking split reaches you and you carry
 it to the author, exactly two things move it: **(a) the content changes** — different bytes are a
 different basis, so a fresh panel run over the fix answers a NEW question, not a retry of the one
 that split; or **(b) the author accepts the split as it stands**, recorded `--how signature --who
@@ -169,12 +172,19 @@ Enumerate every site editorial touched. **Report the count, always, including ze
 
 **Your verdict is one of two**, and it is about proceeding, not about whether you found things:
 
-- **PASS** — editorial's changes are expression. Clarifying language, improvements, no claim moved.
-- **DIVERGENT** — at least one change moves the mathematics, or you cannot establish that it does not.
+- **PASS** — editorial's changes are expression and you accept them. Clarifying language, improvements, no claim moved.
+- **DIVERGENT** — at least one change moves the mathematics, or you cannot establish that it does not, or you object to a change on expression alone.
 
 ⚠ **Report every finding regardless of your verdict.** Findings union across all three of us; only the verdict is voted. **Do not suppress a finding because it did not change your verdict**, and do not inflate your verdict because you have findings.
 
 Tag every finding **VERIFIED** (you re-ran it — name what you ran and quote what it printed) or **RELAYED** (you took someone's word — say whose, and **name the unit**).
+
+**Mark every finding MEANING or WORDING, and grade it BEDROCK or ORDINARY.**
+
+- **MEANING** — what the sentence asserts moved, or you cannot establish that it did not. **WORDING** — only how it is said changed. Unsure which is the "cannot establish" case: mark it MEANING. Any MEANING finding makes your verdict DIVERGENT, and the converse binds too: if you vote DIVERGENT because a change moves the mathematics, or because you cannot establish that it does not, that site MUST appear under Findings marked MEANING. A Stage 2 pair that differs is a MEANING finding; report it there as well as in Stage 2. Every ground of your divergence goes under Findings. State the ground on the `Divergence ground` line: MEANING if any of your findings is MEANING, EXPRESSION only when your objection is to expression alone and every finding is WORDING.
+- **BEDROCK** — a violated core invariant, a fabricated claim about a source, or a false premise carrying a conclusion. **ORDINARY** — anything else: citation scope, a mischaracterized lemma, hedging, wording.
+
+⚠ **The marker and the grade are yours, and nobody changes them.** The carrier records each exactly as you give it. Together they decide what a dissent does: when you vote DIVERGENT, the other two vote PASS, your ground is EXPRESSION, and you report at least one finding and every one is WORDING and ORDINARY, your dissent rides on a recorded PASS instead of blocking it. If your ground, your Stage 2 pairs and your findings disagree, the carrier records `UNDECIDED` and never relabels anything. One MEANING finding, or one BEDROCK finding, from any of the three of us blocks, whatever the votes were, yours included. **Grade the finding, never the outcome you want for it.**
 
 ⚠ **Attribution travels; verification does not.** A number reached the author through a relay having gained confidence and changed units at the hop, with correct attribution at every step. ⚠ **And name what every number PRICES** — a true value read against the wrong object is `DC-44`, this project's most-recurring defect: a value pricing the *tip* applied to a *range*, one pricing the *working tree* applied to a *pushed range*. Every instance was correct, was run, and was quoted verbatim.
 
@@ -196,8 +206,11 @@ Tag every finding **VERIFIED** (you re-ran it — name what you ran and quote wh
 
 ### Findings   (report ALL — these union across the three of us)
   each tagged VERIFIED or RELAYED, each naming what its numbers price
+  each marked MEANING | WORDING   (did what is asserted move, or only how it is said?)
+  each graded BEDROCK | ORDINARY  (your grade; the carrier records it unchanged)
 
 ### Verdict: PASS | DIVERGENT
+### Divergence ground (DIVERGENT only): MEANING | EXPRESSION
 ### First unjustified step: <name it, always>
 ```
 
@@ -227,19 +240,71 @@ was correctly refusing three records that each claimed to be the whole verdict a
 carrier — who already unions the findings and tallies the verdict — emits exactly one:
 
 ```
-python tools/verify/record.py --step copy_editor --verdict <pass|fail|undecided> --tier A     --how agreement --passes 3 --agreed <how many of the three said the meaning SURVIVED>     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --files <the union of every file the three actually read>     --failing-file <a JSON file naming the sites the panel INDICTS, on a blocking verdict>
+python tools/verify/record.py --step copy_editor --verdict <pass|fail|undecided> --tier A     --how agreement --passes <how many readers ran: 3, or fewer on an undecided> --agreed <the size of the bloc that concurred with the verdict you are recording; see the table below>     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --files <the union of every file the three actually read>     --outstanding-file <on a PASS: a JSON file in your SCRATCHPAD carrying EVERY finding from all three readers, each with its reader's shift, severity and vote; omit it only when no reader reported any>     --failing-file <a JSON file naming the sites the panel INDICTS, on a blocking verdict>
 ```
+
+Two PASS votes against a lone DIVERGENT whose ground is EXPRESSION and whose findings are all
+WORDING and ORDINARY is the one PASS that is not unanimous, and it has its own shape:
+
+```
+python tools/verify/record.py --step copy_editor --verdict pass --tier A     --how panel --passes 3 --agreed 2     --who copy_editor     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --files <the union of every file the three actually read>     --outstanding-file <a JSON file in your SCRATCHPAD carrying EVERY finding from all three readers, each with its reader's shift, severity and vote>
+```
+
+Each entry in the `--outstanding-file` of either PASS is one finding from one reader — dissenter
+and PASS voters alike — with that reader's own marker and grade copied across unchanged, and
+`vote` set to the verdict of the reader who made it (`"pass"` for a PASS voter, `"divergent"` for
+the DIVERGENT reader):
+
+    [{"note": "<the finding, as the reader wrote it>", "severity": "ordinary", "shift": "wording",
+      "vote": "divergent", "path": "<optional repo-relative path>"}]
+
+`record.py` refuses `--how panel` on any step but `copy_editor`, and refuses it unless `--passes 3`;
+it writes the threshold of 2 onto the record itself, and there is no flag for it. It requires
+`--who`, `--tier A`, `--evidence` and a stated `--agreed` on a panel record, and refuses `--agreed 3`
+on a panel PASS (unanimity is `agreement`). It refuses `--how delegated` on `--step copy_editor`
+outright: a single round records no headcount and no dissent. Every finding on any record needs a
+`note`. On a `copy_editor` PASS under `agreement` or `panel`, every finding also needs `severity`,
+`shift` and `vote`: any `severity` other than `"ordinary"` is refused, any `"shift": "meaning"` is
+refused, and `vote` must be `"pass"` or `"divergent"`. A panel PASS must carry a non-empty
+`--outstanding-file` with at least one finding whose `vote` is `"divergent"`, so a file holding only
+the PASS voters' findings is refused; an `agreement` PASS carrying any finding whose `vote` is
+`"divergent"` is refused. On a FAIL or UNDECIDED only each finding's `note` is checked, so a blocking verdict
+always lands. **If the DIVERGENT reader reported no findings, the round was never a PASS: record it
+`--verdict undecided`.** `--failing-file` is refused on any PASS.
+
+⛔ **WHAT `record.py` CANNOT CHECK, AND IS THEREFORE YOURS.** It sees only what you copy, never the
+readers' raw output, so it cannot tell whether the file holds EVERY finding or whether each tag,
+`vote` included, is the one its reader gave. Leave out a MEANING finding, copy it as
+`"shift": "wording"`, or mark a PASS voter's finding `"vote": "divergent"`, and the record is
+accepted. So: **copy every finding VERBATIM with its reader's own tags; never regrade,
+relabel, merge or drop one;** and put all three readers' raw outputs in your report to the author,
+so a human can audit the record against them.
 
 ⛔⛔ **THREE VERDICTS, AND `agreed` PICKS WHICH — DO NOT COLLAPSE UNANIMOUS DIVERGENCE INTO
 `UNDECIDED`.** An earlier version of this block offered `<pass|undecided>` only, and that was a
 BEDROCK defect (AR8-1, 2026-09-08): it left **no route to `FAIL`**, so the gate built to catch a
 meaning-change could not say it had caught one.
 
-    ALL THREE say the meaning SURVIVED   -> --verdict pass       --passes 3 --agreed 3
-    THE PANEL SPLITS (2-1 either way)    -> --verdict undecided  --passes 3 --agreed 2
-    ALL THREE say the mathematics MOVED  -> --verdict fail       --passes 3 --agreed 3
+    ALL THREE vote PASS, and no reader
+      reported a BEDROCK or MEANING finding  -> --verdict pass       --how agreement --passes 3 --agreed 3
+    TWO vote PASS; the lone DIVERGENT states
+      ground EXPRESSION, reports at least one
+      finding, all WORDING and all ORDINARY
+      (its own grade), no Stage 2 pair of it
+      differs, and no reader reported a
+      BEDROCK or MEANING finding             -> --verdict pass       --how panel     --passes 3 --agreed 2
+    ALL THREE vote DIVERGENT                 -> --verdict fail       --how agreement --passes 3 --agreed 3
+    ALL THREE vote PASS, and a reader
+      reported a BEDROCK or MEANING finding  -> --verdict undecided  --how agreement --passes 3 --agreed 3
+    ANYTHING ELSE, three having run — a
+      2-1 split with a BEDROCK or MEANING
+      finding from any reader, a DIVERGENT
+      with no findings, a DIVERGENT whose
+      ground or Stage 2 pairs disagree with
+      its findings, two DIVERGENT votes      -> --verdict undecided  --how agreement --passes 3 --agreed 2
+    FEWER THAN THREE READERS RAN             -> --verdict undecided  --how agreement --passes <how many ran> --agreed <the larger voting bloc among them>
 
-⛔⛔ **`--agreed` COUNTS CONCURRENCE WITH THE VERDICT YOU ARE RECORDING — NOT VOTES FOR "SURVIVED".**
+⛔⛔ **`--agreed` COUNTS CONCURRENCE WITH THE VERDICT YOU ARE RECORDING — NOT VOTES FOR "SURVIVED"** (on `UNDECIDED`, which no reader votes, the larger voting bloc; the one-line rule below).
 `record.py --help` defines it as *"how many of them concurred"*, which is why V3's arithmetic is
 `agreed == passes` for a PASS. An earlier version of this table read `agreed` as a survival tally
 and mapped a unanimous FAIL to `--agreed 0` (AR9-2, 2026-09-08). **The ledger cannot tell those
@@ -247,10 +312,14 @@ apart** — measured, `--verdict fail --passes 3 --agreed 0` and `--agreed 3` BO
 so the mistake is silent, and it stores this gate's strongest possible finding as *three ran, none
 concurred*: an unsupported verdict rather than a unanimous one.
 
-⭐ **THE RULE IN ONE LINE: `agreed` is the size of the bloc that agreed with the verdict on the
-record.** Unanimity (3) is what licenses a DECIDED verdict in either direction — `pass` or `fail`.
-Anything less is `undecided`, and there `agreed` is the size of the majority bloc, so `3 ran, 2
-concurred` reads as the 2-1 split it was.
+⭐ **THE RULE IN ONE LINE: on a PASS or FAIL, `agreed` is the size of the bloc that cast the verdict
+on the record; on `UNDECIDED`, which no reader votes, it is the size of the larger voting bloc.**
+Unanimity (3) licenses an `agreement` verdict in either direction — `pass` or `fail`. Two of three
+licenses a `panel` PASS, and only under the dissent rule above. Anything else is `undecided`, so
+`3 ran, 2 agreed` reads as the 2-1 split it was, and `3 ran, 3 agreed` on an `UNDECIDED` reads as
+three PASS votes that a BEDROCK or MEANING finding blocked (three DIVERGENT votes are a FAIL, so
+no other case records it). The ledger does not pick the count on an `UNDECIDED` (dry runs of 0, 2
+and 3 were all accepted); this rule does.
 
 ⚠ **`UNDECIDED` MEANS *"asked, ran to completion, ANSWER CONTESTED"* — this file's own words.
 Three-of-three agreement is the opposite of contested.** A unanimous divergence is the strongest
@@ -270,8 +339,7 @@ ONE producer.** The brief is the artifact that produced the verdict, exactly as 
 round. What differs is how many agents read it, which is `passes`/`agreed` — headcount, not
 provenance.
 
-⛔⛔ **V3 REFUSES A NON-UNANIMOUS PASS. UNTIL 2026-09-27 THIS COLLIDED WITH A 2-OF-3 ESCALATION RULE
-ABOVE; THE COLLISION IS RESOLVED, NOT STANDING.** Measured against this repo's own
+⛔⛔ **V3 REFUSES A NON-UNANIMOUS PASS UNDER `--how agreement`.** Measured against this repo's own
 `policy.v1.json` (`agreement.min_passes = 3`):
 
     --how agreement --verdict pass --passes 3 --agreed 3   ->  VALID
@@ -279,32 +347,37 @@ ABOVE; THE COLLISION IS RESOLVED, NOT STANDING.** Measured against this repo's o
         "a PASS under --how agreement needs --passes >= 3 with --agreed equal to it"
     --how agreement --verdict undecided --passes 3 --agreed 1  ->  VALID
 
-**So a 2-1 split cannot be recorded as a PASS.** Record it as `--verdict undecided` with `--agreed 2`
-and `--failing-file` narrowing it to the contested sites. That is not a downgrade of the panel's
-judgement — it is the ledger's own vocabulary for exit 3, *asked, ran to completion, answer
-contested*, and it is the same word `control.md` uses for the same state.
+**So a 2-1 split is never an `agreement` PASS.** When the lone DIVERGENT's ground is EXPRESSION,
+its findings are all WORDING and all ORDINARY, none of its Stage 2 pairs differs, and no reader
+reported a BEDROCK or MEANING finding, record it under
+`--how panel` with all three readers' findings on `--outstanding-file` (template above). Otherwise
+record it as `--verdict undecided` with `--agreed 2` and `--failing-file` narrowing it to the
+contested sites. That is not a downgrade of the panel's judgement — it is the ledger's own
+vocabulary for exit 3, *asked, ran to completion, answer contested*, and it is the same word
+`control.md` uses for the same state.
 
-⚠⚠ **THE THRESHOLD TENSION WAS REAL AND IS NOW RESOLVED — TIM RULED 2026-09-27, `COPYEDITOR-ESCALATION-1`.**
-Until that date the tally rule above said *"2 of 3 must agree the meaning survived"* while V3 said
-an agreement is unanimous among `min_passes` readers — two different thresholds, both deliberate
-at the time. **The ruling collapses them: the RECORD follows the LEDGER (a non-unanimous split
-records `UNDECIDED`) and the carrier's ESCALATION decision follows the SAME threshold — any split
-blocks, and there is no "2 of 3 may still proceed."** What the panel found and what the carrier
-does about it remain different QUESTIONS, but they now share one answer to "how much agreement is
-enough," which is what closes the gap the paragraph below used to warn was still open.
-`STOP-ORDINARY` (*"a PROCEED verdict that is NOT a pass"*) is a different mechanism entirely and is
-untouched by this ruling.
+⚠⚠ **ONE THRESHOLD FOR THE RECORD AND THE ESCALATION** (Tim, `COPYEDITOR-ESCALATION-1`, and his ruling on the panel).
+`agreement` is unanimous among `min_passes` readers, as V3 requires. The 2-of-3 PASS exists only
+as `panel`, and only for a dissent that states its ground as EXPRESSION and reports at least one
+finding, every one marked WORDING and graded ORDINARY by its own reader, with no differing Stage 2
+pair from that reader and no BEDROCK or MEANING finding from any reader.
+**Whatever records `UNDECIDED` escalates and blocks; whatever records a PASS proceeds, a carried
+dissent included.** What the panel found and what the carrier does about it remain different
+QUESTIONS, and they share one answer to "how much agreement is enough." `STOP-ORDINARY` (*"a
+PROCEED verdict that is NOT a pass"*) is a different mechanism entirely and is untouched by this
+rule.
 
 ⛔⛔ **AR8-3 (2026-09-08) PREDICTED THIS DAY, AND IT ARRIVED.** Read straight through, this brief
 used to say (a) the record BLOCKS and (b) proceed anyway on 2 of 3 — **an instruction to walk past
 a block** — and called the pairing harmless only because (a) was then false: `copy_editor` was in
 no admission set and had 0 records. **Both halves of that excuse are gone.** Admission landed
 2026-09-26 — `copy_editor` is admitted at push and at tag; re-derive live with `gitRobot
-admission(action='push'|'tag')` rather than trusting this line. Tim ruled 2026-09-27: unanimity,
-not 2-of-3-with-a-written-justification — that alternative was offered and not chosen. **So (b) is
-retired outright: there is no "proceed anyway" path.** ANY split — not a unanimous PASS, not a
-unanimous FAIL — is `UNDECIDED`, and `UNDECIDED` blocks the push or tag it is recorded against,
-full stop.
+admission(action='push'|'tag')` rather than trusting this line. Tim ruled out a 2-of-3 PASS on a
+written justification; the one 2-of-3 PASS is `panel`, which carries the dissent on the record and
+refuses one that moved the meaning or was graded BEDROCK. **So (b) is
+retired outright: there is no "proceed anyway" path past a recorded block.** A split is either a
+`panel` PASS — a recorded verdict that carries its dissent, not a walk past a block — or
+`UNDECIDED`, and `UNDECIDED` blocks the push or tag it is recorded against.
 
 ⚠⚠ **THE GUARD LANDED ONE DAY AFTER THE ADMISSION ENTRY, WHICH IS EXACTLY THE SHAPE THIS PARAGRAPH
 WARNED AGAINST.** This file documented the plan *"Register, watch one panel, then admit"* and said
@@ -318,11 +391,10 @@ changed is the shape this project keeps paying for** — see the `admission.v1.j
 revisited the row. This is the second time that shape has cost a day; the fix here is the ruling
 applied everywhere this file states the tally, not a second promise to apply it faster next time.
 
-⚠⚠ **ONCE ESCALATED, HOW A SPLIT ACTUALLY GETS RESOLVED — ADDED 2026-09-27, EXTENDING RATHER THAN
-CORRECTING THE PARAGRAPHS ABOVE.** Everything above says a split blocks, full stop; none of it says
-how a blocked release ever moves again. Tim ruled on exactly this, same conversation as the
-threshold ruling, `COPYEDITOR-ESCALATION-1`: exactly two routes, and a third that sounds like a
-route is named and refused.
+⚠⚠ **ONCE ESCALATED, HOW A SPLIT ACTUALLY GETS RESOLVED.** Everything above says an `UNDECIDED`
+split blocks; none of it says how a blocked release ever moves again. Tim ruled on exactly this,
+same conversation as the threshold ruling, `COPYEDITOR-ESCALATION-1`: exactly two routes, and a
+third that sounds like a route is named and refused.
 
 1. **Fix the content.** Editorial, or the author, changes the bytes. That is a NEW basis, so the
    next panel run answers a NEW question rather than re-asking the one that split — nothing special
@@ -359,9 +431,10 @@ route is named and refused.
    tip's decider: once the basis has moved, it no longer is, and a fresh revision-0 record at the new
    tip is what actually gates the release you are trying to clear.
 
-   ⚠ **Checked against the source before writing this, not assumed:** `record.py`'s `--how` choices
-   are exactly `delegated`, `agreement`, `signature`, `override` — no fifth value for "a panel
-   voted." **And this is NOT `R-LOOPCAP`'s `STOP-ORDINARY` wearing a new name** — the comparison was
+   ⚠ **`--how panel` is not a route through a block either.** It is the value the carrier records
+   at tally time for a split that never blocked, and it refuses a MEANING or BEDROCK dissent, so a
+   split already recorded `UNDECIDED` has no panel form. **And this is NOT `R-LOOPCAP`'s
+   `STOP-ORDINARY` wearing a new name** — the comparison was
    considered and does not hold, verified at `tools/process/review-loop-cap.md` rather than assumed
    by analogy. `STOP-ORDINARY` is the REVIEWER'S own call: after the capped rounds turn up nothing
    worse than ordinary findings, the reviewer itself stops and writes its own PASS (`--how
@@ -379,13 +452,14 @@ lost its dissenting reader the second time look IDENTICAL, and only one of those
 is functionally indistinguishable from discarding a finding `D10` unions in specifically so that no
 single dissenting reader can be outvoted out of existence.
 
-⚠ **A FOURTH OPTION WAS RAISED IN THE SAME CONVERSATION AND IS NOT AVAILABLE TODAY.** A new
-`decided.how` ledger value for a voted or majority panel (M-of-N counts as DECIDED on its own, no
-human required) came up alongside this ruling, and Tim commissioned it as its OWN piece of work —
-separate from this fix, tracked outside this file, coordinated with the ledger's own maintainers
-before it is built. **It does not exist yet.** Do not describe a copy-editor split as something a
-future panel vote could resolve without a human: today `--how` has the four values named above and
-no fifth, and a split resolves only by route 1 or route 2.
+⚠ **`panel` DECIDES AT TALLY TIME AND RESOLVES NOTHING AFTERWARDS.** `decided.how = "panel"` is
+the ledger value for an M-of-N panel that counts as DECIDED with no human: for `copy_editor`, 2 of
+3, all three having run, and a lone DIVERGENT whose ground is EXPRESSION and whose findings — at
+least one — are all marked WORDING and graded ORDINARY by its own reader. A split outside that — any
+MEANING finding, any BEDROCK finding, a DIVERGENT with no findings, a DIVERGENT whose ground or
+Stage 2 pairs disagree with its findings, fewer than two concurring, fewer than three run —
+records `UNDECIDED`, and re-recording it as `panel` over the same content would be
+the outvote the rule forbids. An `UNDECIDED` split resolves only by route 1 or route 2.
 
 ⚠ **`--verdict undecided` EXISTS AS OF 2026-09-06, AND UNTIL THAT MORNING THIS BRIEF INSTRUCTED AN
 IMPOSSIBLE COMMAND.** The flag took `pass` and `fail` only, so the split verdict this gate is built
@@ -423,7 +497,7 @@ this line: at **commit**, `copy_editor` is `registered_not_admitted` — an `UND
 does NOT block a bare commit. At **push** and at **tag**, `copy_editor` IS admitted — an `UNDECIDED`
 recorded there **DOES block that push or tag.** The only existing `copy_editor` record in the ledger
 right now is an `UNDECIDED`. **So: register, watch one panel, then admit was the old sequence; the
-admit half already happened for push and tag, and a split you record today gates the release you are
+admit half already happened for push and tag, and an `UNDECIDED` you record today gates the release you are
 trying to clear, not some future exercise.**
 
 ⚠ **THE ZERO IS REAL AND THE REASON FOR IT CHANGED.** This paragraph read *"`UNDECIDED` has 0
@@ -432,11 +506,13 @@ stream: still zero, out of 2,267 — **because no client could emit the value.**
 evidence about the CLI, never about how often panels split. It is emittable now, so the next zero
 will mean something different from this one.
 
-**So on `DIVERGENT`: hand it to the carrier in full** with both claim-statements from Stage 2b.
+**So on `DIVERGENT`: hand it to the carrier in full** with both claim-statements from Stage 2b,
+your divergence ground, and every finding's marker and grade.
 ⚠ **You do not record it yourself — that changed 2026-09-08 and the reason is above:** three
 records at one basis meant first-writer-wins and your dissent would have been REFUSED, silently.
-The carrier emits one agreement-shaped record carrying `passes`/`agreed`, so a 2-1 split is
-preserved as a contested record rather than lost to whichever agent finished first. **This
+The carrier emits one record carrying `passes`/`agreed`, so a 2-1 split is preserved — as a
+contested `UNDECIDED`, or as your findings carried on a `panel` PASS when your ground is EXPRESSION
+and every one is WORDING and ORDINARY — rather than lost to whichever agent finished first. **This
 paragraph read *"until admission lands, the carrier is what makes escalation happen — do not
 describe it as fail-closed, because it is not yet"* until 2026-09-27; admission landed 2026-09-26,
 one day earlier, and the paragraph had not caught up.** The carrier still carries the split to the
@@ -444,7 +520,7 @@ author (`D4`) — that half never depended on admission. What changed: an `UNDEC
 push or tag now blocks that push or tag on its own, mechanically, because `copy_editor` is admitted
 there. Still do not call this "fail-closed" — a step with no record at all is `MISSING`, a status
 distinct from `FAIL`/`UNDECIDED`, and admission does not turn silence into a block; it only means a
-record that has run and split blocks. The gate is wired now; it is not fail-closed, and those are
+record that has run and come back `UNDECIDED` blocks. The gate is wired now; it is not fail-closed, and those are
 different claims.
 
 ## Before you finish — your controls, and the step you could not justify
