@@ -237,7 +237,9 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # ⚠⚠ THE SECOND TOMBSTONE, AND IT REPRODUCED THE FIRST ONE'S DEADLOCK
                               # EXACTLY. `admission.v1.json` (this repo's copy) was DELETED
                               # 2026-09-26 as a dead 2026-08-23 seed: nothing read it, it admitted
-                              # 3 types at push where the live set admits 21, and only gitRobot's
+                              # 3 types at push, a small fraction of the live set (its size is the
+                              # `count` of `gitRobot admission(action='push')`, read when quoted;
+                              # never a literal here, `RLY56-1`), and only gitRobot's
                               # `config/admission.v1.json` was ever live. The deletion then blocked
                               # its own push — `_unhashed` flagged a routed file absent from this
                               # list, which can never be discharged, and the block clears only when
@@ -273,7 +275,8 @@ UNVERIFIABLE_ROUTED = {
                       "and therefore never stageable, so ledger_subjects drops it on every run.",
     "admission.v1.json":
                       "DELETED 2026-09-26. A dead 2026-08-23 seed that nothing read — it admitted "
-                      "3 types at push where the live set admits 21, and a comment in this file "
+                      "3 types at push, a small fraction of the live set (the live size is the "
+                      "`count` of gitRobot admission(action='push')), and a comment in this file "
                       "recorded it 'itself dead: RLY31-12' while tools/verify/README.md still "
                       "advertised it as REMAINING. (⚠ That comment was itself rewritten in "
                       "8192e54, so the quotation is HISTORICAL and `log -S` is where it lives "
@@ -2233,9 +2236,11 @@ def signal_verdict(name):
 #
 # ⚠⚠ THIS PARAGRAPH CLAIMED `prior_art` WAS ABSENT FROM BOTH PUSH ADMISSION SETS. BOTH HALVES ARE
 # NOW FALSE, and the first one gates a push. Re-derived 2026-09-26 by calling `gitRobot admission`
-# for all three actions rather than relaying any of them: commit -> `registered_not_admitted`
-# (17 admitted), push -> **ADMITTED** (21), tag -> `registered_not_admitted` (23). So `prior_art`
-# DOES gate a push at the ledger, which is the single action this sentence was about.
+# for all three actions rather than relaying any of them: commit -> `registered_not_admitted`,
+# push -> **ADMITTED**, tag -> `registered_not_admitted`. So `prior_art` DOES gate a push at the
+# ledger, which is the single action this sentence was about. No set sizes are written here: the
+# push figure once recorded on this line went stale inside the range a `/rely` round was reviewing
+# (`RLY56-1`). The `count` field of `gitRobot admission(action=...)` is the only number to quote.
 # ⚠ ADMISSION IS PER ACTION, and a sentence naming no action is wrong about at least one of them.
 # `required.v2.json` records this exact correction at `prior_art._admission_is_action_scoped_2026_09_22`
 # — so this is that fix failing to travel to its second site, which is `DC-53`, not a new defect.

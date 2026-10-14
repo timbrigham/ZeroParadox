@@ -1369,6 +1369,51 @@ def selftest():
         bad += 1
         print('    %-34s *** NO README ROWS PARSED ***' % 'the row pattern matches')
 
+    # ⚠ THE SUMMARY LINE, THROUGH `main()` (HASHES-MISMATCH-EXIT0-1). The live MISMATCH rows appear
+    # only where `.claude-local/ar_status.json` exists, so a worktree run reads every row OK and could
+    # never show this (DC-63). The fixture is therefore built here: `AR_AVAILABLE` forced on and
+    # `load_ar_status` returning a Foreword entry at a hash no script has, which is the live shape.
+    # Nothing is written; `record_if_asked` is inert without `--record`.
+    def _run_main_with_ar(_ar):
+        _b = _io2.StringIO()
+        _so, _sa = sys.stdout, sys.argv
+        _sv_av, _sv_load = globals()['AR_AVAILABLE'], globals()['load_ar_status']
+        try:
+            globals()['AR_AVAILABLE'] = True
+            globals()['load_ar_status'] = lambda: dict(_ar)
+            sys.argv = ['check_hashes.py']
+            sys.stdout = _b
+            _r = main()
+        finally:
+            sys.stdout, sys.argv = _so, _sa
+            globals()['AR_AVAILABLE'], globals()['load_ar_status'] = _sv_av, _sv_load
+        return _r, _b.getvalue()
+
+    # Every OTHER standalone key is given its true hash, so exactly one row mismatches and the count
+    # asserted below is a fact about the fixture, not about whichever keys the tree happens to hold.
+    _ar_ok = dict((k, {'hash': sha8(s), 'status': 'remediated'})
+                  for k, s in STANDALONE_SCRIPTS.items())
+    print('  MUST FIRE  (a printed MISMATCH row is never summarised as "all match")')
+    _ar_bad = dict(_ar_ok)
+    _ar_bad['Foreword'] = {'hash': 'deadbeef', 'status': 'remediated'}
+    _mrc, _mtxt = _run_main_with_ar(_ar_bad)
+    _row_ok = 'Foreword: hash=MISMATCH' in _mtxt
+    _no_all = 'All hashes match' not in _mtxt
+    _count_ok = '1 hash=MISMATCH row(s) above: Foreword' in _mtxt
+    for _lbl, _ok in (('fixture prints the MISMATCH row', _row_ok),
+                      ('"All hashes match" is absent', _no_all),
+                      ('the mismatch count is printed', _count_ok),
+                      ('exit stays 0 (ruled, for now)', _mrc == 0)):
+        bad += 0 if _ok else 1
+        print('    %-34s %s' % (_lbl, 'ok' if _ok else '*** WRONG ***'))
+
+    print('  MUST SUPPRESS  (the clean summary still prints when every row is OK)')
+    _crc, _ctxt = _run_main_with_ar(_ar_ok)
+    _clean_ok = ('hash=MISMATCH' not in _ctxt and 'All hashes match' in _ctxt
+                 and 'row(s) above' not in _ctxt and _crc == 0)
+    bad += 0 if _clean_ok else 1
+    print('    %-34s %s' % ('all OK rows: "All hashes match"', 'ok' if _clean_ok else '*** WRONG ***'))
+
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
 
@@ -1830,6 +1875,9 @@ def main():
 
     hash_mismatches = []
     ar_stale        = []
+    # Every row this run PRINTS as `hash=MISMATCH`, gating or not. The summary line reads this, never
+    # `all_ok`, so the two can no longer contradict each other on one screen (HASHES-MISMATCH-EXIT0-1).
+    mismatch_rows   = []
 
     print('ZP Build Script Hash + AR Status Check')
     print('=' * 55)
@@ -1853,6 +1901,8 @@ def main():
 
         hash_status = 'OK' if (formal_ok and comp_ok) else 'MISMATCH'
         print(f'  {doc}: hash={hash_status}  AR={comp_ar_label}  formal-AR={formal_ar_label}')
+        if hash_status == 'MISMATCH':
+            mismatch_rows.append(doc)
 
         if not formal_ok:
             print(f'       formal  — registered: {reg_formal}  current: {current_formal}  *** VERSION BUMP REQUIRED ***')
@@ -1934,6 +1984,8 @@ def main():
         # The absent-tracker branch above already said this; the ordinary branch did not.
         _public = '' if reg_tok else '  (no register token — private tracker only)'
         print(f'  {key}: hash={hash_status}  AR={ar_label}{_public}')
+        if not hash_ok:
+            mismatch_rows.append(key)
 
         if not hash_ok:
             print(f'       stored: {stored_hash}  current: {current_hash}  *** re-mark required ***')
@@ -1972,6 +2024,8 @@ def main():
             _cok = (_creg is not None and _ccur != 'MISSING' and _ccur == _creg)
         _scope = 'formal+comp' if cscript else 'formal'
         print(f'  {name}: {_scope} hash={"OK" if (ok and _cok) else "MISMATCH"}')
+        if not (ok and _cok):
+            mismatch_rows.append(name)
         if current == 'MISSING':
             print(f'       script {script} not found')
             hash_mismatches.append(name)
@@ -2090,7 +2144,19 @@ def main():
         return _rc
 
     if all_ok:
-        print('All hashes match. AR status current. Docstring and README versions in sync.')
+        # ⚠ NEVER "ALL HASHES MATCH" OVER A PRINTED MISMATCH (HASHES-MISMATCH-EXIT0-1, RULED Tim
+        # 2026-10-14). A standalone row compared against the private `ar_status.json` prints
+        # `hash=MISMATCH` but routes to `ar_stale`, not `hash_mismatches`, so `all_ok` stayed true and
+        # this line followed it, contradicting the rows directly above. The COUNT is printed instead.
+        # Exit 0 is KEPT for now by ruling: making it blocking is a later change, after the Foreword
+        # and Tools register hashes are resolved.
+        if mismatch_rows:
+            print('%d hash=MISMATCH row(s) above: %s. Not gating (private AR tracker only; exit 0 '
+                  'for now). Docstring and README versions in sync.'
+                  % (len(mismatch_rows), ', '.join(mismatch_rows)))
+        else:
+            print('All hashes match. AR status %s. Docstring and README versions in sync.'
+                  % ('STALE (see above)' if ar_stale else 'current'))
         return 0
 
     if hash_mismatches:
