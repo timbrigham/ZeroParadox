@@ -47,6 +47,7 @@ LEGS = [
     ('marker', 'WARN',  'HARD CONSTRAINTS sits BELOW the spawn marker (queue ticket, 6 of 14)'),
     ('names',  'WARN',  'a brief that says "record your verdict" names the --step to use'),
     ('unexamined', 'WARN', 'path-shaped citations the BLOCK leg did NOT judge (its silence, counted)'),
+    ('unread', 'WARN', 'flag-shaped tokens in code the flags leg did NOT read (its silence, counted)'),
 ]
 BLOCKING = [n for n, m, _ in LEGS if m == 'BLOCK']
 
@@ -173,6 +174,35 @@ def flag_fragments(text):
     return out
 
 
+def code_spans(text):
+    """Every code region of `text`: fenced blocks (``` or ~~~) and inline backtick spans.
+
+    ⚠ FOR THE `unread` WARN LEG ONLY (`RLY52-1`). The `flags` leg reads two shapes — a `record.py`
+    line with its backslash chain, and a fenced block that OPENS with a flag — and a block that opens
+    with the command and continues without a backslash is in neither, nor is anything behind a
+    `~~~` fence or a stray unpaired fence. Measured: deleting ONE trailing backslash in `rely.md`
+    took every line below it out of the audit while the run said `flags ok`. This does not judge
+    those tokens; it COUNTS them, so the leg's silence prints instead of reading as coverage."""
+    out, cur, fence = [], [], None
+    for line in text.split(chr(10)):
+        st = line.lstrip()
+        mark = st[:3] if st[:3] in ('```', '~~~') else None
+        if fence is None and mark:
+            fence, cur = mark, []
+            continue
+        if fence is not None and mark == fence:
+            out.append(chr(10).join(cur))
+            fence = None
+            continue
+        if fence is not None:
+            cur.append(line)
+        else:
+            out.extend(re.findall(r'`([^`\n]+)`', line))
+    if fence is not None:
+        out.append(chr(10).join(cur))     # an unpaired fence: its tail is still code
+    return out
+
+
 def flags_from_help(text):
     """Every flag-SHAPED token anywhere in help output. **The old ground truth, kept as a control.**
 
@@ -273,11 +303,19 @@ def classify_record_failure(rc, ledger_answers):
 # ⚠ `LICENSE` IS THE FIXTURE FOR BOTH SUBJECT AND BRIEF, deliberately: the controls test record.py's
 # GUARDS, not which file is the brief, and a fixture somebody is editing gets fenced ("differs from
 # the index") and turns every row into a could-not-ask. LICENSE is the tracked file least likely to
-# be mid-edit. The ledger accepts it as evidence (dry run, 2026-10-14, `WOULD ACCEPT`).
+# be mid-edit. The ledger accepts it as evidence (dry run, 2026-10-14, `validate -> {"ok": true`).
 PANEL_BASE = ['--step', 'copy_editor', '--verdict', 'pass', '--files', 'LICENSE', '--tier', 'A',
               '--how', 'panel', '--passes', '3', '--agreed', '2', '--who', 'copy_editor',
               '--evidence', 'LICENSE', '--run', 'selftest-check_briefs', '--dry-run']
-OUTAGE = ('verdictLedger unreachable', 'verdictLedger returned no usable payload')
+# A dry run asks gitRobot to verify the subjects FIRST, then the ledger to validate, so either
+# service being down is a could-not-ask, never a finding about record.py's guards.
+OUTAGE = ('verdictLedger unreachable', 'verdictLedger returned no usable payload',
+          'gitRobot ledger_subjects unreachable', 'gitRobot ledger_subjects returned no usable payload')
+# `record.py --dry-run` prints the ledger's `validate` answer VERBATIM (`RECDRY-1`); these are its
+# two shapes. Reaching either line means every client guard admitted the record.
+VALIDATED = 'verdictLedger validate -> {"ok": true'
+VALIDATE_REFUSED = 'verdictLedger validate -> {"ok": false'
+ASKED = 'verdictLedger validate ->'
 
 
 def record_dry(args, outstanding=None, raw=None, failing=None):
@@ -351,6 +389,11 @@ def audit(text, flags, steps):
         used |= set(FLAG.findall(blk))
     if flags is not None:
         f['flags'] = sorted(used - flags)
+    # The silence of the `flags` leg, counted: flag tokens in code that neither extractor read.
+    seen = set()
+    for span in code_spans(text):
+        seen |= set(FLAG.findall(span))
+    f['unread'] = sorted(seen - used)
 
     declared = sorted(set(STEP.findall(text)))
     if steps is not None:
@@ -473,6 +516,19 @@ def selftest():
          'every `.lean` file in the corpus', 'unexamined', False),
         ('unexam clean   a slash command is not a path',
          'run `/rely` in a fresh agent', 'unexamined', False),
+        # RLY52-1: the `flags` leg's silence is COUNTED. A block that opens with the command and
+        # continues WITHOUT a backslash, and a `~~~` fence, are both outside its two extractors.
+        ('unread fires   continuation with no backslash',
+         '```' + chr(10) + 'python tools/verify/record.py --step rely' + chr(10)
+         + '    --nonesuch x' + chr(10) + '```', 'unread', True),
+        ('unread fires   a tilde fence',
+         '~~~' + chr(10) + '    --nonesuch x' + chr(10) + '~~~', 'unread', True),
+        ('unread fires   behind an unpaired fence',
+         '```' + chr(10) + 'echo' + chr(10) + '    --nonesuch x', 'unread', True),
+        ('unread clean   every flag in code was read',
+         'run `record.py --step rely --verdict fail --failing-file f`', 'unread', False),
+        ('unread clean   flags in prose are not code',
+         'the --verbose switch is mentioned in a sentence', 'unread', False),
         ('names  fires   records with no step',
          'Record your verdict via record.py when done.', 'names', True),
         ('names  clean   records and names the step',
@@ -610,7 +666,7 @@ def selftest():
     )
     for label, args, outst, needle in panel_refusals:
         rc, out = record_dry(args, outst)
-        ok = rc == 2 and needle in out and 'WOULD ACCEPT' not in out
+        ok = rc == 2 and needle in out and ASKED not in out
         bad += 0 if ok else 1
         ran += 1
         fired += 1
@@ -626,7 +682,7 @@ def selftest():
              PANEL_BASE + ['--outstanding-file', _missing], None)):
         rc, out = record_dry(args, raw=raw)
         needle = 'could not be read as JSON'
-        ok = rc == 2 and needle in out and 'WOULD ACCEPT' not in out and 'Traceback' not in out
+        ok = rc == 2 and needle in out and ASKED not in out and 'Traceback' not in out
         bad += 0 if ok else 1
         ran += 1
         fired += 1
@@ -644,7 +700,7 @@ def selftest():
             # The union rule: a 3/3 agreement PASS carries every reader's wording findings.
             ('copyed clean   3/3 agreement PASS, wording findings', AGREE, [WORD_P, WORD_P])):
         rc, out = record_dry(args, outst)
-        if rc == 0 and 'WOULD ACCEPT' in out:
+        if rc == 0 and VALIDATED in out:
             ok, how = True, 'accepted by client and ledger'
         elif rc == 2 and any(o in out for o in OUTAGE) and 'error:' not in out:
             ok, how = True, 'client admitted; ledger NOT ASKED'
@@ -677,8 +733,8 @@ def selftest():
         bad += 0 if ok else 1
         ran += 1
         clean += 1
-        ledger = ('ledger WOULD ACCEPT' if 'WOULD ACCEPT' in out else
-                  'ledger WOULD REFUSE' if 'WOULD REFUSE' in out else 'ledger NOT ASKED')
+        ledger = ('ledger validate ok' if VALIDATED in out else
+                  'ledger validate refused' if VALIDATE_REFUSED in out else 'ledger NOT ASKED')
         print('  %-4s %-42s %s' % ('ok' if ok else 'FAIL', label,
                                    'client admitted; %s' % ledger if ok else
                                    'exit %d: %s' % (rc, out.strip().split(chr(10))[-1][:60])))

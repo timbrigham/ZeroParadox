@@ -108,9 +108,18 @@ def _read(path):
 from vendored import is_vendored  # noqa: E402  (VENDOR_RE and the head window live there)
 
 
-def scan_file(path, rel):
-    """Yield (kind, key, actual, limit, line, detail) violations for one file."""
+# `{rel: [(key, countable length, line)]}` for EVERY module-doc block the last `scan_file` call on
+# that file saw, capped or not. `split_new` reads it to pair blocks with baseline entries.
+LAST_BLOCKS = {}
+
+
+def scan_file(path, rel, blocks_out=None):
+    """Yield (kind, key, actual, limit, line, detail) violations for one file. Every module-doc
+    block is also listed in `LAST_BLOCKS[rel]`, or in `blocks_out` when one is passed."""
     lines = _read(path)
+    seen = [] if blocks_out is None else blocks_out
+    if blocks_out is None:
+        LAST_BLOCKS[rel] = seen
     n = len(lines)
     out = []
     i = 0
@@ -132,6 +141,7 @@ def scan_file(path, rel):
             # how the corpus is laid out. Found 2026-08-08 while writing compliant content.
             length, take_unclosed = countable_block_lines(lines, start, j)
             key = block_key(rel, lines, start, j)
+            seen.append((key, length, start + 1))
             if length > BLOCK_CAP:
                 out.append(("block", key, length, BLOCK_CAP, start + 1,
                             "module-doc block (excluding the Take)"))
@@ -289,12 +299,12 @@ def countable_block_lines(lines, start, end):
 
 
 def block_key(rel, lines, start, end):
-    """Key a block by a hash of its CONTENT, not its line number.
+    """Key a block by a hash of its CONTENT and its opening line, not its line number.
 
-    Two properties, both wanted. It survives the block moving within the file, so an
-    unrelated edit above does not re-fire it. And it CHANGES when the block is edited,
-    so a grandfathered block that gets touched must come under the cap - which is the
-    baseline-shrinking rule enforced rather than remembered.
+    It survives the block moving within the file, so an unrelated edit above does not re-fire
+    it. An edited grandfathered block keeps its baseline entry by file + opening line, one entry
+    per block, and only while it does not grow (`split_new`, `PRS-12`). The hash stays in the key
+    so an edited grandfathered block is NAMED on every run.
     """
     body = "\n".join(lines[start:min(end + 1, len(lines))])
     digest = hashlib.sha256(body.encode("utf-8", "replace")).hexdigest()[:12]
@@ -307,6 +317,115 @@ def block_key(rel, lines, start, end):
             head = s[:48].strip()
             break
     return "%s::block::%s::%s" % (rel, digest, head)
+
+
+def _parts(key):
+    """(rel, digest, head) for a block key, or None for any other kind."""
+    parts = key.split("::", 3)
+    return (parts[0], parts[2], parts[3]) if len(parts) == 4 and parts[1] == "block" else None
+
+
+_BASELINE_REL = "tools/verify/prose_baseline.txt"
+_AT_BASELINE = {}
+
+
+def baseline_blocks(rel):
+    """`[(key, countable length)]` for every module-doc block of `rel` AS IT STOOD in the commit that
+    last wrote `prose_baseline.txt`, in file order — or None when that cannot be read.
+
+    ⚠ THE BASELINE STORES NO LENGTH, so the grandfathered length is DERIVED: the commit that last
+    wrote the baseline is the state the baseline describes, and a block there whose key equals a
+    baseline key is that entry's block, byte for byte. Not HEAD: once a grown block is committed,
+    HEAD carries the growth and the comparison would pass vacuously. None is NOT an empty list
+    (`R-ZERONULL`): an unreadable reference fails the edited block CLOSED in `split_new`."""
+    if rel in _AT_BASELINE:
+        return _AT_BASELINE[rel]
+    import subprocess
+    import tempfile
+    out = None
+    try:
+        ref = subprocess.run(["git", "log", "-1", "--format=%H", "--", _BASELINE_REL], cwd=REPO,
+                             capture_output=True, text=True, encoding="utf-8", errors="replace")
+        sha = ref.stdout.strip()
+        if ref.returncode == 0 and len(sha) == 40:
+            blob = subprocess.run(["git", "show", "%s:%s" % (sha, rel)], cwd=REPO,
+                                  capture_output=True)
+            if blob.returncode == 0:
+                d = tempfile.mkdtemp(prefix="check_prose_baseline_")
+                tmp = os.path.join(d, "at_baseline.lean")
+                with open(tmp, "wb") as fh:
+                    fh.write(blob.stdout)
+                blocks = []
+                scan_file(tmp, rel, blocks_out=blocks)
+                os.remove(tmp)
+                os.rmdir(d)
+                out = [(k, n) for k, n, _line in blocks]
+    except OSError:
+        out = None
+    _AT_BASELINE[rel] = out
+    return out
+
+
+def split_new(viols, base, blocks=None, at_baseline=None):
+    """(new, edited): violations the baseline does not grandfather, and grandfathered blocks whose
+    content changed since the baseline was written but which did NOT GROW.
+
+    ⚠ EACH BASELINE ENTRY IS CONSUMED ONCE (`PRS-12`, `/rely` g5 B1). Within one file and one
+    opening line, a block whose key equals a baseline key takes that entry; the remaining blocks are
+    paired with the remaining entries in file order, and a block left over is NEW. Matching on
+    file + opening line alone grandfathered a brand-new oversized block that reused a heading.
+    ⚠ AN EDITED BLOCK MAY NOT GROW (`/rely` g5 B2). Correcting a sentence inside the debt is not
+    refused; an edited block LONGER than its entry's length at the baseline commit is NEW, and so is
+    one whose baseline length cannot be read. The debt may shrink and may never grow.
+
+    `blocks` is `{rel: [(key, length, line)]}` for EVERY module-doc block, capped or not, so a
+    grandfathered block that shrank under the cap still holds its entry; it defaults to what
+    `scan_file` last saw. `at_baseline(rel)` defaults to `baseline_blocks`."""
+    blocks = LAST_BLOCKS if blocks is None else blocks
+    at_baseline = baseline_blocks if at_baseline is None else at_baseline
+    entries = {}
+    for k in base:
+        pk = _parts(k)
+        if pk:
+            entries.setdefault((pk[0], pk[2]), []).append(k)
+    held, paired = set(), {}
+    for (rel, head), keys in entries.items():
+        cur = [b for b in blocks.get(rel, ()) if _parts(b[0]) and _parts(b[0])[2] == head]
+        left, loose = list(keys), []
+        for key, _n, line in cur:
+            if key in left:
+                left.remove(key)
+                held.add((key, line))
+            else:
+                loose.append((key, line))
+        if not loose or not left:
+            continue
+        old = at_baseline(rel)
+        lengths = dict(old) if old else {}
+        order = [k for k, _n in old] if old else []
+        left.sort(key=lambda k: order.index(k) if k in order else len(order))
+        for (key, line), entry in zip(loose, left):
+            paired[(key, line)] = lengths.get(entry)
+    new, edited = [], []
+    for v in viols:
+        ident = (v[1], v[4])
+        if v[0] != "block":
+            if v[1] not in base:
+                new.append(v)
+        elif ident in held:
+            continue
+        elif ident in paired:
+            was = paired[ident]
+            if was is None:
+                new.append(v[:5] + ("grandfathered block EDITED, its baseline length could not be "
+                                    "read - failing closed",))
+            elif v[2] > was:
+                new.append(v[:5] + ("grandfathered block GREW from %d lines" % was,))
+            else:
+                edited.append(v[:5] + ("%d lines at the baseline" % was,))
+        else:
+            new.append(v)
+    return new, edited
 
 
 def decl_after(lines, k, n):
@@ -453,7 +572,7 @@ def run(block_mode=False, write_baseline=False):
         return 0
 
     base = load_baseline()
-    new = [v for v in viols if v[1] not in base]
+    new, edited = split_new(viols, base)
 
     # ⚠ Recorded here rather than at the returns: this function has more than one exit and a record
     # emitted on only some of them is a coverage gap that depends on the verdict, which is the one
@@ -498,6 +617,12 @@ def run(block_mode=False, write_baseline=False):
             print("      %-34s %4d" % (desc, tot))
     print("  grandfathered (baseline):           %d" % len(base))
     print("  NEW oversized prose sites:          %d" % len(new))
+    # Grandfathered blocks edited since the baseline: not blocked (`PRS-12`), never silent.
+    print("  grandfathered blocks edited since:  %d" % len(edited))
+    for _k, key, actual, limit, line, was in sorted(edited, key=lambda v: v[1]):
+        parts = key.split("::", 3)
+        print("      %s:%d  [%s]  %d lines (cap %d; %s)"
+              % (parts[0], line, parts[3][:44], actual, limit, was))
     if takeopen:
         # NEVER baselined, NEVER blocking - but never silent either. A rising number here
         # means more of the corpus has stopped being measured (PRS-1).
@@ -697,6 +822,67 @@ def selftest():
     v7 = [x for x in scan_file(hide, "Hide.lean") if x[0] == "block"]
     if not v7:
         print("  SELFTEST FAIL: essay hiding beside the Take was exempted wholesale"); ok = False
+
+    # PRS-12 and `/rely` g5 B1/B2, on `split_new` itself with explicit blocks and baseline lengths.
+    # An edited grandfathered block that did not grow is EDITED (passes, named); one that grew, one
+    # whose baseline length cannot be read, and a second block reusing the heading are NEW.
+    H = "ZPJ — Wheel Theory"
+    old = "F.lean::block::aaaaaaaaaaaa::" + H
+    edit = "F.lean::block::bbbbbbbbbbbb::" + H
+    base_t = {old, "F.lean::doc::foo"}
+    at_ok = lambda rel: [(old, 30)] if rel == "F.lean" else None
+    at_none = lambda rel: None
+
+    def blk(key, n, line):
+        return ("block", key, n, 10, line, "")
+
+    cases = [
+        ("MUST SUPPRESS: edited grandfathered block, same length",
+         [blk(edit, 30, 1)], {"F.lean": [(edit, 30, 1)]}, at_ok, 0, 1),
+        ("MUST SUPPRESS: edited grandfathered block, shorter",
+         [blk(edit, 20, 1)], {"F.lean": [(edit, 20, 1)]}, at_ok, 0, 1),
+        ("MUST FIRE: edited grandfathered block GREW (B2)",
+         [blk(edit, 31, 1)], {"F.lean": [(edit, 31, 1)]}, at_ok, 1, 0),
+        ("MUST FIRE: edited block, baseline length unreadable",
+         [blk(edit, 30, 1)], {"F.lean": [(edit, 30, 1)]}, at_none, 1, 0),
+        ("MUST FIRE: NEW block reusing a grandfathered heading (B1)",
+         [blk(old, 30, 1), blk(edit, 60, 90)],
+         {"F.lean": [(old, 30, 1), (edit, 60, 90)]}, at_ok, 1, 0),
+        ("MUST FIRE: a shrunk block still holds its entry (B1)",
+         [blk(edit, 60, 90)], {"F.lean": [(old, 4, 1), (edit, 60, 90)]}, at_ok, 1, 0),
+        ("MUST FIRE: two identical copies of one entry",
+         [blk(old, 30, 1), blk(old, 30, 50)], {"F.lean": [(old, 30, 1), (old, 30, 50)]}, at_ok, 1, 0),
+        ("MUST FIRE: a different block in the same file",
+         [blk("F.lean::block::bbbbbbbbbbbb::Another header", 30, 1)],
+         {"F.lean": [("F.lean::block::bbbbbbbbbbbb::Another header", 30, 1)]}, at_ok, 1, 0),
+        ("MUST FIRE: the same header in another file",
+         [blk("G.lean::block::aaaaaaaaaaaa::" + H, 30, 1)],
+         {"G.lean": [("G.lean::block::aaaaaaaaaaaa::" + H, 30, 1)]}, at_ok, 1, 0),
+        ("MUST FIRE: a doc key never matches by head",
+         [("doc", "F.lean::doc::bar", 30, 10, 1, "")], {}, at_ok, 1, 0),
+        ("MUST SUPPRESS: an exact baseline key is grandfathered",
+         [blk(old, 30, 1)], {"F.lean": [(old, 30, 1)]}, at_ok, 0, 0),
+    ]
+    for label, viols_t, blocks_t, at, want_new, want_edited in cases:
+        n_, e_ = split_new(viols_t, base_t, blocks_t, at)
+        if len(n_) != want_new or len(e_) != want_edited:
+            print("  SELFTEST FAIL: %s (new=%d edited=%d)" % (label, len(n_), len(e_))); ok = False
+    # Through `scan_file`: a grandfathered block that SHRANK under the cap still holds its entry,
+    # so a second, oversized block reusing its heading is NEW. Every block is recorded, capped or not.
+    orig = os.path.join(tmp, "Orig.lean")
+    io.open(orig, "w", encoding="utf-8", newline="\n").write(
+        "/-! Hdr\n" + "\n".join("orig line %d" % i for i in range(28)) + "\n-/\n")
+    scan_file(orig, "S.lean")
+    okey = LAST_BLOCKS["S.lean"][0][0]
+    shrunk = os.path.join(tmp, "Shrunk.lean")
+    io.open(shrunk, "w", encoding="utf-8", newline="\n").write(
+        "/-! Hdr\nshort now\n-/\n/-! Hdr\n" + "\n".join("new line %d" % i for i in range(28))
+        + "\n-/\n")
+    vs = [x for x in scan_file(shrunk, "S.lean") if x[0] == "block"]
+    n_, e_ = split_new(vs, {okey}, None, lambda rel: [(okey, 30)])
+    if len(n_) != 1 or e_:
+        print("  SELFTEST FAIL: MUST FIRE: shrunk block's heading reused by a new block "
+              "(new=%d edited=%d)" % (len(n_), len(e_))); ok = False
 
     # ⚠ THE SCOPE PIN (SCOPE-3). This checker walks `ZeroParadox/` privately rather than using
     # `common.targets()`. Every control above builds its input in a tempfile, so they are

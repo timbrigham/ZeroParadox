@@ -19,8 +19,10 @@ hypotheses so the signature cannot be misread.
 
 **NEVER BUNDLE ONE INTO THE OTHER.** If a class field asserts something the framework could be wrong
 about, extract it as a hypothesis on the theorems that need it. `KleeneStructure` is the worked example
-of the failure: it bundles a `Code` (data) with the assertion that the code names ⊥ (commitment), and the
-bundling is precisely what let `da1_closed_concrete` read as establishing self-execution for months.
+of the misreading: the bracket reads as if it carries the identification that its `Code` names ⊥ of
+`L`, and no field asserts that — the NO-GO gauge at the head of § II of
+`ZeroParadox/Computability/Kleene.lean` says what the fields do assert. A commitment that sits in no
+signature at all is what let `da1_closed_concrete` read as establishing self-execution for months.
 `AbstractSelfApp` has the same shape — which is why `trivialSelfApp` inhabits it, and why "L carries
 `AbstractSelfApp`, therefore …" is vacuous.
 
@@ -44,13 +46,16 @@ visible as one.
 **Three encodings, decreasing honesty — know which you are writing:**
 1. **Baked into the carrier** — `ax_b1_distinct : nullState ≠ firstAtomicState := by decide`, where
    discreteness *is* the two-element type. Invisible at every use site. **Worst.**
-2. **Hidden in a class** — `[QuineHost L]`, `[KleeneStructure L]`. Visible only if you know what the
-   class carries.
+2. **Hidden in a class** — `[QuineHost L]`. Visible only if you know what the class carries.
+   `[KleeneStructure L]` is the neighbouring hazard: the commitment it was built for is in no field, so
+   the bracket shows it nowhere and reads as if it did.
 3. **Explicit hypothesis.** Visible on the face of the statement. **Prefer this for anything that can be
    false.**
 
 **Rollout — AS-TOUCHED, not a rewrite.** The class form is used widely enough that no big-bang
 migration is realistic. Every new or edited commitment uses the hypothesis form immediately;
 where an existing class carries a commitment, add a **companion explicit-hypothesis theorem** rather than
-refactoring the class. First candidates: `KleeneStructure`'s identification, and **AX-B1**, which is the
-framework's one substantive modelling commitment and currently the least visible of the three (encoding 1).
+refactoring the class. First candidate: **AX-B1**, which is the framework's one substantive modelling
+commitment and currently the least visible of the three (encoding 1). `KleeneStructure`'s identification
+cannot take the hypothesis form as an equation: `botCode` is a `Code` and ⊥ of `L` is an element of `L`,
+so no `=` between them is well-typed (the class docstring, `ZeroParadox/Computability/Kleene.lean` § II).

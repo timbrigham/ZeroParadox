@@ -31,12 +31,13 @@ Other flags:
 AR status meanings:
     Y/Y   — current hash adversary-reviewed and remediated (or confirmed clean)
     Y/N   — reviewed at current hash, fixes identified but not yet applied
-    N/—   — not yet in system (informational; does not cause exit 1)
-    STALE — hash changed since last review; re-review required (causes exit 1)
+    N/—   — not yet in system (informational)
+    STALE — hash changed since last review; re-review required (reported; does not gate)
 
 Exit codes:
-    0 — all hashes match register.md, no STALE AR entries
-    1 — one or more hash mismatches or STALE AR entries
+    0 — every tracked check passes: build-script hashes vs register.md, docstring headers, the
+        README/register join, the shared build layer. The private AR tracker never gates.
+    1 — one or more of those tracked checks fails
 """
 
 import ast
@@ -174,6 +175,26 @@ ALL_VALID_KEYS = (set(COMP_SCRIPTS) | set(FORMAL_SCRIPTS)
                   # the comp half of a formal-only row, keyed `<name>-comp` like `ZP-A-formal`
                   | {n + '-comp' for n in FORMAL_ONLY_COMPANIONS})
 
+def register_roster():
+    """Every build script the register maps fingerprint, by basename. The ONE derivation used both
+    for the record's subject set and as the roster a directory listing is checked against."""
+    return sorted(set(list(COMP_SCRIPTS.values()) + list(FORMAL_SCRIPTS.values())
+                      + list(FORMAL_ONLY_SCRIPTS.values()) + list(STANDALONE_SCRIPTS.values())
+                      + list(FORMAL_ONLY_COMPANIONS.values())))
+
+
+class NotListed(object):
+    """The tag on a `check_docstring_versions` row for a roster script the listing omitted
+    (`GLOBDOOR-1`). A distinct TYPE, so it can be mistaken for neither a version string, nor `None`
+    (header not found), nor an `OSError` (could not open) - each of those has a different remedy."""
+
+    def __repr__(self):
+        return 'NotListed()'
+
+    def __str__(self):
+        return 'present on disk, omitted by the directory listing'
+
+
 AR_DISPLAY = {
     'remediated': 'Y/Y',
     'reviewed':   'Y/N',
@@ -185,7 +206,7 @@ AR_DISPLAY = {
 # ---------------------------------------------------------------------------------------------
 # THE SHARED BUILD LAYER. Fingerprinted separately because the per-document tokens structurally
 # cannot cover it: `register.md` records each build SCRIPT's bytes, and a script's bytes do not
-# change when its IMPORT changes. `zp_utils.py` is imported by all 43 build scripts and renders the
+# change when its IMPORT changes. `zp_utils.py` is imported by the build scripts and renders the
 # meta line of every document, so editing its `version_line` text altered every rendered PDF while
 # this checker exited 0 printing "All hashes match" and `check_release_ready` printed
 # "[PASS] Build-script hash integrity". (`RLY3-2`, /rely round 3, pre-existing.)
@@ -392,7 +413,11 @@ def all_hash_mismatches():
     # not-found case and must not borrow its wording: the remedy is to investigate a lock or a
     # permission, never to add a title line. Branch on the exception BEFORE branching on `None`.
     for name, head, const in check_docstring_versions():
-        if isinstance(head, OSError):
+        if isinstance(head, NotListed):
+            out.append('build script NOT LISTED: %s is fingerprinted by register.md and present on '
+                       'disk, but the scripts/ listing omitted it, so its docstring header was '
+                       'never compared' % name)
+        elif isinstance(head, OSError):
             out.append('build script UNREADABLE: %s could not be opened (%s), so neither its '
                        'docstring header nor its VERSION constant was read - this file was '
                        'checked against nothing' % (name, head))
@@ -405,6 +430,11 @@ def all_hash_mismatches():
     return sorted(out)
 
 
+# The register Doc cell for each standalone key. ONE map, read by the token reader below AND by the
+# `--sync-hash` writer, so the row that is checked and the row that is written cannot diverge.
+STANDALONE_LABELS = {'Foreword': 'Zero Paradox Foreword', 'Tools': 'ZP Tools'}
+
+
 def register_formal_token(key):
     """The formal: token recorded in register.md for a standalone doc, or None.
 
@@ -412,7 +442,7 @@ def register_formal_token(key):
     register tokens were unguarded - the same hole just closed for FORMAL_ONLY_SCRIPTS, one tier up.
     """
     import re as _re
-    label = {'Foreword': 'Zero Paradox Foreword', 'Tools': 'ZP Tools'}.get(key)
+    label = STANDALONE_LABELS.get(key)
     if not label:
         return None
     try:
@@ -432,21 +462,39 @@ def sha8(filename):
     return hashlib.sha256(open(path, 'rb').read()).hexdigest()[:8]
 
 
-def parse_register():
-    """Return {ZP-X: (formal_hash, comp_hash)} from register.md."""
-    hashes = {}
+def _ab_rows():
+    """Return {ZP-X: (doc_cell, formal_hash, comp_hash)} from register.md, first row wins."""
+    rows = {}
     with open(REGISTER, encoding='utf-8') as f:
         for line in f:
             m = re.search(
                 r'\|\s*(ZP-[A-Z])[^|]*\|[^|]*\|[^|]*\|[^|]*\|[^|]*\|[^|]*formal:([0-9a-f]{8}).*?comp:([0-9a-f]{8})',
                 line)
-            if m and m.group(1) not in hashes:
+            if m and m.group(1) not in rows:
                 # First-wins: a base-layer row (e.g. "ZP-J Self-Reference") precedes
                 # its addenda ("ZP-J AFA/Wheel Addendum") in register order. Both match
                 # the ZP-[A-Z] key, so without this guard an addendum row would clobber
                 # the base layer's hashes and produce a spurious MISMATCH.
-                hashes[m.group(1)] = (m.group(2), m.group(3))
-    return hashes
+                rows[m.group(1)] = (line.split('|')[1].strip(), m.group(2), m.group(3))
+    return rows
+
+
+def parse_register():
+    """Return {ZP-X: (formal_hash, comp_hash)} from register.md."""
+    return dict((k, (f, c)) for k, (_cell, f, c) in _ab_rows().items())
+
+
+def register_cell(doc):
+    """The full register Doc cell the A..M READER resolves bare `doc` (`ZP-J`) to, or `doc` itself.
+
+    `W4K-10`: the writers matched the bare key as a PREFIX, `ZP-J` hits four rows and `ZP-H` two, so
+    `--sync-hash ZP-J` and `--mark-remediated ZP-J` were refused for the base documents with no key
+    that could reach them. The reader already picks one row (`_ab_rows`, first wins); handing the
+    writer that row's exact cell makes the row written the row read, by construction. A name that is
+    not a bare A..M key passes through unchanged and keeps the boundary-aware matching.
+    """
+    row = _ab_rows().get(doc) if doc in COMP_SCRIPTS else None
+    return row[0] if row else doc
 
 
 def parse_register_formal_by_name(prefix):
@@ -620,7 +668,7 @@ def update_register_ar_column(ar_labels):
 
     targets = {}
     for doc in ar_labels:
-        exact = [i for i, c in cells.items() if c == doc]
+        exact = [i for i, c in cells.items() if c == register_cell(doc)]
         rows = exact or [i for i, c in cells.items() if c.startswith(doc)]
         if len(rows) == 1:
             targets[rows[0]] = ar_labels[doc]
@@ -655,7 +703,7 @@ def mark_doc(key, status, ar_data):
         # printed "Marked ZP-J: Y/Y" and "register.md updated" after BOTH writers refused an
         # ambiguous prefix - exit 0, empty diff, a claim of work not done. The FORMAL branch below
         # already checked. (`/rely` round 3.)
-        if not update_register_comp_hash(key, current_hash):
+        if not update_register_comp_hash(register_cell(key), current_hash):
             print('  NOT marked %s: the register write was refused (see above)' % key)
             return None
         ar_data[key] = {'hash': current_hash, 'status': status}
@@ -668,7 +716,7 @@ def mark_doc(key, status, ar_data):
             print(f'  ERROR: {script} not found — cannot mark {key}')
             return None
         ar_data[key] = {'hash': current_hash, 'status': status}
-        doc = key.replace('-formal', '')
+        doc = register_cell(key.replace('-formal', ''))
         if not update_register_formal_hash(doc, current_hash):
             print('  ⚠ %s: ar_status.json updated, register.md NOT written (see refusal above)' % key)
         return current_hash
@@ -1027,26 +1075,11 @@ def selftest():
                 if _f.endswith('.py'):
                     _sh.copyfile(os.path.join(_saved_sd, _f), os.path.join(_sd, _f))
             globals()['SCRIPT_DIR'] = _sd
-            # Unperturbed copies must be quiet APART FROM KNOWN-OPEN DEBT, or every case below is
-            # meaningless.
-            # ⚠ NOT `== []`. `build_tools.py` genuinely has no `register.md` row (`ZP_Tools_and_
-            # Methods.pdf` is published and linked twice from GUIDE with no public provenance), and
-            # that finding is CORRECT — it is what closing the STANDALONE tier surfaced. Asserting an
-            # empty baseline would leave this control permanently red, and **a control that always
-            # fails is one people learn to scroll past**, which is worse than not having it. So the
-            # open item is named here explicitly: when it is fixed, this line must be deleted, and if
-            # a SECOND item appears the control fires.
-            # ⚠ A SECOND ENTRY LIVED HERE FOR ONE COMMIT AND IS GONE (`HDRVER-1`, 2026-09-23).
-            # Teaching this leg to report an unlocatable docstring header made a REAL finding appear
-            # on the live tree - `build_zpe.py`'s only title line sat INSIDE its changelog - so the
-            # entry was added to keep this control green while that finding stood. `build_zpe.py`
-            # now carries a title line above its changelog, the finding is gone, and the exemption
-            # is deleted in the same change that removed its cause: an exemption is priced on what
-            # it buys, and left standing it would be a permanent silent exemption for the one file
-            # this defect row is about. The synthetic probes below cover the LOGIC either way.
-            _KNOWN_OPEN = ('Tools: no formal: token',)
-            _base = [m for m in all_hash_mismatches()
-                     if not any(m.startswith(k) for k in _KNOWN_OPEN)]
+            # Unperturbed copies must be quiet, or every case below is meaningless. No exemption
+            # list: every standalone key, `Tools` included, has a `register.md` row with a
+            # `formal:` token, so an empty baseline is the expected state, and an exemption left
+            # standing after its cause is gone is a permanent silent exemption.
+            _base = all_hash_mismatches()
             ok = _base == []
             bad += 0 if ok else 1
             print('    %-34s %s%s' % ('untouched copies are quiet', 'ok' if ok else '*** WRONG ***',
@@ -1059,8 +1092,8 @@ def selftest():
                     _hits = all_hash_mismatches()
                 finally:
                     io.open(_p, 'wb').write(_orig)
-                # ⚠⚠ ASSERT THE PERTURBED SCRIPT IS NAMED. Comparing COUNTS was vacuous: `_base` was
-                # filtered for `_KNOWN_OPEN` and `_hits` was not, so `build_tools.py`'s permanent
+                # ⚠⚠ ASSERT THE PERTURBED SCRIPT IS NAMED. Comparing COUNTS was vacuous: the baseline
+                # was filtered for a known-open row and the hits were not, so a permanent
                 # missing-token row made `len(_hits) > len(_base)` true with ZERO perturbation.
                 # Measured (`RLY19-1`, /rely round 3): deleting the COMP+FORMAL, FORMAL_ONLY or SHARED
                 # loop outright left `--selftest` at exit 0 printing "tier is actually scanned ok".
@@ -1072,7 +1105,6 @@ def selftest():
                 # counts instead of asserting the named subject appears* silently changes a control's
                 # subject exactly as relocating a probe does. Length arithmetic cannot say WHICH tier
                 # spoke; only the name can.
-                _hits = [m for m in _hits if not any(m.startswith(k) for k in _KNOWN_OPEN)]
                 _seen = any(_script in m for m in _hits)
                 bad += 0 if _seen else 1
                 print('    %-34s %s' % ('%s tier names %s' % (_label, _script),
@@ -1270,10 +1302,12 @@ def selftest():
     # not re-enter `--selftest`, and `record_if_asked` is inert without `--record`, so this writes
     # nothing.
     _probe_rows = [('<probe-absent>.py', None, '9.9'),
-                   ('<probe-locked>.py', PermissionError(13, 'Permission denied'), None)]
+                   ('<probe-locked>.py', PermissionError(13, 'Permission denied'), None),
+                   ('<probe-unlisted>.py', NotListed(), None)]
     _heads = ('DOCSTRING VERSION != VERSION constant',
               'DOCSTRING HEADER NOT FOUND',
-              'BUILD SCRIPT COULD NOT BE READ')
+              'BUILD SCRIPT COULD NOT BE READ',
+              'BUILD SCRIPT NOT LISTED')
 
     def _section_of(txt, marker):
         """Which heading most recently preceded the line naming `marker`."""
@@ -1302,12 +1336,43 @@ def selftest():
             ('<probe-absent>.py', 'DOCSTRING HEADER NOT FOUND',
              'main() routes absent to its own block'),
             ('<probe-locked>.py', 'BUILD SCRIPT COULD NOT BE READ',
-             'main() routes unreadable to its own')):
+             'main() routes unreadable to its own'),
+            ('<probe-unlisted>.py', 'BUILD SCRIPT NOT LISTED',
+             'main() routes unlisted to its own')):
         _got = _section_of(_txt, _marker)
         _ok = (_got == _want)
         bad += 0 if _ok else 1
         print('    %-34s %s%s' % (_label, 'ok' if _ok else '*** MISROUTED ***',
                                   '' if _ok else ' — under %r' % (_got,)))
+
+    # ⚠ AND THE INSTRUCTION UNDER EACH HEADING (`CTRLTEXT-1`). The routing legs above assert the
+    # heading a row sits under; the reader acts on the REMEDY printed beneath it. Each block must
+    # carry its own remedy and NOT another block's: swapping "add a title line" in under the
+    # could-not-be-read heading is that heading's original harm, and the heading legs stay green.
+    def _block(txt, head):
+        """The text from `head` to the next heading, or to the end: the doc-row blocks are the
+        last thing `main()` prints, so nothing else can fall inside one."""
+        out, inside = [], False
+        for ln in txt.splitlines():
+            if ln.startswith(_heads):
+                inside = ln.startswith(head)
+                continue
+            if inside:
+                out.append(ln)
+        return ' '.join(s.strip() for s in out)
+
+    _remedies = {
+        'DOCSTRING HEADER NOT FOUND': 'Add a title line at the TOP of the',
+        'BUILD SCRIPT COULD NOT BE READ': 'INVESTIGATE THE FILE. Do NOT add a title line',
+        'BUILD SCRIPT NOT LISTED': 'INVESTIGATE THE LISTING',
+    }
+    for _h, _want in sorted(_remedies.items()):
+        _b = _block(_txt, _h)
+        _others = [w for k, w in _remedies.items() if k != _h]
+        _ok = (_want in _b) and not any(w in _b for w in _others)
+        bad += 0 if _ok else 1
+        print('    %-34s %s%s' % ('remedy under %s' % _h, 'ok' if _ok else '*** WRONG REMEDY ***',
+                                  '' if _ok else ' — block reads %r' % (_b[:160],)))
     _rc_ok = (_main_rc == 1)
     bad += 0 if _rc_ok else 1
     print('    %-34s %s%s' % ('main() fails on either row', 'ok' if _rc_ok else '*** WRONG ***',
@@ -1369,25 +1434,53 @@ def selftest():
         bad += 1
         print('    %-34s *** NO README ROWS PARSED ***' % 'the row pattern matches')
 
-    # ⚠ THE SUMMARY LINE, THROUGH `main()` (HASHES-MISMATCH-EXIT0-1). The live MISMATCH rows appear
-    # only where `.claude-local/ar_status.json` exists, so a worktree run reads every row OK and could
-    # never show this (DC-63). The fixture is therefore built here: `AR_AVAILABLE` forced on and
-    # `load_ar_status` returning a Foreword entry at a hash no script has, which is the live shape.
-    # Nothing is written; `record_if_asked` is inert without `--record`.
-    def _run_main_with_ar(_ar):
+    # ⚠ THE SUMMARY LINE AND THE RECORDED INDICTMENT, THROUGH `main()`, ON A HERMETIC TREE.
+    # HASHES-MISMATCH-EXIT0-1: the live MISMATCH rows appear only where `.claude-local/ar_status.json`
+    # exists, so a worktree run reads every row OK and could never show this (DC-63). These fixtures
+    # used to run `main()` over the live register too, so genuine register drift turned them red for
+    # a reason that is not theirs and made "All hashes match is absent" pass vacuously. Every
+    # register READER is therefore replaced by one that agrees with the scripts' current bytes, the
+    # docstring/README/shared legs are emptied, and each case perturbs exactly the one input it
+    # names. `common.record_if_asked` is captured, not called, so the indictment a `--record` run
+    # would carry is observable and nothing is written.
+    def _hermetic():
+        return {
+            'parse_register': lambda: dict(
+                (d, (sha8(FORMAL_SCRIPTS[d + '-formal']), sha8(c))) for d, c in COMP_SCRIPTS.items()),
+            'parse_register_formal_by_name': lambda n: (
+                sha8(FORMAL_ONLY_SCRIPTS[n]) if n in FORMAL_ONLY_SCRIPTS else None),
+            'parse_register_comp_by_name': lambda n: (
+                sha8(FORMAL_ONLY_COMPANIONS[n]) if n in FORMAL_ONLY_COMPANIONS else None),
+            'register_formal_token': lambda k: (
+                sha8(STANDALONE_SCRIPTS[k]) if k in STANDALONE_SCRIPTS else None),
+            'check_shared_build': lambda: [],
+            'check_docstring_versions': lambda: [],
+            'check_readme_versions': lambda: [],
+            'AR_AVAILABLE': False,
+            'load_ar_status': lambda: {},
+        }
+
+    def _run_main(**over):
+        _patch = _hermetic()
+        _patch.update(over)
+        _saved_g = dict((k, globals()[k]) for k in _patch)
+        _saved_rec = common.record_if_asked
+        _cap = []
         _b = _io2.StringIO()
         _so, _sa = sys.stdout, sys.argv
-        _sv_av, _sv_load = globals()['AR_AVAILABLE'], globals()['load_ar_status']
         try:
-            globals()['AR_AVAILABLE'] = True
-            globals()['load_ar_status'] = lambda: dict(_ar)
+            globals().update(_patch)
+            common.record_if_asked = lambda *a, **k: (_cap.append(a), 0)[1]
             sys.argv = ['check_hashes.py']
             sys.stdout = _b
             _r = main()
         finally:
             sys.stdout, sys.argv = _so, _sa
-            globals()['AR_AVAILABLE'], globals()['load_ar_status'] = _sv_av, _sv_load
-        return _r, _b.getvalue()
+            common.record_if_asked = _saved_rec
+            globals().update(_saved_g)
+        _subj = set(_cap[0][1]) if _cap else None
+        _fail = set(_cap[0][2]) if _cap else None
+        return _r, _b.getvalue(), _subj, _fail
 
     # Every OTHER standalone key is given its true hash, so exactly one row mismatches and the count
     # asserted below is a fact about the fixture, not about whichever keys the tree happens to hold.
@@ -1396,23 +1489,170 @@ def selftest():
     print('  MUST FIRE  (a printed MISMATCH row is never summarised as "all match")')
     _ar_bad = dict(_ar_ok)
     _ar_bad['Foreword'] = {'hash': 'deadbeef', 'status': 'remediated'}
-    _mrc, _mtxt = _run_main_with_ar(_ar_bad)
+    _mrc, _mtxt, _ms, _mf = _run_main(AR_AVAILABLE=True, load_ar_status=lambda: dict(_ar_bad))
     _row_ok = 'Foreword: hash=MISMATCH' in _mtxt
     _no_all = 'All hashes match' not in _mtxt
     _count_ok = '1 hash=MISMATCH row(s) above: Foreword' in _mtxt
     for _lbl, _ok in (('fixture prints the MISMATCH row', _row_ok),
                       ('"All hashes match" is absent', _no_all),
                       ('the mismatch count is printed', _count_ok),
-                      ('exit stays 0 (ruled, for now)', _mrc == 0)):
+                      ('exit stays 0 (ruled, for now)', _mrc == 0),
+                      ('private tracker indicts nothing', _mf == set())):
         bad += 0 if _ok else 1
         print('    %-34s %s' % (_lbl, 'ok' if _ok else '*** WRONG ***'))
 
+    # O1: the companion and formal-only appends cannot reach the summary, because the same MISMATCH
+    # also lands in `hash_mismatches`. What CAN be asserted is the consequence a reader sees: a
+    # tracked mismatch at either site is never summarised as "all match" and fails the run.
+    for _site, _over, _name in (
+            ('companion', {'parse_register': lambda: dict(
+                (d, (sha8(FORMAL_SCRIPTS[d + '-formal']),
+                     '00000000' if d == 'ZP-A' else sha8(c))) for d, c in COMP_SCRIPTS.items())},
+             'ZP-A'),
+            ('formal-only', {'parse_register_formal_by_name': lambda n: (
+                '00000000' if n == 'ZP-Q The Frame-Change'
+                else sha8(FORMAL_ONLY_SCRIPTS[n]) if n in FORMAL_ONLY_SCRIPTS else None)},
+             'ZP-Q The Frame-Change')):
+        _r, _t, _s, _f = _run_main(**_over)
+        _ok = (_r == 1 and 'All hashes match' not in _t and 'row(s) above' not in _t
+               and ('HASH MISMATCHES: %s' % _name) in _t)
+        bad += 0 if _ok else 1
+        print('    %-34s %s' % ('%s mismatch fails, unsummarised' % _site,
+                                'ok' if _ok else '*** WRONG ***'))
+
     print('  MUST SUPPRESS  (the clean summary still prints when every row is OK)')
-    _crc, _ctxt = _run_main_with_ar(_ar_ok)
-    _clean_ok = ('hash=MISMATCH' not in _ctxt and 'All hashes match' in _ctxt
+    _crc, _ctxt, _cs, _cf = _run_main(AR_AVAILABLE=True, load_ar_status=lambda: dict(_ar_ok))
+    # O3: the EXACT line, not a substring - "XAll hashes match" satisfied the old `in` test.
+    _CLEAN = 'All hashes match. AR status current. Docstring and README versions in sync.'
+    _clean_ok = ('hash=MISMATCH' not in _ctxt and _CLEAN in _ctxt.splitlines()
                  and 'row(s) above' not in _ctxt and _crc == 0)
     bad += 0 if _clean_ok else 1
-    print('    %-34s %s' % ('all OK rows: "All hashes match"', 'ok' if _clean_ok else '*** WRONG ***'))
+    print('    %-34s %s' % ('all OK rows: the exact clean line', 'ok' if _clean_ok else '*** WRONG ***'))
+
+    # ⚠ THE INDICTMENT IS PER SUBJECT (`CHECKHASHES-NONGRANULAR-1`). A FAIL naming every subject
+    # because one script disagreed condemned forty innocent blobs and left them with no passing
+    # coverage. One bad input must indict exactly its own subject; a clean run indicts none; and a
+    # failure no subject can carry still indicts the whole set rather than recording an empty FAIL.
+    print('  MUST FIRE  (the recorded indictment names only the failing subject)')
+    _cases = (
+        ('one companion token', {'parse_register': lambda: dict(
+            (d, (sha8(FORMAL_SCRIPTS[d + '-formal']),
+                 '00000000' if d == 'ZP-A' else sha8(c))) for d, c in COMP_SCRIPTS.items())},
+         {'scripts/' + COMP_SCRIPTS['ZP-A']}),
+        ('one standalone token', {'register_formal_token': lambda k: (
+            '00000000' if k == 'Tools' else sha8(STANDALONE_SCRIPTS[k])
+            if k in STANDALONE_SCRIPTS else None)},
+         {'scripts/' + STANDALONE_SCRIPTS['Tools']}),
+        ('README drift', {'check_readme_versions': lambda: [('X.pdf', 'v0.1', 'v1.0')]},
+         {'register.md'}),
+    )
+    for _lbl, _over, _want in _cases:
+        _r, _t, _s, _f = _run_main(**_over)
+        _ok = (_r == 1 and _f == _want)
+        bad += 0 if _ok else 1
+        print('    %-34s %s%s' % (_lbl, 'ok' if _ok else '*** WRONG ***',
+                                  '' if _ok else ' — failing %r' % (sorted(_f or []),)))
+    _r, _t, _s, _f = _run_main(check_docstring_versions=lambda: [('build_zz_unmapped.py', None, '1')])
+    _ok = _r == 1 and _s is not None and _f == _s
+    bad += 0 if _ok else 1
+    print('    %-34s %s' % ('unattributable: whole set (closed)', 'ok' if _ok else '*** WRONG ***'))
+    print('  MUST SUPPRESS  (a clean run indicts nothing)')
+    _ok = _crc == 0 and _cf == set() and bool(_cs)
+    bad += 0 if _ok else 1
+    print('    %-34s %s' % ('clean: failing is empty', 'ok' if _ok else '*** WRONG ***'))
+
+    # ⚠ A LISTING SHORTER THAN THE DIRECTORY (`GLOBDOOR-1`). The probes above replace `glob.glob`
+    # wholesale, so they could never observe the pattern production uses. Two halves: a REAL listing
+    # with one roster script removed must produce a `NotListed` row and reach the release gate; and
+    # the PRODUCTION listing must cover the whole roster, which is what turns red if the pattern
+    # itself is narrowed.
+    print('  MUST FIRE  (a roster script the listing omits is REPORTED)')
+    _drop = FORMAL_SCRIPTS['ZP-A-formal']
+    try:
+        glob.glob = lambda *a, **k: [p for p in _real_glob(*a, **k)
+                                     if os.path.basename(p) != _drop]
+        _gl_rows = check_docstring_versions()
+        _gl_gate = [m for m in all_hash_mismatches() if 'NOT LISTED' in m]
+    finally:
+        glob.glob = _real_glob
+    _ok = any(n == _drop and isinstance(h, NotListed) and c is None for n, h, c in _gl_rows)
+    bad += 0 if _ok else 1
+    print('    %-34s %s' % ('omitted script gets a NotListed row', 'ok' if _ok else '*** SILENT ***'))
+    _ok = any(_drop in m for m in _gl_gate)
+    bad += 0 if _ok else 1
+    print('    %-34s %s' % ('the release gate names it', 'ok' if _ok else '*** NOT DELEGATED ***'))
+    print('  MUST SUPPRESS  (the production listing covers the roster)')
+    _unl = [n for n, h, _c in check_docstring_versions() if isinstance(h, NotListed)]
+    _ok = _unl == []
+    bad += 0 if _ok else 1
+    print('    %-34s %s%s' % ('no roster script unlisted', 'ok' if _ok else '*** SHORT LISTING ***',
+                              '' if _ok else ' — %s' % (_unl,)))
+
+    # ⚠ `--sync-hash` REACHES EVERY ROW IT CAN BE ASKED FOR (`W4K-10`), on a TEMP copy of the
+    # register: nothing tracked is written. The laundering guard (git history) is stubbed to allow,
+    # because what is under test here is which row the writer lands on, not the guard.
+    print('  MUST FIRE  (--sync-hash writes the row the reader reads)')
+    import tempfile as _tf3
+    _live_reg = io.open(REGISTER, encoding='utf-8').read()
+
+    def _zero(text, cell, kind):
+        return ''.join(re.sub(kind + r':[0-9a-f]{8}', kind + ':00000000', ln)
+                       if ln.startswith('| %s |' % cell) else ln
+                       for ln in text.splitlines(True))
+
+    def _sync_on(text, key):
+        _sv = (globals()['REGISTER'], globals()['AR_STATUS'], globals()['_refuses_as_laundering'])
+        _so2 = sys.stdout
+        with _tf3.TemporaryDirectory() as _td:
+            _rp = os.path.join(_td, 'register.md')
+            io.open(_rp, 'w', encoding='utf-8', newline='\n').write(text)
+            try:
+                globals()['REGISTER'] = _rp
+                globals()['AR_STATUS'] = os.path.join(_td, 'ar_status.json')
+                globals()['_refuses_as_laundering'] = lambda *_a: None
+                sys.stdout = _io2.StringIO()
+                _ok2 = sync_hash(key)
+            finally:
+                sys.stdout = _so2
+                (globals()['REGISTER'], globals()['AR_STATUS'],
+                 globals()['_refuses_as_laundering']) = _sv
+            _after = io.open(_rp, encoding='utf-8').read()
+            _ar_made = os.path.exists(os.path.join(_td, 'ar_status.json'))
+        return _ok2, _after, _ar_made
+
+    def _row(text, cell):
+        return next((ln for ln in text.splitlines() if ln.startswith('| %s |' % cell)), '')
+
+    _sync_cases = (
+        ('ZP-J', 'ZP-J Self-Reference', 'comp', COMP_SCRIPTS['ZP-J']),
+        ('ZP-H-formal', 'ZP-H Categorical Bridge', 'formal', FORMAL_SCRIPTS['ZP-H-formal']),
+        ('Tools', STANDALONE_LABELS['Tools'], 'formal', STANDALONE_SCRIPTS['Tools']),
+    )
+    for _key, _cell, _kind, _script in _sync_cases:
+        _before_txt = _zero(_live_reg, _cell, _kind)
+        _ok2, _after, _ar_made = _sync_on(_before_txt, _key)
+        _wrote = ('%s:%s' % (_kind, sha8(_script))) in _row(_after, _cell)
+        # MUST SUPPRESS in the same breath: no OTHER row moved, and no private tracker was created.
+        _others = ([ln for ln in _before_txt.splitlines() if not ln.startswith('| %s |' % _cell)]
+                   == [ln for ln in _after.splitlines() if not ln.startswith('| %s |' % _cell)])
+        _ok = _ok2 is True and _wrote and _others and not _ar_made
+        bad += 0 if _ok else 1
+        print('    %-34s %s%s' % ('--sync-hash %s lands on its row' % _key,
+                                  'ok' if _ok else '*** WRONG ***',
+                                  '' if _ok else ' — returned %r, wrote %r, others intact %r, '
+                                  'tracker created %r' % (_ok2, _wrote, _others, _ar_made)))
+    # and the laundering guard's attestation for a standalone key is the REGISTER token it writes,
+    # never a private-tracker hash that may name a different blob.
+    _sv_load = globals()['load_ar_status']
+    try:
+        globals()['load_ar_status'] = lambda: {'Tools': {'hash': 'deadbeef', 'status': 'x'}}
+        _tok = _recorded_token('Tools')
+    finally:
+        globals()['load_ar_status'] = _sv_load
+    _ok = _tok is not None and _tok == register_formal_token('Tools') and _tok != 'deadbeef'
+    bad += 0 if _ok else 1
+    print('    %-34s %s (%r)' % ('standalone attestation = register', 'ok' if _ok else '*** WRONG ***',
+                                 _tok))
 
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
@@ -1434,13 +1674,17 @@ def check_docstring_versions():
                             is `None`, because nothing in the file was ever read, and the
                             exception itself is the payload a reader needs (errno, strerror).
 
-    A header that agrees produces no row. Four outcomes; the three that mean "this file was not
+        a `NotListed`       a script `register.md` fingerprints exists on disk but the directory
+                            LISTING omitted it - remedy: investigate the listing. `const` is
+                            `None`, because the file was never opened.
+
+    A header that agrees produces no row. Five outcomes; the four that mean "this file was not
     successfully compared" all reach the caller as VALUES, and only agreement is silence.
 
-    ⚠ MATCH THE HEADER LINE ONLY. A first draft of this scanned for any `Version N.N` before the
-    constant and flagged `build_zpc.py`, whose only hit sits INSIDE a changelog entry
-    ("Version 1.4 updates this") - a historical record that must never be rewritten. Changelog
-    entries and the header line look alike to a loose pattern and mean opposite things.
+    ⚠ MATCH THE HEADER LINE ONLY. A loose scan for any `Version N.N` before the constant also hits
+    a changelog entry that mentions a version in prose (say, "Version 1.4 updates this") - a
+    historical record that must never be rewritten. Changelog entries and the header line look
+    alike to a loose pattern and mean opposite things.
 
     ⚠⚠ AND AN UNFINDABLE HEADER IS NOT SILENCE (`HDRVER-1`, 2026-09-23). The guard here read
     `if head and head != const`, so a file whose header `_header_version` could NOT locate was
@@ -1459,7 +1703,7 @@ def check_docstring_versions():
     the same exit code, through a different opening. Zero rows is the value the SATISFIED branch
     produces, so `all_ok` stayed true on this axis. The unreadable file now emits a row too, and
     the `continue` below is loop control only: one unopenable script must not abort the walk over
-    the other 43.
+    the rest.
     ⛔ THE TWO STATES MUST NOT SHARE A ROW SHAPE, because they have DIFFERENT REMEDIES. "No header
     located" is answered by ADDING a title line; "could not open" is answered by INVESTIGATING a
     lock, a permission or a vanished path. Telling a reader to add a title line to a file nobody
@@ -1469,26 +1713,28 @@ def check_docstring_versions():
     NOT caught and fails LOUD - verified by injection, not assumed. Widening this to a bare
     `except:` would convert that loud failure into a quiet row and give back the coverage this
     change just bought.
-    ⚠ ONE SILENT PATH REMAINS, NAMED RATHER THAN CLAIMED CLOSED. This walks whatever `glob.glob`
-    lists, so a listing SHORTER than the directory drops the scripts it omitted with no row - again
-    the satisfied value. Measured 2026-09-23 over an empty listing: `[]`.
-    ⛔ AND THE HASH LAYER DOES NOT COVER IT, though it reads as though it should - that clause was
-    drafted here from the code and measured FALSE the same day. `all_hash_mismatches` does read each
-    script BY NAME from `register.md`'s five maps (40 of the 44 `build_*.py` on disk; with every
-    script made absent it produced 41 loud rows), but that catches a file that is GONE. A file that
-    EXISTS and was merely not LISTED opens fine under its own name and its hash matches, so the hash
-    layer is silent on it too. Not fixed here: the remedy is to compare the LISTING against those
-    maps, which is a roster check rather than a row shape. Stated at this length because the
-    reassuring half of the sentence is the half that was wrong.
+    ⚠⚠ AND A THIRD DOOR: A LISTING SHORTER THAN THE DIRECTORY (`GLOBDOOR-1`). This walks whatever
+    `glob.glob` lists, and a script the listing omits used to vanish with no row - the satisfied
+    value again. The hash layer does not cover it: `all_hash_mismatches` reads each script BY NAME,
+    which catches a file that is GONE, while a file that EXISTS and was merely not LISTED opens fine
+    under its own name and matches. So the listing is compared against an independent ROSTER - every
+    script the register maps fingerprint (`register_roster()`) - and a roster script present on disk
+    but absent from the listing gets a `NotListed` row. Scripts outside every map are reachable only
+    through the listing; the roster covers what the register vouches for.
     ⛔ REPORT THE ABSENCE; NEVER WIDEN THE SCAN. `_header_version`'s changelog truncation and its
     header shapes are load-bearing, and each carries its own measured incident below: a greedier
     pattern trades a silent SKIP for a silent REWRITE of a historical record, which is worse.
-    ⛔ `if not m: continue` STAYS. Five build scripts (`build_bottom_matrix`, `build_dictionary_map`,
-    `build_manifest`, `build_snap_map`, `build_tools`) define no `VERSION` constant at all and are
-    legitimately OUT OF SCOPE - there is no step 4 to skip where there is no version to bump.
+    ⛔ `if not m: continue` STAYS. A build script that defines no `VERSION` constant is legitimately
+    OUT OF SCOPE - there is no step 4 to skip where there is no version to bump. Which scripts those
+    are is whatever `^VERSION\\s*=` fails to match in `scripts/build_*.py`; no list is kept here.
     """
     out = []
-    for p in sorted(glob.glob(os.path.join(REPO, 'scripts', 'build_*.py'))):
+    listing = sorted(glob.glob(os.path.join(REPO, 'scripts', 'build_*.py')))
+    listed = set(os.path.basename(p) for p in listing)
+    for name in register_roster():
+        if name not in listed and os.path.exists(os.path.join(REPO, 'scripts', name)):
+            out.append((name, NotListed(), None))
+    for p in listing:
         try:
             body = io.open(p, encoding='utf-8').read()
         except OSError as exc:
@@ -1625,7 +1871,7 @@ def _register_attested_source(script, recorded_hash):
 
 
 def _recorded_token(key):
-    """The hash `register.md` (or `ar_status.json`) currently records for `key`, or None.
+    """The hash `register.md` currently records for `key`, or None.
 
     ⚠ **MY OWN BUG, AND IT MADE THE GUARD UNREACHABLE** (`/rely` round 3). The first version called
     `parse_register().get(key).get('comp')` - but `parse_register` returns **tuples**, so every one
@@ -1635,7 +1881,9 @@ def _recorded_token(key):
     against a register token. It failed closed, which is why nothing noticed.
     """
     if key in STANDALONE_SCRIPTS:
-        return load_ar_status().get(key, {}).get('hash') or register_formal_token(key)
+        # The register token, never the private tracker: `--sync-hash` writes the register row, so
+        # the attestation it is checked against must be that row's (`W4K-10`).
+        return register_formal_token(key)
     if key in COMP_SCRIPTS:
         row = parse_register().get(key)
         return row[1] if row else None          # (formal, comp)
@@ -1729,7 +1977,7 @@ def sync_hash(key):
         if h == 'MISSING':
             print('  ERROR: %s not found' % FORMAL_SCRIPTS[key])
             return False
-        ok = update_register_formal_hash(key.replace('-formal', ''), h)
+        ok = update_register_formal_hash(register_cell(key.replace('-formal', '')), h)
         print('  %-26s formal:%s  %s' % (key, h, 'written' if ok else 'REFUSED'))
         return ok
     if key in COMP_SCRIPTS:
@@ -1737,7 +1985,7 @@ def sync_hash(key):
         if h == 'MISSING':
             print('  ERROR: %s not found' % COMP_SCRIPTS[key])
             return False
-        ok = update_register_comp_hash(key, h)
+        ok = update_register_comp_hash(register_cell(key), h)
         print('  %-26s comp:%s  %s' % (key, h, 'written' if ok else 'REFUSED'))
         return ok
     if key in FORMAL_ONLY_SCRIPTS:
@@ -1753,22 +2001,25 @@ def sync_hash(key):
         print('  %-26s formal:%s  %s' % (key, h, 'written' if ok else 'REFUSED'))
         return ok
     if key in STANDALONE_SCRIPTS:
-        # ⚠ STANDALONE DOCS LIVE IN `ar_status.json`, NOT `register.md` - the header says so, and a
-        # register write for one silently matches nothing. Update the recorded hash and PRESERVE the
-        # status: the rendered content did not change, so a `remediated` doc is still remediated;
-        # only the script bytes moved. Overwriting the status here would be the same false claim
-        # `--mark-remediated` would make.
+        # ⚠ THE TRACKED RECORD IS THE REGISTER ROW (`W4K-10`). Each standalone key has a
+        # `register.md` row carrying `formal:` (`STANDALONE_LABELS`), and that token is what the
+        # hash check and the release gate compare against; writing only `ar_status.json` left the
+        # public token stale with no route to fix it. The private tracker's hash is updated too
+        # when the tracker EXISTS, status PRESERVED (the rendered content did not change), and is
+        # never created from nothing - the same refusal `main()` makes for `--mark-*`.
         h = sha8(STANDALONE_SCRIPTS[key])
         if h == 'MISSING':
             print('  ERROR: %s not found' % STANDALONE_SCRIPTS[key])
             return False
-        ar = load_ar_status()
-        prev = ar.get(key, {})
-        status = prev.get('status', 'unknown')
-        ar[key] = {'hash': h, 'status': status}
-        save_ar_status(ar)
-        print('  %-26s ar_status:%s  status preserved as %r' % (key, h, status))
-        return True
+        ok = update_register_formal_hash(STANDALONE_LABELS[key], h)
+        print('  %-26s formal:%s  %s' % (key, h, 'written' if ok else 'REFUSED'))
+        if ok and os.path.exists(AR_STATUS):
+            ar = load_ar_status()
+            status = ar.get(key, {}).get('status', 'unknown')
+            ar[key] = {'hash': h, 'status': status}
+            save_ar_status(ar)
+            print('  %-26s ar_status:%s  status preserved as %r' % ('', h, status))
+        return ok
     # ⚠ LIST THE KEYS, AS `mark_doc` DOES (`RLY20-2`). This printed a bare `unknown key`, so the
     # repair route this function OWNS was undiscoverable from the tool: `check_hashes` names the
     # drifting half of a formal-only row and nothing told the reader that `<name>-comp` is the key
@@ -1875,9 +2126,15 @@ def main():
 
     hash_mismatches = []
     ar_stale        = []
-    # Every row this run PRINTS as `hash=MISMATCH`, gating or not. The summary line reads this, never
-    # `all_ok`, so the two can no longer contradict each other on one screen (HASHES-MISMATCH-EXIT0-1).
+    # Every row this run PRINTS as `hash=MISMATCH`, gating or not, so the list is complete. Only the
+    # STANDALONE appends can reach the summary line that reads it (HASHES-MISMATCH-EXIT0-1): a
+    # MISMATCH at the companion or formal-only sites also lands in `hash_mismatches`, so `all_ok` is
+    # false and the summary is never printed. Those two appends keep the list honest, not the summary.
     mismatch_rows   = []
+    # The SUBJECTS each failure is attributable to (`CHECKHASHES-NONGRANULAR-1`): the script whose
+    # bytes disagree, or `register.md` where the disagreement is the register's own. Recording only
+    # these keeps every innocent script's passing coverage, per `common.emit_verdict`'s convention.
+    bad_subjects    = set()
 
     print('ZP Build Script Hash + AR Status Check')
     print('=' * 55)
@@ -1917,6 +2174,10 @@ def main():
 
         if not formal_ok or not comp_ok:
             hash_mismatches.append(doc)
+        if not formal_ok and formal_script:
+            bad_subjects.add('scripts/' + formal_script)
+        if not comp_ok:
+            bad_subjects.add('scripts/' + comp_script)
         if comp_ar_label == 'STALE':
             ar_stale.append(doc)
         if formal_ar_label == 'STALE':
@@ -1943,9 +2204,11 @@ def main():
             print(f'  {key}: NO register.md token - {script} has NO public provenance to check '
                   f'against tracked content')
             hash_mismatches.append(key + ' (no register token)')
+            bad_subjects.add('scripts/' + script)
         elif reg_tok != current_hash:
             print(f'  {key}: REGISTER TOKEN STALE - register has {reg_tok}, script is {current_hash}')
             hash_mismatches.append(key + ' (register token)')
+            bad_subjects.add('scripts/' + script)
 
         # ⚠ THE AR TRACKER IS PRIVATE, AND ITS ABSENCE IS NOT A HASH MISMATCH.
         #
@@ -2029,30 +2292,37 @@ def main():
         if current == 'MISSING':
             print(f'       script {script} not found')
             hash_mismatches.append(name)
+            bad_subjects.add('scripts/' + script)
         elif reg is None:
             print(f'       no formal: hash found in register.md for a row starting "{name}"')
             hash_mismatches.append(name)
+            bad_subjects.add('scripts/' + script)
         elif not ok:
             print(f'       formal  — registered: {reg}  current: {current}  *** VERSION BUMP REQUIRED ***')
             hash_mismatches.append(name)
+            bad_subjects.add('scripts/' + script)
         if cscript:
             ccur = sha8(cscript)
             creg = parse_register_comp_by_name(name)
             if ccur == 'MISSING':
                 print(f'       companion script {cscript} not found')
                 hash_mismatches.append(name)
+                bad_subjects.add('scripts/' + cscript)
             elif creg is None:
                 print(f'       no comp: hash found in register.md for a row starting "{name}"')
                 hash_mismatches.append(name)
+                bad_subjects.add('scripts/' + cscript)
             elif creg != ccur:
                 print(f'       comp    — registered: {creg}  current: {ccur}  *** VERSION BUMP REQUIRED ***')
                 hash_mismatches.append(name)
+                bad_subjects.add('scripts/' + cscript)
 
     for name, tok in _formal_only_premise_violations():
         print(f'  {name}: *** comp:{tok} VERIFIED BY NOTHING ***')
         print('       the row carries a companion token with no FORMAL_ONLY_COMPANIONS entry;')
         print('       add one (script name) so the token is compared against bytes.')
         hash_mismatches.append(name)
+        bad_subjects.add('register.md')
 
     print('=' * 55)
     print("NOTE: the LIVE, load-bearing check is build-script HASH INTEGRITY above (script bytes vs")
@@ -2124,9 +2394,7 @@ def main():
     # of five left it checked but unnamed, so editing it moved no subject and the record stayed
     # SATISFIED. That is the 2026-08-19 defect this map exists to fix, arriving a second time through
     # the subject set instead of through the map. Derive from the maps, never from a hand-written list.
-    _scripts = sorted(set(list(COMP_SCRIPTS.values()) + list(FORMAL_ONLY_SCRIPTS.values())
-                          + list(STANDALONE_SCRIPTS.values()) + list(FORMAL_SCRIPTS.values())
-                          + list(FORMAL_ONLY_COMPANIONS.values())))
+    _scripts = register_roster()
     # ⚠ `SHARED_BUILD` IS AN INPUT TOO, AND IT WAS MISSING FROM THIS LIST. `main` runs
     # `check_shared_build()`, which hashes `scripts/zp_utils.py` against `shared_build_baseline.txt`
     # — so the verdict depends on that module, and naming only the build scripts left the record
@@ -2136,8 +2404,14 @@ def main():
     _subjects = (['register.md']
                  + ['scripts/%s' % os.path.basename(s) for s in _scripts if s]
                  + ['scripts/%s' % n for n in SHARED_BUILD])
-    _rc = common.record_if_asked('check_hashes', _subjects,
-                                 set(_subjects) if not all_ok else set(),
+    bad_subjects |= set('scripts/' + r[0] for r in doc_mismatches)
+    bad_subjects |= set('scripts/' + n for n, _w, _c in shared_moved)
+    if readme_drift:
+        bad_subjects.add('register.md')
+    # ⚠ FAILS CLOSED: a failure no subject can be attributed to indicts the whole set, so a FAIL is
+    # never recorded with an empty indictment (which would read as a PASS everywhere it covers).
+    _failing = ((bad_subjects & set(_subjects)) or set(_subjects)) if not all_ok else set()
+    _rc = common.record_if_asked('check_hashes', _subjects, _failing,
                                  'a build-script fingerprint disagrees with register.md',
                                  switches=[os.path.relpath(SHARED_BASELINE, REPO).replace('\\', '/')])
     if _rc:
@@ -2171,9 +2445,11 @@ def main():
     # third class again: not a wrong answer, and not a missing title line either - the checker never
     # got as far as the docstring. It must not land in EITHER block above, because both of those
     # tell the reader to edit the docstring of a file nobody could read.
+    _unlisted = [r for r in doc_mismatches if isinstance(r[1], NotListed)]
     _unreadable = [r for r in doc_mismatches if isinstance(r[1], OSError)]
     _absent = [r for r in doc_mismatches if r[1] is None]
-    _stale = [r for r in doc_mismatches if r[1] is not None and not isinstance(r[1], OSError)]
+    _stale = [r for r in doc_mismatches
+              if r[1] is not None and not isinstance(r[1], (OSError, NotListed))]
     if _stale:
         print('DOCSTRING VERSION != VERSION constant (step 4 of the four-step rule):')
         for name, head, const in _stale:
@@ -2195,6 +2471,14 @@ def main():
         print('VERSION constant was ever read - a lock, a permission, or a path that moved between')
         print('the listing and the read. INVESTIGATE THE FILE. Do NOT add a title line: nothing')
         print('here says the header is missing, only that nobody looked.')
+    if _unlisted:
+        print('BUILD SCRIPT NOT LISTED (this file was checked against nothing):')
+        for name, _tag, _const in _unlisted:
+            print('  %-42s fingerprinted by register.md, present on disk, absent from the listing'
+                  % name)
+        print('The scripts/ directory listing came back SHORTER than the register roster, so these')
+        print('files were never opened. INVESTIGATE THE LISTING (the glob pattern, or a filesystem')
+        print('that returned a partial directory). The files themselves need no edit.')
     return 1
 
 

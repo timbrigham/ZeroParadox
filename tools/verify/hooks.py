@@ -172,13 +172,26 @@ def reconcile(phase, expected, refs=(), skipped=None):
             continue
         _inv, rc = hit
         if ok_codes is not None and rc not in ok_codes:
-            bad.append("%s (exit %d)" % (label, rc))
+            # ⚠ `LED-8`: this line is what the operator reads at commit — the loop's own list never
+            #   prints once a bad exit lands here — so a RECORDING failure must not read as a finding.
+            #   2 and 4 are the fleet vocabulary's could-not-ask / asked-and-refused.
+            bad.append("%s (exit %d%s)" % (label, rc, _RC_NOTE.get(rc, "")))
 
     named = sum(1 for _l, argv, _o in expected if argv)
     print("")
     print("  manifest reconciliation: %d of %d advertised check(s) launched; %d bad exit(s)%s"
           % (named - len(missing), named, len(bad),
              ("; %d inline row(s): %s" % (len(inline), ", ".join(inline))) if inline else ""))
+    # ⚠⚠ `HOOK-R5-3`: AN EMPTY EXPECTATION SET IS NOT A CLEAN ONE. `PRE_COMMIT_CHECKS = []` was one
+    #   edit, and this loop then expected nothing, found nothing missing and nothing bad, and the hook
+    #   exited 0 printing `plan 0 check(s)` — vacuous truth, the failure mode of every "for each
+    #   expected thing, check it ran" design. "0 of 0" gets its own refusal (`R-ZERONULL`).
+    if not expected:
+        print("")
+        print("%s BLOCKED — the manifest advertises NO check at all (0 of 0)." % phase.upper())
+        print("An empty expectation set certifies nothing; it is a gate with its table deleted, not a")
+        print("clean run. Restore the table — never read 0 of 0 as a pass.")
+        return 1
 
     # ⚠ R4-2: `quarantine` was the only push row with NO observer — deleting its inline branch let
     #   a `private/*` ref push green while the manifest printed the row's name. Re-tested here
@@ -240,6 +253,16 @@ def reconcile(phase, expected, refs=(), skipped=None):
     return 0
 
 
+# ⚠⚠ EXIT 2 DOES NOT SAY WHICH (`G1-2`). Every gating checker records through `common.emit_verdict`
+#   -> `record.emit`, which returns None for a ledger REFUSAL and for an OUTAGE alike, so both arrive
+#   here as 2. Exit 2's text therefore names BOTH and sends the reader to the checker's own output;
+#   a remedy for one ("fix the connection") is wrong for the other (a refusal is terminal). Only a
+#   child that splits them itself (record.py, check_briefs) emits 4.
+_RC_NOTE = {2: " — verdict NOT RECORDED: the ledger refused it or could not be reached; read the "
+               "checker's own output above; not a finding",
+            4: " — the ledger REFUSED the record: terminal, read the rule it named; not a finding"}
+
+
 def recorded(script, *args):
     """Run a push-time checker WITH `--record`, and keep exit 2 distinct from exit 1.
 
@@ -256,11 +279,25 @@ def recorded(script, *args):
     """
     rc = py(script, *(args + ("--record",)))
     if rc == 2:
-        print("\n⚠ %s ran but its verdict was NOT RECORDED." % script)
-        print("  The ledger will report this step MISSING and refuse the push. This is a RECORDING")
-        print("  failure, not a check failure — the check itself may have passed. Fix the ledger")
-        print("  connection; do not go looking for a defect in the corpus.")
+        print("\n⚠ %s ran but its verdict was NOT RECORDED (exit 2)." % script)
+        print("  The ledger REFUSED the record or could NOT BE REACHED — exit 2 carries both (see")
+        print("  `_RC_NOTE`). Read the checker's own output above: a refusal names a rule (V11, V16c,")
+        print("  ...) and is TERMINAL — fix the record, the staging or the registry, do not retry; an")
+        print("  outage names the connection and is retryable. Either way this is a RECORDING failure,")
+        print("  not a check failure — do not go looking for a defect in the corpus.")
+    elif rc == 4:
+        # ⚠ 4 IS "ASKED AND REFUSED" in the fleet vocabulary (`verdictLedger vocabulary(name=
+        #   'exit_code')`), TERMINAL where 2 is retryable — so it gets its own remedy, never 2's.
+        print("\n⚠ %s ran but the ledger REFUSED its record (exit 4: asked and refused)." % script)
+        print("  This is a RECORDING failure, not a check failure. It is TERMINAL: do not retry. Read")
+        print("  the rule the ledger named in the output above (e.g. an unapproved build of the")
+        print("  checker) and fix the record or the registry; do not look for a defect in the corpus.")
     return rc
+
+
+# The exit codes `recorded` explains as RECORDING failures. A caller tests this BEFORE printing its
+# own finding-specific message, so a refusal is never re-described as a finding (`BLOCKMSG-1`).
+NOT_RECORDED = (2, 4)
 
 
 def git_out(*args):
@@ -304,16 +341,9 @@ def git_out(*args):
 #   PURE   `hooks.py selftest` reads this file, batch.py and required.v2.json (none of which a
 #          mutator writes) plus temp dirs, so it may overlap the mutators. Its verdict still gates
 #          the skip decision, which stays where it is in `pre_push`.
-#          `probe_routing_behavioural.py --selftest` reads its own source (`_mutant`) and works only
-#          in temp dirs: stub worktrees, a stubbed `main()` whose git seam is replaced (`_NoGit`),
-#          and `_tree_state` on scratch trees with git location variables removed. Measured
-#          2026-10-04: a whole-tree hash before and after a run is identical. It records nothing.
 #   READERS every other leg reads the tree and records a DISTINCT ledger step at the same basis
-#          (no two legs record one step; the routing control's nested runs record nothing: no
-#          `--record`, and the agent gate forced off by the `ZP_AGENT_GATE=0` override in the
-#          probe's `_run_prepush`), so they run together once the mutators and the pure legs are
-#          done. The routing control reads tools/verify only while seeding its own worktree (the
-#          probe's `_seed`) and runs everything else inside that worktree, so it is a reader.
+#          (no two legs record one step), so they run together once the mutators and the pure legs
+#          are done.
 #   batch prepush  needs the skip decision (receipt consulted after the selftest passed; its
 #          env switch, `pre_push` below), and reads the tree (agent gate re-runs three checkers):
 #          submitted at the decision point, after the mutators. Its verdict reads only the review
@@ -343,9 +373,9 @@ _PUSH_LEDGER_ENV = {"ZPLEDGER_BASIS": "HEAD", "ZPLEDGER_RUN": "pre-push"}
 _COMMIT_LEDGER_ENV = {"ZPLEDGER_BASIS": "INDEX", "ZPLEDGER_RUN": "pre-commit"}
 
 # Push rows by role, in the order they must run. See the graph above for the evidence.
-_PUSH_PURE = ("advisory-skip controls", "routing control selftest")
+_PUSH_PURE = ("advisory-skip controls",)
 _PUSH_MUTATORS = ("guards", "check_checkers")
-_PUSH_FIRST = ("routing control", "batch prepush")      # longest legs launch first among readers
+_PUSH_FIRST = ("batch prepush",)      # longest legs launch first among readers
 
 _SCHED = None
 
@@ -386,7 +416,7 @@ def leg_timeout(environ=None):
 
 
 def _kill_tree(p):
-    """Kill a timed-out leg AND its children (the routing control spawns nested runs)."""
+    """Kill a timed-out leg AND its children (a leg may spawn nested runs)."""
     if os.name == "nt":
         subprocess.run(["taskkill", "/T", "/F", "/PID", str(p.pid)], capture_output=True)
     try:
@@ -707,7 +737,7 @@ def _with_scheduler(body, *args):
 # WHAT IT IS: `preflight()` runs this hook to green and `push()` then runs it again on the same
 # HEAD and refs. The second run may skip ONLY the legs `advisory_skip_set()` derives as advisory —
 # WARN mode AND an emitter that records no gating step. Today that is `agent gate`, the leg that
-# makes paid model calls. Every BLOCK leg, the routing probe included, runs on every push.
+# makes paid model calls. Every BLOCK leg runs on every push.
 #
 # ⛔ WHAT IT IS NOT: a ledger lookup standing in for a check (fence 2), or trust in a caller's
 # claim about scope (fence 1). The match key is the tuple set THIS process read from git's stdin,
@@ -1312,7 +1342,8 @@ PRE_COMMIT_CHECKS = [
     ("check_encoding", ("check_encoding.py",), (0,),
      "BOM + undecodable BLOCK; suspected double-encoding WARNS"),
     # ⚠⚠ THE SIX BELOW WERE PUSH-ONLY UNTIL 2026-08-30, AND THAT WAS A HOLE, NOT A SAVING.
-    # gitRobot admits 20 keys for a push and 18 for a commit; this hook emits 11. The other six ran
+    # The commit admission set (`gitRobot admission(action='commit')`, read live — never a count
+    # written here) names more steps than this table produces. The six ran
     # only in `pre_push`, against the TIP -- so a second commit silently invalidated the first, and
     # no intermediate commit could EVER reach the bar through ordinary work. Measured: a 2-commit
     # range read 11/19 with both commits made through the full pipeline, hook green each time.
@@ -1320,9 +1351,9 @@ PRE_COMMIT_CHECKS = [
     # that exists BECAUSE intermediate commits are fetchable, bisectable and citable forever.
     # ⚠ They already BLOCK at push, so this adds NO new failure class -- same argument
     # `pre_commit` makes for the original five, one paragraph down. Cost 16.1s (~5.9s -> ~22s).
-    # ⚠ NOT the whole gap: `build`, `check_checkers`, `check_claude_md`, `check_hashes`,
-    # `claim_review`, `guards` and `pdf_coupling` still have no pre-commit producer. Narrowed, not
-    # closed (RLY27-5).
+    # ⚠ NOT the whole gap (RLY27-5): the commit-admitted steps with no label in this table still have
+    # no pre-commit producer. Which ones is the difference between `gitRobot admission(action='commit')`
+    # and the labels below, computed when asked; a list written here goes stale.
     #
     # ⚠⚠ EXIT 3 IS "SKIPPED PART OF MY SCOPE", NOT A FINDING -- `check_paths.EXIT_SKIPPED`, and
     # `pre_push` has always allowed it (see the File-reference check below). When these six were
@@ -1373,20 +1404,7 @@ PRE_PUSH_PLAN = [
     ("advisory-skip controls", "BLOCK", "the green-receipt match that may skip an ADVISORY leg is "
                                         "run against a mutant per control, in a child, before any "
                                         "receipt is read; its own output prints the count"),
-    ("routing control selftest", "BLOCK", "the routing control's OWN controls (probe --selftest): "
-                                          "its pool, retry, observable, clean-phase and vacuity "
-                                          "machinery, each run against a mutant; 28 probe controls, "
-                                          "pinned (the probe refuses if its list disagrees)"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
-    ("routing control", "BLOCK", "the behavioural mutation probe: mutations of the routing and "
-                                 "enforcement routes, each required to turn its named ROW red, move "
-                                 "the prepush EXIT CODE, or reach a named REFUSAL; "
-                                 "23 probe mutation rows, pinned (fails CLOSED on a moved anchor or "
-                                 "a changed count). "
-                                 "RLY28-1 IS covered. The recorded VALUE of the four inline "
-                                 "non-routing legs is covered through the agreement check, observed "
-                                 "at ROUTING 0 (RLYB4-1/1b with meta-controls deleting or weakening "
-                                 "that check); the two review-signal legs' site is NOT"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_claude_md", "BLOCK", "CLAUDE.md shape contract: rooted paths resolve, named checkers exist "
                                  "(3 legs still PENDING — it says so on every run)"),
@@ -1422,12 +1440,34 @@ PRE_PUSH_PLAN = [
     # can block a push on its own. Calling it "report" while it did exactly that is a
     # manifest that lies, which is worse than no manifest (/rely pass 3 and 4).
     ("scan_pdfs", "BLOCK", "PDF asset scan — its exit code becomes the hook's"),
-    # ⚠ "/rely routing" is no longer one mode: the logic and exemption-switch legs BLOCK, the
-    # routed-prose leg WARNS (downgraded 2026-08-21, rung 5). Said here too, because a manifest that
+    # ⚠ `/rely` is NOT a push leg: its obligation is the ledger's, at TAG
+    # (`coverage_gap(step='rely', action='tag')`). Said here too, because a manifest that
     # over-states at ONE entry point is the same defect as over-stating at all four.
-    ("batch prepush", "BLOCK", "trigger 5, the three review signals, and /rely routing — logic and "
-                               "exemption switches BLOCK, routed prose WARNS"),
+    ("batch prepush", "BLOCK", "purity, ssot, pdf coupling, prior-art attribution and the review "
+                               "signals (/rely is owed at TAG in the ledger, not here)"),
 ]
+
+
+def push_table_problems(plan, expect):
+    """Every way the push MANIFEST and the push EXPECTATION table disagree on LABELS. [] when total.
+
+    ⚠ `HOOK-R5-2`: `_bind_push_modes` invented `(0,)` — a BLOCK mode — for a plan row with no
+    expectation row, and `reconcile` iterates the expectation table only, so such a row was
+    ADVERTISED as blocking and NEVER CHECKED. Measured: dropping `guards` from `PRE_PUSH_EXPECT` plus
+    its call site printed `guards BLOCK`, reconciled `19 of 19`, exited 0, and never launched
+    `guards.py`. A join between two hand-maintained lists needs the join asserted total; `pre_push`
+    refuses on any problem named here, before the manifest prints."""
+    p = [label for label, _m, _d in plan]
+    e = [label for label, _a, _o in expect]
+    out = []
+    for label in sorted(set(p) - set(e)):
+        out.append("%s is in the manifest with NO expectation row — it would be advertised and "
+                   "never checked" % label)
+    for label in sorted(set(e) - set(p)):
+        out.append("%s has an expectation row but is NOT in the manifest" % label)
+    for label in sorted({x for x in p if p.count(x) > 1} | {x for x in e if e.count(x) > 1}):
+        out.append("%s appears more than once in a table" % label)
+    return out
 
 
 def _bind_push_modes(plan, expect):
@@ -1487,11 +1527,7 @@ PRE_PUSH_EXPECT = [
     #   pushed green while the manifest printed this row's name.
     ("quarantine", None, None),
     ("advisory-skip controls", ("hooks.py", "selftest"), (0,)),
-    # ⚠ BOTH probe rows name their argument: `_found` matches by PREFIX, so a bare
-    #   `("probe_routing_behavioural.py",)` would be satisfied by the `--selftest` launch alone.
-    ("routing control selftest", ("probe_routing_behavioural.py", "--selftest"), (0,)),
     ("guards", ("guards.py", "--record"), (0,)),
-    ("routing control", ("probe_routing_behavioural.py", "--mutations"), (0,)),
     # ⚠ 3 = scope skipped for want of a built .lake, tolerated at both phases (RLY27-7).
     ("check_paths", ("check_paths.py", "--all", "--warn-private", "--record"), (0, 3)),
     ("check_claude_md", ("check_claude_md.py", "--record"), (0,)),
@@ -1599,9 +1635,15 @@ def _pre_commit():
         # reader needs the outage named, not a phantom finding.
         # ⚠ A checker MISSING FROM DISK also surfaces as 2 today and is reported with the same
         #   wording, which fails closed but diagnoses wrong (RLY27-6, ledgered, not fixed here).
+        # ⚠ `LED-8`'s wording, corrected here too: the old line said "no key exists for this
+        #   content", which a V11 refusal proves FALSE (a key at that basis exists). The child's own
+        #   reason is on screen above; this line names only which recording failure it was.
         if rc == 2:
-            failed.append("%s (ran; verdict NOT RECORDED — no key exists for this content)"
-                          % label)
+            failed.append("%s (exit 2: ran; verdict NOT RECORDED — the ledger refused it or could "
+                          "not be reached; its reason is printed above)" % label)
+        elif rc == 4:
+            failed.append("%s (exit 4: ran; the ledger REFUSED the record — terminal, read the "
+                          "rule it named above; do not retry)" % label)
         elif rc not in ok_codes:
             failed.append("%s (exit %d)" % (label, rc))
 
@@ -1706,6 +1748,13 @@ def _pre_push(stream):
                    + " + anything under Vendored/"),
         ("not run", "lake build — CI at the PR owns build state (stub-first pushes stubs)"),
     ])
+    _tbl = push_table_problems(PRE_PUSH_PLAN, PRE_PUSH_EXPECT)
+    if _tbl:
+        print("\nPush blocked: the push manifest and its expectation table disagree (HOOK-R5-2):")
+        for _p in _tbl:
+            print("  - %s" % _p)
+        print("A row advertised without an expectation is never checked. Fix the tables.")
+        return 1
     report.plan(_bind_push_modes(PRE_PUSH_PLAN, PRE_PUSH_EXPECT))
 
     # ⚠ CONCURRENT LAUNCH, SEQUENTIAL DECISION — see the dependency graph above `JOBS_ENV`. Every leg
@@ -1726,18 +1775,6 @@ def _pre_push(stream):
         print("\nPush blocked: the advisory-skip controls did not behave as required.")
         print("Each FAIL row above names the control and the mutant it had to catch. Fix the")
         print("cause; never skip the controls to get the skip.")
-        return 1
-
-    # ⚠⚠ THE ROUTING CONTROL'S OWN CONTROLS (RELY-CC-5, 2026-10-04). `--selftest` drives the probe's
-    #   pool, retry and observable machinery against a mutant per control; until this line it had
-    #   no caller, so a defect in the machinery that decides whether a probe verdict may be trusted
-    #   was found only when a human ran it. PURE (temp dirs only), so it runs beside the selftest
-    #   above, BEFORE the ledger environment is set — the environment its concurrent launch carries.
-    print("\n=== Routing control's own controls (probe --selftest) ===")
-    if py("probe_routing_behavioural.py", "--selftest") != 0:
-        print("\nPush blocked: the routing control's own controls did not behave as required.")
-        print("Each FAIL row above names the control and the mutant it had to catch. A probe whose")
-        print("pool or retry cannot be trusted cannot certify the routes; fix the probe, never skip it.")
         return 1
 
     # The decision. Scope is NOT touched by any of this: `ranges` above came from git's stdin and
@@ -1805,42 +1842,11 @@ def _pre_push(stream):
 
     print("\n=== Property guards (exemption surface) ===")
     _rc_guards = recorded("guards.py")
-    if _rc_guards == 2:
+    if _rc_guards in NOT_RECORDED:
         return 1                      # `recorded` already said why; do not also blame the guard
     if _rc_guards != 0:
         print("\nPush blocked: a guarded property can be walked, or a guard left files mutated.")
         print("Read the FAIL lines above — each names the ROUTE. Fix the route, do not skip the run.")
-        return 1
-
-    # ⚠⚠ THE CONTROL FOR THE TWO ROUTES ABOVE, AND UNTIL NOW NOTHING RAN IT. `guards.py` green is
-    # not evidence: ROUTE 3 and ROUTE 5 have been defeated FOUR times (whole-file substring →
-    # windowed substring → AST shape → AST name), and each repair moved the hole rather than
-    # closing it, because every attempt asked "does the consumer's SOURCE look like it honours the
-    # flag?" — a static approximation with an escape every time. `probe_routing_behavioural.py`
-    # asks the behavioural question instead: it drives the consumer with synthetic rows in its own
-    # detached worktree and requires the named ROW to go red. It was written, it works, and it had
-    # ZERO automatic callers — so the one artifact that can falsify the guard ran only when a human
-    # remembered. Measured 2026-08-24 by `/rely`: 9 of 9, 225s, and it was the only thing in the
-    # layer that reacted to a live neuter of `cmd_prepush`.
-    #
-    # ⚠ IT ASSERTS THE ROW, NOT THE EXIT CODE, and it fails CLOSED — a mutation whose anchor has
-    # moved reports `MUTATION DID NOT APPLY` rather than passing, so a refactor that slides the
-    # anchor blocks the push instead of silently retiring the control.
-    #
-    # ⚠ `RLY28-1` IS CLOSED AT THE SHAPE, NOT HERE. The router's producer now records its own count
-    # in `batch`'s verdict registry and the push verdict is read from that, so multiplying the
-    # returned count by zero at the call site — the neuter that took the gate from exit 1 to exit 0
-    # on 2026-08-23 while three FAIL rows sat on screen — is now INERT rather than merely
-    # detectable. Two mutations here pin both directions: annihilating the return must stay GREEN,
-    # and deleting the producer's record must go RED. What THIS wiring closes is `RLY29-1`: the
-    # control had no caller, so nothing ever ran the one artifact that can falsify the guard.
-    print("\n=== Routing control (behavioural mutation probe) ===")
-    _rc_probe = py("probe_routing_behavioural.py", "--mutations")
-    if _rc_probe != 0:
-        print("\nPush blocked: the routing control did not behave as required.")
-        print("Each row above names the mutation and the ROW that had to go red. A row reading")
-        print("MUTATION DID NOT APPLY means the anchor moved — the control is no longer testing")
-        print("what it claims, which is a fail-open in the making. Fix the control, never skip it.")
         return 1
 
     print("\n=== File-reference check ===")
@@ -1848,6 +1854,8 @@ def _pre_push(stream):
     # Locally the pinned Mathlib checkout is present, so this is normally 0; the branch
     # exists so a developer without a built .lake is not blocked by an unrunnable check.
     _rc_paths = recorded("check_paths.py", "--all", "--warn-private")
+    if _rc_paths in NOT_RECORDED:
+        return 1
     if _rc_paths not in (0, 3):
         print("\nPush blocked: a repo-relative reference in TRACKED markdown does not resolve.")
         print("Fix the path, or word the line so the resolver skips it (e.g. 'no longer exists').")
@@ -1920,14 +1928,20 @@ def _pre_push(stream):
         print("Run: python tools/verify/install_hooks.py --force")
         return 1
 
-    if recorded("check_moved.py", "--block") != 0:
+    _rc_moved = recorded("check_moved.py", "--block")
+    if _rc_moved in NOT_RECORDED:
+        return 1
+    if _rc_moved != 0:
         print("\nPush blocked: something still points at a relocated path.")
         print("Update the reference, or record the file as a dated record in check_moved.py.")
         print("⚠ Writing it into .claude-local/DEFECTS.md does NOT clear this gate: nothing reads")
         print("  that file, and this leg recomputes from the checker on every run.")
         return 1
 
-    if recorded("check_negatives.py", "--block") != 0:
+    _rc_neg = recorded("check_negatives.py", "--block")
+    if _rc_neg in NOT_RECORDED:
+        return 1
+    if _rc_neg != 0:
         print("\nPush blocked: an undated universal negative.")
         print("Write 'none located as of <date>, searched as follows' — a universal negative")
         print("is falsified by any single future commit and nothing mechanical notices.")
@@ -1935,7 +1949,10 @@ def _pre_push(stream):
         print("  that file, and this leg recomputes from the checker on every run.")
         return 1
 
-    if recorded("check_figures.py", "--block") != 0:
+    _rc_fig = recorded("check_figures.py", "--block")
+    if _rc_fig in NOT_RECORDED:
+        return 1
+    if _rc_fig != 0:
         print("\nPush blocked: an artifact count recorded in prose with no date.")
         print("Prefer measuring on demand. If it must be written down, date it -")
         print("the papers count went stale by 15 in a day, and nothing noticed.")
@@ -1957,7 +1974,10 @@ def _pre_push(stream):
     print("  check_frozen: WARN-only (retired 2026-08-23, dead topology). Ran and recorded;")
     print("  claim_review emitted. A finding here is a reading list, not a block.")
 
-    if recorded("check_checkers.py", "--block") != 0:
+    _rc_cc = recorded("check_checkers.py", "--block")
+    if _rc_cc in NOT_RECORDED:
+        return 1
+    if _rc_cc != 0:
         print("\nPush blocked: a checker cannot fail, or nothing runs it.")
         print("This suite's characteristic defect is a check that could not have failed;")
         print("every instance so far was found by probing, never by reading.")
@@ -1988,7 +2008,13 @@ def _pre_push(stream):
               % os.path.dirname(SELF))
         return 1
 
-    if recorded("check_hashes.py") != 0:
+    _rc_hashes = recorded("check_hashes.py")
+    # ⚠ `BLOCKMSG-1`: a RECORDING refusal (exit 2/4 — e.g. V16c, an unapproved build of the
+    #   checker) printed the HASH-MISMATCH remedy below, sending the reader to register.md,
+    #   where every hash was OK. `recorded` has already named the recording failure.
+    if _rc_hashes in NOT_RECORDED:
+        return 1
+    if _rc_hashes != 0:
         print("\nPush blocked: build-script hash mismatch vs register.md.")
         print("A script changed without completing the four-step workflow")
         print("(change + version bump + PDF rebuild + hash update).")
@@ -2037,7 +2063,7 @@ def _pre_push(stream):
         # (`batch.pdf_coupling_accepts`, step `pdf_coupling_in_push`). `check_paths`, `check_moved`,
         # `check_negatives` and `check_hashes` are registered and admitted and still recompute from
         # their checker every run, so a signature against them changes nothing at this gate.
-        # `purity`, `ssot`, `routing` and `prior_art_attrib` are not registered steps at all.
+        # `purity`, `ssot` and `prior_art_attrib` are not registered steps at all.
         print("The ONLY leg here with a human-accept route is `pdf coupling`: an accepted FAIL")
         print("recorded as `pdf_coupling_in_push` over those exact (path, blob) pairs is not a")
         print("block. Every other leg above must be FIXED — a signature does not reach them, and")
@@ -2073,7 +2099,7 @@ def _pre_push(stream):
 # FAIL. A control that also passes on its mutant cannot fail, which is a check in name only. A
 # mutant whose anchor is missing is reported `MUTATION DID NOT APPLY` and fails the suite — fail
 # CLOSED, so a refactor that slides an anchor blocks the push instead of retiring the control
-# silently (the `probe_routing_behavioural.py` precedent).
+# silently.
 #
 # Simulated runs drive `pre_push` in-process with every child process stubbed: `run` records the
 # launch and returns a scripted exit code, `tools_digest` / `head_tree` return fixed values, and the
@@ -2108,8 +2134,10 @@ def _good_receipt(**over):
 
 
 def _simulate(m, stdin=_REFS, receipt=None, raw=None, env=None, red=(), digest=_DIGEST,
-              keep_dir=None):
-    """Run `m.pre_push` with every child stubbed. Returns a dict describing what happened."""
+              keep_dir=None, codes=None):
+    """Run `m.pre_push` with every child stubbed. Returns a dict describing what happened.
+
+    `red` legs exit 1; `codes` maps an argv prefix to any other exit code (2, 4, ...)."""
     import io as _io
     import json
     import shutil
@@ -2132,6 +2160,9 @@ def _simulate(m, stdin=_REFS, receipt=None, raw=None, env=None, red=(), digest=_
     def fake_run(*cmd):
         inv = m._invocation(cmd)
         rc = 1 if any(tuple(inv[:len(r)]) == tuple(r) for r in red) else 0
+        for pre, code in (codes or {}).items():
+            if tuple(inv[:len(pre)]) == tuple(pre):
+                rc = code
         launched.append(inv)
         if tuple(inv[:2]) == ("batch.py", "prepush"):
             # What the CHILD would have seen: the switch values at the moment of launch.
@@ -3361,43 +3392,79 @@ def _ctl_cc_early_key_used(m):
         reads, c["rc"], "SKIPPED agent gate" in c["out"])
 
 
-def _ctl_probe_selftest_blocks(m):
-    """RELY-CC-5: a red `probe_routing_behavioural.py --selftest` blocks the push at ITS OWN call
-    site, before the probe itself is launched."""
-    st = ("probe_routing_behavioural.py", "--selftest")
-    r = _simulate(m, red=(st,))
-    launched = lambda argv: any(tuple(inv[:len(argv)]) == argv for inv in r["launched"])
-    probe = launched(("probe_routing_behavioural.py", "--mutations"))
-    ok = (r["rc"] == 1 and launched(st) and not probe
-          and "Push blocked: the routing control's own controls" in r["out"])
-    return ok, "probe --selftest exits 1 -> rc=%s, selftest launched=%s, probe launched=%s" % (
-        r["rc"], launched(st), probe)
+def _ctl_blockmsg(m):
+    """`BLOCKMSG-1`: a RECORDING refusal on check_hashes (exit 4) blocks and names the refusal, and
+    does NOT print the hash-mismatch remedy; a real mismatch (exit 1) still prints it. Both
+    directions, read from the guard's own message, because both exit 1."""
+    r4 = _simulate(m, codes={("check_hashes.py",): 4})
+    r1 = _simulate(m, red=(("check_hashes.py",),))
+    mism = "build-script hash mismatch vs register.md"
+    ok4 = r4["rc"] == 1 and "REFUSED its record" in r4["out"] and mism not in r4["out"]
+    ok1 = r1["rc"] == 1 and mism in r1["out"] and "REFUSED its record" not in r1["out"]
+    return ok4 and ok1, ("exit 4 -> rc=%s, refusal named=%s, mismatch remedy printed=%s; exit 1 -> "
+                         "rc=%s, mismatch remedy printed=%s" % (
+                             r4["rc"], "REFUSED its record" in r4["out"], mism in r4["out"],
+                             r1["rc"], mism in r1["out"]))
 
 
-def _ctl_probe_rows_distinct(m):
-    """RELY-CC-5: each probe row is satisfied ONLY by its own launch. `_found` matches by prefix, so
-    with every advertised child recorded except one probe row's, `reconcile` must refuse and name
-    THAT row — measured before the explicit flags: a bare `probe_routing_behavioural.py` expectation
-    was satisfied by the `--selftest` launch, and deleting the probe's call reconciled 23 of 23."""
+def _ctl_exit2_both(m):
+    """`G1-2`: a push-time checker exiting 2 (refusal OR outage — `record.emit` cannot tell them
+    apart) blocks, and its text names BOTH and points at the checker's output, never a
+    connection-only remedy; a clean run prints neither."""
+    r2 = _simulate(m, codes={("check_moved.py",): 2})
+    r0 = _simulate(m)
+    both = "REFUSED the record or could NOT BE REACHED" in r2["out"]
+    ok = (r2["rc"] == 1 and both and "Fix the ledger connection" not in r2["out"]
+          and r0["rc"] == 0 and "NOT BE REACHED" not in r0["out"])
+    return ok, "check_moved exit 2 -> rc=%s, both named=%s; clean -> rc=%s" % (
+        r2["rc"], both, r0["rc"])
+
+
+def _ctl_push_tables(m):
+    """`HOOK-R5-2`: the live tables join totally, and a push whose expectation table lost a row
+    (`guards`, with its launch still present) is REFUSED rather than reconciled green."""
+    live = m.push_table_problems(m.PRE_PUSH_PLAN, m.PRE_PUSH_EXPECT)
+    saved = m.PRE_PUSH_EXPECT
+    try:
+        m.PRE_PUSH_EXPECT = [row for row in saved if row[0] != "guards"]
+        r = _simulate(m)
+    finally:
+        m.PRE_PUSH_EXPECT = saved
+    ok = (not live and r["rc"] == 1
+          and "push manifest and its expectation table disagree" in r["out"])
+    return ok, "live problems=%s; expectation row for guards dropped -> rc=%s, refused=%s" % (
+        live or "none", r["rc"], "expectation table disagree" in r["out"])
+
+
+def _ctl_empty_expect(m):
+    """`HOOK-R5-3`: an EMPTY expectation set is refused (0 of 0 is not a pass), while a non-empty
+    fully-launched one still reconciles 0."""
     import io as _io
-    named = []
-    for gone in ("routing control", "routing control selftest"):
-        saved = list(m.EXECUTED)
-        buf, real = _io.StringIO(), sys.stdout
-        try:
-            del m.EXECUTED[:]
-            for label, argv, _ok in m.PRE_PUSH_EXPECT:
-                if argv and label != gone:
-                    m.EXECUTED.append((tuple(argv), 0))
-            sys.stdout = buf
-            rc = m.reconcile("push", m.PRE_PUSH_EXPECT)
-        finally:
-            sys.stdout = real
-            m.EXECUTED[:] = saved
-        hit = any(ln.strip().endswith("never ran: %s" % gone) for ln in buf.getvalue().splitlines())
-        named.append((gone, rc, hit))
-    return all(rc == 1 and hit for _g, rc, hit in named), "; ".join(
-        "%s not launched -> rc=%s, named=%s" % n for n in named)
+    saved = list(m.EXECUTED)
+    buf, real = _io.StringIO(), sys.stdout
+    try:
+        sys.stdout = buf
+        del m.EXECUTED[:]
+        rc_empty = m.reconcile("commit", [])
+        m.EXECUTED.append((("ctl.py", "--block"), 0))
+        rc_full = m.reconcile("commit", [("ctl", ("ctl.py", "--block"), (0,))])
+    finally:
+        sys.stdout = real
+        m.EXECUTED[:] = saved
+    ok = rc_empty == 1 and rc_full == 0 and "0 of 0" in buf.getvalue()
+    return ok, "empty table -> rc=%s; one launched row -> rc=%s" % (rc_empty, rc_full)
+
+
+def _ctl_commit_refused_line(m):
+    """`LED-8` at the commit hook: an exit-4 leg is reported as a REFUSED record and never as
+    "no key exists for this content", which a V11 refusal proves false."""
+    def script(lab):
+        return (4 if lab == "check_pov" else 0), "OUT %s\n" % lab, 0
+    c = _simulate_conc(m, 1, "commit", script)
+    named = "check_pov (exit 4 — the ledger REFUSED the record" in c["out"]
+    ok = c["rc"] == 1 and named and "no key exists" not in c["out"]
+    return ok, "check_pov exit 4 at commit -> rc=%s, refusal named=%s, 'no key exists'=%s" % (
+        c["rc"], named, "no key exists" in c["out"])
 
 
 # (label, control, anchor, replacement). The replacement removes exactly the protection the
@@ -3458,16 +3525,25 @@ _CONTROLS = [
     ("cc  key: the decision recomputes the receipt key", _ctl_cc_early_key_used,
      "    key, _why = _SCHED.early_key if _SCHED is not None else push_key(REF_TUPLES)",
      "    key, _why = push_key(REF_TUPLES)"),
-    # ⚠ RELY-CC-5: the probe's own controls are a BLOCK leg; a red one stops the push at its site.
-    ("wiring  a red probe --selftest blocks the push", _ctl_probe_selftest_blocks,
-     '    if py("probe_routing_behavioural.py", "--selftest") != 0:',
-     "    if False:"),
-    ("wiring  the probe run is not satisfied by --selftest", _ctl_probe_rows_distinct,
-     '    ("routing control", ("probe_routing_behavioural.py", "--mutations"), (0,)),',
-     '    ("routing control", ("probe_routing_behavioural.py",), (0,)),'),
-    ("wiring  --selftest is not satisfied by the probe run", _ctl_probe_rows_distinct,
-     '    ("routing control selftest", ("probe_routing_behavioural.py", "--selftest"), (0,)),',
-     '    ("routing control selftest", ("probe_routing_behavioural.py",), (0,)),'),
+    # ⚠ BLOCKMSG-1 / HOOK-R5-2 / HOOK-R5-3 / LED-8 (2026-10-14): each mutant removes the one fix.
+    ("msg  a recording refusal is not a hash mismatch", _ctl_blockmsg,
+     "    if _rc_hashes in NOT_RECORDED:\n        return 1\n    if _rc_hashes != 0:",
+     "    if _rc_hashes != 0:"),
+    ("msg  exit 4 is explained as a REFUSAL", _ctl_blockmsg,
+     "    elif rc == 4:\n        # ⚠ 4 IS",
+     "    elif False:\n        # ⚠ 4 IS"),
+    ("msg  exit 2 names refusal AND outage", _ctl_exit2_both,
+     '        print("  The ledger REFUSED the record or could NOT BE REACHED — exit 2 carries both (see")',
+     '        print("  Fix the ledger connection.")'),
+    ("tables  a manifest row with no expectation refuses", _ctl_push_tables,
+     "    if _tbl:\n        print(\"\\nPush blocked: the push manifest",
+     "    if False:\n        print(\"\\nPush blocked: the push manifest"),
+    ("tables  0 of 0 is not a pass", _ctl_empty_expect,
+     "    if not expected:\n        print(\"\")",
+     "    if False:\n        print(\"\")"),
+    ("msg  commit exit 4 is a REFUSAL, not 'no key'", _ctl_commit_refused_line,
+     '            bad.append("%s (exit %d%s)" % (label, rc, _RC_NOTE.get(rc, "")))',
+     '            bad.append("%s (exit %d%s)" % (label, rc, ""))'),
     ("cc  jobs=1 (push) still schedules", _ctl_cc_jobs_one,
      "    if _jobs > 1:\n        _t, _tnote = leg_timeout()\n        _start_push_prefetch",
      "    if _jobs >= 1:\n        _t, _tnote = leg_timeout()\n        _start_push_prefetch"),

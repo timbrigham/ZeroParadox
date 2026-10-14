@@ -43,49 +43,29 @@ still the defect class (§ below), so ask what the gate DOES:
   bedrock cap, the quarantine check and the hook-armed check are all this kind.
 
 **⚠⚠ SPLIT AT THE LEG, NEVER AT THE CHECK — the first draft of this rule got that wrong and the
-error was silent.** A single check routinely has legs of both kinds. The `/rely` routing check is the
-worked example: *"a routed `.md` changed since the signature"* is enumeration and downgrades, while
-*"a checker's executable LOGIC changed since the signature"* guards against unreviewed weakening of
-the verification layer and **must keep blocking**. Downgrading the check wholesale carries the second
-across with the first.
+error was silent.** A single check routinely has legs of both kinds. Reviewing the verification layer
+is the worked example: *"a routed `.md` changed since it was reviewed"* is enumeration, while *"a
+checker's executable LOGIC changed since it was reviewed"* guards against unreviewed weakening of the
+verification layer. Downgrading the check wholesale carries the second across with the first.
 
 **⚠⚠ AND ASK WHAT THE DOWNGRADE UN-PRICES. AN EXEMPTION BOUGHT WITH A BLOCK IS UNPAID THE MOMENT THAT
-BLOCK BECOMES A WARNING.** ⭐ **LANDED 2026-08-21, AND THE PRICE IS NOW SPLIT THE SAME WAY THE LEGS
-ARE.** `tools/verify/**` and `tools/process/**` skip editorial and adversary, and what pays for that
-depends on WHAT changed:
+BLOCK BECOMES A WARNING.** `tools/verify/**` and `tools/process/**` skip editorial and adversary,
+and `/rely` is what pays for that. Whether it gates a given action, and so where the price is
+collected, is the served admission set, `gitRobot admission(action=...)`, asked per action; what it
+still owes at the bytes in hand is `verdictLedger coverage_gap(step='rely', admission=['rely'])`.
+Both are decided in the services, never by a local predicate.
 
-| what changed under the prefix | `/rely` routing | what pays for the exemption |
-|---|---|---|
-| **executable logic** (`.py`, hooks) | **BLOCKS** | `/rely` covers it and blocks. Unchanged. |
-| **exemption switches** (baselines, whitelists, pins) | **BLOCKS** | as above — a fail-open surface, never downgradable |
-| **routed prose** (`.md`) | **WARNS** | **no longer a block** — see the warrant below |
-
-**The prose leg's warrant is now an ARGUMENT, not a gate, and it has to stand on its own.** It is
+**The prose half's warrant is an ARGUMENT, not a gate, and it has to stand on its own.** It is
 this: routed `.md` is operating instruction of the same kind as `CLAUDE.md`, which is exempt from
-both prose gates **and routed nowhere at all, by design**. So advisory `/rely` coverage is strictly
+both prose gates **and routed nowhere at all, by design**. So `/rely` coverage of it is strictly
 *more* review than the parent file gets, not less. **The fence is what makes that hold — anything
 asserting mathematics belongs in the corpus and is gated normally** (`tools/process/README.md` states
 the criterion). If that fence ever slips, this warrant fails and the prose must go back to editorial
 and adversary; that is the trigger to watch, and it is a content question, not a tooling one.
 
-**⚠ THE MECHANICAL HALF IS BUILT AND CONTROLLED.** `guards.py` § *the router the exemption is priced
-on still BLOCKS* walks five routes: the fail-open legs are declared blocking, `check_routing` emits
-those flags, every consumer of it honours them, `routing_bad` computes correctly, and `cmd_prepush`
-still calls it. Two probes in `.claude-local/tools_wip/` are its controls —
-`probe_warrant_blocks.py` neuters enforcement three ways and requires `guards.py` to go red on each
-(it does), and `probe_docs_only_clears.py` exercises both halves: a docs-only edit clears as a
-warning, a checker edit still blocks.
-
-**Why the guard had to exist first, in one line:** enforcement mode used to be a literal at one call
-site (`bad += 0 if ran else 1`), so no control could read it — a probe measured `guards.py` printing
-`ok` over a router that had stopped blocking, the **fifth** warrant-satisfied-while-empty in that same
-code (rounds 1–4: sampling, narrowing, a three-probe set, unchecked regex flags). The warrant tested
-COVERAGE and the exemption is priced on coverage **and** enforcement. The mode is now data
-(`_LEG_BLOCKING`, `routing_bad`), which is the entire reason it is testable.
-
-⚠ **The rule this instance satisfied, kept for the next one: before any downgrade lands, the guard
-asserting what still BLOCKS lands with it — or the exemption it warrants is given up in the same
-change.**
+⚠ **The rule for any downgrade: before it lands, the guard asserting what still BLOCKS lands with
+it — or the exemption it warrants is given up in the same change.** Where the blocking decision lives
+in a service, the guard is the served admission set itself, read per action.
 
 **⚠ NON-CONVERGENCE MUST BE MEASURED, NOT ASSERTED — or this rule becomes a licence to downgrade any
 gate that is currently inconvenient.** Name the rounds and their finding counts, as the `10 → 4 → 6 →

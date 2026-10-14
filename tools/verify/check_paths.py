@@ -23,6 +23,7 @@ the ride-along cross-reference rule, the private-layer dependency list, and the 
 reading list. A caller that reads only the exit status sees none of them - and CI does exactly
 that, discarding stdout, so those findings reach the push terminal only.
 """
+import html as _html
 import io
 import re
 import subprocess
@@ -350,7 +351,31 @@ def _rel(path):
 UNREADABLE = []          # tracked files the scanner could not decode; each is a FAILURE, not a skip
 
 
-def scan(files, find_bare, lean_mode=False, check_mathlib=False):
+def markdown_link_targets(line):
+    """Relative markdown link targets on a line — the leg `PATTERN` cannot reach.
+
+    `PATTERN` anchors at a tracked top-level DIRECTORY and a short extension list, so a link to a
+    root-level page (`[loop](snap-loop.html)`), a PDF, or a sibling file was never resolved:
+    `CARRY1008-26` (w3a gate (e)) measured `README.md` linking three deleted pages while this
+    checker printed "all repo-relative references resolve". URLs, pure anchors and links inside an
+    inline code span (an example, not a link) are skipped; a `#fragment` is dropped."""
+    out = []
+    code_free = re.sub(r'`[^`]*`', lambda m: ' ' * len(m.group(0)), line)
+    for tgt in re.findall(r'\]\(\s*<?([^)\s>]+)>?(?:\s+"[^"]*")?\s*\)', code_free):
+        if re.match(r'^[a-z][a-z0-9+.-]*:', tgt, re.I) or tgt.startswith('#'):
+            continue
+        path = tgt.split('#', 1)[0]
+        if path:
+            out.append(path)
+    return out
+
+
+def _link_resolves(md, target):
+    base = REPO if target.startswith('/') else md.parent
+    return (base / target.lstrip('/')).exists()
+
+
+def scan(files, find_bare, lean_mode=False, check_mathlib=False, links=False):
     dangling, bare, checked = [], [], 0
     mathlib_bad, mathlib_checked = [], 0
     markers = SKIP_MARKERS_LEAN if lean_mode else SKIP_MARKERS
@@ -381,6 +406,11 @@ def scan(files, find_bare, lean_mode=False, check_mathlib=False):
                 checked += 1
                 if not (REPO / ref).exists():
                     dangling.append((md, lineno, ref))
+            if links:
+                for ref in markdown_link_targets(line):
+                    checked += 1
+                    if not _link_resolves(md, ref):
+                        dangling.append((md, lineno, ref))
             if check_mathlib and not mathlib_exempt(md):
                 for ref in MATHLIB_PATTERN.findall(line):
                     mathlib_checked += 1
@@ -884,6 +914,9 @@ def selftest_ride_along():
         ok = any(want_sub in why for _n, why in hits)
         bad += 0 if ok else 1
         print('  %-52s %s' % (why[:52], 'ok' if ok else 'WRONG BRANCH: %s' % (hits or 'no hit')))
+    # The segment's own verdict line, printed from `bad` itself, so a `return bad` slipped to
+    # `return 0` still prints FAIL — the form `check_checkers` hears (`B2`).
+    print('\n  ride-along controls: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return bad
 
 
@@ -1178,12 +1211,34 @@ def selftest():
     # said such an exclusion would be "stated and recorded", which named a surface that does not
     # exist. If one is ever needed, add it explicitly rather than widening the universe query, which
     # would silence the control instead of narrowing it.
+    # `CARRY1008-26` second leg: relative markdown LINKS resolve against the linking file.
+    import tempfile
+    print('  MUST FIRE  (a dangling relative LINK is reported)')
+    with tempfile.TemporaryDirectory() as _d:
+        _md = Path(_d) / 'x.md'
+        (Path(_d) / 'here.html').write_text('x', encoding='utf-8')
+        for label, text, want in (
+                ('root-level .html link to nothing', 'See [the loop](snap-loop.html).', 1),
+                ('.pdf link with a fragment', 'Read [ZP-A](ZP-A_Gone.pdf#page=2).', 1),
+                ('an existing sibling resolves', 'See [here](here.html#top).', 0),
+                ('URL, anchor, and code-span example', 'See [u](https://x.org/a.pdf), [s](#sec)'
+                                                       ' and `[e](nope.pdf)`.', 0)):
+            _md.write_text(text + '\n', encoding='utf-8')
+            _dg = scan([_md], find_bare=False, links=True)[0]
+            _ok = len(_dg) == want
+            bad += 0 if _ok else 1
+            print('    %-32s %s' % (label[:32], 'ok' if _ok else '*** got %d, want %d ***'
+                                    % (len(_dg), want)))
+
     print('  UNIVERSE')
+    # `RLY50-2`: the PDF enumerator gets the same invariant — it is the surface `--claim` calls
+    # authoritative, and it was narrowable 40 -> 1 with every control green.
     for _name, _paths, _pat in (('python', tracked_scripts(), '*.py'),
                                 ('markdown', tracked_markdown(), '*.md'),
-                                ('lean', tracked_lean(), '*.lean')):
+                                ('lean', tracked_lean(), '*.lean'),
+                                ('pdf', tracked_pdfs(), '*.pdf')):
         _live, _uni = _universe_gap(_paths, _pat)
-        _ok = _live == _uni
+        _ok = _live == _uni and bool(_uni)
         bad += 0 if _ok else 1
         _why = '' if _ok else '  MISSED %s' % (sorted(_uni - _live)[:3] or sorted(_live - _uni)[:3],)
         print('    %-32s %s (%d of %d tracked)%s'
@@ -1198,7 +1253,8 @@ def selftest():
     print('  MUST FIRE  (a narrowed enumerator is INCOMPLETE)')
     for _name, _paths, _pat in (('python', tracked_scripts(), '*.py'),
                                 ('markdown', tracked_markdown(), '*.md'),
-                                ('lean', tracked_lean(), '*.lean')):
+                                ('lean', tracked_lean(), '*.lean'),
+                                ('pdf', tracked_pdfs(), '*.pdf')):
         _dropped = sorted(_paths)[:-1]
         _l, _u = _universe_gap(_dropped, _pat)
         _fires = _l != _u
@@ -1359,7 +1415,45 @@ def _claim_pattern(phrase):
     and so does any query carrying a character the normaliser deletes. **Both open directions turn
     a real hit into a printed zero, and a zero is what a caller writes into a commit message.**
     """
-    return re.compile(r'\s+'.join(re.escape(w) for w in _soften(phrase).split()), re.I)
+    words = _soften(phrase).split()
+    if not words:
+        # ⚠ `RLY45-6`: a phrase made only of markers (`***`, `_`, `|`) softens to nothing and compiled
+        # the EMPTY regex, which matches at every offset and crashed `line_at[m.start()]`. Refuse it
+        # by name; the CLI checks `unsearchable_phrases` first and exits 2.
+        raise ValueError('phrase %r softens to no words, so it cannot be searched' % phrase)
+    return re.compile(r'\s+'.join(re.escape(w) for w in words), re.I)
+
+
+def unsearchable_phrases(phrases):
+    """The phrases `_claim_pattern` would refuse — those that soften to no words."""
+    return [p for p in phrases if not _soften(p).split()]
+
+
+def _marker_positions(text):
+    """Offsets `_soften` blanks as LINE-START MARKERS — the only blanking that can weld two lines.
+
+    `RLY45-5`: the `⊘` sentinel used to mark every blanked position, so an underscore inside a
+    declaration name (blanked as emphasis) printed as a swallowed marker on almost every hit. The
+    fold is 1:1 and the marker substitution length-preserving, so offsets here are `raw` offsets."""
+    out = set()
+    for m in _CLAIM_MARKER.finditer(text.translate(_CLAIM_FOLD)):
+        out.update(range(m.start(2), m.end(2)))
+    return out
+
+
+def _published_text(path, raw):
+    """Readable text of an outward-facing surface, NEWLINES PRESERVED so line numbers survive.
+
+    `.html`: tags blanked (any length, unlike `_CLAIM_EMPH`'s short-tag rule) and entities decoded,
+    so `&#8869;` reads as the glyph a reader sees. `.json`: `\\uXXXX` escapes decoded."""
+    name = str(path).lower()
+    if name.endswith('.html') or name.endswith('.htm'):
+        raw = re.sub(r'<[^>]*>', lambda m: ''.join('\n' if c == '\n' else ' ' for c in m.group(0)),
+                     raw)
+        return _html.unescape(raw)
+    if name.endswith('.json'):
+        return re.sub(r'\\u([0-9a-fA-F]{4})', lambda m: chr(int(m.group(1), 16)), raw)
+    return raw
 
 
 def tracked_pdfs():
@@ -1381,9 +1475,22 @@ def _pdf_text(path):
         return None
 
 
+def tracked_published():
+    """Tracked HTML pages and `.zenodo.json` — the outward-facing surfaces `CARRY1008-26` names.
+
+    The HTML pages are what GUIDE links a reader to, and `.zenodo.json` is the record a DOI
+    freezes; a sweep that cannot reach them reports a retired sentence gone while it is still
+    being served. `sweep_claim` strips tags and decodes entities on `.html` before softening."""
+    out = subprocess.run(
+        ['git', 'ls-files', '*.html', '.zenodo.json'], cwd=REPO, capture_output=True, text=True,
+        check=True
+    ).stdout.split('\n')
+    return [REPO / p for p in out if p.strip()]
+
+
 def _claim_targets():
     seen, out = set(), []
-    for group in (tracked_markdown(), tracked_lean(), tracked_scripts()):
+    for group in (tracked_markdown(), tracked_lean(), tracked_scripts(), tracked_published()):
         for p in group:
             if str(p) not in seen:
                 seen.add(str(p))
@@ -1473,12 +1580,17 @@ def _claim_domain(files=None, mode='delta', ranges=None):
     #   half-applied duplicate this layer keeps paying for (`check_negatives` records the same
     #   rule one file over). Keys are family-prefixed — 'ZP-J', 'ZP-J-formal', 'ZP-J AFA
     #   Addendum' — so a prefix test reaches every script in a family.
+    # ⚠ `RLY50-5`: an import failure used to drop the builders SILENTLY. It still degrades rather
+    #   than refusing (the PDFs and changed files are still searched), but the label now says so.
+    _builders_note = ''
     try:
         import check_hashes as _ch
         _maps = (_ch.COMP_SCRIPTS, _ch.FORMAL_SCRIPTS, _ch.FORMAL_ONLY_SCRIPTS,
                  _ch.STANDALONE_SCRIPTS)
-    except (ImportError, AttributeError):
+    except (ImportError, AttributeError) as exc:
         _maps = ()
+        _builders_note = '; family BUILDERS NOT INCLUDED (check_hashes map unavailable: %s)' % (
+            type(exc).__name__,)
     for _m in _maps:
         for _key, _script in _m.items():
             if any(_key.startswith(f) for f in fams):
@@ -1506,12 +1618,13 @@ def _claim_domain(files=None, mode='delta', ranges=None):
             '  An empty domain returns zero hits for every phrase, and that zero is\n'
             '  indistinguishable from "the claim is absent". It is not evidence; it is the\n'
             '  absence of a question.\n'
-            '  Either name a range that contains the change  --  or use --full, which is a\n'
-            '  deliberate approved-ticket act, not a way around this message.' % len(changed))
+            '  Either name a range that contains the change (--range <rev-range>)  --  or use\n'
+            '  --full, which is a deliberate approved-ticket act, not a way around this message.'
+            % len(changed))
 
-    return t, ('DELTA — %d changed file(s), their counterparts, and the %s document famil%s (%d)'
+    return t, ('DELTA — %d changed file(s), their counterparts, and the %s document famil%s (%d)%s'
                % (len(changed), ', '.join(sorted(fams)) or 'no', 'ies' if len(fams) != 1 else 'y',
-                  len(t)))
+                  len(t), _builders_note))
 
 
 def changed_in_range(ranges=None):
@@ -1575,7 +1688,9 @@ def sweep_claim(phrases, files=None, pdfs=None, mode='delta', ranges=None):
         except (OSError, UnicodeDecodeError) as exc:
             unreadable.append((_rel(path), str(exc)))
             continue
+        raw = _published_text(path, raw)
         soft = _soften(raw)
+        swallowed = _marker_positions(raw)
         line_at, n = [], 1
         for ch in soft:
             line_at.append(n)
@@ -1607,10 +1722,11 @@ def sweep_claim(phrases, files=None, pdfs=None, mode='delta', ranges=None):
                 # style. `_soften` is length-preserving, so comparing `raw` against `soft` recovers
                 # exactly the positions that were blanked: `⊘` marks a swallowed MARKER, and
                 # `⏎⊘` is the weld signature. Honest wrap stays `⏎`.
+                # ⚠ `⊘` MARKS LINE-START MARKERS ONLY (`_marker_positions`), never emphasis or an
+                # underscore blanked inside an identifier — that read as a weld on 99% of hits.
                 _ctx = ''.join(
                     ('⏎' if soft[lo + i] == '\n'
-                     else '⊘' if (lo + i < len(raw) and raw[lo + i] != soft[lo + i]
-                                  and soft[lo + i] == ' ') else c)
+                     else '⊘' if (lo + i) in swallowed else c)
                     if (m.start() <= lo + i < m.end() and lo + i < len(soft)) else c
                     for i, c in enumerate(flat[lo:hi]))
                 hits.append((_rel(path), line_at[m.start()], phrase,
@@ -1649,12 +1765,17 @@ def cmd_claim(phrases, mode='delta', ranges=None):
     for rel, line, phrase, ctx in hits:
         by_file.setdefault(rel, []).append((line, ctx))
     n_pdf = sum(1 for t in targets if str(t).lower().endswith('.pdf'))
+    n_pub = sum(1 for t in targets if str(t).lower().endswith(('.html', '.htm'))
+                or Path(t).name == '.zenodo.json')
     print('=' * 78)
     print('  CLAIM SWEEP')
     for p in phrases:
-        print('    "%s"' % p)
+        _eff = ' '.join(_soften(p).split())
+        # the query actually searched, when softening changed it (`".*"` searches `"."`)
+        print('    "%s"%s' % (p, '' if _eff == ' '.join(p.split()) else '   (searched as "%s")' % _eff))
     print('  domain     %s' % label)
-    print('             %d file(s), of which %d rendered PDF(s)' % (len(targets), n_pdf))
+    print('             %d file(s), of which %d rendered PDF(s), %d HTML page(s) / .zenodo.json'
+          % (len(targets), n_pdf, n_pub))
     print('=' * 78)
     for rel in sorted(by_file):
         print('\n  %s' % rel)
@@ -1883,6 +2004,94 @@ def selftest_claim():
     print('    %-40s %s' % ('underscored identifier is reachable',
                             'ok' if ok else '*** ZERO — one-sided soften ***'))
 
+    def _one(name, content, phrases):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / name
+            p.write_text(content, encoding='utf-8', newline='\n')
+            return sweep_claim(phrases, files=[p])
+
+    # `RLY45-4`: no control varied CASE, so dropping `re.I` left everything green.
+    print('  MUST FIRE  (case does not filter)')
+    for label, content in (('Title Case in the text', 'Choice Enters Only In The Analytic '
+                                                      'Realisations.\n'),
+                           ('UPPER CASE in the text', 'CHOICE ENTERS ONLY IN THE ANALYTIC '
+                                                      'REALISATIONS.\n')):
+        hits, _u = _one('x.md', content, [CLAIM])
+        ok = len(hits) == 1
+        bad += 0 if ok else 1
+        print('    %-40s %s' % (label, 'ok' if ok else '*** MISSED — case-sensitive ***'))
+
+    # `CARRY1008-26`: HTML pages and `.zenodo.json`. Entities and long tags split the phrase in
+    # source; the reader sees it whole, so the sweep must too.
+    print('  MUST FIRE  (published surfaces: HTML decoded, JSON escapes decoded)')
+    for label, name, content, phrase in (
+            ('HTML entity glyph + long tag mid-phrase', 'x.html',
+             '<p>the &#8869; of <span class="term" title="a long attribute">Ordinal</span> '
+             'is zero</p>\n', '⊥ of Ordinal is zero'),
+            ('.zenodo.json unicode escape', '.zenodo.json',
+             '{"description": "the framework\\u2019s own choice"}\n', "the framework's own choice")):
+        hits, _u = _one(name, content, [phrase])
+        ok = len(hits) == 1
+        bad += 0 if ok else 1
+        print('    %-40s %s' % (label, 'ok' if ok else '*** MISSED ***'))
+    print('  MUST SUPPRESS  (published surfaces)')
+    hits, _u = _one('x.html', '<p data-x="choice enters only in the analytic realisations">'
+                              'other text</p>\n', [CLAIM])
+    ok = not hits
+    bad += 0 if ok else 1
+    print('    %-40s %s' % ('words inside a TAG are not prose', 'ok' if ok else
+                            '*** FALSE POSITIVE ***'))
+
+    # `RLY45-5`: `⊘` marks a swallowed LINE-START MARKER, never an underscore inside a name.
+    print('  MUST SUPPRESS  (no weld sentinel on an underscored name)')
+    hits, _u = _one('x.md', 'The theorem epsilon0_ne_bot closes it.\n',
+                    ['epsilon0_ne_bot closes it'])
+    ok = len(hits) == 1 and '⊘' not in hits[0][3]
+    bad += 0 if ok else 1
+    print('    %-40s %s' % ('identifier underscores are not markers',
+                            'ok' if ok else '*** CRY-WOLF: %r ***' % (hits[:1],)))
+    print('  MUST FIRE  (a weld across list items is marked)')
+    hits, _u = _one('x.md', '* choice here is the framework\'s own\n* rather than inherited\n',
+                    ['own rather than inherited'])
+    ok = len(hits) == 1 and '⏎⊘' in hits[0][3].replace(' ', '')
+    bad += 0 if ok else 1
+    print('    %-40s %s' % ('weld shows the marker sentinel',
+                            'ok' if ok else '*** WELD UNMARKED: %r ***' % (hits[:1],)))
+
+    # `RLY45-6`: a phrase of markers only is REFUSED by name, never an IndexError and never a
+    # silent zero; a phrase with words is not.
+    print('  MUST FIRE  (a marker-only phrase is refused, not searched)')
+    _junk = ['***', '**', '_', '`', '|', '[']
+    _refused = unsearchable_phrases(_junk)
+    try:
+        _one('x.md', 'some text\n', ['***'])
+        _raised = False
+    except ValueError:
+        _raised = True
+    except Exception:                                             # noqa: BLE001  (an IndexError is the defect)
+        _raised = False
+    ok = _refused == _junk and _raised
+    bad += 0 if ok else 1
+    print('    %-40s %s' % ('*** ** _ ` | [ all refused',
+                            'ok' if ok else '*** NOT REFUSED: %r raised=%s ***'
+                            % (_refused, _raised)))
+    print('  MUST SUPPRESS  (a phrase with words is searchable)')
+    ok = not unsearchable_phrases(['epsilon0_ne_bot', '-- a Lean comment', '.*'])
+    bad += 0 if ok else 1
+    print('    %-40s %s' % ('words survive softening', 'ok' if ok else '*** OVER-REFUSED ***'))
+
+    # `RLY45-3`: an unreadable PDF is REPORTED, never read as an absence.
+    print('  MUST FIRE  (an unreadable PDF is reported)')
+    _real_pt = globals()['_pdf_text']
+    globals()['_pdf_text'] = lambda path: None
+    try:
+        hits, unreadable = sweep_claim([CLAIM], files=[Path(REPO) / 'probe_unreadable.pdf'])
+    finally:
+        globals()['_pdf_text'] = _real_pt
+    ok = not hits and len(unreadable) == 1
+    bad += 0 if ok else 1
+    print('    %-40s %s' % ('render failure is not a zero', 'ok' if ok else '*** DROPPED ***'))
+
     # ⚠⚠ THE DOMAIN ITSELF — the thing `RLY45-1` proved NO control could see. Domain construction
     #   was fused into `sweep_claim`, so deleting `targets += tracked_pdfs()` left every control
     #   green while the sweep returned 0 for a phrase that provably lived in a deposited PDF.
@@ -1890,65 +2099,112 @@ def selftest_claim():
     #   which is the entire reason it was extracted. These are the cheapest controls in the file
     #   and they cover the failure that survived four rounds.
     print('  MUST HOLD  (the DOMAIN, asserted without searching)')
-    try:
-        d_delta, lbl_d = _claim_domain(mode='delta')
-        d_full, lbl_f = _claim_domain(mode='full')
-    except RuntimeError as exc:
-        print('    %-40s *** DOMAIN UNRESOLVABLE: %s ***' % ('delta domain builds', exc))
-        bad += 1
-        d_delta, d_full = [], []
-    # ⚠ The narrowing must not silently drop the authoritative surface: a delta domain with no
-    #   rendered text would return zeros that read like corpus-wide absence. THAT PROPERTY IS A
-    #   CAPABILITY, AND THE FIRST VERSION TESTED TODAY'S DIFF INSTEAD (`PATHCTL-1`, 2026-09-04):
-    #   `any(pdf in d_delta)` over the LIVE delta, which legitimately holds no PDF whenever the
-    #   push touches no document — most pushes. It therefore sat red in the HEALTHY state, which
-    #   is how a reader learns to skip a block; and this is the block `RLY45-1` proved nothing
-    #   else can see. So drive the domain the way the MUST FIRE control below does — with a
-    #   CONSTRUCTED document-implicating change — and assert the PDF surface travels with it.
-    # ⚠⚠ THE PROBE INPUT IS DERIVED, NEVER A HARDCODED BUILDER. Measured 2026-09-04: feeding the
-    #   alphabetically first `build_zp*.py` (`scripts/archive/build_zp_pdfs.py`) yields 1 target
-    #   and 0 PDFs, because that archived aggregate's stem matches no deposited PDF. Picking "the
-    #   first builder" would ship a control that is green for the wrong reason.
-    _fam_pdf = next((p for p in tracked_pdfs() if _doc_family(p)), None)
-    if _fam_pdf is None:
-        _carries, _cap_why = True, 'vacuous - no tracked PDF carries a document family'
-    else:
-        _probe = '%s_capability_probe.md' % _doc_family(_fam_pdf)
+    # ⚠⚠ EVERY DELTA HERE IS CONSTRUCTED, NEVER THE LIVE DIFF (`RLY46-4/5/6`, `MERGEDELTA-1`). The
+    #   live range is empty after any merge whose tree matches origin — the normal state under
+    #   `R-BRANCH` — and this block then exited 4; on a range holding no PDF its legs went vacuous.
+    #   Controls on the CODE must not move with the tree, so each leg feeds `_claim_domain` a
+    #   changed-path list built here, and each universe it quantifies over must be NON-EMPTY or the
+    #   leg fails (`RLY50`: an empty universal is true, so every leg went green exactly where the
+    #   thing it guarded had broken).
+    def _delta_for(paths):
         _real_cr = globals().get('changed_in_range')
-        globals()['changed_in_range'] = lambda ranges=None: [_probe]
+        globals()['changed_in_range'] = lambda ranges=None: list(paths)
         try:
-            _dom, _ = _claim_domain(mode='delta')
-            _dom_pdfs = [p for p in _dom if str(p).lower().endswith('.pdf')]
-            _carries = bool(_dom_pdfs)
-            _cap_why = '%s -> %d target(s), %d pdf(s)' % (_probe, len(_dom), len(_dom_pdfs))
-        except RuntimeError as exc:
-            _carries, _cap_why = False, 'domain refused: %s' % str(exc).split('\n')[0][:48]
+            return _claim_domain(mode='delta')
         finally:
             globals()['changed_in_range'] = _real_cr
-    checks = [
-        ('full contains rendered PDFs',
-         any(str(p).lower().endswith('.pdf') for p in d_full)),
+
+    def _is_pdf(p):
+        return str(p).lower().endswith('.pdf')
+
+    # The PDF universe from an INDEPENDENT enumeration — every tracked path, filtered here — so a
+    # narrowed `tracked_pdfs()` cannot certify itself (`RLY50-2`).
+    _all_tracked = [x for x in subprocess.run(
+        ['git', 'ls-files'], cwd=REPO, capture_output=True, text=True, encoding='utf-8',
+        errors='replace').stdout.split('\n') if x.strip()]
+    _pdf_uni = {x for x in _all_tracked if x.lower().endswith('.pdf')}
+    _pub_uni = {x for x in _all_tracked if x.lower().endswith(('.html', '.htm'))
+                or x == '.zenodo.json'}
+    try:
+        d_full, _lbl_f = _claim_domain(mode='full')
+    except RuntimeError as exc:
+        print('    %-40s *** DOMAIN UNRESOLVABLE: %s ***' % ('full domain builds', exc))
+        bad += 1
+        d_full = []
+    _full_rel = {_rel(p) for p in d_full}
+
+    # The family probe, and the builder probe, are DERIVED: a family-carrying PDF, and a
+    # `scripts/build_zp<x>.py` whose `ZP-<X>_*.pdf` is tracked — paired by name here, independently
+    # of the stem match the production route uses.
+    _fam_pdf = next((p for p in tracked_pdfs() if _doc_family(p)), None)
+    _fam = _doc_family(_fam_pdf) if _fam_pdf is not None else None
+    _fam_uni = {x for x in _pdf_uni if _fam and _doc_family(x) == _fam}
+    _builder = None
+    for x in sorted(_all_tracked):
+        m = re.match(r'scripts/build_zp([a-z])\.py$', x)
+        if m:
+            _want = [y for y in sorted(_pdf_uni)
+                     if y.startswith('ZP-%s_' % m.group(1).upper())]
+            if _want:
+                _builder = (x, _want[0])
+                break
+    _pair = next(iter(sorted(ride_along_pairs().items())), None)
+
+    checks = []
+    if not _pdf_uni:
+        checks.append(('tracked PDF universe is non-empty', False))
+    checks += [
         ('full covers every deposited PDF',
-         len([p for p in d_full if str(p).lower().endswith('.pdf')]) == len(tracked_pdfs())),
-        ('delta is a strict subset of full',
-         0 < len(d_delta) < len(d_full)),
-        ('implicating delta carries rendered text', _carries),
-        # ⚠⚠ AND IT MUST REACH THE WHOLE FAMILY, NOT JUST THE CHANGED DOCUMENT'S OWN OUTPUT.
-        #   The first version of this control asserted only "delta contains SOME pdf", and a
-        #   mutation dropping the family loop stayed GREEN — because a changed build script's own
-        #   PDF is added by a different branch. **The family siblings are the entire point**: the
-        #   `ZPJ-ITER` sites that a 452-surface sweep found were in SIBLING documents, and delta
-        #   reproduces that only if the family travels. Too-weak control, caught by mutation.
-        ('delta reaches every PDF of an implicated family',
-         all(any(str(q) == str(p) for q in d_delta)
-             for p in tracked_pdfs()
-             if _doc_family(p) and any(_doc_family(p) == _doc_family(x) for x in d_delta
-                                       if str(x).lower().endswith('.pdf')))),
+         bool(_pdf_uni) and _pdf_uni <= _full_rel),
+        ('full covers every HTML page / .zenodo.json', _pub_uni <= _full_rel),
     ]
+    if _fam is None:
+        checks.append(('a PDF carries a document family', False))
+        _cap_why = 'no tracked PDF carries a document family - cannot test, failing closed'
+    else:
+        _probe = '%s_capability_probe.md' % _fam
+        try:
+            _dom, _ = _delta_for([_probe, 'tools/verify/check_paths.py'])
+            _rel_dom = {_rel(p) for p in _dom}
+            _dom_pdfs = [p for p in _dom if _is_pdf(p)]
+            _cap_why = '%s -> %d target(s), %d pdf(s)' % (_probe, len(_dom), len(_dom_pdfs))
+            checks += [
+                ('implicating delta carries rendered text', bool(_dom_pdfs)),
+                ('delta is a strict subset of full', 0 < len(_dom) < len(d_full)),
+                # ⚠⚠ THE WHOLE FAMILY, QUANTIFIED OVER THE CONSTRUCTED FAMILY (`RLY50-3`). The
+                #   siblings are the point: the `ZPJ-ITER` sites were in SIBLING documents.
+                ('delta reaches every PDF of the family',
+                 bool(_fam_uni) and _fam_uni <= _rel_dom),
+                ('delta carries the family\'s builders',
+                 any(_rel(p).startswith('scripts/build_') for p in _dom)),
+            ]
+        except RuntimeError as exc:
+            checks.append(('implicating delta carries rendered text', False))
+            _cap_why = 'domain refused: %s' % str(exc).split('\n')[0][:48]
+    # `RLY50-4`: the build-script -> PDF route, alone (a builder has no family of its own).
+    if _builder is None:
+        checks.append(('a builder/PDF pair exists to probe', False))
+    else:
+        try:
+            _bdom, _ = _delta_for([_builder[0]])
+            checks.append(('a changed builder reaches its PDF',
+                           _builder[1] in {_rel(p) for p in _bdom}))
+        except RuntimeError:
+            checks.append(('a changed builder reaches its PDF', False))
+    # `RLY50-5`: the `.lean` <-> `.md` counterpart route.
+    if _pair is not None:
+        _lean = _pair[1][:-3] + '.lean'
+        try:
+            _cdom, _ = _delta_for([_lean])
+            checks.append(('a changed .lean brings its ride-along',
+                           _pair[1] in {_rel(p) for p in _cdom}))
+        except RuntimeError:
+            checks.append(('a changed .lean brings its ride-along', False))
     for name, ok in checks:
         bad += 0 if ok else 1
         print('    %-40s %s' % (name, 'ok' if ok else '*** FAIL ***'))
-    print('    %-40s %s' % ('delta / full sizes', '%d / %d' % (len(d_delta), len(d_full))))
+    print('    %-40s %s' % ('universes (pdf / published / full)',
+                            '%d / %d / %d' % (len(_pdf_uni), len(_pub_uni), len(d_full))))
     print('    %-40s %s' % ('capability probe', _cap_why))
 
     # ⚠⚠ AND THE ALARM ITSELF. A refusal nobody has watched fire is a hypothesis, and this one
@@ -1983,8 +2239,55 @@ def selftest_claim():
           % ('day-to-day mode is the narrow one',
              'ok' if ok else '*** DEFAULT MOVED ***', _dflt))
 
+    # `RLY45-2` / `RLY46-7..12`: the CLI WIRING, through `main` itself with `cmd_claim` stubbed.
+    # The default reaches delta (whose domain carries the family PDFs), `--full` reaches full,
+    # `--range` reaches the domain, and a phrase beginning `--` is kept rather than dropped.
+    print('  MUST HOLD  (the CLI reaches cmd_claim as written)')
+    _seen = []
+    _real_cc, _real_argv = globals()['cmd_claim'], sys.argv
+    globals()['cmd_claim'] = lambda ph, mode='delta', ranges=None: _seen.append((ph, mode, ranges)) or 0
+    try:
+        for argv in (['--claim', 'a b'], ['--claim', 'a b', '--full'],
+                     ['--claim', 'a b', '--range', 'X..Y', '-- a Lean comment']):
+            sys.argv = ['check_paths.py'] + argv
+            main()
+        sys.argv = ['check_paths.py', '--claim', '***']
+        _rc_junk = main()
+    finally:
+        globals()['cmd_claim'], sys.argv = _real_cc, _real_argv
+    for label, ok in (
+            ('default is delta', _seen[:1] == [(['a b'], 'delta', None)]),
+            ('--full reaches full', _seen[1:2] == [(['a b'], 'full', None)]),
+            ('--range and a "--" phrase reach it',
+             _seen[2:3] == [(['a b', '-- a Lean comment'], 'delta', 'X..Y')]),
+            ('a marker-only phrase exits 2 unsearched', _rc_junk == 2 and len(_seen) == 3)):
+        bad += 0 if ok else 1
+        print('    %-40s %s' % (label, 'ok' if ok else '*** MISWIRED: %r ***' % (_seen,)))
+
     print('\n  claim-sweep controls: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return bad
+
+
+_claim_flags = ('--claim', '--full', '--pdf', '--no-pdf')
+
+
+def parse_claim_args(args):
+    """(phrases, ranges) for `--claim`. `ranges` is None when absent and False when valueless.
+
+    Every argument after `--claim` that is not one of `_claim_flags` or `--range <value>` is a
+    phrase — including one that begins `--`, which is how a Lean comment reads (`RLY46-7..12`:
+    such a phrase used to be dropped silently)."""
+    rest, phrases, ranges, i = args[args.index('--claim') + 1:], [], None, 0
+    while i < len(rest):
+        a = rest[i]
+        if a == '--range':
+            ranges = rest[i + 1] if i + 1 < len(rest) else False
+            i += 2
+            continue
+        if a not in _claim_flags:
+            phrases.append(a)
+        i += 1
+    return phrases, ranges
 
 
 def main():
@@ -1999,9 +2302,20 @@ def main():
         print('== file-reference resolver - CONTROLS ==')
         return selftest() + selftest_ride_along() + selftest_claim()
     if '--claim' in args:
-        phrases = [a for a in args[args.index('--claim') + 1:] if not a.startswith('--')]
+        phrases, ranges = parse_claim_args(args)
         if not phrases:
             print('--claim needs at least one phrase — and prefer two: the claim AND its inverse')
+            return 2
+        if ranges is False:
+            print('--range needs a value, e.g. --range origin/main..HEAD')
+            return 2
+        _empty = unsearchable_phrases(phrases)
+        if _empty:
+            # A phrase of markers only softens to nothing; searching it would match everywhere.
+            # Refused before any search, so one bad phrase never aborts a two-polarity run midway.
+            print('--claim: %d phrase(s) soften to no words and cannot be searched: %s'
+                  % (len(_empty), ', '.join(repr(p) for p in _empty)))
+            print('  Markdown markers (* _ ` | [ ) are blanked on both sides; give words.')
             return 2
         # ⚠ INVERTED 2026-09-02. Was `pdfs='--pdf' in args`, which made the surface this tool's
         #   own docstring calls AUTHORITATIVE into an opt-in. `--pdf` is still accepted so any
@@ -2009,7 +2323,7 @@ def main():
         if '--pdf' in args or '--no-pdf' in args:
             print('  note: --pdf/--no-pdf are RETIRED. The axis is SCOPE, not the\n'
                   '  render: rendered text is authoritative in both modes. Use --full.')
-        return cmd_claim(phrases, mode='full' if '--full' in args else 'delta')
+        return cmd_claim(phrases, mode='full' if '--full' in args else 'delta', ranges=ranges)
     do_all = '--all' in args
     warn_private = '--warn-private' in args
 
@@ -2017,7 +2331,7 @@ def main():
 
     tracked_live, tracked_rec = split_live_records(tracked_markdown())
 
-    d1, b1, c1 = scan(tracked_live, find_bare=True)
+    d1, b1, c1 = scan(tracked_live, find_bare=True, links=True)
     report('tracked markdown (live)', d1, b1, c1)
     failed = bool(d1)
 

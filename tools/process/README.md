@@ -41,7 +41,9 @@ fires at all.
 
 The argument is the one already made for `tools/verify/**`: these files are operating instructions and
 assert nothing about the mathematics, so an editorial or adversary pass has no claim to review. The
-exemption is **not free** — it is a re-route, and `/rely` **blocks**.
+exemption is **not free** — it is a re-route to `/rely`. Which actions `rely` gates is
+`gitRobot admission(action=...)`; what it still owes at the bytes in hand is
+`verdictLedger coverage_gap(step='rely', admission=['rely'])`.
 
 ⚠ **This is a DECLARED carve, not one derived from "it is operating instructions."** `CLAUDE.md` bans
 that inference explicitly, and `.claude/commands/` is the counterexample that proves it: those files
@@ -113,9 +115,10 @@ An unenforced section sitting at line 1200 is already in the zone where rules do
 required every run now. let's avoid calling it unnecessary."* Measured cost of one pass: **~95 tool
 calls, ~258k tokens, ~30 minutes wall clock.**
 
-As of 2026-08-26 (gitRobot 98c3480) **`rely` no longer admits COMMIT or PUSH.** It stays registered,
-still records, and still gates a TAG; the ledger reports it under `registered_not_admitting` with
-`gating: false`, so **a green push cannot be misread as rely having passed.**
+**Which actions `rely` gates is the served admission set**, `gitRobot admission(action=...)`, asked
+per action; a registered step an action does not admit is listed under `registered_not_admitted`. So
+**a green action that does not admit `rely` is never evidence that rely passed** — ask
+`verdictLedger coverage_gap(step='rely', admission=['rely'])` for what it still owes.
 
 **Why it was demoted:** its scope is `tools/verify/*` and it gated commit, so every fix to the
 verification tooling staled it **while it blocked the commit carrying that fix** — deadlocked by

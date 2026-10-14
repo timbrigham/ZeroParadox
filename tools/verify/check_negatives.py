@@ -229,13 +229,23 @@ def sentence_around(text, pos):
 # ⚠ IT FAILS OPEN IN ONE NARROW WAY, STATED SO NOBODY DISCOVERS IT LATER: a negative ASSERTED inside
 # quotes is missed. Bold or italic emphasis is NOT quoting and still fires — which is what the live
 # sample looks like, the one genuine assertion being `**retained nowhere in the repo**`, unquoted.
-_QUOTES = '"“”'
 
 
 def is_mention(text, pos):
-    """True when the match at `pos` sits inside a quoted span on its own line."""
+    """True when the match at `pos` sits inside a quoted span on its own line.
+
+    ⚠ THE SPAN MUST CLOSE (`RLY31-10`). Parity alone counted quotes from line start, so ONE
+    unbalanced `"` earlier on a line (an inch mark, a string literal's opening) silenced every later
+    match on it. A mention is now a quote OPENED before the match and CLOSED after it on the same
+    line: a straight `"` toggles, a curly `“` opens and `”` closes."""
     bol = text.rfind('\n', 0, pos) + 1
-    return sum(text.count(q, bol, pos) for q in _QUOTES) % 2 == 1
+    eol = text.find('\n', pos)
+    eol = len(text) if eol < 0 else eol
+    straight = text.count('"', bol, pos) % 2 == 1
+    curly = text.rfind('“', bol, pos) > text.rfind('”', bol, pos)
+    if straight and '"' in text[pos:eol]:
+        return True
+    return curly and '”' in text[pos:eol]
 
 
 def scan_text(t):
@@ -306,6 +316,11 @@ MUST_FIRE = [
         ('"no X anywhere in the corpus"', 'There is no such instance anywhere in the corpus.'),
         # ⚠ THE WRAPPED SHAPE. A flat pattern misses this, and it is how a real one hid.
         ('wrapped across a Lean comment', '-- the corpus\n--     does not have\n-- any such case'),
+        # RLY31-10: an unbalanced quote earlier on the line is not a quoted span around the match.
+        ('an UNCLOSED quote earlier on the line still fires',
+         'A 5" bolt holds it, and the covering relation is not in Mathlib.'),
+        ('a curly CLOSER before the match is not an opener',
+         'The term ”wall” is defined, and the covering relation is not in Mathlib (the ”index”).'),
 ]
 MUST_SUPPRESS = [
         # ── STATUS group, 2026-08-26. Paired one-for-one with the MUST_FIRE twins above; a
@@ -336,6 +351,8 @@ MUST_SUPPRESS = [
         # firing case is indistinguishable from a checker that stopped working.
         ('the RULE naming its own forbidden phrase',
          'Before writing "not in Mathlib", confirm the name elaborates.'),
+        ('the same rule in CURLY quotes',
+         'Before writing “not in Mathlib”, confirm the name elaborates.'),
         ('retraction QUOTING the closed defect',
          'The index had asserted "No essential case has ever been found" and is now fixed.'),
         ('a date cut off by a dotted FILENAME',

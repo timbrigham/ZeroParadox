@@ -278,6 +278,18 @@ def selftest():
                 bad += 1
             print("    %-28s %s" % (label, "ok" if ok else "*** WRONG ***"))
 
+    # MOVED-1: a hit in the private repository is a WARN, never a failing subject; a hit anywhere
+    # else still fails. Both halves on `partition`, which `main` routes every hit through.
+    own, priv = partition([(".claude-local/DEFECTS.md", 1, "x", "y"),
+                           ("tools/process/foo.md", 2, "x", "y"),
+                           ("docs/.claude-local/notes.md", 3, "x", "y")])
+    for label, ok in (("private-repo hit is not failing", [h[0] for h in priv] == [".claude-local/DEFECTS.md"]),
+                      ("main-repo hits still fail", [h[0] for h in own]
+                       == ["tools/process/foo.md", "docs/.claude-local/notes.md"])):
+        if not ok:
+            bad += 1
+        print("    %-28s %s" % (label, "ok" if ok else "*** WRONG ***"))
+
     # ⚠ THE PATTERN PINS (PAT-1). This checker's whole content is its relocation TABLE — 74 rules
     # and 4 globbed families — and ten controls covered them. A rule deleted from the table is a
     # stale path that silently stops being reported, which is the exact failure `MIG-2` was opened
@@ -295,6 +307,20 @@ def selftest():
 
     print("\n  selftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
     return 1 if bad else 0
+
+
+# ⚠ A FINDING THIS CHECKER CANNOT RECORD MUST NOT BLOCK (`MOVED-1`). `.claude-local/` is a separate
+# repository, so none of its paths can be a SUBJECT of a main-repo record, and the ledger correctly
+# refuses a FAIL whose `failing` names no subject: the checker exited 2 and the main repo blocked on
+# a finding it could never record from where it was found. Such hits are reported as a counted WARN
+# and kept out of the record's subjects and failing list; every other hit still FAILS.
+PRIVATE_PREFIX = ".claude-local/"
+
+
+def partition(hits):
+    """(subject_hits, private_hits): hits in files a main-repo record can name, and the rest."""
+    own = [h for h in hits if not h[0].startswith(PRIVATE_PREFIX)]
+    return own, [h for h in hits if h[0].startswith(PRIVATE_PREFIX)]
 
 
 def main(argv):
@@ -315,18 +341,25 @@ def main(argv):
         for i, line in enumerate(text.split("\n"), 1):
             for found, dest in scan_line(line):
                 hits.append((os.path.relpath(p, REPO).replace("\\", "/"), i, found, dest))
+    hits, private = partition(hits)
     print("=" * 60)
     print("  relocated-path check")
     print("  relocations tracked : %d" % len(RULES))
     print("  stale references    : %d" % len(hits))
+    print("  in %s (WARN - not a subject of this repo's record): %d"
+          % (PRIVATE_PREFIX, len(private)))
     print("=" * 60)
     for rel, i, found, dest in hits:
         print("  %s:%d" % (rel, i))
         print("      %s  ->  %s" % (found, dest))
+    for rel, i, found, dest in private:
+        print("  %s:%d  [WARN]" % (rel, i))
+        print("      %s  ->  %s" % (found, dest))
     rc = common.record_if_asked(
         "check_moved",
-        [os.path.relpath(p, REPO).replace("\\", "/")
-         for p in surfaces() if not is_tombstone(p)],
+        [rel for rel in (os.path.relpath(p, REPO).replace("\\", "/")
+                         for p in surfaces() if not is_tombstone(p))
+         if not rel.startswith(PRIVATE_PREFIX)],
         {h[0] for h in hits}, "a relocated path is still referenced", argv)
     if rc:
         return rc

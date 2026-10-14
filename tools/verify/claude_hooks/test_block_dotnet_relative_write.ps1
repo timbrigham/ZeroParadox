@@ -63,6 +63,18 @@ $cases = @(
     # O3: bash escapes `\"`, `\$`, `\\` must all be undone before the path is judged.
     @{ id='DC71-15'; want='ALLOW'; tool='Bash';       why='Bash -Command with \$env:TEMP\\x.txt'
        cmd='powershell -Command "[IO.File]::WriteAllText(\"\$env:TEMP\\x.txt\", ''y'')"' }
+    # CARRYW3-13 r2 O1: `.FullName` of a FileInfo CONSTRUCTED from a relative string is the
+    # process-directory path in disguise. Inline and through a variable, both constructor spellings.
+    @{ id='DC71-16'; want='DENY';  tool='PowerShell'; why='FileInfo cast from a relative string, via a variable'
+       cmd='$f = [IO.FileInfo]"fi1.txt"; [IO.File]::WriteAllText($f.FullName,"y")' }
+    @{ id='DC71-17'; want='DENY';  tool='PowerShell'; why='FileInfo::new on a relative string, inline'
+       cmd='[IO.File]::WriteAllText(([IO.FileInfo]::new("x.txt")).FullName,"y")' }
+    @{ id='DC71-18'; want='DENY';  tool='PowerShell'; why='New-Object IO.FileInfo on a relative string, inline'
+       cmd='[IO.File]::WriteAllText((New-Object IO.FileInfo "x.txt").FullName,"y")' }
+    @{ id='DC71-19'; want='ALLOW'; tool='PowerShell'; why='FileInfo cast from an ABSOLUTE string'
+       cmd='$f = [IO.FileInfo]''C:\x\a.txt''; [IO.File]::WriteAllText($f.FullName,"y")' }
+    @{ id='DC71-20'; want='ALLOW'; tool='PowerShell'; why='(Get-Item ...).FullName, built by the provider'
+       cmd='[IO.File]::WriteAllText((Get-Item C:\x\a.txt).FullName,"y")' }
 )
 
 $fails = 0
@@ -115,7 +127,9 @@ $mutations = @(
     @{ id='DC71-MUT5'; ctl='DC71-12'; why='(Resolve-Path X).Path branch removed'
        find='if ($e -match ''^(?i)\(\s*Resolve-Path\b.*\)\.(Path|ProviderPath)$'') { return ''C:\__resolve_path__'' }'; repl='' }
     @{ id='DC71-MUT6'; ctl='DC71-13'; why='.FullName branch removed'
-       find='if ($e -match ''^(?i)\S.*\.FullName$'') { return ''C:\__fullname__'' }'; repl='' }
+       find='if ($e -match ''^(?i)\S.*\.FullName$'') { return (Resolve-FullName $e $depth) }'; repl='' }
+    @{ id='DC71-MUT8'; ctl='DC71-16'; why='FileInfo constructor no longer judged (the r2 O1 proxy)'
+       find='    if ($null -eq $ctorArg) { return ''C:\__fullname__'' }'; repl='    return ''C:\__fullname__''' }
     @{ id='DC71-MUT7'; ctl='DC71-15'; why='Bash unescape reverted to \" only'
        find='$cmd = [regex]::Replace($cmd, ''\\(["$\\`])'', ''$1'')'; repl='$cmd = $cmd.Replace(''\"'', ''"'')' }
 )
