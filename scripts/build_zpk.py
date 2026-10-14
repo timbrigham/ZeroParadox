@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.26 | October 2026
+Version 1.27 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -542,7 +542,8 @@ def build():
     E.append(Paragraph('III. What Changed for DA-1', S['h2']))
     E.append(body(
         'ZP-E\'s DA-1 section previously carried the designation "Outside Lean Scope" with '
-        'three justifications: Path 1 requires ZF+AFA (incompatible with Lean\'s CIC/MLTT); '
+        'three justifications: Path 1 requires ZF+AFA, whose Quine atom Mathlib\'s ZFSet, a model of ZFC, '
+        'excludes (no_quine_atom); '
         'Path 3 requires Kolmogorov complexity (uncomputable, absent from Mathlib); Path 2 '
         'requires a step from unbounded surprisal to executing, which ZP-E names a bridge '
         'principle of its own, a missing principle and not a missing proof.'))

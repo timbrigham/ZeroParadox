@@ -62,8 +62,10 @@ its own gauge mirrors.
 Degenerate models of an axiom set, and non-degeneracy stated as an **inequation**, are ordinary
 universal algebra. Burris & Sankappanavar, *A Course in Universal Algebra* (all three passages read from
 the filed copy): an algebra is *"trivial if |A| = 1"* (§ II.1, p. 26); *"as trivial algebras satisfy any
-quasi-identity"* (p. 250); and — the load-bearing one — *"As a trivial algebra cannot satisfy a negated
-atomic formula, exactly one of Ψ₁, …, Ψₖ is atomic"* (p. 251).
+quasi-identity"* (p. 250); and — the load-bearing one, which this corpus instantiates with the negated
+atom `member_ne_floor`, met by no one-element carrier (the `example` after it in
+`ZeroParadox/Valuation/InfinitudeFloor.lean`) — *"As a trivial algebra cannot satisfy a negated atomic
+formula, exactly one of Ψ₁, …, Ψₖ is atomic"* (p. 251).
 
 **That last is WHY a non-degeneracy condition has to be stated as an inequality**: a trivial model
 satisfies every positive axiom, so only a negated atom excludes it. It is the shape `WVSNondegenerate`,

@@ -23,8 +23,8 @@ Assembled from pieces already proved across the ZPJ family + ZP-P's coalgebra:
   (`ZeroParadox.categorical_fork_strict`: `Fix idPF_Coalgebra.Obj` empty, `Cofix idPF_Coalgebra.Obj` inhabited.)
 - **Uniqueness + identity:** wherever the self-referential fixed point lives, it is unique and IS the
   bottom. (`ZeroParadox.selfMem_eq_singleton_bot`: the self-members are exactly `{⊥}`.)
-- **Cantor obstruction (no literal):** a nontrivial lattice face admits no Lawvere witness, so the literal
-  self-singleton (which would need `T ≃ Set T`) cannot be built. (`nontrivial_lattice_no_witness`.)
+- **Cantor obstruction (no literal):** a nontrivial lattice face admits no Lawvere witness
+  (`nontrivial_lattice_no_witness`); a literal self-singleton needs `T ≃ Set T`, which cannot be built (`cantor_via_engine`).
 
 ## FENCE (crucial — unlike the snap dichotomy)
 The snap's classifier (Ostrowski) is a theorem INSIDE one foundation, so "snap ⟺ non-Archimedean" is fully

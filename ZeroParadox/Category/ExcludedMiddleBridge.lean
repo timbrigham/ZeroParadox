@@ -82,8 +82,9 @@ the leverage `em_of_choiceFragment` uses. Second, it is genuinely implied by Lea
 middle implying itself in costume, not a choice principle implying it. Measured result: the natural
 construction `fun S => if S true then true else false` under only `ExcludedMiddle` **fails to elaborate**
 — `failed to synthesize instance of type class Decidable (S true)`. That is the `Prop`→`Bool` elimination
-barrier: excluded middle supplies a disjunction in `Prop`, which cannot be eliminated to produce data.
-The same construction closes immediately under `classical`, at footprint
+barrier: excluded middle supplies a disjunction in `Prop`, which cannot be eliminated to produce data,
+because `Or`'s eliminator takes only `Prop`-valued motives (measured by the `#check_failure` after this
+definition). The same construction closes immediately under `classical`, at footprint
 `[propext, Classical.choice, Quot.sound]`. So the route from a decision to a *chooser* runs through
 choice, not through excluded middle, and the fragment **appears to sit above** `ExcludedMiddle` in Lean.
 **Honest limit:** a failed proof attempt is not a proof of unprovability. This is strong evidence — the
@@ -99,9 +100,17 @@ The gap measured here is a property of the ambient type theory, not of the two p
 def ChoiceFragment : Prop :=
   ∃ ch : (Bool → Prop) → Bool, ∀ S : (Bool → Prop), (∃ b, S b) → S (ch S)
 
+-- Statement: case analysis on a proof of `True ∨ False` into the motive `Bool` fails to elaborate, since
+-- `Or.casesOn` accepts only motives valued in `Prop`. On `Decidable True`, which is data, the same
+-- case analysis into `Bool` elaborates.
+#check_failure (fun h : True ∨ False =>
+  (Or.casesOn (motive := fun _ => Bool) h (fun _ => true) (fun _ => false) : Bool))
+example : Decidable True → Bool := fun h =>
+  Decidable.casesOn (motive := fun _ => Bool) h (fun _ => false) (fun _ => true)
+
 /-- **The fragment is non-vacuous.** Lean's `Classical.choice` supplies it. Footprint is classical by
-construction — that is the point: this is the *source* end of the § II arrow, recorded so that
-`em_of_choiceFragment` cannot be dismissed as an implication with an unsatisfiable hypothesis. -/
+construction — that is the point: this is the *source* end of the § II arrow, and it inhabits the
+hypothesis of `em_of_choiceFragment`, so that implication's hypothesis is satisfiable in Lean. -/
 theorem choiceFragment_of_classical : ChoiceFragment := by
   classical
   refine ⟨fun S => if h : ∃ b, S b then h.choose else true, fun S hS => ?_⟩

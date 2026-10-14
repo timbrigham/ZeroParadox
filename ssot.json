@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1911,
+        "declarations": 1912,
         "files": 161
       },
       "entries": [
@@ -30032,6 +30032,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6b9d2758-d4ac-4cd8-834b-82f8bb7716a7",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.valBridge_scale_not_injective",
+            "short": "valBridge_scale_not_injective"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.valBridge_scale_not_injective",
+            "short": "valBridge_scale_not_injective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "MODAL-2 pass 2: a ValBridge with non-injective scale, the pointer for OrbitDichotomy's \"cannot be made to\" (2026-10-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true

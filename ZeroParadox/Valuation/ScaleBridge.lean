@@ -321,6 +321,28 @@ theorem valBridge_nonempty_iff (α : Type*) :
     · haveI := hi; exact nonempty_valBridge_of_infinite α
     · haveI := hn; haveI := hs; exact nonempty_valBridge_of_inhabited_subsingleton α
 
+/-- `Statement:` a `ValBridge` whose `scale` is not injective exists, on `Option (ℕ × Bool)` with
+    `none` as `bot`, `val (n, b) = n` and `scale (n, b) = (n + 1, false)`: `(0, true)` and
+    `(0, false)` have the same image. So the four axioms do not supply `Function.Injective scale`. -/
+theorem valBridge_scale_not_injective :
+    ∃ V : ValBridge (Option (ℕ × Bool)), ¬ Function.Injective V.scale := by
+  refine ⟨{ bot := none
+            scale := fun x => x.map fun nb => (nb.1 + 1, false)
+            val := fun x => x.elim ⊤ fun nb => (nb.1 : ℕ∞)
+            scale_bot := rfl
+            val_bot := rfl
+            val_unique := ?_
+            val_scale := ?_ }, ?_⟩
+  · rintro (_ | ⟨n, b⟩) h
+    · rfl
+    · exact absurd h (ENat.coe_ne_top n)
+  · rintro (_ | ⟨n, b⟩) h
+    · exact absurd rfl h
+    · exact Nat.cast_succ n
+  · intro hinj
+    have h := hinj (a₁ := some (0, true)) (a₂ := some (0, false)) rfl
+    exact Bool.noConfusion (congrArg (fun x : Option (ℕ × Bool) => x.elim false fun nb => nb.2) h)
+
 /-! ### Witnesses for the claims made about this gauge in prose
 
     Tier 1 (R-TOLEAN): each fails to COMPILE if the sentence citing it is wrong. Anonymous, so
@@ -373,5 +395,6 @@ open ZeroParadox
 #print axioms nonempty_valBridge_of_infinite
 #print axioms nonempty_valBridge_of_inhabited_subsingleton
 #print axioms valBridge_nonempty_iff
+#print axioms valBridge_scale_not_injective
 
 end PurityCheck
