@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-N: The Constructive Snap PDF Builder
-Version 2.4 | October 2026
+Version 2.5 | October 2026
 
 Lean: ConstructiveOrdinals.lean, SnapNucleusConstructive.lean, OrdinalChoiceEssential.lean,
 PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
@@ -9,7 +9,7 @@ PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '2.4'
+VERSION = '2.5'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -261,7 +261,8 @@ def build():
             'x &#8614; &#969;<sup>x</sup>; the tower climbs without bound). The matching '
             '<i>minimality</i> &#8212; that &#949;<sub>0</sub> is the LEAST fixed point of '
             'x &#8614; &#969;<sup>x</sup> &#8212; is a separate, harder target: it quantifies over the '
-            'limit, which no notation names, so it cannot be stated purely syntactically on ONote. '
+            'limit, which no notation names, so it cannot be stated purely syntactically on ONote '
+            '(tower_no_upper_bound; across the crossing, repr_lt_epsilon0). '
             'Leastness is proved on Ordinal (epsilon0_min_eq_max, with choice); a choice-free proof of '
             'it on a well-founded carrier was not located as of 2026-10-08. What is proved here is the '
             'from-below half, choice-free.',

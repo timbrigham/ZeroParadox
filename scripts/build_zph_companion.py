@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.18)
+Build ZP-H Illustrated Companion (v1.19)
 v1.16: DECISION BATCH REMEDIATION (Tim, 2026-09-15): the T-H3 page said the transition 'was derived as a theorem (T-SNAP), not assumed as an axiom' and called the Binary Snap 'a structural fact that survives translation'; both are scoped to the shape with the canonical AX-1 sentence.
 v1.15: CC-1 STATUS SYNC (Tim, 2026-09-13: everything in one arc). "CC-1 derived / closed / no longer a freestanding commitment" collapsed two readings: cc1_derived proves the CONDITIONAL (a state sequence starting at a Quine atom starts at bottom), and with t_exec_iff the converse holds, so the starting-point choice is RESTATED through the Quine-atom role, not forced; every ZP-A lattice carries AFAStructure trivially. Every site now keeps both halves, matching ZP-J v2.7. Four sites; the key-result box no longer calls CC-1 'not a free commitment' (ZP-A calls it a modelling choice). ROUND 1 (editorial + claim-review + adversary FAIL-BEDROCK; prior-art PASS): the sync first gave the wrong REASON for "not forced" ("every ZP-A lattice carries AFAStructure trivially, so ..."), which does not follow; the reason is that a valid state sequence can start above bottom (T2 fixes only bottom <= S0; an example on OntologicalStates in OntBridge.lean). Also CC-1 is 'the modelling commitment CC-1', not 'the structural identification CC-1', at three sites.
 v1.13: Scope "any state change" to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix.
@@ -143,7 +143,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -248,7 +248,8 @@ def build():
         'every power of 2. Every nonzero element has a finite v₂. No sequence of nonzero '
         'elements can close this valuation gap: a nonzero element always has finite v₂, while '
         '0 has infinite v₂, and no finite accumulation of finite values reaches infinity. '
-        'In ℚ₂, sequences can get metrically close to 0, but the valuation gap cannot be closed. '
+        'In ℚ₂, sequences can get metrically close to 0, but the valuation gap cannot be closed '
+        '(q2Val_unique: only 0 has infinite v₂ among the 2-adic integers). '
         'In ZP-A, ⊥ is the bottom of the lattice and the axioms forbid any non-trivial return. '
         'In ZP-C, the informational cost of approaching ⊥ diverges — infinite '
         'cost means no finite path reaches it. In ZP-D, the basis vector e₀ is orthogonal to '
@@ -257,8 +258,11 @@ def build():
         'The power set example shows that the structural floor property is not exotic: it appears '
         'in the most elementary object in set theory. What is non-trivial about the ZP framework '
         'is that the same property appears in four analytic settings — topology, algebra, '
-        'information theory, Hilbert space — each with its own structural reason for why the '
-        'bottom cannot be approached. These settings are not independent: they share the '
+        'information theory, Hilbert space — each with its own structural reason why ⊥ is never '
+        'reached from above in finitely many steps, even where it can be approached. In ℚ₂, where '
+        'the role is played by 0, least in the norm order, the doubling orbit of any nonzero point '
+        'converges to 0 in the 2-adic metric (doubling_orbit_tendsto_zero) and still never lands on 0 '
+        'at any finite step (padic_orbit_never_reaches_zero). These settings are not independent: they share the '
         'axioms (A1-A4, AX-B1) and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced) '
         'that produce this behavior in all four. '
         'ZP-H verifies that these four reasons are consistent.'))

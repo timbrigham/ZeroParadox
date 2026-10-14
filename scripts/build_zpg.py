@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.22 | October 2026
+Version 1.23 | October 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -361,8 +361,8 @@ def build():
             'Computability note: K(x|y) is not computable in general (it is approximable from above by standard '
             'results). This is not a defect for the present purposes: the framework requires that K(x|y) be '
             'well-defined, not that it be computable. The ontological claims of ZP-G do not depend on computability.',
-            'Status: This is an import, not a bridge axiom. A bridge axiom is a claim that cannot be derived '
-            'from either side and must be assumed. K(x|y) is a defined mathematical object with a complete '
+            'Status: This is an import, not a bridge axiom. A bridge axiom is a claim derived '
+            'from neither side, so assumed. K(x|y) is a defined mathematical object with a complete '
             'internal theory. I-KC is a decision to use that object within ZP-G, not an assumption about it.',
         ]
     ))

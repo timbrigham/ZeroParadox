@@ -31,13 +31,13 @@ notation is a fixed point of `ω^·`).
 
 **It does NOT classify ZP-L's footprint as "representational, not intrinsic"**. That is an
 *eliminability* claim, and
-it cannot be asked of those ε₀ results as stated: they are **STATEMENT-CARRIED**
+it cannot be asked of those ε₀ results as stated (statement control, measured 2026-10-08): they are **STATEMENT-CARRIED**
 (`ZeroParadox/Category/ChoiceCannotBe.md`). ZP-L's `epsilonZero_fixedPoint`, `epsilonZero_eq_nfp`,
 `epsilonZero_tower_lt` and `epsilonZero_le_fixedPoint` (`ZeroParadox/Ordinal/Gentzen.lean`), and the
 invariants `epsilon0_ne_zero`, `epsilon0_ne_bot`, `epsilon0_is_fixedpoint`
 (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) and `epsilon0_eq_nfp_bot`
 (`ZeroParadox/Ordinal/Epsilon0MinMax.lean`), each only assumed in a theorem that proves `True`, already
-report `Classical.choice` (statement control, measured 2026-10-08), so no re-proof of them can drop it.
+report `Classical.choice`, so no re-proof of them can drop it.
 
 A restatement cannot be had on `ONote`, which does not name ε₀: inside the carrier no notation bounds
 the tower (`tower_no_upper_bound`, `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`, `[propext]`), and
@@ -69,7 +69,7 @@ is carried by its own statement (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom f
 
 This is the snap *from below* (ε₀ is the unreachable fixed point). On `ONote` the matching
 *minimality* ("ε₀ is the LEAST fixed point") cannot be stated, because it quantifies over the limit,
-which no notation names. Leastness is proved on `Ordinal` (`epsilon0_min_eq_max`, with choice); a
+which no notation names (`tower_no_upper_bound`; across the crossing, `repr_lt_epsilon0`). Leastness is proved on `Ordinal` (`epsilon0_min_eq_max`, with choice); a
 choice-free proof of it on a well-founded carrier was not located as of 2026-10-08. The other carriers
 are in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 

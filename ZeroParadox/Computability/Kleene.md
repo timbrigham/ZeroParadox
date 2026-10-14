@@ -48,7 +48,7 @@ Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partial
 computable transformation. The KleeneStructure typeclass is built for the reading that the AFA
 Quine atom (⊥ = {⊥}) and the Kleene computational quine (∃ c, eval c = f c) are the same
 structural property. That identification is the motivating commitment, asserted by no field
-of the class and not a theorem proved here, and it cannot be stated as an equation — `Code` and `L` are different
+of the class and not a theorem proved here, and it is ill-typed as an equation — `Code` and `L` are different
 types.
 
 ## Dependencies

@@ -9,46 +9,21 @@ import Mathlib.Tactic
 This file represents a common ancestor between semilattice and p-adic valuation
 on our continuing hunt for the most basic structures to hold the bottom element.
 
-## The question
-
-ZeroParadox/Valuation/Scale.lean defines ValuationStructure over `[ZPSemilattice L]`, but the four
-axioms (scale_bot, val_bot, val_unique, val_scale) only ever use `bot` — the
-join operation ⊔ never appears. This means ZPSemilattice is an over-strong
-constraint, and ℤ_[2] cannot be a formal ValuationStructure instance despite
-satisfying all four axioms (proved as standalone theorems in ZeroParadox/Valuation/Scale.lean §V).
-
-This file tests the conjecture that the constraint is an encoding artefact, not
-a mathematical gap. It defines ValBridge — the same four axioms with `bot` as a
-plain field rather than a ZPSemilattice bottom — and builds a formal ℤ_[2]
-instance using the theorems already proved in ZeroParadox/Valuation/Scale.lean.
-
-If the instance builds and the AFA content chain follows, the formal bridge is
-complete: ℤ_[2] carries the LATTICE SHADOW of AFA content as a theorem of ZFC, rather
-than as an import from Aczel. ⚠ Read that with the fence
-ZeroParadox/Computability/SelfApp.lean applies to the same gloss: what is proved here is that the
-scale map has `bot` as its unique fixed point (`z2_selfMem_singleton`), which is the one-relation
-shadow of the Quine atom — NOT literal set-membership `⊥ ∈ ⊥`, which is a statement of the ZF+AFA
-metatheory and is not expressible on this carrier.
-
-## The chain
-
-  ValBridge (scale + val axioms, bot as plain field)
-    → scale_ne_fixed_free
-    → scale_unique_fp_free
-    → selfMem_eq_singleton_free  ({x | scale x = x} = {bot})
-
-This is the same chain as ZeroParadox/Valuation/Scale.lean §II–IV, without the ZPSemilattice dependency.
+## Overview
+`ValBridge` is `ValuationStructure` with `bot` a plain field, since the four axioms never use the join ⊔.
+No `ZPSemilattice ℤ_[2]` instance is registered, so no `ValuationStructure` instance on ℤ_[2] is either,
+though all four axioms hold there (`ZeroParadox/Valuation/Scale.lean` § V); `instZ2ValBridge` is the
+formal ℤ_[2] instance, and `z2_selfMem_singleton` gives 0 as the only fixed point of `x ↦ 2 * x`, NOT
+literal `⊥ ∈ ⊥`. Argument, fence and prior art: `ZeroParadox/Valuation/ScaleBridge.md`.
 -/
 
-/-! ⚠⚠ **"CANNOT BE A FORMAL INSTANCE" ABOVE IS TOO STRONG — READ IT AS "IS NOT
-    DEFINED".** Membership here is settled EXACTLY, by `valBridge_nonempty_iff` (§ VI): a
+/-! **Membership in `ValBridge` is settled exactly**, by `valBridge_nonempty_iff` (§ VI): a
     carrier admits a `ValBridge` iff it is INFINITE, or is inhabited and trivial. The
     dividing line is infinitude, never inhabitation — `Bool` is inhabited and
     `valBridge_bool_isEmpty` proves it admits none. ℤ_[2] qualifies because it is INFINITE
     (`nonempty_valBridge_of_infinite`), not by any equipping argument. ⚠ For `ZPSemilattice`
     ALONE inhabitation is the line, proved both ways in `ZeroParadox/Order/Lattice.lean`;
-    that gauge does NOT transfer to this class. The header sentence stays only because its
-    block is frozen by content hash in the prose baseline. -/
+    that gauge does NOT transfer to this class. -/
 
 namespace ZeroParadox
 
