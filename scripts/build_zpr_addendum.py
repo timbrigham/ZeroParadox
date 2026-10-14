@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.15 | October 2026
+Version 1.16 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -36,7 +36,8 @@ def build():
             '&#8869;" refer to that role, not to one object. The addendum maps the faces formalized here, '
             'organized by the '
             '&#956;/&#957; fork &#8212; the <b>wall</b> faces where self-reference cannot close (no fixed '
-            'point) and the <b>floor</b> faces where it does (a fixed point exists). Every entry except '
+            'point) and the <b>floor</b> faces where it does (a fixed point exists; for L&#246;b / G&#246;del '
+            '2nd, from a hypothesized L&#246;b diagonal). Every entry except '
             'the G&#246;del-first row carries a machine-checked Lean 4 witness. The diagonal-family unification is '
             'Lawvere (1969) / Yanofsky (2003), cited; the contribution is the formalization '
             'and the tie to the self-application role (the engine, the wall faces, and the Quine-atom '
