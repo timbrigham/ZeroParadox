@@ -213,7 +213,7 @@ example : letI := ZeroParadox.trivialZPSemilattice
 -- Statement: `fixToCofix` is not surjective.
 #check @ZeroParadox.fixToCofix_not_surjective
 
-/-! ### non-convergent orbits, and one balanced start -/
+/-! ### orbits: ℚ₂ unit multipliers, the swap chain, balanced starts -/
 
 -- Statement: in ℚ₂, for `‖u‖ = 1` and `x ≠ 0`, the orbit `uⁿ * x` does not converge to 0.
 #check @ZeroParadox.unit_orbit_not_tendsto_zero
