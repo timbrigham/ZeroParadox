@@ -160,8 +160,8 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 
 /-! ### the Markov interpretation cannot be a single ordered or unique point -/
 
--- Statement: for `2 ≤ n` and EVERY chain `f`, some stationary distribution of `f` is neither least
--- nor greatest in the simplex.
+-- Statement: for `2 ≤ n`, `[Nonempty (Fin n)]` and EVERY chain `f`, some stationary distribution of
+-- `f` is neither least nor greatest in the simplex.
 #check @ZeroParadox.stationary_attractor_no_order_placement
 -- Statement: a doubly-stochastic `Fin 4` chain other than the pure chain exists whose stationary
 -- distribution is not unique.
@@ -169,16 +169,16 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 -- Statement: so stationarity under doubly-stochastic `Fin 4` chains is not subsingleton-valued.
 #check @ZeroParadox.doublyStochastic_stationary_not_subsingleton
 
-/-! ### the p-adic floor cannot be reached from within, nor matched to the Markov rate -/
+/-! ### the p-adic floor cannot be reached from within, nor matched to `markovRate` -/
 
 -- Statement: for `x ≠ 0` in ℚ₂, `2ⁿ * x ≠ 0` at every finite `n` — the orbit never lands on ℚ₂'s 0.
 -- Reading: other chart, the 2-adic metric: the same orbit converges to that 0
 -- (`doubling_orbit_tendsto_zero`, § DYNAMICS). Reached in the limit, never at a finite step.
 #check @ZeroParadox.padic_orbit_never_reaches_zero
--- Statement: for `x ≠ 0`, no reindexing `φ : ℕ → ℕ` matches the p-adic rate to the Markov rate at
--- every step.
+-- Statement: for `x ≠ 0`, no reindexing `φ : ℕ → ℕ` matches the p-adic rate to `markovRate`, the
+-- absorbing chain's rate (`ZeroParadox/Valuation/NuRateEdge.lean`), at every step.
 #check @ZeroParadox.no_rate_conjugacy
--- Statement: for `x ≠ 0`, indeed no single pair of indices makes the two rates agree.
+-- Statement: for `x ≠ 0`, indeed no single pair of indices makes those two rates agree.
 #check @ZeroParadox.no_rate_orderIso
 
 /-! ### categorical floor and seam exclusions -/
@@ -213,7 +213,7 @@ example : letI := ZeroParadox.trivialZPSemilattice
 -- Statement: `fixToCofix` is not surjective.
 #check @ZeroParadox.fixToCofix_not_surjective
 
-/-! ### orbits that cannot reach ⊥, or cannot be matched -/
+/-! ### orbits that cannot reach ⊥ -/
 
 -- Statement: in ℚ₂, for `‖u‖ = 1` and `x ≠ 0`, the orbit `uⁿ * x` does not converge to 0.
 #check @ZeroParadox.unit_orbit_not_tendsto_zero
@@ -230,7 +230,7 @@ example : letI := ZeroParadox.trivialZPSemilattice
 -- Statement: no binary cofan of `fD_functor.obj 1` with itself has `fD_functor.obj 0` as a colimit
 -- apex.
 #check @ZeroParadox.seam_not_mu_colimit_apex
--- Statement: the QPF seam is the canonical bijection, no `Fix ≃ Cofix` exists for the recursive
+-- Statement: for `constPF Unit` the QPF seam `qpfSeam Unit` is the canonical bijection, no `Fix ≃ Cofix` exists for the recursive
 -- `idPF_Coalgebra`, the lattice seam is the identity equivalence, and the `selfApp` fixed points
 -- are `{bot}`.
 -- Reading: this records that no cross-setting map was EXHIBITED — an open "none given", not a no-go.
@@ -244,8 +244,8 @@ example : letI := ZeroParadox.trivialZPSemilattice
 #check @ZeroParadox.t3_unreachability
 example : @ZeroParadox.t3_unreachability = @ZeroParadox.ZPCategory.ax_g2 := rfl
 -- Statement: rose trees over a partially-well-ordered preorder are partially well ordered.
--- Reading: this is the labeled Kruskal tree theorem (Kruskal 1960, after Higman 1952 and
--- Nash-Williams 1963); full attribution in `ZeroParadox/Ordinal/Kruskal.lean`. Indexed as a SCOPE
+-- Reading: this is the labeled Kruskal tree theorem; attribution in `ZeroParadox/Ordinal/Kruskal.md`.
+-- Indexed as a SCOPE
 -- FENCE — a well-quasi-order is not a descent to a bottom, so the "canonical floor 0" claim does
 -- not reach here.
 #check @ZeroParadox.kruskal_is_wqo_not_descent
@@ -346,10 +346,12 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 -- Reading: PRIOR-ART RECORD, do NOT rebuild. The abstract "order-reversal swaps ⊥ and ⊤" is already
 -- Mathlib's, indexed below. The three inversions share no single buildable type, so their
 -- "unification" is a schema, not a theorem.
--- Statement: over a bare `[Bot α]`, passing to the order dual sends ⊥ to ⊤ — by `rfl`, with no
--- lattice, complement or completeness in sight. This is the abstract fact; `compl_bot` and friends
--- are Boolean-algebra special cases of it.
-#check @OrderDual.toDual_bot
+-- Statement: Mathlib's `OrderIso.map_bot`: an order isomorphism `α ≃o β` sends ⊥ of `α` to ⊥ of `β`.
+#check @OrderIso.map_bot
+-- Statement: in a Boolean algebra `α`, `⊥ᶜ = ⊤`, as `OrderIso.map_bot` applied to the order-reversing
+-- `OrderIso.compl α : α ≃o αᵒᵈ`.
+example {α : Type*} [BooleanAlgebra α] : (⊥ : α)ᶜ = ⊤ :=
+  congrArg OrderDual.ofDual ((OrderIso.compl α).map_bot)
 
 /-! ### SELF-REFERENCE — the diagonal fixed point
 
@@ -459,9 +461,8 @@ noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
 -- equal: `t4` carries an extra unused `⊥ ⟶ X` binder, so `@t4 = @t3 := rfl` does not typecheck.
 #check @ZeroParadox.t4_chains_forward_only
 -- Statement: the relaxation operator of `fullMix` is not injective.
--- Reading: information is lost, so the relaxation cannot be reversed. ⚠ FENCE: mixing-specific, NOT
--- universal — permutation chains do not mix (`swap_orbit_not_convergent`, which exhibits one
--- non-convergent orbit and says nothing about eigenvalues).
+-- Reading: information is lost, so the relaxation cannot be reversed. ⚠ FENCE: a fact about `fullMix`,
+-- not about every chain.
 #check @ZeroParadox.fullMix_not_injective
 -- Statement: an eigenmode with `|λ| < 1` has `‖(T f)^[m] v‖ → 0`.
 #check @ZeroParadox.tendsto_norm_iterate_zero

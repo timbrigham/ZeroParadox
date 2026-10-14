@@ -17,52 +17,12 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 
 ---
-
 ## Formal Overview (AI-assisted)
-
-`ZeroParadox/Valuation/ContractionRate.lean` gave a sharp *valuation* contraction criterion for node #3 (the p-adic floor): the doubling-type
-map `x ↦ c·x` makes `{0} ⊆ Q₂` a global attractor **iff** `‖c‖₂ < 1`, and fails (norm is preserved)
-at the boundary `‖c‖₂ = 1`. This file builds the **Markov analog** for node #2 (the stationary
-attractor in the probability simplex): a sharp *spectral* dichotomy governed by the subdominant
-eigenvalue modulus `|λ₂|`.
-
-We work concretely on `Fin 2 → ℝ` with the symmetric doubly-stochastic kernel
-`P_a v = ![(1-a)·v 0 + a·v 1, a·v 0 + (1-a)·v 1]` (matrix `[[1-a,a],[a,1-a]]`, eigenvalues `1` and
-`λ₂ = 1 - 2a`). The uniform distribution `w = ![1/2, 1/2]` is the stationary vector. The diagnostic
-functional is the **imbalance** `imb v = v 0 - v 1`; the load-bearing algebraic fact is
-`imb (P_a v) = (1 - 2a) · imb v` (the subdominant eigenvalue acting on the eigenline), while the total
-mass `v 0 + v 1` is preserved. So the orbit is pinned by `imb (P_aᵏ v₀) = (1-2a)ᵏ · imb v₀`.
-
-**GO half (spectral gap `|λ₂| < 1`).** `markov_contraction_tendsto` — for `0 < a < 1` (so
-`|1 - 2a| < 1`) and any start `v₀` on the line `v 0 + v 1 = 1`, the orbit `P_aᵏ v₀ → w` (uniform).
-The convergence is at the explicit geometric **rate** `|1-2a|ᵏ`, witnessed in-statement by
-`markov_imbalance_pow` (`imb (P_aᵏ v₀) = (1-2a)ᵏ · imb v₀`) together with
-`tendsto_pow_atTop_nhds_zero_of_abs_lt_one` on the gap. This exhibits #2 as a genuine geometric
-ν-attractor with an explicit contraction rate — structurally matching `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic `c`-contraction.
-
-**NO-GO half (spectral boundary `|λ₂| = 1`).** `swap_orbit_not_convergent` — the cyclic-shift /
-permutation kernel `S v = ![v 1, v 0]` (the `a = 1` boundary of the family; `λ₂ = -1`, `|λ₂| = 1`)
-started at `v₀ = ![1, 0]` produces the **periodic** orbit `![1,0], ![0,1], ![1,0], …` which does **not**
-converge: its coordinate-0 sequence is `1, 0, 1, 0, …`, whose even/odd subsequences have distinct
-limits. So #2 is **not** a single attractor at the spectral boundary — exactly dual to `ZeroParadox/Valuation/ContractionRate.lean`'s
-`‖c‖₂ = 1 ⇒ non-attractor` for #3.
-
-**Dichotomy capstone.** `markov_contraction_dichotomy` packages both halves with the spectral reading
-`|λ₂| < 1 ⇒ attractor`, `|λ₂| = 1 ⇒ non-attractor`, mirroring `ZeroParadox/Valuation/ContractionRate.lean`'s valuation dichotomy.
-
-**Honest scope.** The convergence theorem and the rate are genuine, in-statement, for the concrete
-symmetric `Fin 2` family (the eigenline reduction `imb (P_a v) = (1-2a)·imb v` does the work). It is a
-witnessed example matching the p-adic criterion's *shape* (a sharp contraction-modulus dichotomy in a
-second ambient), **not** a proof that the p-adic `‖c‖₂` and Markov `|λ₂|` criteria are literally the
-same object — that cross-ambient identity is the interpretation, not the Lean claim. No category,
-inverse limit, or final coalgebra is constructed; the ν reading of "unique geometric attractor" is an
-interpretation. This is an edge/rate test on node #2 of the bottom-diagram tree.
-
-**Prior art.** The spectral-gap ⇒ geometric-ergodicity mechanism (subdominant eigenvalue modulus governing
-the convergence rate) is standard finite-Markov theory: Levin–Peres, *Markov Chains and Mixing Times*. The
-value here is only the concrete `Fin 2` instantiation and its use as a second-ambient shape witness, not the
-mechanism. (Sibling `ZeroParadox/Reals/MarkovSpectralGap.lean` cites the same home.)
--/
+The Markov analog, on `Fin 2 → ℝ`, of `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic contraction
+dichotomy; both halves are `markov_contraction_dichotomy`. Convergence covers `0 < a < 1`; the
+non-convergence half is one swap orbit (`swap_orbit_not_convergent`), and the `example` after it is
+the other endpoint `a = 0`, where every orbit is constant. Prior art: Levin–Peres, *Markov Chains and
+Mixing Times*. -/
 
 namespace ZeroParadox
 
@@ -110,7 +70,7 @@ theorem markov_sum_pow (a : ℝ) (v₀ : Fin 2 → ℝ) (k : ℕ) :
   | succ k ih =>
       rw [Function.iterate_succ_apply', step_sum, ih]
 
-/-! ### GO half: spectral gap `|λ₂| < 1` ⇒ geometric convergence to the uniform attractor -/
+/-! ### GO half: `|1 - 2a| < 1` ⇒ geometric convergence to the uniform attractor -/
 
 /-- Coordinate recovery: a vector on the line `v 0 + v 1 = s` is determined by its imbalance:
     `v 0 = (s + imb v)/2`, `v 1 = (s - imb v)/2`. -/
@@ -118,10 +78,10 @@ theorem coord_from_imb {v : Fin 2 → ℝ} {s : ℝ} (hs : v 0 + v 1 = s) :
     v 0 = (s + imb v) / 2 ∧ v 1 = (s - imb v) / 2 := by
   constructor <;> · simp only [imb]; linarith
 
-/-- **GO — the geometric Markov attractor.** For `0 < a < 1` (spectral gap `|1 - 2a| < 1`) and any
+/-- **GO — the geometric Markov attractor.** For `0 < a < 1` (so `|1 - 2a| < 1`) and any
     start `v₀` on the probability line `v₀ 0 + v₀ 1 = 1`, the iteration `P_aᵏ v₀` converges to the
     uniform stationary vector `unif = ![1/2,1/2]`. The convergence is at the explicit geometric rate
-    `|1 - 2a|ᵏ` (carried by `markov_imbalance_pow` + `tendsto_pow…of_abs_lt_one` on the gap), so #2 is
+    `|1 - 2a|ᵏ` (carried by `markov_imbalance_pow` + `tendsto_pow…of_abs_lt_one`), so #2 is
     a genuine geometric ν-attractor, structurally matching `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic `c`-contraction. -/
 theorem markov_contraction_tendsto {a : ℝ} (ha0 : 0 < a) (ha1 : a < 1)
     {v₀ : Fin 2 → ℝ} (hv : v₀ 0 + v₀ 1 = 1) :
@@ -155,7 +115,7 @@ theorem markov_contraction_tendsto {a : ℝ} (ha0 : 0 < a) (ha1 : a < 1)
       exact ((tendsto_const_nhds.sub himb).div_const 2)
     simpa only [sub_zero] using (this.congr (fun k => (e1 k).symm))
 
-/-! ### NO-GO half: spectral boundary `|λ₂| = 1` ⇒ no single attractor (periodic orbit) -/
+/-! ### NO-GO half: the swap kernel (`a = 1`) has a non-convergent orbit -/
 
 /-- The cyclic-shift / permutation kernel `S v = ![v 1, v 0]`: the `a = 1` boundary of the family,
     `λ₂ = -1`, `|λ₂| = 1`. -/
@@ -186,8 +146,8 @@ theorem swap_orbit_coord0 (k : ℕ) :
 
 /-- **NO-GO — non-convergence at the spectral boundary.** The swap orbit started at `![1,0]` does NOT
     converge: its coordinate-0 sequence is `1, 0, 1, 0, …`, whose even-indexed subsequence is constant
-    `1` and odd-indexed is constant `0`. A convergent limit would force `1 = 0`. So #2 is not a single
-    attractor when `|λ₂| = 1` — exactly dual to `ZeroParadox/Valuation/ContractionRate.lean`'s `‖c‖₂ = 1 ⇒ non-attractor` for #3. -/
+    `1` and odd-indexed is constant `0`. A convergent limit would force `1 = 0`. So under the swap
+    kernel #2 is not a single attractor; the `example` below is the other endpoint `a = 0`. -/
 theorem swap_orbit_not_convergent :
     ¬ ∃ w : Fin 2 → ℝ, Tendsto (fun k => swap^[k] e0vec) atTop (nhds w) := by
   rintro ⟨w, hw⟩
@@ -222,10 +182,17 @@ theorem swap_orbit_not_convergent :
   rw [e1] at e0
   exact one_ne_zero e0
 
+-- Statement: control, at `a = 0` (where `1 - 2a = 1`) `markovStep 0` is the identity, so every orbit
+-- is constant and converges.
+example (v₀ : Fin 2 → ℝ) (k : ℕ) : (markovStep 0)^[k] v₀ = v₀ := by
+  have h : markovStep 0 = id := by
+    funext v i; fin_cases i <;> simp [markovStep]
+  rw [h, Function.iterate_id]; rfl
+
 /-! ### Dichotomy capstone -/
 
 /-- **The sharp contraction dichotomy for node #2 (spectral).** Both halves, with the spectral
-    reading: spectral gap `|λ₂| < 1` (here `0 < a < 1`) ⇒ geometric attractor at the uniform vector;
+    reading: `|λ₂| < 1` (here `0 < a < 1`) ⇒ geometric attractor at the uniform vector;
     spectral boundary `|λ₂| = 1` (the swap kernel) ⇒ no single attractor (periodic orbit). This
     mirrors `ZeroParadox/Valuation/ContractionRate.lean`'s valuation dichotomy for #3 (`‖c‖₂ < 1` attractor / `‖c‖₂ = 1` non-attractor) in a
     second ambient — the within-ν rate structure `ZeroParadox/Computability/StationaryUnique.lean` and `ZeroParadox/Valuation/NuRateEdge.lean` left unbuilt. -/

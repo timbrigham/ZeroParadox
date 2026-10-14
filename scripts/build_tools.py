@@ -67,7 +67,8 @@ def key_result_box(title, body_text, bg=BLUE, hdr_bg=BLUE_DARK):
 
 def tool_stack_diagram():
     """Stacked rectangles showing tool layers."""
-    dw, dh = TW, 2.2 * inch
+    # dh = 2.2 in + 8 pt: content top = caption cap height at dh - 10.5, bottom = lowest box at 10 pt
+    dw, dh = TW, 2.2 * inch + 8
     d = Drawing(dw, dh)
 
     layers = [
@@ -80,10 +81,10 @@ def tool_stack_diagram():
     n = len(layers)
     margin = 0.6 * inch
     bw = dw - 2 * margin
-    bh = (dh - 0.35*inch) / n
+    bh = (2.2*inch - 0.35*inch) / n   # fixed box height, independent of dh
     gap = 4
 
-    caption_y = dh - 12
+    caption_y = dh - 18
     d.add(String(margin, caption_y,
                  'Claude acts as reasoning layer; all formal tools are standard open software.',
                  fontSize=7.5, fontName='DV-I', fillColor=GREY))
@@ -215,8 +216,8 @@ def build():
         'Key Result: What formal verification does and does not change',
         'Formal verification in Lean 4 operates at two levels. (1) Full algebraic verification: '
         'ZP-A\'s algebraic layer (A1-A4 and all derived results) is fully machine-checked via NatSLat; '
-        '#print axioms confirms the proofs depend only on the ZPSemilattice typeclass fields and '
-        'Lean\'s standard axioms (propext, Classical.choice, Quot.sound). (2) Functor-level verification: for ZP-B, ZP-C, and ZP-D, '
+        'each proof\'s axiom footprint is the #print axioms output in ZeroParadox/Order/Lattice.lean. '
+        '(2) Functor-level verification: for ZP-B, ZP-C, and ZP-D, '
         'sorry-free Lean functors land in ℕ-indexed stand-in categories and in the standard Mathlib '
         'categories TopCat, KleisliCat PMF and ModuleCat ℂ, which close OQ-G3; the domain theorems '
         '(C3, T1b, T4) ground the snap in each stand-in category. '
