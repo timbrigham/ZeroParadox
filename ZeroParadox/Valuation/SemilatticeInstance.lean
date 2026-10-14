@@ -130,7 +130,7 @@ h_bound (∀ n, ‖Sₙ‖ ≤ (2⁻¹)ⁿ), a hypothesis of `t_iz_cauchy`, is p
 making ascent available, never a premise here. Nor is it ZP-A's R1 (no-subtraction). Gauge: § Ib. -/
 
 /-- Integer arithmetic: a strictly increasing ℤ-valued sequence satisfies v 0 + n ≤ v n.
-    Proved by induction. No axioms beyond propext (from linarith). -/
+    Proved by induction. Its measured footprint is in the purity block below; no purity claim is made here. -/
 private lemma int_strict_mono_ge (v : ℕ → ℤ)
     (h : ∀ n, v n < v (n + 1)) : ∀ n : ℕ, v 0 + (n : ℤ) ≤ v n := by
   intro n
@@ -521,6 +521,7 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox ZeroParadox
 #print axioms t_iz_conv_zero
 #print axioms t_iz_cauchy
 #print axioms t_inside_zero
+#print axioms int_strict_mono_ge
 #print axioms t_iz_r1_t3_geometric_bound
 #print axioms t_iz_valuation_unbounded
 #print axioms t_iz_limit_is_new_null
