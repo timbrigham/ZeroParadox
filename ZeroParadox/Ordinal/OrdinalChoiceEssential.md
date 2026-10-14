@@ -84,8 +84,8 @@ middle by a choice-free reduction. `le_total` on `Ordinal.{0}` is that principle
 implies it through `le_of_lt`, so both
 imply the principle as well as follow from it; every `sup`/`nfp`/`deriv` argument that leans on
 trichotomy uses it. On `Ordinal` the order instance carries choice in its own term (the Lean file's
-§ III), so as Mathlib spells `le_total` neither direction is choice-free there; over the bare-relation
-respelling, its implication to excluded middle is (the classification below).
+§ III), so as Mathlib spells `le_total` neither direction is choice-free there; the bare-relation
+respelling of `le_total` implies excluded middle choice-free (the classification below).
 
 ## What this does NOT establish — read before citing the Lean file
 

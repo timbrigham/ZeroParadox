@@ -26,9 +26,9 @@ past what the notation system can name (`tower_cofinal`,
 and a restatement on a choice-free carrier has two readings. The defined one is `E0Note`: a choice-free
 Lean restatement where uniqueness of the fixed point is proved and its existence is set by definition, on
 an order that is not well-founded (§ *The carrier, and what it actually is* and § *The closure at the top is STIPULATED, not
-discovered* below). The derived
-one, on a well-founded carrier, leastness included, is open (`ZeroParadox/Ordinal/SnapNucleus.md`
-§ "Axiom footprint").
+discovered* below). The derived one, a well-founded Lean carrier on which the fixed point is derived,
+leastness included, was not located as of 2026-10-13 (`ZeroParadox/Ordinal/SnapNucleus.md`
+§ "Axiom footprint"); and the crossing into `Ordinal`, `e0Repr`, carries choice (the purity block).
 
 Worse, the claim was **not measurable by the instrument used to support it.** `Classical.choice` sits in
 the `Ordinal.partialOrder` *instance term*, so every statement written through that instance inherits it,
@@ -80,8 +80,8 @@ crossing is one named map rather than a diffuse correspondence.
 **What that measurement does and does not license.** It locates where the classical assumption is paid
 on this pair of carriers. It does **not** show that Mathlib's ε₀ results are eliminable: as stated they
 are STATEMENT-CARRIED, so no proof of them can drop the choice, and the open question is a restatement
-on a choice-free carrier, with the two readings of § *Why this file exists*: defined on `E0Note`,
-derived open. Its state is in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint".
+on a choice-free carrier, with the two readings of § *Why this file exists — a correction of record*:
+the defined one on `E0Note`, and the derived one, not located in Lean. Its state is in `ZeroParadox/Ordinal/SnapNucleus.md` § "Axiom footprint".
 This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.md` records. Scoped to
 what is measured: *the ascent below ε₀ borrows a tool far stronger than it needs*, because its
 counterpart on notations measures `[propext]`. Note also the standing caveat from
