@@ -53,7 +53,7 @@ In the computability face it is a Kleene code (a `Code`), a term of another type
 #check @ZeroParadox.t_comp                   -- T-COMP: proves the Quine-atom / order-bottom / join-identity faces equivalent (three). The Kleene face is a `KleeneStructure` class field, not a clause
 #check @ZeroParadox.selfApp_isLeastFixedPointFrom  -- ⊥ of the `ZPSemilattice` is the least fixed point of self-application (the order floor)
 #check @ZeroParadox.ProvabilityLogic.loeb_sentence_is_fixedpoint  -- Löb: the provability diagonal closes given a Löb diagonal ψ (hypotheses hfix1, hfix2)
-#check @ZeroParadox.ProvabilityLogic.godel_two     -- Gödel's second: consistency unprovable — the provability floor
+#check @ZeroParadox.ProvabilityLogic.godel_two     -- Gödel's second: given a Löb diagonal for falsum, a consistent system does not prove □falsum → falsum — the provability floor, given a Löb diagonal
 #check @ZeroParadox.rice_face_has_bottom     -- Rice: computable f has a fixed point up to eval; reading it as the face's floor is the family's criterion, not the theorem
 #check @ZeroParadox.quine_exists_yet_rice    -- Rice pivot: f's fixed point exists AND a non-trivial extensional C is undecidable over all codes; the second conjunct does not mention f (ComputationCannotBe.lean § V)
 

@@ -451,7 +451,7 @@ APOPHATIC = [
      ["strict_fix_isEmpty", "fix_isEmpty_constructive"]),
     ("D5", "recovered by mapping the least fixed point onto the greatest: the comparison map is not onto",
      ["fixToCofix_not_surjective"]),
-    ("D6", "reached by a non-contracting orbit: from a nonzero start, unit-norm orbits in ℚ₂ and the Markov swap chain do not converge to 0 of ℚ₂ / the uniform vector",
+    ("D6", "reached by a non-contracting orbit: see ZeroParadox/BottomCannotBe.lean § orbits (unit_orbit_not_tendsto_zero, swap_orbit_not_convergent)",
      ["unit_orbit_not_tendsto_zero", "swap_orbit_not_convergent"]),
 ]
 
@@ -692,8 +692,8 @@ DIAGONAL_FAMILY = [
     ("Curry",        "μ wall",  "no naming surjection - Curry's paradox forces any conclusion", "curry_no_bottom", "(none)"),
     ("the wall",     "μ",       "no well-founded relation admits a self-loop (a host verdict, not an engine face)", "wf_no_selfloop", "(none)"),
     ("Quine atom",   "ν floor", "⊥ = {⊥}: ⊥ of a ZPSemilattice in the Quine-atom role, from the class fields", "t_exec", "(none)"),
-    ("Löb",          "ν floor", "provability of (□A → A) yields A - the provability-logic fixed point", "loeb", "(none)"),
-    ("Gödel 2nd",    "ν floor", "no consistent system proves its own consistency", "godel_two", "(none)"),
+    ("Löb",          "ν floor", "given a Löb diagonal ψ (hypotheses hfix1, hfix2), ⊢ □A → A yields ⊢ A", "loeb", "(none)"),
+    ("Gödel 2nd",    "ν floor", "given a Löb diagonal for falsum, a consistent system does not prove □falsum → falsum", "godel_two", "(none)"),
     ("Kleene quine", "ν floor", "every computable self-map on codes has a fixed point up to eval (Rogers' form of the recursion theorem)", "computability_face_fixedPoint", "`[propext, Classical.choice, Quot.sound]`"),
     ("Rice",         "ν floor", "a fixed point up to eval exists; every non-trivial semantic property is undecidable over all codes", "rice_face_has_bottom, quine_exists_yet_rice","`[propext, Classical.choice, Quot.sound]`"),
 ]

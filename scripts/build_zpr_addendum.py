@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.16 | October 2026
+Version 1.17 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -208,12 +208,13 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'L&#246;b (Loeb.lean) &#8212; the provability floor; and G&#246;del\'s second incompleteness',
+        'L&#246;b (Loeb.lean) &#8212; the provability floor, given a L&#246;b diagonal; and G&#246;del\'s second incompleteness',
         [
             'loeb: given a L&#246;b diagonal (&#968; &#8596; (&#9633;&#968; &#8594; A)), &#8866; '
             '&#9633;A &#8594; A yields &#8866; A. Given such a diagonal, &#968; is a fixed point up to '
             'provability (loeb_sentence_is_fixedpoint).',
-            'godel_two: a consistent system cannot prove &#9633;&#8869; &#8594; &#8869; &#8212; its own '
+            'godel_two: given a L&#246;b diagonal for falsum, a consistent system does not prove '
+            '&#9633;falsum &#8594; falsum &#8212; its own '
             'consistency (G&#246;del\'s second incompleteness, the A = &#8869; corollary). Built from '
             'scratch (no modal logic in Mathlib): an abstract ProvabilityLogic typeclass with the '
             'Hilbert&#8211;Bernays&#8211;L&#246;b derivability conditions.',
@@ -285,7 +286,7 @@ def build():
             ['Kleene quine', '&#957;', 'every computable self-map on codes has a fixed point up to eval',
              'computability_face_fixedPoint (Lawvere.lean)'],
             ['L&#246;b / G&#246;del 2nd', '&#957;', 'the provability diagonal closes given a L&#246;b diagonal &#968; '
-             '(hypotheses hfix1, hfix2); consistency unprovable',
+             '(hypotheses hfix1, hfix2); consistency unprovable, given a L&#246;b diagonal for falsum',
              'loeb, godel_two (Loeb.lean)'],
             ['Rice', '&#957;', 'a fixed point exists; every non-trivial semantic property is '
              'undecidable over all codes',

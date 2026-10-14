@@ -97,7 +97,7 @@ valuation) come from other layers. The partial numbering is scoped, not missing 
 | a *greatest* element (it is the floor, not the top) | [`zpa_bot_not_greatest`](ZeroParadox/Category/SeamUniqueness.lean) |
 | an inhabited least-fixed-point for the identity functor: that least fixed point is provably empty | [`strict_fix_isEmpty`](ZeroParadox/Computability/RootCutTrichotomy.lean), [`fix_isEmpty_constructive`](ZeroParadox/Computability/ChoicePurityInvariant.lean) |
 | recovered by mapping the least fixed point onto the greatest: the comparison map is not onto | [`fixToCofix_not_surjective`](ZeroParadox/Computability/NatListRegime.lean) |
-| reached by a non-contracting orbit: from a nonzero start, unit-norm orbits in ℚ₂ and the Markov swap chain do not converge to 0 of ℚ₂ / the uniform vector | [`unit_orbit_not_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`swap_orbit_not_convergent`](ZeroParadox/Order/MarkovContractionDual.lean) |
+| reached by a non-contracting orbit: see ZeroParadox/BottomCannotBe.lean § orbits (unit_orbit_not_tendsto_zero, swap_orbit_not_convergent) | [`unit_orbit_not_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`swap_orbit_not_convergent`](ZeroParadox/Order/MarkovContractionDual.lean) |
 
 ### ⊥ is (positive handles - the slots)
 
@@ -325,8 +325,8 @@ The classical self-reference arguments are not separate theorems that happen to 
 | Curry | μ wall | no naming surjection - Curry's paradox forces any conclusion | [`curry_no_bottom`](ZeroParadox/Settheory/Curry.lean) | (none) |
 | the wall | μ | no well-founded relation admits a self-loop (a host verdict, not an engine face) | [`wf_no_selfloop`](ZeroParadox/Settheory/Wall.lean) | (none) |
 | Quine atom | ν floor | ⊥ = {⊥}: ⊥ of a ZPSemilattice in the Quine-atom role, from the class fields | [`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean) | (none) |
-| Löb | ν floor | provability of (□A → A) yields A - the provability-logic fixed point | [`loeb`](ZeroParadox/Settheory/Loeb.lean) | (none) |
-| Gödel 2nd | ν floor | no consistent system proves its own consistency | [`godel_two`](ZeroParadox/Settheory/Loeb.lean) | (none) |
+| Löb | ν floor | given a Löb diagonal ψ (hypotheses hfix1, hfix2), ⊢ □A → A yields ⊢ A | [`loeb`](ZeroParadox/Settheory/Loeb.lean) | (none) |
+| Gödel 2nd | ν floor | given a Löb diagonal for falsum, a consistent system does not prove □falsum → falsum | [`godel_two`](ZeroParadox/Settheory/Loeb.lean) | (none) |
 | Kleene quine | ν floor | every computable self-map on codes has a fixed point up to eval (Rogers' form of the recursion theorem) | [`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean) | `[propext, Classical.choice, Quot.sound]` |
 | Rice | ν floor | a fixed point up to eval exists; every non-trivial semantic property is undecidable over all codes | [`rice_face_has_bottom`](ZeroParadox/Computability/Rice.lean), [`quine_exists_yet_rice`](ZeroParadox/Computability/Rice.lean) | `[propext, Classical.choice, Quot.sound]` |
 
