@@ -213,7 +213,7 @@ example : letI := ZeroParadox.trivialZPSemilattice
 -- Statement: `fixToCofix` is not surjective.
 #check @ZeroParadox.fixToCofix_not_surjective
 
-/-! ### orbits that cannot reach ⊥ -/
+/-! ### non-convergent orbits, and one balanced start -/
 
 -- Statement: in ℚ₂, for `‖u‖ = 1` and `x ≠ 0`, the orbit `uⁿ * x` does not converge to 0.
 #check @ZeroParadox.unit_orbit_not_tendsto_zero
@@ -230,8 +230,8 @@ example : letI := ZeroParadox.trivialZPSemilattice
 -- Statement: no binary cofan of `fD_functor.obj 1` with itself has `fD_functor.obj 0` as a colimit
 -- apex.
 #check @ZeroParadox.seam_not_mu_colimit_apex
--- Statement: for `constPF Unit` the QPF seam `qpfSeam Unit` is the canonical bijection, no `Fix ≃ Cofix` exists for the recursive
--- `idPF_Coalgebra`, the lattice seam is the identity equivalence, and the `selfApp` fixed points
+-- Statement: for `constPF Unit` the QPF seam `qpfSeam Unit` is the canonical bijection, no
+-- `Fix ≃ Cofix` exists for the recursive `idPF_Coalgebra`, the lattice seam is the identity equivalence, and the `selfApp` fixed points
 -- are `{bot}`.
 -- Reading: this records that no cross-setting map was EXHIBITED — an open "none given", not a no-go.
 -- The `IsEmpty` conjunct above is about `Fix ≃ Cofix`, not about any cross-setting map type.
@@ -245,8 +245,7 @@ example : letI := ZeroParadox.trivialZPSemilattice
 example : @ZeroParadox.t3_unreachability = @ZeroParadox.ZPCategory.ax_g2 := rfl
 -- Statement: rose trees over a partially-well-ordered preorder are partially well ordered.
 -- Reading: this is the labeled Kruskal tree theorem; attribution in `ZeroParadox/Ordinal/Kruskal.md`.
--- Indexed as a SCOPE
--- FENCE — a well-quasi-order is not a descent to a bottom, so the "canonical floor 0" claim does
+-- Indexed as a SCOPE FENCE — a well-quasi-order is not a descent to a bottom, so the "canonical floor 0" claim does
 -- not reach here.
 #check @ZeroParadox.kruskal_is_wqo_not_descent
 
@@ -343,15 +342,18 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 -- Statement: Mathlib's `hasZeroObject_op` — a zero object stays a zero object in the opposite.
 -- Reading: the seam is self-dual under `op`, the fixed centre of the inversion.
 #check @CategoryTheory.Limits.hasZeroObject_op
--- Reading: PRIOR-ART RECORD, do NOT rebuild. The abstract "order-reversal swaps ⊥ and ⊤" is already
--- Mathlib's, indexed below. The three inversions share no single buildable type, so their
--- "unification" is a schema, not a theorem.
--- Statement: Mathlib's `OrderIso.map_bot`: an order isomorphism `α ≃o β` sends ⊥ of `α` to ⊥ of `β`.
+-- Reading: PRIOR-ART RECORD, do NOT rebuild. "Order-reversal swaps ⊥ and ⊤" is Mathlib's
+-- `OrderIso.map_bot` below, applied to an order isomorphism into an order dual. The three inversions
+-- share no single buildable type, so their "unification" is a schema, not a theorem.
+-- Statement: Mathlib's `OrderIso.map_bot`: for `[LE α]`, `[PartialOrder β]`, `[OrderBot α]` and
+-- `[OrderBot β]`, an order isomorphism `α ≃o β` sends ⊥ of `α` to ⊥ of `β`.
 #check @OrderIso.map_bot
 -- Statement: in a Boolean algebra `α`, `⊥ᶜ = ⊤`, as `OrderIso.map_bot` applied to the order-reversing
 -- `OrderIso.compl α : α ≃o αᵒᵈ`.
 example {α : Type*} [BooleanAlgebra α] : (⊥ : α)ᶜ = ⊤ :=
   congrArg OrderDual.ofDual ((OrderIso.compl α).map_bot)
+-- Statement: Mathlib's `compl_bot`: `⊥ᶜ = ⊤` in any Heyting algebra, the general home of that fact.
+#check @compl_bot
 
 /-! ### SELF-REFERENCE — the diagonal fixed point
 

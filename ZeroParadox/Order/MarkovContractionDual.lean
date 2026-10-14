@@ -19,10 +19,10 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 ## Formal Overview (AI-assisted)
 The Markov analog, on `Fin 2 → ℝ`, of `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic contraction
-dichotomy; both halves are `markov_contraction_dichotomy`. Convergence covers `0 < a < 1`; the
-non-convergence half is one swap orbit (`swap_orbit_not_convergent`), and the `example` after it is
-the other endpoint `a = 0`, where every orbit is constant. Prior art: Levin–Peres, *Markov Chains and
-Mixing Times*. -/
+dichotomy; both halves are `markov_contraction_dichotomy`. Convergence covers `0 < a < 1`, starts on the
+probability line; the non-convergence half is one orbit of `swap = markovStep 1`, and the `example`
+after it is the other endpoint `a = 0`, where every orbit is constant. Prior art: Levin–Peres,
+*Markov Chains and Mixing Times*. -/
 
 namespace ZeroParadox
 
@@ -47,7 +47,7 @@ theorem step_sum (a : ℝ) (v : Fin 2 → ℝ) :
   ring
 
 /-- **Eigenline identity (the load-bearing algebra).** The imbalance scales by the subdominant
-    eigenvalue `1 - 2a` under one step: `imb (P_a v) = (1 - 2a) · imb v`. -/
+    eigenvalue `λ₂ = 1 - 2a` under one step: `imb (P_a v) = (1 - 2a) · imb v`. -/
 theorem step_imb (a : ℝ) (v : Fin 2 → ℝ) :
     imb (markovStep a v) = (1 - 2 * a) * imb v := by
   simp only [imb, markovStep, Matrix.cons_val_zero, Matrix.cons_val_one]
@@ -86,7 +86,7 @@ theorem coord_from_imb {v : Fin 2 → ℝ} {s : ℝ} (hs : v 0 + v 1 = s) :
 theorem markov_contraction_tendsto {a : ℝ} (ha0 : 0 < a) (ha1 : a < 1)
     {v₀ : Fin 2 → ℝ} (hv : v₀ 0 + v₀ 1 = 1) :
     Tendsto (fun k => (markovStep a)^[k] v₀) atTop (nhds unif) := by
-  -- gap modulus is < 1
+  -- |λ₂| = |1 - 2a| < 1
   have hgap : |1 - 2 * a| < 1 := by rw [abs_lt]; constructor <;> linarith
   -- the imbalance sequence tends to 0 geometrically
   have himb : Tendsto (fun k => imb ((markovStep a)^[k] v₀)) atTop (nhds 0) := by
@@ -121,6 +121,10 @@ theorem markov_contraction_tendsto {a : ℝ} (ha0 : 0 < a) (ha1 : a < 1)
     `λ₂ = -1`, `|λ₂| = 1`. -/
 noncomputable def swap (v : Fin 2 → ℝ) : Fin 2 → ℝ := ![v 1, v 0]
 
+-- Statement: `swap` is `markovStep 1`.
+example : swap = markovStep 1 := by
+  funext v i; fin_cases i <;> simp [swap, markovStep]
+
 /-- The boundary start `![1, 0]`. -/
 noncomputable def e0vec : Fin 2 → ℝ := ![1, 0]
 
@@ -144,7 +148,7 @@ theorem swap_orbit_coord0 (k : ℕ) :
   rw [swap_orbit_eq]
   by_cases hk : Even k <;> simp [hk]
 
-/-- **NO-GO — non-convergence at the spectral boundary.** The swap orbit started at `![1,0]` does NOT
+/-- **NO-GO — non-convergence under the swap kernel.** The swap orbit started at `![1,0]` does NOT
     converge: its coordinate-0 sequence is `1, 0, 1, 0, …`, whose even-indexed subsequence is constant
     `1` and odd-indexed is constant `0`. A convergent limit would force `1 = 0`. So under the swap
     kernel #2 is not a single attractor; the `example` below is the other endpoint `a = 0`. -/
@@ -183,7 +187,7 @@ theorem swap_orbit_not_convergent :
   exact one_ne_zero e0
 
 -- Statement: control, at `a = 0` (where `1 - 2a = 1`) `markovStep 0` is the identity, so every orbit
--- is constant and converges.
+-- is constant.
 example (v₀ : Fin 2 → ℝ) (k : ℕ) : (markovStep 0)^[k] v₀ = v₀ := by
   have h : markovStep 0 = id := by
     funext v i; fin_cases i <;> simp [markovStep]

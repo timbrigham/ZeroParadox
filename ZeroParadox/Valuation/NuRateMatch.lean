@@ -20,8 +20,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 At `a = 1/4` the kernel of `ZeroParadox/Order/MarkovContractionDual.lean` scales the imbalance by
 `1 - 2a = 1/2` (`step_imb`), the p-adic doubling rate. The match is `padic_markov_shared_rate_envelope`;
-the `example` after `padic_markov_no_orbit_correspondence` is its step-by-step form for every start.
-Both sides are real-valued distances: no category, inverse limit or map between `Fin 2 → ℝ` and `Q₂` is
+the `example` after `padic_markov_no_orbit_correspondence` states that match step by step, for every
+start. Both sides are real numbers: no category, inverse limit or map between `Fin 2 → ℝ` and `Q₂` is
 built. -/
 
 namespace ZeroParadox
@@ -74,7 +74,8 @@ theorem padic_markov_shared_rate_envelope (x : Q₂) (v₀ : Fin 2 → ℝ) :
 
 /-- At a balanced start (`hbal`) and `x ≠ 0`: the p-adic orbit distance stays positive while the
     `markovStep (1/4)` imbalance is `0` at every step. The start, not the rate, sets the Markov
-    constant to `0`; the `example` below is the step-by-step proportionality for every start. -/
+    constant to `0`; the `example` below holds for every start, so the name's "no correspondence"
+    is this balanced start only. -/
 theorem padic_markov_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0)
     {v₀ : Fin 2 → ℝ} (hbal : imb v₀ = 0) :
     (∀ n, 0 < ‖(2 : Q₂) ^ n * x‖) ∧
@@ -84,7 +85,7 @@ theorem padic_markov_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0)
   rw [markov_imbalance_quarter, hbal, mul_zero]
 
 -- Statement: for every `x` and every start `v₀`, at every step `n`,
--- `‖2ⁿ·x‖ · imb v₀ = imb (P^ⁿ v₀) · ‖x‖`: the two distances are proportional step by step.
+-- `‖2ⁿ·x‖ · imb v₀ = imb (P^ⁿ v₀) · ‖x‖`, the p-adic norm and the signed imbalance cross-multiplied.
 example (x : Q₂) (v₀ : Fin 2 → ℝ) (n : ℕ) :
     ‖(2 : Q₂) ^ n * x‖ * imb v₀ = imb ((markovStep (1/4))^[n] v₀) * ‖x‖ := by
   rw [padic_orbit_half, markov_imbalance_quarter]; ring
