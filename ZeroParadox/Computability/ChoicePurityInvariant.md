@@ -2,6 +2,9 @@
 
 Moved from `ZeroParadox/Computability/ChoicePurityInvariant.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
 
+In the sections below, "this file" and "here" refer to
+`ZeroParadox/Computability/ChoicePurityInvariant.lean`.
+
 ## The honest answer, and what the Lean witnesses
 
 Lean cannot quantify over its own axiom footprint inside a `Prop`: no object-level proposition can say
@@ -17,7 +20,7 @@ content over `fix_isEmpty`:
   strictly tighter than `fix_isEmpty`'s `[propext, Quot.sound]`. `IsEmpty (Fix idPF_Coalgebra.Obj)`
   (`fix_isEmpty_constructive`) then follows using `Quot.exists_rep`, and is measured **fully
   axiom-free** — strictly tighter than the existing `fix_isEmpty`. The μ-emptiness of the root is thus
-  witnessed by structural recursion on a plain inductive type, with no kernel axioms at all.
+  witnessed by structural recursion on a plain inductive type.
 
 * **ν side — choice cannot be made load-bearing.** The strongest honest in-statement claim is
   `Nonempty (Cofix idPF_Coalgebra.Obj)` with the corecursion term as witness (re-exported as `cofix_nonempty'`),

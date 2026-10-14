@@ -138,13 +138,8 @@ example (k : ℕ) : ZeroParadox.IsComputationalQuine (Nat.Partrec.Code.const k) 
 
 -- Statement: a disjunctive tape `ℕ → Bool` equals its own shift by no `a > 0`: no full copy of
 --   itself at any offset.
--- Reading: Tim's commitment concerns the framework's ⊥ role, ⊥ of a `ZPSemilattice`: read as a tape,
---   its occupant is maximally complex (prefix-free sense). What that would add, and the standard
---   theory behind it, is `ZeroParadox/Information/Disjunctive.lean` § VI. No map from a
---   `ZPSemilattice` to `ℕ → Bool` is claimed or constructed, and no order on tapes in which a
---   maximally complex tape is least: the reading is a commitment, not a chart. In `ℕ → Bool` under
---   the pointwise order, ⊥ is the all-false tape, which is not disjunctive
---   (`allFalse_not_disjunctive`).
+-- Reading: the ⊥-role commitment this bears on, with both sides stated, is
+--   `ZeroParadox/Information/Disjunctive.lean` § VI.
 #check @ZeroParadox.disjunctive_not_periodic
 
 /-! ### § IV. The bottom's computational face — PROVED vs COMMITTED -/
@@ -224,8 +219,15 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 -- Statement: at any configuration — halted, looping in place, or stepping onward.
 -- Reading: the middle case is not a third route; it is the self-referential object itself,
 --   `s` being a fixed point of its own step. Under a function it shares the halted case's fate:
---   each reaches only itself (`loop_is_a_trap`).
+--   each reaches only itself (self-looping: `loop_is_a_trap`; halted: the `example` below).
 #check @ZeroParadox.machine_trichotomy
+
+-- Statement: everything reachable from a halted configuration is that configuration.
+example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
+    (hr : StateTransition.Reaches f s t) : t = s := by
+  rcases Relation.ReflTransGen.cases_head hr with rfl | ⟨u, hu, _⟩
+  · rfl
+  · simp [h] at hu
 
 -- Statement: everything reachable from a self-looping configuration is that configuration.
 #check @ZeroParadox.loop_is_a_trap
@@ -251,7 +253,8 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 
 -- Statement: `∃ k, evaln k c n ≠ none` holds exactly when `(eval c n).Dom`.
 -- Reading: that this is the framework's "occurrence". A modelling choice, not a theorem. Occurrence
---   is then the halting question: semidecidable, not decidable (the next two entries).
+--   is then the halting question: semidecidable, not decidable (`occurrence_undecidable`,
+--   `occurrence_semidecidable_nonoccurrence_not`, below).
 #check @ZeroParadox.occurs_iff_halts
 
 -- Statement: CONTROL, `Code.zero`, which is not universal, satisfies `Occurs` on every input.
@@ -370,7 +373,7 @@ reading of one. The negative conditions of this index. See `ZeroParadox/Computab
 --   `ZeroParadox/Computability/SelfCopyReference.lean`).
 -- Reading: SCOPE. This is the existence of such a map, not that one is applied. That ⊥ on an
 --   infinite carrier performs one is a commitment (`ZeroParadox/Computability/SelfCopyReference.lean`
---   § IV); `MachinePhase`, the two-phase rounding that carries `machinePhaseKleene`, admits none
+--   § IV); `MachinePhase`, which carries `machinePhaseKleene`, admits none
 --   (the `example` below).
 #check @ZeroParadox.infinite_iff_exists_selfCopyRef
 

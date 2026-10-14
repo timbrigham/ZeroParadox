@@ -21,6 +21,7 @@ machine, and this is that statement with something underneath it.
 
 ---
 
+Long form, beside this file: `ZeroParadox/Computability/GroundZero.md`.
 -/
 
 namespace ZeroParadox

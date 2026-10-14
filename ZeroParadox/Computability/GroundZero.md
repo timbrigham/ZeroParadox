@@ -2,6 +2,9 @@
 
 Moved from `ZeroParadox/Computability/GroundZero.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
 
+In the sections below, "this file", "here" and every bare § number refer to
+`ZeroParadox/Computability/GroundZero.lean`.
+
 ## Formal Overview (AI-assisted)
 
 This file connects two developments the project already had and had never wired together:
@@ -38,9 +41,10 @@ lemma, so the Lean formalization is a genuine small addition — the mathematics
 **And the framework already had it, in another dress:** `Miniature.lean`'s
 `enat_fp_iff : x + 1 = x ↔ x = ⊤` is this same fact in the `ℕ∞ = WithTop ℕ` presentation.
 
-**What is NOT claimed.** That the framework's bottom *is* such a behaviour remains a modelling
-commitment — the results here are conditional on non-termination, and say nothing about whether
-the framework's bottom non-terminates. Nothing here makes the snap occur: occurrence is still
+**What is NOT claimed.** Which bottom the framework reads as such a behaviour, and that the reading
+is a modelling commitment: the `loop_unfolds_to_infinity` entry of
+`ZeroParadox/Computability/ComputationCannotBe.lean` § VIII. The results here are conditional on
+non-termination. Nothing here makes the snap occur: occurrence is still
 the halting problem (`occurs_iff_halts`, `occurrence_undecidable`). And the mathematics is not
 new — the final coalgebra of `X ↦ 1 + X` being `ℕ ∪ {∞}` is standard (Jacobs, *Introduction to
 Coalgebra*, Ex. 2.4.1 p. 66). **Note the scope of that citation:** Jacobs supports the *object*,

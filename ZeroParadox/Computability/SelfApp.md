@@ -2,6 +2,8 @@
 
 Moved from `ZeroParadox/Computability/SelfApp.lean`. ⚠ **This content was GRANDFATHERED — it was carried in an accepted-defect baseline, which means it was let through UNEXAMINED. Moving it changes that by exactly nothing.** Its claims are unverified until a claim review says otherwise.
 
+In the sections below, "this file" and "here" refer to `ZeroParadox/Computability/SelfApp.lean`.
+
 ## The question
 
 ZPJ imports three fields from AFA (via AFAStructure):
@@ -18,19 +20,19 @@ Two facts from different ZP layers:
   - 2-adic (ZPB): 0 is the unique fixed point of x ↦ 2x (characterised by v₂ = +∞)
 
 These are the same abstract pattern: the domain's self-application operation has a
-unique fixed point, and that fixed point is the "bottom" of the domain. Neither
-requires DC — uniqueness collapses construction to identification (ZeroParadox/Settheory/AczelConn.lean).
+unique fixed point, and that fixed point is the "bottom" of the domain. Uniqueness
+collapses construction to identification (ZeroParadox/Settheory/AczelConn.lean). Footprints: the
+`PurityCheck` section of `ZeroParadox/Computability/SelfApp.lean`.
 
 ## What this file does
 
 Introduces `AbstractSelfApp`: a typeclass encoding the minimal fixed-point
-structure. From it, `selfMem`, `bot_self_mem`, and `quine_unique` are derived
-as theorems rather than class fields — reducing AFAStructure's axiom load to a
-single structural commitment (selfApp + fixed_bot + unique_fp).
+structure. Which of `AFAStructure`'s three fields it derives as theorems, and which it
+supplies as data: § III of `ZeroParadox/Computability/SelfApp.lean`.
 
 The 2-adic parallel is then proved standalone: `singleton_from_unique_witness`
 (already proved in ZeroParadox/Settheory/AczelConn.lean) closes the Q₂ case with the same proof term.
-Both domains are formally instances of the same abstract pattern.
+Why it is standalone rather than an `AbstractSelfApp` instance: § IV of the same file.
 
 ## What the Scale files resolved
 

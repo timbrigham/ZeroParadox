@@ -11,18 +11,8 @@ A ZP-J self-reference sub-file. See the Engineer's Take in `ZeroParadox/Settheor
 
 ---
 
+Long form, beside this file: `ZeroParadox/Computability/SelfApp.md`.
 -/
-
-/-! ⚠⚠ **READ §III BEFORE THE OVERVIEW ABOVE.** That overview says all three
-    `AFAStructure` fields become theorems. **TWO do.** `selfMem` is DATA — a predicate —
-    and is SUPPLIED by `def selfMemDerived`, never proved; `bot_self_mem` and
-    `quine_unique` are the LAWS, discharged by theorems. §III carries the measurement.
-    The overview is left uncorrected because its block is frozen by CONTENT HASH in
-    `prose_baseline.txt`: editing it re-keys the entry and `check_prose` blocks the
-    commit. Route is a byte-identical move to a ride-along first, via
-    `tools/verify/move_ridealong.py`, which dissolves the cap rather than re-keying it.
-    Its "Neither requires DC" is withdrawn as a claim about Aczel's proof, which neither case touches; in
-    Lean the lattice case is choice-free (`selfMem_eq_singleton_bot`) and the ℚ_[2] case is not. -/
 
 namespace ZeroParadox
 

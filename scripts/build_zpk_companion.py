@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.24 | October 2026
+Version 1.25 | October 2026
 """
 
 import os
@@ -107,7 +107,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -154,11 +154,12 @@ def build():
         '(order-theoretic minimum) are the same object. ZP-K adds a fourth language: '
         'computability theory. It adds a fourth description of ⊥, this time in terms of '
         'Turing machines and Kleene\'s second recursion theorem. THREE of the four descriptions '
-        'are proved equivalent: T-COMP shows that being a Quine atom is equivalent to being ⊥ '
+        'are proved equivalent: T-COMP shows that, for an element of a ZPSemilattice carrying '
+        'KleeneStructure, being a Quine atom is equivalent to being its least element ⊥ '
         'together with the join identity, and da2_bottom_characterization shows those two '
         'equivalent. ZP-K carries c₀\'s computational face as a '
-        'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is that '
-        'commitment, not a theorem.'))
+        'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is the '
+        'KleeneStructure commitment, not a theorem.'))
     E.append(cbody(
         'On the framework\'s reading, ⊥ is not a description of a Turing machine waiting for an '
         'outside party to run it: ⊥ is read as an instance of a Turing machine (its ground state, '
@@ -166,8 +167,8 @@ def build():
         'requirement, not a theorem). That rules out an outside executor, not an idle ⊥: ⊥ is the '
         'unique self-containing state of MachinePhase (da1_closed_concrete) even in a dynamics where '
         'nothing ever leaves c₀ (tsnap_holds_but_nothing_moves). That ⊥ does run is the occurrence '
-        'commitment, which DA-1 uses and does not supply. Three of the four descriptions of ⊥, the '
-        'least element of a ZPSemilattice carrying KleeneStructure, are proved equivalent (T-COMP '
+        'commitment, which DA-1 uses and does not supply. Three of the four descriptions of ⊥ '
+        'are proved equivalent (T-COMP '
         'with da2_bottom_characterization); the computational one is assumed rather than derived.'))
     E.append(sp(4))
 

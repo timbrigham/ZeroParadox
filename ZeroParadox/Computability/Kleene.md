@@ -4,7 +4,7 @@ Ride-along for `ZeroParadox/Computability/Kleene.lean`: its long header, § VI a
 file holds the declarations, the Engineer's Take and the per-declaration docstrings.
 
 The sections from "Formal Overview" to the § VI status line are the long header of the Lean file.
-In them, "this file", "below", "the end of this file" and every § number refer to
+In them, "this file", "below", "the end of this file" and every bare § number refer to
 `ZeroParadox/Computability/Kleene.lean`.
 
 ## Formal Overview (AI-assisted)
@@ -28,11 +28,13 @@ fixed points form an infinite family (§ VI).
 ## Structure
 
 - § I   The Kleene fixed point — statement and computational Quine definition
-- § II  KleeneStructure typeclass — the commitment bridging AFAStructure to computability
+- § II  KleeneStructure — Bridging Computation and AFA
 - § III T-COMP: three proved equivalent, and where the fourth face sits
 - § IV  DA-1 closure — the witnesses the description-instantiation argument rests on
 - § V   MachinePhase instance — DA-1's concrete witness for ZP-E's machine
 - § VI  Function-Gödel-number correspondence — period = index, non-computability boundary
+- § VII The two spellings of a code's Gödel number
+- § VIII Infinitely many fixed points, padding, and a self-printing universal code
 
 ## Key insight (April 26, 2026)
 
@@ -61,8 +63,9 @@ Not every proved theorem here carries `Classical.choice`: `encodeCode_self` has 
 A carried footprint is a fact about the statement or proof as written, never evidence that
 choice is needed (`ZeroParadox/Category/ChoiceCannotBe.md`). `Code` and `eval` are axiom-free;
 `selfApply` reaches choice through `Nat.Partrec.Code.instDenumerable`, the instance from which
-`Encodable.encode` is resolved at `Code`; the `Encodable.encode` projection itself has no axioms
-(§ VII). Routes into Kleene's and Rogers'
+`Encodable.encode` is resolved at `Code` (the route beneath that instance, through
+`Nat.Partrec.Code.ofNatCode`: `ZeroParadox/Computability/Kleene.md` § VIII); the `Encodable.encode`
+projection itself has no axioms (§ VII). Routes into Kleene's and Rogers'
 statements: `ZeroParadox/Computability/Kleene.md` § VIII. ZP-J's `t_exec` has no axioms.
 
 Note a distinction that is easy to get backwards. Several results here are ZP-J
@@ -72,7 +75,7 @@ theorems restated under a stronger hypothesis — `t_comp` (proof term
 routes*, and the fences below say so. It is **not** absent from their axiom footprints:
 `#print axioms` traverses the statement, and the hypothesis reaches
 `IsComputationalQuine` → `selfApply` → `Nat.Partrec.Code.instDenumerable`. So all three report the full
-triple, as the block at the end of this file shows. Inert-in-the-proof and
+triple, as the `PurityCheck` section at the end of `ZeroParadox/Computability/Kleene.lean` shows. Inert-in-the-proof and
 absent-from-the-footprint are different properties; do not infer either from the other.
 
 § VI theorems: all fully proved — self_halting_undecidable, isComputationalQuine_undecidable,
@@ -187,8 +190,11 @@ by `#print axioms` in a scratch file importing this one.
   of code `d` written `Nat.pair (encodeCode d + 1) n`, the predicate pair and the existence
   statement measure no axioms.
 - No proof of it was found without choice. Mathlib's `fixed_point₂` carries choice in its
-  statement: its hypothesis `Partrec₂ f` measures the triple, through `Primcodable.prod`, while
-  `Partrec` measures `[propext]` and `Nat.Partrec` none. `exists_code`, `eval_part`,
+  statement: its hypothesis `Partrec₂ f` measures the triple. Its instance `Primcodable (Code × ℕ)`
+  is `Primcodable.prod` over `Primcodable.ofDenumerable Code`, and both `Primcodable.prod` and that
+  instance's `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, measure the triple (the
+  `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`), while `Partrec` measures
+  `[propext]` and `Nat.Partrec` none. `exists_code`, `eval_part`,
   `eval_curry`, `primrec₂_curry` and `evaln` each carry it. Mathlib's other recursion theorem,
   `fixed_point : Computable f → ∃ c, eval (f c) = eval c` for `f : Code → Code`, avoids
   `Partrec₂` and still carries choice in its statement: that statement, restated as a `Prop`,

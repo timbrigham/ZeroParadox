@@ -11,8 +11,8 @@ This module probes Axis V (choice-purity) at the root of the QPF fork. Every pri
 (`fix_isEmpty`, the initial algebra / well-founded closure) is choice-free `[propext, Quot.sound]`
 while the ν side (`cofix_nonempty`, the final coalgebra / non-well-founded closure) carries
 `Classical.choice`. The question here: can that split be lifted into a **theorem-level, in-statement
-invariant** — a witnessed result — rather than a measured comment?
-
+invariant** — a witnessed result — rather than a measured comment? Long form, beside this file:
+`ZeroParadox/Computability/ChoicePurityInvariant.md`.
 ## Engineer's Take
 
 This file is one of a series of iterative attempts on this branch to build a map of how the various
