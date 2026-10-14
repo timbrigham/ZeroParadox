@@ -1073,7 +1073,16 @@ def _enum_config_at(ref):
     if rc != 0:
         raise OSError("cannot read common.py at %s" % ref)
     cfg = {}
-    for node in ast.parse(out).body:
+    # ⚠ A `SyntaxError` IS RE-RAISED AS `ValueError` (`RLY56-3`). The per-commit loop catches only
+    # `(OSError, ValueError)`, so an unparsable historical `common.py` escaped it, killed the run
+    # before the later properties and the restoration line, and recorded nothing. Converted here, at
+    # the one call, so every caller gets a named fail-closed row rather than a traceback, and an
+    # unreadable config can never be read as an unchanged one (`R-ZERONULL`).
+    try:
+        tree = ast.parse(out)
+    except SyntaxError as e:
+        raise ValueError("common.py at %s does not parse (%s, line %s)" % (ref, e.msg, e.lineno))
+    for node in tree.body:
         if not isinstance(node, ast.Assign) or len(node.targets) != 1:
             continue
         tgt = node.targets[0]
@@ -2738,6 +2747,49 @@ def selftest():
     print("  %-42s %s (%d)" % ("every route has a callable factory",
                                "ok" if n_routes else "*** EMPTY REGISTRY ***", n_routes))
     bad += 0 if n_routes else 1
+
+    # `RLY56-3`: a malformed historical config must FAIL CLOSED with a named row, through the real
+    # `check_enumeration_widening_strands`. `sh` is wrapped so one synthetic unpushed commit exists
+    # and its `common.py` is whatever the case supplies; the universe is pinned to one path so the
+    # reconstruction self-check does not depend on the tree. Every other git call is real.
+    print("ENUMERATION CONFIG")
+    _fake = "deadbeef" * 5
+    _real_sh, _real_tp, _real_es = sh, _tracked_paths, _enumerator_surface
+    _head_src = _real_sh("git", "show", "HEAD:tools/verify/common.py")[1]
+
+    def _strands_with(src):
+        import vendored
+
+        def _sh(*a):
+            if a[:2] == ("git", "rev-list"):
+                return 0, _fake + "\n"
+            if a[:2] == ("git", "show") and a[2].startswith(_fake):
+                return 0, src
+            return _real_sh(*a)
+        g = globals()
+        try:
+            g["sh"] = _sh
+            g["_tracked_paths"] = lambda: ["probe.md"]
+            g["_enumerator_surface"] = lambda: _surface_from_config(
+                _enum_config_at("HEAD"), ["probe.md"], vendored.is_vendored)
+            return check_enumeration_widening_strands()
+        except SyntaxError as e:
+            return [("escaped", False, "SyntaxError escaped: %s" % e)], None
+        finally:
+            g["sh"], g["_tracked_paths"], g["_enumerator_surface"] = _real_sh, _real_tp, _real_es
+
+    _rows, _b = _strands_with("GLOBS = [\n")
+    _ok = bool(_b) and any(lbl.startswith("config readable at") and not ok and "does not parse" in v
+                           for lbl, ok, v in _rows)
+    print("  %-42s %s" % ("malformed config fails CLOSED, named",
+                          "ok" if _ok else "*** %r ***" % (_rows,)))
+    bad += 0 if _ok else 1
+    _rows, _b = _strands_with(_head_src)
+    _ok = _b == 0 and any(lbl == "shared enumeration config across the range" and ok
+                          for lbl, ok, _v in _rows)
+    print("  %-42s %s" % ("a well-formed unchanged config passes",
+                          "ok" if _ok else "*** %r ***" % (_rows,)))
+    bad += 0 if _ok else 1
 
     if bad:
         print("\nselftest: FAIL (%d)" % bad)
