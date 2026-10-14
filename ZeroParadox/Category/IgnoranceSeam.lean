@@ -465,8 +465,8 @@ example : ¬ ([] : List Bool) ⋖ [true] := fun h => h.2 (c := [false]) (by deci
 example : IsPartialOrder (List Bool) (· <+: ·) := inferInstance
 -- Reading: `first_digit_covers` gives the shape the OVER leg asks for (`UpAndOver.cover`, Mathlib
 --   `CovBy`), here in the prefix order, stated directly because `⋖` on `List Bool` reads its
---   lexicographic `<` (the lexicographic `example` above). With its two covers and no join it is Winskel's
---   conflict shape (`ZeroParadox/Order/SnapCannotBe.lean` § II).
+--   lexicographic `<` (the lexicographic `example` above). With its two covers and no join it is
+--   Winskel's conflict shape (`ZeroParadox/Order/SnapCannotBe.lean` § II).
 
 -- Statement: `w` lies in the up-set `{v | w <+: v}` and is a prefix of each of its members.
 example (w : List Bool) : w <+: w ∧ ∀ v ∈ {v : List Bool | w <+: v}, w <+: v :=

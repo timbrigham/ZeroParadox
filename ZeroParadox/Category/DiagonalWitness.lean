@@ -4,16 +4,18 @@ import Mathlib.Order.UpperLower.Basic
 /-!
 # The minimum requirements to be a diagonal fixed point — the relativized Lawvere witness
 
-## Formal Overview (AI-assisted)
-A diagonal witness relative to a class of admissible endomaps (`HasWitnessRel`), its engine and wall,
-the topology of the witness set, and the floor in the effective category. Argument, level sets,
-topology and prior art: `ZeroParadox/Category/DiagonalWitness.md`.
-
 ## Engineer's Take
 
 Definition of a minimal set of criteria across the faces, including Cantor, Russell, Turing, Kleene,
 Tarski, Curry, Löb, Gödel, and Rice. We focused our work around behavior at bottom, and have been able
 to build a topological map.
+
+---
+
+## Formal Overview (AI-assisted)
+A diagonal witness relative to a class of admissible endomaps (`HasWitnessRel`), its engine and wall,
+the topology of the witness set, and the floor in the effective category. Argument, level sets,
+topology and prior art: `ZeroParadox/Category/DiagonalWitness.md`.
 -/
 
 namespace ZeroParadox
@@ -96,7 +98,7 @@ theorem no_witnessRel_top_of_nontrivial {β : Type u} [DecidableEq β] [Nontrivi
 /-- **The fine end is inhabited (non-degeneracy).** A one-element carrier has a witness for *every*
     admissible class — there is no fixed-point-free endomap to obstruct it, so the diagonal always
     closes. This is the trivial genuine floor; it keeps the witness set (hence the topology) from being
-    empty. The nontrivial genuine floor is the computability face (see below). -/
+    empty. The nontrivial genuine floor is the computability face, up to `eval` (§ Axis 2). -/
 theorem hasWitnessRel_of_subsingleton {β : Type u} [Nonempty β] [Subsingleton β]
     (M : (β → β) → Prop) : HasWitnessRel β M := by
   obtain ⟨b₀⟩ := ‹Nonempty β›
@@ -141,8 +143,8 @@ theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (
 /-- **Why the wall lifts in the effective category (the axis-2 mechanism).** There is no *computable*
     self-map on codes that is eval-fixed-point-free: the recursion theorem forces a fixed point. So the
     diagonal swap that refutes the witness at the Set level (`no_witnessRel_of_admissible_fpf`) has NO
-    computable representative — it is not admissible effectively, and the obstruction cannot fire. This
-    is exactly why the floor switches on along axis 2. -/
+    computable representative up to `eval`; with literal equality one exists (the `example` after
+    `no_witnessRel_of_admissible_fpf`). This is why the floor can switch on along axis 2. -/
 theorem no_computable_evalFixedPointFree {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
     ¬ (∀ c, Nat.Partrec.Code.eval (g c) ≠ Nat.Partrec.Code.eval c) := by
   intro hfpf

@@ -115,12 +115,12 @@ theorem godel_two {falsum : S} (psi : S)
     (hcon : ¬ Thm falsum) : ¬ Thm (imp (box falsum) falsum) :=
   fun h => hcon (loeb psi hfix1 hfix2 h)
 
-/-! ## § V. The bottom-element relationship — the floor (ν): the Löb sentence is a fixed point -/
+/-! ## § V. The bottom-element relationship: an assumed Löb sentence is a provability fixed point -/
 
-/-- **Löb on the family's μ/ν fork: the provability face has a fixed point (the Löb sentence); reading
-    it as the face's bottom is the family's criterion, not this theorem.** Given the diagonal
-    hypotheses, `⊢ ψ` iff `⊢ (□ψ → A)`: `ψ` is a fixed point, up to provability, of the map
-    `p ↦ (□p → A)`, and Löb (§ III) is what it forces. The statement names no bottom. -/
+/-- **Given a Löb sentence `ψ` (the hypotheses `hfix1`, `hfix2`), `ψ` is a fixed point, up to
+    provability, of `p ↦ (□p → A)`; reading it as the face's bottom is the family's criterion, not
+    this theorem.** `⊢ ψ` iff `⊢ (□ψ → A)`; with `⊢ □A → A` it yields `⊢ A` (`loeb`, § III). The
+    statement names no bottom. -/
 theorem loeb_sentence_is_fixedpoint {A : S} (psi : S)
     (hfix1 : Thm (imp psi (imp (box psi) A)))
     (hfix2 : Thm (imp (imp (box psi) A) psi)) :

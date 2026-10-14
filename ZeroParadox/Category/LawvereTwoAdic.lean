@@ -54,7 +54,7 @@ namespace ZeroParadox
 A partial stream is a `List Bool`, least-significant digit first, ordered by prefix; its least element is
 the empty stream (`List.nil_prefix`), in a different type from ℤ_[2]'s `0`, and no `ZPSemilattice`
 structure is put on `List Bool`. Iterating from a least element is Scott's schema, "Data types as
-lattices", SIAM J. Comput. 5 (1976), Thm 1.4, p. 526, on `Pω` (any complete lattice: the `#check` below);
+lattices", SIAM J. Comput. 5 (1976), Thm 1.4, p. 526, on `Pω` (general form: first `#check` below);
 extending a continuous map into `Pω` from a subspace is its Thm 1.5, p. 527; and extending a
 Cantor-continuous map into a continuous ω-CPO with meets, from Cantor space to finite and infinite words,
 is Amorim et al., LICS 2021, Lemma 8(ii), p. 5 of arXiv:2011.13171v2. `List Bool` is not claimed an
@@ -117,7 +117,8 @@ theorem partialDouble_ne_self (w : List Bool) : partialDouble w ≠ w :=
   List.cons_ne_self false w
 
 -- Statement: on `ℤ_[2]`, doubling fixes exactly `0`.
--- Reading: as with § I's `ℤ` note, this cell is not 2-adic: the proof script is commutative-ring arithmetic.
+-- Reading: as with § I's `ℤ` note, this cell is not 2-adic: the proof script is commutative-ring
+--   arithmetic.
 example (x : ℤ_[2]) : 2 * x = x ↔ x = 0 :=
   ⟨fun h => by linear_combination h, fun h => by rw [h, mul_zero]⟩
 
