@@ -21,8 +21,8 @@ the second carries choice in its statement. The principle, comparability of well
 `InitialSeg` form, is essential on the premise stated in `ZeroParadox/Category/ChoiceCannotBe.lean`
 § IV. Mathlib's `le_total` on `Ordinal.{0}` is that principle at `Type`: `Ordinal.type_le_iff`
 (`Iff.rfl`) gives `le_total` ⇒ principle, and the converse uses `Ordinal.inductionOn` (both are
-`example`s in the Lean file's § III). So it implies excluded middle too, though on `Ordinal` that
-implication is not choice-free.
+`example`s in the Lean file's § III). So it implies excluded middle too; which spelling of it does so
+choice-free is the classification below.
 Mathlib's `Ordinal` order is
 built with choice, and the statement as written carries it, so `le_total` on `Ordinal.{0}`, as Mathlib
 spells it, is STATEMENT-CARRIED (its bare-relation respelling is not; see the classification below): a
@@ -84,7 +84,8 @@ middle by a choice-free reduction. `le_total` on `Ordinal.{0}` is that principle
 implies it through `le_of_lt`, so both
 imply the principle as well as follow from it; every `sup`/`nfp`/`deriv` argument that leans on
 trichotomy uses it. On `Ordinal` the order instance carries choice in its own term (the Lean file's
-§ III), so neither direction is choice-free there.
+§ III), so as Mathlib spells `le_total` neither direction is choice-free there; for the bare-relation
+respelling, see the classification below.
 
 ## What this does NOT establish — read before citing the Lean file
 

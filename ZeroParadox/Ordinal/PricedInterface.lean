@@ -302,12 +302,19 @@ example : ¬ WellFoundedLT E0Note := by
       show ONote.oadd 0 1 (ONote.oadd 1 1 0) ≠ ONote.oadd 1 1 0
       decide
     | succ k ih => exact fun h => ih (by injection h)
+  have hlt : ∀ k, e0Coe (c (k + 1)) < e0Coe (c k) := fun k =>
+    WithTop.coe_lt_coe.2 (lt_iff_le_and_ne.2 ⟨by
+      show ONote.cmp (c (k + 1)) (c k) ≠ Ordering.gt
+      rw [hcmp]
+      decide, fun h' => hne k h'⟩)
+  have hacc : ∀ a : E0Note, Acc (· < ·) a → ∀ k, a ≠ e0Coe (c k) := by
+    intro a ha
+    induction ha with
+    | intro a _ ih =>
+      rintro k rfl
+      exact ih _ (hlt k) (k + 1) rfl
   intro h
-  obtain ⟨m, ⟨k, rfl⟩, hmin⟩ := h.wf.has_min (Set.range fun k => e0Coe (c k)) ⟨_, ⟨0, rfl⟩⟩
-  refine hmin _ ⟨k + 1, rfl⟩ (WithTop.coe_lt_coe.2 (lt_iff_le_and_ne.2 ⟨?_, fun h' => hne k h'⟩))
-  show ONote.cmp (c (k + 1)) (c k) ≠ Ordering.gt
-  rw [hcmp]
-  decide
+  exact hacc _ (h.wf.apply _) 0 rfl
 
 /-- **`Statement:` the fiber, exhibited.** Two distinct notations with one denotation — the unfolding of
 `e0Repr_not_injective`, with `1 + ω` and `ω` as the underlying witness. -/

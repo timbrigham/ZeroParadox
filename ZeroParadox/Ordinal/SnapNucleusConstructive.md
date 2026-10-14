@@ -137,8 +137,8 @@ Both halves are measured here, and they split:
 * **The counterpart route via this carrier is blocked — for a different reason than choice.** What
   blocks it is **expressive reach**: *this* carrier cannot name the object the closure produces.
   **Scope, narrowly:** the result is about `ONote`-shaped notation systems, not about constructive
-  mathematics in general. A system extending past ε₀ (Veblen, Bachmann-Howard) is not ruled out here
-  (for its state, see `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint). **Say which sense, because the pin does ship Veblen:**
+  mathematics in general. A system extending past ε₀ (Veblen, Bachmann-Howard) is not ruled out here.
+  **Say which sense, because the pin does ship Veblen:**
   `Mathlib/SetTheory/Ordinal/Veblen.lean` defines `veblen`, `ε_` and `Γ_`, but *semantically* — they
   are `noncomputable` functions on `Ordinal`, not a computable **notation system** of the
   `ONote`/`NONote` kind this file's argument is about. **The ε₀ ceiling is a fact about the NOTATION
