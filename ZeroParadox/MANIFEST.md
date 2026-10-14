@@ -105,6 +105,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Category/ChoiceCannotBe.lean` - Machine-checked characterization index of the framework's relationship to `Classical.choice`
   - ride-along docs: `ZeroParadox/Category/ChoiceCannotBe.md` - Choice and the framework: the long form of the choice index
 - `ZeroParadox/Category/DiagonalWitness.lean` - The minimum requirements to be a diagonal fixed point — the relativized Lawvere witness
+  - ride-along docs: `ZeroParadox/Category/DiagonalWitness.md` - The relativized Lawvere witness: level sets, topology and prior art
 - `ZeroParadox/Category/DifferenceGeneratesSystem.lean` - Nuclei and sublocales — the home of "a predicated difference generates a system"
   - ride-along docs: `ZeroParadox/Category/DifferenceGeneratesSystem.md` - Double negation as the canonical predicated difference: Glivenko's core, and logic versus choice
 - `ZeroParadox/Category/DoubleNegationNucleus.lean` - The double-negation nucleus: the excluded-middle modality
@@ -164,6 +165,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Computability/ComputationCannotBe.lean` - Machine-checked characterization index of COMPUTATION — what it can and cannot be
   - ride-along docs: `ZeroParadox/Computability/ComputationCannotBe.md` - ComputationCannotBe — ride-along documentation
 - `ZeroParadox/Computability/GroundZero.lean` - Ground zero — the bottom as a behaviour, not a configuration
+  - ride-along docs: `ZeroParadox/Computability/GroundZero.md` - GroundZero — ride-along documentation
 - `ZeroParadox/Computability/Kleene.lean` - ZP-K: Computational Grounding of Self-Reference
   - ride-along docs: `ZeroParadox/Computability/Kleene.md` - The Gödel-number family, infinitely many fixed points, and a self-printing universal code
 - `ZeroParadox/Computability/Occurrence.lean` - Occurrence — what it takes for the bottom to move, in the computational face
@@ -172,6 +174,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Computability/Rice.lean` - Rice's theorem — the computability face's UNDECIDABILITY, from the recursion theorem (probe)
   - ride-along docs: `ZeroParadox/Computability/Rice.md` - ν-existence beside Rice undecidability: two conjuncts, two uses of the recursion theorem
 - `ZeroParadox/Computability/SelfApp.lean` - ZPJ — Abstract Self-Application Bridge
+  - ride-along docs: `ZeroParadox/Computability/SelfApp.md` - SelfApp — ride-along documentation
 - `ZeroParadox/Computability/SelfCopyReference.lean` - Self-copying self-reference: infinite ⟺ a one-to-one, not-onto self-map with exactly one fixed point
 
 ### Ordinals / proof theory (ZP-L, ZP-M, ZP-N)
@@ -377,6 +380,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 ### Computability (ZP-K, ZP-J)
 
 - `ZeroParadox/Computability/ChoicePurityInvariant.lean` - Is choice-purity an IN-STATEMENT μ/ν separating invariant?
+  - ride-along docs: `ZeroParadox/Computability/ChoicePurityInvariant.md` - ChoicePurityInvariant — ride-along documentation
 - `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution and the quine on its fixed locus
 - `ZeroParadox/Computability/ComputableCrossing.lean` - The Lawvere bridge, crossed in the computability face (probe)
   - ride-along docs: `ZeroParadox/Computability/ComputableCrossing.md` - Where the obstruction is absent: the universal machine as a reflexive object

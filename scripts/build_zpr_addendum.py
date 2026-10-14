@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.14 | October 2026
+Version 1.18 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.18'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -36,7 +36,8 @@ def build():
             '&#8869;" refer to that role, not to one object. The addendum maps the faces formalized here, '
             'organized by the '
             '&#956;/&#957; fork &#8212; the <b>wall</b> faces where self-reference cannot close (no fixed '
-            'point) and the <b>floor</b> faces where it does (a fixed point exists). Every entry except '
+            'point) and the <b>floor</b> faces where it does (a fixed point exists; for L&#246;b / G&#246;del '
+            '2nd, from a hypothesized L&#246;b diagonal). Every entry except '
             'the G&#246;del-first row carries a machine-checked Lean 4 witness. The diagonal-family unification is '
             'Lawvere (1969) / Yanofsky (2003), cited; the contribution is the formalization '
             'and the tie to the self-application role (the engine, the wall faces, and the Quine-atom '
@@ -207,12 +208,13 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'L&#246;b (Loeb.lean) &#8212; the provability floor; and G&#246;del\'s second incompleteness',
+        'L&#246;b (Loeb.lean) &#8212; the provability floor, given a L&#246;b diagonal; and G&#246;del\'s second incompleteness',
         [
             'loeb: given a L&#246;b diagonal (&#968; &#8596; (&#9633;&#968; &#8594; A)), &#8866; '
-            '&#9633;A &#8594; A yields &#8866; A. The L&#246;b sentence is a genuine fixed point '
-            '(loeb_sentence_is_fixedpoint) &#8212; the provability face has a floor.',
-            'godel_two: a consistent system cannot prove &#9633;&#8869; &#8594; &#8869; &#8212; its own '
+            '&#9633;A &#8594; A yields &#8866; A. Given such a diagonal, &#968; is a fixed point up to '
+            'provability (loeb_sentence_is_fixedpoint).',
+            'godel_two: given a L&#246;b diagonal for falsum, a consistent system does not prove '
+            '&#9633;falsum &#8594; falsum &#8212; its own '
             'consistency (G&#246;del\'s second incompleteness, the A = &#8869; corollary). Built from '
             'scratch (no modal logic in Mathlib): an abstract ProvabilityLogic typeclass with the '
             'Hilbert&#8211;Bernays&#8211;L&#246;b derivability conditions.',
@@ -283,7 +285,9 @@ def build():
              't_exec / t_exec_iff (SetTheoryAFA.lean)'],
             ['Kleene quine', '&#957;', 'every computable self-map on codes has a fixed point up to eval',
              'computability_face_fixedPoint (Lawvere.lean)'],
-            ['L&#246;b / G&#246;del 2nd', '&#957;', 'the provability diagonal closes; consistency unprovable',
+            ['L&#246;b / G&#246;del 2nd', '&#957;', 'the provability diagonal closes given a L&#246;b diagonal &#968; '
+             '(hypotheses hfix1, hfix2); consistency unprovable, for a consistent system given a L&#246;b '
+             'diagonal for falsum',
              'loeb, godel_two (Loeb.lean)'],
             ['Rice', '&#957;', 'a fixed point exists; every non-trivial semantic property is '
              'undecidable over all codes',

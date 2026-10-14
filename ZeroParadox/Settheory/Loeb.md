@@ -6,7 +6,7 @@ declarations, the Engineer's Take and the per-declaration glosses.
 ## The face
 
 Löb (1955): in a system with a provability predicate `□` satisfying the Hilbert–Bernays–Löb derivability
-conditions, `⊢ (□A → A)` implies `⊢ A`. This is the diagonal family's **provability-modal face** — the
+conditions and given a Löb diagonal ψ (hypotheses hfix1, hfix2), `⊢ (□A → A)` implies `⊢ A`. This is the diagonal family's **provability-modal face** — the
 self-referential fixed point of the map `p ↦ (□p → A)` (the Löb sentence). It is the ONLY sibling of the
 four with no Mathlib support located as of 2026-08-17, so it is built from scratch as an abstract
 provability logic. Searched as follows: `Löb`, `GL`, `provability`, `□`/`box` as a modality, and
@@ -16,9 +16,9 @@ provability logic found.
 ## Placement in the family
 
 Tarski is the TRUTH face (undefinable — the wall), Gödel/Löb the PROVABILITY face (definable but
-self-constrained). Löb subsumes **Gödel's second incompleteness**: at `A = ⊥` it says a consistent system
-cannot prove `□⊥ → ⊥` — its own consistency (`godel_two`). The Löb sentence `ψ ↔ (□ψ → A)` is a genuine
-diagonal fixed point (ν: it exists, by the diagonal lemma), and Löb is what it forces.
+self-constrained). Löb subsumes **Gödel's second incompleteness**: at `A = falsum`, given a Löb diagonal for
+falsum, a consistent system cannot prove `□falsum → falsum` — its own consistency (`godel_two`). The Löb sentence `ψ ↔ (□ψ → A)` is a genuine
+diagonal fixed point (ν: in arithmetic, by the diagonal lemma; here the hypotheses hfix1, hfix2), and Löb is what it forces.
 
 ## Design
 
@@ -30,7 +30,9 @@ separation of concerns: Löb from the derivability conditions plus a diagonal.
 
 ## Honest delta
 
-A genuinely new construction — no Mathlib modal/provability logic, and nothing like it in the repo.
+No Mathlib modal/provability logic, and nothing like it in the repo.
 Attribution: Löb (1955); Hilbert–Bernays–Löb derivability conditions; diagonal-family framing Lawvere
-(1969), via Yanofsky (2003) § 1 p. 1. The classical Löb derivation is standard; the contribution is
-the clean abstract typeclass and its placement as the provability face of the diagonal family.
+(1969), via Yanofsky (2003) § 1 p. 1. The classical Löb derivation is standard.
+Prior art: Popescu & Traytel, CADE-27 (2019) and AFP Goedel_Incompleteness (abstract HBL conditions, Gödel 2
+and Löb in Isabelle); Saitou & Noguchi, arXiv:2609.13780 (Lean 4 Foundation: abstract Provability and Diagonalization
+classes).
