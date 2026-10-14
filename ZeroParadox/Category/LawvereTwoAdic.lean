@@ -23,14 +23,14 @@ witness. § II: add-one and doubling on finite partial digit streams. § II fenc
 `botEnd`, against the empty stream.
 -/
 
-/-! ## § I. Add-one on `ℤ_[2]` -/
+/-! ## § I. Add-one on `ℤ_[2]` and on `ℤ` -/
 
 -- Statement: if an endomap in the class `M` fixes no point, there is no relativized witness
 --   `HasWitnessRel β M`.
 #check @ZeroParadox.no_witnessRel_of_admissible_fpf
 
--- Statement: on `ℤ_[2]`, add-one fixes no point.
-example (x : ℤ_[2]) : x + 1 ≠ x := fun hx => by simp at hx
+-- Statement: on `ℤ_[2]`, add-one fixes no point: Mathlib's `succ_ne_self`.
+example (x : ℤ_[2]) : x + 1 ≠ x := succ_ne_self x
 
 -- Statement: on `ℤ_[2]`, no class `M` containing `x ↦ x + 1` has a relativized witness.
 example (M : (ℤ_[2] → ℤ_[2]) → Prop) (h : M (· + 1)) : ¬ ZeroParadox.HasWitnessRel ℤ_[2] M :=
@@ -54,15 +54,18 @@ namespace ZeroParadox
 A partial stream is a `List Bool`, least-significant digit first, ordered by prefix; its least element is
 the empty stream (`List.nil_prefix`), in a different type from ℤ_[2]'s `0`, and no `ZPSemilattice`
 structure is put on `List Bool`. Iterating from a least element is Scott's schema, "Data types as
-lattices", SIAM J. Comput. 5 (1976), Thm 1.4, p. 526, on `Pω` (in general, the `#check` below); extending
-a continuous map into `Pω` from a subspace is its Thm 1.5, p. 527; and extending a Cantor-continuous map
-into a continuous ω-CPO with meets, from Cantor space to finite and infinite words, is Amorim et al.,
-LICS 2021, Lemma 8(ii), p. 5 of arXiv:2011.13171v2. `List Bool` is not claimed an instance of these; the
-doubling stages have no upper bound in its prefix order (the last `example` of § II). -/
+lattices", SIAM J. Comput. 5 (1976), Thm 1.4, p. 526, on `Pω` (any complete lattice: the `#check` below);
+extending a continuous map into `Pω` from a subspace is its Thm 1.5, p. 527; and extending a
+Cantor-continuous map into a continuous ω-CPO with meets, from Cantor space to finite and infinite words,
+is Amorim et al., LICS 2021, Lemma 8(ii), p. 5 of arXiv:2011.13171v2. `List Bool` is not claimed an
+instance of these; the doubling stages have no upper bound under `<+:` (§ II's last `example`). -/
 
 -- Statement: Mathlib, Kleene's fixed-point theorem: on a complete lattice, for monotone
 --   ω-Scott-continuous `f`, `lfp f = ⨆ n, f^[n] ⊥`.
 #check @fixedPoints.lfp_eq_sSup_iterate
+-- Statement: Mathlib, the dual: on a complete lattice, for monotone `f` whose order dual is
+--   ω-Scott-continuous, `gfp f = ⨅ n, f^[n] ⊤`.
+#check @fixedPoints.gfp_eq_sInf_iterate
 
 -- Reading: the Take's dead zero is the all-zeros tape, in either carrier. Here it is
 --   `botEnd : End = ℕ → Fin 2`.
@@ -70,10 +73,9 @@ doubling stages have no upper bound in its prefix order (the last `example` of �
 --   doubling (`boundaryDouble_botEnd`, `boundaryDouble_unique_fp`,
 --   `ZeroParadox/Valuation/PoleCompletion.lean`). The all-false tape ℕ → Bool carries the same
 --   coincidence (`ZeroParadox/Category/IgnoranceSeam.lean`).
--- Statement: CARRIER — the least element of the prefix order is the empty stream `[]`, a different
---   object and type from `botEnd`; zero-fill sends `[]` to the all-false tape, ⊥ of the pointwise order
---   on `ℕ → Bool` (the zero-fill `example` below, at stage 0).
--- Reading: that tape is where the two charts meet.
+-- Statement: CARRIER — the least element of the prefix order is the empty stream `[]`, in a different
+--   type from `botEnd`; zero-fill sends `[]` to the all-false tape, ⊥ of the pointwise order on
+--   `ℕ → Bool` (`ZeroParadox/Category/IgnoranceSeam.lean` § I, its first `example`).
 
 /-- `Statement:` add-one on partial streams: the carry runs through `true` digits and stops at the
     first `false`, or where the known digits end. -/
@@ -115,7 +117,7 @@ theorem partialDouble_ne_self (w : List Bool) : partialDouble w ≠ w :=
   List.cons_ne_self false w
 
 -- Statement: on `ℤ_[2]`, doubling fixes exactly `0`.
--- Reading: as with § I's `ℤ` note, this cell is not 2-adic: the proof script is ring arithmetic.
+-- Reading: as with § I's `ℤ` note, this cell is not 2-adic: the proof script is commutative-ring arithmetic.
 example (x : ℤ_[2]) : 2 * x = x ↔ x = 0 :=
   ⟨fun h => by linear_combination h, fun h => by rw [h, mul_zero]⟩
 
@@ -144,16 +146,29 @@ example (n : ℕ) : (fun k => (partialDoubleStage n).getD k false) = fun _ => fa
   rw [partialDoubleStage_eq, List.getD_eq_getElem?_getD, List.getElem?_replicate]
   split <;> rfl
 
+-- Statement: read as partial digit maps `ℕ → Part Bool`, an ω-CPO under Mathlib's pointwise order,
+--   the stages have a supremum: the all-false word.
+example : OmegaCompletePartialOrder.ωSup
+    (⟨fun n k => ((partialDoubleStage n)[k]? : Part Bool), fun n m hnm k b hb => by
+      dsimp only at hb ⊢
+      rw [partialDoubleStage_eq, List.getElem?_replicate] at hb ⊢
+      split_ifs at hb ⊢ <;> first | exact hb | (exfalso; omega) | simp at hb⟩ :
+      OmegaCompletePartialOrder.Chain (ℕ → Part Bool)) = fun _ => Part.some false := by
+  funext k
+  refine Part.eq_some_iff.2 ((Part.mem_ωSup false _).2 ⟨k + 1, ?_⟩)
+  show Part.some false = ((partialDoubleStage (k + 1))[k]? : Part Bool)
+  rw [partialDoubleStage_eq, List.getElem?_replicate, if_pos (Nat.lt_succ_self k)]
+  rfl
+
 -- Statement: the stages have no upper bound in the prefix order on `List Bool`.
 example : ¬ ∃ u : List Bool, ∀ n, partialDoubleStage n <+: u := fun ⟨u, h⟩ => by
   have := (h (u.length + 1)).length_le
   rw [partialDoubleStage_eq, List.length_replicate] at this
   omega
--- Reading: CARRIER — two charts. Among finite words the chain has no supremum (the `example`
---   above); among finite and infinite words, an ω-CPO, its supremum is the all-zeros word, not proved
---   here (the ω-CPO fixed-point form is Mathlib's
---   `OmegaCompletePartialOrder.fixedPoints.ωSup_iterate_mem_fixedPoint`). Separately, zero-fill sends
---   every stage, `[]` included, to the all-false tape (the `example` before).
+-- Reading: CARRIER — two charts. Among finite words the stages have no upper bound (the `example`
+--   above); as partial digit maps their supremum is the all-false word (the `ωSup` `example`).
+--   Separately, zero-fill sends every stage, `[]` included, to the all-false tape (the zero-fill
+--   `example`).
 
 end ZeroParadox
 

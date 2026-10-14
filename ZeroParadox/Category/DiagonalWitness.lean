@@ -4,43 +4,10 @@ import Mathlib.Order.UpperLower.Basic
 /-!
 # The minimum requirements to be a diagonal fixed point — the relativized Lawvere witness
 
-`DiagonalFixedPoint.lean` *collects* the faces of self-reference; this file asks what they **minimally
-have in common**, one level beneath the μ/ν fork. The engine is the diagonal argument of **Lawvere
-(1969)**, restated by **Yanofsky (2003)**; that whether the witness exists is *category-relative* is the
-recognized effective-topos / Turing-category observation (**Hyland 1982; Cockett–Hofstra 2008; van
-Oosten**). This file only *packages* those — `HasWitnessRel` is a formalization lever, not a new theorem,
-and its level sets are the per-face verdicts already proven in `Category/Lawvere.lean` §V–VI. There the
-bare `HasLawvereWitness β` (a point-surjection `α → (α → β)`) is FALSE for every nontrivial type in
-**Set** (Cantor), so the lattice and 2-adic faces are *posited* fixed points, while the computability
-(Kleene) face is *genuine* — in the **effective** category.
-
-## The underlying level: the witness relative to an admissible endomap class
-
-`HasWitnessRel β M` relativizes the diagonal hypothesis to a class `M` of admissible endomaps: a
-self-application `e : α → (α → β)` whose range contains the diagonal `fun x => g (e x x)` for every
-`g ∈ M`. This is the minimal requirement — the witness only has to dodge the diagonals of the maps `M`
-that "count" in the ambient category. The face table becomes level sets of ONE predicate:
-- **M coarse (all endomaps), β nontrivial** — a fixed-point-free swap is admissible ⇒ no witness. Set
-  floor faces are *posited*, wall faces *refuted*.
-- **M fine (computable endomaps)** — the fixed-point-free diagonal is **not** admissible, which
-  **removes** the § III obstruction. It does not by itself supply the witness: the implication runs one
-  way, and **no `HasWitnessRel` theorem for the computable class is proved in this file.** The genuine
-  diagonal fixed point on this side is **Rogers' fixed-point theorem**, cited rather than derived here
-  (`Nat.Partrec.Code.fixed_point`, aliased below as `computability_face_fixedPoint`; Mathlib reserves
-  *Kleene's second recursion theorem* for `fixed_point₂`). *(Corrected 2026-08-02: this said "Kleene's
-  recursion theorem" — the same-file sibling of the `:157` fix, left standing 123 lines above it in the
-  same commit.)*
-  *(Corrected 2026-08-01: previously written "not admissible ⇒ the witness holds ⇒ a genuine diagonal
-  fixed point", which does not follow — an absent obstruction is not a witness.)*
-
-## The topology (why "underlying level" makes it obvious)
-
-`HasWitnessRel β ·` is **antitone** in `M`: shrinking the admissible class can only help the witness. So
-`{M | HasWitnessRel β M}` is downward-closed in `⊆` — a lower set on the lattice of admissible-map-classes,
-i.e. a **closed set in the Alexandrov topology** on that lattice. The wall/floor/posited trichotomy is the
-level structure of one monotone predicate over that space; the floor "switches on" exactly as `M` drops
-below the fixed-point-free diagonal. That lattice-of-map-classes, with the witness as an Alexandrov-closed
-set, is the topology the collection carries.
+## Formal Overview (AI-assisted)
+A diagonal witness relative to a class of admissible endomaps (`HasWitnessRel`), its engine and wall,
+the topology of the witness set, and the floor in the effective category. Argument, level sets,
+topology and prior art: `ZeroParadox/Category/DiagonalWitness.md`.
 
 ## Engineer's Take
 
@@ -79,6 +46,13 @@ theorem no_witnessRel_of_admissible_fpf {β : Type*} {M : (β → β) → Prop}
   obtain ⟨b, hb⟩ := fixedPoint_of_witnessRel h hg
   exact hgf b hb
 
+-- Statement: with literal equality the computable endomaps of codes carry no relativized witness:
+--   `fun c => Code.pair c c` is computable and fixes no code.
+example : ¬ HasWitnessRel Nat.Partrec.Code Computable :=
+  no_witnessRel_of_admissible_fpf (g := fun c => Nat.Partrec.Code.pair c c)
+    (Nat.Partrec.Code.primrec₂_pair.comp Primrec.id Primrec.id).to_comp
+    (fun c h => by have := congrArg sizeOf h; simp at this)
+
 /-- **Antitone in the admissible class (the topology spine).** Shrinking the admissible endomap class
     can only help the witness. So `{M | HasWitnessRel β M}` is downward-closed in `⊆` — a lower set /
     Alexandrov-closed set on the lattice of admissible-map-classes. -/
@@ -113,10 +87,6 @@ theorem no_witnessRel_top_of_nontrivial {β : Type u} [DecidableEq β] [Nontrivi
   -- middle from its ∀-closure). **That is a fact about that theorem, not about this one:
   -- essentiality does not transfer, and there is no dependency here — the swap is inlined, and this
   -- statement measures `[propext]`, which is what proves the independence.**
-  -- (Corrected 2026-08-01, found independently by all three round-4 gates: an earlier revision called
-  -- this "the theorem this MIRRORS (`:96`)". Line 96 mirrors `no_witness_of_nontrivial`, a DIFFERENT
-  -- declaration; the relation to `fixedPointFree_of_nontrivial` is inlining, not mirroring. That
-  -- revision had itself corrected the word "SUPPLIER" while carrying the wrong theorem name along.)
   obtain ⟨b₀, b₁, hne⟩ := exists_pair_ne β
   refine no_witnessRel_of_admissible_fpf (g := fun x => if x = b₀ then b₁ else b₀) trivial (fun x => ?_)
   by_cases hx : x = b₀
@@ -163,8 +133,7 @@ NOT claimed — the framework joins that program. -/
     for `fixed_point₂`, and literally derives `fixed_point₂` from `fixed_point`, so the two are
     inter-derivable. `ZeroParadox/Category/Lawvere.lean` attaches **both** names to `fixed_point` as a
     slash-alias ("Rogers / Kleene's recursion theorem") rather than making this split — compatible, but
-    not the same convention. The fine end of axis 2.
-    *(Corrected 2026-08-02: this claimed `Lawvere.lean` "words it the same way", which it does not.)* -/
+    not the same convention. The fine end of axis 2. -/
 theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
     ∃ c, Nat.Partrec.Code.eval (g c) = Nat.Partrec.Code.eval c :=
   computability_face_fixedPoint hg
