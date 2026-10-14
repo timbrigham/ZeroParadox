@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R Addendum: The Diagonal Family — PDF Builder
-Version 1.17 | October 2026
+Version 1.18 | October 2026
 Follows scripts/PDF_Rendering_Standards.md.
 Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over ZeroParadox/**/*.lean):
   (a) godel_?(one|1|first)|first_?incompleteness|incompleteness_?(one|1|first)|godel_?sentence|true_?but_?unprovable  -> 0 hits
@@ -11,7 +11,7 @@ Search record behind § IV's Gödel-first sentence (2026-10-06, ripgrep over Zer
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -286,7 +286,8 @@ def build():
             ['Kleene quine', '&#957;', 'every computable self-map on codes has a fixed point up to eval',
              'computability_face_fixedPoint (Lawvere.lean)'],
             ['L&#246;b / G&#246;del 2nd', '&#957;', 'the provability diagonal closes given a L&#246;b diagonal &#968; '
-             '(hypotheses hfix1, hfix2); consistency unprovable, given a L&#246;b diagonal for falsum',
+             '(hypotheses hfix1, hfix2); consistency unprovable, for a consistent system given a L&#246;b '
+             'diagonal for falsum',
              'loeb, godel_two (Loeb.lean)'],
             ['Rice', '&#957;', 'a fixed point exists; every non-trivial semantic property is '
              'undecidable over all codes',

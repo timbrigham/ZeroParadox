@@ -105,8 +105,8 @@ theorem loeb {A : S} (psi : S)
 
 /-! ## § IV. Gödel's second incompleteness — the `A = ⊥` corollary -/
 
-/-- **Gödel's second incompleteness, via Löb.** If the system is consistent (`⊬ falsum`), it cannot prove
-    `□falsum → falsum` — the internal statement of its own consistency. Immediate from Löb at `A = falsum`:
+/-- **Gödel's second incompleteness, via Löb.** If the system is consistent (`⊬ falsum`) and has a Löb
+    diagonal for falsum (`hfix1`, `hfix2`), it cannot prove `□falsum → falsum` — the internal statement of its own consistency. Immediate from Löb at `A = falsum`:
     a proof of `□falsum → falsum` would yield `⊢ falsum`, contradicting consistency. So Löb subsumes
     Gödel's second theorem; the wall on the provability axis is the unprovability of consistency. -/
 theorem godel_two {falsum : S} (psi : S)
