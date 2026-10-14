@@ -268,7 +268,7 @@ def build():
         'approached but not reached in finitely many steps: the doubling orbit of any nonzero point '
         'converges to 0 in the 2-adic metric (doubling_orbit_tendsto_zero) and still never lands on 0 '
         'at any finite step (padic_orbit_never_reaches_zero). That ⊥ has nothing below it holds in '
-        'every setting by A4 and D1 (T2); the four settings also share AX-B1 and the modelling '
+        'every setting by A1–A4 (T1, T2); the four settings also share AX-B1 and the modelling '
         'commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced). '
         'ZP-H verifies that these four reasons are consistent.'))
     E.append(sp(6))
