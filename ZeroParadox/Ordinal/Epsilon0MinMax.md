@@ -5,12 +5,11 @@ declarations, the Engineer's Take and the per-declaration glosses.
 
 ## Why "both a minimum and a maximum" is a signature rather than a tension
 
-"ε₀ is both a minimum and a maximum, depending on your point of view" is the defining signature of a
-**least fixed point** reached by iteration (`Statement:` COINCIDENCE, `epsilon0_min_eq_max`): for a
-normal map on `Ordinal`, the least fixed point at or
-above a seed *is* the supremum of the ascending iterates (`Ordinal.iSup_iterate_eq_nfp` with
-`isLeastFixedPointFrom_nfp`; the classical form, Veblen 1908, is credited in
-`ZeroParadox/Order/LeastFixedPoint.md`). The Lean file bundles the two halves the framework
+"ε₀ is both a minimum and a maximum, depending on your point of view" (`Statement:` COINCIDENCE, for
+ε₀ alone: `epsilon0_min_eq_max`) is the signature of a **least fixed point** reached by iteration. For a
+normal map on `Ordinal`, the least fixed point at or above a seed *is* the supremum of the ascending
+iterates (the `example` after `isLeastFixedPointFrom_nfp`, `ZeroParadox/Order/LeastFixedPoint.lean`;
+the classical form, Veblen 1908, is credited in `ZeroParadox/Order/LeastFixedPoint.md`). The Lean file bundles the two halves the framework
 already proves, in two separate files, into one statement about the one object.
 
 - **max reading:** ε₀ is the supremum of the ω-tower `ω, ω^ω, ω^(ω^ω), …` (`epsilonZero_eq_iSup`,

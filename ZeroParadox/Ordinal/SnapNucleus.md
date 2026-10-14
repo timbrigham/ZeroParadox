@@ -74,9 +74,10 @@ part (measured 2026-10-08):
   points), and that obstruction is about **expressive reach, not choice**. It concerns `ONote` only
   and says nothing about a carrier that reaches ε₀. One such carrier is constructive and outside
   Lean: Kraus, Nordvall Forsberg and Xu (MFCS 2021, arXiv:2104.02549) build Brouwer trees with
-  exponentiation at every base (Thm 18), and their cubical Agda development, which uses Agda's
-  `{-# TERMINATING #-}` pragma (KNX p. 3), defines ε₀ as the limit
-  of the ω-tower and proves ε₀ = ω^ε₀; every Cantor normal form lies below it (Thm 22). A lemma that
+  exponentiation at every base (Thm 18), and their cubical Agda development defines ε₀ as the limit
+  of the ω-tower and proves ε₀ = ω^ε₀ (the development uses Agda's `{-# TERMINATING #-}` pragma to work
+  around one known Agda bug and one termination-checker limitation, KNX p. 3, which does not say which
+  results use it); every Cantor normal form lies below it (Thm 22). A lemma that
   ε₀ is the *least* fixed point of `ω^·` was not located there as of 2026-10-08 (searched: the paper,
   and the Agda module `BrouwerTree.Arithmetic.Properties`, pinned to a commit in
   `ZeroParadox/Ordinal/ConstructiveOrdinals.md` § Prior art).
@@ -90,9 +91,9 @@ part (measured 2026-10-08):
   well-founded (the `example` stating `¬ WellFoundedLT E0Note`). That file states no leastness
   declaration. Its crossing into `Ordinal`, `e0Repr`, carries `Classical.choice` (its purity block).
 * **Open: the derived reading.** A well-founded Lean carrier whose statements are choice-free, on which ε₀'s fixed point is derived
-  rather than set by definition, leastness included, was not located as of 2026-10-08. Searched: this
-  corpus (`ZeroParadox/**/*.lean` for carriers built over ordinal notations; `E0Note` is the only one
-  reaching ε₀). Re-run 2026-10-13: `theoremsearch` on "epsilon zero is the least fixed point of omega
+  rather than set by definition, leastness included, was not located as of 2026-10-13. Searched: this
+  corpus, 2026-10-08 and again 2026-10-13 (`ZeroParadox/**/*.lean` for carriers built over ordinal notations; `E0Note` is the
+  only one reaching ε₀); and on 2026-10-13, `theoremsearch` on "epsilon zero is the least fixed point of omega
   exponentiation on a well-founded ordinal notation system, constructive proof" (formal and
   informal), "no ordinal below epsilon_0 satisfies omega^a = a, and omega^epsilon_0 = epsilon_0,
   proved for a notation type with a well-founded order" (formal) and "intuitionistic ordinal notation

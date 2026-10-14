@@ -49,9 +49,10 @@ the ω-tower. -/
 
 /-- **The min ≡ max capstone.** One theorem, one object: ε₀ (`epsilonZero`) is simultaneously the
     **supremum** of the ω-tower (the *max* reading) and the **least** fixed point of `α ↦ ω^α` (the
-    *min* reading). That an object is both at once is the defining signature of a least fixed point:
-    for a normal map, the least fixed point reached from a seed *is* the supremum of the ascending
-    iterates. Bundles
+    *min* reading). That an object is both at once is the signature of a least fixed point reached
+    by iterating a normal map: the least fixed point at or above a seed *is* the supremum of the
+    ascending iterates (the `example` after `isLeastFixedPointFrom_nfp`,
+    `ZeroParadox/Order/LeastFixedPoint.lean`). Bundles
     `epsilonZero_eq_iSup` (max, `Gentzen.lean`) with `epsilonZero_fixedPoint` and
     `epsilon0_least_fixedpoint` (min, `Epsilon0LeastFP.lean`) — previously an impression spread across
     two files, here one statement.

@@ -265,10 +265,11 @@ def build():
             'Leastness is proved on Ordinal (epsilon0_min_eq_max, with choice); a choice-free proof of '
             'it on a well-founded carrier was not located as of 2026-10-08. What is proved here is the '
             'from-below half, choice-free.',
-            'Prior art for leastness, classical: Cast&#233;ran and Contejean&#8217;s hydra-battles (Coq) '
-            'proves epsilon0_lfp, that &#949;<sub>0</sub> is the least fixed point of phi0, its name for x &#8614; &#969;<sup>x</sup> '
-            '(theories/ordinals/Schutte/AP.v, commit ed8e604), in its Sch&#252;tte module, which '
-            'axiomatises the countable ordinals and works in classical logic.',
+            'Prior art for leastness, classical: hydra-battles (Coq) proves epsilon0_lfp, that '
+            '&#949;<sub>0</sub> is the least fixed point of phi0, its name for x &#8614; &#969;<sup>x</sup> '
+            '(theories/ordinals/Schutte/AP.v, commit ed8e604), a file carrying Cast&#233;ran&#8217;s '
+            'name alone, in the library&#8217;s Sch&#252;tte module, which axiomatises the countable '
+            'ordinals and works in classical logic.',
         ]
     ))
     E.append(sp(6))
