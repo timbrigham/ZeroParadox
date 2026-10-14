@@ -81,7 +81,8 @@ theorem ps_structural_floor :
   exact ⟨1, Nat.one_pos, fun A hA => ps_nonempty_depth_pos A hA⟩
 
 /-- Statement: a descending orbit of finsets that shrinks at every nonempty step (removing an element
-    is one) is `∅` from step `(S 0).card` on; the finset form of `pred_orbit_reaches_floor`. -/
+    is one) is `∅` from step `(S 0).card` on. Analogs: `descent_with_strict_steps_reaches_floor`
+    (`ZeroParadox/Order/WellFoundedObstruct.lean`) and Mathlib's `Finset.lt_wf`; adds `N ≤ (S 0).card`. -/
 theorem ps_descent_reaches_floor (S : ℕ → Finset α) (hsub : ∀ k, S (k + 1) ⊆ S k)
     (hstrict : ∀ k, S k ≠ ∅ → S (k + 1) ≠ S k) :
     ∃ N, N ≤ (S 0).card ∧ ∀ k, N ≤ k → S k = ∅ := by

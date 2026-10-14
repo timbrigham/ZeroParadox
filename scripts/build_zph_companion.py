@@ -226,7 +226,7 @@ def build():
     E.append(cbody(
         'Before the categorical machinery, it helps to understand one key property that ⊥ '
         'has in every ZP framework. ⊥ has nothing below it: a structural floor. How it is '
-        'approached from above depends on the setting. In ℕ a descending path reaches it in '
+        'approached from above depends on the setting. In ℕ a strictly descending path reaches it in '
         'finitely many steps (pred_orbit_reaches_floor), and in a finite power set so does '
         'removing one element at a time (ps_descent_reaches_floor); in the 2-adic metric the doubling orbit converges to it '
         'without ever reaching it (see the box below), so there ⊥ is a limit point of the elements '
@@ -247,10 +247,10 @@ def build():
         'extreme form: it sits below the entire lattice, so the minimum gap is between nothing '
         'and something. No sequence of nonempty sets closes that gap.'))
     E.append(cbody(
-        'A floor of this kind appears in the ZP framework, but for deeper reasons. In ZP-B, the '
+        'A floor with nothing below it appears in the ZP framework, but for deeper reasons. In ZP-B, the '
         '2-adic valuation v₂ assigns 0 the value +∞: v₂(0) = +∞, meaning 0 is divisible by '
-        'every power of 2. Every nonzero element has a finite v₂. No sequence of nonzero '
-        'elements can close this valuation gap: a nonzero element always has finite v₂, while '
+        'every power of 2. Every nonzero element has a finite v₂. No nonzero element closes '
+        'this valuation gap: a nonzero element always has finite v₂, while '
         '0 has infinite v₂, and no finite accumulation of finite values reaches infinity. '
         'In the 2-adic integers ℤ₂, sequences of nonzero elements can get metrically close to 0, '
         'but the valuation gap cannot be closed at any finite step (q2Val_unique: only 0 has '
@@ -262,14 +262,14 @@ def build():
     E.append(remember_box(
         'The power set example shows that the structural floor property is not exotic: it appears '
         'in the most elementary object in set theory. What is non-trivial about the ZP framework '
-        'is that a floor of this kind appears in four analytic settings — topology, algebra, '
+        'is that a floor with nothing below it appears in four analytic settings — topology, algebra, '
         'information theory, Hilbert space — each with the structural reason the paragraph above '
         'gives for it. In ℚ₂, where the role is played by 0, the unique point of norm 0, the floor is '
         'approached but not reached in finitely many steps: the doubling orbit of any nonzero point '
         'converges to 0 in the 2-adic metric (doubling_orbit_tendsto_zero) and still never lands on 0 '
         'at any finite step (padic_orbit_never_reaches_zero). These settings are not independent: they share the '
         'axioms (A1-A4, AX-B1) and the modelling commitment CC-1 (S₀ = ⊥, restated in ZP-J, not forced) '
-        'that produce this behavior in all four. '
+        'that give ⊥ nothing below it in all four. '
         'ZP-H verifies that these four reasons are consistent.'))
     E.append(sp(6))
 
