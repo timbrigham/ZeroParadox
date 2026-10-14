@@ -18,7 +18,7 @@ provability logic found.
 Tarski is the TRUTH face (undefinable — the wall), Gödel/Löb the PROVABILITY face (definable but
 self-constrained). Löb subsumes **Gödel's second incompleteness**: at `A = ⊥` it says a consistent system
 cannot prove `□⊥ → ⊥` — its own consistency (`godel_two`). The Löb sentence `ψ ↔ (□ψ → A)` is a genuine
-diagonal fixed point (ν: it exists, by the diagonal lemma), and Löb is what it forces.
+diagonal fixed point (ν: in arithmetic, by the diagonal lemma; here the hypotheses hfix1, hfix2), and Löb is what it forces.
 
 ## Design
 
