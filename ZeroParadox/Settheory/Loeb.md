@@ -30,7 +30,9 @@ separation of concerns: Löb from the derivability conditions plus a diagonal.
 
 ## Honest delta
 
-A genuinely new construction — no Mathlib modal/provability logic, and nothing like it in the repo.
+No Mathlib modal/provability logic, and nothing like it in the repo.
 Attribution: Löb (1955); Hilbert–Bernays–Löb derivability conditions; diagonal-family framing Lawvere
-(1969), via Yanofsky (2003) § 1 p. 1. The classical Löb derivation is standard; the contribution is
-the clean abstract typeclass and its placement as the provability face of the diagonal family.
+(1969), via Yanofsky (2003) § 1 p. 1. The classical Löb derivation is standard.
+Prior art: Popescu & Traytel, CADE-27 (2019) and AFP Goedel_Incompleteness (abstract HBL conditions, Gödel 2
+and Löb in Isabelle); Saitou & Noguchi, arXiv:2609.13780 (Lean 4 Foundation: abstract Provability and Diagonalization
+classes).
