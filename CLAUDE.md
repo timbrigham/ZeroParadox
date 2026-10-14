@@ -33,15 +33,16 @@ READ     .claude-local/notes/access_controls_2026-08-22.md
 TRIGGER  you are about to commit a file and are deciding whether the prose gates apply.
 RULE     EXEMPT: `CLAUDE.md`, `tools/verify/**`, `tools/process/**` — operating machinery that
          asserts nothing about the mathematics, so editorial and adversary have no claim.
-         `/rely` covers those two directories INSTEAD, and it BLOCKS on executable logic and
-         exemption switches; routed `.md` only WARNS. NOT EXEMPT: `.claude/commands/**` — the
-         gate briefs are published deliberately, as the artifact showing how this project
-         reviews itself, so both gates fire on them. **Published-and-exempt is not a category
-         you may reason your way into.** Each carve is WRITTEN DOWN; do not extend one to a
+         `/rely` covers those two directories INSTEAD, owed at TAG through the ledger:
+         `coverage_gap(step='rely', action='tag')` names every path it still owes, so a push
+         may carry changes `/rely` has not examined and a release cannot. NOT EXEMPT:
+         `.claude/commands/**` — the gate briefs are published deliberately, as the artifact
+         showing how this project reviews itself, so both gates fire on them.
+         **Published-and-exempt is not a category you may reason your way into.** Each carve is WRITTEN DOWN; do not extend one to a
          further directory by analogy — write the next one, or it is not exempt. Fence:
          anything asserting mathematics belongs in the corpus and is gated normally.
-COST     the exemption is PRICED on `/rely` still blocking. Weaken that routing and the
-         exemption becomes a hole; a downgrade un-prices whatever the block paid for.
+COST     the exemption is PRICED on `rely` staying ADMITTED at tag. Narrow it out of the tag
+         set and the exemption becomes a hole; the two are a pair and go together.
 READ     tools/process/README.md
 
 ## R-NARRATE  Narrate the MATHEMATICS, in an engineer's register, in every report.
@@ -538,17 +539,13 @@ COST     BOTH bypasses succeed SILENTLY and the push looks green: the identical 
          "a command that runs a GATE", a one-file `check_encoding` run did not feel like one, and
          `| Select-Object -Last 2` hid four warnings an hour after this rule was quoted. A CATEGORY
          leaks; A PIPE AFTER A PATH binds. A fail-closed `PreToolUse` hook keyed to INVOCATION
-         (`tools/verify/claude_hooks/block_checker_truncation.ps1`, 39 controls) catches the NAMED consumers, and
-         reading checker SOURCE stays free. ⚠⚠ IT IS A DENYLIST, SO THE TRIGGER LIST ABOVE IS STILL
-         LOAD-BEARING MEMORY. An earlier version of this line said "nothing here is remembered";
-         that was measured FALSE 2026-08-29 — 15 of 19 filters walked through, among them `sed -n`,
-         `awk`, `wc -l`, `cut`, `sort`, `uniq`, `less`, `ForEach-Object`, `Measure-Object` and
-         `Select-Object -Skip/-Index`, and ripgrep passes while GNU grep is denied even though ripgrep
-         is the one this project tells you to PREFER. A denylist is porous by construction: every fix
-         closes the cut its author thought of. THE FIX IS TO INVERT — deny any pipe after a checker
-         invocation, allow-list the sinks (`RLY40-1`). It also matches on the whole command STRING,
-         so writing ABOUT truncation beside a checker path trips it. Still unsealed either way:
-         run-then-grep across two calls looks clean, and `--no-verify` is unhooked.
+         (`tools/verify/claude_hooks/block_checker_truncation.ps1`, 104 controls) is an ALLOW-LIST
+         OF SINKS (`RLY40-1`): after a checker run every pipe stage must be a file write or a
+         pass-through, so a consumer nobody listed is denied on arrival, and a file the call
+         redirected into must be read WHOLE in that same call. It tests INVOCATION, not mention,
+         so reading checker SOURCE and writing ABOUT truncation stay free. ⚠⚠ IT IS NOT A SEAL, SO
+         THE TRIGGER LIST ABOVE IS STILL LOAD-BEARING MEMORY: run-then-grep across two calls looks
+         clean, so does a narrowed Read of a saved log, and `--no-verify` has no hook of its own.
 READ     tools/process/push-gate-bypass.md
 
 ## R-STAGE  Stage NAMED PATHS. Never `-A` on the main repo.
