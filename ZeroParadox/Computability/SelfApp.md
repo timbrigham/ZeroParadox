@@ -9,7 +9,7 @@ In the sections below, "this file" and "here" refer to `ZeroParadox/Computabilit
 ZPJ imports three fields from AFA (via AFAStructure):
   `selfMem`, `bot_self_mem`, `quine_unique`
 
-These encode Aczel's AFA content but appear as axioms in the Lean encoding
+These encode Aczel's AFA content but appear as class fields in the Lean encoding
 because the abstract lattice lacks the graph-decoration semantics needed to
 derive them. This file asks: can they be derived from something more primitive?
 

@@ -15,7 +15,7 @@ which is cited there to Jacobs & Rutten (EATCS Bulletin 62, 1997).
 **What it establishes.** Reading a step function as a coalgebra, every configuration is a leaf
 (halted) or a successor (stepping) — the head is `Bool`, so "exists but has not begun" is not
 merely unproved, it is *not expressible* (§ I, axiom-free). And the behaviour that never reaches
-a leaf is **unique**: it is `natInfinity` (§ II, `notEL_unique`). So the non-terminating bottom
+a leaf is **unique**: it is `natInfinity` (§ II, `notEL_unique`). So that non-terminating behaviour, `natInfinity`,
 is pinned by a purely negative description — by what it never does — with no element-hood in any
 machine carrier assumed. A self-looping configuration unfolds to exactly that point (§ III).
 
@@ -41,10 +41,11 @@ lemma, so the Lean formalization is a genuine small addition — the mathematics
 **And the framework already had it, in another dress:** `Miniature.lean`'s
 `enat_fp_iff : x + 1 = x ↔ x = ⊤` is this same fact in the `ℕ∞ = WithTop ℕ` presentation.
 
-**What is NOT claimed.** Which bottom the framework reads as such a behaviour, and that the reading
-is a modelling commitment: the `loop_unfolds_to_infinity` entry of
-`ZeroParadox/Computability/ComputationCannotBe.lean` § VIII. The results here are conditional on
-non-termination. Nothing here makes the snap occur: occurrence is still
+**What is NOT claimed.** That ⊥ of a `ZPSemilattice`, read as a configuration of a step function,
+*is* such a behaviour remains a modelling commitment (the reading is glossed at the
+`loop_unfolds_to_infinity` entry of `ZeroParadox/Computability/ComputationCannotBe.lean` § VIII) —
+the results here are conditional on non-termination, and say nothing about whether that ⊥
+non-terminates. Nothing here makes the snap occur: occurrence is still
 the halting problem (`occurs_iff_halts`, `occurrence_undecidable`). And the mathematics is not
 new — the final coalgebra of `X ↦ 1 + X` being `ℕ ∪ {∞}` is standard (Jacobs, *Introduction to
 Coalgebra*, Ex. 2.4.1 p. 66). **Note the scope of that citation:** Jacobs supports the *object*,

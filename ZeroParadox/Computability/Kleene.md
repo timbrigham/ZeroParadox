@@ -19,9 +19,9 @@ Relates four structural roles of ⊥, of which three are proved equivalent:
 The central result (T-COMP) establishes (1) ↔ (2) ↔ (3) via T-EXEC. Its proof term is
 `t_exec_triple_iff`, a ZP-J result that does not mention computation; ⊥ is then the
 element those three pick out. **(4) is not a clause of that theorem** — it is present
-by typeclass requirement, as the class field `botCode_is_quine`. The KleeneStructure
-typeclass taking (1)–(4) to name the same structural role in four formal languages is
-the motivating commitment, not a consequence derived by the theorems. Note the two
+by typeclass requirement, as the class field `botCode_is_quine`. Reading (1)–(4)
+as naming the same structural role in four formal languages is the motivating commitment
+of the KleeneStructure typeclass; no field asserts it, and no theorem derives it. Note the two
 sides also differ in shape: (1)–(3) pick out a unique element, while the computational
 fixed points form an infinite family (§ VI).
 
@@ -45,10 +45,10 @@ and U is not a description awaiting an external executor but IS the executor.
 
 What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
 Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
-computable transformation. The KleeneStructure typeclass then takes the AFA Quine atom
-(⊥ = {⊥}) and the Kleene computational quine (∃ c, eval c = f c) to be the same
-structural property. That identification is the motivating commitment, not a theorem
-proved here, and it cannot be stated as an equation — `Code` and `L` are different
+computable transformation. The KleeneStructure typeclass is built for the reading that the AFA
+Quine atom (⊥ = {⊥}) and the Kleene computational quine (∃ c, eval c = f c) are the same
+structural property. That identification is the motivating commitment, asserted by no field
+of the class and not a theorem proved here, and it cannot be stated as an equation — `Code` and `L` are different
 types.
 
 ## Dependencies
@@ -63,8 +63,8 @@ Not every proved theorem here carries `Classical.choice`: `encodeCode_self` has 
 A carried footprint is a fact about the statement or proof as written, never evidence that
 choice is needed (`ZeroParadox/Category/ChoiceCannotBe.md`). `Code` and `eval` are axiom-free;
 `selfApply` reaches choice through `Nat.Partrec.Code.instDenumerable`, the instance from which
-`Encodable.encode` is resolved at `Code` (the route beneath that instance, through
-`Nat.Partrec.Code.ofNatCode`: `ZeroParadox/Computability/Kleene.md` § VIII); the `Encodable.encode`
+`Encodable.encode` is resolved at `Code` (that instance is built from `encodeCode` and
+`Nat.Partrec.Code.ofNatCode`, whose footprints are in `ZeroParadox/Computability/Kleene.md` § VIII); the `Encodable.encode`
 projection itself has no axioms (§ VII). Routes into Kleene's and Rogers'
 statements: `ZeroParadox/Computability/Kleene.md` § VIII. ZP-J's `t_exec` has no axioms.
 

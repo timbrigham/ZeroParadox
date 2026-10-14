@@ -84,8 +84,9 @@ has a representative (`Quot.exists_rep`) and the representative is impossible. T
 self-unfolding corecursion node (`ZeroParadox.cofix_nonempty`).
 
 What is PROVED is exactly: `IsEmpty idPF_Coalgebra.W` by the inductive eliminator (no axioms), `IsEmpty (Fix
-idPF_Coalgebra.Obj)` from it (`[Quot.sound]`), and `Nonempty (Cofix idPF_Coalgebra.Obj)`. The VERDICT on the pre-registered
+idPF_Coalgebra.Obj)` from it, and `Nonempty (Cofix idPF_Coalgebra.Obj)`; footprints: the `PurityCheck` section of
+`ZeroParadox/Computability/ChoicePurityInvariant.lean`. The VERDICT on the pre-registered
 fork — whether this constitutes a *new theorem-level invariant* or only a *measured comment* — is the
-finding, recorded in the Engineer's Take placeholder and the report. The in-statement constructive
+finding, recorded in that section's VERDICT comment. The in-statement constructive
 upgrade on the μ side is real; the "ν needs choice" half remains a fenced comment, not a theorem.
 

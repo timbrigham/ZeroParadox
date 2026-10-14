@@ -155,7 +155,7 @@ def build():
         'computability theory. It adds a fourth description of ⊥, this time in terms of '
         'Turing machines and Kleene\'s second recursion theorem. THREE of the four descriptions '
         'are proved equivalent: T-COMP shows that, for an element of a ZPSemilattice carrying '
-        'KleeneStructure, being a Quine atom is equivalent to being its least element ⊥ '
+        'KleeneStructure, being a Quine atom is equivalent to being the semilattice\'s least element ⊥ '
         'together with the join identity, and da2_bottom_characterization shows those two '
         'equivalent. ZP-K carries c₀\'s computational face as a '
         'KleeneStructure requirement (botCode_is_quine); reading c₀ as the Kleene quine is the '
@@ -167,9 +167,7 @@ def build():
         'requirement, not a theorem). That rules out an outside executor, not an idle ⊥: ⊥ is the '
         'unique self-containing state of MachinePhase (da1_closed_concrete) even in a dynamics where '
         'nothing ever leaves c₀ (tsnap_holds_but_nothing_moves). That ⊥ does run is the occurrence '
-        'commitment, which DA-1 uses and does not supply. Three of the four descriptions of ⊥ '
-        'are proved equivalent (T-COMP '
-        'with da2_bottom_characterization); the computational one is assumed rather than derived.'))
+        'commitment, which DA-1 uses and does not supply.'))
     E.append(sp(4))
 
     # What Is a Kleene Fixed Point?
