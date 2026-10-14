@@ -85,6 +85,19 @@ APPLIED = re.compile(r"(?:(?:%s)|(?<![A-Za-z])[a-z])\s+$"
 # theorems here. Found by reading the first full-corpus scan - the operation allowlist only knew
 # about `/0` and missed every other operator.
 EXPR_BEFORE = re.compile(r"[+\-·*/^]\s*$")
+# ⚠ MARKUP IS NOT AN OPERATOR, and `*` and `-` are both (`POLE-1`). A bold or italic opener
+# (`**⊥ = 0 = ∞`) and a list bullet (`- ⊥ = 0 = ∞`) each presented a trailing operator character to
+# EXPR_BEFORE and excused the chain as arithmetic - and a list item is the most ordinary shape a
+# claim takes. Stripped from `before` ONLY for the EXPR_BEFORE test. The discriminator is ADJACENCY:
+# an emphasis run touches the chain and follows whitespace, a quote or a bracket, so `0 * ∞ = ⊥`
+# (spaced) and `0*∞ = ⊥` (an operand before it) still read as an expression's value. A bullet must
+# be followed by whitespace, so `-∞ = 0` stays a negation.
+EMPHASIS_BEFORE = re.compile(r"(?:^|(?<=[\s(\[\"']))[*_]+$")
+LIST_MARKER = re.compile(r"^\s*(?:>\s*)*(?:[-*+]|\d+[.)])\s+$")
+
+def _strip_markup(before):
+    before = EMPHASIS_BEFORE.sub("", before)
+    return "" if LIST_MARKER.match(before) else before
 # An operation on either side means the `=` is not between two bare poles.
 # ⚠ `rInv` and `1/` were listed here at first. Both are WRONG: a map that SWAPS two points is
 # evidence they are DIFFERENT, so its presence beside a bare `0 = ∞` INDICTS the line rather than
@@ -110,7 +123,7 @@ def classify(line, m):
     before = line[:m.start()]
     if APPLIED.search(before):
         return None                      # `rInv 0 = ∞` - an application, not an identity
-    if EXPR_BEFORE.search(before):
+    if EXPR_BEFORE.search(_strip_markup(before)):
         return None                      # `0 · ∞ = ⊥`, `∞ + ∞ = ⊥`, `/∞ = 0` - an expression's VALUE
     near = line[max(0, m.start() - GRACE): m.end() + GRACE]
     if OPERATION.search(near):
@@ -194,6 +207,12 @@ MUST_FIRE = [
     ("three-pole chain", "the pole is the single point 0 = ∞ = ⊥ at which all three coincide"),
     ("swap cited as identity", "Within-frame identities stand (0 = ∞ under rInvHomeo in Q2)"),
     ("inf equals bot", "the two ends are one, so ∞ = ⊥ and the distinction dissolves"),
+    # POLE-1: markup is not arithmetic. The bold line is the measured `two-pole-test.md:10` site.
+    ("bold-wrapped (POLE-1)", "**⊥ = 0 = ∞ is the framework's own pole identity (`rInv_swaps`)**"),
+    ("italic-wrapped (POLE-1)", "*⊥ = 0 = ∞ is the pole identity*"),
+    ("bullet (POLE-1)", "- ⊥ = 0 = ∞ is the pole identity"),
+    ("bullet + bold (POLE-1)", "  * **⊥ = 0 = ∞** is the pole identity"),
+    ("bold mid-sentence (POLE-1)", "the claim **⊥ = 0 = ∞** is the pole identity"),
 ]
 MUST_SUPPRESS = [
     ("Idiom-labelled", "Idiom: the 0 = ∞ inversion - a NAME for the phenomenon, not an assertion"),
@@ -203,6 +222,11 @@ MUST_SUPPRESS = [
     ("negated", "Wheel vs meadow diagram (∞ ≠ ⊥), division by zero made total"),
     ("rejected case named", "In a meadow the two collapse: ∞ = ⊥. The wheel refuses this."),
     ("example lattice", "Take the lattice [0, ∞) with ⊥ = 0 and join = max"),
+    # POLE-1's other side: stripping markup must not eat a real operator.
+    ("spaced product", "the wheel bottom is defined by 0 * ∞ = ⊥ in this carrier"),
+    ("tight product", "the wheel bottom is defined by 0*∞ = ⊥ in this carrier"),
+    ("bullet, arithmetic", "- 0 · ∞ = ⊥ is the wheel bottom's defining equation"),
+    ("line-start negation", "-∞ = 0 is not a bullet: no space follows the minus"),
 ]
 
 def selftest():

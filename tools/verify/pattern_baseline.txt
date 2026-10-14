@@ -103,9 +103,11 @@ TAKE_RE	#+\s*Engineer'?s\s+Take
 [check_poles]
 APPLIED	(?:(?:rInv|rInvHomeo|winv|wmul|swap|cornerId|poleToSphere|cnfToZp2|snapNucleus|shiftEnd|localCx|endVal|cx|val|v_2|v₂)|(?<![A-Za-z])[a-z])\s+$
 CHAIN	((?:0|∞|⊥))(?:\s*=\s*((?:0|∞|⊥)))+
+EMPHASIS_BEFORE	(?:^|(?<=[\s(\[\"']))[*_]+$
 EXPR_BEFORE	[+\-·*/^]\s*$
 GRACE	24
 IDIOM	\bIdiom:
+LIST_MARKER	^\s*(?:>\s*)*(?:[-*+]|\d+[.)])\s+$
 MAPS	cnfToZp2
 MAPS	cornerId
 MAPS	cx
