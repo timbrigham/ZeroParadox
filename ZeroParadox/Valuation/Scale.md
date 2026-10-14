@@ -71,7 +71,7 @@ obstruction is this class's ℕ∞ target, a design choice, not the field.
 `multiplicity_addValuation PadicInt.prime_p : AddValuation ℤ_[2] ℕ∞`
 (`Mathlib/RingTheory/Valuation/PrimeMultiplicity.lean`) discharges all four axioms from stock
 API at the same axiom footprint § V already emits, over the cast prime `((2 : ℕ) : ℤ_[2])` (the
-rewrite to the numeral is the `example` opening `section PadicParallel` in `Scale.lean`). Its `val_scale` is strictly stronger:
+`example` opening `section PadicParallel` in `Scale.lean` uses it at the numeral `2`). Its `val_scale` is strictly stronger:
 unguarded, holding at 0 as well, because ⊤ + 1 = ⊤ in ℕ∞ — so `q2Val_scale`'s `x ≠ 0`
 hypothesis is one this class does not need. ⚠ **`AddValuation.top_iff` does NOT cover the `val_bot` + `val_unique` pair on this
 carrier, and this section claimed it did until 2026-09-01.** `top_iff` is stated over a

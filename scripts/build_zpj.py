@@ -1018,7 +1018,7 @@ def build():
          'cc1_derived and t_exec_iff restate as an equivalence of starting conditions, not a forcing of the starting point.'],
         ['Formal ZPSemilattice instance for a ValuationStructure type',
          'CLOSED &#8212; registered on &#8469;&#8734;',
-         'Model.lean registers both instances on &#8469;&#8734;. '
+         'ZeroParadox/Settheory/Model.lean registers both instances on &#8469;&#8734;. '
          'ZeroParadox/Valuation/Scale.lean &#167; V proves &#8484;&#8322; admits a ZPSemilattice '
          'carrying a ValuationStructure, as an existence statement, without registering an '
          'instance; no registered instance on &#8484;&#8322; was located in ZeroParadox/**/*.lean '

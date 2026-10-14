@@ -172,10 +172,9 @@ theorem val_selfMem_singleton :
 
 section PadicParallel
 
--- Statement: the stock prime `PadicInt.prime_p` is the cast `((2 : ℕ) : ℤ_[2])`; one `Nat.cast_ofNat`
--- rewrite reaches the numeral `2` that `q2Val_scale` uses.
-example : Prime (2 : ℤ_[2]) := by
-  rw [← Nat.cast_ofNat (R := ℤ_[2]) (n := 2)]; exact PadicInt.prime_p
+-- Statement: the stock prime `PadicInt.prime_p`, stated over the cast `((2 : ℕ) : ℤ_[2])`, closes the
+-- goal at the numeral `2` that `q2Val_scale` uses, with no rewrite at the pinned Mathlib.
+example : Prime (2 : ℤ_[2]) := PadicInt.prime_p
 
 noncomputable instance instDecidableEqZ2 : DecidableEq ℤ_[2] := Classical.decEq _
 
@@ -243,8 +242,8 @@ set_option linter.flexible false in
     `ZeroParadox/Category/ChoiceCannotBe.lean` defines and sources: respelling the successor as a
     cast from ℕ clears the class outright. ⚠ The numeral half is pin-relative; its routes, its
     dated measurements and the Brasca–Clemente prior art are in
-    `ZeroParadox/Valuation/PricedPadicInterface.lean` § I (`enat_add_choice`). The CARRIER half is not pin-relative in the same
-    way — it follows from the printer walking the TYPE, so it holds of any statement mentioning
+    `ZeroParadox/Valuation/PricedPadicInterface.lean` § I (`enat_add_choice`). The CARRIER half is
+    not pin-relative in the same way — it follows from the printer walking the TYPE, so it holds of any statement mentioning
     `ℤ_[2]` for as long as `PadicInt` is built with choice. ⚠ The two counterfactual PAIRS below emit exactly that — carrier,
     then numeral. ⚠ The UNIVERSALS here (any lawful join serves; ruled out for every spelling)
     are not emitted and cannot be — a footprint list settles instances, never universals. The
