@@ -6,16 +6,15 @@ import Mathlib.Tactic
 /-!
 # ZP-H Extension: Power Set Lattice as Structural Floor Witness
 
-The structural floor class is an ORDER property: the bottom has a first step, `HasFirstStep`
-(`⊥ ⋖ a`, AX-B1, `ZeroParadox/Reals/OrderedField.lean`); density is exactly its failure
-(`axb1_fails_everywhere_iff_dense`). In `Finset α` under inclusion, ∅ is covered by every
-singleton (the `example` after T-PS6). Statement: CARRIER, depth chart: every nonempty finset has
+The structural floor class is an ORDER property: the bottom has a first step, `HasFirstStep` (`⊥ ⋖ a`,
+AX-B1, `ZeroParadox/Reals/OrderedField.lean`). Density rules one out at every element, the bottom
+included; `axb1_fails_everywhere_iff_dense` quantifies over all elements, so one element without a
+first step does not make an order dense. In `Finset α` under inclusion, ∅ is covered by every
+singleton (the `example` after T-PS6). Statement: CARRIER, the depth chart. Every nonempty finset has
 cardinality ≥ 1 (`ps_nonempty_depth_pos`), so ∅ is no limit of nonempty finsets in that depth. That
-does not decide the class: in the 2-adic metric ℚ₂'s 0 is a limit of nonzero elements
-(`doubling_orbit_tendsto_zero`, `padic_orbit_never_reaches_zero`), and `LT ℚ_[2]` does not
-synthesize (`ZeroParadox/BottomCannotBe.lean` § ROLE), so a cover there is not stated.
-
-Proved independently of ZPA–ZPH: the same order property, a different witness.
+does not decide the class: ℚ₂'s 0 is the limit of the doubling orbit, not reached in finite time, where
+ℕ's 0 is (`floor_reach_separates_mu_nu`); `LT ℚ_[2]` does not synthesize (`ZeroParadox/BottomCannotBe.lean`
+§ ROLE), so a cover there is not stated. Proved independently of ZPA–ZPH: the same order property.
 
 ## Engineer's Take
 
@@ -71,10 +70,11 @@ The gap between ∅ and the simplest nonempty set is exactly 1 — a singleton.
 theorem ps_no_subgap (A : Finset α) (hA : A ≠ ∅) : ¬ psDepth A < 1 := by
   exact Nat.not_lt.mpr (ps_nonempty_depth_pos A hA)
 
-/-! ## T-PS6: The class condition
+/-! ## T-PS6: A depth threshold above ∅
 
-Depth chart: a depth threshold (1) below which no nonempty finset can fall. The class itself
-is the order property, a first step off ∅; the `example` after this theorem measures it.
+Depth chart: a threshold (1) below which no nonempty finset can fall. This is not the class
+condition, which is the order property, a first step off ∅; the `example` after this theorem
+measures that.
 -/
 
 theorem ps_structural_floor :

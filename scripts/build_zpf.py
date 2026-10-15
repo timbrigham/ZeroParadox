@@ -46,11 +46,14 @@ def build():
     E.append(body(
         'This result contextualises the choice of Q&#8322; in ZP-B. Among all completions '
         'of &#8474;, Ostrowski\'s theorem identifies exactly two kinds: Archimedean completions '
-        '(such as &#8477;, where zero is a limit point and density excludes any floor) and '
-        'non-Archimedean completions (&#8474;<sub>p</sub>, where zero is valuatively distinguished '
-        '(v<sub>p</sub>(0) = +&#8734;) from all nonzero elements). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2 — '
+        '(&#8477;, a densely ordered field, so no element has a first step) and '
+        'non-Archimedean completions (&#8474;<sub>p</sub>, where v<sub>p</sub>(0) = +&#8734; while '
+        'every nonzero element has a finite valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2 — '
         'the minimum prime compatible with binary existence (AX-B1). '
-        'The valuative gap at zero is not imposed from outside; it follows from the completion.'))
+        'In both kinds zero is a metric limit of nonzero elements (for Q&#8322;, '
+        'floor_reach_separates_mu_nu), so the metric does not separate them; for &#8477; the '
+        'order does. '
+        'The infinite valuation of zero is not imposed from outside; it follows from the completion.'))
     E.append(sp(4))
 
     # ── II. The General Result ────────────────────────────────────────────────
@@ -150,13 +153,14 @@ def build():
     E.append(body(
         'ZP-F is self-contained and does not feed formally into any other layer. '
         'It is the negative complement to ZP-B: where ZP-B establishes that Q&#8322; '
-        'can host the snap (via the 2-adic valuation and clopen ball structure), '
-        'ZP-F establishes that &#8477; — and any linearly ordered field — cannot.'))
+        'does not block the snap (its 2-adic topology is totally disconnected, padic_snaps, '
+        'with clopen balls), ZP-F establishes that &#8477; — and any linearly ordered field — '
+        'cannot host it. Neither supplies the first step; that is AX-B1.'))
     E.append(body(
         'The dependency order of the framework places ZP-F as independent:'))
     E.append(data_table(
         ['Layer', 'Role', 'Dependency'],
-        [['ZP-B', 'p-Adic topology — Q&#8322; hosts the snap', 'ZP-A'],
+        [['ZP-B', 'p-Adic topology — Q&#8322; does not block the snap', 'ZP-A'],
          ['ZP-F', 'Counterexample — &#8477; and ordered fields cannot host the snap', 'None (self-contained)'],
          ['ZP-G', 'Category theory', 'Self-contained; ZP-E conceptually']],
         [0.8*inch, 3.5*inch, 2.2*inch]
@@ -187,18 +191,24 @@ def build():
         'and every Archimedean completion — has been ruled out.'))
     E.append(body(
         'The structural difference can be stated directly, and it is a property of the order. '
-        'The snap needs the bottom to have a first step: an element directly above it with '
-        'nothing strictly between, a cover of the bottom (HasFirstStep, AX-B1). Density is '
-        'exactly the failure of that: an order is dense if and only if no element has a first '
-        'step (axb1_fails_everywhere_iff_dense), and in an ordered field 0 has none '
-        '(axb1_fails_in_ordered_field). In the metric chart zero is a limit point of the '
-        'nonzero elements, in &#8477; and equally in Q&#8322;, where the doubling orbit of a '
-        'nonzero element converges to 0 without reaching it (doubling_orbit_tendsto_zero, '
-        'padic_orbit_never_reaches_zero); so being a limit point does not decide the snap. '
-        'In Q&#8322;, zero carries the infinite 2-adic valuation; it is valuatively '
-        'distinguished from every nonzero element. That removes the density obstruction; it does not by itself supply a first step, since the 2-adic norm values accumulate at 0 and Q&#8322; has no closest nonzero element either. The first step is AX-B1. '
+        'The snap needs the point it leaves to have a first step: an element directly above it '
+        'with nothing strictly between, a cover (HasFirstStep, AX-B1). An ordered field has no '
+        'bottom element; its 0, which plays that role here, has no first step '
+        '(axb1_fails_in_ordered_field). That is one instance of a stronger fact: an order is '
+        'dense if and only if no element at all has a first step '
+        '(axb1_fails_everywhere_iff_dense). The equivalence quantifies over every element, so '
+        'density rules out a first step at 0, and one element without a first step does not '
+        'make an order dense. In the metric chart zero is a limit point of the nonzero elements, '
+        'in &#8477; and equally in Q&#8322;; so being a limit point does not decide the snap. '
+        'Q&#8322;\'s zero is a floor of the limit kind: the doubling orbit of a nonzero element '
+        'converges to 0 and does not reach it in finite time, while counting down in &#8469; '
+        'reaches 0 in finitely many steps (floor_reach_separates_mu_nu). In the valuation chart '
+        'zero sits at the other end: v(0) = +&#8734;, the greatest value, and no nonzero element '
+        'shares it (padic_addVal_eq_top_iff). Neither fact is a first step, and Mathlib supplies '
+        'no order instance on Q&#8322; in which to state one (ZeroParadox/BottomCannotBe.lean, &#167; ROLE). '
+        'The first step is AX-B1, a commitment. '
         'The snap does not fail in &#8477; by accident. It fails because &#8477; is densely '
-        'ordered, and density is exactly the absence of a first step.'))
+        'ordered, and in a dense order no element has a first step, 0 included.'))
     E.append(sp(4))
 
     E.append(remark_box(
@@ -224,11 +234,15 @@ def build():
             'both describe a boundary approached but not reachable by finite steps on one '
             'side &#8212; but it is not a proved identification. The two structures live in '
             'different mathematical categories.',
-            'A domain that can host the snap must satisfy two conditions simultaneously: '
-            '(1) the boundary is a genuine limit (no nearest neighbour &#8212; what makes '
-            'the threshold non-arbitrary) and (2) the crossing is discrete (a step, not a '
-            'continuous transition). Dense ordered fields have condition (1) but density '
-            'makes condition (2) impossible. In the non-standard naturals *&#8469; with '
+            'A domain that can host the snap must satisfy two conditions simultaneously, at '
+            'opposite ends of the crossing: (1) below the landing, the boundary is a limit with '
+            'no immediate predecessor (as &#949;&#8320; is approached by the tower and no '
+            '&#945; has &#945; + 1 = &#949;&#8320; &#8212; what makes the threshold '
+            'non-arbitrary) and (2) above the point left, the crossing is discrete: that point '
+            'has a first step, a cover (HasFirstStep). Dense ordered fields fail condition (2) '
+            'at every element (axb1_fails_everywhere_iff_dense). Their 0 also lacks an immediate '
+            'predecessor, for the same reason, and without (2) that does not help. '
+            'In the non-standard naturals *&#8469; with '
             'the order topology, every element has an immediate predecessor, so there is '
             'no limit point at infinity in the order-topology sense; condition (1) fails '
             'informally. (This *&#8469; observation is informal &#8212; not a proved result '
