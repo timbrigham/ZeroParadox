@@ -72,8 +72,9 @@ def comparison_table():
     rows = [
         ['Order: densely ordered, so no element, zero included, has a first step',
          'Order: no field order synthesizes in Mathlib. Under the norm preorder 0 is least and has '
-         'no first step (between 0 and any non-zero element lies one of smaller norm); under the '
-         'valuation order 0 is greatest'],
+         'no first step (between 0 and any non-zero element lies one of smaller norm, as in any '
+         'nontrivially normed field), yet globally it is not dense (2 has the first step 1); '
+         'under the valuation order 0 is greatest'],
         ['Topology: connected, so not totally disconnected (real_no_snap)',
          'Topology: totally disconnected (t5_totallyDisconnected)'],
         ['Metric: 0 is a limit point of the non-zero reals',
@@ -148,7 +149,10 @@ def build():
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
               'language why the real number line cannot serve as the mathematical substrate '
-              'for the Binary Snap, and why the 2-adic metric Q&#8322; is required. '
+              'for the Binary Snap, and what ZP-F shows about the 2-adic numbers Q&#8322;: '
+              'ordered fields are excluded by density, and among the completions of the '
+              'rationals Q&#8322;\'s totally disconnected topology removes the topological '
+              'obstruction while supplying no first step (that is AX-B1, a commitment). '
               'The formal results are machine-verified in Lean 4 as part of ZP-F '
               '(F-SNAP-IMPOSSIBLE and the general ordered field result); see also '
               'ZP-B (p-adic topology) for the positive case.',
@@ -165,7 +169,8 @@ def build():
         'The answer begins with a counterexample. The real number line is not a valid '
         'substrate for the Binary Snap — not because it is wrong, but because it is '
         'the space where the snap is structurally impossible. Understanding why the snap '
-        'fails in &#8477; is the clearest path to understanding why Q&#8322; is required.'))
+        'fails in &#8477; is the clearest path to seeing what Q&#8322; removes and what it '
+        'does not supply.'))
     E.append(sp(4))
 
     # ── II. The Density Symmetry ────────────────────────────────────────────────
@@ -209,9 +214,14 @@ def build():
         'on the line. Zero is a limit point: surrounded by non-zero reals, '
         'reachable as a limit but not isolated from them. That is a fact about the metric, '
         'and the 2-adic zero shares it, so being a limit point does not separate the two. The '
-        'topology does: &#8477; is connected (real_no_snap) and Q&#8322; is totally disconnected '
-        '(t5_totallyDisconnected). For the snap\'s first step the order does: &#8477; is densely '
-        'ordered.'))
+        'topology does: &#8477; is connected, so not totally disconnected (real_no_snap), and '
+        'Q&#8322; is totally disconnected (t5_totallyDisconnected). The order separates them '
+        'globally, not at zero. At zero neither has a first step: &#8477; in its field order '
+        '(axb1_fails_in_ordered_field), and Q&#8322; in the norm preorder of '
+        'ZeroParadox/BottomCannotBe.lean, &#167; ROLE, where that fact holds in any nontrivially '
+        'normed field. Globally &#8477; is densely ordered (axb1_fails_everywhere_iff_dense), '
+        'while that norm preorder on Q&#8322; is not dense: 2 has the first step 1 (the example '
+        'beside it there).'))
     E.append(cbody(
         'In Q&#8322;, the infinity is the <i>address</i> of zero. The 2-adic '
         'valuation assigns +&#8734; to 0 as its actual value, and no non-zero element '
@@ -288,7 +298,8 @@ def build():
         'has no such character: it is a regular point of a dense line, '
         'indistinguishable in structure from 1 or &#960;, with no first step above it. '
         'In the order, density is what disqualifies it (axb1_fails_everywhere_iff_dense); in '
-        'the topology, the line is connected (real_no_snap). Being approached as a limit is '
+        'the topology, the line is connected, so not totally disconnected (real_no_snap). '
+        'Being approached as a limit is '
         'not what disqualifies it, since the 2-adic 0 is approached as a limit too '
         '(floor_reach_separates_mu_nu).'))
     E.append(cbody(
@@ -425,16 +436,20 @@ def build():
     E.append(sp(8))
 
     # ── Closing ─────────────────────────────────────────────────────────────────
-    E.append(Paragraph('The Minimal Required Structure', CS['h1']))
+    E.append(Paragraph('What the Counterexample Shows', CS['h1']))
     E.append(cbody(
         'The real numbers are the most natural, most familiar metric space in '
         'mathematics. They are also precisely the space where the Binary Snap '
         'cannot occur. They are densely ordered, so no element, zero included, has a first '
         'step: every candidate first step admits an infinite sequence of smaller steps below '
         'it. Zero is also a limit point there, but so is the 2-adic zero, so being a limit '
-        'point does not separate them. The order decides the first step, and the topology is a '
-        'second fence: &#8477; is connected (real_no_snap), Q&#8322; totally disconnected '
-        '(t5_totallyDisconnected).'))
+        'point does not separate them. Two fences do. The order separates them globally, not '
+        'at zero: at zero neither has a first step, and globally &#8477; is densely ordered '
+        '(axb1_fails_everywhere_iff_dense) while the norm preorder on Q&#8322; is not; the two '
+        'Q&#8322; facts are the &#167; ROLE examples in ZeroParadox/BottomCannotBe.lean. The '
+        'topology is the second fence: '
+        '&#8477; is connected, so not totally disconnected (real_no_snap), and Q&#8322; is '
+        'totally disconnected (t5_totallyDisconnected).'))
     E.append(cbody(
         'Q&#8322; is not an exotic choice. Among all completions of the rationals, '
         'Ostrowski\'s theorem says there are exactly two kinds: Archimedean ones '
@@ -446,7 +461,9 @@ def build():
         'That zero\'s valuation is +&#8734; is set by definition, not produced by the '
         'completion; what holds in Q&#8322; is that zero alone has it (padic_addVal_eq_top_iff). '
         'The framework did not choose unusual mathematics for its own sake. '
-        'It followed the result to the structure the result required.'))
+        'What ZP-F shows is that ordered fields are excluded, by density, and that among '
+        'the completions of the rationals Q&#8322;\'s topology removes the topological '
+        'obstruction while supplying no first step.'))
     E.append(cbody(
         'A note on scope: ZP-F establishes this result for linearly ordered fields — '
         'the class that contains &#8477; and &#8474; — because that is the natural '
@@ -459,7 +476,9 @@ def build():
         'Where the Snap Fails',
         'The Binary Snap is impossible in &#8477;: for any &#949;&#8320; > 0, '
         '&#949;&#8320; / 2 also exists; &#8477; is densely ordered, and in a dense order '
-        'no element has a first step. Q&#8322; is not blocked that way. Its zero is '
+        'no element has a first step. At zero Q&#8322; has none either, in its norm preorder; '
+        'globally that preorder is not dense, and Q&#8322; is totally disconnected where '
+        '&#8477; is connected. Its zero is '
         'distinguished in two charts: by its valuation, v&#8322;(0) = +&#8734; while every '
         'non-zero element carries a finite valuation, and as a limit the doubling orbit '
         'approaches and does not reach in finite time. Neither supplies the first step; '

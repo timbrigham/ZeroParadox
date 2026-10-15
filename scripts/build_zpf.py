@@ -53,8 +53,11 @@ def build():
         'In both kinds zero is a metric limit of nonzero elements (for Q&#8322;, '
         'floor_reach_separates_mu_nu), so being a limit point does not separate them. The '
         'topology does: Q&#8322; is totally disconnected (ZP-B, t5_totallyDisconnected), while '
-        '&#8477; is connected, so not totally disconnected (real_no_snap). For the snap\'s first '
-        'step the order does: &#8477; is densely ordered (axb1_fails_everywhere_iff_dense). '
+        '&#8477; is connected, so not totally disconnected (real_no_snap). The order separates '
+        'them globally, not at zero: at 0 neither has a first step (&#8477; in its field order, '
+        'Q&#8322; in its norm preorder), and globally &#8477; is '
+        'densely ordered (axb1_fails_everywhere_iff_dense) while Q&#8322;\'s norm preorder is '
+        'not dense (&#167;VI). '
         'That zero has valuation +&#8734; is set by definition, not produced by the completion: '
         'Mathlib\'s Padic.addValuationDef assigns &#8868; to 0 by an explicit case. What holds in '
         'Q&#8322; is that only 0 has infinite valuation (padic_addVal_eq_top_iff).'))
@@ -194,7 +197,8 @@ def build():
         'Q&#8322; is not chosen against &#8477;; it is what remains after &#8477; — '
         'and every Archimedean completion — has been ruled out.'))
     E.append(body(
-        'The structural difference can be stated directly, and it is a property of the order. '
+        'The structural difference can be stated directly. It has two fences, the order and the '
+        'topology, and the order separates &#8477; from Q&#8322; globally, not at zero. '
         'The snap needs the point it leaves to have a first step: an element directly above it '
         'with nothing strictly between, a cover (HasFirstStep, AX-B1). An ordered field has no '
         'bottom element; its 0, which plays that role here, has no first step '
@@ -209,14 +213,20 @@ def build():
         'reaches 0 in finitely many steps (floor_reach_separates_mu_nu). In the valuation chart '
         'zero sits at the other end: v(0) = +&#8734;, the greatest value, and no nonzero element '
         'shares it (padic_addVal_eq_top_iff). Neither fact is a first step. No order instance '
-        'on Q&#8322; synthesizes in Mathlib (LT &#8474;_[2] does not); in the corpus\'s norm '
-        'preorder 0 is least and has no first step, since between 0 and any nonzero a lies an '
-        'element of strictly smaller nonzero norm, and in the valuation order 0 is greatest, '
-        'v(0) = &#8868; (both in ZeroParadox/BottomCannotBe.lean, &#167; ROLE). '
-        'The first step is AX-B1, a commitment. '
+        'on Q&#8322; synthesizes in Mathlib (LT &#8474;_[2] does not). Take instead the norm '
+        'preorder of the &#167; ROLE examples in ZeroParadox/BottomCannotBe.lean '
+        '(Preorder.lift of the norm). At zero the order does not separate the two: 0 is least and, as '
+        'in &#8477;\'s field order, has no first step, since between 0 and any nonzero a lies an element of '
+        'strictly smaller nonzero norm, and that holds in any nontrivially normed field, '
+        '&#8477;\'s norm preorder included. Globally the order does: that preorder is not dense, since 2 has the first '
+        'step 1 (the norms are 1/2 and 1, and no norm lies strictly between; the next example '
+        'there), while &#8477; is densely ordered. In the valuation order 0 is greatest, '
+        'v(0) = &#8868; (addVal_bot). '
+        'The first step at 0 is AX-B1, a commitment. '
         'The snap does not fail in &#8477; by accident. In the order it fails because &#8477; '
         'is densely ordered, and in a dense order no element has a first step, 0 included; in '
-        'the topology &#8477; is connected (real_no_snap), a second and separate fence.'))
+        'the topology &#8477; is connected, so not totally disconnected (real_no_snap), a '
+        'second and separate fence.'))
     E.append(sp(4))
 
     E.append(remark_box(

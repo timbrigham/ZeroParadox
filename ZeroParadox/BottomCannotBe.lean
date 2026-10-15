@@ -88,13 +88,38 @@ example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.End) = ZeroParadox.botEnd
 -- Statement: under the norm preorder ℚ₂'s `0` is least, and the only point of norm `0`.
 example : ∀ x : ℚ_[2], ‖(0 : ℚ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 ↔ x = 0) := fun x => ⟨by simp, norm_eq_zero⟩
 -- Statement: and in that preorder `0` has no first step (`HasFirstStep`): below any `a` above `0` lies
--- a `c` of strictly smaller nonzero norm (`NormedField.exists_norm_lt`).
+-- a `c` of strictly smaller nonzero norm (`NormedField.exists_norm_lt`). The proof uses only
+-- `NontriviallyNormedField`, so it holds in any nontrivially normed field, ℝ included.
 example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); ¬ ZeroParadox.HasFirstStep (0 : ℚ_[2]) :=
   letI : Preorder ℚ_[2] := Preorder.lift (‖·‖)
   fun ⟨a, h0a, hc⟩ =>
     have ha : (0 : ℝ) < ‖a‖ := norm_zero (E := ℚ_[2]) ▸ h0a
     let ⟨c, hc0, hca⟩ := NormedField.exists_norm_lt ℚ_[2] ha
     hc (c := c) (show ‖(0 : ℚ_[2])‖ < ‖c‖ from norm_zero (E := ℚ_[2]) ▸ hc0) hca
+-- Statement: that preorder is not dense (`axb1_fails_everywhere_iff_dense`): `2` has the first step
+-- `1`, since `‖2‖ = 1/2`, `‖1‖ = 1` and no norm lies strictly between.
+example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); ¬ DenselyOrdered ℚ_[2] := by
+  letI : Preorder ℚ_[2] := Preorder.lift (‖·‖)
+  have h2n : ‖(2 : ℚ_[2])‖ = 2⁻¹ := by have := Padic.norm_p (p := 2); exact_mod_cast this
+  refine fun hd => ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd 2 ⟨1, ?_, fun c h2 h1 => ?_⟩
+  · change ‖(2 : ℚ_[2])‖ < ‖(1 : ℚ_[2])‖
+    rw [h2n, norm_one]; norm_num
+  · change ‖(2 : ℚ_[2])‖ < ‖c‖ at h2
+    change ‖c‖ < ‖(1 : ℚ_[2])‖ at h1
+    rw [h2n] at h2
+    rw [norm_one] at h1
+    have hc : c ≠ 0 := by rintro rfl; rw [norm_zero] at h2; norm_num at h2
+    obtain ⟨n, hn⟩ := Padic.padicNormE.image (p := 2) hc
+    rw [hn] at h1 h2
+    push_cast at h1 h2
+    rcases lt_trichotomy n 0 with hn0 | hn0 | hn0
+    · have : (1 : ℝ) ≤ 2 ^ (-n) := one_le_zpow₀ (by norm_num) (by omega)
+      linarith
+    · subst hn0; simp at h1
+    · have : (2 : ℝ) ^ (-n) ≤ 2 ^ (-1 : ℤ) := zpow_le_zpow_right₀ (by norm_num) (by omega)
+      have e : (2 : ℝ) ^ (-1 : ℤ) = 2⁻¹ := by norm_num
+      rw [e] at this
+      exact absurd (lt_of_lt_of_le h2 this) (lt_irrefl _)
 -- Reading: other chart, the valuation order: there `0` is greatest, `v 0 = ⊤` (`addVal_bot`,
 -- § POSITIVE — narrow uniqueness and infinite width).
 -- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,
