@@ -63,7 +63,7 @@ Degenerate models of an axiom set, and non-degeneracy stated as an **inequation*
 universal algebra. Burris & Sankappanavar, *A Course in Universal Algebra* (all three passages read from
 the filed copy): an algebra is *"trivial if |A| = 1"* (§ II.1, p. 26); *"as trivial algebras satisfy any
 quasi-identity"* (p. 250); and — the load-bearing one, which this corpus instantiates with the
-inequation `member_ne_floor` (derived from the class field `cx_member_strictMono`, not itself a field),
+inequation `member_ne_floor` (derived from the class fields `cx_member_strictMono` and `cx_floor_eq_iSup`, not itself a field),
 met by no one-element carrier (the `example` after it in `ZeroParadox/Valuation/InfinitudeFloor.lean`;
 `no_infinitudeFloor_of_finite` excludes every finite carrier) — *"As a trivial algebra cannot satisfy a
 negated atomic formula, exactly one of Ψ₁, …, Ψₖ is atomic"* (p. 251).

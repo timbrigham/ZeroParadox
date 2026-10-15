@@ -547,7 +547,11 @@ def build():
         'requires a step from unbounded surprisal to executing, which ZP-E names a bridge '
         'principle of its own, a missing principle and not a missing proof.'))
     E.append(body(
-        'For Path 1 (AFA structural), the Lean counterpart is da1_closed_concrete, which proves '
+        'For Path 1 (AFA structural), in Lean the two charts split: Mathlib\'s ZFSet, a model of '
+        'ZFC, contains no set that is a member of itself (no_quine_atom), while outside ZFSet '
+        'Lean hosts a one-atom model whose distinguished element is its own unique self-member '
+        '(the QuineHost instance on OneAtom, ZeroParadox/Settheory/QuineHost.lean &#167; V). '
+        'The Lean counterpart of Path 1 is da1_closed_concrete, which proves '
         'IsQuineAtom (⊥ : MachinePhase) and nothing computational: in the AFAStructure '
         'typeclass, selfMem encodes ⊥ = {⊥} in CIC-compatible form, and the proof obligation '
         'is discharged by the MachinePhase instance. Path 3 (computational) is NOT resolved '
