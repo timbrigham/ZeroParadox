@@ -147,7 +147,7 @@ Enumerate every site editorial touched. **Report the count, always, including ze
 
 ⚠ **Ask what the `example` EXCLUDES.** A witness that elaborates for every type witnesses nothing — `Subsingleton (α ≃ PUnit)` is the recorded instance. Where the claim genuinely *is* a universal, a generic witness is the content rather than the defect.
 
-⚠ **MODAL claims cannot be settled this way.** *"not a necessity"*, *"an artifact"*, *"could be removed"*, *"eliminable"* are claims about what CANNOT be proved. ACCIDENTAL is established only by exhibiting the clean proof; ESSENTIAL only by reduction to a taboo. **`#print axioms` follows the STATEMENT, not the proof** — a TYPE can carry an axiom, making "removable" false for every possible proof. **Measure the type.** A modal shift is divergence; it does not resolve.
+⚠ **A footprint measurement does not settle a MODAL claim.** *"not a necessity"*, *"an artifact"*, *"could be removed"*, *"eliminable"* are claims about what no proof can establish. ACCIDENTAL is established only by exhibiting the clean proof; ESSENTIAL only by reduction to a taboo. **`#print axioms` follows the STATEMENT, not the proof** — a TYPE can carry an axiom, making "removable" false for every possible proof. **Measure the type.** A modal shift is divergence; it does not resolve.
 
 **2b. Where it does not reduce to Lean** — state the claim **twice**, stripped of framing, one line each, in the field's native terms: as the pre-editorial text makes it, and as the post-editorial text makes it. **If those two lines differ in what they assert, the meaning moved.** The deliverable is that the drift is VISIBLE.
 

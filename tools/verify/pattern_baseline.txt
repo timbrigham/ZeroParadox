@@ -24,14 +24,40 @@
 [check_modal]
 ARTIFACT_NEAR	110
 ARTIFACT_SCOPE	Classical\.choice
-EVIDENCE	measur|UNCLASSIFIED|retract|corrected|does \*\*not\*\* show|does not show|no such re-proof|not attempted|reduction|taboo|em_of_wellOrder_comparable|wem_of_fixedPointFree|in the type|in the TYPE|strict_cofix_nonempty|open question|is open|destructor|eliminator|M\.children|M\.dest|axiom-free witness|does not settle|honest tier|not classified|\(open\)|NOT claimed|not claimed|choice-free outright|choice-free \(his|Thm 1|Theorem 1
+ASIDE	\([^()]*\)|—[^—]*—|–[^–]*–|,[^,;:()]*,|\s(?:at|over|on|in|of|for|with|under|from)(?:\s+(?:the|an?))?\s+(?:`[^`\n]*`|[\w.']+)
+BARE_DECL_TOKEN	(?<![\w.`])([^\W\d][\w']*(?:[_.][\w']+)+)
+BUILD_SCRIPT	^scripts/build_[^/]*\.py$
+CLAUSE_BREAK	[,;:()—–]
+DECL_SRC	^\s*(?:@\[[^\]]*\]\s*)*(?:(?:private|protected|noncomputable|partial|unsafe|scoped)\s+)*(?:theorem|lemma)\s+([^\W\d][\w'.!?]*)
+DECL_TOKEN	`@?([^\W\d][\w'.!?]*)`
+EVIDENCE	measur|UNCLASSIFIED|retract|corrected|does \*\*not\*\* show|does not show|no such re-proof|not attempted|reduction|taboo|em_of_wellOrder_comparable|wem_of_fixedPointFree|in the type|in the TYPE|strict_cofix_nonempty|open question|is open|destructor|eliminator|M\.children|M\.dest|axiom-free witness|does not settle|honest tier|not classified|\(open\)|NOT claimed|not claimed|choice-free outright|choice-free \(his|Thm 1\b|Theorem 1\b
+FLOOR_BUILD	21
+FLOOR_LEAN	113
+FLOOR_MD	35
+IMPOSSIBLE	cannot\s+be|can\s+not\s+be|can't\s+be|can’t\s+be|could\s+not\s+be|cannot\s+satisfy|cannot\s+exist|cannot\s+hold|is\s+impossible
+IMPOSSIBLE_EVIDENCE	em_of_wellOrder_comparable|wem_of_fixedPointFree|strict_cofix_nonempty|\bmeasured\b(?:\W+\w+){0,3}?\W+20\d\d-\d\d(?:-\d\d)?\b|(?-i:\bUNCLASSIFIED\b)|\bnot\s+claimed\b|\(open\)|\bopen\s+question\b|\bretracted\b
+LINE_START	^[ \t]*(?:#{1,6}|[-*+]|\d{1,3}[.)])[ \t]
 MODAL	not\s+a\s+necessity|not\s+asserted\s+as\s+a\s+necessity|rather\s+than\s+as\s+a\s+necessity|artifact|choice\-free\s+in\s+principle|removable\s+in\s+principle|could\s+be\s+removed|can\s+be\s+removed|is\s+removable|are\s+removable|eliminable|not\s+forced\s+by\s+the\s+mathematics|not\s+a\s+fact\s+about\s+the\s+mathematics|not\s+a\s+fact\s+about
 SCOPE	Classical\.choice|axiom|choice-free|#print axioms|propext|Quot\.sound|LLPO|excluded middle|constructive
+SCOPE_END	^\s*end\b
+SCOPE_OPEN	^\s*(?:noncomputable\s+)?(namespace|section|mutual)\b[ \t]*([\w'.]*)
 SENTENCE	260
+SENTENCE_END	[.!?](?:[*_)\]\"'”’`]|</\w+>|\[\^[^\]\s]*\]|\]\([^)\s]*\))*(?:(?<=[)\]\"'”’*_>])[,;])?(?:(?=\s|\Z|\\n)|<br\s*/?>|[—–])|\n[ \t]*\n
 SKIP_NAMES	check_modal.py
 SKIP_NAMES	modal_baseline.txt
+STAR_BULLET	^[ \t]*\*(?=[ \t])
 STRONG	UNCLASSIFIED|retract|corrected|does not settle|honest tier|not classified|\(open\)|NOT claimed|not claimed|does \*\*not\*\* show|does not show|no such re-proof|not attempted|open question|is open
 WINDOW	420
+WRAP_LINE	[\w,][ \t]*$
+_IMPOSSIBILITY_PHRASES	can not be
+_IMPOSSIBILITY_PHRASES	can't be
+_IMPOSSIBILITY_PHRASES	cannot be
+_IMPOSSIBILITY_PHRASES	cannot exist
+_IMPOSSIBILITY_PHRASES	cannot hold
+_IMPOSSIBILITY_PHRASES	cannot satisfy
+_IMPOSSIBILITY_PHRASES	can’t be
+_IMPOSSIBILITY_PHRASES	could not be
+_IMPOSSIBILITY_PHRASES	is impossible
 _MODAL_PHRASES	are removable
 _MODAL_PHRASES	artifact
 _MODAL_PHRASES	can be removed

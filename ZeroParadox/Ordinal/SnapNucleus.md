@@ -67,7 +67,7 @@ part (measured 2026-10-08):
   choice). The statement and the proof of
   `tower_strictMono`, `tower_cofinal` and `synCollapse_epsN` each measure `[propext]`. That is the
   ascent, not the nucleus.
-* **The results that name ε₀ cannot be stated on `ONote`.** No notation is an upper bound for the
+* **The results that name ε₀ cannot be stated on `ONote`**: no notation is an upper bound for the
   tower (`tower_no_upper_bound`, from `tower_cofinal`, both `[propext]`), so the carrier has no point
   where ε₀ would sit. The natural counterpart route for the nucleus is therefore **blocked** there
   (`no_snap_closure`: no idempotent endomap of the notation carrier has the ε-numbers as closed

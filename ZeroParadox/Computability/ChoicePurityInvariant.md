@@ -10,7 +10,7 @@ In the sections below, "this file" and "here" refer to
 A proposition about a proof cannot see that proof's axiom footprint: a predicate on the proofs of one
 proposition takes the same value at every proof (proof irrelevance; measured 2026-10-14 by the `example`
 just before this file's `PurityCheck` section, which closes by `Iff.rfl`), so no proposition about the
-proof can say "this proof term omits `Classical.choice`." So "μ is choice-free" cannot be made
+proof can say "this proof term omits `Classical.choice`"; so "μ is choice-free" cannot be made
 *directly* load-bearing in a statement; the footprint is read at the meta level (`#print axioms`), not
 by a proposition about the proof. The only way to put constructive content IN the statement is to
 exhibit the μ-witness through a genuinely constructive proxy. That is what this file does, and it is the load-bearing new
@@ -25,7 +25,7 @@ content over `fix_isEmpty`:
   axiom-free** — strictly tighter than the existing `fix_isEmpty`. The μ-emptiness of the root is thus
   witnessed by structural recursion on a plain inductive type.
 
-* **ν side — choice cannot be made load-bearing.** The strongest honest in-statement claim is
+* **ν side — choice is not claimed load-bearing.** The strongest honest in-statement claim is
   `Nonempty (Cofix idPF_Coalgebra.Obj)` with the corecursion term as witness (re-exported as `cofix_nonempty'`),
   whose footprint carries `Classical.choice` from Mathlib's M-type / `Cofix.corec`. We do **not**
   claim ν *requires* choice — but be precise about what is measured (2026-08-03). `QPF.Cofix` carries
@@ -83,7 +83,7 @@ choice-dependent or quotient-quotient-collapse lemma.
 there is no leaf (no head `a` with `B a` empty), so `WType.recOn` with motive `fun _ => False`
 discharges emptiness: each node needs its `PUnit`-indexed child already refuted, and `PUnit.unit`
 supplies that contradiction. `QPF.Fix idPF_Coalgebra.Obj = Quotient (Wsetoid)` is then empty because every class
-has a representative (`Quot.exists_rep`) and the representative is impossible. The ν inhabitant is the
+has a representative (`Quot.exists_rep`) and the representative is impossible (`w_isEmpty`). The ν inhabitant is the
 self-unfolding corecursion node (`ZeroParadox.cofix_nonempty`).
 
 What is PROVED is exactly: `IsEmpty idPF_Coalgebra.W` by the inductive eliminator (no axioms), `IsEmpty (Fix

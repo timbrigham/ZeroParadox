@@ -83,8 +83,8 @@ middle implying itself in costume, not a choice principle implying it. Measured 
 construction `fun S => if S true then true else false` under only `ExcludedMiddle` **fails to elaborate**
 — `failed to synthesize instance of type class Decidable (S true)`. That is the `Prop`→`Bool` elimination
 barrier: excluded middle supplies a disjunction in `Prop`, which cannot be eliminated to produce data,
-because `Or`'s eliminator takes only `Prop`-valued motives (measured by the `#check_failure` after this
-definition). The same construction closes immediately under `classical`, at footprint
+because `Or`'s eliminator takes only `Prop`-valued motives (measured 2026-10-14 by the `#check_failure` after
+this definition). The same construction closes immediately under `classical`, at footprint
 `[propext, Classical.choice, Quot.sound]`. So the route from a decision to a *chooser* runs through
 choice, not through excluded middle, and the fragment **appears to sit above** `ExcludedMiddle` in Lean.
 **Honest limit:** a failed proof attempt is not a proof of unprovability. This is strong evidence — the
