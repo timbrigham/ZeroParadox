@@ -112,10 +112,9 @@
       "module": "tools/verify/check_modal.py",
       "_repinned_2026_09_24": "`953ca866...` REPLACES `fce373af...`, per the top-level `_approved_modules` rule -- `[\"<new>\"]` is correct; `[\"<old>\", \"<new>\"]` is wrong absent a stated expiry. REGDESC-1: the comment block above SKIP_NAMES asserted register.md was a changelog of record and cited CLAUDE.md as the authority for it. Both were false -- the Notes column was stripped to hash tokens, and CLAUDE.md exempts nothing of the kind (the exemption lived in tools/process/document-workflow.md). Comment-only change; no pattern, no threshold and no scan set moved in THIS file. Reviewed by `/rely` rounds 1 and 2 (`rely@e7f2103d...#0`, `rely@fc38ee3c...#0`); Tim authorised the repin 2026-09-24.",
       "approved_modules": [
-        "953ca86634ac0af380e6204771cb87147a8f27e7",
         "b1bc667922db924eb860447424b315c8295e6667"
       ],
-      "_rollout_window_2026_10_15": "TWO-BLOB ROLLOUT WINDOW, Tim-approved route (precedent 242287c -> 062db13). `b1bc6679…` is the MODAL-2 rebuild of tools/verify/check_modal.py from worktree cm-land (impossibility vocabulary, theorem-pointer rule, sentence-scoped evidence; /rely PASS `rely@1e2b0f12…#0` after rounds 1-4 FAILed 5/5/3/1); `953ca866…` is the current build. EXPIRES when the cm-land commit merges: the next main-checkout commit NARROWS this list to `b1bc6679…` and deletes this key. Blob re-derived with `record.module_evidence('tools/verify/check_modal.py', repo='.')` in the worktree."
+      "_repinned_2026_10_15": "`b1bc6679…` REPLACES `953ca866…`, closing the two-blob rollout window opened in a75b117 (Tim-approved route). The MODAL-2 rebuild: impossibility vocabulary under the axiom-scope guard; a claim passes only by naming a real corpus theorem in its own sentence (not as its subject), a dated measurement, or an explicit status marker. /rely PASS `rely@1e2b0f12…#0` after rounds 1-4 FAILed 5/5/3/1. Narrowed after the cm-land merge."
     },
     "check_classes": {
       "family": "mechanical",
