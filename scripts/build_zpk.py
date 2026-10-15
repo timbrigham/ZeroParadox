@@ -542,8 +542,7 @@ def build():
     E.append(Paragraph('III. What Changed for DA-1', S['h2']))
     E.append(body(
         'ZP-E\'s DA-1 section previously carried the designation "Outside Lean Scope" with '
-        'three justifications: Path 1 requires ZF+AFA, whose Quine atom Mathlib\'s ZFSet, a model of ZFC, '
-        'excludes (no_quine_atom); '
+        'three justifications: Path 1 requires ZF+AFA, which ZP-E held incompatible with Lean\'s CIC/MLTT; '
         'Path 3 requires Kolmogorov complexity (uncomputable, absent from Mathlib); Path 2 '
         'requires a step from unbounded surprisal to executing, which ZP-E names a bridge '
         'principle of its own, a missing principle and not a missing proof.'))

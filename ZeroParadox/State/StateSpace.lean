@@ -167,6 +167,20 @@ theorem t4_snap_orthogonal (n : ℕ) (hn : 2 ≤ n) :
   intro h
   exact absurd (congr_arg Fin.val h) (by norm_num)
 
+/-- T4 (gap): any two distinct states sit exactly √2 apart in H, so a step between states is a jump of
+    one fixed size. From `t2_orthogonal` and `t2_norm_eq_one`: ‖eᵢ − eⱼ‖² = 1 + 1 − 2·Re 0 = 2. -/
+theorem t4_state_gap (n : ℕ) (i j : Fin n) (h : i ≠ j) :
+    ‖transitionOp n i - transitionOp n j‖ = Real.sqrt 2 := by
+  have hsq : ‖transitionOp n i - transitionOp n j‖ ^ 2 = 2 := by
+    rw [@norm_sub_sq ℂ, t2_orthogonal n i j h, t2_norm_eq_one, t2_norm_eq_one]
+    norm_num
+  rw [← hsq, Real.sqrt_sq (norm_nonneg _)]
+
+-- Statement: the snap pair T(0), T(ε₀) is one instance (for n ≥ 2).
+example (n : ℕ) (hn : 2 ≤ n) :
+    ‖transitionOp n ⟨0, by omega⟩ - transitionOp n ⟨1, by omega⟩‖ = Real.sqrt 2 :=
+  t4_state_gap n _ _ (by simp [Fin.ext_iff])
+
 /-! ## VI. T5 — Monotone State Sequences Map to Non-Decreasing Norms -/
 
 /-- T5: For any sequence S: ℕ → Fin n, ‖T(S(k))‖ ≤ ‖T(S(k+1))‖ for all k.
@@ -204,6 +218,7 @@ open ZeroParadox
 #print axioms t2_norm_eq_one
 #print axioms t2_existence
 #print axioms t4_snap_orthogonal
+#print axioms t4_state_gap
 #print axioms t5_monotone_norms
 #print axioms t5_strict_orthogonal
 

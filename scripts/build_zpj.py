@@ -146,8 +146,9 @@ def build():
             'Informally: the Quine atom is unique. Self-containment is a property held by at '
             'most one element of any AFA-structured type.',
             'Lean: AFAStructure.quine_unique &#8212; encoded as a typeclass field, not a theorem, '
-            'because it cannot be derived for an arbitrary selfMem: on Bool with every element '
-            'self-membered, two distinct elements qualify (boffa_fails_unique). It is a hypothesis every theorem here '
+            'because it does not follow from the other two fields: on the two-state lattice '
+            'MachinePhase, the selfMem true of every element meets bot_self_mem while two distinct '
+            'elements satisfy it (quine_unique_independent). It is a hypothesis every theorem here '
             'carries, and (Section III.II) any lattice can meet it by a trivial choice of selfMem.',
         ]
     ))

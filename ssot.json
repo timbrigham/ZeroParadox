@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1912,
-        "files": 161
+        "declarations": 1914,
+        "files": 163
       },
       "entries": [
         {
@@ -27975,6 +27975,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "633f248f-6d6b-4de8-a1f3-88f9c59c41db",
+          "new": {
+            "file": "ZeroParadox/Settheory/SetTheoryAFA.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_unique_independent",
+            "short": "quine_unique_independent"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/SetTheoryAFA.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_unique_independent",
+            "short": "quine_unique_independent",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "MODAL-2 pass 2 r2: t4_state_gap (distinct ZP-D states sqrt 2 apart, the ZP-H companion pointer) and quine_unique_independent (in-frame countermodel for ZP-J) (2026-10-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -60142,6 +60179,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "db7e587b-8b31-4223-950d-47cf8b30acf0",
+          "new": {
+            "file": "ZeroParadox/State/StateSpace.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t4_state_gap",
+            "short": "t4_state_gap"
+          },
+          "old": {
+            "file": "ZeroParadox/State/StateSpace.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t4_state_gap",
+            "short": "t4_state_gap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "MODAL-2 pass 2 r2: t4_state_gap (distinct ZP-D states sqrt 2 apart, the ZP-H companion pointer) and quine_unique_independent (in-frame countermodel for ZP-J) (2026-10-14)",
           "verify": {
             "axioms": null,
             "sorry_free": true

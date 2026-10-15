@@ -141,7 +141,7 @@ theorem member_ne_floor {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
   fun h => member_cx_ne_floor_cx n (congrArg I.cx h)
 
 -- Statement: a one-element carrier admits no `InfinitudeFloor`: there `member 0 = floor`, which the
--- negated atom `member_ne_floor` refutes.
+-- derived inequation `member_ne_floor` refutes (`no_infinitudeFloor_of_finite` covers every finite carrier).
 example (α : Type*) [Subsingleton α] : IsEmpty (InfinitudeFloor α) :=
   ⟨fun I => member_ne_floor (I := I) 0 (Subsingleton.elim _ _)⟩
 

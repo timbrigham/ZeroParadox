@@ -258,7 +258,9 @@ def build():
         'In ZP-A, ⊥ is the bottom of the lattice and the axioms forbid any non-trivial return. '
         'In ZP-C, the informational cost of approaching ⊥ diverges — infinite '
         'cost means no finite path reaches it. In ZP-D, the basis vector e₀ is orthogonal to '
-        'e₁, the image of ε₀: their inner product is 0 (T4, t4_snap_orthogonal).'))
+        'e₁, the image of ε₀: their inner product is 0 (T4, t4_snap_orthogonal). The state vectors '
+        'are orthonormal, so any two distinct ones sit exactly √2 apart (t4_state_gap): approach to '
+        'the floor e₀ is a jump of that fixed size, never a sequence of state vectors drawing closer.'))
     E.append(remember_box(
         'The power set example shows that the structural floor property is not exotic: it appears '
         'in the most elementary object in set theory. What is non-trivial is how that floor is '

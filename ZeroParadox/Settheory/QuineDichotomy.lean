@@ -24,7 +24,7 @@ Assembled from pieces already proved across the ZPJ family + ZP-P's coalgebra:
 - **Uniqueness + identity:** wherever the self-referential fixed point lives, it is unique and IS the
   bottom. (`ZeroParadox.selfMem_eq_singleton_bot`: the self-members are exactly `{⊥}`.)
 - **Cantor obstruction (no literal):** a nontrivial lattice face admits no Lawvere witness
-  (`nontrivial_lattice_no_witness`); a literal self-singleton needs `T ≃ Set T`, which cannot be built (`cantor_via_engine`).
+  (`nontrivial_lattice_no_witness`); a literal self-singleton needs `T ≃ Set T`, and no `T → Set T` is surjective (`cantor_via_engine`, `ZeroParadox/Settheory/Wall.lean`), so no such `≃` exists.
 
 ## FENCE (crucial — unlike the snap dichotomy)
 The snap's classifier (Ostrowski) is a theorem INSIDE one foundation, so "snap ⟺ non-Archimedean" is fully
@@ -38,10 +38,10 @@ claim that AFA is machine-checked.
 ## Symbol map (component → existing lemma)
 - existence fork        → `ZeroParadox.categorical_fork_strict`  (`idPF_Coalgebra`, `Fix`, `Cofix` from ZP-P)
 - self-members = {⊥}    → `ZeroParadox.selfMem_eq_singleton_bot`  (`selfMemDerived`, `bot`)
-- no literal (Cantor)   → `ZeroParadox.nontrivial_lattice_no_witness`  (`HasLawvereWitness`)
+- no literal (Cantor)   → `ZeroParadox.nontrivial_lattice_no_witness` (lattice face, `HasLawvereWitness`); `ZeroParadox.cantor_via_engine` (`T ≃ Set T`, `ZeroParadox/Settheory/Wall.lean`, not imported)
 
 STATUS: PROVED, sorry-free. Pure assembly of ZP-P coalgebra (`categorical_fork_strict`) +
-ZeroParadox/Computability/SelfApp.lean (`selfMem_eq_singleton_bot`) + ZeroParadox/Category/Lawvere.lean (`nontrivial_lattice_no_witness`).
+ZeroParadox/Computability/SelfApp.lean (`selfMem_eq_singleton_bot`) + ZeroParadox/Category/Lawvere.lean (`nontrivial_lattice_no_witness`); Cantor is cited from ZeroParadox/Settheory/Wall.lean (`cantor_via_engine`).
 -/
 
 set_option maxHeartbeats 400000
@@ -64,7 +64,7 @@ theorem quine_self_members_eq_bot {L : Type*} [ZPSemilattice L] [AbstractSelfApp
     {x : L | selfMemDerived x} = ({bot} : Set L) := selfMem_eq_singleton_bot
 
 /-- **Cantor obstruction (no literal Quine atom).** A nontrivial lattice face has no Lawvere witness; a literal
-    self-singleton needs `T ≃ Set T`, which cannot be built (Cantor, `cantor_via_engine`). -/
+    self-singleton needs `T ≃ Set T`, excluded by Cantor (`cantor_via_engine`: no `T → Set T` is surjective). -/
 theorem quine_no_literal {L : Type*} [ZPSemilattice L] (a : L) (ha : a ≠ bot) :
     ¬ HasLawvereWitness L := nontrivial_lattice_no_witness a ha
 
