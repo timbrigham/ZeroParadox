@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.14 | May 2026
+Version 1.15 | May 2026
 """
 
 import os, math
@@ -100,7 +100,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -270,9 +270,10 @@ def build():
         'from which everything departs — not a peer of the states, but their origin. '
         'In the ZP framework, zero is the asymptotic limit that the system moves '
         'away from, not a state it can stably occupy or return to. In &#8477;, zero '
-        'has no such character: it is a regular limit point, reachable from any '
-        'direction, indistinguishable in structure from 1 or &#960;. That is '
-        'exactly what disqualifies it.'))
+        'has no such character: it is a regular point of a dense line, '
+        'indistinguishable in structure from 1 or &#960;, with no first step above it. '
+        'The density is what disqualifies it (axb1_fails_everywhere_iff_dense); being '
+        'approached as a limit is not, since the 2-adic 0 is approached as a limit too.'))
     E.append(cbody(
         'The real number line treats zero as an ordinary point — a peer of every '
         'other element, with the same local structure as 1 or &#960;. '
@@ -369,8 +370,11 @@ def build():
     E.append(cbody(
         'From the field side: density shows there is no smallest positive element in &#8477;. '
         'For any candidate first step &#949; > 0, the value &#949;/2 is smaller '
-        'and also positive. There is always something between any candidate step and zero. '
-        'Zero is a limit point &#8212; surrounded, always approachable, never a structural floor.'))
+        'and also positive. There is always something between any candidate step and zero, '
+        'so zero has no first step. That is a fact about the order, and density is exactly '
+        'its failure (axb1_fails_everywhere_iff_dense). Zero in &#8477; is also a limit point, '
+        'a fact about the metric; so is zero in Q&#8322; (doubling_orbit_tendsto_zero), so the '
+        'limit point is not what blocks the snap.'))
     E.append(cbody(
         'From the ordinal side: &#949;&#8320; has no ordinal immediately below it. There is '
         'no &#945; with &#945; + 1 = &#949;&#8320;. It is the limit of the tower '
@@ -410,7 +414,7 @@ def build():
     E.append(cbody(
         'Q&#8322; is not an exotic choice. Among all completions of the rationals, '
         'Ostrowski\'s theorem says there are exactly two kinds: Archimedean ones '
-        '(like &#8477;, where zero is a limit point — always approachable, never a floor) '
+        '(like &#8477;, which is densely ordered, so zero has no first step) '
         'and non-Archimedean ones (&#8474;<sub>p</sub>, where the p-adic valuation assigns '
         'zero infinite valuation while every non-zero element has finite valuation). '
         'Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
@@ -422,8 +426,8 @@ def build():
         'A note on scope: ZP-F establishes this result for linearly ordered fields — '
         'the class that contains &#8477; and &#8474; — because that is the natural '
         'comparison class for the most familiar number systems. The blocking '
-        'phenomenon is not unique to fields; simpler structures with a limit point '
-        'at zero show the same property. The ordered field result is the right '
+        'phenomenon is not unique to fields: in any densely ordered structure no element '
+        'has a first step (axb1_fails_everywhere_iff_dense). The ordered field result is the right '
         'frame for the &#8477; comparison. The broader phenomenon is the same.'))
     E.append(sp(6))
     E.append(key_result_box(

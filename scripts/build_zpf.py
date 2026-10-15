@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.11)
+Build ZP-F: The Counterexamples (v1.12)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -186,14 +186,19 @@ def build():
         'Q&#8322; is not chosen against &#8477;; it is what remains after &#8477; — '
         'and every Archimedean completion — has been ruled out.'))
     E.append(body(
-        'The structural difference that the Ostrowski classification makes precise can be '
-        'stated directly. In any Archimedean completion, zero is a limit point: every '
-        'neighbourhood of zero contains a smaller positive element. The snap requires zero '
-        'to be something different — a structural origin from which the first departure is '
-        'forced, with no smaller departure possible. In Q&#8322;, zero carries the infinite '
-        '2-adic valuation; it is valuatively distinguished from every nonzero element. That removes the density obstruction; it does not by itself supply a first step, since the 2-adic norm values accumulate at 0 and Q&#8322; has no closest nonzero element either. The first step is AX-B1. '
-        'The snap does not fail in &#8477; by accident. It fails because &#8477; and the '
-        'snap require incompatible roles for zero: limit point versus structural origin.'))
+        'The structural difference can be stated directly, and it is a property of the order. '
+        'The snap needs the bottom to have a first step: an element directly above it with '
+        'nothing strictly between, a cover of the bottom (HasFirstStep, AX-B1). Density is '
+        'exactly the failure of that: an order is dense if and only if no element has a first '
+        'step (axb1_fails_everywhere_iff_dense), and in an ordered field 0 has none '
+        '(axb1_fails_in_ordered_field). In the metric chart zero is a limit point of the '
+        'nonzero elements, in &#8477; and equally in Q&#8322;, where the doubling orbit of a '
+        'nonzero element converges to 0 without reaching it (doubling_orbit_tendsto_zero, '
+        'padic_orbit_never_reaches_zero); so being a limit point does not decide the snap. '
+        'In Q&#8322;, zero carries the infinite 2-adic valuation; it is valuatively '
+        'distinguished from every nonzero element. That removes the density obstruction; it does not by itself supply a first step, since the 2-adic norm values accumulate at 0 and Q&#8322; has no closest nonzero element either. The first step is AX-B1. '
+        'The snap does not fail in &#8477; by accident. It fails because &#8477; is densely '
+        'ordered, and density is exactly the absence of a first step.'))
     E.append(sp(4))
 
     E.append(remark_box(
