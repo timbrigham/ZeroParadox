@@ -82,7 +82,7 @@ def comparison_table():
         ['Infinity lives in the representation (infinite decimal = finite magnitude)',
          'Valuation: infinity is the address of 0 — v&#8322;(0) = +&#8734;, the greatest value; every nonzero element has a finite valuation'],
         ['The snap cannot occur — density blocks every candidate first step',
-         'The topological obstruction is removed, and no first step is supplied (the step itself is AX-B1, a commitment)'],
+         'The topological obstruction is removed, and no first step at 0 is supplied (the step itself is AX-B1, a commitment)'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
                      Paragraph(fix(r[1]), CS['kr_body'])] for r in rows]
@@ -149,10 +149,10 @@ def build():
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
               'language why the real number line cannot serve as the mathematical substrate '
-              'for the Binary Snap, and what ZP-F shows about the 2-adic numbers Q&#8322;: '
-              'ordered fields are excluded by density, and among the completions of the '
-              'rationals Q&#8322;\'s totally disconnected topology removes the topological '
-              'obstruction while supplying no first step (that is AX-B1, a commitment). '
+              'for the Binary Snap, and where the 2-adic numbers Q&#8322; stand: ZP-F excludes '
+              'ordered fields, by density; ZP-B shows Q&#8322; is totally disconnected '
+              '(t5_totallyDisconnected), which removes the topological obstruction; neither '
+              'supplies the first step at &#8869; of the state carrier (that is AX-B1, a commitment). '
               'The formal results are machine-verified in Lean 4 as part of ZP-F '
               '(F-SNAP-IMPOSSIBLE and the general ordered field result); see also '
               'ZP-B (p-adic topology) for the positive case.',
@@ -263,8 +263,10 @@ def build():
         'smallest step. Its zero is a floor of the other kind: a finite-precision system\'s '
         'floor is reached by counting down, while Q&#8322;\'s is a limit the doubling orbit '
         'approaches and does not reach in finite time (floor_reach_separates_mu_nu), marked '
-        'out by its valuation, v&#8322;(0) = +&#8734;. The first step the snap needs is AX-B1, '
-        'a commitment, not a consequence of the 2-adic structure.'))
+        'out by its valuation, v&#8322;(0) = +&#8734;. The first step the snap needs is a cover '
+        'of &#8869; on the state carrier (AX-B1, a commitment: the cover hypothesis of '
+        't_snap_given_cover, met by MachinePhase); neither ordering of Q&#8322; supplies one at '
+        'its 0, so it is not a consequence of the 2-adic structure.'))
     E.append(sp(4))
     E.append(remember_box(
         'Every finite computational system is already subject to the Binary Snap by '
@@ -461,9 +463,10 @@ def build():
         'That zero\'s valuation is +&#8734; is set by definition, not produced by the '
         'completion; what holds in Q&#8322; is that zero alone has it (padic_addVal_eq_top_iff). '
         'The framework did not choose unusual mathematics for its own sake. '
-        'What ZP-F shows is that ordered fields are excluded, by density, and that among '
-        'the completions of the rationals Q&#8322;\'s topology removes the topological '
-        'obstruction while supplying no first step.'))
+        'ZP-F shows that ordered fields are excluded, by density; ZP-B shows that Q&#8322; is '
+        'totally disconnected (t5_totallyDisconnected), which removes the topological '
+        'obstruction. Neither supplies the first step at &#8869; of the state carrier; that is '
+        'AX-B1.'))
     E.append(cbody(
         'A note on scope: ZP-F establishes this result for linearly ordered fields — '
         'the class that contains &#8477; and &#8474; — because that is the natural '
@@ -481,8 +484,9 @@ def build():
         '&#8477; is connected. Its zero is '
         'distinguished in two charts: by its valuation, v&#8322;(0) = +&#8734; while every '
         'non-zero element carries a finite valuation, and as a limit the doubling orbit '
-        'approaches and does not reach in finite time. Neither supplies the first step; '
-        'that is AX-B1, a commitment.'))
+        'approaches and does not reach in finite time. Neither supplies the first step the snap '
+        'needs, a cover of &#8869; on the state carrier: that is AX-B1, a commitment (the cover '
+        'hypothesis of t_snap_given_cover, met by MachinePhase).'))
 
     print(f'Building: {out_path}')
     doc.build(E)
