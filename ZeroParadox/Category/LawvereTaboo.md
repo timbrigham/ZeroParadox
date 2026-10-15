@@ -93,7 +93,7 @@ The mathematics of this genre is not new and is not claimed as new.
   above that theorem in `LawvereTaboo.lean`, which also credits Simpson's proof technique.
 * **T. de Jong and M. Escardó, "Examples and counterexamples of injective types"**
   (arXiv:2601.12536, 18 January 2026). Read in full from the held copy; Prop 6.4, p. 24, is quoted
-  under "What is NOT claimed" above. From the abstract verbatim: *"any type with an apartness
+  under "What is NOT claimed" above. From the abstract verbatim (cited, not claimed): *"any type with an apartness
   relation and two points apart cannot be injective unless weak excluded middle holds"*, and
   *"injective types have no non-trivial decidable properties, unless weak excluded middle holds,
   which amounts to a Rice-like theorem for injective types."* Same genre and same landing principle

@@ -98,7 +98,7 @@ REVALIDATION_PROTOCOL = """
   2. ASK WHAT WOULD SETTLE IT -- and whether anyone ever did that. Not "is it cited?"
      but "is it PROVED, and by what?"
   3. WATCH FOR MODAL CLAIMS. "not a necessity" / "an artifact" / "in principle" /
-     "could be removed" / "is eliminable" are claims about what CANNOT be proved,
+     "could be removed" / "is eliminable" are claims about what NO proof can establish,
      and a footprint measurement can never establish one:
        - ACCIDENTAL is proved only by EXHIBITING the clean proof.
        - ESSENTIAL is proved only by a REDUCTION to a taboo.

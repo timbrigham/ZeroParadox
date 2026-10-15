@@ -154,7 +154,7 @@ Both halves are measured here, and they split:
   constructively impossible, and **not** a claim that ε₀ requires choice.
 
 These are compatible and should not be conflated. "The proof needs no choice" and "the carrier cannot
-hold the answer" are different failures, and only the second one bites here.
+hold the answer" are different failures, and only the second one bites here (`tower_no_upper_bound`).
 
 ## Does `ONote` carry a choice-free `SemilatticeInf`? (measured: yes, but not Mathlib's)
 
@@ -243,7 +243,7 @@ usable equivalent — its `ONote` order is `repr`-routed (hence choice-carrying)
 
 **The delta against them**, stated narrowly: neither states the *impossibility*. They build the
 constructive system and observe where it stops; the Lean file proves that no idempotent endomap of that
-carrier can have the ε-numbers as its closed points, which is what converts "the system stops here" into
+carrier can have the ε-numbers as its closed points (`no_snap_closure`), which is what converts "the system stops here" into
 "a closure operator of this shape cannot exist here." Given `omegaPow_no_fixedpoint` that conversion is
 two lines (see the triviality assessment) — the contribution is the statement and its placement, not
 depth.

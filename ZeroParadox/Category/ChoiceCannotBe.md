@@ -172,8 +172,7 @@ relation, `ZeroParadox/Ordinal/OrdinalChoiceEssential.md`).
 The same split between a statement's and a proof's reach of `Classical.choice` is drawn across Mathlib
 by V. Gonzalez, "Where Formal Libraries Spend Their Axioms", Zenodo 2026, doi:10.5281/zenodo.21769846
 (page numbers from v1.0.3, doi:10.5281/zenodo.21866855), § 4 (p. 8) and § 8 (p. 14): a theorem whose
-statement mentions something choice-dependent "cannot be made choice-free however it is proved".
-Cited, not claimed.
+statement mentions something choice-dependent "cannot be made choice-free however it is proved" (cited, not claimed).
 
 Prior art for the distinction and its methods: constructive reverse mathematics, which classifies
 theorems ("to classify [over intuitionistic logic] various theorems … by logical principles") and whose

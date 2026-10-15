@@ -53,7 +53,7 @@ REGISTERED, and whether one EXISTS, are not the same question, and only the firs
 instance synthesis reports. Both are measured: `#synth` fails, because no such instance is
 declared; and the existential is provable, because § V's closing example supplies a semilattice
 with bottom 0 and discharges all four axioms over it. ⚠ So "ℤ_[2] cannot be a ValuationStructure
-instance" is true only in the not-registered reading and false read modally. The related gap
+instance" is true only in the not-registered reading and false read modally (both readings measured 2026-08-30). The related gap
 once recorded at `ZeroParadox/Valuation/Scale.lean` § V — "a ZPSemilattice instance for a concrete
 type carrying a ValuationStructure" — is CLOSED in two independent ways: ℕ∞ carries both structures (`instNatInfZPS` and
 `instNatInfVal` in `ZeroParadox/Settheory/Model.lean`, which imports Scale.lean), and

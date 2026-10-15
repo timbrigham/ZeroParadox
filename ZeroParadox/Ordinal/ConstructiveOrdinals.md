@@ -32,7 +32,7 @@ notation is a fixed point of `ω^·`).
 **It does NOT classify ZP-L's footprint as "representational, not intrinsic"**. That is an
 *eliminability* claim, and
 it cannot be asked of those ε₀ results as stated, because their statements themselves carry the
-choice, as the statement control in the next sentence measured: they are **STATEMENT-CARRIED**
+choice, as the statement control in the next sentence measured 2026-10-08: they are **STATEMENT-CARRIED**
 (`ZeroParadox/Category/ChoiceCannotBe.md`). ZP-L's `epsilonZero_fixedPoint`, `epsilonZero_eq_nfp`,
 `epsilonZero_tower_lt` and `epsilonZero_le_fixedPoint` (`ZeroParadox/Ordinal/Gentzen.lean`), and the
 invariants `epsilon0_ne_zero`, `epsilon0_ne_bot`, `epsilon0_is_fixedpoint`
