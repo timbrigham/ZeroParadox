@@ -82,7 +82,7 @@ def comparison_table():
         ['Infinity lives in the representation (infinite decimal = finite magnitude)',
          'Valuation: infinity is the address of 0 — v&#8322;(0) = +&#8734;, the greatest value; every nonzero element has a finite valuation'],
         ['The snap cannot occur — density blocks every candidate first step',
-         'The topological obstruction is removed, and no first step at 0 is supplied (the step itself is AX-B1, a commitment)'],
+         'The topological obstruction is removed, and no first step at 0 is supplied (AX-B1\'s first step is a cover of &#8869; on the state carrier, a commitment)'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
                      Paragraph(fix(r[1]), CS['kr_body'])] for r in rows]
@@ -263,9 +263,10 @@ def build():
         'smallest step. Its zero is a floor of the other kind: a finite-precision system\'s '
         'floor is reached by counting down, while Q&#8322;\'s is a limit the doubling orbit '
         'approaches and does not reach in finite time (floor_reach_separates_mu_nu), marked '
-        'out by its valuation, v&#8322;(0) = +&#8734;. The first step the snap needs is a cover '
-        'of &#8869; on the state carrier (AX-B1, a commitment: the cover hypothesis of '
-        't_snap_given_cover, met by MachinePhase); neither ordering of Q&#8322; supplies one at '
+        'out by its valuation, v&#8322;(0) = +&#8734;. The first step AX-B1 commits to is a cover '
+        'of &#8869; on the state carrier (a commitment); t_snap_given_cover assumes the run\'s '
+        'first step is such a cover, which with CC-1 gives it, and MachinePhase meets it '
+        '(c&#8321; covers its &#8869;, c&#8320;). Neither ordering of Q&#8322; supplies one at '
         'its 0, so it is not a consequence of the 2-adic structure.'))
     E.append(sp(4))
     E.append(remember_box(
@@ -484,9 +485,10 @@ def build():
         '&#8477; is connected. Its zero is '
         'distinguished in two charts: by its valuation, v&#8322;(0) = +&#8734; while every '
         'non-zero element carries a finite valuation, and as a limit the doubling orbit '
-        'approaches and does not reach in finite time. Neither supplies the first step the snap '
-        'needs, a cover of &#8869; on the state carrier: that is AX-B1, a commitment (the cover '
-        'hypothesis of t_snap_given_cover, met by MachinePhase).'))
+        'approaches and does not reach in finite time. Neither supplies the first step AX-B1 '
+        'commits to, a cover of &#8869; on the state carrier; t_snap_given_cover assumes the '
+        'run\'s first step is such a cover, which with CC-1 gives it, and MachinePhase meets it '
+        '(c&#8321; covers its &#8869;, c&#8320;).'))
 
     print(f'Building: {out_path}')
     doc.build(E)

@@ -162,9 +162,10 @@ def build():
         'It is the negative complement to ZP-B: where ZP-B establishes that Q&#8322; '
         'removes the topological obstruction to the snap (its 2-adic topology is totally '
         'disconnected, t5_totallyDisconnected, with clopen balls), ZP-F establishes that &#8477; — and any linearly ordered field — '
-        'cannot host it. Neither supplies the first step the snap needs, a cover of &#8869; on '
-        'the state carrier: that is AX-B1, the cover hypothesis of t_snap_given_cover, met by '
-        'MachinePhase.'))
+        'cannot host it. Neither supplies the first step AX-B1 commits to, a cover of &#8869; on '
+        'the state carrier (HasFirstStep). t_snap_given_cover assumes the run\'s first step is '
+        'such a cover (hcov), which with CC-1 gives it; MachinePhase meets it (c&#8321; covers '
+        'its &#8869;, c&#8320;).'))
     E.append(body(
         'The dependency order of the framework places ZP-F as independent:'))
     E.append(data_table(
@@ -224,10 +225,12 @@ def build():
         'step 1 (the norms are 1/2 and 1, and no norm lies strictly between; the next example '
         'there), while &#8477; is densely ordered. In the valuation order 0 is greatest, '
         'v(0) = &#8868; (addVal_bot). '
-        'The first step the snap needs is a cover of &#8869; on the state carrier, in ZP-A\'s '
-        'induced order: AX-B1, a commitment, the cover hypothesis of t_snap_given_cover '
-        '(ZeroParadox/Order/Snap.lean), met by MachinePhase, where c&#8321; covers &#8869; (the '
-        'example after it). Neither ordering of Q&#8322; supplies one at its 0. '
+        'The first step AX-B1 commits to is a cover of &#8869; on the state carrier, in ZP-A\'s '
+        'induced order (HasFirstStep), a commitment. t_snap_given_cover '
+        '(ZeroParadox/Order/Snap.lean) assumes the run\'s first step is such a cover (hcov), which '
+        'with CC-1 gives it; the converse fails (ZeroParadox/Order/SnapCannotBe.lean). '
+        'MachinePhase meets it (the MachinePhase example in ZeroParadox/Order/Snap.lean stating '
+        'that c&#8321; covers &#8869;). Neither ordering of Q&#8322; supplies one at its 0. '
         'The snap does not fail in &#8477; by accident. In the order it fails because &#8477; '
         'is densely ordered, and in a dense order no element has a first step, 0 included; in '
         'the topology &#8477; is connected, so not totally disconnected (real_no_snap), a '
@@ -264,8 +267,8 @@ def build():
             'non-arbitrary) and (2) above the point left, the crossing is discrete: that point '
             'has a first step, a cover (HasFirstStep). Condition (1) is not required of every '
             'host: in the two-state carrier MachinePhase, where T-SNAP holds (t_snap_derived), '
-            'the landing c&#8321; covers the bottom c&#8320; (the example after '
-            't_snap_given_cover, ZeroParadox/Order/Snap.lean), so it has an immediate '
+            'the landing c&#8321; covers the bottom c&#8320; (the MachinePhase example in '
+            'ZeroParadox/Order/Snap.lean stating that c&#8321; covers &#8869;), so it has an immediate '
             'predecessor. Dense ordered fields fail condition (2) '
             'at every element (axb1_fails_everywhere_iff_dense). Their 0 also lacks an immediate '
             'predecessor, for the same reason, and without (2) that does not help. '
