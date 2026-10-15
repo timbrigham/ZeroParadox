@@ -71,13 +71,17 @@ def comparison_table():
            Paragraph('Q&#8322; 2-adic Numbers', CS['kr_hdr'])]
     rows = [
         ['Order: densely ordered, so no element, zero included, has a first step',
-         'Order: none supplied (Mathlib has no order instance on Q&#8322;), so density does not apply'],
+         'Order: no field order synthesizes in Mathlib. Under the norm preorder 0 is least and has '
+         'no first step (between 0 and any non-zero element lies one of smaller norm); under the '
+         'valuation order 0 is greatest'],
+        ['Topology: connected, so not totally disconnected (real_no_snap)',
+         'Topology: totally disconnected (t5_totallyDisconnected)'],
         ['Metric: 0 is a limit point of the non-zero reals',
          'Metric: 0 is a limit point too — the doubling orbit 2&#8319;x tends to 0 and does not reach it in finite time'],
         ['Infinity lives in the representation (infinite decimal = finite magnitude)',
          'Valuation: infinity is the address of 0 — v&#8322;(0) = +&#8734;, the greatest value; every nonzero element has a finite valuation'],
         ['The snap cannot occur — density blocks every candidate first step',
-         'The snap is not blocked by density, and no first step is supplied either (the step itself is AX-B1, a commitment)'],
+         'The topological obstruction is removed, and no first step is supplied (the step itself is AX-B1, a commitment)'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
                      Paragraph(fix(r[1]), CS['kr_body'])] for r in rows]
@@ -204,8 +208,10 @@ def build():
         'not the thing being noted. The number itself is finite and well-located '
         'on the line. Zero is a limit point: surrounded by non-zero reals, '
         'reachable as a limit but not isolated from them. That is a fact about the metric, '
-        'and the 2-adic zero shares it; what rules the snap out in &#8477; is the order, '
-        'which is dense.'))
+        'and the 2-adic zero shares it, so being a limit point does not separate the two. The '
+        'topology does: &#8477; is connected (real_no_snap) and Q&#8322; is totally disconnected '
+        '(t5_totallyDisconnected). For the snap\'s first step the order does: &#8477; is densely '
+        'ordered.'))
     E.append(cbody(
         'In Q&#8322;, the infinity is the <i>address</i> of zero. The 2-adic '
         'valuation assigns +&#8734; to 0 as its actual value, and no non-zero element '
@@ -281,8 +287,9 @@ def build():
         'away from, not a state it can stably occupy or return to. In &#8477;, zero '
         'has no such character: it is a regular point of a dense line, '
         'indistinguishable in structure from 1 or &#960;, with no first step above it. '
-        'The density is what disqualifies it (axb1_fails_everywhere_iff_dense); being '
-        'approached as a limit is not, since the 2-adic 0 is approached as a limit too '
+        'In the order, density is what disqualifies it (axb1_fails_everywhere_iff_dense); in '
+        'the topology, the line is connected (real_no_snap). Being approached as a limit is '
+        'not what disqualifies it, since the 2-adic 0 is approached as a limit too '
         '(floor_reach_separates_mu_nu).'))
     E.append(cbody(
         'The real number line treats zero as an ordinary point — a peer of every '
@@ -424,8 +431,10 @@ def build():
         'mathematics. They are also precisely the space where the Binary Snap '
         'cannot occur. They are densely ordered, so no element, zero included, has a first '
         'step: every candidate first step admits an infinite sequence of smaller steps below '
-        'it. Zero is also a limit point there, but so is the 2-adic zero; the order is what '
-        'decides.'))
+        'it. Zero is also a limit point there, but so is the 2-adic zero, so being a limit '
+        'point does not separate them. The order decides the first step, and the topology is a '
+        'second fence: &#8477; is connected (real_no_snap), Q&#8322; totally disconnected '
+        '(t5_totallyDisconnected).'))
     E.append(cbody(
         'Q&#8322; is not an exotic choice. Among all completions of the rationals, '
         'Ostrowski\'s theorem says there are exactly two kinds: Archimedean ones '
@@ -434,7 +443,8 @@ def build():
         'zero infinite valuation while every non-zero element has finite valuation). '
         'Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
         'the minimum prime compatible with binary existence. '
-        'The valuative distinction of zero is not imposed; it follows from the completion. '
+        'That zero\'s valuation is +&#8734; is set by definition, not produced by the '
+        'completion; what holds in Q&#8322; is that zero alone has it (padic_addVal_eq_top_iff). '
         'The framework did not choose unusual mathematics for its own sake. '
         'It followed the result to the structure the result required.'))
     E.append(cbody(

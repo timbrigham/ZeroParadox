@@ -87,6 +87,14 @@ example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.End) = ZeroParadox.botEnd
 #check_failure (inferInstance : LT ℚ_[2])
 -- Statement: under the norm preorder ℚ₂'s `0` is least, and the only point of norm `0`.
 example : ∀ x : ℚ_[2], ‖(0 : ℚ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 ↔ x = 0) := fun x => ⟨by simp, norm_eq_zero⟩
+-- Statement: and in that preorder `0` has no first step (`HasFirstStep`): below any `a` above `0` lies
+-- a `c` of strictly smaller nonzero norm (`NormedField.exists_norm_lt`).
+example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); ¬ ZeroParadox.HasFirstStep (0 : ℚ_[2]) :=
+  letI : Preorder ℚ_[2] := Preorder.lift (‖·‖)
+  fun ⟨a, h0a, hc⟩ =>
+    have ha : (0 : ℝ) < ‖a‖ := norm_zero (E := ℚ_[2]) ▸ h0a
+    let ⟨c, hc0, hca⟩ := NormedField.exists_norm_lt ℚ_[2] ha
+    hc (c := c) (show ‖(0 : ℚ_[2])‖ < ‖c‖ from norm_zero (E := ℚ_[2]) ▸ hc0) hca
 -- Reading: other chart, the valuation order: there `0` is greatest, `v 0 = ⊤` (`addVal_bot`,
 -- § POSITIVE — narrow uniqueness and infinite width).
 -- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,

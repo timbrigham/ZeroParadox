@@ -51,9 +51,13 @@ def build():
         'every nonzero element has a finite valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2 — '
         'the minimum prime compatible with binary existence (AX-B1). '
         'In both kinds zero is a metric limit of nonzero elements (for Q&#8322;, '
-        'floor_reach_separates_mu_nu), so the metric does not separate them; for &#8477; the '
-        'order does. '
-        'The infinite valuation of zero is not imposed from outside; it follows from the completion.'))
+        'floor_reach_separates_mu_nu), so being a limit point does not separate them. The '
+        'topology does: Q&#8322; is totally disconnected (ZP-B, t5_totallyDisconnected), while '
+        '&#8477; is connected, so not totally disconnected (real_no_snap). For the snap\'s first '
+        'step the order does: &#8477; is densely ordered (axb1_fails_everywhere_iff_dense). '
+        'That zero has valuation +&#8734; is set by definition, not produced by the completion: '
+        'Mathlib\'s Padic.addValuationDef assigns &#8868; to 0 by an explicit case. What holds in '
+        'Q&#8322; is that only 0 has infinite valuation (padic_addVal_eq_top_iff).'))
     E.append(sp(4))
 
     # ── II. The General Result ────────────────────────────────────────────────
@@ -153,14 +157,14 @@ def build():
     E.append(body(
         'ZP-F is self-contained and does not feed formally into any other layer. '
         'It is the negative complement to ZP-B: where ZP-B establishes that Q&#8322; '
-        'does not block the snap (its 2-adic topology is totally disconnected, padic_snaps, '
-        'with clopen balls), ZP-F establishes that &#8477; — and any linearly ordered field — '
+        'removes the topological obstruction to the snap (its 2-adic topology is totally '
+        'disconnected, t5_totallyDisconnected, with clopen balls), ZP-F establishes that &#8477; — and any linearly ordered field — '
         'cannot host it. Neither supplies the first step; that is AX-B1.'))
     E.append(body(
         'The dependency order of the framework places ZP-F as independent:'))
     E.append(data_table(
         ['Layer', 'Role', 'Dependency'],
-        [['ZP-B', 'p-Adic topology — Q&#8322; does not block the snap', 'ZP-A'],
+        [['ZP-B', 'p-Adic topology — Q&#8322; removes the topological obstruction', 'ZP-A'],
          ['ZP-F', 'Counterexample — &#8477; and ordered fields cannot host the snap', 'None (self-contained)'],
          ['ZP-G', 'Category theory', 'Self-contained; ZP-E conceptually']],
         [0.8*inch, 3.5*inch, 2.2*inch]
@@ -204,11 +208,15 @@ def build():
         'converges to 0 and does not reach it in finite time, while counting down in &#8469; '
         'reaches 0 in finitely many steps (floor_reach_separates_mu_nu). In the valuation chart '
         'zero sits at the other end: v(0) = +&#8734;, the greatest value, and no nonzero element '
-        'shares it (padic_addVal_eq_top_iff). Neither fact is a first step, and Mathlib supplies '
-        'no order instance on Q&#8322; in which to state one (ZeroParadox/BottomCannotBe.lean, &#167; ROLE). '
+        'shares it (padic_addVal_eq_top_iff). Neither fact is a first step. No order instance '
+        'on Q&#8322; synthesizes in Mathlib (LT &#8474;_[2] does not); in the corpus\'s norm '
+        'preorder 0 is least and has no first step, since between 0 and any nonzero a lies an '
+        'element of strictly smaller nonzero norm, and in the valuation order 0 is greatest, '
+        'v(0) = &#8868; (both in ZeroParadox/BottomCannotBe.lean, &#167; ROLE). '
         'The first step is AX-B1, a commitment. '
-        'The snap does not fail in &#8477; by accident. It fails because &#8477; is densely '
-        'ordered, and in a dense order no element has a first step, 0 included.'))
+        'The snap does not fail in &#8477; by accident. In the order it fails because &#8477; '
+        'is densely ordered, and in a dense order no element has a first step, 0 included; in '
+        'the topology &#8477; is connected (real_no_snap), a second and separate fence.'))
     E.append(sp(4))
 
     E.append(remark_box(
@@ -234,12 +242,16 @@ def build():
             'both describe a boundary approached but not reachable by finite steps on one '
             'side &#8212; but it is not a proved identification. The two structures live in '
             'different mathematical categories.',
-            'A domain that can host the snap must satisfy two conditions simultaneously, at '
+            'In the ordinal chart the snap meets two conditions at once, at '
             'opposite ends of the crossing: (1) below the landing, the boundary is a limit with '
             'no immediate predecessor (as &#949;&#8320; is approached by the tower and no '
             '&#945; has &#945; + 1 = &#949;&#8320; &#8212; what makes the threshold '
             'non-arbitrary) and (2) above the point left, the crossing is discrete: that point '
-            'has a first step, a cover (HasFirstStep). Dense ordered fields fail condition (2) '
+            'has a first step, a cover (HasFirstStep). Condition (1) is not required of every '
+            'host: in the two-state carrier MachinePhase, where T-SNAP holds (t_snap_derived), '
+            'the landing c&#8321; covers the bottom c&#8320; (the example after '
+            't_snap_given_cover, ZeroParadox/Order/Snap.lean), so it has an immediate '
+            'predecessor. Dense ordered fields fail condition (2) '
             'at every element (axb1_fails_everywhere_iff_dense). Their 0 also lacks an immediate '
             'predecessor, for the same reason, and without (2) that does not help. '
             'In the non-standard naturals *&#8469; with '
@@ -287,8 +299,9 @@ def build():
             'is required to exclude them, has not been determined. '
             '(Informal &#8212; not a result of this document.)',
             'Development path toward a formal theorem: prove the two conditions as '
-            'independent Lean results (density impossibility established here; limit ordinal '
-            'necessity established in ZP-L), then prove they agree on the same structural '
+            'independent Lean results (density impossibility established here; &#949;&#8320; '
+            'a limit ordinal, the Order.IsSuccLimit example in '
+            'ZeroParadox/Order/SnapCannotBe.lean), then prove they agree on the same structural '
             'point. The surreal case is the critical test of whether two conditions are '
             'jointly sufficient.',
         ]
