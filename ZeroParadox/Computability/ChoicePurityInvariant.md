@@ -7,10 +7,13 @@ In the sections below, "this file" and "here" refer to
 
 ## The honest answer, and what the Lean witnesses
 
-Lean cannot quantify over its own axiom footprint inside a `Prop`: no object-level proposition can say
-"this proof term omits `Classical.choice`." So "μ is choice-free" cannot be made *directly* load-bearing
-in a statement. The only way to put constructive content IN the statement is to exhibit the μ-witness
-through a genuinely constructive proxy. That is what this file does, and it is the load-bearing new
+A proposition about a proof cannot see that proof's axiom footprint: a predicate on the proofs of one
+proposition takes the same value at every proof (proof irrelevance; measured 2026-10-14 by the `example`
+just before this file's `PurityCheck` section, which closes by `Iff.rfl`), so no proposition about the
+proof can say "this proof term omits `Classical.choice`." So "μ is choice-free" cannot be made
+*directly* load-bearing in a statement; the footprint is read at the meta level (`#print axioms`), not
+by a proposition about the proof. The only way to put constructive content IN the statement is to
+exhibit the μ-witness through a genuinely constructive proxy. That is what this file does, and it is the load-bearing new
 content over `fix_isEmpty`:
 
 * **μ side — a strictly more constructive witness than the existing one.** `QPF.Fix idPF_Coalgebra.Obj` is by

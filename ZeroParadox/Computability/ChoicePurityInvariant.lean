@@ -73,6 +73,12 @@ theorem root_purity_split :
     IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj) ∧ Nonempty (Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ⟨fix_isEmpty_constructive, cofix_nonempty'⟩
 
+-- Statement: a predicate on the proofs of one proposition takes the same value at every proof; the
+-- kernel identifies any two proofs of `p` (proof irrelevance), so `Iff.rfl` closes it.
+-- Reading: so no proposition about a proof of `p` separates one that uses `Classical.choice` from one
+-- that does not; the footprint is read at the meta level (`#print axioms`), not by such a proposition.
+example (p : Prop) (P : p → Prop) (h₁ h₂ : p) : P h₁ ↔ P h₂ := Iff.rfl
+
 section PurityCheck
 -- Measured footprint (lake build, v4.30.0-rc2):
 --   w_isEmpty                 : (no axioms)                                   — bare WType eliminator

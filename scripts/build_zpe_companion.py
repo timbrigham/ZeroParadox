@@ -1,6 +1,6 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.26 | October 2026
+Version 1.27 | October 2026
 """
 
 import os
@@ -171,7 +171,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -272,7 +272,7 @@ def build():
     E.append(Paragraph('The Central Advance: AX-1 Retired, T-SNAP Proves the Shape', CS['h1']))
     E.append(cbody(
         'In earlier versions, the Binary Snap causality was listed as AX-1 — an axiom: a '
-        'foundational assumption that could not be derived. The claim was: when P₀ is reached, '
+        'foundational assumption, taken without derivation. The claim was: when P₀ is reached, '
         'the Snap happens. Why? Because AX-1 says so. That claim bundled two things: the shape of '
         'the Snap (what a step off ⊥ looks like) and its occurrence (that the step is taken). '
         'AX-1 is now retired, and its content was split in two: T-SNAP proves the shape, and that the Snap occurs is stated separately: it follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2).'))

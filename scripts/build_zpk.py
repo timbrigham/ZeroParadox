@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.26 | October 2026
+Version 1.27 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -542,12 +542,16 @@ def build():
     E.append(Paragraph('III. What Changed for DA-1', S['h2']))
     E.append(body(
         'ZP-E\'s DA-1 section previously carried the designation "Outside Lean Scope" with '
-        'three justifications: Path 1 requires ZF+AFA (incompatible with Lean\'s CIC/MLTT); '
+        'three justifications: Path 1 requires ZF+AFA, which ZP-E held incompatible with Lean\'s CIC/MLTT; '
         'Path 3 requires Kolmogorov complexity (uncomputable, absent from Mathlib); Path 2 '
         'requires a step from unbounded surprisal to executing, which ZP-E names a bridge '
         'principle of its own, a missing principle and not a missing proof.'))
     E.append(body(
-        'For Path 1 (AFA structural), the Lean counterpart is da1_closed_concrete, which proves '
+        'For Path 1 (AFA structural), in Lean the two charts split: Mathlib\'s ZFSet, a model of '
+        'ZFC, contains no set that is a member of itself (no_quine_atom), while outside ZFSet '
+        'Lean hosts a one-atom model whose distinguished element is its own unique self-member '
+        '(the QuineHost instance on OneAtom, ZeroParadox/Settheory/QuineHost.lean &#167; V). '
+        'The Lean counterpart of Path 1 is da1_closed_concrete, which proves '
         'IsQuineAtom (⊥ : MachinePhase) and nothing computational: in the AFAStructure '
         'typeclass, selfMem encodes ⊥ = {⊥} in CIC-compatible form, and the proof obligation '
         'is discharged by the MachinePhase instance. Path 3 (computational) is NOT resolved '

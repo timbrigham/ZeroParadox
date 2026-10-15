@@ -146,6 +146,13 @@ theorem bot_unique {L : Type*} [ZPSemilattice L]
   have hyb : y = bot := (da2_bottom_characterization y).mp hy
   rw [hxb, hyb]
 
+/-- **`Statement:` `quine_unique` does not follow from the other two fields.** On the two-state
+    lattice `MachinePhase`, the predicate true of every element meets `bot_self_mem` and fails
+    `quine_unique`, since `initial ≠ running`. -/
+theorem quine_unique_independent :
+    ¬ ∀ sm : MachinePhase → Prop, sm bot → ∀ x y, sm x → sm y → x = y := fun h =>
+  absurd (h (fun _ => True) trivial .initial .running trivial trivial) (by decide)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -164,5 +171,6 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms bot_is_quine_atom
 #print axioms t_exec_iff
 #print axioms t_exec_triple_iff
+#print axioms quine_unique_independent
 
 end PurityCheck

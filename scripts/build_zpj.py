@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.11 | October 2026
+Version 2.12 | October 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.11'
+VERSION = '2.12'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -146,8 +146,9 @@ def build():
             'Informally: the Quine atom is unique. Self-containment is a property held by at '
             'most one element of any AFA-structured type.',
             'Lean: AFAStructure.quine_unique &#8212; encoded as a typeclass field, not a theorem, '
-            'because AFA is a foundational axiom and cannot be derived from type-theoretic '
-            'principles alone for an arbitrary selfMem. It is a hypothesis every theorem here '
+            'because it does not follow from the other two fields: on the two-state lattice '
+            'MachinePhase, the selfMem true of every element meets bot_self_mem while two distinct '
+            'elements satisfy it (quine_unique_independent). It is a hypothesis every theorem here '
             'carries, and (Section III.II) any lattice can meet it by a trivial choice of selfMem.',
         ]
     ))
