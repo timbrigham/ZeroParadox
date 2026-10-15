@@ -162,7 +162,9 @@ def build():
         'It is the negative complement to ZP-B: where ZP-B establishes that Q&#8322; '
         'removes the topological obstruction to the snap (its 2-adic topology is totally '
         'disconnected, t5_totallyDisconnected, with clopen balls), ZP-F establishes that &#8477; — and any linearly ordered field — '
-        'cannot host it. Neither supplies the first step; that is AX-B1.'))
+        'cannot host it. Neither supplies the first step the snap needs, a cover of &#8869; on '
+        'the state carrier: that is AX-B1, the cover hypothesis of t_snap_given_cover, met by '
+        'MachinePhase.'))
     E.append(body(
         'The dependency order of the framework places ZP-F as independent:'))
     E.append(data_table(
