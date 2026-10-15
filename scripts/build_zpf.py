@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.11)
+Build ZP-F: The Counterexamples (v1.12)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -46,11 +46,21 @@ def build():
     E.append(body(
         'This result contextualises the choice of Q&#8322; in ZP-B. Among all completions '
         'of &#8474;, Ostrowski\'s theorem identifies exactly two kinds: Archimedean completions '
-        '(such as &#8477;, where zero is a limit point and density excludes any floor) and '
-        'non-Archimedean completions (&#8474;<sub>p</sub>, where zero is valuatively distinguished '
-        '(v<sub>p</sub>(0) = +&#8734;) from all nonzero elements). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2 — '
+        '(&#8477;, a densely ordered field, so no element has a first step) and '
+        'non-Archimedean completions (&#8474;<sub>p</sub>, where v<sub>p</sub>(0) = +&#8734; while '
+        'every nonzero element has a finite valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2 — '
         'the minimum prime compatible with binary existence (AX-B1). '
-        'The valuative gap at zero is not imposed from outside; it follows from the completion.'))
+        'In both kinds zero is a metric limit of nonzero elements (for Q&#8322;, '
+        'floor_reach_separates_mu_nu), so being a limit point does not separate them. The '
+        'topology does: Q&#8322; is totally disconnected (ZP-B, t5_totallyDisconnected), while '
+        '&#8477; is connected, so not totally disconnected (real_no_snap). The order separates '
+        'them globally, not at zero: at 0 neither has a first step (&#8477; in its field order, '
+        'Q&#8322; in its norm preorder), and globally &#8477; is '
+        'densely ordered (axb1_fails_everywhere_iff_dense) while Q&#8322;\'s norm preorder is '
+        'not dense (&#167;VI). '
+        'That zero has valuation +&#8734; is set by definition, not produced by the completion: '
+        'Mathlib\'s Padic.addValuationDef assigns &#8868; to 0 by an explicit case. What holds in '
+        'Q&#8322; is that only 0 has infinite valuation (padic_addVal_eq_top_iff).'))
     E.append(sp(4))
 
     # ── II. The General Result ────────────────────────────────────────────────
@@ -150,13 +160,17 @@ def build():
     E.append(body(
         'ZP-F is self-contained and does not feed formally into any other layer. '
         'It is the negative complement to ZP-B: where ZP-B establishes that Q&#8322; '
-        'can host the snap (via the 2-adic valuation and clopen ball structure), '
-        'ZP-F establishes that &#8477; — and any linearly ordered field — cannot.'))
+        'removes the topological obstruction to the snap (its 2-adic topology is totally '
+        'disconnected, t5_totallyDisconnected, with clopen balls), ZP-F establishes that &#8477; — and any linearly ordered field — '
+        'cannot host it. Neither supplies the first step AX-B1 commits to, a cover of &#8869; on '
+        'the state carrier (HasFirstStep). t_snap_given_cover assumes the run\'s first step is '
+        'such a cover (hcov), which with CC-1 gives it; MachinePhase meets it (c&#8321; covers '
+        'its &#8869;, c&#8320;).'))
     E.append(body(
         'The dependency order of the framework places ZP-F as independent:'))
     E.append(data_table(
         ['Layer', 'Role', 'Dependency'],
-        [['ZP-B', 'p-Adic topology — Q&#8322; hosts the snap', 'ZP-A'],
+        [['ZP-B', 'p-Adic topology — Q&#8322; removes the topological obstruction', 'ZP-A'],
          ['ZP-F', 'Counterexample — &#8477; and ordered fields cannot host the snap', 'None (self-contained)'],
          ['ZP-G', 'Category theory', 'Self-contained; ZP-E conceptually']],
         [0.8*inch, 3.5*inch, 2.2*inch]
@@ -186,14 +200,41 @@ def build():
         'Q&#8322; is not chosen against &#8477;; it is what remains after &#8477; — '
         'and every Archimedean completion — has been ruled out.'))
     E.append(body(
-        'The structural difference that the Ostrowski classification makes precise can be '
-        'stated directly. In any Archimedean completion, zero is a limit point: every '
-        'neighbourhood of zero contains a smaller positive element. The snap requires zero '
-        'to be something different — a structural origin from which the first departure is '
-        'forced, with no smaller departure possible. In Q&#8322;, zero carries the infinite '
-        '2-adic valuation; it is valuatively distinguished from every nonzero element. That removes the density obstruction; it does not by itself supply a first step, since the 2-adic norm values accumulate at 0 and Q&#8322; has no closest nonzero element either. The first step is AX-B1. '
-        'The snap does not fail in &#8477; by accident. It fails because &#8477; and the '
-        'snap require incompatible roles for zero: limit point versus structural origin.'))
+        'The structural difference can be stated directly. It has two fences, the order and the '
+        'topology, and the order separates &#8477; from Q&#8322; globally, not at zero. '
+        'The snap needs the point it leaves to have a first step: an element directly above it '
+        'with nothing strictly between, a cover (HasFirstStep, AX-B1). An ordered field has no '
+        'bottom element; its 0, which plays that role here, has no first step '
+        '(axb1_fails_in_ordered_field). That is one instance of a stronger fact: an order is '
+        'dense if and only if no element at all has a first step '
+        '(axb1_fails_everywhere_iff_dense). The equivalence quantifies over every element, so '
+        'density rules out a first step at 0, and one element without a first step does not '
+        'make an order dense. In the metric chart zero is a limit point of the nonzero elements, '
+        'in &#8477; and equally in Q&#8322;; so being a limit point does not decide the snap. '
+        'Q&#8322;\'s zero is a floor of the limit kind: the doubling orbit of a nonzero element '
+        'converges to 0 and does not reach it in finite time, while counting down in &#8469; '
+        'reaches 0 in finitely many steps (floor_reach_separates_mu_nu). In the valuation chart '
+        'zero sits at the other end: v(0) = +&#8734;, the greatest value, and no nonzero element '
+        'shares it (padic_addVal_eq_top_iff). Neither fact is a first step. No order instance '
+        'on Q&#8322; synthesizes in Mathlib (LT &#8474;_[2] does not). Take instead the norm '
+        'preorder of the &#167; ROLE examples in ZeroParadox/BottomCannotBe.lean '
+        '(Preorder.lift of the norm). At zero the order does not separate the two: 0 is least and, as '
+        'in &#8477;\'s field order, has no first step, since between 0 and any nonzero a lies an element of '
+        'strictly smaller nonzero norm, and that holds in any nontrivially normed field, '
+        '&#8477;\'s norm preorder included. Globally the order does: that preorder is not dense, since 2 has the first '
+        'step 1 (the norms are 1/2 and 1, and no norm lies strictly between; the next example '
+        'there), while &#8477; is densely ordered. In the valuation order 0 is greatest, '
+        'v(0) = &#8868; (addVal_bot). '
+        'The first step AX-B1 commits to is a cover of &#8869; on the state carrier, in ZP-A\'s '
+        'induced order (HasFirstStep), a commitment. t_snap_given_cover '
+        '(ZeroParadox/Order/Snap.lean) assumes the run\'s first step is such a cover (hcov), which '
+        'with CC-1 gives it; the converse fails (ZeroParadox/Order/SnapCannotBe.lean). '
+        'MachinePhase meets it (the MachinePhase example in ZeroParadox/Order/Snap.lean stating '
+        'that c&#8321; covers &#8869;). Neither ordering of Q&#8322; supplies one at its 0. '
+        'The snap does not fail in &#8477; by accident. In the order it fails because &#8477; '
+        'is densely ordered, and in a dense order no element has a first step, 0 included; in '
+        'the topology &#8477; is connected, so not totally disconnected (real_no_snap), a '
+        'second and separate fence.'))
     E.append(sp(4))
 
     E.append(remark_box(
@@ -219,11 +260,19 @@ def build():
             'both describe a boundary approached but not reachable by finite steps on one '
             'side &#8212; but it is not a proved identification. The two structures live in '
             'different mathematical categories.',
-            'A domain that can host the snap must satisfy two conditions simultaneously: '
-            '(1) the boundary is a genuine limit (no nearest neighbour &#8212; what makes '
-            'the threshold non-arbitrary) and (2) the crossing is discrete (a step, not a '
-            'continuous transition). Dense ordered fields have condition (1) but density '
-            'makes condition (2) impossible. In the non-standard naturals *&#8469; with '
+            'In the ordinal chart the snap meets two conditions at once, at '
+            'opposite ends of the crossing: (1) below the landing, the boundary is a limit with '
+            'no immediate predecessor (as &#949;&#8320; is approached by the tower and no '
+            '&#945; has &#945; + 1 = &#949;&#8320; &#8212; what makes the threshold '
+            'non-arbitrary) and (2) above the point left, the crossing is discrete: that point '
+            'has a first step, a cover (HasFirstStep). Condition (1) is not required of every '
+            'host: in the two-state carrier MachinePhase, where T-SNAP holds (t_snap_derived), '
+            'the landing c&#8321; covers the bottom c&#8320; (the MachinePhase example in '
+            'ZeroParadox/Order/Snap.lean stating that c&#8321; covers &#8869;), so it has an immediate '
+            'predecessor. Dense ordered fields fail condition (2) '
+            'at every element (axb1_fails_everywhere_iff_dense). Their 0 also lacks an immediate '
+            'predecessor, for the same reason, and without (2) that does not help. '
+            'In the non-standard naturals *&#8469; with '
             'the order topology, every element has an immediate predecessor, so there is '
             'no limit point at infinity in the order-topology sense; condition (1) fails '
             'informally. (This *&#8469; observation is informal &#8212; not a proved result '
@@ -268,8 +317,9 @@ def build():
             'is required to exclude them, has not been determined. '
             '(Informal &#8212; not a result of this document.)',
             'Development path toward a formal theorem: prove the two conditions as '
-            'independent Lean results (density impossibility established here; limit ordinal '
-            'necessity established in ZP-L), then prove they agree on the same structural '
+            'independent Lean results (density impossibility established here; &#949;&#8320; '
+            'a limit ordinal, the Order.IsSuccLimit example in '
+            'ZeroParadox/Order/SnapCannotBe.lean), then prove they agree on the same structural '
             'point. The surreal case is the critical test of whether two conditions are '
             'jointly sufficient.',
         ]

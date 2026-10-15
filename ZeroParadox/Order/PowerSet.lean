@@ -1,20 +1,20 @@
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Grade
 import Mathlib.Tactic
 
 /-!
 # ZP-H Extension: Power Set Lattice as Structural Floor Witness
 
-This file verifies that the power set lattice 𝒫(S) — represented via `Finset α` — is a
-member of the structural floor class: the bottom element (∅) is not a limit point of the
-non-bottom elements.
-
-The argument is elementary. Any nonempty finset has cardinality ≥ 1, so there is a discrete
-gap of size 1 between ∅ and every nonempty set. No sequence of nonempty finsets can converge
-to ∅ in the cardinality depth metric. The bottom is a structural floor, not a limit.
-
-This is proved independently of ZPA–ZPH to demonstrate that the structural floor property
-holds for its own reasons in this domain — the same class condition, a different witness.
+The structural floor class is an ORDER property: the bottom has a first step, `HasFirstStep` (`⊥ ⋖ a`,
+AX-B1, `ZeroParadox/Reals/OrderedField.lean`). Density rules one out at every element, the bottom
+included; `axb1_fails_everywhere_iff_dense` quantifies over all elements, so one element without a
+first step does not make an order dense. In `Finset α` under inclusion, ∅ is covered by every
+singleton (the `example` after T-PS6). Statement: CARRIER, the depth chart. Every nonempty finset has
+cardinality ≥ 1 (`ps_nonempty_depth_pos`), so ∅ is no limit of nonempty finsets in that depth. That
+does not decide the class: ℚ₂'s 0 is the limit of the doubling orbit, not reached in finite time, where
+ℕ's 0 is (`floor_reach_separates_mu_nu`); `LT ℚ_[2]` does not synthesize (`ZeroParadox/BottomCannotBe.lean`
+§ ROLE), so a cover there is not stated. Proved independently of ZPA–ZPH: the same order property.
 
 ## Engineer's Take
 
@@ -70,15 +70,21 @@ The gap between ∅ and the simplest nonempty set is exactly 1 — a singleton.
 theorem ps_no_subgap (A : Finset α) (hA : A ≠ ∅) : ¬ psDepth A < 1 := by
   exact Nat.not_lt.mpr (ps_nonempty_depth_pos A hA)
 
-/-! ## T-PS6: The class condition
+/-! ## T-PS6: A depth threshold above ∅
 
-∅ is not a limit point of the non-empty finsets: there exists a depth threshold (1)
-below which no nonempty finset can fall. This is the structural floor property.
+Depth chart: a threshold (1) below which no nonempty finset can fall. This is not the class
+condition, which is the order property, a first step off ∅; the `example` after this theorem
+measures that.
 -/
 
 theorem ps_structural_floor :
     ∃ gap : ℕ, 0 < gap ∧ ∀ A : Finset α, A ≠ ∅ → gap ≤ psDepth A := by
   exact ⟨1, Nat.one_pos, fun A hA => ps_nonempty_depth_pos A hA⟩
+
+-- `Statement:` ∅, ⊥ of `Finset α` under inclusion, is covered by every singleton (Mathlib's
+-- `Finset.empty_covBy_singleton`); for inhabited `α` that is `HasFirstStep ∅`
+-- (`ZeroParadox/Reals/OrderedField.lean`).
+example : ∀ a : α, (∅ : Finset α) ⋖ {a} := Finset.empty_covBy_singleton
 
 /-- Statement: a descending orbit of finsets that shrinks at every nonempty step (removing an element
     is one) is `∅` from step `(S 0).card` on. Analogs: `descent_with_strict_steps_reaches_floor`
