@@ -304,9 +304,14 @@ def classify_record_failure(rc, ledger_answers):
 # GUARDS, not which file is the brief, and a fixture somebody is editing gets fenced ("differs from
 # the index") and turns every row into a could-not-ask. LICENSE is the tracked file least likely to
 # be mid-edit. The ledger accepts it as evidence (dry run, 2026-10-14, `validate -> {"ok": true`).
+# ⚠ THE BASIS IS PINNED (V11 collision, 2026-10-15): the default INDEX basis is the live tree, and a
+# REAL copy_editor record there made the clean rows fail V11 (one record per step/basis/revision).
+# 3148eef (2026-08-15) is LICENSE's last change, so its blob matches today's, and it predates the
+# copy_editor step, so no real copy_editor record sits at that commit basis.
+SELFTEST_REF = ['--ref', '3148eef68086dcb54649ee8ca6602d59db5b58e2']
 PANEL_BASE = ['--step', 'copy_editor', '--verdict', 'pass', '--files', 'LICENSE', '--tier', 'A',
               '--how', 'panel', '--passes', '3', '--agreed', '2', '--who', 'copy_editor',
-              '--evidence', 'LICENSE', '--run', 'selftest-check_briefs', '--dry-run']
+              '--evidence', 'LICENSE', '--run', 'selftest-check_briefs', '--dry-run'] + SELFTEST_REF
 # A dry run asks gitRobot to verify the subjects FIRST, then the ledger to validate, so either
 # service being down is a could-not-ask, never a finding about record.py's guards.
 OUTAGE = ('verdictLedger unreachable', 'verdictLedger returned no usable payload',
@@ -720,7 +725,7 @@ def selftest():
     FAIL3 = with_flag(AGREE, '--verdict', 'fail') + ['--reason', 'selftest']
     OTHER = ['--step', 'editorial', '--verdict', 'pass', '--files', 'LICENSE', '--tier', 'A',
              '--how', 'delegated', '--who', 'editorial', '--evidence', 'LICENSE',
-             '--run', 'selftest-check_briefs', '--dry-run']
+             '--run', 'selftest-check_briefs', '--dry-run'] + SELFTEST_REF
     UNTAGGED = {'severity': 'ordinary', 'note': 'selftest: untagged'}
     for label, args, outst, fail in (
             ('copyed admits  UNDECIDED, meaning finding (M18)', UNDEC,
