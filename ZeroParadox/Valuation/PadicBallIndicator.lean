@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the p-adic norm-ball indicator as an element of L²(ℤ_p) and its L² norm, the first brick of the van der Put ball-indicator basis. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the p-adic norm-ball indicator as an element of L²(ℤ_p) and its L² norm. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.PadicHaar
 import Mathlib.MeasureTheory.Function.L2Space
 import Mathlib.MeasureTheory.Function.LpSpace.Indicator
@@ -26,8 +26,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 Realizes the indicator `𝟙_{‖·‖ ≤ p⁻ⁿ}` of a p-adic norm-ball as an actual vector in `L²(ℤ_p, haarZp)`
 (via Mathlib's `indicatorConstLp`), and computes its L² norm: `‖𝟙_ball‖ = (p⁻ⁿ)^(1/2)`. The norm drops
 straight out of `‖𝟙_s‖ = μ(s)^(1/2)` together with the ball measure `haarZp_ball` (`μ(ball) = p⁻ⁿ`).
-These ball indicators are the first brick of the van der Put ball-indicator basis. All standard once
-the measure exists; no novelty claimed.
+A Kozyrev wavelet is an additive character times a ball indicator (`PadicKozyrev`). All standard
+once the measure exists; no novelty claimed.
 
 ## Structure
 - § I   Measurability of the norm-ball

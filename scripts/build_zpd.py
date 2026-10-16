@@ -1,11 +1,11 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.16)
+Build ZP-D: State Layer (Hilbert Space) (v1.17)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -118,7 +118,7 @@ def build():
     ]))
     E.append(sp(4))
     E.append(remark_box('Remark R-PA — What T Is, in Standard Terms (Prior Art)', [
-        'Representing the clopen-ball structure of Q<sub>2</sub> by an orthonormal system in a Hilbert space is the standard p-adic construction, not a ZP novelty: the indicator functions of clopen balls form an orthonormal basis for locally constant functions (the van der Put basis), which refines to Kozyrev\'s p-adic wavelet basis of L<super>2</super>(&#8474;<sub>2</sub>) &#8212; the analog of the Haar basis and an eigenbasis of the Vladimirov operator (Kozyrev, 2002). p-adic quantum mechanics builds Hilbert-space state models (the "p-adic qubit") on the same structure.',
+        'Representing the clopen-ball structure of Q<sub>2</sub> by orthogonal unit vectors in a Hilbert space is the standard p-adic construction, not a ZP novelty. In L<super>2</super> of the Haar measure, the indicator functions of two disjoint balls of one level are orthogonal and of equal length, so the normalized indicators of the balls of one level form an orthonormal system; T\'s basis assignment (T2) follows that pattern at level k. Indicators of nested balls are not orthogonal, since the smaller ball has positive measure. An orthonormal basis of L<super>2</super>(&#8474;<sub>p</sub>) built on balls is Kozyrev\'s p-adic wavelet basis &#8212; the analog of the Haar basis and an eigenbasis of the Vladimirov operator (Kozyrev, 2002). The van der Put basis, also made of ball indicators, expands every continuous function from &#8484;<sub>p</sub> to &#8484;<sub>p</sub> as a series; its balls nest, so it is not an orthonormal system in L<super>2</super>. p-adic quantum mechanics builds Hilbert-space state models (the "p-adic qubit") on the same structure.',
         'ZP-D\'s contribution is not the embedding itself but the specific reading in DP-1 &#8212; clopen separation &#8614; orthogonality &#8212; that carries the Binary Snap into the state layer. T is an instance of the recognized construction, applied to the snap.',
     ]))
 
