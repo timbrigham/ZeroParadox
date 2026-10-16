@@ -175,26 +175,55 @@ from 0 by a discrete gap — the topological identity of the Snap. -/
 theorem t3_isolation (r : ℝ) (hr : r ≠ 0) : IsClopen (Metric.closedBall (0 : Q₂) r) :=
   t2_closedBall_isClopen 0 r hr
 
-/-- D5: The Minimum Viable Deviation, written `2 ^ k` for an integer EXPONENT `k`.
+/-- D5 support: the real norm threshold `2 ^ k`. This is ZP-B's ε₀ of ℚ₂, never `Ordinal.epsilon 0`.
 
-    **Corrected 2026-07-28.** The previous docstring said "`k` is the maximum 2-adic valuation
-    accessible", which contradicts this file's own ball convention `B(0, 2⁻ⁿ)`: a *maximum*
-    valuation gives a *minimum* scale, so the exponent is `k = -v` where `v` is that valuation.
-    `k` is the exponent, `v` is the valuation, and they differ by sign. No semantic change —
-    the definition is unaltered, and `k : ℤ` was always free to be negative.
-
-    Structural role universal; value contingent — contingent on the **chosen exponent `k`**, i.e.
-    on which valuation is taken to be the finest accessible one. That is a normalisation choice,
-    **not** a physical measurement and **not** a dimension: ε₀ is a *position* (`Ordinal.epsilon 0`,
-    Veblen (1,0), the least fixed point of `α ↦ ω^α` — **not** an order-adjacent step above ⊥;
-    see `epsilonZero_tower_lt`) and a position carries no units, exactly
-    as ⊥ carries none. (Corrected 2026-07-29: an earlier revision said "it is dimensionful, so it
-    depends on a choice of units", which imported a magnitude reading of ε₀ and contradicted the
-    same box's own no-physical-claims disclaimer.)
-
-    **Note this definition is inert**: nothing in the development depends on it. It records the
-    framework's parameterization of the snap threshold, not a load-bearing construction. -/
+    ε₀ of ℚ₂ is a role, the minimum viable deviation from ℚ₂'s `0`, and its occupant is a POINT of
+    ℚ₂ named only by its rung: any point whose 2-adic valuation is the chosen finest accessible
+    valuation `v`. Such a point has norm `eps0 (-v)` (first `example` below), shared by every point
+    at that rung, so the rung fixes the norm and not the point (second `example`). ℚ₂ supplies no
+    least nonzero norm (the `¬ HasFirstStep` example in `ZeroParadox/BottomCannotBe.lean` § ROLE),
+    so the role is filled only relative to the chosen `v`. The requirement list of the ordinal
+    chart (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b) does not transfer to this carrier.
+    Inert: nothing in the development depends on this definition. -/
 noncomputable def eps0 (k : ℤ) : ℝ := 2 ^ k
+
+-- Statement: every nonzero point `x` of ℚ₂ has norm `eps0 (-v)`, where `v` is its 2-adic valuation.
+example (x : Q₂) (hx : x ≠ 0) : ‖x‖ = eps0 (-x.valuation) := by
+  rw [Padic.norm_eq_zpow_neg_valuation hx, eps0]; norm_num
+
+-- Statement: at every rung `v`, the distinct points `2 ^ v` and `-(2 ^ v)` of ℚ₂ both have
+-- valuation `v` and norm `eps0 (-v)`.
+example (v : ℤ) :
+    ((2 : Q₂) ^ v).valuation = v ∧ (-((2 : Q₂) ^ v)).valuation = v ∧
+    (2 : Q₂) ^ v ≠ -((2 : Q₂) ^ v) ∧
+    ‖(2 : Q₂) ^ v‖ = eps0 (-v) ∧ ‖-((2 : Q₂) ^ v)‖ = eps0 (-v) := by
+  have hv : ((2 : Q₂) ^ v).valuation = v := by
+    have h := Padic.valuation_zpow (p := 2) (2 : Q₂) v
+    have h2 : (2 : Q₂).valuation = 1 := by exact_mod_cast Padic.valuation_p (p := 2)
+    rw [h, h2, mul_one]
+  have hn : ‖(2 : Q₂) ^ v‖ = eps0 (-v) := by
+    have := Padic.norm_p_zpow (p := 2) v
+    simpa [eps0] using this
+  have h0 : (2 : Q₂) ^ v ≠ 0 := zpow_ne_zero v two_ne_zero
+  have h1 : (-1 : Q₂).valuation = 0 := by
+    have := Padic.valuation_intCast (p := 2) (-1)
+    push_cast at this
+    rw [this]
+    simp
+  have hneg : (-((2 : Q₂) ^ v)).valuation = v := by
+    rw [neg_eq_neg_one_mul, Padic.valuation_mul (by norm_num) h0, hv, h1, zero_add]
+  refine ⟨hv, hneg, fun h => h0 ?_, hn, by rw [norm_neg, hn]⟩
+  have : (2 : Q₂) * (2 : Q₂) ^ v = 0 := by
+    rw [two_mul]; nth_rewrite 2 [h]; exact add_neg_cancel _
+  exact (mul_eq_zero.mp this).resolve_left two_ne_zero
+
+-- Statement: ZP-B T3's scope: a nonzero point of ℚ₂ lies in the ball `B(0, 2^(-j))` exactly when
+-- `j` is at most its valuation.
+example (x : Q₂) (hx : x ≠ 0) (j : ℤ) : ‖x‖ ≤ (2 : ℝ) ^ (-j) ↔ j ≤ x.valuation := by
+  rw [Padic.norm_eq_zpow_neg_valuation hx]
+  push_cast
+  rw [zpow_le_zpow_iff_right₀ (by norm_num : (1 : ℝ) < 2)]
+  omega
 
 /-! ## Theorem T5 — Q₂ is Totally Disconnected
 

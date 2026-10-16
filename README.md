@@ -79,13 +79,13 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | File | Document | Version | Focus |
 |------|----------|---------|-------|
 | [Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.32 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
-| [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.20 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
+| [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.21 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.26 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
-| [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.17 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
+| [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.18 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
 | [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.55 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.12 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.23 | The categorical layer: ⊥ as initial object, the informational singularity. |
-| [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.26 | The categorical bridge: the snap holding under all four domain functors. |
+| [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.27 | The categorical bridge: the snap holding under all four domain functors. |
 | [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.7 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
 | [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.28 | Inside zero: each nowhere-zero 2-adic sequence whose valuation equals a depth index in ℕ that climbs at every step converges to 0 in the 2-adics; reading that limit as an occupant of the ⊥ role, and then as a successor ⊥′, are two further commitments. |
 | [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.12 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |

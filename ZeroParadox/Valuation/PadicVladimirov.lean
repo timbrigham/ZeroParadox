@@ -79,13 +79,13 @@ theorem measure_ball_diff (k : ℕ) :
   rw [measure_diff hsub (ball_measurableSet (k + 1)).nullMeasurableSet (measure_ne_top _ _),
     haarZp_ball, haarZp_ball]
 
-/-! ## § IV — A connection-matrix entry: D^α of a ball indicator at the center -/
+/-! ## § IV — One value of D^α: a ball indicator at the center -/
 
 /-- The radius-`p⁻ᵐ` ball indicator `𝟙_{‖·‖ ≤ p⁻ᵐ}` as a function `ℤ_p → ℂ`. -/
 noncomputable def ballFun (m : ℕ) : ℤ_[p] → ℂ :=
   Set.indicator {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-(m : ℤ))} (fun _ => 1)
 
-/-- **Connection-matrix entry (Fourier-free).** `D^α` of the radius-`p⁻¹` ball indicator, evaluated at
+/-- **D^α of a ball indicator at the center (Fourier-free).** `D^α` of the radius-`p⁻¹` ball indicator, evaluated at
     the center `0`, is the units-shell mass `1 - p⁻¹` — and `α` drops out, because the units have norm
     `1` so the singular kernel equals `1` on the whole support. (This is one value of `D^α` on the
     ball-indicator family, not a full eigenvalue: a genuine eigenfunction is a Kozyrev wavelet, which
@@ -120,9 +120,9 @@ theorem vladimirov_ballFun_one_zero (α : ℝ) :
   push_cast
   ring
 
-/-! ## § V — The general-`m` connection entry: `D^α 𝟙_{ball p⁻ᵐ}(0)`
+/-! ## § V — The general-`m` value: `D^α 𝟙_{ball p⁻ᵐ}(0)`
 
-The general-`m` matrix entry generalizes § IV (`m = 1`) by peeling one shell at a time. The complement
+The general-`m` value generalizes § IV (`m = 1`) by peeling one shell at a time. The complement
 of `ball_m` decomposes into shells of norm `p⁻ᵏ` (`k = 0,…,m-1`); on shell `k` the kernel is the constant
 `(p^α)^k · p^k`, so the radial integral is the geometric series `(1 - p⁻¹) ∑_{k<m} (p^α)^k`. -/
 
@@ -248,7 +248,7 @@ theorem vladIntegrand_integrable (α : ℝ) (m : ℕ) :
     rw [vladIntegrand_succ]
     exact ih.add (shellLoad_integrable α m)
 
-/-- **General connection-matrix entry (Fourier-free).** `D^α` of the radius-`p⁻ᵐ` ball indicator at the
+/-- **General value at the center (Fourier-free).** `D^α` of the radius-`p⁻ᵐ` ball indicator at the
     center `0` is the geometric series `(1 - p⁻¹) ∑_{k<m} (p^α)^k` — the radial integral over the `m`
     shells peeled off the complement of `ball_m`. Recovers § IV at `m = 1`. -/
 theorem vladimirov_ballFun_zero (α : ℝ) (m : ℕ) :
@@ -278,17 +278,16 @@ theorem vladimirov_ballFun_zero (α : ℝ) (m : ℕ) :
     push_cast
     ring
 
-/-! ## § VI — The symbol `|ξ|^α`, read off the connection matrix (Fourier-free)
+/-! ## § VI — The symbol `|ξ|^α`, read off those values (Fourier-free)
 
-Over the standard Fourier theory (which is NOT developed here), the Taibleson–Vladimirov operator `D^α` is
-the Fourier multiplier by `|ξ|_p^α`, with the Kozyrev wavelets as eigenfunctions (Vladimirov; Kozyrev,
-Izv. Math. 66 (2002) 367). Neither the Fourier transform nor those eigenfunctions are built here. What is
-proved is an *algebraic* identity that matches that symbol under the standard identification: a ball of
-radius `p⁻ᵐ` has dual frequency scale `|ξ|_p = p^m` (the reciprocal radius), and the per-shell increment of
-`D^α` at the center is exactly `(1 - p⁻¹)·(p^m)^α`. Reading the factor `(p^m)^α` as the symbol `|ξ|^α` is
-that Fourier interpretation; the checkable content is the algebraic identity `(p^α)^m = (p^m)^α`
-(`pow_rpow_symbol`) times the shell-load value. This is an **operator-level** statement about `D^α` on ℤ_p;
-it makes no dynamical or physical claim, and it is not an eigenvalue (ball indicators are not eigenfunctions). -/
+Over the standard Fourier theory, the Taibleson–Vladimirov operator `D^α` is the Fourier multiplier by
+`|ξ|_p^α`, with the Kozyrev wavelets as eigenfunctions (Vladimirov; Kozyrev, Izv. Math. 66 (2002) 367).
+Neither the Fourier transform nor those eigenfunctions are built here. What is proved is an *algebraic*
+identity that matches that symbol under the standard identification: a ball of radius `p⁻ᵐ` has dual
+frequency scale `|ξ|_p = p^m`, and the per-shell increment of `D^α` at the center is exactly
+`(1 - p⁻¹)·(p^m)^α`. Reading `(p^m)^α` as `|ξ|^α` is that Fourier interpretation; the checkable content is
+`(p^α)^m = (p^m)^α` (`pow_rpow_symbol`) times the shell-load value. An **operator-level** statement about
+`D^α` on ℤ_p: no dynamical or physical claim, and not an eigenvalue (ball indicators are not eigenfunctions). -/
 
 omit [Fact p.Prime] in
 /-- The symbol identity: `(p^α)^m = (p^m)^α`. Rewrites the per-shell factor `(p^α)^m` into `|ξ|^α` form
@@ -306,7 +305,7 @@ theorem vladimirov_shell_symbol (α : ℝ) (m : ℕ) :
       = (((1 - (p : ℝ)⁻¹) * ((p : ℝ) ^ m) ^ α : ℝ) : ℂ) := by
   rw [vladimirov_shell_load, pow_rpow_symbol]
 
-/-- **Closed form of the connection entry.** When `p^α ≠ 1`, the geometric series sums, so `D^α` of the
+/-- **Closed form of the value at the center.** When `p^α ≠ 1`, the geometric series sums, so `D^α` of the
     radius-`p⁻ᵐ` ball indicator at the center is `(1 - p⁻¹)·((p^α)^m - 1)/(p^α - 1)`. -/
 theorem vladimirov_ballFun_geom (α : ℝ) (m : ℕ) (hα : (p : ℝ) ^ α ≠ 1) :
     vladimirov α (ballFun (p := p) m) 0
@@ -348,10 +347,10 @@ theorem vladimirov_shell_symbol_inv (α : ℝ) (m : ℕ) {x : ℤ_[p]}
 The ball indicator `ballIndicatorL2` (`ZeroParadox/Valuation/PadicBallIndicator.lean`) splits as the
 shell-`m` indicator plus the next ball's, two orthogonal pieces. Standard facts, no novelty claimed;
 § VI's citation (Kozyrev 2002) builds its wavelets on p-adic balls. At `p = 2`, compare
-`shellIndicatorL2 m - ballIndicatorL2 (m + 1)` with its 2-adic Haar wavelet, up to sign and scale. Two
-orthogonal vectors of equal length are `√2` times that length apart in any inner product space. At every
-prime, the level-`n` ball around `0` and the level-`n` ball around any point `a` outside it have
-orthogonal indicators of equal length (compare `t4_state_gap`, `ZeroParadox/State/StateSpace.lean`).
+`shellIndicatorL2 m - ballIndicatorL2 (m + 1)` with Kozyrev's wavelet (pullback of the Haar wavelet), up
+to sign and scale. Two orthogonal vectors of equal length are `√2` times that length apart in any inner
+product space. At every prime, the level-`n` ball around `0` and the level-`n` ball around any `a`
+outside the ball around `0` have orthogonal indicators of equal length (compare `t4_state_gap`).
 The shell and the next ball have indicators of equal length exactly when `p = 2`. -/
 
 /-- The indicator of shell `m` (`shellSet`) as an element of `L²(ℤ_p, haarZp)`. -/
@@ -520,7 +519,7 @@ example (m : ℕ) :
   norm_num
 
 -- Statement: at every prime and level `n`, the level-`n` balls around `0` and around any `a` outside
--- it have orthogonal indicators of equal length, `√2` times that length apart.
+-- the ball around `0` have orthogonal indicators of equal length, `√2` times that length apart.
 example (n : ℕ) (a : ℤ_[p]) (ha : (p : ℝ) ^ (-(n : ℤ)) < ‖a‖) :
     inner ℂ (ballIndicatorL2 (p := p) n) (indicatorConstLp 2 ((ball_measurableSet (p := p) n).preimage
         (measurable_const_add (-a))) (measure_ne_top (haarZp (p := p)) _) (1 : ℂ)) = 0 ∧

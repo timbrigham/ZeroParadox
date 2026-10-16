@@ -1,5 +1,5 @@
 """
-Build ZP-B: p-Adic Topology (v1.20)
+Build ZP-B: p-Adic Topology (v1.21)
 This document makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21)
 flagged that analogy because it makes a document read as a physics grand theory.
 """
@@ -7,7 +7,7 @@ flagged that analogy because it makes a document read as a physics grand theory.
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -86,10 +86,10 @@ def build():
     E.append(sp(4))
     E.append(Paragraph('2.3  The Minimum Viable Deviation &#949;<sub>0</sub>', S['h2']))
     E.append(label_box('Definition D5 — Minimum Viable Deviation &#949;₀', [
-        '&#949;<sub>0</sub> = 2<super>k</super> for an integer exponent k. With the ball convention B(0, 2<super>&#8722;n</super>), the finest accessible scale has k = &#8722;v where v is the maximum accessible valuation: k is the exponent, v the valuation, and they differ by sign.',
-        'Structural role (universal): &#949;<sub>0</sub> is always the first element crossed by the Snap. Fixed by the structure of Q<sub>2</sub> and AX-B1.',
-        'Numerical value (contingent): the real-valued threshold 2<super>k</super> depends on the chosen exponent k — that is, on which valuation is taken to be the finest accessible one. The contingency is a choice of cutoff, a normalisation, not a physical measurement: this document makes no claim about magnitude in any unit system, and does not treat &#949;<sub>0</sub> as a dimensionful quantity. &#949;<sub>0</sub> itself is a position — the first step above the bottom — and a position carries no units, exactly as the bottom carries none.',
-        'Status: DEFINED — threshold parameterised by a chosen cutoff.',
+        'Role: &#949;<sub>0</sub> of Q<sub>2</sub> is the minimum viable deviation from 0 of Q<sub>2</sub>, the deviation the Snap crosses. Q<sub>2</sub> itself has no least nonzero norm (the norms 2<super>&#8722;n</super> accumulate at 0), so the role is filled only relative to a chosen finest accessible valuation v.',
+        'Requirement in Q<sub>2</sub>: a nonzero point of Q<sub>2</sub> whose 2-adic valuation is v. Occupant: any such point; the rung v names it, and it has no value beyond that position. Every point at rung v has norm 2<super>&#8722;v</super>, the real-valued threshold of this choice (Lean: eps0 (&#8722;v), ZeroParadox/Valuation/Padic.lean); 2<super>v</super> and &#8722;2<super>v</super> are two distinct such points.',
+        'Contingency: v, and with it the threshold 2<super>&#8722;v</super>, depends on which valuation is taken to be the finest accessible one. That is a choice of cutoff, a normalisation, not a physical measurement: this document makes no claim about magnitude in any unit system, and the rung carries no units.',
+        'Status: DEFINED — relative to a chosen finest rung v.',
     ]))
 
     E.append(Paragraph('III. The Ultrametric', S['h1']))
@@ -128,7 +128,7 @@ def build():
     E.append(label_box('Theorem T3 — Clopen Gap at 0', [
         'For any r = 2<super>&#8722;j</super>, the ball B(0,r) = { x &#8712; Q<sub>2</sub> : v<sub>2</sub>(x) &#8805; j }. Any x outside this ball has d(0,x) &#8805; 2<super>&#8722;j+1</super> > r. B(0,r) and its complement are separated by a gap of at least 2<super>&#8722;j</super>.',
         'ZP Interpretation: this discrete jump across a clopen boundary is the topological expression of the Binary Snap (defined in ZP-E).',
-        'Relationship to &#949;<sub>0</sub>: the elements of least norm outside B(0, 2<super>&#8722;j</super>) are exactly those of valuation j &#8722; 1, all of norm 2<super>&#8722;j+1</super>; there are many of them (2<super>j&#8722;1</super> and 3 &#183; 2<super>j&#8722;1</super> among them), so the least norm is attained by many elements, not by a unique one. &#949;<sub>0</sub> = 2<super>k</super> of D5 has valuation k, so it lies outside B(0, 2<super>&#8722;j</super>) exactly when j &gt; k, and it is of least norm there, among the others of valuation k, exactly when j = k + 1. ZP Interpretation: the gap between B(0, 2<super>&#8722;k&#8722;1</super>) and &#949;<sub>0</sub> is the gap the Binary Snap crosses. <font name="DV">&#10003;</font>',
+        'Relationship to &#949;<sub>0</sub>: the elements of least norm outside B(0, 2<super>&#8722;j</super>) are exactly those of valuation j &#8722; 1, all of norm 2<super>&#8722;j+1</super>; there are many of them (2<super>j&#8722;1</super> and 3 &#183; 2<super>j&#8722;1</super> among them), so the least norm is attained by many elements, not by a unique one. &#949;<sub>0</sub> of D5 is a point at rung v, so it lies outside B(0, 2<super>&#8722;j</super>) exactly when j &gt; v, and it attains the least norm outside that ball, a norm shared by every point of valuation v, exactly when j = v + 1. ZP Interpretation: the gap between B(0, 2<super>&#8722;v&#8722;1</super>) and &#949;<sub>0</sub> is the gap the Binary Snap crosses. <font name="DV">&#10003;</font>',
     ]))
 
     E.append(Paragraph('V. Topological Structure of Q₂', S['h1']))
@@ -152,7 +152,7 @@ def build():
     E.append(Paragraph('VI. Universal Structure vs. Contingent Parameters', S['h1']))
     E.append(label_box('Remark R1 — Universal Structure vs. Universe-Contingent Parameters', [
         'Universal (invariant across all instantiations): AX-B1 (binary distinction — logical, not physical). MP-1 (methodological commitment). T0 (p=2 derived). T1, T2, T3, T5, C1, C2, C3 (all topological results). Structural role of &#949;<sub>0</sub>.',
-        'Instantiation-contingent (varies with the chosen cutoff): the real-valued threshold 2<super>k</super> of D5, whose exponent k records which valuation is taken to be the finest accessible one. This is a choice of normalisation, not a physical constant, and &#949;<sub>0</sub> as a position is not dimensionful.',
+        'Instantiation-contingent (varies with the chosen cutoff): the finest accessible rung v of D5 and its real-valued threshold 2<super>&#8722;v</super>. This is a choice of normalisation, not a physical constant, and &#949;<sub>0</sub>, a point named by its rung, is not dimensionful.',
         'The topological and algebraic results of this document hold for any instantiation satisfying AX-B1 and MP-1 — they are not specific to our universe.',
     ]))
 

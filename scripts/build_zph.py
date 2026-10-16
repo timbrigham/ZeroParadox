@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.26 | October 2026
+Version 1.27 | October 2026
 v1.23: DECISION BATCH REMEDIATION ROUND 2 (Tim rulings, 2026-09-15): the T-H3 status said 'That the transition is taken remains a framework commitment, not a consequence of any of the four'; now the Snap occurring follows from the occurrence commitment (instantiation occurs) together with DA-1 (closed given DP-2), not from any of the four.
 v1.22: OCCURRENCE COMMITMENT DEFINED, T5 RESTATED, T-SNAP RESIDUE (Tim decision batch, 2026-09-14): the occurrence commitment is instantiation occurs, and that the Snap occurs follows from it together with DA-1 (closed given DP-2). The ZP-E import line, the Open Items AX-1 row (whose status cell now reads 'the snap occurs given the occurrence commitment and DA-1'), the IR-ZP and IR-2 validation rows and the AX-1 validation row replace 'stated separately, as the occurrence commitment' / 'which ZP-E's DA-1 argues for' / 'occurrence is the occurrence commitment' with that sentence. The Open Items row says 'with no Lean kernel axioms' where it said 'with no axioms' (A4 and AX-B1 are called axioms on the same pages). T-SNAP's readable name 'Binary Snap Causality' is glossed once, at its first use in T-H3: 'Causality' refers to the shape of the step, not to its occurrence.
 v1.21: AX-1 SPLIT (Tim, 2026-09-14): AX-1 bundled the SHAPE of the Snap with its OCCURRENCE. The shape half is Theorem T-SNAP; the occurrence half was never retired and is a framework commitment (tsnap_holds_but_nothing_moves). These sites said AX-1 whole was derived or no longer an axiom: the ZP-E import line, the Open Items AX-1 row ("Derived as Theorem T-SNAP ... No longer an axiom"), the IR-ZP and IR-2 validation rows, and the AX-1 validation row. Each now scopes the derivation to the shape half and names the occurrence half as a commitment. T-H3's own row, which says T-SNAP is inherited as a derived theorem, is unchanged: T-SNAP is the shape theorem. AX-1 WORDING CORRECTED (Tim, 2026-09-14): retired, split into T-SNAP (shape, proved) and the occurrence commitment (stated separately); the earlier 'occurrence half was never retired' was a paraphrase error. ROUND 2 GATES (Tim rulings: title, ZP-C label, DA-1 credit): the Open Items AX-1 row credited the shape to 'the P0 / L-RUN / TQ-IH / DA-1 chain'; DA-1 argues for occurrence, not the shape, so the row now carries Tim's sentence: the shape is proved as T-SNAP from L-RUN, TQ-IH and the bottom law with no axioms, and occurrence is the occurrence commitment, which ZP-E's DA-1 argues for.
@@ -35,7 +35,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.26'
+VERSION = '1.27'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -154,7 +154,7 @@ def build():
             'T-BUF / T-SNAP: Binary Snap derived as theorem.',
             'From ZP-D: H = &#8450;<sup>n</sup> (D1). T: Q<sub>2</sub> &#8594; H constructed by basis assignment (T2). '
             'T unique up to unitary equivalence (T3). Snap produces orthogonal shift (T4). '
-            'Monotone sequences map to accumulating vectors (T5). DP-1 (orthogonality design commitment).',
+            'Monotone sequences map to non-decreasing norms, all equal to 1 by D2(v) (T5). DP-1 (orthogonality design commitment).',
             'From ZP-E: Universal constituent cross-framework (T1). Hamming/JSD consistency (T2). '
             'Landauer bridge BA-1. Processing bounds T3. Unified Snap description T4. '
             'Iterative forcing T5. State representations T6. Zero Paradox T7. '
@@ -324,9 +324,10 @@ def build():
             '(fD_functor, ZeroParadox/State/HilbFunctor.lean), and its &#8469;-indexed stand-in is HilbDimDepth (fd_functor, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean).',
             'Morphism map: F<sub>D</sub> sends each morphism f: A &#8594; B to the orthogonal extension from T(x<sub>A</sub>) to T(x<sub>B</sub>) '
-            'in H. By ZP-D T4, distinct elements of Q<sub>2</sub> map to orthogonal basis vectors under T, so the transition is a well-defined orthogonal step in H.',
-            'Preservation of composition: Sequential orthogonal extensions compose by accumulation: T(x<sub>A</sub>) &#8594; T(x<sub>B</sub>) &#8594; '
-            'T(x<sub>C</sub>) produces &#8214;T(x<sub>C</sub>)&#8214; &#8805; &#8214;T(x<sub>B</sub>)&#8214; &#8805; &#8214;T(x<sub>A</sub>)&#8214; by ZP-D T5. <font name="DV">&#10003;</font>',
+            'in H. By ZP-D D2(iii) and D2(iv) (DP-1), points in different cells of the level-k partition P<sub>k</sub> map to orthogonal basis vectors under T, '
+            'and points in one cell share one vector, so the transition is an orthogonal step when x<sub>A</sub> and x<sub>B</sub> lie in different cells and the trivial step when they share a cell.',
+            'Preservation of composition: Sequential orthogonal extensions compose: T(x<sub>A</sub>) &#8594; T(x<sub>B</sub>) &#8594; '
+            'T(x<sub>C</sub>) keeps &#8214;T(x<sub>C</sub>)&#8214; = &#8214;T(x<sub>B</sub>)&#8214; = &#8214;T(x<sub>A</sub>)&#8214; = 1 by ZP-D D2(v), so ZP-D T5\'s non-decreasing norms hold with equality. <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>D</sub>(id<sub>A</sub>) maps to the trivial orthogonal extension T(x<sub>A</sub>) &#8594; T(x<sub>A</sub>), which is the identity on the basis vector e<sub>k</sub>. <font name="DV">&#10003;</font>',
             'F<sub>D</sub>(0) = e<sub>0</sub> is the anchor vector from which all other state vectors are orthogonal extensions (ZP-D T3).',
             'AX-G1 respected in the stand-in category: the Lean functor fd_functor lands in HilbDimDepth, the &#8469;-indexed dimension-depth '
@@ -374,8 +375,11 @@ def build():
             'transition with work E = JSD(P &#8741; P<sub>Y</sub>). Uniqueness: JSD is symmetric and uniquely determined by P '
             'and P<sub>Y</sub>; there is exactly one value of informational work for any pair of distributions. <font name="DV">&#10003;</font>',
             'F<sub>D</sub>: F<sub>D</sub>(0) = T(0) = e<sub>0</sub>. For any T(x) &#8712; H, the unique morphism e<sub>0</sub> &#8594; T(x) is the orthogonal extension '
-            'from e<sub>0</sub> to e<sub>k</sub> (the basis vector assigned to x). Uniqueness: T is unique up to unitary equivalence '
-            '(ZP-D T3); the orthogonal extension is unique up to the same equivalence. <font name="DV">&#10003;</font>',
+            'from e<sub>0</sub> to e<sub>k</sub> (the basis vector assigned to x). Uniqueness of that morphism is a fact about the codomain category, '
+            'not about T: in the stand-in HilbDimDepth every hom-set out of depth 0 has exactly one element (hilbDimHom0Unique), so fd_functor sends 0 '
+            'to an initial object (fd_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In ModuleCat &#8450; the realization fD_functor '
+            'sends 0 to the zero module, a zero object and so initial (hilbert_bottom_isZero, ZeroParadox/Category/TreeSeam.lean). ZP-D T3 (T unique up to a '
+            'unitary) fixes the vectors T(x), not the morphisms between them, and is not used here. <font name="DV">&#10003;</font>',
             'Conclusion: OQ-G2 is closed. ZP-G T5 is now unconditional for the four instantiation functors '
             'of this framework, for F<sub>B</sub> in its stand-in. The universal property of 0 &#8712; ob(C) is fully preserved under F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, and F<sub>D</sub> (for F<sub>B</sub>, in its stand-in). <font name="DV">&#10003;</font>',
         ]
@@ -456,7 +460,7 @@ def build():
             'Under F<sub>C</sub> (ZP-C): F<sub>C</sub>(&#953;<sub>&#949;0</sub>) is the informational transition P &#8594; Q with E = JSD(P &#8741; Q) = 1 bit (ZP-C '
             'T1b). Irreversible: JSD(Q &#8741; P) = 1 bit &#8800; 0.',
             'Under F<sub>D</sub> (ZP-D): F<sub>D</sub>(&#953;<sub>&#949;0</sub>) is the orthogonal shift T(0) = e<sub>0</sub> &#8594; T(&#949;<sub>0</sub>) = e<sub>1</sub>. '
-            '&#10216;e<sub>0</sub>, e<sub>1</sub>&#10217; = 0 (ZP-D T4). Norm-increasing (ZP-D T5). DP-1 is a design premise.',
+            '&#10216;e<sub>0</sub>, e<sub>1</sub>&#10217; = 0 (ZP-D T4). Both vectors have norm 1 (ZP-D D2(v)), so ZP-D T5\'s non-decreasing norms hold with equality. DP-1 is a design premise.',
             'Cross-framework consistency: All four functors agree that the Snap is irreversible. Each '
             'irreversibility result is a closed theorem within its own domain document. Their agreement is '
             'structural consistency, not circular argument. Independence of null-analog discovery: each '
@@ -491,7 +495,7 @@ def build():
         ['F<sub>D</sub>(0) = T(0) = e<sub>0</sub>',   'ZP-D T2, T3; C-H4',           'DP-1',        'Valid — from DP-1'],
         ['F<sub>D</sub> preserves composition',        'ZP-D T5; C-H4',               'DP-1',        'Valid — from DP-1'],
         ['F<sub>D</sub> respects AX-G1, AX-G2',       'hilbDimZPCat (stand-in); ZP-D T4; C-H4', 'DP-1 (for ZP-D T4; the stand-in proofs do not use it)', 'Valid in the stand-in — both fail in ModuleCat &#8450;'],
-        ['T-H1: universal property preserved',         'ZP-A T2; ZP-B T3; ZP-C T1b; ZP-D T3', 'None', 'Valid — OQ-G2 closed; F<sub>B</sub> in its stand-in'],
+        ['T-H1: universal property preserved',         'ZP-A T2; ZP-B T3; ZP-C T1b; C-H4 (fd_preserves_initial)', 'None', 'Valid — OQ-G2 closed; F<sub>B</sub> in its stand-in'],
         ['T-H2: singularity compatibility',            'ZP-G T6; ZP-C T2; C-H3',     'None',        'Valid — OQ-G4 closed'],
         ['T-H3: Snap under all four functors',         'C-H1 through C-H4; ZP-E T4; ZP-E T-SNAP', 'DP-1', 'Valid — T-SNAP derived (ZP-E v2.0)'],
         ['D-H1: morphisms of C',                       'ZP-A D2; ZP-B T2; ZP-C; ZP-D', 'None',      'Design Commitment'],

@@ -88,6 +88,7 @@ theorem stillPoint_vladimirov_zero (α : ℝ) (n : ℕ) (x : ℤ_[p]) :
 -- `ZeroParadox/Valuation/PadicVladimirov.lean` § VIII) equals the trivial character almost everywhere.
 example (n : ℕ) :
     (ballIndicatorL2 (p := p) 0 : ℤ_[p] → ℂ) =ᵐ[haarZp (p := p)] paChar (p := p) n 0 := by
+  -- `(p := 2)` here is the Lp exponent of L², not the prime.
   filter_upwards [indicatorConstLp_coeFn (p := 2) (μ := haarZp (p := p))
     (hs := ball_measurableSet (p := p) 0) (hμs := measure_ne_top _ _) (c := (1 : ℂ))]
     with x hx
