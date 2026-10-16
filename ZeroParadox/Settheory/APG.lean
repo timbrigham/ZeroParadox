@@ -436,6 +436,138 @@ example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure
   have h := cyclic_decoration_eq_bot d hd v hcyc
   exact ⟨h, by rw [h]; exact ValuationStructure.val_bot⟩
 
+/-- `Statement:` along a path `v ⟶* w`, a decoration sending `w` to ⊥ of `U` (valuation ⊤ of ℕ∞)
+    sends `v` there too: ⊥ spreads backward to every ancestor.
+    `Reading:` rank ∞ propagates upward (Pakhomov–Walsh, JSL 86 (2021), arXiv 1805.02095,
+    Remark 5.1, with `∞ + 1 = ∞`); at graph level, every ancestor of a vertex on a cycle starts an
+    infinite path, so lies outside "A∗ = Aω", "the set of all nodes from which no infinite paths
+    starts" (Adámek-Milius-Moss 2020, arXiv:1910.09401v2, Example 6.10 p. 26). -/
+theorem path_decoration_eq_bot
+    {V : Type*} [Quiver V]
+    {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (d : V → U) (hd : IsDecoration d) {v w : V} (p : Quiver.Path v w) (hw : d w = bot) :
+    d v = bot := by
+  have h := path_val_chain d hd p
+  rw [hw, ValuationStructure.val_bot, top_add] at h
+  exact ValuationStructure.val_unique _ (top_le_iff.mp h)
+
+-- Statement: so every vertex that reaches a cyclic vertex is decorated ⊥ of `U`.
+example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure U]
+    [DecorationUniverse U] (d : V → U) (hd : IsDecoration d) {v w : V} (p : Quiver.Path v w)
+    (hc : HasSelfCycle w) : d v = bot :=
+  path_decoration_eq_bot d hd p (cyclic_decoration_eq_bot d hd w hc)
+
+/-! ### Absorption at ⊥ of `U`, and when the join identity is the absorber
+
+Here `v : U → ℕ∞` and `c : Set U → U` are bare data. -/
+
+-- Statement: absorption needs no join and no `val_bot`: a lower bound `v (c S) ≥ v x + 1` on members
+-- and a unique `v`-⊤ point `b` force `v b = ⊤` and `c S = b` whenever `b ∈ S`.
+-- Reading: a rank into On ∪ {∞} with `∞ + 1 = ∞` (Pakhomov–Walsh, Remark 5.1); the uniqueness of
+-- the ∞ point is the corpus's own hypothesis.
+example {U : Type*} (v : U → ℕ∞) (c : Set U → U) (hc : ∀ S x, x ∈ S → v (c S) ≥ v x + 1)
+    (b : U) (hu : ∀ x, v x = ⊤ → x = b) : v b = ⊤ ∧ ∀ S, b ∈ S → c S = b := by
+  have htop : v (c Set.univ) = ⊤ := by
+    have h := hc Set.univ (c Set.univ) trivial
+    rcases hv : v (c Set.univ) with _ | m
+    · rfl
+    · rw [hv] at h
+      change (m : ℕ∞) ≥ (m : ℕ∞) + 1 at h
+      exact absurd (show m ≥ m + 1 by exact_mod_cast h) (by omega)
+  have hb : v b = ⊤ := hu _ htop ▸ htop
+  refine ⟨hb, fun S hS => hu _ (top_le_iff.mp ?_)⟩
+  exact le_trans (hb ▸ le_self_add) (hc S b hS)
+
+-- Statement: its instance: ⊥ of `U` absorbs `collect` in every `DecorationUniverse`.
+example {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (S : Set U) (h : (bot : U) ∈ S) : DecorationUniverse.collect S = bot := by
+  have hge := DecorationUniverse.collect_val_ge S bot h
+  rw [ValuationStructure.val_bot, top_add] at hge
+  exact ValuationStructure.val_unique _ (top_le_iff.mp hge)
+
+-- Statement: `v` reverses the ZP order into ℕ∞'s iff `v (join x y) ≤ min (v x) (v y)`; Mathlib's
+-- `Antitone.map_sup_le` and `Monotone.of_le_map_sup` (through `OrderDual`), restated because the ZP
+-- order is not `≤` here. Reading: the equation form is a nonzero prime's valuation on the fractional
+-- ideals of a Dedekind domain (values in ℤ), `v_p(I + J) = min (v_p I) (v_p J)` (Aitken,
+-- arXiv 2102.11725, Prop. 86, p. 33).
+example {L : Type*} [ZPSemilattice L] (v : L → ℕ∞) :
+    (∀ x y, le x y → v y ≤ v x) ↔ ∀ x y, v (join x y) ≤ min (v x) (v y) := by
+  have hl : ∀ x y : L, le x (join x y) := fun x y =>
+    show join x (join x y) = join x y by rw [← join_assoc, join_idem]
+  refine ⟨fun h x y => le_min (h _ _ (hl x y)) (h _ _ (join_comm y x ▸ hl y x)), fun h x y hxy => ?_⟩
+  have := h x y
+  rw [show join x y = y from hxy] at this
+  exact le_trans this (min_le_left _ _)
+
+-- Statement: one way only: under order-reversal, any identity `e` of a binary operation `j` is the
+-- unique `v`-⊤ point `b`, the absorber above.
+example {U : Type*} (j : U → U → U) (v : U → ℕ∞) (c : Set U → U)
+    (hc : ∀ S x, x ∈ S → v (c S) ≥ v x + 1) (b : U) (hu : ∀ x, v x = ⊤ → x = b)
+    (hanti : ∀ x y, j x y = y → v y ≤ v x) (e : U) (he : ∀ x, j e x = x) : e = b := by
+  have htop : v (c Set.univ) = ⊤ := by
+    have h := hc Set.univ (c Set.univ) trivial
+    rcases hv : v (c Set.univ) with _ | m
+    · rfl
+    · rw [hv] at h
+      change (m : ℕ∞) ≥ (m : ℕ∞) + 1 at h
+      exact absurd (show m ≥ m + 1 by exact_mod_cast h) (by omega)
+  exact hu e (top_le_iff.mp (htop ▸ hanti e (c Set.univ) (he _)))
+
+-- Statement: the converse fails (counter-model M1, on `Option ℕ∞`): a semilattice operation with
+-- order-reversal and a unique, absorbing `v`-⊤ point, and no identity at all.
+example : ∃ (j : Option ℕ∞ → Option ℕ∞ → Option ℕ∞) (v : Option ℕ∞ → ℕ∞)
+    (c : Set (Option ℕ∞) → Option ℕ∞) (b : Option ℕ∞),
+    (∀ x y z, j (j x y) z = j x (j y z)) ∧ (∀ x y, j x y = j y x) ∧ (∀ x, j x x = x) ∧
+    (∀ x y, j x y = y → v y ≤ v x) ∧ (∀ x, v x = ⊤ → x = b) ∧
+    (∀ S x, x ∈ S → v (c S) ≥ v x + 1) ∧ (∀ S, b ∈ S → c S = b) ∧
+    ¬ ∃ e, ∀ x, j e x = x := by
+  let mj : Option ℕ∞ → Option ℕ∞ → Option ℕ∞ := fun x y => match x, y with
+    | some a, some c => some (min a c)
+    | none, none => none
+    | _, _ => some 0
+  let mv : Option ℕ∞ → ℕ∞ := fun x => x.elim 0 id
+  have hu : ∀ x, mv x = ⊤ → x = some ⊤ := by
+    intro x hx; rcases x with _ | x
+    · simp [mv] at hx
+    · simp [mv] at hx; simp [hx]
+  have hc : ∀ (S : Set (Option ℕ∞)) x, x ∈ S → mv (some (sSup (mv '' S) + 1)) ≥ mv x + 1 :=
+    fun S x hx => add_le_add (le_sSup (Set.mem_image_of_mem mv hx)) le_rfl
+  refine ⟨mj, mv, fun S => some (sSup (mv '' S) + 1), some ⊤, ?_, ?_, ?_, ?_, hu, hc, ?_, ?_⟩
+  · intro x y z
+    rcases x with _ | x <;> rcases y with _ | y <;> rcases z with _ | z <;> simp [mj, min_assoc]
+  · intro x y
+    rcases x with _ | x <;> rcases y with _ | y <;> simp [mj, min_comm]
+  · intro x; rcases x with _ | x <;> simp [mj]
+  · intro x y h
+    rcases x with _ | x <;> rcases y with _ | y
+    · exact le_rfl
+    · change some (0 : ℕ∞) = some y at h
+      change y ≤ 0
+      rw [← Option.some.inj h]
+    · change some (0 : ℕ∞) = none at h
+      exact absurd h (Option.some_ne_none _)
+    · change some (min x y) = some y at h
+      change y ≤ x
+      rw [← Option.some.inj h]
+      exact min_le_left x y
+  · intro S hS
+    refine hu _ (top_le_iff.mp ?_)
+    exact le_trans (le_self_add (a := ⊤) (b := 1)) (hc S _ hS)
+  · rintro ⟨e, he⟩
+    rcases e with _ | e
+    · have := he (some 5); simp [mj] at this
+    · have := he none; simp [mj] at this
+
+-- Statement: without order-reversal the identity and the absorber can be different elements
+-- (counter-model M2, ℕ∞ with `max`): 0 is the identity, ⊤ absorbs `sSup · + 1`.
+example : (∀ x : ℕ∞, max 0 x = x) ∧ (∀ S : Set ℕ∞, ⊤ ∈ S → sSup S + 1 = ⊤) ∧
+    (∀ (S : Set ℕ∞) x, x ∈ S → sSup S + 1 ≥ x + 1) ∧ (0 : ℕ∞) ≠ ⊤ ∧
+    ¬ ∀ x y : ℕ∞, max x y = y → y ≤ x := by
+  refine ⟨fun x => by simp, fun S hS => ?_, fun S x hx => add_le_add (le_sSup hx) le_rfl,
+    by simp, fun h => ?_⟩
+  · rw [top_le_iff.mp (le_sSup hS)]; rfl
+  · have := h 0 1 (by simp); simp at this
+
 /-! ## § VIII. Acyclic Vertex Uniqueness (superseded by § IX)
 
     For acyclic vertices, the induction step is clear:
@@ -576,6 +708,7 @@ open ZeroParadox
 #print axioms kCycle_node_eq_bot
 #print axioms acyclic_induction_step
 #print axioms cyclic_decoration_eq_bot
+#print axioms path_decoration_eq_bot
 #print axioms decoration_unique
 
 end PurityCheck
