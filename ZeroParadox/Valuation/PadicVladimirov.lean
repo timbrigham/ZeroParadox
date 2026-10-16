@@ -388,6 +388,13 @@ theorem norm_ballIndicatorL2_eq_sqrt_mul_succ (n : ℕ) :
     rw [h1, ← mul_assoc, h2]
   exact (pow_left_inj₀ (norm_nonneg _) (by positivity) two_ne_zero).1 hsq
 
+-- Statement: the smallest prime gives the smallest split ratio, √2 (equality exactly at `p = 2`).
+example : Real.sqrt 2 ≤ Real.sqrt p ∧ (Real.sqrt p = Real.sqrt 2 ↔ p = 2) := by
+  have h2 : (2 : ℝ) ≤ p := by exact_mod_cast ‹Fact p.Prime›.out.two_le
+  refine ⟨Real.sqrt_le_sqrt h2, ?_⟩
+  rw [Real.sqrt_inj (by linarith) (by norm_num)]
+  exact_mod_cast Iff.rfl
+
 /-- **Split.** The ball-`m` indicator is the shell-`m` indicator plus the ball-`(m+1)` indicator. -/
 theorem ballIndicatorL2_eq_shell_add (m : ℕ) :
     ballIndicatorL2 (p := p) m = shellIndicatorL2 m + ballIndicatorL2 (p := p) (m + 1) := by
