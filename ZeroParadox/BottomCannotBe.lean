@@ -88,38 +88,61 @@ example : (ZeroParadox.ZPSemilattice.bot : ZeroParadox.End) = ZeroParadox.botEnd
 -- Statement: under the norm preorder ℚ₂'s `0` is least, and the only point of norm `0`.
 example : ∀ x : ℚ_[2], ‖(0 : ℚ_[2])‖ ≤ ‖x‖ ∧ (‖x‖ = 0 ↔ x = 0) := fun x => ⟨by simp, norm_eq_zero⟩
 -- Statement: and in that preorder `0` has no first step (`HasFirstStep`): below any `a` above `0` lies
--- a `c` of strictly smaller nonzero norm (`NormedField.exists_norm_lt`). The proof uses only
--- `NontriviallyNormedField`, so it holds in any nontrivially normed field, ℝ included.
+-- a `c` of strictly smaller nonzero norm (`NormedField.exists_norm_lt`).
 example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); ¬ ZeroParadox.HasFirstStep (0 : ℚ_[2]) :=
   letI : Preorder ℚ_[2] := Preorder.lift (‖·‖)
   fun ⟨a, h0a, hc⟩ =>
     have ha : (0 : ℝ) < ‖a‖ := norm_zero (E := ℚ_[2]) ▸ h0a
     let ⟨c, hc0, hca⟩ := NormedField.exists_norm_lt ℚ_[2] ha
     hc (c := c) (show ‖(0 : ℚ_[2])‖ < ‖c‖ from norm_zero (E := ℚ_[2]) ▸ hc0) hca
--- Statement: that preorder is not dense (`axb1_fails_everywhere_iff_dense`): `2` has the first step
--- `1`, since `‖2‖ = 1/2`, `‖1‖ = 1` and no norm lies strictly between.
-example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); ¬ DenselyOrdered ℚ_[2] := by
+-- Statement: the same holds in every nontrivially normed field, ℝ included, so at `0` the norm
+-- preorder does not separate ℚ₂ from ℝ. The order is passed with `@`: a `letI` loses to ℝ's `<`.
+example : (∀ (K : Type) [NontriviallyNormedField K],
+      ¬ @ZeroParadox.HasFirstStep K (Preorder.lift (‖·‖ : K → ℝ)).toLT 0) ∧
+    ¬ @ZeroParadox.HasFirstStep ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT 0 := by
+  have h : ∀ (K : Type) [NontriviallyNormedField K],
+      ¬ @ZeroParadox.HasFirstStep K (Preorder.lift (‖·‖ : K → ℝ)).toLT 0 := by
+    intro K _ ⟨a, h0a, hc⟩
+    have ha : (0 : ℝ) < ‖a‖ := norm_zero (E := K) ▸ h0a
+    obtain ⟨c, hc0, hca⟩ := NormedField.exists_norm_lt K ha
+    exact hc (c := c) (show ‖(0 : K)‖ < ‖c‖ from norm_zero (E := K) ▸ hc0) hca
+  exact ⟨h, h ℝ⟩
+-- Statement: globally it does. ℚ₂'s norm preorder is not dense: `2 ⋖ 1`, since `‖2‖ = 1/2`,
+-- `‖1‖ = 1`, and every nonzero norm is an integer power of 2 (`Padic.padicNormE.image`).
+example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); (2 : ℚ_[2]) ⋖ 1 ∧ ¬ DenselyOrdered ℚ_[2] := by
   letI : Preorder ℚ_[2] := Preorder.lift (‖·‖)
   have h2n : ‖(2 : ℚ_[2])‖ = 2⁻¹ := by have := Padic.norm_p (p := 2); exact_mod_cast this
-  refine fun hd => ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd 2 ⟨1, ?_, fun c h2 h1 => ?_⟩
-  · change ‖(2 : ℚ_[2])‖ < ‖(1 : ℚ_[2])‖
-    rw [h2n, norm_one]; norm_num
-  · change ‖(2 : ℚ_[2])‖ < ‖c‖ at h2
-    change ‖c‖ < ‖(1 : ℚ_[2])‖ at h1
-    rw [h2n] at h2
-    rw [norm_one] at h1
-    have hc : c ≠ 0 := by rintro rfl; rw [norm_zero] at h2; norm_num at h2
-    obtain ⟨n, hn⟩ := Padic.padicNormE.image (p := 2) hc
-    rw [hn] at h1 h2
-    push_cast at h1 h2
-    rcases lt_trichotomy n 0 with hn0 | hn0 | hn0
-    · have : (1 : ℝ) ≤ 2 ^ (-n) := one_le_zpow₀ (by norm_num) (by omega)
-      linarith
-    · subst hn0; simp at h1
-    · have : (2 : ℝ) ^ (-n) ≤ 2 ^ (-1 : ℤ) := zpow_le_zpow_right₀ (by norm_num) (by omega)
-      have e : (2 : ℝ) ^ (-1 : ℤ) = 2⁻¹ := by norm_num
-      rw [e] at this
-      exact absurd (lt_of_lt_of_le h2 this) (lt_irrefl _)
+  have hcov : (2 : ℚ_[2]) ⋖ 1 := by
+    refine ⟨?_, fun c h2 h1 => ?_⟩
+    · change ‖(2 : ℚ_[2])‖ < ‖(1 : ℚ_[2])‖
+      rw [h2n, norm_one]; norm_num
+    · change ‖(2 : ℚ_[2])‖ < ‖c‖ at h2
+      change ‖c‖ < ‖(1 : ℚ_[2])‖ at h1
+      rw [h2n] at h2
+      rw [norm_one] at h1
+      have hc : c ≠ 0 := by rintro rfl; rw [norm_zero] at h2; norm_num at h2
+      obtain ⟨n, hn⟩ := Padic.padicNormE.image (p := 2) hc
+      rw [hn] at h1 h2
+      push_cast at h1 h2
+      rcases lt_trichotomy n 0 with hn0 | hn0 | hn0
+      · have : (1 : ℝ) ≤ 2 ^ (-n) := one_le_zpow₀ (by norm_num) (by omega)
+        linarith
+      · subst hn0; simp at h1
+      · have : (2 : ℝ) ^ (-n) ≤ 2 ^ (-1 : ℤ) := zpow_le_zpow_right₀ (by norm_num) (by omega)
+        have e : (2 : ℝ) ^ (-1 : ℤ) = 2⁻¹ := by norm_num
+        rw [e] at this
+        exact absurd (lt_of_lt_of_le h2 this) (lt_irrefl _)
+  exact ⟨hcov, fun hd => ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd 2 ⟨1, hcov⟩⟩
+-- Statement: and ℝ's norm preorder is dense, as its field order is.
+example : @DenselyOrdered ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT ∧ DenselyOrdered ℝ := by
+  refine ⟨@DenselyOrdered.mk ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT fun a b h => ?_, inferInstance⟩
+  change ‖a‖ < ‖b‖ at h
+  have hm : ‖(‖a‖ + ‖b‖) / 2‖ = (‖a‖ + ‖b‖) / 2 := Real.norm_of_nonneg (by positivity)
+  refine ⟨(‖a‖ + ‖b‖) / 2, ?_, ?_⟩
+  · change ‖a‖ < ‖(‖a‖ + ‖b‖) / 2‖
+    rw [hm]; linarith
+  · change ‖(‖a‖ + ‖b‖) / 2‖ < ‖b‖
+    rw [hm]; linarith
 -- Reading: other chart, the valuation order: there `0` is greatest, `v 0 = ⊤` (`addVal_bot`,
 -- § POSITIVE — narrow uniqueness and infinite width).
 -- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,

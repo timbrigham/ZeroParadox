@@ -149,8 +149,8 @@ BOUNDARY_MAP = [
      "the fork collapses to the diagonal fixed point exactly when the map has a unique fixed point, and the self-containing ⊥ = {⊥} realizes it. The field snaps form one family (MC-1); the reading that they are numerically one object is retired as ill-typed (object equality across categories does not typecheck and is not invariant under equivalence)",
      ["fork_collapse_iff", "selfMem_eq_singleton_bot"]),
     ("real numbers", "**Walled - the snap fails**",
-     "density: between 0 and any positive lies a smaller positive, so there is no minimum non-⊥ to snap to. The one field where the transition provably cannot happen - and that impossibility is itself a theorem",
-     ["f_snap_impossible", "f_no_minimal_positive"]),
+     "density: between 0 and any positive lies a smaller positive, so there is no least positive element to snap to. The one row of this map where the transition provably cannot happen, and that impossibility is itself a theorem, proved for every ordered field, ℝ among them",
+     ["f_snap_impossible", "f_no_minimal_positive", "axb1_fails_in_ordered_field"]),
 ]
 
 def render_boundary_map():

@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.15 | May 2026
+Version 1.16 | May 2026
 """
 
 import os, math
@@ -70,12 +70,14 @@ def comparison_table():
     hdr = [Paragraph('&#8477; Real Numbers', CS['kr_hdr']),
            Paragraph('Q&#8322; 2-adic Numbers', CS['kr_hdr'])]
     rows = [
-        ['Order: densely ordered, so no element, zero included, has a first step',
+        ['Order: densely ordered, in its field order and in its norm preorder alike, so no '
+         'element, zero included, has a first step',
          'Order: no field order synthesizes in Mathlib. Under the norm preorder 0 is least and has '
          'no first step (between 0 and any non-zero element lies one of smaller norm, as in any '
          'nontrivially normed field), yet globally it is not dense (2 has the first step 1); '
          'under the valuation order 0 is greatest'],
-        ['Topology: connected, so not totally disconnected (real_no_snap)',
+        ['Topology: connected (place_topological_signature), so not totally disconnected '
+         '(real_no_snap)',
          'Topology: totally disconnected (t5_totallyDisconnected)'],
         ['Metric: 0 is a limit point of the non-zero reals',
          'Metric: 0 is a limit point too — the doubling orbit 2&#8319;x tends to 0 and does not reach it in finite time'],
@@ -105,7 +107,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -150,9 +152,11 @@ def build():
               'This companion document is written for general readers. It explains in plain '
               'language why the real number line cannot serve as the mathematical substrate '
               'for the Binary Snap, and where the 2-adic numbers Q&#8322; stand: ZP-F excludes '
-              'ordered fields, by density; ZP-B shows Q&#8322; is totally disconnected '
-              '(t5_totallyDisconnected), which removes the topological obstruction; neither '
-              'supplies the first step at &#8869; of the state carrier (that is AX-B1, a commitment). '
+              'ordered fields, by density; ZP-B records that Q&#8322; is totally disconnected '
+              '(t5_totallyDisconnected, an instance Mathlib already supplies), which removes the '
+              'topological obstruction; neither supplies the first step at &#8869; of the state '
+              'carrier, the set of states a run of the framework moves through, ordered as in '
+              'ZP-A (that first step is AX-B1, a commitment). '
               'The formal results are machine-verified in Lean 4 as part of ZP-F '
               '(F-SNAP-IMPOSSIBLE and the general ordered field result); see also '
               'ZP-B (p-adic topology) for the positive case.',
@@ -214,14 +218,15 @@ def build():
         'on the line. Zero is a limit point: surrounded by non-zero reals, '
         'reachable as a limit but not isolated from them. That is a fact about the metric, '
         'and the 2-adic zero shares it, so being a limit point does not separate the two. The '
-        'topology does: &#8477; is connected, so not totally disconnected (real_no_snap), and '
+        'topology does: &#8477; is connected (place_topological_signature), so not totally '
+        'disconnected (real_no_snap), and '
         'Q&#8322; is totally disconnected (t5_totallyDisconnected). The order separates them '
         'globally, not at zero. At zero neither has a first step: &#8477; in its field order '
         '(axb1_fails_in_ordered_field), and Q&#8322; in the norm preorder of '
-        'ZeroParadox/BottomCannotBe.lean, &#167; ROLE, where that fact holds in any nontrivially '
-        'normed field. Globally &#8477; is densely ordered (axb1_fails_everywhere_iff_dense), '
-        'while that norm preorder on Q&#8322; is not dense: 2 has the first step 1 (the example '
-        'beside it there).'))
+        'ZeroParadox/BottomCannotBe.lean, &#167; ROLE, where that fact holds in every nontrivially '
+        'normed field. Globally &#8477; is densely ordered (axb1_fails_everywhere_iff_dense), in '
+        'its norm preorder as in its field order, while that norm preorder on Q&#8322; is not '
+        'dense: 2 has the first step 1 (the &#167; ROLE example stating that cover).'))
     E.append(cbody(
         'In Q&#8322;, the infinity is the <i>address</i> of zero. The 2-adic '
         'valuation assigns +&#8734; to 0 as its actual value, and no non-zero element '
@@ -264,10 +269,12 @@ def build():
         'floor is reached by counting down, while Q&#8322;\'s is a limit the doubling orbit '
         'approaches and does not reach in finite time (floor_reach_separates_mu_nu), marked '
         'out by its valuation, v&#8322;(0) = +&#8734;. The first step AX-B1 commits to is a cover '
-        'of &#8869; on the state carrier (a commitment); t_snap_given_cover assumes the run\'s '
-        'first step is such a cover, which with CC-1 gives it, and MachinePhase meets it '
-        '(c&#8321; covers its &#8869;, c&#8320;). Neither ordering of Q&#8322; supplies one at '
-        'its 0, so it is not a consequence of the 2-adic structure.'))
+        'of &#8869; on the state carrier (a commitment): a state directly above &#8869; with '
+        'nothing strictly between, which order theory calls an atom. t_snap_given_cover assumes '
+        'the run\'s first step is a cover; with CC-1, the commitment that the run starts at '
+        '&#8869;, that step is a cover of &#8869;. MachinePhase meets the commitment (its state '
+        'c&#8321; covers its &#8869;, c&#8320;). In neither ordering of Q&#8322; does its 0 have a '
+        'first step, so the step is not a consequence of the 2-adic structure.'))
     E.append(sp(4))
     E.append(remember_box(
         'Every finite computational system is already subject to the Binary Snap by '
@@ -301,7 +308,8 @@ def build():
         'has no such character: it is a regular point of a dense line, '
         'indistinguishable in structure from 1 or &#960;, with no first step above it. '
         'In the order, density is what disqualifies it (axb1_fails_everywhere_iff_dense); in '
-        'the topology, the line is connected, so not totally disconnected (real_no_snap). '
+        'the topology, the line is connected (place_topological_signature), so not totally '
+        'disconnected (real_no_snap). '
         'Being approached as a limit is '
         'not what disqualifies it, since the 2-adic 0 is approached as a limit too '
         '(floor_reach_separates_mu_nu).'))
@@ -448,11 +456,11 @@ def build():
         'it. Zero is also a limit point there, but so is the 2-adic zero, so being a limit '
         'point does not separate them. Two fences do. The order separates them globally, not '
         'at zero: at zero neither has a first step, and globally &#8477; is densely ordered '
-        '(axb1_fails_everywhere_iff_dense) while the norm preorder on Q&#8322; is not; the two '
-        'Q&#8322; facts are the &#167; ROLE examples in ZeroParadox/BottomCannotBe.lean. The '
-        'topology is the second fence: '
-        '&#8477; is connected, so not totally disconnected (real_no_snap), and Q&#8322; is '
-        'totally disconnected (t5_totallyDisconnected).'))
+        '(axb1_fails_everywhere_iff_dense), in its norm preorder as in its field order, while the '
+        'norm preorder on Q&#8322; is not; the norm-preorder facts are the &#167; ROLE examples in '
+        'ZeroParadox/BottomCannotBe.lean. The topology is the second fence: '
+        '&#8477; is connected (place_topological_signature), so not totally disconnected '
+        '(real_no_snap), and Q&#8322; is totally disconnected (t5_totallyDisconnected).'))
     E.append(cbody(
         'Q&#8322; is not an exotic choice. Among all completions of the rationals, '
         'Ostrowski\'s theorem says there are exactly two kinds: Archimedean ones '
@@ -464,10 +472,10 @@ def build():
         'That zero\'s valuation is +&#8734; is set by definition, not produced by the '
         'completion; what holds in Q&#8322; is that zero alone has it (padic_addVal_eq_top_iff). '
         'The framework did not choose unusual mathematics for its own sake. '
-        'ZP-F shows that ordered fields are excluded, by density; ZP-B shows that Q&#8322; is '
-        'totally disconnected (t5_totallyDisconnected), which removes the topological '
-        'obstruction. Neither supplies the first step at &#8869; of the state carrier; that is '
-        'AX-B1.'))
+        'ZP-F shows that ordered fields are excluded, by density; ZP-B records that Q&#8322; is '
+        'totally disconnected (t5_totallyDisconnected, an instance Mathlib already supplies), '
+        'which removes the topological obstruction. Neither supplies the first step at &#8869; '
+        'of the state carrier; that is AX-B1.'))
     E.append(cbody(
         'A note on scope: ZP-F establishes this result for linearly ordered fields — '
         'the class that contains &#8477; and &#8474; — because that is the natural '
@@ -487,8 +495,9 @@ def build():
         'non-zero element carries a finite valuation, and as a limit the doubling orbit '
         'approaches and does not reach in finite time. Neither supplies the first step AX-B1 '
         'commits to, a cover of &#8869; on the state carrier; t_snap_given_cover assumes the '
-        'run\'s first step is such a cover, which with CC-1 gives it, and MachinePhase meets it '
-        '(c&#8321; covers its &#8869;, c&#8320;).'))
+        'run\'s first step is a cover, and with CC-1 (the run starts at &#8869;) that step is a '
+        'cover of &#8869;. MachinePhase meets the commitment (c&#8321; covers its &#8869;, '
+        'c&#8320;).'))
 
     print(f'Building: {out_path}')
     doc.build(E)

@@ -12,7 +12,7 @@ For a dictionary and map of ⊥ - the object the whole framework is built on - s
 
 ## What This Is
 
-The Zero Paradox proves that an atom above ⊥ of the discrete state chart (a state with nothing between it and ⊥; c₁ in `MachinePhase`) is structurally forced - not assumed - given the framework's discrete state model (a bare join-semilattice alone can be dense, with no such atom; that is exactly where the transition fails, in the reals). The result is machine-verified in Lean 4. The supporting structure examines what happens at the bottom element ⊥ across several mathematical frameworks; each independently locates the same structural constraint. One additional hypothesis per framework is required that is not derivable from that framework's axioms alone - these are catalogued in [Axiomatic Commitments](README.md#axiomatic-commitments) in README.md.
+The Zero Paradox proves that an atom above ⊥ of the discrete state chart (a state with nothing between it and ⊥; c₁ in `MachinePhase`) is structurally forced - not assumed - given the framework's discrete state model (a bare join-semilattice alone can be densely ordered, and in a dense order no element has a first step, so there is no such atom; the real numbers are the familiar dense case). The result is machine-verified in Lean 4. The supporting structure examines what happens at the bottom element ⊥ across several mathematical frameworks; each independently locates the same structural constraint. One additional hypothesis per framework is required that is not derivable from that framework's axioms alone - these are catalogued in [Axiomatic Commitments](README.md#axiomatic-commitments) in README.md.
 
 Each layer of the proof is internally closed before any cross-framework claim is made.
 

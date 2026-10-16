@@ -205,15 +205,43 @@ example {α : Type*} [PartialOrder α] (bot a : α) (h : IsLeast {x | bot < x} a
 example {α : Type*} [LinearOrder α] (bot a : α) (h : bot ⋖ a) : IsLeast {x | bot < x} a :=
   ⟨h.1, fun _ hx => h.ge_of_gt hx⟩
 
-/-- **AX-B1 fails exactly where the order is dense — a BICONDITIONAL, and it is Mathlib's.**
+/-- **An order is dense iff AX-B1 fails at EVERY element — a BICONDITIONAL over the whole order,
+    and it is Mathlib's** `denselyOrdered_iff_forall_not_covBy`.
 
-    `denselyOrdered_iff_forall_not_covBy`. This is stronger than the framework's own statement:
-    ZP-F shows the snap fails in the reals, and this shows that failing *is* density. The two
-    are the same condition, not two facts that happen to coincide. -/
+    The right-hand side quantifies over all elements. Density rules out a first step at each one,
+    `0` of an ordered field included (`axb1_fails_in_ordered_field`); one element without a first
+    step does not make an order dense (the two controls below). -/
 theorem axb1_fails_everywhere_iff_dense {α : Type*} [Preorder α] :
     DenselyOrdered α ↔ ∀ bot : α, ¬ HasFirstStep bot := by
   rw [denselyOrdered_iff_forall_not_covBy]
   exact ⟨fun h bot ⟨a, hcov⟩ => h bot a hcov, fun h a b hcov => h a ⟨b, hcov⟩⟩
+
+-- `Statement:` control, the iff does not hold at one element: in `Bool`, `true` has no first step,
+-- and `Bool` is not dense (`false ⋖ true`).
+example : ¬ HasFirstStep true ∧ ¬ DenselyOrdered Bool := by
+  refine ⟨fun ⟨c, hc⟩ => absurd hc.1 (by cases c <;> decide), fun hd => ?_⟩
+  exact axb1_fails_everywhere_iff_dense.mp hd false
+    ⟨true, by decide, fun c h1 h2 => by cases c <;> simp_all⟩
+-- `Statement:` control, with something above the element: in `WithTop (WithTop ℚ)`, `0` has no first
+-- step, and the order is not dense (the inner `⊤` is covered by the outer `⊤`).
+example : ¬ HasFirstStep (((0 : ℚ) : WithTop ℚ) : WithTop (WithTop ℚ)) ∧
+    ¬ DenselyOrdered (WithTop (WithTop ℚ)) := by
+  refine ⟨fun ⟨a, h0a, hc⟩ => ?_, fun hd => ?_⟩
+  · induction a using WithTop.recTopCoe with
+    | top => exact hc (c := ((1 : ℚ) : WithTop ℚ)) (by simp) (WithTop.coe_lt_top _)
+    | coe b =>
+      induction b using WithTop.recTopCoe with
+      | top => exact hc (c := (((1 : ℚ) : WithTop ℚ) : WithTop (WithTop ℚ)))
+                (by simp) (WithTop.coe_lt_coe.2 (WithTop.coe_lt_top _))
+      | coe r =>
+        have hr : (0 : ℚ) < r := by simpa using h0a
+        exact hc (c := (((r / 2 : ℚ) : WithTop ℚ) : WithTop (WithTop ℚ)))
+          (by simpa using half_pos hr) (by simpa using half_lt_self hr)
+  · refine axb1_fails_everywhere_iff_dense.mp hd ((⊤ : WithTop ℚ) : WithTop (WithTop ℚ))
+      ⟨⊤, WithTop.coe_lt_top _, fun c h1 h2 => ?_⟩
+    induction c using WithTop.recTopCoe with
+    | top => exact lt_irrefl _ h2
+    | coe b => exact (not_top_lt (WithTop.coe_lt_coe.1 h1))
 
 end AxB1
 
@@ -330,9 +358,9 @@ completion of ℚ — the first bullet is therefore wider than Ostrowski and res
 clopen (`t3_isolation`) and the return across it admits no continuous path (`c3_irreversible`,
 via `t5_totallyDisconnected`). Neither yields a first step, and no metric result could: the
 2-adic norm values accumulate at 0 (‖2ⁿ‖₂ = 2⁻ⁿ), so ℚ₂ has no closest non-zero element either
-— ZP-B's own `eps0 k = 2 ^ k` is parameterized by a chosen maximum accessible valuation and its
-definition records the value as contingent. **The first step is AX-B1**, the commitment stated
-in § 0 above, not a consequence of the 2-adic structure.
+— ZP-B's own `eps0 k = 2 ^ k` reads as a 2-adic norm: a nonzero `x : ℚ₂` of valuation `v` has
+`‖x‖ = 2 ^ (-v)` (Mathlib `Padic.norm_eq_zpow_neg_valuation`), so at the chosen finest valuation `v`
+the exponent is `k = -v`, a contingent value. **The first step is AX-B1** (§ 0), not a 2-adic consequence.
 
 So the classification is a statement about where the snap is RULED OUT. Ostrowski's theorem
 (see `ZeroParadox/Valuation/Ostrowski.lean` for the framework's own statement of it) separates
