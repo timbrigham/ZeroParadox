@@ -34,7 +34,7 @@ here is only that Mathlib has no p-adic pseudodifferential operator, so the cons
 ## Structure
 - § I   The operator (singular-integral form)
 - § II  Vanishing on constants
-- § III Annulus (shell) measures
+- § III Annulus (shell) measures; § VIII the shells as vectors in L², split by Pythagoras
 -/
 
 namespace ZeroParadox
@@ -343,6 +343,201 @@ theorem vladimirov_shell_symbol_inv (α : ℝ) (m : ℕ) {x : ℤ_[p]}
       = (((1 - (p : ℝ)⁻¹) * ‖((x : ℚ_[p]))⁻¹‖ ^ α : ℝ) : ℂ) := by
   rw [vladimirov_shell_symbol, norm_inv_eq_freq m hx]
 
+/-! ## § VIII — The shells as vectors in L²
+
+The ball indicator `ballIndicatorL2` (`ZeroParadox/Valuation/PadicBallIndicator.lean`) splits as the
+shell-`m` indicator plus the next ball's, and the two pieces are orthogonal. These are standard facts
+of the p-adic Haar wavelet analysis cited in § VI (Kozyrev 2002); no novelty claimed. At `p = 2`,
+compare `shellIndicatorL2 m - ballIndicatorL2 (m + 1)` with that citation's 2-adic Haar wavelet, up to
+sign and scale. Two orthogonal vectors of equal length are `√2` times that length apart in any inner
+product space, so two sibling balls are, at every prime (compare `t4_state_gap`,
+`ZeroParadox/State/StateSpace.lean`); only at `p = 2` is the nested pair, shell and next ball, equal. -/
+
+/-- The indicator of shell `m` (`shellSet`) as an element of `L²(ℤ_p, haarZp)`. -/
+noncomputable def shellIndicatorL2 (m : ℕ) : Lp ℂ 2 (haarZp (p := p)) :=
+  indicatorConstLp 2 (shellSet_measurable m) (measure_ne_top (haarZp (p := p)) _) 1
+
+/-- **Count times squared length.** There are `pⁿ` level-`n` balls, and `pⁿ · ‖𝟙_ball‖² = 1`. -/
+theorem count_mul_norm_sq_ballIndicatorL2 (n : ℕ) :
+    ((p : ℝ) ^ n) * ‖ballIndicatorL2 (p := p) n‖ ^ 2 = 1 := by
+  have hpn : (0 : ℝ) < (p : ℝ) ^ n := by have := ‹Fact p.Prime›.out.pos; positivity
+  rw [norm_ballIndicatorL2, ← Real.sqrt_eq_rpow, Real.sq_sqrt (inv_nonneg.2 hpn.le)]
+  field_simp
+
+-- Statement: the ideal `(pⁿ)`, the level-`n` ball around `0` (`haarZp_ball`), has index `pⁿ`.
+example (n : ℕ) : (Ideal.span {(p : ℤ_[p]) ^ n}).toAddSubgroup.index = p ^ n := by
+  haveI : NeZero (p ^ n) := ⟨pow_ne_zero n ‹Fact p.Prime›.out.pos.ne'⟩
+  have hsurj : Function.Surjective ⇑(PadicInt.toZModPow (p := p) n) := fun a =>
+    ⟨(a.val : ℤ_[p]), by rw [map_natCast]; exact ZMod.natCast_rightInverse a⟩
+  have hker : (Ideal.span {(p : ℤ_[p]) ^ n}).toAddSubgroup
+      = (PadicInt.toZModPow (p := p) n).toAddMonoidHom.ker := by
+    ext x
+    rw [Submodule.mem_toAddSubgroup, ← PadicInt.ker_toZModPow, RingHom.mem_ker,
+      AddMonoidHom.mem_ker]
+    rfl
+  rw [hker, AddSubgroup.index_ker, AddMonoidHom.range_eq_top_of_surjective _ hsurj,
+    Nat.card_congr (AddSubgroup.topEquiv (G := ZMod (p ^ n))).toEquiv, Nat.card_zmod]
+
+-- Statement: control, the count times the unsquared length is not constant (`p = 2`, levels 0 and 2).
+example : ((2 : ℝ) ^ 0) * ‖ballIndicatorL2 (p := 2) 0‖ ≠
+    ((2 : ℝ) ^ 2) * ‖ballIndicatorL2 (p := 2) 2‖ := by
+  have h0 := count_mul_norm_sq_ballIndicatorL2 (p := 2) 0
+  have h2 := count_mul_norm_sq_ballIndicatorL2 (p := 2) 2
+  have a0 := norm_nonneg (ballIndicatorL2 (p := 2) 0)
+  have a2 := norm_nonneg (ballIndicatorL2 (p := 2) 2)
+  push_cast at h0 h2 ⊢
+  intro h
+  nlinarith
+
+/-- **Parent to child.** A ball's indicator is `√p` times as long as the next level's. -/
+theorem norm_ballIndicatorL2_eq_sqrt_mul_succ (n : ℕ) :
+    ‖ballIndicatorL2 (p := p) n‖ = Real.sqrt p * ‖ballIndicatorL2 (p := p) (n + 1)‖ := by
+  have hp0 : (0 : ℝ) < p := by exact_mod_cast ‹Fact p.Prime›.out.pos
+  have h1 := count_mul_norm_sq_ballIndicatorL2 (p := p) n
+  have h2 := count_mul_norm_sq_ballIndicatorL2 (p := p) (n + 1)
+  rw [pow_succ] at h2
+  have hpn : (0 : ℝ) < (p : ℝ) ^ n := by positivity
+  have hsq : ‖ballIndicatorL2 (p := p) n‖ ^ 2 =
+      (Real.sqrt p * ‖ballIndicatorL2 (p := p) (n + 1)‖) ^ 2 := by
+    rw [mul_pow, Real.sq_sqrt hp0.le]
+    apply mul_left_cancel₀ hpn.ne'
+    rw [h1, ← mul_assoc, h2]
+  exact (pow_left_inj₀ (norm_nonneg _) (by positivity) two_ne_zero).1 hsq
+
+-- Statement: the smallest prime gives the smallest split ratio, √2 (equality exactly at `p = 2`).
+example : Real.sqrt 2 ≤ Real.sqrt p ∧ (Real.sqrt p = Real.sqrt 2 ↔ p = 2) := by
+  have h2 : (2 : ℝ) ≤ p := by exact_mod_cast ‹Fact p.Prime›.out.two_le
+  refine ⟨Real.sqrt_le_sqrt h2, ?_⟩
+  rw [Real.sqrt_inj (by linarith) (by norm_num)]
+  exact_mod_cast Iff.rfl
+
+/-- **Split.** The ball-`m` indicator is the shell-`m` indicator plus the ball-`(m+1)` indicator. -/
+theorem ballIndicatorL2_eq_shell_add (m : ℕ) :
+    ballIndicatorL2 (p := p) m = shellIndicatorL2 m + ballIndicatorL2 (p := p) (m + 1) := by
+  have hsub : {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-((m + 1 : ℕ) : ℤ))}
+      ⊆ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-(m : ℤ))} := by
+    intro x hx
+    simp only [Set.mem_setOf_eq] at hx ⊢
+    refine le_trans hx (zpow_le_zpow_right₀ ?_ ?_)
+    · exact_mod_cast ‹Fact p.Prime›.out.one_lt.le
+    · omega
+  simp only [ballIndicatorL2, shellIndicatorL2]
+  rw [← indicatorConstLp_disjoint_union (shellSet_measurable m) (ball_measurableSet (m + 1))
+    (measure_ne_top _ _) (measure_ne_top _ _) Set.disjoint_sdiff_left (1 : ℂ)]
+  congr 1
+  exact (Set.diff_union_of_subset hsub).symm
+
+/-- **Orthogonality.** The shell-`m` and ball-`(m+1)` indicators are orthogonal (disjoint supports). -/
+theorem inner_shellIndicatorL2_ballIndicatorL2 (m : ℕ) :
+    inner ℂ (shellIndicatorL2 (p := p) m) (ballIndicatorL2 (p := p) (m + 1)) = 0 := by
+  rw [shellIndicatorL2, ballIndicatorL2, L2.inner_indicatorConstLp_one_indicatorConstLp_one,
+    shellSet, Set.disjoint_iff_inter_eq_empty.mp Set.disjoint_sdiff_left]
+  simp
+
+-- Statement: control, two consecutive ball indicators are not orthogonal, so the split needs the shell.
+example (m : ℕ) :
+    inner ℂ (ballIndicatorL2 (p := p) m) (ballIndicatorL2 (p := p) (m + 1)) ≠ 0 := by
+  have hsub : {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-((m + 1 : ℕ) : ℤ))}
+      ⊆ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-(m : ℤ))} := by
+    intro x hx
+    simp only [Set.mem_setOf_eq] at hx ⊢
+    refine le_trans hx (zpow_le_zpow_right₀ ?_ ?_)
+    · exact_mod_cast ‹Fact p.Prime›.out.one_lt.le
+    · omega
+  simp only [ballIndicatorL2]
+  rw [L2.inner_indicatorConstLp_one_indicatorConstLp_one, Set.inter_eq_right.mpr hsub,
+    measureReal_def, haarZp_ball]
+  simp [‹Fact p.Prime›.out.ne_zero]
+
+/-- **Pythagoras.** `‖𝟙_ball m‖² = ‖𝟙_shell m‖² + ‖𝟙_ball (m+1)‖²`. -/
+theorem norm_sq_ballIndicatorL2_eq_shell_add (m : ℕ) :
+    ‖ballIndicatorL2 (p := p) m‖ ^ 2
+      = ‖shellIndicatorL2 (p := p) m‖ ^ 2 + ‖ballIndicatorL2 (p := p) (m + 1)‖ ^ 2 := by
+  rw [ballIndicatorL2_eq_shell_add m, @norm_add_sq ℂ, inner_shellIndicatorL2_ballIndicatorL2]
+  simp
+
+/-- **The gap between the pieces.** The shell-`m` and ball-`(m+1)` indicators are the parent's length
+    apart, which is `√p` times the child's. -/
+theorem norm_shell_sub_ballIndicatorL2 (m : ℕ) :
+    ‖shellIndicatorL2 (p := p) m - ballIndicatorL2 (p := p) (m + 1)‖ = ‖ballIndicatorL2 (p := p) m‖
+      ∧ ‖shellIndicatorL2 (p := p) m - ballIndicatorL2 (p := p) (m + 1)‖
+        = Real.sqrt p * ‖ballIndicatorL2 (p := p) (m + 1)‖ := by
+  have hsq : ‖shellIndicatorL2 (p := p) m - ballIndicatorL2 (p := p) (m + 1)‖ ^ 2
+      = ‖ballIndicatorL2 (p := p) m‖ ^ 2 := by
+    rw [@norm_sub_sq ℂ, inner_shellIndicatorL2_ballIndicatorL2,
+      norm_sq_ballIndicatorL2_eq_shell_add m]
+    simp
+  have h := (pow_left_inj₀ (norm_nonneg _) (norm_nonneg _) two_ne_zero).1 hsq
+  exact ⟨h, h.trans (norm_ballIndicatorL2_eq_sqrt_mul_succ m)⟩
+
+/-- **Equal pieces at `p = 2`.** The shell-`m` and ball-`(m+1)` indicators have equal length. -/
+theorem norm_shellIndicatorL2_two (m : ℕ) :
+    ‖shellIndicatorL2 (p := 2) m‖ = ‖ballIndicatorL2 (p := 2) (m + 1)‖ := by
+  have hle : ((2 : ℝ≥0∞) ^ (m + 1))⁻¹ ≤ ((2 : ℝ≥0∞) ^ m)⁻¹ :=
+    ENNReal.inv_le_inv.mpr (pow_le_pow_right₀ (by norm_num) (Nat.le_succ m))
+  have htop : ((2 : ℝ≥0∞) ^ m)⁻¹ ≠ ⊤ := ENNReal.inv_ne_top.mpr (pow_ne_zero m (by norm_num))
+  have hS : (haarZp (p := 2)).real (shellSet (p := 2) m) = ((2 : ℝ) ^ (m + 1))⁻¹ := by
+    rw [measureReal_def, shellSet, measure_ball_diff m]
+    push_cast
+    rw [ENNReal.toReal_sub_of_le hle htop]
+    simp only [ENNReal.toReal_inv, ENNReal.toReal_pow, ENNReal.toReal_ofNat]
+    field_simp
+    ring
+  have hB : (haarZp (p := 2)).real {x : ℤ_[2] | ‖x‖ ≤ ((2 : ℕ) : ℝ) ^ (-((m + 1 : ℕ) : ℤ))}
+      = ((2 : ℝ) ^ (m + 1))⁻¹ := by
+    rw [measureReal_def, haarZp_ball]
+    simp
+  rw [shellIndicatorL2, ballIndicatorL2, norm_indicatorConstLp two_ne_zero ENNReal.ofNat_ne_top,
+    norm_indicatorConstLp two_ne_zero ENNReal.ofNat_ne_top, hS]
+  rw [hB]
+
+-- Statement: so at `p = 2` the two pieces are `√2` times either piece's length apart.
+example (m : ℕ) :
+    ‖shellIndicatorL2 (p := 2) m - ballIndicatorL2 (p := 2) (m + 1)‖
+      = Real.sqrt 2 * ‖shellIndicatorL2 (p := 2) m‖ := by
+  rw [(norm_shell_sub_ballIndicatorL2 (p := 2) m).2, norm_shellIndicatorL2_two]
+  norm_num
+
+-- Statement: at every prime, the sibling level-1 balls around `0` and `1` are `√2` times the first's
+-- length apart.
+example :
+    ‖ballIndicatorL2 (p := p) 1 - indicatorConstLp 2 ((ball_measurableSet (p := p) 1).preimage
+        (measurable_const_add (-1))) (measure_ne_top (haarZp (p := p)) _) (1 : ℂ)‖
+      = Real.sqrt 2 * ‖ballIndicatorL2 (p := p) 1‖ := by
+  set B := {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-((1 : ℕ) : ℤ))}
+  have hdisj : B ∩ (fun x => -1 + x) ⁻¹' B = ∅ := by
+    refine Set.eq_empty_of_forall_notMem fun x ⟨hx, hy⟩ => ?_
+    have h := PadicInt.nonarchimedean x (-(-1 + x))
+    rw [show x + -(-1 + x) = 1 by ring, norm_one, norm_neg] at h
+    exact absurd (h.trans (max_le hx hy)) (not_le.mpr
+      (zpow_lt_one_of_neg₀ (by exact_mod_cast ‹Fact p.Prime›.out.one_lt) (by norm_num)))
+  have hn : ‖indicatorConstLp 2 ((ball_measurableSet (p := p) 1).preimage
+      (measurable_const_add (-1))) (measure_ne_top (haarZp (p := p)) _) (1 : ℂ)‖
+        = ‖ballIndicatorL2 (p := p) 1‖ := by
+    rw [ballIndicatorL2, norm_indicatorConstLp two_ne_zero ENNReal.ofNat_ne_top,
+      norm_indicatorConstLp two_ne_zero ENNReal.ofNat_ne_top, measureReal_def, measureReal_def,
+      measure_preimage_add]
+  refine (pow_left_inj₀ (norm_nonneg _) (by positivity) two_ne_zero).1 ?_
+  rw [@norm_sub_sq ℂ, hn, mul_pow, Real.sq_sqrt (by norm_num), ballIndicatorL2,
+    L2.inner_indicatorConstLp_one_indicatorConstLp_one, hdisj]
+  simp; ring
+
+section ShellControlThree
+
+local instance : Fact (Nat.Prime 3) := ⟨by norm_num⟩
+
+-- Statement: control, at `p = 3` the shell-`0` and ball-`1` indicators differ in length.
+example : ‖shellIndicatorL2 (p := 3) 0‖ ≠ ‖ballIndicatorL2 (p := 3) 1‖ := by
+  intro h
+  have hpy := norm_sq_ballIndicatorL2_eq_shell_add (p := 3) 0
+  have h0 := count_mul_norm_sq_ballIndicatorL2 (p := 3) 0
+  have h1 := count_mul_norm_sq_ballIndicatorL2 (p := 3) 1
+  rw [h] at hpy
+  push_cast at h0 h1 hpy
+  nlinarith
+
+end ShellControlThree
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -358,4 +553,12 @@ open ZeroParadox
 #print axioms vladimirov_ballFun_geom
 #print axioms norm_inv_eq_freq
 #print axioms vladimirov_shell_symbol_inv
+#print axioms shellIndicatorL2
+#print axioms count_mul_norm_sq_ballIndicatorL2
+#print axioms norm_ballIndicatorL2_eq_sqrt_mul_succ
+#print axioms ballIndicatorL2_eq_shell_add
+#print axioms inner_shellIndicatorL2_ballIndicatorL2
+#print axioms norm_sq_ballIndicatorL2_eq_shell_add
+#print axioms norm_shell_sub_ballIndicatorL2
+#print axioms norm_shellIndicatorL2_two
 end PurityCheck
