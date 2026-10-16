@@ -34,9 +34,9 @@ Proves: T2 (existence of T by basis assignment, all five D2 requirements),
 T4 (Snap → orthogonal shift in H), T5 (monotone norms — tautology of the
 unit-norm construction), T5-b (distinct consecutive states → orthogonal
 T-images, using DP-1 via t2_orthogonal — the non-trivial content of T5).
-T3 (uniqueness up to unitary equivalence) is stated; proof deferred
-pending OrthonormalBasis API. DP-1 (orthogonality) is proved as a theorem
-of the construction — reflecting the design commitment, not a bare axiom.
+Also proves T3 (uniqueness up to unitary equivalence, `t3_uniqueness`) over
+cell-indexed maps with unit-norm, pairwise-orthogonal values, as D2(iii)–(v) require.
+DP-1 (orthogonality) is proved as a theorem of the construction — reflecting the design commitment, not a bare axiom.
 -/
 
 namespace ZeroParadox
@@ -117,13 +117,13 @@ theorem t2_orthogonal (n : ℕ) (i j : Fin n) (h : i ≠ j) :
     @inner ℂ (StateSpace n) _ (transitionOp n i) (transitionOp n j) = 0 :=
   dp1_orthogonality n i j h
 
-/-- T2(v): All basis vectors have norm 1 ≥ 1 = ‖e₀‖ — T is norm-preserving. -/
+/-- T2(v): every T-image has norm 1 (D2(v), unit norm). -/
 theorem t2_norm_eq_one (n : ℕ) (i : Fin n) : ‖transitionOp n i‖ = 1 := by
   simp [transitionOp, basisVec]
 
 /-- T2: Existence — transitionOp satisfies all five D2 requirements.
     (i/ii) by construction (rfl); (iii) injective; (iv) orthogonal across indices;
-    (v) norm-preserving (all basis vectors have norm 1). -/
+    (v) unit norm (all basis vectors have norm 1). -/
 theorem t2_existence (n : ℕ) :
     Function.Injective (transitionOp n) ∧
     (∀ i j : Fin n, i ≠ j →

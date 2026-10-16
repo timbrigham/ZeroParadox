@@ -186,7 +186,9 @@ def build():
         'and ε₀, the state off ⊥ of OntologicalStates (existence). This is not a simplifying assumption — '
         'it is the irreducible minimum. The core question is whether any transition from ⊥ to '
         'a first state is possible, and for that question n=2 is the smallest meaningful case. '
-        'No claim ZP-D makes in H requires n > 2. Binary is the logical ground floor, not a placeholder '
+        'The right angle between e₀ and e₁ already exists at n=2; the map T from ℚ₂ reaches it at n=2 only '
+        'when ε₀ lies outside ℤ₂, and otherwise uses a finer level and more dimensions. '
+        'Binary is the logical ground floor, not a placeholder '
         'for a more general construction.'))
 
     # ── Page 2: T operator ─────────────────────────────────────────────────────
@@ -247,7 +249,7 @@ def build():
         'states are distinct — meaning the sequence actually moved — their T-images in H '
         'are orthogonal. Each genuine transition opens a new direction. The whole ascending '
         'chain, not just the first step, unfolds through orthogonal shifts. '
-        'Lean: t5_strict_orthogonal (axiom-free, via DP-1).'))
+        'Lean: t5_strict_orthogonal (via DP-1).'))
     E.append(sp(8))
 
     E.append(cbody(
