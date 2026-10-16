@@ -86,6 +86,23 @@ noncomputable instance instNatInfVal : ValuationStructure ℕ∞ where
   val_unique := fun _x hx => hx
   val_scale  := fun _x _hx => rfl
 
+-- Reading: CARRIER, this model only (not abstract `collect`). Its join, ⊥ and scale are the min-plus
+-- semiring's addition, zero and multiplication by `trop 1` in Mathlib's `Tropical ℕ∞`
+-- (`Tropical.trop_top`, `Tropical.untrop_add`, `Tropical.untrop_mul`), so `scale_bot` is `zero_mul`:
+-- "∞ is the zero of this semiring" (Pin, "Tropical Semirings", *Idempotency*, Cambridge UP 1998, p. 3).
+
+-- Statement: scale is deflationary in the ZP order and not inflationary, join is inflationary, and
+-- `scale_bot` follows from deflationarity alone (the arrow beside `t_snap_irreversible`).
+example : (∀ x : ℕ∞, le (ValuationStructure.scale x) x) ∧
+    ¬ (∀ x : ℕ∞, le x (ValuationStructure.scale x)) ∧ (∀ y z : ℕ∞, le z (join y z)) ∧
+    ValuationStructure.scale (bot : ℕ∞) = bot := by
+  have hd : ∀ x : ℕ∞, le (ValuationStructure.scale x) x := fun x =>
+    show min (x + 1) x = x from min_eq_right le_self_add
+  refine ⟨hd, fun h => ?_, fun y z => ?_, le_antisymm (hd _) (bot_le _)⟩
+  · have h0 : min (0 : ℕ∞) (0 + 1) = 0 + 1 := h 0
+    simp at h0
+  · show min z (min y z) = min y z; simp
+
 /-! ## § III. Derived AFA Content -/
 
 /-- The unique fixed point of (· + 1) in ℕ∞ is ⊤. -/

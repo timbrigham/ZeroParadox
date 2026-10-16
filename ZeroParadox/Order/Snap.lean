@@ -240,6 +240,29 @@ theorem t_snap_irreversible {L : Type*} [ZPSemilattice L] {x y : L}
     rw [← hz, ← join_assoc, join_idem]
   exact hne (le_antisymm hle hyx)
 
+-- Statement: an inflationary map on a partial order with a top undoes no strict step and fixes ⊤
+-- (Mathlib `eq_top_iff`; for closure operators, `ClosureOperator.closure_top`).
+example {α : Type*} [PartialOrder α] [OrderTop α] (f : α → α) (hf : ∀ x, x ≤ f x) :
+    (∀ x y, x < y → f y ≠ x) ∧ f ⊤ = ⊤ :=
+  ⟨fun _ y hxy h => absurd (h ▸ hf y) (not_le_of_gt hxy), eq_top_iff.mpr (hf ⊤)⟩
+
+-- Statement: `t_snap_irreversible` is that first half at `f := (· ⊔ z)`, in the order
+-- `zpSemilatticeSup` builds; neither ⊥ of `L` nor a valuation enters.
+example {L : Type*} [ZPSemilattice L] {x y : L} (hle : le x y) (hne : x ≠ y) (z : L) :
+    join y z ≠ x := by
+  letI := zpSemilatticeSup L
+  intro h
+  exact absurd (h ▸ (le_sup_left : y ≤ y ⊔ z)) (not_le_of_gt (lt_of_le_of_ne hle hne))
+
+-- Statement: the other chart: a map deflationary in the ZP order fixes ⊥ of `L` (Mathlib form,
+-- in an `OrderBot`: `le_bot_iff`).
+example {L : Type*} [ZPSemilattice L] (f : L → L) (hf : ∀ x, le (f x) x) : f bot = bot :=
+  le_antisymm (hf _) (bot_le _)
+
+-- Reading: two opposed arrows meeting at ⊥ of `L`. Join climbs away from it and cannot return;
+-- a deflationary map, such as scale in the ℕ∞ model (`ZeroParadox/Settheory/Model.lean`),
+-- descends into it and stays.
+
 /-! ## III. DA-2 — Instantiation Succession
 
 DA-2: A state S satisfies the structural ⊥ role for instantiation I_{n+1} iff

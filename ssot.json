@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1914,
-        "files": 163
+        "declarations": 1915,
+        "files": 164
       },
       "entries": [
         {
@@ -67592,6 +67592,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f6b48d71-fadf-4f76-8ff5-02711862d54b",
+          "new": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.path_decoration_eq_bot",
+            "short": "path_decoration_eq_bot"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/APG.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.path_decoration_eq_bot",
+            "short": "path_decoration_eq_bot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New lemma: backward spreading of bottom along a decoration path (APG.lean)",
           "verify": {
             "axioms": null,
             "sorry_free": true
