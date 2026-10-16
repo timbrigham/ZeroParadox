@@ -48,11 +48,14 @@ across the crossing every notation denotes below ε₀ (`repr_lt_epsilon0`,
 (`ZeroParadox/Ordinal/PricedInterface.lean`), the notations with one top adjoined, the fixed point of
 `e0OmegaPow` (ω^· extended to fix ⊤ by definition) is unique by theorem (`e0OmegaPow_fixedpoint_iff`, `[propext]`) and exists by definition
 (`e0OmegaPow_top`, proved by `rfl`), on an order that is not well-founded (the `example` stating
-`¬ WellFoundedLT E0Note`). The **derived** one is open: a choice-free, well-founded Lean carrier on which
-ε₀'s fixed point is derived, leastness included, is not located as of 2026-10-08 (searched
+`¬ WellFoundedLT E0Note`). The **derived** one is open: a well-founded Lean carrier on which
+ε₀'s fixed point is derived, leastness included, with no `Classical.choice` in the `#print axioms` of
+those declarations, is not located as of 2026-10-08. The qualifier is on the derivation, not the
+carrier: the `Ordinal` type is choice-free (below), its order is well-founded (Mathlib's
+`Ordinal.lt_wf`), and leastness is proved there with choice (`epsilon0_min_eq_max`). Searched
 2026-10-08: `ZeroParadox/**/*.lean` for `WellFounded`, `IsWellOrder` and `Acc`; the Mathlib pin's
-notation systems were surveyed 2026-08-02 in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`), and the crossing into `Ordinal`,
-`e0Repr`, carries choice. The current state is in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
+notation systems were surveyed 2026-08-02 in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`. The
+crossing into `Ordinal`, `e0Repr`, carries choice. The current state is in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 
 Two further corrections. `Ordinal` itself is `[propext, Quot.sound]` — **choice is not in the
 type**; it enters through `Ordinal.instLinearOrder`, `nfp`, `omega0`, `epsilon`. And a choice-free result *about the ascent* is
