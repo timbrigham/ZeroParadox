@@ -1,5 +1,5 @@
 """
-Build ZP-B Illustrated Companion (v1.17)
+Build ZP-B Illustrated Companion (v1.18)
 """
 
 import os
@@ -85,7 +85,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -162,10 +162,11 @@ def build():
         'What it measures in this framework: depth of binary structure — how many times 2 divides x.',
         'The crucial point: 0 and any nonzero element lie in disjoint clopen sets of ℚ₂. '
         'No continuous path connects them — the geometry enforces the binary gap.',
-        'Note on ε₀: ε₀ is not a specific nonzero element of ℚ₂ that you can look up — '
-        'the 2-adic number system has no smallest nonzero element. ε₀ is the framework\'s name '
-        'for the minimum viable departure from null, defined by structural constraints. '
-        'The geometry provides the right topology; it does not fix the specific value.',
+        'Note on ε₀: ε₀ is a point of ℚ₂, but not one with a fixed value you can look up — '
+        'the 2-adic number system has no smallest nonzero size. ε₀ is the framework\'s name '
+        'for the minimum viable departure from 0 of ℚ₂, and it is located only by a rung: once a '
+        'finest accessible valuation is chosen, any point at that valuation fills the role. '
+        'The geometry provides the right topology; it does not fix the rung, and the rung does not fix the point.',
     ]))
     E.append(sp(8))
 
@@ -248,8 +249,8 @@ def build():
 
     E.append(nested_balls_diagram())
     E.append(ccaption(
-        'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold (a framework threshold, not a '
-        'specific nonzero element of ℚ₂) marks the Snap boundary. '
+        'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold (the size of any point at the chosen '
+        'finest rung, not one fixed element of ℚ₂) marks the Snap boundary. '
         '0 is clopen-separated — no continuous path from outside ever reaches it.'))
 
     E.append(key_result_box('Key Result: Total Disconnectedness (T5)',
@@ -284,7 +285,7 @@ def build():
     E.append(remember_box(
         'Remember: The 2-adic structure — ultrametric, clopen balls, clopen separation of 0 — is '
         'fixed by the framework\'s axioms. ε₀ (the Snap threshold) is a structural concept: '
-        'the minimum step required by those axioms, not a specific nonzero element of ℚ₂ and not a specific physical constant. '
+        'the minimum step required by those axioms, a point of ℚ₂ named by its rung rather than by a fixed value, and not a specific physical constant. '
         'The Zero Paradox is a structural argument, not a physical theory of our particular universe.'))
 
     print(f'Building: {out_path}')

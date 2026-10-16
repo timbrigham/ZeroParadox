@@ -67,6 +67,16 @@ theorem dp1_orthogonality (n : ℕ) (i j : Fin n) (h : i ≠ j) :
   simp only [basisVec, EuclideanSpace.inner_single_left, map_one, one_mul]
   simp [h.symm]
 
+-- Statement: an orthonormal family in `StateSpace n` has finitely many members, so DP-1 stated
+-- over every pair of distinct points of an infinite set, with unit-norm images, has no model in `ℂⁿ`.
+example {ι : Type*} (n : ℕ) (v : ι → StateSpace n) (hv : Orthonormal ℂ v) : Finite ι :=
+  hv.linearIndependent.finite
+
+-- Statement: control, without nonzero images the zero map is pairwise orthogonal on any index type.
+example {ι : Type*} (n : ℕ) :
+    ∀ i j : ι, i ≠ j → @inner ℂ (StateSpace n) _ ((fun _ => 0) i) ((fun _ => 0) j) = 0 :=
+  fun _ _ _ => inner_zero_left _
+
 /-! ## III. The Transition Operator T: Fin n → StateSpace n (D2 + T2) -/
 
 /-- D2 (construction): T assigns each cell-index to its corresponding basis vector.
@@ -121,9 +131,8 @@ theorem t2_orthogonal (n : ℕ) (i j : Fin n) (h : i ≠ j) :
 theorem t2_norm_eq_one (n : ℕ) (i : Fin n) : ‖transitionOp n i‖ = 1 := by
   simp [transitionOp, basisVec]
 
-/-- T2: Existence — transitionOp satisfies all five D2 requirements.
-    (i/ii) by construction (rfl); (iii) injective; (iv) orthogonal across indices;
-    (v) unit norm (all basis vectors have norm 1). -/
+/-- T2: Existence — the three conjuncts are D2(iii) injectivity, D2(iv) orthogonality across
+    indices and D2(v) unit norm; D2(i) and D2(ii) are `t2_maps_null` and `t2_maps_eps0`. -/
 theorem t2_existence (n : ℕ) :
     Function.Injective (transitionOp n) ∧
     (∀ i j : Fin n, i ≠ j →
@@ -154,6 +163,19 @@ theorem t3_uniqueness (n : ℕ)
   rw [show transitionOp n i = EuclideanSpace.single i (1 : ℂ) from rfl,
       (OrthonormalBasis.mk hOrth_T' hSpan).repr_symm_single]
   exact congr_fun (OrthonormalBasis.coe_mk hOrth_T' hSpan) i
+
+-- Statement: the two-sided form, which ZP-D T3 states: any two cell-indexed maps with unit-norm,
+-- pairwise-orthogonal values are related by a linear isometry equivalence, through `transitionOp`.
+example (n : ℕ) (T T' : Fin n → StateSpace n)
+    (hT_orth : ∀ i j : Fin n, i ≠ j → @inner ℂ (StateSpace n) _ (T i) (T j) = 0)
+    (hT_norm : ∀ i : Fin n, ‖T i‖ = 1)
+    (hT'_orth : ∀ i j : Fin n, i ≠ j → @inner ℂ (StateSpace n) _ (T' i) (T' j) = 0)
+    (hT'_norm : ∀ i : Fin n, ‖T' i‖ = 1) :
+    ∃ U : StateSpace n ≃ₗᵢ[ℂ] StateSpace n, ∀ i, U (T i) = T' i := by
+  obtain ⟨U, hU⟩ := t3_uniqueness n T hT_orth hT_norm
+  obtain ⟨U', hU'⟩ := t3_uniqueness n T' hT'_orth hT'_norm
+  refine ⟨U.symm.trans U', fun i => ?_⟩
+  rw [LinearIsometryEquiv.trans_apply, ← hU i, LinearIsometryEquiv.symm_apply_apply, hU']
 
 /-! ## V. T4 — The Binary Snap Produces an Orthogonal Shift in H -/
 
@@ -218,6 +240,7 @@ open ZeroParadox
 #print axioms t2_orthogonal
 #print axioms t2_norm_eq_one
 #print axioms t2_existence
+#print axioms t3_uniqueness
 #print axioms t4_snap_orthogonal
 #print axioms t4_state_gap
 #print axioms t5_monotone_norms

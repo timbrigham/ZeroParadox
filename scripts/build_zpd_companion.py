@@ -1,5 +1,5 @@
 """
-Build ZP-D Illustrated Companion (v1.15)
+Build ZP-D Illustrated Companion (v1.16)
 """
 
 import os
@@ -88,7 +88,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -159,10 +159,12 @@ def build():
         'orthogonal — they have nothing in common.'))
     E.append(example_box('Real-world example — Compass directions', [
         'North and East are orthogonal — perpendicular, sharing nothing. If you know how far '
-        'north something is, that tells you nothing about how far east it is. ZP-D says: states '
-        'that are clopen-separated in ℚ₂ (placed in different open-and-closed sets, with no '
-        'continuous path between them) should be represented as orthogonal vectors in H '
-        '(no shared component). Geometric independence matches clopen separation.',
+        'north something is, that tells you nothing about how far east it is. ZP-D fixes a level and '
+        'cuts ℚ₂ into finitely many open-and-closed cells, with no continuous path between '
+        'cells. Points in different cells are represented as orthogonal vectors in H (no shared '
+        'component); points in the same cell share one vector. Every two distinct points of ℚ₂ are '
+        'separated by some open-and-closed set, so asking this of all of them at once would need '
+        'infinitely many directions, which H does not have.',
     ]))
     E.append(sp(4))
 
@@ -179,8 +181,8 @@ def build():
     E.append(cbody(
         'ZP-D constructs an explicit map T: ℚ₂ → H that carries the topological structure of '
         'ℚ₂ into the state geometry of H. The central insight: clopen separation in ℚ₂ '
-        'corresponds to orthogonality in H. States with no continuous path between them are '
-        'represented as perpendicular vectors.'))
+        'corresponds to orthogonality in H, at a chosen level. Points in different cells of '
+        'that level are represented as perpendicular vectors; points in one cell share a vector.'))
     E.append(cbody(
         'ZP-D works with exactly two foundational states: ⊥ of OntologicalStates (non-existence) '
         'and ε₀, the state off ⊥ of OntologicalStates (existence). This is not a simplifying assumption — '
@@ -225,9 +227,10 @@ def build():
 
     # ── Key results ────────────────────────────────────────────────────────────
     E.append(key_result_box('Key Result: T Exists and is Unique up to Rotation (T2, T3)',
-        'T can be explicitly constructed by basis assignment (T2). It is unique up to a '
-        'rotation of the basis (T3) — meaning any two valid T operators differ only in which '
-        'direction they label as "e₀" vs. "e₁" vs. "e₂" etc. This is called unitary '
+        'T can be explicitly constructed by basis assignment (T2). At one level k it is unique up to a '
+        'rotation of the basis (T3) — meaning any two valid T operators at the same level agree on '
+        'e₀ and e₁, which the requirements pin, and differ only by a rotation of the remaining '
+        'directions. This is called unitary '
         'equivalence: like choosing different compass orientations for a map, the underlying '
         'geometry is the same. Two maps that agree on distances but point north differently '
         'are equivalent in all the ways that matter.'))
@@ -246,8 +249,8 @@ def build():
     E.append(sp(4))
     E.append(key_result_box('Key Result: Every Genuine Transition Produces an Orthogonal Shift (T5-b)',
         'The Snap is not a special case. For any state sequence, whenever two consecutive '
-        'states are distinct — meaning the sequence actually moved — their T-images in H '
-        'are orthogonal. Each genuine transition opens a new direction. The whole ascending '
+        'states sit in different cells of ℚ₂ — meaning the sequence actually moved between cells — '
+        'their T-images in H are orthogonal. Each genuine transition opens a new direction. The whole ascending '
         'chain, not just the first step, unfolds through orthogonal shifts. '
         'Lean: t5_strict_orthogonal (via DP-1).'))
     E.append(sp(8))
