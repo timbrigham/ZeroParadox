@@ -135,6 +135,29 @@ Working directory: use the current project root.
 
 ---
 
+## Take your READING before you open a file in scope
+
+⭐ **Your record must name the bytes you READ, and only you can say which those were.** Before you
+open any file in scope, save the blob id of every one of them:
+
+    python tools/verify/record.py --observe <every repo-relative path in scope> > <SCRATCHPAD>\observed_adversary_<run>.json
+
+then open that file whole. It holds one JSON object, `{path: git blob id of the bytes on disk now}`.
+Exit 2 means some path has no reading (`NO READING: <path>` on stderr): correct the path, or take it
+out of scope and say so. `<run>` is the value you will pass to `--run`, so a gate running beside you
+never writes the same file. **Every `record.py` command below passes this file as `--observed-file`.**
+
+⚠ **Without `--observed-file`, `record.py` takes the reading at RECORD time** and prints
+`reading: taken NOW from the working tree … not the review's own`. A file changed and staged between
+your read and your record would then be recorded as the new bytes: a verdict on content nobody
+examined, and nothing else flags it (`SUBJ-1`). With the file, gitRobot `ledger_subjects` checks
+your reading against the staged tree. A path whose staged blob is not the one you read is left out
+of the record with `not recorded: <path>  DRIFTED SINCE YOU READ IT: you examined <id>, <tree>
+holds <id>`, and a path missing from the reading is left out with `no blob was supplied for it`.
+Name every such path in your report.
+
+---
+
 ## Claim-status routing (all modes)
 
 While reviewing, note whether the content asserts any unproved or conjectural claim — anything stated with confidence that is not a cited, proved result (a conjecture, a "we expect / this shows" about an open question, a universal, an evidential summary, a choice/independence statement). **Detecting the presence of such a claim is in scope; evaluating it in depth is NOT your job — that belongs to `/claim-review` and its proof-theory-referee persona.** If any such claim is present, add a kill-list item: "Conjectural/unproved claim present — `/claim-review` must be recorded and current in the ledger for this content before clearance." A kill-list item withholds the clean verdict, so you record a FAIL rather than reporting a PASS, and the push stays blocked until claim-review has run and recorded. ⚠ **Ledger step `claim_review`, keyed per file — not a signal file, and not HEAD-equality.**
@@ -334,7 +357,8 @@ python tools/verify/record.py --step adversary --verdict fail --tier A \
     --evidence .claude/commands/adversary-review.md \
     --run gate-adversary-<YYYY-MM-DD> \
     --reason-file <path to a file holding one line: what failed> \
-    --failing-file <a JSON file in your SCRATCHPAD: the subset you indict> \
+    --failing-file <SCRATCHPAD>\failing_adversary_<run>.json \
+    --observed-file <SCRATCHPAD>\observed_adversary_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -373,35 +397,25 @@ implementing someone else's finding from a note.** `D3` names the same failure a
 *"a carrier that paraphrases has rebuilt the translation step `D1` and `D3` exist to delete."*
 
 ⚠⚠ **ORDER MATTERS AND IT IS NOT THE OBVIOUS ONE: RECORD FIRST (Step 6), THEN FIX.** A verdict binds
-to `(step, path, git_blob_id)` — the CONTENT. `ledger_subjects` DERIVES that blob from the INDEX at
-record time, so if you stage a fix and record afterwards, **your verdict binds to the bytes you
-repaired rather than the bytes you reviewed** — a record asserting a finding about content that no
-longer contains it.
+to `(step, path, git_blob_id)` — the CONTENT, and the content must be the bytes you reviewed.
+`D1` is the one workflow in which a reviewer reads, mutates, stages and records in one session, so
+it is where reading and recording come apart.
 
-⛔⛔ **AND THE REASON THIS IS A RULE RATHER THAN A PREFERENCE: NOTHING WOULD TELL YOU.** From
-`ledger_subjects`' own docstring, measured 2026-08-25:
+⭐ **`--observed-file` is what keeps that from becoming a false record.** `record.py` sends your
+reading (§ *Take your READING*) to gitRobot `ledger_subjects`, which VERIFIES it against the staged
+tree rather than deriving a blob of its own. Stage a fix and record afterwards, and every fixed path
+comes back `DRIFTED SINCE YOU READ IT` and is left out: the record cannot name the repaired bytes.
 
-> *"agent reads blob X → the file changes to Y AND IS STAGED → at record time worktree == index == Y
-> → NO FENCE FIRES → the record names Y. The record then certifies content nobody examined, and
-> nothing reports it."*
+⛔⛔ **WITHOUT `--observed-file` IT CAN, AND NOTHING TELLS YOU.** `record.py` then takes the reading at
+record time from the working tree, so a fix that is staged and left in place (worktree == index ==
+the fixed bytes) is recorded as though you had reviewed it, and the only trace is the
+`reading: taken NOW from the working tree` line. That is `SUBJ-1`'s silent case, and `D1` makes it
+the normal path.
 
-The staleness fences catch drift-and-REVERT and drift-to-UNSTAGED. **They cannot catch
-drift-and-STAY, because at record time both sides agree on the new bytes.** It is invisible by
-construction, not by oversight.
-
-⚠⚠⚠ **AND `D1` MAKES DRIFT-AND-STAY THE NORMAL PATH.** Before remediation moved here, a reviewer had
-no reason to change bytes between reading and recording. Now it reads, mutates, stages and records
-in one session — that exact sequence. **Record-first is the only thing standing between this
-workflow and the measured silent case.** ⛔ DO NOT "correct" this ordering because it reads
-backwards. It reads backwards and it is right, and the next person to find it sensible-looking and
-swap it will produce records that certify content nobody examined, with every gate green.
-
-⭐ **THE DURABLE FIX EXISTS AND IS NOT YET USED, so treat this ordering as an interim guard rather
-than the design.** `gitRobot.ledger_subjects` takes `observed` — path → the blob the gate ACTUALLY
-READ — as a MANDATORY input and VERIFIES instead of deriving, turning a mismatch into a `skipped`
-entry carrying both ids. `record.py` uses the deriving `common` one. **When that moves, the ordering
-becomes moot instead of load-bearing** — a defect that cannot be represented beats a rule someone
-has to follow, and that is this project's whole measured history.
+**So record first in either case:** with the reading in hand, recording after a staged fix leaves
+the fixed paths out of your verdict instead of recording them, and a verdict missing the files it
+found the defect in is not the verdict you meant to record. ⛔ DO NOT "correct" this ordering because
+it reads backwards.
 
 ### The route, and every step is a tool call
 
@@ -454,8 +468,8 @@ merge, the fix stalls — so say plainly in your report that the merge is owed, 
 sequence it.
 
 ```
-    --failing-file <a JSON file in your SCRATCHPAD holding a list of the repo-relative paths
-                    this verdict indicts — a subset of --files>
+    --failing-file <SCRATCHPAD>\failing_adversary_<run>.json
+                   (a JSON list of the repo-relative paths this verdict indicts — a subset of --files)
 ```
 
 ⚠ **Until 2026-09-06 no review gate could express this**, because the flag did not exist —
@@ -491,6 +505,7 @@ python tools/verify/record.py --step adversary --verdict pass --tier A \
     --how delegated --who adversary \
     --evidence .claude/commands/adversary-review.md \
     --run gate-adversary-<YYYY-MM-DD> \
+    --observed-file <SCRATCHPAD>\observed_adversary_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -502,15 +517,18 @@ at round 0 that found only ordinary things is a PASS, and it carries them.** You
 past the cap to use the flag, and you must not reach for STOP-ORDINARY in order to earn it.
 
 **THE ARTIFACT, specified HERE because this is where the flag is now bound.** Write a JSON list of
-your ordinary findings **to the SCRATCHPAD, never into the repo** — one object per finding, each with
-at least `note` and `severity: "ordinary"`. That file is what `--outstanding-file` names:
+your ordinary findings **to the SCRATCHPAD, never into the repo**, as
+`<SCRATCHPAD>\outstanding_adversary_<run>.json` — one object per finding, each with at least `note`
+and `severity: "ordinary"`. The step in the name is what keeps a gate running beside you from
+writing over it (`GATE-OUTSTANDING-FILE-COLLISION-1`). That file is what `--outstanding-file` names:
 
 ```
 python tools/verify/record.py --step adversary --verdict pass --tier A \
     --how delegated --who adversary \
     --evidence .claude/commands/adversary-review.md \
     --run gate-adversary-<YYYY-MM-DD> \
-    --outstanding-file <the JSON file you wrote> \
+    --outstanding-file <SCRATCHPAD>\outstanding_adversary_<run>.json \
+    --observed-file <SCRATCHPAD>\observed_adversary_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -545,7 +563,8 @@ python tools/verify/record.py --step adversary --verdict pass --tier A \
     --how delegated --who adversary \
     --evidence .claude/commands/adversary-review.md \
     --run gate-adversary-<YYYY-MM-DD> \
-    --outstanding-file <the JSON file you wrote> \
+    --outstanding-file <SCRATCHPAD>\outstanding_adversary_<run>.json \
+    --observed-file <SCRATCHPAD>\observed_adversary_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -554,9 +573,10 @@ and that split is the entire safety of this route — it is not a way to ship on
 findings and a clean pass are different facts, and `outstanding` is the only place a reader can still
 tell them apart; omitting the key is what a genuinely clean pass looks like.
 
-⚠⚠ **STAGE THE FILES BEFORE YOU RECORD — AND THE CALLER OWNS THAT STEP.** Subjects are read from the
-git INDEX, so a review of a modified-but-unstaged tree records NOTHING: `common.ledger_subjects`
-fences every path that differs from the index, and when NOTHING survives the fence `record.py` exits
+⚠⚠ **STAGE THE FILES BEFORE YOU RECORD — AND THE CALLER OWNS THAT STEP.** The record's basis is the
+staged tree (`--ref INDEX`, the default), and gitRobot `ledger_subjects` keeps a path only when the
+blob in your reading is the blob staged there. So a review of a modified-but-unstaged tree records
+NOTHING — every path comes back `DRIFTED SINCE YOU READ IT` — and when NOTHING survives `record.py` exits
 2 — *"nothing recordable for &lt;step&gt; at &lt;ref&gt; — the review certified no recordable file"*.
 ⚠ **All-or-nothing is the wrong model, and the middle case is the dangerous one:** on a PARTIAL fence
 `record.py` prints the skip lines and **records a NARROWED subject set at exit 0**. A green exit does
@@ -574,7 +594,7 @@ same ledger state**, and the findings survived only in prose.
 
 ⚠ **`delegated` claims no consensus and must not be dressed as one.** It records ONE agent round, honestly. If a caller genuinely runs three independent passes, that is still `--how agreement` and it remains the stronger claim; V3 is untouched.
 
-⚠ **Subjects are read from the git INDEX, so the files you reviewed must be STAGED.** `common.ledger_subjects` fences anything untracked or differing from the index, so a review of bytes that have since changed cannot be recorded by accident. ⚠ **It fails closed ONLY when NOTHING survives the fence — on a PARTIAL fence it records a NARROWED subject set at exit 0.** See *STAGE THE FILES BEFORE YOU RECORD*: read the skip lines and say which paths did not make it. If it fences a path, say so; do not work around it.
+⚠ **The files you reviewed must be STAGED, as the bytes you read.** gitRobot `ledger_subjects` leaves out every path whose staged blob is not the one in your reading, so bytes that changed after you read them cannot be recorded by accident — when the reading is yours (`--observed-file`), not one `record.py` takes at record time. ⚠ **It fails closed ONLY when NOTHING survives the fence — on a PARTIAL fence it records a NARROWED subject set at exit 0.** See *STAGE THE FILES BEFORE YOU RECORD*: read the skip lines and say which paths did not make it. If it fences a path, say so; do not work around it.
 
 ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
 keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
@@ -601,11 +621,12 @@ message is.**
 
 | what the message shows | what happened | what YOU do |
 |---|---|---|
-| an argparse `usage:` banner | your invocation is wrong — among others `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset | **YOURS to fix.** Correct the flags and re-run. |
+| an argparse `usage:` banner | your invocation is wrong — among others `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset, an `--observed-file` that is not a JSON object of path to blob id | **YOURS to fix.** Correct the flags and re-run. |
 | `nothing recordable for <step> at <ref>` | the subject fence emptied your set. **The ledger was never contacted** | You are READ-ONLY and cannot fix it — see *STAGE THE FILES BEFORE YOU RECORD*. Say so and hand the command back. |
+| `UNDECIDED: <step> was NOT SENT:` | the subjects or the basis could not be verified — gitRobot `ledger_subjects` unreachable or refusing, or the staged tree could not be resolved. **The ledger was never contacted** | **Report it**, quoting the message. Nothing was recorded; an outage decided nothing and may be retried once gitRobot is up. |
 | any line beginning `UNDECIDED: verdictLedger ` — unreachable, refused, or no usable payload — or an outage line printed by the dry-run check | the ledger was reached and refused, or could not be reached. **The message says WHICH**: `record refused by verdictLedger:` is a rule being applied; `unreachable` decided nothing | **Report it.** Do NOT retry a refusal — the same call is refused again. An outage decided nothing and may be retried once the ledger is up. Either way the review may have been fine and simply went unrecorded. |
 
-⛔ **If the message matches none of the three, it is a site added since the survey date — not one of
+⛔ **If the message matches none of the rows above, it is a site added since the survey date — not one of
 these wearing a different coat.** The binding rule still governs: report what the message actually
 said, and do not translate it into the nearest familiar case. ⚠ **Translating an unfamiliar exit 2
 into "the ledger" is the exact harm named earlier in this brief** — a reviewer with a real FAIL

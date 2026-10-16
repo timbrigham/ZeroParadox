@@ -64,7 +64,7 @@ Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual valu
 
 ⚠⚠ **THIS USED TO READ "any repo file", WRITTEN BEFORE WORKTREES EXISTED.** Read literally it also banned working in a PRIVATE worktree — the one place `R-BRIEF` explicitly permits it, and the place this gate most needs, since it is the only reviewer whose measured law is that every BEDROCK finding came from EXECUTING something. **The property protected was always the CALLER'S uncommitted work**: a review agent once hard-reset three times, destroyed an uncommitted edit, then correctly verified the tree was clean, which *was* the destruction. ⭐ And when you DO work in a worktree, **cd into the `run_tools_from` path `add` returns before running any checker** — a checker invoked from elsewhere resolves ROOT to the wrong tree and records evidence paths full of `../..`, which surfaces at V16 and reads as a config problem rather than a cwd one.
 
-⚠ **You still produce the metadata the pipeline consumes — it is just a RECORD now.** `batch.py`'s routing legs block a push until a `rely` record covers the current blob of every verification-layer file, because a checker change is invisible to an ordinary diff of the pushed range. That obligation has not softened; only its container changed. **What has NOT changed is why you write it at all:** before 2026-08-10 this gate produced nothing, so the CALLER wrote the metadata about its own work — the exact self-certification this routing exists to prevent.
+⚠ **You still produce the metadata the pipeline consumes — as a ledger RECORD.** The `rely` step is admitted at TAG, and the ledger keys its coverage to the current blob of every file in the step's scope, because a checker change is invisible to an ordinary diff of the content it checks. **Why you write it, and not the caller:** a caller recording the metadata about its own work is the exact self-certification this gate exists to prevent.
 
 **NO SCRATCH FILES IN THE REPO.** Everything you build goes in the session scratchpad, never under `ZeroParadox/`, and is deleted when done. **You will be building a lot — be disciplined about this.**
 
@@ -77,6 +77,28 @@ You are an engineer who wants to **build on** this corpus. You are not reviewing
 Working directory: use the current project root. Scope: **ARGUMENTS_VALUE**.
 
 **You report only what you EXECUTED.** A concern you reasoned your way to and did not run is not a finding — either run it or drop it. Every item in your output carries the code you ran and what came back.
+
+## Take your READING before you open a file in scope
+
+⭐ **Your record must name the bytes you EXAMINED, and only you can say which those were.** Before you
+open or run any file in scope, save the blob id of every one of them:
+
+    python tools/verify/record.py --observe <every repo-relative path in scope> > <SCRATCHPAD>\observed_rely_<run>.json
+
+then open that file whole. It holds one JSON object, `{path: git blob id of the bytes on disk now}`.
+Exit 2 means some path has no reading (`NO READING: <path>` on stderr): correct the path, or take it
+out of scope and say so. `<run>` is the value you will pass to `--run`. **Both `record.py` commands
+below pass this file as `--observed-file`.** Take it in the checkout whose files you will examine:
+it reads the bytes on disk where you run it.
+
+⚠ **Without `--observed-file`, `record.py` takes the reading at RECORD time** and prints
+`reading: taken NOW from the working tree … not the review's own`. A file changed and staged between
+your run and your record would then be recorded as the new bytes: a verdict on content nobody
+examined, and nothing else flags it (`SUBJ-1`). With the file, gitRobot `ledger_subjects` checks
+your reading against the staged tree. A path whose staged blob is not the one you read is left out
+of the record with `not recorded: <path>  DRIFTED SINCE YOU READ IT: you examined <id>, <tree>
+holds <id>`, and a path missing from the reading is left out with `no blob was supplied for it`.
+Name every such path in your report.
 
 ## The five attempts
 
@@ -158,29 +180,26 @@ Save to `.claude-local/notes/reliability_YYYY-MM-DD_<scope>.md`. State the filen
 
 **No verdict of PASS or FAIL.** If you tried to break it and could not, say so — *"I attempted X, Y and Z and all three held"* is the most valuable output this agent produces, and it is only worth anything because you ran them.
 
-## Recording — TWO DIFFERENT FACTS, AND THEY SPLIT AT THE LEG
+## Recording — one `rely` record in the LEDGER, owed at TAG
 
-⚠ **`/rely` records in two places because it produces two kinds of thing:**
-its **routing check is a hash comparison (tier M)** — which versions of the layer were examined — and
-its **findings are judgement (tier A)**. Split at the leg, never at the check.
+⛔ **DO NOT WRITE `.claude-local/rely_cleared.txt`.** There is no hash file. Your verdict is a `rely`
+ledger record, and it is the only thing this gate writes besides the findings note.
 
-### 1. There is NO hash file any more
+⚠ **WHERE THE OBLIGATION LIVES.** The `rely` step is admitted at TAG and not at commit or push —
+`gitRobot admission(action='tag')` lists it, `admission(action='push')` lists it under
+`registered_not_admitted` — so a push may carry verification-layer changes `/rely` has not examined,
+and the question is asked at the tag. Nothing in `batch.py` blocks on `/rely`: its prepush manifest carries a `rely`
+row marked `report`, which points at the ledger. What `/rely` still owes is the ledger's answer:
+verdictLedger `coverage_gap(step='rely', action='tag', admission=<the tag admission set>)` names
+every path in the step's scope that has no PASSING `rely` verdict at its current bytes.
 
-⛔ **DO NOT WRITE `.claude-local/rely_cleared.txt`.** It was RETIRED on 2026-08-24, in the change that retired the
-`*_cleared.txt` scheme. `batch.py`'s routing legs and `ship.py`'s cap read the `rely` LEDGER RECORD
-now, and the readers moved in the same change as the writer.
+⚠ **YOUR SUBJECTS ARE THE COVERAGE.** A file you do not name stays on that list, exactly as a changed
+one does, and there is no partial credit. So name every file in scope you actually examined; a
+short subject list is not modesty, it is a smaller claim and the ledger reads it as one. ⚠ `ship.py`
+reads your record as well: its cap parses `BLOCKING:<n>` and `pass <n>` out of the reason
+(§ *Severity, and the cap*).
 
-⚠ **YOUR SUBJECTS ARE THE COVERAGE — this is the part that changed for you.** The routing legs
-compare each routed file's **blob ID** against the subjects of your record. **A file you do not name
-counts as UNREVIEWED**, exactly as a changed one does, and there is no partial credit. So name every
-file in scope you actually examined; a short subject list is not modesty, it is a smaller claim and
-the gate will read it as one.
-
-⚠ **`tools/verify/README.md` had already reached this conclusion and written it down** — the old
-signal *"can be edited, its verdict changes, and no subject moves… A scope cannot close it; only
-making `rely` a record instead of a file can."*
-
-### 2. The findings record — the LEDGER
+### The findings record
 
 **If you found anything BLOCKING, record it. One agent's finding stands alone.** ⚠ Record a clean run
 too — `--verdict pass --how delegated`. A gate that can only report failure makes absence of a pass
@@ -193,8 +212,9 @@ python tools/verify/record.py --step rely --verdict fail --tier A \
     --evidence .claude/commands/rely.md \
     --run gate-rely-<YYYY-MM-DD> \
     --reason-file <path to a file holding: BLOCKING:<n> — the highest-severity fail-open, one line> \
-    --failing-file <a JSON file in your SCRATCHPAD: the subset you indict> \
-    --files <every file in tools/verify/ you actually examined>
+    --failing-file <SCRATCHPAD>\failing_rely_<run>.json \
+    --observed-file <SCRATCHPAD>\observed_rely_<run>.json \
+    --files <every file in scope you actually examined>
 ```
 
 ⛔⛔ **`--failing-file` IS REQUIRED ON A FAIL — 2026-09-07, AND THIS TEMPLATE OMITTED IT FOR A DAY.**
@@ -208,18 +228,17 @@ right here.
 REQUIRED one is present. **A rule was made mandatory and its callers were not updated.**
 
 ⚠⚠ **AND NAME WHAT YOU ACTUALLY INDICT — `--failing-file`, ADDED 2026-09-06.** `--files` is
-COVERAGE: the blobs you examined, and the routing legs discharge on it. `--failing-file` is
+COVERAGE: the blobs you examined, and `coverage_gap` discharges on it. `--failing-file` is
 INDICTMENT: the subset that actually failed. ⚠ **Absence is no longer a way to spell "all"** — it
 is REFUSED, and so is an EMPTY list. To indict everything, pass the full `--files` list explicitly.
 
 ```
-    --failing-file <a JSON file in your SCRATCHPAD holding a list of the repo-relative paths
-                    this verdict indicts — a subset of --files>
+    --failing-file <SCRATCHPAD>\failing_rely_<run>.json
+                   (a JSON list of the repo-relative paths this verdict indicts — a subset of --files)
 ```
 
 ⚠ **THE TWO ARE NOT THE SAME LIST AND FOR THIS GATE THAT MATTERS MOST.** Your subjects must stay
-WIDE — a file you do not name counts as UNREVIEWED and the routing leg reads a short list as a
-smaller claim. Your indictment should be NARROW. Recording six BLOCKING findings against
+WIDE — a file you do not name stays owed in `coverage_gap`, and a short list is a smaller claim. Your indictment should be NARROW. Recording six BLOCKING findings against
 `batch.py` while having examined four files means `--files` has four entries and
 `--failing-file` has one.
 
@@ -237,18 +256,15 @@ python tools/verify/record.py --step rely --verdict pass --tier A \
     --evidence .claude/commands/rely.md \
     --run gate-rely-<YYYY-MM-DD> \
     --reason-file <path to a file holding: BLOCKING:0 ORDINARY:<n>, scope <what>> \
-    --files <every file in tools/verify/ you actually examined>
+    --observed-file <SCRATCHPAD>\observed_rely_<run>.json \
+    --files <every file in scope you actually examined>
 ```
 
-⚠ **THIS INVERTED ON 2026-08-25 AND THE REASON MATTERS.** This paragraph used to say *"record NOTHING
-YOURSELF"* and hand the coverage to the caller. That was forced, not chosen: a lone A-tier PASS was
-rejected at the server (V3 wants three concurring passes), `mechanical` would have been a lie about a
-computation, and `signature` asserts a PERSON accepted it. Measured across the whole stream that day —
-editorial 3xFAIL, adversary 3xFAIL, rely 3xFAIL: **nine agent reviews, every one a FAIL, and no
-delegated review had ever recorded a PASS.** A `rely` record existed ONLY when something was found, so
-the routing gate — which discharges on SUBJECTS — was satisfied exactly when this layer was BROKEN and
-unsatisfied when it was sound. **Clean and never-ran were the same state**, which is the one
-distinction this layer exists to keep.
+⚠ **WHY A CLEAN RUN IS RECORDED TOO.** Coverage discharges on SUBJECTS, so a gate that records only
+when it finds something leaves its scope covered exactly when the layer is BROKEN and owed when it is
+sound. **Clean and never-ran would be the same state**, which is the one distinction this layer
+exists to keep. Measured across the whole stream on 2026-08-25, before `delegated` existed: editorial
+3xFAIL, adversary 3xFAIL, rely 3xFAIL — nine agent reviews, every one a FAIL, and no PASS recorded.
 
 ⚠ **`delegated` claims ONE round and no consensus, which is what this gate actually is.** It is not a
 weaker `agreement`; it is an honest label for a different thing. A genuine three-pass panel still
@@ -256,20 +272,18 @@ records `--how agreement`, and that remains the stronger claim. **The accountabi
 `--evidence` pins the verdict to the instructions it ran under, so editing this file stales the key
 and the gate re-runs. A delegated verdict cannot outlive its instructions.
 
-⚠ **Subjects come from the git INDEX: the files must be STAGED.** `common.ledger_subjects` fences
-anything untracked or differing from the index; do not work around it.
+⚠ **The files you examined must be STAGED, as the bytes you read.** The record's basis is the staged
+tree (`--ref INDEX`, the default), and gitRobot `ledger_subjects` leaves out every path whose staged
+blob is not the one in your reading (`--observed-file`); do not work around it.
 
-⛔⛔ **IT DOES NOT FAIL CLOSED, AND ON THIS GATE THAT CONTRADICTS THE ROUTING CONTRACT ABOVE.**
-Corrected 2026-09-09; this line said *"it fails closed"* flat, and it is false as stated. **It fails
-closed ONLY when NOTHING survives the fence** (`record.py` returns 2 and prints
+⛔⛔ **IT DOES NOT FAIL CLOSED, AND ON THIS GATE THAT CUTS AGAINST THE COVERAGE CONTRACT ABOVE.**
+**It fails closed ONLY when NOTHING survives the fence** (`record.py` returns 2 and prints
 `nothing recordable for <step> at <ref>`). **On a PARTIAL fence it records a NARROWED subject set at
-exit 0** — the skip lines are printed, and nothing else marks the difference.
+exit 0** — the `not recorded:` lines are printed, and nothing else marks the difference.
 
-⚠⚠ **Read that against this brief's own rule that a file you do not name counts as UNREVIEWED and
-there is no partial credit.** A silently narrowed set is exactly a file you did not name, arriving
-without you deciding to omit it — and because the routing legs block a push until a `rely` record
-covers the current blob of every verification-layer file, a narrowed record reports coverage the
-round did not have. **Exit 0 is not "all of them". Read the skip lines, and NAME in your report every
+⚠⚠ **Read that against this brief's own rule that a file you do not name stays owed and there is no
+partial credit.** A silently narrowed set is exactly a file you did not name, arriving without you
+deciding to omit it. **Exit 0 is not "all of them". Read the skip lines, and NAME in your report every
 path that did not make it.**
 
 ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
@@ -297,11 +311,12 @@ message is.**
 
 | what the message shows | what happened | what YOU do |
 |---|---|---|
-| an argparse `usage:` banner | your invocation is wrong — among others `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset | **YOURS to fix.** Correct the flags and re-run. |
+| an argparse `usage:` banner | your invocation is wrong — among others `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset, an `--observed-file` that is not a JSON object of path to blob id | **YOURS to fix.** Correct the flags and re-run. |
 | `nothing recordable for <step> at <ref>` | the subject fence emptied your set. **The ledger was never contacted** | You are READ-ONLY and cannot fix it — the CALLER must stage the files before you record. Say so and hand the command back. |
+| `UNDECIDED: <step> was NOT SENT:` | the subjects or the basis could not be verified — gitRobot `ledger_subjects` unreachable or refusing, or the staged tree could not be resolved. **The ledger was never contacted** | **Report it**, quoting the message. Nothing was recorded; an outage decided nothing and may be retried once gitRobot is up. |
 | any line beginning `UNDECIDED: verdictLedger ` — unreachable, refused, or no usable payload — or an outage line printed by the dry-run check | the ledger was reached and refused, or could not be reached. **The message says WHICH**: `record refused by verdictLedger:` is a rule being applied; `unreachable` decided nothing | **Report it.** Do NOT retry a refusal — the same call is refused again. An outage decided nothing and may be retried once the ledger is up. Either way the review may have been fine and simply went unrecorded. |
 
-⛔ **If the message matches none of the three, it is a site added since the survey date — not one of
+⛔ **If the message matches none of the rows above, it is a site added since the survey date — not one of
 these wearing a different coat.** The binding rule still governs: report what the message actually
 said, and do not translate it into the nearest familiar case. ⚠ **Translating an unfamiliar exit 2
 into "the ledger" is the exact harm named earlier in this brief** — a reviewer with a real FAIL

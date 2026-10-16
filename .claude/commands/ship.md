@@ -30,11 +30,11 @@ SHIP_ROUND=<n>
 ```
 
 ⚠ **DO NOT EDIT ANYTHING IN `SHIP_SCOPE` WHILE THE GATES ARE READING IT.** Nothing stops you at
-the keystroke any more — the read-only freeze was retired 2026-08-23, because git unlinks and
-recreates rather than opening for write, so `checkout` and `reset --hard` silently un-froze a
-locked path. **What catches it instead is the per-file SHA-256:** an edited file stops matching
-what the signal recorded, so `prepush` refuses and names it. The round is then wasted rather than
-corrupted — which is the right failure, and still a wasted round.
+the keystroke. **What catches it is the content key:** a verdict binds `(step, path, git_blob_id)`,
+and each gate takes its reading with `record.py --observe` when it reads, so a file edited and
+staged afterwards comes back `DRIFTED SINCE YOU READ IT` and is left out of that gate's record, and
+the ledger reports the step owed for the new bytes. The round is then wasted rather than corrupted —
+which is the right failure, and still a wasted round.
 
 ## 2. Spawn exactly the gates in `SHIP_GATES` — one Agent call each, all in one message.
 
@@ -47,8 +47,9 @@ caller pre-flight: `SHIP_ROUND` and the cap, the permitted verdicts, and the thr
 mode, round, permitted verdicts, what gets recorded and by whom, what this round must attack.
 
 **Three warnings every brief must carry:**
-1. **Hash the FILE ON DISK for any signal, never `git show "HEAD:<path>"`** — that means different
-   things before and after a commit and yields a signal stale the instant the commit lands.
+1. **Take the reading from the FILE ON DISK (`record.py --observe`), never `git show "HEAD:<path>"`**
+   — that means different things before and after a commit and yields a reading stale the instant
+   the commit lands.
 2. **Never `reset --hard` / `checkout -- .` / `clean` / `stash` the shared tree.** Assume the caller
    holds uncommitted work. Needs commits? `mcp__gitRobot__worktree(action='add')`. A run destroyed the caller's
    uncommitted file this way and reported success.
@@ -66,8 +67,13 @@ running beside it. ⚠ The prose signal files are retired — do not send it loo
 ```
 python tools/verify/ship.py post
 ```
-Echoes each signal's recorded **verdict line**, so *"cleared"* is never read as *"clean"*. Exit 0
-means safe to commit and push.
+Asks gitRobot for the **TAG** admission set and verdictLedger whether it is satisfied — `can_push`
+over each `--ranges` range, or `inventory` of the staged tree — and prints the services' own lines,
+so *"cleared"* is never read as *"clean"*. Exit 0 means the ledger reports that set satisfied, 1
+that it does not, 2 that a service could not be asked. ⚠ The tag set is not the push set (today
+it admits `rely` and `release_ready` and not `prior_art`; `gitRobot admission(action=...)` gives
+either), so `post` and a push can disagree in both directions; whether a push will go is
+`mcp__gitRobot__preflight()`'s answer.
 
 Then:
 ```
