@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1915,
-        "files": 164
+        "declarations": 1923,
+        "files": 165
       },
       "entries": [
         {
@@ -21208,6 +21208,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "48f4c9e1-d67f-4433-819f-04e1eff424f7",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_ballIndicatorL2_eq_sqrt_mul_succ",
+            "short": "norm_ballIndicatorL2_eq_sqrt_mul_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_ballIndicatorL2_eq_sqrt_mul_succ",
+            "short": "norm_ballIndicatorL2_eq_sqrt_mul_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicVladimirov § VIII: the shells as vectors in L2",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "49265382-4bf7-4127-9d31-aeabcd64ac8f",
           "new": {
@@ -21968,6 +22005,43 @@
             ]
           },
           "reason": "lane K1: ZP-K § VIII (infinitely many fixed points, padding, self-printing universal code, occurrence controls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4c0ac384-ec75-44a2-a2b2-c6ed1b785f8d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_shellIndicatorL2_two",
+            "short": "norm_shellIndicatorL2_two"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_shellIndicatorL2_two",
+            "short": "norm_shellIndicatorL2_two",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicVladimirov § VIII: the shells as vectors in L2",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24496,6 +24570,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "55ccf370-6c0b-4e44-8a35-f448426a726e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.inner_shellIndicatorL2_ballIndicatorL2",
+            "short": "inner_shellIndicatorL2_ballIndicatorL2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.inner_shellIndicatorL2_ballIndicatorL2",
+            "short": "inner_shellIndicatorL2_ballIndicatorL2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicVladimirov § VIII: the shells as vectors in L2",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33804,6 +33915,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "78d8d73d-a11e-4f06-ab27-66251eb99ecf",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.count_mul_norm_sq_ballIndicatorL2",
+            "short": "count_mul_norm_sq_ballIndicatorL2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.count_mul_norm_sq_ballIndicatorL2",
+            "short": "count_mul_norm_sq_ballIndicatorL2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicVladimirov § VIII: the shells as vectors in L2",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "78da3cc8-8f3a-4d4a-9960-c4bc0f4ab096",
           "new": {
             "file": "ZeroParadox/Computability/Kleene.lean",
@@ -36026,6 +36174,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8165386c-b329-404e-acad-bd896c860494",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_shell_sub_ballIndicatorL2",
+            "short": "norm_shell_sub_ballIndicatorL2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_shell_sub_ballIndicatorL2",
+            "short": "norm_shell_sub_ballIndicatorL2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicVladimirov § VIII: the shells as vectors in L2",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41716,6 +41901,43 @@
             ]
           },
           "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "968a773c-9a55-4dce-95c7-64b0cee6baac",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballIndicatorL2_eq_shell_add",
+            "short": "ballIndicatorL2_eq_shell_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ballIndicatorL2_eq_shell_add",
+            "short": "ballIndicatorL2_eq_shell_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicVladimirov § VIII: the shells as vectors in L2",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -53909,6 +54131,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c552df76-87a3-49d5-ac2e-d041476a08df",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_sq_ballIndicatorL2_eq_shell_add",
+            "short": "norm_sq_ballIndicatorL2_eq_shell_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_sq_ballIndicatorL2_eq_shell_add",
+            "short": "norm_sq_ballIndicatorL2_eq_shell_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicVladimirov § VIII: the shells as vectors in L2",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c566ffb2-d5ef-45f2-a879-3c99967d4928",
           "new": {
             "file": "ZeroParadox/Category/BottomUndecidable.lean",
@@ -56862,6 +57121,43 @@
             ]
           },
           "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cfa25ada-03c4-43c6-92bb-f17e4e8b37d1",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shellIndicatorL2",
+            "short": "shellIndicatorL2"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shellIndicatorL2",
+            "short": "shellIndicatorL2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "PadicVladimirov § VIII: the shells as vectors in L2",
           "verify": {
             "axioms": null,
             "sorry_free": true

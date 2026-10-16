@@ -84,6 +84,17 @@ theorem stillPoint_vladimirov_zero (α : ℝ) (n : ℕ) (x : ℤ_[p]) :
   rw [paChar_trivial]
   exact vladimirov_const α 1 x
 
+-- Statement: at `p = 2`, the level-0 ball indicator (`ballIndicatorL2`, the parent in
+-- `ZeroParadox/Valuation/PadicVladimirov.lean` § VIII) equals the trivial character almost everywhere.
+example (n : ℕ) :
+    (ballIndicatorL2 (p := 2) 0 : ℤ_[2] → ℂ) =ᵐ[haarZp (p := 2)] paChar (p := 2) n 0 := by
+  filter_upwards [indicatorConstLp_coeFn (p := 2) (μ := haarZp (p := 2))
+    (hs := ball_measurableSet (p := 2) 0) (hμs := measure_ne_top _ _) (c := (1 : ℂ))]
+    with x hx
+  rw [ballIndicatorL2, hx, Set.indicator_of_mem, paChar_trivial]
+  simp only [Set.mem_setOf_eq, CharP.cast_eq_zero, neg_zero, zpow_zero]
+  exact PadicInt.norm_le_one x
+
 /-! ## § III — Positivity of the primitive eigenvalue `λ_n` -/
 
 /-- The primitive `D^α` eigenvalue
