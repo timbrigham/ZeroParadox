@@ -439,8 +439,9 @@ example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure
 /-- `Statement:` along a path `v ⟶* w`, a decoration sending `w` to ⊥ of `U` (valuation ⊤ of ℕ∞)
     sends `v` there too: ⊥ spreads backward to every ancestor.
     `Reading:` rank ∞ propagates upward (Pakhomov–Walsh, JSL 86 (2021), arXiv 1805.02095,
-    Remark 5.1, with `∞ + 1 = ∞`); at graph level, a parent of a looping vertex lies outside the
-    well-founded part (Adámek-Milius-Moss 2020, arXiv:1910.09401v2, Example 5.4 p. 22). -/
+    Remark 5.1, with `∞ + 1 = ∞`); at graph level, every ancestor of a vertex on a cycle starts an
+    infinite path, so lies outside "A∗ = Aω", "the set of all nodes from which no infinite paths
+    starts" (Adámek-Milius-Moss 2020, arXiv:1910.09401v2, Example 6.10 p. 26). -/
 theorem path_decoration_eq_bot
     {V : Type*} [Quiver V]
     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
@@ -458,8 +459,7 @@ example {V : Type*} [Quiver V] {U : Type*} [ZPSemilattice U] [ValuationStructure
 
 /-! ### Absorption at ⊥ of `U`, and when the join identity is the absorber
 
-Here `v : U → ℕ∞` and `c : Set U → U` are bare data. Measurements:
-`.claude-local/notes/future-research/snap_absorption_causal_2026-10-15.md`. -/
+Here `v : U → ℕ∞` and `c : Set U → U` are bare data. -/
 
 -- Statement: absorption needs no join and no `val_bot`: a lower bound `v (c S) ≥ v x + 1` on members
 -- and a unique `v`-⊤ point `b` force `v b = ⊤` and `c S = b` whenever `b ∈ S`.
@@ -487,8 +487,9 @@ example {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse
 
 -- Statement: `v` reverses the ZP order into ℕ∞'s iff `v (join x y) ≤ min (v x) (v y)`; Mathlib's
 -- `Antitone.map_sup_le` and `Monotone.of_le_map_sup` (through `OrderDual`), restated because the ZP
--- order is not `≤` here. Reading: the equation form is a prime's valuation on ideals,
--- `v_p(I + J) = min (v_p I) (v_p J)` (Aitken, arXiv 2102.11725, Prop. 86).
+-- order is not `≤` here. Reading: the equation form is a nonzero prime's valuation on the fractional
+-- ideals of a Dedekind domain (values in ℤ), `v_p(I + J) = min (v_p I) (v_p J)` (Aitken,
+-- arXiv 2102.11725, Prop. 86, p. 33).
 example {L : Type*} [ZPSemilattice L] (v : L → ℕ∞) :
     (∀ x y, le x y → v y ≤ v x) ↔ ∀ x y, v (join x y) ≤ min (v x) (v y) := by
   have hl : ∀ x y : L, le x (join x y) := fun x y =>
@@ -557,7 +558,7 @@ example : ∃ (j : Option ℕ∞ → Option ℕ∞ → Option ℕ∞) (v : Optio
     · have := he (some 5); simp [mj] at this
     · have := he none; simp [mj] at this
 
--- Statement: without order-reversal the identity and the absorber are different elements
+-- Statement: without order-reversal the identity and the absorber can be different elements
 -- (counter-model M2, ℕ∞ with `max`): 0 is the identity, ⊤ absorbs `sSup · + 1`.
 example : (∀ x : ℕ∞, max 0 x = x) ∧ (∀ S : Set ℕ∞, ⊤ ∈ S → sSup S + 1 = ⊤) ∧
     (∀ (S : Set ℕ∞) x, x ∈ S → sSup S + 1 ≥ x + 1) ∧ (0 : ℕ∞) ≠ ⊤ ∧

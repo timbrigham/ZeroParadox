@@ -90,7 +90,8 @@ noncomputable instance instNatInfVal : ValuationStructure ℕ∞ where
 -- Reading: CARRIER, this model only (not abstract `collect`). Its join, ⊥ and scale are the min-plus
 -- semiring's addition, zero and multiplication by `trop 1` in Mathlib's `Tropical ℕ∞`
 -- (`Tropical.trop_top`, `Tropical.untrop_add`, `Tropical.untrop_mul`), so `scale_bot` is `zero_mul`:
--- "∞ is the zero of this semiring" (Pin, "Tropical Semirings", *Idempotency*, Cambridge UP 1998, p. 3).
+-- "∞ is the zero of this semiring" (Pin, "Tropical Semirings", in *Idempotency* (Cambridge UP 1998);
+-- author's preprint p. 3).
 
 -- Statement: `trop` sends this model's join to tropical `+`, ⊥ to tropical `0` and scale to `* trop 1`,
 -- so `scale_bot` is `zero_mul`.
