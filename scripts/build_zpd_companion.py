@@ -1,5 +1,5 @@
 """
-Build ZP-D Illustrated Companion (v1.14)
+Build ZP-D Illustrated Companion (v1.15)
 """
 
 import os
@@ -88,7 +88,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -186,24 +186,26 @@ def build():
         'and ε₀, the state off ⊥ of OntologicalStates (existence). This is not a simplifying assumption — '
         'it is the irreducible minimum. The core question is whether any transition from ⊥ to '
         'a first state is possible, and for that question n=2 is the smallest meaningful case. '
-        'No claim in ZP-D requires n > 2. Binary is the logical ground floor, not a placeholder '
+        'No claim ZP-D makes in H requires n > 2. Binary is the logical ground floor, not a placeholder '
         'for a more general construction.'))
 
     # ── Page 2: T operator ─────────────────────────────────────────────────────
     E.append(Paragraph('The Transition Operator T', CS['h1']))
     E.append(cbody(
-        'T is constructed by <b>basis assignment</b>: the clopen ball partition of ℚ₂ maps to '
-        'an orthonormal basis of H. An <b>orthonormal basis</b> is a set of vectors that are '
+        'T is constructed by <b>basis assignment</b>: at a chosen level k, ℚ₂ is cut into 2<super>k</super> + 1 '
+        'clopen cells (the 2<super>k</super> small balls that make up the 2-adic integers ℤ₂, plus '
+        'everything outside ℤ₂ as one cell), and the cells map to an orthonormal basis of H. An <b>orthonormal basis</b> is a set of vectors that are '
         'mutually orthogonal (all inner products equal zero) and each have length exactly 1. '
         'Think of it as a coordinate system where every axis is perpendicular to every other '
         'and all axes are the same length.'))
     E.append(cbody(
         'The element 0 maps to e₀; the nonzero element ε₀ of ℚ₂ maps to e₁; and so on. Because '
-        'clopen balls are completely separated (ZP-B), their images under T are orthogonal in H.'))
+        'the cells are clopen and completely separated (ZP-B), their images under T are orthogonal in H. '
+        'The level k is chosen fine enough that 0 and ε₀ fall in different cells.'))
     E.append(t_map_diagram())
     E.append(ccaption(
         'T maps clopen separation (left, ℚ₂) to orthogonality (right, H = ℂⁿ). '
-        '0 (amber) maps to e₀. Non-zero point x maps to e₁. Clopen separation '
+        '0 (amber) maps to e₀. A point x in the cell of ε₀ maps to e₁. Clopen separation '
         'becomes orthogonality: ⟨e₀, e₁⟩ = 0.'))
     E.append(sp(6))
 

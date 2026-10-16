@@ -87,8 +87,8 @@ noncomputable def ballFun (m : ℕ) : ℤ_[p] → ℂ :=
 
 /-- **Connection-matrix entry (Fourier-free).** `D^α` of the radius-`p⁻¹` ball indicator, evaluated at
     the center `0`, is the units-shell mass `1 - p⁻¹` — and `α` drops out, because the units have norm
-    `1` so the singular kernel equals `1` on the whole support. (This is a matrix entry of `D^α` in the
-    ball-indicator basis, not a full eigenvalue: a genuine eigenfunction is a Kozyrev wavelet, which
+    `1` so the singular kernel equals `1` on the whole support. (This is one value of `D^α` on the
+    ball-indicator family, not a full eigenvalue: a genuine eigenfunction is a Kozyrev wavelet, which
     needs additive characters.) -/
 theorem vladimirov_ballFun_one_zero (α : ℝ) :
     vladimirov α (ballFun (p := p) 1) 0 = (1 : ℂ) - (p : ℂ)⁻¹ := by
@@ -346,13 +346,13 @@ theorem vladimirov_shell_symbol_inv (α : ℝ) (m : ℕ) {x : ℤ_[p]}
 /-! ## § VIII — The shells as vectors in L²
 
 The ball indicator `ballIndicatorL2` (`ZeroParadox/Valuation/PadicBallIndicator.lean`) splits as the
-shell-`m` indicator plus the next ball's, two orthogonal pieces. No novelty claimed: § VI's citation
-(Kozyrev 2002) builds its wavelets on p-adic discs, any two disjoint or nested. At `p = 2`, compare
-`shellIndicatorL2 m - ballIndicatorL2 (m + 1)` with that citation's 2-adic Haar wavelet, up to sign and
-scale. Two orthogonal vectors of equal length are `√2` times that length apart in any inner product
-space. At every prime the level-`n` balls around `0` and any `a` outside it have orthogonal indicators
-of equal length (compare `t4_state_gap`, `ZeroParadox/State/StateSpace.lean`). The shell and the next
-ball have indicators of equal length exactly when `p = 2`. -/
+shell-`m` indicator plus the next ball's, two orthogonal pieces. Standard facts, no novelty claimed;
+§ VI's citation (Kozyrev 2002) builds its wavelets on p-adic balls. At `p = 2`, compare
+`shellIndicatorL2 m - ballIndicatorL2 (m + 1)` with its 2-adic Haar wavelet, up to sign and scale. Two
+orthogonal vectors of equal length are `√2` times that length apart in any inner product space. At every
+prime, the level-`n` ball around `0` and the level-`n` ball around any point `a` outside it have
+orthogonal indicators of equal length (compare `t4_state_gap`, `ZeroParadox/State/StateSpace.lean`).
+The shell and the next ball have indicators of equal length exactly when `p = 2`. -/
 
 /-- The indicator of shell `m` (`shellSet`) as an element of `L²(ℤ_p, haarZp)`. -/
 noncomputable def shellIndicatorL2 (m : ℕ) : Lp ℂ 2 (haarZp (p := p)) :=
