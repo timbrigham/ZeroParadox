@@ -1,5 +1,5 @@
 """
-Build ZP-B: p-Adic Topology (v1.19)
+Build ZP-B: p-Adic Topology (v1.20)
 This document makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21)
 flagged that analogy because it makes a document read as a physics grand theory.
 """
@@ -7,7 +7,7 @@ flagged that analogy because it makes a document read as a physics grand theory.
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -126,9 +126,9 @@ def build():
 
     E.append(Paragraph('IV. Clopen Gap at Zero', S['h1']))
     E.append(label_box('Theorem T3 — Clopen Gap at 0', [
-        'For any r = 2<super>&#8722;k</super>, the ball B(0,r) = { x &#8712; Q<sub>2</sub> : v<sub>2</sub>(x) &#8805; k }. Any x outside this ball has d(0,x) &#8805; 2<super>&#8722;k+1</super> > r. B(0,r) and its complement are separated by a gap of at least 2<super>&#8722;k</super>.',
+        'For any r = 2<super>&#8722;j</super>, the ball B(0,r) = { x &#8712; Q<sub>2</sub> : v<sub>2</sub>(x) &#8805; j }. Any x outside this ball has d(0,x) &#8805; 2<super>&#8722;j+1</super> > r. B(0,r) and its complement are separated by a gap of at least 2<super>&#8722;j</super>.',
         'ZP Interpretation: this discrete jump across a clopen boundary is the topological expression of the Binary Snap (defined in ZP-E).',
-        'Relationship to &#949;<sub>0</sub>: &#949;<sub>0</sub> = 2<super>k</super> is the smallest non-zero element outside the tightest ball around 0. ZP Interpretation: this is the gap the Binary Snap crosses. <font name="DV">&#10003;</font>',
+        'Relationship to &#949;<sub>0</sub>: the elements of least norm outside B(0, 2<super>&#8722;j</super>) are exactly those of valuation j &#8722; 1, all of norm 2<super>&#8722;j+1</super>; there are many of them (2<super>j&#8722;1</super> and 3 &#183; 2<super>j&#8722;1</super> among them), so the least norm is not attained by a single element. &#949;<sub>0</sub> = 2<super>k</super> of D5 has valuation k, so it lies outside B(0, 2<super>&#8722;j</super>) exactly when j &gt; k, and it is of least norm there, among the others of valuation k, exactly when j = k + 1. ZP Interpretation: the gap between B(0, 2<super>&#8722;k&#8722;1</super>) and &#949;<sub>0</sub> is the gap the Binary Snap crosses. <font name="DV">&#10003;</font>',
     ]))
 
     E.append(Paragraph('V. Topological Structure of Q₂', S['h1']))

@@ -25,8 +25,8 @@ step in the state sequence produces an orthogonal shift.
 ## Formal Overview (AI-assisted)
 
 Formalizes the Zero Paradox Hilbert space state layer H = ℂⁿ and the
-transition operator T: Q₂ → H. Q₂'s clopen-ball partition is abstracted
-as `Fin n`, keeping this file self-contained within functional analysis
+transition operator T: Q₂ → H. The level-k clopen partition of Q₂ (see `StateSpace`) is
+abstracted as `Fin n`, keeping this file self-contained within functional analysis
 (no p-adic imports). ZP-A and ZP-B are imported conceptually, not as
 Lean dependencies.
 
@@ -44,7 +44,8 @@ namespace ZeroParadox
 /-! ## I. The State-Layer Hilbert Space (D1) -/
 
 /-- D1: The state-layer Hilbert space H = ℂⁿ.
-    n is the cardinality of the clopen ball partition of Q₂ at the chosen level. -/
+    n counts the cells of the level-k clopen partition of Q₂: the 2^k balls of radius 2^(-k) that
+    make up ℤ₂, plus the one cell Q₂ \ ℤ₂, so n = 2^k + 1. -/
 abbrev StateSpace (n : ℕ) := EuclideanSpace ℂ (Fin n)
 
 /-- The i-th standard basis vector eᵢ ∈ StateSpace n. -/
@@ -68,8 +69,8 @@ theorem dp1_orthogonality (n : ℕ) (i j : Fin n) (h : i ≠ j) :
 
 /-! ## III. The Transition Operator T: Fin n → StateSpace n (D2 + T2) -/
 
-/-- D2 (construction): T assigns each ball-index to its corresponding basis vector.
-    Fin n abstracts Q₂'s clopen ball partition at a given level k (2^k balls). -/
+/-- D2 (construction): T assigns each cell-index to its corresponding basis vector.
+    Fin n abstracts the level-k clopen partition of Q₂ (n = 2^k + 1 cells, see `StateSpace`). -/
 noncomputable def transitionOp (n : ℕ) : Fin n → StateSpace n :=
   basisVec n
 
@@ -97,7 +98,7 @@ theorem t2_maps_eps0 (n : ℕ) (hn : 2 ≤ n) :
     transitionOp n ⟨1, by omega⟩ = basisVec n ⟨1, by omega⟩ :=
   rfl
 
-/-- T2(iii): T is injective — distinct ball-indices map to distinct vectors.
+/-- T2(iii): T is injective — distinct cell-indices map to distinct vectors.
     Proved by contradiction via DP-1: if T(i) = T(j) then ⟨T(i),T(j)⟩ = 1 yet
     also = 0 (DP-1 when i ≠ j), contradicting norm = 1. -/
 theorem t2_injective (n : ℕ) : Function.Injective (transitionOp n) := by
@@ -111,7 +112,7 @@ theorem t2_injective (n : ℕ) : Function.Injective (transitionOp n) := by
   rw [hzero, norm_zero] at hnorm
   norm_num at hnorm
 
-/-- T2(iv): T maps disjoint ball-indices to orthogonal vectors (DP-1). -/
+/-- T2(iv): T maps distinct cell-indices to orthogonal vectors (DP-1). -/
 theorem t2_orthogonal (n : ℕ) (i j : Fin n) (h : i ≠ j) :
     @inner ℂ (StateSpace n) _ (transitionOp n i) (transitionOp n j) = 0 :=
   dp1_orthogonality n i j h
@@ -158,7 +159,7 @@ theorem t3_uniqueness (n : ℕ)
 
 /-- T4: The Binary Snap 0 → ε₀ in Q₂ maps to an orthogonal shift in H.
     T(0) = e₀ and T(ε₀) = e₁ satisfy ⟨e₀, e₁⟩_ℂ = 0.
-    Derived from D2(i), D2(ii), and DP-1 (disjoint ball-indices → orthogonality). -/
+    Derived from D2(i), D2(ii), and DP-1 (distinct cell-indices → orthogonality). -/
 theorem t4_snap_orthogonal (n : ℕ) (hn : 2 ≤ n) :
     @inner ℂ (StateSpace n) _
       (transitionOp n ⟨0, by omega⟩)

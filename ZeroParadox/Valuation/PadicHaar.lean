@@ -79,8 +79,8 @@ instance : (haarZp (p := p)).IsAddHaarMeasure := by
 /-! ## § III — Measure of the norm-balls -/
 
 /-- **Ball measure.** The norm-ball `{x : ℤ_p | ‖x‖ ≤ p^(-n)}` — equivalently the additive
-    subgroup `p^n ℤ_p`, of index `p^n` — has Haar measure `p^(-n)`. This is the value that makes
-    the van der Put ball-indicator basis orthonormal-with-known-norms in `L²(ℤ_p, haarZp)`. -/
+    subgroup `p^n ℤ_p`, of index `p^n` — has Haar measure `p^(-n)`. This gives the ball indicators
+    their lengths in `L²(ℤ_p, haarZp)` (`norm_ballIndicatorL2`). -/
 theorem haarZp_ball (n : ℕ) :
     haarZp (p := p) {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-(n : ℤ))} = ((p : ℝ≥0∞) ^ n)⁻¹ := by
   -- The ball is the additive subgroup underlying the ideal `(pⁿ)`.
