@@ -114,6 +114,14 @@ example : (∀ x : ℕ∞, le (ValuationStructure.scale x) x) ∧
     simp at h0
   · show min z (min y z) = min y z; simp
 
+-- Statement: iterating scale from any element other than ⊥ never reaches ⊥.
+example (x : ℕ∞) (hx : x ≠ bot) (k : ℕ) : ValuationStructure.scale^[k] x ≠ bot := by
+  induction k with
+  | zero => exact hx
+  | succ k ih =>
+    rw [Function.iterate_succ_apply']
+    exact WithTop.add_ne_top.mpr ⟨ih, WithTop.one_ne_top⟩
+
 /-! ## § III. Derived AFA Content -/
 
 /-- The unique fixed point of (· + 1) in ℕ∞ is ⊤. -/

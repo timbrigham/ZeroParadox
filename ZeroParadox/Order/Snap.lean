@@ -260,8 +260,8 @@ example {L : Type*} [ZPSemilattice L] (f : L → L) (hf : ∀ x, le (f x) x) : f
   le_antisymm (hf _) (bot_le _)
 
 -- Reading: two opposed arrows meeting at ⊥ of `L`. Join climbs away from it and cannot return;
--- a deflationary map, such as scale in the ℕ∞ model (`ZeroParadox/Settheory/Model.lean`),
--- descends toward it, never reaching it from a finite value in that model, and fixes it.
+-- a deflationary map, such as scale in the ℕ∞ model, descends toward it and fixes it (whether it
+-- arrives there: the scale-iteration example in `ZeroParadox/Settheory/Model.lean`).
 
 /-! ## III. DA-2 — Instantiation Succession
 
