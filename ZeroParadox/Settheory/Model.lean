@@ -1,4 +1,5 @@
 import ZeroParadox.Valuation.Scale
+import Mathlib.Algebra.Tropical.Basic
 import Mathlib.Tactic
 
 /-!
@@ -90,6 +91,15 @@ noncomputable instance instNatInfVal : ValuationStructure ℕ∞ where
 -- semiring's addition, zero and multiplication by `trop 1` in Mathlib's `Tropical ℕ∞`
 -- (`Tropical.trop_top`, `Tropical.untrop_add`, `Tropical.untrop_mul`), so `scale_bot` is `zero_mul`:
 -- "∞ is the zero of this semiring" (Pin, "Tropical Semirings", *Idempotency*, Cambridge UP 1998, p. 3).
+
+-- Statement: `trop` sends this model's join to tropical `+`, ⊥ to tropical `0` and scale to `* trop 1`,
+-- so `scale_bot` is `zero_mul`.
+example : (∀ x y : ℕ∞, Tropical.trop (join x y) = Tropical.trop x + Tropical.trop y) ∧
+    Tropical.trop (bot : ℕ∞) = 0 ∧
+    (∀ x : ℕ∞, Tropical.trop (ValuationStructure.scale x) =
+      Tropical.trop x * Tropical.trop (1 : ℕ∞)) ∧
+    Tropical.trop (ValuationStructure.scale (bot : ℕ∞)) = 0 :=
+  ⟨fun _ _ => rfl, rfl, fun _ => rfl, zero_mul (Tropical.trop (1 : ℕ∞))⟩
 
 -- Statement: scale is deflationary in the ZP order and not inflationary, join is inflationary, and
 -- `scale_bot` follows from deflationarity alone (the arrow beside `t_snap_irreversible`).
