@@ -131,6 +131,15 @@ That is this project's most persistent defect shape: measuring the thing *next t
 
 ## Stage 1 — read all three inputs before judging anything
 
+⭐ **First, take your READING.** You do not record, and the carrier cannot know which bytes you read
+unless you hand them over. Before you open any repo file you will judge, in the checkout you will
+read it from:
+
+    python tools/verify/record.py --observe <every repo-relative path you will read> > <SCRATCHPAD>\observed_copy_editor_reader<N>.json
+
+then open that file whole and copy its JSON object, `{path: git blob id}`, into your report under
+`### Reading`. Exit 2 means some path has no reading (`NO READING: <path>` on stderr): say which.
+
 1. The **bedrock-clean state** — what the adversary passed.
 2. **Editorial's branch** — what editorial actually changed.
 3. The **prior-art references** — the ones that will be published.
@@ -194,6 +203,7 @@ Tag every finding **VERIFIED** (you re-ran it — name what you ran and quote wh
 ## Copy Editor Review — YYYY-MM-DD   (1 of 3, independent)
 ### Round: N (from gate_round.py show — NOT bumped)
 ### Inputs: bedrock-clean <sha> · editorial branch <name> · references <source>
+### Reading: <the JSON object `record.py --observe` printed, verbatim>
 
 ### Stage 1
   sites editorial touched      N
@@ -240,15 +250,26 @@ was correctly refusing three records that each claimed to be the whole verdict a
 carrier — who already unions the findings and tallies the verdict — emits exactly one:
 
 ```
-python tools/verify/record.py --step copy_editor --verdict <pass|fail|undecided> --tier A     --how agreement --passes <how many readers ran: 3, or fewer on an undecided> --agreed <the size of the bloc that concurred with the verdict you are recording; see the table below>     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --files <the union of every file the three actually read>     --outstanding-file <on a PASS: a JSON file in your SCRATCHPAD carrying EVERY finding from all three readers, each with its reader's shift, severity and vote; omit it only when no reader reported any>     --failing-file <a JSON file naming the sites the panel INDICTS, on a blocking verdict>
+python tools/verify/record.py --step copy_editor --verdict <pass|fail|undecided> --tier A     --how agreement --passes <how many readers ran: 3, or fewer on an undecided> --agreed <the size of the bloc that concurred with the verdict you are recording; see the table below>     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --observed-file <SCRATCHPAD>\observed_copy_editor_<run>.json     --files <the union of every file the three actually read>     --outstanding-file <on a PASS: <SCRATCHPAD>\outstanding_copy_editor_<run>.json, carrying EVERY finding from all three readers, each with its reader's shift, severity and vote; omit it only when no reader reported any>     --failing-file <a JSON file naming the sites the panel INDICTS, on a blocking verdict>
 ```
 
 Two PASS votes against a lone DIVERGENT whose ground is EXPRESSION and whose findings are all
 WORDING and ORDINARY is the one PASS that is not unanimous, and it has its own shape:
 
 ```
-python tools/verify/record.py --step copy_editor --verdict pass --tier A     --how panel --passes 3 --agreed 2     --who copy_editor     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --files <the union of every file the three actually read>     --outstanding-file <a JSON file in your SCRATCHPAD carrying EVERY finding from all three readers, each with its reader's shift, severity and vote>
+python tools/verify/record.py --step copy_editor --verdict pass --tier A     --how panel --passes 3 --agreed 2     --who copy_editor     --evidence .claude/commands/copy-editor.md     --run gate-copyedit-<YYYY-MM-DD>     --reason-file <a file in your SCRATCHPAD holding one line>     --observed-file <SCRATCHPAD>\observed_copy_editor_<run>.json     --files <the union of every file the three actually read>     --outstanding-file <SCRATCHPAD>\outstanding_copy_editor_<run>.json <carrying EVERY finding from all three readers, each with its reader's shift, severity and vote>
 ```
+
+⭐ **`--observed-file` is the three readers' READINGS, merged by you.** Each reader reports the
+JSON object `record.py --observe` printed when it read (`### Reading`). Write one object to
+`<SCRATCHPAD>\observed_copy_editor_<run>.json` holding every path in `--files` with its blob id,
+copied from those readings. ⚠ **If two readers give one path different blob ids, the file changed
+between their reads**: they judged different bytes, so leave that path out of `--files` and name it
+in your report to the author. Never pick one of the two. `record.py` sends the merged reading to
+gitRobot `ledger_subjects`, which leaves out, with a `not recorded:` line, every path whose staged
+blob is not the one the readers read. Without the file, `record.py` takes the reading at RECORD time
+from the working tree, so content staged after the panel read it would be recorded as read
+(`SUBJ-1`).
 
 Each entry in the `--outstanding-file` of either PASS is one finding from one reader — dissenter
 and PASS voters alike — with that reader's own marker and grade copied across unchanged, and

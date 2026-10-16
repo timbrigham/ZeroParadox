@@ -77,6 +77,27 @@ Working directory: use the current project root.
 - Empty or absent: **STOP AND ERROR. Do not proceed, and do not fall back to a diff.** Report `SCOPE UNKNOWN — refusing to review` and record nothing. Direct version-control commands are denied to agents here (`MIG-3`, the OPEN entry about brief scope discovery — not the closed one about `common.py` mirrors, which shares the id). ⚠ **The denial itself is loud, not silent** — measured 2026-08-24 through both shells, it returns a ~25-line `BLOCKED:` message naming the command, the reason and the substitute. **What fails open is the BEHAVIOUR, not the call:** an agent told to review the staged diff, handed a refusal instead of a file list, has no instruction for that state and falls back to a scope of nothing — and every PASS condition below is **vacuously true of the empty set**, so the PASS writes the signal that clears the push. An empty scope is not an empty diff. If you need the staged list, the caller must pass it explicitly; `mcp__gitRobot__read(op='diff', args=['--staged','--name-only'])` is the only sanctioned way to obtain it, and it is the CALLER's job, not yours.
 - A single block of prose: review that text only.
 
+## Take your READING before you open a file in scope
+
+⭐ **Your record must name the bytes you READ, and only you can say which those were.** When your
+scope is files, save the blob id of every one of them before you open any:
+
+    python tools/verify/record.py --observe <every repo-relative path in scope> > <SCRATCHPAD>\observed_prior_art_<run>.json
+
+then open that file whole. It holds one JSON object, `{path: git blob id of the bytes on disk now}`.
+Exit 2 means some path has no reading (`NO READING: <path>` on stderr): correct the path, or take it
+out of scope and say so. `<run>` is the value you will pass to `--run`, so a gate running beside you
+never writes the same file. **Every `record.py` command below passes this file as `--observed-file`.**
+
+⚠ **Without `--observed-file`, `record.py` takes the reading at RECORD time** and prints
+`reading: taken NOW from the working tree … not the review's own`. A file changed and staged between
+your read and your record would then be recorded as the new bytes: a verdict on content nobody
+examined, and nothing else flags it (`SUBJ-1`). With the file, gitRobot `ledger_subjects` checks
+your reading against the staged tree. A path whose staged blob is not the one you read is left out
+of the record with `not recorded: <path>  DRIFTED SINCE YOU READ IT: you examined <id>, <tree>
+holds <id>`, and a path missing from the reading is left out with `no blob was supplied for it`.
+Name every such path in your report.
+
 ## Scope — what counts
 Evaluate only **synthesis / bridge claims**: a distinctive claim that unifies or identifies a structure across more than one field or framework, or that sits in a specialist subfield the framework is not native to. **Out of scope:** a claim whose central content is a single named classical theorem the framework merely invokes (e.g. Ostrowski, Gentzen) — that is already anchored; and a claim already carrying a specific prior-art citation (verify the citation is real and correctly directed, then move on).
 
@@ -126,7 +147,8 @@ python tools/verify/record.py --step prior_art --verdict fail --tier A \
     --evidence .claude/commands/prior-art-review.md \
     --run gate-prior_art-<YYYY-MM-DD> \
     --reason-file <path to a file holding one line: the uncited closest prior art> \
-    --failing-file <a JSON file in your SCRATCHPAD: the subset you indict> \
+    --failing-file <SCRATCHPAD>\failing_prior_art_<run>.json \
+    --observed-file <SCRATCHPAD>\observed_prior_art_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -149,8 +171,8 @@ Historically, absent `failing` meant a FAIL over forty
 files condemns the thirty-nine that passed.
 
 ```
-    --failing-file <a JSON file in your SCRATCHPAD holding a list of the repo-relative paths
-                    this verdict indicts — a subset of --files>
+    --failing-file <SCRATCHPAD>\failing_prior_art_<run>.json
+                   (a JSON list of the repo-relative paths this verdict indicts — a subset of --files)
 ```
 
 ⚠ **Until 2026-09-06 no review gate could express this**, because the flag did not exist —
@@ -184,6 +206,7 @@ python tools/verify/record.py --step prior_art --verdict pass --tier A \
     --how delegated --who prior_art \
     --evidence .claude/commands/prior-art-review.md \
     --run gate-prior_art-<YYYY-MM-DD> \
+    --observed-file <SCRATCHPAD>\observed_prior_art_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -193,14 +216,17 @@ python tools/verify/record.py --step prior_art --verdict pass --tier A \
 answers *am I carrying findings that do not block*. **A round at round 0 that found only ordinary
 things is a PASS, and it carries them.** You do not need to be past the cap to use the flag, and you
 must not reach for STOP-ORDINARY in order to earn it. Write a JSON list of your ordinary findings to
-the SCRATCHPAD — one object per finding, each with at least `note` and `severity: "ordinary"`:
+`<SCRATCHPAD>\outstanding_prior_art_<run>.json` — one object per finding, each with at least `note`
+and `severity: "ordinary"`. The step in the name keeps a gate running beside you from writing over it
+(`GATE-OUTSTANDING-FILE-COLLISION-1`, where prior_art's file overwrote adversary's):
 
 ```
 python tools/verify/record.py --step prior_art --verdict pass --tier A \
     --how delegated --who prior_art \
     --evidence .claude/commands/prior-art-review.md \
     --run gate-prior_art-<YYYY-MM-DD> \
-    --outstanding-file <the JSON file you wrote> \
+    --outstanding-file <SCRATCHPAD>\outstanding_prior_art_<run>.json \
+    --observed-file <SCRATCHPAD>\observed_prior_art_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -235,11 +261,12 @@ message is.**
 
 | what the message shows | what happened | what YOU do |
 |---|---|---|
-| an argparse `usage:` banner | your invocation is wrong — among others `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset | **YOURS to fix.** Correct the flags and re-run. |
+| an argparse `usage:` banner | your invocation is wrong — among others `--failing-file` missing on a FAIL, `--failing-file` on a PASS, `--outstanding-file` carrying a non-`ordinary` severity, `--evidence` absent on a delegated PASS, `--run` unset, an `--observed-file` that is not a JSON object of path to blob id | **YOURS to fix.** Correct the flags and re-run. |
 | `nothing recordable for <step> at <ref>` | the subject fence emptied your set. **The ledger was never contacted** | You are READ-ONLY and cannot fix it — see *STAGE THE FILES BEFORE YOU RECORD*. Say so and hand the command back. |
+| `UNDECIDED: <step> was NOT SENT:` | the subjects or the basis could not be verified — gitRobot `ledger_subjects` unreachable or refusing, or the staged tree could not be resolved. **The ledger was never contacted** | **Report it**, quoting the message. Nothing was recorded; an outage decided nothing and may be retried once gitRobot is up. |
 | any line beginning `UNDECIDED: verdictLedger ` — unreachable, refused, or no usable payload — or an outage line printed by the dry-run check | the ledger was reached and refused, or could not be reached. **The message says WHICH**: `record refused by verdictLedger:` is a rule being applied; `unreachable` decided nothing | **Report it.** Do NOT retry a refusal — the same call is refused again. An outage decided nothing and may be retried once the ledger is up. Either way the review may have been fine and simply went unrecorded. |
 
-⛔ **If the message matches none of the three, it is a site added since the survey date — not one of
+⛔ **If the message matches none of the rows above, it is a site added since the survey date — not one of
 these wearing a different coat.** The binding rule still governs: report what the message actually
 said, and do not translate it into the nearest familiar case. ⚠ **Translating an unfamiliar exit 2
 into "the ledger" is the exact harm named earlier in this brief** — a reviewer with a real FAIL
@@ -256,7 +283,8 @@ python tools/verify/record.py --step prior_art --verdict pass --tier A \
     --how delegated --who prior_art \
     --evidence .claude/commands/prior-art-review.md \
     --run gate-prior_art-<YYYY-MM-DD> \
-    --outstanding-file <the JSON file you wrote> \
+    --outstanding-file <SCRATCHPAD>\outstanding_prior_art_<run>.json \
+    --observed-file <SCRATCHPAD>\observed_prior_art_<run>.json \
     --files <every file you reviewed>
 ```
 
@@ -265,9 +293,10 @@ with eight findings and recorded NOTHING — correctly, per the rule — and the
 either. **A gate that found eight ordinaries and a gate that found nothing produced the same ledger
 state**, and the findings survived only in prose.
 
-⚠⚠ **STAGE THE FILES BEFORE YOU RECORD — AND THE CALLER OWNS THAT STEP.** Subjects are read from the
-git INDEX, so a review of a modified-but-unstaged tree records NOTHING: `common.ledger_subjects`
-fences every path that differs from the index, and when NOTHING survives the fence `record.py` exits
+⚠⚠ **STAGE THE FILES BEFORE YOU RECORD — AND THE CALLER OWNS THAT STEP.** The record's basis is the
+staged tree (`--ref INDEX`, the default), and gitRobot `ledger_subjects` keeps a path only when the
+blob in your reading is the blob staged there. So a review of a modified-but-unstaged tree records
+NOTHING — every path comes back `DRIFTED SINCE YOU READ IT` — and when NOTHING survives `record.py` exits
 2 — *"nothing recordable for &lt;step&gt; at &lt;ref&gt; — the review certified no recordable file"*.
 ⚠ **All-or-nothing is the wrong model, and the middle case is the dangerous one:** on a PARTIAL fence
 `record.py` prints the skip lines and **records a NARROWED subject set at exit 0**. A green exit does
@@ -281,7 +310,7 @@ command back. ⛔ Do not reach for `--ref` to route around it.
 
 ⚠ **`--run` is REQUIRED, and `--reason-file` is not optional politeness.** `V9` refuses a record with no run id, and a spawned gate has no pipeline to inherit one from. The reason goes in a FILE because the PreToolUse hook denies any command containing the denied version-control token — arguments included — so an honest reason describing a scope-discovery defect blocks the very command that reports it. Measured three times on 2026-08-24, by three separate review agents.
 
-⚠ **Subjects are read from the INDEX, so the files must be STAGED**, and `--ref` defaults to `INDEX` for exactly that reason. `common.ledger_subjects` fences anything untracked or differing from the index. ⚠ **It fails closed ONLY when NOTHING survives the fence — on a PARTIAL fence it records a NARROWED subject set at exit 0.** See *STAGE THE FILES BEFORE YOU RECORD*: read the skip lines and say which paths did not make it. ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
+⚠ **The files you reviewed must be STAGED, as the bytes you read**, and `--ref` defaults to `INDEX` for exactly that reason. gitRobot `ledger_subjects` leaves out every path whose staged blob is not the one in your reading (`--observed-file`). ⚠ **It fails closed ONLY when NOTHING survives the fence — on a PARTIAL fence it records a NARROWED subject set at exit 0.** See *STAGE THE FILES BEFORE YOU RECORD*: read the skip lines and say which paths did not make it. ⚠⚠ **IF YOU ARE ONE OF SEVERAL CONCURRENT PASSES, EXPECT `V11` AND DO NOT RETRY.** The server
 keys a record by `(step, basis, revision)`, so the FIRST failing pass records and later ones are
 refused with *"revision 0 already exists for step '<step>' at this basis"*. That is the design
 working — it fails CLOSED and loudly, with an attributed append-only record, where the retired
