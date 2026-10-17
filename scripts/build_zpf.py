@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.17)
+Build ZP-F: The Counterexamples (v1.18)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -50,8 +50,9 @@ def build():
         'non-Archimedean completions (&#8474;<sub>p</sub>, where v<sub>p</sub>(0) = +&#8734; while '
         'every nonzero element has a finite valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
         'the prime fixed by ZP-B Theorem T0 from binary existence (AX-B1) together with the minimality '
-        'principle MP-1, a design commitment (t0_no_prime_below_two, t0_two_is_prime, t0_redundancy in '
-        'ZeroParadox/Valuation/Padic.lean). '
+        'principle MP-1, a design commitment (its arithmetic steps: t0_no_prime_below_two, t0_two_is_prime, '
+        't0_redundancy in ZeroParadox/Valuation/Padic.lean; MP-1 is stated in ZP-B\'s prose, not as a '
+        'Lean hypothesis). '
         'In both kinds zero is a metric limit of nonzero elements (for Q&#8322;, '
         'floor_reach_separates_mu_nu), so being a limit point does not separate them. The '
         'topology does: Q&#8322; is totally disconnected (ZP-B, t5_totallyDisconnected), while '
