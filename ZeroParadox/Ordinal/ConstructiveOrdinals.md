@@ -83,7 +83,7 @@ against `Ordinal`:
   `Classical.choice`, as on `Ordinal`.
 
 It does not close the item: on both carriers the fixed point is set, and on the second, where the convention is
-checked against `Ordinal`, the statements carry choice.
+checked against `Ordinal`, the statements written with its order carry choice.
 
 Two further corrections. `Ordinal` itself is `[propext, Quot.sound]` — **choice is not in the
 type**; it enters through `Ordinal.instLinearOrder`, `nfp`, `omega0`, `epsilon`. And a choice-free result *about the ascent* is
