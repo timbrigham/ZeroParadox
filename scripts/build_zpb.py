@@ -1,5 +1,5 @@
 """
-Build ZP-B: p-Adic Topology (v1.28)
+Build ZP-B: p-Adic Topology (v1.29)
 This document makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21)
 flagged that analogy because it makes a document read as a physics grand theory.
 """
@@ -7,7 +7,7 @@ flagged that analogy because it makes a document read as a physics grand theory.
 import os
 from zp_utils import *
 
-VERSION = '1.28'
+VERSION = '1.29'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -78,7 +78,7 @@ def build():
         'Prior art: Shannon names the base-2 unit of information the bit (a word he credits to J. W. Tukey), '
         'and a device with two stable positions can store one bit (C. E. Shannon, "A Mathematical '
         'Theory of Communication", Bell System Technical Journal 27 (1948), Introduction). '
-        'MP-1 minimises digit values without redundancy and does not use radix economy, which prices a base '
+        'MP-1 minimises digit values without redundancy and does not use the cost measure that prices a base '
         'by its digit values times the digits it needs, with optimum e, so that 3 is almost always the most '
         'economical integer base (B. Hayes, "Third Base", American Scientist 89(6), 490 (2001), doi:10.1511/2001.6.490). '
         'For a given range rounding can tie or reverse that ranking (two values cost 2 in base 2 and 3 in base 3).',

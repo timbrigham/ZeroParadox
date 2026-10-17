@@ -74,9 +74,9 @@ against `Ordinal`:
 * **Set, checked against `Ordinal`, choice in the statement.** `Gamma0Note`, the Veblen normal forms below Γ₀
   (`Veblen/Gamma0Note.lean` line 177), is well-founded (`Gamma0Note.lt_wf`, line 229). Its `omegaPow` is
   `veblenNote 0` (line 287), and `VNote.veblenNote` (line 121) returns its second argument itself when that argument
-  passes a syntactic fixed-point test (line 125), so an ε-number term is fixed by a convention of the same kind.
+  passes the syntactic fixed-point test for the first argument (line 125), so an ε-number term is fixed by a convention of the same kind.
   What this carrier adds is a check of that convention through `repr` into Mathlib's `Ordinal`:
-  `VNote.veblen_repr_eq_of_test` (line 80) proves that a term passing the test is a fixed point of Mathlib's
+  `VNote.veblen_repr_eq_of_test` (line 80) proves that the `repr` of a term passing the test is a fixed point of Mathlib's
   `veblen (repr a)` (for the `a` the test is run against), `Gamma0Note.omegaPow_epsilonNote` (`Veblen/Epsilon.lean` line 75) is proved through `repr`, and
   `Gamma0Note.epsilonNote_zero_repr` (line 44) states `repr (epsilonNote 0) = Ordinal.epsilon 0`. Its order is defined
   through `repr` (`Veblen/Gamma0Note.lean` line 201), so statements written with that order carry
@@ -102,7 +102,8 @@ is carried by its own statement (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom f
 This is the snap *from below* (ε₀ is the unreachable fixed point). On `ONote` the matching
 *minimality* ("ε₀ is the LEAST fixed point") cannot be stated, because it quantifies over the limit,
 which no notation names (`tower_no_upper_bound`; across the crossing, `repr_lt_epsilon0`). Leastness is proved on `Ordinal` (`epsilon0_min_eq_max`, with choice); a
-choice-free proof of it on a well-founded carrier is part of the open item under Result above. The other carriers
+choice-free proof of it on a well-founded carrier was not located as of 2026-10-17, searching `ZeroParadox/**/*.lean`
+for `WellFounded`, `IsWellOrder` and `Acc` (the open item under Result above). The other carriers
 are in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 
 ## Prior art
