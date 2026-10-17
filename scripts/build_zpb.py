@@ -1,5 +1,5 @@
 """
-Build ZP-B: p-Adic Topology (v1.27)
+Build ZP-B: p-Adic Topology (v1.28)
 This document makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21)
 flagged that analogy because it makes a document read as a physics grand theory.
 """
@@ -7,7 +7,7 @@ flagged that analogy because it makes a document read as a physics grand theory.
 import os
 from zp_utils import *
 
-VERSION = '1.27'
+VERSION = '1.28'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -80,9 +80,8 @@ def build():
         'Theory of Communication", Bell System Technical Journal 27 (1948), Introduction). '
         'MP-1 minimises digit values without redundancy and does not use radix economy, which prices a base '
         'by its digit values times the digits it needs, with optimum e, so that 3 is almost always the most '
-        'economical integer base (B. Hayes, "Third Base", American Scientist 89(6), 490 (2001), doi:10.1511/2001.6.490). Per digit, '
-        'that criterion ranks 3 ahead of 2 (3/ln 3 &lt; 2/ln 2, equivalently 2&#183;2&#183;2 = 8 &lt; 9 = 3&#183;3); '
-        'for a given range rounding can tie or reverse it (two values cost 2 in base 2 and 3 in base 3).',
+        'economical integer base (B. Hayes, "Third Base", American Scientist 89(6), 490 (2001), doi:10.1511/2001.6.490). '
+        'For a given range rounding can tie or reverse that ranking (two values cost 2 in base 2 and 3 in base 3).',
     ]))
 
     E.append(Paragraph('II. The 2-Adic Field', S['h1']))
