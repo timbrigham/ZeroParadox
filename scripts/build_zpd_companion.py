@@ -1,5 +1,5 @@
 """
-Build ZP-D Illustrated Companion (v1.17)
+Build ZP-D Illustrated Companion (v1.18)
 """
 
 import os
@@ -88,7 +88,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -226,7 +226,7 @@ def build():
     E.append(sp(6))
 
     # ── Key results ────────────────────────────────────────────────────────────
-    E.append(key_result_box('Key Result: T Exists and is Unique up to Rotation (T2, T3)',
+    E.append(key_result_box('Key Result: T Exists and is Unique up to Unitary Equivalence (T2, T3)',
         'T can be explicitly constructed by basis assignment (T2). At one level k it is unique up to a '
         'unitary transformation of H (T3). Every valid T sends 0 to e₀ and the fixed ε₀ to e₁, because '
         'D2(i) and D2(ii) require it, so the unitary relating two valid T operators at the same level '

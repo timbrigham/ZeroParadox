@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.14)
+Build ZP-F: The Counterexamples (v1.15)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -294,10 +294,11 @@ def build():
             'The tower images cnfToZp2(towerNONote n) converge to 0 in &#8484;&#8322; '
             'as n &#8594; &#8734; (proved in ZP-L), and &#949;&#8320; is the minimal '
             'snap threshold in the ordinal setting (proved in ZP-L). cnf_bridge_type_boundary '
-            '(ZeroParadox/Ordinal/CnfBridge.lean) states the two in one conjunction, as co-witnesses '
-            'and not as an identity: &#949;&#8320; is the least fixed point of &#945; &#8614; '
-            '&#969;^&#945; at or above the bottom of the ordinals, and the images of the same tower '
-            'converge to the 2-adic 0. cnfToZp2 maps the &#969;-tower into &#8484;&#8322;. '
+            '(ZeroParadox/Ordinal/CnfBridge.lean) states these as co-witnesses, and not as an identity, '
+            'in three conjuncts: &#949;&#8320; is the least fixed point of &#945; &#8614; '
+            '&#969;^&#945; at or above the bottom of the ordinals; the images cnfToZp2(towerNONote n) '
+            'converge to the 2-adic 0; and each towerNONote n represents the n-th stage of the '
+            '&#969;-tower (towerNONote_repr), which makes the two the same tower. cnfToZp2 maps the &#969;-tower into &#8484;&#8322;. '
             '&#949;&#8320; &#8800; 0, with 0 the ordinal zero, is a theorem in the '
             'ordinals (epsilon0_ne_zero). An equation between &#949;&#8320; and the 2-adic 0 does '
             'not type-check, with no coercion between the ordinals and &#8484;&#8322; in either '
