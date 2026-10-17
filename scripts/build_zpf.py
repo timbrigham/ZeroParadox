@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.18)
+Build ZP-F: The Counterexamples (v1.19)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -50,9 +50,8 @@ def build():
         'non-Archimedean completions (&#8474;<sub>p</sub>, where v<sub>p</sub>(0) = +&#8734; while '
         'every nonzero element has a finite valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
         'the prime fixed by ZP-B Theorem T0 from binary existence (AX-B1) together with the minimality '
-        'principle MP-1, a design commitment (its arithmetic steps: t0_no_prime_below_two, t0_two_is_prime, '
-        't0_redundancy in ZeroParadox/Valuation/Padic.lean; MP-1 is stated in ZP-B\'s prose, not as a '
-        'Lean hypothesis). '
+        'principle MP-1, a design commitment (T0 in Lean: t0_mp1_faithful_nonredundant and '
+        't0_mp1_least_prime in ZeroParadox/Valuation/Padic.lean, with MP-1 as hypotheses in two readings). '
         'In both kinds zero is a metric limit of nonzero elements (for Q&#8322;, '
         'floor_reach_separates_mu_nu), so being a limit point does not separate them. The '
         'topology does: Q&#8322; is totally disconnected (ZP-B, t5_totallyDisconnected), while '
@@ -200,13 +199,13 @@ def build():
         'The exclusion of &#8477; is not an isolated fact about one number system. '
         'F-SNAP-IMPOSSIBLE applies to any linearly ordered field. By Ostrowski\'s theorem, '
         'every completion of &#8474; falls into exactly one of two classes: Archimedean '
-        '(including &#8477;) or non-Archimedean (the p-adic fields &#8474;<sub>p</sub>). '
+        '(including &#8477;) or non-Archimedean (the p-adic fields Q<sub>p</sub>). '
         'The theorems of this document eliminate the entire Archimedean class. '
-        'What remains is the non-Archimedean class, every &#8474;<sub>p</sub>, not Q&#8322; alone. '
+        'What remains is the non-Archimedean class, every Q<sub>p</sub>, not Q&#8322; alone. '
         'Among these, ZP-B Theorem T0 fixes p&#160;=&#160;2 from binary existence (AX-B1) together '
         'with the minimality principle MP-1, a design commitment. So Q&#8322; is not chosen against '
         '&#8477;: ruling out &#8477; and every Archimedean completion leaves the p-adic fields, and '
-        'T0 then selects Q&#8322; among them.'))
+        'T0, under MP-1, then selects Q&#8322; among them.'))
     E.append(body(
         'The structural difference can be stated directly. It has two fences, the order and the '
         'topology, and the order separates &#8477; from Q&#8322; globally, not at zero. '

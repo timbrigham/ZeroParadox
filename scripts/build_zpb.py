@@ -1,5 +1,5 @@
 """
-Build ZP-B: p-Adic Topology (v1.24)
+Build ZP-B: p-Adic Topology (v1.25)
 This document makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21)
 flagged that analogy because it makes a document read as a physics grand theory.
 """
@@ -7,7 +7,7 @@ flagged that analogy because it makes a document read as a physics grand theory.
 import os
 from zp_utils import *
 
-VERSION = '1.24'
+VERSION = '1.25'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -71,6 +71,15 @@ def build():
         'Step 5 — p = 2 is the unique prime satisfying both conditions simultaneously.',
         'Step 6 — The binary branching at every level of Q<sub>2</sub>\'s ball structure reflects the eventual binary resolution of any representational complexity.',
         'Therefore p = 2. Status: DERIVED given MP-1 (design commitment). OQ-B1 closed. <font name="DV">&#10003;</font>',
+        'Lean: MP-1 enters as hypotheses, in two readings (ZeroParadox/Valuation/Padic.lean). '
+        't0_mp1_faithful_nonredundant takes MP-1 as stated above, faithfulness and no redundancy, and concludes p = 2; '
+        't0_mp1_least_prime reads MP-1 as the least prime covering the two states, and that prime is 2.',
+        'Prior art: base 2 as the unit of information is Shannon\'s: with base 2 the units are binary digits, '
+        'or bits, and a device with two stable positions can store one bit (C. E. Shannon, "A Mathematical '
+        'Theory of Communication", Bell System Technical Journal 27 (1948), Introduction). '
+        'MP-1 minimises digit values without redundancy and does not use radix economy, which prices a base '
+        'by its digit values times the digits it needs; that criterion ranks 3 ahead of 2 '
+        '(3/ln 3 &lt; 2/ln 2, equivalently 2<super>3</super> &lt; 3<super>2</super>).',
     ]))
 
     E.append(Paragraph('II. The 2-Adic Field', S['h1']))

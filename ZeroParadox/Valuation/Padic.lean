@@ -66,8 +66,9 @@ theorem ax_b1_distinct : nullState ≠ firstAtomicState := by decide
 
 /-! ## Theorem T0 — p = 2 is the Unique Minimum Sufficient Base
 
-Given exactly 2 ontological states (derived via ax_b1_distinct) and MP-1 (minimum base
-without redundancy), the representational base is uniquely p = 2. -/
+The selection is `t0_mp1_faithful_nonredundant` and `t0_mp1_least_prime`, with MP-1 in their
+signatures in two readings and AX-B1 as the two-state type `OntologicalStates`. The three lemmas
+before them are arithmetic ingredients. -/
 
 /-- Every prime satisfies p ≥ 2; there is no prime below 2.
     A base p < 2 cannot encode two distinct states (fails faithfulness of MP-1). -/
@@ -81,6 +82,36 @@ theorem t0_redundancy (p : ℕ) (_hp : Nat.Prime p) (hgt : 2 < p) :
     Fintype.card OntologicalStates < Fintype.card (Fin p) := by
   have hcard : Fintype.card OntologicalStates = 2 := by decide
   simp [hcard, hgt]
+
+/-- T0, MP-1 as ZP-B states it: a base with no fewer digit values than states (`hfaith`) and no
+    more (`hnored`) is 2. Primality is unused; `t0_two_is_prime` supplies it. -/
+theorem t0_mp1_faithful_nonredundant (p : ℕ)
+    (hfaith : Fintype.card OntologicalStates ≤ p)
+    (hnored : p ≤ Fintype.card OntologicalStates) : p = 2 := by
+  have h : Fintype.card OntologicalStates = 2 := by decide
+  omega
+
+/-- T0, MP-1 read as "the least prime covering the states": that prime is 2. -/
+theorem t0_mp1_least_prime :
+    IsLeast {p : ℕ | Nat.Prime p ∧ Fintype.card OntologicalStates ≤ p} 2 := by
+  have h : Fintype.card OntologicalStates = 2 := by decide
+  exact ⟨⟨t0_two_is_prime, by omega⟩, fun p hp => t0_no_prime_below_two p hp.1⟩
+
+-- Statement: reading B with MP-1 as a hypothesis: a least prime covering the states is 2.
+example (p : ℕ) (hmp1 : IsLeast {q : ℕ | Nat.Prime q ∧ Fintype.card OntologicalStates ≤ q} p) :
+    p = 2 :=
+  hmp1.unique t0_mp1_least_prime
+-- Statement: control, dropping `hnored`: 3 is prime and has at least as many digit values as states.
+example : Nat.Prime 3 ∧ Fintype.card OntologicalStates ≤ 3 := ⟨by decide, by decide⟩
+-- Statement: reading A at `n` states forces `p = n`, and at `n = 4` that value is not prime.
+example (n p : ℕ) (hfaith : n ≤ p) (hnored : p ≤ n) : p = n := le_antisymm hnored hfaith
+example : ¬ Nat.Prime 4 := by decide
+-- Statement: reading B at 4 states picks 5. So the two readings agree at 2 states and differ at 4.
+example : IsLeast {p : ℕ | Nat.Prime p ∧ 4 ≤ p} 5 := by
+  refine ⟨⟨by decide, by decide⟩, fun p ⟨hp, h4⟩ => ?_⟩
+  by_contra h
+  have : p = 4 := by omega
+  subst this; exact absurd hp (by decide)
 
 /-! ## Why Q₂ Rather Than a Discrete Two-Point Space
 
@@ -413,9 +444,10 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-Measured 2026-10-08 (the output below is authoritative): `ax_b1_distinct` depends on no Lean
+Measured 2026-10-17 (the output below is authoritative): `ax_b1_distinct` depends on no Lean
 axioms; the T0 results do not share one footprint — `t0_no_prime_below_two` reaches only `propext`,
-while `t0_two_is_prime` and `t0_redundancy` reach `[propext, Classical.choice, Quot.sound]`.
+while `t0_two_is_prime`, `t0_redundancy`, `t0_mp1_faithful_nonredundant` and `t0_mp1_least_prime`
+reach `[propext, Classical.choice, Quot.sound]`.
 T1–C3 depend on Mathlib's p-adic and topology instances — any classical axioms used
 by those instances will appear here and are inherited from standard Mathlib, not ZP-B. -/
 
@@ -425,6 +457,8 @@ open ZeroParadox
 #print axioms t0_two_is_prime
 #print axioms t0_no_prime_below_two
 #print axioms t0_redundancy
+#print axioms t0_mp1_faithful_nonredundant
+#print axioms t0_mp1_least_prime
 #print axioms ax_b1_distinct
 #print axioms t1_ultrametric
 #print axioms c1_isosceles
