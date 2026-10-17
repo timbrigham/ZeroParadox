@@ -1,5 +1,5 @@
 """
-Build ZP-B Illustrated Companion (v1.20)
+Build ZP-B Illustrated Companion (v1.21)
 """
 
 import os
@@ -85,7 +85,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -183,13 +183,14 @@ def build():
         'The starting point is a single axiom: AX-B1 (Binary Existence) — a state either exists '
         'or it does not. AX-B1 holds at every state with anything above it: each '
         'has a first distinct state above it, with nothing strictly between. A state with nothing above it '
-        'owes no step. From AX-B1&#8217;s two states (T0 Step 1), together with a minimality principle (MP-1), the document '
-        'derives that the field must be ℚ₂. Given MP-1, the choice of geometry is proven as Theorem T0, '
-        'not assumed; MP-1 itself is a design choice, the smallest base that encodes the two states '
-        'with no unused digit, and not a theorem.'))
+        'owes no step. From AX-B1&#8217;s two states (T0 Step 1), together with a minimality principle (MP-1), '
+        'Theorem T0 proves the base is 2, so among the p-adic fields the framework uses ℚ₂; that the geometry '
+        'is p-adic at all is a motivated modelling choice. MP-1 itself is a design choice, the smallest base '
+        'that encodes the two states with no unused digit, and not a theorem.'))
     E.append(example_box('Real-world example — Light switch vs. dimmer', [
         'AX-B1 says existence is like a light switch: on or off, no dimmer. This is the '
-        'foundational claim. From "binary only," the 2-adic geometry follows mathematically.',
+        'foundational claim. From "binary only," together with MP-1, the base 2 follows mathematically; '
+        'building a p-adic geometry on it is a modelling choice.',
     ]))
     E.append(sp(8))
 

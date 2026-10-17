@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.19)
+Build ZP-F: The Counterexamples (v1.20)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -47,11 +47,11 @@ def build():
         'This result contextualises the choice of Q&#8322; in ZP-B. Among all completions '
         'of &#8474;, Ostrowski\'s theorem identifies exactly two kinds: Archimedean completions '
         '(&#8477;, a densely ordered field, so no element has a first step) and '
-        'non-Archimedean completions (&#8474;<sub>p</sub>, where v<sub>p</sub>(0) = +&#8734; while '
+        'non-Archimedean completions (Q<sub>p</sub>, where v<sub>p</sub>(0) = +&#8734; while '
         'every nonzero element has a finite valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
         'the prime fixed by ZP-B Theorem T0 from binary existence (AX-B1) together with the minimality '
         'principle MP-1, a design commitment (T0 in Lean: t0_mp1_faithful_nonredundant and '
-        't0_mp1_least_prime in ZeroParadox/Valuation/Padic.lean, with MP-1 as hypotheses in two readings). '
+        't0_mp1_least_prime_unique in ZeroParadox/Valuation/Padic.lean take MP-1 as hypotheses, in two readings). '
         'In both kinds zero is a metric limit of nonzero elements (for Q&#8322;, '
         'floor_reach_separates_mu_nu), so being a limit point does not separate them. The '
         'topology does: Q&#8322; is totally disconnected (ZP-B, t5_totallyDisconnected), while '

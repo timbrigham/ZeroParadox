@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1925,
+        "declarations": 1926,
         "files": 166
       },
       "entries": [
@@ -32174,6 +32174,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7311a4b8-5394-48cf-934d-43703212d0b1",
+          "new": {
+            "file": "ZeroParadox/Valuation/Padic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t0_mp1_least_prime_unique",
+            "short": "t0_mp1_least_prime_unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Padic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t0_mp1_least_prime_unique",
+            "short": "t0_mp1_least_prime_unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ZP-B T0: reading B of MP-1 as a named hypothesis theorem (2026-10-17)",
           "verify": {
             "axioms": null,
             "sorry_free": true
