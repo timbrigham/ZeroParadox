@@ -62,7 +62,9 @@ its carrier `ThetaWNoteD` at that commit's own toolchain (Lean v4.33.0): the ord
 (`ThetaWNoteD.wellFoundedLT`); no leastness lemma for that term was located in the repository
 (case-insensitive grep of `OrdinalAnalysis/Ordinal/**` for `IsLeast`, `least fixed`, `lfp`,
 `_le_of_fixed`, `le_of_omegaPow_eq` and `fixed point`); the term `ϑ₀ 0` is a fixed point of `ω^·` by the normal-form convention (`ThetaWTerm.ofList`, by
-`rfl`), so it is set, not derived; and every proof footprint measured there carries `Classical.choice`.
+`rfl`), so it is set, not derived; and under `#print axioms` `ThetaWNoteD.wellFoundedLT` and
+`ThetaWNoteD.omegaPow_eq_self_iff` report `Classical.choice`, while the step on raw terms,
+`ThetaWTerm.ofList_singleton_prin`, reports `[propext]` only.
 It does not close the item. The
 crossing into `Ordinal`, `e0Repr`, carries choice. The current state is in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 
