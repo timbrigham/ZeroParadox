@@ -80,7 +80,7 @@ def build():
     E.append(label_box('Definition D2 — Transition Operator T (Requirements)', [
         'T: Q<sub>2</sub> &#8594; H must satisfy:',
         '(i)   T(0) = e<sub>0</sub>   (0 of Q<sub>2</sub>, read as &#8869;, maps to the designated base vector)',
-        '(ii)  T(&#949;<sub>0</sub>) = e<sub>1</sub>   (minimum deviation maps to the first non-base vector)',
+        '(ii)  T(&#949;<sub>0</sub>) = e<sub>1</sub>   (fix one point &#949;<sub>0</sub> of Q<sub>2</sub> at the chosen finest rung v of ZP-B D5, so v<sub>2</sub>(&#949;<sub>0</sub>) = v; D5 admits any point at rung v, and D2 binds this one. The minimum deviation maps to the first non-base vector)',
         '(iii) T is constant on each cell of P<sub>k</sub>, and points in different cells have different images',
         '(iv)  If x and y lie in different cells of P<sub>k</sub>, then &#10216;T(x), T(y)&#10217; = 0   (DP-1)',
         '(v)   &#8214;T(x)&#8214; = 1 for all x   (unit norm)',
@@ -88,7 +88,7 @@ def build():
     E.append(sp(4))
     E.append(Paragraph('3.3  Existence of T', S['h2']))
     E.append(label_box('Theorem T2 — Existence of T (Basis Assignment)', [
-        'At each level k with k &gt; v<sub>2</sub>(&#949;<sub>0</sub>), and at no other level, there exists a function T: Q<sub>2</sub> &#8594; H, with n = 2<super>k</super> + 1, satisfying all five requirements of D2 relative to P<sub>k</sub>.',
+        'For the point &#949;<sub>0</sub> fixed in D2(ii): at each level k with k &gt; v<sub>2</sub>(&#949;<sub>0</sub>), and at no other level, there exists a function T: Q<sub>2</sub> &#8594; H, with n = 2<super>k</super> + 1, satisfying all five requirements of D2 relative to P<sub>k</sub>.',
         'Proof: Construct T by basis assignment. P<sub>k</sub> has 2<super>k</super> + 1 cells (D1). Assign e<sub>0</sub> to the cell containing 0, e<sub>1</sub> to the cell containing &#949;<sub>0</sub>, and the remaining basis vectors to the remaining cells, one each. T(x) = e<sub>i</sub> where i is the index of the cell containing x; every x outside Z<sub>2</sub> maps to the one vector assigned to Q<sub>2</sub> \\ Z<sub>2</sub>. The cell of 0 is the ball 2<super>k</super>Z<sub>2</sub>, the points of valuation at least k, and &#949;<sub>0</sub> is a point of Q<sub>2</sub> at rung v<sub>2</sub>(&#949;<sub>0</sub>) (ZP-B D5), so it lies in that cell exactly when v<sub>2</sub>(&#949;<sub>0</sub>) &#8805; k. So 0 and &#949;<sub>0</sub> lie in different cells exactly when k &gt; v<sub>2</sub>(&#949;<sub>0</sub>). Otherwise no T satisfies D2 at level k: 0 and &#949;<sub>0</sub> share a cell, so D2(iii) forces T(0) = T(&#949;<sub>0</sub>), while D2(i) and D2(ii) require T(0) = e<sub>0</sub> and T(&#949;<sub>0</sub>) = e<sub>1</sub> &#8800; e<sub>0</sub>. When &#949;<sub>0</sub> lies outside Z<sub>2</sub>, every level k &#8805; 0 qualifies, level 0 included.',
         '(i) 0 maps to e<sub>0</sub> by assignment. <font name="DV">&#10003;</font>  (ii) &#949;<sub>0</sub> maps to e<sub>1</sub> by assignment, its cell differing from that of 0. <font name="DV">&#10003;</font>  (iii) T is constant on each cell by construction, and distinct cells &#8594; distinct basis vectors. <font name="DV">&#10003;</font>  (iv) Different cells &#8594; orthogonal basis vectors. <font name="DV">&#10003;</font>  (v) Every basis vector has norm 1. <font name="DV">&#10003;</font>',
     ]))

@@ -231,7 +231,9 @@ def build():
         'the integer powers of 2 (Padic.padicNormE.image) and so 2 is covered by 1, its norms being '
         '1/2 and 1 (the &#167; ROLE example stating that cover), while &#8477; is densely ordered in '
         'its field order and in its norm preorder alike (the &#167; ROLE example stating both). In '
-        'the standard terms this is a discrete group of norm values against a dense one. In the '
+        'the standard terms this is a discrete group of norm values against a dense one; Mathlib\'s '
+        'name for the dense side is DenselyNormedField, &#8477; is an instance '
+        '(Real.denselyNormedField), and its density lemma is NormedField.exists_lt_norm_lt. In the '
         'valuation order 0 is greatest, v(0) = &#8868; (addVal_bot). '
         'The first step AX-B1 commits to is a cover of &#8869; on the state carrier, in ZP-A\'s '
         'induced order (HasFirstStep), a commitment. t_snap_given_cover '
@@ -258,12 +260,11 @@ def build():
             'a topological limit point from above with no minimum positive element. The snap '
             'requires a discrete first step above 0; density forbids it. This is the blocking '
             'condition established in this document.',
-            '&#949;&#8320; (the snap threshold, established in ZP-L) is the least fixed '
+            '&#949;&#8320; of Ordinal (the snap threshold in the ordinal chart, ZP-L) is the least fixed '
             'point of &#945; &#8614; &#969;^&#945;: it is not reachable by any finite '
             'iteration of the &#969;^(&#183;) operation, only by the limit of the tower '
-            '&#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230; The snap is possible '
-            'at &#949;&#8320; precisely because it has no predecessor in the ordinal '
-            'hierarchy: no ordinal &#945; satisfies &#945; + 1 = &#949;&#8320;.',
+            '&#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230; It has no predecessor in '
+            'the ordinal hierarchy: no ordinal &#945; satisfies &#945; + 1 = &#949;&#8320;.',
             'Both cases are limit-type conditions: the field case is a topological limit '
             'point with no minimum positive neighbour above 0; the ordinal case is a limit '
             'ordinal (specifically, the least fixed point of &#945; &#8614; &#969;^&#945;) '

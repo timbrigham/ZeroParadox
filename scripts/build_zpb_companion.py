@@ -285,7 +285,7 @@ def build():
     E.append(remember_box(
         'Remember: The 2-adic structure — ultrametric, clopen balls, clopen separation of 0 — is '
         'fixed by the framework\'s axioms. ε₀ (the Snap threshold) is a structural concept: '
-        'the minimum step required by those axioms, a point of ℚ₂ named by its rung rather than by a fixed value, and not a specific physical constant. '
+        'the minimum step relative to a chosen finest rung (ℚ₂ itself has no least nonzero step), a point of ℚ₂ named by its rung rather than by a fixed value, and not a specific physical constant. '
         'The Zero Paradox is a structural argument, not a physical theory of our particular universe.'))
 
     print(f'Building: {out_path}')

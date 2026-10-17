@@ -418,12 +418,10 @@ def build():
         'so is zero in Q&#8322; (floor_reach_separates_mu_nu), so the limit point is not what '
         'blocks the snap.'))
     E.append(cbody(
-        'From the ordinal side: &#949;&#8320; has no ordinal immediately below it. There is '
+        'From the ordinal side: &#949;&#8320; of Ordinal has no ordinal immediately below it. There is '
         'no &#945; with &#945; + 1 = &#949;&#8320;. It is the limit of the tower '
         '&#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230; &#8212; approachable from below '
-        'by finite iteration, but not reachable in any finite number of steps. The snap is '
-        'possible at &#949;&#8320; precisely because it has no predecessor: there is no '
-        '&#8220;just before&#8221; it that the snap would have to pass through.'))
+        'by finite iteration, but not reachable in any finite number of steps.'))
     E.append(cbody(
         'Both conditions describe the same structure from opposite sides. In the field '
         'case, zero has no smallest positive neighbour in &#8477; &#8212; density fills '

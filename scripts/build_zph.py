@@ -319,17 +319,21 @@ def build():
         'Status: PDF construction complete — Lean: full functor (fd_functor, sorry-free)',
         [
             'Object map: F<sub>D</sub> sends each object X &#8712; ob(C) to a state vector T(x) &#8712; H = &#8450;<sup>n</sup> via the transition '
-            'operator T: Q<sub>2</sub> &#8594; H constructed in ZP-D (T2). The initial object 0 maps to: F<sub>D</sub>(0) = T(0) = e<sub>0</sub>. '
+            'operator T: Q<sub>2</sub> &#8594; H constructed in ZP-D (T2). The initial object 0 maps to F<sub>D</sub>(0): in Lean, depth 0 of HilbDimDepth '
+            '(fd_functor.obj 0) and the zero module &#8450;<sup>0</sup> of ModuleCat &#8450; (fD_functor.obj 0). In ZP-D\'s vector model, 0 of Q<sub>2</sub> '
+            'is read as the base vector T(0) = e<sub>0</sub> (ZP-D D2(i), met by T2). '
             'Hilb is the informal name of the target: in Lean, F<sub>D</sub> is realized in ModuleCat &#8450;, the category of &#8450;-modules '
             '(fD_functor, ZeroParadox/State/HilbFunctor.lean), and its &#8469;-indexed stand-in is HilbDimDepth (fd_functor, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean).',
             'Morphism map: F<sub>D</sub> sends each morphism f: A &#8594; B to the orthogonal extension from T(x<sub>A</sub>) to T(x<sub>B</sub>) '
             'in H. By ZP-D D2(iii) and D2(iv) (DP-1), points in different cells of the level-k partition P<sub>k</sub> map to orthogonal basis vectors under T, '
             'and points in one cell share one vector, so the transition is an orthogonal step when x<sub>A</sub> and x<sub>B</sub> lie in different cells and the trivial step when they share a cell.',
-            'Preservation of composition: Sequential orthogonal extensions compose: T(x<sub>A</sub>) &#8594; T(x<sub>B</sub>) &#8594; '
-            'T(x<sub>C</sub>) keeps &#8214;T(x<sub>C</sub>)&#8214; = &#8214;T(x<sub>B</sub>)&#8214; = &#8214;T(x<sub>A</sub>)&#8214; = 1 by ZP-D D2(v), so ZP-D T5\'s non-decreasing norms hold with equality. <font name="DV">&#10003;</font>',
+            'Preservation of composition: F<sub>D</sub>(g &#8728; f) = F<sub>D</sub>(g) &#8728; F<sub>D</sub>(f) is the functor law map_comp of the Lean functors, '
+            'fd_functor.map_comp and fD_functor.map_comp. <font name="DV">&#10003;</font>',
+            'Remark (ZP-D T5, not composition): every state vector is a unit vector by ZP-D D2(v), so along T(x<sub>A</sub>) &#8594; T(x<sub>B</sub>) &#8594; '
+            'T(x<sub>C</sub>) the norms are all 1 and ZP-D T5\'s non-decreasing norms hold with equality.',
             'Preservation of identity: F<sub>D</sub>(id<sub>A</sub>) maps to the trivial orthogonal extension T(x<sub>A</sub>) &#8594; T(x<sub>A</sub>), which is the identity on the basis vector e<sub>k</sub>. <font name="DV">&#10003;</font>',
-            'F<sub>D</sub>(0) = e<sub>0</sub> is the anchor vector from which all other state vectors are orthogonal extensions (ZP-D T3).',
+            'In the vector model, T(0) = e<sub>0</sub> (ZP-D D2(i), met by T2) is the anchor vector from which all other state vectors are orthogonal extensions.',
             'AX-G1 respected in the stand-in category: the Lean functor fd_functor lands in HilbDimDepth, the &#8469;-indexed dimension-depth '
             'category, which has no terminal object because the depth index has no maximum: n + 1 &gt; n (hilbDimZPCat, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean). <font name="DV">&#10003;</font>',
@@ -374,12 +378,14 @@ def build():
             'F<sub>C</sub>: F<sub>C</sub>(0) = P = (1, 0). For any distribution P<sub>Y</sub>, the unique morphism P &#8594; P<sub>Y</sub> is the informational '
             'transition with work E = JSD(P &#8741; P<sub>Y</sub>). Uniqueness: JSD is symmetric and uniquely determined by P '
             'and P<sub>Y</sub>; there is exactly one value of informational work for any pair of distributions. <font name="DV">&#10003;</font>',
-            'F<sub>D</sub>: F<sub>D</sub>(0) = T(0) = e<sub>0</sub>. For any T(x) &#8712; H, the unique morphism e<sub>0</sub> &#8594; T(x) is the orthogonal extension '
-            'from e<sub>0</sub> to e<sub>k</sub> (the basis vector assigned to x). Uniqueness of that morphism is a fact about the codomain category, '
+            'F<sub>D</sub>: F<sub>D</sub>(0) is depth 0 of HilbDimDepth (fd_functor.obj 0) and the zero module &#8450;<sup>0</sup> of ModuleCat &#8450; '
+            '(fD_functor.obj 0); ZP-D\'s vector model reads 0 of Q<sub>2</sub> as the base vector T(0) = e<sub>0</sub> (ZP-D D2(i)), and reads the morphism '
+            'from F<sub>D</sub>(0) to the object of x as the orthogonal extension from e<sub>0</sub> to e<sub>k</sub> (the basis vector assigned to x). '
+            'Uniqueness of that morphism is a fact about the codomain category, '
             'not about T: in the stand-in HilbDimDepth every hom-set out of depth 0 has exactly one element (hilbDimHom0Unique), so fd_functor sends 0 '
             'to an initial object (fd_preserves_initial, ZeroParadox/Multihomed/CategoricalBridge.lean). In ModuleCat &#8450; the realization fD_functor '
             'sends 0 to the zero module, a zero object and so initial (hilbert_bottom_isZero, ZeroParadox/Category/TreeSeam.lean). ZP-D T3 (T unique up to a '
-            'unitary) fixes the vectors T(x), not the morphisms between them, and is not used here. <font name="DV">&#10003;</font>',
+            'unitary) concerns the vectors T(x) up to a unitary, not the morphisms between objects, and is not used here. <font name="DV">&#10003;</font>',
             'Conclusion: OQ-G2 is closed. ZP-G T5 is now unconditional for the four instantiation functors '
             'of this framework, for F<sub>B</sub> in its stand-in. The universal property of 0 &#8712; ob(C) is fully preserved under F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, and F<sub>D</sub> (for F<sub>B</sub>, in its stand-in). <font name="DV">&#10003;</font>',
         ]
@@ -466,7 +472,7 @@ def build():
             'structural consistency, not circular argument. Independence of null-analog discovery: each '
             'framework located its null-analog through its own domain logic — &#8869; through A4 (ZP-A), '
             '0 &#8712; Q<sub>2</sub> through T3 (ZP-B), P = (1,0) through D1/RP-1 (ZP-C), e<sub>0</sub> through '
-            'T2/T3 (ZP-D) — prior to and without reference to the others. The modeling commitment is the '
+            'D2(i)/T2 (ZP-D) — prior to and without reference to the others. The modeling commitment is the '
             'identification of these independently-located objects under the functors, not the claim that '
             'any domain forced the others\' choices. Their agreement confirms coherence across mathematical '
             'representations of a shared foundation, not external replication. '
@@ -492,8 +498,8 @@ def build():
         ['F<sub>C</sub>(0) = P = (1,0)',               'ZP-C T1; ZP-E T6; C-H3',      'AX-B1, RP-1', 'Valid — from AX-B1, RP-1'],
         ['F<sub>C</sub> preserves composition',        'Q-stability of post-snap codomain; C-H3', 'None', 'Valid — Derived (binary framework; Q-stability, not subadditivity)'],
         ['F<sub>C</sub> respects AX-G1, AX-G2',       'infoDepthZPCat (stand-in); ZP-C T1b; C-H3', 'AX-B1, RP-1 (for ZP-C T1b; the stand-in proofs use neither)', 'Valid in the stand-in — KleisliCat PMF has a terminal object'],
-        ['F<sub>D</sub>(0) = T(0) = e<sub>0</sub>',   'ZP-D T2, T3; C-H4',           'DP-1',        'Valid — from DP-1'],
-        ['F<sub>D</sub> preserves composition',        'ZP-D T5; C-H4',               'DP-1',        'Valid — from DP-1'],
+        ['F<sub>D</sub>(0) = depth 0, &#8450;<sup>0</sup>; T(0) = e<sub>0</sub> in ZP-D\'s vector model', 'ZP-D D2(i), T2; C-H4', 'DP-1 (for ZP-D T2; the Lean objects do not use it)', 'Valid — from DP-1'],
+        ['F<sub>D</sub> preserves composition',        'fd_functor.map_comp, fD_functor.map_comp; C-H4', 'None', 'Valid — Derived (functor law)'],
         ['F<sub>D</sub> respects AX-G1, AX-G2',       'hilbDimZPCat (stand-in); ZP-D T4; C-H4', 'DP-1 (for ZP-D T4; the stand-in proofs do not use it)', 'Valid in the stand-in — both fail in ModuleCat &#8450;'],
         ['T-H1: universal property preserved',         'ZP-A T2; ZP-B T3; ZP-C T1b; C-H4 (fd_preserves_initial)', 'None', 'Valid — OQ-G2 closed; F<sub>B</sub> in its stand-in'],
         ['T-H2: singularity compatibility',            'ZP-G T6; ZP-C T2; C-H3',     'None',        'Valid — OQ-G4 closed'],
