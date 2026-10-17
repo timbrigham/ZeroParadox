@@ -60,22 +60,30 @@ crossing into `Ordinal`, `e0Repr`, carries choice. The current state is in `Zero
 
 The item was checked against two carriers of MaxWellApexLab/OrdinalAnalysis at commit
 `87baec70db931cda0df00167d68bd16defb4f7bf` (namespace `OrdinalAnalysis`, paths under `OrdinalAnalysis/Ordinal/`,
-each declaration re-read at that commit 2026-10-17). They are its two poles, and neither is the derived reading:
+each declaration re-read at that commit 2026-10-17). They are its two poles, and neither is the derived reading: on
+both, the fixed point is set by a normal-form convention, and they differ in whether that convention is checked
+against `Ordinal`:
 
-* **Set.** `ThetaNote` (`Theta/Basic.lean` line 482), the one-level ϑ notation of Freund, arXiv:2204.09321,
-  Definition 3.1, is well-founded (`ThetaNote.wellFoundedLT`, `Theta/WellFounded.lean` line 315). Its
+* **Set.** `ThetaNote` (`Theta/Basic.lean` line 482), the one-level ϑ notation due to Rathjen and Weiermann as
+  presented in Freund, arXiv:2204.09321, Definition 3.1, is well-founded (`ThetaNote.wellFoundedLT`,
+  `Theta/WellFounded.lean` line 315). Its
   `omegaPow` fixes exactly the principal terms (`ThetaNote.omegaPow_eq_self_iff`, `Theta/Arith.lean` line 878), and
   the direction making a principal term fixed is the normal-form convention itself: it is
   `ThetaTerm.ofList_singleton_prin` (`Theta/Arith.lean` line 57), `ofList [x] = x` for principal `x`, proved by
   `simp [ofList, h]` from `ofList`'s defining clause. The fixed point is set, not derived.
-* **Derived, choice in the statement.** `Gamma0Note`, the Veblen normal forms below Γ₀ (`Veblen/Gamma0Note.lean`
-  line 177), is well-founded (`Gamma0Note.lt_wf`, line 229), and its fixed point is derived:
-  `Gamma0Note.omegaPow_epsilonNote` (`Veblen/Epsilon.lean` line 75) is proved through `repr` into Mathlib's `Ordinal`,
-  and `Gamma0Note.epsilonNote_zero_repr` (line 44) states `repr (epsilonNote 0) = Ordinal.epsilon 0`. Its order is defined
-  through `repr` (`Veblen/Gamma0Note.lean` line 201), so `Classical.choice` is carried by its statements, as on
-  `Ordinal`.
+* **Set, checked against `Ordinal`, choice in the statement.** `Gamma0Note`, the Veblen normal forms below Γ₀
+  (`Veblen/Gamma0Note.lean` line 177), is well-founded (`Gamma0Note.lt_wf`, line 229). Its `omegaPow` is
+  `veblenNote 0` (line 287), and `VNote.veblenNote` (line 121) returns its argument itself when that argument
+  passes a syntactic fixed-point test (line 125), so an ε-number term is fixed by a convention of the same kind.
+  What this carrier adds is a check of that convention through `repr` into Mathlib's `Ordinal`:
+  `VNote.veblen_repr_eq_of_test` (line 80) proves that a term passing the test is a fixed point of Mathlib's
+  `veblen`, `Gamma0Note.omegaPow_epsilonNote` (`Veblen/Epsilon.lean` line 75) is proved through `repr`, and
+  `Gamma0Note.epsilonNote_zero_repr` (line 44) states `repr (epsilonNote 0) = Ordinal.epsilon 0`. Its order is defined
+  through `repr` (`Veblen/Gamma0Note.lean` line 201), so statements written with that order carry
+  `Classical.choice`, as on `Ordinal`.
 
-It does not close the item: the first carrier's fixed point is set, and the second carrier's statements carry choice.
+It does not close the item: on both carriers the fixed point is set, and on the second, where the convention is
+checked against `Ordinal`, the statements carry choice.
 
 Two further corrections. `Ordinal` itself is `[propext, Quot.sound]` — **choice is not in the
 type**; it enters through `Ordinal.instLinearOrder`, `nfp`, `omega0`, `epsilon`. And a choice-free result *about the ascent* is
