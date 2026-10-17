@@ -73,11 +73,11 @@ against `Ordinal`:
   `simp [ofList, h]` from `ofList`'s defining clause. The fixed point is set, not derived.
 * **Set, checked against `Ordinal`, choice in the statement.** `Gamma0Note`, the Veblen normal forms below Γ₀
   (`Veblen/Gamma0Note.lean` line 177), is well-founded (`Gamma0Note.lt_wf`, line 229). Its `omegaPow` is
-  `veblenNote 0` (line 287), and `VNote.veblenNote` (line 121) returns its argument itself when that argument
+  `veblenNote 0` (line 287), and `VNote.veblenNote` (line 121) returns its second argument itself when that argument
   passes a syntactic fixed-point test (line 125), so an ε-number term is fixed by a convention of the same kind.
   What this carrier adds is a check of that convention through `repr` into Mathlib's `Ordinal`:
   `VNote.veblen_repr_eq_of_test` (line 80) proves that a term passing the test is a fixed point of Mathlib's
-  `veblen`, `Gamma0Note.omegaPow_epsilonNote` (`Veblen/Epsilon.lean` line 75) is proved through `repr`, and
+  `veblen (repr a)` (for the `a` the test is run against), `Gamma0Note.omegaPow_epsilonNote` (`Veblen/Epsilon.lean` line 75) is proved through `repr`, and
   `Gamma0Note.epsilonNote_zero_repr` (line 44) states `repr (epsilonNote 0) = Ordinal.epsilon 0`. Its order is defined
   through `repr` (`Veblen/Gamma0Note.lean` line 201), so statements written with that order carry
   `Classical.choice`, as on `Ordinal`.

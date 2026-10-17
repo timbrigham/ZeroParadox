@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.15)
+Build ZP-F: The Counterexamples (v1.16)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -298,7 +298,7 @@ def build():
             'in three conjuncts: &#949;&#8320; is the least fixed point of &#945; &#8614; '
             '&#969;^&#945; at or above the bottom of the ordinals; the images cnfToZp2(towerNONote n) '
             'converge to the 2-adic 0; and each towerNONote n represents the n-th stage of the '
-            '&#969;-tower (towerNONote_repr), which makes the two the same tower. cnfToZp2 maps the &#969;-tower into &#8484;&#8322;. '
+            '&#969;-tower (towerNONote_repr). cnfToZp2 maps the &#969;-tower into &#8484;&#8322;. '
             '&#949;&#8320; &#8800; 0, with 0 the ordinal zero, is a theorem in the '
             'ordinals (epsilon0_ne_zero). An equation between &#949;&#8320; and the 2-adic 0 does '
             'not type-check, with no coercion between the ordinals and &#8484;&#8322; in either '
