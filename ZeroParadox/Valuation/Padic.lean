@@ -99,7 +99,7 @@ theorem t0_mp1_least_prime :
   exact ⟨⟨t0_two_is_prime, by omega⟩, fun p hp => t0_no_prime_below_two p hp.1⟩
 
 /-- T0, MP-1 read as "the least prime covering the states", taken as the hypothesis `hmp1`: that
-    prime is 2. -/
+    prime is 2 (`IsLeast.unique`). -/
 theorem t0_mp1_least_prime_unique (p : ℕ)
     (hmp1 : IsLeast {q : ℕ | Nat.Prime q ∧ Fintype.card OntologicalStates ≤ q} p) : p = 2 :=
   hmp1.unique t0_mp1_least_prime
