@@ -102,7 +102,7 @@ is carried by its own statement (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom f
 This is the snap *from below* (ε₀ is the unreachable fixed point). On `ONote` the matching
 *minimality* ("ε₀ is the LEAST fixed point") cannot be stated, because it quantifies over the limit,
 which no notation names (`tower_no_upper_bound`; across the crossing, `repr_lt_epsilon0`). Leastness is proved on `Ordinal` (`epsilon0_min_eq_max`, with choice); a
-choice-free proof of it on a well-founded carrier is part of the open item under Result above, where the searched
+choice-free proof of it on a well-founded Lean carrier is part of the open item under Result above, where the searched
 scope and its dates are stated. The other carriers
 are in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 
