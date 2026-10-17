@@ -824,12 +824,13 @@ COST     only ~10% of 767 notes were ever referenced again, and on one day four 
          self-reported status; verify at the artifact.
 
 
-## R-LEANDEV  Stub first. Build, commit, then fill proofs one at a time.
+## R-LEANDEV  Stub first. Build, then fill proofs one at a time; commit sorry-free.
 TRIGGER  you are creating a new `.lean` file or starting a proof.
 RULE     map each symbol to its Mathlib equivalent and identify heavy imports BEFORE writing
          Lean. Write the complete file with every proof `sorry`, `set_option maxHeartbeats
-         400000`, and STOP — wait for a clean build. Commit the stub as a rollback point. Fill
-         one theorem at a time, building and committing after each. Build as TWO separate
+         400000`, and STOP; wait for a clean build. The clean stub build is the checkpoint. Fill
+         one theorem at a time, building after each. Commit only when no `sorry` remains
+         (`batch.py precommit` refuses one); never commit a stub. Build as TWO separate
          calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`, then read the
          log — never combined with `;`. When done: zero errors and warnings, a `#print axioms`
          block per proved theorem inside `section PurityCheck`, README updated, and the SJV
