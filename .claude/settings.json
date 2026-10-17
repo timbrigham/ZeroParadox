@@ -154,6 +154,17 @@
             "statusMessage": "Checking log read has row limit..."
           }
         ]
+      },
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& \"$env:CLAUDE_PROJECT_DIR\\tools\\verify\\claude_hooks\\require_search_record_in_questions.ps1\"",
+            "shell": "powershell",
+            "statusMessage": "Checking absence claims in the question carry a search record..."
+          }
+        ]
       }
     ]
   }
