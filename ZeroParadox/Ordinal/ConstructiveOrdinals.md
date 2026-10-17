@@ -59,14 +59,19 @@ notation systems were surveyed 2026-08-02 in `ZeroParadox/Ordinal/SnapNucleusCon
 Searched 2026-10-09: KT. Wu's OrdinalAnalysis (github.com/MaxWellApexLab/OrdinalAnalysis, Lean 4,
 commit `87baec70db931cda0df00167d68bd16defb4f7bf`, `OrdinalAnalysis/Ordinal/ThetaW/`), measured on
 its carrier `ThetaWNoteD` at that commit's own toolchain (Lean v4.33.0): the order is well-founded
-(`ThetaWNoteD.wellFoundedLT`); no leastness lemma for that term was located in the repository
-(case-insensitive grep of `OrdinalAnalysis/Ordinal/**` for `IsLeast`, `least fixed`, `lfp`,
-`_le_of_fixed`, `le_of_omegaPow_eq` and `fixed point`); the term `ϑ₀ 0` is a fixed point of `ω^·` by the normal-form convention (`ThetaWTerm.ofList`, by
-`rfl`), so it is set, not derived; and under `#print axioms` `ThetaWNoteD.wellFoundedLT` and
-`ThetaWNoteD.omegaPow_eq_self_iff` report `Classical.choice`, while the step on raw terms,
-`ThetaWTerm.ofList_singleton_prin`, reports `[propext]` only.
-It does not close the item. The
-crossing into `Ordinal`, `e0Repr`, carries choice. The current state is in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
+(`ThetaWNoteD.wellFoundedLT`); the term `ThetaWTerm.theta 0 ThetaWTerm.zero` is a fixed point of
+`ω^·` by the normal-form convention: the definition `ThetaWTerm.ofList` returns a principal
+singleton unchanged, proved there as `ThetaWTerm.ofList_singleton_prin` and used by
+`ThetaWNoteD.omegaPow_eq_self_iff`, so it is set, not derived; no lemma stating leastness of that
+term was located in the repository (case-insensitive grep of `OrdinalAnalysis/Ordinal/**` for
+`IsLeast`, `least fixed`, `lfp`, `_le_of_fixed`, `le_of_omegaPow_eq` and `fixed point`; the
+`IsLeast` hits, `theta_isLeast` and `theta_isLeastS`, state that a hull operator is least, which
+the repository's README gives as Wilken's Proposition 3.9, not leastness of this fixed point); and
+under `#print axioms` `ThetaWNoteD.wellFoundedLT` and `ThetaWNoteD.omegaPow_eq_self_iff` report
+`Classical.choice`, while the step on raw terms, `ThetaWTerm.ofList_singleton_prin`, reports
+`[propext]` only.
+It does not close the item. Our own
+crossing into `Ordinal`, `e0Repr` in `ZeroParadox/Ordinal/PricedInterface.lean`, carries choice. The current state is in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 
 Two further corrections. `Ordinal` itself is `[propext, Quot.sound]` — **choice is not in the
 type**; it enters through `Ordinal.instLinearOrder`, `nfp`, `omega0`, `epsilon`. And a choice-free result *about the ascent* is

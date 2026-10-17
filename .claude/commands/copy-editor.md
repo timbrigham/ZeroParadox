@@ -81,7 +81,7 @@ Spawn the Agent with this prompt (substitute ARGUMENTS_VALUE for the actual valu
 
 ⭐ **AND THE GENERAL RULE IT EARNS: a measurement of a directory, written INTO that directory, is stale the moment the same change set edits it.** Cite the checker that recomputes the condition — `check_briefs.py`'s `marker` leg — rather than a count taken by hand, because the count cannot re-measure itself and the leg does it on every run.
 
-- **READ-ONLY ON THE WORKING TREE.** You write exactly two things: your findings, and your verdict record. **You do not fix anything.** The adversary writes fixes (`D1`); you do not, and neither does editorial's reviewer.
+- **READ-ONLY ON THE WORKING TREE.** You write exactly one thing, your findings note, and you hand your verdict to the carrier, who records it (§ Recording). **You do not fix anything.** The adversary writes fixes (`D1`); you do not, and neither does editorial's reviewer.
 - **NEVER `reset --hard`, `checkout -- .`, `clean`, or `stash`.** A review agent once hard-reset three times, destroyed an uncommitted edit, and correctly verified the tree was clean — which *was* the destruction. "Restore the tree" and "preserve the tree" are different instructions.
 - **NO SCRATCH FILES IN THE REPO.** Session scratchpad only; one probe was committed permanently that way.
 - **Direct `git` and `gh` are BLOCKED.** Use `gitRobot` — `read(op=..., args=[...], worktree=...)`, `status()`. The hook matches the whole command string including arguments and FAILS CLOSED.
@@ -138,9 +138,15 @@ That is this project's most persistent defect shape: measuring the thing *next t
     python -c "import hashlib,os,time;print(hashlib.sha256(f'{time.time_ns()}-{os.getpid()}'.encode()).hexdigest()[:12])"
 
 It prints 12 hexadecimal characters, a hash of the clock in nanoseconds and the process id. That
-output is your `<suffix>`. Name your scratch folder `copy_editor_reader_<suffix>` (inside the session
-scratchpad) and your findings note `copy_editor_<YYYY-MM-DD>_reader<suffix>.md`, and report the suffix
-in your output.
+output is your `<suffix>`. Your scratch folder is `<SCRATCHPAD>\copy_editor_reader_<suffix>`, inside
+the session scratchpad. CREATE it now, before anything writes into it; a redirect into a folder that
+does not exist fails:
+
+    New-Item -ItemType Directory -Force <SCRATCHPAD>\copy_editor_reader_<suffix>
+
+or, from any shell, `python -c "import os,sys;os.makedirs(sys.argv[1],exist_ok=True)" <that path>`.
+Your findings note is `.claude-local/notes/copy_editor_<YYYY-MM-DD>_reader<suffix>.md`, in the
+private repository, never the public tree. Report the suffix in your output.
 
 ⭐ **Then take your READING.** You do not record, and the carrier cannot know which bytes you read
 unless you hand them over. Before you open any repo file you will judge, in the checkout you will
@@ -211,7 +217,7 @@ Tag every finding **VERIFIED** (you re-ran it — name what you ran and quote wh
 ### Output format
 
 ```
-## Copy Editor Review — YYYY-MM-DD   (1 of 3, independent)
+## Copy Editor Review — YYYY-MM-DD   (one of three, independent)
 ### Reader suffix: <the 12 hex characters the Stage 1 command printed>
 ### Round: N (from gate_round.py show — NOT bumped)
 ### Inputs: bedrock-clean <sha> · editorial branch <name> · references <source>
