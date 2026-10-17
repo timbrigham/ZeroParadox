@@ -257,9 +257,11 @@ def build():
             'structural account of why the snap is domain-specific.',
             'In any dense ordered field, 0 has no nearest neighbour from above: for any '
             '&#949; > 0 there exists &#948; with 0 < &#948; < &#949; (F-DENSITY). Zero is '
-            'a topological limit point from above with no minimum positive element. The snap '
-            'requires a discrete first step above 0; density forbids it. This is the blocking '
-            'condition established in this document.',
+            'a topological limit point from above with no minimum positive element. AX-B1 '
+            'commits the point the snap leaves to a first step (HasFirstStep); density forbids '
+            'a first step at every element, 0 included (axb1_fails_everywhere_iff_dense), so '
+            'the block is global, not located at 0. This is the blocking condition established '
+            'in this document.',
             '&#949;&#8320; of Ordinal (the snap threshold in the ordinal chart, ZP-L) is the least fixed '
             'point of &#945; &#8614; &#969;^&#945;: it is not reachable by any finite '
             'iteration of the &#969;^(&#183;) operation, only by the limit of the tower '

@@ -80,7 +80,7 @@ def build():
     E.append(label_box('Definition D2 — Transition Operator T (Requirements)', [
         'T: Q<sub>2</sub> &#8594; H must satisfy:',
         '(i)   T(0) = e<sub>0</sub>   (0 of Q<sub>2</sub>, read as &#8869;, maps to the designated base vector)',
-        '(ii)  T(&#949;<sub>0</sub>) = e<sub>1</sub>   (fix one point &#949;<sub>0</sub> of Q<sub>2</sub> at the chosen finest rung v of ZP-B D5, so v<sub>2</sub>(&#949;<sub>0</sub>) = v; D5 admits any point at rung v, and D2 binds this one. The minimum deviation maps to the first non-base vector)',
+        '(ii)  T(&#949;<sub>0</sub>) = e<sub>1</sub>   (fix one point &#949;<sub>0</sub> of Q<sub>2</sub> at the chosen finest rung of ZP-B D5, so v<sub>2</sub>(&#949;<sub>0</sub>) is that rung; D5 admits any point at that rung, and D2 binds this one. The minimum deviation maps to the first non-base vector)',
         '(iii) T is constant on each cell of P<sub>k</sub>, and points in different cells have different images',
         '(iv)  If x and y lie in different cells of P<sub>k</sub>, then &#10216;T(x), T(y)&#10217; = 0   (DP-1)',
         '(v)   &#8214;T(x)&#8214; = 1 for all x   (unit norm)',

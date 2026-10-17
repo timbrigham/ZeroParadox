@@ -318,10 +318,12 @@ def build():
         'Construction C-H4 — Functor FD: C → Hilb',
         'Status: PDF construction complete — Lean: full functor (fd_functor, sorry-free)',
         [
-            'Object map: F<sub>D</sub> sends each object X &#8712; ob(C) to a state vector T(x) &#8712; H = &#8450;<sup>n</sup> via the transition '
-            'operator T: Q<sub>2</sub> &#8594; H constructed in ZP-D (T2). The initial object 0 maps to F<sub>D</sub>(0): in Lean, depth 0 of HilbDimDepth '
-            '(fd_functor.obj 0) and the zero module &#8450;<sup>0</sup> of ModuleCat &#8450; (fD_functor.obj 0). In ZP-D\'s vector model, 0 of Q<sub>2</sub> '
-            'is read as the base vector T(0) = e<sub>0</sub> (ZP-D D2(i), met by T2). '
+            'Object map: F<sub>D</sub> sends each object of C to a state space: in Lean, with C realized as &#8469;, object n goes to depth n of '
+            'HilbDimDepth (fd_functor.obj n) and to the module StateSpace n of ModuleCat &#8450; (fD_functor.obj n).The initial object 0 maps to F<sub>D</sub>(0): depth 0 of HilbDimDepth '
+            '(fd_functor.obj 0) and the zero module &#8450;<sup>0</sup> (fD_functor.obj 0). ZP-D\'s vector model reads a point x of Q<sub>2</sub> as the '
+            'vector T(x) &#8712; H = &#8450;<sup>n</sup>, through the transition operator T: Q<sub>2</sub> &#8594; H constructed in ZP-D (T2); there 0 of '
+            'Q<sub>2</sub> is read as the unit vector T(0) = e<sub>0</sub> (ZP-D D2(i), met by T2), which &#8450;<sup>0</sup> does not contain, so the two '
+            'models differ at 0. '
             'Hilb is the informal name of the target: in Lean, F<sub>D</sub> is realized in ModuleCat &#8450;, the category of &#8450;-modules '
             '(fD_functor, ZeroParadox/State/HilbFunctor.lean), and its &#8469;-indexed stand-in is HilbDimDepth (fd_functor, '
             'ZeroParadox/Multihomed/CategoricalBridge.lean).',
@@ -346,7 +348,7 @@ def build():
             'map, fD_has_return, ZeroParadox/Category/Heterogeneous.lean) and stage 1 is not a zero object (leaf_not_isZero, '
             'ZeroParadox/Category/SeamNotColimit.lean).',
             'Design commitment inherited: DP-1 (orthogonality as representation of clopen separation) is a '
-            'design commitment in ZP-D v1.2. F<sub>D</sub> inherits this label. T4 and T5 of ZP-D depend on DP-1 as a premise.',
+            'design commitment in ZP-D v1.2. F<sub>D</sub> inherits this label. T4 and T5-b of ZP-D depend on DP-1 as a premise.',
         ]
     ))
 
@@ -471,8 +473,9 @@ def build():
             'irreversibility result is a closed theorem within its own domain document. Their agreement is '
             'structural consistency, not circular argument. Independence of null-analog discovery: each '
             'framework located its null-analog through its own domain logic — &#8869; through A4 (ZP-A), '
-            '0 &#8712; Q<sub>2</sub> through T3 (ZP-B), P = (1,0) through D1/RP-1 (ZP-C), e<sub>0</sub> through '
-            'D2(i)/T2 (ZP-D) — prior to and without reference to the others. The modeling commitment is the '
+            '0 &#8712; Q<sub>2</sub> through T3 (ZP-B), P = (1,0) through D1/RP-1 (ZP-C) — prior to and without '
+            'reference to the others. ZP-D\'s e<sub>0</sub> is not independent in this sense: it is reached by transport '
+            'of ZP-B\'s 0 along T (ZP-D D2(i), T(0) = e<sub>0</sub>). The modeling commitment is the '
             'identification of these independently-located objects under the functors, not the claim that '
             'any domain forced the others\' choices. Their agreement confirms coherence across mathematical '
             'representations of a shared foundation, not external replication. '
@@ -498,7 +501,7 @@ def build():
         ['F<sub>C</sub>(0) = P = (1,0)',               'ZP-C T1; ZP-E T6; C-H3',      'AX-B1, RP-1', 'Valid — from AX-B1, RP-1'],
         ['F<sub>C</sub> preserves composition',        'Q-stability of post-snap codomain; C-H3', 'None', 'Valid — Derived (binary framework; Q-stability, not subadditivity)'],
         ['F<sub>C</sub> respects AX-G1, AX-G2',       'infoDepthZPCat (stand-in); ZP-C T1b; C-H3', 'AX-B1, RP-1 (for ZP-C T1b; the stand-in proofs use neither)', 'Valid in the stand-in — KleisliCat PMF has a terminal object'],
-        ['F<sub>D</sub>(0) = depth 0, &#8450;<sup>0</sup>; T(0) = e<sub>0</sub> in ZP-D\'s vector model', 'ZP-D D2(i), T2; C-H4', 'DP-1 (for ZP-D T2; the Lean objects do not use it)', 'Valid — from DP-1'],
+        ['F<sub>D</sub>(0) = depth 0, &#8450;<sup>0</sup>; T(0) = e<sub>0</sub> in ZP-D\'s vector model', 'ZP-D D2(i), T2; C-H4', 'None (D2(i), by assignment)', 'Valid — by construction'],
         ['F<sub>D</sub> preserves composition',        'fd_functor.map_comp, fD_functor.map_comp; C-H4', 'None', 'Valid — Derived (functor law)'],
         ['F<sub>D</sub> respects AX-G1, AX-G2',       'hilbDimZPCat (stand-in); ZP-D T4; C-H4', 'DP-1 (for ZP-D T4; the stand-in proofs do not use it)', 'Valid in the stand-in — both fail in ModuleCat &#8450;'],
         ['T-H1: universal property preserved',         'ZP-A T2; ZP-B T3; ZP-C T1b; C-H4 (fd_preserves_initial)', 'None', 'Valid — OQ-G2 closed; F<sub>B</sub> in its stand-in'],
