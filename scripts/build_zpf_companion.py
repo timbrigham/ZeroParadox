@@ -427,11 +427,11 @@ def build():
         '&#8477;; in the ordinal case, &#949;&#8320; has no immediate predecessor in the '
         'ordinals. Each is a point approached by a limit and not reached in finitely many '
         'steps from one side. These are two limit-type conditions in two different '
-        'structures, not one boundary. What is proved pairs them as co-witnesses, not as an '
-        'identity: &#949;&#8320; is the least fixed point of &#945; &#8614; &#969;^&#945; '
-        'in the ordinals, and the 2-adic images of the &#969;-tower converge to the 2-adic 0 '
-        '(cnf_bridge_type_boundary); an equation between &#949;&#8320; and the 2-adic 0 does '
-        'not type-check.'))
+        'structures, not one boundary. What is proved pairs the ordinal side with &#8484;&#8322;, '
+        'not with &#8477;, and as co-witnesses, not as an identity: &#949;&#8320; is the least '
+        'fixed point of &#945; &#8614; &#969;^&#945; in the ordinals, and the 2-adic images of '
+        'the &#969;-tower converge to the 2-adic 0 (cnf_bridge_type_boundary); an equation '
+        'between &#949;&#8320; and the 2-adic 0 does not type-check.'))
     E.append(cbody(
         'Neither condition is needed for the snap itself. In the two-state carrier '
         'MachinePhase, T-SNAP holds (t_snap_derived), and the landing c&#8321; covers '
