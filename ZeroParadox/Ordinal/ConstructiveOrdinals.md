@@ -59,11 +59,9 @@ notation systems were surveyed 2026-08-02 in `ZeroParadox/Ordinal/SnapNucleusCon
 Searched 2026-10-09: KT. Wu's OrdinalAnalysis (github.com/MaxWellApexLab/OrdinalAnalysis, Lean 4,
 commit `87baec70db931cda0df00167d68bd16defb4f7bf`, `OrdinalAnalysis/Ordinal/ThetaW/`), measured on
 its carrier `ThetaWNoteD` at that commit's own toolchain (Lean v4.33.0): the order is well-founded
-(`ThetaWNoteD.wellFoundedLT`); no leastness lemma for that term was located in the repository (case-insensitive grep of
-`OrdinalAnalysis/Ordinal/**` for `IsLeast`, `least fixed`, `lfp`, `_le_of_fixed`, `le_of_omegaPow_eq`
-and `fixed point`), and leastness stated on the
-raw comparison `ThetaWTerm.ltb` has a statement free of `Classical.choice` (`[propext, Quot.sound]`);
-the term `ϑ₀ 0` is a fixed point of `ω^·` by the normal-form convention (`ThetaWTerm.ofList`, by
+(`ThetaWNoteD.wellFoundedLT`); no leastness lemma for that term was located in the repository
+(case-insensitive grep of `OrdinalAnalysis/Ordinal/**` for `IsLeast`, `least fixed`, `lfp`,
+`_le_of_fixed`, `le_of_omegaPow_eq` and `fixed point`); the term `ϑ₀ 0` is a fixed point of `ω^·` by the normal-form convention (`ThetaWTerm.ofList`, by
 `rfl`), so it is set, not derived; and every proof footprint measured there carries `Classical.choice`.
 It does not close the item. The
 crossing into `Ordinal`, `e0Repr`, carries choice. The current state is in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
