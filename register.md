@@ -5,13 +5,13 @@ Update this file first on any version bump. README.md Framework table is verifie
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
 | ZP-A Lattice Algebra | v1.32 | ZP-A_Lattice_Algebra.pdf | v1.12 | N/— | formal:9f668734 comp:aa71c65d |
-| ZP-B p-Adic Topology | v1.21 | ZP-B_pAdic_Topology.pdf | v1.18 | N/— | formal:379abf6b comp:26f117dd |
-| ZP-F The Counterexamples | v1.13 | ZP-F_The_Counterexamples.pdf | v1.16 | N/— | formal:00212c25 comp:afe68ae6 |
+| ZP-B p-Adic Topology | v1.21 | ZP-B_pAdic_Topology.pdf | v1.18 | N/— | formal:379abf6b comp:b1c15d9d |
+| ZP-F The Counterexamples | v1.13 | ZP-F_The_Counterexamples.pdf | v1.16 | N/— | formal:c65e8f55 comp:ecdf0435 |
 | ZP-C Information Theory | v1.26 | ZP-C_Information_Theory.pdf | v2.11 | N/— | formal:7ba26d82 comp:51d4a5bc |
-| ZP-D State Layer | v1.18 | ZP-D_State_Layer.pdf | v1.16 | N/— | formal:7bdb0c16 comp:29996aae |
+| ZP-D State Layer | v1.18 | ZP-D_State_Layer.pdf | v1.16 | N/— | formal:0e1c09b2 comp:f9b40219 |
 | ZP-E Bridge Document | v3.55 | ZP-E_Bridge_Document.pdf | v1.27 | Y/Y | formal:c77af4ec comp:3a25f240 |
 | ZP-G Category Theory | v1.23 | ZP-G_Category_Theory.pdf | v1.14 | N/— | formal:7b23b058 comp:c39d201c |
-| ZP-H Categorical Bridge | v1.27 | ZP-H_Categorical_Bridge.pdf | v1.21 | N/— | formal:dd40275e comp:b85ebaf7 |
+| ZP-H Categorical Bridge | v1.27 | ZP-H_Categorical_Bridge.pdf | v1.21 | N/— | formal:4f507ab6 comp:b85ebaf7 |
 | ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:6055c8d4 |
 | ZP-I Inside Zero | v1.28 | ZP-I_Inside_Zero.pdf | v1.34 | N/— | formal:37707b03 comp:8e589905 |
 | ZP-J Self-Reference | v2.12 | ZP-J_Self_Reference.pdf | v1.33 | N/— | formal:66a8d9d6 comp:7cfd99e4 |

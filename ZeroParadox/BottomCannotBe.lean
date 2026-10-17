@@ -133,16 +133,11 @@ example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); (2 : ℚ_[2]) ⋖
         rw [e] at this
         exact absurd (lt_of_lt_of_le h2 this) (lt_irrefl _)
   exact ⟨hcov, fun hd => ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd 2 ⟨1, hcov⟩⟩
--- Statement: and ℝ's norm preorder is dense, as its field order is.
-example : @DenselyOrdered ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT ∧ DenselyOrdered ℝ := by
-  refine ⟨@DenselyOrdered.mk ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT fun a b h => ?_, inferInstance⟩
-  change ‖a‖ < ‖b‖ at h
-  have hm : ‖(‖a‖ + ‖b‖) / 2‖ = (‖a‖ + ‖b‖) / 2 := Real.norm_of_nonneg (by positivity)
-  refine ⟨(‖a‖ + ‖b‖) / 2, ?_, ?_⟩
-  · change ‖a‖ < ‖(‖a‖ + ‖b‖) / 2‖
-    rw [hm]; linarith
-  · change ‖(‖a‖ + ‖b‖) / 2‖ < ‖b‖
-    rw [hm]; linarith
+-- Statement: and ℝ's norm preorder is dense, as its field order is; Mathlib's `DenselyNormedField`
+-- (`Real.denselyNormedField`) via `NormedField.exists_lt_norm_lt`.
+example : @DenselyOrdered ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT ∧ DenselyOrdered ℝ :=
+  ⟨@DenselyOrdered.mk ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT fun a _ h =>
+    NormedField.exists_lt_norm_lt ℝ (norm_nonneg a) h, inferInstance⟩
 -- Reading: other chart, the valuation order: there `0` is greatest, `v 0 = ⊤` (`addVal_bot`,
 -- § POSITIVE — narrow uniqueness and infinite width).
 -- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,

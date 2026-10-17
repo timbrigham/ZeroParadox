@@ -203,7 +203,7 @@ def build():
         'Think of it as a coordinate system where every axis is perpendicular to every other '
         'and all axes are the same length.'))
     E.append(cbody(
-        'The element 0 maps to e₀; the nonzero element ε₀ of ℚ₂ maps to e₁; and so on. Because '
+        'The element 0 maps to e₀; a nonzero point ε₀ of ℚ₂, fixed at the chosen finest rung, maps to e₁; and so on. Because '
         'the cells are clopen and completely separated (ZP-B), their images under T are orthogonal in H. '
         'The level k is chosen fine enough that 0 and ε₀ fall in different cells.'))
     E.append(t_map_diagram())
@@ -228,8 +228,8 @@ def build():
     # ── Key results ────────────────────────────────────────────────────────────
     E.append(key_result_box('Key Result: T Exists and is Unique up to Rotation (T2, T3)',
         'T can be explicitly constructed by basis assignment (T2). At one level k it is unique up to a '
-        'rotation of the basis (T3) — meaning any two valid T operators at the same level agree on '
-        'e₀ and e₁, which the requirements pin, and differ only by a rotation of the remaining '
+        'rotation of the basis (T3) — meaning any two valid T operators at the same level both send '
+        '0 to e₀ and the fixed ε₀ to e₁ (D2(i), D2(ii)), and differ only by a rotation of the remaining '
         'directions. This is called unitary '
         'equivalence: like choosing different compass orientations for a map, the underlying '
         'geometry is the same. Two maps that agree on distances but point north differently '
@@ -250,8 +250,9 @@ def build():
     E.append(key_result_box('Key Result: Every Genuine Transition Produces an Orthogonal Shift (T5-b)',
         'The Snap is not a special case. For any state sequence, whenever two consecutive '
         'states sit in different cells of ℚ₂ — meaning the sequence actually moved between cells — '
-        'their T-images in H are orthogonal. Each genuine transition opens a new direction. The whole ascending '
-        'chain, not just the first step, unfolds through orthogonal shifts. '
+        'their T-images in H are orthogonal. Each genuine transition is a right-angle turn away from '
+        'the state just before it. The result compares each state with the next one only: a later '
+        'state can return to a cell visited earlier, and then its image is that earlier vector again. '
         'Lean: t5_strict_orthogonal (via DP-1).'))
     E.append(sp(8))
 
