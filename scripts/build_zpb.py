@@ -1,5 +1,5 @@
 """
-Build ZP-B: p-Adic Topology (v1.21)
+Build ZP-B: p-Adic Topology (v1.22)
 This document makes no Planck-scale comparison for epsilon-0: an adversary review (2026-05-21)
 flagged that analogy because it makes a document read as a physics grand theory.
 """
@@ -7,7 +7,7 @@ flagged that analogy because it makes a document read as a physics grand theory.
 import os
 from zp_utils import *
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -87,7 +87,7 @@ def build():
     E.append(Paragraph('2.3  The Minimum Viable Deviation &#949;<sub>0</sub>', S['h2']))
     E.append(label_box('Definition D5 — Minimum Viable Deviation &#949;₀', [
         'Role: &#949;<sub>0</sub> of Q<sub>2</sub> is the minimum viable deviation from 0 of Q<sub>2</sub>, the deviation the Snap crosses. Q<sub>2</sub> itself has no least nonzero norm (the norms 2<super>&#8722;n</super> accumulate at 0), so the role is filled only relative to a chosen finest accessible valuation v.',
-        'Requirement in Q<sub>2</sub>: a nonzero point of Q<sub>2</sub> whose 2-adic valuation is v. Occupant: any such point; the rung v names it, and it has no value beyond that position. Every point at rung v has norm 2<super>&#8722;v</super>, the real-valued threshold of this choice (Lean: eps0 (&#8722;v), ZeroParadox/Valuation/Padic.lean); 2<super>v</super> and &#8722;2<super>v</super> are two distinct such points.',
+        'Requirement in Q<sub>2</sub>: a nonzero point of Q<sub>2</sub> whose 2-adic valuation is v. Occupant: any such point. The rung v names the position, which many points share, and an occupant has no value beyond that position. Every point at rung v has norm 2<super>&#8722;v</super>, the real-valued threshold of this choice (Lean: eps0 (&#8722;v), ZeroParadox/Valuation/Padic.lean); 2<super>v</super> and &#8722;2<super>v</super> are two distinct such points.',
         'Contingency: v, and with it the threshold 2<super>&#8722;v</super>, depends on which valuation is taken to be the finest accessible one. That is a choice of cutoff, a normalisation, not a physical measurement: this document makes no claim about magnitude in any unit system, and the rung carries no units.',
         'Status: DEFINED — relative to a chosen finest rung v.',
     ]))
@@ -150,7 +150,7 @@ def build():
     ]))
 
     E.append(Paragraph('VI. Universal Structure vs. Contingent Parameters', S['h1']))
-    E.append(label_box('Remark R1 — Universal Structure vs. Universe-Contingent Parameters', [
+    E.append(label_box('Remark R1 — Universal Structure vs. Instantiation-Contingent Parameters', [
         'Universal (invariant across all instantiations): AX-B1 (binary distinction — logical, not physical). MP-1 (methodological commitment). T0 (p=2 derived). T1, T2, T3, T5, C1, C2, C3 (all topological results). Structural role of &#949;<sub>0</sub>.',
         'Instantiation-contingent (varies with the chosen cutoff): the finest accessible rung v of D5 and its real-valued threshold 2<super>&#8722;v</super>. This is a choice of normalisation, not a physical constant, and &#949;<sub>0</sub>, a point named by its rung, is not dimensionful.',
         'The topological and algebraic results of this document hold for any instantiation satisfying AX-B1 and MP-1 — they are not specific to our universe.',
@@ -168,7 +168,7 @@ def build():
          ['T3: Clopen gap at 0', 'Derived', 'ZP-E: grounds ontological claim about the Snap'],
          ['T5: Total disconnectedness', 'Derived', 'ZP-E: supports C3'],
          ['C3: Snap topologically irreversible', 'Derived — Corollary of T5', 'ZP-E: cross-framework irreversibility'],
-         ['&#949;<sub>0</sub> (D5)', 'Defined — contingent', 'ZP-E: Snap threshold; value depends on instantiation'],
+         ['&#949;<sub>0</sub> (D5)', 'Defined — relative to a chosen rung v', 'ZP-E: Snap threshold; the rung v and its threshold 2<super>&#8722;v</super> depend on the chosen cutoff'],
          ['R1: Universal vs. contingent', 'Remark', 'ZP-E: framework is instantiation-independent']],
         [1.6*inch, 1.8*inch, 3.1*inch]
     ))
@@ -188,7 +188,7 @@ def build():
          ['T3: Clopen gap at 0', 'Valid — Derived from D1 and D2'],
          ['T5: Q<sub>2</sub> totally disconnected', 'Valid — Derived from T2; proven before C3'],
          ['C3: Snap topologically irreversible', 'Valid — Corollary of T5; reclassified from Theorem T4'],
-         ['D5: &#949;<sub>0</sub>', 'Valid — Defined; structural role universal; value contingent'],
+         ['D5: &#949;<sub>0</sub>', 'Valid — Defined; structural role universal; the rung v and its threshold 2<super>&#8722;v</super> contingent'],
          ['R1', 'Valid — Remark; ontological scope clarified']],
         [2.5*inch, 4.0*inch]
     ))

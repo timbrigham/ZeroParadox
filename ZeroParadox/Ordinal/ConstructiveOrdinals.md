@@ -58,6 +58,25 @@ defined in `ZeroParadox/Category/ChoiceCannotBe.md`. Searched
 notation systems were surveyed 2026-08-02 in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`. The
 crossing into `Ordinal`, `e0Repr`, carries choice. The current state is in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 
+The item was checked against two carriers of MaxWellApexLab/OrdinalAnalysis at commit
+`87baec70db931cda0df00167d68bd16defb4f7bf` (namespace `OrdinalAnalysis`, paths under `OrdinalAnalysis/Ordinal/`,
+each declaration re-read at that commit 2026-10-17). They are its two poles, and neither is the derived reading:
+
+* **Set.** `ThetaNote` (`Theta/Basic.lean` line 482), the one-level ϑ notation of Freund, arXiv:2204.09321,
+  Definition 3.1, is well-founded (`ThetaNote.wellFoundedLT`, `Theta/WellFounded.lean` line 315). Its
+  `omegaPow` fixes exactly the principal terms (`ThetaNote.omegaPow_eq_self_iff`, `Theta/Arith.lean` line 878), and
+  the direction making a principal term fixed is the normal-form convention itself: it is
+  `ThetaTerm.ofList_singleton_prin` (`Theta/Arith.lean` line 57), `ofList [x] = x` for principal `x`, proved by
+  `simp [ofList, h]` from `ofList`'s defining clause. The fixed point is set, not derived.
+* **Derived, choice in the statement.** `Gamma0Note`, the Veblen normal forms below Γ₀ (`Veblen/Gamma0Note.lean`
+  line 177), is well-founded (`Gamma0Note.lt_wf`, line 229), and its fixed point is derived:
+  `Gamma0Note.omegaPow_epsilonNote` (`Veblen/Epsilon.lean` line 75) is proved through `repr` into Mathlib's `Ordinal`,
+  and `Gamma0Note.epsilonNote_zero_repr` (line 44) states `repr (epsilonNote 0) = Ordinal.epsilon 0`. Its order is defined
+  through `repr` (`Veblen/Gamma0Note.lean` line 201), so `Classical.choice` is carried by its statements, as on
+  `Ordinal`.
+
+It does not close the item: the first carrier's fixed point is set, and the second carrier's statements carry choice.
+
 Two further corrections. `Ordinal` itself is `[propext, Quot.sound]` — **choice is not in the
 type**; it enters through `Ordinal.instLinearOrder`, `nfp`, `omega0`, `epsilon`. And a choice-free result *about the ascent* is
 suggestive for the ε₀ results without being a re-proof of them.
@@ -75,7 +94,7 @@ is carried by its own statement (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom f
 This is the snap *from below* (ε₀ is the unreachable fixed point). On `ONote` the matching
 *minimality* ("ε₀ is the LEAST fixed point") cannot be stated, because it quantifies over the limit,
 which no notation names (`tower_no_upper_bound`; across the crossing, `repr_lt_epsilon0`). Leastness is proved on `Ordinal` (`epsilon0_min_eq_max`, with choice); a
-choice-free proof of it on a well-founded carrier was not located as of 2026-10-08. The other carriers
+choice-free proof of it on a well-founded carrier is part of the open item under Result above. The other carriers
 are in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.
 
 ## Prior art
@@ -108,6 +127,9 @@ Read from the arXiv v2 PDF:
   `2308dc82dca10c8bfc04030974b5e506f710783e`, `BrouwerTree/Arithmetic/Properties.agda` line 811)
   states `ε₀≡ω^ε₀ : ε₀ ≡ ω^ ε₀`, and the proof of Theorem 22 (p. 26) uses ε₀ = ω^ε₀; a leastness
   lemma was not located there (`ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint).
+
+Two Lean carriers of MaxWellApexLab/OrdinalAnalysis, `ThetaNote` and `Gamma0Note`, are named against the open
+item under Result above.
 
 The Coq precedent on the same carrier is Castéran and Contejean's *hydra-battles*; its credit, including
 the comparator and the order construction, is in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`

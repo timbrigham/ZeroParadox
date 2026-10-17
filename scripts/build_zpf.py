@@ -1,11 +1,11 @@
 """
-Build ZP-F: The Counterexamples (v1.13)
+Build ZP-F: The Counterexamples (v1.14)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -227,8 +227,8 @@ def build():
         'has no first step, as in &#8477;\'s field order, since between 0 and any nonzero a lies an '
         'element of strictly smaller nonzero norm; that holds in every nontrivially normed field, '
         '&#8477;\'s norm preorder included (the &#167; ROLE example stating it for every such field). '
-        'Globally the order does: Q&#8322;\'s norm preorder is not dense, since its nonzero norms are '
-        'the integer powers of 2 (Padic.padicNormE.image) and so 2 is covered by 1, its norms being '
+        'Globally the order does: Q&#8322;\'s norm preorder is not dense, since every nonzero norm is '
+        'an integer power of 2 (Padic.padicNormE.image) and so 2 is covered by 1, its norms being '
         '1/2 and 1 (the &#167; ROLE example stating that cover), while &#8477; is densely ordered in '
         'its field order and in its norm preorder alike (the &#167; ROLE example stating both). In '
         'the standard terms this is a discrete group of norm values against a dense one; Mathlib\'s '
@@ -293,12 +293,12 @@ def build():
             'of this document or ZP-L.)',
             'The tower images cnfToZp2(towerNONote n) converge to 0 in &#8484;&#8322; '
             'as n &#8594; &#8734; (proved in ZP-L), and &#949;&#8320; is the minimal '
-            'snap threshold in the ordinal setting (proved in ZP-L). The structural '
-            'identification of these two results &#8212; that &#8484;&#8322;\'s limit at 0 '
-            'and the ordinal threshold at &#949;&#8320; reflect the same boundary &#8212; '
-            'is a co-witness, not an identity (cnf_bridge_type_boundary, '
-            'ZeroParadox/Ordinal/CnfBridge.lean): cnfToZp2 maps the &#969;-tower into '
-            '&#8484;&#8322;. &#949;&#8320; &#8800; 0, with 0 the ordinal zero, is a theorem in the '
+            'snap threshold in the ordinal setting (proved in ZP-L). cnf_bridge_type_boundary '
+            '(ZeroParadox/Ordinal/CnfBridge.lean) states the two in one conjunction, as co-witnesses '
+            'and not as an identity: &#949;&#8320; is the least fixed point of &#945; &#8614; '
+            '&#969;^&#945; at or above the bottom of the ordinals, and the images of the same tower '
+            'converge to the 2-adic 0. cnfToZp2 maps the &#969;-tower into &#8484;&#8322;. '
+            '&#949;&#8320; &#8800; 0, with 0 the ordinal zero, is a theorem in the '
             'ordinals (epsilon0_ne_zero). An equation between &#949;&#8320; and the 2-adic 0 does '
             'not type-check, with no coercion between the ordinals and &#8484;&#8322; in either '
             'direction; a Lean guard in that file detects the failure (MC-1 / ZP-P). Under cnfToZp2 the 2-adic 0 is '

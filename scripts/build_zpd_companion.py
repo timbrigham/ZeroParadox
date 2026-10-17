@@ -1,5 +1,5 @@
 """
-Build ZP-D Illustrated Companion (v1.16)
+Build ZP-D Illustrated Companion (v1.17)
 """
 
 import os
@@ -88,7 +88,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -228,12 +228,11 @@ def build():
     # ── Key results ────────────────────────────────────────────────────────────
     E.append(key_result_box('Key Result: T Exists and is Unique up to Rotation (T2, T3)',
         'T can be explicitly constructed by basis assignment (T2). At one level k it is unique up to a '
-        'rotation of the basis (T3) — meaning any two valid T operators at the same level both send '
-        '0 to e₀ and the fixed ε₀ to e₁ (D2(i), D2(ii)), and differ only by a rotation of the remaining '
-        'directions. This is called unitary '
-        'equivalence: like choosing different compass orientations for a map, the underlying '
-        'geometry is the same. Two maps that agree on distances but point north differently '
-        'are equivalent in all the ways that matter.'))
+        'unitary transformation of H (T3). Every valid T sends 0 to e₀ and the fixed ε₀ to e₁, because '
+        'D2(i) and D2(ii) require it, so the unitary relating two valid T operators at the same level '
+        'leaves e₀ and e₁ where they are and can only rotate the remaining directions. This is called '
+        'unitary equivalence: like a wheel turned on a fixed axle, the axle stays put and only the rest '
+        'turns, and every distance and angle is unchanged.'))
     E.append(sp(4))
     E.append(cbody(
         '<b>R3 — T respects the topology:</b> A map between topological spaces can introduce '

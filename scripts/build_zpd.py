@@ -1,11 +1,11 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.18)
+Build ZP-D: State Layer (Hilbert Space) (v1.19)
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -42,7 +42,7 @@ def build():
         'T3: Clopen gap at 0.',
         'T5: Q<sub>2</sub> is totally disconnected.',
         'C3: Snap is topologically irreversible (corollary of T5).',
-        '&#949;<sub>0</sub>: Minimum viable deviation, universe-contingent parameter (D5).',
+        '&#949;<sub>0</sub>: Minimum viable deviation, a point of Q<sub>2</sub> at a chosen finest rung v; the rung and its threshold 2<super>&#8722;v</super> are a normalisation (D5).',
     ]))
 
     E.append(Paragraph('II. The Hilbert Space State Layer', S['h1']))
