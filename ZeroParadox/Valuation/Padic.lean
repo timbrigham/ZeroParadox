@@ -351,9 +351,9 @@ leaves nothing else — a restriction this paragraph does not make. *(Corrected 
 implication called incomparable thirteen lines below in this same docstring. It survived because the
 fix that introduced it changed the ADJECTIVE — "non-Archimedean" → "ultrametric" — and left the claim
 wrapped around it standing.)* (An earlier revision of this
-paragraph asserted the biconditional "possible if and only if non-Archimedean". The direction that
-fails is **non-Archimedean ⟹ a first step exists**: ℚ₂ removes the density obstruction but supplies
-no closest nonzero element, so it does not yield the step.)
+paragraph asserted the biconditional "possible if and only if non-Archimedean". The direction that fails is
+**non-Archimedean ⟹ a first step exists**: ℚ₂ carries no order instance, and under its norm preorder its 0 has
+no first step, as in every nontrivially normed field, while that preorder is globally not dense (§ ROLE of `ZeroParadox/BottomCannotBe.lean`).)
 
 **What the converse actually is — and it is not about Archimedean-ness.** `f_snap_impossible`
 (`ZeroParadox/Reals/OrderedField.lean` — a declaration name is self-locating, so **no line number**;
