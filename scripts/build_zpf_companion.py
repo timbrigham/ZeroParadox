@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.16 | May 2026
+Version 1.17 | May 2026
 """
 
 import os, math
@@ -107,7 +107,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -427,15 +427,22 @@ def build():
         '&#8477;; in the ordinal case, &#949;&#8320; has no immediate predecessor in the '
         'ordinals. Each is a point approached by a limit and not reached in finitely many '
         'steps from one side. These are two limit-type conditions in two different '
-        'structures, not one boundary. What is proved pairs the ordinal side with &#8484;&#8322;, '
-        'not with &#8477;, and as co-witnesses, not as an identity: &#949;&#8320; is the least '
-        'fixed point of &#945; &#8614; &#969;^&#945; in the ordinals, and the 2-adic images of '
-        'the &#969;-tower converge to the 2-adic 0 (cnf_bridge_type_boundary); an equation '
-        'between &#949;&#8320; and the 2-adic 0 does not type-check.'))
+        'structures, not one boundary. What is proved (cnf_bridge_type_boundary) pairs a '
+        'different face of &#949;&#8320;, its least-fixed-point face, with &#8484;&#8322;, the '
+        '2-adic integers inside Q&#8322;, and as co-witnesses, not as an identity: &#949;&#8320; is '
+        'the least fixed point of &#945; &#8614; &#969;^&#945; in the ordinals, and the 2-adic '
+        'images of the tower stages 0, 1, &#969;, &#969;^&#969;, &#8230; converge to the 2-adic 0. '
+        '&#949;&#8320; is at once that least fixed point and the supremum of those stages '
+        '(epsilon0_min_eq_max). Read through the 2-adic norm, the same convergence is the norms '
+        'tending to 0 of &#8477; (the norm-chart example in ZeroParadox/Ordinal/CnfBridge.lean '
+        '&#167; VI); there &#8477; holds the norm values, a different role from &#8477; in the '
+        'density argument. An equation between &#949;&#8320; and the 2-adic 0 does not type-check.'))
     E.append(cbody(
         'Neither condition is needed for the snap itself. In the two-state carrier '
         'MachinePhase, T-SNAP holds (t_snap_derived), and the landing c&#8321; covers '
-        'c&#8320;, the bottom of MachinePhase, so the landing has an immediate predecessor '
+        'c&#8320;, the bottom of MachinePhase (the MachinePhase example in '
+        'ZeroParadox/Order/Snap.lean stating that c&#8321; covers &#8869; of MachinePhase), '
+        'so the landing has an immediate predecessor '
         'and no limit is involved on either side. What the density argument shows is '
         'narrower: a dense order has no first step at any element '
         '(axb1_fails_everywhere_iff_dense), so it cannot meet AX-B1\'s commitment.'))
@@ -462,8 +469,9 @@ def build():
         '(like &#8477;, which is densely ordered, so zero has no first step) '
         'and non-Archimedean ones (&#8474;<sub>p</sub>, where the p-adic valuation assigns '
         'zero infinite valuation while every non-zero element has finite valuation). '
-        'Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
-        'the minimum prime compatible with binary existence. '
+        'Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2. ZP-B\'s Theorem T0 fixes '
+        'that prime from binary existence (AX-B1) together with a minimality principle (MP-1), the '
+        'design choice to use the smallest base that encodes the two states. '
         'That zero\'s valuation is +&#8734; is set by definition, not produced by the '
         'completion; what holds in Q&#8322; is that zero alone has it (padic_addVal_eq_top_iff). '
         'The framework did not choose unusual mathematics for its own sake. '
