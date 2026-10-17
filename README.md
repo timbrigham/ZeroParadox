@@ -83,7 +83,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.26 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.19 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
 | [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.55 | The bridge: the snap assembled as a derived theorem across the layers. |
-| [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.17 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
+| [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.18 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.23 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.27 | The categorical bridge: the snap holding under all four domain functors. |
 | [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.7 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
