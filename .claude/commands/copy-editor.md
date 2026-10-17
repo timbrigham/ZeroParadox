@@ -4,6 +4,8 @@
 
 Read `$ARGUMENTS` to determine the two states and the references, then spawn three Agents using the Agent tool with `subagent_type` omitted (general-purpose). Pass the prompt below verbatim to each, substituting `ARGUMENTS_VALUE` for the actual value of `$ARGUMENTS`. None of them may have knowledge of the current session, or of each other.
 
+⛔ **Never ask the readers to choose a name, a tag or an id, and never add one to a prompt.** Each reader COMPUTES its own suffix by running a command (Stage 1, below the marker), so the three prompts stay byte-identical and nothing in them differs. Why: on 2026-10-16 three readers told to choose a random tag produced `k7q2xm` twice, and only an OS file lock on the second write caught the collision.
+
 ---
 
 ## CALLER PRE-FLIGHT — this is the CARRIER's job, not the copy editor's
@@ -131,11 +133,20 @@ That is this project's most persistent defect shape: measuring the thing *next t
 
 ## Stage 1 — read all three inputs before judging anything
 
-⭐ **First, take your READING.** You do not record, and the carrier cannot know which bytes you read
+⛔ **Before you write anything, COMPUTE your suffix. Never choose one.** Run:
+
+    python -c "import hashlib,os,time;print(hashlib.sha256(f'{time.time_ns()}-{os.getpid()}'.encode()).hexdigest()[:12])"
+
+It prints 12 hexadecimal characters, a hash of the clock in nanoseconds and the process id. That
+output is your `<suffix>`. Name your scratch folder `copy_editor_reader_<suffix>` (inside the session
+scratchpad) and your findings note `copy_editor_<YYYY-MM-DD>_reader<suffix>.md`, and report the suffix
+in your output.
+
+⭐ **Then take your READING.** You do not record, and the carrier cannot know which bytes you read
 unless you hand them over. Before you open any repo file you will judge, in the checkout you will
 read it from:
 
-    python tools/verify/record.py --observe <every repo-relative path you will read> > <SCRATCHPAD>\observed_copy_editor_reader<N>.json
+    python tools/verify/record.py --observe <every repo-relative path you will read> > <SCRATCHPAD>\copy_editor_reader_<suffix>\observed_copy_editor_reader<suffix>.json
 
 then open that file whole and copy its JSON object, `{path: git blob id}`, into your report under
 `### Reading`. Exit 2 means some path has no reading (`NO READING: <path>` on stderr): say which.
@@ -201,6 +212,7 @@ Tag every finding **VERIFIED** (you re-ran it — name what you ran and quote wh
 
 ```
 ## Copy Editor Review — YYYY-MM-DD   (1 of 3, independent)
+### Reader suffix: <the 12 hex characters the Stage 1 command printed>
 ### Round: N (from gate_round.py show — NOT bumped)
 ### Inputs: bedrock-clean <sha> · editorial branch <name> · references <source>
 ### Reading: <the JSON object `record.py --observe` printed, verbatim>
