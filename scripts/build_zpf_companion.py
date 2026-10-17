@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.18 | May 2026
+Version 1.19 | May 2026
 """
 
 import os, math
@@ -107,7 +107,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -428,10 +428,10 @@ def build():
         'ordinals. Each is a point approached by a limit and not reached in finitely many '
         'steps from one side. These are two limit-type conditions in two different '
         'structures, not one boundary. What is proved (cnf_bridge_type_boundary) pairs a '
-        'different face of &#949;&#8320;, its least-fixed-point face, with &#8484;&#8322;, the '
+        'face of &#949;&#8320; other than that limit one, its least-fixed-point face, with &#8484;&#8322;, the '
         '2-adic integers inside Q&#8322;, and as co-witnesses, not as an identity: &#949;&#8320; is '
         'the least fixed point of &#945; &#8614; &#969;^&#945; in the ordinals, and the 2-adic '
-        'images of the same tower, from its first stages 0, 1, &#969;, &#969;^&#969;, &#8230;, converge to the 2-adic 0. '
+        'images (cnfToZp2) of the same tower\'s codes, from its first stages 0, 1, &#969;, &#969;^&#969;, &#8230;, converge to the 2-adic 0. '
         '&#949;&#8320; is at once that least fixed point and the supremum of those stages '
         '(epsilon0_min_eq_max). Read through the 2-adic norm, the same convergence is the 2-adic '
         'norms of the images tending to 0 in &#8477; (the norm-chart example in ZeroParadox/Ordinal/CnfBridge.lean '

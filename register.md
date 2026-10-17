@@ -5,8 +5,8 @@ Update this file first on any version bump. README.md Framework table is verifie
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
 | ZP-A Lattice Algebra | v1.32 | ZP-A_Lattice_Algebra.pdf | v1.12 | N/— | formal:9f668734 comp:aa71c65d |
-| ZP-B p-Adic Topology | v1.24 | ZP-B_pAdic_Topology.pdf | v1.19 | N/— | formal:f80f7ee9 comp:f05e8a0b |
-| ZP-F The Counterexamples | v1.18 | ZP-F_The_Counterexamples.pdf | v1.18 | N/— | formal:c011bb72 comp:f82b4942 |
+| ZP-B p-Adic Topology | v1.25 | ZP-B_pAdic_Topology.pdf | v1.20 | N/— | formal:ae24967f comp:327a4ff6 |
+| ZP-F The Counterexamples | v1.19 | ZP-F_The_Counterexamples.pdf | v1.19 | N/— | formal:37f59dc9 comp:dee59dce |
 | ZP-C Information Theory | v1.26 | ZP-C_Information_Theory.pdf | v2.11 | N/— | formal:7ba26d82 comp:51d4a5bc |
 | ZP-D State Layer | v1.19 | ZP-D_State_Layer.pdf | v1.18 | N/— | formal:339590dd comp:6be72c57 |
 | ZP-E Bridge Document | v3.55 | ZP-E_Bridge_Document.pdf | v1.27 | Y/Y | formal:c77af4ec comp:3a25f240 |

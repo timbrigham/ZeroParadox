@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1923,
-        "files": 165
+        "declarations": 1925,
+        "files": 166
       },
       "entries": [
         {
@@ -9121,6 +9121,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1d886ddf-b5c7-41a0-b0eb-33306c7122b1",
+          "new": {
+            "file": "ZeroParadox/Valuation/Padic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t0_mp1_faithful_nonredundant",
+            "short": "t0_mp1_faithful_nonredundant"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Padic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t0_mp1_faithful_nonredundant",
+            "short": "t0_mp1_faithful_nonredundant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ZP-B T0: MP-1 stated as hypotheses, two readings (2026-10-17)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -45168,6 +45205,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a321aa28-106c-49a3-8f8b-3f2d0cd04bd7",
+          "new": {
+            "file": "ZeroParadox/Valuation/Padic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.t0_mp1_least_prime",
+            "short": "t0_mp1_least_prime"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/Padic.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.t0_mp1_least_prime",
+            "short": "t0_mp1_least_prime",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ZP-B T0: MP-1 stated as hypotheses, two readings (2026-10-17)",
           "verify": {
             "axioms": null,
             "sorry_free": true
