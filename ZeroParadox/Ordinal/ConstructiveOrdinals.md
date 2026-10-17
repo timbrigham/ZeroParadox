@@ -50,11 +50,10 @@ across the crossing every notation denotes below ε₀ (`repr_lt_epsilon0`,
 (`e0OmegaPow_top`, proved by `rfl`), on an order that is not well-founded (the `example` stating
 `¬ WellFoundedLT E0Note`). The **derived** one is open: a well-founded Lean carrier on which
 ε₀'s fixed point is derived, leastness included, with no `Classical.choice` in the `#print axioms` of
-those declarations, is not located as of 2026-10-08. The qualifier binds the carrier's order as well
-as the derivation: the `Ordinal` type is choice-free (below), and its order is not, so a statement
-mentioning that order carries `Classical.choice` however it is proved (`order_footprint_le` against
-`order_footprint_eq`, `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` § III). Leastness is proved on
-`Ordinal` with choice (`epsilon0_min_eq_max`), and no re-proof there can drop it. Searched
+those declarations, is not located as of 2026-10-08. Leastness is proved on `Ordinal` with choice
+(`epsilon0_min_eq_max`); how such a footprint splits between a statement as written and its proof is
+measured in `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` § III, with the STATEMENT-CARRIED bin
+defined in `ZeroParadox/Category/ChoiceCannotBe.md`. Searched
 2026-10-08: `ZeroParadox/**/*.lean` for `WellFounded`, `IsWellOrder` and `Acc`; the Mathlib pin's
 notation systems were surveyed 2026-08-02 in `ZeroParadox/Ordinal/SnapNucleusConstructive.md`. The
 crossing into `Ordinal`, `e0Repr`, carries choice. The current state is in `ZeroParadox/Ordinal/SnapNucleus.md` § Axiom footprint.

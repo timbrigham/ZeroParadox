@@ -400,13 +400,13 @@ def build():
          'One is the absence of structure. The other is structure all the way down.']))
     E.append(sp(8))
 
-    # ── VIII. Two Approaches to the Same Boundary ────────────────────────────────
-    E.append(Paragraph('VIII. Two Approaches to the Same Boundary', CS['h1']))
+    # ── VIII. Two Limit Conditions, Side by Side ─────────────────────────────────
+    E.append(Paragraph('VIII. Two Limit Conditions, Side by Side', CS['h1']))
     E.append(cbody(
-        'The density argument and the ordinal threshold argument feel like two separate '
-        'observations &#8212; one about why the snap fails in &#8477;, one about where '
-        'it succeeds. But they are approaching the same boundary from opposite directions, '
-        'and that is not a coincidence.'))
+        'The density argument and the ordinal threshold argument are two separate '
+        'observations &#8212; one about why the snap fails in &#8477;, one about how '
+        '&#949;&#8320; of Ordinal is reached. Read side by side they share a shape, and the '
+        'shared shape is an analogy, not a proved identification.'))
     E.append(cbody(
         'From the field side: density shows there is no smallest positive element in &#8477;. '
         'For any candidate first step &#949; > 0, the value &#949;/2 is smaller '
@@ -423,25 +423,22 @@ def build():
         '&#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230; &#8212; approachable from below '
         'by finite iteration, but not reachable in any finite number of steps.'))
     E.append(cbody(
-        'Both conditions describe the same structure from opposite sides. In the field '
-        'case, zero has no smallest positive neighbour in &#8477; &#8212; density fills '
-        'the gap above zero completely. In the ordinal case, &#949;&#8320; has no immediate '
-        'predecessor in the ordinals &#8212; no &#945; with &#945; + 1 = &#949;&#8320; exists. '
-        'The snap is the meeting point &#8212; the boundary both sides are approaching.'))
+        'The shared shape: in the field case, zero has no smallest positive neighbour in '
+        '&#8477;; in the ordinal case, &#949;&#8320; has no immediate predecessor in the '
+        'ordinals. Each is a point approached by a limit and not reached in finitely many '
+        'steps from one side. These are two limit-type conditions in two different '
+        'structures, not one boundary. What is proved pairs them as co-witnesses, not as an '
+        'identity: &#949;&#8320; is the least fixed point of &#945; &#8614; &#969;^&#945; '
+        'in the ordinals, and the 2-adic images of the &#969;-tower converge to the 2-adic 0 '
+        '(cnf_bridge_type_boundary); an equation between &#949;&#8320; and the 2-adic 0 does '
+        'not type-check.'))
     E.append(cbody(
-        'This is why the snap cannot be located by looking in just one direction. '
-        'From inside the real numbers, you can see that density blocks something, '
-        'but you cannot see &#949;&#8320; directly. From inside the ordinals, you '
-        'can see the limit ordinal structure, but not the 2-adic topology. Neither '
-        'framework alone is enough. The snap is precisely the point where each '
-        'framework runs out of its own descriptive reach &#8212; which means you need '
-        'both frameworks, approaching from their respective directions, to pin it down.'))
-    E.append(cbody(
-        'Mathematicians call this pattern the squeeze &#8212; the same idea behind the '
-        'squeeze theorem in calculus, where two functions approaching a limit from above '
-        'and below force the middle to the same point. Here the squeeze is not an optional '
-        'proof technique. It is the only way to locate the snap, because the snap is '
-        'the point where each framework runs out of its own descriptive reach.'))
+        'Neither condition is needed for the snap itself. In the two-state carrier '
+        'MachinePhase, T-SNAP holds (t_snap_derived), and the landing c&#8321; covers '
+        'c&#8320;, the bottom of MachinePhase, so the landing has an immediate predecessor '
+        'and no limit is involved on either side. What the density argument shows is '
+        'narrower: a dense order has no first step at any element '
+        '(axb1_fails_everywhere_iff_dense), so it cannot meet AX-B1\'s commitment.'))
     E.append(sp(8))
 
     # ── Closing ─────────────────────────────────────────────────────────────────

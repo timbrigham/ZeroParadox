@@ -132,10 +132,10 @@ theorem comparable_of_classical :
 
 /-! ## § III — Why this is stated about `InitialSeg` and not about `Ordinal`
 
-The taboo above deliberately never mentions `Ordinal`'s `≤`. It cannot: **`Classical.choice` sits
-in the `Ordinal.partialOrder` instance term itself**, so every statement mentioning that order
-inherits it no matter how the statement is proved. `order_footprint_le` / `order_footprint_eq` below are the
-demonstration — `a ≤ a`, proved by `le_refl`, carries `Classical.choice`, while `a = a` does not.
+The taboo above deliberately never mentions `Ordinal`'s `≤` through its instance: **`Classical.choice` sits
+in the `Ordinal.partialOrder` instance term itself**, so every statement written through that instance term
+inherits it, however the statement is proved; the bare-relation respelling below does not. `order_footprint_le` /
+`order_footprint_eq` below are the demonstration — `a ≤ a`, proved by `le_refl`, carries `Classical.choice`, while `a = a` does not.
 
 Traced to source, three independent classical entry points feed that instance:
 
@@ -195,7 +195,7 @@ example (H : ∀ (α β : Type) (r : α → α → Prop) (s : β → β → Prop
 
 -- `Statement:` the same totality respelled over the bare `le` relation of `Ordinal.partialOrder`
 -- (no instance term) is, by `rfl`, the proposition `∀ a b : Ordinal.{0}, a ≤ b ∨ b ≤ a`.
--- Reading: "every statement mentioning that order inherits it" above is about the TERM AS WRITTEN;
+-- Reading: "written through that instance term" above is about the TERM AS WRITTEN;
 -- this respelling's own statement measures `[propext, Quot.sound]` (statement control, 2026-10-08).
 example : let ordLe : Ordinal.{0} → Ordinal.{0} → Prop := fun a b =>
       (Quotient.liftOn₂ a b (fun ⟨_, r, _⟩ ⟨_, s, _⟩ => Nonempty (r ≼i s))
