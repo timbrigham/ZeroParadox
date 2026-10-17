@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.56 | October 2026
+Version 3.57 | October 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.56'
+VERSION = '3.57'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -591,7 +591,9 @@ def build():
            'each instantiation carries its own ⊥.'),
         li('ZP-B R1 (Universal Structure vs. Instantiation-Contingent Parameters) keeps the structural role of ε<sub>0</sub> of '
            'Q<sub>2</sub> universal; what is contingent per instantiation is the rung v of ZP-B D5 and its threshold '
-           '2<super>&#8722;v</super>. Whether ⊥ is contingent per instantiation is not addressed in ZP-A through ZP-D.'),
+           '2<super>&#8722;v</super>. R1 keeps AX-B1, whose 0 is ⊥ of the ZP-A semilattice, universal as structure; '
+           'whether the occupant of that ⊥ role is shared across instantiations or carried per instantiation is not '
+           'addressed in ZP-A through ZP-D.'),
         li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Every "fires" below narrates the commitment that instantiation occurs, not a consequence of the theorem.'),
         li('Whether T-SNAP&#8217;s shape applies at the terminal state of instantiation I<sub>n</sub>, read as the '
            'starting ⊥ of I<sub>n+1</sub>. That needs the terminal state connected to a ⊥ role-occupant. DA-2 provides '
