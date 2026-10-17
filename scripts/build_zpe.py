@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.59 | October 2026
+Version 3.60 | October 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.59'
+VERSION = '3.60'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -584,7 +584,7 @@ def build():
 
     E.append(Paragraph('I. The Gap DA-2 Closes', S['h2']))
     E.append(body('Given the premises stated under Premises of T-SNAP (DA-1 insert, &#167; V), DA-1 and T-SNAP give the Binary Snap on reaching P<sub>0</sub> '
-                  'within an instantiation. Three questions remain open after DA-1:'))
+                  'within an instantiation. After DA-1 the CC-1 and terminal-state questions remain open; ZP-B R1&#8217;s scope and the occurrence fence stand beside them:'))
     E += [
         li('CC-1 (ZP-A) posits S<sub>0</sub> = ⊥ — not derivable from A1–A4 alone (ZP-J restates it as '
            'an equivalence with starting at a Quine atom, cc1_derived and t_exec_iff, and does not force it). This leaves open whether ⊥ is unique across all instantiations or whether '
