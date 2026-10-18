@@ -56,7 +56,8 @@ example {α : Type} (f : α → α) : IsIdempotentElem (show Function.End α fro
 /-! ### § I. The switches -/
 -- Reading (cited, not claimed): UP beside OVER has the shape of rewriting logic's split of equations
 -- from rules. "One step, then UP" from a landing is the canonical transition system (Meseguer,
--- "Generalized Rewrite Theories and Coherence Completion", Def. 8, p. 10) and the relation of
+-- "Generalized Rewrite Theories and Coherence Completion", Def. 8, p. 10; pages of the 28-page copy
+-- read, which prints no venue, year or report number) and the relation of
 -- R. Diaconescu, "Non-Deterministic Algebraic Rewriting as Adjunction", arXiv:2204.12133, Defs.
 -- 11–12, so Loop and Climb are properties of one canonical edge. Delta: in Meseguer UP is total, the
 -- normal form modulo the axioms B of a convergent equation system; in R. Diaconescu (Def. 11) it is a
@@ -64,7 +65,9 @@ example {α : Type} (f : α → α) : IsIdempotentElem (show Function.End α fro
 -- coherence (p. 11, with Theorem 4) for the canonical system to be faithful to the rules; the analogue
 -- in R. Diaconescu is β-coherence (Def. 12, a hypothesis of his Props. 5.1 and 5.5), to which he says
 -- the Maude literature's coherence conditions bear "some similarity" while playing "a different role"
--- (p. 26). Neither is imposed here; the switches have no located counterpart.
+-- (p. 26). Neither is imposed here. No counterpart of the switches was located in these two sources
+-- as of 2026-10-18 (UP is total in both; their text, searched for "partial", "loop" and "cycle", has
+-- no hit bearing on a switch); the dated search for the pair is in `LEAN_CUSTOM_REGISTRY.md`.
 -- Reading: the adjoined-points switch is a CHOICE OF CARRIER: `Option σ` adjoins one point and
 -- `Option (Option σ)` two (the `TriStep` example below). `Pointed` and `Bipointed` carry
 -- distinguished points, not adjoined ones, and `Bipointed`'s two may coincide.
@@ -409,16 +412,23 @@ example (u : ℤ_[2]ˣ) : PadicInt.valuation (u : ℤ_[2]) = 0 := by
 #check @ZeroParadox.Motion.stageClosure_of_run  -- Statement: and a run with no landing among its stages has the shape
 #check @ZeroParadox.Motion.StageClosure.isLanding_of_mem -- Statement: over a nonempty stage set, a defined closure is a landing
 #check @ZeroParadox.Motion.StageClosure.not_mem_of_mem -- Statement: over a nonempty stage set, a defined closure is not a stage
--- Statement: there the nonempty premise is redundant: `y ∈ S` supplies it.
+-- Statement: `not_mem_of_mem`'s nonempty premise is redundant: `y ∈ S` supplies it.
 example {α : Type} {M : ZeroParadox.Motion α} {S : Set α} {c : Part α} (h : M.StageClosure S c)
     {y : α} (hy : y ∈ c) : y ∉ S :=
   fun hyS => h.not_mem_of_mem ⟨y, hyS⟩ hy hyS
 #check @ZeroParadox.Motion.StageClosure.unique  -- Statement: a nonempty stage set has at most one closure
--- Statement: the nonempty premise of `isLanding_of_mem` and `unique` is needed: over the empty stage
--- set every value is a closure of every motion.
+-- Statement: over the empty stage set every value is a closure of every motion.
 example {α : Type} (M : ZeroParadox.Motion α) (c : Part α) : M.StageClosure ∅ c :=
   fun _ hs => absurd hs (Set.notMem_empty _)
--- Statement: among them a defined closure that is not a landing.
+-- Statement: so `unique` needs its nonempty premise: on any inhabited carrier, `Part.none` and
+-- `Part.some default` are two different closures of the empty stage set.
+example {α : Type} [Inhabited α] (M : ZeroParadox.Motion α) :
+    M.StageClosure ∅ Part.none ∧ M.StageClosure ∅ (Part.some default) ∧
+      (Part.none : Part α) ≠ Part.some default :=
+  ⟨fun _ hs => absurd hs (Set.notMem_empty _), fun _ hs => absurd hs (Set.notMem_empty _),
+    fun h => Part.notMem_none (default : α) (h ▸ Part.mem_some default)⟩
+-- Statement: and `isLanding_of_mem` needs it: on ℕ, a defined closure of the empty stage set that is
+-- not a landing.
 example : ∃ M : ZeroParadox.Motion ℕ, M.StageClosure ∅ (Part.some 1) ∧ ¬ M.IsLanding 1 :=
   ⟨⟨fun _ => Part.some 0, fun _ _ h => by rw [Part.mem_some_iff] at h ⊢; exact h, fun _ _ => False⟩,
     fun _ hs => absurd hs (Set.notMem_empty _), fun h => by simp [ZeroParadox.Motion.IsLanding] at h⟩
@@ -577,7 +587,7 @@ example : ∃ M : ZeroParadox.Motion Nat.Partrec.Code,
 #check @ZeroParadox.em_of_poleDiscriminator     -- Statement: a total test of definedness on `Part Unit` gives excluded middle
 #check @ZeroParadox.em_of_choiceFragment        -- Statement: the two-element choice fragment gives excluded middle
 #check @ZeroParadox.select_of_decidable         -- Statement: a decidable inhabited predicate on `Bool` has a witness computed by `if`
--- Statement: registering every motion ⇒ excluded middle (no axioms).
+-- Statement: registering every motion on a `Type` ⇒ excluded middle (no axioms).
 example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable) :
     ZeroParadox.ExcludedMiddle := by
   intro p
@@ -587,7 +597,7 @@ example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable)
   exact match d () with
     | isTrue hp => Or.inl hp
     | isFalse hn => Or.inr hn
--- Statement: the two-element choice fragment ⇒ every motion registered (`[propext, Quot.sound]`).
+-- Statement: the two-element choice fragment ⇒ every motion on a `Type` registered (`[propext, Quot.sound]`).
 example (h : ZeroParadox.ChoiceFragment) {α : Type} (M : ZeroParadox.Motion α) :
     M.RegisteredDecidable := by
   obtain ⟨ch, hch⟩ := h
@@ -605,7 +615,7 @@ example (h : ZeroParadox.ChoiceFragment) {α : Type} (M : ZeroParadox.Motion α)
     · exact h1
   · have : A = B := funext fun b => propext ⟨fun _ => Or.inr hp, fun _ => Or.inr hp⟩
     rw [this]
--- Statement: registering every motion ⇒ the two-element choice fragment (no axioms).
+-- Statement: registering every motion on a `Type` ⇒ the two-element choice fragment (no axioms).
 example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable) :
     ZeroParadox.ChoiceFragment := by
   let M : ZeroParadox.Motion (Bool → Prop) :=
@@ -620,9 +630,14 @@ example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable)
     · exact hb
     · exact absurd hb this
   · exact @of_decide_eq_true _ (d S) hS
--- Reading: so registering every motion and the two-element choice fragment are inter-derivable, and
--- each implies excluded middle; no arrow uses `Classical.choice`. On `Part Unit` the test is
--- inter-derivable with the fragment, both legs choice-free
--- (`ZeroParadox/Valuation/PoleRegistration.lean` § II).
+-- Statement: by the three `example`s above and `em_of_choiceFragment`, registration on a `Type` and
+-- the fragment are inter-derivable and each gives excluded middle, none of the four using
+-- `Classical.choice` (footprints: the glosses above; `ExcludedMiddleBridge.lean`'s PurityCheck);
+-- `Part Unit` form: `ZeroParadox/Valuation/PoleRegistration.lean` § II.
+-- Reading (cited, not claimed): an instance of "L X ≃ X + 1 iff the canonical map 2 → Ω is an
+-- equivalence iff excluded middle holds" (Escardó and Knapp, "Partial Elements and Recursion via
+-- Dominances in Univalent Type Theory", CSL 2017, LIPIcs 82, § 2.7, p. 21:6; T. de Jong,
+-- arXiv:2407.06952, Prop. 5.7, p. 13), read in Lean's `Prop`/`Type` split, where the data side is
+-- `Decidable`, equivalently the `Bool` choice fragment; an instance of theirs, not a generalization.
 
 end DieCannotBeIndex
