@@ -360,6 +360,16 @@ theorem registeredDecidable_of_classical : M.RegisteredDecidable := by
   classical
   exact ⟨fun _ => inferInstance⟩
 
+/-- `Statement:` if every motion on every `β : Type` has a decision of definedness, excluded middle
+    holds; the reduction runs on `Unit`, with UP defined exactly where `p` holds. -/
+theorem em_of_registeredDecidable (h : ∀ (β : Type) (M : Motion β), M.RegisteredDecidable) :
+    ∀ p : Prop, p ∨ ¬ p := by
+  intro p
+  obtain ⟨d⟩ := h Unit ⟨fun _ => Part.mk p (fun _ => ()), fun _ _ hy => hy, fun _ _ => False⟩
+  exact match d () with
+    | isTrue hp => Or.inl hp
+    | isFalse hn => Or.inr hn
+
 /-- `Statement:` a total motion on a `Primcodable` carrier has a computable test. -/
 theorem registeredComputable_of_upTotal [Primcodable α] (h : M.UpTotal) :
     M.RegisteredComputable :=
@@ -404,6 +414,28 @@ theorem selectedTotal_of_classical : M.SelectedTotal := by
   classical
   exact selectedTotal_of_selectedData (fun _ => inferInstance)
     ⟨fun _ ha => ⟨Classical.choose ha, Classical.choose_spec ha⟩⟩
+
+/-- `Statement:` if every motion on every `β : Type` has a data selector, excluded middle holds; the
+    reduction runs on `(Bool → Prop) × Bool`, with OVER `(S, _) → (S, b)` when `S b`, at the pair
+    `b = true ∨ p`, `b = false ∨ p`. -/
+theorem em_of_selectedData (h : ∀ (β : Type) (M : Motion β), M.SelectedData) :
+    ∀ p : Prop, p ∨ ¬ p := by
+  intro p
+  obtain ⟨g⟩ := h _ (ofTotal id (fun _ => rfl)
+    (fun x y : (Bool → Prop) × Bool => y.1 = x.1 ∧ x.1 y.2))
+  let pick : ∀ S : Bool → Prop, (∃ b, S b) → Bool := fun S hS =>
+    (g (S, true) (hS.elim fun b hb => ⟨(S, b), rfl, hb⟩)).1.2
+  have spec : ∀ (S : Bool → Prop) (hS : ∃ b, S b), S (pick S hS) := fun S hS =>
+    (g (S, true) (hS.elim fun b hb => ⟨(S, b), rfl, hb⟩)).2.2
+  have cong : ∀ (X Y : Bool → Prop) hX hY, X = Y → pick X hX = pick Y hY := by
+    intro X Y hX hY e; subst e; rfl
+  rcases spec (fun b => b = true ∨ p) ⟨true, Or.inl rfl⟩ with h1 | h1
+  · rcases spec (fun b => b = false ∨ p) ⟨false, Or.inl rfl⟩ with h2 | h2
+    · exact Or.inr fun hp => absurd (h1.symm.trans ((cong _ _ ⟨true, Or.inl rfl⟩
+        ⟨false, Or.inl rfl⟩ (funext fun b => propext ⟨fun _ => Or.inr hp, fun _ => Or.inr hp⟩)).trans
+        h2)) (by decide)
+    · exact Or.inl h2
+  · exact Or.inl h1
 
 /-- `Statement:` a step given by a function `f` (`step a b ↔ b = f a`) has the total selector `f`. -/
 theorem selectedTotal_of_fun (f : α → α) (h : ∀ a b, M.step a b ↔ b = f a) : M.SelectedTotal :=
@@ -486,6 +518,21 @@ theorem not_fanIn_of_injective (f : α → α) (hf : Function.Injective f)
     (h : ∀ a b, M.step a b ↔ b = f a) (y : α) : ¬ M.FanIn y :=
   fun ⟨a, b, hab, ha, hb⟩ => hab (hf (((h a y).1 ha).symm.trans ((h b y).1 hb)))
 
+/-- `Statement:` an involution `σ` with `step a b ↔ step (σ b) (σ a)` maps the points with no
+    predecessor (`M.reverse.NoStepAt`) one-to-one onto the points with no successor (`NoStepAt`). -/
+theorem bijOn_sources_sinks {σ : α → α} (hσ : Function.Involutive σ)
+    (hr : ∀ a b, M.step a b ↔ M.step (σ b) (σ a)) :
+    Set.BijOn σ {y | M.reverse.NoStepAt y} {y | M.NoStepAt y} := by
+  refine ⟨fun y hy b hb => hy (σ b) ?_, hσ.injective.injOn,
+    fun z hz => ⟨σ z, fun a ha => hz (σ a) ?_, hσ z⟩⟩
+  · show M.step (σ b) y
+    have h := (hr (σ b) y).2
+    rw [hσ b] at h
+    exact h hb
+  · have h := (hr a (σ z)).1 ha
+    rw [hσ z] at h
+    exact h
+
 /-- `Statement:` a value `z` of `up` is an `up`-preimage of itself. -/
 theorem mem_up_self_of_mem_up {x z : α} (h : z ∈ M.up x) : z ∈ M.up z :=
   M.up_idem x z h
@@ -544,6 +591,7 @@ open ZeroParadox
 #print axioms Motion.ofOption_registeredDecidable
 #print axioms Motion.registeredDecidable_of_registeredComputable
 #print axioms Motion.registeredDecidable_of_classical
+#print axioms Motion.em_of_registeredDecidable
 #print axioms Motion.registeredComputable_of_upTotal
 #print axioms Motion.ofOption_registeredComputable
 #print axioms Motion.SelectedData
@@ -551,6 +599,7 @@ open ZeroParadox
 #print axioms Motion.selectedData_of_selectedTotal
 #print axioms Motion.selectedTotal_of_selectedData
 #print axioms Motion.selectedTotal_of_classical
+#print axioms Motion.em_of_selectedData
 #print axioms Motion.selectedTotal_of_fun
 #print axioms Motion.selectedTotal_of_option
 #print axioms Motion.NoStepAt
@@ -565,6 +614,7 @@ open ZeroParadox
 #print axioms Motion.reverse_reverse
 #print axioms Motion.fanIn_iff_reverse
 #print axioms Motion.not_fanIn_of_injective
+#print axioms Motion.bijOn_sources_sinks
 #print axioms Motion.mem_up_self_of_mem_up
 
 end PurityCheck
