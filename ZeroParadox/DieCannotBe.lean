@@ -3,6 +3,11 @@ import ZeroParadox.Multihomed.BoundaryOrder
 import ZeroParadox.Order.Snap
 import ZeroParadox.Computability.GroundZero
 import ZeroParadox.Valuation.FloorWitness
+import ZeroParadox.Ordinal.Epsilon0LeastFP
+import ZeroParadox.Ordinal.Gentzen
+import ZeroParadox.Computability.Occurrence
+import ZeroParadox.Valuation.PoleRegistration
+import ZeroParadox.Valuation.PoleChartSelection
 import Mathlib.Data.NNReal.Basic
 import Mathlib.CategoryTheory.Category.Bipointed
 import Mathlib.Data.Fintype.Option
@@ -10,6 +15,7 @@ import Mathlib.Algebra.Group.End
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.Interval.Finset.Basic
 import Mathlib.Combinatorics.SimpleGraph.Hasse
+import Mathlib.Data.Seq.Computation
 
 set_option maxHeartbeats 400000
 
@@ -48,6 +54,15 @@ example {α : Type} (f : α → α) : IsIdempotentElem (show Function.End α fro
 #check @PFun                                    -- Statement: Mathlib, partial functions `α →. β`
 
 /-! ### § I. The switches -/
+-- Reading (cited, not claimed): UP beside OVER has the shape of rewriting logic's split of equations
+-- from rules. "One step, then UP" from a landing is the canonical transition system (Meseguer,
+-- "Generalized Rewrite Theories and Coherence Completion", 2018, Def. 8, p. 10) and the relation of
+-- Diaconescu, arXiv:2204.12133, Defs. 11–12, so Loop and Climb are properties of one canonical edge.
+-- Delta: in Meseguer UP is total, the normal form of a convergent equation system; in Diaconescu
+-- (Def. 11) it is a total homomorphism into a subset it fixes, with equations only in his Examples
+-- 8–9. Coherence (Meseguer, Theorem 4, p. 11; a hypothesis of Diaconescu's Props. 5.1 and 5.5) is
+-- required there for the canonical system to be faithful to the rules, and is not imposed here; the
+-- switches have no located counterpart.
 -- Reading: the adjoined-points switch is a CHOICE OF CARRIER: `Option σ` adjoins one point and
 -- `Option (Option σ)` two (the `TriStep` example below). `Pointed` and `Bipointed` carry
 -- distinguished points, not adjoined ones, and `Bipointed`'s two may coincide.
@@ -153,6 +168,10 @@ example : ∃ M : ZeroParadox.Motion ℕ, (∀ n, M.up n = if n % 2 = 0 then Par
     ⟨0, 1, by show 0 ∈ (if 0 % 2 = 0 then Part.some 0 else Part.none); rw [if_pos rfl]; exact Part.mem_some _,
       rfl, by show ¬ (if 1 % 2 = 0 then Part.some 1 else Part.none).Dom; rw [if_neg (by decide)]; exact id⟩⟩
 #check @ZeroParadox.Motion.not_overToUndefined_of_upTotal -- Statement: non-members: every total motion
+-- Reading: two corpus usages sit beside this name, and neither is claimed here: divergence read as the
+-- infinite pole (`ZeroParadox/Computability/Occurrence.lean`'s overview; `wfPart_stepCoalg`'s
+-- `Reading:` in `ZeroParadox/Computability/GroundZero.lean`, conjectural), and
+-- `ZeroParadox/Computability/Occurrence.lean` § IV-c's two-element pole {halted, loops-in-place}.
 
 /-! ### § III. The smallest step is DERIVED — unique successor, no way back ⇒ cover, one way -/
 #check @ZeroParadox.unique_succ_covBy           -- Statement: unique successor, no way back ⇒ a cover of the reachability preorder
@@ -176,6 +195,25 @@ example : let R : Fin 3 → Fin 3 → Prop := fun a b => (a = 0 ∧ b = 1) ∨ (
     (fun c hc => by
       rcases hc with ⟨-, h⟩ | ⟨h, -⟩ | ⟨h, -⟩ <;> first | exact h | exact absurd h (by decide))
     (fun h => absurd (back _ _ h rfl) (by decide))
+-- Statement: there `0 ⋖ 2` also holds, with no step `0 → 2`.
+example : let R : Fin 3 → Fin 3 → Prop := fun a b => (a = 0 ∧ b = 1) ∨ (a = 1 ∧ b = 2) ∨ (a = 2 ∧ b = 1)
+    @CovBy (Fin 3) (ZeroParadox.reachPreorder R).toLT 0 2 ∧ ¬ R 0 2 := by
+  intro R
+  have back : ∀ a b, Relation.ReflTransGen R a b → b = 0 → a = 0 := by
+    intro a b h
+    induction h with
+    | refl => exact id
+    | tail _ hcd _ =>
+      intro hd; subst hd
+      rcases hcd with ⟨-, h⟩ | ⟨-, h⟩ | ⟨-, h⟩ <;> exact absurd h (by decide)
+  have r02 : Relation.ReflTransGen R 0 2 := Relation.ReflTransGen.head (Or.inl ⟨rfl, rfl⟩)
+    (Relation.ReflTransGen.single (Or.inr (Or.inl ⟨rfl, rfl⟩)))
+  refine ⟨⟨⟨r02, fun h => absurd (back _ _ h rfl) (by decide)⟩, fun c h0c hc2 => ?_⟩, ?_⟩
+  · fin_cases c
+    · exact h0c.2 Relation.ReflTransGen.refl
+    · exact hc2.2 (Relation.ReflTransGen.single (Or.inr (Or.inr ⟨rfl, rfl⟩)))
+    · exact hc2.2 Relation.ReflTransGen.refl
+  · rintro (⟨-, h⟩ | ⟨h, -⟩ | ⟨h, -⟩) <;> exact absurd h (by decide)
 -- Statement: the converse fails: on `Fin 3` with `0 → 1` and `0 → 2`, `0 ⋖ 1` in the reachability
 -- preorder while `0` has two successors.
 example : let R : Fin 3 → Fin 3 → Prop := fun a b => (a = 0 ∧ b = 1) ∨ (a = 0 ∧ b = 2)
@@ -351,10 +389,215 @@ example : PadicInt.valuation (0 : ℤ_[2]) = 0 ∧ PadicInt.valuation (1 : ℤ_[
 example : PadicInt.valuation (0 : ℤ_[2]) = 0 ∧
     multiplicity_addValuation PadicInt.prime_p (0 : ℤ_[2]) = ⊤ :=
   ⟨PadicInt.valuation_zero, ZeroParadox.addVal_bot _⟩
+-- Statement: every unit of ℤ_[2] reads 0 under the ℕ-valued valuation.
+example (u : ℤ_[2]ˣ) : PadicInt.valuation (u : ℤ_[2]) = 0 := by
+  have h := PadicInt.valuation_mul u.ne_zero (u⁻¹).ne_zero
+  rw [Units.mul_inv, PadicInt.valuation_one] at h
+  omega
 
 /-! ### § VII. Runs, beside the die — commitments as hypotheses -/
 #check @ZeroParadox.t_snap_given                -- Statement: CC-1 `hcc1` and occurrence `hocc` as hypotheses
 #check @ZeroParadox.t_snap_given_cover          -- Statement: and the cover `hcov` as a third
 #check @ZeroParadox.tsnap_holds_but_nothing_moves -- Statement: the shape holds where nothing moves
+
+/-! ### § VIII. Stages and one shared closure — two faces, co-witnesses -/
+#check @ZeroParadox.Motion.StageClosure         -- Statement: no stage is a landing, and UP sends every stage to one value `c`, possibly undefined
+#check @ZeroParadox.Motion.UpStepInvariant      -- Statement: the premise form: UP unchanged along every step
+#check @ZeroParadox.Motion.up_run_const         -- Statement: UP unchanged along steps ⇒ UP constant along a run; one way
+#check @ZeroParadox.Motion.stageClosure_of_run  -- Statement: and a run with no landing among its stages has the shape
+#check @ZeroParadox.Motion.StageClosure.isLanding_of_mem -- Statement: over a nonempty stage set, a defined closure is a landing
+#check @ZeroParadox.Motion.StageClosure.not_mem_of_mem -- Statement: over a nonempty stage set, a defined closure is not a stage
+-- Statement: the premise is needed: over the empty stage set every value is a closure, here a
+-- non-landing.
+example : ∃ M : ZeroParadox.Motion ℕ, M.StageClosure ∅ (Part.some 1) ∧ ¬ M.IsLanding 1 :=
+  ⟨⟨fun _ => Part.some 0, fun _ _ h => by rw [Part.mem_some_iff] at h ⊢; exact h, fun _ _ => False⟩,
+    fun _ hs => absurd hs (Set.notMem_empty _), fun h => by simp [ZeroParadox.Motion.IsLanding] at h⟩
+#check @ZeroParadox.Motion.StageClosure.unique  -- Statement: a nonempty stage set has at most one closure
+#check @ZeroParadox.Motion.RunsClose            -- Statement: the derived form: every landing-free run has the shape, closure `up (s 0)`
+#check @ZeroParadox.Motion.runsClose_of_upStepInvariant -- Statement: premise form ⇒ derived form; one way
+-- Statement: the converse fails: on ℕ, UP rounds up to even and OVER adds one; no run is
+-- landing-free (of two consecutive stages one is even), so `RunsClose` holds, while UP changes
+-- along the step `2 → 3`.
+example :
+    (ZeroParadox.Motion.ofTotal (fun n : ℕ => n + n % 2)
+      (fun n => show (n + n % 2) + (n + n % 2) % 2 = n + n % 2 by omega)
+      (fun a b => b = a + 1)).RunsClose ∧
+    ¬ (ZeroParadox.Motion.ofTotal (fun n : ℕ => n + n % 2)
+      (fun n => show (n + n % 2) + (n + n % 2) % 2 = n + n % 2 by omega)
+      (fun a b => b = a + 1)).UpStepInvariant := by
+  refine ⟨fun s hs hint => ?_, fun h => absurd (Part.some_inj.1 (h 2 3 rfl)) (by decide)⟩
+  exfalso
+  have h0 : ¬ s 0 = s 0 + s 0 % 2 := fun h => hint 0 (Part.mem_some_iff.2 h)
+  have h1 : ¬ s 1 = s 1 + s 1 % 2 := fun h => hint 1 (Part.mem_some_iff.2 h)
+  have e : s 1 = s 0 + 1 := hs 0
+  rw [e] at h1
+  omega
+#check @ZeroParadox.Motion.RunClosure           -- Statement: the run form: `s` is a run and its range has the shape
+#check @ZeroParadox.Motion.RunClosure.stageClosure -- Statement: run form ⇒ set form; one way
+-- Reading: the two faces below are co-witnesses of one shape; no identity between `Ordinal` and a
+-- machine's configurations is claimed, and no claim that an undefined closure is the corpus's pole.
+#check @ZeroParadox.ordinalTowerMotion          -- Statement: on `Ordinal`, UP `nfp (ω^·)`, OVER `a ↦ ω^a`
+#check @ZeroParadox.ordinalTowerMotion_upStepInvariant -- Statement: member of the premise form
+#check @ZeroParadox.ordinalTowerMotion_stageClosure -- Statement: the tower stages `(ω^·)^[n] 0` close at ε₀
+#check @ZeroParadox.ordinalTowerMotion_runClosure -- Statement: and the tower is a member of the run form too
+-- Statement: those stages are `fundamentalSeq`.
+example (n : ℕ) : ZeroParadox.fundamentalSeq n = (fun a : Ordinal => Ordinal.omega0 ^ a)^[n] 0 := rfl
+-- Statement: ε₀ is a landing of the ordinal motion: the closure lies in the carrier.
+example : ZeroParadox.ordinalTowerMotion.IsLanding (Ordinal.epsilon 0) :=
+  (ZeroParadox.ordinalTowerMotion_isLanding_iff _).2 (Ordinal.omega0_opow_epsilon 0)
+#check @ZeroParadox.nothing_between_is_a_step   -- Statement: no ordinal below ε₀ is fixed by `α ↦ ω^α`
+#check @ZeroParadox.nfp_seed_independent_below_epsilon0 -- Statement: every seed at or below ε₀ closes at ε₀
+#check @ZeroParadox.runMotion                   -- Statement: on configurations of `f : σ → Option σ`, UP `StateTransition.eval f`, OVER one step
+#check @ZeroParadox.runMotion_upStepInvariant   -- Statement: member of the premise form
+#check @ZeroParadox.runMotion_stageClosure      -- Statement: the not-yet-halted configurations reachable from `a` close at `eval f a`
+#check @StateTransition.reaches_eval            -- Statement: Mathlib, `Reaches f a b → eval f a = eval f b`
+#check @PFun.fix_fwd_eq                         -- Statement: Mathlib, `Sum.inr a' ∈ f a → f.fix a = f.fix a'`; `eval` is a `PFun.fix`
+-- Reading: Mathlib's docstring calls `PFun.fix` the "first return map"; `fix_fwd_eq` is the `Part`
+-- case of the Elgot fixpoint law (Goncharov, Jakob, Neves, arXiv:1807.01053, Def. 5, p. 22:7; cited).
+-- Reading: for a step RELATION that iteration lands in the powerset, a set of results (ibid.,
+-- Example 6.1, p. 22:7), not one landing; here `UpStepInvariant` supplies the single closure, one
+-- way: premise ⇒ one closure (`stageClosure_of_run`); the converse control above fails.
+-- Statement: HALTING member: `n ↦ n + 1` below 3, halted at 3; the stages `0, 1, 2` close at 3.
+example : (ZeroParadox.runMotion (fun n : ℕ => if n < 3 then some (n + 1) else none)).StageClosure
+    {0, 1, 2} (Part.some 3) := by
+  let g : ℕ → Option ℕ := fun n => if n < 3 then some (n + 1) else none
+  have r2 : StateTransition.Reaches g 2 3 := Relation.ReflTransGen.single rfl
+  have r1 : StateTransition.Reaches g 1 3 := Relation.ReflTransGen.head rfl r2
+  have r0 : StateTransition.Reaches g 0 3 := Relation.ReflTransGen.head rfl r1
+  have h3 : g 3 = none := rfl
+  intro s hs
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hs
+  refine ⟨fun hl => ?_, ?_⟩
+  · have := (ZeroParadox.runMotion_isLanding_iff g s).1 hl
+    rcases hs with rfl | rfl | rfl <;> simp [g] at this
+  · show StateTransition.eval g s = Part.some 3
+    rcases hs with rfl | rfl | rfl
+    · exact Part.eq_some_iff.2 (StateTransition.mem_eval.2 ⟨r0, h3⟩)
+    · exact Part.eq_some_iff.2 (StateTransition.mem_eval.2 ⟨r1, h3⟩)
+    · exact Part.eq_some_iff.2 (StateTransition.mem_eval.2 ⟨r2, h3⟩)
+-- Statement: and that machine has no run, so it is a member of the set form and of no run form.
+example : ¬ ∃ s : ℕ → ℕ,
+    (ZeroParadox.runMotion (fun n : ℕ => if n < 3 then some (n + 1) else none)).IsRun s := by
+  rintro ⟨s, hs⟩
+  have step : ∀ n, s n < 3 ∧ s (n + 1) = s n + 1 := fun n => by
+    have h : s (n + 1) ∈ (if s n < 3 then some (s n + 1) else none) := hs n
+    by_cases hlt : s n < 3
+    · rw [if_pos hlt] at h
+      exact ⟨hlt, (Option.mem_some_iff.1 h).symm⟩
+    · rw [if_neg hlt] at h
+      simp at h
+  have grow : ∀ n, n ≤ s n := fun n => by
+    induction n with
+    | zero => omega
+    | succ n ih => have := (step n).2; omega
+  have := (step 3).1
+  have := grow 3
+  omega
+-- Statement: DIVERGENT member: `n ↦ n + 1` forever; every `n` is a stage and the closure is undefined.
+example : (ZeroParadox.runMotion (fun n : ℕ => some (n + 1))).StageClosure Set.univ
+    (StateTransition.eval (fun n : ℕ => some (n + 1)) 0) ∧
+    ¬ (StateTransition.eval (fun n : ℕ => some (n + 1)) 0).Dom := by
+  have reach : ∀ n, StateTransition.Reaches (fun n : ℕ => some (n + 1)) 0 n := fun n => by
+    induction n with
+    | zero => exact Relation.ReflTransGen.refl
+    | succ n ih => exact ih.tail rfl
+  refine ⟨fun s _ => ⟨fun hl => ?_, (StateTransition.reaches_eval (reach s)).symm⟩, ?_⟩
+  · have := (ZeroParadox.runMotion_isLanding_iff _ s).1 hl
+    simp at this
+  · exact (ZeroParadox.runMotion_run_diverges (fun n : ℕ => some (n + 1)) (s := id)
+      (fun _ => rfl)).2
+#check @ZeroParadox.runMotion_run_diverges      -- Statement: along a run of the motion no stage is a landing and the closure is undefined
+-- Statement: the delay face: for `f a = some b`, the delayed runs from `a` and from `b` are weakly
+-- bisimilar (Mathlib `Computation.Equiv`); one step adds one `think`.
+example {σ : Type} (f : σ → Option σ) {a b : σ} (h : f a = some b) :
+    Computation.Equiv (Computation.corec (fun s => (f s).elim (Sum.inl s) Sum.inr) a)
+      (Computation.corec (fun s => (f s).elim (Sum.inl s) Sum.inr) b) := by
+  have e : Computation.destruct (Computation.corec (fun s => (f s).elim (Sum.inl s) Sum.inr) a) =
+      Sum.inr (Computation.corec (fun s => (f s).elim (Sum.inl s) Sum.inr) b) := by
+    rw [Computation.corec_eq, h]; rfl
+  rw [Computation.destruct_eq_think e]
+  exact Computation.think_equiv _
+-- Statement: NON-MEMBER, stages closing at different values: on ℕ, UP rounds up to even and OVER adds
+-- one; `1` closes at 2 and `3` at 4.
+example :
+    ¬ ∃ c, (ZeroParadox.Motion.ofTotal (fun n : ℕ => n + n % 2)
+      (fun n => show (n + n % 2) + (n + n % 2) % 2 = n + n % 2 by omega)
+      (fun a b => b = a + 1)).StageClosure {1, 3} c := fun ⟨_, hc⟩ =>
+  absurd (Part.some_inj.1 ((hc 1 (by simp)).2.trans (hc 3 (by simp)).2.symm)) (by decide)
+-- Statement: NON-MEMBER, a stage that is a landing: the tower stages together with ε₀.
+example : ¬ ∃ c, ZeroParadox.ordinalTowerMotion.StageClosure
+    (insert (Ordinal.epsilon 0) (Set.range fun n => (fun a : Ordinal => Ordinal.omega0 ^ a)^[n] 0)) c :=
+  fun ⟨_, hc⟩ => (hc _ (Set.mem_insert _ _)).1
+    ((ZeroParadox.ordinalTowerMotion_isLanding_iff _).2 (Ordinal.omega0_opow_epsilon 0))
+
+/-! ### § IX. The registration switch — is closure-definedness data? -/
+#check @ZeroParadox.Motion.RegisteredComputable -- Statement: (a) a computable `Bool` test decides where UP is defined
+#check @ZeroParadox.Motion.RegisteredDecidable  -- Statement: (b) a `Decidable` family on where UP is defined
+#check @ZeroParadox.Motion.registeredDecidable_of_registeredComputable -- Statement: (a) ⇒ (b); one way
+#check @ZeroParadox.Motion.registeredDecidable_of_classical -- Statement: under `classical` every motion is in (b), so (b) has no non-member there
+#check @ZeroParadox.Motion.ofOption             -- Statement: a motion from an `Option`-valued UP, via `Part.ofOption`
+#check @ZeroParadox.Motion.ofOption_registeredDecidable -- Statement: an `Option` presentation is in (b), with no axiom of choice
+#check @ZeroParadox.Motion.ofOption_registeredComputable -- Statement: and in (a) when its `Option` map is computable
+#check @ZeroParadox.Motion.registeredComputable_of_upTotal -- Statement: members of (a): every total motion on a `[Primcodable α]` carrier; the total ordinal tower is not one (below)
+#check @ZeroParadox.Motion.registeredDecidable_of_upTotal -- Statement: members of (b): every total motion
+-- Statement: the ordinal tower is a member of (b).
+example : ZeroParadox.ordinalTowerMotion.RegisteredDecidable :=
+  ZeroParadox.Motion.registeredDecidable_of_upTotal (ZeroParadox.Motion.ofTotal_upTotal _ _ _)
+-- Statement: (a) takes `[Primcodable α]`, and `Ordinal` has no `Primcodable` structure (it is uncountable).
+example : IsEmpty (Primcodable Ordinal) :=
+  ⟨fun h => (Uncountable.not_countable : ¬ Countable Ordinal) (@Encodable.countable _ h.toEncodable)⟩
+#check @ZeroParadox.no_computable_registration_at_kleene_floor -- Statement: no computable test decides self-halting on `Nat.Partrec.Code`
+-- Statement: NON-MEMBER of (a): on `Nat.Partrec.Code`, UP defined (and fixing `c`) where `c` halts on
+-- its own code.
+example : ∃ M : ZeroParadox.Motion Nat.Partrec.Code,
+    (∀ c, M.up c = (Nat.Partrec.Code.eval c (Encodable.encode c)).map (fun _ => c)) ∧
+    ¬ M.RegisteredComputable := by
+  refine ⟨⟨fun c => (Nat.Partrec.Code.eval c (Encodable.encode c)).map (fun _ => c),
+    fun x y h => ?_, fun _ _ => False⟩, fun _ => rfl, ?_⟩
+  · obtain ⟨a, ha, rfl⟩ := (Part.mem_map_iff _).1 h
+    exact Part.mem_map _ ha
+  · rintro ⟨d, hdc, hd⟩
+    exact ZeroParadox.no_computable_registration_at_kleene_floor ⟨d, hdc, fun c => hd c⟩
+-- Reading: three presentations of UP: `Option` (definedness decided), the delay type (Capretta, LMCS
+-- 1(2) 2005, Def. 3.1, p. 8; Mathlib `Computation`; p. 9: "A^ν is not isomorphic to A + 1 ...
+-- because divergence is undecidable"), and `Part` (definedness a proposition).
+#check @Part.ofOption                           -- Statement: Mathlib, `Option α → Part α`; free
+#check @Part.toOption                           -- Statement: Mathlib, `Part α → Option α`, given `[Decidable o.Dom]`
+#check @Part.equivOption                        -- Statement: Mathlib, `Part α ≃ Option α`, noncomputable
+#check @ZeroParadox.registeredDecider           -- Statement: an `Option` decides its own `none`, with `propext` only, no `Classical.choice`
+#check @ZeroParadox.em_of_poleDiscriminator     -- Statement: a total test of definedness on `Part Unit` gives excluded middle
+#check @ZeroParadox.em_of_choiceFragment        -- Statement: the two-element choice fragment gives excluded middle
+#check @ZeroParadox.select_of_decidable         -- Statement: a decidable inhabited predicate on `Bool` has a witness computed by `if`
+-- Statement: registering every motion ⇒ excluded middle (no axioms).
+example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable) :
+    ZeroParadox.ExcludedMiddle := by
+  intro p
+  let M : ZeroParadox.Motion Unit :=
+    ⟨fun _ => Part.mk p (fun _ => ()), fun _ _ hy => hy, fun _ _ => False⟩
+  obtain ⟨d⟩ := h Unit M
+  exact match d () with
+    | isTrue hp => Or.inl hp
+    | isFalse hn => Or.inr hn
+-- Statement: the two-element choice fragment ⇒ every motion registered (`[propext, Quot.sound]`).
+example (h : ZeroParadox.ChoiceFragment) {α : Type} (M : ZeroParadox.Motion α) :
+    M.RegisteredDecidable := by
+  obtain ⟨ch, hch⟩ := h
+  refine ⟨fun a => ?_⟩
+  let p := (M.up a).Dom
+  let A : Bool → Prop := fun b => b = true ∨ p
+  let B : Bool → Prop := fun b => b = false ∨ p
+  have hA := hch A ⟨true, Or.inl rfl⟩
+  have hB := hch B ⟨false, Or.inl rfl⟩
+  refine decidable_of_iff (ch A = ch B) ⟨fun e => ?_, fun hp => ?_⟩
+  · rcases hA with h1 | h1
+    · rcases hB with h2 | h2
+      · exact absurd (e ▸ h1 : ch B = true) (by rw [h2]; decide)
+      · exact h2
+    · exact h1
+  · have : A = B := funext fun b => propext ⟨fun _ => Or.inr hp, fun _ => Or.inr hp⟩
+    rw [this]
+-- Reading: so registering everywhere implies excluded middle, and the two-element choice fragment
+-- suffices for it; neither arrow uses `Classical.choice`. On `Part Unit` the test is inter-derivable
+-- with the fragment, both legs choice-free (`ZeroParadox/Valuation/PoleRegistration.lean` § II).
 
 end DieCannotBeIndex

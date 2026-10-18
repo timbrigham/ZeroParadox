@@ -168,7 +168,7 @@ example : IsEmpty (ZeroParadox.UpAndOver ℝ) := ZeroParadox.UpAndOver.isEmpty_o
 #check @ZeroParadox.phaseUp_snap                      -- Statement: floor-below order: `phaseUpAndOver.up` sends `↑0` to `↑ε₀` (UP)
 #check @ZeroParadox.phase_epsilon0_isLeast_landing_above_floor -- Statement: floor-below order: `↑ε₀` is the least closed point (landing) of that `up` strictly above ⊥ of `WithBot Ordinal`
 #check @ZeroParadox.phase_floor_snap_epsilon0_ne      -- Statement: in `WithBot Ordinal`, the snap `↑0` ≠ `↑ε₀`, and its ⊥ differs from both
-#check @ZeroParadox.phaseEquivWithTop_floor_covers_nothing -- Statement: floor-above order, `WithTop Ordinal`: the boundary model's floor is ⊤ and nothing covers it
+#check @ZeroParadox.phaseEquivWithTop_floor_covers_nothing -- Statement: floor-above order, `WithTop Ordinal`: the boundary model's floor is ⊤ and covers nothing
 #check @ZeroParadox.phaseTop_epsilon0_isLeast_landing_above_snap -- Statement: floor-above order: the snap `↑0` is ⊥ of `WithTop Ordinal`, and `↑ε₀` is the least `snapNucleusTop`-closed point strictly above it
 -- Reading: CARRIER. The two orders are a dichotomy over one boundary model, neither of them THE order.
 --   In each, `↑ε₀` is the first closed point (landing) of the closure above that order's ⊥. On all of `Ordinal`, ⊥ ⋖ ε₀ is false

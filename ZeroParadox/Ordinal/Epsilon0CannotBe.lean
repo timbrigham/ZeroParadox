@@ -37,6 +37,15 @@ universe u
 -- least fixed point of `α ↦ ω^α` strictly above `f` (Veblen 1908, Corollary 1 to Theorem 4; see
 -- `ZeroParadox/Ordinal/Epsilon0LeastFP.md`); `f` is the bottom of the carrier `Set.Ici f`.
 #check @Ordinal.epsilon_succ_eq_nfp           -- Statement: Mathlib, `ε_(succ o) = nfp (ω^·) (succ ε_o)`
+-- Reading: Veblen calls the function whose values are these fixed points the first derived function
+-- (Veblen 1908, Theorem 4, p. 283; p. 284, Corollaries 1 and 4, the latter for `ω^x`).
+-- Statement: `nfp (ω^·)` sends each seed `a` to the least fixed point at or above it; this is the
+-- die's ordinal UP (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`, `ordinalTowerMotion`).
+example (a : Ordinal) : IsLeast {x : Ordinal | Ordinal.omega0 ^ x = x ∧ a ≤ x}
+    (Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a) := by
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  exact ⟨⟨Ordinal.nfp_fp hn a, Ordinal.le_nfp _ a⟩,
+    fun x ⟨hx, hax⟩ => Ordinal.nfp_le_fp hn.strictMono.monotone hax hx.le⟩
 -- Statement: INVARIANT over ordinal floors under `α ↦ ω^α`. At every floor `f`, the least fixed point
 -- strictly above ⊥ of `Set.Ici f` is `nfp (ω^·) (succ f)`, and it is not that ⊥.
 example (f : Ordinal) :

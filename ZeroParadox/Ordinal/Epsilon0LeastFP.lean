@@ -1,3 +1,4 @@
+import ZeroParadox.Die
 import Mathlib.SetTheory.Ordinal.Veblen
 import Mathlib.SetTheory.Cardinal.Ordinal
 
@@ -220,6 +221,60 @@ theorem epsilon0_ne_bot : ε₀ ≠ (⊥ : Ordinal) := by
     Feferman–Schütte ordinal closing the two-argument Veblen hierarchy; the framework lives below Γ₀. -/
 theorem epsilon0_eq_veblen_one_zero : ε₀ = Ordinal.veblen 1 0 := rfl
 
+/-! ### The tower as a motion — the ordinal face of the die's stage/closure shape
+
+UP is `nfp (ω^·)` and OVER is `a ↦ ω^a`, a `Motion` in the sense of `ZeroParadox/Die.lean`. The stages
+`(ω^·)^[n] 0` are not landings and all close at ε₀. Indexed in `ZeroParadox/DieCannotBe.lean` § VIII. -/
+
+/-- `Statement:` on `Ordinal`, UP is `nfp (ω^·)` and OVER is `a ↦ ω^a`. -/
+noncomputable def ordinalTowerMotion : Motion Ordinal.{u} :=
+  Motion.ofTotal (Ordinal.nfp fun a => ω ^ a)
+    (fun x => Ordinal.nfp_eq_self (Ordinal.nfp_fp (Ordinal.isNormal_opow Ordinal.one_lt_omega0) x))
+    (fun a b => b = ω ^ a)
+
+/-- `Statement:` a landing of the ordinal motion is a fixed point of `α ↦ ω^α`. -/
+theorem ordinalTowerMotion_isLanding_iff (a : Ordinal.{u}) :
+    ordinalTowerMotion.IsLanding a ↔ ω ^ a = a := by
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  refine ⟨fun h => ?_, fun h => Part.mem_some_iff.2 (Ordinal.nfp_eq_self h).symm⟩
+  have h' : a = Ordinal.nfp (fun a => ω ^ a) a := Part.mem_some_iff.1 h
+  have hfp := Ordinal.nfp_fp hn a
+  rwa [← h'] at hfp
+
+/-- `Statement:` UP is unchanged along a step: `nfp (ω^·) (ω^a) = nfp (ω^·) a`. -/
+theorem ordinalTowerMotion_upStepInvariant : ordinalTowerMotion.{u}.UpStepInvariant := by
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  intro a b hab
+  have hb : b = ω ^ a := hab
+  subst hb
+  show Part.some (Ordinal.nfp (fun a => ω ^ a) a) = Part.some (Ordinal.nfp (fun a => ω ^ a) (ω ^ a))
+  congr 1
+  refine le_antisymm (Ordinal.nfp_monotone hn.strictMono.monotone (hn.strictMono.id_le a)) ?_
+  exact Ordinal.nfp_le_fp hn.strictMono.monotone
+    ((hn.strictMono.monotone (Ordinal.le_nfp _ a)).trans (le_of_eq (Ordinal.nfp_fp hn a)))
+    (le_of_eq (Ordinal.nfp_fp hn a))
+
+/-- `Statement:` the tower stages `(ω^·)^[n] 0` form a run. -/
+theorem ordinalTowerMotion_isRun :
+    ordinalTowerMotion.{u}.IsRun (fun n => (fun a : Ordinal.{u} => ω ^ a)^[n] 0) :=
+  fun n => Function.iterate_succ_apply' _ n 0
+
+/-- `Statement:` the tower stages have the stage/closure shape, with closure ε₀. -/
+theorem ordinalTowerMotion_stageClosure :
+    ordinalTowerMotion.{u}.StageClosure (Set.range fun n => (fun a : Ordinal.{u} => ω ^ a)^[n] 0)
+      (Part.some ε₀) := by
+  rintro _ ⟨n, rfl⟩
+  have hlt := Ordinal.iterate_omega0_opow_lt_epsilon_zero.{u} n
+  refine ⟨fun h => nothing_between_is_a_step _ hlt ((ordinalTowerMotion_isLanding_iff _).1 h), ?_⟩
+  show Part.some (Ordinal.nfp (fun a => ω ^ a) _) = Part.some ε₀
+  rw [nfp_seed_independent_below_epsilon0 _ hlt.le]
+
+/-- `Statement:` and in the run form, with the same closure. -/
+theorem ordinalTowerMotion_runClosure :
+    ordinalTowerMotion.{u}.RunClosure (fun n => (fun a : Ordinal.{u} => ω ^ a)^[n] 0)
+      (Part.some ε₀) :=
+  ⟨ordinalTowerMotion_isRun, ordinalTowerMotion_stageClosure⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -242,4 +297,10 @@ open ZeroParadox
 #print axioms epsilon0_ne_zero
 #print axioms epsilon0_ne_bot
 #print axioms epsilon0_eq_veblen_one_zero
+#print axioms ordinalTowerMotion
+#print axioms ordinalTowerMotion_isLanding_iff
+#print axioms ordinalTowerMotion_upStepInvariant
+#print axioms ordinalTowerMotion_isRun
+#print axioms ordinalTowerMotion_stageClosure
+#print axioms ordinalTowerMotion_runClosure
 end PurityCheck
