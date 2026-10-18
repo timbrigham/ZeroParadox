@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1985,
+        "declarations": 2005,
         "files": 168
       },
       "entries": [
@@ -1201,6 +1201,45 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "01af6356-d803-41f1-b5b1-850788ed580e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.fanIn_iff_reverse",
+            "short": "fanIn_iff_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.fanIn_iff_reverse",
+            "short": "fanIn_iff_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -3013,6 +3052,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0775ee33-dc3d-4c65-b15d-479ee448f170",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.FanIn",
+            "short": "FanIn"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.FanIn",
+            "short": "FanIn",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "07c7f150-6d9c-4dd9-adb8-76462ac77bc7",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -4506,6 +4584,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0cbb7187-658a-4a37-9539-a810abfee8c5",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.NoStepAt",
+            "short": "NoStepAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.NoStepAt",
+            "short": "NoStepAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10405,6 +10522,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "210843b5-5ed1-40e5-bd47-0a83cdfad954",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selectedTotal_of_fun",
+            "short": "selectedTotal_of_fun"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selectedTotal_of_fun",
+            "short": "selectedTotal_of_fun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "21404f77-d128-411c-a0b0-ee90e4ec1a4d",
           "new": {
@@ -11254,6 +11410,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "249406f1-b3b5-4d99-9918-429dd10d4363",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mem_up_self_of_mem_up",
+            "short": "mem_up_self_of_mem_up"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mem_up_self_of_mem_up",
+            "short": "mem_up_self_of_mem_up",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "24a7b238-3b56-4c03-ac76-02ff6712d81c",
           "new": {
             "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
@@ -12009,6 +12204,45 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "26ef3761-ef6d-4522-8d92-339f771b0139",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_fanIn_of_injective",
+            "short": "not_fanIn_of_injective"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_fanIn_of_injective",
+            "short": "not_fanIn_of_injective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -19784,6 +20018,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4365ea5b-1db8-40c0-adc9-c2c514e75b2f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.reverse_reverse",
+            "short": "reverse_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.reverse_reverse",
+            "short": "reverse_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "436f4a8e-b0a5-4f6f-83a5-604dd963a589",
           "new": {
@@ -27103,6 +27376,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5c141442-2ebd-43d0-8bb3-cdbc5d43853c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selectedData_of_selectedTotal",
+            "short": "selectedData_of_selectedTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selectedData_of_selectedTotal",
+            "short": "selectedData_of_selectedTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5c2b96dc-75c5-4a84-b078-35ec5a00b9e8",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -29671,6 +29983,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "67306680-8aae-4b0b-9d33-0cc68d3ea101",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.reverse",
+            "short": "reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.reverse",
+            "short": "reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "678aaaea-635e-42d9-9958-f733f8015171",
           "new": {
             "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
@@ -29848,6 +30199,45 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "67c728b3-7da3-4f1f-97b3-e8c150f6215a",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.OverTrichotomy",
+            "short": "OverTrichotomy"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.OverTrichotomy",
+            "short": "OverTrichotomy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34226,6 +34616,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "76545f90-3f61-4c36-9cd2-825f994ecad7",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.reverse_up",
+            "short": "reverse_up"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.reverse_up",
+            "short": "reverse_up",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "767e2b66-594e-4708-8d1a-4cac6c2f31a7",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -36725,6 +37154,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7eede61f-ff68-4864-ba3c-f07a6acb2bd5",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selectedTotal_of_classical",
+            "short": "selectedTotal_of_classical"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selectedTotal_of_classical",
+            "short": "selectedTotal_of_classical",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7f075639-a82c-4dce-97d4-8feac22fcfdd",
           "new": {
@@ -38869,6 +39337,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "868d682f-4b0a-4759-b756-140cbc67a2e6",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_leavesAt",
+            "short": "corner_leavesAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_leavesAt",
+            "short": "corner_leavesAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "869a4ef0-8f9c-465a-8ba8-0309b62f4278",
           "new": {
@@ -40958,6 +41465,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "903f0560-3519-4803-9a7b-e2ca3061cea9",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.SelectedData",
+            "short": "SelectedData"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.SelectedData",
+            "short": "SelectedData",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46123,6 +46669,46 @@
             ]
           },
           "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a091913d-e553-488b-b000-a516e41d0b0f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selectedTotal_of_option",
+            "short": "selectedTotal_of_option"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selectedTotal_of_option",
+            "short": "selectedTotal_of_option",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped",
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -53210,6 +53796,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ba51dfe1-c36c-437a-a948-8c615fd44f8b",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.SelectedTotal",
+            "short": "SelectedTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.SelectedTotal",
+            "short": "SelectedTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ba665a46-a40e-41ac-be7f-86ce138a2947",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -53378,6 +54003,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bb8a29c0-d95f-4cc6-b35d-e4ca5e355897",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.overTrichotomy_of_option",
+            "short": "overTrichotomy_of_option"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.overTrichotomy_of_option",
+            "short": "overTrichotomy_of_option",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped",
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -62765,6 +63430,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "dccf472a-1dc2-4f67-b3e5-a88735ddda76",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selectedTotal_of_selectedData",
+            "short": "selectedTotal_of_selectedData"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selectedTotal_of_selectedData",
+            "short": "selectedTotal_of_selectedData",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dce13bb4-0f4d-4d45-a799-85bb2a02365a",
           "new": {
             "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
@@ -67219,6 +67923,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "eb56761f-6ea5-440e-9345-64d60f23c5ea",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.SelfOnlyAt",
+            "short": "SelfOnlyAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.SelfOnlyAt",
+            "short": "SelfOnlyAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "eb6bd87c-0c38-4387-970b-c2a14cacf39b",
           "new": {
@@ -70117,6 +70860,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f629b762-0def-4fc1-b0f4-5729b87a35bf",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LeavesAt",
+            "short": "LeavesAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LeavesAt",
+            "short": "LeavesAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
           "verify": {
             "axioms": null,
             "sorry_free": true

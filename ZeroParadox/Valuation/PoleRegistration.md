@@ -86,14 +86,16 @@ statement of that fence is `ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `C
 docstring; it is not restated here.
 
 **The lifting form of the same principle.** **M. H. Escardó and C. M. Knapp, "Partial Elements and
-Recursion via Dominances in Univalent Type Theory," CSL 2017, LIPIcs 82, 21:1–21:16**, filed, § 2.7,
-p. 21:6, read at the PDF 2026-10-18: *"(And hence L X ≃ X + 1 iff the canonical map 2 → Ω is an
-equivalence iff excluded middle holds.)"* Here `L X` is `Part X` and `X + 1` is `Option X`. **T. de
-Jong, "Domain Theory in Univalent Foundations I: Directed Complete Posets and Scott's D∞"**
-(arXiv:2407.06952v3), filed, Proposition 5.7 (p. 13), read at the PDF: the map `[η, const⊥] : X + 1 → L_V(X)` *"is an
+Recursion via Dominances in Univalent Type Theory," CSL 2017, LIPIcs 82, 21:1–21:16**, filed, read
+at the PDF 2026-10-18. § 2.2, p. 21:4: *"The assertion that every partial element is defined or else
+undefined is equivalent to the principle of excluded middle (every proposition is inhabited or
+empty)."* § 2.7, p. 21:6: *"(And hence L X ≃ X + 1 iff the canonical map 2 → Ω is an equivalence iff
+excluded middle holds.)"* Here `L X` is `Part X` and `X + 1` is `Option X`. **T. de Jong, "Domain
+Theory in Univalent Foundations I: Directed Complete Posets and Scott's D∞"** (arXiv:2407.06952v3),
+filed, Proposition 5.7 (p. 13), read at the PDF: the map `[η, const⊥] : X + 1 → L_V(X)` *"is an
 equivalence for every type X : U if and only if excluded middle in V holds"*, credited there to
-"[EK17, Section 2.2]"; in the CSL text read here the sentence sits in § 2.7. The instance this corpus
-proves is `ZeroParadox/DieCannotBe.lean` § IX's — registering every motion on a `Type` and
+"[EK17, Section 2.2]", where the defined-or-undefined form above is stated. The instance this corpus
+proves is `ZeroParadox/DieCannotBe.lean` § IX's — registering every motion on every `α : Type` and
 `ChoiceFragment` inter-derivable — across the same `Prop`/`Type` fence as above, where the data side
 is `Decidable`. **Credit runs one way: an instance of theirs, never a generalization.**
 

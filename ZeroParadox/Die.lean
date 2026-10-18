@@ -352,6 +352,125 @@ theorem ofOption_registeredComputable [Primcodable α] (u : α → Option α) (h
   ⟨fun a => (u a).isSome, Primrec.option_isSome.to_comp.comp hc,
     fun _ => (Part.ofOption_dom _).symm⟩
 
+/-! ### § VIII. The OVER leg's WHICH: selection -/
+
+variable (M)
+
+/-- `Statement:` at every point with a successor, a successor is chosen, as data. -/
+def SelectedData : Prop := Nonempty (∀ a, (∃ b, M.step a b) → {b // M.step a b})
+
+/-- `Statement:` one map `f` has `step a (f a)` at every point `a` with a successor. -/
+def SelectedTotal : Prop := ∃ f : α → α, ∀ a, (∃ b, M.step a b) → M.step a (f a)
+
+variable {M}
+
+/-- `Statement:` a total selector gives a data selector; one way. -/
+theorem selectedData_of_selectedTotal (h : M.SelectedTotal) : M.SelectedData :=
+  let ⟨f, hf⟩ := h
+  ⟨fun a ha => ⟨f a, hf a ha⟩⟩
+
+/-- `Statement:` a data selector, with a decision at every point of whether a successor exists,
+    gives a total selector. -/
+theorem selectedTotal_of_selectedData (hd : ∀ a, Decidable (∃ b, M.step a b))
+    (h : M.SelectedData) : M.SelectedTotal := by
+  obtain ⟨g⟩ := h
+  refine ⟨fun a => @dite _ (∃ b, M.step a b) (hd a) (fun ha => (g a ha).1) (fun _ => a),
+    fun a ha => ?_⟩
+  show M.step a (@dite _ _ (hd a) _ _)
+  rw [dif_pos ha]
+  exact (g a ha).2
+
+/-- `Statement:` classically every motion has a total selector. -/
+theorem selectedTotal_of_classical : M.SelectedTotal := by
+  classical
+  exact selectedTotal_of_selectedData (fun _ => inferInstance)
+    ⟨fun _ ha => ⟨Classical.choose ha, Classical.choose_spec ha⟩⟩
+
+/-- `Statement:` a step given by a function `f` (`step a b ↔ b = f a`) has the total selector `f`. -/
+theorem selectedTotal_of_fun (f : α → α) (h : ∀ a b, M.step a b ↔ b = f a) : M.SelectedTotal :=
+  ⟨f, fun a _ => (h a (f a)).2 rfl⟩
+
+/-- `Statement:` a step given by an `Option`-valued `f` (`step a b ↔ f a = some b`) has the total
+    selector `a ↦ (f a).getD a`. -/
+theorem selectedTotal_of_option (f : α → Option α) (h : ∀ a b, M.step a b ↔ f a = some b) :
+    M.SelectedTotal := by
+  refine ⟨fun a => (f a).getD a, fun a ⟨b, hb⟩ => ?_⟩
+  have hb' := (h a b).1 hb
+  rw [h]
+  show f a = some ((f a).getD a)
+  rw [hb']
+  rfl
+
+/-! ### § IX. The OVER leg's WHETHER: what OVER does at a point -/
+
+variable (M)
+
+/-- `Statement:` no step leaves `y`. -/
+def NoStepAt (y : α) : Prop := ∀ b, ¬ M.step y b
+
+/-- `Statement:` `y` steps to itself and to nothing else. -/
+def SelfOnlyAt (y : α) : Prop := M.step y y ∧ ∀ b, M.step y b → b = y
+
+/-- `Statement:` `y` steps to some point other than `y`. -/
+def LeavesAt (y : α) : Prop := ∃ b, M.step y b ∧ b ≠ y
+
+/-- `Statement:` at `y`, no step, or a step to itself only, or a step elsewhere. -/
+def OverTrichotomy (y : α) : Prop := M.NoStepAt y ∨ M.SelfOnlyAt y ∨ M.LeavesAt y
+
+variable {M}
+
+-- The `DecidableEq` binder is kept in the type on purpose: the proof cases on `decEq`, and the
+-- PurityCheck prints the footprint that binder buys.
+set_option linter.unusedDecidableInType false in
+/-- `Statement:` with decidable equality, a step given by an `Option`-valued `f` meets the
+    trichotomy at every point. -/
+theorem overTrichotomy_of_option [DecidableEq α] (f : α → Option α)
+    (h : ∀ a b, M.step a b ↔ f a = some b) (y : α) : M.OverTrichotomy y := by
+  cases hf : f y with
+  | none => exact Or.inl fun b hb => by rw [h, hf] at hb; cases hb
+  | some b =>
+    rcases decEq b y with hne | heq
+    · exact Or.inr (Or.inr ⟨b, (h y b).2 hf, hne⟩)
+    · subst heq
+      exact Or.inr (Or.inl ⟨(h _ _).2 hf,
+        fun c hc => (Option.some_injective _ (hf.symm.trans ((h _ c).1 hc))).symm⟩)
+
+/-- `Statement:` a corner leaves its landing. -/
+theorem corner_leavesAt (h : M.Corner) : ∃ y, M.IsLanding y ∧ M.LeavesAt y :=
+  let ⟨y, b, _, hy, hs, hz, hzb⟩ := h
+  ⟨y, hy, b, hs, fun hb => hzb (by rw [hb] at hz ⊢; exact Part.mem_unique hz hy)⟩
+
+/-! ### § X. OVER run backwards: fan-in and reversal -/
+
+variable (M)
+
+/-- `Statement:` `y` has two distinct predecessors. -/
+def FanIn (y : α) : Prop := ∃ a b, a ≠ b ∧ M.step a y ∧ M.step b y
+
+/-- `Statement:` the reversed motion: the same UP, and OVER flipped. -/
+def reverse : Motion α := ⟨M.up, M.up_idem, flip M.step⟩
+
+variable {M}
+
+/-- `Statement:` reversal leaves UP unchanged. -/
+theorem reverse_up : M.reverse.up = M.up := rfl
+
+/-- `Statement:` reversing twice returns the motion. -/
+theorem reverse_reverse : M.reverse.reverse = M := rfl
+
+/-- `Statement:` fan-in at `y` is two distinct successors of `y` in the reversed motion. -/
+theorem fanIn_iff_reverse (y : α) :
+    M.FanIn y ↔ ∃ a b, a ≠ b ∧ M.reverse.step y a ∧ M.reverse.step y b := Iff.rfl
+
+/-- `Statement:` a step given by a one-to-one function has no fan-in. -/
+theorem not_fanIn_of_injective (f : α → α) (hf : Function.Injective f)
+    (h : ∀ a b, M.step a b ↔ b = f a) (y : α) : ¬ M.FanIn y :=
+  fun ⟨a, b, hab, ha, hb⟩ => hab (hf (((h a y).1 ha).symm.trans ((h b y).1 hb)))
+
+/-- `Statement:` a value `z` of `up` is an `up`-preimage of itself. -/
+theorem mem_up_self_of_mem_up {x z : α} (h : z ∈ M.up x) : z ∈ M.up z :=
+  M.up_idem x z h
+
 end Motion
 
 end ZeroParadox
@@ -407,5 +526,25 @@ open ZeroParadox
 #print axioms Motion.registeredDecidable_of_classical
 #print axioms Motion.registeredComputable_of_upTotal
 #print axioms Motion.ofOption_registeredComputable
+#print axioms Motion.SelectedData
+#print axioms Motion.SelectedTotal
+#print axioms Motion.selectedData_of_selectedTotal
+#print axioms Motion.selectedTotal_of_selectedData
+#print axioms Motion.selectedTotal_of_classical
+#print axioms Motion.selectedTotal_of_fun
+#print axioms Motion.selectedTotal_of_option
+#print axioms Motion.NoStepAt
+#print axioms Motion.SelfOnlyAt
+#print axioms Motion.LeavesAt
+#print axioms Motion.OverTrichotomy
+#print axioms Motion.overTrichotomy_of_option
+#print axioms Motion.corner_leavesAt
+#print axioms Motion.FanIn
+#print axioms Motion.reverse
+#print axioms Motion.reverse_up
+#print axioms Motion.reverse_reverse
+#print axioms Motion.fanIn_iff_reverse
+#print axioms Motion.not_fanIn_of_injective
+#print axioms Motion.mem_up_self_of_mem_up
 
 end PurityCheck
