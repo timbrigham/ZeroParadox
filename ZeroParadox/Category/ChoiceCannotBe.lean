@@ -13,6 +13,9 @@ import ZeroParadox.Category.LawvereTaboo
 import ZeroParadox.Computability.SelfCopyReference
 import ZeroParadox.Order.PataraiaChoiceFree
 import ZeroParadox.Order.PataraiaFromBourbakiWitt
+import ZeroParadox.Reals.OrderedField
+import ZeroParadox.Valuation.PoleRegistration
+import ZeroParadox.Die
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -286,21 +289,22 @@ proved about where choice does work. -/
 #check @Prop.instHeytingAlgebra
 #check @Prop.instBooleanAlgebra
 
-/-! ## § IV. The ESSENTIAL cases — two reductions to taboos, and the premise they rest on
+/-! ## § IV. The ESSENTIAL cases — reductions to taboos, and the premise they rest on
 
-The arrow runs from each principle (cases 1 and 2 below) to its taboo, so each theorem speaks of the
+The arrow runs from each principle (cases 1 to 3 below) to its taboo, so each theorem speaks of the
 principle, not of any one proof of it. ESSENTIAL, in the sense of § "Accidental versus essential" of
 `ZeroParadox/Category/ChoiceCannotBe.md`, means that no proof of the principle in Lean's choice-free
 fragment (the kernel with `propext` and `Quot.sound` as its only axioms) exists, GIVEN that the taboo
 the case reaches is not derivable in that fragment. That premise is not proved in this corpus; without
 it, what is proved is that a choice-free proof of the principle would be a choice-free proof of the
-taboo. Neither case is an independence result, and neither says the framework's overall use of choice
+taboo. No case is an independence result, and none says the framework's overall use of choice
 is essential. -/
 
--- Each case is a reduction proved without `Classical.choice` (`[propext, Quot.sound]`), from a classical
--- principle the framework uses to a constructive taboo: case 1 from comparability of well-orders to
--- excluded middle, case 2 from the fixed-point-free principle over arbitrary `Type` to weak excluded
--- middle.
+-- Each case is a reduction proved without `Classical.choice` (at most `[propext, Quot.sound]`), from a
+-- classical principle the framework uses to a constructive taboo: case 1 from comparability of
+-- well-orders to excluded middle, case 2 from the fixed-point-free principle over arbitrary `Type` to
+-- weak excluded middle, case 3 from the die's cut-to-piece at ⊥ of `α`, over every partial order `α`
+-- with a least element on a `Type`, to weak excluded middle.
 
 -- ESSENTIAL CASE 1 — comparability of well-orders implies EXCLUDED MIDDLE. Mathlib's `le_total` on
 -- `Ordinal` has exactly this shape, which is what puts it in the framework's path.
@@ -341,5 +345,80 @@ is essential. -/
 -- universal over every carrier would be the sentence shape `ZeroParadox/Category/ChoiceCannotBe.md`'s § "No count" warns about.
 -- The two `#check`ed declarations are what is established; the reach is not.
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
+
+-- Statement: ESSENTIAL CASE 3 — if a cover of ⊥ gives a two-point first interval (`[⊥, a] = {⊥, a}`)
+-- in every partial order with a least element on a `Type`, weak excluded middle holds; measured
+-- `[propext]`. Its hypothesis is the ∀-closure of `ZeroParadox/Die.lean`'s
+-- `botCovered_botIntervalTwo_classical`, the framework's own bare `classical`, which instantiates to it
+-- as `fun _ _ _ => botCovered_botIntervalTwo_classical` (next `example`); so that theorem's `classical`
+-- is essential in the sense of the header above, and on its premise.
+#check @ZeroParadox.wem_of_botCovered_botIntervalTwo
+-- Statement: non-vacuity: the framework's classical proof supplies the hypothesis.
+example : ∀ (β : Type) [PartialOrder β] [OrderBot β],
+    ZeroParadox.BotCovered β → ZeroParadox.BotIntervalTwo β :=
+  fun _ _ _ => ZeroParadox.botCovered_botIntervalTwo_classical
+#check @ZeroParadox.botCovered_botIntervalTwo_classical -- Statement: cut ⇒ piece at ⊥, proved with `classical`
+-- Statement: the escape, as in case 2: with `DecidableEq`, a cover of ⊥ of `α` gives some `a` with
+-- `[⊥, a] = {⊥, a}`, with no axioms (footprint in `ZeroParadox/Die.lean`'s PurityCheck).
+#check @ZeroParadox.botCovered_botIntervalTwo
+
+-- Statement: beside case 3, and not counted among the cases above because no framework proof uses
+-- `CovBy.Icc_eq` (not located in `ZeroParadox/**/*.lean` as of 2026-10-18; grep `Icc_eq` and
+-- `CovBy.Icc` return index, comment and non-vacuity sites only): Mathlib's principle that every
+-- cover `a ⋖ b` in every partial order on a `Type` has `Set.Icc a b = {a, b}`, of which the die's
+-- piece `BotIntervalTwo` is the case at ⊥, gives excluded middle; measured `[propext]`. The reduction
+-- runs at `Prop`, where ⊥ of `Prop` (`False`) is covered by `True` (`ZeroParadox/Reals/OrderedField.lean`
+-- § 0, which cites the prior art for that `Prop` case).
+#check @ZeroParadox.em_of_covBy_Icc_eq
+-- Statement: non-vacuity: Mathlib's `CovBy.Icc_eq` supplies the hypothesis; its footprint is printed next.
+example : ∀ (α : Type) [PartialOrder α] (a b : α), a ⋖ b → Set.Icc a b = {a, b} :=
+  fun _ _ _ _ h => h.Icc_eq
+#check @CovBy.Icc_eq                              -- Statement: Mathlib, `a ⋖ b → Set.Icc a b = {a, b}`
+#print axioms CovBy.Icc_eq
+-- Statement: the negative form, nothing strictly between (`CovBy.Ioo_eq`); its footprint is printed next.
+#check @CovBy.Ioo_eq
+#print axioms CovBy.Ioo_eq
+
+/-! ## § V. Per instance free, uniform a taboo — pointers
+
+Each row pairs a per-instance member with the uniform principle's reduction. Pointers only; the
+uniform legs proved by anonymous `example` are cited by section. -/
+
+-- Statement: chart selection: free given a point (`chart_selection_is_freeG`, § I); uniform at the
+-- stipulated pole, the fragment (`uniformChartSelection_iff_choiceFragment`, § III).
+#check @ZeroParadox.chart_selection_is_freeG
+#check @ZeroParadox.uniformChartSelection_iff_choiceFragment -- Statement: uniform selection at the stipulated pole is the fragment, `Iff.rfl`
+-- Statement: pole discrimination: an `Option` decides its own `none` (`registeredDecider`); a total
+-- test of definedness on `Part Unit` gives excluded middle (`em_of_poleDiscriminator`).
+#check @ZeroParadox.registeredDecider
+#check @ZeroParadox.em_of_poleDiscriminator       -- Statement: a total definedness test on `Part Unit` gives excluded middle
+-- Statement: Lawvere's fixed-point-free swap: free with `DecidableEq`; over every `Type`, weak excluded
+-- middle (case 2, § IV).
+#check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
+#check @ZeroParadox.wem_of_fixedPointFree         -- Statement: the general fixed-point-free principle gives weak excluded middle
+-- Statement: the die's piece at ⊥: free with `DecidableEq`; over every partial order with a least
+-- element on a `Type`, weak excluded middle (case 3, § IV); for every cover, Mathlib's form, excluded
+-- middle (beside case 3, § IV).
+#check @ZeroParadox.botCovered_botIntervalTwo
+#check @ZeroParadox.wem_of_botCovered_botIntervalTwo -- Statement: case 3, § IV
+#check @ZeroParadox.em_of_covBy_Icc_eq            -- Statement: beside case 3, § IV
+-- Statement: the die's UP leg, registration: an `Option`-presented UP is registered on every carrier;
+-- registration of every motion on every `α : Type` and the fragment are inter-derivable, each giving
+-- excluded middle (`ZeroParadox/DieCannotBe.lean` § IX).
+#check @ZeroParadox.Motion.ofOption_registeredDecidable
+-- Statement: the die's OVER leg, selection: a step given by a function, or an `Option`-valued one, is
+-- selected; a data selector on every motion on every `α : Type`, or a predecessor selector on the
+-- image of every step function, gives the fragment, and the two uniform selections are
+-- inter-derivable (`ZeroParadox/DieCannotBe.lean` §§ X, XII).
+#check @ZeroParadox.Motion.selectedTotal_of_fun
+#check @ZeroParadox.Motion.selectedTotal_of_option -- Statement: an `Option`-valued step is selected by `getD`
+-- Statement: the die's OVER leg, the trichotomy: an `Option`-valued step meets it with `DecidableEq`;
+-- at every point of every motion on every `α : Type` it gives excluded middle
+-- (`ZeroParadox/DieCannotBe.lean` § XI).
+#check @ZeroParadox.Motion.overTrichotomy_of_option
+-- Reading: these reductions are what constructive reverse mathematics calls Brouwerian
+-- counterexamples, "T ⟹ P, where P is a general, constructively dubious statement such as LPO" (Diener,
+-- *Constructive Reverse Mathematics*, arXiv:1804.05495v3, p. 6, PDF page 7; cited, not claimed). No count of rows is
+-- recorded (`ZeroParadox/Category/ChoiceCannotBe.md` § "No count is recorded here").
 
 end ChoiceCannotBeIndex

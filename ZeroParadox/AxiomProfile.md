@@ -24,8 +24,8 @@ Mathlib's classically-built libraries, shown in § II for honest contrast.
 
 ⚠ **Not entirely inherited (measured), and on the premise in `ZeroParadox/Category/ChoiceCannotBe.lean`
 § IV not entirely removable (reduced).** The measurements below name the axioms each proof uses, and
-reading the source settles where they come from; necessity rests on the two reductions, as the next
-paragraphs say:
+reading the source settles where they come from; necessity rests on the reductions of
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV, as the next paragraphs say:
 
 | measured | footprint |
 |---|---|
@@ -34,9 +34,13 @@ paragraphs say:
 | `fixedPointFree_of_nontrivial` | `[propext, Classical.choice, Quot.sound]` |
 | `wem_of_fixedPointFree` | `[propext, Quot.sound]` |
 | `em_of_wellOrder_comparable` | `[propext, Quot.sound]` |
+| `botCovered_botIntervalTwo_classical` | `[propext, Classical.choice, Quot.sound]` |
+| `wem_of_botCovered_botIntervalTwo` | `[propext]` |
 
 **Not inherited:** the category-theory face takes its choice from a bare `classical` written in
-framework source (`ZeroParadox/Category/Lawvere.lean`), not from Mathlib.
+framework source (`ZeroParadox/Category/Lawvere.lean`), not from Mathlib, and so does the die's
+cut-to-piece at the least element of a partial order (`botCovered_botIntervalTwo_classical`,
+`ZeroParadox/Die.lean`).
 
 ⚠ **Do not read `no_witness_of_fixedPointFree`'s axiom-freedom as evidence the choice is avoidable.**
 It is not a purer proof of the same statement — it *takes* a fixed-point-free map as a hypothesis,
@@ -45,19 +49,20 @@ supplier, and composing them returns `[propext, Classical.choice, Quot.sound]`. 
 § III reduces the general statement to weak excluded middle, so the `classical` there is
 **essential** in the sense, and on the premise, of `ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
 
-**Reductions, not measurements:** `wem_of_fixedPointFree` and `em_of_wellOrder_comparable` reduce
-two principles to taboos, and they are themselves choice-free — a reduction that used choice would
+**Reductions, not measurements:** `wem_of_fixedPointFree`, `em_of_wellOrder_comparable` and
+`wem_of_botCovered_botIntervalTwo` reduce three principles to taboos, and they are themselves choice-free — a reduction that used choice would
 establish nothing. What they make essential, and the premise it rests on, is stated once in
 `ZeroParadox/Category/ChoiceCannotBe.lean` § IV.
 
-⚠⚠ **Provenance and necessity are independent axes.** The two reductions sit on *opposite* sides
-of provenance: `fixedPointFree_of_nontrivial` spends the framework's own bare `classical`, while
-well-order comparability spends **Mathlib's**, in `InitialSeg.total`. **So, on § IV's premise, an
+⚠⚠ **Provenance and necessity are independent axes.** The reductions sit on *both* sides of
+provenance: `fixedPointFree_of_nontrivial` and `botCovered_botIntervalTwo_classical` spend the
+framework's own bare `classical`, while well-order comparability spends **Mathlib's**, in
+`InitialSeg.total`. **So, on § IV's premise, an
 inherited dependence can be essential**, and *inherited* is not a synonym for *removable*.
 
 | | own | inherited |
 |---|---|---|
-| **essential** (on § IV's premise) | `fixedPointFree_of_nontrivial` | well-order comparability |
+| **essential** (on § IV's premise) | `fixedPointFree_of_nontrivial`, `botCovered_botIntervalTwo_classical` | well-order comparability |
 | **statement-carried** (statement control, measured 2026-10-08) | — | `c3_irreversible`, `t4_snap_orthogonal`, `fD_functor`, `fC_functor`, `snap_dichotomy`, `quine_dichotomy` |
 | **open** | — | the remaining analytic layers (e.g. `fB_functor`, whose statement is choice-free) |
 
@@ -65,7 +70,7 @@ inherited dependence can be essential**, and *inherited* is not a synonym for *r
 reports what that proof used, not what a proof must use. (The statement control is a different
 measurement: it establishes that no proof of a statement as written can drop the choice,
 STATEMENT-CARRIED.) The accidental side needs an **exhibited clean proof**; the essential
-side needs a **reduction**. So the two reductions are the evidence on the necessity side, which
+side needs a **reduction**. So the reductions are the evidence on the necessity side, which
 becomes "not removable" only on § IV's premise. Provenance ("not inherited") is a separate question,
 settled by the footprint table above read against the source.
 

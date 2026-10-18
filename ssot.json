@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2005,
-        "files": 168
+        "declarations": 2007,
+        "files": 169
       },
       "entries": [
         {
@@ -17971,6 +17971,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3a27b3b5-e004-4204-9a77-485860f1ebbc",
+          "new": {
+            "file": "ZeroParadox/Reals/OrderedField.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_covBy_Icc_eq",
+            "short": "em_of_covBy_Icc_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/OrderedField.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_covBy_Icc_eq",
+            "short": "em_of_covBy_Icc_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "EM arc item 2: the two-point closed interval of every cover (Mathlib CovBy.Icc_eq's statement, quantified over partial orders on a Type) implies excluded middle; a reduction for Mathlib's principle, indexed beside ChoiceCannotBe § IV case 3",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3a5b0866-465b-46f0-bb95-b903e5c76132",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -21718,6 +21753,41 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "47fcf3cc-130e-4033-ba82-61719d648eec",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wem_of_botCovered_botIntervalTwo",
+            "short": "wem_of_botCovered_botIntervalTwo"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wem_of_botCovered_botIntervalTwo",
+            "short": "wem_of_botCovered_botIntervalTwo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "EM arc item 2 round-1 fold: the uniform statement of botCovered_botIntervalTwo_classical (cut gives piece at ⊥ over every partial order with ⊥ on a Type) implies weak excluded middle; ESSENTIAL case 3 in ChoiceCannotBe § IV, on the framework's own classical",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -167,6 +167,21 @@ example : (False : Prop) ⋖ True ∧
 -- `Prop` the two differ only in cost: the cover is free, the two-element interval costs excluded
 -- middle, and classically both hold.
 
+/-- `Statement:` if every cover in every partial order on a `Type` has a two-point closed interval
+    (`Set.Icc a b = {a, b}`, the statement of Mathlib's `CovBy.Icc_eq`), excluded middle holds; the
+    reduction is the `Prop` control above, at `False ⋖ True`. -/
+theorem em_of_covBy_Icc_eq
+    (h : ∀ (α : Type) [PartialOrder α] (a b : α), a ⋖ b → Set.Icc a b = {a, b}) :
+    ∀ p : Prop, p ∨ ¬ p := by
+  intro p
+  have hcov : (False : Prop) ⋖ True :=
+    ⟨⟨fun h => h.elim, fun h => h trivial⟩, fun c h1 h2 => h1.2 fun hc => h2.2 fun _ => hc⟩
+  have hp : p ∈ Set.Icc (False : Prop) True := ⟨fun h => h.elim, fun _ => trivial⟩
+  rw [h Prop False True hcov] at hp
+  rcases hp with h0 | h1
+  · exact Or.inr fun hp' => h0 ▸ hp'
+  · exact Or.inl (h1 ▸ trivial)
+
 /-- **The first step is unique.** This is Mathlib's `CovBy.unique_right`, and it is cited as
     such — proved here by hand only to keep the footprint at `[propext]`. Mathlib's version
     routes through `LinearOrder` machinery that pulls in `Classical.choice`, and the framework
@@ -381,6 +396,7 @@ See `ZeroParadox/Valuation/Padic.lean` (`c3_irreversible`, `t5_totallyDisconnect
 section PurityCheck
 #print axioms firstStep_unique
 #print axioms axb1_gives_unique_target
+#print axioms em_of_covBy_Icc_eq
 #print axioms axb1_fails_in_ordered_field
 #print axioms axb1_fails_everywhere_iff_dense
 #print axioms f_density

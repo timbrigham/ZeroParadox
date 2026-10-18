@@ -17,6 +17,8 @@ import Mathlib.Order.Interval.Finset.Basic
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Data.Seq.Computation
 import Mathlib.CategoryTheory.Idempotents.Basic
+import ZeroParadox.Ordinal.PricedInterface
+import ZeroParadox.Valuation.RiemannSphere
 
 set_option maxHeartbeats 400000
 
@@ -858,5 +860,191 @@ example (h : ∀ (α : Type) (f : α → α),
 -- or above it (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b), the least fixed point; one point in
 -- one order (`epsilon0_min_eq_max`). `Motion` carries no order, and reversal leaves UP unchanged.
 #check @ZeroParadox.epsilon0_min_eq_max          -- Statement: ε₀ is the sup of the tower ∧ the least fixed point of ω^· (`IsLeast`)
+
+/-! ### § XIII. Per face — which legs come as data, and what the others cost -/
+-- Reading: three costs are kept apart: a taboo (excluded middle, the weak limited principle of
+-- omniscience, the fragment); non-computability (`no_computable_registration_at_kleene_floor`, § IX);
+-- and STATEMENT-CARRIED choice (`ZeroParadox/Category/ChoiceCannotBe.md`): `runMotion` and
+-- `ordinalTowerMotion` each carry `[propext, Classical.choice, Quot.sound]`, and a statement that only
+-- assumes a premise of either reports it (statement control, measured 2026-10-18).
+-- Statement: `Motion.ofOption`: UP is data, so registration is free on every carrier
+-- (`ofOption_registeredDecidable`, § IX); OVER is any relation, and a data selector on every such
+-- motion gives one on every motion (`[propext]`), hence the fragment by § X's first `example`.
+example (h : ∀ (α : Type) (u : α → Option α) (hu : ∀ x y, y ∈ u x → y ∈ u y) (s : α → α → Prop),
+    (ZeroParadox.Motion.ofOption u hu s).SelectedData) :
+    ∀ (α : Type) (M : ZeroParadox.Motion α), M.SelectedData :=
+  fun α M => h α some (fun _ _ _ => rfl) M.step
+-- Statement: `Bool`, UP constant `true`, OVER `≠`: registered, selected, the trichotomy at every point,
+-- and no fan-in (`[propext]`).
+example : let M := ZeroParadox.Motion.ofTotal (fun _ : Bool => true) (fun _ => rfl) (fun a b => a ≠ b)
+    M.RegisteredDecidable ∧ M.SelectedTotal ∧ (∀ y, M.OverTrichotomy y) ∧ ∀ y, ¬ M.FanIn y :=
+  ⟨ZeroParadox.Motion.registeredDecidable_of_upTotal (ZeroParadox.Motion.ofTotal_upTotal _ _ _),
+   ZeroParadox.Motion.selectedTotal_of_fun (fun b => !b) (fun a b => show a ≠ b ↔ b = !a by
+     cases a <;> cases b <;> decide),
+   fun y => Or.inr (Or.inr ⟨!y, show y ≠ !y by cases y <;> decide, by cases y <;> decide⟩),
+   fun y ⟨a, b, hab, ha, hb⟩ => by
+     change a ≠ y at ha; change b ≠ y at hb
+     revert hab ha hb; cases a <;> cases b <;> cases y <;> decide⟩
+-- Statement: the ordinal face on `E0Note` (`ZeroParadox/Ordinal/PricedInterface.lean`), UP constant ⊤,
+-- the only fixed point of OVER `e0OmegaPow` (`e0OmegaPow_fixedpoint_iff`, below): registered, selected,
+-- the trichotomy at every point (`e0DecidableEq`), no fan-in, and the notation tower's stages close at
+-- ⊤ (`[propext]`).
+example : let M := (ZeroParadox.Motion.ofTotal (fun _ : ZeroParadox.E0Note => ⊤) (fun _ => rfl)
+      (fun a b => b = ZeroParadox.e0OmegaPow a))
+    M.RegisteredDecidable ∧ M.SelectedTotal ∧ (∀ y, M.OverTrichotomy y) ∧ (∀ y, ¬ M.FanIn y) ∧
+      M.StageClosure (Set.range fun n => ZeroParadox.e0Coe (ZeroParadox.tower n)) (Part.some ⊤) := by
+  intro M
+  have inj : Function.Injective ZeroParadox.e0OmegaPow := by
+    intro a b h
+    induction a using WithTop.recTopCoe with
+    | top =>
+      induction b using WithTop.recTopCoe with
+      | top => rfl
+      | coe y => exact absurd h.symm WithTop.coe_ne_top
+    | coe x =>
+      induction b using WithTop.recTopCoe with
+      | top => exact absurd h WithTop.coe_ne_top
+      | coe y =>
+        have h' : ZeroParadox.omegaPow (ZeroParadox.ofSyn x) =
+            ZeroParadox.omegaPow (ZeroParadox.ofSyn y) :=
+          congrArg ZeroParadox.ofSyn (WithTop.coe_injective h)
+        unfold ZeroParadox.omegaPow at h'
+        cases h'
+        rfl
+  exact ⟨ZeroParadox.Motion.registeredDecidable_of_upTotal (ZeroParadox.Motion.ofTotal_upTotal _ _ _),
+    ZeroParadox.Motion.selectedTotal_of_fun _ (fun _ _ => Iff.rfl),
+    fun y => @ZeroParadox.Motion.overTrichotomy_of_option _ M ZeroParadox.e0DecidableEq
+      (fun a => some (ZeroParadox.e0OmegaPow a))
+      (fun _ _ => ⟨fun h => h ▸ rfl, fun h => (Option.some_inj.1 h).symm⟩) y,
+    fun y => ZeroParadox.Motion.not_fanIn_of_injective _ inj (fun _ _ => Iff.rfl) y,
+    by rintro _ ⟨n, rfl⟩; exact ⟨fun h => WithTop.coe_ne_top (Part.mem_some_iff.1 h), rfl⟩⟩
+-- Reading: ⊤ is adjoined by definition (`e0OmegaPow_top` is `rfl`) and `E0Note`'s order is not
+-- well-founded; naming ⊤ as ε₀ crosses into `Ordinal` by `e0Repr`, whose footprint carries choice, so
+-- on this face the cost moved to that map and did not vanish. Against it, `ordinalTowerMotion` meets
+-- the same four cells (§§ IX–XII) with statement-carried footprints.
+#check @ZeroParadox.e0Repr_eq_epsilon0_iff        -- Statement: `e0Repr a = ε₀ ↔ a = ⊤`
+#check @ZeroParadox.e0OmegaPow_top                -- Statement: `e0OmegaPow ⊤ = ⊤`, by `rfl`
+#check @ZeroParadox.e0OmegaPow_fixedpoint_iff     -- Statement: `e0OmegaPow a = a ↔ a = ⊤`
+-- Statement: the machine face's OVER, an `Option`-valued function: the trichotomy at every point of
+-- every carrier `σ : Type` gives excluded middle (`[propext]`). At `Prop`, `_ ↦ some True` returns to
+-- `p` exactly when `p` holds; with `DecidableEq` it is free (`overTrichotomy_of_option`, § XI).
+example (H : ∀ (σ : Type) (f : σ → Option σ) (y : σ),
+    (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b => f a = some b)).OverTrichotomy y) :
+    ZeroParadox.ExcludedMiddle := by
+  intro p
+  rcases H Prop (fun _ => some True) p with h | ⟨_, h⟩ | ⟨b, hb, hne⟩
+  · exact absurd rfl (h True)
+  · exact Or.inl ((h True rfl) ▸ trivial)
+  · have hb' : b = True := (Option.some_inj.1 hb).symm
+    subst hb'
+    exact Or.inr fun hp => hne (propext ⟨fun _ => hp, fun _ => trivial⟩)
+-- Statement: bit tapes `ℕ → Bool`, UP constant ⊥ (the all-false tape), OVER prepending `false`: both
+-- legs are functions, registered and selected, with no fan-in (`[propext, Quot.sound]`).
+example : let M := (ZeroParadox.Motion.ofTotal (fun _ : ℕ → Bool => ⊥) (fun _ => rfl)
+      (fun a b => b = fun n => match n with | 0 => false | k + 1 => a k))
+    M.RegisteredDecidable ∧ M.SelectedTotal ∧ ∀ y, ¬ M.FanIn y :=
+  ⟨ZeroParadox.Motion.registeredDecidable_of_upTotal (ZeroParadox.Motion.ofTotal_upTotal _ _ _),
+   ZeroParadox.Motion.selectedTotal_of_fun _ (fun _ _ => Iff.rfl),
+   fun y => ZeroParadox.Motion.not_fanIn_of_injective
+     (fun a : ℕ → Bool => fun n => match n with | 0 => false | k + 1 => a k)
+     (fun _ _ h => funext fun k => congrFun h (k + 1)) (fun _ _ => Iff.rfl) y⟩
+-- Statement: and there the trichotomy at every point is equivalent to the weak limited principle of
+-- omniscience at ⊥ of `ℕ → Bool` (`ZeroParadox/Category/ChoiceCannotBe.lean` § II), since the step
+-- returns to `x` exactly when `x = ⊥` (`[propext, Quot.sound]`).
+example : let M := (ZeroParadox.Motion.ofTotal (fun _ : ℕ → Bool => ⊥) (fun _ => rfl)
+      (fun a b => b = fun n => match n with | 0 => false | k + 1 => a k))
+    (∀ y, M.OverTrichotomy y) ↔ ∀ x : ℕ → Bool, x = ⊥ ∨ x ≠ ⊥ := by
+  intro M
+  have fix : ∀ x : ℕ → Bool, ((fun n => match n with | 0 => false | k + 1 => x k) = x) ↔ x = ⊥ := by
+    intro x
+    constructor
+    · intro h
+      funext n
+      induction n with
+      | zero => exact (congrFun h 0).symm
+      | succ k ih => rw [← congrFun h (k + 1)]; exact ih
+    · rintro rfl; funext n; cases n <;> rfl
+  constructor
+  · intro H x
+    rcases H x with h | ⟨h, _⟩ | ⟨b, hb, hne⟩
+    · exact absurd rfl (h _)
+    · exact Or.inl ((fix x).1 h.symm)
+    · refine Or.inr fun hx => hne ?_
+      rw [hb]; exact (fix x).2 hx
+  · intro W y
+    rcases W y with h | h
+    · refine Or.inr (Or.inl ⟨((fix y).2 h).symm, fun b hb => ?_⟩)
+      rw [hb]; exact (fix y).2 h
+    · exact Or.inr (Or.inr ⟨_, rfl, fun e => h ((fix y).1 e)⟩)
+-- Reading: the prediction that a face pays a taboo exactly on the legs it does not present as data
+-- holds on `Motion.ofOption` (over every carrier) and on `Bool` and `E0Note` (per instance), and fails
+-- on the OVER leg of the last two faces, over every carrier for the machine face and on the one carrier
+-- `ℕ → Bool` for bit tapes: OVER is a function, and the trichotomy still reaches a taboo through the
+-- carrier's equality, which the leg does not supply. The machine face's own UP,
+-- `StateTransition.eval`, is partial and is not the leg measured here.
+
+/-! ### § XIV. Reversing OVER by an involution of the carrier -/
+-- Statement: an involution `σ` with `step a b ↔ step (σ b) (σ a)` sends each source (a point with no
+-- predecessor) to a sink (a point with no successor) (`[propext]`).
+-- Reading (cited, not claimed): the shape is Devaney's reversing involution, `R² = identity`, under which
+-- a vector field or a diffeomorphism is R-reversible (Devaney, "Reversible diffeomorphisms and flows",
+-- Trans. AMS 218 (1976) 89–113, pp. 89–90), here for a step relation and without his condition
+-- `dim Fix(R) = ½ dim M`. The relational form is ours, an instance of that shape and not a
+-- generalization of his results.
+example {α : Type} (M : ZeroParadox.Motion α) (σ : α → α) (hσ : Function.Involutive σ)
+    (hr : ∀ a b, M.step a b ↔ M.step (σ b) (σ a)) (y : α) :
+    (∀ a, ¬ M.step a y) ↔ M.NoStepAt (σ y) :=
+  ⟨fun h b hb => h _ (by rw [hr, hσ] at hb; exact hb), fun h a ha => h (σ a) ((hr _ _).1 ha)⟩
+-- Statement: non-member: on `OnePoint ℕ`, which is `Option ℕ`, OVER `Option.map Nat.succ` steps `∞` to
+-- itself and has the source `0` and no sink; no involution reverses it (`[propext]`).
+example : ¬ ∃ σ : OnePoint ℕ → OnePoint ℕ, Function.Involutive σ ∧
+    ∀ a b : OnePoint ℕ, (b = Option.map Nat.succ a ↔ σ a = Option.map Nat.succ (σ b)) := by
+  rintro ⟨σ, hσ, hr⟩
+  have h0 : ∀ a : OnePoint ℕ, ¬ (OnePoint.some 0 = Option.map Nat.succ a) := fun a ha =>
+    match a, ha with
+    | none, (ha : some 0 = none) => nomatch ha
+    | some n, (ha : some 0 = some (n + 1)) => Nat.succ_ne_zero n (Option.some.inj ha).symm
+  refine h0 (σ (Option.map Nat.succ (σ (OnePoint.some 0)))) ?_
+  have := (hr (σ (OnePoint.some 0)) (Option.map Nat.succ (σ (OnePoint.some 0)))).1 rfl
+  rw [hσ] at this
+  exact this
+-- Statement: member on the same carrier: OVER `0 → ∞` alone, reversed by the involution exchanging `0`
+-- and `∞`.
+example : let σ : OnePoint ℕ → OnePoint ℕ := fun o => match o with
+      | none => some 0
+      | some 0 => none
+      | some (n + 1) => some (n + 1)
+    Function.Involutive σ ∧ ∀ a b : OnePoint ℕ,
+      (a = some 0 ∧ b = none) ↔ (σ b = some 0 ∧ σ a = none) := by
+  intro σ
+  have l1 : ∀ b, σ b = some 0 ↔ b = none := by
+    intro b
+    rcases b with _ | _ | m
+    · exact ⟨fun _ => rfl, fun _ => rfl⟩
+    · exact ⟨fun h => (nomatch h), fun h => (nomatch h)⟩
+    · exact ⟨fun h => absurd (Option.some.inj h) (Nat.succ_ne_zero m), fun h => (nomatch h)⟩
+  have l2 : ∀ a, σ a = none ↔ a = some 0 := by
+    intro a
+    rcases a with _ | _ | n
+    · exact ⟨fun h => (nomatch h), fun h => (nomatch h)⟩
+    · exact ⟨fun _ => rfl, fun _ => rfl⟩
+    · exact ⟨fun h => (nomatch h), fun h => absurd (Option.some.inj h) (Nat.succ_ne_zero n)⟩
+  refine ⟨fun o => ?_, fun a b => ⟨fun ⟨ha, hb⟩ => ⟨(l1 b).2 hb, (l2 a).2 ha⟩,
+    fun ⟨hb, ha⟩ => ⟨(l2 a).1 ha, (l1 b).1 hb⟩⟩⟩
+  rcases o with _ | _ | n <;> rfl
+-- Statement: members: `Fin 3` with OVER `0 → 1 → 2` and `Fin.rev`; `Bool` with OVER `false → true` and
+-- `not`, the two-state step off ⊥ of `Bool`.
+example : ∀ a b : Fin 3, ((a = 0 ∧ b = 1) ∨ (a = 1 ∧ b = 2)) ↔
+    ((Fin.rev b = 0 ∧ Fin.rev a = 1) ∨ (Fin.rev b = 1 ∧ Fin.rev a = 2)) := by decide
+example : ∀ a b : Bool, (a = false ∧ b = true) ↔ ((!b) = false ∧ (!a) = true) := by decide
+-- Statement: member: ℤ with OVER `a ↦ a + 1`, which has no source and no sink, and negation
+-- (`[propext, Quot.sound]`).
+example : ∀ a b : ℤ, (b = a + 1 ↔ -a = -b + 1) := fun a b => by constructor <;> intro h <;> omega
+#check @ZeroParadox.rInv_conj_rScale             -- Statement: on `OnePoint ℚ_[2]`, `rInv ∘ rScale n ∘ rInv = rScale (-n)`
+-- Reading: an end-exchanging reversal is a property of the step, not of which ends of the one pole
+-- ⊥ = 0 = ∞ the carrier holds as points: on `OnePoint ℕ`, `Option.map Nat.succ` admits none and
+-- `0 → ∞` admits one. The obstruction measured is the motion's sources against its sinks, which a
+-- reversal exchanges. The adjoined-points switch (§ I) does not count ends: `OnePoint ℕ` and
+-- `OnePoint ℚ_[2]` each adjoin one point and hold both `0` and `∞`; that switch stands as stated in § I.
 
 end DieCannotBeIndex
