@@ -203,9 +203,9 @@ run_cmd do
       -- `/rely` round 2: the marker used to be printed BEFORE the loop, so it proved a module was
       -- ENTERED, never that its declarations were EMITTED -- truncating stdout after the last
       -- marker still wrote a table at "221 of 221 modules" with no complaint. And the blind spot
-      -- is OCCUPIED: 8 of 221 modules genuinely emit zero rows (`AxiomProfile`,
-      -- `DiagonalFixedPoint`, and all five `*CannotBe.lean` indexes, which are `#check`-only and
-      -- declare nothing). So "correctly empty" and "truncated" returned the same value.
+      -- is OCCUPIED: at `/rely` round 2, 8 of 221 modules emitted zero rows (`AxiomProfile`,
+      -- `DiagonalFixedPoint`, and the `*CannotBe.lean` indexes, which declare nothing -- `#check`
+      -- lines and anonymous `example`s). So "correctly empty" and "truncated" returned the same value.
       -- That is `R-ZERONULL` exactly. The COUNT is what separates them: the driver checks that
       -- the per-module counts SUM to the rows it actually parsed.
       IO.println s!"MOD\\t{{m}}\\t{{cnt}}"

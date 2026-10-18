@@ -376,10 +376,10 @@ TRIGGER  ANY work on a public-facing surface, READING INCLUDED (Tim, 2026-09-14:
          question option put to Tim, an agent brief, a commit message. NO TOPIC LIST: the old
          trigger named directions, poles, min/max, and a "retired" → "never retired" flip passed
          straight through it; a list of topics is a category, and categories leak.
-RULE     FIRST load the five `*CannotBe.lean` indexes whole — `ZeroParadox/BottomCannotBe.lean`
+RULE     FIRST load the `*CannotBe.lean` indexes whole — `ZeroParadox/BottomCannotBe.lean`
          `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` `ZeroParadox/Order/SnapCannotBe.lean`
          `ZeroParadox/Category/ChoiceCannotBe.lean` `ZeroParadox/Computability/ComputationCannotBe.lean`
-         — once per session and again after compaction. Before you write, delete, negate or reverse
+         `ZeroParadox/DieCannotBe.lean` — once per session and again after compaction. Before you write, delete, negate or reverse
          ANY claim — acting on a review finding and restating a ruling included — write it in the
          OTHER chart: if it holds there too, the defect is a MISSING CHART and the fix ADDS that
          chart — a flip or a delete writes the opposite one-chart sentence, the next round's finding.
