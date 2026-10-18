@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1926,
-        "files": 166
+        "declarations": 1953,
+        "files": 167
       },
       "entries": [
         {
@@ -5336,6 +5336,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0ffa77c1-d4d9-4f45-83f3-859edc8f82b9",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.reachPreorder",
+            "short": "reachPreorder"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.reachPreorder",
+            "short": "reachPreorder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17792,6 +17829,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3c0becc3-0b0c-495e-a5eb-6e7848f74a70",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.EveryStepCovered",
+            "short": "EveryStepCovered"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.EveryStepCovered",
+            "short": "EveryStepCovered",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3c173d44-7a47-468e-bca7-4a9abfb8cd27",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleDepthWitness.lean",
@@ -20546,6 +20622,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "46cc45dd-a1c6-4a9a-8076-490ea71acffa",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_overAtLanding",
+            "short": "corner_overAtLanding"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_overAtLanding",
+            "short": "corner_overAtLanding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "46e2def8-6b53-4f94-bea1-70c661a8720e",
           "new": {
@@ -21246,6 +21361,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "48cf44a5-eddc-415c-ad0d-7aedd430531c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.climb_three",
+            "short": "climb_three"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.climb_three",
+            "short": "climb_three",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "48f4c9e1-d67f-4433-819f-04e1eff424f7",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -21933,6 +22087,45 @@
             ]
           },
           "reason": "ZPK-BED arc: the two spellings of a code's Godel number, as tracked witnesses for ZP-K section IV's measurement table",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4bc70004-c05f-4856-8387-450ac8229114",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.HasLanding",
+            "short": "HasLanding"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.HasLanding",
+            "short": "HasLanding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29338,6 +29531,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6858530c-ccb7-4968-930e-a60980d3f721",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Climb",
+            "short": "Climb"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Climb",
+            "short": "Climb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6881b2ad-cdd2-4ab5-8b7f-3629c944fb94",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -31042,6 +31274,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6dcfe48e-b93d-484e-b92e-b596f7202b9a",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.OverToUndefined",
+            "short": "OverToUndefined"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.OverToUndefined",
+            "short": "OverToUndefined",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6dd36955-32af-470c-bd93-2f5c8809926d",
           "new": {
@@ -31334,6 +31605,84 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6effb820-5cc8-4d2f-8904-675c42bee54f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.loop_corner",
+            "short": "loop_corner"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.loop_corner",
+            "short": "loop_corner",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6f08a163-b24b-40a1-b91b-e1be5f6d05ad",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Loop",
+            "short": "Loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Loop",
+            "short": "Loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6f0ed056-1fad-40a7-94ba-1880d93d3a2f",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -31398,6 +31747,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6f5c400c-2202-4359-8044-53f6a23c241f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BotIntervalTwo",
+            "short": "BotIntervalTwo"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.BotIntervalTwo",
+            "short": "BotIntervalTwo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33688,6 +34076,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "77a52dd6-f1d9-4522-b985-4b8a5fa4a836",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpTotal",
+            "short": "UpTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpTotal",
+            "short": "UpTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "77d0d5c2-861d-4ec0-bc82-84ed21c824ad",
           "new": {
@@ -33791,6 +34218,45 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7815675b-2cad-4a15-a4c5-8c03a814c669",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_overToUndefined_of_upTotal",
+            "short": "not_overToUndefined_of_upTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_overToUndefined_of_upTotal",
+            "short": "not_overToUndefined_of_upTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -36779,6 +37245,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "82e4df30-b017-45b2-9fb3-6f22fcfee1d9",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botCovered_botIntervalTwo_classical",
+            "short": "botCovered_botIntervalTwo_classical"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botCovered_botIntervalTwo_classical",
+            "short": "botCovered_botIntervalTwo_classical",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Gate round 1: the classical form of cut ⇒ piece, measuring the DecidableEq cost",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "82f4811d-5731-4c41-83bd-e93a025da338",
           "new": {
             "file": "ZeroParadox/Computability/GroundZero.lean",
@@ -38067,6 +38572,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8793eed0-f466-4b7b-ad54-cde4b2adbf1e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.IsLanding",
+            "short": "IsLanding"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.IsLanding",
+            "short": "IsLanding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "87ca89a5-e8a8-4103-8270-07bbfc327279",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -39136,6 +39680,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8de7a063-a634-42e9-b921-baa368f7be34",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofTotal_upTotal",
+            "short": "ofTotal_upTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofTotal_upTotal",
+            "short": "ofTotal_upTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8e32795d-5705-4108-ad97-f86b708c3813",
           "new": {
@@ -39859,6 +40440,45 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "907ff8e4-3709-4d43-9f36-5763afc3bf76",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.OverAtLanding",
+            "short": "OverAtLanding"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.OverAtLanding",
+            "short": "OverAtLanding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46023,6 +46643,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a6b50435-9221-4018-9e56-ebd6a03cf1ed",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botCovered_botIntervalTwo",
+            "short": "botCovered_botIntervalTwo"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botCovered_botIntervalTwo",
+            "short": "botCovered_botIntervalTwo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a6eba2bf-edbf-47f3-80bb-4a1ba7ab2779",
           "new": {
             "file": "ZeroParadox/Information/Disjunctive.lean",
@@ -48231,6 +48890,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "aeca1153-5f6e-4226-a37e-cb0b1d754dac",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofTotal",
+            "short": "ofTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofTotal",
+            "short": "ofTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "af0c3599-5019-4454-8c76-4c6a2f241932",
           "new": {
             "file": "ZeroParadox/Valuation/PadicTree.lean",
@@ -49693,6 +50389,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b3d1e137-c0c5-426f-9aa4-de33a4cd5637",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BotCovered",
+            "short": "BotCovered"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.BotCovered",
+            "short": "BotCovered",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56105,6 +56840,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "cbbfbbef-d498-4dc7-b956-3bdc2246620f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.everyStepCovered_botCovered",
+            "short": "everyStepCovered_botCovered"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.everyStepCovered_botCovered",
+            "short": "everyStepCovered_botCovered",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "cc044ef6-b407-440b-ab77-0de9a1520a84",
           "new": {
@@ -59524,6 +60298,45 @@
             ]
           },
           "reason": "Dedup: rename-twin of fresh add_new weak_gseq_measure_lt (same HEAD decl); old identity renamed in source, deps remapped to fresh entry",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d89a565e-f195-4404-886c-67d4bf2c01c8",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_step_moves",
+            "short": "corner_step_moves"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_step_moves",
+            "short": "corner_step_moves",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -65564,6 +66377,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ed6089f3-35da-40a8-9206-30e2d17aef47",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botIntervalTwo_botCovered",
+            "short": "botIntervalTwo_botCovered"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botIntervalTwo_botCovered",
+            "short": "botIntervalTwo_botCovered",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ed85d1f2-0c2c-4f6c-8707-880fe8d98e7b",
           "new": {
@@ -65825,6 +66677,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ee4e5cdc-7410-447a-98a7-28794794ac84",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UniqueBotCover",
+            "short": "UniqueBotCover"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UniqueBotCover",
+            "short": "UniqueBotCover",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ee74cedd-b8f2-467d-adc3-5b2f8abecdc2",
           "new": {
             "file": "ZeroParadox/Computability/SelfCopyReference.lean",
@@ -65957,6 +66848,45 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ef1a956a-8c41-4878-8fb8-f4b7f1ddd281",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.climb_corner",
+            "short": "climb_corner"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.climb_corner",
+            "short": "climb_corner",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66543,6 +67473,86 @@
             ]
           },
           "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f208d812-63b9-4103-98bf-a027208e3c64",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion",
+            "short": "Motion"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion",
+            "short": "Motion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "ceiling",
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f208eb2f-11e8-47e9-bd0e-2c1b345c9ae5",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unique_succ_covBy",
+            "short": "unique_succ_covBy"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unique_succ_covBy",
+            "short": "unique_succ_covBy",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -68660,6 +69670,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f807ec79-2260-4d2e-9599-c221202c4a76",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Corner",
+            "short": "Corner"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Corner",
+            "short": "Corner",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
           "verify": {
             "axioms": null,
             "sorry_free": true
