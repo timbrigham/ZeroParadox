@@ -16,6 +16,7 @@ import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.Interval.Finset.Basic
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Data.Seq.Computation
+import Mathlib.CategoryTheory.Idempotents.Basic
 
 set_option maxHeartbeats 400000
 
@@ -56,14 +57,15 @@ example {α : Type} (f : α → α) : IsIdempotentElem (show Function.End α fro
 /-! ### § I. The switches -/
 -- Reading (cited, not claimed): UP beside OVER has the shape of rewriting logic's split of equations
 -- from rules. "One step, then UP" from a landing is the canonical transition system (Meseguer,
--- "Generalized Rewrite Theories and Coherence Completion", Def. 8, p. 10; pages of the 28-page copy
--- read, which prints no venue, year or report number) and the relation of
+-- "Generalized Rewrite Theories and Coherence Completion", Rewriting Logic and Its Applications, LNCS,
+-- 2018, pp. 164–183, doi 10.1007/978-3-319-99840-4_10, record checked at Crossref 2026-10-18; Def. 8,
+-- p. 10 of the 28-page copy read, which prints no venue and is not the LNCS pagination) and the relation of
 -- R. Diaconescu, "Non-Deterministic Algebraic Rewriting as Adjunction", arXiv:2204.12133, Defs.
 -- 11–12, so Loop and Climb are properties of one canonical edge. Delta: in Meseguer UP is total, the
 -- normal form modulo the axioms B of a convergent equation system; in R. Diaconescu (Def. 11) it is a
 -- total homomorphism into a subset it fixes, with equations only in his Examples 8–9. Meseguer requires
--- coherence (p. 11, with Theorem 4) for the canonical system to be faithful to the rules; the analogue
--- in R. Diaconescu is β-coherence (Def. 12, a hypothesis of his Props. 5.1 and 5.5), to which he says
+-- coherence (p. 11, with Theorem 4) for the canonical system to be faithful to the rules; the
+-- counterpart condition in R. Diaconescu is β-coherence (Def. 12, a hypothesis of his Props. 5.1 and 5.5), to which he says
 -- the Maude literature's coherence conditions bear "some similarity" while playing "a different role"
 -- (p. 26). Neither is imposed here. No counterpart of the switches was located in these two sources
 -- as of 2026-10-18 (UP is total in both; their text, searched for "partial", "loop" and "cycle", has
@@ -587,7 +589,7 @@ example : ∃ M : ZeroParadox.Motion Nat.Partrec.Code,
 #check @ZeroParadox.em_of_poleDiscriminator     -- Statement: a total test of definedness on `Part Unit` gives excluded middle
 #check @ZeroParadox.em_of_choiceFragment        -- Statement: the two-element choice fragment gives excluded middle
 #check @ZeroParadox.select_of_decidable         -- Statement: a decidable inhabited predicate on `Bool` has a witness computed by `if`
--- Statement: registering every motion on a `Type` ⇒ excluded middle (no axioms).
+-- Statement: registering every motion on every `α : Type` ⇒ excluded middle (no axioms).
 example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable) :
     ZeroParadox.ExcludedMiddle := by
   intro p
@@ -597,7 +599,8 @@ example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable)
   exact match d () with
     | isTrue hp => Or.inl hp
     | isFalse hn => Or.inr hn
--- Statement: the two-element choice fragment ⇒ every motion on a `Type` registered (`[propext, Quot.sound]`).
+-- Statement: the two-element choice fragment ⇒ every motion on every `α : Type` registered
+-- (`[propext, Quot.sound]`).
 example (h : ZeroParadox.ChoiceFragment) {α : Type} (M : ZeroParadox.Motion α) :
     M.RegisteredDecidable := by
   obtain ⟨ch, hch⟩ := h
@@ -615,7 +618,7 @@ example (h : ZeroParadox.ChoiceFragment) {α : Type} (M : ZeroParadox.Motion α)
     · exact h1
   · have : A = B := funext fun b => propext ⟨fun _ => Or.inr hp, fun _ => Or.inr hp⟩
     rw [this]
--- Statement: registering every motion on a `Type` ⇒ the two-element choice fragment (no axioms).
+-- Statement: registering every motion on every `α : Type` ⇒ the two-element choice fragment (no axioms).
 example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable) :
     ZeroParadox.ChoiceFragment := by
   let M : ZeroParadox.Motion (Bool → Prop) :=
@@ -630,14 +633,220 @@ example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable)
     · exact hb
     · exact absurd hb this
   · exact @of_decide_eq_true _ (d S) hS
--- Statement: by the three `example`s above and `em_of_choiceFragment`, registration on a `Type` and
--- the fragment are inter-derivable and each gives excluded middle, none of the four using
--- `Classical.choice` (footprints: the glosses above; `ExcludedMiddleBridge.lean`'s PurityCheck);
--- `Part Unit` form: `ZeroParadox/Valuation/PoleRegistration.lean` § II.
--- Reading (cited, not claimed): an instance of "L X ≃ X + 1 iff the canonical map 2 → Ω is an
--- equivalence iff excluded middle holds" (Escardó and Knapp, "Partial Elements and Recursion via
--- Dominances in Univalent Type Theory", CSL 2017, LIPIcs 82, § 2.7, p. 21:6; T. de Jong,
--- arXiv:2407.06952, Prop. 5.7, p. 13), read in Lean's `Prop`/`Type` split, where the data side is
--- `Decidable`, equivalently the `Bool` choice fragment; an instance of theirs, not a generalization.
+-- Statement: by the three preceding `example`s and `em_of_choiceFragment`, registration on every
+-- `α : Type` and the fragment are inter-derivable and each gives excluded middle, none of the four
+-- using `Classical.choice` (footprints: the glosses above; the PurityCheck of
+-- `ZeroParadox/Category/ExcludedMiddleBridge.lean`); `Part Unit` form:
+-- `ZeroParadox/Valuation/PoleRegistration.lean` § II.
+-- Statement: given unique choice into `Bool` as a hypothesis, registration on every `α : Type` and
+-- excluded middle are inter-derivable (no axioms).
+example (uc : ∀ P : Bool → Prop, (∃! b, P b) → {b : Bool // P b}) :
+    (∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable) ↔ ZeroParadox.ExcludedMiddle := by
+  refine ⟨fun h p => ?_, fun hem α M => ⟨fun a => ?_⟩⟩
+  · let M : ZeroParadox.Motion Unit :=
+      ⟨fun _ => Part.mk p (fun _ => ()), fun _ _ hy => hy, fun _ _ => False⟩
+    obtain ⟨d⟩ := h Unit M
+    exact match d () with
+      | isTrue hp => Or.inl hp
+      | isFalse hn => Or.inr hn
+  · have hu : ∃! b : Bool, (b = true ∧ (M.up a).Dom) ∨ (b = false ∧ ¬ (M.up a).Dom) := by
+      rcases hem (M.up a).Dom with hp | hn
+      · exact ⟨true, Or.inl ⟨rfl, hp⟩, fun _ hy => hy.elim And.left (fun h => absurd hp h.2)⟩
+      · exact ⟨false, Or.inr ⟨rfl, hn⟩, fun _ hy => hy.elim (fun h => absurd h.2 hn) And.left⟩
+    obtain ⟨b, hb⟩ := uc _ hu
+    exact match b, hb with
+      | true, hb => isTrue (hb.elim And.right (fun h => absurd h.1 (by decide)))
+      | false, hb => isFalse (hb.elim (fun h => absurd h.1 (by decide)) And.right)
+-- Reading (cited, not claimed): Escardó and Knapp, "Partial Elements and Recursion via Dominances in
+-- Univalent Type Theory", CSL 2017, LIPIcs 82: § 2.2, p. 21:4, "The assertion that every partial
+-- element is defined or else undefined is equivalent to the principle of excluded middle (every
+-- proposition is inhabited or empty)", and § 2.7, p. 21:6, "L X ≃ X + 1 iff the canonical map 2 → Ω
+-- is an equivalence iff excluded middle holds"; T. de Jong, arXiv:2407.06952, Prop. 5.7, p. 13, credits
+-- the equivalence to their § 2.2. In Lean's `Prop`/`Type` split their excluded middle sits on the data
+-- side, `∀ p, Decidable p`, equivalently the `Bool` choice fragment, and the PROVED legs above are
+-- instances of their equivalence on that side: registration on every `α : Type` ⇔ the fragment. The
+-- `Prop`-valued `ZeroParadox.ExcludedMiddle` is reached one way, and back only with the unique-choice
+-- hypothesis of the previous `example`; without it the converse is not established in Lean
+-- (`ZeroParadox/Category/ChoiceCannotBe.md`). An instance of theirs, not a generalization.
+
+/-! ### § X. The OVER leg's WHICH — selection, in two variants -/
+#check @ZeroParadox.Motion.SelectedData         -- Statement: (a) at every point with a successor, a successor chosen as data
+#check @ZeroParadox.Motion.SelectedTotal        -- Statement: (b) one map choosing a successor at every point that has one
+#check @ZeroParadox.Motion.selectedData_of_selectedTotal -- Statement: (b) ⇒ (a); one way
+#check @ZeroParadox.Motion.selectedTotal_of_selectedData -- Statement: (a) ⇒ (b), given a decision at every point of whether a successor exists
+#check @ZeroParadox.Motion.selectedTotal_of_classical -- Statement: under `classical` every motion is in (b), so neither variant has a non-member there
+#check @ZeroParadox.Motion.selectedTotal_of_fun -- Statement: a step given by a function is in (b)
+#check @ZeroParadox.Motion.selectedTotal_of_option -- Statement: a step given by an `Option`-valued function is in (b)
+-- Statement: members: the run motion of any `f : σ → Option σ`, and the ordinal tower motion.
+example {σ : Type} (f : σ → Option σ) : (ZeroParadox.runMotion f).SelectedTotal :=
+  ZeroParadox.Motion.selectedTotal_of_option f (fun _ _ => Iff.rfl)
+example : ZeroParadox.ordinalTowerMotion.{0}.SelectedTotal :=
+  ZeroParadox.Motion.selectedTotal_of_fun _ (fun _ _ => Iff.rfl)
+-- Statement: (a) on every motion on every `α : Type` ⇒ the two-element choice fragment. The carrier is
+-- `(Bool → Prop) × Bool` with OVER `(S, _) → (S, b)` when `S b`; both predicates of
+-- `em_of_choiceFragment`'s pair are inhabited, so the selector decides `S true` as data
+-- (`[propext, Quot.sound]`).
+example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.SelectedData) :
+    ZeroParadox.ChoiceFragment := by
+  obtain ⟨g⟩ := h _ (ZeroParadox.Motion.ofTotal id (fun _ => rfl)
+    (fun x y : (Bool → Prop) × Bool => y.1 = x.1 ∧ x.1 y.2))
+  let pick : ∀ S : Bool → Prop, (∃ b, S b) → Bool := fun S hS =>
+    (g (S, true) (hS.elim fun b hb => ⟨(S, b), rfl, hb⟩)).1.2
+  have spec : ∀ (S : Bool → Prop) (hS : ∃ b, S b), S (pick S hS) := fun S hS =>
+    (g (S, true) (hS.elim fun b hb => ⟨(S, b), rfl, hb⟩)).2.2
+  have cong : ∀ (X Y : Bool → Prop) hX hY, X = Y → pick X hX = pick Y hY := by
+    intro X Y hX hY e; subst e; rfl
+  have key : ∀ S : Bool → Prop, pick (fun b => b = true ∨ S true) ⟨true, Or.inl rfl⟩ =
+      pick (fun b => b = false ∨ S true) ⟨false, Or.inl rfl⟩ ↔ S true := by
+    intro S
+    refine ⟨fun e => ?_, fun hp => cong _ _ ⟨true, Or.inl rfl⟩ ⟨false, Or.inl rfl⟩
+      (funext fun b => propext ⟨fun _ => Or.inr hp, fun _ => Or.inr hp⟩)⟩
+    rcases spec (fun b => b = true ∨ S true) ⟨true, Or.inl rfl⟩ with h1 | h1
+    · rcases spec (fun b => b = false ∨ S true) ⟨false, Or.inl rfl⟩ with h2 | h2
+      · exact absurd (h1.symm.trans (e.trans h2)) (by decide)
+      · exact h2
+    · exact h1
+  refine ⟨fun S => decide (pick (fun b => b = true ∨ S true) ⟨true, Or.inl rfl⟩ =
+    pick (fun b => b = false ∨ S true) ⟨false, Or.inl rfl⟩), fun S ⟨b, hb⟩ => ?_⟩
+  show S (decide (pick (fun b => b = true ∨ S true) ⟨true, Or.inl rfl⟩ =
+    pick (fun b => b = false ∨ S true) ⟨false, Or.inl rfl⟩))
+  cases hd : decide (pick (fun b => b = true ∨ S true) ⟨true, Or.inl rfl⟩ =
+    pick (fun b => b = false ∨ S true) ⟨false, Or.inl rfl⟩)
+  · have hn : ¬ S true := fun hp => absurd ((key S).2 hp) (of_decide_eq_false hd)
+    cases b
+    · exact hb
+    · exact absurd hb hn
+  · exact (key S).1 (of_decide_eq_true hd)
+-- Statement: with the fragment, (a) at any motion gives (b); so (a) on every motion on every
+-- `α : Type` gives (b) on every such motion, with the previous `example`, and (b) gives (a) by
+-- `selectedData_of_selectedTotal` (`[propext, Quot.sound]`).
+example (hf : ZeroParadox.ChoiceFragment) {α : Type} (M : ZeroParadox.Motion α)
+    (h : M.SelectedData) : M.SelectedTotal := by
+  obtain ⟨ch, hch⟩ := hf
+  refine ZeroParadox.Motion.selectedTotal_of_selectedData (fun a => ?_) h
+  have hA := hch (fun b => b = true ∨ ∃ c, M.step a c) ⟨true, Or.inl rfl⟩
+  have hB := hch (fun b => b = false ∨ ∃ c, M.step a c) ⟨false, Or.inl rfl⟩
+  refine decidable_of_iff (ch (fun b => b = true ∨ ∃ c, M.step a c) =
+    ch (fun b => b = false ∨ ∃ c, M.step a c)) ⟨fun e => ?_, fun hp => ?_⟩
+  · rcases hA with h1 | h1
+    · rcases hB with h2 | h2
+      · exact absurd (h1.symm.trans (e.trans h2)) (by decide)
+      · exact h2
+    · exact h1
+  · have : (fun b => b = true ∨ ∃ c, M.step a c) = (fun b => b = false ∨ ∃ c, M.step a c) :=
+      funext fun b => propext ⟨fun _ => Or.inr hp, fun _ => Or.inr hp⟩
+    rw [this]
+-- Reading: the converse, the fragment ⇒ a selector on every motion, is not established here: the
+-- fragment chooses in `Bool`, a selector in an arbitrary carrier.
+
+/-! ### § XI. The OVER leg's WHETHER — what OVER does at a point -/
+#check @ZeroParadox.Motion.NoStepAt              -- Statement: no step leaves `y`
+#check @ZeroParadox.Motion.SelfOnlyAt            -- Statement: `y` steps to itself and to nothing else
+#check @ZeroParadox.Motion.LeavesAt              -- Statement: `y` steps to some point other than `y`
+#check @ZeroParadox.Motion.OverTrichotomy        -- Statement: one of the three holds at `y`
+-- Statement: the three are pairwise exclusive.
+example {α : Type} (M : ZeroParadox.Motion α) (y : α) :
+    ¬ (M.NoStepAt y ∧ M.SelfOnlyAt y) ∧ ¬ (M.NoStepAt y ∧ M.LeavesAt y) ∧
+      ¬ (M.SelfOnlyAt y ∧ M.LeavesAt y) :=
+  ⟨fun ⟨h1, h2⟩ => h1 y h2.1, fun ⟨h1, ⟨b, hb, _⟩⟩ => h1 b hb,
+    fun ⟨⟨_, h2⟩, ⟨b, hb, hne⟩⟩ => hne (h2 b hb)⟩
+#check @ZeroParadox.Motion.overTrichotomy_of_option -- Statement: with `DecidableEq`, an `Option`-valued step meets the trichotomy at every point
+-- Statement: the trichotomy at every point of every motion on every `α : Type` ⇒ excluded middle
+-- (`[propext]`).
+example (H : ∀ (α : Type) (M : ZeroParadox.Motion α) (y : α), M.OverTrichotomy y) :
+    ZeroParadox.ExcludedMiddle := by
+  intro p
+  rcases H Unit (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun _ _ => p)) () with
+    h | ⟨hp, _⟩ | ⟨b, _, hb⟩
+  · exact Or.inr (h ())
+  · exact Or.inl hp
+  · exact absurd (Subsingleton.elim b ()) hb
+#check @ZeroParadox.machine_trichotomy           -- Statement: the machine face: a configuration of `f : σ → Option σ` is halted, loops in place, or steps to some `s' ≠ s`
+-- Reading: under a function the first two values share a fate, as `machine_trichotomy`'s docstring
+-- states for the machine face (`loop_is_a_trap`); the obstruction is single-valuedness
+-- (`deterministic_has_no_fanout`, § III), not the fixed point.
+-- Statement: under a relation a point can step to itself and elsewhere, which is `LeavesAt`: the
+-- always-true relation on `Bool`, at `true`.
+example : let M := ZeroParadox.Motion.ofTotal (id : Bool → Bool) (fun _ => rfl) (fun _ _ => True)
+    M.step true true ∧ M.LeavesAt true ∧ ¬ M.SelfOnlyAt true :=
+  ⟨trivial, ⟨false, trivial, by decide⟩, fun ⟨_, h⟩ => absurd (h false trivial) (by decide)⟩
+-- Statement: `NoStepAt` members: every landing of the run motion.
+example {σ : Type} (f : σ → Option σ) (s : σ) (hs : (ZeroParadox.runMotion f).IsLanding s) :
+    (ZeroParadox.runMotion f).NoStepAt s := fun b hb => by
+  have h := (ZeroParadox.runMotion_isLanding_iff f s).1 hs
+  change b ∈ f s at hb
+  rw [h] at hb
+  cases hb
+-- Statement: `SelfOnlyAt` members: every landing of the ordinal tower motion.
+example (y : Ordinal.{0}) (hy : ZeroParadox.ordinalTowerMotion.IsLanding y) :
+    ZeroParadox.ordinalTowerMotion.SelfOnlyAt y := by
+  have h := (ZeroParadox.ordinalTowerMotion_isLanding_iff y).1 hy
+  exact ⟨h.symm, fun b hb => hb.trans h⟩
+-- Statement: `LeavesAt` member, `NoStepAt` and `SelfOnlyAt` non-member: on `Bool` with OVER `≠`, at
+-- `true`.
+example : let M := ZeroParadox.Motion.ofTotal (fun _ : Bool => true) (fun _ => rfl) (fun a b => a ≠ b)
+    M.LeavesAt true ∧ ¬ M.NoStepAt true ∧ ¬ M.SelfOnlyAt true :=
+  ⟨⟨false, fun e => Bool.noConfusion e, fun e => Bool.noConfusion e⟩,
+    fun h => h false (fun e => Bool.noConfusion e), fun ⟨h, _⟩ => h rfl⟩
+#check @ZeroParadox.Motion.corner_leavesAt       -- Statement: a corner leaves its landing; with `loop_corner` and `climb_corner`, loop and climb sit at `LeavesAt`
+
+/-! ### § XII. OVER run backwards — fan-in, reversal, predecessor selection -/
+#check @ZeroParadox.Motion.FanIn                 -- Statement: `y` has two distinct predecessors
+-- Statement: member: on `Bool` with OVER constant `true`, `true` has predecessors `false` and `true`.
+example : (ZeroParadox.Motion.ofTotal (id : Bool → Bool) (fun _ => rfl) (fun _ b => b = true)).FanIn
+    true :=
+  ⟨false, true, by decide, rfl, rfl⟩
+#check @ZeroParadox.Motion.not_fanIn_of_injective -- Statement: non-members: every point of a step given by a one-to-one function
+-- Statement: non-member: every motion on `Unit`.
+example (M : ZeroParadox.Motion Unit) (y : Unit) : ¬ M.FanIn y :=
+  fun ⟨a, b, h, _, _⟩ => h (Subsingleton.elim a b)
+-- Reading: the forward twin is `deterministic_has_no_fanout` (§ III): a step function has no
+-- fan-out, and fan-in only where it is not one-to-one.
+#check @ZeroParadox.Motion.reverse               -- Statement: the reversed motion: the same UP, OVER flipped
+#check @ZeroParadox.Motion.reverse_up            -- Statement: INVARIANT: reversal leaves UP, and with it `up_idem`, unchanged
+#check @ZeroParadox.Motion.reverse_reverse       -- Statement: reversing twice returns the motion
+#check @ZeroParadox.Motion.fanIn_iff_reverse     -- Statement: fan-in at `y` is two distinct successors of `y` in the reversed motion
+-- Statement: selecting predecessors on every motion on every `α : Type` and selecting successors there
+-- are inter-derivable, since reversal is an involution (no axioms).
+example : (∀ (α : Type) (M : ZeroParadox.Motion α), M.reverse.SelectedData) ↔
+    ∀ (α : Type) (M : ZeroParadox.Motion α), M.SelectedData :=
+  ⟨fun h α M => h α M.reverse, fun h α M => h α M.reverse⟩
+#check @ZeroParadox.Motion.mem_up_self_of_mem_up -- Statement: a value of UP is its own UP-preimage, so on UP's image the identity selects a UP-preimage
+#check @CategoryTheory.IsIdempotentComplete      -- Statement: Mathlib, a category in which every idempotent splits. Reading: the general frame for the line above; not claimed of partial maps
+#check @ZeroParadox.first_cell_eq_Iic            -- Statement: the seeds `α` with `nfp (ω^·) α = ε₀` are exactly `Set.Iic ε₀`. Reading: the ordinal face's fan-in at ε₀, whose least seed is ⊥ of `Ordinal`, not its only one
+#check @Function.Surjective.hasRightInverse      -- Statement: Mathlib, a surjection has a right inverse; its footprint is printed next. Reading: prior art, the standard frame in which choice is "every surjection has a section"; cited, not re-proved
+#print axioms Function.Surjective.hasRightInverse
+-- Statement: choosing, on the image of every step function on every `α : Type`, a predecessor (a total
+-- selector of the reversed motion) ⇒ the two-element choice fragment (`[propext]`).
+example (h : ∀ (α : Type) (f : α → α),
+    (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b => b = f a)).reverse.SelectedTotal) :
+    ZeroParadox.ChoiceFragment := by
+  let X := {x : (Bool → Prop) × Bool // x.1 x.2} ⊕ (Bool → Prop)
+  let f : Option X → Option X := fun o => match o with
+    | some (Sum.inl x) => some (Sum.inr x.1.1)
+    | _ => none
+  obtain ⟨g, hg⟩ := h (Option X) f
+  refine ⟨fun S => match g (some (Sum.inr S)) with
+    | some (Sum.inl x) => x.1.2
+    | _ => true, fun S ⟨b, hb⟩ => ?_⟩
+  have e : some (Sum.inr S) = f (g (some (Sum.inr S))) :=
+    hg (some (Sum.inr S)) ⟨some (Sum.inl ⟨(S, b), hb⟩), rfl⟩
+  show S (match g (some (Sum.inr S)) with
+    | some (Sum.inl x) => x.1.2
+    | _ => true)
+  revert e
+  generalize g (some (Sum.inr S)) = o
+  rcases o with _ | (⟨⟨T, c⟩, hc⟩ | T)
+  · intro e; cases e
+  · intro e
+    have hT : S = T := Sum.inr.inj (Option.some.inj e)
+    subst hT
+    exact hc
+  · intro e; cases e
+-- Reading: ε₀'s two faces in die terms: the tower's stages close at ε₀
+-- (`ordinalTowerMotion_stageClosure`, § VIII), the supremum; UP at a seed is the least fixed point at
+-- or above it (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § I-b), the least fixed point; one point in
+-- one order (`epsilon0_min_eq_max`). `Motion` carries no order, and reversal leaves UP unchanged.
+#check @ZeroParadox.epsilon0_min_eq_max          -- Statement: ε₀ is the sup of the tower ∧ the least fixed point of ω^· (`IsLeast`)
 
 end DieCannotBeIndex
