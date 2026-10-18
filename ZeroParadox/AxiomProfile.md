@@ -56,8 +56,9 @@ decision of where UP is defined (`Motion.registeredDecidable_of_classical`) and 
 
 **Inherited, in the die:** `Motion.RegisteredComputable` (a definition, so its statement),
 `registeredDecidable_of_registeredComputable`, `registeredComputable_of_upTotal` and
-`ofOption_registeredComputable` each measure `[propext, Classical.choice, Quot.sound]`, through
-Mathlib's `Computable`. A theorem that only assumes `M.RegisteredComputable`, or only
+`ofOption_registeredComputable` each measure `[propext, Classical.choice, Quot.sound]`. The choice
+enters through Mathlib's `Bool` encoding instance `Primcodable.bool`, which stating `Computable d`
+for a `Bool`-valued `d` uses; `Computable` itself is choice-free. A theorem that only assumes `M.RegisteredComputable`, or only
 `∃ d : ℕ → Bool, Computable d`, reports the same (statement control, 2026-10-18), so that variant is
 **statement-carried**.
 
