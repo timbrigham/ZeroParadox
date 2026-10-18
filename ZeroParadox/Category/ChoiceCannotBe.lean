@@ -291,7 +291,7 @@ proved about where choice does work. -/
 
 /-! ## § IV. The ESSENTIAL cases — reductions to taboos, and the premise they rest on
 
-The arrow runs from each principle (cases 1 to 3 below) to its taboo, so each theorem speaks of the
+The arrow runs from each principle (cases 1 to 5 below) to its taboo, so each theorem speaks of the
 principle, not of any one proof of it. ESSENTIAL, in the sense of § "Accidental versus essential" of
 `ZeroParadox/Category/ChoiceCannotBe.md`, means that no proof of the principle in Lean's choice-free
 fragment (the kernel with `propext` and `Quot.sound` as its only axioms) exists, GIVEN that the taboo
@@ -304,7 +304,9 @@ is essential. -/
 -- classical principle the framework uses to a constructive taboo: case 1 from comparability of
 -- well-orders to excluded middle, case 2 from the fixed-point-free principle over arbitrary `Type` to
 -- weak excluded middle, case 3 from the die's cut-to-piece at ⊥ of `α`, over every partial order `α`
--- with a least element on a `Type`, to weak excluded middle.
+-- with a least element on a `Type`, to weak excluded middle, case 4 from a decision of where UP is
+-- defined on every motion on a `Type` to excluded middle, and case 5 from a data selector of OVER on
+-- every such motion to excluded middle.
 
 -- ESSENTIAL CASE 1 — comparability of well-orders implies EXCLUDED MIDDLE. Mathlib's `le_total` on
 -- `Ordinal` has exactly this shape, which is what puts it in the framework's path.
@@ -348,11 +350,24 @@ is essential. -/
 
 -- Statement: ESSENTIAL CASE 3 — if a cover of ⊥ gives a two-point first interval (`[⊥, a] = {⊥, a}`)
 -- in every partial order with a least element on a `Type`, weak excluded middle holds; measured
--- `[propext]`. Its hypothesis is the ∀-closure of `ZeroParadox/Die.lean`'s
--- `botCovered_botIntervalTwo_classical`, the framework's own bare `classical`, which instantiates to it
--- as `fun _ _ _ => botCovered_botIntervalTwo_classical` (next `example`); so that theorem's `classical`
--- is essential in the sense of the header above, and on its premise.
+-- `[propext]`. The principle is the converse of `botIntervalTwo_botCovered` (`ZeroParadox/Die.lean`),
+-- which holds over every such order with no axioms. Its hypothesis is the ∀-closure of
+-- `ZeroParadox/Die.lean`'s `botCovered_botIntervalTwo_classical`, a bare `classical` written in
+-- framework source, which instantiates to it as `fun _ _ _ => botCovered_botIntervalTwo_classical`
+-- (next `example`); so that theorem's `classical` is essential in the sense of the header above, and on
+-- its premise.
 #check @ZeroParadox.wem_of_botCovered_botIntervalTwo
+-- Reading (cited, not claimed): de Jong, "Apartness, sharp elements and the Scott topology of domains",
+-- MSCS (2023), arXiv:2106.05064v5, Prop 22, p. 7: "Let D be any pointed dcpo that is nontrivial in the
+-- sense that there exists x ∈ D with x ≠ ⊥. If y = ⊥ is decidable for every y ∈ D, then weak excluded
+-- middle follows." The reduction runs on that taboo: at `Prop` the piece decides `c = False` for every
+-- `c` below some `a ≠ False` (next `example`); an instance of theirs, not a generalization.
+-- Statement: the piece at ⊥ of `Prop` decides `c = False` below some `a ≠ False` (`[propext]`).
+example (h : ZeroParadox.BotIntervalTwo Prop) :
+    ∃ a : Prop, a ≠ False ∧ ∀ c : Prop, (c → a) → c = False ∨ c ≠ False := by
+  obtain ⟨a, hlt, h2⟩ := h
+  exact ⟨a, hlt.ne', fun c hc => (h2 c hc).imp id
+    fun (e : c = a) (hc0 : c = False) => hlt.ne' (e.symm.trans hc0)⟩
 -- Statement: non-vacuity: the framework's classical proof supplies the hypothesis.
 example : ∀ (β : Type) [PartialOrder β] [OrderBot β],
     ZeroParadox.BotCovered β → ZeroParadox.BotIntervalTwo β :=
@@ -362,9 +377,12 @@ example : ∀ (β : Type) [PartialOrder β] [OrderBot β],
 -- `[⊥, a] = {⊥, a}`, with no axioms (footprint in `ZeroParadox/Die.lean`'s PurityCheck).
 #check @ZeroParadox.botCovered_botIntervalTwo
 
--- Statement: beside case 3, and not counted among the cases above because no framework proof uses
--- `CovBy.Icc_eq` (not located in `ZeroParadox/**/*.lean` as of 2026-10-18; grep `Icc_eq` and
--- `CovBy.Icc` return index, comment and non-vacuity sites only): Mathlib's principle that every
+-- Statement: beside case 3, and not counted among the cases of this section: its `classical` is
+-- Mathlib's, not written in framework source as case 3's is, and unlike case 1's principle it is not
+-- located in the framework's path, since no framework proof names `CovBy.Icc_eq` (not located in
+-- `ZeroParadox/**/*.lean` as of 2026-10-18, searched for the name `Icc_eq`, the dot form `.Icc_eq`
+-- and the statement `Icc a b = {a, b}`: index, comment, non-vacuity and this reduction's own sites
+-- only; use through another Mathlib lemma not measured): Mathlib's principle that every
 -- cover `a ⋖ b` in every partial order on a `Type` has `Set.Icc a b = {a, b}`, of which the die's
 -- piece `BotIntervalTwo` is the case at ⊥, gives excluded middle; measured `[propext]`. The reduction
 -- runs at `Prop`, where ⊥ of `Prop` (`False`) is covered by `True` (`ZeroParadox/Reals/OrderedField.lean`
@@ -378,6 +396,36 @@ example : ∀ (α : Type) [PartialOrder α] (a b : α), a ⋖ b → Set.Icc a b 
 -- Statement: the negative form, nothing strictly between (`CovBy.Ioo_eq`); its footprint is printed next.
 #check @CovBy.Ioo_eq
 #print axioms CovBy.Ioo_eq
+
+-- Statement: ESSENTIAL CASE 4 — if every motion on every `Type` has a decision of where UP is defined
+-- (`RegisteredDecidable`), excluded middle holds; measured no axioms. Its hypothesis is the ∀-closure
+-- of `ZeroParadox/Die.lean`'s `Motion.registeredDecidable_of_classical`, a bare `classical` written in
+-- framework source, which instantiates to it (next `example`); so that theorem's `classical` is
+-- essential in the sense of the header above, and on its premise. The hypothesis alone measures no
+-- axioms (statement control, 2026-10-18), so the class is not STATEMENT-CARRIED.
+#check @ZeroParadox.Motion.em_of_registeredDecidable
+-- Statement: non-vacuity: the framework's classical proof supplies the hypothesis.
+example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.RegisteredDecidable :=
+  fun _ _ => ZeroParadox.Motion.registeredDecidable_of_classical
+#check @ZeroParadox.Motion.registeredDecidable_of_classical -- Statement: every motion has a decision of definedness, proved with `classical`
+-- Statement: the escape: an `Option`-presented UP has one with no axiom of choice (`[propext]`).
+#check @ZeroParadox.Motion.ofOption_registeredDecidable
+
+-- Statement: ESSENTIAL CASE 5 — if every motion on every `Type` has a data selector of OVER
+-- (`SelectedData`), excluded middle holds; measured `[propext, Quot.sound]`. The ∀-closure of
+-- `ZeroParadox/Die.lean`'s `Motion.selectedTotal_of_classical`, a bare `classical` written in framework
+-- source, gives that hypothesis through `selectedData_of_selectedTotal` (next `example`); so that
+-- theorem's `classical` is essential in the sense of the header above, and on its premise. Neither
+-- hypothesis form measures any axiom alone (statement control, 2026-10-18).
+#check @ZeroParadox.Motion.em_of_selectedData
+-- Statement: non-vacuity: the framework's classical proof supplies the hypothesis.
+example : ∀ (β : Type) (M : ZeroParadox.Motion β), M.SelectedData :=
+  fun _ _ => ZeroParadox.Motion.selectedData_of_selectedTotal
+    ZeroParadox.Motion.selectedTotal_of_classical
+#check @ZeroParadox.Motion.selectedTotal_of_classical -- Statement: every motion has a total selector, proved with `classical`
+-- Statement: the escape: a step given by a function is selected with no axioms.
+#check @ZeroParadox.Motion.selectedTotal_of_fun
+#check @ZeroParadox.Motion.selectedTotal_of_option -- Statement: and one given by an `Option`-valued function, with `[propext]`
 
 /-! ## § V. Per instance free, uniform a taboo — pointers
 
@@ -404,12 +452,12 @@ uniform legs proved by anonymous `example` are cited by section. -/
 #check @ZeroParadox.em_of_covBy_Icc_eq            -- Statement: beside case 3, § IV
 -- Statement: the die's UP leg, registration: an `Option`-presented UP is registered on every carrier;
 -- registration of every motion on every `α : Type` and the fragment are inter-derivable, each giving
--- excluded middle (`ZeroParadox/DieCannotBe.lean` § IX).
+-- excluded middle (case 4, § IV; `ZeroParadox/DieCannotBe.lean` § IX).
 #check @ZeroParadox.Motion.ofOption_registeredDecidable
 -- Statement: the die's OVER leg, selection: a step given by a function, or an `Option`-valued one, is
 -- selected; a data selector on every motion on every `α : Type`, or a predecessor selector on the
 -- image of every step function, gives the fragment, and the two uniform selections are
--- inter-derivable (`ZeroParadox/DieCannotBe.lean` §§ X, XII).
+-- inter-derivable (case 5, § IV; `ZeroParadox/DieCannotBe.lean` §§ X, XII).
 #check @ZeroParadox.Motion.selectedTotal_of_fun
 #check @ZeroParadox.Motion.selectedTotal_of_option -- Statement: an `Option`-valued step is selected by `getD`
 -- Statement: the die's OVER leg, the trichotomy: an `Option`-valued step meets it with `DecidableEq`;

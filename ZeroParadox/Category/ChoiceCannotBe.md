@@ -76,8 +76,10 @@ tactic call. **Not all: `ZeroParadox/Category/Lawvere.lean`'s bare `classical` i
 `fixedPointFree_of_nontrivial` is the framework's own, and § IV classifies it ESSENTIAL, on the
 premise stated there** — the cost is in stating the swap over types **whose equality is not decidable** (the swap is `if x = b₀ then b₁ else b₀`;
 decidable equality is exactly what the § IV escape restores), which is the framework's chosen
-generality, not Mathlib's. The same holds of `ZeroParadox/Die.lean`'s bare `classical` in
-`botCovered_botIntervalTwo_classical` (§ IV, case 3). So a corpus-wide
+generality, not Mathlib's. `ZeroParadox/Die.lean`'s bare `classical`s in
+`botCovered_botIntervalTwo_classical`, `Motion.registeredDecidable_of_classical` and
+`Motion.selectedTotal_of_classical` are the framework's own as well, and § IV classifies each
+ESSENTIAL on the same premise (cases 3 to 5), with a per-instance escape beside each. So a corpus-wide
 total still mixes the two sources and still reads as a property of this project, which is reason enough
 not to record one; but it is not true that the framework contributes none.
 
@@ -85,7 +87,10 @@ not to record one; but it is not true that the framework contributes none.
 framework is non-constructive." The load-bearing fact is the opposite and much narrower: **T-SNAP, the
 core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`). Beyond it the picture
 is mixed and the categories are what matter, not a total: some footprints are *accidental* (a choice-free
-re-proof exists — the entries labelled ACCIDENTAL in § I), the three footprints whose principles § IV's counted cases reduce to taboos (by `em_of_wellOrder_comparable`, `wem_of_fixedPointFree`, `wem_of_botCovered_botIntervalTwo`) are
+re-proof exists — the entries labelled ACCIDENTAL in § I), the footprints of the proofs whose
+principles § IV's counted cases reduce to taboos (well-order comparability, spent in `InitialSeg.total`;
+`fixedPointFree_of_nontrivial`; `botCovered_botIntervalTwo_classical`;
+`Motion.registeredDecidable_of_classical`; `Motion.selectedTotal_of_classical`) are
 **ESSENTIAL** on its premise, some are **STATEMENT-CARRIED** (the statement itself carries choice), and others are
 **UNCLASSIFIED**, meaning nobody has tried. A count collapses those four into one number and loses the
 only distinction that carries information.
@@ -133,8 +138,10 @@ fact about the build you just ran, not a fact to carry anywhere.
 
 **The survey is partial, and that is the honest caveat that matters.** Only some footprints have been
 traced to a source and classified; much of the corpus is unexamined. **Not every footprint is
-accidental** — § IV counts three reductions to taboos (`em_of_wellOrder_comparable`, `wem_of_fixedPointFree`, `wem_of_botCovered_botIntervalTwo`), which make
-three footprints essential on the premise stated there. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
+accidental** — § IV counts reductions to taboos (`em_of_wellOrder_comparable`,
+`wem_of_fixedPointFree`, `wem_of_botCovered_botIntervalTwo`, `Motion.em_of_registeredDecidable`,
+`Motion.em_of_selectedData`), which make the footprints of the proofs of those principles essential
+on the premise stated there. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
 has been examined, it has been **assigned** a class* — accidental, essential, statement-carried, or
 unclassified. (Not
 "classifiable": with `unclassified` among the buckets, classifiability holds of everything and says
@@ -156,8 +163,9 @@ fraction either**; it moves with every commit.
   excluded middle intuitionistically (Jankov 1968, "The calculus of the weak law of excluded middle",
   Math. USSR-Izv. 2(5) 997-1004; checked through a secondary source, not read). Lean's choice-free
   fragment is not plain intuitionistic logic, so the § IV premise is what carries that non-provability
-  over to it. Reaching a weaker taboo is a weaker implication and needs a stronger premise. **Three are
-  located, and the premise is stated, in § IV** (`em_of_wellOrder_comparable`, `wem_of_fixedPointFree`, `wem_of_botCovered_botIntervalTwo`). Detected by *reducing* — deriving a taboo from the
+  over to it. Reaching a weaker taboo is a weaker implication and needs a stronger premise. **The
+  located cases, and the premise, are in § IV** (`em_of_wellOrder_comparable`, `wem_of_fixedPointFree`,
+  `wem_of_botCovered_botIntervalTwo`, `Motion.em_of_registeredDecidable`, `Motion.em_of_selectedData`). Detected by *reducing* — deriving a taboo from the
   principle — which is the mirror image of the accidental test: accidental is shown by re-proving
   without choice, essential by showing that re-proving without choice would prove a taboo. Note this is
   a statement about the PRINCIPLE, not about any one proof of it: `#print axioms` on a proof reports that
@@ -192,10 +200,13 @@ Cited, not claimed.
 
 It does **not** claim the framework is choice-free — it is not. It does **not** claim any
 footprint is provably removable beyond the specific cases actually re-proved. **On the negative side,
-for the necessity of a PRINCIPLE, it claims exactly the three reductions to taboos counted in § IV (`em_of_wellOrder_comparable`, `wem_of_fixedPointFree`, `wem_of_botCovered_botIntervalTwo`)
-— non-removability results given § IV's premise — and none comes from a measurement**;
-`em_of_covBy_Icc_eq` is listed beside them and not counted, because no framework proof uses
-`CovBy.Icc_eq` (the search is recorded at that site) — § IV's cases are **reductions**, and
+for the necessity of a PRINCIPLE, the non-removability results it claims, given § IV's premise, are
+the reductions to taboos that § IV counts as cases (`em_of_wellOrder_comparable`,
+`wem_of_fixedPointFree`, `wem_of_botCovered_botIntervalTwo`, `Motion.em_of_registeredDecidable`,
+`Motion.em_of_selectedData`), and none comes from a measurement**. § IV lists `em_of_covBy_Icc_eq`
+beside them and does not count it: its `classical` is Mathlib's rather than written in framework
+source, and no framework proof names `CovBy.Icc_eq` (the search is recorded at that site). § V points
+at further reductions to taboos, which § IV does not count either. § IV's cases are **reductions**, and
 for a principle that is the only route available: `#print axioms` on a proof reports **that proof's**
 footprint, never **the principle's** necessity. A choice-carrying proof is evidence about how the proof
 was written, and nothing more; to show a principle *needs* choice you must derive a taboo from it.

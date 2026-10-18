@@ -591,16 +591,7 @@ example : ∃ M : ZeroParadox.Motion Nat.Partrec.Code,
 #check @ZeroParadox.em_of_poleDiscriminator     -- Statement: a total test of definedness on `Part Unit` gives excluded middle
 #check @ZeroParadox.em_of_choiceFragment        -- Statement: the two-element choice fragment gives excluded middle
 #check @ZeroParadox.select_of_decidable         -- Statement: a decidable inhabited predicate on `Bool` has a witness computed by `if`
--- Statement: registering every motion on every `α : Type` ⇒ excluded middle (no axioms).
-example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable) :
-    ZeroParadox.ExcludedMiddle := by
-  intro p
-  let M : ZeroParadox.Motion Unit :=
-    ⟨fun _ => Part.mk p (fun _ => ()), fun _ _ hy => hy, fun _ _ => False⟩
-  obtain ⟨d⟩ := h Unit M
-  exact match d () with
-    | isTrue hp => Or.inl hp
-    | isFalse hn => Or.inr hn
+#check @ZeroParadox.Motion.em_of_registeredDecidable -- Statement: registering every motion on every `α : Type` ⇒ excluded middle
 -- Statement: the two-element choice fragment ⇒ every motion on every `α : Type` registered
 -- (`[propext, Quot.sound]`).
 example (h : ZeroParadox.ChoiceFragment) {α : Type} (M : ZeroParadox.Motion α) :
@@ -635,10 +626,10 @@ example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.RegisteredDecidable)
     · exact hb
     · exact absurd hb this
   · exact @of_decide_eq_true _ (d S) hS
--- Statement: by the three preceding `example`s and `em_of_choiceFragment`, registration on every
--- `α : Type` and the fragment are inter-derivable and each gives excluded middle, none of the four
--- using `Classical.choice` (footprints: the glosses above; the PurityCheck of
--- `ZeroParadox/Category/ExcludedMiddleBridge.lean`); `Part Unit` form:
+-- Statement: by `Motion.em_of_registeredDecidable`, the `example`s after it and `em_of_choiceFragment`,
+-- registration on every `α : Type` and the fragment are inter-derivable and each gives excluded
+-- middle, none of them using `Classical.choice` (footprints: the glosses above; the PurityChecks of
+-- `ZeroParadox/Die.lean` and `ZeroParadox/Category/ExcludedMiddleBridge.lean`); `Part Unit` form:
 -- `ZeroParadox/Valuation/PoleRegistration.lean` § II.
 -- Statement: given unique choice into `Bool` as a hypothesis, registration on every `α : Type` and
 -- excluded middle are inter-derivable (no axioms).
@@ -719,10 +710,12 @@ example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.SelectedData) :
     · exact hb
     · exact absurd hb hn
   · exact (key S).1 (of_decide_eq_true hd)
--- Reading (cited, not claimed): an instance of Diaconescu's argument in the relational form of the Rocq
--- standard library, `theories/Logic/Diaconescu.v` Part A (`pred_ext_and_rel_choice_imp_EM`, through
+-- Reading (cited, not claimed): Diaconescu's argument as in the Rocq standard library,
+-- `theories/Logic/Diaconescu.v` Part A (`pred_ext_and_rel_choice_imp_EM`, through
 -- `AC_bool_subset_to_bool`, a functional relation choosing in every inhabited subset of `bool`), which
--- credits Diaconescu 1975 and Lacas and Werner 1999; an instance of theirs, not a generalization.
+-- credits Diaconescu 1975 and Lacas and Werner 1999, run on the data side: there relational choice, a
+-- `Prop`, gives excluded middle; here a selector given as data gives the fragment.
+#check @ZeroParadox.Motion.em_of_selectedData -- Statement: (a) on every motion on every `α : Type` ⇒ excluded middle, directly
 -- Statement: with the fragment, (a) at any motion gives (b); so (a) on every motion on every
 -- `α : Type` gives (b) on every such motion, with the previous `example`, and (b) gives (a) by
 -- `selectedData_of_selectedTotal` (`[propext, Quot.sound]`).
@@ -985,16 +978,37 @@ example : let M := (ZeroParadox.Motion.ofTotal (fun _ : ℕ → Bool => ⊥) (fu
 
 /-! ### § XIV. Reversing OVER by an involution of the carrier -/
 -- Statement: an involution `σ` with `step a b ↔ step (σ b) (σ a)` sends each source (a point with no
--- predecessor) to a sink (a point with no successor) (`[propext]`).
+-- predecessor, `M.reverse.NoStepAt`) to a sink (a point with no successor, `NoStepAt`) (`[propext]`).
 -- Reading (cited, not claimed): the shape is Devaney's reversing involution, `R² = identity`, under which
 -- a vector field or a diffeomorphism is R-reversible (Devaney, "Reversible diffeomorphisms and flows",
 -- Trans. AMS 218 (1976) 89–113, pp. 89–90), here for a step relation and without his condition
--- `dim Fix(R) = ½ dim M`. The relational form is ours, an instance of that shape and not a
--- generalization of his results.
+-- `dim Fix(R) = ½ dim M`; an instance of that shape, not a generalization of his results.
 example {α : Type} (M : ZeroParadox.Motion α) (σ : α → α) (hσ : Function.Involutive σ)
     (hr : ∀ a b, M.step a b ↔ M.step (σ b) (σ a)) (y : α) :
     (∀ a, ¬ M.step a y) ↔ M.NoStepAt (σ y) :=
   ⟨fun h b hb => h _ (by rw [hr, hσ] at hb; exact hb), fun h a ha => h (σ a) ((hr _ _).1 ha)⟩
+#check @ZeroParadox.Motion.bijOn_sources_sinks   -- Statement: and the sources map one-to-one onto the sinks
+-- Statement: and the sinks onto the sources: the same theorem at the reversed motion (no axioms).
+example {α : Type} {M : ZeroParadox.Motion α} {σ : α → α} (hσ : Function.Involutive σ)
+    (hr : ∀ a b, M.step a b ↔ M.step (σ b) (σ a)) :
+    Set.BijOn σ {y | M.NoStepAt y} {y | M.reverse.NoStepAt y} :=
+  ZeroParadox.Motion.bijOn_sources_sinks (M := M.reverse) hσ (fun a b => hr b a)
+-- Statement: the trichotomy of § XI is carried across: at `y` no step, a step to itself only, or a
+-- step elsewhere holds exactly when its counterpart for predecessors holds at `σ y` (no axioms).
+example {α : Type} {M : ZeroParadox.Motion α} {σ : α → α} (hσ : Function.Involutive σ)
+    (hr : ∀ a b, M.step a b ↔ M.step (σ b) (σ a)) (y : α) :
+    (M.NoStepAt y ↔ M.reverse.NoStepAt (σ y)) ∧ (M.SelfOnlyAt y ↔ M.reverse.SelfOnlyAt (σ y)) ∧
+      (M.LeavesAt y ↔ M.reverse.LeavesAt (σ y)) := by
+  have key : ∀ b, M.step y b ↔ M.reverse.step (σ y) (σ b) := fun b => hr y b
+  refine ⟨⟨fun h a ha => h (σ a) ?_, fun h b hb => h (σ b) ((key b).1 hb)⟩,
+    ⟨fun ⟨h1, h2⟩ => ⟨(key y).1 h1, fun a ha => ?_⟩, fun ⟨h1, h2⟩ => ⟨(key y).2 h1, fun b hb => ?_⟩⟩,
+    ⟨fun ⟨b, hb, hne⟩ => ⟨σ b, (key b).1 hb, fun e => hne (hσ.injective e)⟩,
+     fun ⟨a, ha, hne⟩ => ⟨σ a, (key (σ a)).2 (by rw [hσ a]; exact ha),
+       fun e => hne (by rw [← e, hσ a])⟩⟩⟩
+  · exact (key (σ a)).2 (by rw [hσ a]; exact ha)
+  · have h := h2 (σ a) ((key (σ a)).2 (by rw [hσ a]; exact ha))
+    rw [← hσ a, h]
+  · exact hσ.injective (h2 (σ b) ((key b).1 hb))
 -- Statement: non-member: on `OnePoint ℕ`, which is `Option ℕ`, OVER `Option.map Nat.succ` steps `∞` to
 -- itself and has the source `0` and no sink; no involution reverses it (`[propext]`).
 example : ¬ ∃ σ : OnePoint ℕ → OnePoint ℕ, Function.Involutive σ ∧
@@ -1037,14 +1051,259 @@ example : let σ : OnePoint ℕ → OnePoint ℕ := fun o => match o with
 example : ∀ a b : Fin 3, ((a = 0 ∧ b = 1) ∨ (a = 1 ∧ b = 2)) ↔
     ((Fin.rev b = 0 ∧ Fin.rev a = 1) ∨ (Fin.rev b = 1 ∧ Fin.rev a = 2)) := by decide
 example : ∀ a b : Bool, (a = false ∧ b = true) ↔ ((!b) = false ∧ (!a) = true) := by decide
--- Statement: member: ℤ with OVER `a ↦ a + 1`, which has no source and no sink, and negation
--- (`[propext, Quot.sound]`).
+-- Statement: member: ℤ with OVER `a ↦ a + 1`, and negation (`[propext, Quot.sound]`).
 example : ∀ a b : ℤ, (b = a + 1 ↔ -a = -b + 1) := fun a b => by constructor <;> intro h <;> omega
+-- Statement: the ends of those motions. `Fin 3`, OVER `0 → 1 → 2`: the source is `0` and the sink `2`
+-- (`[propext, Quot.sound]`).
+example : let M := (ZeroParadox.Motion.ofTotal (id : Fin 3 → Fin 3) (fun _ => rfl)
+      (fun a b => (a = 0 ∧ b = 1) ∨ (a = 1 ∧ b = 2)))
+    {y | M.reverse.NoStepAt y} = {0} ∧ {y | M.NoStepAt y} = {2} := by
+  intro M
+  refine ⟨Set.ext fun y => ?_, Set.ext fun y => ?_⟩ <;>
+    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff, ZeroParadox.Motion.NoStepAt,
+      ZeroParadox.Motion.reverse, flip, M, ZeroParadox.Motion.ofTotal] <;> revert y <;> decide
+-- Statement: `Bool`, OVER `false → true`: the source is `false` and the sink `true`
+-- (`[propext, Quot.sound]`).
+example : let M := (ZeroParadox.Motion.ofTotal (id : Bool → Bool) (fun _ => rfl)
+      (fun a b => a = false ∧ b = true))
+    {y | M.reverse.NoStepAt y} = {false} ∧ {y | M.NoStepAt y} = {true} := by
+  intro M
+  refine ⟨Set.ext fun y => ?_, Set.ext fun y => ?_⟩ <;>
+    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff, ZeroParadox.Motion.NoStepAt,
+      ZeroParadox.Motion.reverse, flip, M, ZeroParadox.Motion.ofTotal] <;> revert y <;> decide
+-- Statement: ℤ, OVER `a ↦ a + 1`: no source, no sink, and no point steps only to itself
+-- (`[propext, Quot.sound]`).
+example : let M := ZeroParadox.Motion.ofTotal (id : ℤ → ℤ) (fun _ => rfl) (fun a b => b = a + 1)
+    (∀ y, ¬ M.reverse.NoStepAt y) ∧ (∀ y, ¬ M.NoStepAt y) ∧ ∀ y, ¬ M.SelfOnlyAt y := by
+  intro M
+  exact ⟨fun y h => h (y - 1) (show y = y - 1 + 1 by omega), fun y h => h (y + 1) rfl,
+    fun y ⟨h, _⟩ => by change y = y + 1 at h; omega⟩
+-- Statement: `OnePoint ℕ`, OVER `Option.map Nat.succ`: the only source is `0`, there is no sink, and `∞`
+-- steps only to itself and is stepped into only from itself (`[propext, Quot.sound]`).
+example : let M := (ZeroParadox.Motion.ofTotal (id : OnePoint ℕ → OnePoint ℕ) (fun _ => rfl)
+      (fun a b => b = Option.map Nat.succ a))
+    {y | M.reverse.NoStepAt y} = {OnePoint.some 0} ∧ (∀ y, ¬ M.NoStepAt y) ∧
+      M.SelfOnlyAt OnePoint.infty ∧ M.reverse.SelfOnlyAt OnePoint.infty := by
+  intro M
+  refine ⟨Set.ext fun y => ⟨fun h => ?_, fun h => ?_⟩, fun y h => h _ rfl,
+    ⟨rfl, fun b hb => hb⟩, ⟨rfl, fun a ha => ?_⟩⟩
+  · rcases y with _ | _ | n
+    · exact absurd (show M.reverse.step OnePoint.infty OnePoint.infty from rfl) (h OnePoint.infty)
+    · rfl
+    · exact absurd (show M.reverse.step (OnePoint.some (n + 1)) (OnePoint.some n) from rfl)
+        (h (OnePoint.some n))
+  · rw [Set.mem_singleton_iff] at h
+    subst h
+    intro a ha
+    change OnePoint.some 0 = Option.map Nat.succ a at ha
+    rcases a with _ | n
+    · exact nomatch ha
+    · exact Nat.succ_ne_zero n (Option.some.inj ha).symm
+  · change OnePoint.infty = Option.map Nat.succ a at ha
+    rcases a with _ | n
+    · rfl
+    · exact nomatch ha
+-- Statement: the same carrier, OVER `0 → ∞` alone: the source that steps is `0` and the sink stepped
+-- into is `∞`; a point that does neither, such as `1`, is a source and a sink at once
+-- (`[propext, Quot.sound]`).
+example : let M := (ZeroParadox.Motion.ofTotal (id : OnePoint ℕ → OnePoint ℕ) (fun _ => rfl)
+      (fun a b => a = OnePoint.some 0 ∧ b = OnePoint.infty))
+    {y | M.reverse.NoStepAt y ∧ ∃ b, M.step y b} = {OnePoint.some 0} ∧
+      {y | M.NoStepAt y ∧ ∃ a, M.step a y} = {OnePoint.infty} ∧
+      M.reverse.NoStepAt (OnePoint.some 1) ∧ M.NoStepAt (OnePoint.some 1) := by
+  intro M
+  refine ⟨Set.ext fun y => ⟨fun ⟨_, b, hb⟩ => hb.1, fun h => ?_⟩,
+    Set.ext fun y => ⟨fun ⟨_, a, ha⟩ => ha.2, fun h => ?_⟩, fun a ha => ?_, fun b hb => ?_⟩
+  · rw [Set.mem_singleton_iff] at h; subst h
+    exact ⟨fun a ha => (nomatch ha.2), OnePoint.infty, rfl, rfl⟩
+  · rw [Set.mem_singleton_iff] at h; subst h
+    exact ⟨fun b hb => (nomatch hb.1), OnePoint.some 0, rfl, rfl⟩
+  · exact nomatch ha.2
+  · exact absurd (Option.some.inj hb.1) (by decide)
+-- Statement: the run motion: the sinks are exactly the halted configurations, and a self-looping
+-- configuration steps only to itself and is no sink (`[propext, Classical.choice, Quot.sound]`, which
+-- `runMotion` carries, § XIII).
+example {σ : Type} (f : σ → Option σ) (s : σ) :
+    (ZeroParadox.runMotion f).NoStepAt s ↔ f s = none := by
+  constructor
+  · intro h
+    cases hf : f s with
+    | none => rfl
+    | some b => exact absurd (show b ∈ f s by rw [hf]; rfl) (h b)
+  · intro h b hb
+    change b ∈ f s at hb
+    rw [h] at hb
+    cases hb
+example {σ : Type} (f : σ → Option σ) (s : σ) (h : ZeroParadox.LoopsInPlace f s) :
+    (ZeroParadox.runMotion f).SelfOnlyAt s ∧ ¬ (ZeroParadox.runMotion f).NoStepAt s :=
+  ⟨⟨show s ∈ f s by rw [h]; rfl, fun b hb => by
+      change b ∈ f s at hb; rw [h] at hb; exact (Option.mem_some_iff.1 hb).symm⟩,
+    fun hn => hn s (show s ∈ f s by rw [h]; rfl)⟩
+-- Statement: NON-MEMBER by `bijOn_sources_sinks`: the machine `0 ↦ 2`, `1 ↦ 2`, `2` halted, on `Fin 3`
+-- has the sources `0` and `1` and the one sink `2`, so no involution reverses it
+-- (`[propext, Classical.choice, Quot.sound]`).
+example : ¬ ∃ σ : Fin 3 → Fin 3, Function.Involutive σ ∧ ∀ a b,
+    (ZeroParadox.runMotion (fun a : Fin 3 => if a = 2 then none else some 2)).step a b ↔
+      (ZeroParadox.runMotion (fun a : Fin 3 => if a = 2 then none else some 2)).step (σ b) (σ a) := by
+  rintro ⟨σ, hσ, hr⟩
+  have hb := ZeroParadox.Motion.bijOn_sources_sinks hσ hr
+  have src : ∀ y : Fin 3, y ≠ 2 →
+      (ZeroParadox.runMotion (fun a : Fin 3 => if a = 2 then none else some 2)).reverse.NoStepAt y := by
+    intro y hy a ha
+    change y ∈ (if a = 2 then none else some 2) at ha
+    revert ha hy; revert a y; decide
+  have snk : ∀ y : Fin 3,
+      (ZeroParadox.runMotion (fun a : Fin 3 => if a = 2 then none else some 2)).NoStepAt y → y = 2 := by
+    intro y hy
+    by_contra hne
+    fin_cases y
+    · exact hy 2 (show (if (0 : Fin 3) = 2 then none else some 2) = some 2 from rfl)
+    · exact hy 2 (show (if (1 : Fin 3) = 2 then none else some 2) = some 2 from rfl)
+    · exact hne rfl
+  have h0 := snk _ (hb.mapsTo (src 0 (by decide)))
+  have h1 := snk _ (hb.mapsTo (src 1 (by decide)))
+  exact absurd (hσ.injective (h0.trans h1.symm)) (by decide)
+-- Statement: the converse fails: on `Fin 4` with OVER `0 → 1 → 2 → 3` and `0 → 2`, the one source is `0`
+-- and the one sink `3`, and no involution reverses it (`[propext]`).
+example : ¬ ∃ σ : Fin 4 → Fin 4, Function.Involutive σ ∧
+    ∀ a b : Fin 4, ((a = 0 ∧ b = 1) ∨ (a = 1 ∧ b = 2) ∨ (a = 2 ∧ b = 3) ∨ (a = 0 ∧ b = 2)) ↔
+      ((σ b = 0 ∧ σ a = 1) ∨ (σ b = 1 ∧ σ a = 2) ∨ (σ b = 2 ∧ σ a = 3) ∨ (σ b = 0 ∧ σ a = 2)) := by
+  rintro ⟨σ, hσ, hr⟩
+  have noPred0 : ∀ a : Fin 4, ¬ ((a = 0 ∧ (0 : Fin 4) = 1) ∨ (a = 1 ∧ (0 : Fin 4) = 2) ∨
+      (a = 2 ∧ (0 : Fin 4) = 3) ∨ (a = 0 ∧ (0 : Fin 4) = 2)) := by decide
+  have s0 : ∀ b : Fin 4, ¬ ((σ 0 = 0 ∧ b = 1) ∨ (σ 0 = 1 ∧ b = 2) ∨ (σ 0 = 2 ∧ b = 3) ∨
+      (σ 0 = 0 ∧ b = 2)) := by
+    intro b hb
+    apply noPred0 (σ b)
+    have := (hr (σ b) 0).2
+    rw [hσ b] at this
+    exact this hb
+  have e0 : σ 0 = 3 := by
+    revert s0; generalize σ 0 = x; revert x; decide
+  have e1 : σ 1 = 2 := by
+    have h := (hr 0 1).1 (Or.inl ⟨rfl, rfl⟩)
+    rw [e0] at h
+    revert h; generalize σ 1 = x; revert x; decide
+  have e2 : σ 2 = 2 := by
+    have h := (hr 0 2).1 (Or.inr (Or.inr (Or.inr ⟨rfl, rfl⟩)))
+    rw [e0] at h
+    revert h; generalize σ 2 = x; revert x; decide
+  exact absurd (hσ.injective (e1.trans e2.symm)) (by decide)
+-- Statement: counting a self-loop as an end: the points stepped into only from themselves or from
+-- nothing map one-to-one onto the points stepping only to themselves or nowhere (no axioms) ...
+example {α : Type} {M : ZeroParadox.Motion α} {σ : α → α} (hσ : Function.Involutive σ)
+    (hr : ∀ a b, M.step a b ↔ M.step (σ b) (σ a)) :
+    Set.BijOn σ {y | ∀ a, M.step a y → a = y} {y | ∀ b, M.step y b → b = y} := by
+  refine ⟨fun y hy b hb => ?_, hσ.injective.injOn, fun z hz => ⟨σ z, fun a ha => ?_, hσ z⟩⟩
+  · have h := (hr (σ b) y).2 (by rw [hσ b]; exact hb)
+    rw [← hσ b, hy _ h]
+  · have h := (hr a (σ z)).1 ha
+    rw [hσ z] at h
+    rw [← hσ a, hz _ h]
+-- Statement: ... and on `OnePoint ℕ` under `Option.map Nat.succ` the first set is `{0, ∞}` and the
+-- second `{∞}`, so that count refuses a reversal too (`[propext, Quot.sound]`).
+example : let M := (ZeroParadox.Motion.ofTotal (id : OnePoint ℕ → OnePoint ℕ) (fun _ => rfl)
+      (fun a b => b = Option.map Nat.succ a))
+    {y | ∀ a, M.step a y → a = y} = {OnePoint.some 0, OnePoint.infty} ∧
+      {y | ∀ b, M.step y b → b = y} = {OnePoint.infty} := by
+  intro M
+  refine ⟨Set.ext fun y => ⟨fun h => ?_, fun h => ?_⟩, Set.ext fun y => ⟨fun h => ?_, fun h => ?_⟩⟩
+  · rcases y with _ | _ | n
+    · exact Or.inr rfl
+    · exact Or.inl rfl
+    · exact absurd (h (OnePoint.some n) rfl) (fun e => by have := Option.some.inj e; omega)
+  · rcases h with rfl | rfl
+    · intro a ha
+      change OnePoint.some 0 = Option.map Nat.succ a at ha
+      rcases a with _ | n
+      · exact nomatch ha
+      · exact absurd (Option.some.inj ha).symm (Nat.succ_ne_zero n)
+    · intro a ha
+      change OnePoint.infty = Option.map Nat.succ a at ha
+      rcases a with _ | n
+      · rfl
+      · exact nomatch ha
+  · rcases y with _ | n
+    · rfl
+    · exact absurd (h _ rfl) (fun e => by have := Option.some.inj e; omega)
+  · rw [Set.mem_singleton_iff] at h; subst h
+    intro b hb; exact hb
+-- Statement: the adjoined points. `Option σ` under `Option.map f`: `none` steps only to itself and is
+-- stepped into only from itself, so it is neither a source nor a sink (`[propext]`).
+example {σ : Type} (f : σ → σ) : let M := (ZeroParadox.Motion.ofTotal (id : Option σ → Option σ)
+      (fun _ => rfl) (fun a b => b = Option.map f a))
+    M.SelfOnlyAt none ∧ M.reverse.SelfOnlyAt none ∧ ¬ M.NoStepAt none ∧ ¬ M.reverse.NoStepAt none := by
+  intro M
+  refine ⟨⟨rfl, fun b hb => hb⟩, ⟨rfl, fun a ha => ?_⟩, fun h => h none rfl, fun h => h none rfl⟩
+  change none = Option.map f a at ha
+  rcases a with _ | x
+  · rfl
+  · exact nomatch ha
+-- Statement: `TriStep σ` as the codomain of a step `g`: on `σ` with OVER `g a = step b`, a configuration
+-- at either adjoined value, `halted` or `idle`, has no step (`[propext]`).
+example {σ : Type} (g : σ → ZeroParadox.TriStep σ) (s : σ)
+    (h : g s = ZeroParadox.TriStep.halted ∨ g s = ZeroParadox.TriStep.idle) :
+    (ZeroParadox.Motion.ofTotal (id : σ → σ) (fun _ => rfl)
+      (fun a b => g a = ZeroParadox.TriStep.step b)).NoStepAt s := by
+  intro b hb
+  change g s = ZeroParadox.TriStep.step b at hb
+  rcases h with h | h <;> rw [h] at hb <;> exact nomatch hb
+-- Statement: `E0Note` under `e0OmegaPow`: ⊤ of `E0Note`, the adjoined point, steps only to itself and
+-- is stepped into only from itself, and `e0Coe 0` is a source (`[propext]`).
+example : let M := (ZeroParadox.Motion.ofTotal (id : ZeroParadox.E0Note → ZeroParadox.E0Note)
+      (fun _ => rfl) (fun a b => b = ZeroParadox.e0OmegaPow a))
+    M.SelfOnlyAt ⊤ ∧ M.reverse.SelfOnlyAt ⊤ ∧ M.reverse.NoStepAt (ZeroParadox.e0Coe 0) := by
+  intro M
+  refine ⟨⟨rfl, fun b hb => hb⟩, ⟨rfl, fun a ha => ?_⟩, fun a ha => ?_⟩
+  · change ⊤ = ZeroParadox.e0OmegaPow a at ha
+    induction a using WithTop.recTopCoe with
+    | top => rfl
+    | coe x => exact absurd ha.symm WithTop.coe_ne_top
+  · change ZeroParadox.e0Coe 0 = ZeroParadox.e0OmegaPow a at ha
+    induction a using WithTop.recTopCoe with
+    | top => exact absurd ha WithTop.coe_ne_top
+    | coe x =>
+      have h' := WithTop.coe_injective ha
+      unfold ZeroParadox.omegaPow at h'
+      exact nomatch congrArg ZeroParadox.ofSyn h'
 #check @ZeroParadox.rInv_conj_rScale             -- Statement: on `OnePoint ℚ_[2]`, `rInv ∘ rScale n ∘ rInv = rScale (-n)`
--- Reading: an end-exchanging reversal is a property of the step, not of which ends of the one pole
--- ⊥ = 0 = ∞ the carrier holds as points: on `OnePoint ℕ`, `Option.map Nat.succ` admits none and
--- `0 → ∞` admits one. The obstruction measured is the motion's sources against its sinks, which a
--- reversal exchanges. The adjoined-points switch (§ I) does not count ends: `OnePoint ℕ` and
--- `OnePoint ℚ_[2]` each adjoin one point and hold both `0` and `∞`; that switch stands as stated in § I.
+-- Statement: `OnePoint ℚ_[2]` under `rScale n`: `rInv` reverses the motion, `0` and `∞` each step only
+-- to themselves, and there is no source and no sink (`[propext, Classical.choice, Quot.sound]`).
+example (n : ℤ) : let M := (ZeroParadox.Motion.ofTotal (id : ZeroParadox.Sphere → ZeroParadox.Sphere)
+      (fun _ => rfl) (fun a b => b = ZeroParadox.rScale n a))
+    (∀ a b, M.step a b ↔ M.step (ZeroParadox.rInv b) (ZeroParadox.rInv a)) ∧
+      M.SelfOnlyAt (OnePoint.some 0) ∧ M.SelfOnlyAt OnePoint.infty ∧
+      (∀ y, ¬ M.reverse.NoStepAt y) ∧ (∀ y, ¬ M.NoStepAt y) := by
+  intro M
+  have inv : ∀ z, ZeroParadox.rScale n (ZeroParadox.rScale (-n) z) = z := fun z => by
+    rw [ZeroParadox.rScale_add, add_neg_cancel, ZeroParadox.rScale_zero]; rfl
+  have inv' : ∀ z, ZeroParadox.rScale (-n) (ZeroParadox.rScale n z) = z := fun z => by
+    rw [ZeroParadox.rScale_add, neg_add_cancel, ZeroParadox.rScale_zero]; rfl
+  have conj : ∀ z, ZeroParadox.rScale n (ZeroParadox.rInv z) =
+      ZeroParadox.rInv (ZeroParadox.rScale (-n) z) := fun z => by
+    rw [← ZeroParadox.rInv_conj_rScale n z, ZeroParadox.rInv_involutive]
+  refine ⟨fun a b => ?_, ⟨(ZeroParadox.rScale_fixes_poles n).1.symm,
+      fun b hb => hb.trans (ZeroParadox.rScale_fixes_poles n).1⟩,
+    ⟨rfl, fun b hb => hb⟩, fun y h => h (ZeroParadox.rScale (-n) y) (inv y).symm, fun y h => h _ rfl⟩
+  change b = ZeroParadox.rScale n a ↔ ZeroParadox.rInv a = ZeroParadox.rScale n (ZeroParadox.rInv b)
+  rw [conj]
+  constructor
+  · rintro rfl; rw [inv']
+  · intro h
+    rw [ZeroParadox.rInv_involutive.injective h, inv]
+-- Reading: Tim's reading of the two ends, measured. A source (nothing steps in) and a sink (nothing
+-- steps out) are roles of the MOTION, not points of its carrier, and a reversal maps the first one for
+-- one onto the second (`bijOn_sources_sinks`), as `0` and `∞` under `0 → ∞` on `OnePoint ℕ`. Read as the
+-- motion's local 0 and local ∞ they pair with the pole ⊥ = 0 = ∞, a chart claim
+-- (`ZeroParadox/BottomCannotBe.lean` § INVERSION), as a reading, not an identity. The implication runs
+-- one way: a reversal matches the ends, matched ends force no reversal (`Fin 4`), and a reversal needs
+-- no ends (ℤ). An adjoined point that the motion maps to itself is no end: it steps only to itself and
+-- is stepped into only from itself, INVARIANT under reversal (`Option.map`, ⊤ of `E0Note`, `∞` under
+-- `rScale n`, where `rInv` reverses the motion and exchanges `0` and `∞` as two such points). An
+-- adjoined value in the step's codomain gives a sink instead (`runMotion`; both `TriStep` values, which
+-- the relation does not tell apart). Under a function a halted and a self-looping configuration share
+-- a fate (§ XI); under reversal the first goes to a source and the second to a point stepped into only
+-- from itself. The adjoined-points switch (§ I) counts points of the carrier, not ends of a motion, and
+-- stands as stated in § I.
 
 end DieCannotBeIndex

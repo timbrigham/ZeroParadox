@@ -35,6 +35,7 @@ import ZeroParadox.Valuation.SnapDichotomy
 import ZeroParadox.Settheory.QuineDichotomy
 import ZeroParadox.Category.LawvereTaboo
 import ZeroParadox.Ordinal.OrdinalChoiceEssential
+import ZeroParadox.Die
 
 
 /-!
@@ -50,24 +51,37 @@ required in places... the heart of what we're trying to prove is choice free.
 
 A **checkable artifact** (`lake build ZeroParadox.AxiomProfile`): the `#print axioms` output reports
 each result's complete axiom dependency. **The core is choice-free; T-SNAP depends on no axioms at
-all.** Choice appears in the realization layers, mostly inherited from Mathlib; where it is essential,
-and on what premise: `ZeroParadox/Category/ChoiceCannotBe.lean` § IV (§ 0 prints two cases). -/
+all.** Choice appears mostly in the realization layers, inherited from Mathlib, and also in the die's
+meta objects (`ZeroParadox/Die.lean`); where it is essential, and on what premise:
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV, whose cases § 0 prints. -/
 
-/-! ## 0. Two choice-free reductions to taboos — essential on the premise in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV
+/-! ## 0. Choice-free reductions to taboos — essential on the premise in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV
 
-⚠ PROVENANCE and NECESSITY are independent axes. `fixedPointFree_of_nontrivial` spends the framework's
-OWN `classical`; well-order comparability spends MATHLIB's, in `InitialSeg.total`. The two reductions
-below are choice-free, which is what makes them reductions rather than measurements. Full argument:
-`ZeroParadox/AxiomProfile.md`. -/
+⚠ PROVENANCE and NECESSITY are independent axes. `fixedPointFree_of_nontrivial` and the die's
+`classical`s spend the framework's OWN `classical`; well-order comparability spends MATHLIB's, in
+`InitialSeg.total`. The reductions below are choice-free, which is what makes them reductions rather
+than measurements. Full argument: `ZeroParadox/AxiomProfile.md`. -/
 section FrameworkOwnChoice
 
--- PROVENANCE: a bare `classical` written in framework source (Lawvere.lean), not inherited.
+-- PROVENANCE: bare `classical`s written in framework source (`ZeroParadox/Category/Lawvere.lean`,
+-- `ZeroParadox/Die.lean`), not inherited.
 #print axioms ZeroParadox.fixedPointFree_of_nontrivial   -- [propext, Classical.choice, Quot.sound]
--- NECESSITY: two reductions to taboos, themselves CHOICE-FREE. The first is about the declaration
--- above; the SECOND is about well-order comparability, whose choice is MATHLIB's — so it witnesses
--- that an INHERITED dependence can be essential too, on § IV's premise.
+#print axioms ZeroParadox.botCovered_botIntervalTwo_classical -- [propext, Classical.choice, Quot.sound]
+#print axioms ZeroParadox.Motion.registeredDecidable_of_classical -- [propext, Classical.choice, Quot.sound]
+#print axioms ZeroParadox.Motion.selectedTotal_of_classical -- [propext, Classical.choice, Quot.sound]
+-- NECESSITY: one reduction to a taboo per principle, each CHOICE-FREE, about the declarations above,
+-- in the same order.
 #print axioms ZeroParadox.wem_of_fixedPointFree          -- [propext, Quot.sound]
+#print axioms ZeroParadox.wem_of_botCovered_botIntervalTwo -- [propext]
+#print axioms ZeroParadox.Motion.em_of_registeredDecidable -- does not depend on any axioms
+#print axioms ZeroParadox.Motion.em_of_selectedData      -- [propext, Quot.sound]
+-- NECESSITY for well-order comparability, whose choice is MATHLIB's, so an INHERITED dependence can
+-- be essential too, on § IV's premise.
 #print axioms ZeroParadox.em_of_wellOrder_comparable     -- [propext, Quot.sound]
+-- The consumer and the supplier of a fixed-point-free map; `ZeroParadox/AxiomProfile.md` says why the
+-- consumer's footprint is no evidence the supplier's choice is avoidable.
+#print axioms ZeroParadox.no_witness_of_fixedPointFree   -- does not depend on any axioms
+#print axioms ZeroParadox.no_witness_of_nontrivial       -- [propext, Classical.choice, Quot.sound]
 
 end FrameworkOwnChoice
 

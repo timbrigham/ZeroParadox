@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2007,
+        "declarations": 2010,
         "files": 169
       },
       "entries": [
@@ -16447,6 +16447,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "34e64832-c416-477c-8102-1d5ae05cb638",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.em_of_registeredDecidable",
+            "short": "em_of_registeredDecidable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.em_of_registeredDecidable",
+            "short": "em_of_registeredDecidable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "K2 motion-level ends (bijOn_sources_sinks) and EM23-CARRY-1k: the die's registration and selection classicals reduced to excluded middle (ChoiceCannotBe § IV cases 4-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "34e697f3-f100-4ca5-829d-1d821219f7e5",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -25682,6 +25721,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5686441f-9e1e-4ebc-b98e-518d7ee0619e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.em_of_selectedData",
+            "short": "em_of_selectedData"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.em_of_selectedData",
+            "short": "em_of_selectedData",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "K2 motion-level ends (bijOn_sources_sinks) and EM23-CARRY-1k: the die's registration and selection classicals reduced to excluded middle (ChoiceCannotBe § IV cases 4-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -60661,6 +60739,45 @@
             ]
           },
           "reason": "Gate round 1 fixes: rename never_repeats to seq_ne_succ (F1 bedrock), land no_zpcat_top/no_zpcat_int (F2 bedrock) and freeNat_not_finite (F8).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d32bfd7b-e230-4a00-ba81-269884d685bb",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.bijOn_sources_sinks",
+            "short": "bijOn_sources_sinks"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.bijOn_sources_sinks",
+            "short": "bijOn_sources_sinks",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "K2 motion-level ends (bijOn_sources_sinks) and EM23-CARRY-1k: the die's registration and selection classicals reduced to excluded middle (ChoiceCannotBe § IV cases 4-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
