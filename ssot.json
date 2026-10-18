@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1953,
-        "files": 167
+        "declarations": 1985,
+        "files": 168
       },
       "entries": [
         {
@@ -1417,6 +1417,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "026d6220-2949-472a-9337-df50c1c42e6e",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runMotion",
+            "short": "runMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runMotion",
+            "short": "runMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6225,6 +6264,46 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "12ad61e5-b8b2-4090-ade1-b5e18ffd2b36",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofOption_registeredComputable",
+            "short": "ofOption_registeredComputable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofOption_registeredComputable",
+            "short": "ofOption_registeredComputable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped",
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "12d49e09-2768-48d8-ab2b-dddd1ddd5485",
           "new": {
@@ -7132,6 +7211,45 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "161514b4-3f43-40d1-9d86-5b5dae7d2709",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_runClosure",
+            "short": "ordinalTowerMotion_runClosure"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_runClosure",
+            "short": "ordinalTowerMotion_runClosure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9535,6 +9653,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1f3c3c5a-32f0-4a05-974e-b51cd268e9b8",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofOption",
+            "short": "ofOption"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofOption",
+            "short": "ofOption",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1f4eb789-e92f-4cad-ba90-30aecd4fbac4",
           "new": {
@@ -9972,6 +10129,45 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "20425130-f1ef-4398-9502-2b5a991766ed",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runMotion_run_diverges",
+            "short": "runMotion_run_diverges"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runMotion_run_diverges",
+            "short": "runMotion_run_diverges",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -10983,6 +11179,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2462e4e1-6197-4b85-8c92-cbf64941718c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofOption_registeredDecidable",
+            "short": "ofOption_registeredDecidable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofOption_registeredDecidable",
+            "short": "ofOption_registeredDecidable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "24705f06-c8c9-4210-b2dc-d16ea7225f33",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -11154,6 +11389,45 @@
             ]
           },
           "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "255339ae-96e8-47a8-8512-74e71cfc29b8",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.registeredDecidable_of_upTotal",
+            "short": "registeredDecidable_of_upTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.registeredDecidable_of_upTotal",
+            "short": "registeredDecidable_of_upTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13342,6 +13616,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2bb3cdfd-230b-4160-960f-48d07d8dd845",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_isLanding_iff",
+            "short": "ordinalTowerMotion_isLanding_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_isLanding_iff",
+            "short": "ordinalTowerMotion_isLanding_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2bd551b7-fdd7-4d09-8501-a3fdfa396bc9",
           "new": {
             "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
@@ -13405,6 +13718,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2c7d8835-9110-4e4a-8730-ff83ad072d6f",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion",
+            "short": "ordinalTowerMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion",
+            "short": "ordinalTowerMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18368,6 +18720,45 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3eaa05b0-ed14-42c3-80ae-597c94552b4c",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runMotion_upStepInvariant",
+            "short": "runMotion_upStepInvariant"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runMotion_upStepInvariant",
+            "short": "runMotion_upStepInvariant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27181,6 +27572,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5da78ef8-4fcd-4bd1-8eea-4806386d223b",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.up_run_const",
+            "short": "up_run_const"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.up_run_const",
+            "short": "up_run_const",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5db10ff2-8066-4f85-b7ed-fa9f0ad368da",
           "new": {
             "file": "ZeroParadox/Valuation/BottomInvariant.lean",
@@ -27771,6 +28201,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "60cef8dc-49df-415e-99c8-4fcaf3873f34",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_upStepInvariant",
+            "short": "ordinalTowerMotion_upStepInvariant"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_upStepInvariant",
+            "short": "ordinalTowerMotion_upStepInvariant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "60fddaac-6118-46de-aec2-505388729afb",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleRealization.lean",
@@ -27950,6 +28419,45 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "61b5f6cc-5e97-4b34-98ae-35d493ed146a",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_isRun",
+            "short": "ordinalTowerMotion_isRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_isRun",
+            "short": "ordinalTowerMotion_isRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32023,6 +32531,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7022023a-c3ec-4f2b-b8e4-afbdca6637aa",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runMotion_isLanding_iff",
+            "short": "runMotion_isLanding_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runMotion_isLanding_iff",
+            "short": "runMotion_isLanding_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "702de247-221e-4a4d-94a8-8c11d8f85b5f",
           "new": {
@@ -32860,6 +33407,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "73d16487-eda9-440a-ab7e-88950b333fc1",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.RunClosure.stageClosure",
+            "short": "stageClosure"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.RunClosure.stageClosure",
+            "short": "stageClosure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -36165,6 +36751,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f1da094-5cd8-4c6b-90d2-980b30e9c138",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.registeredComputable_of_upTotal",
+            "short": "registeredComputable_of_upTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.registeredComputable_of_upTotal",
+            "short": "registeredComputable_of_upTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped",
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40963,6 +41589,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "919213cf-93be-4904-988d-6457a5ea3237",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.RunClosure",
+            "short": "RunClosure"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.RunClosure",
+            "short": "RunClosure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "91bc99a6-9626-424b-a508-d6b4721860d0",
           "new": {
             "file": "ZeroParadox/Ordinal/NaturalOpsPow.lean",
@@ -44033,6 +44698,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9b712cda-8f53-4eca-9f49-8d99e29857b3",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StageClosure",
+            "short": "StageClosure"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StageClosure",
+            "short": "StageClosure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "withdrawn",
           "id": "9b8e0bed-1e85-4511-b89f-3f21a4fa6eb9",
           "new": {
@@ -46865,6 +47569,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a81dff83-4feb-4c7f-b34e-60befea88b03",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.RegisteredDecidable",
+            "short": "RegisteredDecidable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.RegisteredDecidable",
+            "short": "RegisteredDecidable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a8400a5f-ae30-4d2a-a27b-5edb744834fc",
           "new": {
@@ -47954,6 +48697,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ac07cb32-c2e7-4cf5-8f27-d0d00e1c621d",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StageClosure.unique",
+            "short": "unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StageClosure.unique",
+            "short": "unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50621,6 +51403,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b460d932-a994-4d95-8f2a-4439d3855b39",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StageClosure.not_mem_of_mem",
+            "short": "not_mem_of_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StageClosure.not_mem_of_mem",
+            "short": "not_mem_of_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b46250bd-8b30-429b-b7ff-4c9b5ab01b40",
           "new": {
             "file": "ZeroParadox/Ordinal/PricedInterface.lean",
@@ -52567,6 +53388,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "bc122225-ecdb-48d2-8c37-e705a3c77e69",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.registeredDecidable_of_classical",
+            "short": "registeredDecidable_of_classical"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.registeredDecidable_of_classical",
+            "short": "registeredDecidable_of_classical",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "bc35a809-877f-4c32-ac5d-24581ce24d90",
           "new": {
@@ -53509,6 +54369,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bf6de194-34c3-4bd4-bc64-b3516022c8bc",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpStepInvariant",
+            "short": "UpStepInvariant"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpStepInvariant",
+            "short": "UpStepInvariant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -55998,6 +56897,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c8ac43df-8afa-4546-9a8a-a0a95b82b1e0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.IsRun",
+            "short": "IsRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.IsRun",
+            "short": "IsRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c8e3bd41-cf84-482b-b6e1-020b4b224c72",
           "new": {
@@ -58349,6 +59287,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d175000f-14d9-4e44-8776-e4cded821061",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.stageClosure_of_run",
+            "short": "stageClosure_of_run"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.stageClosure_of_run",
+            "short": "stageClosure_of_run",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d185928e-fbf7-4ed6-b846-567dda32c094",
           "new": {
             "file": "ZeroParadox/Information/Disjunctive.lean",
@@ -60125,6 +61102,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d84b0bb0-3e03-4ca4-9524-f38492d3036c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.RunsClose",
+            "short": "RunsClose"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.RunsClose",
+            "short": "RunsClose",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d86abcd3-9f63-42c9-9d0b-ecda16313561",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -60519,6 +61535,46 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d95ceec6-2fe6-4ec3-83e3-625b77ec8ad3",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.RegisteredComputable",
+            "short": "RegisteredComputable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.RegisteredComputable",
+            "short": "RegisteredComputable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped",
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -61849,6 +62905,85 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "dd1eb387-f73b-4fd8-b21d-8adf49ab74d2",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.registeredDecidable_of_registeredComputable",
+            "short": "registeredDecidable_of_registeredComputable"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.registeredDecidable_of_registeredComputable",
+            "short": "registeredDecidable_of_registeredComputable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped",
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dd284143-5676-4a33-bc53-d5bb637b8460",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_stageClosure",
+            "short": "ordinalTowerMotion_stageClosure"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_stageClosure",
+            "short": "ordinalTowerMotion_stageClosure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ddcc176a-dd4e-4da1-b9aa-e73a2d99c37a",
           "new": {
@@ -62640,6 +63775,45 @@
           "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
           "verify": {
             "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dff22faa-b952-4ded-839e-2261db0eb3d9",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StageClosure.isLanding_of_mem",
+            "short": "isLanding_of_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StageClosure.isLanding_of_mem",
+            "short": "isLanding_of_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -64395,6 +65569,45 @@
             ]
           },
           "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e55f6b26-fe25-415c-9120-0cf760c5482e",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.runMotion_stageClosure",
+            "short": "runMotion_stageClosure"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.runMotion_stageClosure",
+            "short": "runMotion_stageClosure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66555,6 +67768,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ee006367-da84-469c-83ff-15e458d3f11f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.runsClose_of_upStepInvariant",
+            "short": "runsClose_of_upStepInvariant"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.runsClose_of_upStepInvariant",
+            "short": "runsClose_of_upStepInvariant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
           "verify": {
             "axioms": null,
             "sorry_free": true

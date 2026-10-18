@@ -2,6 +2,7 @@ import Mathlib.Order.Cover
 import Mathlib.Order.BoundedOrder.Basic
 import Mathlib.Data.PFun
 import Mathlib.Logic.Relation
+import Mathlib.Computability.Partrec
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -34,7 +35,10 @@ universe u
 /-! ### § I. The motion -/
 
 /-- `Statement:` a partial self-map `up` whose every value is a fixed point of `up`, and a
-    relation `step`. `Reading:` UP is `up`, OVER is `step`; a landing is a fixed point of `up`. -/
+    relation `step`. `Reading:` UP is `up`, OVER is `step`; a landing is a fixed point of `up`. UP
+    is an idempotent of the monoid of partial endofunctions (Cockett and Hofstra, APAL 156 (2008),
+    p. 187, Example (iii)), inside Par; it need not be a restriction idempotent, which in Par are
+    the partial identities (p. 186): the identity UP is one, the `Bool` control below is not. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: pairs an idempotent partial map (Mathlib `PFun`) with a
 -- step relation; Mathlib has each part, not the pair.
 structure Motion (α : Type u) where
@@ -47,6 +51,32 @@ structure Motion (α : Type u) where
 
 /-! NO-GO gauge — `Motion` is trivially inhabited: every type carries one (identity UP, empty step;
 `ZeroParadox/DieCannotBe.lean` § 0). It is a record; the premises below carry the content. -/
+
+-- Statement: the `up_idem` field is idempotence under `PFun.comp`.
+example {α : Type u} (u : α →. α) : (∀ x y, y ∈ u x → y ∈ u y) ↔ u.comp u = u := by
+  constructor
+  · intro h
+    funext x
+    apply Part.ext
+    intro y
+    rw [PFun.comp_apply, Part.mem_bind_iff]
+    exact ⟨fun ⟨z, hz, hyz⟩ => (Part.mem_unique (h x z hz) hyz) ▸ hz,
+      fun hy => ⟨y, hy, h x y hy⟩⟩
+  · intro h x y hy
+    have hy' : y ∈ (u.comp u) x := by rw [congrFun h x]; exact hy
+    rw [PFun.comp_apply, Part.mem_bind_iff] at hy'
+    obtain ⟨z, hz, hyz⟩ := hy'
+    exact Part.mem_unique hz hy ▸ hyz
+
+-- Statement: the identity UP, `x ↦ Part.some x`, is a partial identity: every value equals its argument.
+example {α : Type u} : ∀ x y : α, y ∈ (Part.some x) → y = x := fun _ _ h => Part.mem_some_iff.1 h
+
+-- Statement: control: the constant map `true` on `Bool` meets `up_idem` and is not a partial
+-- identity (some value differs from its argument).
+example : (∀ x y, y ∈ (fun _ : Bool => Part.some true) x → y ∈ (fun _ : Bool => Part.some true) y) ∧
+    ¬ ∀ x y, y ∈ (fun _ : Bool => Part.some true) x → y = x :=
+  ⟨fun _ _ h => (Part.mem_some_iff.1 h) ▸ Part.mem_some true,
+    fun h => absurd (h false true (Part.mem_some true)) (by decide)⟩
 
 namespace Motion
 
@@ -200,6 +230,130 @@ theorem everyStepCovered_botCovered (h : EveryStepCovered α) (hne : ∃ a : α,
 
 end OrderPremises
 
+/-! ### § VI. Stages and their shared closure -/
+
+namespace Motion
+
+variable {α : Type u} (M : Motion α)
+
+/-- `Statement:` UP is unchanged along a step: `step a b` gives `up a = up b`. -/
+def UpStepInvariant : Prop := ∀ a b, M.step a b → M.up a = M.up b
+
+/-- `Statement:` `s` is a run: each stage steps to the next. -/
+def IsRun (s : ℕ → α) : Prop := ∀ n, M.step (s n) (s (n + 1))
+
+/-- `Statement:` the stage/closure shape: no point of `S` is a landing, and UP sends every point of
+    `S` to the one value `c`, which may be undefined. -/
+def StageClosure (S : Set α) (c : Part α) : Prop :=
+  ∀ s ∈ S, ¬ M.IsLanding s ∧ M.up s = c
+
+variable {M}
+
+/-- `Statement:` with UP unchanged along steps, UP is constant along a run. -/
+theorem up_run_const (h : M.UpStepInvariant) {s : ℕ → α} (hs : M.IsRun s) (n : ℕ) :
+    M.up (s n) = M.up (s 0) := by
+  induction n with
+  | zero => rfl
+  | succ n ih => exact (h _ _ (hs n)).symm.trans ih
+
+/-- `Statement:` with UP unchanged along steps, a run with no landing among its stages has the
+    stage/closure shape, with closure `up (s 0)`. -/
+theorem stageClosure_of_run (h : M.UpStepInvariant) {s : ℕ → α} (hs : M.IsRun s)
+    (hint : ∀ n, ¬ M.IsLanding (s n)) : M.StageClosure (Set.range s) (M.up (s 0)) := by
+  rintro _ ⟨n, rfl⟩
+  exact ⟨hint n, up_run_const h hs n⟩
+
+/-- `Statement:` over a nonempty stage set, a defined closure is a landing. -/
+theorem StageClosure.isLanding_of_mem {S : Set α} {c : Part α} (h : M.StageClosure S c)
+    (hne : S.Nonempty) {y : α} (hy : y ∈ c) : M.IsLanding y := by
+  obtain ⟨s, hs⟩ := hne
+  have hys : y ∈ M.up s := (h s hs).2 ▸ hy
+  exact M.up_idem s y hys
+
+/-- `Statement:` over a nonempty stage set, a defined closure is not one of the stages. -/
+theorem StageClosure.not_mem_of_mem {S : Set α} {c : Part α} (h : M.StageClosure S c)
+    (hne : S.Nonempty) {y : α} (hy : y ∈ c) : y ∉ S :=
+  fun hyS => (h y hyS).1 (h.isLanding_of_mem hne hy)
+
+/-- `Statement:` a nonempty stage set has at most one closure. -/
+theorem StageClosure.unique {S : Set α} {c d : Part α} (h₁ : M.StageClosure S c)
+    (h₂ : M.StageClosure S d) (hne : S.Nonempty) : c = d := by
+  obtain ⟨s, hs⟩ := hne
+  exact (h₁ s hs).2.symm.trans (h₂ s hs).2
+
+variable (M)
+
+/-- `Statement:` every run with no landing among its stages closes at `up` of its first stage. -/
+def RunsClose : Prop :=
+  ∀ s : ℕ → α, M.IsRun s → (∀ n, ¬ M.IsLanding (s n)) → M.StageClosure (Set.range s) (M.up (s 0))
+
+/-- `Statement:` the run form of the shape: `s` is a run, and its stages close at `c`. -/
+def RunClosure (s : ℕ → α) (c : Part α) : Prop := M.IsRun s ∧ M.StageClosure (Set.range s) c
+
+variable {M}
+
+/-- `Statement:` UP unchanged along steps gives `RunsClose`; one way. -/
+theorem runsClose_of_upStepInvariant (h : M.UpStepInvariant) : M.RunsClose :=
+  fun _ hs hint => stageClosure_of_run h hs hint
+
+/-- `Statement:` the run form gives the set form on the run's range; one way. -/
+theorem RunClosure.stageClosure {s : ℕ → α} {c : Part α} (h : M.RunClosure s c) :
+    M.StageClosure (Set.range s) c := h.2
+
+/-! ### § VII. The registration switch: is closure-definedness data? -/
+
+variable (M)
+
+/-- `Statement:` some COMPUTABLE `Bool` test decides, at every point, whether `up` is defined. -/
+def RegisteredComputable [Primcodable α] : Prop :=
+  ∃ d : α → Bool, Computable d ∧ ∀ a, d a = true ↔ (M.up a).Dom
+
+/-- `Statement:` a decision of whether `up` is defined, at every point, exists as data. -/
+def RegisteredDecidable : Prop := Nonempty (∀ a, Decidable (M.up a).Dom)
+
+variable {M}
+
+/-- `Statement:` a motion presented by an `Option`-valued UP, through `Part.ofOption`. -/
+def ofOption (u : α → Option α) (hu : ∀ x y, y ∈ u x → y ∈ u y) (s : α → α → Prop) : Motion α where
+  up x := Part.ofOption (u x)
+  up_idem x y h := by
+    rw [Part.mem_ofOption] at h ⊢
+    exact hu x y h
+  step := s
+
+/-- `Statement:` a total motion has a decision of definedness. -/
+theorem registeredDecidable_of_upTotal (h : M.UpTotal) : M.RegisteredDecidable :=
+  ⟨fun a => isTrue (h a)⟩
+
+/-- `Statement:` an `Option`-presented motion has a decision of definedness. -/
+theorem ofOption_registeredDecidable (u : α → Option α) (hu : ∀ x y, y ∈ u x → y ∈ u y)
+    (s : α → α → Prop) : (ofOption u hu s).RegisteredDecidable :=
+  ⟨fun a => Part.ofOptionDecidable (u a)⟩
+
+/-- `Statement:` a computable test gives a decision of definedness; one way. -/
+theorem registeredDecidable_of_registeredComputable [Primcodable α]
+    (h : M.RegisteredComputable) : M.RegisteredDecidable := by
+  obtain ⟨d, -, hd⟩ := h
+  exact ⟨fun a => decidable_of_iff _ (hd a)⟩
+
+/-- `Statement:` classically every motion has a decision of definedness. -/
+theorem registeredDecidable_of_classical : M.RegisteredDecidable := by
+  classical
+  exact ⟨fun _ => inferInstance⟩
+
+/-- `Statement:` a total motion on a `Primcodable` carrier has a computable test. -/
+theorem registeredComputable_of_upTotal [Primcodable α] (h : M.UpTotal) :
+    M.RegisteredComputable :=
+  ⟨fun _ => true, Computable.const true, fun a => ⟨fun _ => h a, fun _ => rfl⟩⟩
+
+/-- `Statement:` an `Option`-presented motion with a computable UP has a computable test. -/
+theorem ofOption_registeredComputable [Primcodable α] (u : α → Option α) (hu : ∀ x y, y ∈ u x → y ∈ u y)
+    (s : α → α → Prop) (hc : Computable u) : (ofOption u hu s).RegisteredComputable :=
+  ⟨fun a => (u a).isSome, Primrec.option_isSome.to_comp.comp hc,
+    fun _ => (Part.ofOption_dom _).symm⟩
+
+end Motion
+
 end ZeroParadox
 
 section PurityCheck
@@ -232,5 +386,26 @@ open ZeroParadox
 #print axioms botCovered_botIntervalTwo
 #print axioms botCovered_botIntervalTwo_classical
 #print axioms everyStepCovered_botCovered
+#print axioms Motion.UpStepInvariant
+#print axioms Motion.IsRun
+#print axioms Motion.StageClosure
+#print axioms Motion.up_run_const
+#print axioms Motion.stageClosure_of_run
+#print axioms Motion.StageClosure.isLanding_of_mem
+#print axioms Motion.StageClosure.not_mem_of_mem
+#print axioms Motion.StageClosure.unique
+#print axioms Motion.RunsClose
+#print axioms Motion.RunClosure
+#print axioms Motion.runsClose_of_upStepInvariant
+#print axioms Motion.RunClosure.stageClosure
+#print axioms Motion.RegisteredComputable
+#print axioms Motion.RegisteredDecidable
+#print axioms Motion.ofOption
+#print axioms Motion.registeredDecidable_of_upTotal
+#print axioms Motion.ofOption_registeredDecidable
+#print axioms Motion.registeredDecidable_of_registeredComputable
+#print axioms Motion.registeredDecidable_of_classical
+#print axioms Motion.registeredComputable_of_upTotal
+#print axioms Motion.ofOption_registeredComputable
 
 end PurityCheck

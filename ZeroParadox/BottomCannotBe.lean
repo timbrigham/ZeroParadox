@@ -148,7 +148,7 @@ example : Nonempty (CategoryTheory.Limits.IsTerminal (TopCat.of (↥({(0 : ℚ_[
 -- Reading: one point, two orders, neither THE order (the next three lines).
 -- Statement: the boundary model's floor is the least element of `WithBot Ordinal`.
 #check @ZeroParadox.phase_floor_isBot
--- Statement: and the greatest element of `WithTop Ordinal`, which nothing covers.
+-- Statement: and the greatest element of `WithTop Ordinal`: the floor is ⊤ and covers nothing.
 #check @ZeroParadox.phaseEquivWithTop_floor_covers_nothing
 -- Statement: the map carrying ⊥ of `WithBot Ordinal` to ⊤ of `WithTop Ordinal`, fixing every `↑o`, is
 -- not monotone.

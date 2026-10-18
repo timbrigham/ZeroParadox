@@ -1,4 +1,5 @@
 import ZeroParadox.Settheory.Wall
+import ZeroParadox.Die
 import Mathlib.Computability.StateTransition
 import Mathlib.Computability.PartrecCode
 import Mathlib.Computability.Halting
@@ -511,6 +512,57 @@ theorem occurrence_shape [DecidableEq σ] (s : σ) :
    machine_snap_impossible f s,
    dead_yields_live_withholds f s⟩
 
+/-! ## § VIII. The machine as a motion — the computation face of the die's stage/closure shape
+
+UP is run-to-halt (`StateTransition.eval f`) and OVER is one step, a `Motion` in the sense of
+`ZeroParadox/Die.lean`. The configurations a run passes through before halting are not landings and
+share one closure, defined or not. Indexed in `ZeroParadox/DieCannotBe.lean` § VIII. -/
+
+/-- `Statement:` on the configurations of `f`, UP is `StateTransition.eval f` and OVER is one step. -/
+def runMotion : Motion σ :=
+  ⟨StateTransition.eval f, fun _ _ h =>
+    StateTransition.mem_eval.2 ⟨Relation.ReflTransGen.refl, (StateTransition.mem_eval.1 h).2⟩,
+    fun a b => b ∈ f a⟩
+
+/-- `Statement:` a landing of the run motion is a halted configuration. -/
+theorem runMotion_isLanding_iff (a : σ) : (runMotion f).IsLanding a ↔ f a = Option.none :=
+  ⟨fun h => (StateTransition.mem_eval.1 h).2,
+   fun h => StateTransition.mem_eval.2 ⟨Relation.ReflTransGen.refl, h⟩⟩
+
+/-- `Statement:` UP is unchanged along a step (Mathlib `StateTransition.reaches_eval`). -/
+theorem runMotion_upStepInvariant : (runMotion f).UpStepInvariant :=
+  fun _ _ h => StateTransition.reaches_eval (Relation.ReflTransGen.single h)
+
+/-- `Statement:` the not-yet-halted configurations reachable from `a` have the stage/closure shape,
+    with closure `eval f a`, defined or not. -/
+theorem runMotion_stageClosure (a : σ) :
+    (runMotion f).StageClosure {c | StateTransition.Reaches f a c ∧ f c ≠ Option.none}
+      (StateTransition.eval f a) := by
+  rintro c ⟨hr, hc⟩
+  exact ⟨fun hl => hc ((runMotion_isLanding_iff f c).1 hl), (StateTransition.reaches_eval hr).symm⟩
+
+/-- `Statement:` along a run of the motion, no stage is a landing and the closure is undefined. -/
+theorem runMotion_run_diverges {s : ℕ → σ} (hs : (runMotion f).IsRun s) :
+    (∀ n, ¬ (runMotion f).IsLanding (s n)) ∧ ¬ (StateTransition.eval f (s 0)).Dom := by
+  have hstep : ∀ n, s (n + 1) ∈ f (s n) := hs
+  refine ⟨fun n hl => ?_, fun hd => ?_⟩
+  · have h := hstep n
+    rw [(runMotion_isLanding_iff f _).1 hl] at h
+    simp at h
+  · obtain ⟨b, hb⟩ := Part.dom_iff_mem.1 hd
+    obtain ⟨hr, hb0⟩ := StateTransition.mem_eval.1 hb
+    have key : ∀ c, StateTransition.Reaches f (s 0) c → ∃ k, c = s k := by
+      intro c hc
+      induction hc with
+      | refl => exact ⟨0, rfl⟩
+      | tail _ hcd ih =>
+        obtain ⟨k, rfl⟩ := ih
+        exact ⟨k + 1, Option.mem_unique hcd (hstep k)⟩
+    obtain ⟨k, rfl⟩ := key b hr
+    have h := hstep k
+    rw [hb0] at h
+    simp at h
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -548,5 +600,10 @@ open ZeroParadox
 #print axioms occurs_iff_halts
 #print axioms occurrence_undecidable
 #print axioms occurrence_semidecidable_nonoccurrence_not
+#print axioms runMotion
+#print axioms runMotion_isLanding_iff
+#print axioms runMotion_upStepInvariant
+#print axioms runMotion_stageClosure
+#print axioms runMotion_run_diverges
 
 end PurityCheck
