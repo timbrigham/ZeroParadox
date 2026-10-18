@@ -39,7 +39,8 @@ reading the source settles where they come from; necessity rests on the reductio
 
 **Not inherited:** the category-theory face takes its choice from a bare `classical` written in
 framework source (`ZeroParadox/Category/Lawvere.lean`), not from Mathlib, and so does the die's
-cut-to-piece at ⊥ (`botCovered_botIntervalTwo_classical`, `ZeroParadox/Die.lean`).
+cut-to-piece at the least element of a partial order (`botCovered_botIntervalTwo_classical`,
+`ZeroParadox/Die.lean`).
 
 ⚠ **Do not read `no_witness_of_fixedPointFree`'s axiom-freedom as evidence the choice is avoidable.**
 It is not a purer proof of the same statement — it *takes* a fixed-point-free map as a hypothesis,

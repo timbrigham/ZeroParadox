@@ -303,8 +303,8 @@ is essential. -/
 -- Each case is a reduction proved without `Classical.choice` (at most `[propext, Quot.sound]`), from a
 -- classical principle the framework uses to a constructive taboo: case 1 from comparability of
 -- well-orders to excluded middle, case 2 from the fixed-point-free principle over arbitrary `Type` to
--- weak excluded middle, case 3 from the die's cut-to-piece at ⊥ over every partial order with a
--- least element on a `Type` to weak excluded middle.
+-- weak excluded middle, case 3 from the die's cut-to-piece at ⊥ of `α`, over every partial order `α`
+-- with a least element on a `Type`, to weak excluded middle.
 
 -- ESSENTIAL CASE 1 — comparability of well-orders implies EXCLUDED MIDDLE. Mathlib's `le_total` on
 -- `Ordinal` has exactly this shape, which is what puts it in the framework's path.
@@ -362,7 +362,9 @@ example : ∀ (β : Type) [PartialOrder β] [OrderBot β],
 -- `[⊥, a] = {⊥, a}`, with no axioms (footprint in `ZeroParadox/Die.lean`'s PurityCheck).
 #check @ZeroParadox.botCovered_botIntervalTwo
 
--- Statement: beside case 3, and not counted among the cases above: Mathlib's principle that every
+-- Statement: beside case 3, and not counted among the cases above because no framework proof uses
+-- `CovBy.Icc_eq` (not located in `ZeroParadox/**/*.lean` as of 2026-10-18; grep `Icc_eq` and
+-- `CovBy.Icc` return index, comment and non-vacuity sites only): Mathlib's principle that every
 -- cover `a ⋖ b` in every partial order on a `Type` has `Set.Icc a b = {a, b}`, of which the die's
 -- piece `BotIntervalTwo` is the case at ⊥, gives excluded middle; measured `[propext]`. The reduction
 -- runs at `Prop`, where ⊥ of `Prop` (`False`) is covered by `True` (`ZeroParadox/Reals/OrderedField.lean`
