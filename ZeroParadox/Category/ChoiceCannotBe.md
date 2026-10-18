@@ -1,6 +1,6 @@
 # Choice and the framework: the long form of the choice index
 
-Long form of `ZeroParadox/Category/ChoiceCannotBe.lean`. Every § number below (§ I to § IV) refers
+Long form of `ZeroParadox/Category/ChoiceCannotBe.lean`. Every § number below (§ I to § V) refers
 to that file.
 
 ## Formal Overview (AI-assisted)
@@ -84,7 +84,7 @@ not to record one; but it is not true that the framework contributes none.
 framework is non-constructive." The load-bearing fact is the opposite and much narrower: **T-SNAP, the
 core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`). Beyond it the picture
 is mixed and the categories are what matter, not a total: some footprints are *accidental* (a choice-free
-re-proof exists — the entries labelled ACCIDENTAL in § I), two are **ESSENTIAL** on § IV's premise
+re-proof exists — the entries labelled ACCIDENTAL in § I), three are **ESSENTIAL** on § IV's premise
 (§ IV), some are **STATEMENT-CARRIED** (the statement itself carries choice), and others are
 **UNCLASSIFIED**, meaning nobody has tried. A count collapses those four into one number and loses the
 only distinction that carries information.
@@ -132,7 +132,7 @@ fact about the build you just ran, not a fact to carry anywhere.
 
 **The survey is partial, and that is the honest caveat that matters.** Only some footprints have been
 traced to a source and classified; much of the corpus is unexamined. **Not every footprint is
-accidental** — § IV exhibits two reductions to taboos, which make two footprints essential on the
+accidental** — § IV exhibits three reductions to taboos, which make three footprints essential on the
 premise stated there. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
 has been examined, it has been **assigned** a class* — accidental, essential, statement-carried, or
 unclassified. (Not
@@ -155,7 +155,7 @@ fraction either**; it moves with every commit.
   excluded middle intuitionistically (Jankov 1968, "The calculus of the weak law of excluded middle",
   Math. USSR-Izv. 2(5) 997-1004; checked through a secondary source, not read). Lean's choice-free
   fragment is not plain intuitionistic logic, so the § IV premise is what carries that non-provability
-  over to it. Reaching a weaker taboo is a weaker implication and needs a stronger premise. **Two are
+  over to it. Reaching a weaker taboo is a weaker implication and needs a stronger premise. **Three are
   located, and the premise is stated, in § IV.** Detected by *reducing* — deriving a taboo from the
   principle — which is the mirror image of the accidental test: accidental is shown by re-proving
   without choice, essential by showing that re-proving without choice would prove a taboo. Note this is
@@ -191,7 +191,7 @@ Cited, not claimed.
 
 It does **not** claim the framework is choice-free — it is not. It does **not** claim any
 footprint is provably removable beyond the specific cases actually re-proved. **On the negative side,
-for the necessity of a PRINCIPLE, it claims exactly two reductions to taboos — non-removability results
+for the necessity of a PRINCIPLE, it claims exactly three reductions to taboos — non-removability results
 given § IV's premise — and neither comes from a measurement** — § IV's cases are **reductions**, and
 for a principle that is the only route available: `#print axioms` on a proof reports **that proof's**
 footprint, never **the principle's** necessity. A choice-carrying proof is evidence about how the proof

@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2005,
-        "files": 168
+        "declarations": 2006,
+        "files": 169
       },
       "entries": [
         {
@@ -17960,6 +17960,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3a27b3b5-e004-4204-9a77-485860f1ebbc",
+          "new": {
+            "file": "ZeroParadox/Reals/OrderedField.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_covBy_Icc_eq",
+            "short": "em_of_covBy_Icc_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Reals/OrderedField.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_covBy_Icc_eq",
+            "short": "em_of_covBy_Icc_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "EM arc item 2: the two-point closed interval of every cover (Mathlib CovBy.Icc_eq's statement, quantified over partial orders on a Type) implies excluded middle; ESSENTIAL case 3 in ChoiceCannotBe § IV",
           "verify": {
             "axioms": null,
             "sorry_free": true
