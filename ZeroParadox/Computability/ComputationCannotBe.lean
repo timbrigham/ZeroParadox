@@ -23,7 +23,9 @@ specifically what this document renders: a list of both positive and negative co
 
 ---
 ## Formal Overview (AI-assisted)
-The computational face, beside the four other `*CannotBe.lean` indexes: `#check` lines, each glossed
+The computational face, beside `ZeroParadox/BottomCannotBe.lean`, `ZeroParadox/Order/SnapCannotBe.lean`,
+`ZeroParadox/Ordinal/Epsilon0CannotBe.lean`, `ZeroParadox/Category/ChoiceCannotBe.lean` and
+`ZeroParadox/DieCannotBe.lean`: `#check` lines, each glossed
 `Statement:` / `Reading:` above it, and anonymous `example`s, this file's only proofs. Conventions and
 the commitments the glosses name: `ZeroParadox/Computability/ComputationCannotBe.md`.
 -/
