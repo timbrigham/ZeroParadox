@@ -320,3 +320,9 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 **Reason:** A deliberate COUNTER-MODEL, not a construction to build on: a three-valued step outcome (halted / idle / stepping) whose only purpose is to be the carrier in which the § I forcing fails. Mathlib has no three-valued step outcome because there is no reason to want one. It must never be used as a framework object.
 
 **Prior art (added 2026-07-27):** the halted-versus-idle distinction is the ACP split between *successful termination* and *deadlock* (Baeten & Weijland, *Process Algebra*, 1990) - process algebra calls the third value **deadlock**, where the framework reads it as *unstarted*. Same object, opposite valence; the standard term should lead in any reader-facing prose.
+
+### `Motion` — `ZeroParadox/Die.lean`
+
+**Relationship to Mathlib:** Has a `PFun` field; no Mathlib analog for the pair
+
+**Reason:** Mathlib carries each part separately, a partial function (`PFun`) and a relation. A structure pairing an idempotent partial self-map with a step relation was not located as of 2026-10-17, searched for the pair as follows: theoremsearch (one phrasing by the author, plus the prior-art gate's formal and informal queries on the pair) and web searches, finding nothing closer. The nearest neighbour is an abstract rewriting system with a normal-form map, where the normal forms are defined by the relation; in `Motion` the landings are independent of `step`. The pair is a record: every type carries one (identity map, empty relation), recorded as a NO-GO gauge beside the declaration, so membership says nothing and the content sits in the predicates (`Corner`, `Climb`, `Loop`, `OverToUndefined`) indexed in `ZeroParadox/DieCannotBe.lean`.
