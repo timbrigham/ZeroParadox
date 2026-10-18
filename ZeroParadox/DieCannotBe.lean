@@ -665,7 +665,7 @@ example (uc : ∀ P : Bool → Prop, (∃! b, P b) → {b : Bool // P b}) :
 -- the equivalence to their § 2.2. In Lean's `Prop`/`Type` split their excluded middle sits on the data
 -- side, `∀ p, Decidable p`, equivalently the `Bool` choice fragment, and the PROVED legs above are
 -- instances of their equivalence on that side: registration on every `α : Type` ⇔ the fragment. The
--- `Prop`-valued `ZeroParadox.ExcludedMiddle` is reached one way, and back only with the unique-choice
+-- `Prop`-valued `ZeroParadox.ExcludedMiddle` is reached one way, and back with the unique-choice
 -- hypothesis of the previous `example`; without it the converse is not established in Lean
 -- (`ZeroParadox/Category/ChoiceCannotBe.md`). An instance of theirs, not a generalization.
 
@@ -717,6 +717,10 @@ example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.SelectedData) :
     · exact hb
     · exact absurd hb hn
   · exact (key S).1 (of_decide_eq_true hd)
+-- Reading (cited, not claimed): an instance of Diaconescu's argument in the relational form of the Rocq
+-- standard library, `theories/Logic/Diaconescu.v` Part A (`pred_ext_and_rel_choice_imp_EM`, through
+-- `AC_bool_subset_to_bool`, a functional relation choosing in every inhabited subset of `bool`), which
+-- credits Diaconescu 1975 and Lacas and Werner 1999; an instance of theirs, not a generalization.
 -- Statement: with the fragment, (a) at any motion gives (b); so (a) on every motion on every
 -- `α : Type` gives (b) on every such motion, with the previous `example`, and (b) gives (a) by
 -- `selectedData_of_selectedTotal` (`[propext, Quot.sound]`).
@@ -761,6 +765,8 @@ example (H : ∀ (α : Type) (M : ZeroParadox.Motion α) (y : α), M.OverTrichot
   · exact Or.inr (h ())
   · exact Or.inl hp
   · exact absurd (Subsingleton.elim b ()) hb
+-- Reading: the OVER-leg counterpart of § IX's Escardó–Knapp § 2.2 form ("every partial element is
+-- defined or else undefined"), there quoted; cited, not claimed.
 #check @ZeroParadox.machine_trichotomy           -- Statement: the machine face: a configuration of `f : σ → Option σ` is halted, loops in place, or steps to some `s' ≠ s`
 -- Reading: under a function the first two values share a fate, as `machine_trichotomy`'s docstring
 -- states for the machine face (`loop_is_a_trap`); the obstruction is single-valuedness
@@ -813,8 +819,12 @@ example : (∀ (α : Type) (M : ZeroParadox.Motion α), M.reverse.SelectedData) 
   ⟨fun h α M => h α M.reverse, fun h α M => h α M.reverse⟩
 #check @ZeroParadox.Motion.mem_up_self_of_mem_up -- Statement: a value of UP is its own UP-preimage, so on UP's image the identity selects a UP-preimage
 #check @CategoryTheory.IsIdempotentComplete      -- Statement: Mathlib, a category in which every idempotent splits. Reading: the general frame for the line above; not claimed of partial maps
-#check @ZeroParadox.first_cell_eq_Iic            -- Statement: the seeds `α` with `nfp (ω^·) α = ε₀` are exactly `Set.Iic ε₀`. Reading: the ordinal face's fan-in at ε₀, whose least seed is ⊥ of `Ordinal`, not its only one
-#check @Function.Surjective.hasRightInverse      -- Statement: Mathlib, a surjection has a right inverse; its footprint is printed next. Reading: prior art, the standard frame in which choice is "every surjection has a section"; cited, not re-proved
+#check @ZeroParadox.first_cell_eq_Iic            -- Statement: the seeds `α` with `nfp (ω^·) α = ε₀` are exactly `Set.Iic ε₀`. Reading: these are UP's preimages of ε₀, whose least is ⊥ of `Ordinal`, not its only one; OVER there is one-to-one, so no point has `FanIn` (next `example`)
+-- Statement: OVER of the ordinal tower motion, `a ↦ ω ^ a`, is one-to-one, so no ordinal has fan-in.
+example (y : Ordinal.{0}) : ¬ ZeroParadox.ordinalTowerMotion.FanIn y :=
+  ZeroParadox.Motion.not_fanIn_of_injective _
+    (Ordinal.isNormal_opow Ordinal.one_lt_omega0).strictMono.injective (fun _ _ => Iff.rfl) y
+#check @Function.Surjective.hasRightInverse      -- Statement: Mathlib, a surjection has a right inverse; its footprint is printed next. Reading: prior art; the governing source is Diaconescu, "Axiom of Choice and Complementation", Proc. AMS 51 (1975), p. 176, "AC: Every epimorphism has a section"; cited, not re-proved
 #print axioms Function.Surjective.hasRightInverse
 -- Statement: choosing, on the image of every step function on every `α : Type`, a predecessor (a total
 -- selector of the reversed motion) ⇒ the two-element choice fragment (`[propext]`).

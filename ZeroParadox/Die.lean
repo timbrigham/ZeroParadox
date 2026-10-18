@@ -467,7 +467,7 @@ theorem not_fanIn_of_injective (f : α → α) (hf : Function.Injective f)
     (h : ∀ a b, M.step a b ↔ b = f a) (y : α) : ¬ M.FanIn y :=
   fun ⟨a, b, hab, ha, hb⟩ => hab (hf (((h a y).1 ha).symm.trans ((h b y).1 hb)))
 
-/-- `Statement:` a value `z` of `up` is a `up`-preimage of itself. -/
+/-- `Statement:` a value `z` of `up` is an `up`-preimage of itself. -/
 theorem mem_up_self_of_mem_up {x z : α} (h : z ∈ M.up x) : z ∈ M.up z :=
   M.up_idem x z h
 
