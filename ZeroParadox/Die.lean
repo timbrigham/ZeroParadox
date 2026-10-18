@@ -221,6 +221,25 @@ theorem botCovered_botIntervalTwo_classical : BotCovered α → BotIntervalTwo �
   classical
   exact botCovered_botIntervalTwo
 
+/-- `Statement:` if a cover of ⊥ gives a two-point first interval in every partial order with a
+    least element on a `Type`, weak excluded middle holds; the reduction runs at `Prop`, below the
+    witness `a`, at `p ∧ a`. -/
+theorem wem_of_botCovered_botIntervalTwo
+    (h : ∀ (β : Type) [PartialOrder β] [OrderBot β], BotCovered β → BotIntervalTwo β) :
+    ∀ p : Prop, ¬ p ∨ ¬ ¬ p := by
+  intro p
+  have hcov : BotCovered Prop :=
+    ⟨True, ⟨⟨fun h => h.elim, fun h => h trivial⟩, fun c h1 h2 => h1.2 fun hc => h2.2 fun _ => hc⟩⟩
+  obtain ⟨a, hlt, h2⟩ := h Prop hcov
+  rcases h2 (p ∧ a) (fun h => h.2) with e | e
+  · exact Or.inl fun hp => hlt.2 fun ha => by
+      have hpa : p ∧ a := ⟨hp, ha⟩
+      rw [e] at hpa
+      exact hpa
+  · exact Or.inr fun hnp => hlt.2 fun ha => by
+      have hpa : p ∧ a := by rw [e]; exact ha
+      exact hnp hpa.1
+
 /-- `Statement:` a cover at every non-maximal point, and a point other than ⊥ of `α`, give a cover
     of ⊥ of `α`. -/
 theorem everyStepCovered_botCovered (h : EveryStepCovered α) (hne : ∃ a : α, a ≠ ⊥) :
@@ -504,6 +523,7 @@ open ZeroParadox
 #print axioms botIntervalTwo_botCovered
 #print axioms botCovered_botIntervalTwo
 #print axioms botCovered_botIntervalTwo_classical
+#print axioms wem_of_botCovered_botIntervalTwo
 #print axioms everyStepCovered_botCovered
 #print axioms Motion.UpStepInvariant
 #print axioms Motion.IsRun

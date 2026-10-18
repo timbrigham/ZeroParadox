@@ -289,7 +289,7 @@ proved about where choice does work. -/
 #check @Prop.instHeytingAlgebra
 #check @Prop.instBooleanAlgebra
 
-/-! ## § IV. The ESSENTIAL cases — three reductions to taboos, and the premise they rest on
+/-! ## § IV. The ESSENTIAL cases — reductions to taboos, and the premise they rest on
 
 The arrow runs from each principle (cases 1 to 3 below) to its taboo, so each theorem speaks of the
 principle, not of any one proof of it. ESSENTIAL, in the sense of § "Accidental versus essential" of
@@ -303,7 +303,8 @@ is essential. -/
 -- Each case is a reduction proved without `Classical.choice` (at most `[propext, Quot.sound]`), from a
 -- classical principle the framework uses to a constructive taboo: case 1 from comparability of
 -- well-orders to excluded middle, case 2 from the fixed-point-free principle over arbitrary `Type` to
--- weak excluded middle, case 3 from the two-point interval of every cover to excluded middle.
+-- weak excluded middle, case 3 from the die's cut-to-piece at ⊥ over every partial order with a
+-- least element on a `Type` to weak excluded middle.
 
 -- ESSENTIAL CASE 1 — comparability of well-orders implies EXCLUDED MIDDLE. Mathlib's `le_total` on
 -- `Ordinal` has exactly this shape, which is what puts it in the framework's path.
@@ -345,11 +346,27 @@ is essential. -/
 -- The two `#check`ed declarations are what is established; the reach is not.
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
 
--- Statement: ESSENTIAL CASE 3 — if every cover `a ⋖ b` in every partial order on a `Type` has `Set.Icc a b =
--- {a, b}`, excluded middle holds; measured `[propext]`. The principle is the statement of Mathlib's
--- `CovBy.Icc_eq`, quantified over the carrier; the reduction runs at `Prop`, where ⊥ of `Prop`
--- (`False`) is covered by `True` (`ZeroParadox/Reals/OrderedField.lean` § 0, which cites the prior art
--- for that `Prop` case).
+-- Statement: ESSENTIAL CASE 3 — if a cover of ⊥ gives a two-point first interval (`[⊥, a] = {⊥, a}`)
+-- in every partial order with a least element on a `Type`, weak excluded middle holds; measured
+-- `[propext]`. Its hypothesis is the ∀-closure of `ZeroParadox/Die.lean`'s
+-- `botCovered_botIntervalTwo_classical`, the framework's own bare `classical`, which instantiates to it
+-- as `fun _ _ _ => botCovered_botIntervalTwo_classical` (next `example`); so that theorem's `classical`
+-- is essential in the sense of the header above, and on its premise.
+#check @ZeroParadox.wem_of_botCovered_botIntervalTwo
+-- Statement: non-vacuity: the framework's classical proof supplies the hypothesis.
+example : ∀ (β : Type) [PartialOrder β] [OrderBot β],
+    ZeroParadox.BotCovered β → ZeroParadox.BotIntervalTwo β :=
+  fun _ _ _ => ZeroParadox.botCovered_botIntervalTwo_classical
+#check @ZeroParadox.botCovered_botIntervalTwo_classical -- Statement: cut ⇒ piece at ⊥, proved with `classical`
+-- Statement: the escape, as in case 2: with `DecidableEq`, a cover of ⊥ of `α` gives some `a` with
+-- `[⊥, a] = {⊥, a}`, with no axioms (footprint in `ZeroParadox/Die.lean`'s PurityCheck).
+#check @ZeroParadox.botCovered_botIntervalTwo
+
+-- Statement: beside case 3, and not counted among the cases above: Mathlib's principle that every
+-- cover `a ⋖ b` in every partial order on a `Type` has `Set.Icc a b = {a, b}`, of which the die's
+-- piece `BotIntervalTwo` is the case at ⊥, gives excluded middle; measured `[propext]`. The reduction
+-- runs at `Prop`, where ⊥ of `Prop` (`False`) is covered by `True` (`ZeroParadox/Reals/OrderedField.lean`
+-- § 0, which cites the prior art for that `Prop` case).
 #check @ZeroParadox.em_of_covBy_Icc_eq
 -- Statement: non-vacuity: Mathlib's `CovBy.Icc_eq` supplies the hypothesis; its footprint is printed next.
 example : ∀ (α : Type) [PartialOrder α] (a b : α), a ⋖ b → Set.Icc a b = {a, b} :=
@@ -359,10 +376,6 @@ example : ∀ (α : Type) [PartialOrder α] (a b : α), a ⋖ b → Set.Icc a b 
 -- Statement: the negative form, nothing strictly between (`CovBy.Ioo_eq`); its footprint is printed next.
 #check @CovBy.Ioo_eq
 #print axioms CovBy.Ioo_eq
--- Statement: the escape, as in case 2: with `DecidableEq`, a cover of ⊥ of `α` gives `[⊥, a] = {⊥, a}`
--- (footprint in `ZeroParadox/Die.lean`'s PurityCheck); for any cover, the `DecidableEq` `example` in
--- `ZeroParadox/Reals/OrderedField.lean` § 0.
-#check @ZeroParadox.botCovered_botIntervalTwo
 
 /-! ## § V. Per instance free, uniform a taboo — pointers
 
@@ -381,10 +394,12 @@ uniform legs proved by anonymous `example` are cited by section. -/
 -- middle (case 2, § IV).
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
 #check @ZeroParadox.wem_of_fixedPointFree         -- Statement: the general fixed-point-free principle gives weak excluded middle
--- Statement: the two-point interval of a cover: free at ⊥ with `DecidableEq`; over every partial order
--- on a `Type`, excluded middle (case 3, § IV).
+-- Statement: the die's piece at ⊥: free with `DecidableEq`; over every partial order with a least
+-- element on a `Type`, weak excluded middle (case 3, § IV); for every cover, Mathlib's form, excluded
+-- middle (beside case 3, § IV).
 #check @ZeroParadox.botCovered_botIntervalTwo
-#check @ZeroParadox.em_of_covBy_Icc_eq            -- Statement: case 3, § IV
+#check @ZeroParadox.wem_of_botCovered_botIntervalTwo -- Statement: case 3, § IV
+#check @ZeroParadox.em_of_covBy_Icc_eq            -- Statement: beside case 3, § IV
 -- Statement: the die's UP leg, registration: an `Option`-presented UP is registered on every carrier;
 -- registration of every motion on every `α : Type` and the fragment are inter-derivable, each giving
 -- excluded middle (`ZeroParadox/DieCannotBe.lean` § IX).
@@ -399,7 +414,9 @@ uniform legs proved by anonymous `example` are cited by section. -/
 -- at every point of every motion on every `α : Type` it gives excluded middle
 -- (`ZeroParadox/DieCannotBe.lean` § XI).
 #check @ZeroParadox.Motion.overTrichotomy_of_option
--- Reading: no count of rows is recorded (`ZeroParadox/Category/ChoiceCannotBe.md` § "No count is
--- recorded here").
+-- Reading: these reductions are what constructive reverse mathematics calls Brouwerian
+-- counterexamples, "T ⟹ P, where P is a general, constructively dubious statement such as LPO" (Diener,
+-- *Constructive Reverse Mathematics*, arXiv:1804.05495v3, p. 6, PDF page 7; cited, not claimed). No count of rows is
+-- recorded (`ZeroParadox/Category/ChoiceCannotBe.md` § "No count is recorded here").
 
 end ChoiceCannotBeIndex

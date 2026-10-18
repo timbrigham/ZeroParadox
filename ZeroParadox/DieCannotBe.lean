@@ -886,8 +886,9 @@ example : let M := ZeroParadox.Motion.ofTotal (fun _ : Bool => true) (fun _ => r
      change a ≠ y at ha; change b ≠ y at hb
      revert hab ha hb; cases a <;> cases b <;> cases y <;> decide⟩
 -- Statement: the ordinal face on `E0Note` (`ZeroParadox/Ordinal/PricedInterface.lean`), UP constant ⊤,
--- OVER `e0OmegaPow`: registered, selected, the trichotomy at every point (`e0DecidableEq`), no fan-in,
--- and the notation tower's stages close at ⊤ (`[propext]`).
+-- the only fixed point of OVER `e0OmegaPow` (`e0OmegaPow_fixedpoint_iff`, below): registered, selected,
+-- the trichotomy at every point (`e0DecidableEq`), no fan-in, and the notation tower's stages close at
+-- ⊤ (`[propext]`).
 example : let M := (ZeroParadox.Motion.ofTotal (fun _ : ZeroParadox.E0Note => ⊤) (fun _ => rfl)
       (fun a b => b = ZeroParadox.e0OmegaPow a))
     M.RegisteredDecidable ∧ M.SelectedTotal ∧ (∀ y, M.OverTrichotomy y) ∧ (∀ y, ¬ M.FanIn y) ∧
@@ -923,6 +924,7 @@ example : let M := (ZeroParadox.Motion.ofTotal (fun _ : ZeroParadox.E0Note => �
 -- the same four cells (§§ IX–XII) with statement-carried footprints.
 #check @ZeroParadox.e0Repr_eq_epsilon0_iff        -- Statement: `e0Repr a = ε₀ ↔ a = ⊤`
 #check @ZeroParadox.e0OmegaPow_top                -- Statement: `e0OmegaPow ⊤ = ⊤`, by `rfl`
+#check @ZeroParadox.e0OmegaPow_fixedpoint_iff     -- Statement: `e0OmegaPow a = a ↔ a = ⊤`
 -- Statement: the machine face's OVER, an `Option`-valued function: the trichotomy at every point of
 -- every carrier `σ : Type` gives excluded middle (`[propext]`). At `Prop`, `_ ↦ some True` returns to
 -- `p` exactly when `p` holds; with `DecidableEq` it is free (`overTrichotomy_of_option`, § XI).
@@ -975,20 +977,26 @@ example : let M := (ZeroParadox.Motion.ofTotal (fun _ : ℕ → Bool => ⊥) (fu
       rw [hb]; exact (fix y).2 h
     · exact Or.inr (Or.inr ⟨_, rfl, fun e => h ((fix y).1 e)⟩)
 -- Reading: the prediction that a face pays a taboo exactly on the legs it does not present as data
--- holds on `Motion.ofOption`, `Bool` and `E0Note`, and fails on the last two faces: both legs are
--- functions, and the trichotomy still reaches a taboo through the carrier's equality, which neither
--- leg supplies.
+-- holds on `Motion.ofOption` (over every carrier) and on `Bool` and `E0Note` (per instance), and fails
+-- on the OVER leg of the last two faces, over every carrier for the machine face and on the one carrier
+-- `ℕ → Bool` for bit tapes: OVER is a function, and the trichotomy still reaches a taboo through the
+-- carrier's equality, which the leg does not supply. The machine face's own UP,
+-- `StateTransition.eval`, is partial and is not the leg measured here.
 
 /-! ### § XIV. Reversing OVER by an involution of the carrier -/
--- Statement: an involution `σ` with `step a b ↔ step (σ b) (σ a)` sends each point with no predecessor
--- to a point with no successor (`[propext]`).
+-- Statement: an involution `σ` with `step a b ↔ step (σ b) (σ a)` sends each source (a point with no
+-- predecessor) to a sink (a point with no successor) (`[propext]`).
+-- Reading (cited, not claimed): the shape is Devaney's reversing involution, `R² = identity`, under which
+-- a vector field or a diffeomorphism is R-reversible (Devaney, "Reversible diffeomorphisms and flows",
+-- Trans. AMS 218 (1976) 89–113, pp. 89–90), here for a step relation and without his condition
+-- `dim Fix(R) = ½ dim M`. The relational form is ours, an instance of that shape and not a
+-- generalization of his results.
 example {α : Type} (M : ZeroParadox.Motion α) (σ : α → α) (hσ : Function.Involutive σ)
     (hr : ∀ a b, M.step a b ↔ M.step (σ b) (σ a)) (y : α) :
     (∀ a, ¬ M.step a y) ↔ M.NoStepAt (σ y) :=
   ⟨fun h b hb => h _ (by rw [hr, hσ] at hb; exact hb), fun h a ha => h (σ a) ((hr _ _).1 ha)⟩
--- Statement: non-member holding both ends: on `OnePoint ℕ`, which is `Option ℕ`, OVER
--- `Option.map Nat.succ` steps `∞` to itself and leaves `0` with no predecessor, while every point has a
--- successor; no involution reverses it (`[propext]`).
+-- Statement: non-member: on `OnePoint ℕ`, which is `Option ℕ`, OVER `Option.map Nat.succ` steps `∞` to
+-- itself and has the source `0` and no sink; no involution reverses it (`[propext]`).
 example : ¬ ∃ σ : OnePoint ℕ → OnePoint ℕ, Function.Involutive σ ∧
     ∀ a b : OnePoint ℕ, (b = Option.map Nat.succ a ↔ σ a = Option.map Nat.succ (σ b)) := by
   rintro ⟨σ, hσ, hr⟩
@@ -1000,18 +1008,43 @@ example : ¬ ∃ σ : OnePoint ℕ → OnePoint ℕ, Function.Involutive σ ∧
   have := (hr (σ (OnePoint.some 0)) (Option.map Nat.succ (σ (OnePoint.some 0)))).1 rfl
   rw [hσ] at this
   exact this
+-- Statement: member on the same carrier: OVER `0 → ∞` alone, reversed by the involution exchanging `0`
+-- and `∞`.
+example : let σ : OnePoint ℕ → OnePoint ℕ := fun o => match o with
+      | none => some 0
+      | some 0 => none
+      | some (n + 1) => some (n + 1)
+    Function.Involutive σ ∧ ∀ a b : OnePoint ℕ,
+      (a = some 0 ∧ b = none) ↔ (σ b = some 0 ∧ σ a = none) := by
+  intro σ
+  have l1 : ∀ b, σ b = some 0 ↔ b = none := by
+    intro b
+    rcases b with _ | _ | m
+    · exact ⟨fun _ => rfl, fun _ => rfl⟩
+    · exact ⟨fun h => (nomatch h), fun h => (nomatch h)⟩
+    · exact ⟨fun h => absurd (Option.some.inj h) (Nat.succ_ne_zero m), fun h => (nomatch h)⟩
+  have l2 : ∀ a, σ a = none ↔ a = some 0 := by
+    intro a
+    rcases a with _ | _ | n
+    · exact ⟨fun h => (nomatch h), fun h => (nomatch h)⟩
+    · exact ⟨fun _ => rfl, fun _ => rfl⟩
+    · exact ⟨fun h => (nomatch h), fun h => absurd (Option.some.inj h) (Nat.succ_ne_zero n)⟩
+  refine ⟨fun o => ?_, fun a b => ⟨fun ⟨ha, hb⟩ => ⟨(l1 b).2 hb, (l2 a).2 ha⟩,
+    fun ⟨hb, ha⟩ => ⟨(l2 a).1 ha, (l1 b).1 hb⟩⟩⟩
+  rcases o with _ | _ | n <;> rfl
 -- Statement: members: `Fin 3` with OVER `0 → 1 → 2` and `Fin.rev`; `Bool` with OVER `false → true` and
 -- `not`, the two-state step off ⊥ of `Bool`.
 example : ∀ a b : Fin 3, ((a = 0 ∧ b = 1) ∨ (a = 1 ∧ b = 2)) ↔
     ((Fin.rev b = 0 ∧ Fin.rev a = 1) ∨ (Fin.rev b = 1 ∧ Fin.rev a = 2)) := by decide
 example : ∀ a b : Bool, (a = false ∧ b = true) ↔ ((!b) = false ∧ (!a) = true) := by decide
--- Statement: member holding neither end: ℤ with OVER `a ↦ a + 1` and negation (`[propext, Quot.sound]`).
+-- Statement: member: ℤ with OVER `a ↦ a + 1`, which has no source and no sink, and negation
+-- (`[propext, Quot.sound]`).
 example : ∀ a b : ℤ, (b = a + 1 ↔ -a = -b + 1) := fun a b => by constructor <;> intro h <;> omega
 #check @ZeroParadox.rInv_conj_rScale             -- Statement: on `OnePoint ℚ_[2]`, `rInv ∘ rScale n ∘ rInv = rScale (-n)`
--- Reading: an end-exchanging reversal is not tied to holding both ends of the one pole ⊥ = 0 = ∞ as
--- points: `OnePoint ℕ` holds `0` and `∞` and admits none, ℤ holds neither and admits one. The
--- obstruction measured is a point with no predecessor against no point without a successor. The
--- adjoined-points switch (§ I) does not count ends: `OnePoint ℕ` and `OnePoint ℚ_[2]` each adjoin
--- one point and hold both; that switch stands as stated in § I.
+-- Reading: an end-exchanging reversal is a property of the step, not of which ends of the one pole
+-- ⊥ = 0 = ∞ the carrier holds as points: on `OnePoint ℕ`, `Option.map Nat.succ` admits none and
+-- `0 → ∞` admits one. The obstruction measured is the motion's sources against its sinks, which a
+-- reversal exchanges. The adjoined-points switch (§ I) does not count ends: `OnePoint ℕ` and
+-- `OnePoint ℚ_[2]` each adjoin one point and hold both `0` and `∞`; that switch stands as stated in § I.
 
 end DieCannotBeIndex
