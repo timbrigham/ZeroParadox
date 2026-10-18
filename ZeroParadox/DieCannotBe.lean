@@ -714,7 +714,9 @@ example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.SelectedData) :
 -- `theories/Logic/Diaconescu.v` Part A (`pred_ext_and_rel_choice_imp_EM`, through
 -- `AC_bool_subset_to_bool`, a functional relation choosing in every inhabited subset of `bool`), which
 -- credits Diaconescu 1975 and Lacas and Werner 1999, run on the data side: there relational choice, a
--- `Prop`, gives excluded middle; here a selector given as data gives the fragment.
+-- `Prop`, gives excluded middle; here a selector given as data gives the fragment (the `example`
+-- above) and excluded middle directly (`Motion.em_of_selectedData`, next line), the latter on Part A's
+-- own two classes `b = true ∨ p`, `b = false ∨ p`; an instance of theirs, not a generalization.
 #check @ZeroParadox.Motion.em_of_selectedData -- Statement: (a) on every motion on every `α : Type` ⇒ excluded middle, directly
 -- Statement: with the fragment, (a) at any motion gives (b); so (a) on every motion on every
 -- `α : Type` gives (b) on every such motion, with the previous `example`, and (b) gives (a) by
@@ -988,6 +990,13 @@ example {α : Type} (M : ZeroParadox.Motion α) (σ : α → α) (hσ : Function
     (∀ a, ¬ M.step a y) ↔ M.NoStepAt (σ y) :=
   ⟨fun h b hb => h _ (by rw [hr, hσ] at hb; exact hb), fun h a ha => h (σ a) ((hr _ _).1 ha)⟩
 #check @ZeroParadox.Motion.bijOn_sources_sinks   -- Statement: and the sources map one-to-one onto the sinks
+-- Reading (cited, not claimed): folklore, of which the theorem is an instance. A digraph isomorphic to
+-- its converse is self-converse (Harary and Palmer, "Enumeration of self-converse digraphs",
+-- Mathematika 13 (1966); bibliographic record only, not read), and the theorem says an involutive such
+-- isomorphism sends the sources onto the sinks; the poset form is Chajda and Länger, arXiv:2502.01266v1, Lemma 3.6, p. 5: for an antitone
+-- involution `'` and `A ⊆ P`, "(Max A)' = Min A' and (Min A)' = Max A'". The dynamical analogue is in
+-- Devaney's § IX (PDF page 26 of the copy read): for a symmetric hyperbolic critical point `p`, "by
+-- R-reversibility, we have R(W^s(p)) = W^u(p)", the stable manifold sent onto the unstable one.
 -- Statement: and the sinks onto the sources: the same theorem at the reversed motion (no axioms).
 example {α : Type} {M : ZeroParadox.Motion α} {σ : α → α} (hσ : Function.Involutive σ)
     (hr : ∀ a b, M.step a b ↔ M.step (σ b) (σ a)) :
@@ -1189,6 +1198,14 @@ example : ¬ ∃ σ : Fin 4 → Fin 4, Function.Involutive σ ∧
     rw [e0] at h
     revert h; generalize σ 2 = x; revert x; decide
   exact absurd (hσ.injective (e1.trans e2.symm)) (by decide)
+-- Statement: and there the source is `0` and the sink `3` (`[propext, Quot.sound]`).
+example : let M := (ZeroParadox.Motion.ofTotal (id : Fin 4 → Fin 4) (fun _ => rfl)
+      (fun a b => (a = 0 ∧ b = 1) ∨ (a = 1 ∧ b = 2) ∨ (a = 2 ∧ b = 3) ∨ (a = 0 ∧ b = 2)))
+    {y | M.reverse.NoStepAt y} = {0} ∧ {y | M.NoStepAt y} = {3} := by
+  intro M
+  refine ⟨Set.ext fun y => ?_, Set.ext fun y => ?_⟩ <;>
+    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff, ZeroParadox.Motion.NoStepAt,
+      ZeroParadox.Motion.reverse, flip, M, ZeroParadox.Motion.ofTotal] <;> revert y <;> decide
 -- Statement: counting a self-loop as an end: the points stepped into only from themselves or from
 -- nothing map one-to-one onto the points stepping only to themselves or nowhere (no axioms) ...
 example {α : Type} {M : ZeroParadox.Motion α} {σ : α → α} (hσ : Function.Involutive σ)
@@ -1291,15 +1308,20 @@ example (n : ℤ) : let M := (ZeroParadox.Motion.ofTotal (id : ZeroParadox.Spher
   · rintro rfl; rw [inv']
   · intro h
     rw [ZeroParadox.rInv_involutive.injective h, inv]
+#check @ZeroParadox.rInv_swaps                    -- Statement: `rInvHomeo` sends `0` to `∞` and `∞` to `0` on `OnePoint ℚ_[2]`: the INVERSION witness, two distinct points exchanged, not the coincidence
 -- Reading: Tim's reading of the two ends, measured. A source (nothing steps in) and a sink (nothing
--- steps out) are roles of the MOTION, not points of its carrier, and a reversal maps the first one for
--- one onto the second (`bijOn_sources_sinks`), as `0` and `∞` under `0 → ∞` on `OnePoint ℕ`. Read as the
--- motion's local 0 and local ∞ they pair with the pole ⊥ = 0 = ∞, a chart claim
+-- steps out) are roles of the MOTION, not points of its carrier, and a reversal maps the first
+-- one-for-one onto the second (`bijOn_sources_sinks`), as `0` and `∞` under `0 → ∞` on `OnePoint ℕ`.
+-- Read as the motion's local 0 and local ∞ they pair with the pole ⊥ = 0 = ∞, a chart claim
 -- (`ZeroParadox/BottomCannotBe.lean` § INVERSION), as a reading, not an identity. The implication runs
 -- one way: a reversal matches the ends, matched ends force no reversal (`Fin 4`), and a reversal needs
--- no ends (ℤ). An adjoined point that the motion maps to itself is no end: it steps only to itself and
--- is stepped into only from itself, INVARIANT under reversal (`Option.map`, ⊤ of `E0Note`, `∞` under
--- `rScale n`, where `rInv` reverses the motion and exchanges `0` and `∞` as two such points). An
+-- no ends (ℤ). An adjoined point that the motion maps to itself is not an end in the no-step sense (in
+-- the self-loop count above it falls in both sets): it steps only to itself and is stepped into only
+-- from itself, INVARIANT under reversal (`Option.map`; ⊤ of `E0Note`; `∞` of `OnePoint ℚ_[2]` under
+-- `rScale n`, where `0`, not adjoined, behaves the same, `rInv` reverses the motion, and `rInv_swaps`
+-- exchanges the two). ⊤ of `E0Note` is the point `e0Repr` sends to ε₀, and ε₀ is the minimum step
+-- next to the pole, never the pole (`ZeroParadox/Ordinal/Epsilon0CannotBe.lean` § III); it sits
+-- in that list beside `∞` as a self-loop, not as the pole's infinity. An
 -- adjoined value in the step's codomain gives a sink instead (`runMotion`; both `TriStep` values, which
 -- the relation does not tell apart). Under a function a halted and a self-looping configuration share
 -- a fate (§ XI); under reversal the first goes to a source and the second to a point stepped into only

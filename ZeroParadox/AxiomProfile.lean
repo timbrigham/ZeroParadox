@@ -51,11 +51,11 @@ required in places... the heart of what we're trying to prove is choice free.
 
 A **checkable artifact** (`lake build ZeroParadox.AxiomProfile`): the `#print axioms` output reports
 each result's complete axiom dependency. **The core is choice-free; T-SNAP depends on no axioms at
-all.** Choice appears mostly in the realization layers, inherited from Mathlib, and also in the die's
-meta objects (`ZeroParadox/Die.lean`); where it is essential, and on what premise:
-`ZeroParadox/Category/ChoiceCannotBe.lean` § IV, whose cases § 0 prints. -/
+all.** Choice appears mostly in the realization layers, inherited from Mathlib, and in the die
+(`ZeroParadox/Die.lean`, the order-free motion over every carrier); where it is essential, and on
+what premise: `ZeroParadox/Category/ChoiceCannotBe.lean` § IV, whose cases § 0 prints. -/
 
-/-! ## 0. Choice-free reductions to taboos — essential on the premise in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV
+/-! ## 0. The framework's own `classical`s, their reductions to taboos, and the fixed-point-free pair — essential on the premise in `ZeroParadox/Category/ChoiceCannotBe.lean` § IV
 
 ⚠ PROVENANCE and NECESSITY are independent axes. `fixedPointFree_of_nontrivial` and the die's
 `classical`s spend the framework's OWN `classical`; well-order comparability spends MATHLIB's, in
@@ -69,8 +69,8 @@ section FrameworkOwnChoice
 #print axioms ZeroParadox.botCovered_botIntervalTwo_classical -- [propext, Classical.choice, Quot.sound]
 #print axioms ZeroParadox.Motion.registeredDecidable_of_classical -- [propext, Classical.choice, Quot.sound]
 #print axioms ZeroParadox.Motion.selectedTotal_of_classical -- [propext, Classical.choice, Quot.sound]
--- NECESSITY: one reduction to a taboo per principle, each CHOICE-FREE, about the declarations above,
--- in the same order.
+-- NECESSITY: one reduction to a taboo per principle, each CHOICE-FREE, about the ∀-closed principle
+-- that each declaration above proves, in the same order.
 #print axioms ZeroParadox.wem_of_fixedPointFree          -- [propext, Quot.sound]
 #print axioms ZeroParadox.wem_of_botCovered_botIntervalTwo -- [propext]
 #print axioms ZeroParadox.Motion.em_of_registeredDecidable -- does not depend on any axioms

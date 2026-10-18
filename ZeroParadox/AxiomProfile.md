@@ -20,8 +20,9 @@ Keep the two tiers apart:
 
 It appears **mostly** in the layers that *realize* these results inside standard analytic structures —
 p-adic topology, Hilbert space, ordinals, computability, category theory — inherited from Mathlib's
-classically-built libraries, shown in § III for honest contrast. It also appears in the die's meta
-objects (`ZeroParadox/Die.lean`), which realize nothing.
+classically-built libraries, shown in § III for honest contrast. It also appears in the die
+(`ZeroParadox/Die.lean`: the order-free motion and its premises, stated over every carrier and
+importing no face file), which realizes nothing.
 
 ⚠ **Not entirely inherited (measured), and on the premise in `ZeroParadox/Category/ChoiceCannotBe.lean`
 § IV not entirely removable (reduced).** The measurements below name the axioms each proof uses, and
