@@ -78,7 +78,8 @@ premise stated there** — the cost is in stating the swap over types **whose eq
 decidable equality is exactly what the § IV escape restores), which is the framework's chosen
 generality, not Mathlib's. `ZeroParadox/Die.lean`'s bare `classical`s in
 `botCovered_botIntervalTwo_classical`, `Motion.registeredDecidable_of_classical` and
-`Motion.selectedTotal_of_classical` are the framework's own as well, and § IV classifies each
+`Motion.selectedTotal_of_classical` (the last also calling `Classical.choose` directly) are the
+framework's own as well, and § IV classifies each
 ESSENTIAL on the same premise (cases 3 to 5), with a per-instance escape beside each. So a corpus-wide
 total still mixes the two sources and still reads as a property of this project, which is reason enough
 not to record one; but it is not true that the framework contributes none.
