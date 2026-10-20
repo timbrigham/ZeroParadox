@@ -21,8 +21,8 @@ slipping in.
 
 The framework's set-theoretic commitment used to read "we adopt ZF + AFA." That
 over-states it: the development's set-theoretic *assumption* is only the fragment
-that supplies a *unique self-containing bottom* ⊥ = {⊥}, not the full Anti-Foundation
-Axiom (AFA's "every graph has a unique decoration"). Naming "AFA specifically" is a
+that supplies a *unique self-membered bottom* (⊥ ∈ ⊥, no other x ∈ x), not the full
+Anti-Foundation Axiom (AFA's "every graph has a unique decoration"). Naming "AFA specifically" is a
 judgment call about which axiom system to adopt; naming the *requirements*, with AFA
 as one witness, is the honest statement. (This is an assumption-side claim, not a
 sufficiency claim: where AFA-specific content is used elsewhere — e.g. decoration
@@ -32,7 +32,7 @@ assumed from full AFA.)
 This file makes that reframe a citable object. `QuineHost` is a typeclass encoding
 the two requirements a host theory must supply:
 
-- **(Y)** `bot` is a Quine atom — `mem bot bot`, i.e. ⊥ = {⊥};
+- **(Y)** `bot` is self-membered — `mem bot bot`, ⊥ ∈ ⊥, weaker than ⊥ = {⊥} (control below);
 - **(Z)** that atom is unique — the only self-membered element is `bot`.
 
 A third requirement, **(X) Foundation-free**, is NOT assumed: it is *forced* by (Y)
@@ -76,7 +76,7 @@ open ZPSemilattice
 
 /-- **The Quine-Host requirements.** A type `L` with a membership relation `mem` and a
     distinguished `bot` *hosts the framework's bottom* when:
-    - **(Y)** `bot` is a Quine atom: `mem bot bot`, i.e. ⊥ = {⊥} (self-containing);
+    - **(Y)** `bot` is self-membered: `mem bot bot`, ⊥ ∈ ⊥ (weaker than ⊥ = {⊥});
     - **(Z)** that atom is unique: the only self-membered element is `bot`.
 
     Requirement **(X)** — that the host is Foundation-free (its membership is not
@@ -97,10 +97,17 @@ class QuineHost (L : Type*) where
   mem : L → L → Prop
   /-- The distinguished bottom element. -/
   bot : L
-  /-- (Y) The bottom is a Quine atom: ⊥ = {⊥}. -/
+  /-- (Y) The bottom is self-membered: `mem bot bot`. -/
   bot_selfMem : mem bot bot
   /-- (Z) Uniqueness: the only self-membered element is the bottom. -/
   selfMem_unique : ∀ x : L, mem x x → x = bot
+
+-- Statement: CONTROL: (Y) and (Z) do not give ⊥ = {⊥}. On `Bool` with `mem x y := y = false`
+-- (every `x` is a member of `false`), ⊥ is `false`, both fields hold, and `true` is a second
+-- member of ⊥.
+example : ∃ H : QuineHost Bool, H.bot = false ∧ H.mem true H.bot :=
+  ⟨{ mem := fun _ y => y = false, bot := false, bot_selfMem := rfl,
+     selfMem_unique := fun _ h => h }, rfl, rfl⟩
 
 /-! ## § II. (X) is forced — any host is Foundation-free -/
 
@@ -160,6 +167,9 @@ instance : QuineHost OneAtom where
   bot := OneAtom.bot
   bot_selfMem := ⟨rfl, rfl⟩
   selfMem_unique := fun _ hx => hx.1
+
+-- Statement: in this model the singleton reading holds as well: the only member of ⊥ is ⊥.
+example (x : OneAtom) (h : QuineHost.mem x OneAtom.bot) : x = OneAtom.bot := h.1
 
 /-- The concrete model does host a Quine atom (its `bot` is self-membered) yet is not
     well-founded — the requirements are satisfiable. -/

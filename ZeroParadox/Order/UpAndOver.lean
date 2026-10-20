@@ -418,6 +418,58 @@ example (o s : Ordinal.{u}) (ho : Order.IsSuccLimit o) (h : ordinalUpAndOver.up 
     s = Ordinal.epsilon o :=
   seed_eq_of_nfp_eq_epsilon_limit o s ho h
 
+/-! ### § V. The ordinal instance as a die motion (`ZeroParadox/Die.lean` § XI) -/
+
+/-- `Statement:` on `Ordinal`, UP `nfp (ω^·)` (as in `ordinalUpAndOver`) and OVER `Order.succ`. -/
+noncomputable def ordinalSuccMotion : Motion Ordinal.{u} :=
+  Motion.ofTotal (Ordinal.nfp fun a => Ordinal.omega0 ^ a)
+    (fun x => Ordinal.nfp_eq_self (Ordinal.nfp_fp (Ordinal.isNormal_opow Ordinal.one_lt_omega0) x))
+    (fun a b => b = Order.succ a)
+
+/-- `Statement:` no successor ordinal is fixed by `α ↦ ω^α`. -/
+theorem omega0_opow_succ_ne (a : Ordinal.{u}) :
+    Ordinal.omega0 ^ Order.succ a ≠ Order.succ a := by
+  intro h
+  have hlim := Ordinal.isSuccLimit_opow_left Ordinal.isSuccLimit_omega0
+    (lt_of_le_of_lt (zero_le a) (Order.lt_succ a)).ne'
+  rw [h] at hlim
+  exact Order.not_isSuccLimit_succ a hlim
+
+/-- `Statement:` the corner of `ordinalSuccMotion` fires, at the landing ε₀ (`corner_ofTotal_iff`). -/
+theorem ordinalSuccMotion_corner : ordinalSuccMotion.{u}.Corner :=
+  (Motion.corner_ofTotal_iff _ (fun a => Ordinal.omega0 ^ a) Order.succ _
+    (fun x => ⟨fun h => h ▸ Ordinal.nfp_fp (Ordinal.isNormal_opow Ordinal.one_lt_omega0) x,
+      Ordinal.nfp_eq_self⟩)).2
+    ⟨Ordinal.epsilon 0, Ordinal.omega0_opow_epsilon 0, omega0_opow_succ_ne _⟩
+
+/-- `Statement:` `ordinalSuccMotion` climbs: from ε₀, a step to `succ ε₀`, and UP to a third point. -/
+theorem ordinalSuccMotion_climb : ordinalSuccMotion.{u}.Climb := by
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  refine ⟨Ordinal.epsilon 0, Order.succ (Ordinal.epsilon 0),
+    Ordinal.nfp (fun a => Ordinal.omega0 ^ a) (Order.succ (Ordinal.epsilon 0)),
+    Part.mem_some_iff.2 (Ordinal.nfp_eq_self (Ordinal.omega0_opow_epsilon 0)).symm, rfl,
+    Part.mem_some _, fun h => ?_,
+    (lt_of_lt_of_le (Order.lt_succ _) (Ordinal.le_nfp _ _)).ne'⟩
+  have := Ordinal.nfp_fp hn (Order.succ (Ordinal.epsilon 0))
+  rw [h] at this
+  exact omega0_opow_succ_ne _ this
+
+/-- `Statement:` UP sends `succ ε₀` to ε₁. -/
+theorem ordinalSuccMotion_up_succ_epsilon0 :
+    Ordinal.nfp (fun a => Ordinal.omega0 ^ a) (Order.succ (Ordinal.epsilon 0)) =
+      Ordinal.epsilon.{u} 1 := by
+  rw [← Ordinal.epsilon_succ_eq_nfp, Order.succ_eq_add_one, zero_add]
+
+/-- `Statement:` `ordinalSuccMotion` does not loop: UP after a step lands strictly above. -/
+theorem ordinalSuccMotion_not_loop : ¬ ordinalSuccMotion.{u}.Loop := by
+  rintro ⟨y, b, -, hs, -, hyb⟩
+  have hb : b = Order.succ y := hs
+  have hy : y = Ordinal.nfp (fun a => Ordinal.omega0 ^ a) b := Part.mem_some_iff.1 hyb
+  have hlt : y < Ordinal.nfp (fun a => Ordinal.omega0 ^ a) b := by
+    rw [hb]; exact lt_of_lt_of_le (Order.lt_succ y) (Ordinal.le_nfp _ _)
+  exact absurd hy hlt.ne
+
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -441,5 +493,12 @@ open ZeroParadox
 #print axioms ordinalUpAndOver_up
 #print axioms deriv_add_one_eq_up_succ
 #print axioms limit_rung_no_over_leg
+#print axioms ordinalSuccMotion
+#print axioms omega0_opow_succ_ne
+#print axioms ordinalSuccMotion_corner
+#print axioms ordinalSuccMotion_climb
+#print axioms ordinalSuccMotion_up_succ_epsilon0
+#print axioms ordinalSuccMotion_not_loop
+
 
 end PurityCheck

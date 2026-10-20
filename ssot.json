@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2010,
-        "files": 169
+        "declarations": 2067,
+        "files": 173
       },
       "entries": [
         {
@@ -1650,6 +1650,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "02f30655-3d2c-4094-9d84-b04709360438",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ComputableOnEval",
+            "short": "ComputableOnEval"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ComputableOnEval",
+            "short": "ComputableOnEval",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0304a2c7-293a-43a3-aebe-1b4ff8df8657",
           "new": {
             "file": "ZeroParadox/Ordinal/NaturalOpsPow.lean",
@@ -2206,6 +2244,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "04adaf70-fef6-46ff-8bab-25f10636d2a8",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.EvalRespecting",
+            "short": "EvalRespecting"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.EvalRespecting",
+            "short": "EvalRespecting",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "04cfa571-99b6-4513-87ba-dea842df3c05",
           "new": {
@@ -2497,6 +2573,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0556a1f4-a664-4648-8077-a1452f9f23dc",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_corner_ofFixedPoints",
+            "short": "not_corner_ofFixedPoints"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_corner_ofFixedPoints",
+            "short": "not_corner_ofFixedPoints",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "056b970f-1973-400a-99a0-7c15fe0f2177",
           "new": {
             "file": "ZeroParadox/Valuation/PadicKoopman.lean",
@@ -2522,6 +2635,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "059cecdf-6105-4c44-af75-819ba293f005",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.isLanding_ofFixedPoints_iff",
+            "short": "isLanding_ofFixedPoints_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.isLanding_ofFixedPoints_iff",
+            "short": "isLanding_ofFixedPoints_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5428,6 +5578,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0fc3095f-81a5-43e0-9219-5ec60440820a",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfPrintsStepMotion",
+            "short": "selfPrintsStepMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfPrintsStepMotion",
+            "short": "selfPrintsStepMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0fcc5a8a-14e6-4f68-ba00-881fcc027b3e",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -6006,6 +6193,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "11b9cd49-af10-4061-a468-0d04cbab156f",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion_corner_iff",
+            "short": "shiftMotion_corner_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion_corner_iff",
+            "short": "shiftMotion_corner_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9726,6 +9950,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1ef5ffc1-9237-4792-8c30-a026a4203e46",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion_upStepInvariant",
+            "short": "shiftMotion_upStepInvariant"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion_upStepInvariant",
+            "short": "shiftMotion_upStepInvariant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -15471,6 +15732,80 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "31270038-b583-4234-a956-e60e2c76a62c",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_witnessRel_of_leavesAt",
+            "short": "no_witnessRel_of_leavesAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_witnessRel_of_leavesAt",
+            "short": "no_witnessRel_of_leavesAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "314f4966-fb33-4671-b013-f9010a72dbe8",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.selfOnlyAt_loebMapQuot_iff",
+            "short": "selfOnlyAt_loebMapQuot_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.selfOnlyAt_loebMapQuot_iff",
+            "short": "selfOnlyAt_loebMapQuot_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "31750884-7e6d-4e72-88e9-4a4097f1998d",
           "new": {
             "file": "ZeroParadox/Category/BottomUndecidable.lean",
@@ -16698,6 +17033,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "35afa21f-683e-4a82-9efe-c7edbb2f8608",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_not_loop",
+            "short": "ordinalSuccMotion_not_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_not_loop",
+            "short": "ordinalSuccMotion_not_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18083,6 +18456,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "3a6fc03c-6153-49b8-b037-d1772e097ba8",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.provSetoid",
+            "short": "provSetoid"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.provSetoid",
+            "short": "provSetoid",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3a98e86a-2861-403d-af65-80defba80eed",
           "new": {
             "file": "ZeroParadox/Category/IgnoranceSeam.lean",
@@ -18378,6 +18788,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3b1f6ff8-fe41-44ff-b959-ddade541e66a",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hasLanding_ofFixedPoints_of_witnessRel",
+            "short": "hasLanding_ofFixedPoints_of_witnessRel"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.hasLanding_ofFixedPoints_of_witnessRel",
+            "short": "hasLanding_ofFixedPoints_of_witnessRel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3b2524ff-6e9b-48fd-97c2-a43c2d5ddc9e",
           "new": {
@@ -18478,6 +18925,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3bd69b48-2416-4f2c-895b-aa8c7ed7cea2",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.leavesAt_ofFun_iff",
+            "short": "leavesAt_ofFun_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.leavesAt_ofFun_iff",
+            "short": "leavesAt_ofFun_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -19585,6 +20069,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "418edcab-4a0d-4aa0-83c1-aa4ddc821ad1",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.evalSetoid",
+            "short": "evalSetoid"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.evalSetoid",
+            "short": "evalSetoid",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "419f1ce1-94e9-4255-8adb-2def0d688d19",
           "new": {
@@ -19643,6 +20165,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "42513184-e4b7-44e8-8d59-faf197820c4b",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.evalStepMotion_leavesAt_of_step",
+            "short": "evalStepMotion_leavesAt_of_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.evalStepMotion_leavesAt_of_step",
+            "short": "evalStepMotion_leavesAt_of_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -21019,6 +21578,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "46032566-85f6-4841-a61e-50051ef26bf6",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_climb",
+            "short": "ordinalSuccMotion_climb"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_climb",
+            "short": "ordinalSuccMotion_climb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24299,6 +24896,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "50a824c7-a383-4642-addb-c80d33823f58",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_selfOnlyAt_and_leavesAt",
+            "short": "not_selfOnlyAt_and_leavesAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_selfOnlyAt_and_leavesAt",
+            "short": "not_selfOnlyAt_and_leavesAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "50c4a5e5-6b76-431e-971a-64f1bda59c9c",
           "new": {
@@ -24479,6 +25113,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "50f9396b-86df-463c-8510-77dcdf1b2b83",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_ofTotal_iff",
+            "short": "corner_ofTotal_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_ofTotal_iff",
+            "short": "corner_ofTotal_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "510b3875-cd7e-46be-9e49-cacc055995ca",
           "new": {
@@ -24541,6 +25212,43 @@
           "reason": "OrdinalChoiceEssential: the framework's first ESSENTIAL choice case - comparability of arbitrary well-orders yields excluded middle (Kraus-Nordvall Forsberg-Xu taboo, cited); plus the demonstration that Ordinal order footprints are uninformative",
           "verify": {
             "axioms": "propext, Classical.choice, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5142ba1b-3434-44ec-8d41-d27042bd41d1",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfPrintsStepMotion_selfOnlyAt_of_step",
+            "short": "selfPrintsStepMotion_selfOnlyAt_of_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfPrintsStepMotion_selfOnlyAt_of_step",
+            "short": "selfPrintsStepMotion_selfOnlyAt_of_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -26647,6 +27355,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "58e8d8d0-398b-4754-bb0a-3697b616667e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selfOnlyAt_ofFun_iff",
+            "short": "selfOnlyAt_ofFun_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selfOnlyAt_ofFun_iff",
+            "short": "selfOnlyAt_ofFun_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "591b34f0-111c-4ff9-9583-852535ccadb7",
           "new": {
@@ -26716,6 +27461,43 @@
             ]
           },
           "reason": "Seed-independence measured: every seed at or below epsilon-0 reaches it; iterative bottoms in the ordinal carrier",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5929e6f7-8a3c-4236-a3df-ad6619f321b0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofPartialFun",
+            "short": "ofPartialFun"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofPartialFun",
+            "short": "ofPartialFun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27152,6 +27934,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5a28d1bf-a48a-4f7f-a53e-64f543f6da00",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.imp_antitone",
+            "short": "imp_antitone"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.imp_antitone",
+            "short": "imp_antitone",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5a41231f-26f3-47e5-bccb-8ed5a7d1bcba",
           "new": {
@@ -27438,6 +28257,43 @@
             ]
           },
           "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5bf0305d-aa89-4274-9059-ee4a5f4168d2",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_selfPrintsStepMotion_selfOnlyAt",
+            "short": "exists_selfPrintsStepMotion_selfOnlyAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_selfPrintsStepMotion_selfOnlyAt",
+            "short": "exists_selfPrintsStepMotion_selfOnlyAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27838,6 +28694,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5cf62e8c-1ad4-4745-a19c-81db83abeef3",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofFun",
+            "short": "ofFun"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofFun",
+            "short": "ofFun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32397,6 +33290,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6debb4a9-cd1c-4896-90c4-7e8c4a9847d9",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loebMapQuot",
+            "short": "loebMapQuot"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loebMapQuot",
+            "short": "loebMapQuot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6df9011d-c86e-4255-8933-5dedf8b5caef",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -32953,6 +33883,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6fa809c7-823d-4eb0-995a-e9d14061df56",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.evalStepMotion_not_selfOnlyAt",
+            "short": "evalStepMotion_not_selfOnlyAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.evalStepMotion_not_selfOnlyAt",
+            "short": "evalStepMotion_not_selfOnlyAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6fbafa81-314a-4b74-9b21-f8894c2fc753",
           "new": {
@@ -33281,6 +34248,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "71476d9e-a416-4762-9210-6c1706c2d84e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofFixedPoints",
+            "short": "ofFixedPoints"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofFixedPoints",
+            "short": "ofFixedPoints",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35354,6 +36358,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "77fd9477-5edb-425f-8972-13ca1aa6629a",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_up_succ_epsilon0",
+            "short": "ordinalSuccMotion_up_succ_epsilon0"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_up_succ_epsilon0",
+            "short": "ordinalSuccMotion_up_succ_epsilon0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7800e2c1-c1b5-439f-bab7-25c06c7e4534",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -35581,6 +36623,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "786d700d-bd19-42d6-b179-8b4fcae526d9",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_witnessRel_evalClass_top",
+            "short": "no_witnessRel_evalClass_top"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.no_witnessRel_evalClass_top",
+            "short": "no_witnessRel_evalClass_top",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7870f8c5-add8-43d8-9252-ed74d773e98a",
           "new": {
@@ -35681,6 +36761,43 @@
             ]
           },
           "reason": "lane K1: ZP-K § VIII (infinitely many fixed points, padding, self-printing universal code, occurrence controls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7911e948-6785-4e55-a8cd-4fc08f6d3365",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.ProvEquiv",
+            "short": "ProvEquiv"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.ProvEquiv",
+            "short": "ProvEquiv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35829,6 +36946,44 @@
             ]
           },
           "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "79aa50b5-83e7-4edf-9e96-ce0b3d88be57",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.liftEval",
+            "short": "liftEval"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.liftEval",
+            "short": "liftEval",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -36945,6 +38100,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7d926289-3b3c-4a4c-b392-2d4c0a498598",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.box_mono",
+            "short": "box_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.box_mono",
+            "short": "box_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7d9f1dbe-26f6-48cc-8a34-999007c7b2a9",
           "new": {
@@ -36974,6 +38166,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7daffb59-0afc-4843-a298-a24cb66beacd",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.universalStepMotion",
+            "short": "universalStepMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.universalStepMotion",
+            "short": "universalStepMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38963,6 +40192,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "84d12994-2695-4b54-a34d-acdd0727e109",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion",
+            "short": "ordinalSuccMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion",
+            "short": "ordinalSuccMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "84de06a4-c488-47b0-b9e2-e780c10924e1",
           "new": {
@@ -39067,6 +40334,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "84e8a722-e619-41a0-8c4f-8b65a53da6aa",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_climb_of_upStepInvariant",
+            "short": "not_climb_of_upStepInvariant"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_climb_of_upStepInvariant",
+            "short": "not_climb_of_upStepInvariant",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39965,6 +41269,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "881a8759-c25a-4e48-b2f6-0c1b8b111319",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.noStepAt_ofPartialFun_iff",
+            "short": "noStepAt_ofPartialFun_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.noStepAt_ofPartialFun_iff",
+            "short": "noStepAt_ofPartialFun_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "885e4330-71db-4a3a-b52e-ac976cf64da4",
           "new": {
@@ -40350,6 +41691,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8a44b292-7c78-4f81-87ef-bbe0ac660c54",
+          "new": {
+            "file": "ZeroParadox/Category/BottomUndecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfOnlyAt_ofFun_app_iff",
+            "short": "selfOnlyAt_ofFun_app_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/BottomUndecidable.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfOnlyAt_ofFun_app_iff",
+            "short": "selfOnlyAt_ofFun_app_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41245,6 +42623,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8f65bfd8-13bf-4d90-9283-1de017b079d9",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loeb_of_selfOnlyAt",
+            "short": "loeb_of_selfOnlyAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loeb_of_selfOnlyAt",
+            "short": "loeb_of_selfOnlyAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -44479,6 +45894,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "987a3772-0db3-47ad-9d89-4608a1ccb6b9",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.EvalClass",
+            "short": "EvalClass"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.EvalClass",
+            "short": "EvalClass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "98b93dd0-1745-44a4-a69e-c8cbac678bcd",
           "new": {
             "file": "ZeroParadox/Ordinal/CnfBridge.lean",
@@ -44986,6 +46439,81 @@
           "reason": "New declarations: Pataraia's theorem and induction with no axioms, ported from TypeTopology Various.Pataraia-Taylor (2026-09-28)",
           "verify": {
             "axioms": "(none) - does not depend on any axioms",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "99f78f55-3c8e-4cfa-9713-c68559d2a50d",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.omega0_opow_succ_ne",
+            "short": "omega0_opow_succ_ne"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.omega0_opow_succ_ne",
+            "short": "omega0_opow_succ_ne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9a11e231-75d4-4a8f-b610-19af1c81f4cb",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.leavesAt_ofFun_not",
+            "short": "leavesAt_ofFun_not"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.leavesAt_ofFun_not",
+            "short": "leavesAt_ofFun_not",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -46449,6 +47977,44 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9ef9936c-72ba-419c-9cc5-1cd8cf265477",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_corner",
+            "short": "ordinalSuccMotion_corner"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_corner",
+            "short": "ordinalSuccMotion_corner",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48893,6 +50459,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "aa43a66a-6ad0-470b-a89b-542bca50ae74",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.Lindenbaum",
+            "short": "Lindenbaum"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.Lindenbaum",
+            "short": "Lindenbaum",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "aa47893a-1565-4965-8ea7-39221bdf1800",
           "new": {
@@ -49026,6 +50629,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aabb71ee-ac73-48ed-a572-917c4f4fcfb5",
+          "new": {
+            "file": "ZeroParadox/Category/BottomUndecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wem_of_decidable_selfOnlyAt_glue",
+            "short": "wem_of_decidable_selfOnlyAt_glue"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/BottomUndecidable.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wem_of_decidable_selfOnlyAt_glue",
+            "short": "wem_of_decidable_selfOnlyAt_glue",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50368,6 +52008,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ae8bd5d3-c099-479f-9805-b4e0d1c2fb04",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion_loop",
+            "short": "shiftMotion_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion_loop",
+            "short": "shiftMotion_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ae91ff69-16fa-4cac-82d1-1944723154ab",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -51514,6 +53191,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b2845391-e93c-4876-aa3c-5438979bce1b",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hasWitnessRel_evalClass",
+            "short": "hasWitnessRel_evalClass"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.hasWitnessRel_evalClass",
+            "short": "hasWitnessRel_evalClass",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b2c1338a-448f-4f1b-b22e-738937a42939",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -52210,6 +53925,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b485e7ad-8350-4ec2-859c-40f1eca1562d",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_code_diagonal",
+            "short": "exists_code_diagonal"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_code_diagonal",
+            "short": "exists_code_diagonal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b4a7a9e6-f43d-4562-80fb-e21d1b0b6ef7",
           "new": {
@@ -52611,6 +54364,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b5c9572e-708f-4f92-9bce-433bc355e7ee",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selfOnlyAt_ofPartialFun_iff",
+            "short": "selfOnlyAt_ofPartialFun_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.selfOnlyAt_ofPartialFun_iff",
+            "short": "selfOnlyAt_ofPartialFun_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b5c99ee1-f355-415a-a4f4-f851a79f06c8",
           "new": {
@@ -52674,6 +54464,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b611dd3e-1f00-481d-93f3-28bf82353b9a",
+          "new": {
+            "file": "ZeroParadox/Computability/Rice.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rice_of_evalClassWitness",
+            "short": "rice_of_evalClassWitness"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Rice.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rice_of_evalClassWitness",
+            "short": "rice_of_evalClassWitness",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56165,6 +57992,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c35d3b5e-8b02-47e3-9cca-fc639dfc7ab4",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.evalStepMotion",
+            "short": "evalStepMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.evalStepMotion",
+            "short": "evalStepMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -60602,6 +62466,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d2fbdeef-c2b8-4be2-91ce-49adbfa445d0",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.universalStepMotion_leavesAt_of_step",
+            "short": "universalStepMotion_leavesAt_of_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.universalStepMotion_leavesAt_of_step",
+            "short": "universalStepMotion_leavesAt_of_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d302c146-c059-4104-8e2e-beb7a8c79695",
           "new": {
@@ -62474,6 +64375,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d989b123-0f4e-4a6d-9acc-996a76947af8",
+          "new": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfOnlyAt_of_witnessRel",
+            "short": "selfOnlyAt_of_witnessRel"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DiagonalWitness.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfOnlyAt_of_witnessRel",
+            "short": "selfOnlyAt_of_witnessRel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d998a132-56df-4aa0-aba5-0f36a67ba7d8",
           "new": {
             "file": "ZeroParadox/Category/DiagonalWitness.lean",
@@ -62686,6 +64624,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d9fcca81-6fd0-404d-9376-f189f83dd15f",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loebMap_respects",
+            "short": "loebMap_respects"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loebMap_respects",
+            "short": "loebMap_respects",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -67601,6 +69576,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e931b1d7-bdb0-4e1b-813f-690be0bc184f",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion",
+            "short": "shiftMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion",
+            "short": "shiftMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e93f1de1-6d33-462a-ba8f-ecedfb7fbeb1",
           "new": {
@@ -67811,6 +69823,43 @@
           "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
           "verify": {
             "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ea56e437-63fc-4ec0-aedd-a4b996253001",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.leavesAt_ofPartialFun_iff",
+            "short": "leavesAt_ofPartialFun_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.leavesAt_ofPartialFun_iff",
+            "short": "leavesAt_ofPartialFun_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -68216,6 +70265,43 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "eb8198f9-1db0-498a-93f5-7e0ea3a368f1",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_corner_of_fun",
+            "short": "not_corner_of_fun"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_corner_of_fun",
+            "short": "not_corner_of_fun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -72991,6 +75077,43 @@
             ]
           },
           "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb9a26b7-6f47-4f01-9deb-42b768c5fcf5",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isComputationalQuine_iff_eval_mod",
+            "short": "isComputationalQuine_iff_eval_mod"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.isComputationalQuine_iff_eval_mod",
+            "short": "isComputationalQuine_iff_eval_mod",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
           "verify": {
             "axioms": null,
             "sorry_free": true

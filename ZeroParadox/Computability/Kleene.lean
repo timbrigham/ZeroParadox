@@ -799,7 +799,182 @@ theorem zero_occurs (n : ℕ) : Occurs Code.zero n := by
   rw [occurs_iff_halts]
   exact Part.dom_iff_mem.mpr ⟨0, Part.mem_some 0⟩
 
+/-! ## § IX. Kleene's fixed points in the die's motion (`ZeroParadox/Die.lean`)
+
+Indexed in `ZeroParadox/DieCannotBe.lean` § XV. -/
+
+/-- `Statement:` on codes, UP the identity and OVER `a → b` when `eval b = F a`. -/
+def evalStepMotion (F : Code → ℕ →. ℕ) : Motion Code :=
+  Motion.ofTotal id (fun _ => rfl) (fun a b => eval b = F a)
+
+-- Statement: `c` steps to itself in `evalStepMotion F` iff `c` is a Kleene fixed point of `F`; both
+-- directions, by definition.
+example (F : Code → ℕ →. ℕ) (c : Code) :
+    (evalStepMotion F).step c c ↔ IsKleeneFixedPoint F c := Iff.rfl
+
+/-- `Statement:` if `c` steps to itself in `evalStepMotion F`, `c` also steps to a code other than
+    `c` (`padding`); one way. -/
+theorem evalStepMotion_leavesAt_of_step (F : Code → ℕ →. ℕ) (c : Code)
+    (h : (evalStepMotion F).step c c) : (evalStepMotion F).LeavesAt c := by
+  have hp : Nat.Partrec (eval c) := exists_code.2 ⟨c, rfl⟩
+  obtain ⟨d, hd, hne⟩ := Set.Nontrivial.exists_ne (Set.Infinite.nontrivial (padding hp)) c
+  exact ⟨d, show eval d = F c from (hd : eval d = eval c).trans h, hne⟩
+
+/-- `Statement:` no code steps to itself only in `evalStepMotion F`, for every `F`. -/
+theorem evalStepMotion_not_selfOnlyAt (F : Code → ℕ →. ℕ) (c : Code) :
+    ¬ (evalStepMotion F).SelfOnlyAt c := fun h =>
+  Motion.not_selfOnlyAt_and_leavesAt _ c ⟨h, evalStepMotion_leavesAt_of_step F c h.1⟩
+
+/-- `Statement:` `evalStepMotion F` restricted to the universal codes. -/
+def universalStepMotion (F : Code → ℕ →. ℕ) : Motion {c : Code // Universal c} :=
+  Motion.ofTotal id (fun _ => rfl) (fun a b => eval b.1 = F a.1)
+
+/-- `Statement:` CONTROL: if a universal code steps to itself in `universalStepMotion F`, it also
+    steps to a different universal code; one way. -/
+theorem universalStepMotion_leavesAt_of_step (F : Code → ℕ →. ℕ) (a : {c : Code // Universal c})
+    (h : (universalStepMotion F).step a a) : (universalStepMotion F).LeavesAt a := by
+  have hp : Nat.Partrec (eval a.1) := exists_code.2 ⟨a.1, rfl⟩
+  obtain ⟨d, hd, hne⟩ := Set.Nontrivial.exists_ne (Set.Infinite.nontrivial (padding hp)) a.1
+  have hd' : eval d = eval a.1 := hd
+  have hu : Universal d := fun e n => by rw [hd']; exact a.2 e n
+  exact ⟨⟨d, hu⟩, show eval d = F a.1 from hd'.trans h, fun he => hne (congrArg Subtype.val he)⟩
+
+/-- `Statement:` `evalStepMotion F` restricted to the self-printing codes. -/
+def selfPrintsStepMotion (F : Code → ℕ →. ℕ) : Motion {c : Code // SelfPrints c} :=
+  Motion.ofTotal id (fun _ => rfl) (fun a b => eval b.1 = F a.1)
+
+/-- `Statement:` if a self-printing code steps to itself in `selfPrintsStepMotion F`, it steps to
+    itself only (`selfprints_behaviour_injective`); one way. -/
+theorem selfPrintsStepMotion_selfOnlyAt_of_step (F : Code → ℕ →. ℕ) (a : {c : Code // SelfPrints c})
+    (h : (selfPrintsStepMotion F).step a a) : (selfPrintsStepMotion F).SelfOnlyAt a :=
+  ⟨h, fun b hb => Subtype.ext (selfprints_behaviour_injective b.2 a.2
+    ((hb : eval b.1 = F a.1).trans (h : eval a.1 = F a.1).symm))⟩
+
+/-- `Statement:` some self-printing universal code steps to itself only in
+    `selfPrintsStepMotion selfPrintOrDelegate`. -/
+theorem exists_selfPrintsStepMotion_selfOnlyAt :
+    ∃ a : {c : Code // SelfPrints c},
+      (selfPrintsStepMotion selfPrintOrDelegate).SelfOnlyAt a ∧ Universal a.1 := by
+  obtain ⟨c, hc⟩ := fixed_point₂ selfPrintOrDelegate_partrec
+  have h := selfPrints_universal_of_fixedPoint c hc
+  exact ⟨⟨c, h.1⟩, selfPrintsStepMotion_selfOnlyAt_of_step _ _ hc, h.2⟩
+
+/-- `Statement:` on inputs, UP `n ↦ n % ⌜c⌝` and OVER `n ↦ ⌜c⌝ + n`, where `⌜c⌝` is `c`'s Gödel
+    number. `Reading:` OVER is the shift in `quine_period_is_goedel`; UP is a choice of this encoding,
+    not forced by it. -/
+def shiftMotion (c : Code) : Motion ℕ :=
+  Motion.ofTotal (fun n => n % Encodable.encode c) (fun n => Nat.mod_mod n _)
+    (fun a b => b = Encodable.encode c + a)
+
+/-- `Statement:` UP is unchanged along a step of `shiftMotion c`. -/
+theorem shiftMotion_upStepInvariant (c : Code) : (shiftMotion c).UpStepInvariant := by
+  intro a b hab
+  have hb : b = Encodable.encode c + a := hab
+  subst hb
+  show Part.some (a % _) = Part.some ((Encodable.encode c + a) % _)
+  rw [Nat.add_mod_left]
+
+/-- `Statement:` `c` is a computational quine iff `eval c n = eval c (n % ⌜c⌝)` for every `n`; both
+    directions. -/
+theorem isComputationalQuine_iff_eval_mod (c : Code) :
+    IsComputationalQuine c ↔ ∀ n, eval c n = eval c (n % Encodable.encode c) := by
+  set k := Encodable.encode c
+  constructor
+  · intro hq n
+    have hp : ∀ x, eval c (k + x) = eval c x := fun x => ((quine_period_is_goedel c hq) x).symm
+    have key : ∀ m r, eval c (r + k * m) = eval c r := by
+      intro m
+      induction m with
+      | zero => intro r; simp
+      | succ m ih =>
+        intro r
+        rw [show r + k * (m + 1) = k + (r + k * m) by ring, hp, ih]
+    have := key (n / k) (n % k)
+    rw [Nat.mod_add_div] at this
+    exact this
+  · intro h
+    show eval c = selfApply c
+    funext n
+    show eval c n = eval c (k + n)
+    rw [h n, h (k + n), Nat.add_mod_left]
+
+/-- `Statement:` if `⌜c⌝ ≠ 0`, `shiftMotion c` loops (from the landing `0` to `⌜c⌝` and back). -/
+theorem shiftMotion_loop (c : Code) (hk : Encodable.encode c ≠ 0) : (shiftMotion c).Loop :=
+  ⟨0, Encodable.encode c, Part.mem_some_iff.2 (Nat.zero_mod _).symm, rfl, hk,
+    Part.mem_some_iff.2 (Nat.mod_self _).symm⟩
+
+/-- `Statement:` the corner of `shiftMotion c` fires iff `⌜c⌝ ≠ 0`; both directions. -/
+theorem shiftMotion_corner_iff (c : Code) : (shiftMotion c).Corner ↔ Encodable.encode c ≠ 0 := by
+  refine ⟨fun h hk => ?_, fun hk => Motion.loop_corner _ (shiftMotion_loop c hk)⟩
+  obtain ⟨y, b, hs, hne⟩ := Motion.corner_step_moves _ h
+  have hb : b = Encodable.encode c + y := hs
+  exact hne (by rw [hb, hk, zero_add])
+
+-- Statement: the statement of `self_halting_undecidable`, by a second route: a decider gives a
+-- computable `g`; Rogers' fixed point `c` of `g` makes "`c` halts on `⌜c⌝`" equivalent to its own
+-- negation, which would make that proposition step to itself only in `Motion.ofFun Not`, where every
+-- proposition steps elsewhere (`Motion.leavesAt_ofFun_not`).
+example : ¬ ComputablePred (fun c : Code => (eval c (Encodable.encode c)).Dom) := by
+  rintro ⟨inst, hD⟩
+  obtain ⟨cn, hcn⟩ := exists_code.1 Nat.Partrec.none
+  let g : Code → Code := fun c => cond (@decide _ (inst c)) cn Code.zero
+  have hg : Computable g := Computable.cond hD (Computable.const cn) (Computable.const Code.zero)
+  obtain ⟨c, hc⟩ := roger_fixed_point_exists g hg
+  have hA : (eval c (Encodable.encode c)).Dom → g c = cn := fun hp => by
+    show cond (@decide _ (inst c)) cn Code.zero = cn
+    rw [@decide_eq_true _ (inst c) hp]; rfl
+  have hB : ¬ (eval c (Encodable.encode c)).Dom → g c = Code.zero := fun hp => by
+    show cond (@decide _ (inst c)) cn Code.zero = Code.zero
+    rw [@decide_eq_false _ (inst c) hp]; rfl
+  have hT : (eval c (Encodable.encode c)).Dom ↔ (eval (g c) (Encodable.encode c)).Dom := by
+    rw [hc]
+  have hflip : (eval c (Encodable.encode c)).Dom ↔ ¬ (eval c (Encodable.encode c)).Dom := by
+    constructor
+    · intro hp hp'
+      have h2 := hT.1 hp
+      rw [hA hp, hcn] at h2
+      exact h2
+    · intro hp
+      apply hT.2
+      rw [hB hp]
+      exact (trivial : (Part.some 0).Dom)
+  exact Motion.not_selfOnlyAt_and_leavesAt _ _
+    ⟨(Motion.selfOnlyAt_ofFun_iff Not _).2 (propext hflip.symm), Motion.leavesAt_ofFun_not _⟩
+
+-- Statement: the statement of `isComputationalQuine_undecidable`, by the same route through Kleene's
+-- second recursion theorem (`kleene_fixed_point_exists`).
+example : ¬ ComputablePred (fun c : Code => IsComputationalQuine c) := by
+  rintro ⟨inst, hD⟩
+  let F : Code → ℕ →. ℕ := fun c n => Part.some (cond (@decide _ (inst c)) n 0)
+  have hF : Partrec₂ F :=
+    (Computable.cond (hD.comp Computable.fst) Computable.snd (Computable.const 0)).partrec
+  obtain ⟨c, hc⟩ := kleene_fixed_point_exists F hF
+  have hz : Encodable.encode Code.zero = 0 := by decide
+  have hflip : IsComputationalQuine c ↔ ¬ IsComputationalQuine c := by
+    constructor
+    · intro hq _
+      have he : eval c = fun n => Part.some n := by
+        rw [hc]; funext n; show Part.some (cond (@decide _ (inst c)) n 0) = _
+        rw [@decide_eq_true _ (inst c) hq]; rfl
+      have h0 := congrFun hq 0
+      simp only [selfApply, he] at h0
+      have hk : Encodable.encode c = 0 := by have := Part.some_inj.1 h0; omega
+      have hcz : c = Code.zero := Encodable.encode_injective (hk.trans hz.symm)
+      have h1 := congrFun he 1
+      rw [hcz] at h1
+      exact absurd (Part.some_inj.1 h1) (by decide)
+    · intro hq
+      have he : eval c = fun _ => Part.some 0 := by
+        rw [hc]; funext n; show Part.some (cond (@decide _ (inst c)) n 0) = _
+        rw [@decide_eq_false _ (inst c) hq]; rfl
+      show eval c = selfApply c
+      funext n
+      simp only [selfApply, he]
+  exact Motion.not_selfOnlyAt_and_leavesAt _ _
+    ⟨(Motion.selfOnlyAt_ofFun_iff Not _).2 (propext hflip.symm), Motion.leavesAt_ofFun_not _⟩
+
 end ZeroParadox
+
 
 /-! ## Axiom Purity Check -/
 
@@ -848,5 +1023,19 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms selfPrints_universal_address
 #print axioms selfprints_occurs
 #print axioms zero_occurs
+#print axioms evalStepMotion
+#print axioms evalStepMotion_leavesAt_of_step
+#print axioms evalStepMotion_not_selfOnlyAt
+#print axioms universalStepMotion
+#print axioms universalStepMotion_leavesAt_of_step
+#print axioms selfPrintsStepMotion
+#print axioms selfPrintsStepMotion_selfOnlyAt_of_step
+#print axioms exists_selfPrintsStepMotion_selfOnlyAt
+#print axioms shiftMotion
+#print axioms shiftMotion_upStepInvariant
+#print axioms isComputationalQuine_iff_eval_mod
+#print axioms shiftMotion_loop
+#print axioms shiftMotion_corner_iff
+
 
 end PurityCheck

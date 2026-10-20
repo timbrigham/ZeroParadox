@@ -127,15 +127,17 @@ theorem ofTotal_upTotal (f : α → α) (hf : ∀ x, f (f x) = f x) (s : α → 
 theorem not_overToUndefined_of_upTotal (h : M.UpTotal) : ¬ M.OverToUndefined :=
   fun ⟨_, b, _, _, hb⟩ => hb (h b)
 
-/-- `Statement:` a climb is a corner. -/
+/-- `Statement:` if the motion climbs, its corner fires; one way, the converse refuted on `Bool`
+    (`ZeroParadox/DieCannotBe.lean` § I: a loop, hence a corner, and no climb). -/
 theorem climb_corner : M.Climb → M.Corner :=
   fun ⟨y, b, z, hy, hs, hz, hzb, _⟩ => ⟨y, b, z, hy, hs, hz, hzb⟩
 
-/-- `Statement:` a loop is a corner. -/
+/-- `Statement:` if the motion loops, its corner fires; one way, the converse refuted by
+    `ordinalSuccMotion` (`ZeroParadox/DieCannotBe.lean` § XV: a climb, hence a corner, and no loop). -/
 theorem loop_corner : M.Loop → M.Corner :=
   fun ⟨y, b, hy, hs, hby, hyb⟩ => ⟨y, b, y, hy, hs, hyb, Ne.symm hby⟩
 
-/-- `Statement:` a corner gives OVER at a landing. -/
+/-- `Statement:` if the corner fires, OVER exists from some landing; one way. -/
 theorem corner_overAtLanding : M.Corner → M.OverAtLanding :=
   fun ⟨y, b, _, hy, hs, _, _⟩ => ⟨y, b, hy, hs⟩
 
@@ -202,7 +204,8 @@ def UniqueBotCover : Prop := ∀ a b : α, ⊥ ⋖ a → ⊥ ⋖ b → a = b
 
 variable {α}
 
-/-- `Statement:` a two-point first interval gives a cover of ⊥ of `α`. -/
+/-- `Statement:` if some first interval of `α` has two points, ⊥ of `α` has a cover; the converse is
+    `botCovered_botIntervalTwo`, given `DecidableEq α`. -/
 theorem botIntervalTwo_botCovered : BotIntervalTwo α → BotCovered α :=
   fun ⟨a, h, h2⟩ => ⟨a, covBy_of_eq_or_eq h fun c _ => h2 c⟩
 
@@ -240,8 +243,8 @@ theorem wem_of_botCovered_botIntervalTwo
       have hpa : p ∧ a := by rw [e]; exact ha
       exact hnp hpa.1
 
-/-- `Statement:` a cover at every non-maximal point, and a point other than ⊥ of `α`, give a cover
-    of ⊥ of `α`. -/
+/-- `Statement:` if every non-maximal point of `α` has a cover and some point is not ⊥ of `α`, then
+    ⊥ of `α` has a cover; one way. -/
 theorem everyStepCovered_botCovered (h : EveryStepCovered α) (hne : ∃ a : α, a ≠ ⊥) :
     BotCovered α :=
   let ⟨_, ha⟩ := hne
@@ -486,7 +489,8 @@ theorem overTrichotomy_of_option [DecidableEq α] (f : α → Option α)
       exact Or.inr (Or.inl ⟨(h _ _).2 hf,
         fun c hc => (Option.some_injective _ (hf.symm.trans ((h _ c).1 hc))).symm⟩)
 
-/-- `Statement:` a corner leaves its landing. -/
+/-- `Statement:` if the corner fires, some landing steps elsewhere; one way. -/
+
 theorem corner_leavesAt (h : M.Corner) : ∃ y, M.IsLanding y ∧ M.LeavesAt y :=
   let ⟨y, b, _, hy, hs, hz, hzb⟩ := h
   ⟨y, hy, b, hs, fun hb => hzb (by rw [hb] at hz ⊢; exact Part.mem_unique hz hy)⟩
@@ -536,6 +540,109 @@ theorem bijOn_sources_sinks {σ : α → α} (hσ : Function.Involutive σ)
 /-- `Statement:` a value `z` of `up` is an `up`-preimage of itself. -/
 theorem mem_up_self_of_mem_up {x z : α} (h : z ∈ M.up x) : z ∈ M.up z :=
   M.up_idem x z h
+
+/-! ### § XI. A self-map as input: two encodings, and where the corner fires -/
+
+variable (M) in
+/-- `Statement:` a point does not both step to itself only and step elsewhere. -/
+theorem not_selfOnlyAt_and_leavesAt (y : α) : ¬ (M.SelfOnlyAt y ∧ M.LeavesAt y) :=
+  fun ⟨⟨_, hu⟩, ⟨b, hb, hne⟩⟩ => hne (hu b hb)
+
+/-- `Statement:` if UP is unchanged along steps, the motion does not climb; one way. -/
+theorem not_climb_of_upStepInvariant (h : M.UpStepInvariant) : ¬ M.Climb :=
+  fun ⟨y, b, _, hy, hs, hz, _, hzy⟩ => hzy (Part.mem_unique (h y b hs ▸ hz) hy)
+
+/-- `Statement:` the motion of a self-map `g`: UP the identity, OVER the graph of `g`.
+    `Reading:` every point is a landing, and OVER carries `g` (encoding 1). -/
+def ofFun (g : α → α) : Motion α :=
+  ofTotal id (fun _ => rfl) (fun x y => y = g x)
+
+/-- `Statement:` in `ofFun g`, `y` steps to itself only iff `g y = y`; both directions. -/
+theorem selfOnlyAt_ofFun_iff (g : α → α) (y : α) : (ofFun g).SelfOnlyAt y ↔ g y = y :=
+  ⟨fun h => h.1.symm, fun h => ⟨h.symm, fun _ hb => hb.trans h⟩⟩
+
+/-- `Statement:` in `ofFun g`, `y` steps elsewhere iff `g y ≠ y`; both directions. -/
+theorem leavesAt_ofFun_iff (g : α → α) (y : α) : (ofFun g).LeavesAt y ↔ g y ≠ y :=
+  ⟨fun ⟨_, hb, hne⟩ h => hne (hb.trans h), fun h => ⟨g y, rfl, h⟩⟩
+
+/-- `Statement:` in `ofFun Not` every proposition steps elsewhere, since `p ≠ ¬ p`. -/
+theorem leavesAt_ofFun_not (p : Prop) : (ofFun Not).LeavesAt p :=
+  (leavesAt_ofFun_iff Not p).2 fun h => iff_not_self (iff_of_eq h).symm
+
+/-- `Statement:` UP the partial identity on the fixed points of `g`, OVER the graph of `g`.
+    `Reading:` the landings carry `g`'s fixed points (encoding 2). -/
+def ofFixedPoints (g : α → α) : Motion α where
+  up x := ⟨g x = x, fun _ => x⟩
+  up_idem x y h := by
+    obtain ⟨hx, rfl⟩ := h
+    exact ⟨hx, rfl⟩
+  step x y := y = g x
+
+/-- `Statement:` in `ofFixedPoints g`, `y` is a landing iff `g y = y`; both directions. -/
+theorem isLanding_ofFixedPoints_iff (g : α → α) (y : α) :
+    (ofFixedPoints g).IsLanding y ↔ g y = y :=
+  ⟨fun ⟨h, _⟩ => h, fun h => ⟨h, rfl⟩⟩
+
+variable (M) in
+/-- `Statement:` if OVER is the graph of a function `g` and every landing is a fixed point of `g`,
+    the corner does not fire; one way, for any UP. -/
+theorem not_corner_of_fun (g : α → α) (hstep : ∀ a b, M.step a b ↔ b = g a)
+    (hfix : ∀ y, M.IsLanding y → g y = y) : ¬ M.Corner := by
+  rintro ⟨y, b, z, hy, hs, hz, hne⟩
+  have hb : b = y := ((hstep y b).1 hs).trans (hfix y hy)
+  subst hb
+  exact hne (Part.mem_unique hz hy)
+
+/-- `Statement:` the corner of `ofFixedPoints g` does not fire, for every `g`. -/
+theorem not_corner_ofFixedPoints (g : α → α) : ¬ (ofFixedPoints g).Corner :=
+  not_corner_of_fun _ g (fun _ _ => Iff.rfl) fun y hy => (isLanding_ofFixedPoints_iff g y).1 hy
+
+/-- `Statement:` if `r` is idempotent and `r x = x ↔ g x = x` for every `x`, then the motion with UP
+    `r` and OVER the graph of `h` fires the corner iff some fixed point `y` of `g` has `h y` not fixed
+    by `g`; both directions. -/
+theorem corner_ofTotal_iff (r g h : α → α) (hr : ∀ x, r (r x) = r x)
+    (hfix : ∀ x, r x = x ↔ g x = x) :
+    (ofTotal r hr (fun a b => b = h a)).Corner ↔ ∃ y, g y = y ∧ g (h y) ≠ h y := by
+  constructor
+  · rintro ⟨y, b, z, hy, hs, hz, hzb⟩
+    have hy' : y = r y := Part.mem_some_iff.1 hy
+    have hz' : z = r b := Part.mem_some_iff.1 hz
+    have hs' : b = h y := hs
+    refine ⟨y, (hfix y).1 hy'.symm, fun hb => hzb ?_⟩
+    rw [hz', hs']
+    exact (hfix (h y)).2 hb
+  · rintro ⟨y, hy, hb⟩
+    exact ⟨y, h y, r (h y), Part.mem_some_iff.2 ((hfix y).2 hy).symm, rfl,
+      Part.mem_some_iff.2 rfl, fun e => hb ((hfix _).1 e)⟩
+
+/-- `Statement:` the motion of an `Option`-valued map `g`: UP the identity, OVER `g x = some y`. -/
+def ofPartialFun (g : α → Option α) : Motion α :=
+  ofTotal id (fun _ => rfl) (fun x y => g x = some y)
+
+/-- `Statement:` in `ofPartialFun g`, no step leaves `y` iff `g y = none`; both directions. -/
+theorem noStepAt_ofPartialFun_iff (g : α → Option α) (y : α) :
+    (ofPartialFun g).NoStepAt y ↔ g y = none := by
+  constructor
+  · intro h
+    cases hy : g y with
+    | none => rfl
+    | some b => exact absurd hy (h b)
+  · intro h b hb
+    have hb' : g y = some b := hb
+    rw [h] at hb'
+    cases hb'
+
+/-- `Statement:` in `ofPartialFun g`, `y` steps to itself only iff `g y = some y`; both directions. -/
+theorem selfOnlyAt_ofPartialFun_iff (g : α → Option α) (y : α) :
+    (ofPartialFun g).SelfOnlyAt y ↔ g y = some y :=
+  ⟨fun h => h.1, fun h => ⟨h, fun b hb => Option.some_injective _ ((hb : g y = some b).symm.trans h)⟩⟩
+
+
+/-- `Statement:` in `ofPartialFun g`, `y` steps elsewhere iff `g y = some b` with `b ≠ y`; both
+    directions. -/
+theorem leavesAt_ofPartialFun_iff (g : α → Option α) (y : α) :
+    (ofPartialFun g).LeavesAt y ↔ ∃ b, g y = some b ∧ b ≠ y :=
+  Iff.rfl
 
 end Motion
 
@@ -616,5 +723,21 @@ open ZeroParadox
 #print axioms Motion.not_fanIn_of_injective
 #print axioms Motion.bijOn_sources_sinks
 #print axioms Motion.mem_up_self_of_mem_up
+#print axioms Motion.not_selfOnlyAt_and_leavesAt
+#print axioms Motion.not_climb_of_upStepInvariant
+#print axioms Motion.ofFun
+#print axioms Motion.selfOnlyAt_ofFun_iff
+#print axioms Motion.leavesAt_ofFun_iff
+#print axioms Motion.leavesAt_ofFun_not
+#print axioms Motion.ofFixedPoints
+#print axioms Motion.isLanding_ofFixedPoints_iff
+#print axioms Motion.not_corner_of_fun
+#print axioms Motion.not_corner_ofFixedPoints
+#print axioms Motion.corner_ofTotal_iff
+#print axioms Motion.ofPartialFun
+#print axioms Motion.noStepAt_ofPartialFun_iff
+#print axioms Motion.selfOnlyAt_ofPartialFun_iff
+#print axioms Motion.leavesAt_ofPartialFun_iff
 
 end PurityCheck
+
