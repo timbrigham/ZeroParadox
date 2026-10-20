@@ -975,7 +975,6 @@ example : ¬ ComputablePred (fun c : Code => IsComputationalQuine c) := by
 
 end ZeroParadox
 
-
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
@@ -1036,6 +1035,5 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms isComputationalQuine_iff_eval_mod
 #print axioms shiftMotion_loop
 #print axioms shiftMotion_corner_iff
-
 
 end PurityCheck

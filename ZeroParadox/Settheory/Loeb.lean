@@ -130,6 +130,11 @@ theorem loeb_sentence_is_fixedpoint {A : S} (psi : S)
 
 /-! ## § VI. The Löb diagonal in the die's motion, on the Lindenbaum quotient -/
 
+-- Reading (cited, not claimed): Yanofsky 2003 proves the diagonalization lemma on Lindenbaum classes
+-- (Theorem 4, pp. 15–16) and derives "Löb's paradox" from it (p. 18); here the diagonal is a
+-- hypothesis, as in `loeb`. On PA's Lindenbaum algebra `φ ↦ ¬φ` has no fixed point (Barendregt and
+-- Terwijn 2018, arXiv:1809.06233, p. 3), so such fixed points are map by map.
+
 /-- `Statement:` `a` and `b` are provably equivalent: `⊢ a → b` and `⊢ b → a`. -/
 def ProvEquiv (a b : S) : Prop := Thm (imp a b) ∧ Thm (imp b a)
 
@@ -179,7 +184,6 @@ theorem loeb_of_selfOnlyAt {A : S} (psi : S)
     (hLob : Thm (imp (box A) A)) : Thm A :=
   let h := (selfOnlyAt_loebMapQuot_iff A psi).1 hy
   loeb psi h.1 h.2 hLob
-
 
 end ProvabilityLogic
 

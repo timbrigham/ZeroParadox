@@ -19,78 +19,48 @@ slipping in.
 
 ## Formal Overview (AI-assisted)
 
-The framework's set-theoretic commitment used to read "we adopt ZF + AFA." That
-over-states it: the development's set-theoretic *assumption* is only the fragment
-that supplies a *unique self-membered bottom* (⊥ ∈ ⊥, no other x ∈ x), not the full
-Anti-Foundation Axiom (AFA's "every graph has a unique decoration"). Naming "AFA specifically" is a
-judgment call about which axiom system to adopt; naming the *requirements*, with AFA
-as one witness, is the honest statement. (This is an assumption-side claim, not a
-sufficiency claim: where AFA-specific content is used elsewhere — e.g. decoration
-uniqueness in `ZeroParadox/Settheory/APG.lean` — it is proved on its own terms, not
-assumed from full AFA.)
+The framework's set-theoretic commitment (CC-2) is a fragment of what a host theory supplies,
+not the full Anti-Foundation Axiom (AFA, "every graph has a unique decoration"): a Quine atom
+⊥ = {⊥}, ⊥'s only member being ⊥, that is the only reflexive element (x = {x}). That is AFA's
+own profile: AFA allows at most one solution of x = {x} (Aczel 1988, p. 19), while a* = {a, a*}
+is self-membered for every a (Examples 1.5–1.6, pp. 7–8; 0* = {∅, 0*}). Two typeclasses, which
+are incomparable (§ VII):
 
-This file makes that reframe a citable object. `QuineHost` is a typeclass encoding
-the two requirements a host theory must supply:
+- `QuineAtomHost` — the commitment: (Y') `bot_mem_iff`, ⊥ = {⊥}; (Z') `reflexive_unique`.
+- `QuineHost` — ⊥ ∈ ⊥ and the only self-membered element is ⊥. AFA's membership fails its
+  (Z), since 0* ∈ 0*; a membership relating no element to any other meets it (§ VI).
 
-- **(Y)** `bot` is self-membered — `mem bot bot`, ⊥ ∈ ⊥, weaker than ⊥ = {⊥} (control below);
-- **(Z)** that atom is unique — the only self-membered element is `bot`.
-
-A third requirement, **(X) Foundation-free**, is NOT assumed: it is *forced* by (Y)
-and proved here (`quineHost_not_wellFounded`). The three standard theories then sort
-out — two as machine-checked theorems, Boffa by a mechanism-witness:
-
-- **ZFC + Foundation fails (Y)** in-kernel about Mathlib's real `ZFSet`:
-  `zfSet_no_quine_bottom` (via `no_quine_atom`, `ZeroParadox/Settheory/Wall.lean`).
-- **Boffa fails (Z)**: its axiom admits a proper class of Quine atoms rather than one
-  (Boffa 1968); the mechanism — self-membership without the uniqueness clause admits
-  many atoms — is witnessed by a toy model (`boffa_fails_unique`), not an in-kernel
-  result about Boffa's axiom itself.
-- **AFA satisfies (X), (Y), (Z)**: it is the canonical example, exhibited as
-  `afaStructure_isQuineHost` off the framework's own `AFAStructure`
-  (`ZeroParadox/Settheory/SetTheoryAFA.lean`), with a concrete satisfiable model
-  (`OneAtom`) witnessing the requirements are non-vacuous.
-
-**Honest status.** What is *proved*: (X) is forced by (Y); Foundation excludes (Y);
-Boffa fails (Z); the requirements are realizable; AFA meets them. What remains a
-*modeling commitment* (a design principle, not a theorem): that (Y) and (Z) are the
-right requirements to demand. AFA is the witness that a theory meeting them exists —
-not itself the commitment. This shrinks the old "AFA is forced" Forced Metatheoretic
-Commitment to "these requirements are the right ones," with the requirements
-themselves grounded/proved.
+(X) Foundation-freeness is not assumed: either class forces it (`quineHost_not_wellFounded`,
+`quineAtomHost_not_wellFounded`). ZFC + Foundation fails both (`zfSet_no_quine_bottom`,
+`zfSet_no_singleton_bottom`). Boffa's BA₁ gives a proper class of reflexive sets (Aczel 1988,
+Prop. 5.1, p. 57), so fails (Z'); toy model `boffa_fails_reflexive_unique`. AFA's pattern, as a
+three-element toy with real ∈, meets `QuineAtomHost` and no `QuineHost` (§ VII); a model of the
+pattern, not of AFA. Both classes are met on every inhabited carrier (NO-GO gauges), so
+realizability alone is uninformative. What remains a *modeling commitment*: that (Y') and (Z')
+are the right requirements; AFA is a theory meeting them, not the commitment. (Where
+AFA-specific content is used elsewhere, e.g. decoration uniqueness in
+`ZeroParadox/Settheory/APG.lean`, it is proved on its own terms.)
 
 ## Structure
 
-- § I   The `QuineHost` requirements typeclass — (Y) and (Z)
-- § II  (X) is forced — any host is Foundation-free (not well-founded)
-- § III Foundation (ZFSet) fails (Y) — no Quine atom in-kernel
-- § IV  Boffa fails (Z) — permissiveness admits many atoms
-- § V   The requirements are realizable — a concrete one-atom model
-- § VI  AFA is the canonical example — from the framework's `AFAStructure`
+- § I   `QuineHost`: ⊥ ∈ ⊥ and uniqueness among self-members
+- § II  (X) is forced — a `QuineHost` is Foundation-free
+- § III Foundation (ZFSet) fails ⊥ ∈ ⊥
+- § IV  The total relation: self-membership without uniqueness
+- § V   A one-atom model
+- § VI  The framework's `AFAStructure` encoding
+- § VII `QuineAtomHost`: ⊥ = {⊥} and uniqueness among reflexive elements; the two classes compared
 -/
 
 namespace ZeroParadox
 
 open ZPSemilattice
 
-/-! ## § I. The requirements a host theory must supply -/
+/-! ## § I. `QuineHost` -/
 
-/-- **The Quine-Host requirements.** A type `L` with a membership relation `mem` and a
-    distinguished `bot` *hosts the framework's bottom* when:
-    - **(Y)** `bot` is self-membered: `mem bot bot`, ⊥ ∈ ⊥ (weaker than ⊥ = {⊥});
-    - **(Z)** that atom is unique: the only self-membered element is `bot`.
-
-    Requirement **(X)** — that the host is Foundation-free (its membership is not
-    well-founded) — is deliberately NOT a field: it is *forced* by (Y), and proved
-    below as `quineHost_not_wellFounded`.
-
-    This is the AFA *fragment* the framework actually uses, not the full Anti-Foundation
-    Axiom. AFA (Aczel, Non-Well-Founded Sets, CSLI 1988) is the canonical set theory
-    meeting these requirements (§ VI); Boffa's axiom (Boffa 1968; and the AFA/Boffa
-    comparison in Barwise & Moss, Vicious Circles, CSLI 1996) meets (Y) but admits a
-    proper class of Quine atoms, so fails (Z) (§ IV); ZFC + Foundation fails (Y)
-    in-kernel (§ III). Naming the requirements, rather than committing to "AFA
-    specifically," is the honest form of the framework's set-theoretic commitment: a
-    design choice of *these requirements*, witnessed by AFA, not an adoption of AFA. -/
+/-- `Statement:` a membership relation `mem` and a point `bot` with (Y) `mem bot bot` and (Z) every
+    self-membered element is `bot`. `Reading:` (Y) is ⊥ ∈ ⊥, weaker than ⊥ = {⊥}; (Z) is
+    uniqueness among self-members, which AFA's membership does not meet (§ VII). -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet carries Foundation (ZFSet.mem_wf), which forbids x ∈ x, so it cannot host a Quine atom; and no Mathlib typeclass abstracts "a membership relation with a unique self-membered bottom." QuineHost is the minimal set-theory-native encoding of the framework's requirements on a host theory (fields bot_selfMem/selfMem_unique), distinct from the lattice-level AFAStructure in SetTheoryAFA.lean.
 class QuineHost (L : Type*) where
   /-- The host's membership relation. -/
@@ -109,55 +79,47 @@ example : ∃ H : QuineHost Bool, H.bot = false ∧ H.mem true H.bot :=
   ⟨{ mem := fun _ y => y = false, bot := false, bot_selfMem := rfl,
      selfMem_unique := fun _ h => h }, rfl, rfl⟩
 
-/-! ## § II. (X) is forced — any host is Foundation-free -/
+/-! ## § II. (X) is forced — a `QuineHost` is Foundation-free -/
 
-/-- **(X), forced.** A Quine host's membership relation is not well-founded: (Y) puts a
-    self-loop at `bot`, and a well-founded relation admits no self-loop (`wf_no_selfloop`).
-    So the host cannot carry Foundation — Foundation-freeness is a *consequence* of hosting
-    a Quine atom, not an independent assumption. -/
+/-- `Statement:` a `QuineHost`'s membership is not well-founded: (Y) is a self-loop at `bot`, and
+    a well-founded relation has none (`wf_no_selfloop`); one way. -/
 theorem quineHost_not_wellFounded (L : Type*) [QuineHost L] :
     ¬ WellFounded (QuineHost.mem : L → L → Prop) :=
   fun h => wf_no_selfloop h QuineHost.bot QuineHost.bot_selfMem
 
-/-- The bottom is the unique self-membered element, packaged as a biconditional:
-    an element is self-membered iff it is the bottom. -/
+/-- `Statement:` in a `QuineHost`, an element is self-membered iff it is the bottom. -/
 theorem quineHost_selfMem_iff (L : Type*) [QuineHost L] (x : L) :
     QuineHost.mem x x ↔ x = QuineHost.bot :=
   ⟨QuineHost.selfMem_unique x, fun h => h ▸ QuineHost.bot_selfMem⟩
 
-/-! ## § III. Foundation fails (Y) — no Quine atom under ZFC -/
+/-! ## § III. Foundation fails ⊥ ∈ ⊥ -/
 
-/-- **ZFC + Foundation fails requirement (Y).** Under Foundation, `∈` is well-founded on
-    `ZFSet` (`ZFSet.mem_wf`), so no set is self-membered (`no_quine_atom`). Hence there is
-    no candidate bottom for a `QuineHost` structure on `ZFSet` with `mem = (· ∈ ·)`: the
-    (Y) field is unsatisfiable. This is the in-kernel exclusion of the literal Quine atom. -/
+/-- `Statement:` no `ZFSet` is self-membered (`no_quine_atom`, Foundation via `ZFSet.mem_wf`), so
+    with `mem = (· ∈ ·)` no `ZFSet` meets `QuineHost`'s (Y). -/
 theorem zfSet_no_quine_bottom : ¬ ∃ b : ZFSet, b ∈ b :=
   fun ⟨b, hb⟩ => no_quine_atom b hb
 
-/-! ## § IV. Boffa fails (Z) — permissiveness admits many atoms -/
+/-! ## § IV. The total relation: self-membership without uniqueness -/
 
-/-- A Boffa-shaped membership on `Bool`: every element is self-membered. Boffa's
-    anti-foundation axiom permits a proper class of Quine atoms; two suffice to break
-    uniqueness. -/
+/-- `Statement:` the total relation on `Bool`: every element is a member of every element.
+    `Reading:` it models self-membership without uniqueness. It does not model Boffa's reflexive
+    sets, x = {x}: here no element is its own only member (`boffa_fails_singleton`, § VII). -/
 def BoffaMem : Bool → Bool → Prop := fun _ _ => True
 
+/-- `Statement:` every element is self-membered under `BoffaMem`. -/
 theorem boffaMem_all_selfMem (x : Bool) : BoffaMem x x := trivial
 
-/-- **Boffa fails requirement (Z).** With every element self-membered, no single element is
-    *the* self-membered one: `true` and `false` are both Quine atoms and distinct. So (Y)
-    without (Z) does not pin down a bottom — uniqueness is exactly the requirement that
-    rules Boffa out, and it is not derivable from self-membership alone. -/
+/-- `Statement:` under `BoffaMem` no single element is the only self-membered one: `true` and
+    `false` are both self-membered and distinct. So `QuineHost`'s (Y) does not give its (Z). -/
 theorem boffa_fails_unique : ¬ ∃ b : Bool, ∀ x : Bool, BoffaMem x x → x = b := by
   rintro ⟨b, hb⟩
   have h1 : true = b := hb true trivial
   have h2 : false = b := hb false trivial
   exact Bool.noConfusion (h1.trans h2.symm)
 
-/-! ## § V. The requirements are realizable — a concrete one-atom model -/
+/-! ## § V. A one-atom model -/
 
-/-- A concrete two-element host: `bot` (self-membered) and one `other` element (not). This
-    is the minimal shape AFA supplies — a single Quine atom, everything else ordinary — and
-    it witnesses that the `QuineHost` requirements are jointly consistent (non-vacuous). -/
+/-- `Statement:` two elements, `bot` and `other`. -/
 inductive OneAtom where
   | bot
   | other
@@ -168,23 +130,19 @@ instance : QuineHost OneAtom where
   bot_selfMem := ⟨rfl, rfl⟩
   selfMem_unique := fun _ hx => hx.1
 
--- Statement: in this model the singleton reading holds as well: the only member of ⊥ is ⊥.
+-- Statement: in this model the only member of ⊥ is ⊥.
 example (x : OneAtom) (h : QuineHost.mem x OneAtom.bot) : x = OneAtom.bot := h.1
 
-/-- The concrete model does host a Quine atom (its `bot` is self-membered) yet is not
-    well-founded — the requirements are satisfiable. -/
+/-- `Statement:` the one-atom model's membership is not well-founded. -/
 theorem oneAtom_not_wellFounded :
     ¬ WellFounded (QuineHost.mem : OneAtom → OneAtom → Prop) :=
   quineHost_not_wellFounded OneAtom
 
-/-! ## § VI. AFA is the canonical example -/
+/-! ## § VI. The framework's `AFAStructure` encoding -/
 
-/-- **AFA is a Quine host.** The framework's lattice-level AFA grounding (`AFAStructure`,
-    the encoding of what ZF + AFA supplies — see `ZeroParadox/Settheory/SetTheoryAFA.lean`)
-    satisfies the `QuineHost` requirements: take `mem x y := selfMem x ∧ x = y`, so
-    `mem x x ↔ selfMem x`; then (Y) is `bot_self_mem` and (Z) is `quine_unique`. This
-    exhibits AFA as the canonical example meeting the requirements — the witness the honest
-    framing points to, not a committed choice. -/
+/-- `Statement:` an `AFAStructure` gives a `QuineHost` with `mem x y := selfMem x ∧ x = y`;
+    (Y) is `bot_self_mem` and (Z) is `quine_unique`. `Reading:` this `mem` relates no element to
+    any other, so it is not AFA's ∈, under which (Z) fails (§ VII). -/
 @[reducible]
 def afaStructure_isQuineHost (L : Type*) [ZPSemilattice L] [AFAStructure L] :
     QuineHost L where
@@ -194,18 +152,33 @@ def afaStructure_isQuineHost (L : Type*) [ZPSemilattice L] [AFAStructure L] :
   selfMem_unique := fun x hx =>
     AFAStructure.quine_unique x bot hx.1 AFAStructure.bot_self_mem
 
-/-! ## § VII. The singleton reading — a stronger variant, ⊥ = {⊥}
+-- Statement: that `mem` relates no element to any other.
+example (L : Type) [ZPSemilattice L] [AFAStructure L] (x y : L)
+    (h : (afaStructure_isQuineHost L).mem x y) : x = y := h.2
 
-`QuineHost` (§ I) is the WEAK reading: ⊥ ∈ ⊥ and no other element is self-membered.
-`QuineAtomHost` adds the STRONG reading: ⊥'s only member is ⊥. Which § II–VI results use which:
-`quineHost_not_wellFounded` and `quineHost_selfMem_iff` take the weak class; `zfSet_no_quine_bottom`
-and `boffa_fails_unique` name neither class (bare `b ∈ b`, bare uniqueness);
-`afaStructure_isQuineHost` builds the weak class, and § VII measures the strong one on it. -/
+/-! ## § VII. `QuineAtomHost` — ⊥ = {⊥} and uniqueness among reflexive elements
 
-/-- `Statement:` a `QuineHost` whose bottom's only member is the bottom: `mem y bot ↔ y = bot`. -/
-class QuineAtomHost (L : Type*) extends QuineHost L where
-  /-- ⊥ = {⊥}: the members of the bottom are exactly the bottom. -/
+Which earlier results use which class: `quineHost_not_wellFounded`, `quineHost_selfMem_iff` and
+`afaStructure_isQuineHost` concern `QuineHost`; `zfSet_no_quine_bottom` and `boffa_fails_unique`
+name neither class. -/
+
+/-- `Statement:` a membership relation `mem` and a point `bot` with (Y') the members of `bot` are
+    exactly `bot` (⊥ = {⊥}) and (Z') every element that is its own only member is `bot`. -/
+class QuineAtomHost (L : Type*) where
+  /-- The host's membership relation. -/
+  mem : L → L → Prop
+  /-- The distinguished bottom element. -/
+  bot : L
+  /-- (Y') ⊥ = {⊥}: the members of the bottom are exactly the bottom. -/
   bot_mem_iff : ∀ y : L, mem y bot ↔ y = bot
+  /-- (Z') Uniqueness among reflexive elements (x = {x}). -/
+  reflexive_unique : ∀ x : L, (∀ y, mem y x ↔ y = x) → x = bot
+
+/-- `Statement:` a `QuineAtomHost`'s membership is not well-founded, since (Y') gives
+    `mem bot bot`; one way. -/
+theorem quineAtomHost_not_wellFounded (L : Type*) [QuineAtomHost L] :
+    ¬ WellFounded (QuineAtomHost.mem : L → L → Prop) :=
+  fun h => wf_no_selfloop h QuineAtomHost.bot ((QuineAtomHost.bot_mem_iff _).2 rfl)
 
 /-! NO-GO gauge — only the EMPTY carrier fails `QuineAtomHost`: on any point `b`,
 `mem x y := x = b ∧ y = b` meets every field (`trivialQuineAtomHost`). Membership is informative
@@ -216,47 +189,81 @@ only with the `mem` named. -/
 def trivialQuineAtomHost {C : Type*} (b : C) : QuineAtomHost C where
   mem x y := x = b ∧ y = b
   bot := b
-  bot_selfMem := ⟨rfl, rfl⟩
-  selfMem_unique _ h := h.1
   bot_mem_iff _ := ⟨And.left, fun h => ⟨h, rfl⟩⟩
+  reflexive_unique x hx := ((hx x).2 rfl).1
 
 -- Statement: and the empty type is not a member: the `bot` field demands a point.
 example : IsEmpty (QuineAtomHost Empty) := ⟨fun S => S.bot.elim⟩
 
--- Statement: strong ⇒ weak: every `QuineAtomHost` is a `QuineHost` (the `extends` projection).
-example (L : Type) [QuineAtomHost L] : QuineHost L := QuineAtomHost.toQuineHost
+-- Statement: AFA's pattern, as a finite toy (not a model of AFA): on `Fin 3` read as Ω, ∅, 0*,
+-- with Ω ∈ Ω, 0* ∈ 0* and ∅ ∈ 0* (Aczel 1988, Ex. 1.3 and 1.5, pp. 6–7), some `QuineAtomHost`
+-- has this membership with ⊥ = Ω, and no `QuineHost` has it, since Ω and 0* are both self-members.
+example :
+    (∃ H : QuineAtomHost (Fin 3), H.bot = 0 ∧
+      H.mem = fun a b => (a = 0 ∧ b = 0) ∨ (a = 2 ∧ b = 2) ∨ (a = 1 ∧ b = 2)) ∧
+    ¬ ∃ H : QuineHost (Fin 3),
+      H.mem = fun a b => (a = 0 ∧ b = 0) ∨ (a = 2 ∧ b = 2) ∨ (a = 1 ∧ b = 2) := by
+  refine ⟨⟨QuineAtomHost.mk (fun a b => (a = 0 ∧ b = 0) ∨ (a = 2 ∧ b = 2) ∨ (a = 1 ∧ b = 2)) 0
+    (by decide) (by decide), rfl, rfl⟩, ?_⟩
+  rintro ⟨H, hH⟩
+  have h0 := H.selfMem_unique 0 (by rw [hH]; exact Or.inl ⟨rfl, rfl⟩)
+  have h2 := H.selfMem_unique 2 (by rw [hH]; exact Or.inr (Or.inl ⟨rfl, rfl⟩))
+  exact absurd (h0.trans h2.symm) (by decide)
 
--- Statement: the converse fails: the `Bool` control of § I meets both `QuineHost` fields and its
--- bottom has the second member `true`, so no `bot_mem_iff` holds for that `mem` and `bot`.
-example : ∃ H : QuineHost Bool, ¬ ∀ y, H.mem y H.bot ↔ y = H.bot :=
+-- Statement: the other direction: the `Bool` control of § I is a `QuineHost`, and no
+-- `QuineAtomHost` has its membership. So neither class contains the other.
+example : ∃ H : QuineHost Bool, ¬ ∃ S : QuineAtomHost Bool, S.mem = H.mem :=
   ⟨{ mem := fun _ y => y = false, bot := false, bot_selfMem := rfl,
-     selfMem_unique := fun _ h => h }, fun h => absurd ((h true).1 rfl) (by decide)⟩
+     selfMem_unique := fun _ h => h }, fun ⟨S, hS⟩ => by
+    have ht := S.bot_mem_iff true
+    have hf := S.bot_mem_iff false
+    rw [hS] at ht hf
+    simp only at ht hf
+    revert ht hf
+    generalize S.bot = b
+    cases b <;> decide⟩
 
-/-- `Statement:` the one-atom model of § V meets the strong variant. -/
+/-- `Statement:` the one-atom model of § V meets `QuineAtomHost`. -/
 @[reducible]
-def oneAtom_quineAtomHost : QuineAtomHost OneAtom :=
-  { (inferInstance : QuineHost OneAtom) with
-    bot_mem_iff := fun _ => ⟨And.left, fun h => ⟨h, rfl⟩⟩ }
+def oneAtom_quineAtomHost : QuineAtomHost OneAtom where
+  mem x y := x = OneAtom.bot ∧ y = OneAtom.bot
+  bot := OneAtom.bot
+  bot_mem_iff _ := ⟨And.left, fun h => ⟨h, rfl⟩⟩
+  reflexive_unique x hx := ((hx x).2 rfl).1
 
-/-- `Statement:` the § VI encoding of an `AFAStructure` meets the strong variant. `Reading:` this
-    holds because that encoding's `mem x y` requires `x = y`, so every element's only possible
-    member is itself; it is a fact about the § VI choice of `mem`, not derived from `selfMem`. -/
+/-- `Statement:` the § VI encoding of an `AFAStructure` meets `QuineAtomHost`. `Reading:` the
+    "member of ⊥ ⇒ = ⊥" half of (Y') comes from the encoding's `x = y` conjunct, and "⊥ ∈ ⊥" from
+    `bot_self_mem`; (Z') from `quine_unique`. -/
 @[reducible]
 def afaStructure_isQuineAtomHost (L : Type*) [ZPSemilattice L] [AFAStructure L] :
-    QuineAtomHost L :=
-  { afaStructure_isQuineHost L with
-    bot_mem_iff := fun y => ⟨fun h => h.2, fun h => by subst h; exact ⟨AFAStructure.bot_self_mem, rfl⟩⟩ }
+    QuineAtomHost L where
+  mem x y := AFAStructure.selfMem x ∧ x = y
+  bot := bot
+  bot_mem_iff y := ⟨fun h => h.2, fun h => by subst h; exact ⟨AFAStructure.bot_self_mem, rfl⟩⟩
+  reflexive_unique x hx := AFAStructure.quine_unique x bot ((hx x).2 rfl).1 AFAStructure.bot_self_mem
 
+-- Statement: that encoding's membership relates no element to any other.
+example (L : Type) [ZPSemilattice L] [AFAStructure L] (x y : L)
+    (h : (afaStructure_isQuineAtomHost L).mem x y) : x = y := h.2
 
-/-- `Statement:` the Boffa-shaped membership has no element whose only member is itself. -/
+/-- `Statement:` under `BoffaMem` no element is its own only member. -/
 theorem boffa_fails_singleton : ¬ ∃ b : Bool, ∀ y, BoffaMem y b ↔ y = b := by
   rintro ⟨b, hb⟩
   cases b
   · exact absurd ((hb true).1 trivial) (by decide)
   · exact absurd ((hb false).1 trivial) (by decide)
 
-/-- `Statement:` no `ZFSet` is its own sole member; one way from `zfSet_no_quine_bottom`, since
-    `∀ y, y ∈ b ↔ y = b` gives `b ∈ b`. -/
+/-- `Statement:` with `mem = Eq` on `Bool` every element is its own only member, so no
+    `QuineAtomHost` has that membership: (Z') fails. `Reading:` the toy shape of Boffa's BA₁,
+    under which the reflexive sets form a proper class (Aczel 1988, Prop. 5.1, p. 57). -/
+theorem boffa_fails_reflexive_unique : ¬ ∃ S : QuineAtomHost Bool, S.mem = Eq := by
+  rintro ⟨S, hS⟩
+  have h1 := S.reflexive_unique true (fun y => by rw [hS])
+  have h2 := S.reflexive_unique false (fun y => by rw [hS])
+  exact absurd (h1.trans h2.symm) (by decide)
+
+/-- `Statement:` no `ZFSet` is its own sole member, so with `mem = (· ∈ ·)` no `ZFSet` meets
+    `QuineAtomHost`'s (Y'); one way from `zfSet_no_quine_bottom`. -/
 theorem zfSet_no_singleton_bottom : ¬ ∃ b : ZFSet, ∀ y, y ∈ b ↔ y = b :=
   fun ⟨b, hb⟩ => zfSet_no_quine_bottom ⟨b, (hb b).2 rfl⟩
 
@@ -264,16 +271,9 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-Expected footprint:
-- quineHost_not_wellFounded:  class fields + `wf_no_selfloop` (axiom-free)
-- quineHost_selfMem_iff:      class fields only
-- boffa_fails_unique:         axiom-free (Bool.noConfusion)
-- oneAtom_not_wellFounded:    axiom-free
-- zfSet_no_quine_bottom:      inherits `no_quine_atom`'s footprint (Foundation via ZFSet;
-                              choice-free — [propext, Quot.sound])
-
-The one non-empty footprint (`zfSet_no_quine_bottom`) is expected: it is the ZFSet /
-Foundation exclusion, and rides on Mathlib's `ZFSet.mem_wf`. -/
+Expected footprint: none for the class facts, the toys and the encodings; `zfSet_no_quine_bottom`
+and `zfSet_no_singleton_bottom` inherit `no_quine_atom`'s [propext, Quot.sound] (Foundation via
+Mathlib's `ZFSet.mem_wf`; choice-free). -/
 
 section PurityCheck
 open ZeroParadox
@@ -285,12 +285,12 @@ open ZeroParadox
 #print axioms zfSet_no_quine_bottom
 #print axioms afaStructure_isQuineHost
 #print axioms QuineAtomHost
+#print axioms quineAtomHost_not_wellFounded
 #print axioms trivialQuineAtomHost
-
 #print axioms oneAtom_quineAtomHost
 #print axioms afaStructure_isQuineAtomHost
 #print axioms boffa_fails_singleton
+#print axioms boffa_fails_reflexive_unique
 #print axioms zfSet_no_singleton_bottom
-
 
 end PurityCheck

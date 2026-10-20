@@ -195,6 +195,12 @@ theorem exists_code_diagonal (g : Code → Code) (hc : Computable g) :
   rw [Code.eval_curry, ha]
   simp only [G, Nat.unpair_pair, Denumerable.ofNat_encode]
 
+-- Reading (cited, not claimed): the square is Yanofsky 2003, Theorem 5 (p. 18), on the unary
+-- computable functions, with his Remark 5 (p. 15): only the constructed maps need be representable,
+-- the relativization `HasWitnessRel` makes. `EvalRespecting` is what makes his Φ_h well-defined on
+-- functions. A fixed point modulo the numbering's equivalence is Ershov's recursion theorem for
+-- precomplete numberings (Barendregt and Terwijn 2018, arXiv:1809.06233, Theorem 3.1, p. 4; n ↦ φ_n
+-- is "the prime example", p. 2). An instance of theirs.
 /-- `Statement:` `EvalClass` carries a diagonal witness relative to `ComputableOnEval`, with
     `e a x` the class of `curry a ⌜x⌝`. -/
 theorem hasWitnessRel_evalClass : HasWitnessRel EvalClass ComputableOnEval := by
@@ -211,8 +217,9 @@ example (g : Code → Code) (hc : Computable g) (hg : EvalRespecting g) :
   induction b using Quotient.ind with
   | _ c => exact ⟨c, Quotient.exact hb⟩
 
-/-- `Statement:` CONTROL: relative to every map on `EvalClass` there is no witness; the swap of the
-    classes of `Code.zero` and a nowhere-defined code fixes no class. -/
+/-- `Statement:` CONTROL: relative to the class of all maps on `EvalClass` there is no witness: the
+    map sending the class of `Code.zero` to that of a nowhere-defined code, and every other class to
+    the class of `Code.zero`, fixes no class. -/
 theorem no_witnessRel_evalClass_top : ¬ HasWitnessRel EvalClass (fun _ => True) := by
   classical
   obtain ⟨cn, hcn⟩ := Code.exists_code.1 Nat.Partrec.none

@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2073,
+        "declarations": 2075,
         "files": 174
       },
       "entries": [
@@ -20440,6 +20440,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "42c89a7c-9a25-4dd1-bb65-42f8f6493845",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quineAtomHost_not_wellFounded",
+            "short": "quineAtomHost_not_wellFounded"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.quineAtomHost_not_wellFounded",
+            "short": "quineAtomHost_not_wellFounded",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "QHOST-SELFMEM-1 round 1 (2026-10-20): QuineAtomHost rebuilt to AFA's profile (standalone, reflexive uniqueness)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "42e309bd-8ec0-4b53-a56a-d37dadf7242b",
           "new": {
@@ -31646,6 +31685,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "68cc7adf-8195-4c7d-adec-2c9d5247c9ba",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boffa_fails_reflexive_unique",
+            "short": "boffa_fails_reflexive_unique"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boffa_fails_reflexive_unique",
+            "short": "boffa_fails_reflexive_unique",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "QHOST-SELFMEM-1 round 1 (2026-10-20): QuineAtomHost rebuilt to AFA's profile (standalone, reflexive uniqueness)",
           "verify": {
             "axioms": null,
             "sorry_free": true

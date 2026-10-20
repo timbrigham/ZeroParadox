@@ -469,7 +469,6 @@ theorem ordinalSuccMotion_not_loop : ¬ ordinalSuccMotion.{u}.Loop := by
     rw [hb]; exact lt_of_lt_of_le (Order.lt_succ y) (Ordinal.le_nfp _ _)
   exact absurd hy hlt.ne
 
-
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -499,6 +498,5 @@ open ZeroParadox
 #print axioms ordinalSuccMotion_climb
 #print axioms ordinalSuccMotion_up_succ_epsilon0
 #print axioms ordinalSuccMotion_not_loop
-
 
 end PurityCheck

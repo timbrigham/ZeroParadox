@@ -117,7 +117,7 @@ non-well-founded or univalent setting as the place the question would get its te
 - § I   The identity decision on the witness carrier
 - § II  Decidable equality of the carrier implies weak excluded middle
 - § III `SelfContained`: self-containment on both sides of the decidability line
-- § IV  On a decidable carrier, "is this the bottom?" resolves
+- § IV  On a decidable carrier, "is this the bottom?" resolves; § V, the same check in the die's motion
 -/
 
 namespace ZeroParadox
@@ -292,6 +292,5 @@ open ZeroParadox
 -- § V — the die form. `wem_of_decidable_selfOnlyAt_glue` MUST NOT carry `Classical.choice`.
 #print axioms selfOnlyAt_ofFun_app_iff
 #print axioms wem_of_decidable_selfOnlyAt_glue
-
 
 end PurityCheck

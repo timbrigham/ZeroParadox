@@ -29,6 +29,7 @@ import ZeroParadox.Settheory.FixedPointFork
 import ZeroParadox.Category.LawvereTwoAdic
 import ZeroParadox.Multihomed.HilbertDiagonal
 import ZeroParadox.Order.UpAndOver
+import ZeroParadox.Settheory.QuineHost
 
 set_option maxHeartbeats 400000
 
@@ -126,6 +127,15 @@ example : ∃ M : ZeroParadox.Motion Bool, (∀ x, M.up x = Part.some true) ∧ 
 example : ∀ M : ZeroParadox.Motion Bool, ¬ M.Climb := fun M h => by
   obtain ⟨y, b, z, h1, h2, h3⟩ := M.climb_three h
   revert h1 h2 h3; cases y <;> cases b <;> cases z <;> decide
+-- Statement: so the converse of `climb_corner` fails: that `Bool` motion fires the corner and does
+-- not climb.
+example : ∃ M : ZeroParadox.Motion Bool, M.Corner ∧ ¬ M.Climb :=
+  ⟨ZeroParadox.Motion.ofTotal (fun _ => true) (fun _ => rfl) (fun a b => a ≠ b),
+    ZeroParadox.Motion.loop_corner _ ⟨true, false, Part.mem_some_iff.2 rfl, Bool.false_ne_true.symm,
+      Bool.false_ne_true, Part.mem_some_iff.2 rfl⟩,
+    fun h => by
+      obtain ⟨y, b, z, h1, h2, h3⟩ := ZeroParadox.Motion.climb_three _ h
+      revert h1 h2 h3; cases y <;> cases b <;> cases z <;> decide⟩
 -- Statement: LOOP non-member: the identity UP with any step never loops.
 example {α : Type} (s : α → α → Prop) : ¬ (ZeroParadox.Motion.ofTotal id (fun _ => rfl) s).Loop :=
   fun ⟨_, _, _, _, hby, hyb⟩ => hby (Part.mem_some_iff.1 hyb).symm
@@ -1459,10 +1469,13 @@ example (n : ℤ) : let M := (ZeroParadox.Motion.ofTotal (id : ZeroParadox.Spher
 -- from itself. The adjoined-points switch (§ I) counts points of the carrier, not ends of a motion, and
 -- stands as stated in § I.
 
-/-! ### § XV. Diagonal faces as inputs to one motion: carrier, map, witness, quotient -/
--- Reading: each face below enters as INPUTS: a carrier `β`, a self-map `g` (or a relation), a class of
--- admissible maps with a witness (`HasWitnessRel`), and, where a face's fixed point holds only up to an
--- equivalence, the quotient by it. No classification of the faces is claimed.
+/-! ### § XV. Diagonal faces as inputs to the die's motion: carrier, map, witness, quotient -/
+-- Reading: each face below enters as INPUTS: a carrier `β` and a self-map `g` (or a relation); the
+-- Lawvere and Cantor entries and the computability witness also take a class of admissible maps with
+-- a witness (`HasWitnessRel`); Rice, Löb and the biproduct entries take a quotient, where the face's
+-- fixed point holds only up to an equivalence. No classification of the faces is claimed. Reading
+-- (cited, not claimed): the diagonal shape these faces share is Lawvere's (Lawvere 1969), the
+-- unification Yanofsky's (Yanofsky 2003), credited in `ZeroParadox/DiagonalFixedPoint.lean`.
 #check @ZeroParadox.Motion.ofFun                 -- Statement: encoding 1: UP the identity, OVER the graph of `g`
 #check @ZeroParadox.Motion.selfOnlyAt_ofFun_iff  -- Statement: there `y` steps to itself only iff `g y = y`; both directions
 #check @ZeroParadox.Motion.leavesAt_ofFun_iff    -- Statement: and `y` steps elsewhere iff `g y ≠ y`; both directions
@@ -1488,7 +1501,7 @@ example : ¬ ZeroParadox.ordinalTowerMotion.{0}.Corner := fun hc => by
 #check @ZeroParadox.hasLanding_ofFixedPoints_of_witnessRel -- Statement: and encoding 2 then has a landing; one way
 #check @ZeroParadox.no_witnessRel_of_leavesAt    -- Statement: Cantor: if `M g` and `ofFun g` steps elsewhere everywhere, no witness relative to `M`; one way
 -- Statement: CONTROL: `Bool` negation steps elsewhere everywhere, so `Bool` has no witness relative to
--- every map.
+-- the class of all maps.
 example : ¬ ZeroParadox.HasWitnessRel Bool (fun _ => True) :=
   ZeroParadox.no_witnessRel_of_leavesAt (g := fun b => !b) trivial
     fun b => (ZeroParadox.Motion.leavesAt_ofFun_iff _ b).2 (by cases b <;> decide)
@@ -1544,9 +1557,9 @@ example (x : ZFSet) :
   · have hs : x ∈ ({x} : ZFSet) := ZFSet.mem_singleton.2 rfl
     rw [← h] at hs; exact hs
   · rw [h] at hb; exact ZFSet.mem_singleton.1 hb
--- Statement: `QuineHost`'s two fields give a self-step at ⊥ of the host and not `SelfOnlyAt`: on `Bool`
--- with `mem x y := y = false` (the control in `ZeroParadox/Settheory/QuineHost.lean`), OVER `a → b`
--- when `b` is a member of `a` steps `false` to itself and to `true`.
+-- Statement: `QuineHost`'s two fields give a self-step at ⊥ of the host and do not give `SelfOnlyAt`:
+-- on `Bool` with `mem x y := y = false` (the control in `ZeroParadox/Settheory/QuineHost.lean`), OVER
+-- `a → b` when `b` is a member of `a` steps `false` to itself and to `true`.
 example : let M := ZeroParadox.Motion.ofTotal (id : Bool → Bool) (fun _ => rfl) (fun a _ => a = false)
     M.step false false ∧ M.LeavesAt false ∧ ¬ M.SelfOnlyAt false :=
   ⟨rfl, ⟨true, rfl, by decide⟩, fun ⟨_, h⟩ => absurd (h true rfl) (by decide)⟩
@@ -1564,6 +1577,13 @@ example (w : List Bool) : ((ZeroParadox.Motion.ofFun ZeroParadox.partialAddOne).
     (ZeroParadox.Motion.ofFun ZeroParadox.partialDouble).LeavesAt w :=
   ⟨(ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ w).trans (ZeroParadox.partialAddOne_fixed_iff w),
     (ZeroParadox.Motion.leavesAt_ofFun_iff _ w).2 (ZeroParadox.partialDouble_ne_self w)⟩
+-- Statement: `QuineAtomHost`'s (Y') does give it: with OVER `a → b` when `b` is a member of `a`, ⊥ steps
+-- to itself only.
+example {L : Type} [ZeroParadox.QuineAtomHost L] :
+    (ZeroParadox.Motion.ofTotal (id : L → L) (fun _ => rfl)
+      (fun a b => ZeroParadox.QuineAtomHost.mem b a)).SelfOnlyAt ZeroParadox.QuineAtomHost.bot :=
+  ⟨(ZeroParadox.QuineAtomHost.bot_mem_iff _).2 rfl,
+    fun b hb => (ZeroParadox.QuineAtomHost.bot_mem_iff b).1 hb⟩
 #check @ZeroParadox.Motion.ofPartialFun          -- Statement: a partial self-map `g : β → Option β`: UP the identity, OVER `g x = some y`
 #check @ZeroParadox.Motion.noStepAt_ofPartialFun_iff -- Statement: no step at `y` iff `g y = none`; both directions
 #check @ZeroParadox.Motion.selfOnlyAt_ofPartialFun_iff -- Statement: a step to itself only iff `g y = some y`; both directions
@@ -1658,6 +1678,5 @@ example : ZeroParadox.IsComputationalQuine Nat.Partrec.Code.zero ∧
 #check @ZeroParadox.ordinalSuccMotion_up_succ_epsilon0 -- Statement: there UP sends `succ ε₀` to ε₁
 #check @ZeroParadox.selfOnlyAt_ofFun_app_iff     -- Statement: for `S : SelfContained C`, `x` steps to itself only in `ofFun S.app` iff `x = S.bot`; both directions
 #check @ZeroParadox.wem_of_decidable_selfOnlyAt_glue -- Statement: deciding that at the glued point, uniformly in `p`, gives weak excluded middle; one way
-
 
 end DieCannotBeIndex

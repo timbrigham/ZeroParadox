@@ -128,7 +128,7 @@ theorem not_overToUndefined_of_upTotal (h : M.UpTotal) : ¬ M.OverToUndefined :=
   fun ⟨_, b, _, _, hb⟩ => hb (h b)
 
 /-- `Statement:` if the motion climbs, its corner fires; one way, the converse refuted on `Bool`
-    (`ZeroParadox/DieCannotBe.lean` § I: a loop, hence a corner, and no climb). -/
+    (`ZeroParadox/DieCannotBe.lean` § I: a `Bool` motion whose corner fires and which does not climb). -/
 theorem climb_corner : M.Climb → M.Corner :=
   fun ⟨y, b, z, hy, hs, hz, hzb, _⟩ => ⟨y, b, z, hy, hs, hz, hzb⟩
 
@@ -490,7 +490,6 @@ theorem overTrichotomy_of_option [DecidableEq α] (f : α → Option α)
         fun c hc => (Option.some_injective _ (hf.symm.trans ((h _ c).1 hc))).symm⟩)
 
 /-- `Statement:` if the corner fires, some landing steps elsewhere; one way. -/
-
 theorem corner_leavesAt (h : M.Corner) : ∃ y, M.IsLanding y ∧ M.LeavesAt y :=
   let ⟨y, b, _, hy, hs, hz, hzb⟩ := h
   ⟨y, hy, b, hs, fun hb => hzb (by rw [hb] at hz ⊢; exact Part.mem_unique hz hy)⟩
@@ -637,7 +636,6 @@ theorem selfOnlyAt_ofPartialFun_iff (g : α → Option α) (y : α) :
     (ofPartialFun g).SelfOnlyAt y ↔ g y = some y :=
   ⟨fun h => h.1, fun h => ⟨h, fun b hb => Option.some_injective _ ((hb : g y = some b).symm.trans h)⟩⟩
 
-
 /-- `Statement:` in `ofPartialFun g`, `y` steps elsewhere iff `g y = some b` with `b ≠ y`; both
     directions. -/
 theorem leavesAt_ofPartialFun_iff (g : α → Option α) (y : α) :
@@ -740,4 +738,3 @@ open ZeroParadox
 #print axioms Motion.leavesAt_ofPartialFun_iff
 
 end PurityCheck
-
