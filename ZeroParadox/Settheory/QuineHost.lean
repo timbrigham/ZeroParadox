@@ -28,14 +28,14 @@ are incomparable (§ VII):
 
 - `QuineAtomHost` — the commitment: (Y') `bot_mem_iff`, ⊥ = {⊥}; (Z') `reflexive_unique`.
 - `QuineHost` — ⊥ ∈ ⊥ and the only self-membered element is ⊥. AFA's membership fails its
-  (Z), since 0* ∈ 0*; a membership relating no element to any other meets it (§ VI).
+  (Z), since 0* ∈ 0*; the § VI encoding, whose membership relates no element to any other, meets it.
 
 (X) Foundation-freeness is not assumed: either class forces it (`quineHost_not_wellFounded`,
 `quineAtomHost_not_wellFounded`). ZFC + Foundation fails both (`zfSet_no_quine_bottom`,
 `zfSet_no_singleton_bottom`). Boffa's BA₁ gives a proper class of reflexive sets (Aczel 1988,
 Prop. 5.1, p. 57), so fails (Z'); toy model `boffa_fails_reflexive_unique`. AFA's pattern, as a
 three-element toy with real ∈, meets `QuineAtomHost` and no `QuineHost` (§ VII); a model of the
-pattern, not of AFA. Both classes are met on every inhabited carrier (NO-GO gauges), so
+pattern, not of AFA. Both classes are met on every inhabited carrier (NO-GO gauges, § I, § VII), so
 realizability alone is uninformative. What remains a *modeling commitment*: that (Y') and (Z')
 are the right requirements; AFA is a theory meeting them, not the commitment. (Where
 AFA-specific content is used elsewhere, e.g. decoration uniqueness in
@@ -61,7 +61,7 @@ open ZPSemilattice
 /-- `Statement:` a membership relation `mem` and a point `bot` with (Y) `mem bot bot` and (Z) every
     self-membered element is `bot`. `Reading:` (Y) is ⊥ ∈ ⊥, weaker than ⊥ = {⊥}; (Z) is
     uniqueness among self-members, which AFA's membership does not meet (§ VII). -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet carries Foundation (ZFSet.mem_wf), which forbids x ∈ x, so it cannot host a Quine atom; and no Mathlib typeclass abstracts "a membership relation with a unique self-membered bottom." QuineHost is the minimal set-theory-native encoding of the framework's requirements on a host theory (fields bot_selfMem/selfMem_unique), distinct from the lattice-level AFAStructure in SetTheoryAFA.lean.
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet carries Foundation (ZFSet.mem_wf), which forbids x ∈ x, so it cannot host a self-membered element; and no Mathlib typeclass abstracts "a membership relation whose bottom is self-membered and the only self-member." QuineHost encodes that (fields bot_selfMem/selfMem_unique); AFA's membership fails its uniqueness field, and the framework's requirement is QuineAtomHost (§ VII). Distinct from the lattice-level AFAStructure in SetTheoryAFA.lean.
 class QuineHost (L : Type*) where
   /-- The host's membership relation. -/
   mem : L → L → Prop
@@ -78,6 +78,12 @@ class QuineHost (L : Type*) where
 example : ∃ H : QuineHost Bool, H.bot = false ∧ H.mem true H.bot :=
   ⟨{ mem := fun _ y => y = false, bot := false, bot_selfMem := rfl,
      selfMem_unique := fun _ h => h }, rfl, rfl⟩
+
+-- Statement: NO-GO gauge: every type with a point `b` carries a `QuineHost`
+-- (`mem x y := x = b ∧ y = b`), and the empty type carries none.
+example {C : Type} (b : C) : QuineHost C :=
+  ⟨fun x y => x = b ∧ y = b, b, ⟨rfl, rfl⟩, fun _ h => h.1⟩
+example : IsEmpty (QuineHost Empty) := ⟨fun H => H.bot.elim⟩
 
 /-! ## § II. (X) is forced — a `QuineHost` is Foundation-free -/
 

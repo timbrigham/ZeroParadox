@@ -70,7 +70,7 @@ theorem existence_without_uniqueness [Nontrivial L] :
 /-- **The engine cannot fire in Set.** Lawvere's trigger — a reflexive point-surjection
 `e : A → (A → Prop)` — does not exist (Cantor, `cantor_via_engine`). So the ν-regime fixed point the
 framework assumes (`fixed_bot`) cannot be produced in well-founded Set; assuming it is the commitment to
-the non-well-founded (AFA) regime — the `QuineHost` requirement, one level down. -/
+the non-well-founded (AFA) regime — the `QuineAtomHost` requirement, one level down. -/
 theorem lawvere_trigger_refuted {A : Type*} (e : A → (A → Prop)) :
     ¬ Function.Surjective e :=
   cantor_via_engine e

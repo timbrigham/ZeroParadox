@@ -1474,8 +1474,12 @@ example (n : ℤ) : let M := (ZeroParadox.Motion.ofTotal (id : ZeroParadox.Spher
 -- Lawvere and Cantor entries and the computability witness also take a class of admissible maps with
 -- a witness (`HasWitnessRel`); Rice, Löb and the biproduct entries take a quotient, where the face's
 -- fixed point holds only up to an equivalence. No classification of the faces is claimed. Reading
--- (cited, not claimed): the diagonal shape these faces share is Lawvere's (Lawvere 1969), the
--- unification Yanofsky's (Yanofsky 2003), credited in `ZeroParadox/DiagonalFixedPoint.lean`.
+-- (cited, not claimed): of these entries, the sources treat Cantor, Russell and Tarski (Lawvere 1969,
+-- TAC reprint p. 3, one fixed-point theorem behind Cantor, Russell, Gödel and Tarski), and, extending
+-- Lawvere, the halting problem (Yanofsky 2003, pp. 11–12), the diagonal lemma and Löb (pp. 15–18), the
+-- recursion theorem (p. 18) and Rice (p. 19). For the rest, Lawvere's theorem is "the translation key
+-- between the faces formalized here, not a mechanism every face instantiates" (ZP-R, "Lawvere's
+-- theorem, face by face").
 #check @ZeroParadox.Motion.ofFun                 -- Statement: encoding 1: UP the identity, OVER the graph of `g`
 #check @ZeroParadox.Motion.selfOnlyAt_ofFun_iff  -- Statement: there `y` steps to itself only iff `g y = y`; both directions
 #check @ZeroParadox.Motion.leavesAt_ofFun_iff    -- Statement: and `y` steps elsewhere iff `g y ≠ y`; both directions
@@ -1632,7 +1636,7 @@ example {S : Type} [ZeroParadox.ProvabilityLogic S] {falsum : S} (psi : S)
       (ZeroParadox.ProvabilityLogic.imp (ZeroParadox.ProvabilityLogic.box falsum) falsum) :=
   fun h => hcon (ZeroParadox.ProvabilityLogic.loeb_of_selfOnlyAt psi hy h)
 #check @ZeroParadox.hasWitnessRel_evalClass      -- Statement: codes up to equal `eval` carry a witness relative to the maps induced by computable `eval`-respecting maps
-#check @ZeroParadox.no_witnessRel_evalClass_top  -- Statement: CONTROL: relative to every map on that quotient, none
+#check @ZeroParadox.no_witnessRel_evalClass_top  -- Statement: CONTROL: relative to the class of all maps on that quotient, none
 -- Statement: so every such induced map has a class that steps to itself only in `ofFun`.
 example (G : ZeroParadox.EvalClass → ZeroParadox.EvalClass) (hG : ZeroParadox.ComputableOnEval G) :
     ∃ y, (ZeroParadox.Motion.ofFun G).SelfOnlyAt y :=

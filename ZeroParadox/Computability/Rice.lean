@@ -86,7 +86,8 @@ theorem rice_face_has_bottom {f : Code → Code} (hf : Computable f) :
 /-! ## § V. Rice through the witness on `EvalClass`, in the die's motion -/
 
 -- Reading (cited, not claimed): Yanofsky 2003, p. 19, "Application: Rice's Theorem", with the same
--- `h` (`a` off the set, `b` on it); here routed through `hasWitnessRel_evalClass`.
+-- `h`: it outputs `a` on inputs off the set and `b` on inputs in it; here routed through
+-- `hasWitnessRel_evalClass`.
 /-- `Statement:` if `C` respects `eval`, `a ∈ C` and `b ∉ C`, then membership in `C` is not a
     `ComputablePred`. The proof calls `hasWitnessRel_evalClass`
     (`ZeroParadox/Category/DiagonalWitness.lean`), not `fixed_point` directly: a decider would give a

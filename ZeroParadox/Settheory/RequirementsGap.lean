@@ -64,8 +64,8 @@ variable {α : Type*} [CompleteLattice α]
 
 /-- **The gap is the fork.** For a fixed-point characterization `f x = x`, "the requirements pin a
 unique instance" (`∃! x`) holds *iff* the fork collapses (`lfp = gfp`). This is `fork_collapse_iff`
-renamed in the instance-vs-requirements language: uniqueness (the recurring `(Z)` requirement, e.g.
-QuineAtomHost `reflexive_unique`) is exactly the collapse condition, and its failure is exactly the gap. -/
+renamed in the instance-vs-requirements language: uniqueness of the fixed point is exactly the
+collapse condition, and its failure is exactly the gap. -/
 theorem instance_pinnable_iff_fork_collapse (f : α →o α) :
     (∃! x, f x = x) ↔ f.lfp = f.gfp :=
   (fork_collapse_iff f).symm

@@ -195,12 +195,11 @@ theorem exists_code_diagonal (g : Code → Code) (hc : Computable g) :
   rw [Code.eval_curry, ha]
   simp only [G, Nat.unpair_pair, Denumerable.ofNat_encode]
 
--- Reading (cited, not claimed): the square is Yanofsky 2003, Theorem 5 (p. 18), on the unary
+-- Reading (cited, not claimed): this is the square of Yanofsky 2003, Theorem 5 (p. 18), on the unary
 -- computable functions, with his Remark 5 (p. 15): only the constructed maps need be representable,
--- the relativization `HasWitnessRel` makes. `EvalRespecting` is what makes his Φ_h well-defined on
--- functions. A fixed point modulo the numbering's equivalence is Ershov's recursion theorem for
--- precomplete numberings (Barendregt and Terwijn 2018, arXiv:1809.06233, Theorem 3.1, p. 4; n ↦ φ_n
--- is "the prime example", p. 2). An instance of theirs.
+-- the relativization `HasWitnessRel` makes. The curried self-application `e` below is ours, not his `f`.
+-- Reading (ours): `EvalRespecting` is the condition under which a map of codes induces a map on
+-- functions, φ_n ↦ φ_{h(n)}.
 /-- `Statement:` `EvalClass` carries a diagonal witness relative to `ComputableOnEval`, with
     `e a x` the class of `curry a ⌜x⌝`. -/
 theorem hasWitnessRel_evalClass : HasWitnessRel EvalClass ComputableOnEval := by
@@ -211,6 +210,9 @@ theorem hasWitnessRel_evalClass : HasWitnessRel EvalClass ComputableOnEval := by
 
 -- Statement: Rogers' fixed-point theorem for computable `eval`-respecting maps, from the witness
 -- (`Nat.Partrec.Code.fixed_point` is the general form, with no `eval`-respecting hypothesis).
+-- Reading (cited, not claimed): an instance of Ershov's recursion theorem for precomplete numberings
+-- (Ershov 1975, Z. Math. Logik Grundlagen Math. 21, 473–584; as stated in Barendregt and Terwijn 2018,
+-- arXiv:1809.06233, Theorem 3.1, p. 4, where n ↦ φ_n is "the prime example", p. 2).
 example (g : Code → Code) (hc : Computable g) (hg : EvalRespecting g) :
     ∃ c, Code.eval (g c) = Code.eval c := by
   obtain ⟨b, hb⟩ := fixedPoint_of_witnessRel hasWitnessRel_evalClass ⟨g, hc, hg, rfl⟩
