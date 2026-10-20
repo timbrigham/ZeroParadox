@@ -142,8 +142,8 @@ def build():
         'enter. For several of those layers the choice is already in the statement as written '
         '(Section III), and Section III points at principles that are essential given a premise '
         'stated there. Their provenance differs, and that is the point: some are proved with the '
-        'framework\'s own bare classical, and one, well-order comparability, with Mathlib\'s (in '
-        'InitialSeg.total) &#8212; and each is essential on that premise. Inherited never meant '
+        'framework\'s own bare classical, and some with Mathlib\'s, among them well-order '
+        'comparability (in InitialSeg.total) &#8212; and each is essential on that premise. Inherited never meant '
         'removable.'))
     E.append(sp(6))
 
@@ -172,8 +172,8 @@ def build():
         'arXiv:2102.08812, Cor 39(iii)-(iv); Booij&#8211;Escard&#243;&#8211;Lumsdaine&#8211;Shulman, '
         '"Parametricity, automorphisms of the universe, and excluded middle", arXiv:1701.05617, '
         'Thm 3, and Thm 5 (Simpson), whose proof technique the reduction uses) &#8212; the latter sitting on the keystone rather than on an imported order '
-        'instance; the principles proved by the framework\'s own bare classicals in '
-        'ZeroParadox/Die.lean have reductions there too. Each is a statement about the '
+        'instance; &#167; IV\'s cases 3 to 5 are reductions for principles proved with bare '
+        'classicals in ZeroParadox/Die.lean. Each is a statement about the '
         '<b>principle</b>: re-proving it constructively would '
         'prove a taboo constructively, so no choice-free re-proof exists <i>given</i> that the taboo is not '
         'derivable in Lean without Classical.choice &#8212; a premise this corpus does not prove '
@@ -212,7 +212,8 @@ def build():
             'foundation showing through the realizations rather than an assumption of the argument. '
             'The reductions Section III points at are the exception on a different axis: they are about '
             '<i>necessity</i>, not provenance. Some of their principles are proved with the '
-            'framework\'s own bare classical and one, well-order comparability, with Mathlib\'s, and each is essential on the '
+            'framework\'s own bare classical and some with Mathlib\'s, among them well-order '
+            'comparability, and each is essential on the '
             'premise stated in Section III &#8212; so "inherited" is not a synonym for '
             '"removable", and none of these cases is absorbed into the generalization.',
         ]
@@ -230,8 +231,9 @@ def build():
         'Checkable evidence',
         [
             'ZeroParadox/AxiomProfile.lean &#8212; a file of `#print axioms` commands. Its &#167; 0 '
-            'prints footprints for the cases ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV '
-            'collects, proofs written with classical and their reductions to taboos; &#167; I prints the choice-free core and &#167; II further choice-free results; '
+            'prints footprints for some proofs written with the framework\'s own classical, for '
+            'reductions to taboos of the kind ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV '
+            'collects, and for related declarations; &#167; I prints the choice-free core and &#167; II further choice-free results; '
             '&#167; III prints the analytic-realization results that carry choice, as an honest '
             'contrast. Build with `lake build ZeroParadox.AxiomProfile` and read '
             'the kernel\'s report. The per-theorem map is in the project repository.',

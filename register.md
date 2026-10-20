@@ -28,7 +28,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-Q The Frame-Change | v1.13 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:bcbee63b |
 | Zero Paradox Foreword | v2.36 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:ce7e929a |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:e6eb108d |
-| ZP Choice-Free Core Addendum | v1.13 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:4c0f6459 |
+| ZP Choice-Free Core Addendum | v1.13 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:e357360d |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
