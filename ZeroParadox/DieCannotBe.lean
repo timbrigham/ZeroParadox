@@ -14,6 +14,7 @@ import Mathlib.Data.Fintype.Option
 import Mathlib.Algebra.Group.End
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.Interval.Finset.Basic
+import Mathlib.Order.Interval.Finset.DenselyOrdered
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Data.Seq.Computation
 import Mathlib.CategoryTheory.Idempotents.Basic
@@ -300,27 +301,148 @@ example {α : Type} [PartialOrder α] [IsStronglyAtomic α] : ZeroParadox.EveryS
     obtain ⟨b, hb⟩ := not_isMax_iff.1 hx
     obtain ⟨c, hc, -⟩ := exists_covBy_le_of_lt hb
     exact ⟨c, hc⟩
--- Statement: member ℕ; non-member `WithBot (WithBot ℚ)`, which has the cut at ⊥ of
--- `WithBot (WithBot ℚ)`.
+-- Statement: no hypotheses: ℕ is a member; `WithBot (WithBot ℚ)` has the cut at its ⊥, is not a
+-- member, and is not densely ordered.
 example : ZeroParadox.EveryStepCovered ℕ := fun x _ => ⟨_, Order.covBy_succ x⟩
 example : ZeroParadox.BotCovered (WithBot (WithBot ℚ)) ∧
-    ¬ ZeroParadox.EveryStepCovered (WithBot (WithBot ℚ)) := by
-  refine ⟨⟨((⊥ : WithBot ℚ) : WithBot (WithBot ℚ)), covBy_of_eq_or_eq (WithBot.bot_lt_coe _)
-    fun c _ hc => ?_⟩, fun h => ?_⟩
-  · induction c using WithBot.recBotCoe with
-    | bot => exact Or.inl rfl
-    | coe c => exact Or.inr (congrArg _ (le_bot_iff.mp (WithBot.coe_le_coe.mp hc)))
-  · obtain ⟨b, hb⟩ := h ((⊥ : WithBot ℚ) : WithBot (WithBot ℚ))
-      (not_isMax_of_lt (WithBot.coe_lt_coe.2 (WithBot.bot_lt_coe (0 : ℚ))))
+    ¬ ZeroParadox.EveryStepCovered (WithBot (WithBot ℚ)) ∧ ¬ DenselyOrdered (WithBot (WithBot ℚ)) := by
+  have hcut : ZeroParadox.BotCovered (WithBot (WithBot ℚ)) :=
+    ⟨((⊥ : WithBot ℚ) : WithBot (WithBot ℚ)), covBy_of_eq_or_eq (WithBot.bot_lt_coe _)
+      fun c _ hc => by
+        induction c using WithBot.recBotCoe with
+        | bot => exact Or.inl rfl
+        | coe c => exact Or.inr (congrArg _ (le_bot_iff.mp (WithBot.coe_le_coe.mp hc)))⟩
+  refine ⟨hcut, fun h => ?_, fun hd => ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd ⊥ hcut⟩
+  obtain ⟨b, hb⟩ := h ((⊥ : WithBot ℚ) : WithBot (WithBot ℚ))
+    (not_isMax_of_lt (WithBot.coe_lt_coe.2 (WithBot.bot_lt_coe (0 : ℚ))))
+  induction b using WithBot.recBotCoe with
+  | bot => exact not_lt_bot hb.lt
+  | coe b =>
+    have hb' := WithBot.coe_covBy_coe.mp hb
     induction b using WithBot.recBotCoe with
-    | bot => exact not_lt_bot hb.lt
-    | coe b =>
-      have hb' := WithBot.coe_covBy_coe.mp hb
-      induction b using WithBot.recBotCoe with
-      | bot => exact lt_irrefl _ hb'.lt
-      | coe q =>
-        exact hb'.2 (WithBot.bot_lt_coe (q - 1)) (WithBot.coe_lt_coe.2 (by linarith))
+    | bot => exact lt_irrefl _ hb'.lt
+    | coe q =>
+      exact hb'.2 (WithBot.bot_lt_coe (q - 1)) (WithBot.coe_lt_coe.2 (by linarith))
 #check @ZeroParadox.everyStepCovered_botCovered -- Statement: scope form, plus a point other than ⊥ of `α`, ⇒ cut; one way
+#check @ZeroParadox.axb1_fails_everywhere_iff_dense -- Statement: if `α` is a preorder, the iff of Mathlib's `denselyOrdered_iff_forall_not_covBy`, both directions (ZP-F's restatement, `ZeroParadox/Reals/OrderedField.lean`); if `α` is a partial order with ⊥, `BotCovered α` is its `HasFirstStep` at ⊥ of `α`
+-- Statement: if `α` is a partial order with ⊥ and has the cut, then `α` is not densely ordered; the
+-- converse is refuted at the `WithTop (WithTop NNReal)` example below.
+example {α : Type} [PartialOrder α] [OrderBot α] (h : ZeroParadox.BotCovered α) :
+    ¬ DenselyOrdered α := fun hd => ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd ⊥ h
+-- Statement: if `α` is a partial order with ⊥, is a member of the scope form, and has a non-maximal
+-- point, then `α` is not densely ordered; the converse fails at the `WithBot (WithBot ℚ)` example above.
+example {α : Type} [PartialOrder α] [OrderBot α] (h : ZeroParadox.EveryStepCovered α)
+    (hx : ∃ x : α, ¬ IsMax x) : ¬ DenselyOrdered α := fun hd =>
+  let ⟨x, hx⟩ := hx
+  ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd x (h x hx)
+-- Statement: no hypotheses: `Unit` is densely ordered, has no cut, and is a member, so the example
+-- above is false without its non-maximal-point hypothesis.
+example : DenselyOrdered Unit ∧ ¬ ZeroParadox.BotCovered Unit ∧ ZeroParadox.EveryStepCovered Unit :=
+  ⟨⟨fun a b h => (lt_irrefl a (Subsingleton.elim b a ▸ h)).elim⟩,
+    fun ⟨_, h⟩ => h.lt.ne (Subsingleton.elim _ _), fun _ hx => absurd (fun _ _ => le_rfl) hx⟩
+-- Statement: if `α` is a partial order with ⊥, then (1) no cut, (2) the cut without the scope form, or
+-- (3) the scope form with ⊥ of `α` not maximal holds, and (1) and (3) do not both hold.
+example {α : Type} [PartialOrder α] [OrderBot α] :
+    (¬ ZeroParadox.BotCovered α ∨ (ZeroParadox.BotCovered α ∧ ¬ ZeroParadox.EveryStepCovered α) ∨
+      (ZeroParadox.EveryStepCovered α ∧ ¬ IsMax (⊥ : α))) ∧
+    ¬ (¬ ZeroParadox.BotCovered α ∧ ZeroParadox.EveryStepCovered α ∧ ¬ IsMax (⊥ : α)) := by
+  refine ⟨?_, fun ⟨hn, h, hb⟩ => hn (h ⊥ hb)⟩
+  by_cases hc : ZeroParadox.BotCovered α
+  · by_cases he : ZeroParadox.EveryStepCovered α
+    · obtain ⟨a, ha⟩ := hc
+      exact Or.inr (Or.inr ⟨he, fun hm => absurd (hm ha.lt.le) (not_le_of_gt ha.lt)⟩)
+    · exact Or.inr (Or.inl ⟨hc, he⟩)
+  · exact Or.inl hc
+-- Statement: if `α` is a partial order with ⊥, then `α` is a member of the scope form with no cut iff
+-- every point of `α` is ⊥ of `α`; both directions.
+example {α : Type} [PartialOrder α] [OrderBot α] :
+    ZeroParadox.EveryStepCovered α ∧ ¬ ZeroParadox.BotCovered α ↔ ∀ a : α, a = ⊥ :=
+  ⟨fun ⟨h, hb⟩ a => by_contra fun ha => hb (ZeroParadox.everyStepCovered_botCovered h ⟨a, ha⟩),
+    fun h => ⟨fun x hx => absurd (fun y _ => by rw [h y, h x]) hx, fun ⟨a, ha⟩ => ha.lt.ne (h a).symm⟩⟩
+-- Statement: no hypotheses: `WithTop (WithTop NNReal)` has no cut and is not densely ordered, so the
+-- converse of the cut ⇒ not-densely-ordered example fails.
+example : ¬ ZeroParadox.BotCovered (WithTop (WithTop NNReal)) ∧
+    ¬ DenselyOrdered (WithTop (WithTop NNReal)) := by
+  refine ⟨fun ⟨a, h⟩ => ?_, fun hd => ?_⟩
+  · induction a using WithTop.recTopCoe with
+    | top =>
+      exact h.2 (c := (((1 : NNReal) : WithTop NNReal) : WithTop (WithTop NNReal)))
+        (WithTop.coe_lt_coe.2 (WithTop.coe_lt_coe.2 one_pos)) (WithTop.coe_lt_top _)
+    | coe b =>
+      induction b using WithTop.recTopCoe with
+      | top =>
+        exact h.2 (c := (((1 : NNReal) : WithTop NNReal) : WithTop (WithTop NNReal)))
+          (WithTop.coe_lt_coe.2 (WithTop.coe_lt_coe.2 one_pos))
+          (WithTop.coe_lt_coe.2 (WithTop.coe_lt_top _))
+      | coe r =>
+        have hr : (0 : NNReal) < r := WithTop.coe_lt_coe.1 (WithTop.coe_lt_coe.1 h.lt)
+        exact h.2 (c := (((r / 2 : NNReal) : WithTop NNReal) : WithTop (WithTop NNReal)))
+          (WithTop.coe_lt_coe.2 (WithTop.coe_lt_coe.2 (by positivity)))
+          (WithTop.coe_lt_coe.2 (WithTop.coe_lt_coe.2 (NNReal.half_lt_self hr.ne')))
+  · refine ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd ((⊤ : WithTop NNReal) : WithTop (WithTop NNReal))
+      ⟨⊤, WithTop.coe_lt_top _, fun c h1 h2 => ?_⟩
+    induction c using WithTop.recTopCoe with
+    | top => exact lt_irrefl _ h2
+    | coe b => exact not_top_lt (WithTop.coe_lt_coe.1 h1)
+#check @LocallyFiniteOrder.denselyOrdered_iff_subsingleton -- Statement: Mathlib, if `X` is a linear order and locally finite, then `X` is densely ordered iff it is a subsingleton; both directions
+#check @Dyadic                                  -- Statement: Lean core, the dyadic rationals: zero or `n * 2 ^ (-k)`, `n` odd, `k : ℤ`; the grids below are subsets of ℚ and do not use it
+-- Statement: if the precision `N : ℕ` is fixed, then the `N`-place grid `{k / 2 ^ N | k : ℕ}` ⊆ ℚ, with
+-- 0 as its ⊥, is a member of the scope form and has the cut; the converse is not claimed.
+example (N : ℕ) :
+    letI : OrderBot {q : ℚ // ∃ k : ℕ, q = k / 2 ^ N} :=
+      { bot := ⟨0, 0, by simp⟩
+        bot_le := fun ⟨_, k, hk⟩ => show (0 : ℚ) ≤ _ from hk ▸ by positivity }
+    ZeroParadox.EveryStepCovered {q : ℚ // ∃ k : ℕ, q = k / 2 ^ N} ∧
+      ZeroParadox.BotCovered {q : ℚ // ∃ k : ℕ, q = k / 2 ^ N} := by
+  have hp : (0 : ℚ) < 2 ^ N := by positivity
+  have cov : ∀ k : ℕ, (⟨k / 2 ^ N, k, rfl⟩ : {q : ℚ // ∃ k : ℕ, q = k / 2 ^ N}) ⋖
+      ⟨((k + 1 : ℕ) : ℚ) / 2 ^ N, k + 1, rfl⟩ := fun k => by
+    refine ⟨show (k : ℚ) / 2 ^ N < ((k + 1 : ℕ) : ℚ) / 2 ^ N by
+      rw [div_lt_div_iff_of_pos_right hp]; exact_mod_cast Nat.lt_succ_self k, ?_⟩
+    rintro ⟨_, j, rfl⟩ h0 h1
+    change (k : ℚ) / 2 ^ N < j / 2 ^ N at h0
+    change (j : ℚ) / 2 ^ N < ((k + 1 : ℕ) : ℚ) / 2 ^ N at h1
+    rw [div_lt_div_iff_of_pos_right hp] at h0 h1
+    have a : k < j := by exact_mod_cast h0
+    have b : j < k + 1 := by exact_mod_cast h1
+    omega
+  have hE : ZeroParadox.EveryStepCovered {q : ℚ // ∃ k : ℕ, q = k / 2 ^ N} :=
+    fun ⟨_, k, hk⟩ _ => by subst hk; exact ⟨_, cov k⟩
+  letI : OrderBot {q : ℚ // ∃ k : ℕ, q = k / 2 ^ N} :=
+    { bot := ⟨0, 0, by simp⟩
+      bot_le := fun ⟨_, k, hk⟩ => show (0 : ℚ) ≤ _ from hk ▸ by positivity }
+  exact ⟨hE, ZeroParadox.everyStepCovered_botCovered hE ⟨⟨((1 : ℕ) : ℚ) / 2 ^ N, 1, rfl⟩,
+    fun h => absurd (congrArg Subtype.val h) (show ((1 : ℕ) : ℚ) / 2 ^ N ≠ 0 by positivity)⟩⟩
+-- Statement: no hypotheses: the union of the grids over all `N : ℕ`, with 0 as its ⊥, is densely
+-- ordered and has no cut.
+example :
+    letI : OrderBot {q : ℚ // ∃ N k : ℕ, q = k / 2 ^ N} :=
+      { bot := ⟨0, 0, 0, by simp⟩
+        bot_le := fun ⟨_, _, k, hk⟩ => show (0 : ℚ) ≤ _ from hk ▸ by positivity }
+    DenselyOrdered {q : ℚ // ∃ N k : ℕ, q = k / 2 ^ N} ∧
+      ¬ ZeroParadox.BotCovered {q : ℚ // ∃ N k : ℕ, q = k / 2 ^ N} := by
+  have hd : DenselyOrdered {q : ℚ // ∃ N k : ℕ, q = k / 2 ^ N} := by
+    refine ⟨fun ⟨a, N, k, ha⟩ ⟨b, M, j, hb⟩ hab => ?_⟩
+    subst ha hb
+    refine ⟨⟨((k * 2 ^ M + j * 2 ^ N : ℕ) : ℚ) / 2 ^ (N + M + 1), N + M + 1, _, rfl⟩, ?_, ?_⟩ <;>
+    · rw [Subtype.mk_lt_mk] at hab ⊢
+      have e : ((k * 2 ^ M + j * 2 ^ N : ℕ) : ℚ) / 2 ^ (N + M + 1)
+          = ((k : ℚ) / 2 ^ N + j / 2 ^ M) / 2 := by
+        push_cast; field_simp; ring
+      rw [e]; linarith
+  exact ⟨hd, fun ⟨_, h⟩ => not_covBy h⟩
+-- Statement: if `S` is a finite set of precisions and `q` lies in the `n`-place grid for some `n ∈ S`,
+-- then `q` lies in the grid of precision `S.sup id`, the largest in `S`; one way; the converse is
+-- not claimed.
+example (S : Finset ℕ) (q : ℚ) (h : ∃ n ∈ S, ∃ k : ℕ, q = k / 2 ^ n) :
+    ∃ k : ℕ, q = k / 2 ^ S.sup id := by
+  obtain ⟨n, hn, k, rfl⟩ := h
+  have hle : n ≤ S.sup id := Finset.le_sup (f := id) hn
+  refine ⟨k * 2 ^ (S.sup id - n), ?_⟩
+  have e : (2 : ℚ) ^ S.sup id = 2 ^ n * 2 ^ (S.sup id - n) := by rw [← pow_add]; congr 1; omega
+  rw [e]; push_cast; field_simp
+-- Reading (Tim's): precision `N` is reading `N` binary digits after the point; see the three grid
+-- examples above (the fixed-`N` grid, the union, the finite-set nesting).
 #check @ZeroParadox.UniqueBotCover              -- Statement: ⊥ of `α` has at most one cover
 -- Statement: members `Bool`, `Fin 3`; non-member `Set Bool` (`∅` is covered by `{true}` and `{false}`).
 example : ZeroParadox.UniqueBotCover Bool ∧ ZeroParadox.UniqueBotCover (Fin 3) := by
