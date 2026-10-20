@@ -194,6 +194,72 @@ def afaStructure_isQuineHost (L : Type*) [ZPSemilattice L] [AFAStructure L] :
   selfMem_unique := fun x hx =>
     AFAStructure.quine_unique x bot hx.1 AFAStructure.bot_self_mem
 
+/-! ## § VII. The singleton reading — a stronger variant, ⊥ = {⊥}
+
+`QuineHost` (§ I) is the WEAK reading: ⊥ ∈ ⊥ and no other element is self-membered.
+`QuineAtomHost` adds the STRONG reading: ⊥'s only member is ⊥. Which § II–VI results use which:
+`quineHost_not_wellFounded` and `quineHost_selfMem_iff` take the weak class; `zfSet_no_quine_bottom`
+and `boffa_fails_unique` name neither class (bare `b ∈ b`, bare uniqueness);
+`afaStructure_isQuineHost` builds the weak class, and § VII measures the strong one on it. -/
+
+/-- `Statement:` a `QuineHost` whose bottom's only member is the bottom: `mem y bot ↔ y = bot`. -/
+class QuineAtomHost (L : Type*) extends QuineHost L where
+  /-- ⊥ = {⊥}: the members of the bottom are exactly the bottom. -/
+  bot_mem_iff : ∀ y : L, mem y bot ↔ y = bot
+
+/-! NO-GO gauge — only the EMPTY carrier fails `QuineAtomHost`: on any point `b`,
+`mem x y := x = b ∧ y = b` meets every field (`trivialQuineAtomHost`). Membership is informative
+only with the `mem` named. -/
+
+/-- `Statement:` on any type with a point `b`, `mem x y := x = b ∧ y = b` is a `QuineAtomHost`. -/
+@[reducible]
+def trivialQuineAtomHost {C : Type*} (b : C) : QuineAtomHost C where
+  mem x y := x = b ∧ y = b
+  bot := b
+  bot_selfMem := ⟨rfl, rfl⟩
+  selfMem_unique _ h := h.1
+  bot_mem_iff _ := ⟨And.left, fun h => ⟨h, rfl⟩⟩
+
+-- Statement: and the empty type is not a member: the `bot` field demands a point.
+example : IsEmpty (QuineAtomHost Empty) := ⟨fun S => S.bot.elim⟩
+
+-- Statement: strong ⇒ weak: every `QuineAtomHost` is a `QuineHost` (the `extends` projection).
+example (L : Type) [QuineAtomHost L] : QuineHost L := QuineAtomHost.toQuineHost
+
+-- Statement: the converse fails: the `Bool` control of § I meets both `QuineHost` fields and its
+-- bottom has the second member `true`, so no `bot_mem_iff` holds for that `mem` and `bot`.
+example : ∃ H : QuineHost Bool, ¬ ∀ y, H.mem y H.bot ↔ y = H.bot :=
+  ⟨{ mem := fun _ y => y = false, bot := false, bot_selfMem := rfl,
+     selfMem_unique := fun _ h => h }, fun h => absurd ((h true).1 rfl) (by decide)⟩
+
+/-- `Statement:` the one-atom model of § V meets the strong variant. -/
+@[reducible]
+def oneAtom_quineAtomHost : QuineAtomHost OneAtom :=
+  { (inferInstance : QuineHost OneAtom) with
+    bot_mem_iff := fun _ => ⟨And.left, fun h => ⟨h, rfl⟩⟩ }
+
+/-- `Statement:` the § VI encoding of an `AFAStructure` meets the strong variant. `Reading:` this
+    holds because that encoding's `mem x y` requires `x = y`, so every element's only possible
+    member is itself; it is a fact about the § VI choice of `mem`, not derived from `selfMem`. -/
+@[reducible]
+def afaStructure_isQuineAtomHost (L : Type*) [ZPSemilattice L] [AFAStructure L] :
+    QuineAtomHost L :=
+  { afaStructure_isQuineHost L with
+    bot_mem_iff := fun y => ⟨fun h => h.2, fun h => by subst h; exact ⟨AFAStructure.bot_self_mem, rfl⟩⟩ }
+
+
+/-- `Statement:` the Boffa-shaped membership has no element whose only member is itself. -/
+theorem boffa_fails_singleton : ¬ ∃ b : Bool, ∀ y, BoffaMem y b ↔ y = b := by
+  rintro ⟨b, hb⟩
+  cases b
+  · exact absurd ((hb true).1 trivial) (by decide)
+  · exact absurd ((hb false).1 trivial) (by decide)
+
+/-- `Statement:` no `ZFSet` is its own sole member; one way from `zfSet_no_quine_bottom`, since
+    `∀ y, y ∈ b ↔ y = b` gives `b ∈ b`. -/
+theorem zfSet_no_singleton_bottom : ¬ ∃ b : ZFSet, ∀ y, y ∈ b ↔ y = b :=
+  fun ⟨b, hb⟩ => zfSet_no_quine_bottom ⟨b, (hb b).2 rfl⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -218,5 +284,13 @@ open ZeroParadox
 #print axioms oneAtom_not_wellFounded
 #print axioms zfSet_no_quine_bottom
 #print axioms afaStructure_isQuineHost
+#print axioms QuineAtomHost
+#print axioms trivialQuineAtomHost
+
+#print axioms oneAtom_quineAtomHost
+#print axioms afaStructure_isQuineAtomHost
+#print axioms boffa_fails_singleton
+#print axioms zfSet_no_singleton_bottom
+
 
 end PurityCheck
