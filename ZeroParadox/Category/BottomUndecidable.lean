@@ -1,4 +1,5 @@
 import ZeroParadox.Category.LawvereTaboo
+import ZeroParadox.Die
 
 set_option maxHeartbeats 400000
 
@@ -116,7 +117,7 @@ non-well-founded or univalent setting as the place the question would get its te
 - § I   The identity decision on the witness carrier
 - § II  Decidable equality of the carrier implies weak excluded middle
 - § III `SelfContained`: self-containment on both sides of the decidability line
-- § IV  On a decidable carrier, "is this the bottom?" resolves
+- § IV  On a decidable carrier, "is this the bottom?" resolves; § V, the same check in the die's motion
 -/
 
 namespace ZeroParadox
@@ -244,6 +245,26 @@ whenever the carrier is one Lean will host. -/
 def selfContaining_decidable {C : Type} [DecidableEq C] (S : SelfContained C) (x : C) :
     Decidable (S.app x = x) := inferInstance
 
+/-! ## § V — The same check in the die's motion (`ZeroParadox/Die.lean` § XI) -/
+
+/-- `Statement:` in `Motion.ofFun S.app`, `x` steps to itself only iff `x = S.bot`; both directions.
+    So each `SelfContained C` gives a motion whose one such point is `S.bot`. -/
+theorem selfOnlyAt_ofFun_app_iff {C : Type} (S : SelfContained C) (x : C) :
+    (Motion.ofFun S.app).SelfOnlyAt x ↔ x = S.bot :=
+  (Motion.selfOnlyAt_ofFun_iff _ x).trans (selfContaining_iff_bot S x)
+
+/-- `Statement:` if, for every `p`, it is decidable whether the glued point `gx p` steps to itself
+    only in `Motion.ofFun (selfContained_glue p).app`, weak excluded middle holds; one way. -/
+theorem wem_of_decidable_selfOnlyAt_glue
+    (h : ∀ p : Prop, Decidable ((Motion.ofFun (selfContained_glue p).app).SelfOnlyAt (gx p))) :
+    WeakExcludedMiddle :=
+  wem_of_glue_identity fun p =>
+    decidable_of_iff _ (selfOnlyAt_ofFun_app_iff (selfContained_glue p) (gx p))
+
+-- Statement: CONTROL: on `Bool` the same question is decidable at every point.
+example (x : Bool) : Decidable ((Motion.ofFun selfContained_bool.app).SelfOnlyAt x) :=
+  decidable_of_iff _ (selfOnlyAt_ofFun_app_iff selfContained_bool x).symm
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -267,5 +288,9 @@ open ZeroParadox
 -- § IV — self-containment resolves to an identity decision.
 #print axioms selfContaining_iff_bot
 #print axioms selfContaining_decidable
+
+-- § V — the die form. `wem_of_decidable_selfOnlyAt_glue` MUST NOT carry `Classical.choice`.
+#print axioms selfOnlyAt_ofFun_app_iff
+#print axioms wem_of_decidable_selfOnlyAt_glue
 
 end PurityCheck

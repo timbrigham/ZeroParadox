@@ -29,7 +29,7 @@ The faces formalized here fork in two:
   is ⊥ of the `ZPSemilattice`, by the class fields `fixed_bot` / `unique_fp` (`selfApp_pinnable`). In
   the Löb face (Löb / Gödel's second) it comes from a hypothesized Löb diagonal. In the computability
   face it is a Kleene code fixed up to eval (`computable_fixedpoint_up_to_eval`), a term of another type
-  than ⊥ of the `ZPSemilattice`; that it is a Lawvere instance is cited, not checked. Rice states that
+  than ⊥ of the `ZPSemilattice`; that it is a Lawvere instance is cited, not checked; the case of computable `eval`-respecting maps is checked in Lean (`hasWitnessRel_evalClass` with `fixedPoint_of_witnessRel`). Rice states that
   fixed point beside an undecidable property (`quine_exists_yet_rice`).
 
 Gödel's first incompleteness is not formalized here. The cells present are the ones currently
@@ -37,8 +37,11 @@ formalized, and other domains' cells remain open.
 
 ## The fence — built in, load-bearing
 
-Each face is a proven theorem; the index only *routes* them. That the faces are **one** self-reference is
-**Lawvere (1969) / Yanofsky (2003)** — cited prior art, a recognized connection, NOT a Zero Paradox
+Each face is a proven theorem; the index only *routes* them. For the arguments of Cantor, Russell,
+Gödel and Tarski, **Lawvere (1969)**, TAC reprint p. 3, offers "a fixed-point theorem ... which seems to
+play this role"; **Yanofsky (2003)**, following Lawvere, extends the scheme to the halting problem
+(pp. 11–12), the diagonal lemma (Theorem 4, pp. 15–16) and Löb's paradox (p. 18), the recursion theorem
+(pp. 18–19) and Rice (p. 19). That the faces here are **one** self-reference is NOT a Zero Paradox
 theorem. The cross-face identity across domains stays a **type boundary**, never a Lean `=`. So this is a
 machine-checked *view* over the existing diagonal family, not a new synthesis claim.
 

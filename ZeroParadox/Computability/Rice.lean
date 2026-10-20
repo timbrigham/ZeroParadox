@@ -1,4 +1,5 @@
 import ZeroParadox.Category.Lawvere
+import ZeroParadox.Category.DiagonalWitness
 import Mathlib.Computability.Halting
 import Mathlib.Tactic
 
@@ -82,6 +83,53 @@ theorem rice_face_has_bottom {f : Code → Code} (hf : Computable f) :
     ∃ c, eval (f c) = eval c :=
   computability_face_fixedPoint hf
 
+/-! ## § V. Rice through the witness on `EvalClass`, in the die's motion -/
+
+-- Reading (cited, not claimed): Yanofsky 2003, p. 19, "Application: Rice's Theorem", with the same
+-- `h`: it outputs `a` on inputs off the set and `b` on inputs in it; here routed through
+-- `hasWitnessRel_evalClass`.
+/-- `Statement:` if `C` respects `eval`, `a ∈ C` and `b ∉ C`, then membership in `C` is not a
+    `ComputablePred`. The proof calls `hasWitnessRel_evalClass`
+    (`ZeroParadox/Category/DiagonalWitness.lean`), not `fixed_point` directly: a decider would give a
+    computable `eval`-respecting map whose motion `Motion.ofFun` on `EvalClass` steps elsewhere at
+    every class, against `selfOnlyAt_of_witnessRel`. -/
+theorem rice_of_evalClassWitness (C : Set Code)
+    (Hext : ∀ cf cg, eval cf = eval cg → (cf ∈ C ↔ cg ∈ C))
+    {a b : Code} (ha : a ∈ C) (hb : b ∉ C) : ¬ ComputablePred (fun c => c ∈ C) := by
+  rintro ⟨D, hD⟩
+  let h : Code → Code := fun c => cond (@decide (c ∈ C) (D c)) b a
+  have hcomp : Computable h := Computable.cond hD (Computable.const b) (Computable.const a)
+  have hval : ∀ c, (c ∈ C → h c = b) ∧ (c ∉ C → h c = a) := fun c =>
+    ⟨fun hc => by simp only [h, @decide_eq_true _ (D c) hc, cond_true],
+     fun hc => by simp only [h, @decide_eq_false _ (D c) hc, cond_false]⟩
+  have hext : EvalRespecting h := fun x y e => by
+    by_cases hx : x ∈ C
+    · rw [(hval x).1 hx, (hval y).1 ((Hext x y e).1 hx)]
+    · rw [(hval x).2 hx, (hval y).2 (fun hy => hx ((Hext x y e).2 hy))]
+  have hleave : ∀ y, (Motion.ofFun (liftEval h hext)).LeavesAt y := by
+    intro y
+    induction y using Quotient.ind with
+    | _ x =>
+      refine (Motion.leavesAt_ofFun_iff _ _).2 fun e => ?_
+      have e' : eval (h x) = eval x := Quotient.exact e
+      by_cases hx : x ∈ C
+      · have := (Hext (h x) x e').2 hx
+        rw [(hval x).1 hx] at this
+        exact hb this
+      · have hin : h x ∈ C := by rw [(hval x).2 hx]; exact ha
+        exact hx ((Hext (h x) x e').1 hin)
+  obtain ⟨y, hy⟩ := selfOnlyAt_of_witnessRel hasWitnessRel_evalClass ⟨h, hcomp, hext, rfl⟩
+  exact Motion.not_selfOnlyAt_and_leavesAt _ y ⟨hy, hleave y⟩
+
+-- Statement: the halting problem at `n`, as an instance: `Code.zero` halts, a nowhere-defined code
+-- does not, and halting at `n` respects `eval` (`halting_undecidable` cites Mathlib instead).
+example (n : ℕ) : ¬ ComputablePred (fun c : Code => (eval c n).Dom) := by
+  obtain ⟨cn, hcn⟩ := Nat.Partrec.Code.exists_code.1 Nat.Partrec.none
+  exact rice_of_evalClassWitness {c | (eval c n).Dom}
+    (fun x y e => by simp only [Set.mem_setOf_eq, e])
+    (a := Code.zero) (b := cn) (trivial : (Part.some 0).Dom)
+    (by show ¬ (eval cn n).Dom; rw [hcn]; exact Part.not_none_dom)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -91,4 +139,6 @@ open ZeroParadox
 #print axioms halting_undecidable
 #print axioms quine_exists_yet_rice
 #print axioms rice_face_has_bottom
+#print axioms rice_of_evalClassWitness
+
 end PurityCheck

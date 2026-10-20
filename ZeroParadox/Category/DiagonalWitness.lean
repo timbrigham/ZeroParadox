@@ -1,4 +1,5 @@
 import ZeroParadox.Category.Lawvere
+import ZeroParadox.Die
 import Mathlib.Order.UpperLower.Basic
 
 /-!
@@ -151,6 +152,115 @@ theorem no_computable_evalFixedPointFree {g : Nat.Partrec.Code → Nat.Partrec.C
   obtain ⟨c, hc⟩ := effective_floor_fixedPoint hg
   exact hfpf c hc
 
+/-! ## § Axis 2, on the quotient — a witness relative to the computable maps that respect `eval` -/
+
+section EvalQuotient
+
+open Nat.Partrec
+
+/-- `Statement:` codes identified when `Code.eval` agrees (`Setoid.ker Code.eval`). -/
+def evalSetoid : Setoid Code := Setoid.ker Code.eval
+
+/-- `Statement:` the classes of codes under equal `Code.eval`. -/
+abbrev EvalClass : Type := Quotient evalSetoid
+
+/-- `Statement:` `g` sends codes with equal `Code.eval` to codes with equal `Code.eval`. -/
+def EvalRespecting (g : Code → Code) : Prop :=
+  ∀ a b, Code.eval a = Code.eval b → Code.eval (g a) = Code.eval (g b)
+
+/-- `Statement:` an `eval`-respecting map of codes, induced on the classes. -/
+def liftEval (g : Code → Code) (hg : EvalRespecting g) : EvalClass → EvalClass :=
+  Quotient.map g (fun a b h => hg a b h)
+
+/-- `Statement:` the admissible class: maps on `EvalClass` induced by a computable `eval`-respecting
+    map of codes. -/
+def ComputableOnEval (G : EvalClass → EvalClass) : Prop :=
+  ∃ g, Computable g ∧ ∃ hg : EvalRespecting g, G = liftEval g hg
+
+/-- `Statement:` if `g` is computable, some code `a` has, at every `x`, the `Code.eval` of
+    `curry a ⌜x⌝` equal to that of `g (curry x ⌜x⌝)`, where `⌜x⌝` is `x`'s Gödel number. -/
+theorem exists_code_diagonal (g : Code → Code) (hc : Computable g) :
+    ∃ a : Code, ∀ x, Code.eval (Code.curry a (Encodable.encode x)) =
+      Code.eval (g (Code.curry x (Encodable.encode x))) := by
+  let G : Code × ℕ →. ℕ := fun p => Code.eval (g (Code.curry p.1 (Encodable.encode p.1))) p.2
+  have hcode : Computable fun p : Code × ℕ => g (Code.curry p.1 (Encodable.encode p.1)) :=
+    hc.comp (Code.primrec₂_curry.comp Primrec.fst (Primrec.encode.comp Primrec.fst)).to_comp
+  have hG : Partrec G := Code.eval_part.comp hcode Computable.snd
+  have hG' : Partrec fun m : ℕ => G (Denumerable.ofNat Code m.unpair.1, m.unpair.2) :=
+    hG.comp (Computable.pair ((Computable.ofNat Code).comp (Computable.fst.comp Computable.unpair))
+      (Computable.snd.comp Computable.unpair))
+  obtain ⟨a, ha⟩ := Code.exists_code.1 (Partrec.nat_iff.1 hG')
+  refine ⟨a, fun x => ?_⟩
+  funext n
+  rw [Code.eval_curry, ha]
+  simp only [G, Nat.unpair_pair, Denumerable.ofNat_encode]
+
+-- Reading (cited, not claimed): this is the square of Yanofsky 2003, Theorem 5 (p. 18), on the unary
+-- computable functions, with his Remark 5 (p. 15): only the constructed maps need be representable,
+-- the relativization `HasWitnessRel` makes. The curried self-application `e` below is ours, not his `f`.
+-- Reading (ours): `EvalRespecting` is the condition under which a map of codes induces a map on
+-- functions, φ_n ↦ φ_{h(n)}.
+/-- `Statement:` `EvalClass` carries a diagonal witness relative to `ComputableOnEval`, with
+    `e a x` the class of `curry a ⌜x⌝`. -/
+theorem hasWitnessRel_evalClass : HasWitnessRel EvalClass ComputableOnEval := by
+  refine ⟨Code, fun a x => ⟦Code.curry a (Encodable.encode x)⟧, ?_⟩
+  rintro G ⟨g, hc, hg, rfl⟩
+  obtain ⟨a, ha⟩ := exists_code_diagonal g hc
+  exact ⟨a, funext fun x => Quotient.sound (ha x).symm⟩
+
+-- Statement: Rogers' fixed-point theorem for computable `eval`-respecting maps, from the witness
+-- (`Nat.Partrec.Code.fixed_point` is the general form, with no `eval`-respecting hypothesis).
+-- Reading (cited, not claimed): an instance of Ershov's recursion theorem for precomplete numberings
+-- (Ershov 1975, Z. Math. Logik Grundlagen Math. 21, 473–584; as stated in Barendregt and Terwijn 2018,
+-- arXiv:1809.06233, Theorem 3.1, p. 4, where n ↦ φ_n is "the prime example", p. 2).
+example (g : Code → Code) (hc : Computable g) (hg : EvalRespecting g) :
+    ∃ c, Code.eval (g c) = Code.eval c := by
+  obtain ⟨b, hb⟩ := fixedPoint_of_witnessRel hasWitnessRel_evalClass ⟨g, hc, hg, rfl⟩
+  induction b using Quotient.ind with
+  | _ c => exact ⟨c, Quotient.exact hb⟩
+
+/-- `Statement:` CONTROL: relative to the class of all maps on `EvalClass` there is no witness: the
+    map sending the class of `Code.zero` to that of a nowhere-defined code, and every other class to
+    the class of `Code.zero`, fixes no class. -/
+theorem no_witnessRel_evalClass_top : ¬ HasWitnessRel EvalClass (fun _ => True) := by
+  classical
+  obtain ⟨cn, hcn⟩ := Code.exists_code.1 Nat.Partrec.none
+  have hne : (⟦Code.zero⟧ : EvalClass) ≠ ⟦cn⟧ := fun h => by
+    have e := congrFun (Quotient.exact h : Code.eval Code.zero = Code.eval cn) 0
+    have hd : (Code.eval Code.zero 0).Dom := (trivial : (Part.some 0).Dom)
+    rw [e, hcn] at hd
+    exact (hd : False)
+  refine no_witnessRel_of_admissible_fpf
+    (g := fun y => if y = ⟦Code.zero⟧ then ⟦cn⟧ else ⟦Code.zero⟧) trivial (fun y hy => ?_)
+  dsimp only at hy
+  by_cases h : y = ⟦Code.zero⟧
+  · rw [if_pos h] at hy; exact hne (h ▸ hy.symm)
+  · rw [if_neg h] at hy; exact h hy.symm
+
+end EvalQuotient
+
+/-! ## § The engine in the die's motion (`ZeroParadox/Die.lean` § XI) -/
+
+/-- `Statement:` if `β` has a witness relative to `M` and `M g`, then the motion `Motion.ofFun g`
+    (UP the identity, OVER the graph of `g`) has a point that steps to itself only; one way. -/
+theorem selfOnlyAt_of_witnessRel {β : Type u} {M : (β → β) → Prop} (h : HasWitnessRel β M)
+    {g : β → β} (hg : M g) : ∃ y, (Motion.ofFun g).SelfOnlyAt y := by
+  obtain ⟨b, hb⟩ := fixedPoint_of_witnessRel h hg
+  exact ⟨b, (Motion.selfOnlyAt_ofFun_iff g b).2 hb⟩
+
+/-- `Statement:` under the same hypotheses, `Motion.ofFixedPoints g` (UP the partial identity on the
+    fixed points of `g`) has a landing; one way. -/
+theorem hasLanding_ofFixedPoints_of_witnessRel {β : Type u} {M : (β → β) → Prop}
+    (h : HasWitnessRel β M) {g : β → β} (hg : M g) : (Motion.ofFixedPoints g).HasLanding := by
+  obtain ⟨b, hb⟩ := fixedPoint_of_witnessRel h hg
+  exact ⟨b, (Motion.isLanding_ofFixedPoints_iff g b).2 hb⟩
+
+/-- `Statement:` if `M g` and `Motion.ofFun g` steps elsewhere at every point, `β` has no witness
+    relative to `M`; one way (Cantor's form). -/
+theorem no_witnessRel_of_leavesAt {β : Type u} {M : (β → β) → Prop} {g : β → β} (hg : M g)
+    (hl : ∀ y, (Motion.ofFun g).LeavesAt y) : ¬ HasWitnessRel β M :=
+  no_witnessRel_of_admissible_fpf hg fun x => (Motion.leavesAt_ofFun_iff g x).1 (hl x)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -166,4 +276,16 @@ open ZeroParadox
 #print axioms witnessSet_isLowerSet
 #print axioms effective_floor_fixedPoint
 #print axioms no_computable_evalFixedPointFree
+#print axioms evalSetoid
+#print axioms EvalClass
+#print axioms EvalRespecting
+#print axioms liftEval
+#print axioms ComputableOnEval
+#print axioms exists_code_diagonal
+#print axioms hasWitnessRel_evalClass
+#print axioms no_witnessRel_evalClass_top
+#print axioms selfOnlyAt_of_witnessRel
+#print axioms hasLanding_ofFixedPoints_of_witnessRel
+#print axioms no_witnessRel_of_leavesAt
+
 end PurityCheck

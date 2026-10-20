@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.35, revised October 2026)
+Zero Paradox — Foreword PDF Builder (v2.36, revised October 2026)
 Follows all rules in pdf rendering standards.md:
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
@@ -9,7 +9,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.35'
+VERSION = '2.36'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() and prose_check() guard on every Paragraph ──
@@ -131,7 +131,7 @@ def commitments_table():
          '⊥ = {⊥}. The bottom element is self-containing, read under ZF+AFA as a Quine atom. '
          'Foundation cannot host it: ⊥ = {⊥} is a member of itself, which Foundation (the Axiom of '
          'Regularity) forbids (no_quine_atom). That half is forced, and it runs one way: a host whose '
-         'bottom is its unique self-member is not well-founded (quineHost_not_wellFounded). Run backwards it selects no '
+         'bottom is its own only member is not well-founded (quineAtomHost_not_wellFounded). Run backwards it selects no '
          'theory: which anti-foundation axiom to adopt is a further choice, and the framework adopts AFA as '
          'the canonical host (ZP-E Remark R-AFA). What remains a commitment is that a unique Quine atom is the '
          'right requirement to demand, and the choice of AFA among the axioms meeting it. '

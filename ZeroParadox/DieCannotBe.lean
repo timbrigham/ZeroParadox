@@ -20,6 +20,16 @@ import Mathlib.Data.Seq.Computation
 import Mathlib.CategoryTheory.Idempotents.Basic
 import ZeroParadox.Ordinal.PricedInterface
 import ZeroParadox.Valuation.RiemannSphere
+import ZeroParadox.Category.BottomUndecidable
+import ZeroParadox.Computability.Rice
+import ZeroParadox.Settheory.Loeb
+import ZeroParadox.Settheory.Curry
+import ZeroParadox.Settheory.Tarski
+import ZeroParadox.Settheory.FixedPointFork
+import ZeroParadox.Category.LawvereTwoAdic
+import ZeroParadox.Multihomed.HilbertDiagonal
+import ZeroParadox.Order.UpAndOver
+import ZeroParadox.Settheory.QuineHost
 
 set_option maxHeartbeats 400000
 
@@ -117,6 +127,15 @@ example : ∃ M : ZeroParadox.Motion Bool, (∀ x, M.up x = Part.some true) ∧ 
 example : ∀ M : ZeroParadox.Motion Bool, ¬ M.Climb := fun M h => by
   obtain ⟨y, b, z, h1, h2, h3⟩ := M.climb_three h
   revert h1 h2 h3; cases y <;> cases b <;> cases z <;> decide
+-- Statement: so the converse of `climb_corner` fails: that `Bool` motion fires the corner and does
+-- not climb.
+example : ∃ M : ZeroParadox.Motion Bool, M.Corner ∧ ¬ M.Climb :=
+  ⟨ZeroParadox.Motion.ofTotal (fun _ => true) (fun _ => rfl) (fun a b => a ≠ b),
+    ZeroParadox.Motion.loop_corner _ ⟨true, false, Part.mem_some_iff.2 rfl, Bool.false_ne_true.symm,
+      Bool.false_ne_true, Part.mem_some_iff.2 rfl⟩,
+    fun h => by
+      obtain ⟨y, b, z, h1, h2, h3⟩ := ZeroParadox.Motion.climb_three _ h
+      revert h1 h2 h3; cases y <;> cases b <;> cases z <;> decide⟩
 -- Statement: LOOP non-member: the identity UP with any step never loops.
 example {α : Type} (s : α → α → Prop) : ¬ (ZeroParadox.Motion.ofTotal id (fun _ => rfl) s).Loop :=
   fun ⟨_, _, _, _, hby, hyb⟩ => hby (Part.mem_some_iff.1 hyb).symm
@@ -184,7 +203,7 @@ example : ∃ M : ZeroParadox.Motion ℕ, (∀ n, M.up n = if n % 2 = 0 then Par
 -- `ZeroParadox/Computability/Occurrence.lean` § IV-c's two-element pole {halted, loops-in-place}.
 
 /-! ### § III. The smallest step is DERIVED — unique successor, no way back ⇒ cover, one way -/
-#check @ZeroParadox.unique_succ_covBy           -- Statement: unique successor, no way back ⇒ a cover of the reachability preorder
+#check @ZeroParadox.unique_succ_covBy           -- Statement: if `b` is `y`'s only successor and `b` does not reach `y`, then `y ⋖ b` in the reachability preorder; one way, the converse refuted on `Fin 3` below
 -- Reading: the closest classical frame is transitive reduction (Aho, Garey and Ullman, SIAM J. Comput.
 -- 1(2):131–137, 1972, doi 10.1137/0201008; cited, not retrieved). On a finite acyclic relation this
 -- lemma is the single-successor case of the standard criterion that an edge is in the reduction when
@@ -324,14 +343,14 @@ example : ZeroParadox.BotCovered (WithBot (WithBot ℚ)) ∧
     | coe q =>
       exact hb'.2 (WithBot.bot_lt_coe (q - 1)) (WithBot.coe_lt_coe.2 (by linarith))
 #check @ZeroParadox.everyStepCovered_botCovered -- Statement: scope form, plus a point other than ⊥ of `α`, ⇒ cut; one way
-#check @ZeroParadox.axb1_fails_everywhere_iff_dense -- Statement: if `α` is a preorder, the iff of Mathlib's `denselyOrdered_iff_forall_not_covBy`, both directions (ZP-F's restatement, `ZeroParadox/Reals/OrderedField.lean`); if `α` is a partial order with ⊥, `BotCovered α` is its `HasFirstStep` at ⊥ of `α`
+#check @ZeroParadox.axb1_fails_everywhere_iff_dense -- Statement: if `α` is a preorder, then `α` is densely ordered iff no point of `α` has a first step (`∀ bot, ¬ HasFirstStep bot`); both directions. ZP-F's restatement (`ZeroParadox/Reals/OrderedField.lean`) of Mathlib's `denselyOrdered_iff_forall_not_covBy`
 -- Statement: if `α` is a partial order with ⊥ and has the cut, then `α` is not densely ordered; the
 -- converse is refuted at the `WithTop (WithTop NNReal)` example below.
 example {α : Type} [PartialOrder α] [OrderBot α] (h : ZeroParadox.BotCovered α) :
     ¬ DenselyOrdered α := fun hd => ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd ⊥ h
--- Statement: if `α` is a partial order with ⊥, is a member of the scope form, and has a non-maximal
--- point, then `α` is not densely ordered; the converse fails at the `WithBot (WithBot ℚ)` example above.
-example {α : Type} [PartialOrder α] [OrderBot α] (h : ZeroParadox.EveryStepCovered α)
+-- Statement: if `α` is a partial order, is a member of the scope form, and has a non-maximal point,
+-- then `α` is not densely ordered; the converse fails at the `WithBot (WithBot ℚ)` example above.
+example {α : Type} [PartialOrder α] (h : ZeroParadox.EveryStepCovered α)
     (hx : ∃ x : α, ¬ IsMax x) : ¬ DenselyOrdered α := fun hd =>
   let ⟨x, hx⟩ := hx
   ZeroParadox.axb1_fails_everywhere_iff_dense.mp hd x (h x hx)
@@ -386,8 +405,8 @@ example : ¬ ZeroParadox.BotCovered (WithTop (WithTop NNReal)) ∧
     | coe b => exact not_top_lt (WithTop.coe_lt_coe.1 h1)
 #check @LocallyFiniteOrder.denselyOrdered_iff_subsingleton -- Statement: Mathlib, if `X` is a linear order and locally finite, then `X` is densely ordered iff it is a subsingleton; both directions
 #check @Dyadic                                  -- Statement: Lean core, the dyadic rationals: zero or `n * 2 ^ (-k)`, `n` odd, `k : ℤ`; the grids below are subsets of ℚ and do not use it
--- Statement: if the precision `N : ℕ` is fixed, then the `N`-place grid `{k / 2 ^ N | k : ℕ}` ⊆ ℚ, with
--- 0 as its ⊥, is a member of the scope form and has the cut; the converse is not claimed.
+-- Statement: for each `N : ℕ`, the `N`-place grid `{k / 2 ^ N | k : ℕ}` ⊆ ℚ, with 0 as its ⊥, is a
+-- member of the scope form and has the cut.
 example (N : ℕ) :
     letI : OrderBot {q : ℚ // ∃ k : ℕ, q = k / 2 ^ N} :=
       { bot := ⟨0, 0, by simp⟩
@@ -713,7 +732,7 @@ example : ∃ M : ZeroParadox.Motion Nat.Partrec.Code,
 #check @ZeroParadox.em_of_poleDiscriminator     -- Statement: a total test of definedness on `Part Unit` gives excluded middle
 #check @ZeroParadox.em_of_choiceFragment        -- Statement: the two-element choice fragment gives excluded middle
 #check @ZeroParadox.select_of_decidable         -- Statement: a decidable inhabited predicate on `Bool` has a witness computed by `if`
-#check @ZeroParadox.Motion.em_of_registeredDecidable -- Statement: registering every motion on every `α : Type` ⇒ excluded middle
+#check @ZeroParadox.Motion.em_of_registeredDecidable -- Statement: if every motion on every `α : Type` is registered, excluded middle holds; one way (the converse, given unique choice into `Bool`, is the `example` below)
 -- Statement: the two-element choice fragment ⇒ every motion on every `α : Type` registered
 -- (`[propext, Quot.sound]`).
 example (h : ZeroParadox.ChoiceFragment) {α : Type} (M : ZeroParadox.Motion α) :
@@ -1449,5 +1468,217 @@ example (n : ℤ) : let M := (ZeroParadox.Motion.ofTotal (id : ZeroParadox.Spher
 -- a fate (§ XI); under reversal the first goes to a source and the second to a point stepped into only
 -- from itself. The adjoined-points switch (§ I) counts points of the carrier, not ends of a motion, and
 -- stands as stated in § I.
+
+/-! ### § XV. Diagonal faces as inputs to the die's motion: carrier, map, witness, quotient -/
+-- Reading: each face below enters as INPUTS: a carrier `β` and a self-map `g` (or a relation); the
+-- Lawvere and Cantor entries and the computability witness also take a class of admissible maps with
+-- a witness (`HasWitnessRel`); Rice, Löb and the biproduct entries take a quotient, where the face's
+-- fixed point holds only up to an equivalence. No classification of the faces is claimed. Reading
+-- (cited, not claimed): the sources treat Cantor, Russell and Tarski (Lawvere 1969, TAC reprint p. 3,
+-- "a fixed-point theorem ... which seems to play this role" for Cantor, Russell, Gödel and Tarski),
+-- and, extending Lawvere, the halting problem (Yanofsky 2003, pp. 11–12), the diagonal lemma
+-- (Theorem 4, pp. 15–16) and Löb's paradox (p. 18), the recursion theorem (pp. 18–19) and Rice (p. 19).
+#check @ZeroParadox.Motion.ofFun                 -- Statement: encoding 1: UP the identity, OVER the graph of `g`
+#check @ZeroParadox.Motion.selfOnlyAt_ofFun_iff  -- Statement: there `y` steps to itself only iff `g y = y`; both directions
+#check @ZeroParadox.Motion.leavesAt_ofFun_iff    -- Statement: and `y` steps elsewhere iff `g y ≠ y`; both directions
+#check @ZeroParadox.Motion.not_selfOnlyAt_and_leavesAt -- Statement: no point does both, in any motion
+#check @ZeroParadox.Motion.ofFixedPoints         -- Statement: encoding 2: UP the partial identity on the fixed points of `g`, OVER the graph of `g`
+#check @ZeroParadox.Motion.isLanding_ofFixedPoints_iff -- Statement: there `y` is a landing iff `g y = y`; both directions
+-- Statement: in encoding 2, UP is total iff `g` is the identity; both directions.
+example {β : Type} (g : β → β) : (ZeroParadox.Motion.ofFixedPoints g).UpTotal ↔ ∀ x, g x = x := Iff.rfl
+#check @ZeroParadox.Motion.not_corner_of_fun     -- Statement: if OVER is the graph of a function `g` and every landing is fixed by `g`, no corner; one way, any UP
+#check @ZeroParadox.Motion.not_corner_ofFixedPoints -- Statement: so encoding 2 never fires the corner
+#check @ZeroParadox.Motion.corner_ofTotal_iff    -- Statement: if UP `r` is idempotent with the fixed points of `g`, and OVER is the graph of `h`, the corner fires iff some fixed point `y` of `g` has `h y` not fixed by `g`; both directions
+-- Statement: CONTROL: with `h = g` the corner does not fire: the ordinal tower motion (UP `nfp (ω^·)`,
+-- OVER `ω^·`).
+example : ¬ ZeroParadox.ordinalTowerMotion.{0}.Corner := fun hc => by
+  have hn := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  obtain ⟨y, hy, hn'⟩ := (ZeroParadox.Motion.corner_ofTotal_iff
+    (Ordinal.nfp fun a => Ordinal.omega0 ^ a) (fun a => Ordinal.omega0 ^ a)
+    (fun a => Ordinal.omega0 ^ a) (fun x => Ordinal.nfp_eq_self (Ordinal.nfp_fp hn x))
+    (fun x => ⟨fun h => h ▸ Ordinal.nfp_fp hn x, Ordinal.nfp_eq_self⟩)).1 hc
+  exact hn' (by rw [hy, hy])
+#check @ZeroParadox.ordinalSuccMotion_corner     -- Statement: with OVER `Order.succ` instead (`ordinalSuccMotion`), the corner fires at ε₀
+#check @ZeroParadox.selfOnlyAt_of_witnessRel     -- Statement: Lawvere: if `β` has a witness relative to `M` and `M g`, some point steps to itself only in `ofFun g`; one way
+#check @ZeroParadox.hasLanding_ofFixedPoints_of_witnessRel -- Statement: and encoding 2 then has a landing; one way
+#check @ZeroParadox.no_witnessRel_of_leavesAt    -- Statement: Cantor: if `M g` and `ofFun g` steps elsewhere everywhere, no witness relative to `M`; one way
+-- Statement: CONTROL: `Bool` negation steps elsewhere everywhere, so `Bool` has no witness relative to
+-- the class of all maps.
+example : ¬ ZeroParadox.HasWitnessRel Bool (fun _ => True) :=
+  ZeroParadox.no_witnessRel_of_leavesAt (g := fun b => !b) trivial
+    fun b => (ZeroParadox.Motion.leavesAt_ofFun_iff _ b).2 (by cases b <;> decide)
+-- Statement: Cantor, Russell, Tarski (`cantor_via_engine`, `russell_via_engine`,
+-- `tarski_no_internal_truth`): no `e : A → (A → Prop)` is onto, since `ofFun Not` steps elsewhere at
+-- every proposition.
+example {A : Type} (e : A → (A → Prop)) : ¬ Function.Surjective e := fun he =>
+  let ⟨b, hb⟩ := Function.exists_fixed_point_of_surjective e he Not
+  ZeroParadox.Motion.not_selfOnlyAt_and_leavesAt _ b
+    ⟨(ZeroParadox.Motion.selfOnlyAt_ofFun_iff Not b).2 hb, ZeroParadox.Motion.leavesAt_ofFun_not b⟩
+-- Statement: Turing (`no_self_decider`): the same with `Bool` and `not`.
+example {A : Type} (e : A → (A → Bool)) : ¬ Function.Surjective e := fun he =>
+  let ⟨b, hb⟩ := Function.exists_fixed_point_of_surjective e he (fun b => !b)
+  ZeroParadox.Motion.not_selfOnlyAt_and_leavesAt _ b
+    ⟨(ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ b).2 hb,
+      (ZeroParadox.Motion.leavesAt_ofFun_iff _ b).2 (ZeroParadox.bool_not_no_fixedpoint b)⟩
+-- Statement: Curry: some proposition steps to itself only in `ofFun (· → P)` iff `P`; both directions
+-- (`curry_paradox` one way, `True` the other).
+example (P : Prop) : (∃ y, (ZeroParadox.Motion.ofFun (fun q : Prop => q → P)).SelfOnlyAt y) ↔ P := by
+  constructor
+  · rintro ⟨y, hy⟩
+    exact ZeroParadox.curry_paradox
+      (iff_of_eq ((ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ y).1 hy)).symm
+  · intro hP
+    exact ⟨True, (ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ _).2
+      (propext ⟨fun _ => trivial, fun _ _ => hP⟩)⟩
+-- Statement: self-application (`AbstractSelfApp`): `y` steps to itself only in `ofFun selfApp` iff `y`
+-- is ⊥ of the `ZPSemilattice`; both directions, from the class fields `fixed_bot` and `unique_fp`.
+example {L : Type} [ZeroParadox.ZPSemilattice L] [ZeroParadox.AbstractSelfApp L] (y : L) :
+    (ZeroParadox.Motion.ofFun (ZeroParadox.AbstractSelfApp.selfApp (L := L))).SelfOnlyAt y ↔
+      y = ZeroParadox.ZPSemilattice.bot :=
+  (ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ y).trans
+    ⟨ZeroParadox.AbstractSelfApp.unique_fp y, fun h => h ▸ ZeroParadox.AbstractSelfApp.fixed_bot⟩
+-- Statement: the Knaster–Tarski fork: exactly one point steps to itself only in `ofFun f` iff
+-- `f.lfp = f.gfp`; both directions (`fork_collapse_iff`).
+example {α : Type} [CompleteLattice α] (f : α →o α) :
+    (∃! y, (ZeroParadox.Motion.ofFun f).SelfOnlyAt y) ↔ f.lfp = f.gfp :=
+  (existsUnique_congr fun y => ZeroParadox.Motion.selfOnlyAt_ofFun_iff f y).trans
+    (ZeroParadox.fork_collapse_iff f).symm
+-- Statement: OVER a relation `r` with UP the identity: if `r` is well-founded, no point steps to itself
+-- only (`wf_no_selfloop`); one way.
+example {α : Type} {r : α → α → Prop} (h : WellFounded r) (y : α) :
+    ¬ (ZeroParadox.Motion.ofTotal id (fun _ => rfl) r).SelfOnlyAt y :=
+  fun hy => ZeroParadox.wf_no_selfloop h y hy.1
+-- Statement: `ZFSet` with OVER `a → b` when `b ∈ a`: `x` steps to itself only iff `x = {x}`; both
+-- directions. No `ZFSet` does (`no_quine_atom`).
+example (x : ZFSet) :
+    ((ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => b ∈ a)).SelfOnlyAt x ↔ x = {x}) ∧
+      ¬ (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b : ZFSet => b ∈ a)).SelfOnlyAt x := by
+  refine ⟨⟨fun ⟨hx, hu⟩ => ZFSet.ext fun z => ?_, fun h => ⟨?_, fun b hb => ?_⟩⟩,
+    fun h => ZeroParadox.no_quine_atom x h.1⟩
+  · rw [ZFSet.mem_singleton]; exact ⟨hu z, fun h => h ▸ hx⟩
+  · have hs : x ∈ ({x} : ZFSet) := ZFSet.mem_singleton.2 rfl
+    rw [← h] at hs; exact hs
+  · rw [h] at hb; exact ZFSet.mem_singleton.1 hb
+-- Statement: `QuineHost`'s two fields give a self-step at ⊥ of the host and do not give `SelfOnlyAt`:
+-- on `Bool` with `mem x y := y = false` (the control in `ZeroParadox/Settheory/QuineHost.lean`), OVER
+-- `a → b` when `b` is a member of `a` steps `false` to itself and to `true`.
+example : let M := ZeroParadox.Motion.ofTotal (id : Bool → Bool) (fun _ => rfl) (fun a _ => a = false)
+    M.step false false ∧ M.LeavesAt false ∧ ¬ M.SelfOnlyAt false :=
+  ⟨rfl, ⟨true, rfl, by decide⟩, fun ⟨_, h⟩ => absurd (h true rfl) (by decide)⟩
+-- Statement: ℤ_[2]: add one steps elsewhere at every point (`succ_ne_self`); doubling steps to itself
+-- only exactly at 0; both directions.
+example (x : ℤ_[2]) : (ZeroParadox.Motion.ofFun (· + (1 : ℤ_[2]))).LeavesAt x ∧
+    ((ZeroParadox.Motion.ofFun (fun y : ℤ_[2] => 2 * y)).SelfOnlyAt x ↔ x = 0) :=
+  ⟨(ZeroParadox.Motion.leavesAt_ofFun_iff _ x).2 (succ_ne_self x)
+,
+    (ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ x).trans
+      ⟨fun h => by linear_combination h, fun h => by rw [h, mul_zero]⟩⟩
+-- Statement: partial digit streams (`ZeroParadox/Category/LawvereTwoAdic.lean`): `partialAddOne` steps
+-- to itself only exactly at `[]`; `partialDouble` steps elsewhere at every stream.
+example (w : List Bool) : ((ZeroParadox.Motion.ofFun ZeroParadox.partialAddOne).SelfOnlyAt w ↔ w = []) ∧
+    (ZeroParadox.Motion.ofFun ZeroParadox.partialDouble).LeavesAt w :=
+  ⟨(ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ w).trans (ZeroParadox.partialAddOne_fixed_iff w),
+    (ZeroParadox.Motion.leavesAt_ofFun_iff _ w).2 (ZeroParadox.partialDouble_ne_self w)⟩
+-- Statement: `QuineAtomHost`'s (Y') does give it: with OVER `a → b` when `b` is a member of `a`, ⊥ steps
+-- to itself only.
+example {L : Type} [ZeroParadox.QuineAtomHost L] :
+    (ZeroParadox.Motion.ofTotal (id : L → L) (fun _ => rfl)
+      (fun a b => ZeroParadox.QuineAtomHost.mem b a)).SelfOnlyAt ZeroParadox.QuineAtomHost.bot :=
+  ⟨(ZeroParadox.QuineAtomHost.bot_mem_iff _).2 rfl,
+    fun b hb => (ZeroParadox.QuineAtomHost.bot_mem_iff b).1 hb⟩
+#check @ZeroParadox.Motion.ofPartialFun          -- Statement: a partial self-map `g : β → Option β`: UP the identity, OVER `g x = some y`
+#check @ZeroParadox.Motion.noStepAt_ofPartialFun_iff -- Statement: no step at `y` iff `g y = none`; both directions
+#check @ZeroParadox.Motion.selfOnlyAt_ofPartialFun_iff -- Statement: a step to itself only iff `g y = some y`; both directions
+#check @ZeroParadox.Motion.leavesAt_ofPartialFun_iff -- Statement: a step elsewhere iff `g y = some b`, `b ≠ y`; both directions
+-- Statement: the nowhere-defined partial map on `Bool` has no step at any point: the third value of
+-- the trichotomy, which a total map never takes.
+example (y : Bool) : (ZeroParadox.Motion.ofPartialFun (fun _ : Bool => (none : Option Bool))).NoStepAt y :=
+  (ZeroParadox.Motion.noStepAt_ofPartialFun_iff _ y).2 rfl
+-- Statement: adjoin one point: if every admissible map on `Option β` is a lift `x ↦ x.bind g`, no
+-- admissible map is fixed-point-free, since each fixes `none`; so the Cantor route
+-- (`no_witnessRel_of_admissible_fpf`) has no admissible input there; one way.
+example {β : Type} (M : (Option β → Option β) → Prop)
+    (hM : ∀ f, M f → ∃ g : β → Option β, f = fun x => x.bind g) :
+    ¬ ∃ f, M f ∧ ∀ x, f x ≠ x := by
+  rintro ⟨f, hf, hfpf⟩
+  obtain ⟨g, rfl⟩ := hM f hf
+  exact hfpf none rfl
+-- Statement: CONTROL: `Bool` negation fixes no `Bool`, and its lift fixes `none`.
+example : (∀ b : Bool, (!b) ≠ b) ∧ (none : Option Bool).bind (fun b => some (!b)) = none :=
+  ⟨by decide, rfl⟩
+-- Statement: biproduct diagonal on isomorphism classes of `ModuleCat ℂ` (the quotient by `≅`): a
+-- finite-dimensional `X` whose class steps to itself only under `Y ↦ Y ⊞ Y` is zero
+-- (`biprod_diagonal_only_zero`); one way. `freeNat`, not finite, has a class that does and is not zero.
+open CategoryTheory CategoryTheory.Limits in
+example (X : ModuleCat.{0} ℂ) [Module.Finite ℂ X] :
+    let D : Quotient (isIsomorphicSetoid (ModuleCat.{0} ℂ)) → Quotient (isIsomorphicSetoid _) :=
+      Quotient.map (fun Y : ModuleCat.{0} ℂ => Y ⊞ Y) (fun _ _ ⟨i⟩ => ⟨biprod.mapIso i i⟩)
+    ((ZeroParadox.Motion.ofFun D).SelfOnlyAt ⟦X⟧ → IsZero X) ∧
+      (ZeroParadox.Motion.ofFun D).SelfOnlyAt ⟦ZeroParadox.freeNat⟧ ∧ ¬ IsZero ZeroParadox.freeNat := by
+  intro D
+  refine ⟨fun h => ?_, (ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ _).2
+    (Quotient.sound ⟨ZeroParadox.freeNat_biprod_self.symm⟩), ZeroParadox.freeNat_not_isZero⟩
+  obtain ⟨i⟩ := (Quotient.exact ((ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ _).1 h) :
+    IsIsomorphic (X ⊞ X) X)
+  exact ZeroParadox.biprod_diagonal_only_zero X ⟨i.symm⟩
+#check @ZeroParadox.ProvabilityLogic.loebMapQuot -- Statement: Löb's `p ↦ (□p → A)` on the Lindenbaum quotient (provable equivalence)
+#check @ZeroParadox.ProvabilityLogic.selfOnlyAt_loebMapQuot_iff -- Statement: a class steps to itself only iff it is a Löb diagonal for `A`; both directions
+#check @ZeroParadox.ProvabilityLogic.loeb_of_selfOnlyAt -- Statement: if such a class exists and `⊢ □A → A`, then `⊢ A`; one way
+-- Statement: Gödel's second theorem in the same form (`godel_two`): if a class steps to itself only
+-- under `p ↦ (□p → falsum)` and `⊬ falsum`, then `⊬ □falsum → falsum`. The diagonal is a hypothesis.
+example {S : Type} [ZeroParadox.ProvabilityLogic S] {falsum : S} (psi : S)
+    (hy : (ZeroParadox.Motion.ofFun (ZeroParadox.ProvabilityLogic.loebMapQuot falsum)).SelfOnlyAt
+      (⟦psi⟧ : ZeroParadox.ProvabilityLogic.Lindenbaum S))
+    (hcon : ¬ ZeroParadox.ProvabilityLogic.Thm falsum) :
+    ¬ ZeroParadox.ProvabilityLogic.Thm
+      (ZeroParadox.ProvabilityLogic.imp (ZeroParadox.ProvabilityLogic.box falsum) falsum) :=
+  fun h => hcon (ZeroParadox.ProvabilityLogic.loeb_of_selfOnlyAt psi hy h)
+#check @ZeroParadox.hasWitnessRel_evalClass      -- Statement: codes up to equal `eval` carry a witness relative to the maps induced by computable `eval`-respecting maps
+#check @ZeroParadox.no_witnessRel_evalClass_top  -- Statement: CONTROL: relative to the class of all maps on that quotient, none
+-- Statement: so every such induced map has a class that steps to itself only in `ofFun`.
+example (G : ZeroParadox.EvalClass → ZeroParadox.EvalClass) (hG : ZeroParadox.ComputableOnEval G) :
+    ∃ y, (ZeroParadox.Motion.ofFun G).SelfOnlyAt y :=
+  ZeroParadox.selfOnlyAt_of_witnessRel ZeroParadox.hasWitnessRel_evalClass hG
+#check @ZeroParadox.rice_of_evalClassWitness     -- Statement: Rice's theorem (`rice_face` cites Mathlib), proved through that witness
+#check @ZeroParadox.occurrence_undecidable       -- Statement: occurrence at `n` is not a `ComputablePred`
+-- Statement: occurrence at `n` respects `eval` and is not a `ComputablePred`, through the witness.
+example (n : ℕ) : ¬ ComputablePred (fun c : Nat.Partrec.Code => ZeroParadox.Occurs c n) := by
+  obtain ⟨cn, hcn⟩ := Nat.Partrec.Code.exists_code.1 Nat.Partrec.none
+  refine ZeroParadox.rice_of_evalClassWitness {c | ZeroParadox.Occurs c n}
+    (fun x y e => by simp only [Set.mem_setOf_eq, ZeroParadox.occurs_iff_halts, e])
+    (a := Nat.Partrec.Code.zero) (b := cn) ?_ ?_
+  · show ZeroParadox.Occurs _ n
+    rw [ZeroParadox.occurs_iff_halts]; exact (trivial : (Part.some 0).Dom)
+  · show ¬ ZeroParadox.Occurs cn n
+    rw [ZeroParadox.occurs_iff_halts, hcn]; exact Part.not_none_dom
+#check @ZeroParadox.evalStepMotion_not_selfOnlyAt -- Statement: with OVER `eval b = F a` on codes, no code steps to itself only (padding)
+#check @ZeroParadox.universalStepMotion_leavesAt_of_step -- Statement: CONTROL: on universal codes, a self-step still leaves
+#check @ZeroParadox.selfPrintsStepMotion_selfOnlyAt_of_step -- Statement: on self-printing codes, a self-step is a step to itself only; one way
+#check @ZeroParadox.exists_selfPrintsStepMotion_selfOnlyAt -- Statement: and a self-printing universal code does so
+#check @ZeroParadox.selfref_universal_infinite   -- Statement: infinitely many codes are self-printing and universal
+#check @ZeroParadox.shiftMotion                  -- Statement: on inputs, OVER `n ↦ ⌜c⌝ + n` (`quine_period_is_goedel`), UP `n ↦ n % ⌜c⌝` (a choice of encoding)
+#check @ZeroParadox.isComputationalQuine_iff_eval_mod -- Statement: `c` is a computational quine iff `eval c` is constant on the fibres of that UP; both directions
+#check @ZeroParadox.shiftMotion_corner_iff       -- Statement: the corner fires iff `⌜c⌝ ≠ 0`; both directions
+-- Statement: ZP-M's two sides, two conjuncts with no `Code`/`Ordinal` equation: some computational
+-- quine's `shiftMotion` loops and does not climb; `ordinalSuccMotion` climbs and does not loop.
+example :
+    (∃ c : Nat.Partrec.Code, ZeroParadox.IsComputationalQuine c ∧ (ZeroParadox.shiftMotion c).Loop ∧
+      ¬ (ZeroParadox.shiftMotion c).Climb) ∧
+    (ZeroParadox.ordinalSuccMotion.{0}.Climb ∧ ¬ ZeroParadox.ordinalSuccMotion.{0}.Loop) := by
+  refine ⟨?_, ZeroParadox.ordinalSuccMotion_climb, ZeroParadox.ordinalSuccMotion_not_loop⟩
+  obtain ⟨c, hc, hk⟩ := ZeroParadox.infinite_quine_family 0
+  exact ⟨c, hc, ZeroParadox.shiftMotion_loop c (by omega),
+    ZeroParadox.Motion.not_climb_of_upStepInvariant (ZeroParadox.shiftMotion_upStepInvariant c)⟩
+-- Statement: CONTROL: `Code.zero` is a computational quine with Gödel number 0, and its `shiftMotion`
+-- has no corner.
+example : ZeroParadox.IsComputationalQuine Nat.Partrec.Code.zero ∧
+    ¬ (ZeroParadox.shiftMotion Nat.Partrec.Code.zero).Corner := by
+  have hz : Encodable.encode Nat.Partrec.Code.zero = 0 := by decide
+  refine ⟨?_, fun h => (ZeroParadox.shiftMotion_corner_iff _).1 h hz⟩
+  show Nat.Partrec.Code.eval Nat.Partrec.Code.zero = ZeroParadox.selfApply Nat.Partrec.Code.zero
+  funext n; simp [ZeroParadox.selfApply, hz]
+#check @ZeroParadox.ordinalSuccMotion_up_succ_epsilon0 -- Statement: there UP sends `succ ε₀` to ε₁
+#check @ZeroParadox.selfOnlyAt_ofFun_app_iff     -- Statement: for `S : SelfContained C`, `x` steps to itself only in `ofFun S.app` iff `x = S.bot`; both directions
+#check @ZeroParadox.wem_of_decidable_selfOnlyAt_glue -- Statement: deciding that at the glued point, uniformly in `p`, gives weak excluded middle; one way
 
 end DieCannotBeIndex

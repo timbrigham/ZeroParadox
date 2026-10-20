@@ -20,8 +20,8 @@ exactly what minimum set of requirements they take.
 
 ## Formal Overview
 Lawvere's engine yields the wall faces (μ, no fixed point); the floor faces (ν) are supplied per face (§ III).
-`#check`-only, so it states no new result — that the faces are ONE self-reference is Lawvere/Yanofsky,
-cited prior art and **not** a ZP theorem. Split and fences: `ZeroParadox/DiagonalFixedPoint.md`.
+`#check`-only. Cantor/Russell/Gödel/Tarski as one theorem is Lawvere 1969 (p. 3), extended by Yanofsky
+2003; neither covers every face here, and that the faces are one is **not** a ZP theorem. Fences: the `.md`.
 -/
 
 section DiagonalFixedPointIndex
