@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.12 | October 2026
+Version 1.13 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -216,8 +216,9 @@ def build():
         'on [propext, Quot.sound] &#8212; propositional extensionality and quotient soundness, two '
         'of Lean&#8217;s standard axioms, used throughout Mathlib. None depends on the Axiom of Choice. As in '
         'ZP-P, the conceptual skeleton needs no choice; choice enters mostly in the analytic '
-        'realisations (Section II) &#8212; not only there, since the category-theory face carries the '
-        'framework&#8217;s own. See AxiomProfile.lean.',
+        'realisations (ZeroParadox/AxiomProfile.lean &#167; III) &#8212; not only there, since the '
+        'framework also carries bare classicals of its own; ZeroParadox/Category/ChoiceCannotBe.lean '
+        '&#167; IV collects such cases with their reductions to taboos.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(6))

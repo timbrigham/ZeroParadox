@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.25 | October 2026
+Version 1.26 | October 2026
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.25'
+VERSION = '1.26'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -139,9 +139,11 @@ def build():
         'The fork spine is choice-free. All four results depend only on [propext, Quot.sound] '
         '&#8212; propositional extensionality and quotient soundness, two of Lean\'s standard axioms, '
         'used throughout Mathlib. None depends on the Axiom of Choice. This is consistent with '
-        'the choice-free core (see AxiomProfile.lean): the conceptual skeleton needs no choice; '
-        'choice enters mostly in the analytic realisations (Section II) &#8212; not only there, since '
-        'the category-theory face carries the framework\'s own.',
+        'the choice-free core (see ZeroParadox/AxiomProfile.lean): the conceptual skeleton needs no '
+        'choice; choice enters mostly in the analytic realisations (that file\'s &#167; III) &#8212; '
+        'not only there, since the framework also carries bare classicals of its own; '
+        'ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV collects such cases with their '
+        'reductions to taboos.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(6))
@@ -287,7 +289,9 @@ def build():
     E.append(body(
         'The remaining two instances are referenced, not re-proved here. The set-theory fork '
         '(Foundation vs AFA) has its Lean witness in ZP-J: quine_atom_unique proves that any two '
-        'Quine atoms are equal &#8212; a uniqueness statement about self-MEMBERSHIP. That the '
+        'Quine atoms are equal &#8212; a uniqueness statement about self-MEMBERSHIP in the sense '
+        'x = {x}, a set that is its own sole member. Bare self-membership is not unique under AFA: '
+        '0* = {&#8709;, 0*} also contains itself (Aczel 1988, Example 1.5). That the '
         'bottom is one of them is a separate result (bot_is_quine_atom), and self-APPLICATION is '
         'a third (selfApp_pinnable, in the experimental Lawvere bridge rather than ZP-J proper). The computation fork '
         '(total vs partial) has its Lean witness in ZP-K: the Kleene quine. Each is the contact '

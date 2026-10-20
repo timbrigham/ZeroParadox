@@ -14,7 +14,7 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-H Categorical Bridge | v1.27 | ZP-H_Categorical_Bridge.pdf | v1.21 | N/— | formal:ac557a4e comp:b85ebaf7 |
 | ZP-H Native Categories Addendum | v1.7 | ZP-H_Native_Categories_Addendum.pdf | N/A | N/— | formal:6055c8d4 |
 | ZP-I Inside Zero | v1.28 | ZP-I_Inside_Zero.pdf | v1.34 | N/— | formal:37707b03 comp:8e589905 |
-| ZP-J Self-Reference | v2.12 | ZP-J_Self_Reference.pdf | v1.33 | N/— | formal:66a8d9d6 comp:7cfd99e4 |
+| ZP-J Self-Reference | v2.13 | ZP-J_Self_Reference.pdf | v1.34 | N/— | formal:2552ecd2 comp:3efa8a49 |
 | ZP-J AFA Addendum | v1.19 | ZP-J_AFA_Addendum.pdf | N/A | N/— | formal:2919b9d3 |
 | ZP-J Wheel Addendum | v1.8 | ZP-J_Wheel_Addendum.pdf | v1.6 | N/— | formal:1711b209 comp:feb49592 |
 | ZP-J Keystone Addendum | v1.26 | ZP-J_Keystone_Addendum.pdf | N/A | N/— | formal:4f3bf1da |
@@ -22,13 +22,13 @@ Update this file first on any version bump. README.md Framework table is verifie
 | ZP-L Incomputability Convergence | v1.30 | ZP-L_Incomputability_Convergence.pdf | v1.18 | N/— | formal:e9597380 comp:c273dc84 |
 | ZP-M Kleene-Ordinal Bridge | v1.13 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.8 | N/— | formal:e7f71e6d comp:139f50be |
 | ZP-N The Constructive Snap | v2.5 | ZP-N_The_Constructive_Snap.pdf | N/A | N/— | formal:5bb204ce |
-| ZP-P The Fixed-Point Fork | v1.25 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:d0811d04 |
+| ZP-P The Fixed-Point Fork | v1.26 | ZP-P_The_Fixed_Point_Fork.pdf | N/A | N/— | formal:21248bbf |
 | ZP-R Cross-Category Fixed Point | v1.20 | ZP-R_Cross_Category_Fixed_Point.pdf | N/A | N/— | formal:b73d52ec |
 | ZP-R Diagonal Family Addendum | v1.18 | ZP-R_Diagonal_Family_Addendum.pdf | N/A | N/— | formal:386d90ea |
-| ZP-Q The Frame-Change | v1.12 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:e839ba53 |
+| ZP-Q The Frame-Change | v1.13 | ZP-Q_The_Frame_Change.pdf | N/A | N/— | formal:0669a235 |
 | Zero Paradox Foreword | v2.36 | Zero_Paradox_Foreword.pdf | N/A | N/A | formal:ce7e929a |
 | ZP Tools | N/A | ZP_Tools_and_Methods.pdf | N/A | N/A | formal:e6eb108d |
-| ZP Choice-Free Core Addendum | v1.12 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:c5aa9a12 |
+| ZP Choice-Free Core Addendum | v1.13 | ZP_Choice_Free_Core_Addendum.pdf | N/A | N/A | formal:fd801634 |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
