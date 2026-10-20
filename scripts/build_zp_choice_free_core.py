@@ -68,8 +68,9 @@ def build():
         '<i>realize</i> the snap inside standard analytic structures (p-adic topology, Hilbert space, '
         'ordinals), where the dependence is inherited from those libraries. Not all of it is '
         'inherited: some is the framework\'s own bare classical. ZeroParadox/Category/ChoiceCannotBe.lean '
-        '&#167; IV collects reductions that show principles those proofs establish essential rather '
-        'than <i>incidental</i>, given a premise stated there (Section III). Necessity is a separate axis from provenance: an inherited dependence is shown '
+        '&#167; IV collects cases, of either provenance, whose principles a reduction shows essential '
+        'rather than <i>incidental</i>, given a premise stated there (Section III); not every bare '
+        'classical in the framework is among them. Necessity is a separate axis from provenance: an inherited dependence is shown '
         'essential the same way, on the same premise. None of it is '
         'used by the core results above. <b>And dependence is not necessity:</b> that those '
         'realizations <i>use</i> choice as written does not show the mathematics <i>requires</i> it. '
@@ -121,8 +122,8 @@ def build():
         'Most occurrences are in a layer that realizes the snap floor inside a standard analytic '
         'structure, inheriting choice from the Mathlib library that builds that structure '
         'classically. Not every occurrence is inherited: the framework writes bare classicals of its '
-        'own, and ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV collects such cases with their '
-        'reductions to taboos &#8212; see Section III.'))
+        'own, and ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV collects cases among them whose '
+        'principles reduce to a taboo, with those reductions &#8212; see Section III.'))
     E.append(result_box(
         'Carries Classical.choice (inherited from Mathlib), e.g.',
         [
@@ -141,7 +142,7 @@ def build():
         'enter. For several of those layers the choice is already in the statement as written '
         '(Section III), and Section III points at principles that are essential given a premise '
         'stated there. Their provenance differs, and that is the point: some are proved with the '
-        'framework\'s own bare classical, and some with Mathlib\'s (well-order comparability, in '
+        'framework\'s own bare classical, and one, well-order comparability, with Mathlib\'s (in '
         'InitialSeg.total) &#8212; and each is essential on that premise. Inherited never meant '
         'removable.'))
     E.append(sp(6))
@@ -165,7 +166,12 @@ def build():
         'comparability of well-orders '
         '(prior art: Kraus, Nordvall Forsberg and Xu, arXiv:2104.02549, Thm 38(d)), and '
         '`wem_of_fixedPointFree` derives <i>weak</i> excluded middle from the general fixed-point-free '
-        'principle &#8212; the latter sitting on the keystone rather than on an imported order '
+        'principle (related prior art, cited not claimed, as recorded in '
+        'ZeroParadox/Category/LawvereTaboo.lean: Bauer, "On fixed-point theorems in synthetic '
+        'computability", Tbilisi Math. J. 10(3) (2017), Cor 4.3; de Jong&#8211;Escard&#243;, '
+        'arXiv:2102.08812, Cor 39(iii)-(iv); Booij&#8211;Escard&#243;&#8211;Lumsdaine&#8211;Shulman, '
+        '"Parametricity, automorphisms of the universe, and excluded middle", arXiv:1701.05617, '
+        'Thm 3, and Thm 5 (Simpson), whose proof technique the reduction uses) &#8212; the latter sitting on the keystone rather than on an imported order '
         'instance; the principles proved by the framework\'s own bare classicals in '
         'ZeroParadox/Die.lean have reductions there too. Each is a statement about the '
         '<b>principle</b>: re-proving it constructively would '
@@ -206,7 +212,7 @@ def build():
             'foundation showing through the realizations rather than an assumption of the argument. '
             'The reductions Section III points at are the exception on a different axis: they are about '
             '<i>necessity</i>, not provenance. Some of their principles are proved with the '
-            'framework\'s own bare classical and some with Mathlib\'s, and each is essential on the '
+            'framework\'s own bare classical and one, well-order comparability, with Mathlib\'s, and each is essential on the '
             'premise stated in Section III &#8212; so "inherited" is not a synonym for '
             '"removable", and none of these cases is absorbed into the generalization.',
         ]

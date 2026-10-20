@@ -142,8 +142,8 @@ def build():
         'the choice-free core (see ZeroParadox/AxiomProfile.lean): the conceptual skeleton needs no '
         'choice; choice enters mostly in the analytic realisations (that file\'s &#167; III) &#8212; '
         'not only there, since the framework also carries bare classicals of its own; '
-        'ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV collects such cases with their '
-        'reductions to taboos.',
+        'ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV collects cases among '
+        'them whose principles reduce to a taboo, with those reductions.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(6))

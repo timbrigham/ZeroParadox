@@ -218,7 +218,8 @@ def build():
         'ZP-P, the conceptual skeleton needs no choice; choice enters mostly in the analytic '
         'realisations (ZeroParadox/AxiomProfile.lean &#167; III) &#8212; not only there, since the '
         'framework also carries bare classicals of its own; ZeroParadox/Category/ChoiceCannotBe.lean '
-        '&#167; IV collects such cases with their reductions to taboos.',
+        '&#167; IV collects cases among them whose principles reduce to a taboo, with those '
+        'reductions.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(6))
