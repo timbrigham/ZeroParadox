@@ -1,12 +1,12 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.12 | October 2026
+Version 2.13 | October 2026
 """
 
 import os
 from zp_utils import *
 
-VERSION = '2.12'
+VERSION = '2.13'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -134,17 +134,22 @@ def build():
         'set &#8212; it contains exactly one thing, and that thing is itself.'))
     E.append(body(
         'The AFA uniqueness guarantee is the key property: there is at most one Quine atom. '
-        'Any two self-containing elements are equal. This means the self-membership property '
-        'uniquely identifies an element &#8212; a fingerprint that belongs to exactly one object '
-        'in the universe.'))
+        'Any two sets that are each their own sole member are equal. This means the property '
+        'x = {x} uniquely identifies an element &#8212; a fingerprint that belongs to exactly one '
+        'object in the universe. Bare self-membership does not: under AFA the set '
+        '0* = {&#8709;, 0*} also contains itself (Aczel 1988, Example 1.5). The framework\'s requirement in '
+        'AFA\'s profile is QuineAtomHost (ZeroParadox/Settheory/QuineHost.lean &#167; VII); '
+        'QuineHost, whose uniqueness is among self-members, is a different class, which AFA\'s '
+        'membership fails, since Q = {Q} (Aczel\'s &#937;) and 0* are distinct self-members (Aczel 1988, '
+        'Examples 1.3 and 1.5, pp. 6&#8211;7).'))
 
     E.append(axiom_box(
         'AFA Uniqueness (AFAStructure.quine_unique)',
         [
             'For any type L with AFA structure: if x, y &#8712; L both satisfy selfMem(x) and '
             'selfMem(y), then x = y.',
-            'Informally: the Quine atom is unique. Self-containment is a property held by at '
-            'most one element of any AFA-structured type.',
+            'Informally: the Quine atom is unique. The selfMem role (read in ZF+AFA as x = {x}, '
+            'not bare x &#8712; x) is held by at most one element of any AFA-structured type.',
             'Lean: AFAStructure.quine_unique &#8212; encoded as a typeclass field, not a theorem, '
             'because it does not follow from the other two fields: on the two-state lattice '
             'MachinePhase, the selfMem true of every element meets bot_self_mem while two distinct '

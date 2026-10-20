@@ -1,13 +1,13 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.12 | October 2026
+Version 1.13 | October 2026
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -66,12 +66,13 @@ def build():
         'Most places it appears are places where the framework builds on Mathlib\'s '
         'classically-built analysis, order, and computability libraries &#8212; the layers that '
         '<i>realize</i> the snap inside standard analytic structures (p-adic topology, Hilbert space, '
-        'ordinals), where the dependence is inherited from those libraries. The category-theory face '
-        'is the exception: its choice is the framework\'s own bare classical, and Section III shows '
-        'it essential rather than <i>incidental</i>, given a premise stated there. Necessity is a '
-        'separate axis from provenance: Section III shows an inherited dependence essential too, '
-        'on its own premise. It is '
-        'not used by the core results above. <b>And dependence is not necessity:</b> that those '
+        'ordinals), where the dependence is inherited from those libraries. Not all of it is '
+        'inherited: some is the framework\'s own bare classical. ZeroParadox/Category/ChoiceCannotBe.lean '
+        '&#167; IV collects cases, of either provenance, whose principles a reduction shows essential '
+        'rather than <i>incidental</i>, given a premise stated there (Section III); not every bare '
+        'classical in the framework is among them. Necessity is a separate axis from provenance: an inherited dependence is shown '
+        'essential the same way, on the same premise. None of it is '
+        'used by the core results above. <b>And dependence is not necessity:</b> that those '
         'realizations <i>use</i> choice as written does not show the mathematics <i>requires</i> it. '
         'Several of their statements carry it as written (Section III), so no proof of those '
         'statements can drop it; whether a restatement on a choice-free carrier holds is a '
@@ -120,7 +121,9 @@ def build():
         'majority of its theorems &#8212; and the same `#print axioms` artifact shows exactly where. '
         'Most occurrences are in a layer that realizes the snap floor inside a standard analytic '
         'structure, inheriting choice from the Mathlib library that builds that structure '
-        'classically. The category-theory face is not one of them &#8212; see Section III.'))
+        'classically. Not every occurrence is inherited: the framework writes bare classicals of its '
+        'own, and ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV collects cases among them whose '
+        'principles reduce to a taboo, with those reductions &#8212; see Section III.'))
     E.append(result_box(
         'Carries Classical.choice (inherited from Mathlib), e.g.',
         [
@@ -137,10 +140,11 @@ def build():
         'The pattern: the core <i>states</i> the result; the analytic layers <i>realize</i> '
         'it inside the standard frameworks, and that is where the library\'s classical foundations '
         'enter. For several of those layers the choice is already in the statement as written '
-        '(Section III), and Section III locates two principles that are essential given a premise '
-        'stated there. Their provenance differs, and that is the point: one spends the framework\'s '
-        'own bare classical, the other spends Mathlib\'s &#8212; and both are essential on that '
-        'premise. Inherited never meant removable.'))
+        '(Section III), and Section III points at principles that are essential given a premise '
+        'stated there. Their provenance differs, and that is the point: some are proved with the '
+        'framework\'s own bare classical, and some with Mathlib\'s, among them well-order '
+        'comparability (in InitialSeg.total) &#8212; and each is essential on that premise. Inherited never meant '
+        'removable.'))
     E.append(sp(6))
 
     # ── Section III ──────────────────────────────────────────────────────────────
@@ -156,20 +160,29 @@ def build():
         'shown a different way, by a <i>reduction</i>: derive a recognised constructive taboo from the '
         'principle itself.'))
     E.append(body(
-        '<b>Two such reductions do exist here, and they bound what this document claims.</b> '
-        '`em_of_wellOrder_comparable` derives excluded middle from comparability of well-orders '
+        '<b>Such reductions do exist here, and they bound what this document claims.</b> '
+        'ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV collects such reductions, with the '
+        'premise they rest on, and that file indexes others besides. For example, `em_of_wellOrder_comparable` derives excluded middle from '
+        'comparability of well-orders '
         '(prior art: Kraus, Nordvall Forsberg and Xu, arXiv:2104.02549, Thm 38(d)), and '
         '`wem_of_fixedPointFree` derives <i>weak</i> excluded middle from the general fixed-point-free '
-        'principle &#8212; the latter sitting on the keystone rather than on an imported order '
-        'instance. Each is a statement about the <b>principle</b>: re-proving it constructively would '
+        'principle (related prior art, cited not claimed, as recorded in '
+        'ZeroParadox/Category/LawvereTaboo.lean: Bauer, "On fixed-point theorems in synthetic '
+        'computability", Tbilisi Math. J. 10(3) (2017), Cor 4.3; de Jong&#8211;Escard&#243;, '
+        'arXiv:2102.08812, Cor 39(iii)-(iv); Booij&#8211;Escard&#243;&#8211;Lumsdaine&#8211;Shulman, '
+        '"Parametricity, automorphisms of the universe, and excluded middle", arXiv:1701.05617, '
+        'Thm 3, and Thm 5 (Simpson), whose proof technique the reduction uses) &#8212; the latter sitting on the keystone rather than on an imported order '
+        'instance; &#167; IV\'s cases 3 to 5 are reductions for principles proved with bare '
+        'classicals in ZeroParadox/Die.lean. Each is a statement about the '
+        '<b>principle</b>: re-proving it constructively would '
         'prove a taboo constructively, so no choice-free re-proof exists <i>given</i> that the taboo is not '
         'derivable in Lean without Classical.choice &#8212; a premise this corpus does not prove '
-        '(ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV). Neither is an independence result, and '
-        'neither is established by a footprint measurement &#8212; which is precisely why the '
+        '(&#167; IV). None is an independence result, and '
+        'none is established by a footprint measurement &#8212; which is precisely why the '
         'accidental side needs a measurement and the essential side needs a reduction.'))
     E.append(body(
         'So the remaining analytic-layer dependence may be removable, and that is a different question '
-        'from the two cases above. It is also not settled by measuring a proof: where an axiom sits in '
+        'from the reductions above. It is also not settled by measuring a proof: where an axiom sits in '
         'a <i>type</i> rather than a proof, no proof of any statement mentioning that type can be '
         'clean, and removability there means changing the statement, not cleaning the argument. That '
         'case is measured: the statements of c3_irreversible, t4_snap_orthogonal, fD_functor and '
@@ -197,11 +210,12 @@ def build():
             '"forced, not chosen" thesis is internally consistent at the level of what the framework '
             'actually asserts. Where choice appears it is mostly the supporting library\'s classical '
             'foundation showing through the realizations rather than an assumption of the argument. '
-            'Section III\'s two cases are the exception on a different axis: they are about '
-            '<i>necessity</i>, not provenance. One of them is the framework\'s own and one is '
-            'Mathlib\'s, and both are essential on the premise stated in Section III &#8212; so "inherited" '
-            'is not a synonym for '
-            '"removable", and neither case is absorbed into the generalization.',
+            'The reductions Section III points at are the exception on a different axis: they are about '
+            '<i>necessity</i>, not provenance. Some of their principles are proved with the '
+            'framework\'s own bare classical and some with Mathlib\'s, among them well-order '
+            'comparability, and each is essential on the '
+            'premise stated in Section III &#8212; so "inherited" is not a synonym for '
+            '"removable", and none of these cases is absorbed into the generalization.',
         ]
     ))
     E.append(sp(6))
@@ -216,9 +230,12 @@ def build():
     E.append(label_box(
         'Checkable evidence',
         [
-            'ZeroParadox/AxiomProfile.lean &#8212; a file of `#print axioms` commands. Section I prints '
-            'the choice-free core; Section II prints the analytic-realization results that carry '
-            'choice, as an honest contrast. Build with `lake build ZeroParadox.AxiomProfile` and read '
+            'ZeroParadox/AxiomProfile.lean &#8212; a file of `#print axioms` commands. Its &#167; 0 '
+            'prints footprints for some proofs written with the framework\'s own classical, for '
+            'reductions to taboos of the kind ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV '
+            'collects, and for related declarations; &#167; I prints the choice-free core and &#167; II further choice-free results; '
+            '&#167; III prints the analytic-realization results that carry choice, as an honest '
+            'contrast. Build with `lake build ZeroParadox.AxiomProfile` and read '
             'the kernel\'s report. The per-theorem map is in the project repository.',
             'Choice-probe (the one-layer classification): branch `choice-probe`; the verdict and the '
             'three decomposed sources are recorded in the project notes.',
@@ -246,8 +263,8 @@ def build():
         '`Classical.choice` appears mostly where the framework builds on Mathlib\'s classical analysis, '
         'order, and computability libraries, where several statements carry it as written (for '
         'those, the open question is a restatement) and elsewhere whether it is necessary remains '
-        'open. It is not only there: the category-theory '
-        'face carries the framework\'s own bare classical, and Section III\'s two reductions settle '
+        'open. It is not only there: the framework carries bare classicals of its own, and the '
+        'reductions Section III points at (ZeroParadox/Category/ChoiceCannotBe.lean &#167; IV) settle '
         'necessity for the principles they cover, given the premise stated there. All of this is '
         'checkable in ZeroParadox/AxiomProfile.lean.',
         S['endnote']))
