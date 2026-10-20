@@ -262,7 +262,13 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** Mathlib's `ZFSet` carries Foundation (`ZFSet.mem_wf`), which forbids `x in x` and so cannot host a Quine atom; and no Mathlib typeclass abstracts "a membership relation with a unique self-membered bottom." `QuineHost` is the minimal set-theory-native encoding of the framework's requirements on a host theory (fields `bot_selfMem` / `selfMem_unique`), distinct from the lattice-level `AFAStructure` in `SetTheoryAFA.lean`.
+**Reason:** Mathlib's `ZFSet` carries Foundation (`ZFSet.mem_wf`), which forbids `x in x` and so cannot host a Quine atom; and no Mathlib typeclass abstracts "a membership relation with a unique self-membered bottom." `QuineHost` encodes a self-membered bottom with uniqueness among self-members (fields `bot_selfMem` / `selfMem_unique`: ⊥ ∈ ⊥ and no other element self-membered), distinct from the lattice-level `AFAStructure` in `SetTheoryAFA.lean`. Under AFA's own membership its uniqueness field fails, since 0* = {∅, 0*} is self-membered (Aczel 1988, Example 1.5, p. 7); the framework's requirement in AFA's profile is `QuineAtomHost`, below.
+
+### `QuineAtomHost` — `ZeroParadox/Settheory/QuineHost.lean`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** The framework's host requirement (CC-2) in AFA's profile: `bot_mem_iff` (the members of ⊥ are exactly ⊥, ⊥ = {⊥}) and `reflexive_unique` (the only element that is its own only member is ⊥), the uniqueness AFA gives (Aczel 1988, p. 19). It stands alone and is incomparable with `QuineHost` (both directions witnessed in `QuineHost.lean` § VII). Mathlib's `ZFSet` cannot host it (`zfSet_no_singleton_bottom`), and no Mathlib typeclass abstracts a membership relation with a unique reflexive bottom.
 
 ### `trivialSelfApp` — `ZeroParadox/Computability/SelfApp.lean`
 

@@ -170,6 +170,8 @@ name neither class. -/
 
 /-- `Statement:` a membership relation `mem` and a point `bot` with (Y') the members of `bot` are
     exactly `bot` (⊥ = {⊥}) and (Z') every element that is its own only member is `bot`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: a membership relation with ⊥ = {⊥} and a unique reflexive
+-- element (AFA's profile); Mathlib's ZFSet carries Foundation and cannot host it.
 class QuineAtomHost (L : Type*) where
   /-- The host's membership relation. -/
   mem : L → L → Prop

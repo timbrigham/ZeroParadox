@@ -1474,12 +1474,10 @@ example (n : ℤ) : let M := (ZeroParadox.Motion.ofTotal (id : ZeroParadox.Spher
 -- Lawvere and Cantor entries and the computability witness also take a class of admissible maps with
 -- a witness (`HasWitnessRel`); Rice, Löb and the biproduct entries take a quotient, where the face's
 -- fixed point holds only up to an equivalence. No classification of the faces is claimed. Reading
--- (cited, not claimed): of these entries, the sources treat Cantor, Russell and Tarski (Lawvere 1969,
--- TAC reprint p. 3, one fixed-point theorem behind Cantor, Russell, Gödel and Tarski), and, extending
--- Lawvere, the halting problem (Yanofsky 2003, pp. 11–12), the diagonal lemma and Löb (pp. 15–18), the
--- recursion theorem (p. 18) and Rice (p. 19). For the rest, Lawvere's theorem is "the translation key
--- between the faces formalized here, not a mechanism every face instantiates" (ZP-R, "Lawvere's
--- theorem, face by face").
+-- (cited, not claimed): the sources treat Cantor, Russell and Tarski (Lawvere 1969, TAC reprint p. 3,
+-- "a fixed-point theorem ... which seems to play this role" for Cantor, Russell, Gödel and Tarski),
+-- and, extending Lawvere, the halting problem (Yanofsky 2003, pp. 11–12), the diagonal lemma
+-- (Theorem 4, pp. 15–16) and Löb's paradox (p. 18), the recursion theorem (pp. 18–19) and Rice (p. 19).
 #check @ZeroParadox.Motion.ofFun                 -- Statement: encoding 1: UP the identity, OVER the graph of `g`
 #check @ZeroParadox.Motion.selfOnlyAt_ofFun_iff  -- Statement: there `y` steps to itself only iff `g y = y`; both directions
 #check @ZeroParadox.Motion.leavesAt_ofFun_iff    -- Statement: and `y` steps elsewhere iff `g y ≠ y`; both directions

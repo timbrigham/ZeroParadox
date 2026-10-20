@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.60 | October 2026
+Version 3.61 | October 2026
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -12,7 +12,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.60'
+VERSION = '3.61'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -459,23 +459,22 @@ def build():
                 'therefore does not single AFA out, so AFA is '
                 '<i>adopted</i> as the canonical witness rather than selected by the membership structure.',
                 '<b>What is machine-checked (the requirements framework).</b> The question of which host '
-                'theory can admit &#8869; is reduced to the two requirements a host theory must supply '
-                '&#8212; <b>(Y)</b> a Quine atom &#8869; = {&#8869;} and <b>(Z)</b> its uniqueness &#8212; '
-                'and largely closed in the '
-                'framework\'s set-theory layer (the QuineHost development, '
-                'ZeroParadox/Settheory/QuineHost.lean). Proved '
-                'there: the third property, <b>(X)</b> Foundation-freeness, is not assumed &#8212; it is '
-                '<i>forced</i> by (Y) (quineHost_not_wellFounded, '
-                'axiom-free); ZF + Foundation is excluded (zfSet_no_quine_bottom &#8212; no set is '
-                'self-membered &#8212; not axiom-free: it inherits no_quine_atom\'s footprint '
-                '[propext, Quot.sound], choice-free); and the requirements are '
-                '<i>realizable</i> &#8212; a concrete one-atom model exhibits them (oneAtom_not_wellFounded, '
-                'axiom-free). AFA is the canonical example, exhibited off the framework\'s own '
-                'AFAStructure (afaStructure_isQuineHost) &#8212; a definition rather than a theorem about '
-                'the set theory, and one every ZP-A lattice supplies trivially (the NO-GO gauge in '
-                'ZeroParadox/Settheory/SetTheoryAFA.lean). So the reduction '
-                'to requirements is not merely argued: the forcing and the realizability are settled '
-                'results. What stays argued is which requirements to demand, below.',
+                'theory can admit &#8869; is reduced to two requirements: <b>(Y\')</b> a Quine atom '
+                '&#8869; = {&#8869;} and <b>(Z\')</b> its uniqueness among reflexive sets, x = {x}, the '
+                'fields bot_mem_iff and reflexive_unique of the typeclass QuineAtomHost '
+                '(ZeroParadox/Settheory/QuineHost.lean). AFA allows at most one solution of x = {x} (Aczel '
+                '1988, p. 19), and decorates a* = {a, a*} for every set a (Examples 1.5&#8211;1.6, '
+                'pp. 7&#8211;8). In Lean: quineAtomHost_not_wellFounded (axiom-free) &#8212; the '
+                'membership of a QuineAtomHost is not well-founded, so <b>(X)</b> Foundation-freeness is '
+                'forced, not assumed; zfSet_no_singleton_bottom ([propext, Quot.sound], choice-free) '
+                '&#8212; no ZFSet is its own sole member, the one exclusion proved about the real theory. '
+                'The AFA and Boffa sorts are cited facts about those theories, each illustrated by a finite '
+                'toy (QuineHost.lean &#167; VII; boffa_fails_reflexive_unique). Realizability carries no '
+                'information: every inhabited carrier meets QuineAtomHost (trivialQuineAtomHost). The '
+                'typeclass QuineHost (fields bot_selfMem, &#8869; &#8712; &#8869;, and selfMem_unique, no '
+                'other element self-membered) is a different requirement, incomparable with QuineAtomHost '
+                '(QuineHost.lean &#167; VII); AFA\'s membership fails its second field, since '
+                '0* &#8712; 0*. What stays argued is which requirements to demand, below.',
                 '<b>Boffa is set aside on a weaker warrant, and the cited half and the checked half are '
                 'separate.</b> That '
                 'Boffa\'s anti-foundation axiom admits a proper class of Quine atoms rather than one is '
@@ -486,22 +485,22 @@ def build():
                 '5.14(i) for the equivalence; p. 59, where the axiom is formulated as Boffa\'s strengthening '
                 'of BA<sub>1</sub>); and BA<sub>1</sub> on its own already '
                 'forces the reflexive sets &#8212; Aczel\'s term for Quine atoms &#8212; to form a '
-                'proper class (Aczel 1988, Proposition 5.1). That permissiveness is therefore '
+                'proper class (Aczel 1988, Proposition 5.1, p. 57). That permissiveness is therefore '
                 'inherited from the weaker axiom rather than introduced by the strengthening. This '
                 'development formalizes no part of either Boffa axiom. What is machine-checked is the '
-                'mechanism behind it &#8212; that '
-                'self-membership alone does not force uniqueness: in a two-element toy model where every '
-                'element is self-membered, no element is <i>the</i> self-membered one '
-                '(boffa_fails_unique, ZeroParadox/Settheory/QuineHost.lean, axiom-free). That is a '
-                'counter-model separating the two requirements, and it blocks one direction only &#8212; a '
-                'host supplying the Quine atom need not supply its uniqueness. Dropping uniqueness '
-                'accordingly leaves a host theory no less consistent; what it leaves standing is the '
-                'Quine-atom clause alone, and in that toy model every element satisfies that clause, so '
-                'the surviving clause is <i>uninformative</i> as a pinning condition &#8212; every element is a '
-                'witness, and none is pinned as the host\'s distinguished bottom. Neither half is an '
-                'in-kernel result about Boffa\'s axiom itself.',
-                '<b>What remains &#8212; a narrow Forced Metatheoretic Commitment.</b> With the forcing and '
-                'realizability proved, one step is not a theorem: that a Quine atom and its uniqueness are '
+                'mechanism behind it &#8212; that (Y\') does not force (Z\'): in a two-element toy model where '
+                'every element is its own only member, no element is <i>the</i> reflexive one, so no '
+                'QuineAtomHost has that membership (boffa_fails_reflexive_unique, '
+                'ZeroParadox/Settheory/QuineHost.lean, axiom-free). That is a counter-model separating '
+                'the two requirements, and it blocks one direction only &#8212; a host supplying a '
+                'reflexive element need not supply its uniqueness. Dropping uniqueness accordingly leaves '
+                'a host theory no less consistent; what it leaves standing is the Quine-atom clause alone, '
+                'and in that toy model every element satisfies that clause, so the surviving clause is '
+                '<i>uninformative</i> as a pinning condition &#8212; every element is a witness, and none '
+                'is pinned as the host\'s distinguished bottom. Neither half is an in-kernel result about '
+                'Boffa\'s axiom itself.',
+                '<b>What remains &#8212; a narrow Forced Metatheoretic Commitment.</b> With the forcing '
+                'proved, one step is not a theorem: that a Quine atom and its uniqueness are '
                 'the <i>right</i> two requirements to demand &#8212; the commitment to &#8869; = {&#8869;} '
                 'as the minimal option consistent with A4\'s additive-identity role (it has exactly one '
                 'member, itself, and introduces no internal differentiation; any extension '
@@ -512,7 +511,7 @@ def build():
                 'is machine-checked to be &#8869; (t_exec, ZeroParadox/Settheory/SetTheoryAFA.lean, '
                 'axiom-free, given the field bot_self_mem). The named falsifier is correspondingly narrow: a differently-motivated '
                 'requirement set that hosts &#8869; without demanding a unique Quine atom would reopen this '
-                'choice &#8212; it would not touch the forcing or the realizability, which are settled.',
+                'choice &#8212; it would not touch the forcing, which is proved.',
             ]
         ),
         sp(4),
@@ -1026,8 +1025,8 @@ def build():
             'commitment asserts, and DA-1 consumes it. Remark '
             'R-&#949;<sub>0</sub> justifies the &#949;<sub>0</sub> symbol as a structural analogy. Remark '
             'R-AFA rules Foundation out by the self-membership of &#8869; = {&#8869;} (Regularity, '
-            'no_quine_atom): the forcing and realizability of the AFA requirements are machine-checked '
-            '(QuineHost), and a narrow Forced Metatheoretic Commitment remains. Open question: OQ-E2. '
+            'no_quine_atom): the forcing is machine-checked '
+            '(quineAtomHost_not_wellFounded), and a narrow Forced Metatheoretic Commitment remains. Open question: OQ-E2. '
             'Remaining axioms: AX-B1, AX-G1, AX-G2.</i>',
             S['endnote']),
     ]
