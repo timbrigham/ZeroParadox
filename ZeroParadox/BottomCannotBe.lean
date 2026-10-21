@@ -48,6 +48,7 @@ import ZeroParadox.Multihomed.BoundaryOrder
 import ZeroParadox.Valuation.InfinitudeFloor
 import ZeroParadox.Valuation.Scale
 import ZeroParadox.Information.Disjunctive
+import ZeroParadox.Settheory.GraphBisim
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -453,6 +454,17 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 #check @ZeroParadox.boundaryDouble_botEnd
 -- Statement: every fixed point of `boundaryDouble` is `botEnd`.
 #check @ZeroParadox.boundaryDouble_unique_fp
+-- Statement: Ω's one-loop and two-cycle drawings are bisimilar (`Same`), and after deleting
+-- self-loops they are not.
+#check @ZeroParadox.MemGraph.dropLoops_not_same
+-- Statement: keeping only arrows from accessible members preserves `Same`.
+#check @ZeroParadox.MemGraph.wfPart_same
+-- Statement: and sends Ω's two-cycle drawing to the empty set's.
+#check @ZeroParadox.MemGraph.wfPart_omegaPair
+-- Reading: Ω = {Ω} is AFA's Quine atom, the shape the Quine atom (CC-2) gives ⊥ of a
+-- `ZPSemilattice`; in the `QuineAtomHost` toy on `Fin 3` (`ZeroParadox/Settheory/QuineHost.lean`
+-- § VII) Ω is the toy's `bot`. `dropLoops_not_same` and `wfPart_omegaPair` are about Ω's drawings;
+-- `wfPart_same` is the general fact, for any two graphs. No declaration links these drawings to the toy.
 
 /-! ### GENERATION — the floor generates its first step -/
 
@@ -540,6 +552,26 @@ example (x : ℤ_[2]) : x - x = 0 ∧ multiplicity_addValuation PadicInt.prime_p
 #check @ZeroParadox.not_disjunctive_of_periodic
 -- Statement: in `ℕ → Bool` under the pointwise order, ⊥ is the all-false tape.
 example : (⊥ : ℕ → Bool) = fun _ => false := rfl
+-- Statement: reading a tape as the set of positions holding `true`, `t ⁻¹' {true}`, sends `≤` to
+-- `⊆`, is one-to-one, and sends a tape to `∅` iff it is ⊥ of `ℕ → Bool`.
+example : (∀ a b : ℕ → Bool, a ≤ b → a ⁻¹' {true} ⊆ b ⁻¹' {true}) ∧
+    Function.Injective (fun t : ℕ → Bool => t ⁻¹' {true}) ∧
+    ∀ t : ℕ → Bool, t ⁻¹' {true} = ∅ ↔ t = ⊥ := by
+  refine ⟨fun a b h n (hn : a n = true) => show b n = true from Bool.le_iff_imp.mp (h n) hn,
+    fun a b h => funext fun n => ?_, fun t => ⟨fun h => funext fun n => ?_, ?_⟩⟩
+  · have := congrArg (n ∈ ·) h
+    simp only [Set.mem_preimage, Set.mem_singleton_iff, eq_iff_iff] at this
+    revert this; cases a n <;> cases b n <;> decide
+  · have : n ∉ t ⁻¹' {true} := h ▸ Set.notMem_empty n
+    cases ht : t n
+    · rfl
+    · exact absurd ht this
+  · rintro rfl; exact Set.eq_empty_of_forall_notMem fun n h => Bool.false_ne_true h
+-- Statement: Mathlib's `Set.preimage_boolIndicator_true`, the inverse direction: the tape
+-- `s.boolIndicator` read back this way is `s`.
+-- Reading: no `Set ℕ ≃o (ℕ → Bool)` was located in pinned Mathlib as of 2026-10-20 (grep `≃o`,
+-- `exact?`).
+#check @Set.preimage_boolIndicator_true
 -- Statement: under pointwise exclusive-or, every tape's self-difference is the all-false tape, so
 -- a tape read against itself is never disjunctive.
 example (x : ℕ → Bool) : (fun n => xor (x n) (x n)) = (fun _ => false) ∧

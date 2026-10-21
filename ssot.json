@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2075,
-        "files": 174
+        "declarations": 2121,
+        "files": 175
       },
       "entries": [
         {
@@ -797,6 +797,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0074d731-9fef-4d49-9ee8-7b15f7231d9c",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_same_self",
+            "short": "wfPart_same_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_same_self",
+            "short": "wfPart_same_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6129,6 +6166,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "11685d46-7d37-4ec4-8690-06e9820af959",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_zeroStar",
+            "short": "wfPart_zeroStar"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_zeroStar",
+            "short": "wfPart_zeroStar",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "116da14d-8fc0-4a74-a867-31f0d5a65b13",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleRealization.lean",
@@ -10032,6 +10106,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1f2ec770-5b67-4d76-884b-f8c67c784799",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_omegaLoop",
+            "short": "wfPart_omegaLoop"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_omegaLoop",
+            "short": "wfPart_omegaLoop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1f3c3c5a-32f0-4a05-974e-b51cd268e9b8",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -12440,6 +12551,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "26b0901d-effa-489c-8a54-91129f55d01f",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.cycle_not_same",
+            "short": "cycle_not_same"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.cycle_not_same",
+            "short": "cycle_not_same",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "26ee2a33-1bb4-49a8-916e-64b49bd140db",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -13366,6 +13514,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "29977bb2-35c5-4c4c-96ef-d3d2aa480fbd",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.acc_of_no_members",
+            "short": "acc_of_no_members"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.acc_of_no_members",
+            "short": "acc_of_no_members",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "299a8e37-8fdd-4e00-973c-514950c965d0",
           "new": {
@@ -14074,6 +14259,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2b66d68e-f6df-4514-9d62-d831122ce0e5",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.plus_mono",
+            "short": "plus_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.plus_mono",
+            "short": "plus_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2bb2a026-add4-4a2f-abec-c7cb1837351a",
           "new": {
@@ -14177,6 +14399,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2c4d986a-d4db-4be5-a7de-105f3dea4eb5",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_trans",
+            "short": "same_trans"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_trans",
+            "short": "same_trans",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "GraphBisim round-1 gate fold-in: Same is symmetric/transitive; wfPart zeroStar = wfPart one; no map recovers the input",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14475,6 +14734,43 @@
             ]
           },
           "reason": "NO-GO gauge: InfinitudeFloor is degenerately inhabited by a bookkeeping carrier",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2d942229-d533-4a75-a5e1-1aa3537c28c8",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.isBisim_flip",
+            "short": "isBisim_flip"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.isBisim_flip",
+            "short": "isBisim_flip",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14983,6 +15279,43 @@
             "role": []
           },
           "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2f0b0b2a-10ad-46ff-ad83-23f54b5c5c14",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.MemGraph",
+            "short": "MemGraph"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.MemGraph",
+            "short": "MemGraph",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17337,6 +17670,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "36f8220a-d188-4b12-a3af-8edb383af7ae",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.cycle",
+            "short": "cycle"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.cycle",
+            "short": "cycle",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "37107b19-96e3-4ad8-9891-3067443800ca",
           "new": {
@@ -17956,6 +18326,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3896a9bb-04e5-4466-b19c-5b3bcc151aa2",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.zeroStar_wfPart_eq_one_wfPart",
+            "short": "zeroStar_wfPart_eq_one_wfPart"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.zeroStar_wfPart_eq_one_wfPart",
+            "short": "zeroStar_wfPart_eq_one_wfPart",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "GraphBisim round-1 gate fold-in: Same is symmetric/transitive; wfPart zeroStar = wfPart one; no map recovers the input",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "38cef9bb-b7bc-485c-97b4-1631ac5cfa60",
           "new": {
@@ -18521,6 +18928,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3a8dd2e2-9c56-413f-a3d9-9bb9090678ef",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_cycle",
+            "short": "wfPart_cycle"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_cycle",
+            "short": "wfPart_cycle",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20364,6 +20808,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "42b411bf-62f0-4100-8978-9c2c2a71abdb",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaLoop",
+            "short": "omegaLoop"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaLoop",
+            "short": "omegaLoop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "42baa825-43f1-4afc-a923-ad63d6c391a3",
           "new": {
             "file": "ZeroParadox/Computability/Kleene.lean",
@@ -20871,6 +21352,43 @@
             ]
           },
           "reason": "New file Multihomed/BoundaryOrder.lean — atlas slice 2: Phase ordered as WithBot Ordinal, the UpAndOver instance with corner at the floor",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "43917cd6-0571-4673-bf9c-5c507c6e0084",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaPair_lfp",
+            "short": "omegaPair_lfp"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaPair_lfp",
+            "short": "omegaPair_lfp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22659,6 +23177,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "488a3722-e8bb-4b9f-9812-3780870e11b0",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.dropLoops_zeroStar",
+            "short": "dropLoops_zeroStar"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.dropLoops_zeroStar",
+            "short": "dropLoops_zeroStar",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "48a7dc4e-e890-441f-8346-0aa432abbd2c",
           "new": {
@@ -23610,6 +24165,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4bd42db8-112e-4404-9607-bf1ff550cec3",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.dropLoops_omegaLoop",
+            "short": "dropLoops_omegaLoop"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.dropLoops_omegaLoop",
+            "short": "dropLoops_omegaLoop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24925,6 +25517,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "506a1aba-8813-4866-a7f2-69eb7caacb2b",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_same",
+            "short": "wfPart_same"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_same",
+            "short": "wfPart_same",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26958,6 +27587,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "57c38330-748a-4884-9567-734db7a12b72",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.one_wf",
+            "short": "one_wf"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.one_wf",
+            "short": "one_wf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "57cb56bf-5645-49ac-9a41-96567a6d31d1",
           "new": {
@@ -28534,6 +29200,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5c30a47a-d60a-48b0-bca4-da4d6e3e78f7",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.dropLoops_not_same",
+            "short": "dropLoops_not_same"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.dropLoops_not_same",
+            "short": "dropLoops_not_same",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5c4763c4-73b6-44db-9105-cbf033833547",
           "new": {
@@ -29180,6 +29883,43 @@
             ]
           },
           "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5e09bcf2-f748-4f9b-a1ce-ba1e079be535",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_of_wf",
+            "short": "wfPart_of_wf"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_of_wf",
+            "short": "wfPart_of_wf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33115,6 +33855,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6d3c82fa-6550-41de-afe2-a2a70690e3d7",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.empty",
+            "short": "empty"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.empty",
+            "short": "empty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6d6b1701-8b85-417d-9047-bae03fa658fa",
           "new": {
@@ -33506,6 +34283,43 @@
             "role": []
           },
           "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6e06d8e4-fc38-4a83-a8b4-a9f0b39c60a1",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart",
+            "short": "wfPart"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart",
+            "short": "wfPart",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38586,6 +39400,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7e32f40d-7d37-4e99-9623-ca33b0f0d75c",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.plus",
+            "short": "plus"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.plus",
+            "short": "plus",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7e74a1a3-0f43-4590-ba26-5e4cc80ecca6",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -40157,6 +41008,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "83a420cf-8e41-4b82-8730-26fab993e48b",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.IsBisim",
+            "short": "IsBisim"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.IsBisim",
+            "short": "IsBisim",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42155,6 +43043,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8bdd9521-3f60-4645-99a1-a300c24e559e",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaPair_plus_empty",
+            "short": "omegaPair_plus_empty"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaPair_plus_empty",
+            "short": "omegaPair_plus_empty",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8bf58463-2a99-4d4b-873e-7e8917b1aa9e",
           "new": {
@@ -42633,6 +43558,43 @@
             ]
           },
           "reason": "Epsilon0LeastFP.lean (2026-10-04, lane Q): cells of nfp (omega^.) as widths — first cell = Iic eps0; successor cell (eps_o, eps_(o+1)) order-isomorphic to Iio eps_(o+1), width eps_(o+1); eps0 countable. From probes_2026-10-04/CellWidth.lean.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8e5d89b6-9622-4c34-bc55-25b9908b8597",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_below_root",
+            "short": "wfPart_below_root"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_below_root",
+            "short": "wfPart_below_root",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46789,6 +47751,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9ac8e465-6279-4d05-8dce-e5532c047af5",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_symm",
+            "short": "same_symm"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_symm",
+            "short": "same_symm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "GraphBisim round-1 gate fold-in: Same is symmetric/transitive; wfPart zeroStar = wfPart one; no map recovers the input",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9acf9c50-0a3e-41f8-8a89-4bdabce45f55",
           "new": {
@@ -47032,6 +48031,43 @@
             ]
           },
           "reason": "lane K1: ZP-K § VIII (infinitely many fixed points, padding, self-printing universal code, occurrence controls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9b5e8d62-2dfc-493f-a9e6-54673890fa68",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.dropLoops",
+            "short": "dropLoops"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.dropLoops",
+            "short": "dropLoops",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48699,6 +49735,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a1560ac5-8b5a-43f3-9d93-bc77952c7608",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_not_recoverable",
+            "short": "wfPart_not_recoverable"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_not_recoverable",
+            "short": "wfPart_not_recoverable",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "GraphBisim round-1 gate fold-in: Same is symmetric/transitive; wfPart zeroStar = wfPart one; no map recovers the input",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a1acd227-2386-49ca-904c-f8f58ff50719",
           "new": {
@@ -48988,6 +50061,43 @@
           "reason": "New declarations: Pataraia's theorem and induction with no axioms, ported from TypeTopology Various.Pataraia-Taylor (2026-09-28)",
           "verify": {
             "axioms": "(none) - does not depend on any axioms",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a311bcd4-eefc-4003-8102-ec3956fb8489",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaPair_plus_full",
+            "short": "omegaPair_plus_full"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaPair_plus_full",
+            "short": "omegaPair_plus_full",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -50026,6 +51136,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a7fab02b-dde3-4f3e-b8ce-e98ba2b9aea5",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.acc_no_loop",
+            "short": "acc_no_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.acc_no_loop",
+            "short": "acc_no_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a81dff83-4feb-4c7f-b34e-60befea88b03",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -50607,6 +51754,43 @@
           "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
           "verify": {
             "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aa295cf0-d50b-42c4-b039-0aa53a0c8448",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.dropLoops_cycle_not_wf",
+            "short": "dropLoops_cycle_not_wf"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.dropLoops_cycle_not_wf",
+            "short": "dropLoops_cycle_not_wf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -53310,6 +54494,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b267c687-08d8-49ad-838c-3956b682d450",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_omegaPair",
+            "short": "wfPart_omegaPair"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_omegaPair",
+            "short": "wfPart_omegaPair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b267c754-ac2d-428e-8e21-07682dc1fc98",
           "new": {
@@ -55265,6 +56486,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b7e3cc26-8abe-4095-80c8-f6635b7aff03",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.flip2_ne",
+            "short": "flip2_ne"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.flip2_ne",
+            "short": "flip2_ne",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b7e689d9-c7df-40b4-bfca-0560fad9259a",
           "new": {
@@ -55966,6 +57224,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ba2f32d6-a040-47dc-9b9b-9b00620bcf04",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.flip2",
+            "short": "flip2"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.flip2",
+            "short": "flip2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ba51dfe1-c36c-437a-a948-8c615fd44f8b",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -56066,6 +57361,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "badca1b4-8bf8-4e62-8878-6b9374f36874",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_iff_gfp",
+            "short": "same_iff_gfp"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_iff_gfp",
+            "short": "same_iff_gfp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -57794,6 +59126,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c1f364b7-ea66-449c-84c0-d098ae2a9247",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaPair",
+            "short": "omegaPair"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaPair",
+            "short": "omegaPair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c242edd9-4078-4aaf-884e-a40eb3227847",
           "new": {
@@ -59106,6 +60475,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c618c82d-09f5-4b1b-96d6-b5de9dd4bc5b",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.plusHom",
+            "short": "plusHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.plusHom",
+            "short": "plusHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c6278104-7eb7-49e8-b8b5-71045e5d4bd0",
           "new": {
@@ -59647,6 +61053,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c7ea3cae-8621-4c74-abfd-61ce23e19173",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.zeroStar_not_same_one",
+            "short": "zeroStar_not_same_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.zeroStar_not_same_one",
+            "short": "zeroStar_not_same_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -62162,6 +63605,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d10ff065-7d13-47df-b502-d072bdc36770",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.Same",
+            "short": "Same"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.Same",
+            "short": "Same",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d1636ef0-eb21-4bb3-9d95-21f2fc6cbe72",
           "new": {
             "file": "ZeroParadox/Category/DiagonalWitness.lean",
@@ -63036,6 +64516,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d3650ccc-0fa6-4e92-88e9-a5f09a35dae7",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaPair_gfp",
+            "short": "omegaPair_gfp"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaPair_gfp",
+            "short": "omegaPair_gfp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d3aacc24-917c-418b-8d62-bd2ec4453136",
           "new": {
@@ -63204,6 +64721,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d47b0c5a-0208-4166-9e23-27e8fdaea949",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.one",
+            "short": "one"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.one",
+            "short": "one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66147,6 +67701,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "de11ff48-010f-4518-8299-cf828bcd5179",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaLoop_same_omegaPair",
+            "short": "omegaLoop_same_omegaPair"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaLoop_same_omegaPair",
+            "short": "omegaLoop_same_omegaPair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -69517,6 +71108,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e83d2d42-e017-4ae9-8c4e-3e74c8f46051",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.acc_no_two_cycle",
+            "short": "acc_no_two_cycle"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.acc_no_two_cycle",
+            "short": "acc_no_two_cycle",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e8428a35-67c4-4c24-81fd-35a6ef87f5a7",
           "new": {
@@ -69690,6 +71318,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e8ce626e-f0c2-4737-8916-0985bd6a4871",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.acc_transfer",
+            "short": "acc_transfer"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.acc_transfer",
+            "short": "acc_transfer",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -76652,6 +78317,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fec3236e-01ef-4732-b920-86f780009b60",
+          "new": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.zeroStar",
+            "short": "zeroStar"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/GraphBisim.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.zeroStar",
+            "short": "zeroStar",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
           "verify": {
             "axioms": null,
             "sorry_free": true
