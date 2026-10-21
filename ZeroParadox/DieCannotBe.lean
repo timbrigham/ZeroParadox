@@ -30,6 +30,7 @@ import ZeroParadox.Category.LawvereTwoAdic
 import ZeroParadox.Multihomed.HilbertDiagonal
 import ZeroParadox.Order.UpAndOver
 import ZeroParadox.Settheory.QuineHost
+import ZeroParadox.Settheory.HypersetOrder
 
 set_option maxHeartbeats 400000
 
@@ -1680,5 +1681,94 @@ example : ZeroParadox.IsComputationalQuine Nat.Partrec.Code.zero ∧
 #check @ZeroParadox.ordinalSuccMotion_up_succ_epsilon0 -- Statement: there UP sends `succ ε₀` to ε₁
 #check @ZeroParadox.selfOnlyAt_ofFun_app_iff     -- Statement: for `S : SelfContained C`, `x` steps to itself only in `ofFun S.app` iff `x = S.bot`; both directions
 #check @ZeroParadox.wem_of_decidable_selfOnlyAt_glue -- Statement: deciding that at the glued point, uniformly in `p`, gives weak excluded middle; one way
+
+/-! ### § XVI. The over-then-up / up-then-over pair, and leg polarity against a carrier order -/
+#check @ZeroParadox.Motion.Elbow                 -- Statement: up-then-over: `up x = y ≠ x`, and `y` steps, possibly to itself
+-- Reading: `Corner` (over-then-up) and `Elbow` (up-then-over) are a pair; neither is the preferred member.
+#check @ZeroParadox.Motion.corner_elbow_of_over_up_over -- Statement: a run OVER, UP, OVER from a landing gives a corner and an elbow
+#check @ZeroParadox.Motion.corner_elbow_of_up_over_up -- Statement: a run UP, OVER, UP gives a corner and an elbow
+#check @ZeroParadox.Motion.elbow_reverse_iff     -- Statement: reversed, an elbow is UP and OVER arriving at one point
+#check @ZeroParadox.Motion.corner_reverse_iff    -- Statement: reversed, a corner is OVER and UP leaving one point
+-- Statement: CONTROL: a corner without an elbow, on `Fin 3`: UP `1 ↦ 2`, OVER only `0 → 1`.
+example : let M := (ZeroParadox.Motion.ofTotal (fun x : Fin 3 => if x = 1 then 2 else x) (by decide)
+      (fun a b => a = 0 ∧ b = 1))
+    M.Corner ∧ ¬ M.Elbow := by
+  refine ⟨⟨0, 1, 2, Part.mem_some_iff.2 (by decide), ⟨rfl, rfl⟩, Part.mem_some_iff.2 (by decide),
+    by decide⟩, ?_⟩
+  rintro ⟨x, y, b, hy, hyx, hs, -⟩
+  have hy' : y = (if x = 1 then 2 else x) := Part.mem_some_iff.1 hy
+  subst hs
+  clear hy
+  revert hy' hyx; revert x; decide
+-- Statement: CONTROL: an elbow without a corner, on `Fin 2`: UP constant `0`, OVER only `0 → 0`;
+-- the elbow's step does not leave `0` (`¬ LeavesAt 0`), where a corner's step always leaves its
+-- landing (the `example` after this one).
+example : let M := (ZeroParadox.Motion.ofTotal (fun _ : Fin 2 => (0 : Fin 2)) (fun _ => rfl)
+      (fun a b => a = 0 ∧ b = 0))
+    M.Elbow ∧ ¬ M.Corner ∧ ¬ M.LeavesAt 0 := by
+  refine ⟨⟨1, 0, 0, Part.mem_some_iff.2 rfl, by decide, ⟨rfl, rfl⟩⟩, ?_, ?_⟩
+  · rintro ⟨y, b, z, -, ⟨-, rfl⟩, hz, hzb⟩
+    exact hzb (Part.mem_some_iff.1 hz)
+  · rintro ⟨b, ⟨-, hb⟩, hne⟩
+    exact hne hb
+-- Statement: from a landing `y`, `step y b`, `z ∈ up b` and `z ≠ b` give `b ≠ y`, in every motion.
+example {α : Type*} (M : ZeroParadox.Motion α) :
+    ∀ y b z, M.IsLanding y → M.step y b → z ∈ M.up b → z ≠ b → b ≠ y := by
+  intro y b z hy _ hz hzb hb
+  subst hb
+  exact hzb (Part.mem_unique hz hy)
+#check @ZeroParadox.ordinalSuccMotion_elbow      -- Statement: `ordinalSuccMotion` has an elbow; with `ordinalSuccMotion_corner`, both members
+#check @ZeroParadox.shiftMotion_elbow_iff        -- Statement: `shiftMotion c` has an elbow iff `⌜c⌝ ≠ 0`, as with the corner (`shiftMotion_corner_iff`)
+#check @ZeroParadox.Motion.UpRaises              -- Statement: every value of `up x` is `≥ x`
+#check @ZeroParadox.Motion.UpLowers              -- Statement: every value of `up x` is `≤ x`
+#check @ZeroParadox.Motion.StepRaises            -- Statement: every step `x → y` has `x ≤ y`
+#check @ZeroParadox.Motion.StepLowers            -- Statement: every step `x → y` has `y ≤ x`
+#check @ZeroParadox.Motion.Agree                 -- Statement: UP raises and OVER raises
+#check @ZeroParadox.Motion.Oppose                -- Statement: UP lowers and OVER raises
+-- Statement: CONTROL: `Agree` and `Oppose` overlap, and `Oppose` does not force a loop: on ℕ, the
+-- identity UP both raises and lowers, OVER `n ↦ n + 1` raises, and the motion does not loop.
+example : let M := ZeroParadox.Motion.ofTotal (id : ℕ → ℕ) (fun _ => rfl) (fun a b => b = a + 1)
+    M.Agree ∧ M.Oppose ∧ ¬ M.Loop := by
+  have hu : ∀ x y : ℕ, y ∈ Part.some (id x) → y = x := fun _ _ h => Part.mem_some_iff.1 h
+  have hs : ∀ x y : ℕ, y = x + 1 → x ≤ y := fun _ _ h => h ▸ Nat.le_succ _
+  exact ⟨⟨fun x y h => (hu x y h).ge, hs⟩, ⟨fun x y h => (hu x y h).le, hs⟩,
+    fun ⟨_, _, _, _, hby, hyb⟩ => hby (Part.mem_some_iff.1 hyb).symm⟩
+-- Statement: CONTROL: they do not cover every motion: on `Fin 4`, UP `1 ↦ 0` lowers and `2 ↦ 3`
+-- raises, so UP neither raises nor lowers, and the motion neither agrees nor opposes.
+example : let M := (ZeroParadox.Motion.ofTotal
+      (fun x : Fin 4 => if x = 1 then 0 else if x = 2 then 3 else x) (by decide)
+      (fun a b => (a = 0 ∧ b = 1) ∨ (a = 0 ∧ b = 2)))
+    ¬ M.Agree ∧ ¬ M.Oppose :=
+  ⟨fun h => absurd (h.1 1 0 (Part.mem_some_iff.2 (by decide))) (by decide),
+    fun h => absurd (h.1 2 3 (Part.mem_some_iff.2 (by decide))) (by decide)⟩
+#check @ZeroParadox.MemGraph.pruneMotion_upLowers -- Statement: under `Sub`, pruning's UP lowers, at every node count
+#check @ZeroParadox.MemGraph.pruneMotion_not_stepRaises -- Statement: on two nodes its OVER, edge inclusion, does not raise
+#check @ZeroParadox.MemGraph.pruneMotion_two_neither -- Statement: on two nodes the legs neither agree nor oppose
+#check @ZeroParadox.MemGraph.pruneMotion_one_oppose -- Statement: on one node the legs oppose (UP lowers; OVER raises, `pruneMotion_one_stepRaises`)
+#check @ZeroParadox.MemGraph.pruneMotion_one_loop -- Statement: and on one node the motion loops
+#check @ZeroParadox.Motion.upRaises_dual         -- Statement: in the order dual, UP raises iff it lowers here
+#check @ZeroParadox.Motion.stepRaises_dual       -- Statement: and OVER raises iff it lowers here
+#check @ZeroParadox.Motion.agree_dual            -- Statement: the order dual flips both legs: agree there is both lowering here
+#check @ZeroParadox.Motion.oppose_dual           -- Statement: oppose there is UP raising and OVER lowering here
+#check @ZeroParadox.Motion.upRaises_reverse      -- Statement: INVARIANT: reversal leaves whether UP raises unchanged
+#check @ZeroParadox.Motion.upLowers_reverse      -- Statement: INVARIANT: and whether UP lowers
+#check @ZeroParadox.Motion.stepRaises_reverse    -- Statement: reversal flips OVER's polarity only
+#check @ZeroParadox.Motion.agree_dual_reverse_iff -- Statement: reversed, in the order dual, the motion agrees iff it opposes here
+#check @ZeroParadox.Motion.not_loop_of_agree     -- Statement: in a partial order, agreeing legs give no loop, by antisymmetry; one way
+-- Statement: in a partial order, both legs lowering gives no loop (`not_loop_of_agree` in the
+-- order dual).
+example {α : Type} [PartialOrder α] (M : ZeroParadox.Motion α) (hu : M.UpLowers)
+    (hs : M.StepLowers) : ¬ M.Loop :=
+  ZeroParadox.Motion.not_loop_of_agree (α := αᵒᵈ) (M := M) ⟨hu, hs⟩
+#check @ZeroParadox.ordinalSuccMotion_agree      -- Statement: `ordinalSuccMotion`'s legs agree in `Ordinal`'s order
+#check @ZeroParadox.shiftMotion_oppose           -- Statement: `shiftMotion c`'s legs oppose in ℕ's order
+-- Statement: polarity beside ZP-M's two sides: `ordinalSuccMotion` agrees and does not loop; for
+-- `⌜c⌝ ≠ 0`, `shiftMotion c` opposes and loops.
+example (c : Nat.Partrec.Code) (hk : Encodable.encode c ≠ 0) :
+    (ZeroParadox.ordinalSuccMotion.{0}.Agree ∧ ¬ ZeroParadox.ordinalSuccMotion.{0}.Loop) ∧
+      ((ZeroParadox.shiftMotion c).Oppose ∧ (ZeroParadox.shiftMotion c).Loop) :=
+  ⟨⟨ZeroParadox.ordinalSuccMotion_agree,
+      ZeroParadox.Motion.not_loop_of_agree ZeroParadox.ordinalSuccMotion_agree⟩,
+    ZeroParadox.shiftMotion_oppose c, ZeroParadox.shiftMotion_loop c hk⟩
 
 end DieCannotBeIndex

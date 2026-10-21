@@ -469,13 +469,31 @@ theorem ordinalSuccMotion_not_loop : ¬ ordinalSuccMotion.{u}.Loop := by
     rw [hb]; exact lt_of_lt_of_le (Order.lt_succ y) (Ordinal.le_nfp _ _)
   exact absurd hy hlt.ne
 
+/-- `Statement:` in `Ordinal`'s order the legs of `ordinalSuccMotion` agree: UP and OVER both raise. -/
+theorem ordinalSuccMotion_agree : ordinalSuccMotion.{u}.Agree :=
+  ⟨fun x _ h => (Part.mem_some_iff.1 h) ▸ Ordinal.le_nfp _ x,
+   fun x _ h => (show _ = Order.succ x from h) ▸ Order.le_succ x⟩
+
+-- Statement: with `ordinalSuccMotion_agree`, `Motion.not_loop_of_agree` re-derives `ordinalSuccMotion_not_loop`.
+example : ¬ ordinalSuccMotion.{u}.Loop := Motion.not_loop_of_agree ordinalSuccMotion_agree
+
+/-- `Statement:` `ordinalSuccMotion` has an elbow: UP sends `1` to `nfp (ω^·) 1 ≠ 1`, which steps to
+    its successor. -/
+theorem ordinalSuccMotion_elbow : ordinalSuccMotion.{u}.Elbow :=
+  ⟨1, Ordinal.nfp (fun a => Ordinal.omega0 ^ a) 1,
+    Order.succ (Ordinal.nfp (fun a => Ordinal.omega0 ^ a) 1), Part.mem_some _, fun h => by
+      have := Ordinal.nfp_fp (Ordinal.isNormal_opow Ordinal.one_lt_omega0) (1 : Ordinal.{u})
+      rw [h, Ordinal.opow_one] at this
+      exact Ordinal.one_lt_omega0.ne' this, rfl⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
 
 The named declarations of §§ I-II measure `[propext, Quot.sound]`. § IV inherits
 `Classical.choice` from `snapNucleus` and Mathlib's `Ordinal` fixed-point theory, STATEMENT-CARRIED as in
-`ZeroParadox/Ordinal/SnapNucleus.lean` (statement control on each, measured 2026-10-08). -/
+`ZeroParadox/Ordinal/SnapNucleus.lean` (statement control on each, measured 2026-10-08). § V's
+footprints are printed below. -/
 
 section PurityCheck
 open ZeroParadox
@@ -498,5 +516,7 @@ open ZeroParadox
 #print axioms ordinalSuccMotion_climb
 #print axioms ordinalSuccMotion_up_succ_epsilon0
 #print axioms ordinalSuccMotion_not_loop
+#print axioms ordinalSuccMotion_agree
+#print axioms ordinalSuccMotion_elbow
 
 end PurityCheck

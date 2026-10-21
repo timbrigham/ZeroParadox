@@ -910,6 +910,23 @@ theorem shiftMotion_corner_iff (c : Code) : (shiftMotion c).Corner ↔ Encodable
   have hb : b = Encodable.encode c + y := hs
   exact hne (by rw [hb, hk, zero_add])
 
+/-- `Statement:` in ℕ's order the legs of `shiftMotion c` oppose: UP `n ↦ n % ⌜c⌝` lowers and OVER
+    `n ↦ ⌜c⌝ + n` raises. -/
+theorem shiftMotion_oppose (c : Code) : (shiftMotion c).Oppose :=
+  ⟨fun x _ h => (Part.mem_some_iff.1 h) ▸ Nat.mod_le x _,
+   fun x _ h => (show _ = Encodable.encode c + x from h) ▸ Nat.le_add_left x _⟩
+
+/-- `Statement:` `shiftMotion c` has an elbow iff `⌜c⌝ ≠ 0`; both directions. -/
+theorem shiftMotion_elbow_iff (c : Code) : (shiftMotion c).Elbow ↔ Encodable.encode c ≠ 0 := by
+  constructor
+  · rintro ⟨x, y, -, hy, hyx, -⟩ hk
+    have hy' : y = x % Encodable.encode c := Part.mem_some_iff.1 hy
+    rw [hk, Nat.mod_zero] at hy'
+    exact hyx hy'
+  · intro hk
+    exact ⟨Encodable.encode c, 0, Encodable.encode c, Part.mem_some_iff.2 (Nat.mod_self _).symm,
+      Ne.symm hk, show _ = _ + 0 by omega⟩
+
 -- Statement: the statement of `self_halting_undecidable`, by a second route: a decider gives a
 -- computable `g`; Rogers' fixed point `c` of `g` makes "`c` halts on `⌜c⌝`" equivalent to its own
 -- negation, which would make that proposition step to itself only in `Motion.ofFun Not`, where every
@@ -1035,5 +1052,7 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms isComputationalQuine_iff_eval_mod
 #print axioms shiftMotion_loop
 #print axioms shiftMotion_corner_iff
+#print axioms shiftMotion_oppose
+#print axioms shiftMotion_elbow_iff
 
 end PurityCheck
