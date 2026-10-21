@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2121,
-        "files": 175
+        "declarations": 2197,
+        "files": 176
       },
       "entries": [
         {
@@ -1971,6 +1971,43 @@
             ]
           },
           "reason": "The one-wayness as an algebraic fact, CONDITIONAL on a valuation-0 point existing: that layer has no scale-predecessor, so scale is not surjective there. Not a class-level property — unit_scale_is_bijective is the carrier where the hypothesis is unsatisfiable and scale is a bijection. Inbound (nu) face, sibling of c3_irreversible.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "036adec9-402d-4a6b-9ead-9d57a6120807",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_not_stepRaises",
+            "short": "pruneMotion_not_stepRaises"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_not_stepRaises",
+            "short": "pruneMotion_not_stepRaises",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -3759,6 +3796,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "094abb05-2009-49ce-a02b-24c9ebe813e2",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.at'",
+            "short": "at'"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.at'",
+            "short": "at'",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "09535661-d89a-4202-af9e-5485f3057a86",
           "new": {
             "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
@@ -5219,6 +5293,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0e572484-edbf-4bf2-bcf3-090dedba73a4",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.stepRaises_dual",
+            "short": "stepRaises_dual"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.stepRaises_dual",
+            "short": "stepRaises_dual",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0e6d2ded-f0da-4634-b14c-0fa28af3e64b",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -5539,6 +5652,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0ed3b29e-a046-4ce1-a628-cd0adfb40c43",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.Grow",
+            "short": "Grow"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.Grow",
+            "short": "Grow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0efdecf8-28fc-49a5-b70a-45fb847a363d",
           "new": {
@@ -5753,6 +5903,45 @@
             ]
           },
           "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0ffd3776-2441-4f49-9548-90a8c42f9c65",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Agree",
+            "short": "Agree"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Agree",
+            "short": "Agree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9117,6 +9306,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1abd647e-ed07-4e4e-bb0e-009396010809",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.agree_dual",
+            "short": "agree_dual"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.agree_dual",
+            "short": "agree_dual",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1ad79c41-6080-46bc-b4d7-911319b18ac2",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -9219,6 +9447,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1b85eff0-a8f1-4604-8a86-393db49e6d23",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.bare2",
+            "short": "bare2"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.bare2",
+            "short": "bare2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9655,6 +9920,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1d4c8b64-45ba-4c52-a2c5-78d658252935",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StepRaises",
+            "short": "StepRaises"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StepRaises",
+            "short": "StepRaises",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12147,6 +12451,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2599e7f3-2456-41d3-bef3-19ab35dc5777",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion_elbow_iff",
+            "short": "shiftMotion_elbow_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion_elbow_iff",
+            "short": "shiftMotion_elbow_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "25a8a3b5-bdef-4f8b-8388-b12f6f5f0c1e",
           "new": {
@@ -13442,6 +13783,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "29668f64-5120-4576-a9f2-68759deb6230",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion",
+            "short": "pruneMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion",
+            "short": "pruneMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2972c210-a2c9-4fe9-9d3c-078f18be0536",
           "new": {
@@ -14113,6 +14491,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2b08af09-bf23-4d80-aab1-e4a867dca34e",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaIn",
+            "short": "omegaIn"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.omegaIn",
+            "short": "omegaIn",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2b128f60-9d05-408f-b939-8c3c2e5a201f",
           "new": {
             "file": "ZeroParadox/Ordinal/NaturalOpsPow.lean",
@@ -14286,6 +14701,43 @@
             ]
           },
           "reason": "New file GraphBisim.lean: finite membership graphs, Aczel bisimulation, dropLoops (control) vs wfPart (bisimulation-invariant), Omega/empty/zero-star/one/two-cycle examples",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2ba626df-96bd-4176-9609-c73af239b2b3",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap_mem_zero",
+            "short": "wrap_mem_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap_mem_zero",
+            "short": "wrap_mem_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17893,6 +18345,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "376d14b2-14b9-48fb-b281-8c0501239755",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.antisymmRel_iff_same",
+            "short": "antisymmRel_iff_same"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.antisymmRel_iff_same",
+            "short": "antisymmRel_iff_same",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3779c68f-117e-485c-afc6-24d81051314a",
           "new": {
             "file": "ZeroParadox/Ordinal/PricedInterface.lean",
@@ -19308,6 +19797,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3b20ead7-c739-4d36-a4db-e0ed7d037af6",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_at_of",
+            "short": "same_at_of"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_at_of",
+            "short": "same_at_of",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3b2524ff-6e9b-48fd-97c2-a43c2d5ddc9e",
           "new": {
@@ -20070,6 +20596,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3ee4cab0-38ae-42d0-8167-5eb0e6c18dd4",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Oppose",
+            "short": "Oppose"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Oppose",
+            "short": "Oppose",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23178,6 +23743,82 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4888e047-418b-45d6-b019-6fffb01c0da7",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.prune_const_of_between",
+            "short": "prune_const_of_between"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.prune_const_of_between",
+            "short": "prune_const_of_between",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4889914e-1503-477d-bcb4-ec431a3cb64a",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.elbow_reverse_iff",
+            "short": "elbow_reverse_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.elbow_reverse_iff",
+            "short": "elbow_reverse_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "488a3722-e8bb-4b9f-9812-3780870e11b0",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -24359,6 +25000,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4ca2036c-04ca-4c83-87a2-73a56a75a601",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StepLowers",
+            "short": "StepLowers"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StepLowers",
+            "short": "StepLowers",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4ca67619-abd3-4b0b-a469-d5b2bfc90dc3",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleBridge.lean",
@@ -25454,6 +26134,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5033735f-14ba-4bf0-b0ed-22456afa55ff",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap",
+            "short": "wrap"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap",
+            "short": "wrap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "50364030-c8cb-4171-ac1c-6edff5acf781",
           "new": {
@@ -26372,6 +27089,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "52623e99-068c-419b-aad8-16fef55a76ed",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_loop_of_agree",
+            "short": "not_loop_of_agree"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_loop_of_agree",
+            "short": "not_loop_of_agree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "withdrawn",
           "id": "52887614-7041-401e-8b21-fab5daedd32d",
           "new": {
@@ -26962,6 +27718,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5541f318-916d-4dd1-9888-e7a3207bd635",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpLowers",
+            "short": "UpLowers"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpLowers",
+            "short": "UpLowers",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "556c247b-8749-43e4-ae2d-25f78ea402a3",
           "new": {
@@ -27440,6 +28235,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "573926b9-7c9a-4c4a-9e0b-65ce0b85a1e0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upRaises_reverse",
+            "short": "upRaises_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upRaises_reverse",
+            "short": "upRaises_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "573f4e47-a451-4208-80b7-1c3e3a3fa5a1",
           "new": {
             "file": "ZeroParadox/Multihomed/HilbertDiagonal.lean",
@@ -27866,6 +28700,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5850281c-3cbf-47dc-9a7a-31bf62b90b48",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_sub_mono",
+            "short": "wfPart_sub_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_sub_mono",
+            "short": "wfPart_sub_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28742,6 +29613,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5a8e3b26-ac7b-48e4-b042-6b8c8ef9f130",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.agree_dual_reverse_iff",
+            "short": "agree_dual_reverse_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.agree_dual_reverse_iff",
+            "short": "agree_dual_reverse_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31291,6 +32201,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "648e845f-8182-46e4-9e4f-0bf591047634",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_one_oppose",
+            "short": "pruneMotion_one_oppose"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_one_oppose",
+            "short": "pruneMotion_one_oppose",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset/die round-1 fold-in: node-count poles of pruning, fixed-point characterisation, upLowers_reverse",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6490dfa8-4be3-4412-b1ae-b61d86b1f0e2",
           "new": {
             "file": "ZeroParadox/Valuation/BottomInvariant.lean",
@@ -32241,6 +33188,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6829c4ab-574d-4471-bb96-947966ebe3e5",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_iff_sub_sub",
+            "short": "same_iff_sub_sub"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_iff_sub_sub",
+            "short": "same_iff_sub_sub",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33445,6 +34429,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6bec9c3c-55cc-41a1-9488-a18c4e3cccde",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.sub_congr",
+            "short": "sub_congr"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.sub_congr",
+            "short": "sub_congr",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6bfa4c45-b855-40ae-a8f3-171fc5baa96a",
           "new": {
@@ -34147,6 +35168,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6d9234bc-c708-448c-9747-fff5122e0204",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.instPreorder",
+            "short": "instPreorder"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.instPreorder",
+            "short": "instPreorder",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6dcfe48e-b93d-484e-b92e-b596f7202b9a",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -34693,6 +35751,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6f3fa6e1-05b9-42f3-9e35-2d5e1bac0448",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_upLowers",
+            "short": "pruneMotion_upLowers"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_upLowers",
+            "short": "pruneMotion_upLowers",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -36963,6 +38058,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7725e254-0277-4ebb-8856-b16fcdecfdfc",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_wfPart_iff_acc",
+            "short": "same_wfPart_iff_acc"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_wfPart_iff_acc",
+            "short": "same_wfPart_iff_acc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset/die round-1 fold-in: node-count poles of pruning, fixed-point characterisation, upLowers_reverse",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "774753cf-8ad4-483f-ae98-93bfcd63909f",
           "new": {
@@ -37805,6 +38937,43 @@
             ]
           },
           "reason": "lane P: ZP-K § VIII address lemma (replicas differ only on channel 0)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "796ea75c-23ac-4d9c-8291-ccec66b7d341",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.sub_refl",
+            "short": "sub_refl"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.sub_refl",
+            "short": "sub_refl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40164,6 +41333,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "80c89a68-f980-42fb-8add-3c1662274f33",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.Sub",
+            "short": "Sub"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.Sub",
+            "short": "Sub",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8110902a-18e4-4372-927b-1b1f8af54fc2",
           "new": {
@@ -40762,6 +41968,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "82ea219d-865a-46c3-8097-b9c9abb66ae2",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_one_loop",
+            "short": "pruneMotion_one_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_one_loop",
+            "short": "pruneMotion_one_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset/die round-1 fold-in: node-count poles of pruning, fixed-point characterisation, upLowers_reverse",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "82f4811d-5731-4c41-83bd-e93a025da338",
           "new": {
             "file": "ZeroParadox/Computability/GroundZero.lean",
@@ -41126,6 +42369,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "83dfaac7-f38c-4c4c-8a24-79bc30867e41",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.le_not_sub",
+            "short": "le_not_sub"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.le_not_sub",
+            "short": "le_not_sub",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "84082b78-d99e-467e-8bd7-73e8f12cf328",
           "new": {
@@ -41188,6 +42468,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8497b152-8e9b-4b89-9694-86f0fcb71af6",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneHom",
+            "short": "pruneHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneHom",
+            "short": "pruneHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42783,6 +44100,80 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8a8d0842-89eb-406a-befb-8d9eb8f1e607",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_two_neither",
+            "short": "pruneMotion_two_neither"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_two_neither",
+            "short": "pruneMotion_two_neither",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Hyperset/die round-1 fold-in: node-count poles of pruning, fixed-point characterisation, upLowers_reverse",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8a9d6d32-b66e-45a7-9638-2fe7e057bc13",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_sub",
+            "short": "wfPart_sub"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_sub",
+            "short": "wfPart_sub",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8ab9a4c6-5eed-4304-8588-69f934f5d402",
           "new": {
             "file": "ZeroParadox/Reals/OrderedField.lean",
@@ -43605,6 +44996,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8ef71113-73f0-48cc-b903-83b923d96964",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap_zeroStar_not_same",
+            "short": "wrap_zeroStar_not_same"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap_zeroStar_not_same",
+            "short": "wrap_zeroStar_not_same",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8f2590db-e3ab-4103-ba32-aa9887c22123",
           "new": {
@@ -44408,6 +45836,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "90bae869-37d0-423a-bd4c-6bd8b8ba08d8",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upRaises_dual",
+            "short": "upRaises_dual"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upRaises_dual",
+            "short": "upRaises_dual",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -45326,6 +46793,43 @@
             ]
           },
           "reason": "AMM Thm 7.6 hypotheses 3(c) and 4, verified for Type u with ofTypeFunctor P.Obj",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "930b678b-428a-4c51-9286-c7c3b2bf344f",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_omegaLoop_of_wrap_same",
+            "short": "same_omegaLoop_of_wrap_same"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_omegaLoop_of_wrap_same",
+            "short": "same_omegaLoop_of_wrap_same",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47420,6 +48924,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "999c85b0-baaf-4eda-8bfb-632969fe7d58",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneKernel",
+            "short": "pruneKernel"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneKernel",
+            "short": "pruneKernel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "99a13fba-7335-4b90-918a-6ca772af8d36",
           "new": {
@@ -47676,6 +49218,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9a8927fd-fb61-4590-b972-348eb0ece7a5",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_same_empty_of_one_node",
+            "short": "wfPart_same_empty_of_one_node"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_same_empty_of_one_node",
+            "short": "wfPart_same_empty_of_one_node",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset/die round-1 fold-in: node-count poles of pruning, fixed-point characterisation, upLowers_reverse",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9ab0ea47-51b1-4d6e-9b46-6331a24f6857",
           "new": {
@@ -47714,6 +49293,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9ac16944-e8c5-4233-93c4-dba0ab5bce44",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.sub_of_same",
+            "short": "sub_of_same"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.sub_of_same",
+            "short": "sub_of_same",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9ac43609-1cdf-4495-aad1-535873f83fb6",
           "new": {
@@ -47741,6 +49357,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9ac6fa68-3c43-431f-8c87-3654580c2e96",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_loop",
+            "short": "pruneMotion_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_loop",
+            "short": "pruneMotion_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -49217,6 +50870,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9efc3947-bb3f-44c1-a5b9-2edc9718d55a",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_of_sub_sub",
+            "short": "same_of_sub_sub"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_of_sub_sub",
+            "short": "same_of_sub_sub",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9f137136-d4b1-4633-8101-0f543e8aa755",
           "new": {
@@ -49834,6 +51524,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a1e11632-09ed-476f-8936-fbb9538f8e42",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.fork_stay",
+            "short": "fork_stay"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.fork_stay",
+            "short": "fork_stay",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50756,6 +52483,43 @@
             ]
           },
           "reason": "A witness family discharging ZP-I's IsDepthChain seam, with the no-go gauge and the tie to the sphere's scalings",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a65bca73-ba70-463f-b9cd-fa8667f8036f",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_root_mem",
+            "short": "wfPart_root_mem"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_root_mem",
+            "short": "wfPart_root_mem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -51873,6 +53637,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "aa54ba1b-cc81-47d5-b444-92005c5972b8",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.mixed3",
+            "short": "mixed3"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.mixed3",
+            "short": "mixed3",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "aa8749e8-b923-4403-b448-4c27edbe5633",
           "new": {
@@ -52610,6 +54411,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ac6c4bf8-cd3a-4324-b17e-7b323667935c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_elbow_of_over_up_over",
+            "short": "corner_elbow_of_over_up_over"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_elbow_of_over_up_over",
+            "short": "corner_elbow_of_over_up_over",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ac6d8445-ecdc-4c41-b896-144b7f79d5d2",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -53236,6 +55076,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ae28daa3-016e-4ccc-b393-1735a5da17ae",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_climb",
+            "short": "pruneMotion_climb"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_climb",
+            "short": "pruneMotion_climb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ae40a5f6-83da-459f-9ced-13f32815575b",
           "new": {
@@ -53423,6 +55300,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "aeb831f9-0feb-4277-b525-81652ca67c26",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upLowers_reverse",
+            "short": "upLowers_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upLowers_reverse",
+            "short": "upLowers_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset/die round-1 fold-in: node-count poles of pruning, fixed-point characterisation, upLowers_reverse",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "aeca1153-5f6e-4226-a37e-cb0b1d754dac",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -53449,6 +55365,80 @@
             ]
           },
           "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aee4cc63-274e-40cb-97ba-8e48a81ba590",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_at_same",
+            "short": "wfPart_at_same"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_at_same",
+            "short": "wfPart_at_same",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aeff7713-c183-4adc-9e47-712046aa8a4b",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.HSet",
+            "short": "HSet"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.HSet",
+            "short": "HSet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -55743,6 +57733,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b5b49cc1-17a8-4930-9017-a635b081045c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.oppose_dual",
+            "short": "oppose_dual"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.oppose_dual",
+            "short": "oppose_dual",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b5bdb688-03be-4e6d-a1c9-9d6bf3d23f2c",
           "new": {
             "file": "ZeroParadox/Computability/GroundZero.lean",
@@ -57042,6 +59071,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b9313319-b55a-451e-ba61-6bbfad4a5ebc",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.sub_trans",
+            "short": "sub_trans"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.sub_trans",
+            "short": "sub_trans",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b947fc04-2679-4f10-a922-858305ee76f0",
           "new": {
             "file": "ZeroParadox/Valuation/PadicKozyrev.lean",
@@ -57067,6 +59133,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b95683bc-a8d5-405e-abc8-8cc3a4b407d1",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_not_monotone",
+            "short": "wfPart_not_monotone"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_not_monotone",
+            "short": "wfPart_not_monotone",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -57505,6 +59608,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bb6c9971-cb43-49f8-bece-d04cbb26f676",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.landing_down",
+            "short": "landing_down"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.landing_down",
+            "short": "landing_down",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -58462,6 +60602,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "beee8aba-12e5-41c4-9631-2c67b9af31f5",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_one_stepRaises",
+            "short": "pruneMotion_one_stepRaises"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.pruneMotion_one_stepRaises",
+            "short": "pruneMotion_one_stepRaises",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset/die round-1 fold-in: node-count poles of pruning, fixed-point characterisation, upLowers_reverse",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -61213,6 +63390,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c8a16c3c-7a9b-4b43-aefc-aeb21a5e91be",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpRaises",
+            "short": "UpRaises"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpRaises",
+            "short": "UpRaises",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c8ac43df-8afa-4546-9a8a-a0a95b82b1e0",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -61427,6 +63643,43 @@
             ]
           },
           "reason": "Epsilon0LeastFP.lean (2026-10-01): seed basins of nfp (omega^.) beyond epsilon-zero — successor cell (eps_o, eps_(o+1)] lands on eps_(o+1) (Veblen 1908 Cor. 1 clause B); at a limit index only eps_o itself seeds eps_o. From probes_2026-10-01 (B2) plus new limit-rung proof.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c980ae81-cbac-4365-a082-6aa1e9eef0b0",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap_mem_succ",
+            "short": "wrap_mem_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap_mem_succ",
+            "short": "wrap_mem_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -62498,6 +64751,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ccca9906-ddc7-4fdc-8a21-47dd87a6bf86",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Elbow",
+            "short": "Elbow"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Elbow",
+            "short": "Elbow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cd20c6d1-e1ef-45dc-b799-1e6dafe90e92",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -63385,6 +65677,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cfe1564a-6505-43ff-8496-7eb056331e43",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_elbow_of_up_over_up",
+            "short": "corner_elbow_of_up_over_up"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_elbow_of_up_over_up",
+            "short": "corner_elbow_of_up_over_up",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d0262e93-f311-4ed0-a7d0-91716a6db63e",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -63754,6 +66085,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d1aec40b-6689-44b9-ac65-ab86cd18788c",
+          "new": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion_oppose",
+            "short": "shiftMotion_oppose"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/Kleene.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.shiftMotion_oppose",
+            "short": "shiftMotion_oppose",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d1c2d550-c898-43b8-a97b-ddb884836ce9",
           "new": {
             "file": "ZeroParadox/Valuation/BottomInvariant.lean",
@@ -63953,6 +66321,44 @@
             ]
           },
           "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d26efe29-4a74-4a9c-b220-919bc9285e4d",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_elbow",
+            "short": "ordinalSuccMotion_elbow"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_elbow",
+            "short": "ordinalSuccMotion_elbow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -64615,6 +67021,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d3c7dc2f-832f-4337-a07b-a0ce0486d29f",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.empty_cell_has_omega_not_one",
+            "short": "empty_cell_has_omega_not_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.empty_cell_not_principal",
+            "short": "empty_cell_not_principal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Hyperset/die round-1 fold-in: restated on two nodes and renamed from empty_cell_not_principal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -69096,6 +71539,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e1aa3e20-817f-4599-b8e1-9db6fd230d72",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_wfPart",
+            "short": "wfPart_wfPart"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_wfPart",
+            "short": "wfPart_wfPart",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e208ad38-18db-4c17-9cba-165eb0152374",
           "new": {
@@ -71431,6 +73911,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e902cd5f-f739-40af-af30-3c0143a92e3b",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap_at_succ",
+            "short": "wrap_at_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap_at_succ",
+            "short": "wrap_at_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -73802,6 +76319,80 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f24ca125-ea89-4dbf-8c26-8d9dac569738",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.prune",
+            "short": "prune"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.prune",
+            "short": "prune",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f24d84a4-aeb2-484d-b1e4-e5d78eef1c2d",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.fork_loop",
+            "short": "fork_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.fork_loop",
+            "short": "fork_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f273f1c3-7850-42ce-a7e3-c26bc6f61d3c",
           "new": {
@@ -74063,6 +76654,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f314ce21-8827-402f-b26f-850b8f5e37dd",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_acc_all",
+            "short": "wfPart_acc_all"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wfPart_acc_all",
+            "short": "wfPart_acc_all",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f33bf750-72fd-484b-9885-c90662a665f9",
           "new": {
             "file": "ZeroParadox/Reals/OrderedField.lean",
@@ -74090,6 +76718,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f33f6165-2b00-499a-b184-a4d95dd79f44",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.no_upAndOver_prune",
+            "short": "no_upAndOver_prune"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.no_upAndOver_prune",
+            "short": "no_upAndOver_prune",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -75121,6 +77787,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f62a9779-5573-4a53-a4d9-bc129a4475cd",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.stepRaises_reverse",
+            "short": "stepRaises_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.stepRaises_reverse",
+            "short": "stepRaises_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f62c96de-ba2c-426a-9d3d-030067df84a2",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -76060,6 +78765,44 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f9733d46-31df-435f-bf3c-625822c938ce",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_agree",
+            "short": "ordinalSuccMotion_agree"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccMotion_agree",
+            "short": "ordinalSuccMotion_agree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -77065,6 +79808,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "fb7197c4-f4de-4c82-85f4-f45c7e183201",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_refl",
+            "short": "same_refl"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.same_refl",
+            "short": "same_refl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "fb9a26b7-6f47-4f01-9deb-42b768c5fcf5",
           "new": {
             "file": "ZeroParadox/Computability/Kleene.lean",
@@ -78029,6 +80809,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fde1e6dc-c51d-4c3b-a951-3d9fdfd39b80",
+          "new": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "namespace": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap_omegaLoop",
+            "short": "wrap_omegaLoop"
+          },
+          "old": {
+            "file": "ZeroParadox/Settheory/HypersetOrder.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.MemGraph",
+            "qualified": "ZeroParadox.MemGraph.wrap_omegaLoop",
+            "short": "wrap_omegaLoop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fdfbe427-e7bb-4e69-819d-092c26c1d5f7",
           "new": {
@@ -78648,6 +81465,45 @@
             "role": []
           },
           "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ffe8ec66-f2a5-4fa9-a568-e4d8150ac784",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_reverse_iff",
+            "short": "corner_reverse_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_reverse_iff",
+            "short": "corner_reverse_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
           "verify": {
             "axioms": null,
             "sorry_free": true

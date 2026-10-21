@@ -49,6 +49,7 @@ import ZeroParadox.Valuation.InfinitudeFloor
 import ZeroParadox.Valuation.Scale
 import ZeroParadox.Information.Disjunctive
 import ZeroParadox.Settheory.GraphBisim
+import ZeroParadox.Settheory.HypersetOrder
 import Mathlib.RingTheory.Valuation.PrimeMultiplicity
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
@@ -461,10 +462,16 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 #check @ZeroParadox.MemGraph.wfPart_same
 -- Statement: and sends Ω's two-cycle drawing to the empty set's.
 #check @ZeroParadox.MemGraph.wfPart_omegaPair
+-- Statement: any membership graph `A` whose one-step wrap (`x ↦ {x}`, `MemGraph.wrap`) is `Same` as
+-- `A` is `Same` as Ω's one-loop drawing (`omegaLoop`); no AFA is assumed.
+-- Reading: the AFA form is Aczel 1988, p. 19: "AFA implies that there is at most one solution to
+-- the equation [x = {x}], namely Ω".
+#check @ZeroParadox.MemGraph.same_omegaLoop_of_wrap_same
 -- Reading: Ω = {Ω} is AFA's Quine atom, the shape the Quine atom (CC-2) gives ⊥ of a
 -- `ZPSemilattice`; in the `QuineAtomHost` toy on `Fin 3` (`ZeroParadox/Settheory/QuineHost.lean`
 -- § VII) Ω is the toy's `bot`. `dropLoops_not_same` and `wfPart_omegaPair` are about Ω's drawings;
--- `wfPart_same` is the general fact, for any two graphs. No declaration links these drawings to the toy.
+-- `wfPart_same` is the general fact, for any two graphs, and `same_omegaLoop_of_wrap_same` is about
+-- every graph `Same` as its wrap. No declaration links these drawings to the toy.
 
 /-! ### GENERATION — the floor generates its first step -/
 

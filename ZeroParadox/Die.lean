@@ -113,8 +113,11 @@ def HasLanding : Prop := ∃ y, M.IsLanding y
 /-- `Statement:` OVER exists from some landing. -/
 def OverAtLanding : Prop := ∃ y b, M.IsLanding y ∧ M.step y b
 
-/-- `Statement:` the corner: from a landing, a step to `b`, and `up b` is a point other than `b`. -/
+/-- `Statement:` the corner, over-then-up: a landing steps to `b`, and `up b` is a point `≠ b`. -/
 def Corner : Prop := ∃ y b z, M.IsLanding y ∧ M.step y b ∧ z ∈ M.up b ∧ z ≠ b
+
+/-- `Statement:` the elbow, up-then-over: `up` sends `x` to a point `y ≠ x`, and `y` steps. -/
+def Elbow : Prop := ∃ x y b, y ∈ M.up x ∧ y ≠ x ∧ M.step y b
 
 /-- `Statement:` from a landing, a step to a point where `up` is undefined. -/
 def OverToUndefined : Prop := ∃ y b, M.IsLanding y ∧ M.step y b ∧ ¬ (M.up b).Dom
@@ -151,6 +154,18 @@ theorem climb_three : M.Climb → ∃ y b z : α, y ≠ b ∧ b ≠ z ∧ z ≠ 
   fun ⟨y, b, z, hy, _, hz, hzb, hzy⟩ =>
     ⟨y, b, z, fun hyb => hzy (by rw [← hyb] at hz; exact Part.mem_unique hz hy),
       Ne.symm hzb, hzy⟩
+
+/-- `Statement:` a run OVER, UP, OVER (a landing `y` steps to `b`, `up b = z ≠ b`, `z` steps to `c`)
+    gives a corner and an elbow. -/
+theorem corner_elbow_of_over_up_over {y b z c : α} (hy : M.IsLanding y) (hs : M.step y b)
+    (hz : z ∈ M.up b) (hzb : z ≠ b) (hc : M.step z c) : M.Corner ∧ M.Elbow :=
+  ⟨⟨y, b, z, hy, hs, hz, hzb⟩, ⟨b, z, c, hz, hzb, hc⟩⟩
+
+/-- `Statement:` a run UP, OVER, UP (`up x = y ≠ x`, `y` steps to `b`, `up b = z ≠ b`) gives a
+    corner and an elbow; `y` is a landing by `up_idem`. -/
+theorem corner_elbow_of_up_over_up {x y b z : α} (hy : y ∈ M.up x) (hyx : y ≠ x)
+    (hs : M.step y b) (hz : z ∈ M.up b) (hzb : z ≠ b) : M.Corner ∧ M.Elbow :=
+  ⟨⟨y, b, z, M.up_idem x y hy, hs, hz, hzb⟩, ⟨x, y, b, hy, hyx, hs⟩⟩
 
 end Motion
 
@@ -642,6 +657,71 @@ theorem leavesAt_ofPartialFun_iff (g : α → Option α) (y : α) :
     (ofPartialFun g).LeavesAt y ↔ ∃ b, g y = some b ∧ b ≠ y :=
   Iff.rfl
 
+/-! ### § XII. The pair run backwards, and leg polarity against a carrier order -/
+
+variable (M)
+
+/-- `Statement:` the reversed motion has an elbow iff UP sends some `x` to `y ≠ x` and some step
+    ARRIVES at `y`: UP and OVER meet at one point. -/
+theorem elbow_reverse_iff :
+    M.reverse.Elbow ↔ ∃ x y b, y ∈ M.up x ∧ y ≠ x ∧ M.step b y := Iff.rfl
+
+/-- `Statement:` the reversed motion has a corner iff some `b` steps to a landing `y` and `up b`
+    is a point other than `b`: OVER and UP leave one point. -/
+theorem corner_reverse_iff :
+    M.reverse.Corner ↔ ∃ y b z, M.IsLanding y ∧ M.step b y ∧ z ∈ M.up b ∧ z ≠ b := Iff.rfl
+
+/-- `Statement:` UP raises: every value of `up x` is at or above `x` in the carrier order. -/
+def UpRaises [LE α] : Prop := ∀ x y, y ∈ M.up x → x ≤ y
+
+/-- `Statement:` UP lowers: every value of `up x` is at or below `x` in the carrier order. -/
+def UpLowers [LE α] : Prop := ∀ x y, y ∈ M.up x → y ≤ x
+
+/-- `Statement:` OVER raises: every step `x → y` has `x ≤ y` in the carrier order. -/
+def StepRaises [LE α] : Prop := ∀ x y, M.step x y → x ≤ y
+
+/-- `Statement:` OVER lowers: every step `x → y` has `y ≤ x` in the carrier order. -/
+def StepLowers [LE α] : Prop := ∀ x y, M.step x y → y ≤ x
+
+/-- `Statement:` the legs agree: UP raises and OVER raises. -/
+def Agree [LE α] : Prop := M.UpRaises ∧ M.StepRaises
+
+/-- `Statement:` the legs oppose: UP lowers and OVER raises. -/
+def Oppose [LE α] : Prop := M.UpLowers ∧ M.StepRaises
+
+variable {M}
+
+/-- `Statement:` in the order dual, UP raises iff it lowers in the original order. -/
+theorem upRaises_dual [LE α] : @UpRaises αᵒᵈ M _ ↔ M.UpLowers := Iff.rfl
+
+/-- `Statement:` in the order dual, OVER raises iff it lowers in the original order. -/
+theorem stepRaises_dual [LE α] : @StepRaises αᵒᵈ M _ ↔ M.StepLowers := Iff.rfl
+
+/-- `Statement:` the order dual flips both legs: agreeing there is both legs lowering here. -/
+theorem agree_dual [LE α] : @Agree αᵒᵈ M _ ↔ M.UpLowers ∧ M.StepLowers := Iff.rfl
+
+/-- `Statement:` and opposing there is UP raising and OVER lowering here. -/
+theorem oppose_dual [LE α] : @Oppose αᵒᵈ M _ ↔ M.UpRaises ∧ M.StepLowers := Iff.rfl
+
+/-- `Statement:` INVARIANT: reversal leaves whether UP raises unchanged. -/
+theorem upRaises_reverse [LE α] : M.reverse.UpRaises ↔ M.UpRaises := Iff.rfl
+
+/-- `Statement:` INVARIANT: reversal leaves whether UP lowers unchanged. -/
+theorem upLowers_reverse [LE α] : M.reverse.UpLowers ↔ M.UpLowers := Iff.rfl
+
+/-- `Statement:` reversal flips the OVER leg only: OVER raises in the reverse iff it lowers here. -/
+theorem stepRaises_reverse [LE α] : M.reverse.StepRaises ↔ M.StepLowers :=
+  ⟨fun h x y hs => h y x hs, fun h x y hs => h y x hs⟩
+
+/-- `Statement:` the reversed motion agrees in the order dual iff the motion opposes. -/
+theorem agree_dual_reverse_iff [LE α] : @Agree αᵒᵈ M.reverse _ ↔ M.Oppose :=
+  ⟨fun h => ⟨h.1, fun x y hs => h.2 y x hs⟩, fun h => ⟨h.1, fun x y hs => h.2 y x hs⟩⟩
+
+/-- `Statement:` in a partial order, agreeing legs give no loop: from a landing `y`, a step to `b`
+    gives `y ≤ b`, UP from `b` back to `y` gives `b ≤ y`, so `b = y` by antisymmetry. -/
+theorem not_loop_of_agree [PartialOrder α] (h : M.Agree) : ¬ M.Loop :=
+  fun ⟨y, b, _, hs, hby, hyb⟩ => hby (le_antisymm (h.1 b y hyb) (h.2 y b hs))
+
 end Motion
 
 end ZeroParadox
@@ -736,5 +816,25 @@ open ZeroParadox
 #print axioms Motion.noStepAt_ofPartialFun_iff
 #print axioms Motion.selfOnlyAt_ofPartialFun_iff
 #print axioms Motion.leavesAt_ofPartialFun_iff
+#print axioms Motion.Elbow
+#print axioms Motion.corner_elbow_of_over_up_over
+#print axioms Motion.corner_elbow_of_up_over_up
+#print axioms Motion.elbow_reverse_iff
+#print axioms Motion.corner_reverse_iff
+#print axioms Motion.UpRaises
+#print axioms Motion.UpLowers
+#print axioms Motion.StepRaises
+#print axioms Motion.StepLowers
+#print axioms Motion.Agree
+#print axioms Motion.Oppose
+#print axioms Motion.upRaises_dual
+#print axioms Motion.stepRaises_dual
+#print axioms Motion.agree_dual
+#print axioms Motion.oppose_dual
+#print axioms Motion.upRaises_reverse
+#print axioms Motion.upLowers_reverse
+#print axioms Motion.stepRaises_reverse
+#print axioms Motion.agree_dual_reverse_iff
+#print axioms Motion.not_loop_of_agree
 
 end PurityCheck
