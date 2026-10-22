@@ -207,6 +207,10 @@ by `#print axioms` in a scratch file importing this one.
   correctness is proved without `eval_part`. Neither was attempted here. Every proof of the
   statement as written carries choice; whether the restated statement has a choice-free proof is
   UNCLASSIFIED.
+- Located 2026-10-22: a recursion theorem whose statement is choice-free, for a transformation given
+  as a code rather than as a `Partrec₂` function, `kleene_cf` in
+  `ZeroParadox/Computability/KleeneChoiceFree.lean` (footprints in its `PurityCheck` section). It
+  builds no universal code, so the classification in the previous sentence is unchanged.
 
 **Controls.** `universal_not_selfprints`: universality alone does not give self-printing.
 The `example`s beside it: no constant code is universal, so the constant codes, which meet
