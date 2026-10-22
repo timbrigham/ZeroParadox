@@ -1,4 +1,4 @@
-# The up-and-over shape: prior art, controls and fences
+# The up-and-over shape's climbing kind: prior art, controls and fences
 
 Ride-along for `ZeroParadox/Order/UpAndOver.lean`. The Lean file holds the declarations, the Engineer's
 Take and a `Statement:` per declaration; this file holds the standard framing and the fences.

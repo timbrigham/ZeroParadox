@@ -204,16 +204,24 @@ example : ∃ M : ZeroParadox.Motion (Fin 4),
 -- Reading (Tim, 2026-10-22, verbatim): "I do think that that shape can represent a self loop which by
 -- definition isn't landing somewhere new correct? That we have a "joint/L/J/boundary/etc" being crossed
 -- is what makes it important I think. If that's the case, that needs to be a legal way of representing it."
--- Reading: in the landed terms. If the corner fires, a landing steps off the set of landings and UP is
--- defined there (`corner_iff_crossing`): the corner is the crossing of the joint. If moreover equality
--- is decidable, the motion loops or climbs (`corner_iff_loop_or_climb`), not exclusively (`Fin 4`
--- above), and both are legal up-and-over shapes. If the legs agree in a partial order there is no loop
--- (`not_loop_of_agree`); `UpAndOver` is that case, so it presents the climbing kind only. The boundary
--- model's `phaseBelowCoverMotion` climbs (§ XXIII); the ℕ∞ model's join and scale loop, in both
--- wirings below. Q1: in the second wiring the loop's landing is the pole, ⊤ of `ℕ∞` (⊥ of the ZP
--- order), which steps off the landings and is sent back to itself. Q2: run backwards (`reverse`, which
--- keeps UP), a loop is a point `b ≠ y` from which OVER and UP both reach the landing `y`, and a climb
--- one from which they reach two different points (the two examples after the ℕ∞ ones).
+-- Statement: the corner fires iff a landing steps to a non-landing at which UP is defined
+-- (`corner_iff_crossing`); with decidable equality, iff the motion loops or climbs
+-- (`corner_iff_loop_or_climb`), not exclusively (`Fin 4` above). In a partial order agreeing legs give
+-- no loop (`not_loop_of_agree`), and the legs of `UpAndOver.toMotion` agree (`toMotion_agree`), so
+-- `UpAndOver` presents the climbing kind only. `phaseBelowCoverMotion` climbs (§ XXIII); the ℕ∞
+-- model's join and scale loop, in both wirings below, and in each wiring, in ℕ∞'s own order and in
+-- ZP-A's induced order alike, one leg raises and the other lowers (the `example` after them).
+-- Reading: by the ruling above both kinds are legal up-and-over shapes, and the crossing of the joint
+-- is OVER leaving the set of landings and UP returning to a landing (the `Statement:` above). Tim's
+-- read, 2026-10-22, verbatim: "My gut reaction is that the joint might fill both of those rolls.. you
+-- have plenty of cases where we have overlap". In the first ℕ∞ wiring the same joint may also be a
+-- switch of order between the legs, UP raising in ZP-A's induced order and OVER raising in ℕ∞'s own
+-- (the `example` after the wirings). Not claimed here: that the two roles coincide in general, or that
+-- every crossing is a switch of order.
+-- Reading: Q1: in the second wiring the loop's landing is the pole, ⊤ of `ℕ∞` (⊥ of the ZP order), which
+-- steps off the landings and is sent back to itself. Q2: run backwards (`reverse`, which keeps UP), a
+-- loop is a point `b ≠ y` from which OVER and UP both reach the landing `y`, and a climb one from which
+-- they reach two different points (the two examples after the ℕ∞ ones).
 -- Statement: LOOP, wiring one, on the ℕ∞ model (`ZeroParadox/Settheory/Model.lean`: join `min`, scale
 -- `+ 1`): UP join with `c`, OVER the scale step. If `c ≠ ⊤` of `ℕ∞`, the motion loops at `c`, does not
 -- climb, and is the die motion of no `UpAndOver ℕ∞`.
@@ -253,6 +261,38 @@ example :
     Part.mem_some _⟩, ?_⟩
   rintro ⟨y, b, z, hy, -, hz, -, hzy⟩
   exact hzy ((Part.mem_some_iff.1 hz).trans (Part.mem_some_iff.1 hy).symm)
+-- Statement: the legs of the two wirings in ℕ∞'s own order and in ZP-A's induced order (the reverse of
+-- it, `ZeroParadox/Settheory/Model.lean`): wiring one opposes in ℕ∞'s own order (UP lowers, OVER
+-- raises), and in the induced order UP raises and OVER lowers; wiring two has UP raising and OVER
+-- lowering in ℕ∞'s own order, and opposes in the induced order.
+example (c : ℕ∞) :
+    let M := ZeroParadox.Motion.ofTotal (fun x : ℕ∞ => ZeroParadox.ZPSemilattice.join x c)
+      (fun x => show min (min x c) c = min x c by rw [min_assoc, min_self])
+      (fun a b => b = ZeroParadox.ValuationStructure.scale a)
+    let N := ZeroParadox.Motion.ofTotal (fun _ : ℕ∞ => (⊤ : ℕ∞)) (fun _ => rfl)
+      (fun a b => ∃ z, b = ZeroParadox.ZPSemilattice.join a z)
+    (M.Oppose ∧ @ZeroParadox.Motion.UpRaises ℕ∞ M (ZeroParadox.zpSemilatticeSup ℕ∞).toLE ∧
+      @ZeroParadox.Motion.StepLowers ℕ∞ M (ZeroParadox.zpSemilatticeSup ℕ∞).toLE) ∧
+    (N.UpRaises ∧ N.StepLowers ∧ @ZeroParadox.Motion.Oppose ℕ∞ N (ZeroParadox.zpSemilatticeSup ℕ∞).toLE) := by
+  intro M N
+  refine ⟨⟨⟨fun x y h => ?_, fun a b h => ?_⟩, fun x y h => ?_, fun a b h => ?_⟩,
+    fun x y h => ?_, fun a b ⟨z, h⟩ => ?_, fun x y h => ?_, fun a b ⟨z, h⟩ => ?_⟩
+  · rw [Part.mem_some_iff.1 h]; exact min_le_left x c
+  · rw [(h : b = a + 1)]; exact le_self_add
+  · rw [Part.mem_some_iff.1 h]
+    show min x (min x c) = min x c
+    rw [← min_assoc, min_self]
+  · rw [(h : b = a + 1)]
+    show min (a + 1) a = a
+    exact min_eq_right le_self_add
+  · rw [Part.mem_some_iff.1 h]; exact le_top
+  · rw [h]; exact min_le_left a z
+  · rw [Part.mem_some_iff.1 h]
+    show min ⊤ x = x
+    exact min_eq_right le_top
+  · rw [h]
+    show min a (min a z) = min a z
+    rw [← min_assoc, min_self]
 -- Statement: CONTROL: with UP constant ⊤ of `ℕ∞`, the always-true step loops too, so the loop kind
 -- there says nothing specific about the join.
 example : (ZeroParadox.Motion.ofTotal (fun _ : ℕ∞ => (⊤ : ℕ∞)) (fun _ => rfl) (fun _ _ => True)).Loop :=
@@ -3336,21 +3376,22 @@ example (n : ℕ) :
 -- of 2026-10-22, searched in 13 theoremsearch queries varied by vocabulary, a text grep of 38 papers on
 -- restriction categories, rewriting, coalgebra and constructive reverse mathematics, and nLab.
 -- Reading: T-SNAP is the die's first case study, read in the converse of the direction the die was
--- built in: the die arose from the snap's up-and-over shape (`ZeroParadox/Die.lean`'s Engineer's Take),
--- and these examples render the snap in the die. "Instance" is too strong: the OVER used is CHOSEN, the run
--- motion of `S` (UP the identity, OVER from each stage `S n` to the next), and carrier, UP and view do
--- not fix OVER (§ XIX, `cover_overs_differ`); that choice is the first step these examples do not
--- justify. If a run `S` on a `ZPSemilattice L` has `S 0 = ⊥` (CC-1, `hcc1`) and `S 1 ≠ S 0` (`hocc`),
--- then in its run motion ⊥ of `L` steps elsewhere, and the first step strictly raises in ZP-A's
--- induced order (`t_snap_given`'s triple is `S 0 < S 1` there); ⊥ of `L` is also a landing, but UP is
--- the identity there, so every point is one and that conjunct is free. If moreover `S` is a state
--- sequence (ZP-A's D3, which is `StepRaises` of the run motion), then ⊥ of `L` is in the first trap set
--- and no later stage is ⊥ of `L`. If moreover `hcov`, then `BotCovered L`; the converse fails on ℕ. UP
--- is the identity in the run motion, so the corner does not fire (§ II); the snap's UP leg is
--- `phaseClosure` on the boundary model `Phase`, and with OVER the covers of its floor-below order
--- (`WithBot Ordinal`) the corner fires and the motion climbs. In the other
--- direction, if some motion on `L` steps elsewhere at ⊥ of `L`, a step out of ⊥ of `L` carries
--- T-SNAP's triple, and that premise gives neither `hocc` nor a run.
+-- built in: "The entire shape of up and over is what gave rise to the premise of the die to start
+-- with" (`ZeroParadox/Die.lean`'s Engineer's Take), and these examples render the snap in the die.
+-- "Instance" is too strong: the OVER used is CHOSEN, the run motion of `S` (UP the identity, OVER from
+-- each stage `S n` to the next), and carrier, UP and view do not fix OVER (§ XIX,
+-- `cover_overs_differ`); that choice is the first step these examples do not justify.
+-- Statement: each clause is an `example` below. If a run `S` on a `ZPSemilattice L` has `S 0 = ⊥`
+-- (CC-1, `hcc1`) and `S 1 ≠ S 0` (`hocc`), then in its run motion ⊥ of `L` steps elsewhere, and the
+-- first step strictly raises in ZP-A's induced order (`t_snap_given`'s triple is `S 0 < S 1` there);
+-- ⊥ of `L` is also a landing, but UP is the identity there, so every point is one and that conjunct
+-- is free. If moreover `S` is a state sequence (ZP-A's D3, which is `StepRaises` of the run motion),
+-- then ⊥ of `L` is in the first trap set and no later stage is ⊥ of `L`. From `hcc1` and `hcov` alone,
+-- `BotCovered L`; the converse fails on ℕ. UP is the identity in the run motion, so the corner does
+-- not fire (§ II); with UP `phaseClosure` on the boundary model `Phase` and OVER the covers of its
+-- floor-below order (`WithBot Ordinal`), the corner fires and the motion climbs. In the other
+-- direction, if some motion on `L` steps elsewhere at ⊥ of `L`, some step elsewhere out of ⊥ of `L`
+-- carries T-SNAP's triple, and that premise gives neither `hocc` nor a run.
 -- Statement: if `S 0 = ⊥` and `S 1 ≠ S 0`, then in the run motion of `S` the point `S 0`, ⊥ of `L`, is a
 -- landing (free: UP is the identity), steps to `S 1`, steps elsewhere, and `S 0 < S 1` in ZP-A's
 -- induced order.
@@ -3425,8 +3466,8 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] (S : ℕ → L) (hS : ZeroPara
     (fun _ => rfl) (fun a b => ∃ n, a = S n ∧ b = S (n + 1))).reverse) ?_ b hb
   rintro x y ⟨n, rfl, rfl⟩
   exact ZeroParadox.ZPSemilattice.state_sequence_monotone S hS n
--- Statement: with `hcov` as well (`t_snap_given_cover`), ⊥ of `L` has a cover in ZP-A's induced order:
--- `BotCovered L`; one way.
+-- Statement: from `hcc1` and `hcov` alone (`t_snap_given_cover`), ⊥ of `L` has a cover in ZP-A's
+-- induced order: `BotCovered L`; one way.
 example {L : Type*} [ZeroParadox.ZPSemilattice L] (S : ℕ → L)
     (hcc1 : S 0 = ZeroParadox.ZPSemilattice.bot)
     (hcov : letI := ZeroParadox.zpSemilatticeSup L; S 0 ⋖ S 1) :
@@ -3545,11 +3586,11 @@ example :
 -- the covers of `WithBot Ordinal`) climbs from the landing `floor`, the point sent to ⊥ of
 -- `WithBot Ordinal`, over the cover to the snap `up 0`, then UP to `up ε₀`, which is neither the snap
 -- (`epsilon0_ne_zero`) nor `floor`; so its corner fires (`climb_corner`). The statement names
--- `phaseBelowCoverMotion`, which measures `[propext, Classical.choice, Quot.sound]`; its UP
--- `phaseClosure`, and its OVER (the covers of `WithBot Ordinal`) as a `def` of its own, measure the
--- same, through Mathlib's `Ordinal` order and fixed-point theory
--- (`ZeroParadox/Multihomed/BoundaryOrder.lean`'s PurityCheck), while `phaseEquivWithBot` and the
--- type `Ordinal` itself measure `[propext, Quot.sound]`.
+-- `phaseBelowCoverMotion`, which measures `[propext, Classical.choice, Quot.sound]`, and its UP
+-- `phaseClosure` measures the same, through Mathlib's `Ordinal` order and fixed-point theory, while
+-- `phaseEquivWithBot` measures `[propext, Quot.sound]` (`ZeroParadox/Multihomed/BoundaryOrder.lean`'s
+-- PurityCheck); the type `Ordinal` itself measures `[propext, Quot.sound]`
+-- (`ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`'s PurityCheck).
 example : ZeroParadox.phaseBelowCoverMotion.Climb ∧ ZeroParadox.phaseBelowCoverMotion.Corner := by
   have h : ZeroParadox.phaseBelowCoverMotion.Climb := by
     refine ⟨ZeroParadox.Phase.floor, ZeroParadox.snap, ZeroParadox.Phase.up ZeroParadox.epsilonZero,
@@ -3560,8 +3601,9 @@ example : ZeroParadox.phaseBelowCoverMotion.Climb ∧ ZeroParadox.phaseBelowCove
     · exact fun e => ZeroParadox.Phase.noConfusion e
   exact ⟨h, ZeroParadox.Motion.climb_corner _ h⟩
 -- Reading: Q1: if `hcc1` and `hocc`, ⊥ of `L` is the source the run leaves (the constant run at ⊥ of
--- `L`, a CONTROL below, never leaves), and if moreover `S` is a state sequence it never re-enters; on
--- the two-state carriers the other end (`c₁`, `exist`) is where the run stays, stepping to itself only.
+-- `L`, a CONTROL below, never leaves); if moreover `S` is a state sequence, it never re-enters, and in
+-- the two-state runs above (`c₀, c₁, c₁, …` and `null, exist, exist, …`) the other end (`c₁`, `exist`)
+-- is where the run stays, stepping to itself only.
 -- Q2: if `S` is a state sequence, then run backwards (`reverse`), ⊥ of `L` is in the second trap set:
 -- every step from it stays at it (CONTROL below: without that premise, on ℕ it fails).
 -- INVARIANT: UP (`reverse` keeps it) and the equivalence of T-SNAP's triple with `<`.
@@ -3591,9 +3633,10 @@ example {L : Type*} [ZeroParadox.ZPSemilattice L] :
   intro M
   have hs : M.SelfOnlyAt ZeroParadox.ZPSemilattice.bot := ⟨⟨0, rfl, rfl⟩, fun _ ⟨_, _, hb⟩ => hb⟩
   exact ⟨hs, fun h => ZeroParadox.Motion.not_selfOnlyAt_and_leavesAt _ _ ⟨hs, h⟩⟩
--- Statement: CONTROL, an ordered field (ℝ is one): it has no `OrderBot`, so `BotCovered` is not stated
--- there (neither member nor non-member); no sequence has `S 0 ⋖ S 1`, so `hcov` has no member; and the
--- field's 0 has no first step (`axb1_fails_in_ordered_field`).
+-- Statement: CONTROL, an ordered field (ℝ is one), in the field's OWN linear order: it has no
+-- `OrderBot`, so `BotCovered` is not stated in that order (neither member nor non-member); no pair is
+-- a cover (`not_covBy`); and the field's 0 has no first step (`axb1_fails_in_ordered_field`). `hcov`
+-- is typed in the order a `ZPSemilattice` induces, not this one, so this control is silent on `hcov`.
 example {F : Type*} [Field F] [LinearOrder F] [IsStrictOrderedRing F] (S : ℕ → F) :
     IsEmpty (OrderBot F) ∧ ¬ (S 0 ⋖ S 1) ∧ ¬ ZeroParadox.HasFirstStep (0 : F) :=
   ⟨⟨fun h => by letI := h; exact not_lt.2 (bot_le : (⊥ : F) ≤ ⊥ - 1) (sub_one_lt ⊥)⟩,

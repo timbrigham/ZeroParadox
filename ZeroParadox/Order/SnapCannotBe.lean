@@ -156,12 +156,12 @@ owes no step. -/
 #check @ZeroParadox.padic_snaps                       -- Statement: CARRIER — ℚ_p IS totally disconnected. Reading: this removes the obstruction and supplies no first step — norms accumulate at 0 in ANY non-trivially normed field (Mathlib `NormedField.exists_norm_lt`), ℝ included, so that half is not p-adic
 #check @ZeroParadox.snap_dichotomy                    -- Statement: every ℚ_p is totally disconnected and ℝ is not, and for NONTRIVIAL absolute values on ℚ, real and p-adic are exclusive and exhaustive (Ostrowski). ⚠ SCOPE: completions of ℚ only
 
-/-! ### § VI. The up-and-over shape — OVER is a cover, UP is a closure; two orders on one boundary model -/
+/-! ### § VI. The up-and-over shape's climbing kind — OVER is a cover, UP is a closure; two orders on one boundary model -/
 #check @ZeroParadox.UpAndOver                         -- Statement: a structure on a partial order: a closure operator `up`, a corner (a closed `y`, a cover `y ⋖ b`, `up b ≠ b`), and a cover at every non-maximal closed point
 -- `Statement:` the `cover` field is `HasFirstStep`, asked at each non-maximal closed point of `up` (a landing).
 example {α : Type} [PartialOrder α] (U : ZeroParadox.UpAndOver α) {y : α} (hy : U.up.IsClosed y)
     (hmax : ¬ IsMax y) : ZeroParadox.HasFirstStep y := U.cover y hy hmax
-#check @ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered -- Statement: no densely ordered carrier carries the shape; the corner's cover is refused. Reading: as § V refuses ℝ a first step
+#check @ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered -- Statement: no densely ordered carrier carries an `UpAndOver`; the corner's cover is refused. Reading: as § V refuses ℝ a first step
 example : IsEmpty (ZeroParadox.UpAndOver ℝ) := ZeroParadox.UpAndOver.isEmpty_of_denselyOrdered
 #check @ZeroParadox.ordinalUpAndOver                  -- Statement: `Ordinal` carries it: `up` is `nfp (ω^·)` (`snapNucleus`), covers by `Order.succ`, the corner at ε₀ and `succ ε₀`
 #check @ZeroParadox.phase_floor_covBy_snap            -- Statement: floor-below order, `WithBot Ordinal`: its ⊥ (the boundary model's floor) is covered by the snap `↑0` (OVER)
