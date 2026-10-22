@@ -173,6 +173,11 @@ example (φ : Ordinal → MachinePhase) (h0 : ∀ n : ℕ, φ (fundamentalSeq n)
       (nhds (snapEmbed c₀)) := by
     simp only [h0]; exact tendsto_const_nhds
   exact snapEmbed_injective (tendsto_nhds_unique hcont h1)
+-- `Statement:` under `h0` the tower's `snapEmbed` images are constantly `snapEmbed c₀ = 1` in ℤ₂,
+-- so they tend to `1`.
+example (φ : Ordinal → MachinePhase) (h0 : ∀ n : ℕ, φ (fundamentalSeq n) = c₀) :
+    Filter.Tendsto (fun n => snapEmbed (φ (fundamentalSeq n))) Filter.atTop (nhds (1 : ℤ_[2])) := by
+  simp only [h0, snapEmbed_c0]; exact tendsto_const_nhds
 -- `Statement:` the tower stages' `cnfToZp2` images tend to `snapEmbed c₁`.
 example : Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop
     (nhds (snapEmbed c₁)) := by
