@@ -326,7 +326,7 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-Measured from the build log, 2026-10-22. `toNucleus` depends on no axioms; `ofNucleus`, `ofNucleus_upTotal`,
+Measured from the build log, 2026-10-21. `toNucleus` depends on no axioms; `ofNucleus`, `ofNucleus_upTotal`,
 `ofNucleus_upRaises`, `isLanding_ofNucleus_iff` and `em_iff_ofNucleus_dneg_isLanding` on `[propext]`;
 `toNucleus_ofNucleus`, `isLanding_ofNucleus_anti`, `isLanding_ofNucleus_subset_iff` and `ofNucleus_top_up` on
 `[propext, Quot.sound]`. `ofNucleus_bot_up` is `rfl`, so its footprint is the statement's, through Mathlib's

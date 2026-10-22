@@ -1457,9 +1457,9 @@ set_option linter.unusedDecidableInType false in
     from `x` visits `y`, then `x` arrives at `y`: the converse of `exists_run_eq_of_arrives` under
     that hypothesis. A run from `x` avoiding `y` is a descending chain of the step with `y` removed
     as a source (Mathlib `not_acc_iff_exists_descending_chain`), so `x` is accessible and
-    `arrives_of_acc` applies. `Reading:` the forward half is axiom-free and this half carries
-    `Classical.choice`, the chain being built by choice, so the asymmetry between the two halves is
-    one of choice, not of finiteness: no finite-branching or finite-carrier hypothesis is used. -/
+    `arrives_of_acc` applies. `Reading:` the forward half is axiom-free and this proof pays in
+    `Classical.choice`, the chain being built by choice; that prices this proof, not the direction,
+    and no finite-branching or finite-carrier hypothesis is used. -/
 theorem arrives_of_forall_run [DecidableEq α] {y : α} (hprog : ∀ a, a ≠ y → ∃ b, M.step a b)
     {x : α} (h : ∀ s : ℕ → α, M.IsRun s → s 0 = x → ∃ n, s n = y) : M.Arrives y x := by
   apply arrives_of_acc hprog

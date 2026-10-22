@@ -2410,11 +2410,19 @@ example : ¬ (∀ a, (ZeroParadox.Motion.ofFun Nat.pred).step a 0 → a = 0) ∧
 -- (Clarke and Emerson, "Design and Synthesis of Synchronization Skeletons Using Branching Time
 -- Temporal Logic", Logics of Programs, LNCS 131 (1981), p. 55: `AFf₁ ≡ A[true U f₁]`, "for every
 -- path, there exists a state on the path at which f₁ holds", a path being an infinite sequence of
--- steps), in Emerson's least-fixpoint form `AFP = μZ.P ∨ AXZ` ("Temporal and Modal Logic", Handbook
--- of Theoretical Computer Science vol. B (1990), § 8.4); the `next` clause's `∃ b, M.step x b` is the
--- source's totality requirement ("we require that A be total", p. 55) carried inside the predicate,
--- since a motion's step need not be total, and on a total step the two coincide. Delta: theirs are
--- properties of executions, these of a step relation.
+-- states), in Emerson's least-fixpoint form `AFP = μZ.P ∨ AXZ` ("Temporal and Modal Logic", Handbook
+-- of Theoretical Computer Science vol. B (1990); § 8.4 "Fixpoint Logics" in the author's preprint, the
+-- published chapter's numbering not checked); the `next` clause's `∃ b, M.step x b` is the source's
+-- totality requirement ("we require that A be total", p. 55) carried inside the predicate, since a
+-- motion's step need not be total; with a step at every point other than `y` and `DecidableEq`,
+-- arrival is the path form, every run from `x` visits `y` (`arrives_iff_forall_run`). Delta: theirs
+-- are properties of executions, these of a step relation. Neighbour: Stefanescu, Ciobaca, Mereuta,
+-- Moore, Serbanuta and Rosu, "All-Path Reachability Logic", LMCS 15(2) 2019, Lemma 8.6 as used at
+-- p. 5:19, `coreach(φ) ↔ φ ∨ (∃c' step(c, c') ∧ ∀c' (step(c, c') → coreach(φ)[c'/□]))`, the `next`
+-- clause's unfolding stated for a step that need not be total; delta: their `coreach` (Fig. 5,
+-- p. 5:15) ranges over complete paths, each ending at a configuration with no step, so a diverging
+-- run does not obstruct it, where `Arrives` is the least fixed point of that unfolding and every run
+-- from `x` visits `y` (`exists_run_eq_of_arrives`).
 #check @ZeroParadox.Motion.reflTransGen_of_arrives -- Statement: arrival gives a path of steps (Mathlib `ReflTransGen`)
 #check @ZeroParadox.Motion.exists_run_eq_of_arrives -- Statement: arrival from `x` gives that every run starting at `x` visits `y`
 #check @ZeroParadox.Motion.arrives_ofFun_iff    -- Statement: in `ofFun g`, arrival is `g^[n] x = y` for some `n`

@@ -19,7 +19,7 @@ differences) form a `Frame` and the **sublocales** (the systems they generate) f
 *lattice of systems*. So the point at infinity is exactly what completes the meta-level.
 
 **Why this is the boundary doing the work.** The lattice-of-systems machinery fires ONLY once a top is present
-(§ III: not on bare `Ordinal`), so it is provably the ceiling, the point the unbounded ascent marches toward, that
+(§ III: not on bare `Ordinal`), so it is the ceiling, the point the unbounded ascent marches toward, that
 unlocks the lattice. In the framework's pole chart ⊥ = 0 = ∞ (a chart claim; its coincidence witness is
 `infinitude_forces_infinite_complexity`, `ZeroParadox/BottomCannotBe.lean` § INVERSION) that ceiling, ⊤ of
 `WithTop Ordinal`, is the point at infinity; reading it as a next bottom is interpretation, no theorem here says
