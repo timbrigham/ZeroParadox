@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# The up-and-over shape: a closure operator with a corner and a cover at every non-maximal landing
+# The up-and-over shape's climbing kind: a closure operator with a corner and a cover at every non-maximal landing
 
 ## Engineer's Take
 
@@ -30,12 +30,14 @@ open Order Ordinal
 
 universe u
 
-/-! ### § I. The shape -/
+/-! ### § I. The climbing kind -/
 
 /-- `Statement:` a closure operator `up` on a partial order with a closed point `y` and a cover `b`
     of `y` that `up` moves, and a cover in the carrier order at every non-maximal closed point.
+    Its die motion climbs and does not loop (`UpAndOver.toMotion_climb`, `UpAndOver.toMotion_not_loop`).
     `Reading:` UP is `up`; OVER is the step from a landing to a cover of it; `corner` is a place
-    where OVER then UP moves. -/
+    where OVER then UP moves. This presents the climbing kind of the up-and-over shape; the loop kind
+    is `Motion.Loop` (`ZeroParadox/Die.lean`). -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `ClosureOperator` admits the identity and the
 -- constant-top closure and says nothing about covers; this bundles it with a corner (a closed
 -- point whose cover the closure moves) and a carrier-order cover at each non-maximal closed point.
@@ -717,7 +719,7 @@ theorem ordinalViewClosed_strictAnti : StrictAnti ordinalViewClosed.{u} := by
   show Set.Ici _ < Set.Ici _
   exact Set.Ici_ssubset_Ici.2 (ordinalCornerStep_iterate_strictMono hmn)
 
-/-! ### § VI. The shape as a die motion: its corner is a climb, never a loop -/
+/-! ### § VI. The climbing kind as a die motion: its corner is a climb, never a loop -/
 
 namespace UpAndOver
 
