@@ -1171,9 +1171,9 @@ example : (ZeroParadox.Motion.ofFun ⇑(ZeroParadox.T ZeroParadox.fullMix)).FanI
   ⟨ZeroParadox.v0, 0, ZeroParadox.v0_ne_zero,
     (show ZeroParadox.T ZeroParadox.fullMix ZeroParadox.v0 = 0 by
       rw [ZeroParadox.fullMix_eigen_zero, zero_smul]).symm, (map_zero _).symm⟩
--- Statement: each of the four cells {one-to-one or not} × {both trap sets (§ XVI) nonempty, both empty} has a
--- function-step member; the mixed cells are not shown. Not one-to-one, both nonempty: `cZero`
--- (zero steps to itself only; no step enters infty).
+-- Statement: each of the four cells {one-to-one or not} × {both trap sets (§ XVI) nonempty, both
+-- empty} has a function-step member; the mixed cells are not shown. Not one-to-one, both nonempty:
+-- `cZero` (zero steps to itself only; no step enters infty).
 example : (ZeroParadox.Motion.ofFun ZeroParadox.Miniature.Pole.cZero).FanIn
       ZeroParadox.Miniature.Pole.zero ∧
     (∀ a, (ZeroParadox.Motion.ofFun ZeroParadox.Miniature.Pole.cZero).step a
@@ -1199,7 +1199,7 @@ example : let g : ℕ → ℕ := fun n => match n with | 0 => 1 | 1 => 0 | n + 2
     | n + 2, h' => exact absurd (show n = n + 2 from h') (by omega)
 -- Statement: on a finite carrier, if `g` is not one-to-one, some point is entered from no other point
 -- in `ofFun g` (`g` is not onto, `Finite.injective_iff_surjective`).
-example {α : Type} [Finite α] (g : α → α) (h : ¬ Function.Injective g) :
+example {α : Type*} [Finite α] (g : α → α) (h : ¬ Function.Injective g) :
     ∃ y, ∀ a, (ZeroParadox.Motion.ofFun g).step a y → a = y := by
   have hns : ¬ Function.Surjective g := fun hs => h (Finite.injective_iff_surjective.2 hs)
   simp only [Function.Surjective, not_forall, not_exists] at hns
@@ -2124,7 +2124,8 @@ example : ZeroParadox.IsComputationalQuine Nat.Partrec.Code.zero ∧
 #check @ZeroParadox.selfOnlyAt_ofFun_app_iff     -- Statement: for `S : SelfContained C`, `x` steps to itself only in `ofFun S.app` iff `x = S.bot`; both directions
 #check @ZeroParadox.wem_of_decidable_selfOnlyAt_glue -- Statement: deciding that at the glued point, uniformly in `p`, gives weak excluded middle; one way
 
-/-! ### § XVI. The over-then-up / up-then-over pair; leg polarity against a carrier order, the causes of the trap sets, arrival and fan-in, the clock machine -/
+/-! ### § XVI. The over-then-up / up-then-over pair; leg polarity against a carrier order, the causes
+of the trap sets, arrival and fan-in, the clock machine -/
 #check @ZeroParadox.Motion.Elbow                 -- Statement: up-then-over: `up x = y ≠ x`, and `y` steps, possibly to itself
 -- Reading: `Corner` (over-then-up) and `Elbow` (up-then-over) are a pair; neither is the preferred member.
 #check @ZeroParadox.Motion.corner_elbow_of_over_up_over -- Statement: a run OVER, UP, OVER from a landing gives a corner and an elbow
@@ -2400,11 +2401,20 @@ example : ¬ (∀ a, (ZeroParadox.Motion.ofFun Nat.pred).step a 0 → a = 0) ∧
 -- Reading: the first trap set says no other start ever gets in, the second that no step leaves to
 -- elsewhere; read on runs, each forbids a "bad thing" (safety, Alpern and Schneider, "Defining
 -- Liveness", IPL 21 (1985), p. 181). `Arrives` implies that every run passes through `y`
--- (`exists_run_eq_of_arrives`; the converse is not stated), a "good thing" eventually happening
--- (liveness, p. 182, termination among their examples); theirs are properties of executions, these of a
--- step relation. Arrival is a die notion; approach in a metric (`Tendsto`) is not, since a motion
--- carries no topology.
+-- (`exists_run_eq_of_arrives`; the converse holds given a step at every point other than `y`,
+-- `arrives_of_forall_run`), a "good thing" eventually happening (liveness, p. 182, termination among
+-- their examples); theirs are properties of executions, these of a step relation. Arrival is a die
+-- notion; approach in a metric (`Tendsto`) is not, since a motion carries no topology.
 #check @ZeroParadox.Motion.Arrives              -- Statement: `x = y`, or `x` has a step and every step from `x` lands at a point arriving at `y`
+-- Reading (cited, not claimed): `Arrives y` is CTL's inevitability `AF` at the proposition "is `y`"
+-- (Clarke and Emerson, "Design and Synthesis of Synchronization Skeletons Using Branching Time
+-- Temporal Logic", Logics of Programs, LNCS 131 (1981), p. 55: `AFf₁ ≡ A[true U f₁]`, "for every
+-- path, there exists a state on the path at which f₁ holds", a path being an infinite sequence of
+-- steps), in Emerson's least-fixpoint form `AFP = μZ.P ∨ AXZ` ("Temporal and Modal Logic", Handbook
+-- of Theoretical Computer Science vol. B (1990), § 8.4); the `next` clause's `∃ b, M.step x b` is the
+-- source's totality requirement ("we require that A be total", p. 55) carried inside the predicate,
+-- since a motion's step need not be total, and on a total step the two coincide. Delta: theirs are
+-- properties of executions, these of a step relation.
 #check @ZeroParadox.Motion.reflTransGen_of_arrives -- Statement: arrival gives a path of steps (Mathlib `ReflTransGen`)
 #check @ZeroParadox.Motion.exists_run_eq_of_arrives -- Statement: arrival from `x` gives that every run starting at `x` visits `y`
 #check @ZeroParadox.Motion.arrives_ofFun_iff    -- Statement: in `ofFun g`, arrival is `g^[n] x = y` for some `n`
@@ -2437,6 +2447,8 @@ example : let M := ZeroParadox.Motion.ofTotal (id : Bool → Bool) (fun _ => rfl
 #check @ZeroParadox.Motion.eq_of_noEntry_of_forall_arrives -- Statement: in `ofFun g`, if every step into `y` starts at `y` and every point arrives at `y`, every point is `y`
 #check @ZeroParadox.Motion.acc_of_arrives       -- Statement: arrival at `y` gives Mathlib's `Acc` for the step with `y` removed as a source
 #check @ZeroParadox.Motion.arrives_of_acc       -- Statement: and back, with `DecidableEq` and a step at every point other than `y`
+#check @ZeroParadox.Motion.arrives_of_forall_run -- Statement: with `DecidableEq` and a step at every point other than `y`, if every run from `x` visits `y` then `x` arrives at `y`; `[propext, Classical.choice, Quot.sound]`, through Mathlib's `not_acc_iff_exists_descending_chain`, where the forward half `exists_run_eq_of_arrives` is axiom-free; the control in `ZeroParadox/Die.lean` § XVI drops the step hypothesis
+#check @ZeroParadox.Motion.arrives_iff_forall_run -- Statement: both directions under that hypothesis
 #check @ZeroParadox.Motion.reach_and_stay_iff   -- Statement: in `ofFun g`, an orbit eventually constant at `y` iff arrival at `y` and `SelfOnlyAt y`
 #check @ZeroParadox.Motion.not_arrives_of_stageClosure -- Statement: no point of a run's stage closure is arrived at from the run's first stage
 -- Statement: members: `Nat.pred` (`pred_orbit_reaches_floor`) and every self-map of ℕ strictly
@@ -2654,7 +2666,7 @@ example (n : ℕ) : ZeroParadox.ordinalCornerStep
 -- holds them all.
 #check @ZeroParadox.not_step_into_ordinalCornerStep_iterate -- Statement: no ordinal steps under `ordinalSuccMotion` to a corner iterate from 0
 -- Statement: nor to any ε-number `Ordinal.epsilon o`.
-example (o a : Ordinal.{0}) : ¬ ZeroParadox.ordinalSuccMotion.step a (Ordinal.epsilon o) := by
+example (o a : Ordinal.{u}) : ¬ ZeroParadox.ordinalSuccMotion.step a (Ordinal.epsilon o) := by
   intro h
   have h' : Ordinal.epsilon o = Order.succ a := h
   have hf := Ordinal.omega0_opow_epsilon o
@@ -3027,7 +3039,7 @@ example : (ZeroParadox.Motion.ofFun (fun y : ℤ_[2] => 2 * y)).SelfOnlyAt 0 ∧
     · exact h2
   exact ⟨(ZeroParadox.Motion.selfOnlyAt_ofFun_iff _ 0).2 (mul_zero 2), hF,
     fun x hx => ZeroParadox.Motion.eq_of_reflTransGen_of_noEntry hF hx⟩
--- Statement: the 2-adic order `emultiplicity 2` drops by one along every step of REVERSED doubling, so
+-- Statement: the 2-adic order `emultiplicity 2` drops by at least one along every step of REVERSED doubling, so
 -- it is ⊤ of `ℕ∞` at ℤ_[2]'s 0, which steps to itself (`rank_eq_top_of_cycle`).
 example : (∀ a b, (ZeroParadox.Motion.ofFun (fun y : ℤ_[2] => 2 * y)).reverse.step a b →
       emultiplicity (2 : ℤ_[2]) b + 1 ≤ emultiplicity (2 : ℤ_[2]) a) ∧
@@ -3115,19 +3127,24 @@ example :
 -- of `Ordinal`, have no fixed stage and close at the first fixed point, ℕ up to `≃` and ε₀ up to `=`.
 -- No map between ℕ and ε₀ is stated, and the count of adjoined points is not linked to the corner
 -- index `ordinalCornerStep^[n]`.
-#check @ZeroParadox.Motion.toNucleus             -- Statement: on a frame, a total, raising, `⊓`-preserving UP is a Mathlib `Nucleus`
+#check @ZeroParadox.Motion.toNucleus             -- Statement: on a meet-semilattice, a total, raising, `⊓`-preserving UP is a Mathlib `Nucleus`
 #check @ZeroParadox.Motion.ofNucleus             -- Statement: a nucleus with any OVER is a motion
-#check @ZeroParadox.Motion.toNucleus_ofNucleus   -- Statement: the round trip returns the nucleus
+#check @ZeroParadox.Motion.toNucleus_ofNucleus   -- Statement: the round trip nucleus → motion → nucleus returns the nucleus
 #check @ZeroParadox.Motion.isLanding_ofNucleus_iff -- Statement: landings are the fixed points of the nucleus
-#check @ZeroParadox.Motion.isLanding_ofNucleus_anti -- Statement: `n ≤ m` gives every landing of `ofNucleus m s` as a landing of `ofNucleus n s`; the converse is the `example` after it, Mathlib's `Nucleus.range_subset_range`
--- Reading: the order on UP legs is the frame of nuclei, the corpus's lattice of systems
+#check @ZeroParadox.Motion.isLanding_ofNucleus_anti -- Statement: `n ≤ m` gives every landing of `ofNucleus m s` as a landing of `ofNucleus n s`; one way
+#check @ZeroParadox.Motion.isLanding_ofNucleus_subset_iff -- Statement: and both directions, on a meet-semilattice; on a frame the same iff is Mathlib's `Nucleus.range_subset_range`
+-- Reading: the order on UP legs is Mathlib's order on nuclei, on any meet-semilattice; when the
+--   carrier is a frame it is the frame of nuclei, the corpus's lattice of systems
 --   (`ZeroParadox/Category/DifferenceGeneratesSystem.lean`; on `WithTop Ordinal`,
 --   `ZeroParadox/Ordinal/SnapMetaLattice.lean` § II). `⊓`-preservation is a hypothesis no die premise
---   supplies. The frame binder is the fence: bare `Ordinal` has no ⊤ over its order (`IsEmpty
---   (OrderTop Ordinal)`, `ZeroParadox/Category/DieNucleus.lean` § IV), so `toNucleus` does not apply to
---   `ordinalTowerMotion` or `ordinalSuccMotion` as stated, while `snapNucleus` is one nucleus there
---   (`ZeroParadox/Ordinal/SnapMetaLattice.lean` § III); adjoining ⊤ gives the frame where the snap is a member:
-#check @ZeroParadox.snapNucleusTop_isLanding_iff -- Statement: MEMBER: on the frame `WithTop Ordinal`, for any OVER `s`, the landings of `ofNucleus snapNucleusTop s` are `⊤` and the lifted ε-numbers `↑(ε_ o)`; UP at `↑a` is `ordinalTowerMotion`'s UP at `a` pushed through `↑`, and the round trip returns `snapNucleusTop` (the `example`s after it)
+--   supplies. The binder is a meet-semilattice, so § I of `ZeroParadox/Category/DieNucleus.lean`
+--   reaches bare `Ordinal`:
+#check @ZeroParadox.toNucleus_ordinalTowerMotion -- Statement: MEMBER: `toNucleus` of `ordinalTowerMotion` is `snapNucleus`, by `rfl`; UP at `a` is `Part.some (snapNucleus a)` (the `example` after it in `ZeroParadox/Category/DieNucleus.lean` § III)
+-- Reading: what bare `Ordinal` lacks is a top over its order (`IsEmpty (OrderTop Ordinal)`,
+--   `ZeroParadox/Category/DieNucleus.lean` § IV), hence ⊤ of `Nucleus Ordinal` and the frame of nuclei,
+--   so `ofNucleus_top_up` and the two-ended lattice of DieNucleus § II do not reach it; adjoining ⊤
+--   gives the frame where the lift is a member:
+#check @ZeroParadox.snapNucleusTop_isLanding_iff -- Statement: MEMBER: on the frame `WithTop Ordinal`, for any OVER `s`, the landings of `ofNucleus snapNucleusTop s` are `⊤` and the lifted ε-numbers `↑(ε_ o)`; UP at `↑a` is `ordinalTowerMotion`'s UP at `a` pushed through `↑`, and the round trip returns `snapNucleusTop` (the `example`s after it in `ZeroParadox/Category/DieNucleus.lean` § III)
 -- `Statement:` `↑⊥`, the ordinals' ⊥ lifted, is not a landing there: UP sends it to `↑ε₀`
 -- (`snapNucleusTop_coe_bot`), and `ε₀ ≠ ⊥` in `Ordinal` (`epsilon0_ne_bot`).
 example (s : WithTop Ordinal → WithTop Ordinal → Prop) :
@@ -3135,13 +3152,14 @@ example (s : WithTop Ordinal → WithTop Ordinal → Prop) :
       ((⊥ : Ordinal) : WithTop Ordinal) := by
   rw [ZeroParadox.Motion.isLanding_ofNucleus_iff, ZeroParadox.snapNucleusTop_coe_bot]
   exact fun h => ZeroParadox.epsilon0_ne_bot (WithTop.coe_injective h)
-#check @ZeroParadox.em_iff_ofNucleus_dneg_isLanding -- Statement: MEMBER: excluded middle iff every proposition is a landing of `ofNucleus (dnegNucleus Prop) s` (`em_iff_dnegNucleus_trivial` through `isLanding_ofNucleus_iff`); the statement carries `Order.Frame Prop`, which is not choice-free
-#check @ZeroParadox.no_snap_nucleus              -- Statement: NON-MEMBER: for every nucleus `j` on `SynONote`, not every closed point of `j` is fixed by `omegaPow`; so no `ofTotal j _ s` has the snap's landings (`ZeroParadox/Category/DieNucleus.lean` § IV). `SynONote` has no ⊤ over its order (`tower_no_upper_bound`), so `ofNucleus` is not stated there at all; the obstruction is order-free and holds regardless
+#check @ZeroParadox.em_iff_ofNucleus_dneg_isLanding -- Statement: MEMBER: excluded middle iff every proposition is a landing of `ofNucleus (dnegNucleus Prop) s` (`em_iff_dnegNucleus_trivial` through `isLanding_ofNucleus_iff`); `[propext]`, the `SemilatticeInf Prop` instance `ofNucleus` takes being choice-free (printed in `ZeroParadox/Category/DieNucleus.lean`)
+#check @ZeroParadox.no_snap_nucleus              -- Statement: NON-MEMBER: for every nucleus `j` on `SynONote`, not every closed point of `j` is fixed by `omegaPow`; so no `ofTotal j _ s` has only `omegaPow`-fixed landings (the die form in `ZeroParadox/Category/DieNucleus.lean` § IV, whose next `example` gives the landings as the closed points). The `Nucleus`-typed corollary of `no_snap_closure`; `SynONote` has no ⊤ over its order (`tower_no_upper_bound`), so `ofNucleus_top_up` is not stated there
+#check @ZeroParadox.no_snap_closure              -- Statement: the order-free form: no idempotent endomap of `ONote` has only `omegaPow`-fixed fixed points; no order, no monotonicity, no inflation assumed
 
 /-! ### § XXII. Quotients of a motion: the drawing and the set; carrier-changing steps -/
 #check @ZeroParadox.Motion.StepCompat            -- Statement: related starts have related successors
 -- Statement: for a setoid, step-compatibility is both transfer clauses, forward and back. Reading: the
--- bisimulation condition of `MemGraph.IsBisim` (Aczel's `R⁺`, 1988, p. 20; Park's, credited there),
+-- bisimulation condition of `MemGraph.IsBisim` (Aczel's `R⁺`, 1988, p. 20; Park's, credited p. 92),
 -- cited in `ZeroParadox/Settheory/GraphBisim.lean`, here for one relation on one carrier; with it `quot`
 -- is the quotient by a bisimulation equivalence.
 example {α : Type} (M : ZeroParadox.Motion α) (s : Setoid α) :
