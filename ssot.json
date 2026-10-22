@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2582,
+        "declarations": 2583,
         "files": 181
       },
       "entries": [
@@ -48958,6 +48958,43 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "82a81d64-b0eb-4b86-8186-b1584d089330",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtPartrecProdHyp",
+            "short": "stmtPartrecProdHyp"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtPartrecProdHyp",
+            "short": "stmtPartrecProdHyp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: statement control measuring that a unary Partrec hypothesis at the pair carrier ℕ × ℕ carries choice, so the choice enters with Primcodable.prod",
           "verify": {
             "axioms": null,
             "sorry_free": true

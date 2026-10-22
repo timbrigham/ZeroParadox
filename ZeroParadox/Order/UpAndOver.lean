@@ -749,11 +749,14 @@ theorem toMotion_not_loop : ¬ U.toMotion.Loop :=
 theorem toMotion_ne_of_loop {M : Motion α} (h : M.Loop) : U.toMotion ≠ M :=
   fun e => U.toMotion_not_loop (e ▸ h)
 
--- Statement: CONTROL: climbing is the wiring's, not the closure's: § III's `Fin 3` closure (`1 ↦ 2`)
--- with the always-true relation as OVER loops at the landing `2` (step to `1`, UP back to `2`).
+-- Statement: CONTROL: not looping is the wiring's, not the closure's: with the always-true OVER the
+-- same `Fin 3` closure (§ III's, `1 ↦ 2`) loops at 2 (step to `1`, UP back to `2`), and still climbs.
 example : (Motion.ofTotal (fun x : Fin 3 => if x = 1 then 2 else x) (by decide)
-    (fun _ _ => True)).Loop :=
-  ⟨2, 1, Part.mem_some_iff.2 (by decide), trivial, by decide, Part.mem_some_iff.2 (by decide)⟩
+      (fun _ _ => True)).Loop ∧
+    (Motion.ofTotal (fun x : Fin 3 => if x = 1 then 2 else x) (by decide) (fun _ _ => True)).Climb :=
+  ⟨⟨2, 1, Part.mem_some_iff.2 (by decide), trivial, by decide, Part.mem_some_iff.2 (by decide)⟩,
+    ⟨0, 1, 2, Part.mem_some_iff.2 (by decide), trivial, Part.mem_some_iff.2 (by decide), by decide,
+      by decide⟩⟩
 
 end UpAndOver
 
