@@ -171,6 +171,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Computability/GroundZero.md` - GroundZero — ride-along documentation
 - `ZeroParadox/Computability/Kleene.lean` - ZP-K: Computational Grounding of Self-Reference
   - ride-along docs: `ZeroParadox/Computability/Kleene.md` - The Gödel-number family, infinitely many fixed points, and a self-printing universal code
+- `ZeroParadox/Computability/KleeneChoiceFree.lean` - Kleene's second recursion theorem for transformations given as codes, choice-free
 - `ZeroParadox/Computability/Occurrence.lean` - Occurrence — what it takes for the bottom to move, in the computational face
   - ride-along docs: `ZeroParadox/Computability/Occurrence.md` - The carrier's reach, floor-directed motion, and stutter equivalence
 - `ZeroParadox/Computability/Periodicity.lean` - ZP-K metric: the selfApply periodicity invariant (P5)

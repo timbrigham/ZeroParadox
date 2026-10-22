@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2530,
-        "files": 180
+        "declarations": 2580,
+        "files": 181
       },
       "entries": [
         {
@@ -2984,6 +2984,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "05b0b667-4a74-4fa0-8ef1-ad57cd6ae48a",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cfDiagIndex",
+            "short": "cfDiagIndex"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cfDiagIndex",
+            "short": "cfDiagIndex",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "05b85523-57f0-4ace-aefe-f07d7eb24e3f",
           "new": {
@@ -4581,6 +4618,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0a3e8939-f4c3-469d-a7a7-f2c696a046a6",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_encodeCode_curry",
+            "short": "cf_encodeCode_curry"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_encodeCode_curry",
+            "short": "cf_encodeCode_curry",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0a57f293-7791-4d86-b542-693071b6664f",
           "new": {
             "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
@@ -4895,6 +4969,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0ab50298-92ad-4def-8735-365dfcf39803",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sqrt_lt_iter_succ_sq",
+            "short": "cf_sqrt_lt_iter_succ_sq"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sqrt_lt_iter_succ_sq",
+            "short": "cf_sqrt_lt_iter_succ_sq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5679,6 +5790,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0d784955-2445-45e2-9406-87c29cfad7aa",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_unpair_left_le",
+            "short": "cf_unpair_left_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_unpair_left_le",
+            "short": "cf_unpair_left_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0d89037e-a1e1-44ef-9b43-9462ebd5f805",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -6365,6 +6513,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0ed2268b-50a3-468a-85fb-b666260f3a35",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtFixedPoint₂",
+            "short": "stmtFixedPoint₂"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtFixedPoint₂",
+            "short": "stmtFixedPoint₂",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "0ed3b29e-a046-4ce1-a628-cd0adfb40c43",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -6540,6 +6725,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0fc4e979-3e44-4ad5-a354-cab0292dd45c",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtKleeneCF",
+            "short": "stmtKleeneCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtKleeneCF",
+            "short": "stmtKleeneCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -8750,6 +8972,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1596e40b-20c3-4dec-ac9b-0cf33a0a2378",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cfCurryIndex",
+            "short": "cfCurryIndex"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cfCurryIndex",
+            "short": "cfCurryIndex",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12096,6 +12355,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1f8a9a22-6d55-4fe3-b531-7788f3d47292",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cfDiag",
+            "short": "cfDiag"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cfDiag",
+            "short": "cfDiag",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1fa0a03e-d151-456b-823e-8bd4147da8b7",
           "new": {
             "file": "ZeroParadox/Category/DieNucleus.lean",
@@ -12801,6 +13097,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2101f0fa-de1b-4110-86aa-525e7c704834",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sqrt_iter_sq_le",
+            "short": "cf_sqrt_iter_sq_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sqrt_iter_sq_le",
+            "short": "cf_sqrt_iter_sq_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15875,6 +16208,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "293354c5-c97c-45f7-84a5-699720928c85",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtFixedPoint",
+            "short": "stmtFixedPoint"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtFixedPoint",
+            "short": "stmtFixedPoint",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -19032,6 +19402,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "31230d16-08d9-46b1-a727-23809750b42c",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_pair_unpair",
+            "short": "cf_pair_unpair"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_pair_unpair",
+            "short": "cf_pair_unpair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "31270038-b583-4234-a956-e60e2c76a62c",
           "new": {
             "file": "ZeroParadox/Category/DiagonalWitness.lean",
@@ -19058,6 +19465,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "313d5edf-f934-45ae-80ab-0f0fdafa65a8",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fpCF",
+            "short": "fpCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.fpCF",
+            "short": "fpCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22725,6 +23169,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3c2583cc-eae0-4c03-a24e-f7eeca9008d1",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_unary",
+            "short": "cf_eval_unary"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_unary",
+            "short": "cf_eval_unary",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3c7f6539-0acd-4948-ad41-9762e8d01b77",
           "new": {
@@ -23378,6 +23859,43 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3ec19f13-7f4c-4568-8607-bc207cf15f53",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_comp_some",
+            "short": "cf_eval_comp_some"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_comp_some",
+            "short": "cf_eval_comp_some",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28760,6 +29278,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4caf2c59-c55e-46ab-b124-86ebbb111cb8",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kleene_cf",
+            "short": "kleene_cf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kleene_cf",
+            "short": "kleene_cf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4cba5a94-0be2-4fd9-828f-6672f93b4cc8",
           "new": {
@@ -29849,6 +30404,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4ff3cd0b-4812-41b3-81a6-0c32e6373ded",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_right",
+            "short": "cf_eval_right"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_right",
+            "short": "cf_eval_right",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33616,6 +34208,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "595cf3d0-79d1-401b-9850-3936717924ad",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cfUnary",
+            "short": "cfUnary"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cfUnary",
+            "short": "cfUnary",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "59611082-494b-475f-81a1-06a8f9aaf9c4",
           "new": {
@@ -34922,6 +35551,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5d142f96-6802-48be-be6c-24699483d287",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sqrt_le_self",
+            "short": "cf_sqrt_le_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sqrt_le_self",
+            "short": "cf_sqrt_le_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37371,6 +38037,80 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6502ddf4-b5df-47ce-82fd-29eb5c565298",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_succ_cf",
+            "short": "quine_succ_cf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_succ_cf",
+            "short": "quine_succ_cf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "652dcfb2-a4a1-4538-8761-435f16500a7c",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_encodeCode_const_succ",
+            "short": "cf_encodeCode_const_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_encodeCode_const_succ",
+            "short": "cf_encodeCode_const_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "657cf8c3-d69c-4443-a834-267701ba3563",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleBridge.lean",
@@ -37918,6 +38658,43 @@
             ]
           },
           "reason": "Die extension: OVER selection (data/total), OVER trichotomy at a point, fan-in and reversal (Die.lean § VIII-X)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6751dc18-d968-49c0-a2fc-d24a0fd619d6",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_left",
+            "short": "cf_eval_left"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_left",
+            "short": "cf_eval_left",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39493,6 +40270,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6b816c6b-6193-46ec-b387-0c7a17b9664d",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cfEncConstStep",
+            "short": "cfEncConstStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cfEncConstStep",
+            "short": "cfEncConstStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6b99619e-92c7-45a2-b662-290353463a21",
           "new": {
@@ -40889,6 +41703,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6e890f42-3943-4f39-9c53-b796f622822f",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_encConst",
+            "short": "cf_eval_encConst"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_encConst",
+            "short": "cf_eval_encConst",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43130,6 +43981,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7532fa11-d0c0-41cb-84ab-d6073842c104",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_pair",
+            "short": "cf_eval_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_pair",
+            "short": "cf_eval_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "75338050-5e17-4db6-b29a-7cc8720f3a56",
           "new": {
             "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
@@ -44575,6 +45463,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "790da4fb-14c2-4884-8ac6-1b0a49e290b0",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_id",
+            "short": "cf_eval_id"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_id",
+            "short": "cf_eval_id",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7911e948-6785-4e55-a8cd-4fc08f6d3365",
           "new": {
             "file": "ZeroParadox/Settheory/Loeb.lean",
@@ -45418,6 +46343,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7b5a8165-d4dc-4b7e-81fe-5bcc49e628ec",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_curry",
+            "short": "cf_eval_curry"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_curry",
+            "short": "cf_eval_curry",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50998,6 +51960,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8b07cc75-0811-498a-919e-a271d1ba4b00",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_prec_zero",
+            "short": "cf_eval_prec_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_prec_zero",
+            "short": "cf_eval_prec_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8b1864ad-f5e9-48fe-86b7-f0e60754f0d5",
           "new": {
             "file": "ZeroParadox/Settheory/ForkFrameChange.lean",
@@ -52550,6 +53549,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "906aaf06-2b7a-4a04-8722-aa515041e75b",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cfAdd2Step",
+            "short": "cfAdd2Step"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cfAdd2Step",
+            "short": "cfAdd2Step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -58003,6 +59039,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9da02922-efae-42f2-ba8d-5a7ffc8acac9",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_succ",
+            "short": "cf_eval_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_succ",
+            "short": "cf_eval_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9dcc31f1-e514-4d75-98b8-b6adbd32ef70",
           "new": {
             "file": "ZeroParadox/Valuation/PadicErgodic.lean",
@@ -58319,6 +59392,43 @@
             ]
           },
           "reason": "Die v2 final batch: the four corners as die motions and the tower as a span of motions (experimental PoleCorners / PoleCornersBridge)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9eaf30b1-d365-45aa-a3f8-ef58ced62f88",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_prec_succ",
+            "short": "cf_eval_prec_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_prec_succ",
+            "short": "cf_eval_prec_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -60510,6 +61620,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a5eec695-2995-48a1-9d86-b31e98cdfaa8",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_diagIndex",
+            "short": "cf_eval_diagIndex"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_diagIndex",
+            "short": "cf_eval_diagIndex",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a6058cb0-46b4-4e5f-842e-d4d3b74d5a58",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -61067,6 +62214,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a7379647-8be3-4cc5-a0e4-318a09a658c7",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_comp",
+            "short": "cf_eval_comp"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_comp",
+            "short": "cf_eval_comp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a76927b2-e392-4cbc-9a70-f873afdb913f",
           "new": {
             "file": "ZeroParadox/Valuation/Scale.lean",
@@ -61392,6 +62576,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a8ba0b90-c48b-4151-84a9-5b8d335b43b9",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_unpair_right_le",
+            "short": "cf_unpair_right_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_unpair_right_le",
+            "short": "cf_unpair_right_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -65883,6 +67104,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b37c3cd1-9d7a-4f9d-a02b-39dbf43dd5ca",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_div2_val",
+            "short": "cf_div2_val"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_div2_val",
+            "short": "cf_div2_val",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b37ebf67-a6a9-4de8-ac66-c77b9d0df2a4",
           "new": {
@@ -68550,6 +69808,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b96fb107-4d47-41b5-8486-a1121b1a625e",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_prec_total",
+            "short": "cf_eval_prec_total"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_prec_total",
+            "short": "cf_eval_prec_total",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b9bf02e1-f854-440e-b377-0e6366e7e5b8",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -69176,6 +70471,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bb83c053-c36d-4902-bb0a-87d5633840fe",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_add4",
+            "short": "cf_eval_add4"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_add4",
+            "short": "cf_eval_add4",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bb8a29c0-d95f-4cc6-b35d-e4ca5e355897",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -69243,6 +70575,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bbe65cf3-d8a1-41e8-b18f-ddcc7a026f24",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.const_not_quine_succ",
+            "short": "const_not_quine_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.const_not_quine_succ",
+            "short": "const_not_quine_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -71898,6 +73267,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c44e1261-8136-4502-964e-42878370af6a",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kleene_cf_fixed₂",
+            "short": "kleene_cf_fixed₂"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.kleene_cf_fixed₂",
+            "short": "kleene_cf_fixed₂",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c493fb93-11b5-4e48-841b-356886a32349",
           "new": {
             "file": "ZeroParadox/Order/LeastFixedPoint.lean",
@@ -73093,6 +74499,43 @@
             ]
           },
           "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c71a7385-3dd1-465b-97d2-21ff6c524b35",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_le_encodeCode_const",
+            "short": "cf_le_encodeCode_const"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_le_encodeCode_const",
+            "short": "cf_le_encodeCode_const",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -74470,6 +75913,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cb297a23-d8fb-41b5-ac3f-ecae7e83d522",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_diag",
+            "short": "cf_eval_diag"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_diag",
+            "short": "cf_eval_diag",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cb4a9025-28a9-41ee-b93d-eec91f68c260",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleRealization.lean",
@@ -75270,6 +76750,43 @@
             ]
           },
           "reason": "Epsilon0LeastFP.lean (2026-10-22, rotation landing): successor cell of nfp (omega^.) as a set = Ioc eps_o eps_(o+1); limit-index cell = {eps_o}. From probe_rotation/rotation_landing_probe.lean.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ccefd40c-1239-4837-9b79-1798ea391db5",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sqrt_isSqrt",
+            "short": "cf_sqrt_isSqrt"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sqrt_isSqrt",
+            "short": "cf_sqrt_isSqrt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -78033,6 +79550,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d4cd964f-7f1b-4573-9960-d360afafc4b0",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_unpair_pair",
+            "short": "cf_unpair_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_unpair_pair",
+            "short": "cf_unpair_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d4f160d0-d9f7-4cfa-95e9-8d8b84953ea2",
           "new": {
@@ -78240,6 +79794,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d567b016-4e50-4840-bb2e-bc8417e87ad7",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_double",
+            "short": "cf_eval_double"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_eval_double",
+            "short": "cf_eval_double",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -78879,6 +80470,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d7bf7794-1653-40d2-a39f-33c55a19d31a",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sq_succ",
+            "short": "cf_sq_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sq_succ",
+            "short": "cf_sq_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d7c2d19a-5d8d-41c5-a25c-6c94d84ae2cd",
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
@@ -79275,6 +80903,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d8ba07fe-8a80-4a2e-8aa9-6fedfe1bbe24",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_bodd_add_div2",
+            "short": "cf_bodd_add_div2"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_bodd_add_div2",
+            "short": "cf_bodd_add_div2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -81466,6 +83131,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "de9f73ab-21ea-4fca-8d04-8bc2397f11a8",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sqrt_eq_of",
+            "short": "cf_sqrt_eq_of"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_sqrt_eq_of",
+            "short": "cf_sqrt_eq_of",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "dea1386c-69fb-49ec-bbd4-08cc1c499d39",
           "new": {
@@ -82730,6 +84432,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e2113f01-ecf0-47cf-8574-17e5495ce250",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cfAdd4",
+            "short": "cfAdd4"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cfAdd4",
+            "short": "cfAdd4",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -84567,6 +86306,43 @@
             ]
           },
           "reason": "Die quotients carrying UP: UpCompat, quotUp, landing transfer, identity-UP reduction to quot",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e6a8cb6e-c7d3-4c6d-a9c3-a7fa2754244e",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_amgm",
+            "short": "cf_amgm"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_amgm",
+            "short": "cf_amgm",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -92463,6 +94239,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fc85c754-106f-4905-814b-0aacac89aa3d",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cfEncConst",
+            "short": "cfEncConst"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cfEncConst",
+            "short": "cfEncConst",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fc90b95f-748a-4e7c-81d3-a64c178d05ec",
           "new": {
@@ -93714,6 +95527,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ff502e29-19f3-464c-a0f0-f608b4552251",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cfDouble",
+            "short": "cfDouble"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cfDouble",
+            "short": "cfDouble",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
           "verify": {
             "axioms": null,
             "sorry_free": true
