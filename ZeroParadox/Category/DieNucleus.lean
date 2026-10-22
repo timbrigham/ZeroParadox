@@ -12,7 +12,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# UP legs as nuclei: the die on a frame, the lifted snap as a member, the notation carrier as a non-member
+# UP legs as nuclei: the die on a meet-semilattice, the snap and its lift as members, the notation carrier as a non-member
 
 ## Engineer's Take
 
@@ -23,22 +23,24 @@ question was how much of this was mapped from those preexisting files. It should
 
 ---
 ## Formal Overview (AI-assisted)
-On a frame, a die motion with total, raising, `⊓`-preserving UP is a Mathlib `Nucleus` and back (§ I);
-landings are its fixed points, the order on UP legs the corpus's lattice of systems (§ II). Members (§ III):
-`snapNucleusTop` on `WithTop Ordinal`, landings `⊤` and the lifted ε-numbers; `dnegNucleus Prop`, all
-points landings iff excluded middle. Non-member (§ IV): `SynONote`, no top, so no frame (`no_snap_nucleus`).
+On a meet-semilattice a die motion with total, raising, `⊓`-preserving UP is a Mathlib `Nucleus`; a nucleus
+with any OVER is a motion, and that round trip returns the nucleus (§ I). Landings are its fixed points,
+and the order on UP legs is Mathlib's order on nuclei (§ II). Members (§ III): `snapNucleus` on `Ordinal`,
+its lift `snapNucleusTop`, `dnegNucleus Prop`; non-member (§ IV): `SynONote` (`no_snap_nucleus`).
 -/
 
 namespace ZeroParadox
 
+universe u
+
 namespace Motion
 
-variable {X : Type*} [Order.Frame X]
+variable {X : Type*} [SemilatticeInf X]
 
 /-! ### § I. A motion with a `⊓`-preserving raising total UP is a nucleus, and back -/
 
-/-- `Statement:` on a frame, a motion whose UP is total, raises, and preserves `⊓` gives the Mathlib
-    `Nucleus` `x ↦ up x`. -/
+/-- `Statement:` on a meet-semilattice, a motion whose UP is total, raises, and preserves `⊓` gives
+    the Mathlib `Nucleus` `x ↦ up x`. -/
 -- [ZP-CUSTOM] extends: Mathlib.Order.Nucleus | reason: reads the die's UP leg as a `Nucleus`;
 -- idempotence comes from the `Motion` field `up_idem`, inflation and `⊓`-preservation are hypotheses.
 def toNucleus (M : Motion X) (ht : M.UpTotal) (hr : M.UpRaises)
@@ -66,18 +68,19 @@ theorem ofNucleus_upTotal (n : Nucleus X) (s : X → X → Prop) : (ofNucleus n 
 theorem ofNucleus_upRaises (n : Nucleus X) (s : X → X → Prop) : (ofNucleus n s).UpRaises :=
   fun _ _ hy => (Part.mem_some_iff.1 hy) ▸ n.le_apply' _
 
-/-- `Statement:` `toNucleus` of `ofNucleus n s` is `n`. -/
+/-- `Statement:` `toNucleus` of `ofNucleus n s` is `n`: the round trip nucleus → motion → nucleus. -/
 theorem toNucleus_ofNucleus (n : Nucleus X) (s : X → X → Prop) :
     toNucleus (ofNucleus n s) (ofNucleus_upTotal n s) (ofNucleus_upRaises n s)
       (fun _ _ => Nucleus.map_inf) = n := by
   ext x
   rfl
 
-/-! ### § II. Landings, and the order on UP legs is the lattice of systems
+/-! ### § II. Landings, and the order on UP legs
 
-The order `n ≤ m` below is the frame of nuclei, `Order.Frame (Nucleus X)`, with its two ends
-`⊥ ≤ ⊤` and its order-dual identification with the coframe of sublocales (`nucleusIsoSublocale`):
-`ZeroParadox/Category/DifferenceGeneratesSystem.lean`, and on `WithTop Ordinal`
+The order `n ≤ m` below is Mathlib's `PartialOrder (Nucleus X)`, on any meet-semilattice. When `X` is
+a frame it is the frame of nuclei, `Order.Frame (Nucleus X)`, the corpus's lattice of systems, with
+its two ends `⊥ ≤ ⊤` and its order-dual identification with the coframe of sublocales
+(`nucleusIsoSublocale`): `ZeroParadox/Category/DifferenceGeneratesSystem.lean`, and on `WithTop Ordinal`
 `ZeroParadox/Ordinal/SnapMetaLattice.lean` § II. Nothing of it is re-derived here. -/
 
 /-- `Statement:` `y` is a landing of `ofNucleus n s` iff `n y = y`; both directions. -/
@@ -92,33 +95,77 @@ theorem isLanding_ofNucleus_anti {n m : Nucleus X} (hnm : n ≤ m) (s : X → X 
   intro hm
   exact le_antisymm (le_trans (hnm y) hm.le) (n.le_apply' y)
 
--- `Statement:` both directions: the landings of `ofNucleus m s` lie among those of `ofNucleus n s`
--- iff `n ≤ m` (Mathlib `Nucleus.range_subset_range`, `Nucleus.mem_range`). The order on UP legs runs
--- opposite to the inclusion of landing sets; `isLanding_ofNucleus_anti` is the `←` half.
-example (n m : Nucleus X) (s : X → X → Prop) :
+/-- `Statement:` both directions: the landings of `ofNucleus m s` lie among those of `ofNucleus n s`
+    iff `n ≤ m`; `isLanding_ofNucleus_anti` is the `←` half, and the `→` half takes `n` monotone from
+    `map_inf'` at `y ⊓ m y = y`. The order on UP legs runs opposite to the inclusion of landing sets.
+    `Reading:` on a frame the same iff is Mathlib's `Nucleus.range_subset_range` with
+    `Nucleus.mem_range`, which Mathlib files in its frame section; a meet-semilattice suffices here. -/
+theorem isLanding_ofNucleus_subset_iff (n m : Nucleus X) (s : X → X → Prop) :
     (∀ y, (ofNucleus m s).IsLanding y → (ofNucleus n s).IsLanding y) ↔ n ≤ m := by
-  rw [← Nucleus.range_subset_range]
   constructor
-  · intro h x hx
-    exact Nucleus.mem_range.2 ((isLanding_ofNucleus_iff _ _ _).1
-      (h x ((isLanding_ofNucleus_iff _ _ _).2 (Nucleus.mem_range.1 hx))))
-  · intro h y hy
-    exact (isLanding_ofNucleus_iff _ _ _).2 (Nucleus.mem_range.1
-      (h (Nucleus.mem_range.2 ((isLanding_ofNucleus_iff _ _ _).1 hy))))
+  · intro h y
+    have hmm : m (m y) = m y := le_antisymm (m.idempotent' y) (m.le_apply' (m y))
+    have hfix : n (m y) = m y :=
+      (isLanding_ofNucleus_iff _ _ _).1 (h (m y) ((isLanding_ofNucleus_iff _ _ _).2 hmm))
+    have hy : y ⊓ m y = y := inf_eq_left.mpr (m.le_apply' y)
+    calc n y = n (y ⊓ m y) := by rw [hy]
+      _ = n y ⊓ n (m y) := n.map_inf' y (m y)
+      _ ≤ n (m y) := inf_le_right
+      _ = m y := hfix
+  · intro hnm y hy
+    exact isLanding_ofNucleus_anti hnm s y hy
 
-/-- `Statement:` at the end `⊥` of the lattice of systems, UP of `ofNucleus ⊥ s` is the identity
-    (every point is then a landing: the `example` below). -/
+/-- `Statement:` at ⊥ of `Nucleus X`, the identity nucleus (Mathlib `instBot`, on any meet-semilattice), UP
+    of `ofNucleus ⊥ s` is the identity, so every point is a landing (the `example` below). -/
 theorem ofNucleus_bot_up (s : X → X → Prop) (x : X) : (ofNucleus ⊥ s).up x = Part.some x := rfl
 
 -- Statement: every point is a landing of `ofNucleus ⊥ s`.
 example (s : X → X → Prop) (x : X) : (ofNucleus ⊥ s).IsLanding x := Part.mem_some x
 
-/-- `Statement:` at the end `⊤` of the lattice of systems, UP of `ofNucleus ⊤ s` is the constant ⊤. -/
+section
+variable [OrderTop X]
+
+/-- `Statement:` given `[OrderTop X]`, at ⊤ of `Nucleus X` (Mathlib `instTop`) UP of `ofNucleus ⊤ s` is ⊤. -/
 theorem ofNucleus_top_up (s : X → X → Prop) (x : X) : (ofNucleus ⊤ s).up x = Part.some ⊤ := rfl
+
+end
 
 end Motion
 
 /-! ### § III. Members and controls -/
+
+/-- `Statement:` UP of `ordinalTowerMotion` (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) is total. -/
+theorem ordinalTowerMotion_upTotal : ordinalTowerMotion.{u}.UpTotal :=
+  Motion.ofTotal_upTotal _ _ _
+
+/-- `Statement:` and it raises in `Ordinal`'s order: `a ≤ nfp (ω^·) a` (`Ordinal.le_nfp`). -/
+theorem ordinalTowerMotion_upRaises : ordinalTowerMotion.{u}.UpRaises :=
+  fun x _ hy => (Part.mem_some_iff.1 hy) ▸ Ordinal.le_nfp _ x
+
+/-- `Statement:` and it preserves `⊓`: `nfp (ω^·)` is monotone and `Ordinal` is a chain, so it sends
+    `min` to `min`, as `snapNucleus.map_inf'` does (`ZeroParadox/Ordinal/SnapNucleus.lean`). -/
+theorem ordinalTowerMotion_up_inf (x y : Ordinal.{u}) :
+    (ordinalTowerMotion.up (x ⊓ y)).get (ordinalTowerMotion_upTotal _) =
+      (ordinalTowerMotion.up x).get (ordinalTowerMotion_upTotal x) ⊓
+        (ordinalTowerMotion.up y).get (ordinalTowerMotion_upTotal y) := by
+  show Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (x ⊓ y) =
+    Ordinal.nfp (fun α => Ordinal.omega0 ^ α) x ⊓ Ordinal.nfp (fun α => Ordinal.omega0 ^ α) y
+  have hmono : Monotone (Ordinal.nfp (fun α : Ordinal.{u} => Ordinal.omega0 ^ α)) :=
+    Ordinal.nfp_monotone (Ordinal.isNormal_opow Ordinal.one_lt_omega0).strictMono.monotone
+  rcases le_total x y with h | h
+  · rw [inf_eq_left.mpr h, inf_eq_left.mpr (hmono h)]
+  · rw [inf_eq_right.mpr h, inf_eq_right.mpr (hmono h)]
+
+/-- `Statement:` MEMBER on bare `Ordinal`, a meet-semilattice with no top (§ IV): `toNucleus` of
+    `ordinalTowerMotion` is `snapNucleus` (`ZeroParadox/Ordinal/SnapNucleus.lean`), by `rfl`. -/
+theorem toNucleus_ordinalTowerMotion :
+    Motion.toNucleus ordinalTowerMotion.{u} ordinalTowerMotion_upTotal ordinalTowerMotion_upRaises
+      ordinalTowerMotion_up_inf = snapNucleus := rfl
+
+-- `Statement:` UP of `ordinalTowerMotion` at `a` is `Part.some (snapNucleus a)`, by `rfl`.
+-- `Reading:` the tower motion on the ordinals IS a nucleus motion, with no top adjoined; the next
+-- member is its lift through `↑ : Ordinal → WithTop Ordinal`.
+example (a : Ordinal.{u}) : ordinalTowerMotion.up a = Part.some (snapNucleus a) := rfl
 
 /-- `Statement:` MEMBER: on the frame `WithTop Ordinal` (`ZeroParadox/Ordinal/SnapMetaLattice.lean`
     § I), for any OVER `s`, `x` is a landing of `ofNucleus snapNucleusTop s` iff `x = ⊤` or
@@ -182,51 +229,65 @@ example (s : WithTop Ordinal → WithTop Ordinal → Prop) :
 /-- `Statement:` MEMBER: excluded middle iff every proposition is a landing of
     `ofNucleus (dnegNucleus Prop) s`, for any OVER `s`: `em_iff_dnegNucleus_trivial` through
     `isLanding_ofNucleus_iff`, the Heyting instance pinned to `Prop.instHeytingAlgebra` as there.
-    `Reading:` `em_iff_dnegNucleus_trivial` measures `[propext]`; this statement carries the
-    `Order.Frame Prop` instance `ofNucleus` takes, which by `inferInstance` measures
-    `[propext, Classical.choice, Quot.sound]` (2026-10-21), the footprint printed below. -/
+    `Reading:` measured `[propext]` (2026-10-22, printed below): the `SemilatticeInf Prop` instance
+    `ofNucleus` takes here is choice-free, where `Order.Frame Prop` by `inferInstance` measures
+    `[propext, Classical.choice, Quot.sound]`; the binder is what the footprint prices. -/
 theorem em_iff_ofNucleus_dneg_isLanding (s : Prop → Prop → Prop) :
     ExcludedMiddle ↔ ∀ p : Prop,
       (Motion.ofNucleus (@dnegNucleus Prop Prop.instHeytingAlgebra) s).IsLanding p := by
   rw [em_iff_dnegNucleus_trivial]
   exact forall_congr' fun p => (Motion.isLanding_ofNucleus_iff _ _ _).symm
 
+-- Reading (cited, not claimed): neighbour: Fellin and Schuster, "A General Glivenko–Gödel Theorem for
+-- Nuclei", EPTCS 351 (MFPS 2021), 2021, § 5.1 with Theorem 3.8 and Application 5.3(1), pp. 56, 60: for
+-- `¬¬` as a nucleus over intuitionistic logic `⊢i`, the stability axiom `¬¬ϕ ⊲ ϕ` is RAA, so its
+-- strong extension is classical logic `⊢c`, and `Γ ⊢c ϕ ⟺ Γ ⊢i ¬¬ϕ`; delta: theirs is conservation
+-- between two provability relations and never names excluded middle, ours is the fixed-point
+-- statement on the Heyting algebra `Prop` with `p ∨ ¬p` as the other side, in both directions.
+
 -- Statement: MEMBER: the double-negation nucleus on `Prop` (`dnegNucleus`) read as a motion with the
 -- empty OVER; `True` is a landing.
 example : (Motion.ofNucleus (dnegNucleus Prop) (fun _ _ => False)).IsLanding True :=
   (Motion.isLanding_ofNucleus_iff _ _ _).2 (by simp [dnegNucleus])
 
--- Statement: CONTROL: on the frame `Bool × Bool`, the map sending `(false, false)` to itself and every
--- other point to `(true, true)` is inflationary, idempotent and monotone, and is no nucleus: it does
--- not preserve `⊓` at `(true, false) ⊓ (false, true)`.
+-- Statement: CONTROL: on `Bool × Bool`, the map sending `(false, false)` to itself and every other
+-- point to `(true, true)` is inflationary, idempotent and monotone, does not preserve `⊓` at
+-- `(true, false) ⊓ (false, true)`, and is no nucleus.
 example :
     let c : Bool × Bool → Bool × Bool := fun p => if p.1 || p.2 then (true, true) else (false, false)
-    ((∀ p, p ≤ c p) ∧ (∀ p, c (c p) = c p) ∧ Monotone c) ∧ ¬ ∃ n : Nucleus (Bool × Bool), ⇑n = c := by
+    ((∀ p, p ≤ c p) ∧ (∀ p, c (c p) = c p) ∧ Monotone c) ∧
+      c ((true, false) ⊓ (false, true)) ≠ c (true, false) ⊓ c (false, true) ∧
+      ¬ ∃ n : Nucleus (Bool × Bool), ⇑n = c := by
   intro c
-  refine ⟨⟨by decide, by decide, fun p q h => by revert p q; decide⟩, ?_⟩
+  refine ⟨⟨by decide, by decide, fun p q h => by revert p q; decide⟩, by decide, ?_⟩
   rintro ⟨n, hn⟩
   have := n.map_inf (x := (true, false)) (y := (false, true))
   rw [hn] at this
   revert this
   decide
 
--- Statement: CONTROL: on `Bool`, the constant map `false` preserves `⊓` and is idempotent, and is no
+-- Statement: CONTROL: on `Bool`, the constant map `⊥` preserves `⊓` and is idempotent, and is no
 -- nucleus: it is not inflationary.
-example : ¬ ∃ n : Nucleus Bool, ⇑n = fun _ => (⊥ : Bool) := by
+example :
+    let c : Bool → Bool := fun _ => ⊥
+    (∀ p q, c (p ⊓ q) = c p ⊓ c q) ∧ (∀ p, c (c p) = c p) ∧ ¬ ∃ n : Nucleus Bool, ⇑n = c := by
+  intro c
+  refine ⟨by decide, by decide, ?_⟩
   rintro ⟨n, hn⟩
   have := n.le_apply (x := true)
   rw [hn] at this
   exact absurd this (by decide)
 
-/-! ### § IV. Non-member, and the fence: no top, so no frame over the given order
+/-! ### § IV. Non-member, and the fence: what bare `Ordinal` and `SynONote` lack
 
-`toNucleus` and `ofNucleus` are stated on a frame, and a frame has a top (`isMax_top`). Two corpus
-carriers have none over their given order, so § I–II do not reach them as stated: bare `Ordinal`,
-where `snapNucleus` is one nucleus (`ZeroParadox/Ordinal/SnapMetaLattice.lean` § III) and
-`ordinalTowerMotion`, `ordinalSuccMotion` are motions; and `SynONote`
-(`ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). Adjoining ⊤ to the ordinals gives § III's frame.
-On `SynONote` the obstruction is sharper and order-free, `no_snap_nucleus`; the corpus's lift of it by
-a top, `E0Note` (`ZeroParadox/Ordinal/PricedInterface.lean`), is not examined here. -/
+§ I–II are stated on a meet-semilattice, so § I reaches bare `Ordinal`: `toNucleus` of `ordinalTowerMotion` is
+`snapNucleus` (§ III), the one nucleus `ZeroParadox/Ordinal/SnapMetaLattice.lean` § III places there. What bare
+`Ordinal` lacks is a top over its order (the first `example` below), hence `⊤ : Nucleus Ordinal` (`ofNucleus_top_up`
+takes `[OrderTop X]`) and the frame of nuclei, § II's two-ended lattice; adjoining ⊤ gives § III's frame, where
+the lift `snapNucleusTop` is a member. `SynONote` (`ZeroParadox/Ordinal/SnapNucleusConstructive.lean`) has no top
+over its comparator order either (the next two `example`s), and there the obstruction is sharper: no nucleus on
+it has only `omegaPow`-fixed landings, `no_snap_nucleus`, the `Nucleus`-typed corollary of the order-free
+`no_snap_closure` (any idempotent endomap of `ONote`); its lift by a top, `E0Note`, is not examined here. -/
 
 -- `Statement:` no `OrderTop` over the ordinals' order: no greatest element (Mathlib `NoMaxOrder`).
 example : IsEmpty (OrderTop Ordinal) := ⟨fun h => by
@@ -262,12 +323,14 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-§ I–II measure `[propext, Quot.sound]` except `ofNucleus_bot_up`: its proof is `rfl`, so its footprint
-is the statement's, through Mathlib's `⊥ : Nucleus X` (`ofNucleus_top_up`, the same proof at `⊤`, is
-the control). `snapNucleusTop_isLanding_iff` and `em_iff_ofNucleus_dneg_isLanding` are
-STATEMENT-CARRIED (statement control, measured 2026-10-21): the first through Mathlib's `Ordinal`
-fixed-point theory, as recorded for `snapNucleus` in `ZeroParadox/Ordinal/SnapNucleus.lean`; the second
-through the `Order.Frame Prop` instance. -/
+Measured from the build log, 2026-10-22. `toNucleus` depends on no axioms; `ofNucleus`, `ofNucleus_upTotal`,
+`ofNucleus_upRaises`, `isLanding_ofNucleus_iff` and `em_iff_ofNucleus_dneg_isLanding` on `[propext]`;
+`toNucleus_ofNucleus`, `isLanding_ofNucleus_anti`, `isLanding_ofNucleus_subset_iff` and `ofNucleus_top_up` on
+`[propext, Quot.sound]`. `ofNucleus_bot_up` is `rfl`, so its footprint is the statement's, through Mathlib's
+`⊥ : Nucleus X` (`ofNucleus_top_up`, the same proof at `⊤`, is the control). The bare-`Ordinal` member with its
+three hypotheses, and `snapNucleusTop_isLanding_iff` (statement control, measured 2026-10-21), are
+STATEMENT-CARRIED through Mathlib's `Ordinal` fixed-point theory, as recorded for `snapNucleus` in
+`ZeroParadox/Ordinal/SnapNucleus.lean`. On `Prop` the `SemilatticeInf` instance is choice-free. -/
 
 section PurityCheck
 open ZeroParadox
@@ -279,8 +342,13 @@ open ZeroParadox
 #print axioms Motion.toNucleus_ofNucleus
 #print axioms Motion.isLanding_ofNucleus_iff
 #print axioms Motion.isLanding_ofNucleus_anti
+#print axioms Motion.isLanding_ofNucleus_subset_iff
 #print axioms Motion.ofNucleus_bot_up
 #print axioms Motion.ofNucleus_top_up
+#print axioms ordinalTowerMotion_upTotal
+#print axioms ordinalTowerMotion_upRaises
+#print axioms ordinalTowerMotion_up_inf
+#print axioms toNucleus_ordinalTowerMotion
 #print axioms snapNucleusTop_isLanding_iff
 #print axioms em_iff_ofNucleus_dneg_isLanding
 

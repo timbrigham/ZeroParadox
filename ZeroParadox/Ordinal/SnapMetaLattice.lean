@@ -18,12 +18,12 @@ all by instance resolution — nothing to prove). On a frame, the **nuclei** (mo
 differences) form a `Frame` and the **sublocales** (the systems they generate) form a `Coframe`: the
 *lattice of systems*. So the point at infinity is exactly what completes the meta-level.
 
-**Why this is the boundary doing the work.** The lattice-of-systems machinery fires ONLY once a top is
-present — it does *not* fire on bare `Ordinal` (no top, not a frame). So it is provably the ceiling, the
-point the unbounded ascent marches toward, that unlocks the lattice. By the framework's self-dual pole
-(0 = ∞, `rInv_swaps`) that ceiling ⊤ is the point at infinity, which is the next bottom: the unboundedness
-is its own type of boundary, and adjoining it is what turns "one modality" (the bare-ordinal `snapNucleus`)
-into "one point in a lattice of systems."
+**Why this is the boundary doing the work.** The lattice-of-systems machinery fires ONLY once a top is present
+(§ III: not on bare `Ordinal`), so it is provably the ceiling, the point the unbounded ascent marches toward, that
+unlocks the lattice. In the framework's pole chart ⊥ = 0 = ∞ (a chart claim; its coincidence witness is
+`infinitude_forces_infinite_complexity`, `ZeroParadox/BottomCannotBe.lean` § INVERSION) that ceiling, ⊤ of
+`WithTop Ordinal`, is the point at infinity; reading it as a next bottom is interpretation, no theorem here says
+so. Adjoining it turns "one modality" (`snapNucleus`) into "one point in a lattice of systems."
 
 **Honest scope.** The frame structure of `WithTop Ordinal` and the nucleus/sublocale lattice are recognized
 Mathlib / locale theory — §§ I–II only *instantiate* them and record the placement (the top is the

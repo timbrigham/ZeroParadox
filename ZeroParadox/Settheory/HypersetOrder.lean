@@ -529,7 +529,8 @@ theorem wrap_zeroStar_not_same : ¬ Same (wrap zeroStar) zeroStar := by
   have h10 : (1 : Fin 2) = 0 := hb'
   exact absurd h10 (by decide)
 
-/-- `Statement:` every `A` with `Same (wrap A) A` is `Same` as `omegaLoop`; no AFA is assumed.
+/-- `Statement:` every `A` with `Same (wrap A) A` is `Same` as `omegaLoop`; no AFA is assumed, and
+    `Same` is the equality AFA installs.
     `Reading:` up to bisimulation, `x = {x}` has the one solution Ω. Neighbours in Aczel 1988:
     Prop. 1.4, p. 7, "An apg is a picture of Ω if and only if every node of the apg has a child";
     p. 19, "AFA implies that there is at most one solution to the equation [x = {x}], namely Ω";

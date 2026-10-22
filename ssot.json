@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2511,
+        "declarations": 2518,
         "files": 180
       },
       "entries": [
@@ -12096,6 +12096,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1fa0a03e-d151-456b-823e-8bd4147da8b7",
+          "new": {
+            "file": "ZeroParadox/Category/DieNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_up_inf",
+            "short": "ordinalTowerMotion_up_inf"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DieNucleus.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_up_inf",
+            "short": "ordinalTowerMotion_up_inf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die v2 carry: nucleus bridge at a meet-semilattice (landing-inclusion iff, the bare-Ordinal member toNucleus ordinalTowerMotion = snapNucleus with its three hypotheses), and the Arrives converse under a step at every point other than y",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1fdb3138-d61d-45aa-9cff-837a5524dd24",
           "new": {
             "file": "ZeroParadox/Multihomed/HilbertDiagonal.lean",
@@ -16613,6 +16652,45 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2b12734a-0890-49a6-82ff-05943a50c098",
+          "new": {
+            "file": "ZeroParadox/Category/DieNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_upTotal",
+            "short": "ordinalTowerMotion_upTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DieNucleus.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_upTotal",
+            "short": "ordinalTowerMotion_upTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die v2 carry: nucleus bridge at a meet-semilattice (landing-inclusion iff, the bare-Ordinal member toNucleus ordinalTowerMotion = snapNucleus with its three hypotheses), and the Arrives converse under a step at every point other than y",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41525,6 +41603,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7254ccde-f3d1-45d2-b083-18d45010aa6b",
+          "new": {
+            "file": "ZeroParadox/Category/DieNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_upRaises",
+            "short": "ordinalTowerMotion_upRaises"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DieNucleus.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalTowerMotion_upRaises",
+            "short": "ordinalTowerMotion_upRaises",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die v2 carry: nucleus bridge at a meet-semilattice (landing-inclusion iff, the bare-Ordinal member toNucleus ordinalTowerMotion = snapNucleus with its three hypotheses), and the Arrives converse under a step at every point other than y",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "72593453-fc1f-4fc5-b0d5-9597a827998e",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapMetaLattice.lean",
@@ -59788,6 +59905,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a47a04b4-bd62-4eae-9d43-2ada8b6d2802",
+          "new": {
+            "file": "ZeroParadox/Category/DieNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.isLanding_ofNucleus_subset_iff",
+            "short": "isLanding_ofNucleus_subset_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DieNucleus.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.isLanding_ofNucleus_subset_iff",
+            "short": "isLanding_ofNucleus_subset_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die v2 carry: nucleus bridge at a meet-semilattice (landing-inclusion iff, the bare-Ordinal member toNucleus ordinalTowerMotion = snapNucleus with its three hypotheses), and the Arrives converse under a step at every point other than y",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a490ac48-a034-4620-8c34-a19c3a0fa43a",
           "new": {
@@ -60555,6 +60709,46 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a7a4242f-97ef-49c3-8dad-f575a2573d7d",
+          "new": {
+            "file": "ZeroParadox/Category/DieNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toNucleus_ordinalTowerMotion",
+            "short": "toNucleus_ordinalTowerMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/DieNucleus.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.toNucleus_ordinalTowerMotion",
+            "short": "toNucleus_ordinalTowerMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Die v2 carry: nucleus bridge at a meet-semilattice (landing-inclusion iff, the bare-Ordinal member toNucleus ordinalTowerMotion = snapNucleus with its three hypotheses), and the Arrives converse under a step at every point other than y",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -71418,6 +71612,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c4b62a35-ff3e-4bed-bdef-538fb1a848f5",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.arrives_of_forall_run",
+            "short": "arrives_of_forall_run"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.arrives_of_forall_run",
+            "short": "arrives_of_forall_run",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die v2 carry: nucleus bridge at a meet-semilattice (landing-inclusion iff, the bare-Ordinal member toNucleus ordinalTowerMotion = snapNucleus with its three hypotheses), and the Arrives converse under a step at every point other than y",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -88041,6 +88272,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f2f0c86d-1ada-4b62-832c-b0a8cf1fa5c0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.arrives_iff_forall_run",
+            "short": "arrives_iff_forall_run"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.arrives_iff_forall_run",
+            "short": "arrives_iff_forall_run",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Die v2 carry: nucleus bridge at a meet-semilattice (landing-inclusion iff, the bare-Ordinal member toNucleus ordinalTowerMotion = snapNucleus with its three hypotheses), and the Arrives converse under a step at every point other than y",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -31,9 +31,9 @@ The die has evolved, and it is on version two now. I think what we are describin
 ---
 
 ## Formal Overview (AI-assisted)
-Version 2, indexed in `ZeroParadox/DieCannotBe.lean`: MOTION (§ I–IV; no order); VIEWS (§ XII,
-§ XIV–XV; an order as data); CELLS (§ IX–XI, § XVI; arrival, fan-in); TRAP SETS (§ XII–XIII, § XVI);
-the DATUM behind a cell (§ V–VIII, § XIII); MAPS, ORDERS, QUOTIENTS (§ XIII, XVII–XVIII).
+Version 2; the index `ZeroParadox/DieCannotBe.lean` numbers its sections differently. Here: MOTION (§ I–IV;
+no order); VIEWS (§ XII, § XIV–XV; an order as data); CELLS (§ IX–XI, § XVI; arrival, fan-in); TRAP SETS
+(§ XII–XIII, § XVI); the DATUM behind a cell (§ V–VIII, § XIII); MAPS, ORDERS, QUOTIENTS (§ XIII, XVII–XVIII).
 -/
 
 namespace ZeroParadox
@@ -829,8 +829,8 @@ theorem eq_of_step_to_isEmpty {E : α → Type*} (hstep : ∀ a b, M.step a b �
 /-- `Statement:` in `ofFun g`, every step into `y` starts at `y` iff every `x` with `g^[n] x = y` for
     some `n` is `y`; both directions. `Reading:` the seam between "no other start ever reaches `y`"
     (safety) and "orbits eventually reach `y`" (liveness), named as in Alpern and Schneider, IPL 21
-    (1985), pp. 181–182; the second is `Arrives` (§ XVI), and the two meet in
-    `noEntry_ofFun_iff_arrives`. -/
+    (1985), pp. 181–182; theirs are properties of executions, these of a step relation. The second
+    is `Arrives` (§ XVI), and the two meet in `noEntry_ofFun_iff_arrives`. -/
 theorem eq_of_step_to_ofFun_iff_iterate (g : α → α) (y : α) :
     (∀ a, (ofFun g).step a y → a = y) ↔ ∀ x n, g^[n] x = y → x = y := by
   constructor
@@ -1160,8 +1160,9 @@ theorem restrict_stepRaises_Ici [Preorder α] (h : M.StepRaises) (a : α)
     (hup : M.UpClosed (Set.Ici a)) : (M.restrict (Set.Ici a) hup).StepRaises :=
   fun x y hs => h x.1 y.1 hs
 
-/-- `Statement:` an empty carrier has at most one motion (one exists: the `Nonempty` example in
-    `DieCannotBe.lean` § 0). -/
+/-- `Statement:` an empty carrier has at most one motion. One exists on every carrier, the identity UP
+    with the empty step (the `example` at `Type` in `ZeroParadox/DieCannotBe.lean` § 0), and on
+    `Empty` the `Nonempty` example of § II there. -/
 theorem subsingleton_of_isEmpty [IsEmpty α] : Subsingleton (Motion α) :=
   ⟨fun ⟨u, _, s⟩ ⟨u', _, s'⟩ => by
     have hu : u = u' := funext fun x => isEmptyElim x
@@ -1319,8 +1320,10 @@ variable (M) in
     point that arrives at `y`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `Relation.ReflTransGen` and
 -- `StateTransition.Reaches` state that SOME path reaches `y`; this implies that every run passes
--- through `y` (`exists_run_eq_of_arrives`); the converse is not stated. Mathlib's `Acc` of the step with `y` removed as a source is the nearest form
--- (`acc_of_arrives`, `arrives_of_acc`); the dated search is in `LEAN_CUSTOM_REGISTRY.md`.
+-- through `y` (`exists_run_eq_of_arrives`), and the converse holds classically given a step at every
+-- point other than `y` (`arrives_of_forall_run`). Mathlib's `Acc` of the step with `y` removed as a
+-- source is the nearest form (`acc_of_arrives`, `arrives_of_acc`); the dated search is in
+-- `LEAN_CUSTOM_REGISTRY.md`.
 inductive Arrives (y : α) : α → Prop
   | here : Arrives y y
   | next {x : α} : (∃ b, M.step x b) → (∀ b, M.step x b → Arrives y b) → Arrives y x
@@ -1447,6 +1450,40 @@ theorem arrives_of_acc [DecidableEq α] {y : α} (hprog : ∀ a, a ≠ y → ∃
     by_cases hxy : x = y
     · subst hxy; exact Arrives.here
     · exact Arrives.next (hprog x hxy) (fun b hb => ih b ⟨hxy, hb⟩)
+
+-- The `DecidableEq` binder is kept in the type on purpose, as for `arrives_of_acc`.
+set_option linter.unusedDecidableInType false in
+/-- `Statement:` with decidable equality, if every point other than `y` has a step and every run
+    from `x` visits `y`, then `x` arrives at `y`: the converse of `exists_run_eq_of_arrives` under
+    that hypothesis. A run from `x` avoiding `y` is a descending chain of the step with `y` removed
+    as a source (Mathlib `not_acc_iff_exists_descending_chain`), so `x` is accessible and
+    `arrives_of_acc` applies. `Reading:` the forward half is axiom-free and this half carries
+    `Classical.choice`, the chain being built by choice, so the asymmetry between the two halves is
+    one of choice, not of finiteness: no finite-branching or finite-carrier hypothesis is used. -/
+theorem arrives_of_forall_run [DecidableEq α] {y : α} (hprog : ∀ a, a ≠ y → ∃ b, M.step a b)
+    {x : α} (h : ∀ s : ℕ → α, M.IsRun s → s 0 = x → ∃ n, s n = y) : M.Arrives y x := by
+  apply arrives_of_acc hprog
+  by_contra hacc
+  obtain ⟨f, hf0, hf⟩ := not_acc_iff_exists_descending_chain.mp hacc
+  obtain ⟨n, hn⟩ := h f (fun n => (hf n).2) hf0
+  exact (hf n).1 hn
+
+-- Statement: CONTROL: without a step at every point other than `y` the converse fails: on `Bool`
+-- with the empty step there are no runs, so every run from `true` visits `false`, and `true` does
+-- not arrive at `false`.
+example : let M := ofTotal (id : Bool → Bool) (fun _ => rfl) (fun _ _ => False)
+    (∀ s : ℕ → Bool, M.IsRun s → s 0 = true → ∃ n, s n = false) ∧ ¬ M.Arrives false true := by
+  intro M
+  refine ⟨fun s hs _ => (hs 0).elim, fun h => ?_⟩
+  cases h with
+  | next hex _ => exact hex.elim fun _ hb => hb
+
+set_option linter.unusedDecidableInType false in
+/-- `Statement:` with decidable equality and a step at every point other than `y`, `x` arrives at `y`
+    iff every run from `x` visits `y`; both directions. -/
+theorem arrives_iff_forall_run [DecidableEq α] {y : α} (hprog : ∀ a, a ≠ y → ∃ b, M.step a b)
+    (x : α) : M.Arrives y x ↔ ∀ s : ℕ → α, M.IsRun s → s 0 = x → ∃ n, s n = y :=
+  ⟨exists_run_eq_of_arrives, arrives_of_forall_run hprog⟩
 
 /-- `Statement:` in `ofFun g`, the orbit of `x` is eventually constant at `y` iff `x` arrives at `y`
     and `y` steps to itself only; both directions. -/
@@ -1720,8 +1757,8 @@ theorem quot_ofFun_step_iff {g : α → α} {s : Setoid α} (hg : ∀ a b, s.r a
 
 -- Statement: CONTROL: on `Fin 3` with classes `{0, 1}` and `{2}`, the map `0 ↦ 0`, `1 ↦ 2`, `2 ↦ 2`
 -- does not send related points to related points; the quotient steps the class of `0` to itself and
--- elsewhere, and steps the class of `1` to the class of `0`, while `1` has no successor in the class
--- of `0`.
+-- elsewhere, and that class, read at its representative `1`, steps to itself while `1` has no
+-- successor in it (so `quot_step_mk_iff` fails at `1`).
 example : let s : Setoid (Fin 3) := Setoid.ker fun x : Fin 3 => decide (x = 2)
     let g : Fin 3 → Fin 3 := fun x => if x = 1 then 2 else x
     (¬ ∀ a b, s.r a b → s.r (g a) (g b)) ∧
@@ -2038,6 +2075,8 @@ open ZeroParadox
 #print axioms Motion.eq_of_noEntry_of_forall_arrives
 #print axioms Motion.acc_of_arrives
 #print axioms Motion.arrives_of_acc
+#print axioms Motion.arrives_of_forall_run
+#print axioms Motion.arrives_iff_forall_run
 #print axioms Motion.reach_and_stay_iff
 #print axioms Motion.not_arrives_of_stageClosure
 #print axioms Motion.reverse_ofFun_subsingleton_iff
