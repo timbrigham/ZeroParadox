@@ -45,6 +45,8 @@ import ZeroParadox.Order.WellFoundedObstruct
 import ZeroParadox.Valuation.PoleCornersBridge
 import ZeroParadox.Category.DieNucleus
 import ZeroParadox.Order.LeastFixedPoint
+import ZeroParadox.Valuation.SemilatticeInstance
+import ZeroParadox.Settheory.OntBridge
 
 set_option maxHeartbeats 400000
 
@@ -3245,5 +3247,274 @@ example (n : ℕ) :
 -- Reading: the change of carrier disappears into a larger carrier (`Σ n, MemGraph n`, `Type`). On the
 -- graphs no point steps to itself (`HypersetOrder.lean` § VII's `example`); on `Type` no equation
 -- between types is stated. The fixed classes are read off the quotient, the shape of `drawing_vs_set`.
+
+/-! ### § XXIII. T-SNAP as the die's first case study: a run's motion, both directions, the gaps -/
+-- Reading (cited, not claimed): each part of the die has a standard home, and this index catalogues
+-- them. UP is an idempotent of Par, the category of sets and partial functions (Cockett and Lack, TCS
+-- 270 (2002), Example 1, p. 228), not in general a restriction idempotent (their p. 227; Cockett and
+-- Hofstra 2008, pp. 186–187, as at `ZeroParadox/Die.lean` § I); OVER is an abstract reduction system, with `NoStepAt` its normal form
+-- (Waldmann, Automated Reasoning lecture notes, 2011, p. 2, citing Baader and Nipkow 1998, ch. 2);
+-- `quot` under `StepCompat` is the quotient by a bisimulation equivalence (Rutten, TCS 249 (2000),
+-- pp. 26–27, Prop. 5.8); a premise free per face and a taboo over all carriers is a Brouwerian
+-- counterexample (Diener, arXiv:1804.05495v3, pp. 6, 11). The pair itself, a partial idempotent beside
+-- a relation with per-leg premises tabulated across carriers, was not located as a named structure as
+-- of 2026-10-22, searched in 13 theoremsearch queries varied by vocabulary, a text grep of 38 papers on
+-- restriction categories, rewriting, coalgebra and constructive reverse mathematics, and nLab.
+-- Reading: T-SNAP is the die's first case study, read in the converse of the direction the die was
+-- built in: the die arose from the snap's up-and-over shape (`ZeroParadox/Die.lean`'s Engineer's Take),
+-- and these examples render the snap in the die. "Instance" is too strong: the OVER used is CHOSEN, the run
+-- motion of `S` (UP the identity, OVER from each stage `S n` to the next), and carrier, UP and view do
+-- not fix OVER (§ XIX, `cover_overs_differ`); that choice is the first step these examples do not
+-- justify. If a run `S` on a `ZPSemilattice L` has `S 0 = ⊥` (CC-1, `hcc1`) and `S 1 ≠ S 0` (`hocc`),
+-- then in its run motion ⊥ of `L` is a landing that steps elsewhere, and the first step strictly raises
+-- in ZP-A's induced order (`t_snap_given`'s triple is `S 0 < S 1` there). If moreover `S` is a state
+-- sequence (ZP-A's D3, which is `StepRaises` of the run motion), then ⊥ of `L` is in the first trap set
+-- and no later stage is ⊥ of `L`. If moreover `hcov`, then `BotCovered L`; the converse fails on ℕ. UP
+-- is the identity in the run motion, so the corner does not fire (§ II); the snap's UP leg is the closure of
+-- the boundary model (`WithBot Ordinal`), where the corner fires and the motion climbs. In the other
+-- direction, if some motion on `L` steps elsewhere at ⊥ of `L`, a step out of ⊥ of `L` carries
+-- T-SNAP's triple, and that premise gives neither `hocc` nor a run.
+-- Statement: if `S 0 = ⊥` and `S 1 ≠ S 0`, then in the run motion of `S` the point `S 0`, ⊥ of `L`, is a
+-- landing, steps to `S 1`, steps elsewhere, and `S 0 < S 1` in ZP-A's induced order.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (S : ℕ → L)
+    (hcc1 : S 0 = ZeroParadox.ZPSemilattice.bot) (hocc : S 1 ≠ S 0) :
+    let M := ZeroParadox.Motion.ofTotal (id : L → L) (fun _ => rfl)
+      (fun a b => ∃ n, a = S n ∧ b = S (n + 1))
+    M.IsLanding (S 0) ∧ M.step (S 0) (S 1) ∧ M.LeavesAt (S 0) ∧
+      (letI := ZeroParadox.zpSemilatticeSup L; S 0 < S 1) := by
+  intro M
+  letI := ZeroParadox.zpSemilatticeSup L
+  obtain ⟨hab, -, hj⟩ := ZeroParadox.t_snap_given S hcc1 hocc
+  exact ⟨Part.mem_some_iff.2 rfl, ⟨0, rfl, rfl⟩, ⟨S 1, ⟨0, rfl, rfl⟩, hocc⟩,
+    hj, fun h => hab (h.symm.trans ((ZeroParadox.ZPSemilattice.join_comm _ _).trans hj))⟩
+-- Statement: INVARIANT, no motion in it: T-SNAP's triple at `(a, b)` is `a < b` in ZP-A's induced order;
+-- both directions.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (a b : L) :
+    (a ≠ b ∧ b ≠ a ∧ ZeroParadox.ZPSemilattice.join a b = b) ↔
+      (letI := ZeroParadox.zpSemilatticeSup L; a < b) := by
+  letI := ZeroParadox.zpSemilatticeSup L
+  constructor
+  · rintro ⟨hab, -, hj⟩
+    exact ⟨hj, fun h => hab (h.symm.trans ((ZeroParadox.ZPSemilattice.join_comm b a).trans hj))⟩
+  · intro h
+    obtain ⟨hj, hn⟩ := lt_iff_le_not_ge.1 h
+    refine ⟨fun h => hn ?_, fun h => hn ?_, hj⟩
+    · subst h; exact ZeroParadox.ZPSemilattice.join_idem a
+    · subst h; exact ZeroParadox.ZPSemilattice.join_idem _
+-- Statement: ZP-A's D3, `IsStateSequence S`, is `StepRaises` of the run motion of `S` in ZP-A's induced
+-- order; both directions.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (S : ℕ → L) :
+    ZeroParadox.ZPSemilattice.IsStateSequence S ↔ @ZeroParadox.Motion.StepRaises L
+      (ZeroParadox.Motion.ofTotal (id : L → L) (fun _ => rfl)
+        (fun a b => ∃ n, a = S n ∧ b = S (n + 1))) (ZeroParadox.zpSemilatticeSup L).toLE := by
+  constructor
+  · intro hS
+    rintro a b ⟨n, rfl, rfl⟩
+    exact ZeroParadox.ZPSemilattice.state_sequence_monotone S hS n
+  · intro h
+    exact ⟨fun n => S (n + 1), fun n => (h (S n) (S (n + 1)) ⟨n, rfl, rfl⟩).symm⟩
+-- Statement: if moreover `S` is a state sequence, every step of the run motion into ⊥ of `L` starts at
+-- ⊥ of `L` (the first trap set, by `eq_bot_of_step_to_bot`) and no later stage is ⊥ of `L`. This
+-- strengthens `t_snap_given` by the extra hypothesis `IsStateSequence S`.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (S : ℕ → L) (hS : ZeroParadox.ZPSemilattice.IsStateSequence S)
+    (hcc1 : S 0 = ZeroParadox.ZPSemilattice.bot) (hocc : S 1 ≠ S 0) :
+    let M := ZeroParadox.Motion.ofTotal (id : L → L) (fun _ => rfl)
+      (fun a b => ∃ n, a = S n ∧ b = S (n + 1))
+    (∀ a, M.step a ZeroParadox.ZPSemilattice.bot → a = ZeroParadox.ZPSemilattice.bot) ∧
+      ∀ n, S (n + 1) ≠ ZeroParadox.ZPSemilattice.bot := by
+  intro M
+  letI := ZeroParadox.zpSemilatticeSup L
+  letI := ZeroParadox.zpOrderBot L
+  have hr : M.StepRaises := by
+    rintro a b ⟨n, rfl, rfl⟩
+    exact ZeroParadox.ZPSemilattice.state_sequence_monotone S hS n
+  have trap : ∀ a, M.step a ⊥ → a = ⊥ := ZeroParadox.Motion.eq_bot_of_step_to_bot hr
+  refine ⟨trap, fun n => ?_⟩
+  induction n with
+  | zero => exact fun h => hocc (h.trans hcc1.symm)
+  | succ n ih => exact fun h => ih (trap _ ⟨n + 1, rfl, h.symm⟩)
+-- Statement: Q2, OVER run backwards: for a state sequence, in the reversed run motion every step out of
+-- ⊥ of `L` ends at ⊥ of `L` (the second trap set, by `eq_bot_of_step_from_bot`).
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (S : ℕ → L) (hS : ZeroParadox.ZPSemilattice.IsStateSequence S) :
+    letI := ZeroParadox.zpSemilatticeSup L; letI := ZeroParadox.zpOrderBot L;
+    ∀ b, (ZeroParadox.Motion.ofTotal (id : L → L) (fun _ => rfl)
+      (fun a b => ∃ n, a = S n ∧ b = S (n + 1))).reverse.step (⊥ : L) b → b = ⊥ := by
+  letI := ZeroParadox.zpSemilatticeSup L
+  letI := ZeroParadox.zpOrderBot L
+  intro b hb
+  refine ZeroParadox.Motion.eq_bot_of_step_from_bot (M := (ZeroParadox.Motion.ofTotal (id : L → L)
+    (fun _ => rfl) (fun a b => ∃ n, a = S n ∧ b = S (n + 1))).reverse) ?_ b hb
+  rintro x y ⟨n, rfl, rfl⟩
+  exact ZeroParadox.ZPSemilattice.state_sequence_monotone S hS n
+-- Statement: with `hcov` as well (`t_snap_given_cover`), ⊥ of `L` has a cover in ZP-A's induced order:
+-- `BotCovered L`; one way.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (S : ℕ → L)
+    (hcc1 : S 0 = ZeroParadox.ZPSemilattice.bot)
+    (hcov : letI := ZeroParadox.zpSemilatticeSup L; S 0 ⋖ S 1) :
+    letI := ZeroParadox.zpSemilatticeSup L; letI := ZeroParadox.zpOrderBot L;
+      ZeroParadox.BotCovered L :=
+  ⟨S 1, (ZeroParadox.t_snap_given_cover S hcc1
+    (by letI := ZeroParadox.zpSemilatticeSup L; exact hcov.1.ne') hcov).2⟩
+-- Statement: GAP, carrier cover against run cover: on ℕ (join `max`, ⊥ = 0), `BotCovered ℕ` holds in
+-- ZP-A's induced order while the run `0, 2, 2, …` meets `hcc1` and `hocc` and not `hcov`.
+example :
+    let S : ℕ → ℕ := fun n => match n with | 0 => 0 | _ + 1 => 2
+    @ZeroParadox.BotCovered ℕ (ZeroParadox.zpSemilatticeSup ℕ).toPartialOrder
+        (ZeroParadox.zpOrderBot ℕ) ∧
+      S 0 = ZeroParadox.ZPSemilattice.bot ∧ S 1 ≠ S 0 ∧
+      ¬ @CovBy ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT (S 0) (S 1) := by
+  intro S
+  have key : ∀ a b : ℕ, @LT.lt ℕ (ZeroParadox.zpSemilatticeSup ℕ).toLT a b ↔ a < b := by
+    intro a b
+    show (max a b = b ∧ ¬ max b a = a) ↔ a < b
+    omega
+  refine ⟨⟨1, (key 0 1).2 (by decide), fun c h1 h2 => ?_⟩, rfl, by decide, fun h => ?_⟩
+  · have h1' := (key 0 c).1 h1
+    have h2' := (key c 1).1 h2
+    clear h1 h2
+    omega
+  · exact h.2 (c := 1) ((key 0 1).2 (by decide)) ((key 1 2).2 (by decide))
+-- Statement: the other direction: if a motion on `L` steps elsewhere at ⊥ of `L`, some step `⊥ → b`
+-- carries T-SNAP's triple at `(⊥, b)`. No landing hypothesis is used, so the UP leg plays no part.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] (M : ZeroParadox.Motion L)
+    (hl : M.LeavesAt (ZeroParadox.ZPSemilattice.bot : L)) :
+    ∃ b, M.step ZeroParadox.ZPSemilattice.bot b ∧
+      (ZeroParadox.ZPSemilattice.bot ≠ b ∧ b ≠ ZeroParadox.ZPSemilattice.bot ∧
+        ZeroParadox.ZPSemilattice.join ZeroParadox.ZPSemilattice.bot b = b) :=
+  let ⟨b, hs, hne⟩ := hl
+  ⟨b, hs, ZeroParadox.t_snap_given
+    (fun n => match n with | 0 => ZeroParadox.ZPSemilattice.bot | _ + 1 => b) rfl hne⟩
+-- Statement: GAP, a point fact against an index fact: stepping elsewhere at `S 0` does not give `hocc`.
+-- The run `c₀, c₀, c₁, c₁, …` on `MachinePhase` starts at ⊥ of `MachinePhase`, steps elsewhere at `S 0`
+-- in its run motion, and has `S 1 = S 0`.
+example :
+    let S : ℕ → ZeroParadox.MachinePhase := fun n => match n with
+      | 0 => ZeroParadox.c₀ | 1 => ZeroParadox.c₀ | _ + 2 => ZeroParadox.c₁
+    S 0 = ZeroParadox.ZPSemilattice.bot ∧
+      (ZeroParadox.Motion.ofTotal (id : ZeroParadox.MachinePhase → ZeroParadox.MachinePhase)
+        (fun _ => rfl) (fun a b => ∃ n, a = S n ∧ b = S (n + 1))).LeavesAt (S 0) ∧ S 1 = S 0 := by
+  intro S
+  exact ⟨rfl, ⟨ZeroParadox.c₁, ⟨1, rfl, rfl⟩, (by decide : ZeroParadox.c₁ ≠ ZeroParadox.c₀)⟩, rfl⟩
+-- Statement: GAP, no run: on `MachinePhase` with UP the identity and OVER the single step `c₀ → c₁`, ⊥
+-- of `MachinePhase` steps elsewhere and no sequence is a run.
+example :
+    let M := ZeroParadox.Motion.ofTotal (id : ZeroParadox.MachinePhase → ZeroParadox.MachinePhase)
+      (fun _ => rfl) (fun a b => a = ZeroParadox.c₀ ∧ b = ZeroParadox.c₁)
+    M.LeavesAt ZeroParadox.c₀ ∧ ¬ ∃ S : ℕ → ZeroParadox.MachinePhase, M.IsRun S := by
+  intro M
+  refine ⟨⟨ZeroParadox.c₁, ⟨rfl, rfl⟩, by decide⟩, ?_⟩
+  rintro ⟨S, hS⟩
+  exact absurd ((hS 1).1.symm.trans (hS 0).2) (by decide)
+-- Statement: the face on `MachinePhase`, the run `c₀, c₁, c₁, …` (`t_snap_derived`'s): a state
+-- sequence; in its run motion ⊥ of `MachinePhase` (`c₀`) is a landing that steps elsewhere, `c₁` steps to
+-- itself only, the corner does not fire, no later stage is `c₀`, and `BotCovered` holds.
+example :
+    let S : ℕ → ZeroParadox.MachinePhase := fun n => match n with
+      | 0 => ZeroParadox.c₀ | _ + 1 => ZeroParadox.c₁
+    let M := ZeroParadox.Motion.ofTotal (id : ZeroParadox.MachinePhase → ZeroParadox.MachinePhase)
+      (fun _ => rfl) (fun a b => ∃ n, a = S n ∧ b = S (n + 1))
+    ZeroParadox.ZPSemilattice.IsStateSequence S ∧ M.IsLanding ZeroParadox.c₀ ∧ M.LeavesAt ZeroParadox.c₀ ∧
+      M.SelfOnlyAt ZeroParadox.c₁ ∧ ¬ M.Corner ∧ (∀ n, S (n + 1) ≠ ZeroParadox.ZPSemilattice.bot) ∧
+      (letI := ZeroParadox.zpSemilatticeSup ZeroParadox.MachinePhase;
+        letI := ZeroParadox.zpOrderBot ZeroParadox.MachinePhase;
+        ZeroParadox.BotCovered ZeroParadox.MachinePhase) := by
+  intro S M
+  refine ⟨⟨fun _ => ZeroParadox.c₁, fun n => by cases n <;> rfl⟩, Part.mem_some_iff.2 rfl,
+    ⟨ZeroParadox.c₁, ⟨0, rfl, rfl⟩, by decide⟩, ⟨⟨1, rfl, rfl⟩, ?_⟩,
+    fun ⟨_, _, _, _, _, hz, hzb⟩ => hzb (Part.mem_some_iff.1 hz),
+    fun n h => (by decide : ZeroParadox.c₁ ≠ ZeroParadox.c₀) h, ?_⟩
+  · rintro b ⟨n, hn, hb⟩
+    cases n with
+    | zero => exact absurd hn (by decide : ZeroParadox.c₁ ≠ ZeroParadox.c₀)
+    | succ k => exact hb
+  · letI := ZeroParadox.zpSemilatticeSup ZeroParadox.MachinePhase
+    letI := ZeroParadox.zpOrderBot ZeroParadox.MachinePhase
+    refine ⟨ZeroParadox.c₁, ⟨rfl, by decide⟩, fun c h1 h2 => ?_⟩
+    cases c
+    · exact lt_irrefl _ h1
+    · exact lt_irrefl _ h2
+-- Statement: the same cells on `OntologicalStates` (⊥ of `OntologicalStates` is `null`), run
+-- `null, exist, exist, …`.
+example :
+    let S : ℕ → ZeroParadox.OntologicalStates := fun n => match n with
+      | 0 => .null | _ + 1 => .exist
+    let M := ZeroParadox.Motion.ofTotal
+      (id : ZeroParadox.OntologicalStates → ZeroParadox.OntologicalStates)
+      (fun _ => rfl) (fun a b => ∃ n, a = S n ∧ b = S (n + 1))
+    ZeroParadox.ZPSemilattice.IsStateSequence S ∧ S 0 = ZeroParadox.ZPSemilattice.bot ∧
+      M.IsLanding .null ∧ M.LeavesAt .null ∧ M.SelfOnlyAt .exist ∧ ¬ M.Corner ∧
+      (∀ n, S (n + 1) ≠ ZeroParadox.ZPSemilattice.bot) ∧
+      (letI := ZeroParadox.zpSemilatticeSup ZeroParadox.OntologicalStates;
+        letI := ZeroParadox.zpOrderBot ZeroParadox.OntologicalStates;
+        ZeroParadox.BotCovered ZeroParadox.OntologicalStates) := by
+  intro S M
+  refine ⟨⟨fun _ => .exist, fun n => by cases n <;> rfl⟩, rfl, Part.mem_some_iff.2 rfl,
+    ⟨.exist, ⟨0, rfl, rfl⟩, by decide⟩, ⟨⟨1, rfl, rfl⟩, ?_⟩,
+    fun ⟨_, _, _, _, _, hz, hzb⟩ => hzb (Part.mem_some_iff.1 hz),
+    fun n h => (by decide : ZeroParadox.OntologicalStates.exist ≠ .null) h, ?_⟩
+  · rintro b ⟨n, hn, hb⟩
+    cases n with
+    | zero => exact absurd hn (by decide : ZeroParadox.OntologicalStates.exist ≠ .null)
+    | succ k => exact hb
+  · letI := ZeroParadox.zpSemilatticeSup ZeroParadox.OntologicalStates
+    letI := ZeroParadox.zpOrderBot ZeroParadox.OntologicalStates
+    refine ⟨.exist, ⟨rfl, by decide⟩, fun c h1 h2 => ?_⟩
+    cases c
+    · exact lt_irrefl _ h1
+    · exact lt_irrefl _ h2
+-- Statement: the snap's UP leg at the boundary model: `phaseBelowCoverMotion` (UP `phaseClosure`, OVER
+-- the covers of `WithBot Ordinal`) climbs from the landing `floor`, the point sent to ⊥ of
+-- `WithBot Ordinal`, over the cover to the snap `up 0`, then UP to `up ε₀`, which is neither the snap
+-- (`epsilon0_ne_zero`) nor `floor`; so its corner fires (`climb_corner`). The statement names
+-- `phaseBelowCoverMotion`, whose `[propext, Classical.choice, Quot.sound]` comes through `Ordinal`
+-- (`ZeroParadox/Multihomed/BoundaryOrder.lean`'s PurityCheck).
+example : ZeroParadox.phaseBelowCoverMotion.Climb ∧ ZeroParadox.phaseBelowCoverMotion.Corner := by
+  have h : ZeroParadox.phaseBelowCoverMotion.Climb := by
+    refine ⟨ZeroParadox.Phase.floor, ZeroParadox.snap, ZeroParadox.Phase.up ZeroParadox.epsilonZero,
+      Part.mem_some_iff.2 rfl, ZeroParadox.phase_floor_covBy_snap, ?_, ?_, ?_⟩
+    · exact Part.mem_some_iff.2 (congrArg ZeroParadox.Phase.up
+        (ZeroParadox.epsilon0_eq_nfp_bot.trans (congrArg _ Ordinal.bot_eq_zero)))
+    · exact fun e => ZeroParadox.epsilon0_ne_zero (ZeroParadox.Phase.up.inj e)
+    · exact fun e => ZeroParadox.Phase.noConfusion e
+  exact ⟨h, ZeroParadox.Motion.climb_corner _ h⟩
+-- Reading: Q1: ⊥ of `L` is the source the run leaves and, for a state sequence, never re-enters; on the
+-- two-state carriers the other end (`c₁`, `exist`) is where the run stays, stepping to itself only. Q2:
+-- run backwards (`reverse`), ⊥ of `L` is in the second trap set: every step from it stays at it.
+-- INVARIANT: UP (`reverse` keeps it) and the equivalence of T-SNAP's triple with `<`.
+-- Statement: CONTROL, `tsnap_holds_but_nothing_moves`: T-SNAP's triple holds on `MachinePhase` while in
+-- `ofFun stuckPhase` every phase steps to itself only, so ⊥ of `MachinePhase` does not step elsewhere.
+example : (ZeroParadox.c₀ ≠ ZeroParadox.c₁ ∧ ZeroParadox.c₁ ≠ ZeroParadox.c₀ ∧
+      ZeroParadox.ZPSemilattice.join ZeroParadox.c₀ ZeroParadox.c₁ = ZeroParadox.c₁) ∧
+    (∀ p, (ZeroParadox.Motion.ofFun ZeroParadox.stuckPhase).SelfOnlyAt p) ∧
+    ¬ (ZeroParadox.Motion.ofFun ZeroParadox.stuckPhase).LeavesAt ZeroParadox.c₀ :=
+  ⟨ZeroParadox.tsnap_holds_but_nothing_moves.1,
+    fun p => (ZeroParadox.Motion.selfOnlyAt_ofFun_iff ZeroParadox.stuckPhase p).2 rfl,
+    fun h => ZeroParadox.Motion.not_selfOnlyAt_and_leavesAt _ ZeroParadox.c₀
+      ⟨(ZeroParadox.Motion.selfOnlyAt_ofFun_iff ZeroParadox.stuckPhase ZeroParadox.c₀).2 rfl, h⟩⟩
+-- Statement: CONTROL: the constant run at ⊥ of any `L`: in its run motion ⊥ of `L` steps to itself only
+-- and does not step elsewhere.
+example {L : Type*} [ZeroParadox.ZPSemilattice L] :
+    let M := ZeroParadox.Motion.ofTotal (id : L → L) (fun _ => rfl)
+      (fun a b => ∃ _ : ℕ, a = ZeroParadox.ZPSemilattice.bot ∧ b = ZeroParadox.ZPSemilattice.bot)
+    M.SelfOnlyAt ZeroParadox.ZPSemilattice.bot ∧ ¬ M.LeavesAt ZeroParadox.ZPSemilattice.bot := by
+  intro M
+  have hs : M.SelfOnlyAt ZeroParadox.ZPSemilattice.bot := ⟨⟨0, rfl, rfl⟩, fun _ ⟨_, _, hb⟩ => hb⟩
+  exact ⟨hs, fun h => ZeroParadox.Motion.not_selfOnlyAt_and_leavesAt _ _ ⟨hs, h⟩⟩
+-- Statement: CONTROL, an ordered field (ℝ is one): no sequence has `S 0 ⋖ S 1` and the field's 0 has no
+-- first step (`axb1_fails_in_ordered_field`), so `hcov` and `BotCovered` have no member there.
+example {F : Type*} [Field F] [LinearOrder F] [IsStrictOrderedRing F] (S : ℕ → F) :
+    ¬ (S 0 ⋖ S 1) ∧ ¬ ZeroParadox.HasFirstStep (0 : F) :=
+  ⟨not_covBy, ZeroParadox.axb1_fails_in_ordered_field⟩
+-- Statement: CONTROL, `Unit`: `hocc` has no member and no motion on `Unit` steps elsewhere.
+example : (¬ ∃ S : ℕ → Unit, S 1 ≠ S 0) ∧ ∀ M : ZeroParadox.Motion Unit, ¬ M.LeavesAt () :=
+  ⟨fun ⟨_, h⟩ => h rfl, fun _ ⟨_, _, h⟩ => h rfl⟩
+-- Statement: CONTROL, `Fin 3` in its own order (⊥ = 0): the run `0, 2, 2, …` has `hocc` and steps
+-- elsewhere at `S 0` in its run motion, and `S 1` does not cover `S 0` (1 lies between).
+example :
+    let S : ℕ → Fin 3 := fun n => match n with | 0 => 0 | _ + 1 => 2
+    S 1 ≠ S 0 ∧ (ZeroParadox.Motion.ofTotal (id : Fin 3 → Fin 3) (fun _ => rfl)
+      (fun a b => ∃ n, a = S n ∧ b = S (n + 1))).LeavesAt (S 0) ∧ ¬ (S 0 ⋖ S 1) := by
+  intro S
+  exact ⟨by decide, ⟨2, ⟨0, rfl, rfl⟩, by decide⟩, fun h => h.2 (c := 1) (by decide) (by decide)⟩
 
 end DieCannotBeIndex
