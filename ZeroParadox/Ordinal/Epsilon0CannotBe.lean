@@ -61,6 +61,12 @@ example (f : Ordinal) :
 -- Statement: at the floor `0`, ⊥ of `Ordinal`, that occupant is ε₀.
 example : Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ 0) = Ordinal.epsilon 0 :=
   ZeroParadox.nfp_seed_independent_below_epsilon0 _ (Order.succ_le_of_lt (Ordinal.epsilon_pos 0))
+-- Statement: that strict form is the die's corner composite `ordinalCornerStep`
+-- (`ZeroParadox/Order/UpAndOver.lean` § V; indexed in `ZeroParadox/DieCannotBe.lean` § VIII).
+example (f : Ordinal) :
+    ZeroParadox.ordinalCornerStep f = Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (Order.succ f) := rfl
+#check @ZeroParadox.ordinalCornerStep_iterate -- Statement: iterated `n + 1` times from 0, ⊥ of `Ordinal`, it gives `ε_n`
+#check @ZeroParadox.ordinalView              -- Statement: the die's restriction of `ordinalSuccMotion` to `Set.Ici` of the `n`-th iterate (`ZeroParadox/Order/UpAndOver.lean` § V; indexed in `ZeroParadox/DieCannotBe.lean` § XVIII)
 -- Statement: in `Ordinal`, the at-or-above form `nfp (ω^·) f` returns the floor `f` exactly when `f`
 -- is itself a fixed point.
 -- Reading: this is why the role is taken strictly above. The strict form differs from the

@@ -1,4 +1,5 @@
 import ZeroParadox.Computability.SelfApp
+import ZeroParadox.Die
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Tactic
 
@@ -221,6 +222,56 @@ theorem q2Val_scale (x : ℤ_[2]) (hx : x ≠ 0) :
 theorem q2Scale_unique_fp (x : ℤ_[2]) (h : 2 * x = x) : x = 0 := by
   linear_combination h
 
+/-- `Statement:` for all `x y` in ℤ_[2], ℤ_[2]'s 0 included, `q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖`: the
+    valuation preorder is the norm preorder reversed. Away from 0 this follows from Mathlib's
+    `PadicInt.norm_eq_zpow_neg_valuation`. -/
+theorem q2Val_le_iff_norm_le (x y : ℤ_[2]) : q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖ := by
+  by_cases hx : x = 0
+  · subst hx
+    simp only [q2Val_bot, top_le_iff, norm_zero]
+    constructor
+    · intro h; have := q2Val_unique y h; subst this; simp
+    · intro h; have : y = 0 := norm_le_zero_iff.mp h; subst this; exact q2Val_bot
+  by_cases hy : y = 0
+  · subst hy
+    simp only [q2Val_bot, le_top, norm_zero, true_iff]
+    exact norm_nonneg x
+  · simp only [q2Val, if_neg hx, if_neg hy, Nat.cast_le]
+    rw [PadicInt.norm_eq_zpow_neg_valuation hx, PadicInt.norm_eq_zpow_neg_valuation hy]
+    rw [zpow_le_zpow_iff_right₀ (by norm_num : (1 : ℝ) < ((2 : ℕ) : ℝ))]
+    omega
+
+/-- `Statement:` on ℤ_[2] with the motion `Motion.ofFun (2 * ·)` (`ZeroParadox/Die.lean`): ℤ_[2]'s 0
+    is least in the norm preorder and greatest in the valuation preorder; the second preorder is the
+    first reversed; OVER lowers in the first, raises in the second, and does not raise in the first;
+    every step into 0 starts at 0; and 0 steps to itself only. -/
+theorem z2_two_views :
+    @IsBot ℤ_[2] (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE 0 ∧
+    @IsTop ℤ_[2] (Preorder.lift q2Val).toLE 0 ∧
+    (∀ x y : ℤ_[2], q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖) ∧
+    @Motion.StepLowers ℤ_[2] (Motion.ofFun (2 * ·)) (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE ∧
+    @Motion.StepRaises ℤ_[2] (Motion.ofFun (2 * ·)) (Preorder.lift q2Val).toLE ∧
+    ¬ @Motion.StepRaises ℤ_[2] (Motion.ofFun (2 * ·)) (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE ∧
+    (∀ a : ℤ_[2], (Motion.ofFun (2 * ·)).step a 0 → a = 0) ∧
+    (Motion.ofFun (fun x : ℤ_[2] => 2 * x)).SelfOnlyAt 0 := by
+  have hlow : @Motion.StepLowers ℤ_[2] (Motion.ofFun (2 * ·))
+      (Preorder.lift (‖·‖ : ℤ_[2] → ℝ)).toLE := by
+    rintro x y rfl
+    show ‖(2 : ℤ_[2]) * x‖ ≤ ‖x‖
+    rw [norm_mul]
+    exact mul_le_of_le_one_left (norm_nonneg _) (PadicInt.norm_le_one 2)
+  have h2 : ‖(2 : ℤ_[2])‖ < 1 := by
+    rw [show (2 : ℤ_[2]) = ((2 : ℕ) : ℤ_[2]) from Nat.cast_ofNat.symm, PadicInt.norm_p]; norm_num
+  refine ⟨fun x => ?_, fun x => ?_, q2Val_le_iff_norm_le,
+    hlow, (Motion.stepRaises_iff_of_dual _ _ (fun x y => q2Val_le_iff_norm_le x y) _).2 hlow,
+    fun h => ?_, fun a (ha : (0 : ℤ_[2]) = 2 * a) => (mul_eq_zero.mp ha.symm).resolve_left two_ne_zero,
+    (Motion.selfOnlyAt_ofFun_iff _ _).2 (mul_zero 2)⟩
+  · show ‖(0 : ℤ_[2])‖ ≤ ‖x‖; simp
+  · show q2Val x ≤ q2Val 0; rw [q2Val_bot]; exact le_top
+  · have h' : ‖(1 : ℤ_[2])‖ ≤ ‖(2 : ℤ_[2]) * 1‖ := h 1 (2 * 1) rfl
+    rw [mul_one, norm_one] at h'
+    linarith
+
 -- `linter.flexible` fires on the `simp_all`s in the proof below: a STYLE lint about a tactic
 -- that modifies the goal, not a soundness warning. Suppressed rather than replaced, because the
 -- replacement is a hand-written simp set and a guessed lemma list is how this proof broke once.
@@ -373,6 +424,8 @@ example {L : Type*} [ZPSemilattice L] (b : _VScast L) : _VSlit L :=
 
 -- Back to the 2-adic side: this one names the carrier, and is tainted accordingly.
 #print axioms q2Scale_unique_fp
+#print axioms q2Val_le_iff_norm_le
+#print axioms z2_two_views
 
 -- The degenerate witnesses making the NO-GO gauge's bound sharp for this class.
 #print axioms trivialZPSemilattice

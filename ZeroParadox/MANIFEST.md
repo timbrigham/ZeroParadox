@@ -106,6 +106,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Category/ChoiceCannotBe.md` - Choice and the framework: the long form of the choice index
 - `ZeroParadox/Category/DiagonalWitness.lean` - The minimum requirements to be a diagonal fixed point — the relativized Lawvere witness
   - ride-along docs: `ZeroParadox/Category/DiagonalWitness.md` - The relativized Lawvere witness: level sets, topology and prior art
+- `ZeroParadox/Category/DieNucleus.lean` - UP legs as nuclei: the die on a frame, the lifted snap as a member, the notation carrier as a non-member
 - `ZeroParadox/Category/DifferenceGeneratesSystem.lean` - Nuclei and sublocales — the home of "a predicated difference generates a system"
   - ride-along docs: `ZeroParadox/Category/DifferenceGeneratesSystem.md` - Double negation as the canonical predicated difference: Glivenko's core, and logic versus choice
 - `ZeroParadox/Category/DoubleNegationNucleus.lean` - The double-negation nucleus: the excluded-middle modality

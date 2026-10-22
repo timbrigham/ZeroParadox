@@ -35,7 +35,7 @@ namespace ZeroParadox
 /-- `Statement:` a finite pointed graph: a relation `edge` on `Fin n` and a point `root`.
 `Reading:` `edge a b` is "a is a member of b", the direction of Mostowski's `fa = {fx | xRa}`
 (Aczel 1988, *Non-Well-Founded Sets*, p. 116). -/
--- [ZP-CUSTOM] extends: Mathlib.Combinatorics.Digraph.Basic | reason: Mathlib's `Digraph (Fin n)` already has a Prop-valued `Adj`; it lacks only the distinguished point, and `MemGraph n ≃ Digraph (Fin n) × Fin n` (the `example` below). Kept as its own structure so `edge` reads member-to-set at every use site. `Quiver` edges are Type-valued, and as the corpus's `APG` (ZeroParadox/Settheory/APG.lean) uses them they point set to member, while `Acc` and bisimulation across two carriers want this Prop-valued member-to-set relation.
+-- [ZP-CUSTOM] extends: Mathlib.Combinatorics.Digraph.Basic | reason: Mathlib's `Digraph (Fin n)` already has a Prop-valued `Adj`; it lacks only the distinguished point, and `MemGraph n ≃ Digraph (Fin n) × Fin n` (the second `example` below). Kept as its own structure so `edge` reads member-to-set at every use site. `Quiver` edges are Type-valued, and as the corpus's `APG` (ZeroParadox/Settheory/APG.lean) uses them they point set to member, while `Acc` and bisimulation across two carriers want this Prop-valued member-to-set relation.
 structure MemGraph (n : ℕ) where
   /-- `edge a b`: `a` is a member of `b`. -/
   edge : Fin n → Fin n → Prop
@@ -66,7 +66,7 @@ def IsBisim (A : MemGraph m) (B : MemGraph n) (R : Fin m → Fin n → Prop) : P
   ∀ a b, R a b → plus A B R a b
 
 /-- `Statement:` some bisimulation relates the two roots. `Reading:` under AFA, `Same` graphs picture
-one set (Aczel 1988: Ex. 2.11, Prop. 2.13(1), Prop. 2.10, pp. 23–24); no AFA is assumed here. -/
+one set (Aczel 1988: Ex. 2.11, Prop. 2.13(1) on their disjoint union, Prop. 2.10, pp. 23–24); no AFA here. -/
 def Same (A : MemGraph m) (B : MemGraph n) : Prop :=
   ∃ R, IsBisim A B R ∧ R A.root B.root
 
@@ -115,8 +115,9 @@ power-set coalgebras (Ex 2.1(1), p. 4) and their next-time operator (Ex 4.2(1), 
 keeps a subcoalgebra of nodes; this keeps every node and drops arrows. Their Prop 5.5, p. 23
 (coreflection) is the categorical neighbour of `wfPart_same`. No graph-level statement of
 `wfPart_same` was located as of 2026-10-20 (Aczel 1988, AMM 2020, Barwise–Moss 1991, Taylor
-*Well founded coalgebras and recursion*, Rutten *Universal coalgebra* 2000, Rutten–Turi
-*Foundations of final semantics* 1993; theoremsearch, three phrasings). -/
+*Well founded coalgebras and recursion*, Rutten *Universal coalgebra* 2000, Rutten–Turi *On the
+Foundations of Final Semantics: Non-Standard Sets, Metric Spaces, Partial Orders* 1993;
+theoremsearch, three phrasings). -/
 
 /-- `Statement:` the converse of a bisimulation is a bisimulation. -/
 theorem isBisim_flip {A : MemGraph m} {B : MemGraph n} {R : Fin m → Fin n → Prop}
@@ -155,10 +156,17 @@ theorem acc_transfer {A : MemGraph m} {B : MemGraph n} {R : Fin m → Fin n → 
     obtain ⟨a', ha', hr⟩ := (hR a b hab).2 b' hb'
     exact ih a' ha' b' hr
 
+/-- `Statement:` if `Same A B`, the root of `A` is accessible iff the root of `B` is. -/
+theorem acc_root_iff_of_same {A : MemGraph m} {B : MemGraph n} (h : Same A B) :
+    Acc A.edge A.root ↔ Acc B.edge B.root :=
+  let ⟨_, hR, hr⟩ := h
+  ⟨fun ha => acc_transfer hR _ ha _ hr, fun hb => acc_transfer (isBisim_flip hR) _ hb _ hr⟩
+
 /-- `Statement:` `wfPart` preserves `Same`, by the same relation. `Reading:` collapse direction:
 many graphs to one set, and `wfPart` is many-to-one (`wfPart_not_recoverable`). Aczel 1988,
-Prop. 1.4, p. 7 (an apg pictures Ω iff every node has a child) is not formalized here; its
-two-picture instance is `omegaLoop_same_omegaPair`. -/
+Prop. 1.4, p. 7 (an accessible pointed graph, apg, pictures Ω iff every node has a child) is not
+formalized here; its consequence for the two drawings of Ω, up to `Same`, is
+`omegaLoop_same_omegaPair`. -/
 theorem wfPart_same {A : MemGraph m} {B : MemGraph n} (h : Same A B) :
     Same A.wfPart B.wfPart := by
   obtain ⟨R, hR, hr⟩ := h
@@ -232,13 +240,13 @@ theorem flip2_ne (a : Fin 2) : flip2 a ≠ a := by
   simp only [flip2] at this
   omega
 
-/-- `Statement:` the two drawings of Ω are `Same`. -/
+/-- `Statement:` `omegaLoop` and `omegaPair` are `Same`. `Reading:` the two drawings of Ω. -/
 theorem omegaLoop_same_omegaPair : Same omegaLoop omegaPair :=
   ⟨fun _ _ => True, fun _ b _ => ⟨fun _ _ => ⟨flip2 b, flip2_ne b, trivial⟩,
     fun _ _ => ⟨0, trivial, trivial⟩⟩, trivial⟩
 
-/-- `Statement:` CONTROL: `dropLoops` does not preserve `Same`: the two drawings of Ω are `Same`,
-their loop-free versions are not. -/
+/-- `Statement:` CONTROL: `dropLoops` does not preserve `Same`: `omegaLoop` and `omegaPair` are
+`Same`, their loop-free versions are not. -/
 theorem dropLoops_not_same :
     Same omegaLoop omegaPair ∧ ¬ Same omegaLoop.dropLoops omegaPair.dropLoops := by
   refine ⟨omegaLoop_same_omegaPair, ?_⟩
@@ -436,6 +444,7 @@ open ZeroParadox MemGraph
 #print axioms same_symm
 #print axioms same_trans
 #print axioms acc_transfer
+#print axioms acc_root_iff_of_same
 #print axioms wfPart_same
 #print axioms wfPart_below_root
 #print axioms wfPart_of_wf

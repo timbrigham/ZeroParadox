@@ -271,6 +271,13 @@ example {σ : Type*} (f : σ → Option σ) {s t : σ} (h : f s = Option.none)
 --   an order fact there and a recursion-theoretic one here; a resemblance, never an identity.
 #check @ZeroParadox.occurrence_semidecidable_nonoccurrence_not
 
+-- Statement: the run of `f` from `a` halts iff, in `runMotion f`, `a` arrives at a configuration with
+--   no step (`Motion.Arrives`, `ZeroParadox/Die.lean` § XVI).
+-- Reading: halting is the die's arrival (liveness) cell, termination being a liveness example in
+--   Alpern and Schneider, "Defining Liveness", IPL 21 (1985), p. 182; over codes that cell is undecidable
+--   (`clock_arrival_undecidable`, `ZeroParadox/DieCannotBe.lean` § XVI).
+#check @ZeroParadox.eval_dom_iff_arrives_noStepAt
+
 /-! ### § VI-b. The pole, its swap, and what actually blocks the snap -/
 
 -- Statement: exchanging the halted and self-looping poles twice is the identity, pointwise:

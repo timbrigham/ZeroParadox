@@ -3,6 +3,7 @@ import ZeroParadox.Order.Snap
 import Mathlib.Computability.PartrecCode
 import Mathlib.Computability.Halting
 import ZeroParadox.Computability.Occurrence
+import ZeroParadox.Category.DiagonalWitness
 import Mathlib.Tactic
 
 /-!
@@ -990,6 +991,118 @@ example : ¬ ComputablePred (fun c : Code => IsComputationalQuine c) := by
   exact Motion.not_selfOnlyAt_and_leavesAt _ _
     ⟨(Motion.selfOnlyAt_ofFun_iff Not _).2 (propext hflip.symm), Motion.leavesAt_ofFun_not _⟩
 
+/-! ### § IX-b. Codes and their classes up to `eval`: the quotient of a motion (`Die.lean` § XVIII)
+
+Reading: codes are drawings and classes are sets, the shape of `MemGraph.drawing_vs_set`
+(`ZeroParadox/Settheory/HypersetOrder.lean` § VII); a shared shape, proved separately here, with no
+map between `Code` and `MemGraph`. Indexed in `ZeroParadox/DieCannotBe.lean` § XXII. -/
+
+/-- `Statement:` for `eval`-respecting `F`, equal `eval` is step-compatible with
+    `evalStepMotion (eval ∘ F)`. -/
+theorem evalStep_stepCompat {F : Code → Code} (hF : EvalRespecting F) :
+    (evalStepMotion fun a => eval (F a)).StepCompat evalSetoid := by
+  intro a a' b haa' hb
+  exact ⟨b, (hb : eval b = eval (F a)).trans (hF a a' haa'), rfl⟩
+
+/-- `Statement:` the quotient of that motion steps `X` to `Y` iff `ofFun (liftEval F hF)` does; both
+    directions. -/
+theorem quot_evalStep_step_iff {F : Code → Code} (hF : EvalRespecting F) (X Y : EvalClass) :
+    ((evalStepMotion fun a => eval (F a)).quot evalSetoid).step X Y ↔
+      (Motion.ofFun (liftEval F hF)).step X Y := by
+  induction X using Quotient.ind with
+  | _ a =>
+    rw [Motion.quot_step_mk_iff (evalStep_stepCompat hF)]
+    constructor
+    · rintro ⟨b, hb, rfl⟩
+      exact Quotient.sound (hb : eval b = eval (F a))
+    · intro h
+      exact ⟨F a, rfl, h.symm⟩
+
+/-- `Statement:` for computable, `eval`-respecting `F`, no code steps to itself only
+    (`evalStepMotion_not_selfOnlyAt`), and some class steps to itself only in the quotient
+    (`effective_floor_fixedPoint`). -/
+theorem codes_vs_classes {F : Code → Code} (hc : Computable F) (hF : EvalRespecting F) :
+    (∀ c, ¬ (evalStepMotion fun a => eval (F a)).SelfOnlyAt c) ∧
+      ∃ X, ((evalStepMotion fun a => eval (F a)).quot evalSetoid).SelfOnlyAt X := by
+  refine ⟨fun c => evalStepMotion_not_selfOnlyAt _ c, ?_⟩
+  obtain ⟨c, hc'⟩ := effective_floor_fixedPoint hc
+  refine ⟨Quotient.mk evalSetoid c, ?_⟩
+  rw [Motion.quot_selfOnlyAt_mk_iff (evalStep_stepCompat hF)]
+  exact ⟨⟨c, show eval c = eval (F c) from hc'.symm, rfl⟩,
+    fun b hb => (hb : eval b = eval (F c)).trans hc'⟩
+
+/-- `Statement:` `c` followed by the identity code, `Code.comp c Code.id`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: a named padding map on Mathlib's `Code`, used as a
+-- self-map whose motion has no self-step while every class up to `eval` steps to itself only.
+def padId (c : Code) : Code := Code.comp c Code.id
+
+/-- `Statement:` `padId c` has the same `eval` as `c`. -/
+theorem eval_padId (c : Code) : eval (padId c) = eval c := by
+  funext n
+  show eval Code.id n >>= eval c = eval c n
+  simp [Code.eval_id]
+
+/-- `Statement:` `padId c ≠ c`. -/
+theorem padId_ne (c : Code) : padId c ≠ c := by
+  intro h
+  have := congrArg sizeOf h
+  simp [padId] at this
+  omega
+
+/-- `Statement:` `padId` sends codes with equal `eval` to codes with equal `eval`. -/
+theorem padId_respects (a b : Code) (h : evalSetoid.r a b) : evalSetoid.r (padId a) (padId b) :=
+  show eval (padId a) = eval (padId b) by rw [eval_padId, eval_padId]; exact h
+
+/-- `Statement:` `padId` is computable. -/
+theorem padId_computable : Computable padId :=
+  (primrec₂_comp.comp Primrec.id (Primrec.const Code.id)).to_comp
+
+/-- `Statement:` no code steps to itself in `ofFun padId`, and every class steps to itself only in
+    its quotient by equal `eval`. -/
+theorem padId_drawing_vs_set :
+    (∀ c, ¬ (Motion.ofFun padId).step c c) ∧
+      ∀ X, ((Motion.ofFun padId).quot evalSetoid).SelfOnlyAt X := by
+  refine ⟨fun c h => padId_ne c (show c = padId c from h).symm, fun X => ?_⟩
+  induction X using Quotient.ind with
+  | _ a =>
+    rw [Motion.quot_selfOnlyAt_mk_iff (Motion.stepCompat_ofFun padId_respects)]
+    exact ⟨⟨padId a, rfl, eval_padId a⟩, fun b hb => (show b = padId a from hb) ▸ eval_padId a⟩
+
+/-- `Statement:` the constant code returning the Gödel number of `c`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: a CONTROL map on Mathlib's `Code`, computable and not
+-- `eval`-respecting (`constEnc_not_respects`).
+def constEnc (c : Code) : Code := Code.const (Encodable.encode c)
+
+/-- `Statement:` `constEnc` is computable. -/
+theorem constEnc_computable : Computable constEnc :=
+  (primrec_const.comp Primrec.encode).to_comp
+
+/-- `Statement:` distinct constants have distinct `eval`. -/
+theorem eval_const_ne {j k : ℕ} (h : j ≠ k) : eval (Code.const j) ≠ eval (Code.const k) := by
+  intro e
+  have := congrFun e 0
+  rw [eval_const, eval_const] at this
+  exact h (Part.some_inj.1 this)
+
+/-- `Statement:` CONTROL: `constEnc` is not `eval`-respecting (at `Code.zero` and `padId Code.zero`). -/
+theorem constEnc_not_respects : ¬ EvalRespecting constEnc := fun h => by
+  have hne : Encodable.encode Code.zero ≠ Encodable.encode (padId Code.zero) := fun e =>
+    padId_ne Code.zero (Encodable.encode_injective e).symm
+  exact eval_const_ne hne (h _ _ (eval_padId Code.zero).symm)
+
+/-- `Statement:` CONTROL: in the quotient of `ofFun constEnc` by equal `eval`, some class steps to
+    two distinct classes. -/
+theorem constEnc_two_successors :
+    ∃ X Y Z, ((Motion.ofFun constEnc).quot evalSetoid).step X Y ∧
+      ((Motion.ofFun constEnc).quot evalSetoid).step X Z ∧ Y ≠ Z := by
+  have haa : evalSetoid.r (padId Code.zero) Code.zero := eval_padId Code.zero
+  have hne : Encodable.encode Code.zero ≠ Encodable.encode (padId Code.zero) := fun h =>
+    padId_ne Code.zero (Encodable.encode_injective h).symm
+  refine ⟨Quotient.mk _ Code.zero, Quotient.mk _ (constEnc Code.zero),
+    Quotient.mk _ (constEnc (padId Code.zero)),
+    ⟨Code.zero, _, rfl, rfl, rfl⟩, ⟨padId Code.zero, _, rfl, Quotient.sound haa, rfl⟩,
+    fun h => eval_const_ne hne (Quotient.exact h)⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -1054,5 +1167,19 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms shiftMotion_corner_iff
 #print axioms shiftMotion_oppose
 #print axioms shiftMotion_elbow_iff
+#print axioms evalStep_stepCompat
+#print axioms quot_evalStep_step_iff
+#print axioms codes_vs_classes
+#print axioms padId
+#print axioms eval_padId
+#print axioms padId_ne
+#print axioms padId_respects
+#print axioms padId_computable
+#print axioms padId_drawing_vs_set
+#print axioms constEnc
+#print axioms constEnc_computable
+#print axioms eval_const_ne
+#print axioms constEnc_not_respects
+#print axioms constEnc_two_successors
 
 end PurityCheck
