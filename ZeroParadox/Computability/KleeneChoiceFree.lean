@@ -438,6 +438,16 @@ def stmtKleeneCF : Prop :=
 -- Statement: `kleene_cf_fixed₂` proves `stmtKleeneCF`.
 example : stmtKleeneCF := kleene_cf_fixed₂
 
+/-- `Statement:` a statement whose only content is a `Partrec₂` hypothesis at `ℕ → ℕ →. ℕ`, as a `Prop`. -/
+def stmtPartrec₂Hyp : Prop := ∀ f : ℕ → ℕ →. ℕ, Partrec₂ f → True
+
+/-- `Statement:` CONTROL: the same with a unary `Partrec` hypothesis at `ℕ →. ℕ`, as a `Prop`. -/
+def stmtPartrecHyp : Prop := ∀ f : ℕ →. ℕ, Partrec f → True
+
+-- Statement: `stmtPartrec₂Hyp` carries `Classical.choice`, with no `Code` in it, and `stmtPartrecHyp`
+-- measures `[propext, Quot.sound]` (`PurityCheck`): the choice enters with the pair, through
+-- `Primcodable.prod`, before any recursion theorem is stated.
+
 -- Statement: each `cf_` lemma of § I and § II named after a Mathlib constant has exactly its type.
 example : type_of% @Nat.unpair_pair := @cf_unpair_pair
 example : type_of% @Nat.pair_unpair := @cf_pair_unpair
@@ -466,9 +476,17 @@ example : type_of% @Nat.Partrec.Code.eval_prec_succ := @cf_eval_prec_succ
 -- versions exist: Forster and Smolka, "Call-by-value lambda calculus as a model of computation in
 -- Coq", J. Automated Reasoning, doi 10.1007/s10817-018-9484-2, Fact 18 (§ 7), for the λ-calculus L; Forster, "Computability in
 -- Constructive Type Theory", PhD thesis, Saarland University (2021), Theorem 6.16, p. 61, Rogers' form
--- under the axiom EPF. So a choice-free construction is expected; this file adds the measurement on
--- Mathlib's `Code`, where the choice sits in the statements' packaging (`Partrec₂`, `Denumerable
--- Code`) and in the proofs of the arithmetic lemmas above, not in the construction.
+-- under the axiom EPF. In Lean 4, the closest located: L. J. Close, `witness-asymmetry` v1.0.1,
+-- Zenodo software (2026), doi 10.5281/zenodo.18915696 (doi 10.5281/zenodo.18915083 resolves to the same
+-- record), `FixedPoint/ChurchTuring/ConstructiveRecursionTheorem.lean`: `recursion_theorem` by the same
+-- construction, `fixedPointIndex e_f := smn (diag_closure e_f) (diag_closure e_f)`, with no imports and
+-- no axioms (`#print axioms` re-run on the filed source, 2026-10-22), over a class `NamingSystem` whose
+-- fields assume s-m-n (`smn_spec`) and the diagonal program (`diag_closure_spec`). So a choice-free
+-- construction is expected. This file proves the counterparts of those two fields on Mathlib's concrete
+-- `Code` (`curry` with `cfCurryIndex` for s-m-n, `cf_eval_curry`; `cfDiag` with `cfDiagIndex` for the
+-- diagonal program, `cf_eval_diag`), builds no `NamingSystem` instance, and adds the measurement on
+-- `Code`, where the choice sits in the statements' packaging (`Partrec₂`, `Denumerable Code`) and in
+-- the proofs of the arithmetic lemmas above, not in the construction.
 -- Reading: whether selecting a code by its behaviour needs choice was not attempted as of 2026-10-22.
 -- Bauer's behaviour-level recursion theorems use choice at that step and do not show it necessary:
 -- "First steps in synthetic computability theory", Electronic Notes in Theoretical Computer Science
@@ -530,6 +548,8 @@ open ZeroParadox
 #print axioms stmtFixedPoint₂
 #print axioms stmtFixedPoint
 #print axioms stmtKleeneCF
+#print axioms stmtPartrec₂Hyp
+#print axioms stmtPartrecHyp
 -- The Mathlib constants the `cf_` lemmas share a type with, and the two recursion theorems.
 #print axioms Nat.unpair_pair
 #print axioms Nat.pair_unpair

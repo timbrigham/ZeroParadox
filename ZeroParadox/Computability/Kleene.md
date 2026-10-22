@@ -202,16 +202,21 @@ by `#print axioms` in a scratch file importing this one.
   the instance `Primcodable.ofDenumerable Code` (`#synth Primcodable Code`), and the choice comes
   from its `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, which measures the
   triple (as does `ofNatCode`, above). `Primcodable.ofDenumerable` itself measures
-  `[propext, Quot.sound]`. Not located in the Mathlib pin as of 2026-10-04 by these
-  measurements: a recursion theorem in the `Partrec₂` / `Denumerable Code` form whose statement is
-  choice-free, and a universal code whose correctness is proved without `eval_part`. Neither was
-  attempted here. Every proof of the statement as written carries choice; whether the restated
+  `[propext, Quot.sound]`. `Partrec₂` is stated through `Primcodable.prod`, which measures the
+  triple (above), so a statement in the `Partrec₂` form carries choice whatever else it says. Measured
+  with no `Code` in it: a statement whose only content is a `Partrec₂` hypothesis at
+  `ℕ → ℕ →. ℕ` carries the triple, and the same with a unary `Partrec` hypothesis does not
+  (`stmtPartrec₂Hyp`, `stmtPartrecHyp`, § V of `ZeroParadox/Computability/KleeneChoiceFree.lean`).
+  Not located in the Mathlib pin as of 2026-10-04 by these measurements: a universal code whose
+  correctness is proved without `eval_part`; it was not attempted here. Every proof of the
+  statement as written carries choice; whether the restated
   statement has a choice-free proof is UNCLASSIFIED.
 - Built 2026-10-22 in this corpus: a recursion theorem whose statement and proof are choice-free, for a
   transformation given as a code rather than as a `Partrec₂` function, `kleene_cf` in
   `ZeroParadox/Computability/KleeneChoiceFree.lean` (footprints in its `PurityCheck` section). The
-  construction is Kleene's own and constructive versions are already machine-checked in Coq (prior-art
-  pointers at the end of § V of that file); this corpus adds the measurement on Mathlib's `Code`. It
+  construction is Kleene's own and constructive versions are already machine-checked, in Coq and, over
+  an axiomatised naming system, in Lean 4 (prior-art pointers at the end of § V of that file); this
+  corpus proves the s-m-n and diagonal steps on Mathlib's `Code` and adds the measurement there. It
   builds no universal code, so the UNCLASSIFIED status above is unchanged.
 - Open as of 2026-10-22, not measured: `ofNatCode`'s choice was traced above to `Nat.unpair_left_le`,
   `Nat.unpair_right_le` and `Nat.div2_val`, which now have choice-free proofs of the same type in

@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2580,
+        "declarations": 2582,
         "files": 181
       },
       "entries": [
@@ -56384,6 +56384,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "96ac1b84-bed8-4375-8463-3e9420f8a902",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtPartrec₂Hyp",
+            "short": "stmtPartrec₂Hyp"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtPartrec₂Hyp",
+            "short": "stmtPartrec₂Hyp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: statement controls measuring that a Partrec₂ hypothesis carries choice and a unary Partrec hypothesis does not",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "96c1823f-8da4-400e-9b32-4b1032884899",
           "new": {
@@ -62613,6 +62650,43 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a8c25525-a77f-4153-bb1e-719a9bf7e266",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtPartrecHyp",
+            "short": "stmtPartrecHyp"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtPartrecHyp",
+            "short": "stmtPartrecHyp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree: statement controls measuring that a Partrec₂ hypothesis carries choice and a unary Partrec hypothesis does not",
           "verify": {
             "axioms": null,
             "sorry_free": true

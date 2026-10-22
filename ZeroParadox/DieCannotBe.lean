@@ -103,9 +103,12 @@ example {α : Type} (f : α → α) : IsIdempotentElem (show Function.End α fro
 -- (p. 26). Neither is imposed here. No counterpart of the switches was located in these two sources
 -- as of 2026-10-18 (UP is total in both; their text, searched for "partial", "loop" and "cycle", has
 -- no hit bearing on a switch); the dated search for the pair is in `LEAN_CUSTOM_REGISTRY.md`. The
--- loop/climb split as a named pair, searched 2026-10-22 in rewriting, transition-system and
--- closure-operator vocabulary (theoremsearch, three phrasings): nothing closer than Meseguer and
--- R. Diaconescu was located.
+-- loop/climb split as a named pair, not located closer than Meseguer and R. Diaconescu as of
+-- 2026-10-22, searched by theoremsearch alone (its null is uninformative on its own) in three
+-- phrasings: "rewrite step from a normal form followed by normalization returns to the same or a
+-- different normal form"; "stuttering step ... quotient transition system"; "closing a cover of a
+-- closed element yields the next closed element"; and by one web search the same day in rewriting,
+-- normal-form, stutter and closure-cover vocabulary.
 -- Reading: the adjoined-points switch is a CHOICE OF CARRIER: `Option σ` adjoins one point and
 -- `Option (Option σ)` two (the `TriStep` example below). `Pointed` and `Bipointed` carry
 -- distinguished points, not adjoined ones, and `Bipointed`'s two may coincide.
@@ -220,9 +223,11 @@ example : ∃ M : ZeroParadox.Motion (Fin 4),
 -- read, 2026-10-22, verbatim: "My gut reaction is that the joint might fill both of those rolls.. you
 -- have plenty of cases where we have overlap". Both ℕ∞ wirings also switch order between the legs, with
 -- opposite assignments: in wiring one UP raises in ZP-A's induced order and OVER in ℕ∞'s own, in wiring
--- two UP raises in ℕ∞'s own and OVER in the induced order (the `example` after the wirings). On ℕ∞ the
--- switch is forced, since the induced order is ℕ∞'s reversed, and it occurs with no corner (the two
--- `example`s after that one), so these examples do not show the switch BEING the crossing; that the
+-- two UP raises in ℕ∞'s own and OVER in the induced order (the `example` after the wirings). On ℕ∞,
+-- legs that oppose in one order switch order, since the induced order is ℕ∞'s own order reversed (the
+-- `example` after that one, per leg: raising in the induced order iff lowering in ℕ∞'s own). A switch
+-- occurs with no corner (the `CONTROL` after that one), so these examples do not show the switch BEING
+-- the crossing; that the
 -- joint fills both roles stays Tim's read. Not claimed here: that the two roles coincide in general, or
 -- that every crossing is a switch of order.
 -- Reading: Q1: in the second wiring the loop's landing is the pole, ⊤ of `ℕ∞` (⊥ of the ZP order), which
@@ -310,21 +315,28 @@ example (M : ZeroParadox.Motion ℕ∞) :
     fun x y => show min x y = y ↔ y ≤ x from min_eq_right_iff
   ⟨forall_congr' fun x => forall_congr' fun y => imp_congr_right fun _ => h x y,
     forall_congr' fun x => forall_congr' fun y => imp_congr_right fun _ => h x y⟩
--- Statement: CONTROL: UP the identity, OVER the scale step on `ℕ∞`: UP raises in the induced order, OVER
--- raises in ℕ∞'s own, and the corner does not fire.
+-- Statement: CONTROL: on `ℕ∞`, UP the join with 0 of `ℕ∞` (every point sent to 0, which is ⊥ of ℕ∞'s
+-- own order and ⊤ of ZP-A's induced order), OVER the scale step only from points other than 0: UP
+-- moves 1 to 0, the legs oppose in ℕ∞'s own order (UP lowers, OVER raises), UP does not raise there and
+-- raises in the induced order, and the corner does not fire (the one landing, 0, has no step).
 example :
-    let M := ZeroParadox.Motion.ofTotal (fun x : ℕ∞ => x) (fun _ => rfl)
-      (fun a b => b = ZeroParadox.ValuationStructure.scale a)
-    @ZeroParadox.Motion.UpRaises ℕ∞ M (ZeroParadox.zpSemilatticeSup ℕ∞).toLE ∧ M.StepRaises ∧
-      ¬ M.Corner := by
+    let M := ZeroParadox.Motion.ofTotal (fun x : ℕ∞ => ZeroParadox.ZPSemilattice.join x 0)
+      (fun x => show min (min x 0) 0 = min x 0 by rw [min_assoc, min_self])
+      (fun a b => a ≠ 0 ∧ b = ZeroParadox.ValuationStructure.scale a)
+    (0 : ℕ∞) ∈ M.up 1 ∧ M.Oppose ∧ ¬ M.UpRaises ∧
+      @ZeroParadox.Motion.UpRaises ℕ∞ M (ZeroParadox.zpSemilatticeSup ℕ∞).toLE ∧ ¬ M.Corner := by
   intro M
-  refine ⟨fun x y h => ?_, fun a b h => ?_, ?_⟩
-  · rw [Part.mem_some_iff.1 h]
-    show min x x = x
-    exact min_self x
+  refine ⟨Part.mem_some_iff.2 (by simp [ZeroParadox.ZPSemilattice.join]),
+    ⟨fun x y h => ?_, fun a b ⟨_, h⟩ => ?_⟩, fun h => ?_, fun x y h => ?_, ?_⟩
+  · rw [Part.mem_some_iff.1 h]; exact min_le_left x 0
   · rw [(h : b = a + 1)]; exact le_self_add
-  · rintro ⟨y, b, z, -, -, hz, hzb⟩
-    exact hzb (Part.mem_some_iff.1 hz)
+  · exact absurd (h 1 (min 1 0) (Part.mem_some _)) (by simp)
+  · rw [Part.mem_some_iff.1 h]
+    show min x (min x 0) = min x 0
+    rw [← min_assoc, min_self]
+  · rintro ⟨y, b, z, hy, ⟨hy0, -⟩, -, -⟩
+    have : y = min y 0 := Part.mem_some_iff.1 hy
+    exact hy0 (this.trans (min_eq_right (zero_le y)))
 -- Statement: CONTROL: with UP constant ⊤ of `ℕ∞`, the always-true step loops too, so the loop kind
 -- there says nothing specific about the join.
 example : (ZeroParadox.Motion.ofTotal (fun _ : ℕ∞ => (⊤ : ℕ∞)) (fun _ => rfl) (fun _ _ => True)).Loop :=
