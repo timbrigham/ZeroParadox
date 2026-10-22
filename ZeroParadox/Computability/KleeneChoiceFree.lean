@@ -459,8 +459,21 @@ example : type_of% @Nat.Partrec.Code.eval_prec_succ := @cf_eval_prec_succ
 -- not (the `#print axioms` lines in `PurityCheck`).
 -- Reading: in the bins of `ZeroParadox/Category/ChoiceCannotBe.md`, those Mathlib lemmas are
 -- ACCIDENTAL (a choice-free proof of the same type is exhibited above) and `fixed_point₂` /
--- `fixed_point` are STATEMENT-CARRIED; the self-referential address is constructed, not selected,
--- and whether selecting a code by its behaviour needs choice was not attempted as of 2026-10-22.
+-- `fixed_point` are STATEMENT-CARRIED; the self-referential address is constructed, not selected.
+-- Reading (cited, not claimed): the construction is Kleene's, "On notation for ordinal numbers", J.
+-- Symbolic Logic 3(4) (1938), p. 153: "Let e define ψ(S¹ₙ(y, y), 𝔵) recursively, and set
+-- f = S¹ₙ(e, e)"; `cfDiag cψ` plays e and `fpCF cψ` plays S¹ₙ(e, e). Constructive machine-checked
+-- versions exist: Forster and Smolka, "Call-by-value lambda calculus as a model of computation in
+-- Coq", J. Automated Reasoning, doi 10.1007/s10817-018-9484-2, Fact 18 (§ 7), for the λ-calculus L; Forster, "Computability in
+-- Constructive Type Theory", PhD thesis, Saarland University (2021), Theorem 6.16, p. 61, Rogers' form
+-- under the axiom EPF. So a choice-free construction is expected; this file adds the measurement on
+-- Mathlib's `Code`, where the choice sits in the statements' packaging (`Partrec₂`, `Denumerable
+-- Code`) and in the proofs of the arithmetic lemmas above, not in the construction.
+-- Reading: whether selecting a code by its behaviour needs choice was not attempted as of 2026-10-22.
+-- Bauer's behaviour-level recursion theorems use choice at that step and do not show it necessary:
+-- "First steps in synthetic computability theory", Electronic Notes in Theoretical Computer Science
+-- (MFPS XXI), Theorem 4.24, p. 34 of the preliminary version, by Number Choice; "On fixed-point theorems in synthetic
+-- computability", Tbilisi Math. J. 10(3) (2017), Theorem 5.2, p. 177, by Countable Choice.
 
 end ZeroParadox
 

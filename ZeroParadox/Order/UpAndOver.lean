@@ -133,7 +133,7 @@ end UpAndOver
 /-! ### § III. NO-GO gauge — what fails to be an `UpAndOver`, and the smallest member. Each
 control's `Statement:` names each field that refuses it. -/
 
--- `Statement:` the three-point chain `Fin 3` carries the shape: the closure sending `1` to `2` and
+-- `Statement:` the three-point chain `Fin 3` carries an `UpAndOver`: the closure sending `1` to `2` and
 -- fixing every other point, with the landing `0`, its cover `1`, and `up` moving `1` to `2`. By the
 -- three-point bound in § II, no carrier with fewer points is a member.
 example : ∃ U : UpAndOver (Fin 3), (∀ x, U.up x = if x = 1 then 2 else x) ∧
@@ -450,7 +450,7 @@ theorem nonempty_upAndOver_dual_of_covBy_classical {α : Type u} [PartialOrder �
 
 /-! ### § IV. The ordinal instance -/
 
-/-- `Statement:` the ordinals carry the shape with `up` the snap-nucleus `nfp (ω^·)` (`snapNucleus`),
+/-- `Statement:` the ordinals carry an `UpAndOver` with `up` the snap-nucleus `nfp (ω^·)` (`snapNucleus`),
     covers by `Order.succ`, and the corner at the landing `ε_ 0` and its cover `succ (ε_ 0)`, which
     `up` sends to `ε_ (succ 0)` (`succession_succ`), a limit ordinal (Mathlib `Order.IsSuccLimit`,
     via `Ordinal.isSuccLimit_opow_left` and `Ordinal.omega0_opow_epsilon`) and so not `succ (ε_ 0)`. -/

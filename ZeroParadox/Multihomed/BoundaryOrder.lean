@@ -276,7 +276,7 @@ theorem withBotClosure_apply {α : Type*} [PartialOrder α] (c : ClosureOperator
 
 `Reading:` selected: this file's order and `phaseUpAndOver` use the floor-below member. -/
 
-/-- `Statement:` `WithBot Ordinal` carries the shape with `up` the lifted `ordinalUpAndOver.up`
+/-- `Statement:` `WithBot Ordinal` carries an `UpAndOver` with `up` the lifted `ordinalUpAndOver.up`
     (`nfp (ω^·)` on `↑o`, the floor `⊥ : WithBot Ordinal` fixed), the corner at the landing
     `⊥ : WithBot Ordinal` and its cover the snap `↑0`, which `up` sends to `↑ε₀ ≠ ↑0`, and covers
     `⊥ ⋖ ↑0`, `↑o ⋖ ↑(succ o)`. -/
