@@ -206,7 +206,8 @@ theorem l_run : c₀ ≠ c₁ := by decide
 /-- TQ-IH: the same fact read from c₁ (`Ne.symm l_run`). -/
 theorem tq_ih : c₁ ≠ c₀ := Ne.symm l_run
 
--- `Statement:` on `MachinePhase`, being `c₁` is not being `c₀`, and being `c₀` is not being `c₁`.
+-- `Statement:` on `MachinePhase`, being `c₁` is the same as not being `c₀`, and being `c₀` the same as
+-- not being `c₁`.
 example : ∀ p : MachinePhase, (p = c₁ ↔ p ≠ c₀) ∧ (p = c₀ ↔ p ≠ c₁) := by
   intro p; cases p <;> decide
 
