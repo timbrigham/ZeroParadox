@@ -6,31 +6,31 @@ set_option maxHeartbeats 400000
 /-!
 # The lattice of systems: adjoining the point at infinity makes the ordinals a frame
 
-`SnapNucleus.lean` builds the snap as a genuine `Nucleus Ordinal` — a single modality — on the bare
-ordinals, which need only that meets exist. What the bare ordinals lack is a **top**: they ascend without
-bound, so they are not a complete lattice and not a frame, and the *lattice of all such modalities* does
-not exist there.
+`SnapNucleus.lean` builds the snap as a genuine `Nucleus Ordinal` — a single modality — on the bare ordinals,
+which need only that meets exist. What the bare ordinals lack is a **top**: they ascend without bound, so they
+are not a complete lattice and not a frame, and the *lattice of all such modalities* does not exist there.
 
-This file adjoins that missing top. `WithTop Ordinal` is the ordinals plus one point at infinity ⊤. That
-single addition turns the ordinals into a **complete linear order**, and a complete linear order is a
-`Order.Frame` (Mathlib: `CompleteLinearOrder → CompletelyDistribLattice → CompleteDistribLattice → Frame`,
-all by instance resolution — nothing to prove). On a frame, the **nuclei** (modalities / predicated
-differences) form a `Frame` and the **sublocales** (the systems they generate) form a `Coframe`: the
-*lattice of systems*. So the point at infinity is exactly what completes the meta-level.
+This file adjoins that missing top. `WithTop Ordinal` is the ordinals plus one point at infinity ⊤. That single
+addition turns the ordinals into a **complete linear order**, and a complete linear order is a `Order.Frame`
+(Mathlib: `CompleteLinearOrder → CompletelyDistribLattice → CompleteDistribLattice → Frame`, all by instance
+resolution — nothing to prove). On a frame, the **nuclei** (modalities / predicated differences) form a `Frame`
+and the **sublocales** (the systems they generate) form a `Coframe`: the *lattice of systems*.
 
-**Why this is the boundary doing the work.** The lattice-of-systems machinery fires ONLY once a top is present
-(§ III: not on bare `Ordinal`), so it is the ceiling, the point the unbounded ascent marches toward, that
-unlocks the lattice. In the framework's pole chart ⊥ = 0 = ∞ (a chart claim; its coincidence witness is
-`infinitude_forces_infinite_complexity`, `ZeroParadox/BottomCannotBe.lean` § INVERSION) that ceiling, ⊤ of
-`WithTop Ordinal`, is the point at infinity; reading it as a next bottom is interpretation, no theorem here says
-so. Adjoining it turns "one modality" (`snapNucleus`) into "one point in a lattice of systems."
+**Why this is the boundary doing the work.** The lattice-of-systems machinery fires ONLY once a top is present;
+bare `Ordinal` has none (`IsEmpty (OrderTop Ordinal)`, `ZeroParadox/Category/DieNucleus.lean` § IV). So the ceiling,
+⊤ of `WithTop Ordinal`, unlocks the lattice. In the pole chart ⊥ = 0 = ∞ (a chart claim; coincidence witness
+`infinitude_forces_infinite_complexity`, `ZeroParadox/BottomCannotBe.lean` § INVERSION) it is the point at infinity.
+Its ROLE is a theorem (`ZeroParadox/Multihomed/BoundaryOrder.lean` § I; the `Statement: COINCIDENCE` example,
+`ZeroParadox/Category/DieNucleus.lean` § III): the floor of the floor-above chart, `⊤ = phaseEquivWithTop Phase.floor`.
+Its NOVELTY, a NEXT bottom, is the framework's commitment, not a theorem (`ZeroParadox/Order/SnapCannotBe.lean`
+§ IV): `phaseFloorToTop_apply` re-places one `Phase.floor`, and in the 2-adic realization the arc reapproaches the
+same 0 (`snap_arc_z2_loop`). Adjoining it turns "one modality" (`snapNucleus`) into "one point in a lattice of systems."
 
 **Honest scope.** The frame structure of `WithTop Ordinal` and the nucleus/sublocale lattice are recognized
-Mathlib / locale theory — §§ I–II only *instantiate* them and record the placement (the top is the
-framework's ∞ = 0 = ⊥ boundary). § IV then lifts the specific snap into the lattice: `snapNucleusTop` reuses
-the ordinal snap-closure through `WithTop.map`, and `snapSublocale = snapNucleusTop.toSublocale` is the
-snap-generated system as a named point in the lattice. The lift is a construction; the frame/lattice
-machinery it lands in is recognized structure, credited outward.
+Mathlib / locale theory — §§ I–II only *instantiate* them and record the placement. § IV then lifts the specific
+snap into the lattice: `snapNucleusTop` reuses the ordinal snap-closure through `WithTop.map`, and
+`snapSublocale = snapNucleusTop.toSublocale` is the snap-generated system as a named point in the lattice. The
+lift is a construction; the frame/lattice machinery it lands in is recognized structure, credited outward.
 
 ## Engineer's Take
 
