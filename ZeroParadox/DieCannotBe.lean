@@ -733,7 +733,7 @@ example (n : ℕ) :
 -- Reading: Mathlib's docstring calls `PFun.fix` the "first return map"; `fix_fwd_eq` is the `Part`
 -- case of the Elgot fixpoint law (Goncharov, Jakob, Neves, arXiv:1807.01053, Def. 5, p. 22:7; cited).
 -- Reading: for a step RELATION that iteration lands in the powerset, a set of results (ibid.,
--- Example 6.1, p. 22:7), not one landing; here `UpStepInvariant` supplies the single closure, one
+-- Example 6, item 1, p. 22:7), not one landing; here `UpStepInvariant` supplies the single closure, one
 -- way: premise ⇒ one closure (`stageClosure_of_run`); the converse control above fails.
 -- Statement: HALTING member: `n ↦ n + 1` below 3, halted at 3; the stages `0, 1, 2` close at 3.
 example : (ZeroParadox.runMotion (fun n : ℕ => if n < 3 then some (n + 1) else none)).StageClosure
@@ -2417,12 +2417,15 @@ example : ¬ (∀ a, (ZeroParadox.Motion.ofFun Nat.pred).step a 0 → a = 0) ∧
 -- motion's step need not be total; with a step at every point other than `y` and `DecidableEq`,
 -- arrival is the path form, every run from `x` visits `y` (`arrives_iff_forall_run`). Delta: theirs
 -- are properties of executions, these of a step relation. Neighbour: Stefanescu, Ciobaca, Mereuta,
--- Moore, Serbanuta and Rosu, "All-Path Reachability Logic", LMCS 15(2) 2019, Lemma 8.6 as used at
--- p. 5:19, `coreach(φ) ↔ φ ∨ (∃c' step(c, c') ∧ ∀c' (step(c, c') → coreach(φ)[c'/□]))`, the `next`
--- clause's unfolding stated for a step that need not be total; delta: their `coreach` (Fig. 5,
--- p. 5:15) ranges over complete paths, each ending at a configuration with no step, so a diverging
--- run does not obstruct it, where `Arrives` is the least fixed point of that unfolding and every run
--- from `x` visits `y` (`exists_run_eq_of_arrives`).
+-- Moore, Rosu and Serbanuta, "All-Path Reachability Logic", LMCS 15(2) 2019, Lemma 8.6, stated one
+-- way (`→`) at p. 5:17 and used as the iff at p. 5:19, `coreach(φ) ↔ φ ∨ (∃c' step(c, c') ∧
+-- ∀c' (step(c, c') → coreach(φ)[c'/□]))`, the `next` clause's unfolding stated for a step that need
+-- not be total; delta: their `coreach` (Fig. 5, p. 5:15) ranges over complete paths, each ending at a
+-- configuration with no step, so a diverging run does not obstruct it, where `Arrives` is the least
+-- fixed point of that unfolding and every run from `x` visits `y` (`exists_run_eq_of_arrives`); that
+-- split is named in Buruiana and Ciobaca, "Reducing Total Correctness to Partial Correctness by a
+-- Transformation of the Language Semantics", WPTE 2018, EPTCS 289 (2019), Def. 2.6 (complete paths,
+-- p. 7) against Def. 3.2 (complete or diverging executions, p. 8).
 #check @ZeroParadox.Motion.reflTransGen_of_arrives -- Statement: arrival gives a path of steps (Mathlib `ReflTransGen`)
 #check @ZeroParadox.Motion.exists_run_eq_of_arrives -- Statement: arrival from `x` gives that every run starting at `x` visits `y`
 #check @ZeroParadox.Motion.arrives_ofFun_iff    -- Statement: in `ofFun g`, arrival is `g^[n] x = y` for some `n`
@@ -3149,8 +3152,9 @@ example :
 --   reaches bare `Ordinal`:
 #check @ZeroParadox.toNucleus_ordinalTowerMotion -- Statement: MEMBER: `toNucleus` of `ordinalTowerMotion` is `snapNucleus`, by `rfl`; UP at `a` is `Part.some (snapNucleus a)` (the `example` after it in `ZeroParadox/Category/DieNucleus.lean` § III)
 -- Reading: what bare `Ordinal` lacks is a top over its order (`IsEmpty (OrderTop Ordinal)`,
---   `ZeroParadox/Category/DieNucleus.lean` § IV), hence ⊤ of `Nucleus Ordinal` and the frame of nuclei,
---   so `ofNucleus_top_up` and the two-ended lattice of DieNucleus § II do not reach it; adjoining ⊤
+--   `ZeroParadox/Category/DieNucleus.lean` § IV), hence Mathlib's `⊤ : Nucleus Ordinal` is not stated
+--   (`instTop`, like `ofNucleus_top_up`, takes `[OrderTop X]`), nor the frame of nuclei, so
+--   `ofNucleus_top_up` and the two-ended lattice of DieNucleus § II do not reach it; adjoining ⊤
 --   gives the frame where the lift is a member:
 #check @ZeroParadox.snapNucleusTop_isLanding_iff -- Statement: MEMBER: on the frame `WithTop Ordinal`, for any OVER `s`, the landings of `ofNucleus snapNucleusTop s` are `⊤` and the lifted ε-numbers `↑(ε_ o)`; UP at `↑a` is `ordinalTowerMotion`'s UP at `a` pushed through `↑`, and the round trip returns `snapNucleusTop` (the `example`s after it in `ZeroParadox/Category/DieNucleus.lean` § III)
 -- `Statement:` `↑⊥`, the ordinals' ⊥ lifted, is not a landing there: UP sends it to `↑ε₀`
@@ -3160,7 +3164,7 @@ example (s : WithTop Ordinal → WithTop Ordinal → Prop) :
       ((⊥ : Ordinal) : WithTop Ordinal) := by
   rw [ZeroParadox.Motion.isLanding_ofNucleus_iff, ZeroParadox.snapNucleusTop_coe_bot]
   exact fun h => ZeroParadox.epsilon0_ne_bot (WithTop.coe_injective h)
-#check @ZeroParadox.em_iff_ofNucleus_dneg_isLanding -- Statement: MEMBER: excluded middle iff every proposition is a landing of `ofNucleus (dnegNucleus Prop) s` (`em_iff_dnegNucleus_trivial` through `isLanding_ofNucleus_iff`); `[propext]`: the statement's `SemilatticeInf Prop` instance is read off the pinned `Prop.instHeytingAlgebra` and is choice-free, where the synthesized `SemilatticeInf Prop` instance carries `Classical.choice` through `Prop.instCompleteLinearOrder` (both printed in `ZeroParadox/Category/DieNucleus.lean`)
+#check @ZeroParadox.em_iff_ofNucleus_dneg_isLanding -- Statement: MEMBER: excluded middle iff every proposition is a landing of `ofNucleus (dnegNucleus Prop) s` (`em_iff_dnegNucleus_trivial` through `isLanding_ofNucleus_iff`); `[propext]`: the statement's `SemilatticeInf Prop` instance is read off the pinned `Prop.instHeytingAlgebra` and is choice-free, where the `SemilatticeInf Prop` instance synthesized under that file's imports carries `Classical.choice` through `Prop.instCompleteLinearOrder` (the parent instances `Prop.instHeytingAlgebra` and `Prop.instCompleteLinearOrder`, and the forced form `dnegLandingForcedInstance`, are printed in `ZeroParadox/Category/DieNucleus.lean`)
 #check @ZeroParadox.no_snap_nucleus              -- Statement: NON-MEMBER: for every nucleus `j` on `SynONote`, not every closed point of `j` is fixed by `omegaPow`; so no `ofTotal j _ s` has only `omegaPow`-fixed landings (the die form in `ZeroParadox/Category/DieNucleus.lean` § IV, whose next `example` gives the landings as the closed points). The `Nucleus`-typed corollary of `no_snap_closure`; `SynONote` has no ⊤ over its order (`tower_no_upper_bound`), so `ofNucleus_top_up` is not stated there
 #check @ZeroParadox.no_snap_closure              -- Statement: the order-free form: no idempotent endomap of `ONote` has only `omegaPow`-fixed fixed points; no order, no monotonicity, no inflation assumed
 

@@ -229,12 +229,13 @@ example (s : WithTop Ordinal → WithTop Ordinal → Prop) :
 /-- `Statement:` MEMBER: excluded middle iff every proposition is a landing of
     `ofNucleus (dnegNucleus Prop) s`, for any OVER `s`: `em_iff_dnegNucleus_trivial` through
     `isLanding_ofNucleus_iff`, the Heyting instance pinned to `Prop.instHeytingAlgebra` as there.
-    `Reading:` measured `[propext]` (printed below). The `SemilatticeInf Prop` instance in the statement
-    is the one unification reads off the pinned `Prop.instHeytingAlgebra` through `Lattice.toSemilatticeInf`,
-    and that instance is choice-free; the instance `inferInstance` synthesizes for `SemilatticeInf Prop`
-    routes through `Prop.instCompleteLinearOrder` and carries `Classical.choice`, as `Order.Frame Prop`
-    does, and forcing it into this motion carries that footprint (measured 2026-10-21). The meet-semilattice
-    binder is met from the nucleus's type, where a frame binder had to be synthesized. -/
+    `Reading:` measured `[propext]` (printed below). A `Nucleus X` carries `[SemilatticeInf X]` and no
+    `Order.Frame X`, so the `SemilatticeInf Prop` instance in the statement is the one unification reads
+    off the pinned `Prop.instHeytingAlgebra` through `Lattice.toSemilatticeInf`, and that instance is
+    choice-free; the instance `inferInstance` synthesizes for `SemilatticeInf Prop` under this file's
+    imports routes through `Prop.instCompleteLinearOrder` and carries `Classical.choice`, as `Order.Frame
+    Prop` does, and forcing it into this motion carries that footprint (`dnegLandingForcedInstance`,
+    printed below). -/
 theorem em_iff_ofNucleus_dneg_isLanding (s : Prop → Prop → Prop) :
     ExcludedMiddle ↔ ∀ p : Prop,
       (Motion.ofNucleus (@dnegNucleus Prop Prop.instHeytingAlgebra) s).IsLanding p := by
@@ -243,10 +244,18 @@ theorem em_iff_ofNucleus_dneg_isLanding (s : Prop → Prop → Prop) :
 
 -- Reading (cited, not claimed): neighbour: Fellin and Schuster, "A General Glivenko–Gödel Theorem for
 -- Nuclei", EPTCS 351 (MFPS 2021), 2021, § 5.1 with Theorem 3.8 and Application 5.3(1), pp. 56, 60: for
--- `¬¬` as a nucleus over intuitionistic logic `⊢i`, the stability axiom `¬¬ϕ ⊲ ϕ` is RAA, so its
--- strong extension is classical logic `⊢c`, and `Γ ⊢c ϕ ⟺ Γ ⊢i ¬¬ϕ`; delta: theirs is conservation
--- between two provability relations and never names excluded middle, ours is the fixed-point
--- statement on the Heyting algebra `Prop` with `p ∨ ¬p` as the other side, in both directions.
+-- `¬¬` as a nucleus over intuitionistic logic `⊢i`, the stability axiom `¬¬ϕ ⊳ ϕ` (their (5), p. 54,
+-- premise left of `⊳`) is RAA, so its strong extension is classical logic `⊢c`, and `Γ ⊢c ϕ ⟺ Γ ⊢i ¬¬ϕ`;
+-- delta: theirs is conservation between two provability relations, its classical side named by RAA,
+-- ours is the fixed-point statement on the Heyting algebra `Prop` with `p ∨ ¬p` as the other side, in
+-- both directions.
+
+/-- `Statement:` the landing side of `em_iff_ofNucleus_dneg_isLanding` with the `SemilatticeInf Prop`
+    instance `inferInstance` synthesizes under this file's imports forced into the motion; a `Prop`,
+    held so that its footprint is printed below. -/
+def dnegLandingForcedInstance (s : Prop → Prop → Prop) : Prop :=
+  ∀ p : Prop,
+    (@Motion.ofNucleus Prop inferInstance (@dnegNucleus Prop Prop.instHeytingAlgebra) s).IsLanding p
 
 -- Statement: MEMBER: the double-negation nucleus on `Prop` (`dnegNucleus`) read as a motion with the
 -- empty OVER; `True` is a landing.
@@ -284,13 +293,13 @@ example :
 /-! ### § IV. Non-member, and the fence: what bare `Ordinal` and `SynONote` lack
 
 § I–II are stated on a meet-semilattice, so § I reaches bare `Ordinal`: `toNucleus` of `ordinalTowerMotion` is
-`snapNucleus` (§ III), the one nucleus `ZeroParadox/Ordinal/SnapMetaLattice.lean` § III places there. What bare
+`snapNucleus` (§ III), the nucleus `ZeroParadox/Ordinal/SnapMetaLattice.lean` § III exhibits there. What bare
 `Ordinal` lacks is a top over its order (the first `example` below), hence `⊤ : Nucleus Ordinal` (`ofNucleus_top_up`
-takes `[OrderTop X]`) and the frame of nuclei, § II's two-ended lattice; adjoining ⊤ gives § III's frame, where
-the lift `snapNucleusTop` is a member. `SynONote` (`ZeroParadox/Ordinal/SnapNucleusConstructive.lean`) has no top
-over its comparator order either (the next two `example`s), and there the obstruction is sharper: no nucleus on
-it has only `omegaPow`-fixed landings, `no_snap_nucleus`, the `Nucleus`-typed corollary of the order-free
-`no_snap_closure` (any idempotent endomap of `ONote`); its lift by a top, `E0Note`, is not examined here. -/
+takes `[OrderTop X]`) and the frame of nuclei (§ II); adjoining ⊤ gives § III's frame, where the lift
+`snapNucleusTop` is a member. `SynONote` (`ZeroParadox/Ordinal/SnapNucleusConstructive.lean`) has no top over its
+comparator order either (the next two `example`s), and the obstruction there is sharper: no nucleus on it has only
+`omegaPow`-fixed landings, `no_snap_nucleus`, the `Nucleus`-typed corollary of the order-free `no_snap_closure` (any
+idempotent endomap of `ONote`); its lift by a top, `E0Note` (`ZeroParadox/Ordinal/PricedInterface.lean`), is not examined here. -/
 
 -- `Statement:` no `OrderTop` over the ordinals' order: no greatest element (Mathlib `NoMaxOrder`).
 example : IsEmpty (OrderTop Ordinal) := ⟨fun h => by
@@ -333,7 +342,7 @@ Measured from the build log, 2026-10-21. `toNucleus` depends on no axioms; `ofNu
 `⊥ : Nucleus X` (`ofNucleus_top_up`, the same proof at `⊤`, is the control). The bare-`Ordinal` member and
 `snapNucleusTop_isLanding_iff` are STATEMENT-CARRIED through Mathlib's `Ordinal` fixed-point theory, as for
 `snapNucleus` in `ZeroParadox/Ordinal/SnapNucleus.lean`. On `Prop` the statement's `SemilatticeInf` instance is
-read off `Prop.instHeytingAlgebra`, `[propext]`; the synthesized one carries choice (both printed below). -/
+read off `Prop.instHeytingAlgebra`, `[propext]`; the synthesized one and `dnegLandingForcedInstance` carry choice (all printed below). -/
 
 section PurityCheck
 open ZeroParadox
@@ -354,6 +363,7 @@ open ZeroParadox
 #print axioms toNucleus_ordinalTowerMotion
 #print axioms snapNucleusTop_isLanding_iff
 #print axioms em_iff_ofNucleus_dneg_isLanding
+#print axioms dnegLandingForcedInstance
 -- Mathlib, the two `Prop` instances contrasted above: the pinned one and the synthesized one.
 #print axioms Prop.instHeytingAlgebra
 #print axioms Prop.instCompleteLinearOrder
