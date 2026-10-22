@@ -229,9 +229,12 @@ example (s : WithTop Ordinal → WithTop Ordinal → Prop) :
 /-- `Statement:` MEMBER: excluded middle iff every proposition is a landing of
     `ofNucleus (dnegNucleus Prop) s`, for any OVER `s`: `em_iff_dnegNucleus_trivial` through
     `isLanding_ofNucleus_iff`, the Heyting instance pinned to `Prop.instHeytingAlgebra` as there.
-    `Reading:` measured `[propext]` (2026-10-22, printed below): the `SemilatticeInf Prop` instance
-    `ofNucleus` takes here is choice-free, where `Order.Frame Prop` by `inferInstance` measures
-    `[propext, Classical.choice, Quot.sound]`; the binder is what the footprint prices. -/
+    `Reading:` measured `[propext]` (printed below). The `SemilatticeInf Prop` instance in the statement
+    is the one unification reads off the pinned `Prop.instHeytingAlgebra` through `Lattice.toSemilatticeInf`,
+    and that instance is choice-free; the instance `inferInstance` synthesizes for `SemilatticeInf Prop`
+    routes through `Prop.instCompleteLinearOrder` and carries `Classical.choice`, as `Order.Frame Prop`
+    does, and forcing it into this motion carries that footprint (measured 2026-10-21). The meet-semilattice
+    binder is met from the nucleus's type, where a frame binder had to be synthesized. -/
 theorem em_iff_ofNucleus_dneg_isLanding (s : Prop → Prop → Prop) :
     ExcludedMiddle ↔ ∀ p : Prop,
       (Motion.ofNucleus (@dnegNucleus Prop Prop.instHeytingAlgebra) s).IsLanding p := by
@@ -327,10 +330,10 @@ Measured from the build log, 2026-10-22. `toNucleus` depends on no axioms; `ofNu
 `ofNucleus_upRaises`, `isLanding_ofNucleus_iff` and `em_iff_ofNucleus_dneg_isLanding` on `[propext]`;
 `toNucleus_ofNucleus`, `isLanding_ofNucleus_anti`, `isLanding_ofNucleus_subset_iff` and `ofNucleus_top_up` on
 `[propext, Quot.sound]`. `ofNucleus_bot_up` is `rfl`, so its footprint is the statement's, through Mathlib's
-`⊥ : Nucleus X` (`ofNucleus_top_up`, the same proof at `⊤`, is the control). The bare-`Ordinal` member with its
-three hypotheses, and `snapNucleusTop_isLanding_iff` (statement control, measured 2026-10-21), are
-STATEMENT-CARRIED through Mathlib's `Ordinal` fixed-point theory, as recorded for `snapNucleus` in
-`ZeroParadox/Ordinal/SnapNucleus.lean`. On `Prop` the `SemilatticeInf` instance is choice-free. -/
+`⊥ : Nucleus X` (`ofNucleus_top_up`, the same proof at `⊤`, is the control). The bare-`Ordinal` member and
+`snapNucleusTop_isLanding_iff` are STATEMENT-CARRIED through Mathlib's `Ordinal` fixed-point theory, as for
+`snapNucleus` in `ZeroParadox/Ordinal/SnapNucleus.lean`. On `Prop` the statement's `SemilatticeInf` instance is
+read off `Prop.instHeytingAlgebra`, `[propext]`; the synthesized one carries choice (both printed below). -/
 
 section PurityCheck
 open ZeroParadox
@@ -351,5 +354,8 @@ open ZeroParadox
 #print axioms toNucleus_ordinalTowerMotion
 #print axioms snapNucleusTop_isLanding_iff
 #print axioms em_iff_ofNucleus_dneg_isLanding
+-- Mathlib, the two `Prop` instances contrasted above: the pinned one and the synthesized one.
+#print axioms Prop.instHeytingAlgebra
+#print axioms Prop.instCompleteLinearOrder
 
 end PurityCheck
