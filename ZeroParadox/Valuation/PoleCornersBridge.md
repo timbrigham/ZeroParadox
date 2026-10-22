@@ -124,6 +124,7 @@ definition — and it is dated for exactly that reason.)*
 - § II  `swap_is_rInv` — the inversion corner is `rInv` (the genuine bridge content).
 - § III `point_and_field_at_the_poles` — the point/field inversion at the two poles.
 - § IV  `irreversible_direction_is_the_snap` — the one-way direction, co-witnessed with `t_snap_irreversible`.
+- § V   `tower_polarity` — the tower as one motion on `NONote` with maps to `Ordinal` and ℤ_[2] (a span, never `=`).
 
 *(The overview above previously said "the genuine Lean content is `swap_is_rInv`" full stop, and
 § III / § IV were unlisted. Corrected 2026-08-04. The § list names the headline declaration of each

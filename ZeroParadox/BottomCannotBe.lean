@@ -140,8 +140,13 @@ example : letI : Preorder ℚ_[2] := Preorder.lift (‖·‖); (2 : ℚ_[2]) ⋖
 example : @DenselyOrdered ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT ∧ DenselyOrdered ℝ :=
   ⟨@DenselyOrdered.mk ℝ (Preorder.lift (‖·‖ : ℝ → ℝ)).toLT fun a _ h =>
     NormedField.exists_lt_norm_lt ℝ (norm_nonneg a) h, inferInstance⟩
--- Reading: other chart, the valuation order: there `0` is greatest, `v 0 = ⊤` (`addVal_bot`,
--- § POSITIVE — narrow uniqueness and infinite width).
+-- Reading: other chart, the valuation order, stated on ℤ_[2] (the next two lines; `addVal_bot`,
+-- § POSITIVE, is `v 0 = ⊤` for an additive valuation).
+-- Statement: on ℤ_[2], ℤ_[2]'s 0 included, `q2Val x ≤ q2Val y ↔ ‖y‖ ≤ ‖x‖`.
+#check @ZeroParadox.q2Val_le_iff_norm_le
+-- Statement: ℤ_[2]'s 0 is least in the norm preorder and greatest in the `q2Val` preorder, and doubling
+-- lowers in the first and raises in the second.
+#check @ZeroParadox.z2_two_views
 -- Statement: in `TopCat` the one-point space `{0} ⊆ ℚ₂` is TERMINAL (it is not initial,
 -- `padic_bottom_not_initial`); `TopCat`'s initial object is the empty space
 -- (`ZeroParadox/Multihomed/TreeObstructions.lean`).
@@ -374,6 +379,11 @@ example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 #check @ZeroParadox.doubling_place_dichotomy
 -- Statement: `rInvHomeo` sends `0` to `∞` and `∞` to `0` on `OnePoint ℚ₂`.
 #check @ZeroParadox.rInv_swaps
+-- Statement: EXCHANGE, with an order: in the order lifted along the extended norm `sNorm`, `0` is
+-- least and `∞` greatest, `0 ≠ ∞`, and `rInv` swaps them; two distinct points, not the coincidence.
+#check @ZeroParadox.sphere_exchange
+-- Statement: `rInv` reverses that order.
+#check @ZeroParadox.rInv_reverses
 -- Statement: a conjunction whose first component is the DISEQUALITY of the floor pole and the
 -- infinity pole; inversion exchanging them, and `Infinite ℚ_[2]`, follow in the same declaration.
 -- ⚠ `rInv_swaps` directly above states two equations and nothing else, so cite THIS one wherever the
@@ -455,23 +465,27 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 #check @ZeroParadox.boundaryDouble_botEnd
 -- Statement: every fixed point of `boundaryDouble` is `botEnd`.
 #check @ZeroParadox.boundaryDouble_unique_fp
--- Statement: Ω's one-loop and two-cycle drawings are bisimilar (`Same`), and after deleting
--- self-loops they are not.
+-- Statement: `omegaLoop` and `omegaPair` are bisimilar (`Same`), and after deleting self-loops they
+-- are not.
 #check @ZeroParadox.MemGraph.dropLoops_not_same
 -- Statement: keeping only arrows from accessible members preserves `Same`.
 #check @ZeroParadox.MemGraph.wfPart_same
--- Statement: and sends Ω's two-cycle drawing to the empty set's.
+-- Statement: and sends `omegaPair` to a graph `Same` as `empty`.
 #check @ZeroParadox.MemGraph.wfPart_omegaPair
 -- Statement: any membership graph `A` whose one-step wrap (`x ↦ {x}`, `MemGraph.wrap`) is `Same` as
--- `A` is `Same` as Ω's one-loop drawing (`omegaLoop`); no AFA is assumed.
+-- `A` is `Same` as `omegaLoop`; no AFA is assumed.
 -- Reading: the AFA form is Aczel 1988, p. 19: "AFA implies that there is at most one solution to
 -- the equation [x = {x}], namely Ω".
 #check @ZeroParadox.MemGraph.same_omegaLoop_of_wrap_same
--- Reading: Ω = {Ω} is AFA's Quine atom, the shape the Quine atom (CC-2) gives ⊥ of a
--- `ZPSemilattice`; in the `QuineAtomHost` toy on `Fin 3` (`ZeroParadox/Settheory/QuineHost.lean`
--- § VII) Ω is the toy's `bot`. `dropLoops_not_same` and `wfPart_omegaPair` are about Ω's drawings;
--- `wfPart_same` is the general fact, for any two graphs, and `same_omegaLoop_of_wrap_same` is about
--- every graph `Same` as its wrap. No declaration links these drawings to the toy.
+-- Reading: `omegaLoop` and `omegaPair` draw Ω and `empty` draws ∅. Ω = {Ω} is AFA's Quine atom, the
+-- shape the Quine atom (CC-2) gives ⊥ of a `ZPSemilattice`; in the `QuineAtomHost` toy on `Fin 3`
+-- (`ZeroParadox/Settheory/QuineHost.lean` § VII) Ω is the toy's `bot`. `dropLoops_not_same` and
+-- `wfPart_omegaPair` are about Ω's drawings; `wfPart_same` is the general fact, for any two `Same`
+-- graphs, and `same_omegaLoop_of_wrap_same` is about every graph `Same` as its wrap. A declaration
+-- linking these drawings to the toy was not located as of 2026-10-21, searched as follows: grep of
+-- `ZeroParadox/` for `MemGraph.` and `omegaLoop` (four files, no declaration in them taking both a
+-- `MemGraph` and a `QuineAtomHost`) and of `QuineHost.lean` for `MemGraph`, `omegaLoop`, `omegaPair`
+-- (no hit).
 
 /-! ### GENERATION — the floor generates its first step -/
 
@@ -574,11 +588,16 @@ example : (∀ a b : ℕ → Bool, a ≤ b → a ⁻¹' {true} ⊆ b ⁻¹' {tru
     · rfl
     · exact absurd ht this
   · rintro rfl; exact Set.eq_empty_of_forall_notMem fun n h => Bool.false_ne_true h
+-- Statement: it also reflects `⊆` to `≤`, so it is an order embedding of `ℕ → Bool` into `Set ℕ`.
+example : (ℕ → Bool) ↪o Set ℕ :=
+  OrderEmbedding.ofMapLEIff (fun t : ℕ → Bool => t ⁻¹' {true}) fun a b =>
+    ⟨fun h _ => Bool.le_iff_imp.mpr fun hn => h hn,
+      fun h n (hn : a n = true) => show b n = true from Bool.le_iff_imp.mp (h n) hn⟩
 -- Statement: Mathlib's `Set.preimage_boolIndicator_true`, the inverse direction: the tape
 -- `s.boolIndicator` read back this way is `s`.
--- Reading: no `Set ℕ ≃o (ℕ → Bool)` was located in pinned Mathlib as of 2026-10-20 (grep `≃o`,
--- `exact?`).
 #check @Set.preimage_boolIndicator_true
+#check @IsSimpleOrder.orderIsoBool -- Statement: Mathlib neighbour: a bounded simple order with decidable equality is order-isomorphic to `Bool`
+#check @CompleteAtomicBooleanAlgebra.toSetOfIsAtom -- Statement: Mathlib neighbour: a complete atomic Boolean algebra is order-isomorphic to the sets of its atoms
 -- Statement: under pointwise exclusive-or, every tape's self-difference is the all-false tape, so
 -- a tape read against itself is never disjunctive.
 example (x : ℕ → Bool) : (fun n => xor (x n) (x n)) = (fun _ => false) ∧

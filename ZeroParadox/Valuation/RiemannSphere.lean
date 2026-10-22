@@ -1,6 +1,7 @@
 import Mathlib.Topology.Compactification.OnePoint.Basic
 import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
 import Mathlib.NumberTheory.Padics.ProperSpace
+import ZeroParadox.Die
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -287,6 +288,59 @@ theorem continuous_rScale (n : ℤ) : Continuous (rScale n) := by
   have h : ⇑(rScaleHomeo n) = rScale n := funext (rScaleHomeo_apply n)
   exact h ▸ (rScaleHomeo n).continuous
 
+/-! ### § VII. A norm view of the sphere, and `rInv` as the change to the reversed view -/
+
+/-- `Statement:` the extended norm on the sphere: `‖x‖₊` at `x`, and ⊤ of `ℝ≥0∞` at `∞`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's extended norm `‖·‖ₑ` is defined on normed
+-- types, and `OnePoint ℚ_[2]` carries no norm; the dated search is in `LEAN_CUSTOM_REGISTRY.md`.
+noncomputable def sNorm : Sphere → ENNReal
+  | (∞ : Sphere) => ⊤
+  | OnePoint.some x => (‖x‖₊ : ENNReal)
+
+/-- `Statement:` `sNorm (rInv s) = (sNorm s)⁻¹` at every point of the sphere, `0` and `∞` included. -/
+theorem sNorm_rInv (s : Sphere) : sNorm (rInv s) = (sNorm s)⁻¹ := by
+  induction s using OnePoint.rec with
+  | infty => simp [sNorm, rInv_infty]
+  | coe x =>
+    by_cases hx : x = 0
+    · subst hx; simp [sNorm, rInv_zero]
+    · rw [rInv_coe_ne hx]
+      simp only [sNorm, nnnorm_inv]
+      rw [ENNReal.coe_inv (nnnorm_ne_zero_iff.mpr hx)]
+
+/-- `Statement:` `rInv` reverses the preorder lifted along `sNorm`. -/
+theorem rInv_reverses (a b : Sphere) : sNorm (rInv a) ≤ sNorm (rInv b) ↔ sNorm b ≤ sNorm a := by
+  rw [sNorm_rInv, sNorm_rInv, ENNReal.inv_le_inv]
+
+/-- `Statement:` `rInvHomeo` as a Mathlib `RelIso` from the preorder lifted along `sNorm` to its
+    reverse. -/
+noncomputable def rInvRelIso :
+    (fun a b : Sphere => sNorm a ≤ sNorm b) ≃r (fun a b : Sphere => sNorm b ≤ sNorm a) where
+  toEquiv := rInvHomeo.toEquiv
+  map_rel_iff' := by
+    intro a b
+    show sNorm (rInv b) ≤ sNorm (rInv a) ↔ sNorm a ≤ sNorm b
+    exact rInv_reverses b a
+
+/-- `Statement:` in the preorder lifted along `sNorm`, `0` is least and `∞` greatest; `0 ≠ ∞`; and
+    `rInv` exchanges them. -/
+theorem sphere_exchange :
+    @IsBot Sphere (Preorder.lift sNorm).toLE (OnePoint.some 0) ∧
+    @IsTop Sphere (Preorder.lift sNorm).toLE ∞ ∧
+    (OnePoint.some (0 : ℚ_[2]) : Sphere) ≠ ∞ ∧
+    rInv (OnePoint.some 0) = ∞ ∧ rInv ∞ = OnePoint.some 0 :=
+  ⟨fun s => by show sNorm (OnePoint.some 0) ≤ sNorm s; simp [sNorm],
+   fun s => by show sNorm s ≤ sNorm ∞; simp [sNorm],
+   OnePoint.coe_ne_infty 0, rInv_zero, rInv_infty⟩
+
+/-- `Statement:` for every motion on the sphere (`ZeroParadox/Die.lean`), OVER raises in the preorder
+    lifted along `sNorm ∘ rInv` iff it lowers in the preorder lifted along `sNorm`. -/
+theorem sphere_polarity_swap (M : Motion Sphere) :
+    @Motion.StepRaises Sphere M (Preorder.lift (sNorm ∘ rInv)).toLE ↔
+      @Motion.StepLowers Sphere M (Preorder.lift sNorm).toLE :=
+  Motion.stepRaises_iff_of_dual (Preorder.lift sNorm).toLE (Preorder.lift (sNorm ∘ rInv)).toLE
+    (fun x y => rInv_reverses x y) M
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check (enable per theorem once proved) -/
@@ -310,4 +364,11 @@ open ZeroParadox
 #print axioms rScaleHomeo
 #print axioms rScaleHomeo_apply
 #print axioms continuous_rScale
+-- § VII: the norm view and its reversal.
+#print axioms sNorm
+#print axioms sNorm_rInv
+#print axioms rInv_reverses
+#print axioms rInvRelIso
+#print axioms sphere_exchange
+#print axioms sphere_polarity_swap
 end PurityCheck

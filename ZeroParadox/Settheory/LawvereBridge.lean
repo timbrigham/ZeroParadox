@@ -219,7 +219,10 @@ existence and uniqueness stay the class-field commitments `fixed_bot` and `uniqu
 point-surjection, is met not here but in the computability face
 (`ZeroParadox/Computability/ComputableCrossing.lean`): the universal machine `eval` is point-surjective
 onto the computable functions, and the recursion theorem gives a fixed point there, a Kleene code, a term
-of another type than ⊥ of the `ZPSemilattice` (that it is a Lawvere instance is cited). A Scott `D∞`
+of another type than ⊥ of the `ZPSemilattice`. That Rogers' general form, over every computable
+self-map on codes, is a Lawvere instance is cited (Yanofsky 2003, Theorem 5; Bauer 2017, Theorem 5.2
+and Corollary 5.3), not checked in Lean; the narrower case of computable `eval`-respecting maps is
+checked (`hasWitnessRel_evalClass` with `fixedPoint_of_witnessRel`). A Scott `D∞`
 domain (`D ≅ [D → D]`) would be a reflexive object in the monotone regime; it was not located in the
 pinned Mathlib as of 2026-10-06 (search record: `ZeroParadox/Settheory/LawvereBridge.md`). -/
 theorem monotone_regime_derives_pinned {α : Type*} [CompleteLattice α] (f : α →o α)

@@ -39,9 +39,10 @@ Lawvere's theorem is an implication: **if** a point-surjection `e : A → (A →
   onto the partial computable functions (`eval_point_surjective`,
   `ZeroParadox/Computability/ComputableCrossing.lean`), and the recursion theorem gives a fixed point
   there (`computable_fixedpoint_up_to_eval`, `selfref_fixedpoint_exists_computable`). The occupant is a
-  Kleene code, a term of another type than ⊥ of the `ZPSemilattice`. That this fixed point is a Lawvere
-  instance is cited (Yanofsky 2003, Theorem 5; Bauer 2017, Theorem 5.2 and Corollary 5.3), not checked in
-  Lean; the case of computable `eval`-respecting maps is checked in Lean (`hasWitnessRel_evalClass` with `fixedPoint_of_witnessRel`).
+  Kleene code, a term of another type than ⊥ of the `ZPSemilattice`. That Rogers' general form, over
+  every computable self-map on codes, is a Lawvere instance is cited (Yanofsky 2003, Theorem 5; Bauer
+  2017, Theorem 5.2 and Corollary 5.3), not checked in Lean; the narrower case of computable
+  `eval`-respecting maps is checked in Lean (`hasWitnessRel_evalClass` with `fixedPoint_of_witnessRel`).
 
 ## Honest status — the fence
 

@@ -22,9 +22,9 @@ a top element with nothing above it owes no next step. It's hit its boundary.
 ---
 
 ## Formal Overview (AI-assisted)
-`Phase` (`ZeroParadox/Multihomed/Boundary.lean`) is equivalent to `WithBot Ordinal` and to
-`WithTop Ordinal`; both agree with `phaseRel` on the ascent, neither is `phaseRel`, in each `↑ε₀` is
-the least landing above the least element (§ I, § IV); `phaseUpAndOver` is on the first (§ III).
+`Phase` is equivalent to `WithBot Ordinal` and to `WithTop Ordinal`; both agree with `phaseRel` on
+the ascent, in each `↑ε₀` is the least landing above the least element (§ I, § IV); `phaseUpAndOver`
+is on the first (§ III); § VI reads both as views of die motions.
 -/
 
 namespace ZeroParadox
@@ -383,6 +383,146 @@ example : (∀ x : WithBot Ordinal, IsBot (⟨x, Set.self_mem_Ici⟩ : Set.Ici x
 example : (∀ a : ℝ, ¬ (⊥ : WithBot ℝ) ⋖ a) ∧ IsEmpty (UpAndOver (WithBot ℝ)) :=
   ⟨fun a h => not_isMin a (WithBot.bot_covBy_coe.1 h), UpAndOver.isEmpty_of_denselyOrdered⟩
 
+/-! ### § VI. The two placements as views of die motions (`ZeroParadox/Die.lean` § XIV) -/
+
+/-- `Statement:` the floor-below view on `Phase`: `x ≤ y` iff `phaseEquivWithBot x ≤ phaseEquivWithBot y`. -/
+abbrev phaseViewBelow : LE Phase := ⟨fun a b => phaseEquivWithBot a ≤ phaseEquivWithBot b⟩
+
+/-- `Statement:` the floor-above view on `Phase`: `x ≤ y` iff `phaseEquivWithTop x ≤ phaseEquivWithTop y`. -/
+abbrev phaseViewAbove : LE Phase := ⟨fun a b => phaseEquivWithTop a ≤ phaseEquivWithTop b⟩
+
+/-- `Statement:` the two views agree on every pair `up a`, `up b`; the floor is least in the first and
+    greatest in the second; no `up o` is below the floor in the first or above it in the second. -/
+theorem phase_views_shape :
+    (∀ a b : Ordinal, phaseViewBelow.le (Phase.up a) (Phase.up b) ↔
+      phaseViewAbove.le (Phase.up a) (Phase.up b)) ∧
+    (∀ x, phaseViewBelow.le Phase.floor x ∧ phaseViewAbove.le x Phase.floor) ∧
+    (∀ o : Ordinal, ¬ phaseViewBelow.le (Phase.up o) Phase.floor ∧
+      ¬ phaseViewAbove.le Phase.floor (Phase.up o)) :=
+  ⟨fun _ _ => WithBot.coe_le_coe.trans WithTop.coe_le_coe.symm,
+    fun x => ⟨phase_floor_isBot (phaseEquivWithBot x),
+      phaseEquivWithTop_floor_covers_nothing.1 (phaseEquivWithTop x)⟩,
+    fun o => ⟨WithBot.not_coe_le_bot o, WithTop.not_top_le_coe o⟩⟩
+
+/-- `Statement:` the floor-above view is not the floor-below view reversed: `x ≤ y` above iff
+    `y ≤ x` below fails, at `up 0`, `up 1`. -/
+theorem phase_views_not_dual : ¬ ∀ x y : Phase, phaseViewAbove.le x y ↔ phaseViewBelow.le y x :=
+  fun h => by
+    have := (h (Phase.up 0) (Phase.up 1)).1
+      (show ((0 : Ordinal) : WithTop Ordinal) ≤ ((1 : Ordinal) : WithTop Ordinal) from
+        WithTop.coe_le_coe.2 zero_le_one)
+    exact (not_le.2 (zero_lt_one : (0 : Ordinal) < 1)) (WithBot.coe_le_coe.1
+      (show ((1 : Ordinal) : WithBot Ordinal) ≤ ((0 : Ordinal) : WithBot Ordinal) from this))
+
+/-- `Statement:` `floor ↦ floor`, `up o ↦ up (nfp (ω^·) o)`. -/
+noncomputable def phaseClosure : Phase → Phase
+  | Phase.floor => Phase.floor
+  | Phase.up o => Phase.up (Ordinal.nfp (fun a => Ordinal.omega0 ^ a) o)
+
+/-- `Statement:` `phaseClosure` is idempotent. -/
+theorem phaseClosure_idem (x : Phase) : phaseClosure (phaseClosure x) = phaseClosure x := by
+  cases x with
+  | floor => rfl
+  | up o =>
+    show Phase.up _ = Phase.up _
+    congr 1
+    exact Ordinal.nfp_eq_self (Ordinal.nfp_fp (Ordinal.isNormal_opow Ordinal.one_lt_omega0) o)
+
+/-- `Statement:` UP `phaseClosure`, OVER `phaseRel`. -/
+noncomputable def phaseRelMotion : Motion Phase := Motion.ofTotal phaseClosure phaseClosure_idem phaseRel
+
+/-- `Statement:` UP `phaseClosure`, OVER the covers of `WithBot Ordinal`. -/
+noncomputable def phaseBelowCoverMotion : Motion Phase :=
+  Motion.ofTotal phaseClosure phaseClosure_idem (fun a b => phaseEquivWithBot a ⋖ phaseEquivWithBot b)
+
+/-- `Statement:` UP `phaseClosure`, OVER the covers of `WithTop Ordinal`. -/
+noncomputable def phaseAboveCoverMotion : Motion Phase :=
+  Motion.ofTotal phaseClosure phaseClosure_idem (fun a b => phaseEquivWithTop a ⋖ phaseEquivWithTop b)
+
+/-- `Statement:` OVER of `phaseBelowCoverMotion` raises under the floor-below view and lowers under
+    that view reversed; under the floor-above view it neither raises nor lowers; no step enters the
+    floor. -/
+theorem phase_cover_three_views :
+    @Motion.StepRaises Phase phaseBelowCoverMotion phaseViewBelow ∧
+    @Motion.StepLowers Phase phaseBelowCoverMotion ⟨fun a b => phaseViewBelow.le b a⟩ ∧
+    (¬ @Motion.StepRaises Phase phaseBelowCoverMotion phaseViewAbove ∧
+      ¬ @Motion.StepLowers Phase phaseBelowCoverMotion phaseViewAbove) ∧
+    (∀ a, ¬ phaseBelowCoverMotion.step a Phase.floor) := by
+  have hr : @Motion.StepRaises Phase phaseBelowCoverMotion phaseViewBelow := fun x y h => h.le
+  refine ⟨hr, (Motion.stepRaises_iff_of_dual _ phaseViewBelow (fun _ _ => Iff.rfl) _).1 hr,
+    ⟨?_, ?_⟩, fun a h => ?_⟩
+  · intro h
+    exact WithTop.not_top_le_coe (0 : Ordinal) (h Phase.floor snap phase_floor_covBy_snap)
+  · intro h
+    have hc : phaseBelowCoverMotion.step (Phase.up 0) (Phase.up (Order.succ 0)) :=
+      WithBot.coe_covBy_coe.2 (Order.covBy_succ (0 : Ordinal))
+    exact absurd (h _ _ hc) (fun e => not_le.2 (Order.lt_succ (0 : Ordinal)) (WithTop.coe_le_coe.1
+      (show ((Order.succ 0 : Ordinal) : WithTop Ordinal) ≤ ((0 : Ordinal) : WithTop Ordinal) from e)))
+  · exact (phase_floor_isBot.isMin).not_lt h.lt
+
+/-- `Statement:` under the floor-below view, if OVER of a motion on `Phase` raises, every step into
+    the floor starts at the floor. -/
+theorem phase_trap_route (N : Motion Phase) (h : @Motion.StepRaises Phase N phaseViewBelow)
+    (a : Phase) (hs : N.step a Phase.floor) : a = Phase.floor :=
+  phaseEquivWithBot.injective (le_antisymm (h a _ hs) (phase_floor_isBot _))
+
+/-- `Statement:` `phaseRelMotion`, `phaseBelowCoverMotion` and `phaseAboveCoverMotion` have the same
+    UP and the floor is a landing of each; at the floor OVER steps to itself only, steps elsewhere,
+    and has no step, respectively; OVER of `phaseRelMotion` raises under both views. -/
+theorem three_overs_one_up :
+    phaseRelMotion.up = phaseBelowCoverMotion.up ∧
+    phaseBelowCoverMotion.up = phaseAboveCoverMotion.up ∧
+    (phaseRelMotion.IsLanding Phase.floor ∧ phaseBelowCoverMotion.IsLanding Phase.floor ∧
+      phaseAboveCoverMotion.IsLanding Phase.floor) ∧
+    phaseRelMotion.SelfOnlyAt Phase.floor ∧ phaseBelowCoverMotion.LeavesAt Phase.floor ∧
+    phaseAboveCoverMotion.NoStepAt Phase.floor ∧
+    (@Motion.StepRaises Phase phaseRelMotion phaseViewBelow ∧
+      @Motion.StepRaises Phase phaseRelMotion phaseViewAbove) := by
+  refine ⟨rfl, rfl, ⟨Part.mem_some_iff.2 rfl, Part.mem_some_iff.2 rfl, Part.mem_some_iff.2 rfl⟩,
+    ⟨trivial, fun b hb => ?_⟩, ⟨snap, phase_floor_covBy_snap, fun e => Phase.noConfusion e⟩,
+    fun b h => lt_irrefl _ (h.lt.trans_le (phaseEquivWithTop_floor_covers_nothing.1 _)), ?_, ?_⟩
+  · cases b with
+    | floor => rfl
+    | up o => exact (hb : False).elim
+  · intro x y h
+    show phaseEquivWithBot x ≤ phaseEquivWithBot y
+    cases x <;> cases y
+    · exact le_rfl
+    · exact (h : False).elim
+    · exact (h : False).elim
+    · exact ((phaseRel_up_iff_withBot _ _).1 h).le
+  · intro x y h
+    show phaseEquivWithTop x ≤ phaseEquivWithTop y
+    cases x <;> cases y
+    · exact le_rfl
+    · exact (h : False).elim
+    · exact (h : False).elim
+    · exact ((phaseRel_up_iff_withTop _ _).1 h).le
+
+/-- `Statement:` OVER of `phaseBelowCoverMotion` and OVER of `phaseAboveCoverMotion` differ. -/
+theorem cover_overs_differ : phaseBelowCoverMotion.step ≠ phaseAboveCoverMotion.step := fun e => by
+  have h : phaseBelowCoverMotion.step Phase.floor snap := phase_floor_covBy_snap
+  rw [e] at h
+  exact lt_irrefl _ (h.lt.trans_le (phaseEquivWithTop_floor_covers_nothing.1 _))
+
+/-- `Statement:` the floor-below view is in the `PoleEnds` cell `(true, false)` and the floor-above
+    view in the cell `(true, true)`, with the snap `up 0` least and the floor greatest. -/
+theorem poleEnds_phase :
+    @PoleEnds Phase phaseViewBelow true false ∧ @PoleEnds Phase phaseViewAbove true true := by
+  refine ⟨⟨⟨fun _ => rfl, fun _ => ⟨Phase.floor, fun y => phase_floor_isBot (phaseEquivWithBot y)⟩⟩,
+      ⟨fun ⟨x, h⟩ => ?_, fun h => ?_⟩⟩,
+    ⟨⟨fun _ => rfl, fun _ => ⟨snap, fun y =>
+        phaseTop_epsilon0_isLeast_landing_above_snap.1 (phaseEquivWithTop y)⟩⟩,
+     ⟨fun _ => rfl, fun _ => ⟨Phase.floor, fun y =>
+        phaseEquivWithTop_floor_covers_nothing.1 (phaseEquivWithTop y)⟩⟩⟩⟩
+  · cases x with
+    | floor => exact absurd (h (Phase.up 0)) (WithBot.not_coe_le_bot 0)
+    | up o =>
+      exact absurd (h (Phase.up (Order.succ o)))
+        (fun e => not_le.2 (Order.lt_succ o) (WithBot.coe_le_coe.1
+          (show ((Order.succ o : Ordinal) : WithBot Ordinal) ≤ (o : WithBot Ordinal) from e)))
+  · exact absurd h Bool.false_ne_true
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -418,5 +558,19 @@ open ZeroParadox
 #print axioms phase_epsilon0_isLeast_landing_above_floor
 #print axioms phaseUp_zero_eq_one
 #print axioms phase_floor_snap_epsilon0_ne
+#print axioms phaseViewBelow
+#print axioms phaseViewAbove
+#print axioms phase_views_shape
+#print axioms phase_views_not_dual
+#print axioms phaseClosure
+#print axioms phaseClosure_idem
+#print axioms phaseRelMotion
+#print axioms phaseBelowCoverMotion
+#print axioms phaseAboveCoverMotion
+#print axioms phase_cover_three_views
+#print axioms phase_trap_route
+#print axioms three_overs_one_up
+#print axioms cover_overs_differ
+#print axioms poleEnds_phase
 
 end PurityCheck
