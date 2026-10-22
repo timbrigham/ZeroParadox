@@ -20,17 +20,17 @@ and the **sublocales** (the systems they generate) form a `Coframe`: the *lattic
 `ZeroParadox/Category/DieNucleus.lean` § IV); the ceiling, ⊤ of `WithTop Ordinal`, unlocks the lattice. Reading it as
 the infinite pole is a placement Reading (`ZeroParadox/Multihomed/BoundaryOrder.lean` § I): the pole chart's coincidence
 witness `infinitude_forces_infinite_complexity` (`ZeroParadox/BottomCannotBe.lean` § INVERSION) takes an `InfinitudeFloor`
-carrier, and none on `WithTop Ordinal` was located as of 2026-10-22 (three regexes over `ZeroParadox/**/*.lean`).
-Its ROLE is a theorem: ⊤ of `WithTop Ordinal` covers nothing (`phaseEquivWithTop_floor_covers_nothing`, BoundaryOrder
-§ I); that it is the floor-above chart's floor is that chart's definition. Its NOVELTY, a NEXT bottom, is the framework's
-commitment, not a theorem (`ZeroParadox/Order/SnapCannotBe.lean` § IV): `phaseFloorToTop`, defined as
+carrier, and every infinite carrier admits one (`infinitudeFloor_nonempty_iff_infinite`), so the class cannot single out
+⊤ of `WithTop Ordinal`. The placement is a theorem: `phaseEquivWithTop` sends `Phase.floor` to the greatest element
+(the `IsTop` half of `phaseEquivWithTop_floor_covers_nothing`, BoundaryOrder § I). Its NOVELTY, a NEXT bottom, is
+the framework's commitment, not a theorem (`ZeroParadox/Order/SnapCannotBe.lean` § IV): `phaseFloorToTop`, defined as
 `phaseEquivWithBot.symm.trans phaseEquivWithTop`, re-places one `Phase.floor`, sending ⊥ of `WithBot Ordinal` to ⊤ of
 `WithTop Ordinal` (`phaseFloorToTop_apply.1`); in the 2-adic realization the arc reapproaches the same 0 (`snap_arc_z2_loop`).
 
 **Honest scope.** The frame structure of `WithTop Ordinal` is Mathlib's, and that the nuclei on a frame form a frame
-is locale theory (Escardó, "Joins in the frame of nuclei", Applied Categorical Structures 11 (2003), p. 1); §§ I–II
-only *instantiate* them. § IV lifts the specific snap: `snapNucleusTop` reuses the ordinal snap-closure through
-`WithTop.map`, and `snapSublocale = snapNucleusTop.toSublocale` is the snap-generated system as a named point in it.
+is locale theory (Escardó, "Joins in the frame of nuclei", Applied Categorical Structures 11 (2003), § 1 of the author's
+preprint); §§ I–II only *instantiate* them. § IV lifts the specific snap: `snapNucleusTop` reuses the ordinal snap-closure
+through `WithTop.map`, and `snapSublocale = snapNucleusTop.toSublocale` is the snap-generated system as a named point in it.
 
 ## Engineer's Take
 
@@ -85,9 +85,15 @@ noncomputable example : Nucleus Ordinal := snapNucleus
 
 /-- `Statement:` two nuclei on `Ordinal` have no common upper bound in the pointwise order: `snapNucleus`
     (closed points the `x` with `ω ^ x = x`, `snapNucleus_isClosed_iff` in
-    `ZeroParadox/Ordinal/SnapSuccession.lean`) and the nucleus sending `x` to the least successor ordinal
-    `≥ x` (closed points the successors). A nucleus `m` above both fixes `m 0`, so both fix it, and no
-    successor `succ b` has `ω ^ succ b = succ b`. -/
+    `ZeroParadox/Ordinal/SnapSuccession.lean`) and the nucleus `k` fixing each successor ordinal and
+    sending any other `x` to `succ x`, so that every value of `k` is a successor. A nucleus `m` above
+    both fixes `m 0`, so both fix it (a larger nucleus has fewer fixed points:
+    `Motion.isLanding_ofNucleus_anti` with `Motion.isLanding_ofNucleus_iff`,
+    `ZeroParadox/Category/DieNucleus.lean`, on a meet-semilattice; Mathlib's `Nucleus.range_subset_range`
+    assumes a frame); so `m 0` is a successor `succ b`, and no `succ b` has `ω ^ succ b = succ b`.
+    `Reading:` adjacent prior art, for closure operations on a poset rather than nuclei: Elliott,
+    arXiv:1101.2462 (2011), § 4, p. 12 (`⋆₁ ≤ ⋆₂` iff the fixed set of `⋆₁` contains that of `⋆₂`), and
+    Lemma 4.2, p. 13 (on a bounded complete poset, joins of BOUNDED families of closure operations). -/
 example : ∃ j k : Nucleus Ordinal, ∀ m : Nucleus Ordinal, ¬ (j ≤ m ∧ k ≤ m) := by
   classical
   let kf : Ordinal → Ordinal := fun x => if ∃ b, succ b = x then x else succ x

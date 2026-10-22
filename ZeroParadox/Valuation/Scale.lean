@@ -274,8 +274,9 @@ theorem z2_two_views :
 
 /-- Statement: ℤ_[2] DOES admit a `ValuationStructure`, once a semilattice is supplied; the join here
     is `max` in the order by descending `q2Val`, ties broken by `WellOrderingRel`, with ℤ_[2]'s 0 as
-    `bot`, and under it `q2Val (join x y) ≤ min (q2Val x) (q2Val y)` for all `x y`. The join is free — the four axioms mention only `bot` and never the join — so any associative,
-    commutative, idempotent operation with 0 as its identity serves. ⚠ It adds NO new axiom:
+    `bot`, and under it `q2Val (join x y) ≤ min (q2Val x) (q2Val y)` for all `x y`. The join is
+    free: the four axioms mention only `bot` and never the join, so every `ZPSemilattice ℤ_[2]` with
+    0 as `bot` carries a `ValuationStructure` (the `example` after this one). ⚠ It adds NO new axiom:
     `q2Val_unique` and `q2Val_scale` above already carry `Classical.choice`. ⚠⚠ **The CARRIER is
     the source, it subsumes every other, and it CLOSES the question.** `ZPSemilattice ℤ_[2]` is
     choice-tainted AS A TYPE. `#print axioms` walks a declaration's TYPE as well as its term, so
@@ -292,9 +293,9 @@ theorem z2_two_views :
     `ZeroParadox/Valuation/PricedPadicInterface.lean` § I (`enat_add_choice`). The CARRIER half is
     not pin-relative in the same way — it follows from the printer walking the TYPE, so it holds of any statement mentioning
     `ℤ_[2]` for as long as `PadicInt` is built with choice. ⚠ The two counterfactual PAIRS below emit exactly that — carrier,
-    then numeral. ⚠ The UNIVERSALS here (any lawful join serves; ruled out for every spelling)
-    are not emitted and cannot be — a footprint list settles instances, never universals. The
-    printer's own type-walk IS emitted, by `_trivialAboutZ2` / `_trivialAboutNat` below. -/
+    then numeral. ⚠ The footprint UNIVERSAL here (ruled out for every spelling) is not emitted and
+    cannot be — a footprint list settles instances, never universals. The printer's own type-walk
+    IS emitted, by `_trivialAboutZ2` / `_trivialAboutNat` below. -/
 example : ∃ h : ZPSemilattice ℤ_[2], @ZPSemilattice.bot _ h = 0 ∧
     ∃ v : @ValuationStructure ℤ_[2] h, v.val = q2Val ∧ v.scale = (2 * ·) ∧
       ∀ x y : ℤ_[2], q2Val (h.join x y) ≤ min (q2Val x) (q2Val y) := by
@@ -322,6 +323,14 @@ example : ∃ h : ZPSemilattice ℤ_[2], @ZPSemilattice.bot _ h = 0 ∧
     q2Val_unique q2Val_scale, rfl, rfl, fun x y => ?_⟩
   exact le_min (hval x _ ((hR _ _).1 ((hLO _ _).1 (@le_max_left ℤ_[2] LO x y))))
     (hval y _ ((hR _ _).1 ((hLO _ _).1 (@le_max_right ℤ_[2] LO x y))))
+
+-- Statement: every `ZPSemilattice ℤ_[2]` whose `bot` is ℤ_[2]'s 0 carries a `ValuationStructure`
+-- (scale `×2`, val `q2Val`), whatever its join.
+example (h : ZPSemilattice ℤ_[2]) (hb : @ZPSemilattice.bot _ h = 0) :
+    Nonempty (@ValuationStructure ℤ_[2] h) :=
+  ⟨@ValuationStructure.mk ℤ_[2] h (fun x => 2 * x) q2Val (by rw [hb]; exact q2Scale_bot)
+    (by rw [hb]; exact q2Val_bot) (fun x hx => hb ▸ q2Val_unique x hx)
+    (fun x hx => q2Val_scale x (hb ▸ hx))⟩
 
 end PadicParallel
 
