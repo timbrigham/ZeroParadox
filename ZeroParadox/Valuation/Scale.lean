@@ -272,12 +272,9 @@ theorem z2_two_views :
     rw [mul_one, norm_one] at h'
     linarith
 
--- `linter.flexible` fires on the `simp_all`s in the proof below: a STYLE lint about a tactic
--- that modifies the goal, not a soundness warning. Suppressed rather than replaced, because the
--- replacement is a hand-written simp set and a guessed lemma list is how this proof broke once.
-set_option linter.flexible false in
-/-- Statement: ℤ_[2] DOES admit a `ValuationStructure`, once a semilattice is supplied. The join
-    is free — the four axioms mention only `bot` and never the join — so any associative,
+/-- Statement: ℤ_[2] DOES admit a `ValuationStructure`, once a semilattice is supplied; the join here
+    is `max` in the order by descending `q2Val`, ties broken by `WellOrderingRel`, with ℤ_[2]'s 0 as
+    `bot`, and under it `q2Val (join x y) ≤ min (q2Val x) (q2Val y)` for all `x y`. The join is free — the four axioms mention only `bot` and never the join — so any associative,
     commutative, idempotent operation with 0 as its identity serves. ⚠ It adds NO new axiom:
     `q2Val_unique` and `q2Val_scale` above already carry `Classical.choice`. ⚠⚠ **The CARRIER is
     the source, it subsumes every other, and it CLOSES the question.** `ZPSemilattice ℤ_[2]` is
@@ -287,9 +284,8 @@ set_option linter.flexible false in
     spelling of the join ON THIS TYPE, under the `#print axioms` metric; whether a constructively
     re-founded 2-adic type would change the question is separate and not addressed. ⚠ `ZPSemilattice`
     itself is clean — it is this carrier, not that class. `PadicInt` is the evidence and
-    `q2Scale_bot` is the consequence — a theorem with no ℕ∞ and no equality test
-    in it, tainted anyway. ⚠ The class's own
-    numeral is a SEPARATE cost, and an ACCIDENTAL one in the sense
+    `q2Scale_bot` is the consequence — a theorem with no ℕ∞ and no equality test in it, tainted
+    anyway. ⚠ The class's own numeral is a SEPARATE cost, and an ACCIDENTAL one in the sense
     `ZeroParadox/Category/ChoiceCannotBe.lean` defines and sources: respelling the successor as a
     cast from ℕ clears the class outright. ⚠ The numeral half is pin-relative; its routes, its
     dated measurements and the Brasca–Clemente prior art are in
@@ -299,32 +295,33 @@ set_option linter.flexible false in
     then numeral. ⚠ The UNIVERSALS here (any lawful join serves; ruled out for every spelling)
     are not emitted and cannot be — a footprint list settles instances, never universals. The
     printer's own type-walk IS emitted, by `_trivialAboutZ2` / `_trivialAboutNat` below. -/
-example : ∃ h : ZPSemilattice ℤ_[2], Nonempty (@ValuationStructure ℤ_[2] h) := by
-  classical
+example : ∃ h : ZPSemilattice ℤ_[2], @ZPSemilattice.bot _ h = 0 ∧
+    ∃ v : @ValuationStructure ℤ_[2] h, v.val = q2Val ∧ v.scale = (2 * ·) ∧
+      ∀ x y : ℤ_[2], q2Val (h.join x y) ≤ min (q2Val x) (q2Val y) := by
   letI : LinearOrder ℤ_[2] := IsWellOrder.linearOrder (WellOrderingRel (α := ℤ_[2]))
-  letI SL : ZPSemilattice ℤ_[2] :=
-    { join := fun x y => if x = 0 then y else if y = 0 then x else max x y
-      bot := 0
-      join_assoc := by
-        intro x y z
-        by_cases hx : x = 0 <;> by_cases hy : y = 0 <;> by_cases hz : z = 0 <;> simp_all
-        have hxy : max x y ≠ 0 := by rcases max_choice x y with h | h <;> simp_all
-        have hyz : max y z ≠ 0 := by rcases max_choice y z with h | h <;> simp_all
-        simp [hxy, hyz, max_assoc]
-      join_comm := by
-        intro x y
-        by_cases hx : x = 0 <;> by_cases hy : y = 0 <;> simp_all [max_comm]
-      join_idem := by
-        intro x
-        by_cases hx : x = 0 <;> simp_all
-      bot_join := by intro x; simp }
-  have hbot : (ZPSemilattice.bot : ℤ_[2]) = 0 := rfl
-  exact ⟨SL, ⟨{ scale := (2 * ·)
-              , val := q2Val
-              , scale_bot := by rw [hbot]; exact q2Scale_bot
-              , val_bot := by rw [hbot]; exact q2Val_bot
-              , val_unique := by intro x hx; rw [hbot]; exact q2Val_unique x hx
-              , val_scale := by intro x hx; rw [hbot] at hx; exact q2Val_scale x hx }⟩⟩
+  let f : ℤ_[2] → Lex (ℕ∞ᵒᵈ × ℤ_[2]) := fun x => toLex (OrderDual.toDual (q2Val x), x)
+  have hval : ∀ x y : ℤ_[2], f x ≤ f y → q2Val y ≤ q2Val x := fun x y h => by
+    rcases Prod.Lex.toLex_le_toLex.mp h with h1 | ⟨h1, _⟩
+    · exact (OrderDual.toDual_lt_toDual.mp h1).le
+    · exact (OrderDual.toDual_inj.mp h1).symm.le
+  have hbot : ∀ x : ℤ_[2], f 0 ≤ f x := fun x => by
+    by_cases hx : x = 0
+    · subst hx; exact le_rfl
+    · refine Prod.Lex.toLex_le_toLex.mpr (Or.inl (OrderDual.toDual_lt_toDual.mpr ?_))
+      rw [q2Val_bot]; exact lt_top_iff_ne_top.mpr (fun h => hx (q2Val_unique x h))
+  obtain ⟨R, hR⟩ : ∃ R : ℤ_[2] → ℤ_[2] → Prop, ∀ x y, R x y ↔ f x ≤ f y := ⟨_, fun _ _ => Iff.rfl⟩
+  obtain ⟨LO, hLO⟩ : ∃ LO : LinearOrder ℤ_[2], ∀ x y, LO.le x y ↔ R x y := by
+    refine ⟨LinearOrder.lift' f
+      (fun x y h => by simpa [f] using congrArg (fun p => (ofLex p).2) h), fun x y => ?_⟩
+    exact (hR x y).symm
+  let SL : ZPSemilattice ℤ_[2] :=
+    { join := @max ℤ_[2] LO.toMax, bot := 0, join_assoc := @max_assoc ℤ_[2] LO
+      join_comm := @max_comm ℤ_[2] LO, join_idem := @max_self ℤ_[2] LO
+      bot_join := fun x => @max_eq_right ℤ_[2] LO _ _ ((hLO 0 x).2 ((hR 0 x).2 (hbot x))) }
+  refine ⟨SL, rfl, @ValuationStructure.mk ℤ_[2] SL (fun x => 2 * x) q2Val q2Scale_bot q2Val_bot
+    q2Val_unique q2Val_scale, rfl, rfl, fun x y => ?_⟩
+  exact le_min (hval x _ ((hR _ _).1 ((hLO _ _).1 (@le_max_left ℤ_[2] LO x y))))
+    (hval y _ ((hR _ _).1 ((hLO _ _).1 (@le_max_right ℤ_[2] LO x y))))
 
 end PadicParallel
 
