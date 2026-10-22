@@ -45,8 +45,9 @@ universe u
 /-- `Statement:` a partial self-map `up` whose every value is a fixed point of `up`, and a
     relation `step`. `Reading:` UP is `up`, OVER is `step`; a landing is a fixed point of `up`. UP
     is an idempotent of the monoid of partial endofunctions (Cockett and Hofstra, APAL 156 (2008),
-    p. 187, Example (iii)), inside Par; it need not be a restriction idempotent, which in Par are
-    the partial identities (p. 186): the identity UP is one, the `Bool` control below is not. -/
+    p. 187, Example (iii)), inside Par; it need not be a restriction idempotent (`f = f̄`, Cockett
+    and Lack, TCS 270 (2002), p. 227), which in Par are the partial identities (Cockett and
+    Hofstra, p. 186): the identity UP is one, the `Bool` control below is not. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: pairs an idempotent partial map (Mathlib `PFun`) with a
 -- step relation; Mathlib has each part, not the pair.
 structure Motion (α : Type u) where
@@ -482,7 +483,7 @@ theorem selectedTotal_of_option (f : α → Option α) (h : ∀ a b, M.step a b 
 
 variable (M)
 
-/-- `Statement:` no step leaves `y`. -/
+/-- `Statement:` no step leaves `y`. `Reading:` a normal form (irreducible) in the abstract-reduction-system reading (Waldmann, Automated Reasoning lecture notes (2011), p. 2, citing Baader–Nipkow ch. 2). -/
 def NoStepAt (y : α) : Prop := ∀ b, ¬ M.step y b
 
 /-- `Statement:` `y` steps to itself and to nothing else. -/
@@ -1320,8 +1321,8 @@ variable (M) in
     point that arrives at `y`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `Relation.ReflTransGen` and
 -- `StateTransition.Reaches` state that SOME path reaches `y`; this implies that every run passes
--- through `y` (`exists_run_eq_of_arrives`), and the converse holds classically given a step at every
--- point other than `y` (`arrives_of_forall_run`). Mathlib's `Acc` of the step with `y` removed as a
+-- through `y` (`exists_run_eq_of_arrives`), and the converse holds classically given `[DecidableEq α]`
+-- and a step at every point other than `y` (`arrives_of_forall_run`). Mathlib's `Acc` of the step with `y` removed as a
 -- source is the nearest form (`acc_of_arrives`, `arrives_of_acc`); the dated search is in
 -- `LEAN_CUSTOM_REGISTRY.md`.
 inductive Arrives (y : α) : α → Prop
