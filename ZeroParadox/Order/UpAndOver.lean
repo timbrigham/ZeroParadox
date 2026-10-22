@@ -34,7 +34,9 @@ universe u
 
 /-- `Statement:` a closure operator `up` on a partial order with a closed point `y` and a cover `b`
     of `y` that `up` moves, and a cover in the carrier order at every non-maximal closed point.
-    Its die motion climbs and does not loop (`UpAndOver.toMotion_climb`, `UpAndOver.toMotion_not_loop`).
+    `UpAndOver.toMotion`, OVER every cover of the carrier (one chosen wiring), climbs and does not loop
+    (`UpAndOver.toMotion_climb`, `UpAndOver.toMotion_not_loop`); with the always-true OVER, § III's
+    `Fin 3` closure loops (the `CONTROL` in § VI).
     `Reading:` UP is `up`; OVER is the step from a landing to a cover of it; `corner` is a place
     where OVER then UP moves. This presents the climbing kind of the up-and-over shape; the loop kind
     is `Motion.Loop` (`ZeroParadox/Die.lean`). -/
@@ -746,6 +748,12 @@ theorem toMotion_not_loop : ¬ U.toMotion.Loop :=
 /-- `Statement:` a motion that loops is the die motion of no `UpAndOver`; one way. -/
 theorem toMotion_ne_of_loop {M : Motion α} (h : M.Loop) : U.toMotion ≠ M :=
   fun e => U.toMotion_not_loop (e ▸ h)
+
+-- Statement: CONTROL: climbing is the wiring's, not the closure's: § III's `Fin 3` closure (`1 ↦ 2`)
+-- with the always-true relation as OVER loops at the landing `2` (step to `1`, UP back to `2`).
+example : (Motion.ofTotal (fun x : Fin 3 => if x = 1 then 2 else x) (by decide)
+    (fun _ _ => True)).Loop :=
+  ⟨2, 1, Part.mem_some_iff.2 (by decide), trivial, by decide, Part.mem_some_iff.2 (by decide)⟩
 
 end UpAndOver
 
