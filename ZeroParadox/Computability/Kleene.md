@@ -203,10 +203,14 @@ by `#print axioms` in a scratch file importing this one.
   from its `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, which measures the
   triple (as does `ofNatCode`, above). `Primcodable.ofDenumerable` itself measures
   `[propext, Quot.sound]`. `Partrec₂` is stated through `Primcodable.prod`, which measures the
-  triple (above), so a statement in the `Partrec₂` form carries choice whatever else it says. Measured
+  triple (above), and the constant `Partrec₂` itself measures the triple (`#print axioms Partrec₂` in
+  the `PurityCheck` section of `ZeroParadox/Computability/KleeneChoiceFree.lean`). Measured
   with no `Code` in it: a statement whose only content is a `Partrec₂` hypothesis at
-  `ℕ → ℕ →. ℕ` carries the triple, and the same with a unary `Partrec` hypothesis does not
-  (`stmtPartrec₂Hyp`, `stmtPartrecHyp`, § V of `ZeroParadox/Computability/KleeneChoiceFree.lean`).
+  `ℕ → ℕ →. ℕ` carries the triple, and the same with a unary `Partrec` hypothesis at `ℕ →. ℕ` does not;
+  a unary `Partrec` hypothesis at the pair carrier `ℕ × ℕ →. ℕ` carries the triple, so the choice
+  enters with the pair instance (`Primcodable.prod`, `Encodable.Prod.encodable`), not with having two
+  arguments (`stmtPartrec₂Hyp`, `stmtPartrecHyp`, `stmtPartrecProdHyp`, § V of
+  `ZeroParadox/Computability/KleeneChoiceFree.lean`).
   Not located in the Mathlib pin as of 2026-10-04 by these measurements: a universal code whose
   correctness is proved without `eval_part`; it was not attempted here. Every proof of the
   statement as written carries choice; whether the restated
@@ -216,7 +220,9 @@ by `#print axioms` in a scratch file importing this one.
   `ZeroParadox/Computability/KleeneChoiceFree.lean` (footprints in its `PurityCheck` section). The
   construction is Kleene's own and constructive versions are already machine-checked, in Coq and, over
   an axiomatised naming system, in Lean 4 (prior-art pointers at the end of § V of that file); this
-  corpus proves the s-m-n and diagonal steps on Mathlib's `Code` and adds the measurement there. It
+  corpus proves the s-m-n step (`cf_eval_curry`) and the diagonal of Kleene's ψ-form (`cf_eval_diag`)
+  on Mathlib's `Code`, and adds the measurement there; Close's `diag_closure_spec` presupposes a
+  universal code, not built. It
   builds no universal code, so the UNCLASSIFIED status above is unchanged.
 - Open as of 2026-10-22, not measured: `ofNatCode`'s choice was traced above to `Nat.unpair_left_le`,
   `Nat.unpair_right_le` and `Nat.div2_val`, which now have choice-free proofs of the same type in
