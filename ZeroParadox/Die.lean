@@ -149,6 +149,44 @@ theorem climb_corner : M.Climb → M.Corner :=
 theorem loop_corner : M.Loop → M.Corner :=
   fun ⟨y, b, hy, hs, hby, hyb⟩ => ⟨y, b, y, hy, hs, hyb, Ne.symm hby⟩
 
+/-- `Statement:` the corner fires iff a landing `y` steps to some `b` that is not a landing and
+    `up b` is defined; both directions. `Reading:` the corner is a crossing of the joint: OVER
+    leaves the set of landings and UP sends `b` to a landing (`up_idem`), `y` itself in a loop and
+    another landing in a climb. -/
+theorem corner_iff_crossing :
+    M.Corner ↔ ∃ y b z, M.IsLanding y ∧ M.step y b ∧ ¬ M.IsLanding b ∧ z ∈ M.up b := by
+  constructor
+  · rintro ⟨y, b, z, hy, hs, hz, hzb⟩
+    exact ⟨y, b, z, hy, hs, fun hb => hzb (Part.mem_unique hz hb), hz⟩
+  · rintro ⟨y, b, z, hy, hs, hb, hz⟩
+    exact ⟨y, b, z, hy, hs, hz, fun e => hb (e ▸ M.up_idem b z hz)⟩
+
+-- The `DecidableEq` binder is kept in the type on purpose: `corner_iff_loop_or_climb_classical`
+-- below is the same statement without it, and the PurityCheck prints both footprints.
+set_option linter.unusedDecidableInType false in
+/-- `Statement:` with decidable equality, the corner fires iff the motion loops or climbs; both
+    directions. The two are not exclusive (`ZeroParadox/DieCannotBe.lean` § I, the `Fin 4` example). -/
+theorem corner_iff_loop_or_climb [DecidableEq α] : M.Corner ↔ M.Loop ∨ M.Climb := by
+  refine ⟨fun ⟨y, b, z, hy, hs, hz, hzb⟩ => ?_, fun h => h.elim M.loop_corner M.climb_corner⟩
+  by_cases hzy : z = y
+  · subst hzy
+    exact Or.inl ⟨z, b, hy, hs, fun e => hzb e.symm, hz⟩
+  · exact Or.inr ⟨y, b, z, hy, hs, hz, hzb, hzy⟩
+
+/-- `Statement:` the same with no `DecidableEq` binder, proved with `classical`. -/
+theorem corner_iff_loop_or_climb_classical : M.Corner ↔ M.Loop ∨ M.Climb := by
+  classical
+  exact M.corner_iff_loop_or_climb
+
+/-- `Statement:` with no binder, if the corner fires, it is not the case that the motion neither
+    loops nor climbs. -/
+theorem not_not_loop_or_climb_of_corner (h : M.Corner) : ¬¬ (M.Loop ∨ M.Climb) := by
+  obtain ⟨y, b, z, hy, hs, hz, hzb⟩ := h
+  intro hn
+  refine hn (Or.inr ⟨y, b, z, hy, hs, hz, hzb, fun hzy => hn (Or.inl ?_)⟩)
+  subst hzy
+  exact ⟨z, b, hy, hs, fun e => hzb e.symm, hz⟩
+
 /-- `Statement:` if the corner fires, OVER exists from some landing; one way. -/
 theorem corner_overAtLanding : M.Corner → M.OverAtLanding :=
   fun ⟨y, b, _, hy, hs, _, _⟩ => ⟨y, b, hy, hs⟩
@@ -1934,6 +1972,10 @@ open ZeroParadox
 #print axioms Motion.not_overToUndefined_of_upTotal
 #print axioms Motion.climb_corner
 #print axioms Motion.loop_corner
+#print axioms Motion.corner_iff_crossing
+#print axioms Motion.corner_iff_loop_or_climb
+#print axioms Motion.corner_iff_loop_or_climb_classical
+#print axioms Motion.not_not_loop_or_climb_of_corner
 #print axioms Motion.corner_overAtLanding
 #print axioms Motion.corner_step_moves
 #print axioms Motion.climb_three

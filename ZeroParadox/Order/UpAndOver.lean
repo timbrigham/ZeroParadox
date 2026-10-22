@@ -717,6 +717,36 @@ theorem ordinalViewClosed_strictAnti : StrictAnti ordinalViewClosed.{u} := by
   show Set.Ici _ < Set.Ici _
   exact Set.Ici_ssubset_Ici.2 (ordinalCornerStep_iterate_strictMono hmn)
 
+/-! ### § VI. The shape as a die motion: its corner is a climb, never a loop -/
+
+namespace UpAndOver
+
+variable {α : Type u} [PartialOrder α] (U : UpAndOver α)
+
+/-- `Statement:` the die motion of `U`: UP `U.up`, OVER the covers of `α`. -/
+def toMotion : Motion α :=
+  Motion.ofTotal U.up U.up.idempotent (· ⋖ ·)
+
+/-- `Statement:` in `α`'s order the legs of `U.toMotion` agree: UP and OVER both raise. -/
+theorem toMotion_agree : U.toMotion.Agree :=
+  ⟨fun x _ h => (Part.mem_some_iff.1 h) ▸ U.up.le_closure x, fun _ _ h => h.lt.le⟩
+
+/-- `Statement:` `U.toMotion` climbs, from the landing and cover of `corner`. -/
+theorem toMotion_climb : U.toMotion.Climb := by
+  obtain ⟨y, b, hy, hb, hne⟩ := U.corner
+  exact ⟨y, b, U.up b, Part.mem_some_iff.2 hy.closure_eq.symm, hb, Part.mem_some _, hne,
+    (hb.lt.trans_le (U.up.le_closure b)).ne'⟩
+
+/-- `Statement:` `U.toMotion` does not loop (`Motion.not_loop_of_agree`). -/
+theorem toMotion_not_loop : ¬ U.toMotion.Loop :=
+  Motion.not_loop_of_agree U.toMotion_agree
+
+/-- `Statement:` a motion that loops is the die motion of no `UpAndOver`; one way. -/
+theorem toMotion_ne_of_loop {M : Motion α} (h : M.Loop) : U.toMotion ≠ M :=
+  fun e => U.toMotion_not_loop (e ▸ h)
+
+end UpAndOver
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -724,7 +754,7 @@ end ZeroParadox
 The named declarations of §§ I-II measure `[propext, Quot.sound]`. § IV inherits
 `Classical.choice` from `snapNucleus` and Mathlib's `Ordinal` fixed-point theory, STATEMENT-CARRIED as in
 `ZeroParadox/Ordinal/SnapNucleus.lean` (statement control on each, measured 2026-10-08). § V's
-footprints are printed below. -/
+footprints are printed below; § VI measures `[propext, Quot.sound]`. -/
 
 section PurityCheck
 open ZeroParadox
@@ -769,5 +799,10 @@ open ZeroParadox
 #print axioms ordinalViewInclusion_bot_ne
 #print axioms ordinalViewClosed
 #print axioms ordinalViewClosed_strictAnti
+#print axioms UpAndOver.toMotion
+#print axioms UpAndOver.toMotion_agree
+#print axioms UpAndOver.toMotion_climb
+#print axioms UpAndOver.toMotion_not_loop
+#print axioms UpAndOver.toMotion_ne_of_loop
 
 end PurityCheck
