@@ -102,7 +102,10 @@ example {α : Type} (f : α → α) : IsIdempotentElem (show Function.End α fro
 -- the Maude literature's coherence conditions bear "some similarity" while playing "a different role"
 -- (p. 26). Neither is imposed here. No counterpart of the switches was located in these two sources
 -- as of 2026-10-18 (UP is total in both; their text, searched for "partial", "loop" and "cycle", has
--- no hit bearing on a switch); the dated search for the pair is in `LEAN_CUSTOM_REGISTRY.md`.
+-- no hit bearing on a switch); the dated search for the pair is in `LEAN_CUSTOM_REGISTRY.md`. The
+-- loop/climb split as a named pair, searched 2026-10-22 in rewriting, transition-system and
+-- closure-operator vocabulary (theoremsearch, three phrasings): nothing closer than Meseguer and
+-- R. Diaconescu was located.
 -- Reading: the adjoined-points switch is a CHOICE OF CARRIER: `Option σ` adjoins one point and
 -- `Option (Option σ)` two (the `TriStep` example below). `Pointed` and `Bipointed` carry
 -- distinguished points, not adjoined ones, and `Bipointed`'s two may coincide.
@@ -207,17 +210,21 @@ example : ∃ M : ZeroParadox.Motion (Fin 4),
 -- Statement: the corner fires iff a landing steps to a non-landing at which UP is defined
 -- (`corner_iff_crossing`); with decidable equality, iff the motion loops or climbs
 -- (`corner_iff_loop_or_climb`), not exclusively (`Fin 4` above). In a partial order agreeing legs give
--- no loop (`not_loop_of_agree`), and the legs of `UpAndOver.toMotion` agree (`toMotion_agree`), so
--- `UpAndOver` presents the climbing kind only. `phaseBelowCoverMotion` climbs (§ XXIII); the ℕ∞
+-- no loop (`not_loop_of_agree`), and the legs of `UpAndOver.toMotion`, whose OVER is every cover of the
+-- carrier (one chosen wiring, § XIX `cover_overs_differ`), agree (`toMotion_agree`), so that motion climbs
+-- and never loops (`toMotion_climb`, `toMotion_not_loop`). `phaseBelowCoverMotion` climbs (§ XXIII); the ℕ∞
 -- model's join and scale loop, in both wirings below, and in each wiring, in ℕ∞'s own order and in
 -- ZP-A's induced order alike, one leg raises and the other lowers (the `example` after them).
 -- Reading: by the ruling above both kinds are legal up-and-over shapes, and the crossing of the joint
 -- is OVER leaving the set of landings and UP returning to a landing (the `Statement:` above). Tim's
 -- read, 2026-10-22, verbatim: "My gut reaction is that the joint might fill both of those rolls.. you
--- have plenty of cases where we have overlap". In the first ℕ∞ wiring the same joint may also be a
--- switch of order between the legs, UP raising in ZP-A's induced order and OVER raising in ℕ∞'s own
--- (the `example` after the wirings). Not claimed here: that the two roles coincide in general, or that
--- every crossing is a switch of order.
+-- have plenty of cases where we have overlap". Both ℕ∞ wirings also switch order between the legs, with
+-- opposite assignments: in wiring one UP raises in ZP-A's induced order and OVER in ℕ∞'s own, in wiring
+-- two UP raises in ℕ∞'s own and OVER in the induced order (the `example` after the wirings). On ℕ∞ the
+-- switch is forced, since the induced order is ℕ∞'s reversed, and it occurs with no corner (the two
+-- `example`s after that one), so these examples do not show the switch BEING the crossing; that the
+-- joint fills both roles stays Tim's read. Not claimed here: that the two roles coincide in general, or
+-- that every crossing is a switch of order.
 -- Reading: Q1: in the second wiring the loop's landing is the pole, ⊤ of `ℕ∞` (⊥ of the ZP order), which
 -- steps off the landings and is sent back to itself. Q2: run backwards (`reverse`, which keeps UP), a
 -- loop is a point `b ≠ y` from which OVER and UP both reach the landing `y`, and a climb one from which
@@ -250,8 +257,9 @@ example (c : ℕ∞) (hc : c ≠ ⊤) :
     by_cases hyt : y = ⊤
     · exact hzy ((top_le_iff.1 (hyt ▸ hy')).trans hyt.symm)
     · exact hzy (le_antisymm ((ENat.lt_add_one_iff hyt).1 (lt_of_le_of_ne hle hzb)) hy')
--- Statement: LOOP, wiring two: UP constant ⊤ of `ℕ∞` (the scale closure, `natInf_scale_unique_fp`), OVER
--- the join step `a → join a z`; the motion loops at ⊤ of `ℕ∞` and does not climb.
+-- Statement: LOOP, wiring two: UP the constant map to ⊤ of `ℕ∞` (the scale's unique fixed point,
+-- `natInf_scale_unique_fp`), OVER the join step `a → join a z`; the motion loops at ⊤ of `ℕ∞` and does
+-- not climb.
 example :
     let M := ZeroParadox.Motion.ofTotal (fun _ : ℕ∞ => (⊤ : ℕ∞)) (fun _ => rfl)
       (fun a b => ∃ z, b = ZeroParadox.ZPSemilattice.join a z)
@@ -293,6 +301,30 @@ example (c : ℕ∞) :
   · rw [h]
     show min a (min a z) = min a z
     rw [← min_assoc, min_self]
+-- Statement: on `ℕ∞`, for every motion, UP raises in ZP-A's induced order iff it lowers in ℕ∞'s own, and
+-- likewise OVER; both directions.
+example (M : ZeroParadox.Motion ℕ∞) :
+    (@ZeroParadox.Motion.UpRaises ℕ∞ M (ZeroParadox.zpSemilatticeSup ℕ∞).toLE ↔ M.UpLowers) ∧
+    (@ZeroParadox.Motion.StepRaises ℕ∞ M (ZeroParadox.zpSemilatticeSup ℕ∞).toLE ↔ M.StepLowers) :=
+  have h : ∀ x y : ℕ∞, (ZeroParadox.zpSemilatticeSup ℕ∞).toLE.le x y ↔ y ≤ x :=
+    fun x y => show min x y = y ↔ y ≤ x from min_eq_right_iff
+  ⟨forall_congr' fun x => forall_congr' fun y => imp_congr_right fun _ => h x y,
+    forall_congr' fun x => forall_congr' fun y => imp_congr_right fun _ => h x y⟩
+-- Statement: CONTROL: UP the identity, OVER the scale step on `ℕ∞`: UP raises in the induced order, OVER
+-- raises in ℕ∞'s own, and the corner does not fire.
+example :
+    let M := ZeroParadox.Motion.ofTotal (fun x : ℕ∞ => x) (fun _ => rfl)
+      (fun a b => b = ZeroParadox.ValuationStructure.scale a)
+    @ZeroParadox.Motion.UpRaises ℕ∞ M (ZeroParadox.zpSemilatticeSup ℕ∞).toLE ∧ M.StepRaises ∧
+      ¬ M.Corner := by
+  intro M
+  refine ⟨fun x y h => ?_, fun a b h => ?_, ?_⟩
+  · rw [Part.mem_some_iff.1 h]
+    show min x x = x
+    exact min_self x
+  · rw [(h : b = a + 1)]; exact le_self_add
+  · rintro ⟨y, b, z, -, -, hz, hzb⟩
+    exact hzb (Part.mem_some_iff.1 hz)
 -- Statement: CONTROL: with UP constant ⊤ of `ℕ∞`, the always-true step loops too, so the loop kind
 -- there says nothing specific about the join.
 example : (ZeroParadox.Motion.ofTotal (fun _ : ℕ∞ => (⊤ : ℕ∞)) (fun _ => rfl) (fun _ _ => True)).Loop :=
@@ -702,7 +734,7 @@ example : letI := ZeroParadox.zpSemilatticeSup ZeroParadox.MachinePhase
 #check @ZeroParadox.phaseEquivWithTop_floor_covers_nothing -- Statement: floor-above order: the floor is top, and covers nothing
 
 /-! ### § V. The up-and-over shape's climbing kind, an order-theoretic presentation -/
-#check @ZeroParadox.UpAndOver                   -- Statement: closure, corner, a cover at every non-maximal landing. Reading: its die motion climbs and never loops (§ I, `UpAndOver.toMotion_climb`); the loop kind is presented by `Motion.Loop`
+#check @ZeroParadox.UpAndOver                   -- Statement: closure, corner, a cover at every non-maximal landing; `UpAndOver.toMotion` (OVER every cover) climbs and never loops (§ I, `toMotion_climb`, `toMotion_not_loop`). Reading: the loop kind is presented by `Motion.Loop`
 #check @ZeroParadox.ordinalUpAndOver            -- Statement: member `Ordinal`
 #check @ZeroParadox.nonempty_upAndOver_dual_of_covBy -- Statement: with decidable `≤`, a least point `e` and a cover `b ⋖ a` with `b ≠ e` give a member `αᵒᵈ`
 #check @ZeroParadox.MemGraph.nonempty_upAndOver_hset2 -- Statement: member `(HSet 2)ᵒᵈ`; by `no_upAndOver_prune` no member there has pruning as UP
