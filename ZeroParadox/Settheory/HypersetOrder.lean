@@ -532,8 +532,8 @@ theorem wrap_zeroStar_not_same : ¬ Same (wrap zeroStar) zeroStar := by
 /-- `Statement:` every `A` with `Same (wrap A) A` is `Same` as `omegaLoop`; no AFA is assumed.
     `Reading:` `Same` is the equality AFA installs: Aczel 1988, Exercise 2.2, p. 20, AFA₂ is
     equivalent to "a ≡ b ⟹ a = b for all sets a, b", with `a ≡ b` "there is an apg that is a picture
-    of both a and b", and Prop. 2.5, p. 21, `≡` is the maximum bisimulation on V. So up to
-    bisimulation, `x = {x}` has the one solution Ω. Neighbours in Aczel 1988:
+    of both a and b", and Prop. 2.5, p. 21, `a ≡ b ⟺ a ≡_V b`, `≡_V` the unique maximum bisimulation
+    on V (Theorem 2.4, p. 20). So up to bisimulation, `x = {x}` has the one solution Ω. Neighbours in Aczel 1988:
     Prop. 1.4, p. 7, "An apg is a picture of Ω if and only if every node of the apg has a child";
     p. 19, "AFA implies that there is at most one solution to the equation [x = {x}], namely Ω";
     p. 57, at most one reflexive set under FAFA₂ (hence under any AFA~), while under BA₁ the
