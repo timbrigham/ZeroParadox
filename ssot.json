@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2519,
+        "declarations": 2521,
         "files": 180
       },
       "entries": [
@@ -34801,6 +34801,45 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5d4a0efa-0785-44b6-a88b-404440c00243",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.successor_cell_eq_Ioc",
+            "short": "successor_cell_eq_Ioc"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.successor_cell_eq_Ioc",
+            "short": "successor_cell_eq_Ioc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-22, rotation landing): successor cell of nfp (omega^.) as a set = Ioc eps_o eps_(o+1); limit-index cell = {eps_o}. From probe_rotation/rotation_landing_probe.lean.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -74880,6 +74919,45 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cccea705-9f59-46cc-ac11-156433cf2264",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.limit_cell_eq_singleton",
+            "short": "limit_cell_eq_singleton"
+          },
+          "old": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.limit_cell_eq_singleton",
+            "short": "limit_cell_eq_singleton",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Epsilon0LeastFP.lean (2026-10-22, rotation landing): successor cell of nfp (omega^.) as a set = Ioc eps_o eps_(o+1); limit-index cell = {eps_o}. From probe_rotation/rotation_landing_probe.lean.",
           "verify": {
             "axioms": null,
             "sorry_free": true

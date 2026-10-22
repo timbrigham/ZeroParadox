@@ -206,6 +206,14 @@ theorem l_run : c₀ ≠ c₁ := by decide
 /-- TQ-IH: the same fact read from c₁ (`Ne.symm l_run`). -/
 theorem tq_ih : c₁ ≠ c₀ := Ne.symm l_run
 
+-- `Statement:` on `MachinePhase`, being `c₁` is not being `c₀`, and being `c₀` is not being `c₁`.
+example : ∀ p : MachinePhase, (p = c₁ ↔ p ≠ c₀) ∧ (p = c₀ ↔ p ≠ c₁) := by
+  intro p; cases p <;> decide
+
+-- `Statement:` control: on `Fin 3` the first equivalence fails, at `2`.
+example : ¬ ∀ p : Fin 3, p = 1 ↔ p ≠ 0 := by
+  intro h; exact absurd ((h 2).2 (by decide)) (by decide)
+
 /-! ## Section VI: The Binary Alphabet is Forced — the minimal non-degenerate distribution
 
 ⊥ is a *degenerate* distribution: a point mass with all weight on a single outcome (`distP = pure null`),

@@ -106,7 +106,7 @@ theorem seed_eq_of_nfp_eq_epsilon_limit (o s : Ordinal) (ho : Order.IsSuccLimit 
 `Reading:` a cell is the set of seeds reaching one landing, and its width is the order type of its
 seeds strictly below that landing. ORDER-TYPE chart: a successor cell is as wide as its landing, the
 first ε₀ and the next ε₁ (`successor_cell_width`); a limit-index cell is a singleton
-(`seed_eq_of_nfp_eq_epsilon_limit`). COUNTING chart: the first cell is countable (`card_epsilon0`)
+(`limit_cell_eq_singleton`). COUNTING chart: the first cell is countable (`card_epsilon0`)
 and a cell past the countable indices is not (the control below). Each address is a finite term
 (`repr_surj_below_epsilon0`, `ZeroParadox/Ordinal/PricedInterface.lean`). Both charts hold. -/
 
@@ -119,6 +119,50 @@ theorem first_cell_eq_Iic :
   ext α
   refine ⟨fun h => ?_, fun h => nfp_seed_independent_below_epsilon0 α h⟩
   exact (show Ordinal.nfp (fun a => ω ^ a) α = ε₀ from h) ▸ Ordinal.le_nfp _ α
+
+/-- **`Statement:` the seeds whose tower closure is `ε_(o+1)` are exactly the half-open interval
+`(ε_o, ε_(o+1)]`.** `⊇` is `nfp_seed_successor_cell`, the canonical home; `⊆` is Mathlib's
+`Ordinal.le_nfp` with `Ordinal.nfp_le_fp` at the fixed point `ε_o`. -/
+theorem successor_cell_eq_Ioc (o : Ordinal) :
+    {s : Ordinal | Ordinal.nfp (fun a => ω ^ a) s = Ordinal.epsilon (Order.succ o)} =
+      Set.Ioc (Ordinal.epsilon o) (Ordinal.epsilon (Order.succ o)) := by
+  have hmono := (Ordinal.isNormal_opow Ordinal.one_lt_omega0).strictMono.monotone
+  ext s
+  refine ⟨fun h => ⟨?_, (show Ordinal.nfp (fun a => ω ^ a) s = _ from h) ▸ Ordinal.le_nfp _ s⟩,
+    fun h => nfp_seed_successor_cell o s h.1 h.2⟩
+  by_contra hle
+  have hfp := Ordinal.nfp_le_fp hmono (not_lt.mp hle) (le_of_eq (omega0_opow_epsilon o))
+  rw [show Ordinal.nfp (fun a => ω ^ a) s = _ from h] at hfp
+  exact absurd hfp (not_le.mpr (veblen_right_strictMono 1 (Order.lt_succ o)))
+
+-- `Statement:` control: the floor `ε_o` is not in the successor cell, so the lower end is open.
+example (o : Ordinal) : Ordinal.nfp (fun a => ω ^ a) (Ordinal.epsilon o) ≠
+    Ordinal.epsilon (Order.succ o) := by
+  rw [Ordinal.nfp_eq_self (omega0_opow_epsilon o)]
+  exact (veblen_right_strictMono 1 (Order.lt_succ o)).ne
+
+/-- **`Statement:` at a limit index the cell is the single point `ε_o`.** `⊆` is
+`seed_eq_of_nfp_eq_epsilon_limit`, the canonical home; `⊇` is Mathlib's `Ordinal.nfp_eq_self`.
+So successor cells are wide and limit cells are points, the measured form of "the rungs do not
+partition".
+`Reading:` the landing map forgets a seed's place in its interval at a successor rung and forgets
+nothing at a limit rung. -/
+theorem limit_cell_eq_singleton (o : Ordinal) (ho : Order.IsSuccLimit o) :
+    {s : Ordinal | Ordinal.nfp (fun a => ω ^ a) s = Ordinal.epsilon o} = {Ordinal.epsilon o} := by
+  ext s
+  refine ⟨fun h => seed_eq_of_nfp_eq_epsilon_limit o s ho h, ?_⟩
+  rintro rfl
+  exact Ordinal.nfp_eq_self (omega0_opow_epsilon o)
+
+-- `Statement:` the cell of `ε_ω` is `{ε_ω}`.
+example : {s : Ordinal | Ordinal.nfp (fun a => ω ^ a) s = Ordinal.epsilon ω} =
+    {Ordinal.epsilon ω} :=
+  limit_cell_eq_singleton ω Ordinal.isSuccLimit_omega0
+
+-- `Statement:` control: under the identity map, also normal, seeds `1` and `2` land apart, so the
+-- wide successor cells belong to `α ↦ ω^α`, not to `nfp`.
+example : Ordinal.nfp id (1 : Ordinal) ≠ Ordinal.nfp id 2 := by
+  rw [Ordinal.nfp_id]; simp
 
 -- `Statement:` the seeds strictly below ε₀ have order type ε₀, lifted one universe. This is Mathlib's
 -- `Ordinal.type_lt_Iio`, true of EVERY ordinal, so it singles out nothing about ε₀.
@@ -290,6 +334,8 @@ open ZeroParadox
 #print axioms nfp_seed_successor_cell
 #print axioms seed_eq_of_nfp_eq_epsilon_limit
 #print axioms first_cell_eq_Iic
+#print axioms successor_cell_eq_Ioc
+#print axioms limit_cell_eq_singleton
 #print axioms epsilon_add_one_add_epsilon_succ
 #print axioms cellIso
 #print axioms successor_cell_width
