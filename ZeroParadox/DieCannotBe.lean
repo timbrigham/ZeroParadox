@@ -47,6 +47,7 @@ import ZeroParadox.Category.DieNucleus
 import ZeroParadox.Order.LeastFixedPoint
 import ZeroParadox.Valuation.SemilatticeInstance
 import ZeroParadox.Settheory.OntBridge
+import ZeroParadox.Settheory.Model
 
 set_option maxHeartbeats 400000
 
@@ -193,6 +194,78 @@ example : ∃ M : ZeroParadox.Motion (Fin 4),
       Part.mem_some_iff.2 (by decide)⟩,
     ⟨0, 2, 3, Part.mem_some_iff.2 (by decide), Or.inr ⟨rfl, rfl⟩, Part.mem_some_iff.2 (by decide),
       by decide, by decide⟩⟩
+#check @ZeroParadox.Motion.corner_iff_crossing  -- Statement: the corner fires iff a landing steps to a non-landing `b` with `up b` defined; both directions
+#check @ZeroParadox.Motion.corner_iff_loop_or_climb -- Statement: with decidable equality, the corner fires iff the motion loops or climbs; both directions
+#check @ZeroParadox.Motion.corner_iff_loop_or_climb_classical -- Statement: the same with no binder, proved with `classical`
+#check @ZeroParadox.Motion.not_not_loop_or_climb_of_corner -- Statement: with no binder, a corner gives `¬¬ (Loop ∨ Climb)`
+#check @ZeroParadox.UpAndOver.toMotion_climb    -- Statement: the die motion of an `UpAndOver` (UP its closure, OVER the covers) climbs
+#check @ZeroParadox.UpAndOver.toMotion_not_loop -- Statement: and does not loop, its legs agreeing (`toMotion_agree`, `not_loop_of_agree`)
+#check @ZeroParadox.UpAndOver.toMotion_ne_of_loop -- Statement: so a motion that loops is the die motion of no `UpAndOver`
+-- Reading (Tim, 2026-10-22, verbatim): "I do think that that shape can represent a self loop which by
+-- definition isn't landing somewhere new correct? That we have a "joint/L/J/boundary/etc" being crossed
+-- is what makes it important I think. If that's the case, that needs to be a legal way of representing it."
+-- Reading: in the landed terms. If the corner fires, a landing steps off the set of landings and UP is
+-- defined there (`corner_iff_crossing`): the corner is the crossing of the joint. If moreover equality
+-- is decidable, the motion loops or climbs (`corner_iff_loop_or_climb`), not exclusively (`Fin 4`
+-- above), and both are legal up-and-over shapes. If the legs agree in a partial order there is no loop
+-- (`not_loop_of_agree`); `UpAndOver` is that case, so it presents the climbing kind only. The boundary
+-- model's `phaseBelowCoverMotion` climbs (§ XXIII); the ℕ∞ model's join and scale loop, in both
+-- wirings below. Q1: in the second wiring the loop's landing is the pole, ⊤ of `ℕ∞` (⊥ of the ZP
+-- order), which steps off the landings and is sent back to itself. Q2: run backwards (`reverse`, which
+-- keeps UP), a loop is a point `b ≠ y` from which OVER and UP both reach the landing `y`, and a climb
+-- one from which they reach two different points (the two examples after the ℕ∞ ones).
+-- Statement: LOOP, wiring one, on the ℕ∞ model (`ZeroParadox/Settheory/Model.lean`: join `min`, scale
+-- `+ 1`): UP join with `c`, OVER the scale step. If `c ≠ ⊤` of `ℕ∞`, the motion loops at `c`, does not
+-- climb, and is the die motion of no `UpAndOver ℕ∞`.
+example (c : ℕ∞) (hc : c ≠ ⊤) :
+    let M := ZeroParadox.Motion.ofTotal (fun x : ℕ∞ => ZeroParadox.ZPSemilattice.join x c)
+      (fun x => show min (min x c) c = min x c by rw [min_assoc, min_self])
+      (fun a b => b = ZeroParadox.ValuationStructure.scale a)
+    M.Loop ∧ ¬ M.Climb ∧ ∀ U : ZeroParadox.UpAndOver ℕ∞, U.toMotion ≠ M := by
+  intro M
+  have hl : M.Loop := by
+    refine ⟨c, c + 1, Part.mem_some_iff.2 (min_self c).symm, rfl,
+      ((ENat.lt_add_one_iff hc).2 le_rfl).ne', ?_⟩
+    show c ∈ Part.some (min (c + 1) c)
+    rw [Part.mem_some_iff, min_eq_right le_self_add]
+  refine ⟨hl, ?_, fun U => U.toMotion_ne_of_loop hl⟩
+  rintro ⟨y, b, z, hy, hs, hz, hzb, hzy⟩
+  have hy' : y ≤ c := min_eq_left_iff.1 (Part.mem_some_iff.1 hy).symm
+  have hs' : b = y + 1 := hs
+  have hz' : z = min b c := Part.mem_some_iff.1 hz
+  rw [hs'] at hz' hzb
+  rcases min_choice (y + 1) c with h | h
+  · exact hzb (hz'.trans h)
+  · rw [h] at hz'
+    rw [hz'] at hzb hzy
+    have hle : c ≤ y + 1 := h ▸ min_le_left _ _
+    by_cases hyt : y = ⊤
+    · exact hzy ((top_le_iff.1 (hyt ▸ hy')).trans hyt.symm)
+    · exact hzy (le_antisymm ((ENat.lt_add_one_iff hyt).1 (lt_of_le_of_ne hle hzb)) hy')
+-- Statement: LOOP, wiring two: UP constant ⊤ of `ℕ∞` (the scale closure, `natInf_scale_unique_fp`), OVER
+-- the join step `a → join a z`; the motion loops at ⊤ of `ℕ∞` and does not climb.
+example :
+    let M := ZeroParadox.Motion.ofTotal (fun _ : ℕ∞ => (⊤ : ℕ∞)) (fun _ => rfl)
+      (fun a b => ∃ z, b = ZeroParadox.ZPSemilattice.join a z)
+    M.Loop ∧ ¬ M.Climb := by
+  intro M
+  refine ⟨⟨⊤, 0, Part.mem_some _, ⟨0, (ZeroParadox.ZPSemilattice.bot_join (0 : ℕ∞)).symm⟩, by simp,
+    Part.mem_some _⟩, ?_⟩
+  rintro ⟨y, b, z, hy, -, hz, -, hzy⟩
+  exact hzy ((Part.mem_some_iff.1 hz).trans (Part.mem_some_iff.1 hy).symm)
+-- Statement: CONTROL: with UP constant ⊤ of `ℕ∞`, the always-true step loops too, so the loop kind
+-- there says nothing specific about the join.
+example : (ZeroParadox.Motion.ofTotal (fun _ : ℕ∞ => (⊤ : ℕ∞)) (fun _ => rfl) (fun _ _ => True)).Loop :=
+  ⟨⊤, 0, Part.mem_some _, trivial, by simp, Part.mem_some _⟩
+-- Statement: Q2: a loop is a landing `y` and a point `b ≠ y` with `b` stepping to `y` in the reversed
+-- motion and `y ∈ up b`; both directions.
+example {α : Type} (M : ZeroParadox.Motion α) :
+    M.Loop ↔ ∃ y b, M.IsLanding y ∧ M.reverse.step b y ∧ b ≠ y ∧ y ∈ M.reverse.up b := Iff.rfl
+-- Statement: Q2: a climb is a landing `y` and a point `b` stepping to `y` in the reversed motion, with
+-- some `z ∈ up b` other than `b` and `y`; both directions.
+example {α : Type} (M : ZeroParadox.Motion α) :
+    M.Climb ↔ ∃ y b z, M.IsLanding y ∧ M.reverse.step b y ∧ z ∈ M.reverse.up b ∧ z ≠ b ∧ z ≠ y :=
+  Iff.rfl
 
 /-! ### § II. Premises on a motion — existence of a leg, never its use -/
 #check @ZeroParadox.Motion.HasLanding           -- Statement: some landing exists
@@ -588,8 +661,8 @@ example : letI := ZeroParadox.zpSemilatticeSup ZeroParadox.MachinePhase
 #check @ZeroParadox.phase_floor_covBy_snap      -- Statement: floor-below order: the floor is covered by the snap
 #check @ZeroParadox.phaseEquivWithTop_floor_covers_nothing -- Statement: floor-above order: the floor is top, and covers nothing
 
-/-! ### § V. The up-and-over shape, an order-theoretic presentation -/
-#check @ZeroParadox.UpAndOver                   -- Statement: closure, corner, a cover at every non-maximal landing
+/-! ### § V. The up-and-over shape's climbing kind, an order-theoretic presentation -/
+#check @ZeroParadox.UpAndOver                   -- Statement: closure, corner, a cover at every non-maximal landing. Reading: its die motion climbs and never loops (§ I, `UpAndOver.toMotion_climb`); the loop kind is presented by `Motion.Loop`
 #check @ZeroParadox.ordinalUpAndOver            -- Statement: member `Ordinal`
 #check @ZeroParadox.nonempty_upAndOver_dual_of_covBy -- Statement: with decidable `≤`, a least point `e` and a cover `b ⋖ a` with `b ≠ e` give a member `αᵒᵈ`
 #check @ZeroParadox.MemGraph.nonempty_upAndOver_hset2 -- Statement: member `(HSet 2)ᵒᵈ`; by `no_upAndOver_prune` no member there has pruning as UP

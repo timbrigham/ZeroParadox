@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2521,
+        "declarations": 2530,
         "files": 180
       },
       "entries": [
@@ -15587,6 +15587,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2887817d-1726-44e6-be17-de3c7184509a",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_iff_loop_or_climb",
+            "short": "corner_iff_loop_or_climb"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_iff_loop_or_climb",
+            "short": "corner_iff_loop_or_climb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Up-and-over includes the loop (Tim 2026-10-22): corner = crossing of the joint, loop or climb; UpAndOver's die motion climbs and never loops",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "289801f7-aa21-4e01-a671-004e184f2800",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -15650,6 +15689,45 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "28cd2926-4c24-4a0e-87e7-b803e43305cf",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_iff_crossing",
+            "short": "corner_iff_crossing"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_iff_crossing",
+            "short": "corner_iff_crossing",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Up-and-over includes the loop (Tim 2026-10-22): corner = crossing of the joint, loop or climb; UpAndOver's die motion climbs and never loops",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20293,6 +20371,45 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "35ee0576-54fb-45a7-ab51-f996bc18623c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_not_loop_or_climb_of_corner",
+            "short": "not_not_loop_or_climb_of_corner"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.not_not_loop_or_climb_of_corner",
+            "short": "not_not_loop_or_climb_of_corner",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Up-and-over includes the loop (Tim 2026-10-22): corner = crossing of the joint, loop or climb; UpAndOver's die motion climbs and never loops",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26892,6 +27009,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "482d3f26-f9c6-4984-a836-f34d7041fe73",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.toMotion_not_loop",
+            "short": "toMotion_not_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.toMotion_not_loop",
+            "short": "toMotion_not_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Up-and-over includes the loop (Tim 2026-10-22): corner = crossing of the joint, loop or climb; UpAndOver's die motion climbs and never loops",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4856fd74-4d42-4a1b-b525-f1216a44e88d",
           "new": {
@@ -32504,6 +32660,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "57ad5083-2402-456a-a430-0369bfc90946",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.toMotion_ne_of_loop",
+            "short": "toMotion_ne_of_loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.toMotion_ne_of_loop",
+            "short": "toMotion_ne_of_loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Up-and-over includes the loop (Tim 2026-10-22): corner = crossing of the joint, loop or climb; UpAndOver's die motion climbs and never loops",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "57c38330-748a-4884-9567-734db7a12b72",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -36479,6 +36674,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "62d93d1c-7e23-4cc6-93a4-20fa454b65ce",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_iff_loop_or_climb_classical",
+            "short": "corner_iff_loop_or_climb_classical"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.corner_iff_loop_or_climb_classical",
+            "short": "corner_iff_loop_or_climb_classical",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Up-and-over includes the loop (Tim 2026-10-22): corner = crossing of the joint, loop or climb; UpAndOver's die motion climbs and never loops",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50205,6 +50439,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "89826df2-f919-4be2-b1fa-8b8f70bfc2d0",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.toMotion_climb",
+            "short": "toMotion_climb"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.toMotion_climb",
+            "short": "toMotion_climb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Up-and-over includes the loop (Tim 2026-10-22): corner = crossing of the joint, loop or climb; UpAndOver's die motion climbs and never loops",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "89af8682-a8f5-4efd-a0d5-2a9fcac11f74",
           "new": {
@@ -50752,6 +51025,45 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8b5f8e64-b624-4309-9a2a-d89f17306936",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.toMotion",
+            "short": "toMotion"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.toMotion",
+            "short": "toMotion",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Up-and-over includes the loop (Tim 2026-10-22): corner = crossing of the joint, loop or climb; UpAndOver's die motion climbs and never loops",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -84509,6 +84821,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e7b097a9-b46c-47f5-a2ff-245231e07c64",
+          "new": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.toMotion_agree",
+            "short": "toMotion_agree"
+          },
+          "old": {
+            "file": "ZeroParadox/Order/UpAndOver.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UpAndOver.toMotion_agree",
+            "short": "toMotion_agree",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Up-and-over includes the loop (Tim 2026-10-22): corner = crossing of the joint, loop or climb; UpAndOver's die motion climbs and never loops",
           "verify": {
             "axioms": null,
             "sorry_free": true
