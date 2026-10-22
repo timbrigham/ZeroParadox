@@ -50,7 +50,8 @@ theorem bot_is_not_a_step : Ordinal.omega0 ^ (0 : Ordinal) ≠ (0 : Ordinal) := 
 
 `nothing_between_is_a_step` says no point strictly below ε₀ is a landing; the theorems below say the
 complement, that **every point at or below ε₀ reaches the SAME landing**. ⚠ The general fact is that
-`nfp (ω^·) a` is the least ε-number `≥ a`, so no ε-number can test it and the rungs do not partition.
+`nfp (ω^·) a` is the least ε-number `≥ a`, so no ε-number can test it. The cells partition the seeds;
+the intervals `(ε_o, ε_(o+1)]` miss each limit-index ε-number (`limit_cell_eq_singleton`).
 Veblen's classical form, the three traps, and the SHAPE-never-instance-of fence: `ZeroParadox/Ordinal/Epsilon0LeastFP.md`. -/
 
 /-- **`Statement:` every seed at or below ε₀ reaches ε₀.** The least fixed point *from* `a` is ε₀ for
@@ -143,8 +144,8 @@ example (o : Ordinal) : Ordinal.nfp (fun a => ω ^ a) (Ordinal.epsilon o) ≠
 
 /-- **`Statement:` at a limit index the cell is the single point `ε_o`.** `⊆` is
 `seed_eq_of_nfp_eq_epsilon_limit`, the canonical home; `⊇` is Mathlib's `Ordinal.nfp_eq_self`.
-So successor cells are wide and limit cells are points, the measured form of "the rungs do not
-partition".
+So the successor intervals `(ε_o, ε_(o+1)]` miss every limit-index ε-number, whose cell is this
+single point, while the cells, as fibres of the landing map, partition the seeds (the example below).
 `Reading:` the landing map forgets a seed's place in its interval at a successor rung and forgets
 nothing at a limit rung. -/
 theorem limit_cell_eq_singleton (o : Ordinal) (ho : Order.IsSuccLimit o) :
@@ -154,13 +155,26 @@ theorem limit_cell_eq_singleton (o : Ordinal) (ho : Order.IsSuccLimit o) :
   rintro rfl
   exact Ordinal.nfp_eq_self (omega0_opow_epsilon o)
 
+-- `Statement:` the cells partition the seeds: every seed reaches exactly one `ε_o`.
+example (s : Ordinal) : ∃! o, Ordinal.nfp (fun a => ω ^ a) s = Ordinal.epsilon o := by
+  have hfp : ω ^ Ordinal.nfp (fun a => ω ^ a) s = Ordinal.nfp (fun a => ω ^ a) s :=
+    Ordinal.nfp_fp (Ordinal.isNormal_opow Ordinal.one_lt_omega0) s
+  have hr : Ordinal.nfp (fun a => ω ^ a) s ∈ Set.range (Ordinal.veblen 1) := by
+    rw [Ordinal.mem_range_veblen one_ne_zero]
+    intro b hb
+    have hb0 : b = 0 := Order.lt_one_iff_nonpos.mp hb |>.antisymm (zero_le b)
+    subst hb0
+    simpa [Ordinal.veblen_zero] using hfp
+  obtain ⟨o, ho⟩ := hr
+  exact ⟨o, ho.symm, fun o' h' => Ordinal.veblen_injective 1 (h'.symm.trans ho.symm)⟩
+
 -- `Statement:` the cell of `ε_ω` is `{ε_ω}`.
 example : {s : Ordinal | Ordinal.nfp (fun a => ω ^ a) s = Ordinal.epsilon ω} =
     {Ordinal.epsilon ω} :=
   limit_cell_eq_singleton ω Ordinal.isSuccLimit_omega0
 
--- `Statement:` control: under the identity map, also normal, seeds `1` and `2` land apart, so the
--- wide successor cells belong to `α ↦ ω^α`, not to `nfp`.
+-- `Statement:` control: under the identity map, also normal, seeds `1` and `2` land apart.
+-- `Reading:` so the wide successor cells belong to `α ↦ ω^α`, not to `nfp`.
 example : Ordinal.nfp id (1 : Ordinal) ≠ Ordinal.nfp id 2 := by
   rw [Ordinal.nfp_id]; simp
 
