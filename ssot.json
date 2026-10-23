@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2601,
-        "files": 181
+        "declarations": 2619,
+        "files": 182
       },
       "entries": [
         {
@@ -13220,6 +13220,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "21071804-7c68-4bcb-a536-46d7c4d29fd3",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_sqrt_iter_sq_le",
+            "short": "bridge_sqrt_iter_sq_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_sqrt_iter_sq_le",
+            "short": "bridge_sqrt_iter_sq_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "210843b5-5ed1-40e5-bd47-0a83cdfad954",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -14097,6 +14134,43 @@
           "reason": "IgnoranceSeam.lean round 2: fixed-point uniqueness, digit converse, 2x and 2x+1 runs, partialNeg as affineExt (2026-10-07)",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2443d330-4b30-48b4-924e-400ffd66a945",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.cf_lt_succ_sqrt",
+            "short": "cf_lt_succ_sqrt"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.cf_lt_succ_sqrt",
+            "short": "cf_lt_succ_sqrt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -21850,6 +21924,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3853aba8-9375-48dc-bd08-bbc0a719c08e",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_eval_prec_zero",
+            "short": "bridge_eval_prec_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_eval_prec_zero",
+            "short": "bridge_eval_prec_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34951,6 +35062,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5a9489f7-84da-41f6-b690-5f71dbaac506",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_sqrt_le_self",
+            "short": "bridge_sqrt_le_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_sqrt_le_self",
+            "short": "bridge_sqrt_le_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5aa7b49a-0b10-434c-822c-e9794688c804",
           "new": {
@@ -39337,6 +39485,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "68333f47-4afe-45a6-a5e2-1d6434ae0e1a",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_div2_val",
+            "short": "bridge_div2_val"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_div2_val",
+            "short": "bridge_div2_val",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46097,6 +46282,43 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "79cc3b18-4555-40f1-98ed-5555a1ec680a",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_sqrt_le",
+            "short": "bridge_sqrt_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_sqrt_le",
+            "short": "bridge_sqrt_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -59248,6 +59470,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9c9f2778-3b00-4ddf-83d6-8e03e809a090",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_lt_succ_sqrt",
+            "short": "bridge_lt_succ_sqrt"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_lt_succ_sqrt",
+            "short": "bridge_lt_succ_sqrt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9cbcafe5-9ce7-47e4-9333-627329846c42",
           "new": {
@@ -61088,6 +61347,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a1c661db-b557-434d-93c9-8b0e4da07e02",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_pair_unpair",
+            "short": "bridge_pair_unpair"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_pair_unpair",
+            "short": "bridge_pair_unpair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a1e11632-09ed-476f-8936-fbb9538f8e42",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -62074,6 +62370,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a55b2007-8779-4d29-8fd9-d9463f87e53a",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.profiles",
+            "short": "profiles"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.profiles",
+            "short": "profiles",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -71461,6 +71794,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bc83d913-a1ac-4494-b5a2-2703719ab475",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.replacements",
+            "short": "replacements"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.replacements",
+            "short": "replacements",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bc91f4b9-6fb7-49e2-9e28-bd77178d9282",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -74283,6 +74653,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c518680b-82e8-42b0-aa5c-f92d4c981d72",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_unpair_left_le",
+            "short": "bridge_unpair_left_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_unpair_left_le",
+            "short": "bridge_unpair_left_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c5491db3-4640-4c99-9ca1-91e6b03483a8",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -74890,6 +75297,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c6b26607-285c-417b-b71a-b28662fa373f",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_unpair_pair",
+            "short": "bridge_unpair_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_unpair_pair",
+            "short": "bridge_unpair_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -81686,6 +82130,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d89ed200-991b-4852-87d9-5892e7637c98",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.cf_sqrt_le",
+            "short": "cf_sqrt_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.cf_sqrt_le",
+            "short": "cf_sqrt_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d8a2c5b1-034c-4e05-9520-788e4a85b7e2",
           "new": {
@@ -85873,6 +86354,43 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e3916dc9-74fc-45bd-8122-7dd7bf31ce1c",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_unpair_right_le",
+            "short": "bridge_unpair_right_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_unpair_right_le",
+            "short": "bridge_unpair_right_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "node-order"
             ]
@@ -88589,6 +89107,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "eb196723-750d-4ef9-92ab-f6e1db659ed4",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_eval_id",
+            "short": "bridge_eval_id"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_eval_id",
+            "short": "bridge_eval_id",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "eb1b889e-e249-4597-abd0-3ecff58baad9",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -89207,6 +89762,43 @@
             ]
           },
           "reason": "Section VI: the scaling parameter as a valuation coordinate, the group identity, and the action packaged as a homeomorphism",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ecda4a7e-0d40-4a26-a20a-bcec2725f141",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_eval_curry",
+            "short": "bridge_eval_curry"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_eval_curry",
+            "short": "bridge_eval_curry",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -94711,6 +95303,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "fb8c1aa2-0272-4aab-853c-e58d3964a080",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_sqrt_lt_iter_succ_sq",
+            "short": "bridge_sqrt_lt_iter_succ_sq"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_sqrt_lt_iter_succ_sq",
+            "short": "bridge_sqrt_lt_iter_succ_sq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "fb9a26b7-6f47-4f01-9deb-42b768c5fcf5",
           "new": {
             "file": "ZeroParadox/Computability/Kleene.lean",
@@ -96260,6 +96889,43 @@
             ]
           },
           "reason": "Was a class FIELD of InfinitudeFloor until 2026-08-09; removed as redundant (derivable from cx_member_strictMono + cx_floor_eq_iSup via member_cx_ne_floor_cx) and re-added as a theorem, deleting 8 hand proofs across 3 files. Footprint [propext, Classical.choice, Quot.sound].",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fed90cea-db0a-4f23-9914-df27f78499ca",
+          "new": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "namespace": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_eval_prec_succ",
+            "short": "bridge_eval_prec_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Meta/AxiomLedger.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox.AxiomLedger",
+            "qualified": "ZeroParadox.AxiomLedger.bridge_eval_prec_succ",
+            "short": "bridge_eval_prec_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "AxiomLedger: axiom-profile ledger gate over KleeneChoiceFree (sqrt projections, 14 same-statement bridges, ledger data)",
           "verify": {
             "axioms": null,
             "sorry_free": true
