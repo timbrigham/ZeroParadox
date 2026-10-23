@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2583,
+        "declarations": 2589,
         "files": 181
       },
       "entries": [
@@ -32478,6 +32478,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "55d7d7a7-eb6e-44b9-8170-5a292d39e4ba",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDouble_zero_isolated",
+            "short": "unitDouble_zero_isolated"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDouble_zero_isolated",
+            "short": "unitDouble_zero_isolated",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Sideways and up on the 2-adic numbers: unit multiplication and doubling; reachability is valuation order, classes are the shells, inversion reverses the ladder",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "55dd5073-6a91-44cf-8c29-7ddc2d14de6d",
           "new": {
             "file": "ZeroParadox/Computability/Kleene.lean",
@@ -34090,6 +34129,45 @@
             "role": []
           },
           "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "594569d3-e4ed-41cc-a9a8-0e0685f76a78",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDouble_reach_mono",
+            "short": "unitDouble_reach_mono"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDouble_reach_mono",
+            "short": "unitDouble_reach_mono",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Sideways and up on the 2-adic numbers: a reachable point from a nonzero point stays nonzero and never drops in valuation",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47925,6 +48003,45 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": "[propext, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f7163ee-d41f-4674-a287-52b1d8ffa076",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDouble_reach_iff",
+            "short": "unitDouble_reach_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDouble_reach_iff",
+            "short": "unitDouble_reach_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Sideways and up on the 2-adic numbers: unit multiplication and doubling; reachability is valuation order, classes are the shells, inversion reverses the ladder",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -63839,6 +63956,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ab5cce16-626c-4cbc-b6d7-862f823cb503",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDoubleStep",
+            "short": "unitDoubleStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDoubleStep",
+            "short": "unitDoubleStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Sideways and up on the 2-adic numbers: unit multiplication and doubling; reachability is valuation order, classes are the shells, inversion reverses the ladder",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ab6cd24c-2c4c-4da9-924f-e4e1bb7eabaa",
           "new": {
@@ -78637,6 +78793,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d268f332-88f7-400c-bbfe-c7333b23edd9",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDouble_reach_inv",
+            "short": "unitDouble_reach_inv"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDouble_reach_inv",
+            "short": "unitDouble_reach_inv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Sideways and up on the 2-adic numbers: unit multiplication and doubling; reachability is valuation order, classes are the shells, inversion reverses the ladder",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d26efe29-4a74-4a9c-b220-919bc9285e4d",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -80350,6 +80545,45 @@
             ]
           },
           "reason": "New file ZeroParadox/Information/Disjunctive.lean: disjunctive (rich) sequences; all-false control; choice-free primitive recursive Champernowne-style witness; fair-coin tape disjunctive a.s. (infinite monkey, 2nd Borel-Cantelli); hypothesis-form presence of every Code's word. PRESENCE only, no execution.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d7464e5f-788f-45e4-a4dd-4a82f4031b83",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDouble_mutual_iff",
+            "short": "unitDouble_mutual_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unitDouble_mutual_iff",
+            "short": "unitDouble_mutual_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Sideways and up on the 2-adic numbers: unit multiplication and doubling; reachability is valuation order, classes are the shells, inversion reverses the ladder",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -341,6 +341,126 @@ theorem sphere_polarity_swap (M : Motion Sphere) :
   Motion.stepRaises_iff_of_dual (Preorder.lift sNorm).toLE (Preorder.lift (sNorm ∘ rInv)).toLE
     (fun x y => rInv_reverses x y) M
 
+/-! ### § VIII. Sideways and up: unit multiplication and doubling on ℚ₂
+
+`Reading:` **CARRIER** — on the nonzero points, the mutually reachable classes of `unitDoubleStep` are
+the valuation shells (`unitDouble_mutual_iff`) and the classes are ordered one way by valuation
+(`unitDouble_reach_iff`); `0` of `ℚ_[2]` is off the board (`unitDouble_zero_isolated`). -/
+
+/-- `Statement:` one move multiplies by a unit (norm `1`) or by `2`. -/
+def unitDoubleStep (x y : ℚ_[2]) : Prop := (∃ u : ℚ_[2], ‖u‖ = 1 ∧ y = u * x) ∨ y = 2 * x
+
+/-- `Statement:` from a nonzero `x`, every point reachable by `unitDoubleStep` is nonzero and has
+    valuation at least `x.valuation`. -/
+theorem unitDouble_reach_mono {x y : ℚ_[2]} (hx : x ≠ 0)
+    (h : Relation.ReflTransGen unitDoubleStep x y) : y ≠ 0 ∧ x.valuation ≤ y.valuation := by
+  have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
+  have hv2 : (2 : ℚ_[2]).valuation = 1 := by
+    have := Padic.valuation_p (p := 2); exact_mod_cast this
+  induction h with
+  | refl => exact ⟨hx, le_rfl⟩
+  | tail _ hm ih =>
+    obtain ⟨hb, hv⟩ := ih
+    rcases hm with ⟨u, hu, rfl⟩ | rfl
+    · have hu0 : u ≠ 0 := by rintro rfl; simp at hu
+      have huv : u.valuation = 0 := by
+        rw [Padic.norm_eq_zpow_neg_valuation hu0] at hu
+        have : ((2 : ℕ) : ℝ) ^ (-u.valuation) = (2 : ℝ) ^ (0 : ℤ) := by rw [hu]; simp
+        push_cast at this
+        have := zpow_right_injective₀ (by norm_num : (0 : ℝ) < 2) (by norm_num) this
+        omega
+      refine ⟨mul_ne_zero hu0 hb, ?_⟩
+      rw [Padic.valuation_mul hu0 hb, huv]; omega
+    · refine ⟨mul_ne_zero h2 hb, ?_⟩
+      rw [Padic.valuation_mul h2 hb, hv2]; omega
+
+/-- `Statement:` on nonzero points, `y` is reachable from `x` iff `x.valuation ≤ y.valuation`. -/
+theorem unitDouble_reach_iff {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
+    Relation.ReflTransGen unitDoubleStep x y ↔ x.valuation ≤ y.valuation := by
+  refine ⟨fun h => (unitDouble_reach_mono hx h).2, fun h => ?_⟩
+  have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
+  have hv2 : (2 : ℚ_[2]).valuation = 1 := by
+    have := Padic.valuation_p (p := 2); exact_mod_cast this
+  have hdbl : ∀ n : ℕ, Relation.ReflTransGen unitDoubleStep x (2 ^ n * x) := by
+    intro n
+    induction n with
+    | zero => simpa using Relation.ReflTransGen.refl
+    | succ n ih => exact ih.tail (Or.inr (by rw [pow_succ]; ring))
+  obtain ⟨n, hn⟩ : ∃ n : ℕ, y.valuation = x.valuation + n :=
+    ⟨(y.valuation - x.valuation).toNat, by omega⟩
+  set u := y / (2 ^ n * x) with hu_def
+  have hd : (2 : ℚ_[2]) ^ n * x ≠ 0 := mul_ne_zero (pow_ne_zero _ h2) hx
+  have huv : u.valuation = 0 := by
+    rw [hu_def, div_eq_mul_inv, Padic.valuation_mul hy (inv_ne_zero hd), Padic.valuation_inv,
+      Padic.valuation_mul (pow_ne_zero _ h2) hx, Padic.valuation_pow, hv2, hn]; ring
+  have hu0 : u ≠ 0 := div_ne_zero hy hd
+  have hun : ‖u‖ = 1 := by rw [Padic.norm_eq_zpow_neg_valuation hu0, huv]; simp
+  exact (hdbl n).tail (Or.inl ⟨u, hun, by rw [hu_def, div_mul_cancel₀ _ hd]⟩)
+
+/-- `Statement:` two nonzero points reach each other iff they have the same valuation. -/
+theorem unitDouble_mutual_iff {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
+    (Relation.ReflTransGen unitDoubleStep x y ∧ Relation.ReflTransGen unitDoubleStep y x) ↔
+      x.valuation = y.valuation := by
+  rw [unitDouble_reach_iff hx hy, unitDouble_reach_iff hy hx]; omega
+
+/-- `Statement:` no nonzero point reaches `0` of `ℚ_[2]`, and `0` reaches only itself. -/
+theorem unitDouble_zero_isolated (x : ℚ_[2]) :
+    (x ≠ 0 → ¬ Relation.ReflTransGen unitDoubleStep x 0) ∧
+      (Relation.ReflTransGen unitDoubleStep 0 x → x = 0) := by
+  refine ⟨fun hx h => (unitDouble_reach_mono hx h).1 rfl, fun h => ?_⟩
+  induction h with
+  | refl => rfl
+  | tail _ hm ih =>
+    subst ih
+    rcases hm with ⟨u, _, rfl⟩ | rfl <;> simp
+
+/-- `Statement:` on nonzero points, `x` reaches `y` iff `y⁻¹` reaches `x⁻¹`.
+    `Reading:` **INVERSION** — field inversion runs the ladder backwards, as `rInv_conj_rScale`
+    negates the scaling parameter. -/
+theorem unitDouble_reach_inv {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
+    Relation.ReflTransGen unitDoubleStep x y ↔ Relation.ReflTransGen unitDoubleStep y⁻¹ x⁻¹ := by
+  rw [unitDouble_reach_iff hx hy, unitDouble_reach_iff (inv_ne_zero hy) (inv_ne_zero hx),
+    Padic.valuation_inv, Padic.valuation_inv]
+  omega
+
+-- Statement: control, with only the stillness step `y = x` every point reaches only itself, so the
+-- ladder in `unitDouble_reach_iff` comes from the doubling leg.
+example (x y : ℚ_[2]) : Relation.ReflTransGen (fun a b : ℚ_[2] => b = a) x y ↔ y = x := by
+  refine ⟨fun h => ?_, fun h => h ▸ Relation.ReflTransGen.refl⟩
+  induction h with
+  | refl => rfl
+  | tail _ hab ih => exact hab.trans ih
+
+/-! #### The mirror: the unit ball against its image under inversion -/
+
+-- Statement: level 0, for nonzero `x`, `x` and `x⁻¹` both have valuation `≥ 0` iff `x.valuation = 0`.
+example {x : ℚ_[2]} (_hx : x ≠ 0) :
+    (0 ≤ x.valuation ∧ 0 ≤ (x⁻¹).valuation) ↔ x.valuation = 0 := by
+  rw [Padic.valuation_inv]; omega
+
+-- Statement: control, moving the ball to level `k > 0` without moving the inversion empties the overlap.
+example (k : ℤ) (hk : 0 < k) (x : ℚ_[2]) : ¬ (k ≤ x.valuation ∧ k ≤ (x⁻¹).valuation) := by
+  rw [Padic.valuation_inv]; omega
+
+-- Statement: control, at level `k < 0` the same overlap holds both `2 ^ k` and `1`, two valuations.
+example (k : ℤ) (hk : k < 0) :
+    (k ≤ ((2 : ℚ_[2]) ^ k).valuation ∧ k ≤ (((2 : ℚ_[2]) ^ k)⁻¹).valuation) ∧
+    (k ≤ (1 : ℚ_[2]).valuation ∧ k ≤ ((1 : ℚ_[2])⁻¹).valuation) := by
+  have h := rScale_valuation k (one_ne_zero : (1 : ℚ_[2]) ≠ 0)
+  rw [mul_one] at h
+  rw [Padic.valuation_inv, Padic.valuation_inv, h]
+  simp; omega
+
+-- Statement: moving the ball AND conjugating the inversion by `2 ^ k`, the overlap on nonzero points
+-- is exactly the valuation-`k` shell.
+example (k : ℤ) {x : ℚ_[2]} (hx : x ≠ 0) :
+    (k ≤ x.valuation ∧ k ≤ ((2 : ℚ_[2]) ^ k * ((2 : ℚ_[2]) ^ (-k) * x)⁻¹).valuation) ↔
+      x.valuation = k := by
+  have h2k : (2 : ℚ_[2]) ^ (-k) ≠ 0 := zpow_ne_zero _ (by norm_num)
+  rw [rScale_valuation k (inv_ne_zero (mul_ne_zero h2k hx)), Padic.valuation_inv,
+    rScale_valuation (-k) hx]
+  omega
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check (enable per theorem once proved) -/
@@ -371,4 +491,11 @@ open ZeroParadox
 #print axioms rInvRelIso
 #print axioms sphere_exchange
 #print axioms sphere_polarity_swap
+-- § VIII: sideways (unit) and up (doubling) on ℚ₂.
+#print axioms unitDoubleStep
+#print axioms unitDouble_reach_mono
+#print axioms unitDouble_reach_iff
+#print axioms unitDouble_mutual_iff
+#print axioms unitDouble_zero_isolated
+#print axioms unitDouble_reach_inv
 end PurityCheck
