@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2589,
+        "declarations": 2598,
         "files": 181
       },
       "entries": [
@@ -10987,6 +10987,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1ab05440-4c21-4457-99fe-301a06eea100",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_conj_upV",
+            "short": "rInv_conj_upV"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_conj_upV",
+            "short": "rInv_conj_upV",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1abd647e-ed07-4e4e-bb0e-009396010809",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -15247,6 +15286,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2701d0b1-590d-4151-accb-ec9b73030069",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.downV_upV",
+            "short": "downV_upV"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.downV_upV",
+            "short": "downV_upV",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2703a0e6-79ae-4520-927e-28753313003b",
           "new": {
@@ -19329,6 +19407,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "30ac12f0-60c1-4b07-b332-6a1b49693a6d",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.upV_eq_downV_rScale_one",
+            "short": "upV_eq_downV_rScale_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.upV_eq_downV_rScale_one",
+            "short": "upV_eq_downV_rScale_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "30d8cbf2-309f-4bcd-bf2d-cacd10300a3d",
           "new": {
@@ -20002,6 +20119,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "32b4c389-b733-4b0b-b790-6e9c6853af37",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.upV_downV",
+            "short": "upV_downV"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.upV_downV",
+            "short": "upV_downV",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32482,8 +32638,8 @@
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.unitDouble_zero_isolated",
-            "short": "unitDouble_zero_isolated"
+            "qualified": "ZeroParadox.unitDouble_zero_own_class",
+            "short": "unitDouble_zero_own_class"
           },
           "old": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -32505,7 +32661,7 @@
               "face"
             ]
           },
-          "reason": "Sideways and up on the 2-adic numbers: unit multiplication and doubling; reachability is valuation order, classes are the shells, inversion reverses the ladder",
+          "reason": "Renamed: 'isolated' read as topological isolation of 0 of Q_2, which is false; 0 is its own one-point reachability class",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -45615,6 +45771,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "792d2c8e-e4f6-4829-89a7-7d9d37291368",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_conj_mulLeft",
+            "short": "rInv_conj_mulLeft"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rInv_conj_mulLeft",
+            "short": "rInv_conj_mulLeft",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "796e1520-095e-4ce1-a46a-1551dc1a2bfe",
           "new": {
             "file": "ZeroParadox/Computability/Kleene.lean",
@@ -47611,6 +47806,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7e337a72-d9a4-4f1c-a4d2-6eebd4f68687",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.upV",
+            "short": "upV"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.upV",
+            "short": "upV",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7e6ae304-4385-4db2-9f16-432df2d3eac2",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCornersBridge.lean",
@@ -48517,6 +48751,45 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "810a7243-f4f5-40bf-b005-677a97056baa",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.downV",
+            "short": "downV"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.downV",
+            "short": "downV",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -77328,6 +77601,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ce248044-25f2-4b27-ae25-560c687e0b9a",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.upV_rScale_two",
+            "short": "upV_rScale_two"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.upV_rScale_two",
+            "short": "upV_rScale_two",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ce2e08bc-39fd-4ed7-8ef1-c1e8a353becd",
           "new": {
@@ -80469,6 +80781,45 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d6ea72d3-ee78-4d02-b948-ea5c5186f77e",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.upV_rScale_one_upV",
+            "short": "upV_rScale_one_upV"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.upV_rScale_one_upV",
+            "short": "upV_rScale_one_upV",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX: rounding the 2-adic valuation to an even landing (UP/DOWN), the flip conjugating one into the other, and rInv conjugating multiplication by u into multiplication by u^-1",
           "verify": {
             "axioms": null,
             "sorry_free": true
