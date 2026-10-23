@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2600,
+        "declarations": 2601,
         "files": 181
       },
       "entries": [
@@ -42767,6 +42767,41 @@
             ]
           },
           "reason": "phase-order arc r2 fixes: rename F3, extremal-placement characterization (P2), floor-above epsilon0 landing (P3)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "70e37e40-14c6-4384-8315-cd83449fdac9",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.valuation_eq_zero_of_norm_eq_one",
+            "short": "valuation_eq_zero_of_norm_eq_one"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.valuation_eq_zero_of_norm_eq_one",
+            "short": "valuation_eq_zero_of_norm_eq_one",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "RiemannSphere § VIII: private helper, norm 1 implies valuation 0 on Q_[2], shared by unitDouble_reach_mono and the units-only control",
           "verify": {
             "axioms": null,
             "sorry_free": true

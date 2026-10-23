@@ -2,6 +2,7 @@ import Mathlib.Topology.Compactification.OnePoint.Basic
 import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
 import Mathlib.NumberTheory.Padics.ProperSpace
 import ZeroParadox.Die
+import ZeroParadox.Algebra.WheelFrac
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -25,8 +26,8 @@ This file builds the **topological Riemann sphere over ℚ₂** — the one-poin
 result `rInvHomeo` is that this map is a **homeomorphism** of the sphere, and `rInv_swaps` is that it
 **swaps the floor `0` with the point at infinity `∞`** (the 0=∞ antipodality, made literal).
 
-The content is genuinely beyond Mathlib's field inversion, which uses `0⁻¹ = 0` and is therefore
-*discontinuous at 0*; adjoining `∞` and sending `0 ↦ ∞` is exactly what *repairs* that discontinuity.
+Mathlib's field inversion uses `0⁻¹ = 0` and is *discontinuous at 0* (beside `Sphere` and a wheel: the
+`example` after `rInv_swaps`); adjoining `∞` and sending `0 ↦ ∞` *repairs* that discontinuity.
 The real work is the two continuity proofs at the special points (as `x → 0`, `x⁻¹ → ∞`; symmetrically at
 `∞`), which go through `OnePoint`'s neighborhood-of-∞ API (`nhds_infty_eq`, the cocompact filter) and the
 fact that `ℚ_[2]` is a `ProperSpace` (closed balls compact, so leaving every compact ⟺ norm → ∞).
@@ -152,6 +153,19 @@ theorem rInv_swaps :
     rInvHomeo (OnePoint.some (0 : ℚ_[2])) = ∞ ∧ rInvHomeo ∞ = OnePoint.some (0 : ℚ_[2]) :=
   ⟨rInv_zero, rInv_infty⟩
 
+-- Statement: `(0 : ℚ_[2])⁻¹ = 0` (Mathlib's junk value), `rInv` sends `0` of `ℚ_[2]` to `∞` of `Sphere`
+-- (`rInv_zero`), and in the wheel of fractions over `ℚ_[2]` at the trivial submonoid `wheelInf` differs
+-- from both `Wheel.wzero` (`wheelFrac_fork_open`) and `wheelBot` (`inf_ne_bot`).
+-- Reading: CARRIER — "what is 1/0" has three answers in three carriers: `0` in the field `ℚ_[2]`, `∞`
+-- of `Sphere`, and in `WheelFrac` a `wheelInf` plus a distinct `wheelBot` (0·/0) that `Sphere` lacks.
+example :
+    (0 : ℚ_[2])⁻¹ = 0 ∧ rInv (OnePoint.some (0 : ℚ_[2])) = ∞ ∧
+    (wheelInf : WheelFrac (⊥ : Submonoid ℚ_[2])) ≠ Wheel.wzero ∧
+    (wheelInf : WheelFrac (⊥ : Submonoid ℚ_[2])) ≠ wheelBot := by
+  have h0 : (0 : ℚ_[2]) ∉ (⊥ : Submonoid ℚ_[2]) := by
+    rw [Submonoid.mem_bot]; exact zero_ne_one
+  exact ⟨inv_zero, rInv_zero, (wheelFrac_fork_open _ h0).symm, inf_ne_bot _ h0⟩
+
 /-! ### § V. The maps that FIX the pole-pair, and why that makes it an AXIS
 
 `rInv` **exchanges** `0` and `∞`. The scalings `x ↦ 2 ^ n * x` hold both still and translate along the
@@ -245,6 +259,16 @@ example (z : Sphere) :
       · subst hx; simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, rInv]
       · rw [rInv_coe_ne hx]
         simp [Matrix.GeneralLinearGroup.mkOfDetNeZero, hx, one_div]
+
+-- Statement: for any nonzero `u`, multiplication by `u` (as in `stabiliser_is_bigger`) IS the Mathlib
+-- action of `diag(u, 1)`.
+example (u : ℚ_[2]) (hu : u ≠ 0) (z : Sphere) :
+    (Matrix.GeneralLinearGroup.mkOfDetNeZero !![u, 0; 0, 1]
+      (by simpa [Matrix.det_fin_two_of] using hu)) • z =
+      (Homeomorph.onePointCongr (Homeomorph.mulLeft₀ u hu)) z := by
+  induction z using OnePoint.rec with
+  | infty => rw [OnePoint.smul_infty_eq_ite]; simp [Matrix.GeneralLinearGroup.mkOfDetNeZero]
+  | coe x => rw [OnePoint.smul_some_eq_ite]; simp [Matrix.GeneralLinearGroup.mkOfDetNeZero]
 
 /-! ### § VI. The parameter is a COORDINATE, and the scalings are a group action
 
@@ -348,11 +372,18 @@ valuation shells (`unitDouble_mutual_iff`), ordered one way by valuation (`unitD
 every move fixes `0` of `ℚ_[2]`, its own one-point class (`unitDouble_zero_own_class`). Doubling raises
 valuation and halves the norm: down toward `0` of `ℚ_[2]` in the `sNorm` preorder (§ VII).
 
-Standard frame, on nonzero points only: the divisibility order of a discrete valuation ring; at `0`
-of `ℚ_[2]` the two orders part. Both are the `example`s after `unitDouble_zero_own_class`. -/
+Standard frame, on nonzero points only: the value group of the valuation ring `ℤ_[2]` (Mathlib
+`ValuationRing.ValueGroup`; Stacks 00ID); at `0` of `ℚ_[2]` the orders part. `example`s after
+`unitDouble_zero_own_class`. -/
 
 /-- `Statement:` one move multiplies by a unit (norm `1`) or by `2`. -/
 def unitDoubleStep (x y : ℚ_[2]) : Prop := (∃ u : ℚ_[2], ‖u‖ = 1 ∧ y = u * x) ∨ y = 2 * x
+
+/-- `Statement:` a point of `ℚ_[2]` of norm `1` has valuation `0`. -/
+private theorem valuation_eq_zero_of_norm_eq_one {u : ℚ_[2]} (hu : ‖u‖ = 1) : u.valuation = 0 := by
+  have h1 := (Padic.norm_le_one_iff_val_nonneg u).1 hu.le
+  have h2 := (Padic.norm_le_one_iff_val_nonneg u⁻¹).1 (by rw [norm_inv, hu, inv_one])
+  rw [Padic.valuation_inv] at h2; omega
 
 /-- `Statement:` from a nonzero `x`, every point reachable by `unitDoubleStep` is nonzero and has
     valuation at least `x.valuation`. -/
@@ -367,12 +398,8 @@ theorem unitDouble_reach_mono {x y : ℚ_[2]} (hx : x ≠ 0)
     obtain ⟨hb, hv⟩ := ih
     rcases hm with ⟨u, hu, rfl⟩ | rfl
     · have hu0 : u ≠ 0 := by rintro rfl; simp at hu
-      have huv : u.valuation = 0 := by
-        have h1 := (Padic.norm_le_one_iff_val_nonneg u).1 hu.le
-        have h2 := (Padic.norm_le_one_iff_val_nonneg u⁻¹).1 (by rw [norm_inv, hu, inv_one])
-        rw [Padic.valuation_inv] at h2; omega
       refine ⟨mul_ne_zero hu0 hb, ?_⟩
-      rw [Padic.valuation_mul hu0 hb, huv]; omega
+      rw [Padic.valuation_mul hu0 hb, valuation_eq_zero_of_norm_eq_one hu]; omega
     · refine ⟨mul_ne_zero h2 hb, ?_⟩
       rw [Padic.valuation_mul h2 hb, hv2]; omega
 
@@ -416,9 +443,8 @@ theorem unitDouble_zero_own_class (x : ℚ_[2]) :
     subst ih
     rcases hm with ⟨u, _, rfl⟩ | rfl <;> simp
 
--- Statement: on nonzero points `x` reaches `y` iff `y / x` is a 2-adic integer, the divisibility
--- order of the discrete valuation ring `ℤ_[2]` (Mathlib `IsDiscreteValuationRing.addVal_le_iff_dvd`,
--- `PadicInt.unitCoeff_spec`).
+-- Statement: on nonzero points `x` reaches `y` iff `‖y / x‖ ≤ 1`, i.e. `y ∈ x · ℤ_[2]`: the order of
+-- `ValuationRing.ValueGroup`, whose unit orbits are the cells of `unitDouble_mutual_iff`.
 example {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
     Relation.ReflTransGen unitDoubleStep x y ↔ ‖y / x‖ ≤ 1 := by
   rw [unitDouble_reach_iff hx hy, Padic.norm_le_one_iff_val_nonneg, div_eq_mul_inv,
@@ -430,6 +456,12 @@ example {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
 example :
     (1 : ℤ_[2]) ∣ 0 ∧ ‖(0 : ℚ_[2]) / 1‖ ≤ 1 ∧ ¬ Relation.ReflTransGen unitDoubleStep 1 0 :=
   ⟨dvd_zero 1, by simp, (unitDouble_zero_own_class 1).1 one_ne_zero⟩
+
+-- Statement: control, `x = 0`: `‖1 / 0‖ ≤ 1` (`1 / 0 = 0`, after `rInv_swaps`) yet `0 ∤ 1`, no reach.
+example :
+    ‖(1 : ℚ_[2]) / 0‖ ≤ 1 ∧ ¬ (0 : ℤ_[2]) ∣ 1 ∧ ¬ Relation.ReflTransGen unitDoubleStep 0 1 :=
+  ⟨by simp, by rw [zero_dvd_iff]; exact one_ne_zero,
+   fun h => one_ne_zero ((unitDouble_zero_own_class 1).2 h)⟩
 
 /-- `Statement:` on nonzero points, `x` reaches `y` iff `y⁻¹` reaches `x⁻¹`.
     `Reading:` **INVERSION** — reachability is the valuation order (`unitDouble_reach_iff`) and field
@@ -457,12 +489,8 @@ example {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
       obtain ⟨hb, hv⟩ := ih
       obtain ⟨u, hu, rfl⟩ := hm
       have hu0 : u ≠ 0 := by rintro rfl; simp at hu
-      have huv : u.valuation = 0 := by
-        have h1 := (Padic.norm_le_one_iff_val_nonneg u).1 hu.le
-        have h2 := (Padic.norm_le_one_iff_val_nonneg u⁻¹).1 (by rw [norm_inv, hu, inv_one])
-        rw [Padic.valuation_inv] at h2; omega
       refine ⟨mul_ne_zero hu0 hb, ?_⟩
-      rw [Padic.valuation_mul hu0 hb, huv]; omega
+      rw [Padic.valuation_mul hu0 hb, valuation_eq_zero_of_norm_eq_one hu]; omega
   · intro h
     have hd : y / x ≠ 0 := div_ne_zero hy hx
     have hv : (y / x).valuation = 0 := by
@@ -510,8 +538,8 @@ bottom (on nonzero points, higher valuation higher); along `sNorm` itself up and
 `upClosure` is UP as a `ClosureOperator` there. Cell width `2`: the landings, UP's fixed points, are
 `0` of `ℚ_[2]`, `∞` of `Sphere` and nonzero points of even valuation (`example` after `downV`).
 
-Standard frame: on valuations UP is ceiling and DOWN floor onto the even integers (UP: `example`
-after `downV`); `rInv_conj_upV` carries Mathlib's `Int.ceil_neg` / `Int.floor_neg` through `rInv`. -/
+Standard frame: on valuations UP is ceiling and DOWN floor onto the even integers (`example`s after
+`downV`); the integer content of `rInv_conj_upV` is ⌈−a⌉ = −⌊a⌋ (`Int.ceil_neg`, `example` there). -/
 
 /-- `Statement:` UP: `∞ ↦ ∞` and `x ↦ 2 ^ (v mod 2) * x`, with `v` the valuation of `x`. -/
 noncomputable def upV : Sphere → Sphere
@@ -560,6 +588,27 @@ example {x : ℚ_[2]} (hx : x ≠ 0) :
       have : x.valuation ≤ ((x.valuation + 1) / 2 : ℤ) * 2 := by omega
       exact_mod_cast this
   rw [this]; omega
+
+-- Statement: on nonzero `x`, DOWN sends the valuation `v` to `2 * ⌊v / 2⌋`, the floor onto the even
+-- integers.
+example {x : ℚ_[2]} (hx : x ≠ 0) :
+    ((2 : ℚ_[2]) ^ (-(x.valuation % 2)) * x).valuation = 2 * ⌊(x.valuation : ℚ) / 2⌋ := by
+  rw [rScale_valuation _ hx]
+  have : ⌊(x.valuation : ℚ) / 2⌋ = x.valuation / 2 := by
+    rw [Int.floor_eq_iff]
+    constructor
+    · rw [le_div_iff₀ (by norm_num)]
+      have : ((x.valuation / 2 : ℤ)) * 2 ≤ x.valuation := by omega
+      exact_mod_cast this
+    · rw [div_lt_iff₀ (by norm_num)]
+      have : x.valuation < ((x.valuation / 2 : ℤ) + 1) * 2 := by omega
+      exact_mod_cast this
+  rw [this]; omega
+
+-- Statement: for every integer `v`, `2 * ⌈-v / 2⌉ = -(2 * ⌊v / 2⌋)`: rounding up after negating is
+-- rounding down then negating, the valuation form of `rInv_conj_upV`.
+example (v : ℤ) : 2 * ⌈-(v : ℚ) / 2⌉ = -(2 * ⌊(v : ℚ) / 2⌋) := by
+  rw [neg_div, Int.ceil_neg]; ring
 
 -- Statement: on nonzero `x`, UP lands on an even valuation at or above `v`, and DOWN on one at or below.
 example {x : ℚ_[2]} (hx : x ≠ 0) :
@@ -636,10 +685,13 @@ theorem sNorm_coe_le_iff {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
     zpow_le_zpow_iff_right₀ (by norm_num), neg_le_neg_iff]
 
 /-- `Statement:` UP as a Mathlib `ClosureOperator` (monotone, extensive, idempotent) on the reverse
-    of § VII's `sNorm` preorder, where `0` of `ℚ_[2]` is top and `∞` of `Sphere` bottom.
-    `Reading:` **INVERSION** — through an order-reversing map a closure conjugates to a closure on
-    the order dual (`ClosureOperator.conjBy`), the corpus's kernel form (`keepAboveKernel`,
-    `pruneKernel`); `rInv_conj_upV` has that shape. -/
+    of § VII's `sNorm` preorder, where `0` of `ℚ_[2]` is top and `∞` of `Sphere` bottom. On
+    valuations it is the closure of the ceiling Galois connection (`Int.gc_ceil_coe`) onto the even
+    integers; compare the ceiling `ClosureOperator ℝ` in `ZeroParadox/Order/UpAndOver.lean`. `Sphere`
+    is no `UpAndOver` member: that structure takes `[PartialOrder α]` and this is a preorder.
+    `Reading:` **INVERSION** — `rInv` is an order isomorphism to the order dual, and `conjBy` along
+    it carries `upClosure` to `downV`, the corpus's kernel form (`keepAboveKernel`, `pruneKernel`):
+    the `example` after this definition. -/
 noncomputable def upClosure :
     @ClosureOperator Sphere (Preorder.lift (fun s => OrderDual.toDual (sNorm s))) :=
   letI : Preorder Sphere := Preorder.lift (fun s => OrderDual.toDual (sNorm s))
@@ -682,6 +734,20 @@ noncomputable def upClosure :
     idempotent' := fun a => by
       show upV (upV a) = upV a
       rw [← downV_upV a, upV_downV] }
+
+-- Statement: on the reverse `sNorm` preorder, `rInv` is an order isomorphism `Sphere ≃o Sphereᵒᵈ`, and
+-- `upClosure.conjBy` along it is `downV` at every point of `Sphere`.
+example (z : Sphere) :
+    letI : Preorder Sphere := Preorder.lift (fun s => OrderDual.toDual (sNorm s))
+    ∃ e : Sphere ≃o Sphereᵒᵈ, (∀ s, OrderDual.ofDual (e s) = rInv s) ∧
+      OrderDual.ofDual ((upClosure.conjBy e) (OrderDual.toDual z)) = downV z := by
+  letI : Preorder Sphere := Preorder.lift (fun s => OrderDual.toDual (sNorm s))
+  refine ⟨{ toEquiv := rInvHomeo.toEquiv.trans OrderDual.toDual
+            map_rel_iff' := fun {a b} => by
+              show sNorm (rInv a) ≤ sNorm (rInv b) ↔ sNorm b ≤ sNorm a
+              exact rInv_reverses a b }, fun _ => rfl, ?_⟩
+  show rInv (upV (rInv z)) = downV z
+  exact rInv_conj_upV z
 
 /-- `Statement:` UP commutes with `rScale 2`, a zoom by one full cell. -/
 theorem upV_rScale_two (z : Sphere) : upV (rScale 2 z) = rScale 2 (upV z) := by
@@ -744,8 +810,8 @@ example : upV (rInv (OnePoint.some 2)) ≠ rInv (upV (OnePoint.some 2)) := by
 /-- `Statement:` for nonzero `u`, conjugating multiplication by `u` (as in `stabiliser_is_bigger`) by
     `rInv` gives multiplication by `u⁻¹`, at every point of `Sphere`.
     `Reading:` **INVERSION** — the twin of `rInv_conj_rScale` for an arbitrary nonzero factor, units
-    of norm `1` included; in § V's Möbius terms (`OnePoint.instGLAction`, § V's two `example`s), the
-    Weyl element conjugating `diag(u, 1)`. -/
+    of norm `1` included; in § V's Möbius terms (`OnePoint.instGLAction`; § V's `diag(u, 1)` and
+    Weyl `example`s), the Weyl element conjugating `diag(u, 1)`. -/
 theorem rInv_conj_mulLeft (u : ℚ_[2]) (hu : u ≠ 0) (z : Sphere) :
     rInv ((Homeomorph.onePointCongr (Homeomorph.mulLeft₀ u hu)) (rInv z)) =
       (Homeomorph.onePointCongr (Homeomorph.mulLeft₀ u⁻¹ (inv_ne_zero hu))) z := by
@@ -796,6 +862,7 @@ open ZeroParadox
 #print axioms sphere_polarity_swap
 -- § VIII: sideways (unit) and up by valuation (doubling) on ℚ₂.
 #print axioms unitDoubleStep
+#print axioms valuation_eq_zero_of_norm_eq_one
 #print axioms unitDouble_reach_mono
 #print axioms unitDouble_reach_iff
 #print axioms unitDouble_mutual_iff
