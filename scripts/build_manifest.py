@@ -115,7 +115,7 @@ DOMAIN = {
     "Multihomed": "Multi-homed bridges (ZP-H)", "Settheory": "Set theory / AFA (ZP-J)",
     "Computability": "Computability (ZP-K, ZP-J)", "Ordinal": "Ordinals / proof theory (ZP-L, ZP-M, ZP-N)",
     "Algebra": "Algebra / wheel (ZP-J)", "Meta": "Meta / tooling (not framework content)",
-    "Vendored": "Vendored external code (Mathlib / CGT)", "(root)": "Root",
+    "Vendored": "Vendored external code (Mathlib / CGT / GuardianEngineAI corpus auditor)", "(root)": "Root",
 }
 ORDER = ["Order","Valuation","Information","State","Reals","Category","Multihomed","Settheory",
          "Computability","Ordinal","Algebra","(root)","Meta","Vendored"]
