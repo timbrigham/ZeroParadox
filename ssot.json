@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2598,
+        "declarations": 2600,
         "files": 181
       },
       "entries": [
@@ -48620,6 +48620,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8091e0a0-a1d3-4057-a4a5-5ff21c172804",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.upClosure",
+            "short": "upClosure"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.upClosure",
+            "short": "upClosure",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX (UPDOWN-R2-1c): UP packaged as a ClosureOperator on the reverse sNorm preorder, with the nonzero-point sNorm/valuation comparison it uses",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "809c24f3-a260-415d-8622-335762c0dedb",
           "new": {
             "file": "ZeroParadox/Valuation/BottomInvariant.lean",
@@ -78950,6 +78989,45 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d1e456ff-81d1-4343-9591-6d2e9fa875ef",
+          "new": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.sNorm_coe_le_iff",
+            "short": "sNorm_coe_le_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Valuation/RiemannSphere.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.sNorm_coe_le_iff",
+            "short": "sNorm_coe_le_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "RiemannSphere § IX (UPDOWN-R2-1c): UP packaged as a ClosureOperator on the reverse sNorm preorder, with the nonzero-point sNorm/valuation comparison it uses",
           "verify": {
             "axioms": null,
             "sorry_free": true
