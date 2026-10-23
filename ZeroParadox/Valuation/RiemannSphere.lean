@@ -38,10 +38,10 @@ cross-construction "inversion = passing to Cᵒᵖ" unification, which a prior-a
 abstract ⊥↔⊤ swap is already Mathlib's `compl_bot`/`compl_top`). Do not read this as that.
 
 ## Structure
-- § I–IV `rInv`, `continuous_rInv`, `rInvHomeo`, `rInv_swaps` — the inversion and the 0↔∞ swap.
+- Opening (unheaded) `rInv`, `continuous_rInv`, `rInvHomeo`, `rInv_swaps` — inversion, the 0↔∞ swap.
 - § V–VI `rScale`, `rInv_conj_rScale`, `rScale_valuation` — pole-fixing scalings, a valuation coordinate.
 - § VII–VIII `sNorm`, `rInvRelIso`, `unitDouble_reach_iff` — the norm preorder; unit and doubling moves.
-- § IX `upV`, `downV`, `rInv_conj_upV` — rounding the valuation to a landing, and the flip between them.
+- § IX `upV`, `downV`, `upClosure`, `rInv_conj_upV` — rounding the valuation to a landing; the flip.
 -/
 
 namespace ZeroParadox
@@ -348,8 +348,8 @@ valuation shells (`unitDouble_mutual_iff`), ordered one way by valuation (`unitD
 every move fixes `0` of `ℚ_[2]`, its own one-point class (`unitDouble_zero_own_class`). Doubling raises
 valuation and halves the norm: down toward `0` of `ℚ_[2]` in the `sNorm` preorder (§ VII).
 
-Standard frame: `x` reaches `y` iff `y / x` is a 2-adic integer, the divisibility order of a discrete
-valuation ring (Mathlib `IsDiscreteValuationRing.addVal_le_iff_dvd`, `PadicInt.unitCoeff_spec`). -/
+Standard frame, on nonzero points only: the divisibility order of a discrete valuation ring; at `0`
+of `ℚ_[2]` the two orders part. Both are the `example`s after `unitDouble_zero_own_class`. -/
 
 /-- `Statement:` one move multiplies by a unit (norm `1`) or by `2`. -/
 def unitDoubleStep (x y : ℚ_[2]) : Prop := (∃ u : ℚ_[2], ‖u‖ = 1 ∧ y = u * x) ∨ y = 2 * x
@@ -368,11 +368,9 @@ theorem unitDouble_reach_mono {x y : ℚ_[2]} (hx : x ≠ 0)
     rcases hm with ⟨u, hu, rfl⟩ | rfl
     · have hu0 : u ≠ 0 := by rintro rfl; simp at hu
       have huv : u.valuation = 0 := by
-        rw [Padic.norm_eq_zpow_neg_valuation hu0] at hu
-        have : ((2 : ℕ) : ℝ) ^ (-u.valuation) = (2 : ℝ) ^ (0 : ℤ) := by rw [hu]; simp
-        push_cast at this
-        have := zpow_right_injective₀ (by norm_num : (0 : ℝ) < 2) (by norm_num) this
-        omega
+        have h1 := (Padic.norm_le_one_iff_val_nonneg u).1 hu.le
+        have h2 := (Padic.norm_le_one_iff_val_nonneg u⁻¹).1 (by rw [norm_inv, hu, inv_one])
+        rw [Padic.valuation_inv] at h2; omega
       refine ⟨mul_ne_zero hu0 hb, ?_⟩
       rw [Padic.valuation_mul hu0 hb, huv]; omega
     · refine ⟨mul_ne_zero h2 hb, ?_⟩
@@ -418,6 +416,21 @@ theorem unitDouble_zero_own_class (x : ℚ_[2]) :
     subst ih
     rcases hm with ⟨u, _, rfl⟩ | rfl <;> simp
 
+-- Statement: on nonzero points `x` reaches `y` iff `y / x` is a 2-adic integer, the divisibility
+-- order of the discrete valuation ring `ℤ_[2]` (Mathlib `IsDiscreteValuationRing.addVal_le_iff_dvd`,
+-- `PadicInt.unitCoeff_spec`).
+example {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
+    Relation.ReflTransGen unitDoubleStep x y ↔ ‖y / x‖ ≤ 1 := by
+  rw [unitDouble_reach_iff hx hy, Padic.norm_le_one_iff_val_nonneg, div_eq_mul_inv,
+    Padic.valuation_mul hy (inv_ne_zero hx), Padic.valuation_inv]; omega
+
+-- Statement: control, at `0` of `ℚ_[2]` the orders part: `1` divides `0` in `ℤ_[2]` and `0 / 1` is a
+-- 2-adic integer, yet `1` does not reach `0`: divisibility puts `0` on top, reachability in its own
+-- class (`unitDouble_zero_own_class`).
+example :
+    (1 : ℤ_[2]) ∣ 0 ∧ ‖(0 : ℚ_[2]) / 1‖ ≤ 1 ∧ ¬ Relation.ReflTransGen unitDoubleStep 1 0 :=
+  ⟨dvd_zero 1, by simp, (unitDouble_zero_own_class 1).1 one_ne_zero⟩
+
 /-- `Statement:` on nonzero points, `x` reaches `y` iff `y⁻¹` reaches `x⁻¹`.
     `Reading:` **INVERSION** — reachability is the valuation order (`unitDouble_reach_iff`) and field
     inversion negates valuation, so it reverses the order, as any valuation-negating map would. On
@@ -445,11 +458,9 @@ example {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
       obtain ⟨u, hu, rfl⟩ := hm
       have hu0 : u ≠ 0 := by rintro rfl; simp at hu
       have huv : u.valuation = 0 := by
-        rw [Padic.norm_eq_zpow_neg_valuation hu0] at hu
-        have : ((2 : ℕ) : ℝ) ^ (-u.valuation) = (2 : ℝ) ^ (0 : ℤ) := by rw [hu]; simp
-        push_cast at this
-        have := zpow_right_injective₀ (by norm_num : (0 : ℝ) < 2) (by norm_num) this
-        omega
+        have h1 := (Padic.norm_le_one_iff_val_nonneg u).1 hu.le
+        have h2 := (Padic.norm_le_one_iff_val_nonneg u⁻¹).1 (by rw [norm_inv, hu, inv_one])
+        rw [Padic.valuation_inv] at h2; omega
       refine ⟨mul_ne_zero hu0 hb, ?_⟩
       rw [Padic.valuation_mul hu0 hb, huv]; omega
   · intro h
@@ -494,14 +505,13 @@ example (k : ℤ) {x : ℚ_[2]} (hx : x ≠ 0) :
 
 /-! ### § IX. Rounding to landings: UP, DOWN, and the flip
 
-Scope: cell width `2`; the landings are `0` of `ℚ_[2]`, `∞` of `Sphere`, and nonzero points of even
-valuation. Up and down are in the order where higher valuation is higher; along `sNorm` (§ VII) they
-exchange.
+Order: the reverse of § VII's `sNorm` preorder, `0` of `ℚ_[2]` on top and `∞` of `Sphere` at the
+bottom (on nonzero points, higher valuation higher); along `sNorm` itself up and down exchange.
+`upClosure` is UP as a `ClosureOperator` there. Cell width `2`: the landings, UP's fixed points, are
+`0` of `ℚ_[2]`, `∞` of `Sphere` and nonzero points of even valuation (`example` after `downV`).
 
-Standard frame: conjugating a closure operator by an order isomorphism gives a closure operator
-(`ClosureOperator.conjBy`, `Mathlib/Order/Closure.lean`); through an order-reversing map it is a closure
-on the order dual, the corpus's kernel form (`keepAboveKernel`, `pruneKernel`). `rInv_conj_upV` has
-that shape; `upV` is not packaged here as a `ClosureOperator`. -/
+Standard frame: on valuations UP is ceiling and DOWN floor onto the even integers (UP: `example`
+after `downV`); `rInv_conj_upV` carries Mathlib's `Int.ceil_neg` / `Int.floor_neg` through `rInv`. -/
 
 /-- `Statement:` UP: `∞ ↦ ∞` and `x ↦ 2 ^ (v mod 2) * x`, with `v` the valuation of `x`. -/
 noncomputable def upV : Sphere → Sphere
@@ -513,6 +523,44 @@ noncomputable def downV : Sphere → Sphere
   | (∞ : Sphere) => ∞
   | OnePoint.some x => OnePoint.some ((2 : ℚ_[2]) ^ (-(x.valuation % 2)) * x)
 
+-- Statement: the fixed points of UP are exactly `∞` of `Sphere`, `0` of `ℚ_[2]`, and the nonzero
+-- points of even valuation.
+example (z : Sphere) : upV z = z ↔
+    z = ∞ ∨ z = OnePoint.some 0 ∨ ∃ x : ℚ_[2], x ≠ 0 ∧ x.valuation % 2 = 0 ∧ z = OnePoint.some x := by
+  induction z using OnePoint.rec with
+  | infty => simp [upV]
+  | coe x =>
+    by_cases hx : x = 0
+    · subst hx; simp [upV]
+    · constructor
+      · intro h
+        refine Or.inr (Or.inr ⟨x, hx, ?_, rfl⟩)
+        have h' : (2 : ℚ_[2]) ^ (x.valuation % 2) * x = x := OnePoint.coe_injective h
+        have := congrArg Padic.valuation h'
+        rw [rScale_valuation _ hx] at this; omega
+      · rintro (h | h | ⟨y, -, hv, h⟩)
+        · exact absurd h (OnePoint.coe_ne_infty x)
+        · exact absurd (OnePoint.coe_injective h) hx
+        · obtain rfl := OnePoint.coe_injective h
+          show OnePoint.some ((2 : ℚ_[2]) ^ (x.valuation % 2) * x) = _
+          rw [hv, zpow_zero, one_mul]
+
+-- Statement: on nonzero `x`, UP sends the valuation `v` to `2 * ⌈v / 2⌉`, the ceiling onto the even
+-- integers.
+example {x : ℚ_[2]} (hx : x ≠ 0) :
+    ((2 : ℚ_[2]) ^ (x.valuation % 2) * x).valuation = 2 * ⌈(x.valuation : ℚ) / 2⌉ := by
+  rw [rScale_valuation _ hx]
+  have : ⌈(x.valuation : ℚ) / 2⌉ = (x.valuation + 1) / 2 := by
+    rw [Int.ceil_eq_iff]
+    constructor
+    · rw [lt_div_iff₀ (by norm_num)]
+      have : (((x.valuation + 1) / 2 : ℤ) - 1) * 2 < x.valuation := by omega
+      exact_mod_cast this
+    · rw [div_le_iff₀ (by norm_num)]
+      have : x.valuation ≤ ((x.valuation + 1) / 2 : ℤ) * 2 := by omega
+      exact_mod_cast this
+  rw [this]; omega
+
 -- Statement: on nonzero `x`, UP lands on an even valuation at or above `v`, and DOWN on one at or below.
 example {x : ℚ_[2]} (hx : x ≠ 0) :
     ((2 : ℚ_[2]) ^ (x.valuation % 2) * x).valuation % 2 = 0 ∧
@@ -522,8 +570,9 @@ example {x : ℚ_[2]} (hx : x ≠ 0) :
   rw [rScale_valuation _ hx, rScale_valuation _ hx]; omega
 
 /-- `Statement:` `rInv (upV (rInv z)) = downV z` at every point of `Sphere`.
-    `Reading:` **INVERSION** — conjugating the round-up map by the valuation-negating `rInv` gives the
-    round-down map; compare `rInv_conj_rScale`. -/
+    `Reading:` **INVERSION** — conjugating the round-up map by `rInv`, valuation-negating on nonzero
+    points and order-reversing on the reverse `sNorm` preorder (§ IX head), gives the round-down map;
+    compare `rInv_conj_rScale`. -/
 theorem rInv_conj_upV (z : Sphere) : rInv (upV (rInv z)) = downV z := by
   have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
   induction z using OnePoint.rec with
@@ -578,6 +627,62 @@ theorem downV_upV (z : Sphere) : downV (upV z) = upV z := by
       rw [rScale_valuation _ hx, show (x.valuation % 2 + x.valuation) % 2 = 0 by omega,
         neg_zero, zpow_zero, one_mul]
 
+/-- `Statement:` on nonzero points, `sNorm x ≤ sNorm y` iff `y.valuation ≤ x.valuation`. -/
+theorem sNorm_coe_le_iff {x y : ℚ_[2]} (hx : x ≠ 0) (hy : y ≠ 0) :
+    sNorm (OnePoint.some x) ≤ sNorm (OnePoint.some y) ↔ y.valuation ≤ x.valuation := by
+  show ((‖x‖₊ : NNReal) : ENNReal) ≤ ((‖y‖₊ : NNReal) : ENNReal) ↔ _
+  rw [ENNReal.coe_le_coe, ← NNReal.coe_le_coe, coe_nnnorm, coe_nnnorm,
+    Padic.norm_eq_zpow_neg_valuation hx, Padic.norm_eq_zpow_neg_valuation hy,
+    zpow_le_zpow_iff_right₀ (by norm_num), neg_le_neg_iff]
+
+/-- `Statement:` UP as a Mathlib `ClosureOperator` (monotone, extensive, idempotent) on the reverse
+    of § VII's `sNorm` preorder, where `0` of `ℚ_[2]` is top and `∞` of `Sphere` bottom.
+    `Reading:` **INVERSION** — through an order-reversing map a closure conjugates to a closure on
+    the order dual (`ClosureOperator.conjBy`), the corpus's kernel form (`keepAboveKernel`,
+    `pruneKernel`); `rInv_conj_upV` has that shape. -/
+noncomputable def upClosure :
+    @ClosureOperator Sphere (Preorder.lift (fun s => OrderDual.toDual (sNorm s))) :=
+  letI : Preorder Sphere := Preorder.lift (fun s => OrderDual.toDual (sNorm s))
+  { toFun := upV
+    monotone' := by
+      intro a b hab
+      change sNorm b ≤ sNorm a at hab
+      change sNorm (upV b) ≤ sNorm (upV a)
+      induction a using OnePoint.rec with
+      | infty => exact le_top
+      | coe x =>
+        induction b using OnePoint.rec with
+        | infty => exact absurd (top_le_iff.mp hab) (by simp [sNorm])
+        | coe y =>
+          by_cases hy : y = 0
+          · subst hy; simp [upV, sNorm]
+          by_cases hx : x = 0
+          · subst hx
+            exfalso; apply hy
+            simpa [sNorm] using hab
+          · rw [sNorm_coe_le_iff hy hx] at hab
+            show sNorm (OnePoint.some ((2 : ℚ_[2]) ^ (y.valuation % 2) * y)) ≤
+              sNorm (OnePoint.some ((2 : ℚ_[2]) ^ (x.valuation % 2) * x))
+            rw [sNorm_coe_le_iff (mul_ne_zero (zpow_ne_zero _ (by norm_num)) hy)
+              (mul_ne_zero (zpow_ne_zero _ (by norm_num)) hx),
+              rScale_valuation _ hx, rScale_valuation _ hy]
+            omega
+    le_closure' := by
+      intro a
+      change sNorm (upV a) ≤ sNorm a
+      induction a using OnePoint.rec with
+      | infty => exact le_rfl
+      | coe x =>
+        by_cases hx : x = 0
+        · subst hx; simp [upV]
+        · show sNorm (OnePoint.some ((2 : ℚ_[2]) ^ (x.valuation % 2) * x)) ≤ sNorm (OnePoint.some x)
+          rw [sNorm_coe_le_iff (mul_ne_zero (zpow_ne_zero _ (by norm_num)) hx) hx,
+            rScale_valuation _ hx]
+          omega
+    idempotent' := fun a => by
+      show upV (upV a) = upV a
+      rw [← downV_upV a, upV_downV] }
+
 /-- `Statement:` UP commutes with `rScale 2`, a zoom by one full cell. -/
 theorem upV_rScale_two (z : Sphere) : upV (rScale 2 z) = rScale 2 (upV z) := by
   induction z using OnePoint.rec with
@@ -609,7 +714,8 @@ theorem upV_rScale_one_upV (z : Sphere) : upV (rScale 1 (upV z)) = rScale 2 (upV
         ← mul_assoc, ← zpow_add₀ h2]
       norm_num
 
--- Statement: control, UP does not commute with `rScale 1`: at `1` of `ℚ_[2]` the two orders differ.
+-- Statement: control, UP does not commute with `rScale 1`: at `1` of `ℚ_[2]` the two composites
+-- differ.
 example : upV (rScale 1 (OnePoint.some 1)) ≠ rScale 1 (upV (OnePoint.some 1)) := by
   have hv : (2 : ℚ_[2]).valuation = 1 := by
     have := Padic.valuation_p (p := 2); exact_mod_cast this
@@ -621,7 +727,8 @@ example : upV (rScale 1 (OnePoint.some 1)) ≠ rScale 1 (upV (OnePoint.some 1)) 
   have := OnePoint.coe_injective h
   norm_num at this
 
--- Statement: control, UP does not commute with `rInv`: at `2` of `ℚ_[2]` the two orders differ.
+-- Statement: control, UP does not commute with `rInv`: at `2` of `ℚ_[2]` the two composites
+-- differ.
 example : upV (rInv (OnePoint.some 2)) ≠ rInv (upV (OnePoint.some 2)) := by
   have hv : (2 : ℚ_[2]).valuation = 1 := by
     have := Padic.valuation_p (p := 2); exact_mod_cast this
@@ -637,7 +744,8 @@ example : upV (rInv (OnePoint.some 2)) ≠ rInv (upV (OnePoint.some 2)) := by
 /-- `Statement:` for nonzero `u`, conjugating multiplication by `u` (as in `stabiliser_is_bigger`) by
     `rInv` gives multiplication by `u⁻¹`, at every point of `Sphere`.
     `Reading:` **INVERSION** — the twin of `rInv_conj_rScale` for an arbitrary nonzero factor, units
-    of norm `1` included. -/
+    of norm `1` included; in § V's Möbius terms (`OnePoint.instGLAction`, § V's two `example`s), the
+    Weyl element conjugating `diag(u, 1)`. -/
 theorem rInv_conj_mulLeft (u : ℚ_[2]) (hu : u ≠ 0) (z : Sphere) :
     rInv ((Homeomorph.onePointCongr (Homeomorph.mulLeft₀ u hu)) (rInv z)) =
       (Homeomorph.onePointCongr (Homeomorph.mulLeft₀ u⁻¹ (inv_ne_zero hu))) z := by
@@ -700,6 +808,8 @@ open ZeroParadox
 #print axioms upV_eq_downV_rScale_one
 #print axioms upV_downV
 #print axioms downV_upV
+#print axioms sNorm_coe_le_iff
+#print axioms upClosure
 #print axioms upV_rScale_two
 #print axioms upV_rScale_one_upV
 #print axioms rInv_conj_mulLeft
