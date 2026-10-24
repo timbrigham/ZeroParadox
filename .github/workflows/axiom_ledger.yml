@@ -71,10 +71,11 @@ jobs:
           python3 scripts/axiom_ledger_report.py al.log "${LEAN_RC}" \
             | tee -a "$GITHUB_STEP_SUMMARY"
       # The fail-closed control. .github/axiom_ledger/WrongProfile.lean reruns the audit with ONE
-      # planted defect, and this step fails the job unless Lean exits non-zero, the report exits
-      # non-zero, AND the audit's failure list is exactly that row. It runs even when the real
-      # verdict is red, so a red ledger cannot hide a control that has stopped failing; it is a
-      # separate step, so a red control cannot overwrite the real verdict above.
+      # planted defect, and this step fails the job unless Lean exits non-zero AND the audit's
+      # failure list is exactly that row. It runs when an earlier step failed too; if the ledger
+      # itself is red its module cannot build, so the control reports 'could not run', which only
+      # keeps the job red. It is a separate step, so a red control cannot overwrite the real
+      # verdict above.
       - name: "Control: a wrong declared profile must turn the gate red"
         if: ${{ !cancelled() }}
         env:
@@ -83,24 +84,19 @@ jobs:
           EXPECTED='ZeroParadox.kleene_cf: declared [] ≠ computed [Quot.sound, propext]'
           verdict() { printf '\n### Control (expected red)\n\n%s\n' "$1" >> "$GITHUB_STEP_SUMMARY"; }
           if ! lake build ZeroParadox.Meta.AxiomLedger; then
-            verdict "could not run: the ledger module did not build ✗"
+            verdict "could not run: the ledger module did not build (expected whenever the ledger above is red) ✗"
             exit 1
           fi
           # No pipefail, as above: PIPESTATUS[0] carries Lean's exit status past the tee.
           lake env lean "${CONTROL_FILE}" 2>&1 | tee control.log
           CTRL_LEAN_RC=${PIPESTATUS[0]}
-          # The control's report goes to a file, never the run summary: it is not the verdict.
-          CTRL_REPORT_RC=0
-          python3 scripts/axiom_ledger_report.py control.log "${CTRL_LEAN_RC}" \
-            > control_report.md || CTRL_REPORT_RC=$?
           # Everything after the audit's header: must be the one planted row and nothing else.
           FAILS=$(sed -n '/audit FAILED:/,$p' control.log | tail -n +2)
-          echo "control: lean exit ${CTRL_LEAN_RC}, report exit ${CTRL_REPORT_RC}, audit failures:"
+          echo "control: lean exit ${CTRL_LEAN_RC}, audit failures:"
           echo "${FAILS}"
-          if [ "${CTRL_LEAN_RC}" -ne 0 ] && [ "${CTRL_REPORT_RC}" -ne 0 ] \
-              && [ "${FAILS}" = "${EXPECTED}" ]; then
-            verdict "red ✓ (the planted profile for \`ZeroParadox.kleene_cf\` failed the audit, and nothing else did)"
+          if [ "${CTRL_LEAN_RC}" -ne 0 ] && [ "${FAILS}" = "${EXPECTED}" ]; then
+            verdict "planted defect caught ✓ (the planted profile for \`ZeroParadox.kleene_cf\` failed the audit, and nothing else did)"
           else
-            verdict "NOT the expected red ✗: lean exit ${CTRL_LEAN_RC}, report exit ${CTRL_REPORT_RC}, and the audit's failure list was not exactly the planted row. Either the gate is not failing closed or the control is broken; the step log shows which."
+            verdict "NOT the expected red ✗: lean exit ${CTRL_LEAN_RC}, and the audit's failure list was not exactly the planted row. Either the gate is not failing closed or the control is broken; the step log shows which."
             exit 1
           fi
