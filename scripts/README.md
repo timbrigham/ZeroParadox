@@ -22,7 +22,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 ### CI verification reports
 
 Unlike everything else in this folder, these three are **primary and executed** — GitHub
-Actions runs `corpus_verification_report.py` on every build; `minimal_core_report.py` is `workflow_dispatch` so it can be fired by hand against any branch, **and also runs automatically when `Miniature.lean`, the report script, or the workflow changes**; `axiom_ledger_report.py` is the same shape for `.github/workflows/axiom_ledger.yml`, which also fires on a `lean-toolchain` or `lake-manifest.json` change. All three publish their output to the run summary, so they
+Actions runs `corpus_verification_report.py` on every build; `minimal_core_report.py` is `workflow_dispatch` so it can be fired by hand against any branch, **and also runs automatically when `Miniature.lean`, the report script, or the workflow changes**; `axiom_ledger_report.py` is the same shape for `.github/workflows/axiom_ledger.yml`, which also fires on a `lean-toolchain` or `lake-manifest.json` change and fails unless a ledger with one planted wrong profile (`.github/axiom_ledger/WrongProfile.lean`) comes out red. All three publish their output to the run summary, so they
 are not copies of anything and they are not PDF tooling. Each reads a Lean log plus the
 build's own exit code and reports what the machine actually checked.
 
