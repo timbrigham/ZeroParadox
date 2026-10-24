@@ -21,7 +21,7 @@ on:
       - 'lean-toolchain'
       - 'scripts/axiom_ledger_report.py'
       - '.github/workflows/axiom_ledger.yml'
-      - '.github/axiom_ledger/**'
+      - 'AxiomLedgerControl.lean'
   pull_request:
     branches:
       - main
@@ -33,7 +33,7 @@ on:
       - 'lean-toolchain'
       - 'scripts/axiom_ledger_report.py'
       - '.github/workflows/axiom_ledger.yml'
-      - '.github/axiom_ledger/**'
+      - 'AxiomLedgerControl.lean'
 
 permissions:
   contents: read
@@ -70,7 +70,7 @@ jobs:
           set -o pipefail
           python3 scripts/axiom_ledger_report.py al.log "${LEAN_RC}" \
             | tee -a "$GITHUB_STEP_SUMMARY"
-      # The fail-closed control. .github/axiom_ledger/WrongProfile.lean reruns the audit with ONE
+      # The fail-closed control. AxiomLedgerControl.lean reruns the audit with ONE
       # planted defect, and this step fails the job unless Lean exits non-zero AND the audit's
       # failure list is exactly that row. It runs when an earlier step failed too; if the ledger
       # itself is red its module cannot build, so the control reports 'could not run', which only
@@ -79,7 +79,7 @@ jobs:
       - name: "Control: a wrong declared profile must turn the gate red"
         if: ${{ !cancelled() }}
         env:
-          CONTROL_FILE: .github/axiom_ledger/WrongProfile.lean
+          CONTROL_FILE: AxiomLedgerControl.lean
         run: |
           EXPECTED='ZeroParadox.kleene_cf: declared [] ≠ computed [Quot.sound, propext]'
           verdict() { printf '\n### Control (expected red)\n\n%s\n' "$1" >> "$GITHUB_STEP_SUMMARY"; }

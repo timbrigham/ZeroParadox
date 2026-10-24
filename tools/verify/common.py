@@ -126,12 +126,7 @@ SKIP_NAMES = frozenset({'CLAUDE.md', 'RELEASES.md'})
 #
 # `*.lean` is the repository ROOT: the root module `ZeroParadox.lean` sits beside the corpus folder,
 # where `ZeroParadox/**/*.lean` cannot reach it (`RLY23-3`). `universe_gap()` is what notices.
-#
-# `.github/**/*.lean` holds CI-only Lean that sits OUTSIDE the default build on purpose: the Axiom
-# Ledger's planted-defect control (`.github/axiom_ledger/WrongProfile.lean`, 2026-10-23) must fail,
-# so it cannot live under `ZeroParadox/`. `universe_gap()` caught it unreached; widening the scan,
-# never narrowing the universe, is the fix.
-GLOBS = ('ZeroParadox/**/*.lean', '*.lean', '.github/**/*.lean', 'scripts/*.py', 'tools/**/*.py')
+GLOBS = ('ZeroParadox/**/*.lean', '*.lean', 'scripts/*.py', 'tools/**/*.py')
 
 # The reviewed scan scope, pinned. `selftest()` asserts the live set is a SUPERSET of it, so any
 # narrowing of GLOBS, SKIP_DIRS, SKIP_NAMES or a per-checker skip fires — see SCOPE-1 there.
