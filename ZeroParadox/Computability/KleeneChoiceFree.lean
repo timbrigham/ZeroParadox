@@ -499,7 +499,13 @@ example : type_of% @Nat.Partrec.Code.eval_prec_succ := @cf_eval_prec_succ
 -- (MFPS XXI), Theorem 4.24, p. 34 of the preliminary version, by Number Choice; "On fixed-point theorems in synthetic
 -- computability", Tbilisi Math. J. 10(3) (2017), Theorem 5.2, p. 177, by Countable Choice.
 
-/-! ## § VI. Decoding: the inverse of `encodeCode` -/
+/-! ## § VI. Decoding: the inverse of `encodeCode`
+
+Reading (cited, not claimed): the encoding is Carneiro's, "Formalizing computability theory via
+partial recursive functions", ITP 2019, LIPIcs 141, paper 12 (arXiv 1810.08380v2, § 5.1, p. 11),
+chosen there because "it is a bijection to N". The decoder below is Mathlib's
+`Nat.Partrec.Code.ofNatCode` with its termination proof redone by `cf_` lemmas, and the proofs of the
+two inverse laws follow Mathlib's private `encode_ofNatCode` and the `left_inv` of `instDenumerable`. -/
 
 /-- `Statement:` `Nat.div2 (Nat.div2 n) < n + 4`, choice-free proof. -/
 theorem cf_div2_div2_lt (n : ℕ) : n.div2.div2 < n + 4 := by
@@ -586,7 +592,9 @@ theorem cf_bodd_div2_eq {n m : ℕ} {x y : Bool} (h : n = x.toNat + 2 * (y.toNat
   · cases hb : n.bodd <;> cases x <;> rw [hb] at ex <;> first | rfl | exact absurd ex (by decide)
   · cases hb : n.div2.bodd <;> cases y <;> rw [hb] at ey <;> first | rfl | exact absurd ey (by decide)
 
-/-- `Statement:` `ofNatCodeCF (n + 4)` for `n = x.toNat + 2 * (y.toNat + 2 * m)`, by cases on `x, y`. -/
+/-- `Statement:` for `n = x.toNat + 2 * (y.toNat + 2 * m)`, `ofNatCodeCF (n + 4)` is the four-way
+match on `x, y`: `pair`, `comp` or `prec` of `ofNatCodeCF` at the two halves of `Nat.unpair m`, or
+`rfind' (ofNatCodeCF m)`. -/
 theorem cf_ofNatCodeCF_step {n m : ℕ} (x y : Bool) (h : n = x.toNat + 2 * (y.toNat + 2 * m)) :
     ofNatCodeCF (n + 4) =
       match x, y with
@@ -632,6 +640,10 @@ theorem ofNatCodeCF_eq_ofNatCode : ofNatCodeCF = ofNatCode := funext fun n => by
 
 -- Statement: `ofNatCodeCF` and its two inverse laws do not carry `Classical.choice`; `ofNatCode` and
 -- `ofNatCodeCF_eq_ofNatCode` do (the `#print axioms` lines in `PurityCheck`).
+-- Reading: in the bins of `ZeroParadox/Category/ChoiceCannotBe.md`, `ofNatCodeCF_eq_ofNatCode` is
+-- STATEMENT-CARRIED, measured 2026-10-25 (the bare statement `ofNatCodeCF = ofNatCode` reports
+-- `Classical.choice`); the choice enters through the constant `ofNatCode`, whose own footprint is
+-- not classed here.
 
 end ZeroParadox
 

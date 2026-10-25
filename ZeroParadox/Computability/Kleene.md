@@ -224,8 +224,11 @@ by `#print axioms` in a scratch file importing this one.
   on Mathlib's `Code`, and adds the measurement there; Close's `diag_closure_spec` presupposes a
   universal code, not built. It
   builds no universal code, so the UNCLASSIFIED status above is unchanged.
-- A decoder equal to `ofNatCode` (`ofNatCodeCF_eq_ofNatCode`), with both inverse laws
-  (`cf_encodeCode_ofNatCodeCF`, `cf_ofNatCodeCF_encodeCode`): § VI of
+- Measured 2026-10-25: the decoder `ofNatCodeCF` and both inverse laws
+  (`cf_encodeCode_ofNatCodeCF`, `cf_ofNatCodeCF_encodeCode`) carry no `Classical.choice`, and
+  `ofNatCodeCF_eq_ofNatCode` shows it is the same function as `ofNatCode`; the constant `ofNatCode`
+  keeps its choice, so `instDenumerable` and `Universal`, which reach it, still carry choice, and every
+  statement naming it, `ofNatCodeCF_eq_ofNatCode` included, stays statement-carried. § VI of
   `ZeroParadox/Computability/KleeneChoiceFree.lean`, footprints in its `PurityCheck` section.
 
 **Controls.** `universal_not_selfprints`: universality alone does not give self-printing.
