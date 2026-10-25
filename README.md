@@ -157,8 +157,6 @@ Hosted at [timbrigham/ZeroParadox](https://github.com/timbrigham/ZeroParadox). P
 
 ## License
 
-The framework, its structure and this repository are the work of the human creator. Prior mathematics it builds on is credited where it is used and recorded in [CLAIMS.md](CLAIMS.md); [NOTICE](NOTICE) lists the third-party code and the arguments followed.
-
 The code is licensed under the Apache License, Version 2.0: see [LICENSE](LICENSE). The code is every file that is neither a document as defined below nor third-party material: the Lean files, the build scripts, everything under `tools/` and `.claude/` (the Markdown there included), `CLAUDE.md`, and the configuration files.
 
 The documents are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0): see [LICENSE-DOCS](LICENSE-DOCS). The documents are the PDFs at the repository root, every Markdown file except `CLAUDE.md` and those under `tools/` and `.claude/` (this README included), and the site layouts in `_layouts/`. You may share them with attribution for non-commercial purposes only, and you may not share adapted versions.
