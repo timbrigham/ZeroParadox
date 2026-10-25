@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2626,
+        "declarations": 2627,
         "files": 182
       },
       "entries": [
@@ -95744,6 +95744,43 @@
           "reason": "IgnoranceSeam.lean § VII local ignorance: first-digit cover, respected local ignorances of doubling and add-one (2026-10-08)",
           "verify": {
             "axioms": "[propext, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fbeb0426-a0e9-4382-b5bd-368e47c9e540",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtOfNatCodeCFEq",
+            "short": "stmtOfNatCodeCFEq"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtOfNatCodeCFEq",
+            "short": "stmtOfNatCodeCFEq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree § VI: statement control for ofNatCodeCF = ofNatCode; reports Classical.choice",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
