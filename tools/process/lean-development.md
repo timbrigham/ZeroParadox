@@ -166,8 +166,9 @@ Reviewer feedback and correspondence are tracked in `.claude-local/feedback/revi
 
 ## License
 
-Code is Apache-2.0 (`LICENSE`); documents, the PDFs and the prose Markdown, are CC BY-NC-ND 4.0
-(`LICENSE-DOCS`). `NOTICE` states which paths fall under which.
+Code, third-party material aside, is Apache License, Version 2.0 (`LICENSE`); documents, the root
+PDFs, every `.md` except `CLAUDE.md` and those under `tools/` and `.claude/`, and `_layouts/`, are
+CC BY-NC-ND 4.0 (`LICENSE-DOCS`). `NOTICE` states which paths fall under which.
 
 
 # .claudecodes instructions for Lean 4 development

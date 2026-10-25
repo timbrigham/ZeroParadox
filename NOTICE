@@ -1,22 +1,25 @@
 The Zero Paradox
 Copyright 2026 Tim Brigham
 
-This repository is released under two licences. Third-party material
-listed at the end keeps its own licence.
+This repository is released under two licences. The third-party
+material listed at the end is covered by neither and keeps its own
+licence.
 
 Code: Apache License, Version 2.0. Full text in LICENSE.
-  ZeroParadox.lean and every other .lean file, scripts/*.py, tools/**
-  (including the Markdown there), .github/**, .claude/** (including the
-  Markdown there), CLAUDE.md, lakefile.toml, lake-manifest.json, lean-toolchain,
-  ssot.json, .zenodo.json and the other configuration files: every file
-  of this repository that is not a document as defined below.
+  Every file of this repository that is not a document as defined below,
+  other than the third-party material listed at the end: ZeroParadox.lean
+  and the other .lean files, scripts/*.py, tools/** (including the
+  Markdown there), .github/**, .claude/** (including the Markdown there),
+  CLAUDE.md, lakefile.toml, lake-manifest.json, lean-toolchain, ssot.json,
+  .zenodo.json and the other configuration files.
 
 Documents: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
 International (CC BY-NC-ND 4.0). Full text in LICENSE-DOCS.
-  The PDFs at the repository root, every Markdown (.md) file outside
-  tools/, .claude/ and CLAUDE.md (README.md, GUIDE.md, CLAIMS.md, register.md,
-  RELEASES.md, the companion .md files under ZeroParadox/, and
-  scripts/README.md among them), and the site layouts in _layouts/.
+  The PDFs at the repository root, every Markdown (.md) file except
+  CLAUDE.md and those under tools/ and .claude/ (README.md, GUIDE.md,
+  CLAIMS.md, register.md, RELEASES.md, the companion .md files under
+  ZeroParadox/, scripts/README.md and scripts/PDF_Rendering_Standards.md
+  among them), and the site layouts in _layouts/.
 
 Third-party material, covered by neither licence above:
   ZeroParadox/Vendored/CorpusAudit/
@@ -24,6 +27,11 @@ Third-party material, covered by neither licence above:
     Full text in ZeroParadox/Vendored/CorpusAudit/LICENSE.
   ZeroParadox/Vendored/NaturalOps.lean
     Copyright 2022 Violeta Hernández Palacios, vendored from Mathlib.
+    Apache License, Version 2.0. Full text in LICENSE.
+  ZeroParadox/Ordinal/NaturalOpsPow.lean
+    Copyright 2025 Violeta Hernández Palacios. Ports part of the proof in
+    CombinatorialGames/NatOrdinal/Pow.lean from vihdzp/combinatorial-games;
+    the port's changes are marked "-- [ZP]" in the file.
     Apache License, Version 2.0. Full text in LICENSE.
   scripts/fonts/ (DejaVu)
     Bitstream Vera and Arev font licences; the DejaVu changes are in the

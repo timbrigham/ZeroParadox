@@ -855,6 +855,7 @@ COST     a file with unresolved conflict markers commits SILENTLY and corrupts t
 
 ## License
 
-Code (`.lean`, `scripts/*.py`, `tools/**`, `.github/**`, `.claude/**`, this file, config) is Apache-2.0, in
-`LICENSE`. Documents (the PDFs and the prose Markdown) are CC BY-NC-ND 4.0, in `LICENSE-DOCS`; `NOTICE` has the paths.
+Code (`.lean`, `scripts/*.py`, `tools/**`, `.github/**`, `.claude/**`, this file, config), third-party material
+aside, is Apache License, Version 2.0, in `LICENSE`. Documents (the root PDFs, every `.md` except this file and those
+under `tools/` and `.claude/`, and `_layouts/`) are CC BY-NC-ND 4.0, in `LICENSE-DOCS`; `NOTICE` has the paths.
 

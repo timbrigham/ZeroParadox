@@ -148,6 +148,6 @@ Output PDFs are written to the repo root.
 
 ## License
 
-The build scripts are code and are licensed under the Apache License, Version 2.0 ([`LICENSE`](../LICENSE)). This README's prose is a document and stays under CC BY-NC-ND 4.0 ([`LICENSE-DOCS`](../LICENSE-DOCS)). [`NOTICE`](../NOTICE) states which paths fall under which licence.
+The build scripts are code and are licensed under the Apache License, Version 2.0 ([`LICENSE`](../LICENSE)). This README and [`PDF_Rendering_Standards.md`](PDF_Rendering_Standards.md) are documents and stay under CC BY-NC-ND 4.0 ([`LICENSE-DOCS`](../LICENSE-DOCS)), as does every Markdown file except `CLAUDE.md` and those under `tools/` and `.claude/`. [`NOTICE`](../NOTICE) states which paths fall under which licence.
 
-⚠ The fonts in `scripts/fonts/` are the exception: they are third-party and remain under their own licences (DejaVu/Bitstream Vera; STIX Two under SIL OFL 1.1), which ship beside them. OFL clause 5 forbids releasing them under any other licence, so they are **not** covered by the terms above.
+⚠ The fonts in `scripts/fonts/` are the exception: they are third-party, are **not** covered by the terms above, and remain under their own licences, whose texts ship beside them. DejaVu is under the Bitstream Vera and Arev font licences, with the DejaVu changes in the public domain ([`fonts/LICENSE-DejaVu.txt`](fonts/LICENSE-DejaVu.txt)). STIX Two is under the SIL Open Font License, Version 1.1 ([`fonts/LICENSE-STIXTwo-OFL.txt`](fonts/LICENSE-STIXTwo-OFL.txt)), whose clause 5 says the Font Software "must be distributed entirely under this license, and must not be distributed under any other license".
