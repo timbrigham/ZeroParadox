@@ -4,6 +4,8 @@
 
 [![Minimal Core](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml) [![Complete Project](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
 
+Code: Apache License, Version 2.0. Documents (the PDFs, the site layouts, and every Markdown file except `CLAUDE.md` and those under `tools/` and `.claude/`): CC BY-NC-ND 4.0. Third-party material keeps its own licence. See [NOTICE](NOTICE).
+
 ---
 
 ## Where to Start
@@ -155,13 +157,13 @@ Hosted at [timbrigham/ZeroParadox](https://github.com/timbrigham/ZeroParadox). P
 
 ## License
 
-All conceptual development, structure, and authorship originate with the human creator.
+Apart from the third-party material credited below, all conceptual development, structure, and authorship originate with the human creator.
 
-The code (the Lean files, the build scripts and the tooling, `CLAUDE.md` included) is licensed under the Apache License, Version 2.0: see [LICENSE](LICENSE).
+The code is licensed under the Apache License, Version 2.0: see [LICENSE](LICENSE). The code is every file that is neither a document as defined below nor third-party material: the Lean files, the build scripts, everything under `tools/` and `.claude/` (the Markdown there included), `CLAUDE.md`, and the configuration files.
 
-The documents (the PDFs and the prose Markdown, this README included) are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0): see [LICENSE-DOCS](LICENSE-DOCS). You may share them with attribution for non-commercial purposes only, and you may not share adapted versions.
+The documents are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0): see [LICENSE-DOCS](LICENSE-DOCS). The documents are the PDFs at the repository root, every Markdown file except `CLAUDE.md` and those under `tools/` and `.claude/` (this README included), and the site layouts in `_layouts/`. You may share them with attribution for non-commercial purposes only, and you may not share adapted versions.
 
-Third-party material keeps its own licence: the vendored Lean under `ZeroParadox/Vendored/` (Apache License 2.0, from its original authors) and the fonts in `scripts/fonts/` (DejaVu/Bitstream Vera; STIX Two under SIL OFL 1.1), whose licences ship beside them. [NOTICE](NOTICE) states which paths fall under which licence.
+Third-party material is covered by neither licence and keeps its own. The vendored Lean under `ZeroParadox/Vendored/` and the port `ZeroParadox/Ordinal/NaturalOpsPow.lean` are under the Apache License, Version 2.0, from their original authors: `ZeroParadox/Vendored/CorpusAudit/` carries its licence text beside it, and for the other two the text is the root [LICENSE](LICENSE). The fonts in `scripts/fonts/` carry their licence texts beside them: DejaVu is under the Bitstream Vera and Arev font licences, with the DejaVu changes in the public domain, and STIX Two is under the SIL Open Font License, Version 1.1. [NOTICE](NOTICE) states which paths fall under which licence.
 
 ---
 
