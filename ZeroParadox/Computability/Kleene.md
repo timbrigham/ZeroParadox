@@ -224,9 +224,9 @@ by `#print axioms` in a scratch file importing this one.
   on Mathlib's `Code`, and adds the measurement there; Close's `diag_closure_spec` presupposes a
   universal code, not built. It
   builds no universal code, so the UNCLASSIFIED status above is unchanged.
-- Open as of 2026-10-22, not measured: `ofNatCode`'s choice was traced above to `Nat.unpair_left_le`,
-  `Nat.unpair_right_le` and `Nat.div2_val`, which now have choice-free proofs of the same type in
-  `KleeneChoiceFree.lean`, so its footprint may be removable.
+- A decoder equal to `ofNatCode` (`ofNatCodeCF_eq_ofNatCode`), with both inverse laws
+  (`cf_encodeCode_ofNatCodeCF`, `cf_ofNatCodeCF_encodeCode`): § VI of
+  `ZeroParadox/Computability/KleeneChoiceFree.lean`, footprints in its `PurityCheck` section.
 
 **Controls.** `universal_not_selfprints`: universality alone does not give self-printing.
 The `example`s beside it: no constant code is universal, so the constant codes, which meet

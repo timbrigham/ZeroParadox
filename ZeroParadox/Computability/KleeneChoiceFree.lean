@@ -499,6 +499,140 @@ example : type_of% @Nat.Partrec.Code.eval_prec_succ := @cf_eval_prec_succ
 -- (MFPS XXI), Theorem 4.24, p. 34 of the preliminary version, by Number Choice; "On fixed-point theorems in synthetic
 -- computability", Tbilisi Math. J. 10(3) (2017), Theorem 5.2, p. 177, by Countable Choice.
 
+/-! ## § VI. Decoding: the inverse of `encodeCode` -/
+
+/-- `Statement:` `Nat.div2 (Nat.div2 n) < n + 4`, choice-free proof. -/
+theorem cf_div2_div2_lt (n : ℕ) : n.div2.div2 < n + 4 := by
+  rw [cf_div2_val, cf_div2_val]
+  exact Nat.lt_of_le_of_lt (Nat.le_trans (Nat.div_le_self _ _) (Nat.div_le_self _ _))
+    (Nat.succ_le_succ (Nat.le_add_right _ _))
+
+/-- `Statement:` a decoder `ℕ → Code` by the case split of Mathlib's `Nat.Partrec.Code.ofNatCode`,
+terminating by `cf_div2_div2_lt`, `cf_unpair_left_le` and `cf_unpair_right_le`. -/
+def ofNatCodeCF : ℕ → Code
+  | 0 => zero
+  | 1 => succ
+  | 2 => left
+  | 3 => right
+  | n + 4 =>
+    match n.bodd, n.div2.bodd with
+    | false, false =>
+      pair (ofNatCodeCF (Nat.unpair n.div2.div2).1) (ofNatCodeCF (Nat.unpair n.div2.div2).2)
+    | false, true =>
+      comp (ofNatCodeCF (Nat.unpair n.div2.div2).1) (ofNatCodeCF (Nat.unpair n.div2.div2).2)
+    | true, false =>
+      prec (ofNatCodeCF (Nat.unpair n.div2.div2).1) (ofNatCodeCF (Nat.unpair n.div2.div2).2)
+    | true, true => rfind' (ofNatCodeCF n.div2.div2)
+termination_by n => n
+decreasing_by
+  all_goals first
+    | exact Nat.lt_of_le_of_lt (cf_unpair_left_le _) (cf_div2_div2_lt _)
+    | exact Nat.lt_of_le_of_lt (cf_unpair_right_le _) (cf_div2_div2_lt _)
+    | exact cf_div2_div2_lt _
+
+/-- `Statement:` `encodeCode (ofNatCodeCF n) = n`. -/
+theorem cf_encodeCode_ofNatCodeCF : ∀ n, encodeCode (ofNatCodeCF n) = n
+  | 0 => by rw [ofNatCodeCF]; rfl
+  | 1 => by rw [ofNatCodeCF]; rfl
+  | 2 => by rw [ofNatCodeCF]; rfl
+  | 3 => by rw [ofNatCodeCF]; rfl
+  | n + 4 => by
+    have IH := cf_encodeCode_ofNatCodeCF n.div2.div2
+    have IH1 := cf_encodeCode_ofNatCodeCF (Nat.unpair n.div2.div2).1
+    have IH2 := cf_encodeCode_ofNatCodeCF (Nat.unpair n.div2.div2).2
+    have hpu := cf_pair_unpair n.div2.div2
+    have h1 := cf_bodd_add_div2 n
+    have h2 := cf_bodd_add_div2 n.div2
+    have hf : (false : Bool).toNat = 0 := rfl
+    have ht : (true : Bool).toNat = 1 := rfl
+    rw [ofNatCodeCF]
+    cases ha : n.bodd <;> cases hb : n.div2.bodd <;> rw [ha] at h1 <;> rw [hb] at h2
+    · show 2 * (2 * Nat.pair (encodeCode (ofNatCodeCF _)) (encodeCode (ofNatCodeCF _))) + 4 = n + 4
+      rw [IH1, IH2, hpu]
+      rw [hf] at h1 h2; omega
+    · show 2 * (2 * Nat.pair (encodeCode (ofNatCodeCF _)) (encodeCode (ofNatCodeCF _)) + 1) + 4 =
+        n + 4
+      rw [IH1, IH2, hpu]
+      rw [hf] at h1; rw [ht] at h2; omega
+    · show (2 * (2 * Nat.pair (encodeCode (ofNatCodeCF _)) (encodeCode (ofNatCodeCF _))) + 1) + 4 =
+        n + 4
+      rw [IH1, IH2, hpu]
+      rw [ht] at h1; rw [hf] at h2; omega
+    · show (2 * (2 * encodeCode (ofNatCodeCF _) + 1) + 1) + 4 = n + 4
+      rw [IH]
+      rw [ht] at h1 h2; omega
+termination_by n => n
+decreasing_by
+  all_goals first
+    | exact Nat.lt_of_le_of_lt (cf_unpair_left_le _) (cf_div2_div2_lt _)
+    | exact Nat.lt_of_le_of_lt (cf_unpair_right_le _) (cf_div2_div2_lt _)
+    | exact cf_div2_div2_lt _
+
+/-- `Statement:` `n = x.toNat + 2 * (y.toNat + 2 * m)` gives `n.bodd = x`, `n.div2.bodd = y` and
+`n.div2.div2 = m`. -/
+theorem cf_bodd_div2_eq {n m : ℕ} {x y : Bool} (h : n = x.toNat + 2 * (y.toNat + 2 * m)) :
+    n.bodd = x ∧ n.div2.bodd = y ∧ n.div2.div2 = m := by
+  have h1 := cf_bodd_add_div2 n
+  have h2 := cf_bodd_add_div2 n.div2
+  have h3 := cf_div2_val n
+  have h4 := cf_div2_val n.div2
+  have hx : x.toNat < 2 := by cases x <;> decide
+  have hy : y.toNat < 2 := by cases y <;> decide
+  have hbx : (n.bodd).toNat < 2 := by cases n.bodd <;> decide
+  have hby : (n.div2.bodd).toNat < 2 := by cases n.div2.bodd <;> decide
+  have ex : n.bodd.toNat = x.toNat := by omega
+  have ey : n.div2.bodd.toNat = y.toNat := by omega
+  refine ⟨?_, ?_, by omega⟩
+  · cases hb : n.bodd <;> cases x <;> rw [hb] at ex <;> first | rfl | exact absurd ex (by decide)
+  · cases hb : n.div2.bodd <;> cases y <;> rw [hb] at ey <;> first | rfl | exact absurd ey (by decide)
+
+/-- `Statement:` `ofNatCodeCF (n + 4)` for `n = x.toNat + 2 * (y.toNat + 2 * m)`, by cases on `x, y`. -/
+theorem cf_ofNatCodeCF_step {n m : ℕ} (x y : Bool) (h : n = x.toNat + 2 * (y.toNat + 2 * m)) :
+    ofNatCodeCF (n + 4) =
+      match x, y with
+      | false, false => pair (ofNatCodeCF (Nat.unpair m).1) (ofNatCodeCF (Nat.unpair m).2)
+      | false, true => comp (ofNatCodeCF (Nat.unpair m).1) (ofNatCodeCF (Nat.unpair m).2)
+      | true, false => prec (ofNatCodeCF (Nat.unpair m).1) (ofNatCodeCF (Nat.unpair m).2)
+      | true, true => rfind' (ofNatCodeCF m) := by
+  obtain ⟨hx, hy, hm⟩ := cf_bodd_div2_eq h
+  rw [ofNatCodeCF, hx, hy, hm]
+  cases x <;> cases y <;> rfl
+
+/-- `Statement:` `ofNatCodeCF (encodeCode c) = c`. -/
+theorem cf_ofNatCodeCF_encodeCode : ∀ c, ofNatCodeCF (encodeCode c) = c
+  | .zero => by rw [encodeCode, ofNatCodeCF]
+  | .succ => by rw [encodeCode, ofNatCodeCF]
+  | .left => by rw [encodeCode, ofNatCodeCF]
+  | .right => by rw [encodeCode, ofNatCodeCF]
+  | .pair a b => by
+    rw [encodeCode, cf_ofNatCodeCF_step (m := Nat.pair (encodeCode a) (encodeCode b)) false false
+      (by show _ = 0 + 2 * (0 + 2 * _); omega)]
+    dsimp only
+    rw [cf_unpair_pair, cf_ofNatCodeCF_encodeCode a, cf_ofNatCodeCF_encodeCode b]
+  | .comp a b => by
+    rw [encodeCode, cf_ofNatCodeCF_step (m := Nat.pair (encodeCode a) (encodeCode b)) false true
+      (by show _ = 0 + 2 * (1 + 2 * _); omega)]
+    dsimp only
+    rw [cf_unpair_pair, cf_ofNatCodeCF_encodeCode a, cf_ofNatCodeCF_encodeCode b]
+  | .prec a b => by
+    rw [encodeCode, cf_ofNatCodeCF_step (m := Nat.pair (encodeCode a) (encodeCode b)) true false
+      (by show _ = 1 + 2 * (0 + 2 * _); omega)]
+    dsimp only
+    rw [cf_unpair_pair, cf_ofNatCodeCF_encodeCode a, cf_ofNatCodeCF_encodeCode b]
+  | .rfind' a => by
+    rw [encodeCode, cf_ofNatCodeCF_step (m := encodeCode a) true true
+      (by show _ = 1 + 2 * (1 + 2 * _); omega)]
+    dsimp only
+    rw [cf_ofNatCodeCF_encodeCode a]
+
+/-- `Statement:` `ofNatCodeCF` is Mathlib's `Nat.Partrec.Code.ofNatCode`. -/
+theorem ofNatCodeCF_eq_ofNatCode : ofNatCodeCF = ofNatCode := funext fun n => by
+  conv_rhs => rw [← cf_encodeCode_ofNatCodeCF n]
+  rw [← ofNatCode_eq, ← encodeCode_eq, Denumerable.ofNat_encode]
+
+-- Statement: `ofNatCodeCF` and its two inverse laws do not carry `Classical.choice`; `ofNatCode` and
+-- `ofNatCodeCF_eq_ofNatCode` do (the `#print axioms` lines in `PurityCheck`).
+
 end ZeroParadox
 
 section PurityCheck
@@ -560,7 +694,15 @@ open ZeroParadox
 #print axioms Partrec₂
 #print axioms Primcodable.prod
 #print axioms Encodable.Prod.encodable
--- The Mathlib constants the `cf_` lemmas share a type with, and the two recursion theorems.
+#print axioms cf_div2_div2_lt
+#print axioms ofNatCodeCF
+#print axioms cf_encodeCode_ofNatCodeCF
+#print axioms cf_bodd_div2_eq
+#print axioms cf_ofNatCodeCF_step
+#print axioms cf_ofNatCodeCF_encodeCode
+#print axioms ofNatCodeCF_eq_ofNatCode
+-- The Mathlib constants the `cf_` lemmas share a type with, the two recursion theorems, and
+-- `ofNatCode`.
 #print axioms Nat.unpair_pair
 #print axioms Nat.pair_unpair
 #print axioms Nat.sqrt_le
@@ -577,5 +719,6 @@ open ZeroParadox
 #print axioms Nat.Partrec.Code.eval_prec_succ
 #print axioms Nat.Partrec.Code.fixed_point₂
 #print axioms Nat.Partrec.Code.fixed_point
+#print axioms Nat.Partrec.Code.ofNatCode
 
 end PurityCheck

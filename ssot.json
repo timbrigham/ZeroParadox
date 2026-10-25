@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2619,
+        "declarations": 2626,
         "files": 182
       },
       "entries": [
@@ -3131,6 +3131,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "062f3d33-8ed4-459e-9228-bb0ad756ca5f",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ofNatCodeCF_eq_ofNatCode",
+            "short": "ofNatCodeCF_eq_ofNatCode"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ofNatCodeCF_eq_ofNatCode",
+            "short": "ofNatCodeCF_eq_ofNatCode",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree § VI: choice-free decoder ofNatCodeCF for Nat.Partrec.Code, both inverse laws at [propext, Quot.sound], and its equality with Mathlib's ofNatCode",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "06301166-46c0-4528-ba33-049440b10155",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -5521,6 +5558,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0c856a60-dd44-4ad7-b320-c49be34898ef",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ofNatCodeCF",
+            "short": "ofNatCodeCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.ofNatCodeCF",
+            "short": "ofNatCodeCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree § VI: choice-free decoder ofNatCodeCF for Nat.Partrec.Code, both inverse laws at [propext, Quot.sound], and its equality with Mathlib's ofNatCode",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22474,6 +22548,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "39d5e219-387b-47b7-a2e6-613affb2316a",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_div2_div2_lt",
+            "short": "cf_div2_div2_lt"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_div2_div2_lt",
+            "short": "cf_div2_div2_lt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree § VI: choice-free decoder ofNatCodeCF for Nat.Partrec.Code, both inverse laws at [propext, Quot.sound], and its equality with Mathlib's ofNatCode",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "39ede329-404a-4df4-ab07-9647001e421c",
           "new": {
             "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
@@ -30527,6 +30638,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "(none) - does not depend on any axioms",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4f2e1781-2ccb-4446-a60e-fa607a989825",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_ofNatCodeCF_step",
+            "short": "cf_ofNatCodeCF_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_ofNatCodeCF_step",
+            "short": "cf_ofNatCodeCF_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree § VI: choice-free decoder ofNatCodeCF for Nat.Partrec.Code, both inverse laws at [propext, Quot.sound], and its equality with Mathlib's ofNatCode",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -64415,6 +64563,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "aab6e151-9b98-4964-afca-d873c79843d7",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_bodd_div2_eq",
+            "short": "cf_bodd_div2_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_bodd_div2_eq",
+            "short": "cf_bodd_div2_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree § VI: choice-free decoder ofNatCodeCF for Nat.Partrec.Code, both inverse laws at [propext, Quot.sound], and its equality with Mathlib's ofNatCode",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "aabb71ee-ac73-48ed-a572-917c4f4fcfb5",
           "new": {
             "file": "ZeroParadox/Category/BottomUndecidable.lean",
@@ -79376,6 +79561,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d1a1f0c4-30a5-44c5-874d-6282f9b6a9e9",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_ofNatCodeCF_encodeCode",
+            "short": "cf_ofNatCodeCF_encodeCode"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_ofNatCodeCF_encodeCode",
+            "short": "cf_ofNatCodeCF_encodeCode",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree § VI: choice-free decoder ofNatCodeCF for Nat.Partrec.Code, both inverse laws at [propext, Quot.sound], and its equality with Mathlib's ofNatCode",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d1aec40b-6689-44b9-ac65-ab86cd18788c",
           "new": {
             "file": "ZeroParadox/Computability/Kleene.lean",
@@ -88955,6 +89177,43 @@
           "reason": "IgnoranceSeam.lean: fills, semiconjugacy, prepends, affine stream motions, negation, complement (2026-10-07)",
           "verify": {
             "axioms": "[propext]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ea19e298-1411-4bcc-91a8-1f0d74d2bbd0",
+          "new": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_encodeCode_ofNatCodeCF",
+            "short": "cf_encodeCode_ofNatCodeCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_encodeCode_ofNatCodeCF",
+            "short": "cf_encodeCode_ofNatCodeCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "KleeneChoiceFree § VI: choice-free decoder ofNatCodeCF for Nat.Partrec.Code, both inverse laws at [propext, Quot.sound], and its equality with Mathlib's ofNatCode",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
