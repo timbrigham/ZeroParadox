@@ -39,3 +39,14 @@ Third-party material, covered by neither licence above:
   scripts/fonts/ (STIX Two)
     SIL Open Font License, Version 1.1.
     Text in scripts/fonts/LICENSE-STIXTwo-OFL.txt.
+
+Arguments followed, not code included:
+  ZeroParadox/Order/PataraiaChoiceFree.lean
+    Follows Pataraia's fixed-point argument, with Taylor's step, as
+    formalized in Agda in TypeTopology (Escardó; Escardó and de Jong;
+    GPL-3.0; https://github.com/martinescardo/TypeTopology). It is an
+    independent Lean rendering under the Apache License, Version 2.0,
+    and includes no TypeTopology code.
+  ZeroParadox/Order/PataraiaFromBourbakiWitt.lean
+    Cites the same formalization and proves its statements by a
+    different route (the Bourbaki-Witt theorem); no TypeTopology code.

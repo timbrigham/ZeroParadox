@@ -52,8 +52,10 @@ file adds is the machine-checked adapter to Mathlib's `CompletePartialOrder`, no
   paper and assuming propositional resizing) and `Various.Pataraia-Taylor` (Escardó and de Jong,
   2024, a predicative version replacing the second step with Taylor's condition `TC`, whose module
   notes that predicatively there are no non-trivial dcpos of the required size to apply it to). In
-  Lean, `ZeroParadox/Order/PataraiaChoiceFree.lean` ports `Various.Pataraia-Taylor` (`TC`) together
-  with the `γ` step, `lemma₂·₁` of `Various.Pataraia`, which that module imports, and
+  Lean, `ZeroParadox/Order/PataraiaChoiceFree.lean` is an independent rendering of the argument
+  formalized in `Various.Pataraia-Taylor` (`TC`) together with the `γ` step, `lemma₂·₁` of
+  `Various.Pataraia`, which that module imports (TypeTopology is GPL-3.0; the Lean file is under
+  this repository's Apache License, Version 2.0), and
   `#print axioms` reports no axioms for
   `pataraia_least_prefixedPoint` and `pataraia_induction_constructive`. No other Lean formalization
   was located as of 2026-09-28, searched in the pinned Mathlib (eight `exact?` statement-shape
