@@ -137,7 +137,19 @@ def profiles : List Corpus.Audit.ProfileRow :=
     ⟨`ZeroParadox.cf_encodeCode_curry, []⟩,
     ⟨`ZeroParadox.cf_eval_diagIndex, ours⟩,
     ⟨`ZeroParadox.cf_eval_diag, ours⟩,
-    ⟨`ZeroParadox.cf_le_encodeCode_const, ours⟩ ]
+    ⟨`ZeroParadox.cf_le_encodeCode_const, ours⟩,
+    ⟨`ZeroParadox.cf_div2_div2_lt, ours⟩,
+    ⟨`ZeroParadox.ofNatCodeCF, ours⟩,
+    ⟨`ZeroParadox.ofNatCodeCF.eq_1, ours⟩,
+    ⟨`ZeroParadox.ofNatCodeCF.eq_2, ours⟩,
+    ⟨`ZeroParadox.ofNatCodeCF.eq_3, ours⟩,
+    ⟨`ZeroParadox.ofNatCodeCF.eq_4, ours⟩,
+    ⟨`ZeroParadox.ofNatCodeCF.eq_5, ours⟩,
+    ⟨`ZeroParadox.cf_encodeCode_ofNatCodeCF, ours⟩,
+    ⟨`ZeroParadox.cf_bodd_div2_eq, ours⟩,
+    ⟨`ZeroParadox.cf_ofNatCodeCF_step, ours⟩,
+    ⟨`ZeroParadox.cf_ofNatCodeCF_encodeCode, ours⟩,
+    ⟨`ZeroParadox.ofNatCodeCF_eq_ofNatCode, Corpus.Audit.stock⟩ ]
 
 /-! ## The run
 
