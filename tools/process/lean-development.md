@@ -166,7 +166,8 @@ Reviewer feedback and correspondence are tracked in `.claude-local/feedback/revi
 
 ## License
 
-CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
+Code is Apache-2.0 (`LICENSE`); documents, the PDFs and the prose Markdown, are CC BY-NC-ND 4.0
+(`LICENSE-DOCS`). `NOTICE` states which paths fall under which.
 
 
 # .claudecodes instructions for Lean 4 development

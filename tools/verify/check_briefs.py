@@ -300,18 +300,19 @@ def classify_record_failure(rc, ledger_answers):
 # record.py's GUARDS HAD A CONTROL ANYWHERE (searched `tools/verify/*.py` 2026-10-13: no hits). They
 # are tested HERE because this module already shells out to record.py and is unpinned; `batch.py`
 # selftest is pinned and would cost a repin for the same rows.
-# ⚠ `LICENSE` IS THE FIXTURE FOR BOTH SUBJECT AND BRIEF, deliberately: the controls test record.py's
+# ⚠ `CNAME` IS THE FIXTURE FOR BOTH SUBJECT AND BRIEF, deliberately: the controls test record.py's
 # GUARDS, not which file is the brief, and a fixture somebody is editing gets fenced ("differs from
-# the index") and turns every row into a could-not-ask. LICENSE is the tracked file least likely to
-# be mid-edit. The ledger accepts it as evidence (dry run, 2026-10-14, `validate -> {"ok": true`).
+# the index") and turns every row into a could-not-ask. The fixture must be byte-identical to its
+# blob at SELFTEST_REF below. It was `LICENSE` until the 2026-10-25 relicense changed that file,
+# which turned 16 rows into could-not-asks; CNAME is unchanged since that ref.
 # ⚠ THE BASIS IS PINNED (V11 collision, 2026-10-15): the default INDEX basis is the live tree, and a
 # REAL copy_editor record there made the clean rows fail V11 (one record per step/basis/revision).
-# 3148eef (2026-08-15) is LICENSE's last change, so its blob matches today's, and it predates the
-# copy_editor step, so no real copy_editor record sits at that commit basis.
+# 3148eef (2026-08-15) predates the copy_editor step, so no real copy_editor record sits at that
+# commit basis.
 SELFTEST_REF = ['--ref', '3148eef68086dcb54649ee8ca6602d59db5b58e2']
-PANEL_BASE = ['--step', 'copy_editor', '--verdict', 'pass', '--files', 'LICENSE', '--tier', 'A',
+PANEL_BASE = ['--step', 'copy_editor', '--verdict', 'pass', '--files', 'CNAME', '--tier', 'A',
               '--how', 'panel', '--passes', '3', '--agreed', '2', '--who', 'copy_editor',
-              '--evidence', 'LICENSE', '--run', 'selftest-check_briefs', '--dry-run'] + SELFTEST_REF
+              '--evidence', 'CNAME', '--run', 'selftest-check_briefs', '--dry-run'] + SELFTEST_REF
 # A dry run asks gitRobot to verify the subjects FIRST, then the ledger to validate, so either
 # service being down is a could-not-ask, never a finding about record.py's guards.
 OUTAGE = ('verdictLedger unreachable', 'verdictLedger returned no usable payload',
@@ -723,15 +724,15 @@ def selftest():
     UNDEC = with_flag(with_flag(AGREE, '--verdict', 'undecided'), '--agreed', '2') + [
         '--reason', 'selftest']
     FAIL3 = with_flag(AGREE, '--verdict', 'fail') + ['--reason', 'selftest']
-    OTHER = ['--step', 'editorial', '--verdict', 'pass', '--files', 'LICENSE', '--tier', 'A',
-             '--how', 'delegated', '--who', 'editorial', '--evidence', 'LICENSE',
+    OTHER = ['--step', 'editorial', '--verdict', 'pass', '--files', 'CNAME', '--tier', 'A',
+             '--how', 'delegated', '--who', 'editorial', '--evidence', 'CNAME',
              '--run', 'selftest-check_briefs', '--dry-run'] + SELFTEST_REF
     UNTAGGED = {'severity': 'ordinary', 'note': 'selftest: untagged'}
     for label, args, outst, fail in (
             ('copyed admits  UNDECIDED, meaning finding (M18)', UNDEC,
-             [dict(WORD, shift='meaning')], ['LICENSE']),
+             [dict(WORD, shift='meaning')], ['CNAME']),
             ('other  admits  editorial PASS, no shift (M19)', OTHER, [UNTAGGED], None),
-            ('copyed admits  agreement FAIL, untagged finding', FAIL3, [UNTAGGED], ['LICENSE'])):
+            ('copyed admits  agreement FAIL, untagged finding', FAIL3, [UNTAGGED], ['CNAME'])):
         rc, out = record_dry(args, outst, failing=fail)
         reached = 'DRY RUN' in out or any(o in out for o in OUTAGE)
         ok = reached and 'error:' not in out

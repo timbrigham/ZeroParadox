@@ -1,0 +1,33 @@
+The Zero Paradox
+Copyright 2026 Tim Brigham
+
+This repository is released under two licences. Third-party material
+listed at the end keeps its own licence.
+
+Code: Apache License, Version 2.0. Full text in LICENSE.
+  ZeroParadox.lean and every other .lean file, scripts/*.py, tools/**
+  (including the Markdown there), .github/**, .claude/** (including the
+  Markdown there), CLAUDE.md, lakefile.toml, lake-manifest.json, lean-toolchain,
+  ssot.json, .zenodo.json and the other configuration files: every file
+  of this repository that is not a document as defined below.
+
+Documents: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
+International (CC BY-NC-ND 4.0). Full text in LICENSE-DOCS.
+  The PDFs at the repository root, every Markdown (.md) file outside
+  tools/, .claude/ and CLAUDE.md (README.md, GUIDE.md, CLAIMS.md, register.md,
+  RELEASES.md, the companion .md files under ZeroParadox/, and
+  scripts/README.md among them), and the site layouts in _layouts/.
+
+Third-party material, covered by neither licence above:
+  ZeroParadox/Vendored/CorpusAudit/
+    Copyright 2026 Larsen James Close. Apache License, Version 2.0.
+    Full text in ZeroParadox/Vendored/CorpusAudit/LICENSE.
+  ZeroParadox/Vendored/NaturalOps.lean
+    Copyright 2022 Violeta Hernández Palacios, vendored from Mathlib.
+    Apache License, Version 2.0. Full text in LICENSE.
+  scripts/fonts/ (DejaVu)
+    Bitstream Vera and Arev font licences; the DejaVu changes are in the
+    public domain. Text in scripts/fonts/LICENSE-DejaVu.txt.
+  scripts/fonts/ (STIX Two)
+    SIL Open Font License, Version 1.1.
+    Text in scripts/fonts/LICENSE-STIXTwo-OFL.txt.

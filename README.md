@@ -157,9 +157,11 @@ Hosted at [timbrigham/ZeroParadox](https://github.com/timbrigham/ZeroParadox). P
 
 All conceptual development, structure, and authorship originate with the human creator.
 
-This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0, except the fonts in `scripts/fonts/`, which are third-party and remain under their own licences (DejaVu/Bitstream Vera; STIX Two under SIL OFL 1.1), shipped beside them).
+The code (the Lean files, the build scripts and the tooling, `CLAUDE.md` included) is licensed under the Apache License, Version 2.0: see [LICENSE](LICENSE).
 
-You may share the work with attribution, but you may not modify it or use it commercially. See [License](LICENSE) for full details.
+The documents (the PDFs and the prose Markdown, this README included) are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0): see [LICENSE-DOCS](LICENSE-DOCS). You may share them with attribution for non-commercial purposes only, and you may not share adapted versions.
+
+Third-party material keeps its own licence: the vendored Lean under `ZeroParadox/Vendored/` (Apache License 2.0, from its original authors) and the fonts in `scripts/fonts/` (DejaVu/Bitstream Vera; STIX Two under SIL OFL 1.1), whose licences ship beside them. [NOTICE](NOTICE) states which paths fall under which licence.
 
 ---
 
