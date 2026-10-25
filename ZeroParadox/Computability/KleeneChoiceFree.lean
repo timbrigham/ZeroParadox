@@ -501,11 +501,21 @@ example : type_of% @Nat.Partrec.Code.eval_prec_succ := @cf_eval_prec_succ
 
 /-! ## § VI. Decoding: the inverse of `encodeCode`
 
-Reading (cited, not claimed): the encoding is Carneiro's, "Formalizing computability theory via
-partial recursive functions", ITP 2019, LIPIcs 141, paper 12 (arXiv 1810.08380v2, § 5.1, p. 11),
-chosen there because "it is a bijection to N". The decoder below is Mathlib's
-`Nat.Partrec.Code.ofNatCode` with its termination proof redone by `cf_` lemmas, and the proofs of the
-two inverse laws follow Mathlib's private `encode_ofNatCode` and the `left_inv` of `instDenumerable`. -/
+Reading (cited, not claimed): the encoding scheme is Carneiro's, "Formalizing computability theory via
+partial recursive functions", ITP 2019, LIPIcs 141, paper 12, doi 10.4230/LIPIcs.ITP.2019.12, § 5.1,
+p. 12:11, which names as an advantage that "it is a bijection to ℕ". The decoder below is Mathlib's
+`Nat.Partrec.Code.ofNatCode` with its termination proof redone by `cf_` lemmas.
+`cf_encodeCode_ofNatCodeCF` follows the induction and case split of Mathlib's private
+`encode_ofNatCode`. `cf_ofNatCodeCF_encodeCode` proves for `ofNatCodeCF` the statement that the
+`left_inv` of `instDenumerable` proves for `ofNatCode`, by structural recursion on the code with
+`cf_ofNatCodeCF_step`, where Mathlib uses `induction` and `simp`. -/
+
+-- Statement: Mathlib's `encodeCode` tags `comp` with `+ 6` and `prec` with `+ 5` over
+-- `4 * Nat.pair`, where the § 5.1 table cited above has `comp` `+ 5` and `prec` `+ 6`.
+example (a b : Code) :
+    encodeCode (comp a b) = 4 * Nat.pair (encodeCode a) (encodeCode b) + 6 ∧
+      encodeCode (prec a b) = 4 * Nat.pair (encodeCode a) (encodeCode b) + 5 := by
+  constructor <;> (rw [encodeCode]; omega)
 
 /-- `Statement:` `Nat.div2 (Nat.div2 n) < n + 4`, choice-free proof. -/
 theorem cf_div2_div2_lt (n : ℕ) : n.div2.div2 < n + 4 := by
@@ -638,12 +648,13 @@ theorem ofNatCodeCF_eq_ofNatCode : ofNatCodeCF = ofNatCode := funext fun n => by
   conv_rhs => rw [← cf_encodeCode_ofNatCodeCF n]
   rw [← ofNatCode_eq, ← encodeCode_eq, Denumerable.ofNat_encode]
 
--- Statement: `ofNatCodeCF` and its two inverse laws do not carry `Classical.choice`; `ofNatCode` and
--- `ofNatCodeCF_eq_ofNatCode` do (the `#print axioms` lines in `PurityCheck`).
--- Reading: in the bins of `ZeroParadox/Category/ChoiceCannotBe.md`, `ofNatCodeCF_eq_ofNatCode` is
--- STATEMENT-CARRIED, measured 2026-10-25 (the bare statement `ofNatCodeCF = ofNatCode` reports
--- `Classical.choice`); the choice enters through the constant `ofNatCode`, whose own footprint is
--- not classed here.
+/-- `Statement:` CONTROL: a theorem whose only hypothesis is `ofNatCodeCF = ofNatCode`, proving `True`. -/
+theorem stmtOfNatCodeCFEq (_h : ofNatCodeCF = Nat.Partrec.Code.ofNatCode) : True := trivial
+
+-- Statement: `ofNatCodeCF` and its two inverse laws do not carry `Classical.choice`; `ofNatCode`,
+-- `ofNatCodeCF_eq_ofNatCode` and `stmtOfNatCodeCFEq` do (the `#print axioms` lines in `PurityCheck`).
+-- Statement: in the bins of `ZeroParadox/Category/ChoiceCannotBe.md`, `ofNatCodeCF_eq_ofNatCode` is
+-- STATEMENT-CARRIED: its statement, assumed alone in `stmtOfNatCodeCFEq`, carries `Classical.choice`.
 
 end ZeroParadox
 
@@ -713,6 +724,7 @@ open ZeroParadox
 #print axioms cf_ofNatCodeCF_step
 #print axioms cf_ofNatCodeCF_encodeCode
 #print axioms ofNatCodeCF_eq_ofNatCode
+#print axioms stmtOfNatCodeCFEq
 -- The Mathlib constants the `cf_` lemmas share a type with, the two recursion theorems, and
 -- `ofNatCode`.
 #print axioms Nat.unpair_pair

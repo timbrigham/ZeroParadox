@@ -224,12 +224,14 @@ by `#print axioms` in a scratch file importing this one.
   on Mathlib's `Code`, and adds the measurement there; Close's `diag_closure_spec` presupposes a
   universal code, not built. It
   builds no universal code, so the UNCLASSIFIED status above is unchanged.
-- Measured 2026-10-25: the decoder `ofNatCodeCF` and both inverse laws
-  (`cf_encodeCode_ofNatCodeCF`, `cf_ofNatCodeCF_encodeCode`) carry no `Classical.choice`, and
-  `ofNatCodeCF_eq_ofNatCode` shows it is the same function as `ofNatCode`; the constant `ofNatCode`
-  keeps its choice, so `instDenumerable` and `Universal`, which reach it, still carry choice, and every
-  statement naming it, `ofNatCodeCF_eq_ofNatCode` included, stays statement-carried. § VI of
-  `ZeroParadox/Computability/KleeneChoiceFree.lean`, footprints in its `PurityCheck` section.
+- As of 2026-10-25, `ofNatCodeCF` and both inverse laws (`cf_encodeCode_ofNatCodeCF`,
+  `cf_ofNatCodeCF_encodeCode`) carry no `Classical.choice`, and `ofNatCodeCF_eq_ofNatCode` proves
+  `ofNatCodeCF = ofNatCode` (§ VI of `ZeroParadox/Computability/KleeneChoiceFree.lean`, footprints in
+  its `PurityCheck` section). `ofNatCode`, `instDenumerable` and `Universal` carry `Classical.choice`
+  (`#print axioms Nat.Partrec.Code.ofNatCode` in that `PurityCheck` section;
+  `#print axioms Nat.Partrec.Code.instDenumerable` and `#print axioms Universal` in the `PurityCheck`
+  section of `ZeroParadox/Computability/Kleene.lean`). The bare statement `ofNatCodeCF = ofNatCode`
+  carries `Classical.choice` whatever its proof (the statement control `stmtOfNatCodeCFEq`, § VI).
 
 **Controls.** `universal_not_selfprints`: universality alone does not give self-printing.
 The `example`s beside it: no constant code is universal, so the constant codes, which meet

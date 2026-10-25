@@ -149,7 +149,8 @@ def profiles : List Corpus.Audit.ProfileRow :=
     ⟨`ZeroParadox.cf_bodd_div2_eq, ours⟩,
     ⟨`ZeroParadox.cf_ofNatCodeCF_step, ours⟩,
     ⟨`ZeroParadox.cf_ofNatCodeCF_encodeCode, ours⟩,
-    ⟨`ZeroParadox.ofNatCodeCF_eq_ofNatCode, Corpus.Audit.stock⟩ ]
+    ⟨`ZeroParadox.ofNatCodeCF_eq_ofNatCode, Corpus.Audit.stock⟩,
+    ⟨`ZeroParadox.stmtOfNatCodeCFEq, Corpus.Audit.stock⟩ ]
 
 /-! ## The run
 
