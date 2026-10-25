@@ -7,14 +7,14 @@ listed at the end keeps its own licence.
 Code: Apache License, Version 2.0. Full text in LICENSE.
   ZeroParadox.lean and every other .lean file, scripts/*.py, tools/**
   (including the Markdown there), .github/**, .claude/** (including the
-  Markdown there), lakefile.toml, lake-manifest.json, lean-toolchain,
+  Markdown there), CLAUDE.md, lakefile.toml, lake-manifest.json, lean-toolchain,
   ssot.json, .zenodo.json and the other configuration files: every file
   of this repository that is not a document as defined below.
 
 Documents: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
 International (CC BY-NC-ND 4.0). Full text in LICENSE-DOCS.
   The PDFs at the repository root, every Markdown (.md) file outside
-  tools/ and .claude/ (README.md, GUIDE.md, CLAIMS.md, register.md,
+  tools/, .claude/ and CLAUDE.md (README.md, GUIDE.md, CLAIMS.md, register.md,
   RELEASES.md, the companion .md files under ZeroParadox/, and
   scripts/README.md among them), and the site layouts in _layouts/.
 

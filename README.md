@@ -157,7 +157,7 @@ Hosted at [timbrigham/ZeroParadox](https://github.com/timbrigham/ZeroParadox). P
 
 All conceptual development, structure, and authorship originate with the human creator.
 
-The code (the Lean files, the build scripts and the tooling) is licensed under the Apache License, Version 2.0: see [LICENSE](LICENSE).
+The code (the Lean files, the build scripts and the tooling, `CLAUDE.md` included) is licensed under the Apache License, Version 2.0: see [LICENSE](LICENSE).
 
 The documents (the PDFs and the prose Markdown, this README included) are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0): see [LICENSE-DOCS](LICENSE-DOCS). You may share them with attribution for non-commercial purposes only, and you may not share adapted versions.
 
