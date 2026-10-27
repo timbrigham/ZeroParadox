@@ -281,7 +281,31 @@ def profiles : List Corpus.Audit.ProfileRow :=
     ⟨`ZeroParadox.univ_value_eq, ours⟩,
     ⟨`ZeroParadox.universal_code_cf, ours⟩,
     ⟨`ZeroParadox.universal_code_cf', ours⟩,
-    ⟨`ZeroParadox.zero_not_universal, []⟩ ]
+    ⟨`ZeroParadox.zero_not_universal, []⟩,
+    ⟨`ZeroParadox.stmtSelfrefUniversal, Corpus.Audit.stock⟩,
+    ⟨`ZeroParadox.stmtSelfrefUniversalCF, ours⟩,
+    ⟨`ZeroParadox.stmtSelfrefUniversalEnc, []⟩,
+    ⟨`ZeroParadox.selfPrints_iff_cf, Corpus.Audit.stock⟩,
+    ⟨`ZeroParadox.universal_iff_cf, Corpus.Audit.stock⟩,
+    ⟨`ZeroParadox.universalCF_iff_enc, ours⟩,
+    ⟨`ZeroParadox.codeIdIndex.eq_1, []⟩,
+    ⟨`ZeroParadox.selfUniv.eq_1, []⟩,
+    ⟨`ZeroParadox.eval_selD, ours⟩,
+    ⟨`ZeroParadox.eval_psiOf, ours⟩,
+    ⟨`ZeroParadox.selfUniv_spec, ours⟩,
+    ⟨`ZeroParadox.selfref_universal_exists_cf, ours⟩,
+    ⟨`ZeroParadox.selfref_universal_exists_enc, ours⟩,
+    ⟨`ZeroParadox.selfref_universal_exists_verbatim, ours⟩,
+    ⟨`ZeroParadox.cf_left_le_pair, []⟩,
+    ⟨`ZeroParadox.cf_right_le_pair, ["propext"]⟩,
+    ⟨`ZeroParadox.encodeCode_lt_comp_left, ours⟩,
+    ⟨`ZeroParadox.encodeCode_lt_comp_right, ours⟩,
+    ⟨`ZeroParadox.encodeCode_lt_pair_left, ours⟩,
+    ⟨`ZeroParadox.lt_encodeCode_selfUniv, ours⟩,
+    ⟨`ZeroParadox.selfref_universal_unbounded_cf, ours⟩,
+    ⟨`ZeroParadox.zero_selfPrints_not_universal, ours⟩,
+    ⟨`ZeroParadox.universal_not_selfPrints_cf, ours⟩,
+    ⟨`ZeroParadox.unshifted_incompatible, ours⟩ ]
 
 /-! ## The run
 

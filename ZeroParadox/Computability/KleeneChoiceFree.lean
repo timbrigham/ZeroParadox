@@ -18,11 +18,11 @@ recursion theorem has cropped up several times in our old discussions, and it sh
 priority item if it keeps repeating itself.
 
 ---
-
 `Statement:` for every code `cψ`, `eval (fpCF cψ) x = eval cψ (Nat.pair (encodeCode (fpCF cψ)) x)`
 (`kleene_cf`), with `fpCF` an explicit term; a fixed point up to `eval`, never a literal one. Not
 proved here: the `Partrec₂` form (Mathlib's `fixed_point₂`), a universal code, or that selecting a
 code by its behaviour needs `Classical.choice`. Footprints: `PurityCheck` at the end of this file.
+A universal code: `universal_code_cf`, in `ZeroParadox/Computability/UniversalChoiceFree.lean`.
 -/
 
 namespace ZeroParadox
@@ -493,6 +493,8 @@ example : type_of% @Nat.Partrec.Code.eval_prec_succ := @cf_eval_prec_succ
 -- universal code and is not built here. It builds no `NamingSystem` instance, and adds the measurement
 -- on `Code`, where the choice sits in the statements' packaging (`Partrec₂`, `Denumerable Code`) and in
 -- the proofs of the arithmetic lemmas above, not in the construction.
+-- Statement: a universal code is built in `ZeroParadox/Computability/UniversalChoiceFree.lean`
+-- (`universal_code_cf`), which imports this file.
 -- Reading: whether selecting a code by its behaviour needs choice was not attempted as of 2026-10-22.
 -- Bauer's behaviour-level recursion theorems use choice at that step and do not show it necessary:
 -- "First steps in synthetic computability theory", Electronic Notes in Theoretical Computer Science
