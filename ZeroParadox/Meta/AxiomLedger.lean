@@ -1,4 +1,5 @@
 import ZeroParadox.Computability.KleeneChoiceFree
+import ZeroParadox.Computability.UniversalChoiceFree
 import ZeroParadox.Vendored.CorpusAudit.Audit
 
 /-!
@@ -12,7 +13,8 @@ This file is a gate on what we claim about which axioms our proofs use. We make 
 
 `Statement:` elaborating this file fails unless every row below holds when recomputed by the
 auditor of `GuardianEngineAI/corpus` (vendored in `ZeroParadox/Vendored/CorpusAudit/`), and unless
-every theorem of `ZeroParadox/Computability/KleeneChoiceFree.lean` and of this file has a row.
+every theorem of `ZeroParadox/Computability/KleeneChoiceFree.lean`, of
+`ZeroParadox/Computability/UniversalChoiceFree.lean` and of this file has a row.
 -/
 
 open Lean
@@ -108,8 +110,8 @@ def replacements : List Corpus.Audit.Row :=
 -- Reading: a row compares two supplied proofs of one statement. It does not show that our
 -- profile is the least possible, nor that the predecessor's statement needs `Classical.choice`.
 
-/-- `Statement:` declared profiles for `fpCF` and every other theorem of `KleeneChoiceFree.lean`
-that replaces no Mathlib lemma. -/
+/-- `Statement:` declared profiles for `fpCF`, every other theorem of `KleeneChoiceFree.lean`
+that replaces no Mathlib lemma, and every theorem of `UniversalChoiceFree.lean`. -/
 def profiles : List Corpus.Audit.ProfileRow :=
   let ours := ["Quot.sound", "propext"]
   [ ⟨`ZeroParadox.fpCF, []⟩,
@@ -150,7 +152,136 @@ def profiles : List Corpus.Audit.ProfileRow :=
     ⟨`ZeroParadox.cf_ofNatCodeCF_step, ours⟩,
     ⟨`ZeroParadox.cf_ofNatCodeCF_encodeCode, ours⟩,
     ⟨`ZeroParadox.ofNatCodeCF_eq_ofNatCode, Corpus.Audit.stock⟩,
-    ⟨`ZeroParadox.stmtOfNatCodeCFEq, Corpus.Audit.stock⟩ ]
+    ⟨`ZeroParadox.stmtOfNatCodeCFEq, Corpus.Audit.stock⟩,
+    ⟨`ZeroParadox.boddNat_div2Nat_eq, ours⟩,
+    ⟨`ZeroParadox.boddNat_eq, []⟩,
+    ⟨`ZeroParadox.cf_exists_code_mp, ours⟩,
+    ⟨`ZeroParadox.cf_primrec_casesOn', ours⟩,
+    ⟨`ZeroParadox.codeArg_add_four, []⟩,
+    ⟨`ZeroParadox.CodeCont.brecOn.eq, []⟩,
+    ⟨`ZeroParadox.codeIterNat_enc, ours⟩,
+    ⟨`ZeroParadox.CodeReaches.of_step, []⟩,
+    ⟨`ZeroParadox.CodeReaches.refl, []⟩,
+    ⟨`ZeroParadox.CodeReaches.trans, []⟩,
+    ⟨`ZeroParadox.codeRun_add, []⟩,
+    ⟨`ZeroParadox.codeRun_complete, ours⟩,
+    ⟨`ZeroParadox.codeRun_halts_iff, ours⟩,
+    ⟨`ZeroParadox.codeRun_prec_complete, ["propext"]⟩,
+    ⟨`ZeroParadox.codeRun_rfind_complete, ours⟩,
+    ⟨`ZeroParadox.codeRun_sem, ours⟩,
+    ⟨`ZeroParadox.codeRun_sound, ours⟩,
+    ⟨`ZeroParadox.codeStep.eq_1, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_10, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_11, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_12, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_13, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_14, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_15, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_16, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_17, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_2, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_3, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_4, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_5, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_6, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_7, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_8, []⟩,
+    ⟨`ZeroParadox.codeStep.eq_9, []⟩,
+    ⟨`ZeroParadox.codeStep_sem, ours⟩,
+    ⟨`ZeroParadox.codeStepNat.eq_1, []⟩,
+    ⟨`ZeroParadox.codeStepNat_enc, ours⟩,
+    ⟨`ZeroParadox.codeTag_add_four, []⟩,
+    ⟨`ZeroParadox.codeTag_comp, ours⟩,
+    ⟨`ZeroParadox.codeTag_left, []⟩,
+    ⟨`ZeroParadox.codeTag_pair, ours⟩,
+    ⟨`ZeroParadox.codeTag_prec, ours⟩,
+    ⟨`ZeroParadox.codeTag_rfind', ours⟩,
+    ⟨`ZeroParadox.codeTag_right, []⟩,
+    ⟨`ZeroParadox.codeTag_succ, []⟩,
+    ⟨`ZeroParadox.codeTag_zero, []⟩,
+    ⟨`ZeroParadox.discussion142_answer, ours⟩,
+    ⟨`ZeroParadox.div2Nat_eq, ["propext"]⟩,
+    ⟨`ZeroParadox.doneTest.eq_1, []⟩,
+    ⟨`ZeroParadox.doneTest_enc, ours⟩,
+    ⟨`ZeroParadox.encCont.eq_1, []⟩,
+    ⟨`ZeroParadox.encCont.eq_2, []⟩,
+    ⟨`ZeroParadox.encCont.eq_3, []⟩,
+    ⟨`ZeroParadox.encCont.eq_4, []⟩,
+    ⟨`ZeroParadox.encCont.eq_5, []⟩,
+    ⟨`ZeroParadox.encCont.eq_6, []⟩,
+    ⟨`ZeroParadox.encState.eq_1, []⟩,
+    ⟨`ZeroParadox.encState.eq_2, []⟩,
+    ⟨`ZeroParadox.encState.eq_3, []⟩,
+    ⟨`ZeroParadox.eval_pair_bind_eq, ours⟩,
+    ⟨`ZeroParadox.eval_prec_eq_precLoopSem, ours⟩,
+    ⟨`ZeroParadox.eval_rfind'_eq_rfindSem, []⟩,
+    ⟨`ZeroParadox.evStepNat.eq_1, []⟩,
+    ⟨`ZeroParadox.haltSearch.eq_1, []⟩,
+    ⟨`ZeroParadox.haltValue.eq_1, []⟩,
+    ⟨`ZeroParadox.initNat.eq_1, []⟩,
+    ⟨`ZeroParadox.initNat_eq, ours⟩,
+    ⟨`ZeroParadox.mem_rfindSem, ["propext"]⟩,
+    ⟨`ZeroParadox.natCase3_0, []⟩,
+    ⟨`ZeroParadox.natCase3_1, []⟩,
+    ⟨`ZeroParadox.natCase3_2, []⟩,
+    ⟨`ZeroParadox.natCase6_0, []⟩,
+    ⟨`ZeroParadox.natCase6_1, []⟩,
+    ⟨`ZeroParadox.natCase6_2, []⟩,
+    ⟨`ZeroParadox.natCase6_3, []⟩,
+    ⟨`ZeroParadox.natCase6_4, []⟩,
+    ⟨`ZeroParadox.natCase6_5, []⟩,
+    ⟨`ZeroParadox.natCase8_0, []⟩,
+    ⟨`ZeroParadox.natCase8_1, []⟩,
+    ⟨`ZeroParadox.natCase8_2, []⟩,
+    ⟨`ZeroParadox.natCase8_3, []⟩,
+    ⟨`ZeroParadox.natCase8_4, []⟩,
+    ⟨`ZeroParadox.natCase8_5, []⟩,
+    ⟨`ZeroParadox.natCase8_6, []⟩,
+    ⟨`ZeroParadox.natCase8_7, []⟩,
+    ⟨`ZeroParadox.natPrimrec_add, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_boddNat, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_boddNat_comp, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_codeArg, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_codeIterNat, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_codeStepNat, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_codeTag, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_const, []⟩,
+    ⟨`ZeroParadox.natPrimrec_div2Nat, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_div2Nat_comp, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_evStepNat, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_fst, []⟩,
+    ⟨`ZeroParadox.natPrimrec_haltSearch, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_haltValue, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_id, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_initNat, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_iterInit, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_natCase3, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_natCase6, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_natCase8, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_pair, []⟩,
+    ⟨`ZeroParadox.natPrimrec_pred, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_pred_self, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_rec, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_retStepNat, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_sel, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_snd, []⟩,
+    ⟨`ZeroParadox.natPrimrec_sub_const, ours⟩,
+    ⟨`ZeroParadox.natPrimrec_succ, []⟩,
+    ⟨`ZeroParadox.natSel_succ, []⟩,
+    ⟨`ZeroParadox.natSel_zero, []⟩,
+    ⟨`ZeroParadox.precLoopSem.eq_1, []⟩,
+    ⟨`ZeroParadox.precLoopSem.eq_2, []⟩,
+    ⟨`ZeroParadox.precLoopSem_rec, ours⟩,
+    ⟨`ZeroParadox.retStepNat.eq_1, []⟩,
+    ⟨`ZeroParadox.rfindSem_ge, ["propext"]⟩,
+    ⟨`ZeroParadox.rfindSem_unfold, ours⟩,
+    ⟨`ZeroParadox.succ_sub_one_rfl, []⟩,
+    ⟨`ZeroParadox.univ_natPartrec, ours⟩,
+    ⟨`ZeroParadox.univ_natPartrec_raw, ours⟩,
+    ⟨`ZeroParadox.univ_value_eq, ours⟩,
+    ⟨`ZeroParadox.universal_code_cf, ours⟩,
+    ⟨`ZeroParadox.universal_code_cf', ours⟩,
+    ⟨`ZeroParadox.zero_not_universal, []⟩ ]
 
 /-! ## The run
 
@@ -181,10 +312,12 @@ the vendored audit, which throws on any failure. The verdict is the throw, never
     line ["profile", r.decl.toString, "-", fmt r.declProfile, fmt d, "-",
       if ok then "PASS" else "FAIL"]
   let cov ← Corpus.Audit.coverageModules replacements profiles
-    [`ZeroParadox.Computability.KleeneChoiceFree]
-  line ["coverage", "ZeroParadox.Computability.KleeneChoiceFree + this file", "-", "every theorem",
-    s!"{cov.length} unledgered", "-", if cov.isEmpty then "PASS" else "FAIL"]
-  Corpus.Audit.auditModules replacements profiles [`ZeroParadox.Computability.KleeneChoiceFree]
+    [`ZeroParadox.Computability.KleeneChoiceFree, `ZeroParadox.Computability.UniversalChoiceFree]
+  line ["coverage",
+    "ZeroParadox.Computability.KleeneChoiceFree + UniversalChoiceFree + this file", "-",
+    "every theorem", s!"{cov.length} unledgered", "-", if cov.isEmpty then "PASS" else "FAIL"]
+  Corpus.Audit.auditModules replacements profiles
+    [`ZeroParadox.Computability.KleeneChoiceFree, `ZeroParadox.Computability.UniversalChoiceFree]
 
 end ZeroParadox.AxiomLedger
 

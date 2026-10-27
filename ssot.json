@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2627,
-        "files": 182
+        "declarations": 2749,
+        "files": 183
       },
       "entries": [
         {
@@ -725,6 +725,43 @@
             ]
           },
           "reason": "The representation fiber over the bottom value 0 is a singleton: zero representational ambiguity at that end; the fiber over epsilon-zero is a singleton too (e0Repr_eq_epsilon0_iff), so fiber cardinality is the same at both ends (INVARIANT reading). No comparison with complexity is made: E0Note carries no InfinitudeFloor instance.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "004f268d-3d1b-48c6-aad0-1fd03f555361",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeStep",
+            "short": "codeStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeStep",
+            "short": "codeStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -1095,6 +1132,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "01185a6b-81a1-425e-8b84-04d7bf27c266",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeCont",
+            "short": "CodeCont"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeCont",
+            "short": "CodeCont",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -1568,6 +1642,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "02619b24-3e25-4ce2-82f6-6258be10128a",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun",
+            "short": "codeRun"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun",
+            "short": "codeRun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -2155,6 +2266,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "03963cd9-6a04-4d03-a367-dbaa8c9a5c8e",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_prec_eq_precLoopSem",
+            "short": "eval_prec_eq_precLoopSem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_prec_eq_precLoopSem",
+            "short": "eval_prec_eq_precLoopSem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -2901,6 +3049,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "055d5eb2-7e9f-47f5-a4a8-633ee1fd4c3b",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_snd",
+            "short": "natPrimrec_snd"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_snd",
+            "short": "natPrimrec_snd",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4094,6 +4279,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "087e00e0-8aee-4f5e-be96-ef54e767820a",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeIterNat",
+            "short": "codeIterNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeIterNat",
+            "short": "codeIterNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0885fa70-e0c1-4bb0-abb7-d13c7f0244ef",
           "new": {
@@ -4120,6 +4342,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "08c0ba70-0911-4c25-a0b9-b8aa391ace39",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encCont",
+            "short": "encCont"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encCont",
+            "short": "encCont",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4234,6 +4493,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0905e829-b2f3-4eef-9580-e446de4ea1df",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_codeArg",
+            "short": "natPrimrec_codeArg"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_codeArg",
+            "short": "natPrimrec_codeArg",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4534,6 +4830,43 @@
             ]
           },
           "reason": "Round 3: the no-go becomes a characterisation - Nonempty (InfinitudeFloor a) iff Infinite a",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "098e90e1-1048-482e-ab93-7ec42dfdd25d",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_5",
+            "short": "natCase6_5"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_5",
+            "short": "natCase6_5",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5267,6 +5600,43 @@
             ]
           },
           "reason": "Boundary.lean SS III-b: oscillation (2-cycle) excluded on the ordinal ascent, present at the floor. Instantiates wf_no_cycle at the two ends of the boundary; no new mathematics, the content is the fence.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0b6dd3b7-547f-4770-809e-02d2e456e8b2",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.univ_value_eq",
+            "short": "univ_value_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.univ_value_eq",
+            "short": "univ_value_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7070,6 +7440,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "10436f64-fe40-4d9f-9613-cee1b85702ce",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.div2Nat_eq",
+            "short": "div2Nat_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.div2Nat_eq",
+            "short": "div2Nat_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "105684f9-404d-4cdd-83c2-277affbf39b5",
           "new": {
@@ -8723,6 +9130,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "14641c4f-e1e5-42e9-9b76-c47b538d829e",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rfindSem",
+            "short": "rfindSem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rfindSem",
+            "short": "rfindSem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "146688b0-69aa-4803-8c94-1d208850f835",
           "new": {
@@ -9986,6 +10430,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "17a71509-ac07-4302-862c-c4307beec590",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rfindSem_unfold",
+            "short": "rfindSem_unfold"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rfindSem_unfold",
+            "short": "rfindSem_unfold",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "17add508-0274-44fa-9e94-063ec34d90e3",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -10550,6 +11031,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "196bbad0-ac52-4352-a77b-73094d8cd911",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_4",
+            "short": "natCase6_4"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_4",
+            "short": "natCase6_4",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1986dd5e-0b97-4b51-8ea0-c2cd03eb7150",
           "new": {
             "file": "ZeroParadox/Ordinal/NaturalOpsPow.lean",
@@ -10989,6 +11507,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1a3c8357-b667-4c4b-beb7-2dde9e28b6ab",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeContSem",
+            "short": "codeContSem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeContSem",
+            "short": "codeContSem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1a839aad-1333-4b00-be6d-c6734c0d3b42",
           "new": {
@@ -11128,6 +11683,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1ad750b6-d66f-4fc9-ac13-5cdc96b97b47",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_haltSearch",
+            "short": "natPrimrec_haltSearch"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_haltSearch",
+            "short": "natPrimrec_haltSearch",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13720,6 +14312,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2255244f-4b0a-4619-9b5a-39f3c3a09c0a",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_codeStepNat",
+            "short": "natPrimrec_codeStepNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_codeStepNat",
+            "short": "natPrimrec_codeStepNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17858,6 +18487,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2c298217-4e93-4aba-9686-b2b893e2938f",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_add_four",
+            "short": "codeTag_add_four"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_add_four",
+            "short": "codeTag_add_four",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2c4d986a-d4db-4be5-a7de-105f3dea4eb5",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -18819,6 +19485,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2ef14dbc-96d8-48cb-bb79-849ad8a533b6",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeStepNat",
+            "short": "codeStepNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeStepNat",
+            "short": "codeStepNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2f02bbe5-dbae-418a-9f39-1dfc5b6332a8",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -18954,6 +19657,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2f28ecb5-bdb4-4fa6-a85f-149234ff5aed",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_6",
+            "short": "natCase8_6"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_6",
+            "short": "natCase8_6",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20391,6 +21131,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "334370bb-9765-4575-a1cf-92f200691497",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeStep_sem",
+            "short": "codeStep_sem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeStep_sem",
+            "short": "codeStep_sem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "335392dc-896e-4d5e-ac98-679e06e68dc3",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -21636,6 +22413,43 @@
             ]
           },
           "reason": "New 2026-09-16. No computable Bool test decides whether self-application is defined — self_halting_undecidable as a fact about REGISTRATION, reduced to it rather than restated. Footprint [propext, Classical.choice, Quot.sound], inherited from Mathlib recursion theory.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3753931e-436d-41eb-b0a6-4f1b76a58317",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeReaches.trans",
+            "short": "CodeReaches.trans"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeReaches.trans",
+            "short": "CodeReaches.trans",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23693,6 +24507,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3ce47fd2-7dd7-4750-a883-cb78993f2e99",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.succ_sub_one_rfl",
+            "short": "succ_sub_one_rfl"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.succ_sub_one_rfl",
+            "short": "succ_sub_one_rfl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3cf2e43d-fd92-41b7-96c2-7e008b0fd5f8",
           "new": {
@@ -24090,6 +24941,43 @@
             ]
           },
           "reason": "Die mining landing (ruled 2026-10-21): trap data (emptiness, rank, monotone), no reversal under <, reverse of an injective step, RelHom maps of motions, wheel as a die face",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3e5eece6-9ab7-402a-8938-99e5593becac",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_prec_complete",
+            "short": "codeRun_prec_complete"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_prec_complete",
+            "short": "codeRun_prec_complete",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24578,6 +25466,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3fb9e02b-632c-4913-8c4b-7000ea0bcd74",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natSel",
+            "short": "natSel"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natSel",
+            "short": "natSel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3fc797ee-2ce6-44f8-bf79-6365639a7541",
           "new": {
@@ -24640,6 +25565,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "401c8d78-0f4b-46b6-ac1f-3e834e2c8bb4",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_rfind'",
+            "short": "codeTag_rfind'"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_rfind'",
+            "short": "codeTag_rfind'",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25679,6 +26641,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "43381af9-ca1f-47a6-ba73-fe1784ba27ff",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_1",
+            "short": "natCase8_1"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_1",
+            "short": "natCase8_1",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4345c656-7c4c-4059-8d9c-89f1f6296c6f",
           "new": {
@@ -26605,6 +27604,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "450d77fb-ee84-4191-ae1e-3d1a86f3fbcd",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_rfindSem",
+            "short": "mem_rfindSem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_rfindSem",
+            "short": "mem_rfindSem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27944,6 +28980,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4855a5eb-b09c-4426-9e42-dd04c7a5b805",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_rfind'_eq_rfindSem",
+            "short": "eval_rfind'_eq_rfindSem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_rfind'_eq_rfindSem",
+            "short": "eval_rfind'_eq_rfindSem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4856fd74-4d42-4a1b-b525-f1216a44e88d",
           "new": {
@@ -28347,6 +29420,43 @@
             ]
           },
           "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "48e1ef8e-8481-4057-a930-561d5f8ad57b",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_pred",
+            "short": "natPrimrec_pred"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_pred",
+            "short": "natPrimrec_pred",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29247,6 +30357,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4bba07ed-f65b-4137-aff5-326061c49f13",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_id",
+            "short": "natPrimrec_id"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_id",
+            "short": "natPrimrec_id",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4bbbec29-f394-45f2-b95f-1bd3f9a5cf7a",
           "new": {
             "file": "ZeroParadox/Computability/Kleene.lean",
@@ -29531,6 +30678,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4c26d9f1-434a-4d8d-9037-15f3fdb6ef7b",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_succ",
+            "short": "codeTag_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_succ",
+            "short": "codeTag_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30534,6 +31718,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4ed8e6e7-771b-41c6-8649-a025a26e4a3f",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haltSearch",
+            "short": "haltSearch"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haltSearch",
+            "short": "haltSearch",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4f0bbd4f-9a2c-4b8b-bbe5-4e14047d3e31",
           "new": {
@@ -31048,6 +32269,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5049dae7-a41f-4825-a4f0-4b04b489d1f5",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.evStepNat",
+            "short": "evStepNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.evStepNat",
+            "short": "evStepNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "50573fd2-821b-4340-adc0-0c576fe0ca7b",
           "new": {
             "file": "ZeroParadox/Information/Disjunctive.lean",
@@ -31297,6 +32555,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "50d1042e-8ff6-4f36-aa08-9a68b88f8a82",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.initNat",
+            "short": "initNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.initNat",
+            "short": "initNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -33044,6 +34339,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5611763b-5260-4b47-bbd4-398173cb3603",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.div2Nat",
+            "short": "div2Nat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.div2Nat",
+            "short": "div2Nat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5614e04b-785c-4b4f-97a1-5d6e98a57686",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -33623,6 +34955,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "577586ce-a8be-4a15-9f0f-3c172c34dd64",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_zero",
+            "short": "codeTag_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_zero",
+            "short": "codeTag_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35360,6 +36729,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5b387e71-8922-48c7-a541-f775e46258c3",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_4",
+            "short": "natCase8_4"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_4",
+            "short": "natCase8_4",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5b43f447-beac-47ec-a034-0fd7ee3caa99",
           "new": {
@@ -35722,6 +37128,43 @@
             ]
           },
           "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5c2db8db-f6f9-4099-9b6d-1172220fef29",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeReaches",
+            "short": "CodeReaches"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeReaches",
+            "short": "CodeReaches",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -36911,6 +38354,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5efc6ded-efc3-4962-9916-bfcf3cff315a",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_const",
+            "short": "natPrimrec_const"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_const",
+            "short": "natPrimrec_const",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5f25dc38-5449-4f7b-9323-cb9d45b0c6dd",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -36938,6 +38418,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5f318a6a-902f-4398-9164-811d59302a74",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6",
+            "short": "natCase6"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6",
+            "short": "natCase6",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38456,6 +39973,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "649d94aa-7142-46ed-b441-eb8b3fa078ab",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_div2Nat_comp",
+            "short": "natPrimrec_div2Nat_comp"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_div2Nat_comp",
+            "short": "natPrimrec_div2Nat_comp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "64c8a785-b3d7-45f4-b321-d5a7debe4cab",
           "new": {
             "file": "ZeroParadox/Valuation/PoleRegistration.lean",
@@ -38593,6 +40147,43 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6509980e-62c7-45d7-a46a-8fcf9e2049bf",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_rfind_complete",
+            "short": "codeRun_rfind_complete"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_rfind_complete",
+            "short": "codeRun_rfind_complete",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40091,6 +41682,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "693912a9-de0c-4a51-9b91-8285642617b4",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_codeTag",
+            "short": "natPrimrec_codeTag"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_codeTag",
+            "short": "natPrimrec_codeTag",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "698e4384-c427-4a0b-9341-6ee1ae25dda1",
           "new": {
@@ -40413,6 +42041,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6a81f310-b2d3-4935-a6ec-313b5542f08a",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_boddNat_comp",
+            "short": "natPrimrec_boddNat_comp"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_boddNat_comp",
+            "short": "natPrimrec_boddNat_comp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41063,6 +42728,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6be47a8d-a080-4991-b254-f2219da27a1e",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_codeIterNat",
+            "short": "natPrimrec_codeIterNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_codeIterNat",
+            "short": "natPrimrec_codeIterNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6be4e359-d824-406c-9a41-181064c5e435",
           "new": {
@@ -41283,6 +42985,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "6c4ca764-5902-4984-97c6-733863d5fbd1",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_0",
+            "short": "natCase6_0"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_0",
+            "short": "natCase6_0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6c6644ba-78de-4207-8229-13a4b532fa3b",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -41460,6 +43199,43 @@
             ]
           },
           "reason": "Name collision: two distinct declarations were both ZeroParadox.step in a flat namespace - this Fin 2 Markov kernel (MarkovContractionDual.lean:74) and Valuation/BottomInvariant.lean:314 (InvariantMarkovKernel). Build was green only because no module imported both. Renamed the scaffolding-tagged Markov one; corpus updated across MarkovContractionDual, NuRateMatch and BottomCannotBe; lake build green, 3978 jobs, 0 errors. Tim's call 2026-08-22.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6ce9496c-54d0-4884-a3b9-c6688273e382",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_complete",
+            "short": "codeRun_complete"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_complete",
+            "short": "codeRun_complete",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41902,6 +43678,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6d8f6c5e-5034-4ffb-a2db-347f0276a0df",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_div2Nat",
+            "short": "natPrimrec_div2Nat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_div2Nat",
+            "short": "natPrimrec_div2Nat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42958,6 +44771,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "700a8e3a-35b6-4397-9a11-25b47a5ce03f",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_pair",
+            "short": "codeTag_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_pair",
+            "short": "codeTag_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "70156f0f-1160-48c4-b2bc-4ca5465f7ff9",
           "new": {
             "file": "ZeroParadox/Information/Disjunctive.lean",
@@ -43060,6 +44910,80 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "703e7d5b-47fe-41af-88a9-a7d029e9f236",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_7",
+            "short": "natCase8_7"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_7",
+            "short": "natCase8_7",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "706ac5f0-82e8-4457-84d9-70821fd8cc4f",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_natCase8",
+            "short": "natPrimrec_natCase8"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_natCase8",
+            "short": "natPrimrec_natCase8",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43242,6 +45166,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "70ffe1c2-f062-4346-9549-cf460a2a78d8",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_rec",
+            "short": "natPrimrec_rec"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_rec",
+            "short": "natPrimrec_rec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43759,6 +45720,43 @@
             ]
           },
           "reason": "ZP-B T0: reading B of MP-1 as a named hypothesis theorem (2026-10-17)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "732c1882-9d44-43cf-a584-efce03216cb0",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.univ_natPartrec_raw",
+            "short": "univ_natPartrec_raw"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.univ_natPartrec_raw",
+            "short": "univ_natPartrec_raw",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -45348,6 +47346,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7781ff9b-a6cb-4f6d-99fa-e16e3f9ba521",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_pair",
+            "short": "natPrimrec_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_pair",
+            "short": "natPrimrec_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47772,6 +49807,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7d34097e-57be-48fe-a726-6e4b315f5252",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natSel_zero",
+            "short": "natSel_zero"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natSel_zero",
+            "short": "natSel_zero",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7d7eedda-a77b-4be8-a066-8a6b3711c013",
           "new": {
@@ -48019,6 +50091,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7dff5e24-6c73-4767-8d2d-0256de459619",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_evStepNat",
+            "short": "natPrimrec_evStepNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_evStepNat",
+            "short": "natPrimrec_evStepNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48602,6 +50711,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f5e8909-d9c3-440a-b9d3-52d03da9e7b5",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_0",
+            "short": "natCase8_0"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_0",
+            "short": "natCase8_0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -49727,6 +51873,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8253a6cb-b24e-460d-bd2e-f4f67bb15f82",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.discussion142_answer",
+            "short": "discussion142_answer"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.discussion142_answer",
+            "short": "discussion142_answer",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "82614457-0f9e-49f8-a6a5-b1ec46d37d83",
           "new": {
             "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
@@ -49792,6 +51975,43 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "829fab95-4af3-4714-9b00-f64ee8792c51",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeReaches.of_step",
+            "short": "CodeReaches.of_step"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeReaches.of_step",
+            "short": "CodeReaches.of_step",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50090,6 +52310,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "833918ca-2f74-4328-b654-13b017003970",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_haltValue",
+            "short": "natPrimrec_haltValue"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_haltValue",
+            "short": "natPrimrec_haltValue",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50640,6 +52897,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "84dc76dd-4440-4d90-9f20-cf637a1ad8c9",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_left",
+            "short": "codeTag_left"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_left",
+            "short": "codeTag_left",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -51838,6 +54132,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "88084ed3-090c-42d8-9a68-ab20e3d5ea2f",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.univ_natPartrec",
+            "short": "univ_natPartrec"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.univ_natPartrec",
+            "short": "univ_natPartrec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "881a8759-c25a-4e48-b2f6-0c1b8b111319",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -52311,6 +54642,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8988e665-54f9-4bbd-9bd3-2d8ba288063b",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeIterNat_enc",
+            "short": "codeIterNat_enc"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeIterNat_enc",
+            "short": "codeIterNat_enc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "89af8682-a8f5-4efd-a0d5-2a9fcac11f74",
           "new": {
@@ -52522,6 +54890,43 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8a491411-fcae-4b57-ab37-0e3f7db6036f",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_sub_const",
+            "short": "natPrimrec_sub_const"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_sub_const",
+            "short": "natPrimrec_sub_const",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -52970,6 +55375,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8b8eff8a-f4cf-465b-b16c-297d13d21929",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_boddNat",
+            "short": "natPrimrec_boddNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_boddNat",
+            "short": "natPrimrec_boddNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -55016,6 +57458,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "914a29ca-1a6f-4e62-9998-afa6de927508",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_comp",
+            "short": "codeTag_comp"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_comp",
+            "short": "codeTag_comp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9163bc9d-a0b8-468c-aa93-98cc6cfe8d86",
           "new": {
@@ -55228,6 +57707,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "920b6a91-b894-4073-903b-70eae356d2c0",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeSem",
+            "short": "codeSem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeSem",
+            "short": "codeSem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -55712,6 +58228,43 @@
             ]
           },
           "reason": "AMM Thm 7.6 hypotheses 3(c) and 4, verified for Type u with ofTypeFunctor P.Obj",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9308bbb9-90a9-4be1-972c-8f842020a4ee",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_prec",
+            "short": "codeTag_prec"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_prec",
+            "short": "codeTag_prec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56797,6 +59350,43 @@
             ]
           },
           "reason": "Tim's concurrency reading, proved: a fiber-confined distribution pushes forward to a point mass. Positive uncertainty in the source and exactly zero in the target, on one object.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "960b786f-3629-462f-ae9e-61d7f9f3d8e6",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeStepNat_enc",
+            "short": "codeStepNat_enc"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeStepNat_enc",
+            "short": "codeStepNat_enc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -58806,6 +61396,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9ad826a1-4ba1-4a2b-bc93-0db1c09c27e9",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rfindSem_ge",
+            "short": "rfindSem_ge"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.rfindSem_ge",
+            "short": "rfindSem_ge",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9ae5b4e5-89a1-4c1a-bed8-abf39afcee1b",
           "new": {
@@ -59619,6 +62246,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9c96070f-1cc7-4e32-83f1-f158d05530fe",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boddNat_div2Nat_eq",
+            "short": "boddNat_div2Nat_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boddNat_div2Nat_eq",
+            "short": "boddNat_div2Nat_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9c9f2778-3b00-4ddf-83d6-8e03e809a090",
           "new": {
             "file": "ZeroParadox/Meta/AxiomLedger.lean",
@@ -59798,6 +62462,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9d172054-a6eb-47c5-abac-4dac58b6528d",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_initNat",
+            "short": "natPrimrec_initNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_initNat",
+            "short": "natPrimrec_initNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9d228f8f-7a69-4d67-9974-09cbfc8f8124",
           "new": {
@@ -59824,6 +62525,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9d2c867a-b5de-4223-806d-eb5b90b0bd1f",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase3_2",
+            "short": "natCase3_2"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase3_2",
+            "short": "natCase3_2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -59984,6 +62722,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9d8e20dc-c86a-461a-b4f4-782c444f6fe8",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.universal_code_cf'",
+            "short": "universal_code_cf'"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.universal_code_cf'",
+            "short": "universal_code_cf'",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9da02922-efae-42f2-ba8d-5a7ffc8acac9",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -60010,6 +62785,43 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9dad5538-a4bb-46cd-89ff-8474e5ad9d3b",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeState",
+            "short": "CodeState"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeState",
+            "short": "CodeState",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -61757,6 +64569,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a2bc43a2-99e7-4b2b-91a3-5219517090fc",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.haltValue",
+            "short": "haltValue"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.haltValue",
+            "short": "haltValue",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a2f01e34-386c-4b0b-9cc7-c40b4fb92f10",
           "new": {
             "file": "ZeroParadox/Order/PataraiaChoiceFree.lean",
@@ -62227,6 +65076,43 @@
             ]
           },
           "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a3d924b1-e378-48cb-b828-ce96d8bc08a8",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encRet",
+            "short": "encRet"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encRet",
+            "short": "encRet",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -64040,6 +66926,43 @@
             ]
           },
           "reason": "Die mining landing (ruled 2026-10-21): trap data (emptiness, rank, monotone), no reversal under <, reverse of an injective step, RelHom maps of motions, wheel as a die face",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a9c52fd4-a538-4411-997b-a5e1360cec73",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8",
+            "short": "natCase8"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8",
+            "short": "natCase8",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66461,6 +69384,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "aee4d82b-f08d-4bff-896e-d1b0fa1cc5b3",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_pred_self",
+            "short": "natPrimrec_pred_self"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_pred_self",
+            "short": "natPrimrec_pred_self",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "aefdbf92-86da-4776-8bd7-20c3d6ea6592",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -66708,6 +69668,43 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "af699e1d-7b97-43da-ad07-0732450ce09b",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_natCase6",
+            "short": "natPrimrec_natCase6"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_natCase6",
+            "short": "natPrimrec_natCase6",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -67675,6 +70672,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b2534166-a350-4829-b72f-96c4a8667b08",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natSel_succ",
+            "short": "natSel_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natSel_succ",
+            "short": "natSel_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -69193,6 +72227,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b58c43a8-779b-4ed1-9e5b-9af65e288464",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.doneTest_enc",
+            "short": "doneTest_enc"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.doneTest_enc",
+            "short": "doneTest_enc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b5949cf8-ace5-4971-a45b-3ddd2c93da77",
           "new": {
@@ -70201,6 +73272,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b7b4984a-fe62-443b-8851-8235f15cd15d",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zero_not_universal",
+            "short": "zero_not_universal"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zero_not_universal",
+            "short": "zero_not_universal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b7e3cc26-8abe-4095-80c8-f6635b7aff03",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -71085,6 +74193,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ba0cb8f3-0d6b-49d2-aa88-9d300a925a0d",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_exists_code_mp",
+            "short": "cf_exists_code_mp"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_exists_code_mp",
+            "short": "cf_exists_code_mp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ba160d3e-82a8-4106-83e7-afb6ed5a9bba",
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
@@ -71346,6 +74491,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "babaa918-cf47-409c-bc1d-1180371b4d5c",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_add",
+            "short": "codeRun_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_add",
+            "short": "codeRun_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "bac5d8e4-246b-47f3-982c-8e348c9c7732",
           "new": {
@@ -71566,6 +74748,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bb44bfa3-9a0d-4e36-8be7-c251b21ce93c",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_sem",
+            "short": "codeRun_sem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_sem",
+            "short": "codeRun_sem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bb6c9971-cb43-49f8-bece-d04cbb26f676",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -71707,6 +74926,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bbdff335-45a2-4fc5-8686-85112340b0c9",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.doneTest",
+            "short": "doneTest"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.doneTest",
+            "short": "doneTest",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -72635,6 +75891,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bdf194a2-478b-437e-b690-076ca5475469",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.precLoopSem_rec",
+            "short": "precLoopSem_rec"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.precLoopSem_rec",
+            "short": "precLoopSem_rec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "be0ea1fd-02dc-46bb-9217-6e45f3ac8be6",
           "new": {
             "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
@@ -73366,6 +76659,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c0d3c27f-b3ce-421c-a1de-2e7d028a998e",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase3",
+            "short": "natCase3"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase3",
+            "short": "natCase3",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -78268,6 +81598,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "cdbc2e74-7001-4b74-acec-820760da757b",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encEv",
+            "short": "encEv"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encEv",
+            "short": "encEv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "cdf7c1ff-747e-40c0-95ec-7b50c2e20d1f",
           "new": {
@@ -78515,6 +81882,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ce6fa84e-8adb-4c5d-ba67-6e33d3922902",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encState",
+            "short": "encState"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encState",
+            "short": "encState",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -80697,6 +84101,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d3dec1b4-4743-42ff-86b8-40482abaae7a",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_fst",
+            "short": "natPrimrec_fst"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_fst",
+            "short": "natPrimrec_fst",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d469d993-3764-490d-9db5-e1737d202414",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -81238,6 +84679,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d5a0a524-6c3f-4869-89b5-e3133a926033",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_right",
+            "short": "codeTag_right"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag_right",
+            "short": "codeTag_right",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d5bfa7dc-6752-42e2-a7e3-bd1bc482ec60",
           "new": {
@@ -81379,6 +84857,43 @@
             ]
           },
           "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d5d99957-5f9e-4793-a528-ec707d2c42e6",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_natCase3",
+            "short": "natPrimrec_natCase3"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_natCase3",
+            "short": "natPrimrec_natCase3",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -82572,6 +86087,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d9011089-36bf-4534-8eca-e2a9b0676712",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_add",
+            "short": "natPrimrec_add"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_add",
+            "short": "natPrimrec_add",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d947fc46-3922-406e-996f-ebfad8cf35a7",
           "new": {
             "file": "ZeroParadox/Category/LawvereTwoAdic.lean",
@@ -83383,6 +86935,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "da568d44-6f77-4543-b025-bccd97a55794",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_halts_iff",
+            "short": "codeRun_halts_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_halts_iff",
+            "short": "codeRun_halts_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "da9e78a9-295a-47f8-b2d6-b05b7426261e",
           "new": {
@@ -83893,6 +87482,43 @@
             ]
           },
           "reason": "New 2026-09-16. The hypothesis: a uniform Bool test correct about Part.Dom, stated at Unit so the hypothesis is weaker and em_of_poleDiscriminator is stronger. Axiom-free.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dc3199ff-8ea8-4c83-aa33-f35f7c9cb34a",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag",
+            "short": "codeTag"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeTag",
+            "short": "codeTag",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -84717,6 +88343,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "debac8ef-05b2-4359-8303-2900df5cd743",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.universal_code_cf",
+            "short": "universal_code_cf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.universal_code_cf",
+            "short": "universal_code_cf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "dede082a-2da1-4808-abea-125c5a65009b",
           "new": {
             "file": "ZeroParadox/Valuation/RiemannSphere.lean",
@@ -84743,6 +88406,43 @@
             ]
           },
           "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "def7ee3d-23c4-4052-9497-ead746d58a4a",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_3",
+            "short": "natCase6_3"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_3",
+            "short": "natCase6_3",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -85175,6 +88875,43 @@
             ]
           },
           "reason": "Die stage/closure shape and registration switch (Die.lean § VI-VII), with its two face maps in their existing homes (Epsilon0LeastFP, Occurrence)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e008b261-7a4e-4113-8e68-31adc8499b56",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boddNat_eq",
+            "short": "boddNat_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boddNat_eq",
+            "short": "boddNat_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -85685,6 +89422,80 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e12cd592-8af4-4c68-8288-49cd3ff1d5b6",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_sound",
+            "short": "codeRun_sound"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeRun_sound",
+            "short": "codeRun_sound",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e12ced89-4bb4-4500-a567-08ebbe60fb73",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase3_0",
+            "short": "natCase3_0"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase3_0",
+            "short": "natCase3_0",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -86215,6 +90026,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e2b2e531-b845-4fe2-b7aa-2a670983a091",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.initNat_eq",
+            "short": "initNat_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.initNat_eq",
+            "short": "initNat_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e2c080b4-5687-46f0-b6d3-c73acbef95e9",
           "new": {
@@ -86458,6 +90306,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e3315032-4a72-4404-9747-c00677dd1239",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_2",
+            "short": "natCase8_2"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_2",
+            "short": "natCase8_2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -87054,6 +90939,80 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e479d498-2bc9-4717-9328-3aa55fdeae90",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boddNat",
+            "short": "boddNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.boddNat",
+            "short": "boddNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e49b78f9-a862-47cc-a406-c72cd7a88fe2",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.precLoopSem",
+            "short": "precLoopSem"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.precLoopSem",
+            "short": "precLoopSem",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e4abeea0-769a-460f-ac47-60754a616d01",
           "new": {
@@ -87080,6 +91039,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e4af4166-97f7-428e-baaf-f4e65db5ffd5",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeReaches.refl",
+            "short": "CodeReaches.refl"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.CodeReaches.refl",
+            "short": "CodeReaches.refl",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -87226,6 +91222,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e5005a21-b668-469b-802c-1ed3db21dfb7",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_primrec_casesOn'",
+            "short": "cf_primrec_casesOn'"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_primrec_casesOn'",
+            "short": "cf_primrec_casesOn'",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -87746,6 +91779,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e693ec2e-a006-48f7-9a78-f0d66c21c3d4",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeArg",
+            "short": "codeArg"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeArg",
+            "short": "codeArg",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -89001,6 +93071,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e9459a3a-da4a-4929-b347-07d73e4d4931",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_sel",
+            "short": "natPrimrec_sel"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_sel",
+            "short": "natPrimrec_sel",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e9725ba7-e311-44b8-9c59-988314f9f910",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCorners.lean",
@@ -89660,6 +93767,80 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "eb659d4f-4afb-443d-9cdf-6fecb2b90e8c",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_pair_bind_eq",
+            "short": "eval_pair_bind_eq"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_pair_bind_eq",
+            "short": "eval_pair_bind_eq",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "eb68599d-f053-40f1-abe5-25b6317f2eab",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_2",
+            "short": "natCase6_2"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_2",
+            "short": "natCase6_2",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "eb6bd87c-0c38-4387-970b-c2a14cacf39b",
           "new": {
@@ -90245,6 +94426,43 @@
             ]
           },
           "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ed765dbd-a194-40d5-bfb5-59f299cc6ece",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeArg_add_four",
+            "short": "codeArg_add_four"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeArg_add_four",
+            "short": "codeArg_add_four",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -90952,6 +95170,43 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "efc9d0ac-4a84-445a-96b4-43e01c409c9c",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_iterInit",
+            "short": "natPrimrec_iterInit"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_iterInit",
+            "short": "natPrimrec_iterInit",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -91989,6 +96244,43 @@
             ]
           },
           "reason": "WHEEL-1..3: ring-preserving gauge, the unit-collapse theorem, and the two nondegeneracy characterizations (map_one)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f28441ff-992f-4c94-8152-7d754c786aae",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_5",
+            "short": "natCase8_5"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_5",
+            "short": "natCase8_5",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -93051,6 +97343,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f561975d-44ed-4393-b58e-d3e201a7c966",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_succ",
+            "short": "natPrimrec_succ"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_succ",
+            "short": "natPrimrec_succ",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -94349,6 +98678,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f85bbdff-9b42-43ca-9f8d-defdb33f24d9",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase3_1",
+            "short": "natCase3_1"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase3_1",
+            "short": "natCase3_1",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f88bba3b-181e-42bb-8f59-699522326a42",
           "new": {
@@ -94483,6 +98849,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f993fb74-49fb-430b-8794-63f3c6792590",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_3",
+            "short": "natCase8_3"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase8_3",
+            "short": "natCase8_3",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -95364,6 +99767,43 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb46f7db-f3ba-47a5-9fea-cb17b2c1c2c2",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_1",
+            "short": "natCase6_1"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natCase6_1",
+            "short": "natCase6_1",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -97309,6 +101749,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ff359a56-30b8-40e0-b4c8-aff5d79028b5",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_retStepNat",
+            "short": "natPrimrec_retStepNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.natPrimrec_retStepNat",
+            "short": "natPrimrec_retStepNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ff502e29-19f3-464c-a0f0-f608b4552251",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -97443,6 +101920,43 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ffc29848-698a-4052-95ce-4177cff3cec1",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.retStepNat",
+            "short": "retStepNat"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.retStepNat",
+            "short": "retStepNat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
           "verify": {
             "axioms": null,
             "sorry_free": true
