@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2749,
+        "declarations": 2782,
         "files": 183
       },
       "entries": [
@@ -5975,6 +5975,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0c9e1c2c-d4f3-4a6f-9d86-04580394efb6",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtSelfrefUniversalCF",
+            "short": "stmtSelfrefUniversalCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtSelfrefUniversalCF",
+            "short": "stmtSelfrefUniversalCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0ca5b89b-e91c-42b5-84c9-d0791964df66",
           "new": {
@@ -8583,6 +8620,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "12e51dae-d121-4f80-85d2-f64e053ce3e6",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unshifted_incompatible",
+            "short": "unshifted_incompatible"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.unshifted_incompatible",
+            "short": "unshifted_incompatible",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "12eed84c-8a8f-41aa-ba36-4efa43eec5ea",
           "new": {
             "file": "ZeroParadox/Order/LeastFixedPoint.lean",
@@ -9307,6 +9381,43 @@
             ]
           },
           "reason": "Bridge 2: W.dest and M.dest are fixed points in AMM's sense (structure map invertible)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "15092f0b-abbe-43e2-9afa-7750e5b7cc55",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UniversalEnc",
+            "short": "UniversalEnc"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UniversalEnc",
+            "short": "UniversalEnc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15069,6 +15180,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "251c7cda-d567-49f3-8748-a76906f431c4",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_psiOf",
+            "short": "eval_psiOf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_psiOf",
+            "short": "eval_psiOf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "252f7d6a-b3cd-4176-8217-023afe5bc741",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -15800,6 +15948,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "264ea3f7-beeb-46bd-a26d-6f91df68390c",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtSelfrefUniversal",
+            "short": "stmtSelfrefUniversal"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtSelfrefUniversal",
+            "short": "stmtSelfrefUniversal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17514,6 +17699,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2a23ef7f-c7e2-453f-8521-111f8d736db6",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encodeCode_lt_comp_left",
+            "short": "encodeCode_lt_comp_left"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encodeCode_lt_comp_left",
+            "short": "encodeCode_lt_comp_left",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2a4f865e-c299-4132-bb7d-346499367389",
           "new": {
@@ -19031,6 +19253,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2dcdd19c-6604-4724-8a7f-6e2a7c5fac82",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeIdIndex",
+            "short": "codeIdIndex"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.codeIdIndex",
+            "short": "codeIdIndex",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22374,6 +22633,43 @@
             ]
           },
           "reason": "lane K1: ZP-K § VIII (infinitely many fixed points, padding, self-printing universal code, occurrence controls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "375059c6-eb56-4692-9be3-aeab3160c7f6",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selDStep",
+            "short": "selDStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selDStep",
+            "short": "selDStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26088,6 +26384,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4227b37b-2ddc-4cc2-9d0f-aa7f221d6045",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfUniv_spec",
+            "short": "selfUniv_spec"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfUniv_spec",
+            "short": "selfUniv_spec",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "422ad1f9-7da7-4dbe-a580-8c690b6197b9",
           "new": {
             "file": "ZeroParadox/Settheory/HypersetOrder.lean",
@@ -27678,6 +28011,43 @@
             ]
           },
           "reason": "SelfCopyReference.lean (2026-10-01): infinite iff a one-to-one, not-onto self-map with exactly one fixed point; choice-free cases where the counting is data (N, a given equiv, boundaryDouble) and a choice-free Fintype finite half; orbit dynamics Q1/Q2. Promoted from probes_2026-10-01.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4551c977-ae30-4600-844e-528e8b4a1117",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_unbounded_cf",
+            "short": "selfref_universal_unbounded_cf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_unbounded_cf",
+            "short": "selfref_universal_unbounded_cf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29864,6 +30234,43 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "49f86463-20c0-4817-872d-ad617e5ee7fa",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.universal_iff_cf",
+            "short": "universal_iff_cf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.universal_iff_cf",
+            "short": "universal_iff_cf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32966,6 +33373,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "518beea2-584c-4031-a00a-cedb1b826cf8",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfPrints_iff_cf",
+            "short": "selfPrints_iff_cf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfPrints_iff_cf",
+            "short": "selfPrints_iff_cf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5193d730-278a-4287-8a50-55e7932d7b62",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -34966,6 +35410,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5770ecb9-31f5-4ead-a826-049382e9da06",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.psiOf",
+            "short": "psiOf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.psiOf",
+            "short": "psiOf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "577586ce-a8be-4a15-9f0f-3c172c34dd64",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -36828,6 +37309,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5b8cda28-1d05-4664-8bde-a35fae915726",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encodeCode_lt_pair_left",
+            "short": "encodeCode_lt_pair_left"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encodeCode_lt_pair_left",
+            "short": "encodeCode_lt_pair_left",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40380,6 +40898,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "663118ba-8015-40e4-ade0-c22ea55aca53",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zero_selfPrints_not_universal",
+            "short": "zero_selfPrints_not_universal"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.zero_selfPrints_not_universal",
+            "short": "zero_selfPrints_not_universal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "66377e29-2ee6-4493-a349-8031211f80da",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -40406,6 +40961,43 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6639acc7-bd14-46a0-8b84-151fcb8246a8",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfUniv",
+            "short": "selfUniv"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfUniv",
+            "short": "selfUniv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46581,6 +47173,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7528fc11-809e-44d7-bbd3-c9f91e4f1aff",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selDValue",
+            "short": "selDValue"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selDValue",
+            "short": "selDValue",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7532fa11-d0c0-41cb-84ab-d6073842c104",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -50675,6 +51304,43 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f57c21f-c770-4c74-b465-a25c35bfc3ad",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.encodeCode_lt_comp_right",
+            "short": "encodeCode_lt_comp_right"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.encodeCode_lt_comp_right",
+            "short": "encodeCode_lt_comp_right",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -64198,6 +64864,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a0e81178-38b7-4764-87e4-203b1b9ae409",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_exists_enc",
+            "short": "selfref_universal_exists_enc"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_exists_enc",
+            "short": "selfref_universal_exists_enc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a1560ac5-8b5a-43f3-9d93-bc77952c7608",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -64519,6 +65222,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a26d9caa-f014-400d-bcb1-6d442ca4d116",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selD",
+            "short": "selD"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selD",
+            "short": "selD",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66224,6 +66964,43 @@
             ]
           },
           "reason": "Die v2 carry: nucleus bridge at a meet-semilattice (landing-inclusion iff, the bare-Ordinal member toNucleus ordinalTowerMotion = snapNucleus with its three hypotheses), and the Arrives converse under a step at every point other than y",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a7c342b7-dde2-4a1a-b3ad-36953cc081ef",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_selD",
+            "short": "eval_selD"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_selD",
+            "short": "eval_selD",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -69929,6 +70706,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "afffda00-77f6-4b6e-be4e-299f3df623ab",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UniversalCF",
+            "short": "UniversalCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.UniversalCF",
+            "short": "UniversalCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -75891,6 +76705,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bde018d7-cd12-4c16-9be4-6e0ee07ebc69",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_exists_verbatim",
+            "short": "selfref_universal_exists_verbatim"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_exists_verbatim",
+            "short": "selfref_universal_exists_verbatim",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bdf194a2-478b-437e-b690-076ca5475469",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -76515,6 +77366,43 @@
             ]
           },
           "reason": "phase-order arc r1 fixes: floor-above member (WithTop), phaseRel compatibility, floor move, least landing above floor, named distinctness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c0201598-7592-428f-9b91-87cb97ad2a83",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selDArg",
+            "short": "selDArg"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selDArg",
+            "short": "selDArg",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -78860,6 +79748,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c6bc1328-73d2-482b-8fe3-7c345ce8b6c9",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.SelfPrintsCF",
+            "short": "SelfPrintsCF"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.SelfPrintsCF",
+            "short": "SelfPrintsCF",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c6d9b48a-b861-41bb-9f34-368f5251b44a",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -79327,6 +80252,43 @@
             ]
           },
           "reason": "Round-2 gate fix: two NO-GO gauges added. depthchain_iff_nonneg measures what ZP-I's IsDepthChain actually buys (exactly non-negativity of the valuation). stabiliser_is_bigger shows the pointwise pole stabiliser is the whole diagonal torus, not the 2^Z scalings.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c7d2f858-809e-4f85-ab28-81fac9ca882e",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lt_encodeCode_selfUniv",
+            "short": "lt_encodeCode_selfUniv"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lt_encodeCode_selfUniv",
+            "short": "lt_encodeCode_selfUniv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -80147,6 +81109,43 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "(none) - does not depend on any axioms",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ca701aa2-65c9-4b6f-9b84-d02cbf1963fa",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtSelfrefUniversalEnc",
+            "short": "stmtSelfrefUniversalEnc"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.stmtSelfrefUniversalEnc",
+            "short": "stmtSelfrefUniversalEnc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -87899,6 +88898,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "dd749285-a5a3-415c-865f-fea23fbe1ad5",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_exists_cf",
+            "short": "selfref_universal_exists_cf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_exists_cf",
+            "short": "selfref_universal_exists_cf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ddcc176a-dd4e-4da1-b9aa-e73a2d99c37a",
           "new": {
@@ -93991,6 +95027,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ebbe8114-e739-4b58-ae82-1858648924fb",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_right_le_pair",
+            "short": "cf_right_le_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_right_le_pair",
+            "short": "cf_right_le_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ebca83ae-509f-4cc7-a84c-fea8d0c4cc03",
           "new": {
@@ -97575,6 +98648,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f5dd90a4-bae0-4b97-a093-82083cad3953",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.universalCF_iff_enc",
+            "short": "universalCF_iff_enc"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.universalCF_iff_enc",
+            "short": "universalCF_iff_enc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f5f33c5b-f4f6-4c8d-a259-0005cb14f207",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -98640,6 +99750,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f7f70b96-a914-457b-b712-67b234fdb3b2",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selDBase",
+            "short": "selDBase"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selDBase",
+            "short": "selDBase",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f807ec79-2260-4d2e-9599-c221202c4a76",
           "new": {
             "file": "ZeroParadox/Die.lean",
@@ -98788,6 +99935,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f8a8d5e0-0fa0-4f1e-a407-1e97fbf8e228",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.universal_not_selfPrints_cf",
+            "short": "universal_not_selfPrints_cf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.universal_not_selfPrints_cf",
+            "short": "universal_not_selfPrints_cf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f927fe36-f1e0-48b3-bb62-584a05373711",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -98849,6 +100033,43 @@
             ]
           },
           "reason": "Hyperset order + die polarity batch: elbow/corner pair, leg polarity against a carrier order, pruning as a kernel on HSet n, wrap-once uniqueness",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f984f3da-6f62-41ed-a0bc-da3e91e044b1",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_left_le_pair",
+            "short": "cf_left_le_pair"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_left_le_pair",
+            "short": "cf_left_le_pair",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
           "verify": {
             "axioms": null,
             "sorry_free": true

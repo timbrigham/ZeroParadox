@@ -1,4 +1,5 @@
 import ZeroParadox.Computability.KleeneChoiceFree
+import ZeroParadox.Computability.Kleene
 import Mathlib.Computability.PartrecCode
 import Mathlib.Tactic
 
@@ -18,9 +19,9 @@ a paragraph.
 ---
 
 ## Formal Overview (AI-assisted)
-
 `Statement:` `universal_code_cf : ∃ u : Code, ∀ d n, eval u (Nat.pair (encodeCode d) n) = eval d n`,
-with `u` not an explicit term; not the `Partrec₂` form `eval_part`. Footprints: `PurityCheck`.
+with `u` not an explicit term; not the `Partrec₂` form `eval_part`. § IX: a code both self-printing
+and universal, `selfref_universal_exists_cf`. Footprints: `PurityCheck`.
 -/
 
 namespace ZeroParadox
@@ -35,6 +36,18 @@ builds its universal function by the same theorem through fuelled evaluation `ev
 doi 10.4230/LIPIcs.ITP.2019.12, § 5.2, p. 12:12, "This is Kleene's normal form theorem (in a
 different language) – eval is a universal partial recursive function." Here the iterated function is
 a one-step machine instead of `evaln`. -/
+
+-- Reading (cited, not claimed): continuations plus a step on configurations is the design of
+-- Mathlib's `Turing.ToPartrec` (`Mathlib/Computability/TuringMachine/Config.lean`: `Cont`, `Cfg`,
+-- `stepNormal`, `stepRet`) for its list-valued `Code`; here an explicit `ev` state keeps `codeStep`
+-- non-recursive. The whole route (a step machine encoded in ℕ, its step primitive recursive, then
+-- iterated and searched) is F. J. Balbach, "Some classical results in inductive inference of
+-- recursive functions", Archive of Formal Proofs (2020), theory `Universal`, § 1.5, pp. 36-37, in
+-- classical Isabelle/HOL. Constructive universal functions exist in Coq, where no proof uses choice
+-- unless an axiom is declared: Forster and Kunze, "A certifying extraction with time bounds from Coq
+-- to call-by-value λ-calculus", arXiv 1904.11818, a universal L-term extracted from a step-indexed
+-- self-interpreter. Carneiro, p. 12:15, on Mathlib's development: "there was no particular reason
+-- to assume LEM except in Theorem 5". This file adds the measurement on Mathlib's `Code`.
 
 /-- `Statement:` continuations of the machine: halt, the two halves of `pair`, `comp`, a `prec`
 loop with `r` steps left, an `rfind'` search at index `m`. -/
@@ -902,7 +915,7 @@ theorem codeIterNat_enc (s : CodeState) : ∀ t, codeIterNat (encState s) t = en
     show codeStepNat (codeIterNat (encState s) t) = _
     rw [codeIterNat_enc s t, codeStepNat_enc, codeRun_add t 1]; rfl
 
-/-- `Statement:` `0` exactly on encoded halted states. -/
+/-- `Statement:` on an encoded state, `0` exactly when it is halted (`doneTest_enc`). -/
 def doneTest (x : ℕ) : ℕ := natCase3 x.unpair.1 1 1 0
 
 /-- `Statement:` `doneTest (encState s) = 0` iff `s` is `done v` for some `v`. -/
@@ -1073,10 +1086,238 @@ theorem zero_not_universal :
   have : (Part.some 0 : Part ℕ) = Part.some 1 := h1
   exact absurd (Part.some_inj.1 this) (by decide)
 
--- Reading: in the bins of `ZeroParadox/Category/ChoiceCannotBe.md`, a proof of this statement
+-- Statement: in the bins of `ZeroParadox/Category/ChoiceCannotBe.md`, a proof of this statement
 -- through Mathlib's `eval_part` carries `Classical.choice`, because `eval_part` does; the proof here
 -- does not, so for this statement that choice is ACCIDENTAL. It says nothing about the `Partrec₂`
 -- form, whose statement carries choice (`stmtPartrec₂Hyp`, `KleeneChoiceFree.lean` § V).
+
+/-! ## § IX. A self-printing universal code
+
+`SelfPrints` and `Universal` (`ZeroParadox/Computability/Kleene.lean`) restated with `encodeCode`
+and `ofNatCodeCF`, the bridges to them, and a code meeting both: Kleene's ψ-form (`kleene_cf`)
+applied to a total dispatcher followed by `universal_code_cf'`. -/
+
+/-- `Statement:` `SelfPrints` with `encodeCode`: channel `0` returns the code's own number. -/
+def SelfPrintsCF (c : Code) : Prop :=
+  ∀ n, eval c (Nat.pair 0 n) = Part.some (encodeCode c)
+
+/-- `Statement:` `Universal` with `ofNatCodeCF`: channel `e + 1` runs code `e`. -/
+def UniversalCF (c : Code) : Prop :=
+  ∀ e n, eval c (Nat.pair (e + 1) n) = eval (ofNatCodeCF e) n
+
+/-- `Statement:` `Universal` with no decoder: channel `encodeCode d + 1` runs `d`. -/
+def UniversalEnc (c : Code) : Prop :=
+  ∀ d n, eval c (Nat.pair (encodeCode d + 1) n) = eval d n
+
+/-- `Statement:` CONTROL: assumes `∃ c, SelfPrints c ∧ Universal c`, proves `True`. -/
+theorem stmtSelfrefUniversal (_h : ∃ c : Code, SelfPrints c ∧ Universal c) : True := trivial
+/-- `Statement:` CONTROL: assumes `∃ c, SelfPrintsCF c ∧ UniversalCF c`, proves `True`. -/
+theorem stmtSelfrefUniversalCF (_h : ∃ c : Code, SelfPrintsCF c ∧ UniversalCF c) : True := trivial
+/-- `Statement:` CONTROL: assumes `∃ c, SelfPrintsCF c ∧ UniversalEnc c`, proves `True`. -/
+theorem stmtSelfrefUniversalEnc (_h : ∃ c : Code, SelfPrintsCF c ∧ UniversalEnc c) : True := trivial
+
+/-- `Statement:` `SelfPrints c ↔ SelfPrintsCF c`. -/
+theorem selfPrints_iff_cf (c : Code) : SelfPrints c ↔ SelfPrintsCF c := by
+  unfold SelfPrints SelfPrintsCF
+  rw [encodeCode_eq]
+
+/-- `Statement:` `Universal c ↔ UniversalCF c`. -/
+theorem universal_iff_cf (c : Code) : Universal c ↔ UniversalCF c := by
+  unfold Universal UniversalCF
+  rw [ofNatCode_eq, ofNatCodeCF_eq_ofNatCode]
+
+/-- `Statement:` `UniversalCF c ↔ UniversalEnc c`. -/
+theorem universalCF_iff_enc (c : Code) : UniversalCF c ↔ UniversalEnc c := by
+  constructor
+  · intro h d n
+    have := h (encodeCode d) n
+    rw [cf_ofNatCodeCF_encodeCode] at this
+    exact this
+  · intro h e n
+    have := h (ofNatCodeCF e) n
+    rw [cf_encodeCode_ofNatCodeCF] at this
+    exact this
+
+/-- `Statement:` the Gödel number of `Code.id`. -/
+def codeIdIndex : ℕ := encodeCode Code.id
+
+/-- `Statement:` the dispatcher's value: `⟨codeIdIndex, y⟩` at `0`, `⟨e, n⟩` at `e + 1`. -/
+def selDValue (y n : ℕ) : ℕ → ℕ
+  | 0 => Nat.pair codeIdIndex y
+  | e + 1 => Nat.pair e n
+
+/-- `Statement:` on `Nat.pair y n`, returns `Nat.pair codeIdIndex y`. -/
+def selDBase : Code := pair (Code.const codeIdIndex) left
+/-- `Statement:` on `Nat.pair (Nat.pair y n) (Nat.pair j i)`, returns `Nat.pair j n`. -/
+def selDStep : Code := pair (comp left right) (comp right left)
+/-- `Statement:` `Nat.pair y (Nat.pair k n)` to `Nat.pair (Nat.pair y n) k`. -/
+def selDArg : Code := pair (pair left (comp right right)) (comp left right)
+/-- `Statement:` the dispatcher, one `prec` on the channel `k`. -/
+def selD : Code := comp (prec selDBase selDStep) selDArg
+
+/-- `Statement:` `selD` on `Nat.pair y (Nat.pair k n)` returns `selDValue y n k`. -/
+theorem eval_selD (y k n : ℕ) :
+    eval selD (Nat.pair y (Nat.pair k n)) = Part.some (selDValue y n k) := by
+  have hA : eval selDArg (Nat.pair y (Nat.pair k n)) = Part.some (Nat.pair (Nat.pair y n) k) :=
+    cf_eval_pair (cf_eval_pair (cf_eval_left _ _)
+      (cf_eval_comp_some (cf_eval_right _ _) (cf_eval_right _ _)))
+      (cf_eval_comp_some (cf_eval_right _ _) (cf_eval_left _ _))
+  unfold selD
+  rw [cf_eval_comp hA]
+  refine cf_eval_prec_total (a := Nat.pair y n) (selDValue y n) ?_ (fun j => ?_) k
+  · exact cf_eval_pair (eval_const _ _) (cf_eval_left _ _)
+  · exact cf_eval_pair (cf_eval_comp_some (cf_eval_right _ _) (cf_eval_left _ _))
+      (cf_eval_comp_some (cf_eval_left _ _) (cf_eval_right _ _))
+
+/-- `Statement:` `selD`, then `u`; `N` pads the number, not the behaviour. -/
+def psiOf (u : Code) (N : ℕ) : Code := comp u (comp right (pair (Code.const N) selD))
+
+/-- `Statement:` `psiOf u N` on `Nat.pair y (Nat.pair k n)` is `u` on `selDValue y n k`. -/
+theorem eval_psiOf (u : Code) (N y k n : ℕ) :
+    eval (psiOf u N) (Nat.pair y (Nat.pair k n)) = eval u (selDValue y n k) :=
+  cf_eval_comp (cf_eval_comp_some (cf_eval_pair (eval_const _ _) (eval_selD y k n))
+    (cf_eval_right _ _))
+
+/-- `Statement:` the Kleene fixed point of `psiOf u N`. -/
+def selfUniv (u : Code) (N : ℕ) : Code := fpCF (psiOf u N)
+
+/-- `Statement:` for `u` as in `universal_code_cf'`, `selfUniv u N` meets both predicates. -/
+theorem selfUniv_spec (u : Code) (hu : ∀ e n, eval u (Nat.pair e n) = eval (ofNatCodeCF e) n)
+    (N : ℕ) : SelfPrintsCF (selfUniv u N) ∧ UniversalCF (selfUniv u N) := by
+  refine ⟨fun n => ?_, fun e n => ?_⟩
+  · rw [selfUniv, kleene_cf, eval_psiOf]
+    show eval u (Nat.pair codeIdIndex (encodeCode (fpCF (psiOf u N)))) = _
+    rw [hu, codeIdIndex, cf_ofNatCodeCF_encodeCode, cf_eval_id]
+  · rw [selfUniv, kleene_cf, eval_psiOf]
+    show eval u (Nat.pair e n) = _
+    rw [hu]
+
+/-- `Statement:` a code that is self-printing and universal, restated. -/
+theorem selfref_universal_exists_cf : ∃ c : Code, SelfPrintsCF c ∧ UniversalCF c := by
+  obtain ⟨u, hu⟩ := universal_code_cf'
+  exact ⟨selfUniv u 0, selfUniv_spec u hu 0⟩
+
+/-- `Statement:` the same, with `UniversalEnc`. -/
+theorem selfref_universal_exists_enc : ∃ c : Code, SelfPrintsCF c ∧ UniversalEnc c := by
+  obtain ⟨c, h1, h2⟩ := selfref_universal_exists_cf
+  exact ⟨c, h1, (universalCF_iff_enc c).1 h2⟩
+
+/-- `Statement:` the same, unfolded, every name fully qualified. -/
+theorem selfref_universal_exists_verbatim : ∃ c : Nat.Partrec.Code,
+    (∀ n, Nat.Partrec.Code.eval c (Nat.pair 0 n) = Part.some (Nat.Partrec.Code.encodeCode c)) ∧
+    (∀ d n, Nat.Partrec.Code.eval c (Nat.pair (Nat.Partrec.Code.encodeCode d + 1) n) =
+      Nat.Partrec.Code.eval d n) :=
+  selfref_universal_exists_enc
+
+/-- `Statement:` same type as Mathlib's `Nat.left_le_pair`, choice-free proof. -/
+theorem cf_left_le_pair (a b : ℕ) : a ≤ Nat.pair a b := by
+  unfold Nat.pair
+  split
+  · exact Nat.le_add_left a (b * b)
+  · exact Nat.le_trans (Nat.le_add_left a (a * a)) (Nat.le_add_right _ b)
+
+/-- `Statement:` same type as Mathlib's `Nat.right_le_pair`, choice-free proof. -/
+theorem cf_right_le_pair (a b : ℕ) : b ≤ Nat.pair a b := by
+  unfold Nat.pair
+  split
+  · exact Nat.le_trans (Nat.le_mul_self b) (Nat.le_add_right _ a)
+  · exact Nat.le_add_left b (a * a + a)
+
+-- Statement: `cf_left_le_pair` and `cf_right_le_pair` have exactly the Mathlib lemmas' types.
+example : type_of% @Nat.left_le_pair := @cf_left_le_pair
+example : type_of% @Nat.right_le_pair := @cf_right_le_pair
+
+/-- `Statement:` `encodeCode a < encodeCode (comp a b)`. -/
+theorem encodeCode_lt_comp_left (a b : Code) : encodeCode a < encodeCode (comp a b) := by
+  have h : encodeCode (comp a b) = 2 * (2 * Nat.pair (encodeCode a) (encodeCode b) + 1) + 4 := rfl
+  have := cf_left_le_pair (encodeCode a) (encodeCode b)
+  omega
+
+/-- `Statement:` `encodeCode b < encodeCode (comp a b)`. -/
+theorem encodeCode_lt_comp_right (a b : Code) : encodeCode b < encodeCode (comp a b) := by
+  have h : encodeCode (comp a b) = 2 * (2 * Nat.pair (encodeCode a) (encodeCode b) + 1) + 4 := rfl
+  have := cf_right_le_pair (encodeCode a) (encodeCode b)
+  omega
+
+/-- `Statement:` `encodeCode a < encodeCode (pair a b)`. -/
+theorem encodeCode_lt_pair_left (a b : Code) : encodeCode a < encodeCode (pair a b) := by
+  have h : encodeCode (pair a b) = 2 * (2 * Nat.pair (encodeCode a) (encodeCode b)) + 4 := rfl
+  have := cf_left_le_pair (encodeCode a) (encodeCode b)
+  omega
+
+/-- `Statement:` `N < encodeCode (selfUniv u N)`. -/
+theorem lt_encodeCode_selfUniv (u : Code) (N : ℕ) : N < encodeCode (selfUniv u N) := by
+  have h1 := cf_le_encodeCode_const N
+  have h2 := encodeCode_lt_pair_left (Code.const N) selD
+  have h3 := encodeCode_lt_comp_right right (pair (Code.const N) selD)
+  have h4 := encodeCode_lt_comp_right u (comp right (pair (Code.const N) selD))
+  have h5 := encodeCode_lt_comp_left (psiOf u N) (pair (comp cfDiagIndex left) right)
+  have h6 : encodeCode (selfUniv u N) =
+      cfCurryIndex (encodeCode (cfDiag (psiOf u N))) (encodeCode (cfDiag (psiOf u N))) :=
+    cf_encodeCode_curry _ _
+  have h7 := cf_left_le_pair (encodeCode (cfDiag (psiOf u N)))
+    (2 * (2 * Nat.pair (encodeCode (Code.const (encodeCode (cfDiag (psiOf u N)))))
+      (encodeCode Code.id)) + 4)
+  have e5 : cfDiag (psiOf u N) = comp (psiOf u N) (pair (comp cfDiagIndex left) right) := rfl
+  have e4 : psiOf u N = comp u (comp right (pair (Code.const N) selD)) := rfl
+  rw [← e5] at h5
+  rw [← e4] at h4
+  unfold cfCurryIndex at h6
+  omega
+
+/-- `Statement:` above every bound there is a self-printing universal code, restated. -/
+theorem selfref_universal_unbounded_cf :
+    ∀ N, ∃ c : Code, N < encodeCode c ∧ SelfPrintsCF c ∧ UniversalCF c := by
+  obtain ⟨u, hu⟩ := universal_code_cf'
+  exact fun N => ⟨selfUniv u N, lt_encodeCode_selfUniv u N, selfUniv_spec u hu N⟩
+
+/-- `Statement:` CONTROL: `Code.zero` is self-printing and not universal. -/
+theorem zero_selfPrints_not_universal : SelfPrintsCF Code.zero ∧ ¬ UniversalCF Code.zero := by
+  refine ⟨fun _ => rfl, fun h => ?_⟩
+  have h1 := h (encodeCode Code.succ) 0
+  rw [cf_ofNatCodeCF_encodeCode] at h1
+  have : (Part.some 0 : Part ℕ) = Part.some 1 := h1
+  exact absurd (Part.some_inj.1 this) (by decide)
+
+/-- `Statement:` CONTROL: some code is universal and not self-printing (`curry (psiOf u 0) 0`). -/
+theorem universal_not_selfPrints_cf : ∃ c : Code, UniversalCF c ∧ ¬ SelfPrintsCF c := by
+  obtain ⟨u, hu⟩ := universal_code_cf'
+  refine ⟨curry (psiOf u 0) 0, fun e n => ?_, fun h => ?_⟩
+  · rw [cf_eval_curry, eval_psiOf]
+    show eval u (Nat.pair e n) = _
+    rw [hu]
+  · have h0 := h 0
+    rw [cf_eval_curry, eval_psiOf] at h0
+    have h0' : eval u (Nat.pair codeIdIndex 0) = _ := h0
+    rw [hu, codeIdIndex, cf_ofNatCodeCF_encodeCode, cf_eval_id] at h0'
+    have he := Part.some_inj.1 h0'
+    have hc : encodeCode (curry (psiOf u 0) 0) = cfCurryIndex (encodeCode (psiOf u 0)) 0 :=
+      cf_encodeCode_curry _ _
+    unfold cfCurryIndex at hc
+    omega
+
+/-- `Statement:` CONTROL: no code self-prints on channel `0` and runs code `e` on every channel `e`. -/
+theorem unshifted_incompatible :
+    ¬ ∃ c : Code, (∀ e n, eval c (Nat.pair e n) = eval (ofNatCodeCF e) n) ∧ SelfPrintsCF c := by
+  rintro ⟨c, hU, hS⟩
+  have h0 := (hS 0).symm.trans (hU 0 0)
+  have hz : ofNatCodeCF 0 = Code.zero := cf_ofNatCodeCF_encodeCode Code.zero
+  rw [hz] at h0
+  have he : encodeCode c = 0 := Part.some_inj.1 h0
+  have hc : c = Code.zero := by
+    have := cf_ofNatCodeCF_encodeCode c
+    rw [he, hz] at this
+    exact this.symm
+  subst hc
+  have h1 := hU (encodeCode Code.succ) 0
+  rw [cf_ofNatCodeCF_encodeCode] at h1
+  have : (Part.some 0 : Part ℕ) = Part.some 1 := h1
+  exact absurd (Part.some_inj.1 this) (by decide)
+
+-- Statement: `stmtSelfrefUniversal` carries `Classical.choice` and `stmtSelfrefUniversalCF` does
+-- not (`PurityCheck`): in the bins of `ZeroParadox/Category/ChoiceCannotBe.md`,
+-- `selfref_universal_exists` is STATEMENT-CARRIED, and its restatement, equivalent code by code
+-- (`selfPrints_iff_cf`, `universal_iff_cf`), has a proof without it (`selfref_universal_exists_cf`).
 
 end ZeroParadox
 
@@ -1205,8 +1446,44 @@ open ZeroParadox
 #print axioms universal_code_cf'
 #print axioms discussion142_answer
 #print axioms zero_not_universal
--- The Mathlib constants two entries share a type with.
+#print axioms SelfPrintsCF
+#print axioms UniversalCF
+#print axioms UniversalEnc
+#print axioms stmtSelfrefUniversal
+#print axioms stmtSelfrefUniversalCF
+#print axioms stmtSelfrefUniversalEnc
+#print axioms selfPrints_iff_cf
+#print axioms universal_iff_cf
+#print axioms universalCF_iff_enc
+#print axioms codeIdIndex
+#print axioms selDValue
+#print axioms selDBase
+#print axioms selDStep
+#print axioms selDArg
+#print axioms selD
+#print axioms eval_selD
+#print axioms psiOf
+#print axioms eval_psiOf
+#print axioms selfUniv
+#print axioms selfUniv_spec
+#print axioms selfref_universal_exists_cf
+#print axioms selfref_universal_exists_enc
+#print axioms selfref_universal_exists_verbatim
+#print axioms cf_left_le_pair
+#print axioms cf_right_le_pair
+#print axioms encodeCode_lt_comp_left
+#print axioms encodeCode_lt_comp_right
+#print axioms encodeCode_lt_pair_left
+#print axioms lt_encodeCode_selfUniv
+#print axioms selfref_universal_unbounded_cf
+#print axioms zero_selfPrints_not_universal
+#print axioms universal_not_selfPrints_cf
+#print axioms unshifted_incompatible
+-- The Mathlib constants entries share a type with, and the corpus original.
 #print axioms Nat.Primrec.casesOn'
 #print axioms Nat.Partrec.Code.exists_code
+#print axioms Nat.left_le_pair
+#print axioms Nat.right_le_pair
+#print axioms selfref_universal_exists
 
 end PurityCheck
