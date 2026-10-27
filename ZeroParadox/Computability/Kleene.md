@@ -212,7 +212,8 @@ by `#print axioms` in a scratch file importing this one.
   arguments (`stmtPartrec₂Hyp`, `stmtPartrecHyp`, `stmtPartrecProdHyp`, § V of
   `ZeroParadox/Computability/KleeneChoiceFree.lean`).
   Not located in the Mathlib pin as of 2026-10-04 by these measurements: a universal code whose
-  correctness is proved without `eval_part`; it was not attempted here. Every proof of the
+  correctness is proved without `eval_part`. One is built in this corpus, `universal_code_cf` in
+  `ZeroParadox/Computability/UniversalChoiceFree.lean` (footprint in its `PurityCheck` section). Every proof of the
   statement as written carries choice; whether the restated
   statement has a choice-free proof is UNCLASSIFIED.
 - Built 2026-10-22 in this corpus: a recursion theorem whose statement and proof are choice-free, for a
@@ -222,8 +223,8 @@ by `#print axioms` in a scratch file importing this one.
   an axiomatised naming system, in Lean 4 (prior-art pointers at the end of § V of that file); this
   corpus proves the s-m-n step (`cf_eval_curry`) and the diagonal of Kleene's ψ-form (`cf_eval_diag`)
   on Mathlib's `Code`, and adds the measurement there; Close's `diag_closure_spec` presupposes a
-  universal code, not built. It
-  builds no universal code, so the UNCLASSIFIED status above is unchanged.
+  universal code, not built in that file, so the UNCLASSIFIED status above is unchanged by it; one is
+  built in `ZeroParadox/Computability/UniversalChoiceFree.lean` (`universal_code_cf`).
 - As of 2026-10-25, `ofNatCodeCF` and both inverse laws (`cf_encodeCode_ofNatCodeCF`,
   `cf_ofNatCodeCF_encodeCode`) carry no `Classical.choice`, and `ofNatCodeCF_eq_ofNatCode` proves
   `ofNatCodeCF = ofNatCode` (§ VI of `ZeroParadox/Computability/KleeneChoiceFree.lean`, footprints in

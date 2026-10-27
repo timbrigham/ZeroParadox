@@ -17,6 +17,7 @@ on:
       - 'ZeroParadox/Meta/AxiomLedger.lean'
       - 'ZeroParadox/Vendored/CorpusAudit/**'
       - 'ZeroParadox/Computability/KleeneChoiceFree.lean'
+      - 'ZeroParadox/Computability/UniversalChoiceFree.lean'
       - 'lake-manifest.json'
       - 'lean-toolchain'
       - 'scripts/axiom_ledger_report.py'
@@ -29,6 +30,7 @@ on:
       - 'ZeroParadox/Meta/AxiomLedger.lean'
       - 'ZeroParadox/Vendored/CorpusAudit/**'
       - 'ZeroParadox/Computability/KleeneChoiceFree.lean'
+      - 'ZeroParadox/Computability/UniversalChoiceFree.lean'
       - 'lake-manifest.json'
       - 'lean-toolchain'
       - 'scripts/axiom_ledger_report.py'
@@ -55,6 +57,7 @@ jobs:
       - name: Build the ledger's imports and the auditor's self-test
         run: |
           lake build ZeroParadox.Computability.KleeneChoiceFree \
+            ZeroParadox.Computability.UniversalChoiceFree \
             ZeroParadox.Vendored.CorpusAudit.Audit \
             ZeroParadox.Vendored.CorpusAudit.AuditChecks
       - name: Re-elaborate the ledger and write the report
