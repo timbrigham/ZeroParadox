@@ -48,7 +48,8 @@ a one-step machine instead of `evaln`. -/
 -- operator (no classical axiom) is available unless one is declared: Forster and Kunze, "A
 -- certifying extraction with time bounds from Coq to call-by-value λ-calculus", arXiv 1904.11818,
 -- a universal L-term extracted from a step-indexed self-interpreter. Carneiro, p. 12:15, on
--- Mathlib's development: "there was no particular reason to assume LEM except in Theorem 5". This file adds the measurement on Mathlib's `Code`.
+-- Mathlib's development: "there was no particular reason to assume LEM except in Theorem 5".
+-- This file adds the measurement on Mathlib's `Code`.
 
 /-- `Statement:` continuations of the machine: halt, the two halves of `pair`, `comp`, a `prec`
 loop with `r` steps left, an `rfind'` search at index `m`. -/
