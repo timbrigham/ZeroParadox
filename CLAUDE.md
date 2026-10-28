@@ -230,7 +230,8 @@ RULE     LOAD THE SUBJECT'S WHOLE ROW BELOW — every file on it — and ground 
            snap        `ZeroParadox/Order/SnapCannotBe.lean` · `ZeroParadox/Order/Snap.lean`
            eps-0       `ZeroParadox/Ordinal/Epsilon0CannotBe.lean`
            choice      `ZeroParadox/Category/ChoiceCannotBe.lean` · `ZeroParadox/Category/ChoiceCannotBe.md`
-                       (choice as an OBJECT, a face of the bottom; the classification classes) ·
+                       (the framework's RELATIONSHIP to choice: `Classical.choice` is an ambient kernel
+                       axiom, NOT a framework object; the classification classes) ·
                        `ZeroParadox/AxiomProfile.lean` (the core/realization split; T-SNAP at no axioms at all) ·
                        `ZeroParadox/Ordinal/SyntacticCollapse.lean` · `ZeroParadox/Ordinal/SyntacticCollapse.md` (the
                        choice-free surrogate; the standing conjecture's two halves; Mathlib's ℚ instances choice-tainted at the INSTANCE level)
