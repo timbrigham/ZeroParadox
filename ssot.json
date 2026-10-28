@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2782,
+        "declarations": 2785,
         "files": 183
       },
       "entries": [
@@ -1057,6 +1057,43 @@
             ]
           },
           "reason": "reorg reconcile TEST (deps-unreferenced decl): Op A flatten + Op B whole-file move",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "00cac57e-7dba-4046-a71e-55dc508ff4e4",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_le_finBound",
+            "short": "cf_le_finBound"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cf_le_finBound",
+            "short": "cf_le_finBound",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: Set.Infinite form of the restated self-printing universal statement at [propext, Quot.sound], via a hand-written bound over Fin n (cfFinBound, cf_le_finBound)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -77339,6 +77376,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c006e9f8-3859-4331-981c-0f5f15e37f12",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cfFinBound",
+            "short": "cfFinBound"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.cfFinBound",
+            "short": "cfFinBound",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: Set.Infinite form of the restated self-printing universal statement at [propext, Quot.sound], via a hand-written bound over Fin n (cfFinBound, cf_le_finBound)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c01de912-646f-4392-bd6c-c81e45d6f06b",
           "new": {
             "file": "ZeroParadox/Multihomed/BoundaryOrder.lean",
@@ -87522,6 +87596,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d9dae592-e6b8-4c47-8e84-605c99cad451",
+          "new": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_infinite_cf",
+            "short": "selfref_universal_infinite_cf"
+          },
+          "old": {
+            "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_universal_infinite_cf",
+            "short": "selfref_universal_infinite_cf",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "UniversalChoiceFree § IX: Set.Infinite form of the restated self-printing universal statement at [propext, Quot.sound], via a hand-written bound over Fin n (cfFinBound, cf_le_finBound)",
           "verify": {
             "axioms": null,
             "sorry_free": true

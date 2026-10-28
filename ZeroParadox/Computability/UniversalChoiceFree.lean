@@ -42,12 +42,13 @@ a one-step machine instead of `evaln`. -/
 -- `stepNormal`, `stepRet`) for its list-valued `Code`; here an explicit `ev` state keeps `codeStep`
 -- non-recursive. The whole route (a step machine encoded in ℕ, its step primitive recursive, then
 -- iterated and searched) is F. J. Balbach, "Some classical results in inductive inference of
--- recursive functions", Archive of Formal Proofs (2020), theory `Universal`, § 1.5, pp. 36-37, in
--- classical Isabelle/HOL. Constructive universal functions exist in Coq, where no proof uses choice
--- unless an axiom is declared: Forster and Kunze, "A certifying extraction with time bounds from Coq
--- to call-by-value λ-calculus", arXiv 1904.11818, a universal L-term extracted from a step-indexed
--- self-interpreter. Carneiro, p. 12:15, on Mathlib's development: "there was no particular reason
--- to assume LEM except in Theorem 5". This file adds the measurement on Mathlib's `Code`.
+-- recursive functions", Archive of Formal Proofs (2020), entry `Inductive_Inference`
+-- (https://www.isa-afp.org/entries/Inductive_Inference.html), theory `Universal`, § 1.5, in
+-- classical Isabelle/HOL. Constructive universal functions exist in Coq, where no global choice
+-- operator (no classical axiom) is available unless one is declared: Forster and Kunze, "A
+-- certifying extraction with time bounds from Coq to call-by-value λ-calculus", arXiv 1904.11818,
+-- a universal L-term extracted from a step-indexed self-interpreter. Carneiro, p. 12:15, on
+-- Mathlib's development: "there was no particular reason to assume LEM except in Theorem 5". This file adds the measurement on Mathlib's `Code`.
 
 /-- `Statement:` continuations of the machine: halt, the two halves of `pair`, `comp`, a `prec`
 loop with `r` steps left, an `rfind'` search at index `m`. -/
@@ -1095,7 +1096,11 @@ theorem zero_not_universal :
 
 `SelfPrints` and `Universal` (`ZeroParadox/Computability/Kleene.lean`) restated with `encodeCode`
 and `ofNatCodeCF`, the bridges to them, and a code meeting both: Kleene's ψ-form (`kleene_cf`)
-applied to a total dispatcher followed by `universal_code_cf'`. -/
+applied to a total dispatcher followed by `universal_code_cf'`.
+
+Reading (cited, not claimed): the textbook ψ-form corollary of the recursion theorem; in the framing
+of Bonfante, Kaczmarek, Marion, "On abstract computer virology from a recursion-theoretic
+perspective", J. Computer Virology 1(3-4), 2006, Def. 2 and Thm 3, such a code is a virus. -/
 
 /-- `Statement:` `SelfPrints` with `encodeCode`: channel `0` returns the code's own number. -/
 def SelfPrintsCF (c : Code) : Prop :=
@@ -1216,7 +1221,8 @@ theorem cf_left_le_pair (a b : ℕ) : a ≤ Nat.pair a b := by
   · exact Nat.le_add_left a (b * b)
   · exact Nat.le_trans (Nat.le_add_left a (a * a)) (Nat.le_add_right _ b)
 
-/-- `Statement:` same type as Mathlib's `Nat.right_le_pair`, choice-free proof. -/
+/-- `Statement:` same type as Mathlib's `Nat.right_le_pair`; both measure `[propext]`
+(`PurityCheck`). -/
 theorem cf_right_le_pair (a b : ℕ) : b ≤ Nat.pair a b := by
   unfold Nat.pair
   split
@@ -1270,6 +1276,31 @@ theorem selfref_universal_unbounded_cf :
     ∀ N, ∃ c : Code, N < encodeCode c ∧ SelfPrintsCF c ∧ UniversalCF c := by
   obtain ⟨u, hu⟩ := universal_code_cf'
   exact fun N => ⟨selfUniv u N, lt_encodeCode_selfUniv u N, selfUniv_spec u hu N⟩
+
+/-- `Statement:` the sum of the values of `f : Fin n → ℕ`. -/
+def cfFinBound : (n : ℕ) → (Fin n → ℕ) → ℕ
+  | 0, _ => 0
+  | n + 1, f => f 0 + cfFinBound n (fun i => f i.succ)
+
+/-- `Statement:` every value of `f : Fin n → ℕ` is at most `cfFinBound n f`. -/
+theorem cf_le_finBound : ∀ (n : ℕ) (f : Fin n → ℕ) (i : Fin n), f i ≤ cfFinBound n f
+  | 0, _, i => i.elim0
+  | n + 1, f, i => by
+    show f i ≤ f 0 + cfFinBound n (fun i => f i.succ)
+    refine Fin.cases ?_ (fun j => ?_) i
+    · exact Nat.le_add_right _ _
+    · exact Nat.le_trans (cf_le_finBound n (fun i => f i.succ) j) (Nat.le_add_left _ _)
+
+/-- `Statement:` the self-printing universal codes, restated, form an infinite set. -/
+theorem selfref_universal_infinite_cf :
+    Set.Infinite {c : Code | SelfPrintsCF c ∧ UniversalCF c} := by
+  intro hfin
+  obtain ⟨e⟩ := hfin
+  obtain ⟨c, hlt, h1, h2⟩ := selfref_universal_unbounded_cf
+    (cfFinBound _ (fun i => encodeCode (e.symm i).1))
+  have hle := cf_le_finBound _ (fun i => encodeCode (e.symm i).1) (e ⟨c, h1, h2⟩)
+  simp only [Equiv.symm_apply_apply] at hle
+  exact absurd (Nat.lt_of_lt_of_le hlt hle) (Nat.lt_irrefl _)
 
 /-- `Statement:` CONTROL: `Code.zero` is self-printing and not universal. -/
 theorem zero_selfPrints_not_universal : SelfPrintsCF Code.zero ∧ ¬ UniversalCF Code.zero := by
@@ -1476,10 +1507,14 @@ open ZeroParadox
 #print axioms encodeCode_lt_pair_left
 #print axioms lt_encodeCode_selfUniv
 #print axioms selfref_universal_unbounded_cf
+#print axioms cfFinBound
+#print axioms cf_le_finBound
+#print axioms selfref_universal_infinite_cf
 #print axioms zero_selfPrints_not_universal
 #print axioms universal_not_selfPrints_cf
 #print axioms unshifted_incompatible
--- The Mathlib constants entries share a type with, and the corpus original.
+-- Mathlib constants that entries above share a type with, then the corpus original
+-- `selfref_universal_exists`.
 #print axioms Nat.Primrec.casesOn'
 #print axioms Nat.Partrec.Code.exists_code
 #print axioms Nat.left_le_pair

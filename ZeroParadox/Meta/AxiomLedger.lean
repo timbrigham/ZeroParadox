@@ -303,6 +303,8 @@ def profiles : List Corpus.Audit.ProfileRow :=
     ⟨`ZeroParadox.encodeCode_lt_pair_left, ours⟩,
     ⟨`ZeroParadox.lt_encodeCode_selfUniv, ours⟩,
     ⟨`ZeroParadox.selfref_universal_unbounded_cf, ours⟩,
+    ⟨`ZeroParadox.cf_le_finBound, ["propext"]⟩,
+    ⟨`ZeroParadox.selfref_universal_infinite_cf, ours⟩,
     ⟨`ZeroParadox.zero_selfPrints_not_universal, ours⟩,
     ⟨`ZeroParadox.universal_not_selfPrints_cf, ours⟩,
     ⟨`ZeroParadox.unshifted_incompatible, ours⟩ ]

@@ -176,24 +176,26 @@ points of `selfPrintOrDelegate`. These are statements about the partial function
 equalities of `Part ℕ` values; they state presence and existence of such codes, and nothing
 here says a code is run.
 
-**Where `Classical.choice` enters `selfref_universal_exists`, measured 2026-10-04.** The choice
-is not removed. The statement as written carries choice, so no proof of it is choice-free; a restated
-form is choice-free, and as of 2026-10-04 no proof of that form without choice was found (for
-2026-10-27, the last bullet). Measured as follows,
-by `#print axioms` in a scratch file importing this one.
+**Where `Classical.choice` enters `selfref_universal_exists`, measured 2026-10-04.** For the
+statement of `selfref_universal_exists` as written, the choice is not removed: that statement
+carries choice, so no proof of it is choice-free. The channel spelling of the statement (second
+bullet) is choice-free, and as of 2026-10-04 no proof of it without choice was found; see the
+last bullet for the 2026-10-27 result. Measured as follows, by `#print axioms` in a scratch file
+importing this one.
 - The statement carries choice. `SelfPrints` and `Universal` each measure
   `[propext, Classical.choice, Quot.sound]`. `Universal` names `Denumerable.ofNat Code`, which is
   `Nat.Partrec.Code.ofNatCode` by `rfl` (`ofNatCode_eq`); `ofNatCode` carries choice, and its
   well-founded recursion is justified by `Nat.unpair_left_le`, `Nat.unpair_right_le` and
   `Nat.div2_val`, each carrying it. `Nat.Partrec.Code.instDenumerable` carries it, while
   `encodeCode`, `eval`, `Nat.pair`, `Nat.unpair` and `Denumerable.ofNat` itself do not.
-- A restated statement is choice-free: with `encodeCode` for the Gödel number and the channel
-  of code `d` written `Nat.pair (encodeCode d + 1) n`, the predicate pair and the existence
-  statement measure no axioms.
-- As of 2026-10-04, no proof of it was found without choice. Mathlib's `fixed_point₂` carries
-  choice in its statement: its hypothesis `Partrec₂ f` measures the triple. Its instance
-  `Primcodable (Code × ℕ)` is `Primcodable.prod` over `Primcodable.ofDenumerable Code`, and both `Primcodable.prod` and that
-  instance's `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, measure the triple (the
+- The channel spelling of the statement is choice-free: with `encodeCode` for the Gödel number
+  and the channel of code `d` written `Nat.pair (encodeCode d + 1) n`, the predicate pair and the
+  existence statement measure no axioms.
+- As of 2026-10-04, no proof of the channel spelling was found without choice. Mathlib's
+  `fixed_point₂` carries choice in its statement: its hypothesis `Partrec₂ f` measures the
+  triple. Its instance `Primcodable (Code × ℕ)` is `Primcodable.prod` over
+  `Primcodable.ofDenumerable Code`, and both `Primcodable.prod` and that instance's
+  `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, measure the triple (the
   `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`), while `Partrec` measures
   `[propext]` and `Nat.Partrec` none. `exists_code`, `eval_part`,
   `eval_curry`, `primrec₂_curry` and `evaln` each carry it. Mathlib's other recursion theorem,
@@ -204,44 +206,50 @@ by `#print axioms` in a scratch file importing this one.
   from its `Denumerable Code` argument, `Nat.Partrec.Code.instDenumerable`, which measures the
   triple (as does `ofNatCode`, above). `Primcodable.ofDenumerable` itself measures
   `[propext, Quot.sound]`. `Partrec₂` is stated through `Primcodable.prod`, which measures the
-  triple (above), and the constant `Partrec₂` itself measures the triple (`#print axioms Partrec₂` in
-  the `PurityCheck` section of `ZeroParadox/Computability/KleeneChoiceFree.lean`). Measured
+  triple (above), and the constant `Partrec₂` itself measures the triple
+  (`#print axioms Partrec₂` in the `PurityCheck` section of
+  `ZeroParadox/Computability/KleeneChoiceFree.lean`). Measured
   with no `Code` in it: a statement whose only content is a `Partrec₂` hypothesis at
-  `ℕ → ℕ →. ℕ` carries the triple, and the same with a unary `Partrec` hypothesis at `ℕ →. ℕ` does not;
-  a unary `Partrec` hypothesis at the pair carrier `ℕ × ℕ →. ℕ` carries the triple, so the choice
-  enters with the pair instance (`Primcodable.prod`, `Encodable.Prod.encodable`), not with having two
-  arguments (`stmtPartrec₂Hyp`, `stmtPartrecHyp`, `stmtPartrecProdHyp`, § V of
+  `ℕ → ℕ →. ℕ` carries the triple, and the same with a unary `Partrec` hypothesis at `ℕ →. ℕ`
+  does not; a unary `Partrec` hypothesis at the pair carrier `ℕ × ℕ →. ℕ` carries the triple, so
+  the choice enters with the pair instance (`Primcodable.prod`, `Encodable.Prod.encodable`), not
+  with having two arguments (`stmtPartrec₂Hyp`, `stmtPartrecHyp`, `stmtPartrecProdHyp`, § V of
   `ZeroParadox/Computability/KleeneChoiceFree.lean`).
-  Not located in the Mathlib pin as of 2026-10-04 by these measurements: a universal code whose
-  correctness is proved without `eval_part`. One is built in this corpus, `universal_code_cf` in
-  `ZeroParadox/Computability/UniversalChoiceFree.lean` (footprint in its `PurityCheck` section).
+  The measurements above are footprints of named Mathlib declarations; the pin was not searched
+  for a universal code whose correctness is proved without `eval_part`. One is built in this
+  corpus, `universal_code_cf` in `ZeroParadox/Computability/UniversalChoiceFree.lean` (footprint
+  in its `PurityCheck` section).
   Every proof of the statement of `selfref_universal_exists`, as written, carries choice.
-- Built 2026-10-22 in this corpus: a recursion theorem whose statement and proof are choice-free, for a
-  transformation given as a code rather than as a `Partrec₂` function, `kleene_cf` in
+- Built 2026-10-22 in this corpus: a recursion theorem whose statement and proof are choice-free,
+  for a transformation given as a code rather than as a `Partrec₂` function, `kleene_cf` in
   `ZeroParadox/Computability/KleeneChoiceFree.lean` (footprints in its `PurityCheck` section). The
-  construction is Kleene's own and constructive versions are already machine-checked, in Coq and, over
-  an axiomatised naming system, in Lean 4 (prior-art pointers at the end of § V of that file); this
-  corpus proves the s-m-n step (`cf_eval_curry`) and the diagonal of Kleene's ψ-form (`cf_eval_diag`)
-  on Mathlib's `Code`, and adds the measurement there; Close's `diag_closure_spec` presupposes a
-  universal code, which `KleeneChoiceFree.lean` does not build; one is built in
-  `ZeroParadox/Computability/UniversalChoiceFree.lean` (`universal_code_cf`).
+  construction is Kleene's own and constructive versions are already machine-checked, in Coq and,
+  over an axiomatised naming system, in Lean 4 (prior-art pointers at the end of § V of that file);
+  this corpus proves the s-m-n step (`cf_eval_curry`) and the diagonal of Kleene's ψ-form
+  (`cf_eval_diag`) on Mathlib's `Code`, and adds the measurement there; Close's
+  `diag_closure_spec` presupposes a universal code, which `KleeneChoiceFree.lean` does not build;
+  one is built in `ZeroParadox/Computability/UniversalChoiceFree.lean` (`universal_code_cf`).
 - As of 2026-10-25, `ofNatCodeCF` and both inverse laws (`cf_encodeCode_ofNatCodeCF`,
   `cf_ofNatCodeCF_encodeCode`) carry no `Classical.choice`, and `ofNatCodeCF_eq_ofNatCode` proves
-  `ofNatCodeCF = ofNatCode` (§ VI of `ZeroParadox/Computability/KleeneChoiceFree.lean`, footprints in
-  its `PurityCheck` section). `ofNatCode`, `instDenumerable` and `Universal` carry `Classical.choice`
-  (`#print axioms Nat.Partrec.Code.ofNatCode` in that `PurityCheck` section;
-  `#print axioms Nat.Partrec.Code.instDenumerable` and `#print axioms Universal` in the `PurityCheck`
-  section of `ZeroParadox/Computability/Kleene.lean`). The bare statement `ofNatCodeCF = ofNatCode`
-  carries `Classical.choice` whatever its proof (the statement control `stmtOfNatCodeCFEq`, § VI).
+  `ofNatCodeCF = ofNatCode` (§ VI of `ZeroParadox/Computability/KleeneChoiceFree.lean`, footprints
+  in its `PurityCheck` section). `ofNatCode`, `instDenumerable` and `Universal` carry
+  `Classical.choice` (`#print axioms Nat.Partrec.Code.ofNatCode` in that `PurityCheck` section;
+  `#print axioms Nat.Partrec.Code.instDenumerable` and `#print axioms Universal` in the
+  `PurityCheck` section of `ZeroParadox/Computability/Kleene.lean`). The bare statement
+  `ofNatCodeCF = ofNatCode` carries `Classical.choice` whatever its proof (the statement control
+  `stmtOfNatCodeCFEq`, § VI).
 - As of 2026-10-27, measured in § IX of `ZeroParadox/Computability/UniversalChoiceFree.lean`
   (footprints in its `PurityCheck` section). The statement of `selfref_universal_exists`, assumed
   alone in the statement control `stmtSelfrefUniversal`, carries `Classical.choice`: it is
-  STATEMENT-CARRIED. The restated statement, with `encodeCode` for the Gödel number and
-  `ofNatCodeCF` for the decoder, has a proof at `[propext, Quot.sound]`,
-  `selfref_universal_exists_cf`; in the channel spelling above, `Nat.pair (encodeCode d + 1) n`,
-  it is `selfref_universal_exists_enc`. The spellings agree code by code (`selfPrints_iff_cf`,
-  `universal_iff_cf`, `universalCF_iff_enc`). The `Set.Infinite` form of the restated statement
-  is UNCLASSIFIED.
+  STATEMENT-CARRIED. The decoder spelling, `∃ c, SelfPrintsCF c ∧ UniversalCF c`, with
+  `encodeCode` for the Gödel number and `ofNatCodeCF` for the decoder, measures
+  `[propext, Quot.sound]` as a statement (`stmtSelfrefUniversalCF`) and has a proof at that
+  footprint, `selfref_universal_exists_cf`. The channel spelling of the second bullet,
+  `∃ c, SelfPrintsCF c ∧ UniversalEnc c`, has a proof at `[propext, Quot.sound]`,
+  `selfref_universal_exists_enc`. The spellings agree code by code (`selfPrints_iff_cf`,
+  `universal_iff_cf`, `universalCF_iff_enc`). The decoder spelling's unbounded form is
+  `selfref_universal_unbounded_cf`, and its `Set.Infinite` form is
+  `selfref_universal_infinite_cf`.
 
 **Controls.** `universal_not_selfprints`: universality alone does not give self-printing.
 The `example`s beside it: no constant code is universal, so the constant codes, which meet
