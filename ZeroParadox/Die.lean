@@ -9,6 +9,8 @@ import Mathlib.Order.CompleteSublattice
 import Mathlib.Data.Set.Card
 import Mathlib.Data.Fintype.Card
 import Mathlib.Order.Atoms.Finite
+import Mathlib.CategoryTheory.Endofunctor.Algebra
+import Mathlib.CategoryTheory.Types.Basic
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -339,7 +341,8 @@ theorem everyStepCovered_botCovered (h : EveryStepCovered α) (hne : ∃ a : α,
 
 omit [OrderBot α] in
 /-- `Statement:` if `α` is finite, every non-maximal point of `α` has a cover; through Mathlib's
-    `IsStronglyAtomic` instance for a finite partial order (`Mathlib/Order/Atoms/Finite.lean`). -/
+    `instIsStronglyAtomicOfWellFoundedLT` (`Mathlib/Order/Atoms.lean`), reached by
+    `Finite.to_wellFoundedLT`. -/
 theorem everyStepCovered_of_finite [Finite α] : EveryStepCovered α := fun x hx => by
   obtain ⟨b, hb⟩ := not_isMax_iff.1 hx
   obtain ⟨c, hc, -⟩ := exists_covBy_le_of_lt hb
@@ -422,7 +425,8 @@ theorem RunClosure.stageClosure {s : ℕ → α} {c : Part α} (h : M.RunClosure
     M.StageClosure (Set.range s) c := h.2
 
 /-- `Statement:` if no stage of `s` is a landing and `up (s n) ≠ up (s 0)` for some `n`, the carrier
-    has three pairwise distinct points: `s n`, `s 0`, and a value of UP at one of them. -/
+    has three pairwise distinct points. `Reading:` the proof's witnesses are `s n`, `s 0`, and a value
+    of UP at one of them. -/
 theorem three_of_not_runClose {s : ℕ → α} (hint : ∀ n, ¬ M.IsLanding (s n)) {n : ℕ}
     (hne : M.up (s n) ≠ M.up (s 0)) : ∃ a b c : α, a ≠ b ∧ b ≠ c ∧ a ≠ c := by
   have hab : s n ≠ s 0 := fun e => hne (e ▸ rfl)
@@ -436,8 +440,8 @@ theorem three_of_not_runClose {s : ℕ → α} (hint : ∀ n, ¬ M.IsLanding (s 
         fun e => hint n (e ▸ M.up_idem _ _ (Part.get_mem h0))⟩
     · exact absurd ((Part.eq_none_iff'.2 h1).trans (Part.eq_none_iff'.2 h0).symm) hne
 
-/-- `Statement:` with UP total, the same hypotheses give four pairwise distinct points: `s n`, `s 0`,
-    and the two UP values. -/
+/-- `Statement:` with UP total, the same hypotheses give four pairwise distinct points. `Reading:`
+    the proof's witnesses are `s n`, `s 0`, and the two UP values. -/
 theorem four_of_not_runClose (ht : M.UpTotal) {s : ℕ → α} (hint : ∀ n, ¬ M.IsLanding (s n))
     {n : ℕ} (hne : M.up (s n) ≠ M.up (s 0)) :
     ∃ a b c d : α, a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d := by
@@ -570,7 +574,10 @@ theorem em_of_selectedData (h : ∀ (β : Type) (M : Motion β), M.SelectedData)
 /-- `Statement:` if every motion on `ℕ` with a `Bool`-valued step (`step a b ↔ r a b = true`) has a total
     selector, then every `r : ℕ → Bool` takes the value `true` somewhere or is `false` everywhere (the
     limited principle of omniscience); one way. The reduction reads the selector at `0` of the step
-    `r a b = r b`. -/
+    `r a b = r b`. `Reading:` a total selector gives each row of the step a putative root, the
+    pointwise content of Escardó's selection function (Def 2.1, p. 3, preprint of JSL 78(3) (2013);
+    there a functional, here an existence per step, with `true` and `false` exchanged), and the
+    reduction is the argument of his Lemma 2.2 (p. 3) at X = ℕ. -/
 theorem lpo_of_selectedTotal_nat_boolStep
     (h : ∀ r : ℕ → ℕ → Bool, (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).SelectedTotal) :
     ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false := by
@@ -2126,15 +2133,31 @@ namespace Motion
 
 variable {α β γ δ : Type*}
 
-/-- `Statement:` `f` carries every UP value at `x` in `M` to an UP value at `f x` in `N`. `Reading:`
-    the lax square of Cockett and Lack, TCS 270 (2002), § 2.1.4, p. 230 (`upLax_iff_le`). -/
+/-- `Statement:` `f` sends UP values at `x` to UP values at `f x`. `Reading:` the square commuting up
+    to the restriction order of Cockett and Lack, TCS 270 (2002), § 2.1.4, p. 230 (`upLax_iff_le`). -/
 def UpLax (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
   ∀ x y, y ∈ M.up x → f y ∈ N.up (f x)
 
 /-- `Statement:` UP at `f x` in `N` is UP at `x` in `M` mapped by `f`, at every `x`. `Reading:` the
-    UP square commutes in Par. -/
+    UP square commutes in Par; it is Mathlib's coalgebra morphism for the functor `Part` (next
+    `example`). -/
 def UpStrict (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
   ∀ x, N.up (f x) = (M.up x).map f
+
+-- Statement: `UpStrict` is `CategoryTheory.Endofunctor.Coalgebra.Hom` for `ofTypeFunctor Part`, with
+-- UP as the structure map; both directions.
+example {α β : Type} (M : Motion α) (N : Motion β) (f : α → β) :
+    UpStrict M N f ↔
+      ∃ h : CategoryTheory.Endofunctor.Coalgebra.Hom (F := CategoryTheory.ofTypeFunctor Part)
+        ⟨α, TypeCat.ofHom M.up⟩ ⟨β, TypeCat.ofHom N.up⟩,
+        h.f = TypeCat.ofHom f := by
+  constructor
+  · intro h
+    refine ⟨⟨TypeCat.ofHom f, ?_⟩, rfl⟩
+    ext x
+    exact (h x).symm
+  · rintro ⟨⟨g, hg⟩, rfl⟩ x
+    exact (CategoryTheory.ConcreteCategory.congr_hom hg x).symm
 
 /-- `Statement:` every step out of `f a` in `N` is the image under `f` of a step out of `a` in `M`.
     `Reading:` with step preservation, Rutten's homomorphism of transition systems, TCS 249 (2000),
@@ -2148,7 +2171,8 @@ example (M : Motion α) (N : Motion β) (f : α → β) :
 
 /-- `Statement:` a strict map of motions: a map carrying steps to steps, with `UpStrict`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: a Mathlib `RelHom` on the OVER leg paired with a commuting
--- square on the partial UP leg; Mathlib has the first, not the pair.
+-- square on the partial UP leg; Mathlib has each half separately (`RelHom`, and
+-- `Endofunctor.Coalgebra.Hom` for `Part`), not the pair.
 structure Hom (M : Motion α) (N : Motion β) where
   /-- The underlying map. -/
   toFun : α → β
@@ -2458,8 +2482,8 @@ example : let M : Motion Bool := ofTotal id (fun _ => rfl) (fun a b => a = true 
   exact absurd hn (by decide)
 
 -- Statement: CONTROL, `Unit` with the identity UP and every step: every motion has a lax map into it,
--- and a strict map into it exists iff UP of the source is total; both directions. So a map existing
--- carries no content without one-to-one or the back clause.
+-- and a strict map into it exists iff UP of the source is total; both directions. Reading: into this
+-- target, a lax map existing carries no content; a strict one carries exactly UP-totality of the source.
 example (M : Motion α) :
     Nonempty (LaxHom M (ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True))) ∧
       (Nonempty (Hom M (ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True))) ↔ M.UpTotal) :=

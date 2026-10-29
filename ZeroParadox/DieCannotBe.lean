@@ -845,7 +845,7 @@ example :
   omega
 #check @ZeroParadox.Motion.RunClosure           -- Statement: the run form: `s` is a run and its range has the shape
 #check @ZeroParadox.Motion.RunClosure.stageClosure -- Statement: run form ⇒ set form; one way
-#check @ZeroParadox.Motion.three_of_not_runClose -- Statement: if no stage of `s` is a landing and two stages differ in UP, the carrier has three distinct points (`[propext, Classical.choice, Quot.sound]`, the choice in a case split on definedness; not statement-carried, control measured 2026-10-28)
+#check @ZeroParadox.Motion.three_of_not_runClose -- Statement: if no stage of `s` is a landing and `up (s n) ≠ up (s 0)` for some `n`, the carrier has three distinct points (`[propext, Classical.choice, Quot.sound]`, the choice in a case split on definedness; not statement-carried, control measured 2026-10-28)
 #check @ZeroParadox.Motion.four_of_not_runClose -- Statement: with UP total, four distinct points (`[propext, Quot.sound]`)
 -- Statement: the bounds are met: on `Fin 3`, UP `0, 2 ↦ 2`, undefined at `1`, OVER `0 ↔ 1`, the run
 -- `0, 1, 0, …` is landing-free and its stages differ in UP, so `RunsClose` fails.
@@ -1282,7 +1282,7 @@ example (H : ∀ (α : Type) (M : ZeroParadox.Motion α) (y : α), M.OverTrichot
 -- defined or else undefined"), there quoted; cited, not claimed.
 #check @ZeroParadox.Motion.lpo_of_trichotomy_nat_boolStep -- Statement: the trichotomy at every point of every motion on `ℕ` with a `Bool`-valued step ⇒ the limited principle of omniscience (`[propext]`)
 -- Statement: CONTROL: on `Bool` with a `Bool`-valued step the trichotomy holds at every point, with no
--- hypothesis; so the cost on `ℕ` is the carrier's search, not the step's values.
+-- hypothesis. Reading: so the cost on `ℕ` is the carrier's search, not the step's values.
 example (r : Bool → Bool → Bool) (y : Bool) :
     (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y := by
   have two : ∀ b : Bool, b = y ∨ b = !y := fun b => by cases b <;> cases y <;> decide
@@ -1448,7 +1448,7 @@ example : Function.Injective (fun n : ℤ => n + 1) ∧
   ⟨fun _ _ h => by simpa using h, fun y => ⟨y - 1, show y = y - 1 + 1 by omega⟩⟩
 #check @ZeroParadox.Motion.exists_fanIn_ofFun_of_not_injective -- Statement: if `g` is not one-to-one, some point has fan-in; proved with `classical`
 #check @ZeroParadox.Motion.exists_fanIn_bool     -- Statement: on `Bool` the same, by cases (`[propext]`)
-#check @ZeroParadox.Motion.mp_of_exists_fanIn_nat -- Statement: the same for every `g : ℕ → ℕ` ⇒ Markov's principle (`[propext, Quot.sound]`); `ℕ` has decidable equality, and a choice-free proof of `exists_fanIn_ofFun_of_not_injective` on `ℕ` would be a choice-free proof of Markov's principle (ESSENTIAL on the premise of `ZeroParadox/Category/ChoiceCannotBe.lean` § IV)
+#check @ZeroParadox.Motion.mp_of_exists_fanIn_nat -- Statement: the same for every `g : ℕ → ℕ` ⇒ Markov's principle (`[propext, Quot.sound]`); `ℕ` has decidable equality, and a choice-free proof of `exists_fanIn_ofFun_of_not_injective` on `ℕ` would be a choice-free proof of Markov's principle (ESSENTIAL in the sense of `ZeroParadox/Category/ChoiceCannotBe.md` given that Markov's principle is not derivable in the choice-free fragment; that premise is not one of `ZeroParadox/Category/ChoiceCannotBe.lean` § IV's cases and is not proved here)
 -- Statement: that reduction lands on `ZeroParadox.MarkovPrinciple`
 -- (`ZeroParadox/Category/LawvereTaboo.lean` § V).
 example (H : ∀ g : ℕ → ℕ, ¬ Function.Injective g → ∃ y, (ZeroParadox.Motion.ofFun g).FanIn y) :
@@ -1719,21 +1719,26 @@ example : let M := (ZeroParadox.Motion.ofTotal (fun _ : ℕ → Bool => ⊥) (fu
 -- (`ZeroParadox/Category/LawvereTaboo.lean` § V): excluded middle from the corner split
 -- (`em_of_corner_loop_or_climb`, § I); weak excluded middle from the cut (`wem_of_botCovered_botIntervalTwo`,
 -- § IV); LPO from the trichotomy and from a total selector over a `Bool`-valued step on `ℕ` (§§ X, XI);
--- Markov's principle from fan-in on `ℕ` (§ XII). Each lands on its principle and, by the arrows there,
--- on every weaker one; here the cut's.
+-- Markov's principle from fan-in on `ℕ` (§ XII). Each lands on its principle and on the weaker ones
+-- the arrows there reach; here the cut's.
 example (h : ∀ (β : Type) [PartialOrder β] [OrderBot β], ZeroParadox.BotCovered β →
     ZeroParadox.BotIntervalTwo β) : ZeroParadox.WLPO ∧ ZeroParadox.LLPO :=
   have w := ZeroParadox.wlpo_of_weakExcludedMiddle (ZeroParadox.wem_of_botCovered_botIntervalTwo h)
   ⟨w, ZeroParadox.llpo_of_wlpo w⟩
--- Reading (cited, not claimed): each of these reductions is a Brouwerian counterexample in the "stable"
--- form, a statement implying a principle quantified over all binary sequences (Diener, arXiv:1804.05495v3,
--- § 0.3, p. 5); the die-shaped statements themselves were not located in the sources read, as of
--- 2026-10-28. What moves the landing point is the carrier: decidable equality frees registration and
--- the cut, and a quantifier over an infinite carrier returns as LPO or Markov's principle; Escardó
--- (JSL 2013, p. 1) grades the same principle by the set searched: "For X finite this is trivial, and
--- for X = ℕ, this is LPO". LPO and weak excluded middle are not shown comparable here: the model over ℝ
--- separates LPO from weak excluded middle (`LawvereTaboo.lean` § V, last Reading), and the other
--- direction was not settled from the sources read.
+-- Reading (cited, not claimed): the reductions to LPO and to Markov's principle are Brouwerian
+-- counterexamples in the "stable" form, a statement implying a principle quantified over all binary
+-- sequences (Diener, arXiv:1804.05495v3, § 0.3, p. 5); the excluded-middle and weak-excluded-middle
+-- reductions quantify over `Prop` instead. The die-shaped statements themselves were not located in the
+-- sources read, as of 2026-10-28. What moves the landing point is the carrier. Decidable equality frees
+-- the corner split (`Motion.corner_iff_loop_or_climb`) and the cut (`botCovered_botIntervalTwo`); it
+-- does not free registration, whose taboo comes from a `Prop`-valued UP-definedness and is reached on
+-- `Unit` (`Motion.em_of_registeredDecidable`). On `ℕ`, the quantifier in the trichotomy, the selector
+-- and fan-in returns as LPO or Markov's principle; this is measured for `ℕ` only. Escardó (preprint of
+-- JSL 78(3) (2013), p. 1) grades the same principle by the set searched, "For X finite this is
+-- trivial, and for X = ℕ, this is LPO", and exhibits infinite sets on which it holds, the first being
+-- ℕ∞. LPO and weak excluded middle are not shown comparable here: the model over ℝ shows that LPO does
+-- not imply weak excluded middle (`LawvereTaboo.lean` § V, last Reading), and the converse was not
+-- settled from the sources read.
 -- Statement: `Prop`, UP double negation `p ↦ ¬¬p` (total, so registration is free,
 -- `registeredDecidable_of_upTotal`), OVER negation `p → ¬p`: a decidable proposition is a landing.
 example (p : Prop) [Decidable p] :
@@ -1829,8 +1834,9 @@ example : ¬ ∃ σ : OnePoint ℕ → OnePoint ℕ, Function.Involutive σ ∧
 example {α : Type} [Preorder α] [OrderBot α] [NoMaxOrder α] : Infinite α := NoMaxOrder.infinite
 -- Statement: CONTROL: infinitude alone does not block the reversal: `WithBot (WithTop ℤ)` is infinite,
 -- has ⊥ and ⊤, and `z ↦ -z` with ⊥ and ⊤ exchanged is an involution reversing `<` (`[propext,
--- Classical.choice, Quot.sound]`, through ℤ's order). So the operative hypothesis is the absence of
--- a maximal element; `Fin 3` with `Fin.rev` (below) is the finite member.
+-- Classical.choice, Quot.sound]`). Reading: both hypotheses are operative. Dropping the absence of a
+-- maximal element gives this example; dropping the least element gives ℤ under negation (the CONTROLS
+-- below); `Fin 3` with `Fin.rev` (below) is the finite member.
 example : Infinite (WithBot (WithTop ℤ)) ∧ ∃ σ : WithBot (WithTop ℤ) → WithBot (WithTop ℤ),
     Function.Involutive σ ∧ ∀ a b, a < b ↔ σ b < σ a := by
   obtain ⟨σ, e1, e2, e3⟩ : ∃ σ : WithBot (WithTop ℤ) → WithBot (WithTop ℤ),
@@ -3022,8 +3028,8 @@ example : ¬ ZeroParadox.Motion.UpStrict (ZeroParadox.runMotion (fun _ : Unit =>
     (fun _ => rfl)).2 hd
 -- Reading: occurrence (every run halts) appears here as strictness of a map into the two-state face.
 -- Not claimed: that this map is canonical, or an identity between the machine face and `MachinePhase`.
--- The probe's maps through ℕ∞ to ℤ_[2] and `Ordinal` (UP constant at an orbit's limit) are not landed:
--- that UP is a choice the corpus does not make.
+-- Not stated in this section: maps through ℕ∞ to ℤ_[2] and `Ordinal` with UP constant at an orbit's
+-- limit; that UP is a choice the corpus does not make.
 
 /-! ### § XVIII. Views: a carrier order passed as data, and restriction -/
 -- Reading: a view is an order on the carrier given as an argument, never a field of `Motion`. The

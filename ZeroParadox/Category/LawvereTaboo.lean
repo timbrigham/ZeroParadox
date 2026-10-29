@@ -233,16 +233,18 @@ theorem decidable_route_unaffected {β : Type} [DecidableEq β] {b₀ b₁ : β}
 
 /-! ## § V — The omniscience principles on bit sequences
 
-The neighbours of weak excluded middle that a quantifier over `ℕ` reaches, in the same hypothesis
-form as § I: never an `axiom`, always discharged by the caller. Each arrow runs from the stronger
-principle to the weaker one. -/
+Instances, for sequences `ℕ → Bool`, of excluded middle, weak excluded middle, De Morgan's law and
+double negation elimination, in the same hypothesis form as § I: never an `axiom`, always discharged
+by the caller. Each arrow runs from the stronger principle to the weaker one. The equivalence
+`LPO ↔ WLPO ∧ MP` in its ⊥-of-`ℕ → Bool` form is the `example` in
+`ZeroParadox/Category/ChoiceCannotBe.lean` § II. -/
 
 -- Reading (cited, not claimed): the forms over `ℕ → Bool` are Escardó, "Infinite sets that satisfy
 -- the principle of omniscience in any variety of constructive mathematics", JSL 78(3) (2013), § 3,
--- p. 4, with `true` and `false` exchanged ("Clearly LPO ⟺ WLPO ∧ MP"); p. 1: "For X finite this is
--- trivial, and for X = ℕ, this is LPO". Ishihara, "Reverse mathematics in Bishop's constructive
--- mathematics", Philosophia Scientiae CS 6 (2006), §§ 3–4, pp. 47–50, states LPO, WLPO, LLPO and MP
--- over `ℕ^ℕ` as instances of excluded middle, weak excluded middle, De Morgan's law and double
+-- p. 4 of the preprint, with `true` and `false` exchanged ("Clearly LPO ⟺ WLPO ∧ MP"); preprint p. 1:
+-- "For X finite this is trivial, and for X = ℕ, this is LPO". Ishihara, "Reverse mathematics in
+-- Bishop's constructive mathematics", Philosophia Scientiae CS 6 (2006), §§ 2–4, pp. 47–50, states
+-- LPO, WLPO, LLPO and MP over `ℕ^ℕ` as instances of excluded middle, weak excluded middle, De Morgan's law and double
 -- negation elimination, and Prop 10, p. 53, gives `LPO ↔ WLPO + MP` and `WLPO → LLPO`. The LLPO form
 -- below is Diener, "Constructive Reverse Mathematics", arXiv:1804.05495v3, § 1.4, p. 25, indexed
 -- from 0.
@@ -309,11 +311,12 @@ theorem llpo_of_wlpo (h : WLPO) : LLPO := by
 
 -- Reading (cited, not claimed): none of the converses is proved here, and Lean cannot prove a
 -- non-implication between these principles, each of which holds classically. Separations by
--- topological models, Diener (above), § 7.2, read for these entries: the model over ℝ refutes weak
--- excluded middle (Prop 7.2.2, p. 102) and validates the sequence form of LPO (pp. 106–107), so LPO
--- does not imply weak excluded middle; the Sierpinski space validates weak excluded middle and not
--- excluded middle (p. 102; Remark 7.2.9, p. 107); the space `X_U` validates weak excluded middle and
--- refutes the REAL-number form of MP (Prop 7.2.12, p. 110), which by itself does not separate weak
+-- topological models, Diener (above), § 7.2, read for these entries: the model over ℝ does not
+-- validate weak excluded middle (Prop 7.2.2, p. 102; a weak counterexample in Diener's sense, p. 102)
+-- and validates the sequence form of LPO (pp. 106–107), so LPO does not imply weak
+-- excluded middle; the Sierpinski space validates weak excluded middle and not excluded middle
+-- (p. 102; Remark 7.2.9, p. 107); the space `X_U` validates weak excluded middle and does not
+-- validate the REAL-number form of MP (Prop 7.2.12, p. 110), which by itself does not separate weak
 -- excluded middle from the sequence form of MP used here. Ishihara, pp. 47–50: LPO, WLPO and LLPO are
 -- false in INT and in RUSS, and MP is accepted in RUSS.
 
