@@ -4213,14 +4213,16 @@ example : (∀ (r : Option ℕ → Option ℕ → Bool) (y : Option ℕ),
   ⟨ZeroParadox.Motion.lpo_of_trichotomy_option_boolStep,
     ZeroParadox.Motion.overTrichotomy_option_boolStep_of_lpo⟩
 -- Reading: the converse of the selector reduction, LPO to a total selector on `Option ℕ`, was not
--- located in the corpus as of 2026-10-29, searched by a grep of `ZeroParadox/**/*.lean` for
--- `selectedTotal` (`Motion.selectedTotal_of_classical` gets one classically, not from LPO).
+-- located in the corpus as of 2026-10-29, searched by case-insensitive greps of
+-- `ZeroParadox/**/*.lean` for `selectedtotal`, for `selector` and `lpo` on one line in either order,
+-- and for `_of_lpo` (`Motion.selectedTotal_of_classical` gets one classically, not from LPO).
 -- Statement: the other direction of the trade: a `Bool` test for "is this the adjoined point" exists
 -- on `Option ℕ` with no hypothesis (`registeredDecider`, § IX), and on `NInf` one for each finite
--- stage (`isAt_iff`); a test isolating `∞` (`t b = true ↔ b = ∞`, a decidable singleton, not a
--- topological claim) gives WLPO.
+-- stage (`isAt_iff`); a test isolating `∞` (`t b = true ↔ b = ∞`; equivalently `t` is `false` at
+-- every `n̲` and `true` at `∞`, `NInf.isolating_infty_iff`, Escardó's basic discontinuity) gives WLPO.
 #check @ZeroParadox.NInf.isAt_iff              -- Statement: `isAt m b = true ↔ b = NInf.ofNat m`
 #check @ZeroParadox.NInf.wlpo_of_isolating_infty -- Statement: a `Bool` test true exactly at `∞` gives WLPO
+#check @ZeroParadox.NInf.isolating_infty_iff   -- Statement: a `Bool` test isolates `∞` iff it is `false` at every `NInf.ofNat n` and `true` at `∞`
 #check @ZeroParadox.NInf.decEq_of_isolating_infty -- Statement: such a test gives `DecidableEq NInf`
 #check @ZeroParadox.NInf.isolating_infty_of_decEq -- Statement: and `DecidableEq NInf` gives such a test
 #check @ZeroParadox.Motion.overTrichotomy_ninf_of_isolating -- Statement: a test isolating `y` gives the trichotomy at `y`
@@ -4272,16 +4274,22 @@ example (g : Part ℕ → Option ℕ) (hg : ∀ o n, g o = some n ↔ n ∈ o) :
 -- `eps` his selection function (Theorem 3.5, p. 5), `exists_ne_infty_eq_false_or` his Lemma 8.1 by his
 -- proof (p. 14), `wlpo_of_eqOr_infty` the right-to-left half of his WLPO row (p. 4) and
 -- `wlpo_of_tag` its data form, `lpo_of_exactTag` the right-to-left half of his LPO row (p. 4; compare
--- his Corollary 3.7, p. 5), and `wlpo_of_isolating_infty` his WLPO row with his Lemma 3.3 (p. 4); his
+-- his Corollary 3.7, p. 5), and `wlpo_of_isolating_infty`, whose hypothesis his Lemma 3.3 (p. 4)
+-- makes equivalent (`isolating_infty_iff`) to the basic discontinuity (p. 5; TypeTopology
+-- `basic-discontinuity`) his WLPO row turns into WLPO; compare de Jong and Escardó,
+-- arXiv:2601.12536, § 7.2, Lemma 7.2, p. 25, for a map `ℕ∞ → ℕ∞` with values `0` and `1`. His
 -- Theorem 7.1(1) (p. 13) gets WLPO from any discontinuous map `ℕ∞ → 2` assuming countable choice.
--- `wlpo_iff_eqOr`, `decEq_of_wlpoData` and `wlpoData_of_decEq`: his TypeTopology module
--- `Taboos.WLPO` (retrieved 2026-10-29), `ℕ∞-discrete-gives-WLPO` and `WLPO-gives-ℕ∞-discrete`.
--- `ninfEquivComp`: C. Knapp, "Partial Functions and Recursion in Univalent Type Theory," 2020
--- (arXiv:2011.00272), § 4.1, Lemma 4.4 (p. 76) and Theorem 4.7 (p. 78) at `X = 1`. Escardó and
--- Knapp, CSL 2017, LIPIcs 82,
--- § 2.7, p. 21:6: lifting by the decidable dominance is `X + 1` and by all propositions is `L X`;
--- § 2.8, pp. 21:6–21:7: "the decidability of Rosolini propositions is known as LPO", and the Rosolini
--- structures sit in their `ℕ∞`, presented there as `Σ α, isProp ⟨α⟩`, which is not related to
--- `NInf` in Lean here. The trichotomy route through `hmap` is constructed here, not from a source.
+-- `wlpo_iff_eqOr`, `decEq_of_wlpoData` and `wlpoData_of_decEq`: compare Escardó's TypeTopology
+-- module `Taboos.WLPO` (retrieved 2026-10-29), `ℕ∞-discrete-gives-WLPO` and
+-- `WLPO-gives-ℕ∞-discrete`, for his `WLPO` indexed by the points of `ℕ∞`; the bit-sequence form
+-- here is his `WLPO-traditional`, linked there by `WLPO-gives-WLPO-traditional` and
+-- `WLPO-traditional-gives-WLPO`, here by `eqOr_of_wlpo` and `wlpo_of_eqOr_infty`. `ninfEquivComp`:
+-- C. Knapp, "Partial Functions and Recursion in Univalent Type Theory," 2020 (arXiv:2011.00272),
+-- § 4.1, Lemma 4.4 (p. 76) and Theorem 4.7 (p. 78) at `X = 1`.
+-- Escardó and Knapp, CSL 2017, LIPIcs 82, § 2.7, p. 21:6: lifting by the decidable dominance is
+-- `X + 1` and by all propositions is `L X`; § 2.8, pp. 21:6–21:7: "the decidability of Rosolini propositions is known as LPO", and
+-- the Rosolini structures sit in their `ℕ∞`, presented there as `Σ α, isProp ⟨α⟩`, which is not
+-- related to `NInf` in Lean here. The trichotomy route through `hmap` is constructed here, not from
+-- a source.
 
 end DieCannotBeIndex
