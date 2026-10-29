@@ -3277,9 +3277,11 @@ end Motion
 one point adjoined to the finite stages of `ℕ` as a constructor (`Option ℕ`, the tagged point;
 Mathlib's `ENat` is `WithTop ℕ`), or as their limit (`NInf`, the untagged point: Escardó's
 one-point compactification of `ℕ`, the generic convergent sequence, preprint of JSL 78(3) (2013),
-p. 1). `ℕ` adjoins none. The corpus's other conatural carriers: `Cofix natPF_NatListRegime.Obj`,
-with `natInfinity` (`ZeroParadox/Computability/NatListRegime.lean`,
-`ZeroParadox/Computability/GroundZero.lean`), and `ENat` (`enat_fp_iff`, `ZeroParadox/Miniature.lean`). -/
+p. 1). `ℕ` adjoins none. Other carriers in the corpus include, on the limit side, final coalgebras
+of `1 + X` (`⟨Bool, fun b => cond b PUnit PEmpty⟩`): `Cofix natPF_NatListRegime.Obj` with `natInfinity`
+(`ZeroParadox/Computability/NatListRegime.lean`, `ZeroParadox/Computability/GroundZero.lean`) and
+`M natPF_RootCutTrichotomy` (`mixed_cofix_nonempty`, `ZeroParadox/Computability/RootCutTrichotomy.lean`);
+on the tagged side, `ENat` in `enat_fp_iff` (`ZeroParadox/Miniature.lean`). -/
 
 /-- `Statement:` Escardó's `ℕ∞`: the decreasing sequences, `x (i + 1) = true → x i = true`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `ENat` (`WithTop ℕ`) and `OnePoint ℕ`
@@ -3829,10 +3831,10 @@ end Motion
 namespace NInf
 
 /-- `Statement:` if a `Bool` test `t` isolates `∞`, the weak limited principle of omniscience (WLPO)
-    holds. `Reading:` `t` is `false` at every `n̲` and `true` at `∞`; with that hypothesis the
-    choice-free reduction is Escardó's own, his WLPO row (p. 4) with Lemma 3.3 (p. 4), formalized as
-    `basic-discontinuity-taboo` in his TypeTopology module `Taboos.BasicDiscontinuity` (retrieved
-    2026-10-29). His Theorem 7.1(1) (p. 13) is the weaker-hypothesis form, any discontinuous map
+    holds. `Reading:` `t` is `false` at every `n̲` and `true` at `∞` (`isolating_infty_iff`); with
+    that hypothesis the choice-free reduction is Escardó's own, his WLPO row (p. 4) with Lemma 3.3
+    (p. 4), formalized as `basic-discontinuity-taboo` in his TypeTopology module
+    `Taboos.BasicDiscontinuity` (retrieved 2026-10-29). His Theorem 7.1(1) (p. 13) is the weaker-hypothesis form, any discontinuous map
     `ℕ∞ → 2`, and assumes countable choice. -/
 theorem wlpo_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b = infty) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r => by
@@ -3841,6 +3843,22 @@ theorem wlpo_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ 
   | false =>
     refine Or.inr fun hall => ?_
     rw [(ht _).2 ((det_eq_infty_iff r).2 hall)] at h; cases h
+
+/-- `Statement:` a `Bool` test isolates `∞` iff it is `false` at every `n̲` and `true` at `∞`; both
+    directions, right to left by Escardó's Lemma 3.3 (p. 4, `eq_infty_of_ne_ofNat`). -/
+theorem isolating_infty_iff (t : NInf → Bool) :
+    (∀ b, t b = true ↔ b = infty) ↔ ((∀ n, t (ofNat n) = false) ∧ t infty = true) := by
+  constructor
+  · intro ht
+    refine ⟨fun n => ?_, (ht _).2 rfl⟩
+    cases h : t (ofNat n) with
+    | false => rfl
+    | true => exact absurd ((ht _).1 h) (ofNat_ne_infty n)
+  · rintro ⟨h0, h1⟩ b
+    constructor
+    · intro hb
+      exact eq_infty_of_ne_ofNat b fun k e => by rw [e, h0 k] at hb; cases hb
+    · rintro rfl; exact h1
 
 /-- `Statement:` if WLPO holds, any two points of `NInf` are equal or not. -/
 theorem eqOr_of_wlpo (h : ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false)
@@ -3855,8 +3873,8 @@ theorem wlpo_of_eqOr_infty (h : ∀ x : NInf, x = infty ∨ x ≠ infty) :
   (h (det r)).imp (det_eq_infty_iff r).1 (fun hne hall => hne ((det_eq_infty_iff r).2 hall))
 
 /-- `Statement:` WLPO iff any two points of `NInf` are equal or not; both directions. `Reading:`
-    the `Prop` form of TypeTopology `Taboos.WLPO`'s `ℕ∞-discrete-gives-WLPO` and
-    `WLPO-gives-ℕ∞-discrete` (Escardó; retrieved 2026-10-29), whose WLPO is type-valued. -/
+    compare TypeTopology `Taboos.WLPO`, whose `WLPO` is type-valued and indexed by `ℕ∞`; the
+    bit-sequence form here is its `WLPO-traditional` (`ZeroParadox/DieCannotBe.lean` § XXVII). -/
 theorem wlpo_iff_eqOr :
     (∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false) ↔ ∀ x y : NInf, x = y ∨ x ≠ y :=
   ⟨eqOr_of_wlpo, fun h => wlpo_of_eqOr_infty fun x => h x infty⟩
@@ -3888,13 +3906,13 @@ def WLPOData : Type := ∀ r : ℕ → Bool, Decidable (∀ n, r n = false)
 
 namespace NInf
 
-/-- `Statement:` WLPO as data gives decidable equality on `NInf` (TypeTopology `Taboos.WLPO`,
-    `WLPO-gives-ℕ∞-discrete`, which also takes function extensionality). -/
+/-- `Statement:` WLPO as data gives decidable equality on `NInf` (compare TypeTopology `Taboos.WLPO`,
+    `WLPO-gives-ℕ∞-discrete` after `WLPO-traditional-gives-WLPO`, each taking funext). -/
 def decEq_of_wlpoData (d : WLPOData) : DecidableEq NInf := fun x y =>
   @decidable_of_iff _ _ (eq_iff_all_bne_false x y).symm (d fun n => x.1 n != y.1 n)
 
-/-- `Statement:` decidable equality on `NInf` gives WLPO as data (TypeTopology `Taboos.WLPO`,
-    `ℕ∞-discrete-gives-WLPO`). -/
+/-- `Statement:` decidable equality on `NInf` gives WLPO as data (compare TypeTopology `Taboos.WLPO`,
+    `ℕ∞-discrete-gives-WLPO`, then `WLPO-gives-WLPO-traditional`, which takes funext). -/
 def wlpoData_of_decEq (d : DecidableEq NInf) : WLPOData := fun r =>
   @decidable_of_iff _ _ (det_eq_infty_iff r) (d (det r) infty)
 
@@ -4458,6 +4476,7 @@ open ZeroParadox
 #print axioms Motion.overTrichotomy_option_boolStep_of_lpo
 #print axioms Motion.lpo_of_selectedTotal_option_boolStep
 #print axioms NInf.wlpo_of_isolating_infty
+#print axioms NInf.isolating_infty_iff
 #print axioms NInf.eqOr_of_wlpo
 #print axioms NInf.wlpo_of_eqOr_infty
 #print axioms NInf.wlpo_iff_eqOr
