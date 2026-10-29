@@ -1729,12 +1729,11 @@ example (h : ∀ (β : Type) [PartialOrder β] [OrderBot β], ZeroParadox.BotCov
 -- counterexamples in the "stable" form, a statement implying a principle quantified over all binary
 -- sequences (Diener, arXiv:1804.05495v3, § 0.3, p. 5); the excluded-middle and weak-excluded-middle
 -- reductions quantify over `Prop` instead. The die-shaped statements themselves were not located in the
--- sources read, as of 2026-10-28. In the cases measured, the carrier moves the landing point of the
--- corner split, the cut and the legs quantifying over `ℕ`, and not that of registration. Decidable
+-- sources read, as of 2026-10-28. Decidable
 -- equality frees the corner split (`Motion.corner_iff_loop_or_climb`) and the cut
 -- (`botCovered_botIntervalTwo`); it does not free registration, whose taboo comes from a
 -- `Prop`-valued UP-definedness, is reached on `Unit` (`Motion.em_of_registeredDecidable`), and is
--- freed by the motion's presentation of UP (`registeredDecidable_of_upTotal`,
+-- decided when UP is total or presented as an `Option` (`registeredDecidable_of_upTotal`,
 -- `ofOption_registeredDecidable`). On `ℕ`, the quantifier in the trichotomy, the selector and fan-in
 -- returns as LPO or Markov's principle; this is measured for `ℕ` only. Escardó (preprint of
 -- JSL 78(3) (2013), p. 1) grades the same principle by the set searched, "For X finite this is
