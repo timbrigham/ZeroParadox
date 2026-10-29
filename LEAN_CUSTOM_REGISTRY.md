@@ -441,6 +441,18 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Reason:** The motion on the classes of an UP-compatible setoid: UP sends the class of `a` to the class of `up a` (defined iff `up a` is), and `up_idem` descends. Mathlib supplies the lift and `Part.map`; the result is a `Motion`, the die's project-local structure (`ZeroParadox/Die.lean` § I), so the wrapper is ours (the dated search for a `Part`-valued respect condition is recorded under `Motion.UpCompat`). With the identity UP it is `Motion.quot` (`quotUp_eq_quot`).
 
+### `Motion.Hom` — `ZeroParadox/Die.lean`
+
+**Relationship to Mathlib:** OVER is Mathlib's `RelHom` condition; no Mathlib analog for the pair with a commuting square on a partial map
+
+**Reason:** A strict map of motions: a map carrying steps to steps (`RelHom`'s condition) such that UP at `f x` is UP at `x` mapped by `f` (`UpStrict`), the UP square commuting in Par. Mathlib supplies the step half; the pairing with the partial UP leg is over `Motion`, the die's project-local structure (`ZeroParadox/Die.lean` § I). The back clause, when wanted, is the separate `Motion.StepBack`, which is Mathlib's `Relation.Fibration` of the reversed steps (`Iff.rfl`, `ZeroParadox/Die.lean` § XIX). A morphism of transition systems was not located in the pinned Mathlib as of 2026-10-28, searched as follows: `structure`/`def`/`class` names containing `Bisim`, `Simulation`, `TransitionSystem`, `LTS` or `Zigzag` (hits: bisimulations for `WSeq`, `Seq`, `Computation`, `Stream'` and `PFunctor.M`, and category-theoretic zigzags, none for a relation step with a partial map).
+
+### `Motion.LaxHom` — `ZeroParadox/Die.lean`
+
+**Relationship to Mathlib:** As `Motion.Hom`, with the UP square lax in `Part`'s order
+
+**Reason:** A lax map of motions: steps to steps, and every value of UP at `x` sent to a value of UP at `f x` (`UpLax`), equivalently `(M.up x).map f ≤ N.up (f x)` in `Part`'s order (`upLax_iff_le`), the restriction order of Cockett and Lack, TCS 270 (2002), § 2.1.4, p. 230. Strict iff lax with UP-definedness reflected (`upStrict_iff`). The search recorded under `Motion.Hom` covers this entry.
+
 ### `clockStep` — `ZeroParadox/Computability/Occurrence.lean`
 
 **Relationship to Mathlib:** Built from Mathlib's `Nat.Partrec.Code.evaln`; no Mathlib analog

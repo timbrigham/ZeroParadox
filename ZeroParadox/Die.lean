@@ -8,6 +8,7 @@ import Mathlib.Order.FixedPoints
 import Mathlib.Order.CompleteSublattice
 import Mathlib.Data.Set.Card
 import Mathlib.Data.Fintype.Card
+import Mathlib.Order.Atoms.Finite
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -33,7 +34,7 @@ The die has evolved, and it is on version two now. I think what we are describin
 ## Formal Overview (AI-assisted)
 Version 2; the index `ZeroParadox/DieCannotBe.lean` numbers its sections differently. Here: MOTION (§ I–IV;
 no order); VIEWS (§ XII, § XIV–XV; an order as data); CELLS (§ IX–XI, § XVI; arrival, fan-in); TRAP SETS
-(§ XII–XIII, § XVI); the DATUM behind a cell (§ V–VIII, § XIII); MAPS, ORDERS, QUOTIENTS (§ XIII, XVII–XVIII).
+(§ XII–XIII, § XVI); the DATUM behind a cell (§ V–VIII, § XIII); MAPS, ORDERS, QUOTIENTS (§ XIII, XVII–XIX).
 -/
 
 namespace ZeroParadox
@@ -178,6 +179,30 @@ theorem corner_iff_loop_or_climb_classical : M.Corner ↔ M.Loop ∨ M.Climb := 
   classical
   exact M.corner_iff_loop_or_climb
 
+/-- `Statement:` if, on every motion on every `β : Type`, a corner gives a loop or a climb, excluded
+    middle holds; one way. The reduction runs on `Option Prop`: UP the identity on `some _` and
+    `none ↦ some p`, one step `some True → none`; a loop there gives `p`, a climb gives `¬ p`. -/
+theorem em_of_corner_loop_or_climb
+    (H : ∀ (β : Type) (M : Motion β), M.Corner → M.Loop ∨ M.Climb) : ∀ p : Prop, p ∨ ¬ p := by
+  intro p
+  let u : Option Prop → Part (Option Prop) := fun x => match x with
+    | none => Part.some (some p)
+    | some q => Part.some (some q)
+  have hu : ∀ x y, y ∈ u x → y ∈ u y := by
+    intro x y h
+    cases x with
+    | none => rw [Part.mem_some_iff.1 h]; exact Part.mem_some _
+    | some q => rw [Part.mem_some_iff.1 h]; exact Part.mem_some _
+  let N : Motion (Option Prop) := ⟨u, hu, fun a b => a = some True ∧ b = none⟩
+  have hc : N.Corner := ⟨some True, none, some p, Part.mem_some _, ⟨rfl, rfl⟩, Part.mem_some _,
+    fun h => by cases h⟩
+  rcases H _ N hc with ⟨y, b, _, ⟨rfl, rfl⟩, _, hyb⟩ | ⟨y, b, z, _, ⟨rfl, rfl⟩, hz, _, hzy⟩
+  · have e : some True = some p := Part.mem_some_iff.1 hyb
+    exact Or.inl ((Option.some_inj.1 e) ▸ trivial)
+  · have e : z = some p := Part.mem_some_iff.1 hz
+    subst e
+    exact Or.inr fun hp => hzy (by rw [eq_true hp])
+
 /-- `Statement:` with no binder, if the corner fires, it is not the case that the motion neither
     loops nor climbs. -/
 theorem not_not_loop_or_climb_of_corner (h : M.Corner) : ¬¬ (M.Loop ∨ M.Climb) := by
@@ -312,6 +337,18 @@ theorem everyStepCovered_botCovered (h : EveryStepCovered α) (hne : ∃ a : α,
   let ⟨_, ha⟩ := hne
   h ⊥ fun hm => ha (le_bot_iff.mp (hm bot_le))
 
+omit [OrderBot α] in
+/-- `Statement:` if `α` is finite, every non-maximal point of `α` has a cover; through Mathlib's
+    `IsStronglyAtomic` instance for a finite partial order (`Mathlib/Order/Atoms/Finite.lean`). -/
+theorem everyStepCovered_of_finite [Finite α] : EveryStepCovered α := fun x hx => by
+  obtain ⟨b, hb⟩ := not_isMax_iff.1 hx
+  obtain ⟨c, hc, -⟩ := exists_covBy_le_of_lt hb
+  exact ⟨c, hc⟩
+
+/-- `Statement:` if `α` is finite and some point is not ⊥ of `α`, then ⊥ of `α` has a cover; one way. -/
+theorem botCovered_of_finite [Finite α] (hne : ∃ a : α, a ≠ ⊥) : BotCovered α :=
+  everyStepCovered_botCovered everyStepCovered_of_finite hne
+
 end OrderPremises
 
 /-! ### § VI. Stages and their shared closure -/
@@ -383,6 +420,34 @@ theorem runsClose_of_upStepInvariant (h : M.UpStepInvariant) : M.RunsClose :=
 /-- `Statement:` the run form gives the set form on the run's range; one way. -/
 theorem RunClosure.stageClosure {s : ℕ → α} {c : Part α} (h : M.RunClosure s c) :
     M.StageClosure (Set.range s) c := h.2
+
+/-- `Statement:` if no stage of `s` is a landing and `up (s n) ≠ up (s 0)` for some `n`, the carrier
+    has three pairwise distinct points: `s n`, `s 0`, and a value of UP at one of them. -/
+theorem three_of_not_runClose {s : ℕ → α} (hint : ∀ n, ¬ M.IsLanding (s n)) {n : ℕ}
+    (hne : M.up (s n) ≠ M.up (s 0)) : ∃ a b c : α, a ≠ b ∧ b ≠ c ∧ a ≠ c := by
+  have hab : s n ≠ s 0 := fun e => hne (e ▸ rfl)
+  have nl : ∀ {x y : α}, y ∈ M.up x → ¬ M.IsLanding x → y ≠ x :=
+    fun hy hx e => hx (e ▸ M.up_idem _ _ hy)
+  by_cases h1 : (M.up (s n)).Dom
+  · refine ⟨s n, s 0, (M.up (s n)).get h1, hab, fun e => hint 0 (e ▸ M.up_idem _ _ (Part.get_mem h1)),
+      (nl (Part.get_mem h1) (hint n)).symm⟩
+  · by_cases h0 : (M.up (s 0)).Dom
+    · exact ⟨s n, s 0, (M.up (s 0)).get h0, hab, (nl (Part.get_mem h0) (hint 0)).symm,
+        fun e => hint n (e ▸ M.up_idem _ _ (Part.get_mem h0))⟩
+    · exact absurd ((Part.eq_none_iff'.2 h1).trans (Part.eq_none_iff'.2 h0).symm) hne
+
+/-- `Statement:` with UP total, the same hypotheses give four pairwise distinct points: `s n`, `s 0`,
+    and the two UP values. -/
+theorem four_of_not_runClose (ht : M.UpTotal) {s : ℕ → α} (hint : ∀ n, ¬ M.IsLanding (s n))
+    {n : ℕ} (hne : M.up (s n) ≠ M.up (s 0)) :
+    ∃ a b c d : α, a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d := by
+  have hy : (M.up (s n)).get (ht _) ∈ M.up (s n) := Part.get_mem _
+  have hz : (M.up (s 0)).get (ht _) ∈ M.up (s 0) := Part.get_mem _
+  have hyl := M.up_idem _ _ hy
+  have hzl := M.up_idem _ _ hz
+  refine ⟨s n, s 0, _, _, fun e => hne (e ▸ rfl), fun e => hint n (e ▸ hyl),
+    fun e => hint n (e ▸ hzl), fun e => hint 0 (e ▸ hyl), fun e => hint 0 (e ▸ hzl), fun e => hne ?_⟩
+  rw [Part.eq_some_iff.2 hy, Part.eq_some_iff.2 hz, e]
 
 /-! ### § VII. The registration switch: is closure-definedness data? -/
 
@@ -502,6 +567,22 @@ theorem em_of_selectedData (h : ∀ (β : Type) (M : Motion β), M.SelectedData)
     · exact Or.inl h2
   · exact Or.inl h1
 
+/-- `Statement:` if every motion on `ℕ` with a `Bool`-valued step (`step a b ↔ r a b = true`) has a total
+    selector, then every `r : ℕ → Bool` takes the value `true` somewhere or is `false` everywhere (the
+    limited principle of omniscience); one way. The reduction reads the selector at `0` of the step
+    `r a b = r b`. -/
+theorem lpo_of_selectedTotal_nat_boolStep
+    (h : ∀ r : ℕ → ℕ → Bool, (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).SelectedTotal) :
+    ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false := by
+  intro r
+  obtain ⟨f, hf⟩ := h (fun _ b => r b)
+  cases hr : r (f 0)
+  · exact Or.inr fun n => by
+      cases hn : r n
+      · rfl
+      · exact absurd (show r (f 0) = true from hf 0 ⟨n, hn⟩) (by rw [hr]; decide)
+  · exact Or.inl ⟨f 0, hr⟩
+
 /-- `Statement:` a step given by a function `f` (`step a b ↔ b = f a`) has the total selector `f`. -/
 theorem selectedTotal_of_fun (f : α → α) (h : ∀ a b, M.step a b ↔ b = f a) : M.SelectedTotal :=
   ⟨f, fun a _ => (h a (f a)).2 rfl⟩
@@ -550,6 +631,23 @@ theorem overTrichotomy_of_option [DecidableEq α] (f : α → Option α)
     · subst heq
       exact Or.inr (Or.inl ⟨(h _ _).2 hf,
         fun c hc => (Option.some_injective _ (hf.symm.trans ((h _ c).1 hc))).symm⟩)
+
+/-- `Statement:` if the trichotomy holds at every point of every motion on `ℕ` with a `Bool`-valued
+    step (`step a b ↔ r a b = true`), then every `r : ℕ → Bool` takes the value `true` somewhere or is
+    `false` everywhere (the limited principle of omniscience); one way. `Reading:` `ℕ` has decidable
+    equality, so what the uniform form costs here is the search over the carrier. -/
+theorem lpo_of_trichotomy_nat_boolStep
+    (H : ∀ r : ℕ → ℕ → Bool, ∀ y,
+      (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y) :
+    ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false := by
+  intro r
+  rcases H (fun _ b => r b) 0 with h | ⟨hs, _⟩ | ⟨b, hb, _⟩
+  · exact Or.inr fun n => by
+      cases hn : r n
+      · rfl
+      · exact absurd hn (h n)
+  · exact Or.inl ⟨0, hs⟩
+  · exact Or.inl ⟨b, hb⟩
 
 /-- `Statement:` if `y` has at most one successor and steps to itself, `y` steps to itself only; no
     order is used. `Reading:` the order-free trap beside § XII's order traps. -/
@@ -1597,6 +1695,80 @@ theorem exists_fanIn_ofFun_of_not_injective (g : α → α) (h : ¬ Function.Inj
     by_contra hne
     exact hn ⟨g b, a, b, hne, hab.symm, rfl⟩
 
+/-- `Statement:` on `Bool`, if `g` is not one-to-one, some point of `ofFun g` has fan-in; by cases on
+    the two values of `g`. -/
+theorem exists_fanIn_bool (g : Bool → Bool) (h : ¬ Function.Injective g) :
+    ∃ y, (ofFun g).FanIn y := by
+  cases h1 : g true <;> cases h2 : g false
+  · exact ⟨false, true, false, by decide, h1.symm, h2.symm⟩
+  · refine absurd (fun a b hab => ?_) h
+    cases a <;> cases b
+    · rfl
+    · rw [h1, h2] at hab; exact absurd hab (by decide)
+    · rw [h1, h2] at hab; exact absurd hab (by decide)
+    · rfl
+  · refine absurd (fun a b hab => ?_) h
+    cases a <;> cases b
+    · rfl
+    · rw [h1, h2] at hab; exact absurd hab (by decide)
+    · rw [h1, h2] at hab; exact absurd hab (by decide)
+    · rfl
+  · exact ⟨true, true, false, by decide, h1.symm, h2.symm⟩
+
+/-- `Statement:` if, for every `g : ℕ → ℕ`, not one-to-one gives a point of `ofFun g` with fan-in, then
+    for every `r : ℕ → Bool`, `¬¬ (∃ n, r n = true)` gives `∃ n, r n = true` (Markov's principle); one
+    way. The reduction uses `g n = 0` once `r` has taken the value `true` at or below `n`, and
+    `g n = n + 1` before. -/
+theorem mp_of_exists_fanIn_nat
+    (H : ∀ g : ℕ → ℕ, ¬ Function.Injective g → ∃ y, (ofFun g).FanIn y) :
+    ∀ r : ℕ → Bool, ¬ ¬ (∃ n, r n = true) → ∃ n, r n = true := by
+  intro r hnn
+  obtain ⟨fired, hf0, hfs⟩ : ∃ f : ℕ → Bool, f 0 = r 0 ∧ ∀ m, f (m + 1) = (f m || r (m + 1)) :=
+    ⟨fun n => Nat.rec (motive := fun _ => Bool) (r 0) (fun m acc => acc || r (m + 1)) n, rfl,
+      fun _ => rfl⟩
+  have fired_iff : ∀ n, fired n = true ↔ ∃ k, k ≤ n ∧ r k = true := by
+    intro n
+    induction n with
+    | zero =>
+      rw [hf0]
+      refine ⟨fun h => ⟨0, le_rfl, h⟩, fun ⟨k, hk, h⟩ => ?_⟩
+      obtain rfl : k = 0 := Nat.le_zero.1 hk
+      exact h
+    | succ m ih =>
+      rw [hfs, Bool.or_eq_true]
+      constructor
+      · rintro (h | h)
+        · obtain ⟨k, hk, hr⟩ := ih.1 h; exact ⟨k, Nat.le_succ_of_le hk, hr⟩
+        · exact ⟨m + 1, le_rfl, h⟩
+      · rintro ⟨k, hk, hr⟩
+        rcases Nat.lt_or_ge k (m + 1) with hlt | hge
+        · exact Or.inl (ih.2 ⟨k, Nat.le_of_lt_succ hlt, hr⟩)
+        · obtain rfl : k = m + 1 := Nat.le_antisymm hk hge
+          exact Or.inr hr
+  obtain ⟨g, hg⟩ : ∃ g : ℕ → ℕ, ∀ n, g n = bif fired n then 0 else n + 1 := ⟨_, fun _ => rfl⟩
+  have hni : ¬ Function.Injective g := by
+    intro hinj
+    apply hnn
+    rintro ⟨k, hk⟩
+    have h1 : fired k = true := (fired_iff k).2 ⟨k, le_rfl, hk⟩
+    have h2 : fired (k + 1) = true := (fired_iff (k + 1)).2 ⟨k, by omega, hk⟩
+    have hgk : g k = g (k + 1) := by rw [hg, hg, h1, h2]; rfl
+    have := hinj hgk
+    omega
+  obtain ⟨y, a, b, hab, ha, hb⟩ := H g hni
+  have e : g a = g b := (show y = g a from ha).symm.trans (show y = g b from hb)
+  cases hfa : fired a
+  · cases hfb : fired b
+    · exfalso
+      have e' : a + 1 = b + 1 := by
+        rw [hg, hg, hfa, hfb] at e
+        exact e
+      exact hab (by omega)
+    · obtain ⟨k, -, hk⟩ := (fired_iff b).1 hfb
+      exact ⟨k, hk⟩
+  · obtain ⟨k, -, hk⟩ := (fired_iff a).1 hfa
+    exact ⟨k, hk⟩
+
 /-- `Statement:` if `y` has fan-in, some step into `y` starts elsewhere. -/
 theorem not_noEntry_of_fanIn {y : α} (h : M.FanIn y) : ¬ ∀ a, M.step a y → a = y :=
   fun hF => let ⟨a, b, hab, ha, hb⟩ := h; hab ((hF a ha).trans (hF b hb).symm)
@@ -1948,6 +2120,362 @@ example : let s : Setoid (Fin 3) := Setoid.ker fun x : Fin 3 => decide (x = 2)
 
 end Motion
 
+/-! ### § XIX. Maps of motions with the UP leg: strict, lax, and the back clause -/
+
+namespace Motion
+
+variable {α β γ δ : Type*}
+
+/-- `Statement:` `f` carries every UP value at `x` in `M` to an UP value at `f x` in `N`. `Reading:`
+    the lax square of Cockett and Lack, TCS 270 (2002), § 2.1.4, p. 230 (`upLax_iff_le`). -/
+def UpLax (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
+  ∀ x y, y ∈ M.up x → f y ∈ N.up (f x)
+
+/-- `Statement:` UP at `f x` in `N` is UP at `x` in `M` mapped by `f`, at every `x`. `Reading:` the
+    UP square commutes in Par. -/
+def UpStrict (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
+  ∀ x, N.up (f x) = (M.up x).map f
+
+/-- `Statement:` every step out of `f a` in `N` is the image under `f` of a step out of `a` in `M`.
+    `Reading:` with step preservation, Rutten's homomorphism of transition systems, TCS 249 (2000),
+    p. 10, conditions 1–2 ("functional bisimulations", p. 13). -/
+def StepBack (M : Motion α) (N : Motion β) (f : α → β) : Prop :=
+  ∀ a c, N.step (f a) c → ∃ b, M.step a b ∧ f b = c
+
+-- Statement: `StepBack` is `Relation.Fibration` of the reversed steps, by `Iff.rfl`.
+example (M : Motion α) (N : Motion β) (f : α → β) :
+    StepBack M N f ↔ Relation.Fibration M.reverse.step N.reverse.step f := Iff.rfl
+
+/-- `Statement:` a strict map of motions: a map carrying steps to steps, with `UpStrict`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: a Mathlib `RelHom` on the OVER leg paired with a commuting
+-- square on the partial UP leg; Mathlib has the first, not the pair.
+structure Hom (M : Motion α) (N : Motion β) where
+  /-- The underlying map. -/
+  toFun : α → β
+  /-- Steps go to steps. -/
+  map_step : ∀ {a b}, M.step a b → N.step (toFun a) (toFun b)
+  /-- The UP square commutes. -/
+  map_up : UpStrict M N toFun
+
+/-- `Statement:` a lax map of motions: a map carrying steps to steps, with `UpLax`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: as `Motion.Hom`, with the UP square lax in the restriction
+-- order.
+structure LaxHom (M : Motion α) (N : Motion β) where
+  /-- The underlying map. -/
+  toFun : α → β
+  /-- Steps go to steps. -/
+  map_step : ∀ {a b}, M.step a b → N.step (toFun a) (toFun b)
+  /-- UP values go to UP values. -/
+  map_up : UpLax M N toFun
+
+variable {M : Motion α} {N : Motion β} {P : Motion γ}
+
+/-- `Statement:` `UpLax` iff, at every `x`, UP at `x` mapped by `f` is `≤` UP at `f x` in `Part`'s
+    order; both directions. -/
+theorem upLax_iff_le (f : α → β) : UpLax M N f ↔ ∀ x, (M.up x).map f ≤ N.up (f x) := by
+  constructor
+  · intro h x z hz
+    obtain ⟨y, hy, rfl⟩ := (Part.mem_map_iff _).1 hz
+    exact h x y hy
+  · intro h x y hy
+    exact h x (f y) ((Part.mem_map_iff _).2 ⟨y, hy, rfl⟩)
+
+/-- `Statement:` `UpStrict` gives `UpLax`; one way (`lax_not_strict` example below). -/
+theorem upStrict_upLax {f : α → β} (h : UpStrict M N f) : UpLax M N f :=
+  fun x y hy => by rw [h x]; exact Part.mem_map f hy
+
+/-- `Statement:` `UpStrict` iff `UpLax` and, at every `x`, UP defined at `f x` in `N` gives UP defined
+    at `x` in `M`; both directions. -/
+theorem upStrict_iff {f : α → β} :
+    UpStrict M N f ↔ UpLax M N f ∧ ∀ x, (N.up (f x)).Dom → (M.up x).Dom := by
+  constructor
+  · intro h
+    refine ⟨upStrict_upLax h, fun x hd => ?_⟩
+    rw [h x] at hd
+    exact hd
+  · rintro ⟨hl, hd⟩ x
+    apply Part.ext
+    intro z
+    constructor
+    · intro hz
+      have hdom : (M.up x).Dom := hd x (Part.dom_iff_mem.2 ⟨z, hz⟩)
+      have hy := Part.get_mem hdom
+      rw [Part.mem_unique hz (hl x _ hy)]
+      exact Part.mem_map f hy
+    · intro hz
+      obtain ⟨y, hy, rfl⟩ := (Part.mem_map_iff _).1 hz
+      exact hl x y hy
+
+/-- `Statement:` if UP of `M` is total, `UpLax` gives `UpStrict`. -/
+theorem upStrict_of_upLax_of_upTotal {f : α → β} (hM : M.UpTotal) (h : UpLax M N f) :
+    UpStrict M N f :=
+  upStrict_iff.2 ⟨h, fun x _ => hM x⟩
+
+/-- `Statement:` a strict map is a lax map with the same underlying map. -/
+def Hom.toLax (φ : Hom M N) : LaxHom M N := ⟨φ.toFun, φ.map_step, upStrict_upLax φ.map_up⟩
+
+/-- `Statement:` if UP of `M` is total, a lax map is a strict map with the same underlying map. -/
+def LaxHom.toHomOfUpTotal (hM : M.UpTotal) (φ : LaxHom M N) : Hom M N :=
+  ⟨φ.toFun, φ.map_step, upStrict_of_upLax_of_upTotal hM φ.map_up⟩
+
+/-- `Statement:` the identity is a strict map. -/
+def Hom.id (M : Motion α) : Hom M M :=
+  ⟨fun x => x, fun h => h, fun _ => (Part.map_id' (fun _ => rfl) _).symm⟩
+
+/-- `Statement:` strict maps compose. -/
+def Hom.comp (ψ : Hom N P) (φ : Hom M N) : Hom M P :=
+  ⟨ψ.toFun ∘ φ.toFun, fun h => ψ.map_step (φ.map_step h), fun x => by
+    show P.up (ψ.toFun (φ.toFun x)) = _
+    rw [ψ.map_up, φ.map_up, Part.map_map]⟩
+
+/-- `Statement:` the identity is a left unit, by `rfl`. -/
+theorem Hom.id_comp (φ : Hom M N) : (Hom.id N).comp φ = φ := rfl
+
+/-- `Statement:` the identity is a right unit, by `rfl`. -/
+theorem Hom.comp_id (φ : Hom M N) : φ.comp (Hom.id M) = φ := rfl
+
+/-- `Statement:` composition is associative, by `rfl`. -/
+theorem Hom.comp_assoc {Q : Motion δ} (χ : Hom P Q) (ψ : Hom N P) (φ : Hom M N) :
+    (χ.comp ψ).comp φ = χ.comp (ψ.comp φ) := rfl
+
+/-- `Statement:` the identity is a lax map. -/
+def LaxHom.id (M : Motion α) : LaxHom M M := ⟨fun x => x, fun h => h, fun _ _ h => h⟩
+
+/-- `Statement:` lax maps compose. -/
+def LaxHom.comp (ψ : LaxHom N P) (φ : LaxHom M N) : LaxHom M P :=
+  ⟨ψ.toFun ∘ φ.toFun, fun h => ψ.map_step (φ.map_step h),
+    fun x y hy => ψ.map_up _ _ (φ.map_up x y hy)⟩
+
+/-- `Statement:` `toLax` preserves composition, by `rfl`. -/
+theorem Hom.toLax_comp (ψ : Hom N P) (φ : Hom M N) : (ψ.comp φ).toLax = ψ.toLax.comp φ.toLax := rfl
+
+/-- `Statement:` a strict map is, with the same underlying map, a strict map of the reverses. -/
+def Hom.reverse (φ : Hom M N) : Hom M.reverse N.reverse := ⟨φ.toFun, fun h => φ.map_step h, φ.map_up⟩
+
+/-- `Statement:` reversing a strict map twice returns it, by `rfl`. -/
+theorem Hom.reverse_reverse (φ : Hom M N) : φ.reverse.reverse = φ := rfl
+
+/-- `Statement:` reversal preserves composition, by `rfl`. -/
+theorem Hom.reverse_comp (ψ : Hom N P) (φ : Hom M N) :
+    (ψ.comp φ).reverse = ψ.reverse.comp φ.reverse := rfl
+
+/-- `Statement:` if UP is the identity on both motions, a relation homomorphism (Mathlib `RelHom`) of
+    the steps is a strict map. -/
+def ofRelHomIdUp (hM : ∀ x, M.up x = Part.some x) (hN : ∀ y, N.up y = Part.some y)
+    (φ : M.step →r N.step) : Hom M N :=
+  ⟨φ, fun h => φ.map_rel h, fun x => by rw [hM, hN, Part.map_some]⟩
+
+/-- `Statement:` `c` semiconjugates `A` to `B` iff some strict map from `ofFun A` to `ofFun B` has
+    underlying map `c`; both directions. -/
+theorem semiconj_iff_exists_hom (A : α → α) (B : β → β) (c : α → β) :
+    Function.Semiconj c A B ↔ ∃ φ : Hom (ofFun A) (ofFun B), φ.toFun = c := by
+  rw [semiconj_iff_exists_relHom]
+  constructor
+  · rintro ⟨φ, rfl⟩; exact ⟨ofRelHomIdUp (fun _ => rfl) (fun _ => rfl) φ, rfl⟩
+  · rintro ⟨φ, rfl⟩; exact ⟨⟨φ.toFun, φ.map_step⟩, rfl⟩
+
+/-- `Statement:` every strict map from `ofFun A` to `ofFun B` has the back clause. -/
+theorem stepBack_ofFun {A : α → α} {B : β → β} (φ : Hom (ofFun A) (ofFun B)) :
+    StepBack (ofFun A) (ofFun B) φ.toFun :=
+  fun a c (hc : c = B (φ.toFun a)) =>
+    ⟨A a, rfl, (φ.map_step (a := a) (b := A a) rfl).symm ▸ hc.symm⟩
+
+section transfer
+variable (φ : LaxHom M N)
+include φ
+
+/-- `Statement:` along a lax map, a landing goes to a landing. -/
+theorem LaxHom.isLanding {y : α} (hy : M.IsLanding y) : N.IsLanding (φ.toFun y) := φ.map_up y y hy
+
+/-- `Statement:` along a lax map, if `M` has a landing, `N` has one. -/
+theorem LaxHom.hasLanding : M.HasLanding → N.HasLanding := fun ⟨_, hy⟩ => ⟨_, φ.isLanding hy⟩
+
+/-- `Statement:` along a lax map, if OVER exists from a landing of `M`, it exists from a landing of `N`. -/
+theorem LaxHom.overAtLanding : M.OverAtLanding → N.OverAtLanding :=
+  fun ⟨_, _, hy, hs⟩ => ⟨_, _, φ.isLanding hy, φ.map_step hs⟩
+
+/-- `Statement:` along an onto lax map, if UP of `M` is total, UP of `N` is total. -/
+theorem LaxHom.upTotal (hs : Function.Surjective φ.toFun) (hM : M.UpTotal) : N.UpTotal := by
+  intro y
+  obtain ⟨x, rfl⟩ := hs y
+  exact Part.dom_iff_mem.2 ⟨_, φ.map_up x _ (Part.get_mem (hM x))⟩
+
+/-- `Statement:` along a one-to-one lax map, if the corner of `M` fires, the corner of `N` fires. -/
+theorem LaxHom.corner (hi : Function.Injective φ.toFun) : M.Corner → N.Corner :=
+  fun ⟨_, b, z, hy, hs, hz, hzb⟩ =>
+    ⟨_, _, _, φ.isLanding hy, φ.map_step hs, φ.map_up b z hz, fun e => hzb (hi e)⟩
+
+/-- `Statement:` along a one-to-one lax map, if `M` loops, `N` loops. -/
+theorem LaxHom.loop (hi : Function.Injective φ.toFun) : M.Loop → N.Loop :=
+  fun ⟨y, b, hy, hs, hby, hyb⟩ =>
+    ⟨_, _, φ.isLanding hy, φ.map_step hs, fun e => hby (hi e), φ.map_up b y hyb⟩
+
+/-- `Statement:` along a one-to-one lax map, if `M` climbs, `N` climbs. -/
+theorem LaxHom.climb (hi : Function.Injective φ.toFun) : M.Climb → N.Climb :=
+  fun ⟨_, b, z, hy, hs, hz, hzb, hzy⟩ =>
+    ⟨_, _, _, φ.isLanding hy, φ.map_step hs, φ.map_up b z hz, fun e => hzb (hi e),
+      fun e => hzy (hi e)⟩
+
+/-- `Statement:` along a one-to-one lax map, if `M` has an elbow, `N` has one. -/
+theorem LaxHom.elbow (hi : Function.Injective φ.toFun) : M.Elbow → N.Elbow :=
+  fun ⟨x, y, _, hy, hyx, hs⟩ => ⟨_, _, _, φ.map_up x y hy, fun e => hyx (hi e), φ.map_step hs⟩
+
+/-- `Statement:` along a one-to-one lax map, if `y` steps elsewhere, its image steps elsewhere. -/
+theorem LaxHom.leavesAt (hi : Function.Injective φ.toFun) {y : α} :
+    M.LeavesAt y → N.LeavesAt (φ.toFun y) :=
+  fun ⟨_, hb, hne⟩ => ⟨_, φ.map_step hb, fun e => hne (hi e)⟩
+
+/-- `Statement:` along a one-to-one lax map, if `y` has fan-in, its image has fan-in. -/
+theorem LaxHom.fanIn (hi : Function.Injective φ.toFun) {y : α} : M.FanIn y → N.FanIn (φ.toFun y) :=
+  fun ⟨_, _, hab, ha, hb⟩ => ⟨_, _, fun e => hab (hi e), φ.map_step ha, φ.map_step hb⟩
+
+/-- `Statement:` along a lax map, if no step leaves the image of `y`, no step leaves `y`. -/
+theorem LaxHom.noStepAt_of_image {y : α} : N.NoStepAt (φ.toFun y) → M.NoStepAt y :=
+  fun h _ hb => h _ (φ.map_step hb)
+
+/-- `Statement:` along a lax map with the back clause, if no step leaves `y`, no step leaves its image. -/
+theorem LaxHom.noStepAt (hb : StepBack M N φ.toFun) {y : α} :
+    M.NoStepAt y → N.NoStepAt (φ.toFun y) :=
+  fun h c hc => let ⟨_, hs, _⟩ := hb y c hc; h _ hs
+
+/-- `Statement:` along a lax map with the back clause, if `y` steps to itself only, so does its image. -/
+theorem LaxHom.selfOnlyAt (hb : StepBack M N φ.toFun) {y : α} :
+    M.SelfOnlyAt y → N.SelfOnlyAt (φ.toFun y) :=
+  fun ⟨h1, h2⟩ => ⟨φ.map_step h1, fun c hc => let ⟨b, hs, e⟩ := hb y c hc; e ▸ (h2 b hs) ▸ rfl⟩
+
+/-- `Statement:` along a lax map with the back clause, if the image of `y` steps elsewhere, `y` steps
+    elsewhere. -/
+theorem LaxHom.leavesAt_of_image (hb : StepBack M N φ.toFun) {y : α} :
+    N.LeavesAt (φ.toFun y) → M.LeavesAt y :=
+  fun ⟨c, hc, hne⟩ => let ⟨b, hs, e⟩ := hb y c hc; ⟨b, hs, fun h => hne (e ▸ h ▸ rfl)⟩
+
+/-- `Statement:` along a one-to-one lax map with the back clause, if the image of `y` steps to itself
+    only, `y` steps to itself only. -/
+theorem LaxHom.selfOnlyAt_of_image (hb : StepBack M N φ.toFun) (hi : Function.Injective φ.toFun)
+    {y : α} : N.SelfOnlyAt (φ.toFun y) → M.SelfOnlyAt y :=
+  fun ⟨h1, h2⟩ =>
+    let ⟨_, hs, e⟩ := hb y _ h1
+    ⟨(hi e) ▸ hs, fun _ hc => hi (h2 _ (φ.map_step hc))⟩
+
+/-- `Statement:` along a lax map with the back clause, if `x` arrives at `y`, the image of `x` arrives
+    at the image of `y`. -/
+theorem LaxHom.arrives (hb : StepBack M N φ.toFun) {y x : α} (h : M.Arrives y x) :
+    N.Arrives (φ.toFun y) (φ.toFun x) := by
+  induction h with
+  | here => exact Arrives.here
+  | next hex _ ih =>
+    obtain ⟨b, hb'⟩ := hex
+    exact Arrives.next ⟨_, φ.map_step hb'⟩ fun c hc => by
+      obtain ⟨b, hs, rfl⟩ := hb _ c hc
+      exact ih b hs
+
+end transfer
+
+/-- `Statement:` along a strict map, if UP of `N` is total, UP of `M` is total. -/
+theorem Hom.upTotal_of (φ : Hom M N) (hN : N.UpTotal) : M.UpTotal := fun x => by
+  have := hN (φ.toFun x); rw [φ.map_up] at this; exact this
+
+/-- `Statement:` along a one-to-one strict map, if the image of `y` is a landing, `y` is a landing. -/
+theorem Hom.isLanding_of_image (φ : Hom M N) (hi : Function.Injective φ.toFun) {y : α}
+    (h : N.IsLanding (φ.toFun y)) : M.IsLanding y := by
+  unfold IsLanding at h; rw [φ.map_up] at h
+  obtain ⟨z, hz, e⟩ := (Part.mem_map_iff _).1 h
+  exact hi e ▸ hz
+
+-- Statement: NO-GO, lax is not strict: on `Unit`, UP undefined in the source and the identity in the
+-- target; the identity map is lax and not strict, and is one-to-one, and `()` is not a landing of the
+-- source while its image is a landing of the target.
+example : let M : Motion Unit :=
+      ⟨fun _ => Part.none, fun _ _ h => (Part.notMem_none _ h).elim, fun _ _ => False⟩
+    UpLax M (ofFun id) id ∧ ¬ UpStrict M (ofFun id) id ∧ ¬ M.IsLanding () ∧
+      (ofFun (id : Unit → Unit)).IsLanding () := by
+  intro M
+  refine ⟨fun _ _ h => (Part.notMem_none _ h).elim, fun h => ?_, Part.notMem_none _, Part.mem_some _⟩
+  have hd : ((ofFun (id : Unit → Unit)).up ()).Dom := trivial
+  rw [h ()] at hd
+  exact hd
+
+-- Statement: NO-GO, the back clause is not carried by reversal: from `Bool` with OVER `_ → false` to
+-- `Unit` with every step, the constant map has the back clause, and between the reverses it does not.
+example : let M : Motion Bool := ofTotal id (fun _ => rfl) (fun _ b => b = false)
+    let N : Motion Unit := ofTotal id (fun _ => rfl) (fun _ _ => True)
+    StepBack M N (fun _ => ()) ∧ ¬ StepBack M.reverse N.reverse (fun _ => ()) := by
+  intro M N
+  refine ⟨fun _ _ _ => ⟨false, rfl, rfl⟩, fun h => ?_⟩
+  obtain ⟨b, hb, -⟩ := h true () trivial
+  cases (hb : true = false)
+
+-- Statement: NO-GO, the corner and stepping elsewhere are not carried forward without one-to-one: the
+-- constant strict map from `Bool` (UP constant `true`, OVER `true → false`) to `Unit` (UP the identity,
+-- every step); the source fires the corner and `true` steps elsewhere, the target does neither, and
+-- `false`, not a landing of the source, goes to a landing.
+example : let M := ofTotal (fun _ : Bool => true) (fun _ => rfl) (fun a b => a = true ∧ b = false)
+    let N := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)
+    ∃ φ : Hom M N, M.Corner ∧ ¬ N.Corner ∧ M.LeavesAt true ∧ ¬ N.LeavesAt (φ.toFun true) ∧
+      ¬ M.IsLanding false ∧ N.IsLanding (φ.toFun false) := by
+  intro M N
+  refine ⟨⟨fun _ => (), fun _ => trivial, fun _ => ?_⟩,
+    ⟨true, false, true, Part.mem_some _, ⟨rfl, rfl⟩, Part.mem_some _, by decide⟩,
+    fun ⟨_, _, _, _, _, _, h⟩ => h rfl, ⟨false, ⟨rfl, rfl⟩, by decide⟩,
+    fun h => by obtain ⟨_, _, h⟩ := h; exact h rfl,
+    fun h => absurd (Part.mem_some_iff.1 h) (by decide), Part.mem_some _⟩
+  show Part.some () = (Part.some true).map _
+  rw [Part.map_some]
+
+-- Statement: NO-GO, a climb is not carried forward without one-to-one and a loop is not reflected: the
+-- strict map `0, 2 ↦ true`, `1 ↦ false` from `Fin 3` (UP `1 ↦ 2`, else fixed; OVER `0 → 1`), which
+-- climbs and does not loop, to `Bool` (UP constant `true`, OVER `true → false`), which loops and, on
+-- two points, does not climb (`climb_three`).
+example : let M := (ofTotal (fun x : Fin 3 => if x = 1 then 2 else x) (by decide)
+      (fun a b => a = 0 ∧ b = 1))
+    let N := ofTotal (fun _ : Bool => true) (fun _ => rfl) (fun a b => a = true ∧ b = false)
+    ∃ φ : Hom M N, M.Climb ∧ ¬ M.Loop ∧ N.Loop ∧ ¬ N.Climb ∧ φ.toFun 1 = false := by
+  intro M N
+  refine ⟨⟨fun x => decide (x ≠ 1), ?_, ?_⟩,
+    ⟨0, 1, 2, Part.mem_some_iff.2 (by decide), ⟨rfl, rfl⟩, Part.mem_some_iff.2 (by decide),
+      by decide, by decide⟩, ?_,
+    ⟨true, false, Part.mem_some _, ⟨rfl, rfl⟩, by decide, Part.mem_some _⟩, ?_, rfl⟩
+  · rintro a b ⟨rfl, rfl⟩; exact ⟨rfl, rfl⟩
+  · intro x
+    show Part.some true = (Part.some (if x = 1 then 2 else x)).map _
+    rw [Part.map_some]; congr 1; revert x; decide
+  · rintro ⟨y, b, hy, ⟨rfl, rfl⟩, -, hyb⟩
+    exact absurd (Part.mem_some_iff.1 hyb) (by decide)
+  · intro h
+    obtain ⟨y, b, z, hyb, hbz, hzy⟩ := N.climb_three h
+    revert hyb hbz hzy; revert y b z; decide
+
+-- Statement: NO-GO, arrival is not carried forward without the back clause: the identity from the step
+-- `true → false` on `Bool` to the steps out of `true`; `true` arrives at `false` in the source, and in
+-- the target the run staying at `true` never visits `false`.
+example : let M : Motion Bool := ofTotal id (fun _ => rfl) (fun a b => a = true ∧ b = false)
+    let N : Motion Bool := ofTotal id (fun _ => rfl) (fun a _ => a = true)
+    ∃ φ : Hom M N, M.Arrives false true ∧ ¬ N.Arrives (φ.toFun false) (φ.toFun true) := by
+  intro M N
+  refine ⟨⟨id, fun h => h.1, fun _ => rfl⟩,
+    Arrives.next ⟨false, rfl, rfl⟩ (fun b ⟨_, hb⟩ => hb ▸ Arrives.here), fun h => ?_⟩
+  obtain ⟨n, hn⟩ := exists_run_eq_of_arrives h (fun _ => true) (fun _ => rfl) rfl
+  exact absurd hn (by decide)
+
+-- Statement: CONTROL, `Unit` with the identity UP and every step: every motion has a lax map into it,
+-- and a strict map into it exists iff UP of the source is total; both directions. So a map existing
+-- carries no content without one-to-one or the back clause.
+example (M : Motion α) :
+    Nonempty (LaxHom M (ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True))) ∧
+      (Nonempty (Hom M (ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True))) ↔ M.UpTotal) :=
+  let φ : LaxHom M (ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)) :=
+    ⟨fun _ => (), fun _ => trivial, fun _ _ _ => Part.mem_some _⟩
+  ⟨⟨φ⟩, fun ⟨ψ⟩ => ψ.upTotal_of (fun _ => trivial), fun h => ⟨φ.toHomOfUpTotal h⟩⟩
+
+-- Statement: NO-GO, a landing is not reflected without onto: a strict map from a motion on `Empty`,
+-- which has no landing, into `Unit` with the identity UP, which has one.
+example : ∃ (M : Motion Empty) (_ : Hom M (ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True))),
+    ¬ M.HasLanding ∧ (ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)).HasLanding :=
+  ⟨ofTotal id (fun _ => rfl) (fun _ _ => False), ⟨Empty.elim, fun {a} _ => a.elim, fun x => x.elim⟩,
+    fun ⟨y, _⟩ => y.elim, ⟨(), Part.mem_some _⟩⟩
+
+end Motion
+
 end ZeroParadox
 
 section PurityCheck
@@ -2192,5 +2720,57 @@ open ZeroParadox
 #print axioms Motion.upCompat_of_up_eq_some
 #print axioms Motion.quotUp_eq_quot
 #print axioms Motion.upCompat_ofTotal
+#print axioms Motion.em_of_corner_loop_or_climb
+#print axioms everyStepCovered_of_finite
+#print axioms botCovered_of_finite
+#print axioms Motion.three_of_not_runClose
+#print axioms Motion.four_of_not_runClose
+#print axioms Motion.lpo_of_selectedTotal_nat_boolStep
+#print axioms Motion.lpo_of_trichotomy_nat_boolStep
+#print axioms Motion.exists_fanIn_bool
+#print axioms Motion.mp_of_exists_fanIn_nat
+#print axioms Motion.UpLax
+#print axioms Motion.UpStrict
+#print axioms Motion.StepBack
+#print axioms Motion.Hom
+#print axioms Motion.LaxHom
+#print axioms Motion.upLax_iff_le
+#print axioms Motion.upStrict_upLax
+#print axioms Motion.upStrict_iff
+#print axioms Motion.upStrict_of_upLax_of_upTotal
+#print axioms Motion.Hom.toLax
+#print axioms Motion.LaxHom.toHomOfUpTotal
+#print axioms Motion.Hom.id
+#print axioms Motion.Hom.comp
+#print axioms Motion.Hom.id_comp
+#print axioms Motion.Hom.comp_id
+#print axioms Motion.Hom.comp_assoc
+#print axioms Motion.LaxHom.id
+#print axioms Motion.LaxHom.comp
+#print axioms Motion.Hom.toLax_comp
+#print axioms Motion.Hom.reverse
+#print axioms Motion.Hom.reverse_reverse
+#print axioms Motion.Hom.reverse_comp
+#print axioms Motion.ofRelHomIdUp
+#print axioms Motion.semiconj_iff_exists_hom
+#print axioms Motion.stepBack_ofFun
+#print axioms Motion.LaxHom.isLanding
+#print axioms Motion.LaxHom.hasLanding
+#print axioms Motion.LaxHom.overAtLanding
+#print axioms Motion.LaxHom.upTotal
+#print axioms Motion.LaxHom.corner
+#print axioms Motion.LaxHom.loop
+#print axioms Motion.LaxHom.climb
+#print axioms Motion.LaxHom.elbow
+#print axioms Motion.LaxHom.leavesAt
+#print axioms Motion.LaxHom.fanIn
+#print axioms Motion.LaxHom.noStepAt_of_image
+#print axioms Motion.LaxHom.noStepAt
+#print axioms Motion.LaxHom.selfOnlyAt
+#print axioms Motion.LaxHom.leavesAt_of_image
+#print axioms Motion.LaxHom.selfOnlyAt_of_image
+#print axioms Motion.LaxHom.arrives
+#print axioms Motion.Hom.upTotal_of
+#print axioms Motion.Hom.isLanding_of_image
 
 end PurityCheck

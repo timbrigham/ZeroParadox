@@ -204,6 +204,7 @@ example : ∃ M : ZeroParadox.Motion (Fin 4),
 #check @ZeroParadox.Motion.corner_iff_loop_or_climb -- Statement: with decidable equality, the corner fires iff the motion loops or climbs; both directions
 #check @ZeroParadox.Motion.corner_iff_loop_or_climb_classical -- Statement: the same with no binder, proved with `classical`
 #check @ZeroParadox.Motion.not_not_loop_or_climb_of_corner -- Statement: with no binder, a corner gives `¬¬ (Loop ∨ Climb)`
+#check @ZeroParadox.Motion.em_of_corner_loop_or_climb -- Statement: if a corner gives a loop or a climb on every motion on every `β : Type`, excluded middle holds (`[propext]`); so a choice-free proof of the binder-free twin's forward direction at `Type` would be a choice-free proof of excluded middle (ESSENTIAL on the premise of `ZeroParadox/Category/ChoiceCannotBe.lean` § IV)
 #check @ZeroParadox.UpAndOver.toMotion_climb    -- Statement: the die motion of an `UpAndOver` (UP its closure, OVER the covers) climbs
 #check @ZeroParadox.UpAndOver.toMotion_not_loop -- Statement: and does not loop, its legs agreeing (`toMotion_agree`, `not_loop_of_agree`)
 #check @ZeroParadox.UpAndOver.toMotion_ne_of_loop -- Statement: so a motion that loops is the die motion of no `UpAndOver`
@@ -575,6 +576,18 @@ example : ZeroParadox.BotCovered (WithBot (WithBot ℚ)) ∧
     | coe q =>
       exact hb'.2 (WithBot.bot_lt_coe (q - 1)) (WithBot.coe_lt_coe.2 (by linarith))
 #check @ZeroParadox.everyStepCovered_botCovered -- Statement: scope form, plus a point other than ⊥ of `α`, ⇒ cut; one way
+#check @ZeroParadox.everyStepCovered_of_finite  -- Statement: if `α` is a finite partial order, the scope form holds
+#check @ZeroParadox.botCovered_of_finite        -- Statement: if `α` is a finite partial order with ⊥ and a point other than ⊥ of `α`, the cut holds
+-- Reading: both measure `[propext, Classical.choice, Quot.sound]`. Not statement-carried (statement
+-- control axiom-free, measured 2026-10-28); the choice enters through Mathlib's well-foundedness of a
+-- finite order (`Finite.wellFounded_of_trans_of_irrefl` measures the same); no choice-free proof was
+-- found, and no reduction to a taboo was attempted, so the class is open between accidental and
+-- essential.
+-- Statement: CONTROL, infinite: `NNReal` has a point other than its ⊥ and no cut, so finiteness in
+-- `botCovered_of_finite` is not removable; `Unit` (finite, no cut, above) is the control for the
+-- point other than ⊥.
+example : (∃ a : NNReal, a ≠ ⊥) ∧ ¬ ZeroParadox.BotCovered NNReal :=
+  ⟨⟨1, one_ne_zero⟩, fun ⟨_, h⟩ => not_covBy h⟩
 #check @ZeroParadox.axb1_fails_everywhere_iff_dense -- Statement: if `α` is a preorder, then `α` is densely ordered iff no point of `α` has a first step (`∀ bot, ¬ HasFirstStep bot`); both directions. ZP-F's restatement (`ZeroParadox/Reals/OrderedField.lean`) of Mathlib's `denselyOrdered_iff_forall_not_covBy`
 -- Statement: if `α` is a partial order with ⊥ and has the cut, then `α` is not densely ordered; the
 -- converse is refuted at the `WithTop (WithTop NNReal)` example below.
@@ -832,6 +845,62 @@ example :
   omega
 #check @ZeroParadox.Motion.RunClosure           -- Statement: the run form: `s` is a run and its range has the shape
 #check @ZeroParadox.Motion.RunClosure.stageClosure -- Statement: run form ⇒ set form; one way
+#check @ZeroParadox.Motion.three_of_not_runClose -- Statement: if no stage of `s` is a landing and two stages differ in UP, the carrier has three distinct points (`[propext, Classical.choice, Quot.sound]`, the choice in a case split on definedness; not statement-carried, control measured 2026-10-28)
+#check @ZeroParadox.Motion.four_of_not_runClose -- Statement: with UP total, four distinct points (`[propext, Quot.sound]`)
+-- Statement: the bounds are met: on `Fin 3`, UP `0, 2 ↦ 2`, undefined at `1`, OVER `0 ↔ 1`, the run
+-- `0, 1, 0, …` is landing-free and its stages differ in UP, so `RunsClose` fails.
+example : ∃ M : ZeroParadox.Motion (Fin 3), ¬ M.RunsClose := by
+  let u : Fin 3 → Option (Fin 3) := fun x => if x = 1 then none else some 2
+  have hu : ∀ x y, y ∈ u x → y ∈ u y := by decide
+  refine ⟨ZeroParadox.Motion.ofOption u hu (fun a b => a ≠ b ∧ a ≠ 2 ∧ b ≠ 2), fun h => ?_⟩
+  let s : ℕ → Fin 3 := fun n => if n % 2 = 0 then 0 else 1
+  have hs : (ZeroParadox.Motion.ofOption u hu (fun a b => a ≠ b ∧ a ≠ 2 ∧ b ≠ 2)).IsRun s :=
+    fun n => by
+      rcases Nat.mod_two_eq_zero_or_one n with h | h
+      · have : (n + 1) % 2 = 1 := by omega
+        simp only [s, h, this]
+        show (0 : Fin 3) ≠ 1 ∧ (0 : Fin 3) ≠ 2 ∧ (1 : Fin 3) ≠ 2
+        decide
+      · have : (n + 1) % 2 = 0 := by omega
+        simp only [s, h, this]
+        show (1 : Fin 3) ≠ 0 ∧ (1 : Fin 3) ≠ 2 ∧ (0 : Fin 3) ≠ 2
+        decide
+  have hint : ∀ n, ¬ (ZeroParadox.Motion.ofOption u hu
+      (fun a b => a ≠ b ∧ a ≠ 2 ∧ b ≠ 2)).IsLanding (s n) := fun n hl => by
+    change s n ∈ Part.ofOption (u (s n)) at hl
+    rw [Part.mem_ofOption] at hl
+    rcases Nat.mod_two_eq_zero_or_one n with h | h <;> simp [s, u, h] at hl
+  have hc := (h s hs hint) 1 ⟨1, rfl⟩
+  have e : Part.ofOption (u 1) = Part.ofOption (u 0) := hc.2
+  have : (2 : Fin 3) ∈ Part.ofOption (u 0) := Part.mem_ofOption.2 rfl
+  rw [← e, Part.mem_ofOption] at this
+  exact absurd this (by decide)
+-- Statement: with UP total: on `Fin 4`, UP `0 ↦ 2`, `1 ↦ 3`, `2`, `3` fixed, OVER `0 ↔ 1`; `RunsClose`
+-- fails.
+example : ∃ M : ZeroParadox.Motion (Fin 4), M.UpTotal ∧ ¬ M.RunsClose := by
+  let r : Fin 4 → Fin 4 := fun x => if x = 0 then 2 else if x = 1 then 3 else x
+  have hr : ∀ x, r (r x) = r x := by decide
+  refine ⟨ZeroParadox.Motion.ofTotal r hr (fun a b => a ≠ b ∧ a.val < 2 ∧ b.val < 2),
+    ZeroParadox.Motion.ofTotal_upTotal _ _ _, fun h => ?_⟩
+  let s : ℕ → Fin 4 := fun n => if n % 2 = 0 then 0 else 1
+  have hs : (ZeroParadox.Motion.ofTotal r hr (fun a b => a ≠ b ∧ a.val < 2 ∧ b.val < 2)).IsRun s :=
+    fun n => by
+      rcases Nat.mod_two_eq_zero_or_one n with h | h
+      · have : (n + 1) % 2 = 1 := by omega
+        simp only [s, h, this]
+        show (0 : Fin 4) ≠ 1 ∧ (0 : Fin 4).val < 2 ∧ (1 : Fin 4).val < 2
+        decide
+      · have : (n + 1) % 2 = 0 := by omega
+        simp only [s, h, this]
+        show (1 : Fin 4) ≠ 0 ∧ (1 : Fin 4).val < 2 ∧ (0 : Fin 4).val < 2
+        decide
+  have hint : ∀ n, ¬ (ZeroParadox.Motion.ofTotal r hr
+      (fun a b => a ≠ b ∧ a.val < 2 ∧ b.val < 2)).IsLanding (s n) := fun n hl => by
+    have := Part.mem_some_iff.1 hl
+    rcases Nat.mod_two_eq_zero_or_one n with h | h <;> simp [s, r, h] at this
+  have hc := (h s hs hint) 1 ⟨1, rfl⟩
+  have e : Part.some (r 1) = Part.some (r 0) := hc.2
+  exact absurd (Part.some_inj.1 e) (by decide)
 -- Reading: the two faces below are co-witnesses of one shape; no identity between `Ordinal` and a
 -- machine's configurations is claimed, and no claim that an undefined closure is the corpus's pole.
 #check @ZeroParadox.ordinalTowerMotion          -- Statement: on `Ordinal`, UP `nfp (ω^·)`, OVER `a ↦ ω^a`
@@ -870,6 +939,14 @@ example (a : Ordinal.{u}) : ZeroParadox.ordinalSuccMotion.{u}.step a (Order.succ
     ZeroParadox.ordinalCornerStep a ∈ ZeroParadox.ordinalSuccMotion.{u}.up (Order.succ a) :=
   ⟨rfl, Part.mem_some _⟩
 #check @ZeroParadox.lt_ordinalCornerStep         -- Statement: it moves every ordinal strictly up
+-- Statement: CONTROL, finite: on a nonempty finite preorder no map moves every point strictly up (its
+-- iterates from a point would be strictly increasing, hence one-to-one on ℕ).
+example {α : Type} [Preorder α] [Finite α] [Nonempty α] (f : α → α) : ¬ ∀ x, x < f x := by
+  intro h
+  obtain ⟨x⟩ := ‹Nonempty α›
+  have hm : StrictMono (fun n => f^[n] x) := strictMono_nat_of_lt_succ fun n => by
+    rw [Function.iterate_succ_apply']; exact h _
+  exact not_finite_iff_infinite.2 (Infinite.of_injective _ hm.injective) ‹_›
 #check @ZeroParadox.ordinalCornerStep_iterate    -- Statement: iterated `n + 1` times from 0, ⊥ of `Ordinal`, it gives `ε_n`
 -- Statement: the `n`-th iterate from 0 is ⊥ of its own `Set.Ici`, and the `n + 1`-th is strictly
 -- above it.
@@ -1143,6 +1220,20 @@ example (h : ∀ (α : Type) (M : ZeroParadox.Motion α), M.SelectedData) :
 -- above) and excluded middle directly (`Motion.em_of_selectedData`, next line), the latter on Part A's
 -- own two classes `b = true ∨ p`, `b = false ∨ p`; an instance of theirs, not a generalization.
 #check @ZeroParadox.Motion.em_of_selectedData -- Statement: (a) on every motion on every `α : Type` ⇒ excluded middle, directly
+#check @ZeroParadox.Motion.lpo_of_selectedTotal_nat_boolStep -- Statement: (b) on every motion on `ℕ` with a `Bool`-valued step ⇒ the limited principle of omniscience (`[propext]`)
+-- Statement: CONTROL: (a) there is free: a `Bool`-valued step on `ℕ` has a data selector, `Nat.find`.
+example (r : ℕ → ℕ → Bool) :
+    (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b => r a b = true)).SelectedData :=
+  ⟨fun a h => ⟨Nat.find (p := fun b => r a b = true) h, Nat.find_spec (p := fun b => r a b = true) h⟩⟩
+-- Statement: the same reduction lands on `ZeroParadox.LPO` (`ZeroParadox/Category/LawvereTaboo.lean`
+-- § V).
+example (h : ∀ r : ℕ → ℕ → Bool,
+    (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b => r a b = true)).SelectedTotal) :
+    ZeroParadox.LPO :=
+  ZeroParadox.Motion.lpo_of_selectedTotal_nat_boolStep h
+-- Reading: on `ℕ` with a `Bool`-valued step, a data selector is free and a total one costs the
+-- limited principle of omniscience: the gap is deciding at each point whether a successor exists,
+-- which is the search over the carrier.
 -- Statement: with the fragment, (a) at any motion gives (b); so (a) on every motion on every
 -- `α : Type` gives (b) on every such motion, with the previous `example`, and (b) gives (a) by
 -- `selectedData_of_selectedTotal` (`[propext, Quot.sound]`).
@@ -1189,6 +1280,30 @@ example (H : ∀ (α : Type) (M : ZeroParadox.Motion α) (y : α), M.OverTrichot
   · exact absurd (Subsingleton.elim b ()) hb
 -- Reading: the OVER-leg counterpart of § IX's Escardó–Knapp § 2.2 form ("every partial element is
 -- defined or else undefined"), there quoted; cited, not claimed.
+#check @ZeroParadox.Motion.lpo_of_trichotomy_nat_boolStep -- Statement: the trichotomy at every point of every motion on `ℕ` with a `Bool`-valued step ⇒ the limited principle of omniscience (`[propext]`)
+-- Statement: CONTROL: on `Bool` with a `Bool`-valued step the trichotomy holds at every point, with no
+-- hypothesis; so the cost on `ℕ` is the carrier's search, not the step's values.
+example (r : Bool → Bool → Bool) (y : Bool) :
+    (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y := by
+  have two : ∀ b : Bool, b = y ∨ b = !y := fun b => by cases b <;> cases y <;> decide
+  cases ho : r y (!y)
+  · cases hs : r y y
+    · refine Or.inl fun b hb => ?_
+      have hb' : r y b = true := hb
+      rcases two b with rfl | rfl
+      · rw [hs] at hb'; exact absurd hb' (by decide)
+      · rw [ho] at hb'; exact absurd hb' (by decide)
+    · refine Or.inr (Or.inl ⟨hs, fun b hb => ?_⟩)
+      have hb' : r y b = true := hb
+      rcases two b with rfl | rfl
+      · rfl
+      · rw [ho] at hb'; exact absurd hb' (by decide)
+  · exact Or.inr (Or.inr ⟨!y, ho, by cases y <;> decide⟩)
+-- Statement: the `ℕ` reduction lands on `ZeroParadox.LPO`.
+example (H : ∀ r : ℕ → ℕ → Bool, ∀ y,
+    (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y) :
+    ZeroParadox.LPO :=
+  ZeroParadox.Motion.lpo_of_trichotomy_nat_boolStep H
 #check @ZeroParadox.machine_trichotomy           -- Statement: the machine face: a configuration of `f : σ → Option σ` is halted, loops in place, or steps to some `s' ≠ s`
 -- Reading: under a function the first two values share a fate, as `machine_trichotomy`'s docstring
 -- states for the machine face (`loop_is_a_trap`); the obstruction is single-valuedness
@@ -1316,7 +1431,34 @@ example {α : Type} (g : α → α) (hg : Function.Injective g) (y x : α) :
 example : Function.Injective (fun n : ℕ => n + 1) ∧
     ¬ ∃ a, (ZeroParadox.Motion.ofFun (fun n : ℕ => n + 1)).reverse.step 0 a :=
   ⟨fun _ _ h => Nat.succ_injective h, fun ⟨a, (ha : 0 = a + 1)⟩ => Nat.succ_ne_zero a ha.symm⟩
+-- Statement: on a finite carrier it is: if `g` is one-to-one, every point has a step in the reverse of
+-- `ofFun g`, and that reverse is the step of a function (`Finite.injective_iff_surjective`, then
+-- `reverse_ofFun_total_iff` and `reverse_ofFun_isFun_iff_bijective`); the converse partner of the
+-- finite `example` below on points entered from no other point.
+example {α : Type} [Finite α] (g : α → α) (hg : Function.Injective g) :
+    (∀ y, ∃ a, (ZeroParadox.Motion.ofFun g).reverse.step y a) ∧
+      ∃ h : α → α, ∀ y a, (ZeroParadox.Motion.ofFun g).reverse.step y a ↔ a = h y :=
+  ⟨(ZeroParadox.Motion.reverse_ofFun_total_iff g).2 (Finite.injective_iff_surjective.1 hg),
+    (ZeroParadox.Motion.reverse_ofFun_isFun_iff_bijective g).2
+      ⟨hg, Finite.injective_iff_surjective.1 hg⟩⟩
+-- Statement: CONTROL, infinite and total: `· + 1` on ℤ is one-to-one and every point has a reverse
+-- step, so finiteness is sufficient, not necessary.
+example : Function.Injective (fun n : ℤ => n + 1) ∧
+    ∀ y : ℤ, ∃ a, (ZeroParadox.Motion.ofFun (fun n : ℤ => n + 1)).reverse.step y a :=
+  ⟨fun _ _ h => by simpa using h, fun y => ⟨y - 1, show y = y - 1 + 1 by omega⟩⟩
 #check @ZeroParadox.Motion.exists_fanIn_ofFun_of_not_injective -- Statement: if `g` is not one-to-one, some point has fan-in; proved with `classical`
+#check @ZeroParadox.Motion.exists_fanIn_bool     -- Statement: on `Bool` the same, by cases (`[propext]`)
+#check @ZeroParadox.Motion.mp_of_exists_fanIn_nat -- Statement: the same for every `g : ℕ → ℕ` ⇒ Markov's principle (`[propext, Quot.sound]`); `ℕ` has decidable equality, and a choice-free proof of `exists_fanIn_ofFun_of_not_injective` on `ℕ` would be a choice-free proof of Markov's principle (ESSENTIAL on the premise of `ZeroParadox/Category/ChoiceCannotBe.lean` § IV)
+-- Statement: that reduction lands on `ZeroParadox.MarkovPrinciple`
+-- (`ZeroParadox/Category/LawvereTaboo.lean` § V).
+example (H : ∀ g : ℕ → ℕ, ¬ Function.Injective g → ∃ y, (ZeroParadox.Motion.ofFun g).FanIn y) :
+    ZeroParadox.MarkovPrinciple :=
+  ZeroParadox.Motion.mp_of_exists_fanIn_nat H
+-- Statement: CONTROL: with a pair `a ≠ b`, `g a = g b` in hand, the fan-in is immediate; the taboo is
+-- the passage from "not one-to-one" to the pair.
+example {α : Type} (g : α → α) {a b : α} (hab : a ≠ b) (h : g a = g b) :
+    (ZeroParadox.Motion.ofFun g).FanIn (g a) :=
+  ⟨a, b, hab, rfl, h⟩
 #check @ZeroParadox.Motion.not_noEntry_of_fanIn  -- Statement: in any motion, if `y` has fan-in, some step into `y` starts elsewhere
 -- Statement: members, each with its fan-in exhibited: `cZero` (`ZeroParadox/Miniature.lean`) and
 -- `Pole.cornerZero` (`ZeroParadox/Valuation/PoleCorners.lean`) at their zero; `T fullMix`
@@ -1573,6 +1715,25 @@ example : let M := (ZeroParadox.Motion.ofTotal (fun _ : ℕ → Bool => ⊥) (fu
 -- `ℕ → Bool` for bit tapes: OVER is a function, and the trichotomy still reaches a taboo through the
 -- carrier's equality, which the leg does not supply. The machine face's own UP,
 -- `StateTransition.eval`, is partial and is not the leg measured here.
+-- Statement: where the uniform die statements land among the omniscience principles
+-- (`ZeroParadox/Category/LawvereTaboo.lean` § V): excluded middle from the corner split
+-- (`em_of_corner_loop_or_climb`, § I); weak excluded middle from the cut (`wem_of_botCovered_botIntervalTwo`,
+-- § IV); LPO from the trichotomy and from a total selector over a `Bool`-valued step on `ℕ` (§§ X, XI);
+-- Markov's principle from fan-in on `ℕ` (§ XII). Each lands on its principle and, by the arrows there,
+-- on every weaker one; here the cut's.
+example (h : ∀ (β : Type) [PartialOrder β] [OrderBot β], ZeroParadox.BotCovered β →
+    ZeroParadox.BotIntervalTwo β) : ZeroParadox.WLPO ∧ ZeroParadox.LLPO :=
+  have w := ZeroParadox.wlpo_of_weakExcludedMiddle (ZeroParadox.wem_of_botCovered_botIntervalTwo h)
+  ⟨w, ZeroParadox.llpo_of_wlpo w⟩
+-- Reading (cited, not claimed): each of these reductions is a Brouwerian counterexample in the "stable"
+-- form, a statement implying a principle quantified over all binary sequences (Diener, arXiv:1804.05495v3,
+-- § 0.3, p. 5); the die-shaped statements themselves were not located in the sources read, as of
+-- 2026-10-28. What moves the landing point is the carrier: decidable equality frees registration and
+-- the cut, and a quantifier over an infinite carrier returns as LPO or Markov's principle; Escardó
+-- (JSL 2013, p. 1) grades the same principle by the set searched: "For X finite this is trivial, and
+-- for X = ℕ, this is LPO". LPO and weak excluded middle are not shown comparable here: the model over ℝ
+-- separates LPO from weak excluded middle (`LawvereTaboo.lean` § V, last Reading), and the other
+-- direction was not settled from the sources read.
 -- Statement: `Prop`, UP double negation `p ↦ ¬¬p` (total, so registration is free,
 -- `registeredDecidable_of_upTotal`), OVER negation `p → ¬p`: a decidable proposition is a landing.
 example (p : Prop) [Decidable p] :
@@ -1663,6 +1824,63 @@ example : ¬ ∃ σ : OnePoint ℕ → OnePoint ℕ, Function.Involutive σ ∧
   rw [hσ] at this
   exact this
 #check @ZeroParadox.Motion.not_exists_involution_reverses_lt -- Statement: if OVER is `<` on a preorder with a least element and no maximal element, no involution reverses it
+-- Statement: its hypotheses already make the carrier infinite (Mathlib `NoMaxOrder.infinite`, the
+-- least element supplying `Nonempty`).
+example {α : Type} [Preorder α] [OrderBot α] [NoMaxOrder α] : Infinite α := NoMaxOrder.infinite
+-- Statement: CONTROL: infinitude alone does not block the reversal: `WithBot (WithTop ℤ)` is infinite,
+-- has ⊥ and ⊤, and `z ↦ -z` with ⊥ and ⊤ exchanged is an involution reversing `<` (`[propext,
+-- Classical.choice, Quot.sound]`, through ℤ's order). So the operative hypothesis is the absence of
+-- a maximal element; `Fin 3` with `Fin.rev` (below) is the finite member.
+example : Infinite (WithBot (WithTop ℤ)) ∧ ∃ σ : WithBot (WithTop ℤ) → WithBot (WithTop ℤ),
+    Function.Involutive σ ∧ ∀ a b, a < b ↔ σ b < σ a := by
+  obtain ⟨σ, e1, e2, e3⟩ : ∃ σ : WithBot (WithTop ℤ) → WithBot (WithTop ℤ),
+      σ ⊥ = ((⊤ : WithTop ℤ) : WithBot (WithTop ℤ)) ∧
+      σ ((⊤ : WithTop ℤ) : WithBot (WithTop ℤ)) = ⊥ ∧
+      ∀ z : ℤ, σ (((z : WithTop ℤ)) : WithBot (WithTop ℤ)) =
+        (((-z : ℤ) : WithTop ℤ) : WithBot (WithTop ℤ)) :=
+    ⟨fun x => match x with
+      | none => some none
+      | some none => none
+      | some (some z) => some (some (-z)), rfl, rfl, fun _ => rfl⟩
+  refine ⟨Infinite.of_injective (fun z : ℤ => ((z : WithTop ℤ) : WithBot (WithTop ℤ)))
+      (fun _ _ h => WithTop.coe_injective (WithBot.coe_injective h)), σ, fun x => ?_, fun a b => ?_⟩
+  · induction x using WithBot.recBotCoe with
+    | bot => rw [e1, e2]
+    | coe x =>
+      induction x using WithTop.recTopCoe with
+      | top => rw [e2, e1]
+      | coe z => rw [e3, e3, neg_neg]
+  · induction a using WithBot.recBotCoe with
+    | bot =>
+      induction b using WithBot.recBotCoe with
+      | bot => simp
+      | coe b =>
+        induction b using WithTop.recTopCoe with
+        | top => rw [e1, e2]
+        | coe b =>
+          rw [e1, e3]
+          exact ⟨fun _ => WithBot.coe_lt_coe.2 (WithTop.coe_lt_top _), fun _ => WithBot.bot_lt_coe _⟩
+    | coe a =>
+      induction a using WithTop.recTopCoe with
+      | top =>
+        induction b using WithBot.recBotCoe with
+        | bot => rw [e1, e2]
+        | coe b =>
+          induction b using WithTop.recTopCoe with
+          | top => simp
+          | coe b => rw [e2, e3]; simp
+      | coe a =>
+        induction b using WithBot.recBotCoe with
+        | bot => rw [e1, e3]; simp
+        | coe b =>
+          induction b using WithTop.recTopCoe with
+          | top =>
+            rw [e2, e3]
+            exact ⟨fun _ => WithBot.bot_lt_coe _,
+              fun _ => WithBot.coe_lt_coe.2 (WithTop.coe_lt_top _)⟩
+          | coe b =>
+            rw [e3, e3, WithBot.coe_lt_coe, WithBot.coe_lt_coe, WithTop.coe_lt_coe, WithTop.coe_lt_coe]
+            exact neg_lt_neg_iff.symm
 -- Statement: it applies to `NNReal`, `Ordinal`, and `WithBot ℤ`, so no involution reverses `<` on
 -- any of them; `WithBot ℤ`'s `<` is not well-founded (next `example`), so the hypotheses hold there
 -- without well-foundedness.
@@ -2728,6 +2946,84 @@ example : ∃ φ : (ZeroParadox.Motion.ofFun (ZeroParadox.tapeCons false)).step 
   show ZeroParadox.tapeCons true (⊥ : ℕ → Bool)ᶜ = (⊥ : ℕ → Bool)ᶜ
   rw [compl_bot]
   exact ZeroParadox.tapeCons_const true
+-- Reading: a `RelHom` carries OVER only. Adding UP gives two notions, strict (the square commutes in
+-- Par) and lax (it commutes up to the restriction order, Cockett and Lack, TCS 270 (2002), § 2.1.4,
+-- p. 230); adding the back clause on OVER gives Rutten's homomorphism of transition systems (TCS 249
+-- (2000), p. 10). Each premise below needs its own combination; none of the three is the map of
+-- motions.
+#check @ZeroParadox.Motion.UpLax                  -- Statement: every UP value goes to an UP value
+#check @ZeroParadox.Motion.UpStrict               -- Statement: UP at `f x` is UP at `x` mapped by `f`
+#check @ZeroParadox.Motion.StepBack               -- Statement: every step out of `f a` is the image of a step out of `a`; Mathlib's `Relation.Fibration` of the reversed steps
+#check @ZeroParadox.Motion.Hom                    -- Statement: steps to steps, with `UpStrict`
+#check @ZeroParadox.Motion.LaxHom                 -- Statement: steps to steps, with `UpLax`
+#check @ZeroParadox.Motion.upLax_iff_le           -- Statement: `UpLax` iff `(M.up x).map f ≤ N.up (f x)` in `Part`'s order, at every `x`
+#check @ZeroParadox.Motion.upStrict_iff           -- Statement: strict iff lax and UP-definedness reflected
+#check @ZeroParadox.Motion.upStrict_of_upLax_of_upTotal -- Statement: lax ⇒ strict when the source UP is total
+#check @ZeroParadox.Motion.Hom.comp_assoc         -- Statement: strict maps compose associatively, with `Hom.id` as unit (`Hom.id_comp`, `Hom.comp_id`), by `rfl`
+#check @ZeroParadox.Motion.Hom.reverse            -- Statement: a strict map is a strict map of the reverses; involutive (`Hom.reverse_reverse`)
+#check @ZeroParadox.Motion.semiconj_iff_exists_hom -- Statement: on `ofFun` motions, strict maps are the semiconjugacies
+#check @ZeroParadox.Motion.stepBack_ofFun         -- Statement: and they have the back clause
+-- Statement: transfers, each with the hypothesis it needs: forward along any lax map, landings
+-- (`LaxHom.isLanding`, `hasLanding`, `overAtLanding`); forward, one-to-one, the corner, loop, climb,
+-- elbow, stepping elsewhere and fan-in (`LaxHom.corner`, `loop`, `climb`, `elbow`, `leavesAt`,
+-- `fanIn`); forward, onto, UP totality (`LaxHom.upTotal`); forward, back clause, no step, a step to
+-- itself only, arrival (`LaxHom.noStepAt`, `selfOnlyAt`, `arrives`); backward, no hypothesis, no step
+-- (`LaxHom.noStepAt_of_image`); backward, back clause, stepping elsewhere (`LaxHom.leavesAt_of_image`),
+-- and with one-to-one a step to itself only (`LaxHom.selfOnlyAt_of_image`); backward, strict, UP
+-- totality (`Hom.upTotal_of`), and with one-to-one landings (`Hom.isLanding_of_image`). The NO-GO
+-- `example`s after them in `ZeroParadox/Die.lean` § XIX refute the forward corner, climb and arrival
+-- and the backward landing without their hypotheses.
+#check @ZeroParadox.Motion.LaxHom.corner         -- Statement: along a one-to-one lax map the corner is carried forward
+#check @ZeroParadox.Motion.LaxHom.selfOnlyAt     -- Statement: along a lax map with the back clause a step to itself only is carried forward
+#check @ZeroParadox.Motion.Hom.isLanding_of_image -- Statement: along a one-to-one strict map landings are reflected
+-- Statement: a cross-face strict map: `towerToZp2Hom` on the steps, with identity UP on both sides,
+-- is a strict map from `ofFun omegaPowNote` on `NONote` to `ofFun towerImageStep` on ℤ_[2], and
+-- `towerToOrdHom` one into `ofFun (ω^·)` on `Ordinal`. Reading: with identity UP the UP square holds for
+-- any map, so these carry content on OVER only.
+example : ∃ φ : ZeroParadox.Motion.Hom (ZeroParadox.Motion.ofFun ZeroParadox.omegaPowNote)
+    (ZeroParadox.Motion.ofFun ZeroParadox.towerImageStep), φ.toFun = ZeroParadox.towerToZp2Hom :=
+  ⟨ZeroParadox.Motion.ofRelHomIdUp (fun _ => rfl) (fun _ => rfl) ZeroParadox.towerToZp2Hom, rfl⟩
+example : ∃ φ : ZeroParadox.Motion.Hom (ZeroParadox.Motion.ofFun ZeroParadox.omegaPowNote)
+    (ZeroParadox.Motion.ofFun (fun a : Ordinal => Ordinal.omega0 ^ a)),
+    φ.toFun = ZeroParadox.towerToOrdHom :=
+  ⟨ZeroParadox.Motion.ofRelHomIdUp (fun _ => rfl) (fun _ => rfl) ZeroParadox.towerToOrdHom, rfl⟩
+-- Statement: a cross-face map with a non-identity UP: from the run motion of `f : σ → Option σ` to
+-- `MachinePhase` (UP constant `c₀`, OVER from `c₁` to every phase), halted configurations to `c₀` and
+-- the others to `c₁`, is a lax map; and it is strict iff UP of the run motion is total, that is, iff
+-- every configuration's run halts; both directions. Reading: sending halted configurations to `c₀` is
+-- a choice of labelling.
+example {σ : Type} (f : σ → Option σ) :
+    let ph : σ → ZeroParadox.MachinePhase := fun c => match f c with
+      | none => ZeroParadox.c₀
+      | some _ => ZeroParadox.c₁
+    let T := ZeroParadox.Motion.ofTotal (fun _ : ZeroParadox.MachinePhase => ZeroParadox.c₀)
+      (fun _ => rfl) (fun a _ => a = ZeroParadox.c₁)
+    (∃ φ : ZeroParadox.Motion.LaxHom (ZeroParadox.runMotion f) T, φ.toFun = ph) ∧
+      (ZeroParadox.Motion.UpStrict (ZeroParadox.runMotion f) T ph ↔
+        (ZeroParadox.runMotion f).UpTotal) := by
+  intro ph T
+  have h1 : ∀ {c d : σ}, d ∈ f c → ph c = ZeroParadox.c₁ := fun {c d} h => by
+    show (match f c with | none => _ | some _ => _) = _
+    rw [Option.mem_def.1 h]
+  have hlax : ZeroParadox.Motion.UpLax (ZeroParadox.runMotion f) T ph := fun x y hy => by
+    show ph y ∈ Part.some ZeroParadox.c₀
+    have h0 : f y = none := (StateTransition.mem_eval.1 hy).2
+    show (match f y with | none => _ | some _ => _) ∈ _
+    rw [h0]; exact Part.mem_some _
+  refine ⟨⟨⟨ph, fun h => h1 h, hlax⟩, rfl⟩,
+    ⟨fun h x => (ZeroParadox.Motion.upStrict_iff.1 h).2 x trivial,
+     fun h => ZeroParadox.Motion.upStrict_iff.2 ⟨hlax, fun x _ => h x⟩⟩⟩
+-- Statement: CONTROL: on `Unit` with `() ↦ some ()` the run diverges, so that map is not strict.
+example : ¬ ZeroParadox.Motion.UpStrict (ZeroParadox.runMotion (fun _ : Unit => some ()))
+    (ZeroParadox.Motion.ofTotal (fun _ : ZeroParadox.MachinePhase => ZeroParadox.c₀) (fun _ => rfl)
+      (fun a _ => a = ZeroParadox.c₁)) (fun _ => ZeroParadox.c₁) := fun h => by
+  have hd := (ZeroParadox.Motion.upStrict_iff.1 h).2 () trivial
+  exact (ZeroParadox.runMotion_run_diverges (fun _ : Unit => some ()) (s := fun _ => ())
+    (fun _ => rfl)).2 hd
+-- Reading: occurrence (every run halts) appears here as strictness of a map into the two-state face.
+-- Not claimed: that this map is canonical, or an identity between the machine face and `MachinePhase`.
+-- The probe's maps through ℕ∞ to ℤ_[2] and `Ordinal` (UP constant at an orbit's limit) are not landed:
+-- that UP is a choice the corpus does not make.
 
 /-! ### § XVIII. Views: a carrier order passed as data, and restriction -/
 -- Reading: a view is an order on the carrier given as an argument, never a field of `Motion`. The
@@ -3122,6 +3418,22 @@ example :
 #check @ZeroParadox.Motion.not_acc_of_cycle      -- Statement: a point on a cycle is not accessible (Mathlib `Acc`)
 #check @ZeroParadox.Motion.acc_of_reflTransGen   -- Statement: accessibility passes down along steps
 #check @ZeroParadox.Motion.not_acc_iff_reaches_cycle -- Statement: on a finite carrier, not accessible iff a cycle lies below
+-- Statement: so, on a finite carrier, if the motion has a run, some point lies on a cycle of OVER: the
+-- run's first stage is not accessible for the reversed step. The cycle is of OVER, not a loop of the
+-- die (the `Bool` motion with identity UP never loops, § I).
+example {α : Type} [Finite α] (M : ZeroParadox.Motion α) {s : ℕ → α} (hs : M.IsRun s) :
+    ∃ c, Relation.TransGen M.step c c := by
+  have key : ∀ a, Acc (fun x a => M.step a x) a → ∀ n, s n = a → False := by
+    intro a ha
+    induction ha with
+    | intro a _ ih => intro n hn; subst hn; exact ih (s (n + 1)) (hs n) (n + 1) rfl
+  obtain ⟨c, -, hc⟩ := (ZeroParadox.Motion.not_acc_iff_reaches_cycle (fun x a => M.step a x)).1
+    (fun h => key _ h 0 rfl)
+  exact ⟨c, hc.swap⟩
+-- Statement: and a run whose stages are pairwise distinct needs an infinite carrier
+-- (Mathlib `Infinite.of_injective`).
+example {α : Type} (s : ℕ → α) (hinj : Function.Injective s) : Infinite α :=
+  Infinite.of_injective s hinj
 #check @ZeroParadox.Motion.acc_of_rank_ne_top    -- Statement: a dropping `ℕ∞` rank finite at `a` makes `a` accessible
 #check @ZeroParadox.Motion.rank_eq_top_of_not_acc -- Statement: at a point that is not accessible, every dropping rank is ⊤ of `ℕ∞`
 #check @ZeroParadox.Motion.accHeight             -- Statement: `Set.ncard` of the strict descendants at accessible points (their count on a finite carrier), ⊤ elsewhere
