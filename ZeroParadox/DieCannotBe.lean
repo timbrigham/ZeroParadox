@@ -4152,7 +4152,8 @@ example :
 -- marks (TCS 249 (2000), Convention 4.4, p. 28) holds for `Part × Set`.
 #check @ZeroParadox.Motion.IsBisim              -- Statement: some map on the related pairs makes both projections match `structMap`
 #check @ZeroParadox.Motion.isBisim_iff          -- Statement: `IsBisim` iff, at related pairs, UP-definedness agrees, UP values are related, and steps are matched both ways
-#check @ZeroParadox.Motion.isBisim_eq           -- Statement: equality is a bisimulation
+#check @ZeroParadox.Motion.isBisim_iff_coalgHom -- Statement: `IsBisim` iff some structure map on the related pairs makes both projections coalgebra homomorphisms into `M.toCoalgebra` and `N.toCoalgebra`
+#check @ZeroParadox.Motion.isBisim_eq          -- Statement: equality is a bisimulation
 #check @ZeroParadox.Motion.isBisim_flip         -- Statement: the flip of a bisimulation is one
 #check @ZeroParadox.Motion.isBisim_comp         -- Statement: the composite of two bisimulations is one
 #check @ZeroParadox.Motion.Bisimilar            -- Statement: related by some bisimulation
@@ -4164,7 +4165,8 @@ example :
 #check @ZeroParadox.Motion.isBisim_preimage     -- Statement: under the same map, the preimage of a bisimulation on `N` is one on `M`
 -- Statement: CONTROL in `ZeroParadox/Die.lean` § XXII: a strict map from `Bool` onto `Unit` without
 -- the back clause whose kernel is not a bisimulation.
--- Reading: Rutten, TCS 249 (2000): `IsBisim` is the bisimulation of p. 11 for this functor;
+-- Reading: Rutten, TCS 249 (2000): `isBisim_iff_coalgHom` states `IsBisim` as the bisimulation of
+-- p. 11 for this functor;
 -- `isBisim_eq` is Proposition 5.1 and `isBisim_flip` Theorem 5.2 (p. 31), `isBisim_comp` Theorem* 5.4
 -- (p. 32), `Bisimilar` with `isBisim_bisimilar` and `bisimilar_equivalence` Corollary 5.6 (p. 33),
 -- `isBisim_ker` Proposition* 5.7 (p. 33), `isBisim_preimage` Proposition* 5.9(2) (p. 34).

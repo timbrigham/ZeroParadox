@@ -3033,8 +3033,8 @@ variable {α β γ : Type*}
 
 /-- `Statement:` some `c` on the pairs related by `R` has, at every pair `p`, its `Part.map` and
     image along the first projection equal to `M.structMap p.1.1`, and along the second equal to
-    `N.structMap p.1.2`. `Reading:` Rutten's bisimulation (TCS 249 (2000), p. 11) for the functor of
-    § XX: both projections are homomorphisms. -/
+    `N.structMap p.1.2`. `isBisim_iff_coalgHom` states it as Rutten's bisimulation (TCS 249 (2000),
+    p. 11) for the functor of § XX. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: over `Motion`, the die's project-local structure; the
 -- dated search is in `LEAN_CUSTOM_REGISTRY.md`.
 def IsBisim (M : Motion α) (N : Motion β) (R : α → β → Prop) : Prop :=
@@ -3093,6 +3093,33 @@ theorem isBisim_iff (M : Motion α) (N : Motion β) (R : α → β → Prop) :
       · intro hb'
         obtain ⟨a', ha', r⟩ := (h _ _ p.2).2.2.2 b' hb'
         exact ⟨⟨(a', b'), r⟩, ⟨ha', hb'⟩, rfl⟩
+
+/-- `Statement:` `IsBisim M N R` iff some structure map `str` on the pairs related by `R`, for the
+    functor of `Motion.toCoalgebra` (§ XX), makes the two projections the underlying maps of
+    coalgebra homomorphisms (Mathlib `Endofunctor.Coalgebra.Hom`) into `M.toCoalgebra` and
+    `N.toCoalgebra`; both directions. `Reading:` Rutten's bisimulation, TCS 249 (2000), p. 11. -/
+theorem isBisim_iff_coalgHom {α β : Type u} (M : Motion α) (N : Motion β) (R : α → β → Prop) :
+    IsBisim M N R ↔
+      ∃ str : {p : α × β // R p.1 p.2} ⟶
+          (FunctorToTypes.prod (ofTypeFunctor Part.{u}) (ofTypeFunctor Set.{u})).obj
+            {p : α × β // R p.1 p.2},
+        (∃ h : Endofunctor.Coalgebra.Hom ⟨_, str⟩ M.toCoalgebra,
+            h.f = TypeCat.ofHom fun q => q.1.1) ∧
+        ∃ h : Endofunctor.Coalgebra.Hom ⟨_, str⟩ N.toCoalgebra,
+            h.f = TypeCat.ofHom fun q => q.1.2 := by
+  constructor
+  · rintro ⟨c, hc⟩
+    refine ⟨TypeCat.ofHom c, ⟨⟨TypeCat.ofHom fun q => q.1.1, ?_⟩, rfl⟩,
+      ⟨⟨TypeCat.ofHom fun q => q.1.2, ?_⟩, rfl⟩⟩
+    · apply ConcreteCategory.hom_ext
+      intro p
+      exact (hc p).1
+    · apply ConcreteCategory.hom_ext
+      intro p
+      exact (hc p).2
+  · rintro ⟨str, ⟨⟨g1, hg1⟩, rfl⟩, ⟨⟨g2, hg2⟩, rfl⟩⟩
+    exact ⟨fun p => str p,
+      fun p => ⟨ConcreteCategory.congr_hom hg1 p, ConcreteCategory.congr_hom hg2 p⟩⟩
 
 -- Statement: CONTROL: on `Bool` with UP the identity and the one step `false → true`, the map onto
 -- `Unit` (UP the identity, every step) is a strict map whose kernel is not a bisimulation (`false`
@@ -3565,6 +3592,7 @@ open ZeroParadox
 #print axioms PreservesWeakPullbacksElementwise.partSet
 #print axioms Motion.IsBisim
 #print axioms Motion.isBisim_iff
+#print axioms Motion.isBisim_iff_coalgHom
 #print axioms Motion.isBisim_eq
 #print axioms Motion.isBisim_flip
 #print axioms Motion.isBisim_comp

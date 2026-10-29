@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2890,
+        "declarations": 2891,
         "files": 184
       },
       "entries": [
@@ -69764,6 +69764,41 @@
             ]
           },
           "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a913e049-42e6-4ed1-833a-83dbb0ee3465",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.isBisim_iff_coalgHom",
+            "short": "isBisim_iff_coalgHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.isBisim_iff_coalgHom",
+            "short": "isBisim_iff_coalgHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-wpb-1029: bridge Motion.IsBisim to Rutten's bisimulation (TCS 249 p. 11) for the Part x Set functor of Die § XX, via Endofunctor.Coalgebra.Hom (Die § XXII)",
           "verify": {
             "axioms": null,
             "sorry_free": true
