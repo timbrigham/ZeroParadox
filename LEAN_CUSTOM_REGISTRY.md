@@ -453,6 +453,36 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Reason:** A lax map of motions: steps to steps, and every value of UP at `x` sent to a value of UP at `f x` (`UpLax`), equivalently `(M.up x).map f ≤ N.up (f x)` in `Part`'s order (`upLax_iff_le`), the restriction order of Cockett and Lack, TCS 270 (2002), § 2.1.4, p. 230. Strict iff lax with UP-definedness reflected (`upStrict_iff`). The search recorded under `Motion.Hom` covers this entry.
 
+### `IsWeakPullback` — `ZeroParadox/Die.lean`
+
+**Relationship to Mathlib:** Mathlib's `IsPullback` with the uniqueness of the mediating map dropped; no Mathlib analog
+
+**Reason:** Rutten, "Universal coalgebra", TCS 249 (2000), Appendix, p. 74: a weak pullback is defined as a pullback without the requirement that the mediating function be unique. Stated in the category `Type u`, with the cone over any type. A weak-pullback definition was not located in the pinned Mathlib as of 2026-10-29, searched as follows: a case-insensitive grep of `Mathlib/` (`.lean` files) for `weak pullback`, `weak_pullback` and `weakpullback`, and a grep for `WeakPullback`, `weakPullback` and `PreservesWeak` (no hits for any).
+
+### `PreservesWeakPullbacks` — `ZeroParadox/Die.lean`
+
+**Relationship to Mathlib:** Over `IsWeakPullback`; Mathlib's `PreservesLimit` concerns limits with unique mediating maps
+
+**Reason:** A functor `Type u ⥤ Type u` sending every `IsWeakPullback` square to one, Rutten's hypothesis on the functor from Convention 4.4 (TCS 249 (2000), p. 28), worded in Proposition A.3 (p. 76) as transforming weak pullbacks into weak pullbacks. Convention 4.4 stars the results whose proofs use it. The search recorded under `IsWeakPullback` covers this entry.
+
+### `PreservesWeakPullbacksElementwise` — `ZeroParadox/Die.lean`
+
+**Relationship to Mathlib:** Stated over Mathlib's canonical pullback `CategoryTheory.Limits.Types.PullbackObj`; no Mathlib analog
+
+**Reason:** The elementwise form of `PreservesWeakPullbacks`: each pair `x : F A`, `y : F B` with `F f x = F g y` lifts to `F` of the canonical pullback, Rutten's `P` (TCS 249 (2000), Appendix, p. 74). Taken over every pair `f`, `g`, it is the criterion of Gumm and Freese, Proposition 3 (arXiv:2103.09566, p. 4). It follows from `PreservesWeakPullbacks` without `Classical.choice` (`PreservesWeakPullbacks.elementwise`) and gives it with `Classical.choice` (`PreservesWeakPullbacksElementwise.preserves`). `part`, `set` and `partSet` prove it for `ofTypeFunctor Part`, `ofTypeFunctor Set` and their product, and `prod` closes it under products, each without `Classical.choice`. Mathlib's `Functor.Liftr` (`Mathlib/Control/Functor.lean`) lifts a relation on one type to `F` of the subtype of related pairs; it is a neighbour, not this condition. The search recorded under `IsWeakPullback` covers this entry.
+
+### `Motion.IsBisim` — `ZeroParadox/Die.lean`
+
+**Relationship to Mathlib:** Mathlib's `IsBisimulation` is stated for `Stream'`, `Seq` and `Computation`, each for its own type; no Mathlib analog for `Motion`
+
+**Reason:** Rutten's bisimulation (TCS 249 (2000), p. 11) between two motions read as coalgebras for `Part × Set` (`ZeroParadox/Die.lean` § XX; `isBisim_iff_coalgHom`, both carriers in one universe): some structure map on the related pairs for which both projections are homomorphisms, each square checked against `structMap`. `isBisim_iff` gives the equivalent transfer conditions on UP and the step relation. `Motion` is project-local (its entry above). The Mathlib bisimulation search is recorded under `Motion.StepCompat` (2026-10-21); repeated 2026-10-29 as a grep of `Mathlib/` for `def IsBisimulation`, `def Bisim`, `structure Bisim` and `def IsBisim` (hits: `IsBisimulation` in `Data/Seq/Computation.lean`, `Data/Seq/Defs.lean`, `Data/Stream/Init.lean`, and, through the `def Bisim` pattern, `BisimO` in `Data/Seq/Computation.lean`, `Data/Seq/Defs.lean`, `Data/WSeq/Relation.lean`; none for a general coalgebra).
+
+### `Motion.Bisimilar` — `ZeroParadox/Die.lean`
+
+**Relationship to Mathlib:** Over `Motion.IsBisim`; no Mathlib analog
+
+**Reason:** Related by some bisimulation: the union of all bisimulations, Rutten's greatest bisimulation of Corollary 5.6 (TCS 249 (2000), p. 33). `isBisim_bisimilar` shows it is a bisimulation, and `bisimilar_equivalence` that on one motion it is an equivalence relation. The search recorded under `Motion.IsBisim` covers this entry.
+
 ### `clockStep` — `ZeroParadox/Computability/Occurrence.lean`
 
 **Relationship to Mathlib:** Built from Mathlib's `Nat.Partrec.Code.evaln`; no Mathlib analog
