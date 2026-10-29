@@ -1085,7 +1085,8 @@ example : ∃ M : ZeroParadox.Motion Nat.Partrec.Code,
     exact ZeroParadox.no_computable_registration_at_kleene_floor ⟨d, hdc, fun c => hd c⟩
 -- Reading: three presentations of UP: `Option` (definedness decided), the delay type (Capretta, LMCS
 -- 1(2) 2005, Def. 3.1, p. 8; Mathlib `Computation`; p. 9: "A^ν is not isomorphic to A + 1 ...
--- because divergence is undecidable"), and `Part` (definedness a proposition).
+-- because divergence is undecidable"), and `Part` (definedness a proposition). At `ℕ` the three sit in
+-- one chain, and the delay type at `Unit` is `NInf`: § XXVII.
 #check @Part.ofOption                           -- Statement: Mathlib, `Option α → Part α`; free
 #check @Part.toOption                           -- Statement: Mathlib, `Part α → Option α`, given `[Decidable o.Dom]`
 #check @Part.equivOption                        -- Statement: Mathlib, `Part α ≃ Option α`, noncomputable
@@ -1738,7 +1739,7 @@ example (h : ∀ (β : Type) [PartialOrder β] [OrderBot β], ZeroParadox.BotCov
 -- returns as LPO or Markov's principle; this is measured for `ℕ` only. Escardó (preprint of
 -- JSL 78(3) (2013), p. 1) grades the same principle by the set searched, "For X finite this is
 -- trivial, and for X = ℕ, this is LPO", and exhibits infinite sets on which it holds, the first being
--- ℕ∞. LPO and weak excluded middle are not shown comparable here: the model over ℝ shows that LPO does
+-- ℕ∞ (`NInf.omniscient`, § XXVII). LPO and weak excluded middle are not shown comparable here: the model over ℝ shows that LPO does
 -- not imply weak excluded middle (`LawvereTaboo.lean` § V, last Reading), and the converse was not
 -- settled from the sources read.
 -- Statement: `Prop`, UP double negation `p ↦ ¬¬p` (total, so registration is free,
@@ -4172,5 +4173,75 @@ example :
 -- greatest bisimulation exists, and `bisimilar_equivalence` its last clause, that on one system it
 -- is an equivalence (its complete-lattice clause is not built); `isBisim_ker` is the bisimulation
 -- half of Proposition* 5.7 (p. 33), `isBisim_preimage` Proposition* 5.9(2) (p. 34).
+
+/-! ### § XXVII. The adjoined point: tagged or a limit -/
+-- Reading: a second coordinate on § I's adjoined-points switch: one point adjoined to `ℕ` as a
+-- constructor (`Option ℕ`, tagged) or as the limit of the finite stages (`NInf`, untagged); `ℕ`
+-- adjoins none. Definitions and proofs: `ZeroParadox/Die.lean` § XXIII.
+#check @ZeroParadox.NInf                       -- Statement: decreasing sequences `ℕ → Bool`; finite stages `NInf.ofNat n` and the point `NInf.infty`
+#check @ZeroParadox.NInf.omniscient            -- Statement: every `p : NInf → Bool` is `false` somewhere or `true` everywhere
+#check @ZeroParadox.NInf.eps_spec              -- Statement: `eps` is a selection function: `p (eps p) = true` gives `p` true everywhere
+-- Statement: MEMBER `NInf`, with no hypothesis, for every `Bool`-valued step:
+#check @ZeroParadox.Motion.overTrichotomy_ninf_boolStep -- Statement: the trichotomy holds at every point
+#check @ZeroParadox.Motion.selectedTotal_ninf_boolStep -- Statement: a total selector exists
+#check @ZeroParadox.NInf.exists_ne_infty_eq_false_or -- Statement: some point other than `∞` has `p = false`, or every finite stage has `p = true`
+#check @ZeroParadox.NInf.separated             -- Statement: `¬¬ (b = y) → b = y` on `NInf`
+-- Statement: NON-MEMBER `ℕ`, § X and § XI: `lpo_of_selectedTotal_nat_boolStep`,
+-- `lpo_of_trichotomy_nat_boolStep`. NON-MEMBER `Option ℕ`, below, read at `none`.
+#check @ZeroParadox.Motion.lpo_of_trichotomy_option_boolStep -- Statement: the trichotomy at every point of every `Bool`-valued step on `Option ℕ` gives LPO
+#check @ZeroParadox.Motion.overTrichotomy_option_boolStep_of_lpo -- Statement: and LPO gives it
+#check @ZeroParadox.Motion.lpo_of_selectedTotal_option_boolStep -- Statement: a total selector for every `Bool`-valued step on `Option ℕ` gives LPO; one way
+-- Statement: on `Option ℕ` the uniform `Bool`-step trichotomy is `ZeroParadox.LPO`; both directions.
+example : (∀ (r : Option ℕ → Option ℕ → Bool) (y : Option ℕ),
+    (ZeroParadox.Motion.ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y) ↔
+    ZeroParadox.LPO :=
+  ⟨ZeroParadox.Motion.lpo_of_trichotomy_option_boolStep,
+    ZeroParadox.Motion.overTrichotomy_option_boolStep_of_lpo⟩
+-- Reading: the converse of the selector reduction, LPO to a total selector on `Option ℕ`, is not
+-- built here.
+-- Statement: the other direction of the trade: a `Bool` test for "is this the adjoined point" exists
+-- on `Option ℕ` with no hypothesis (`registeredDecider`, § IX), and on `NInf` one for each finite
+-- stage (`isAt_iff`); a test isolating `∞` gives WLPO.
+#check @ZeroParadox.NInf.isAt_iff              -- Statement: `isAt m b = true ↔ b = NInf.ofNat m`
+#check @ZeroParadox.NInf.wlpo_of_isolating_infty -- Statement: a `Bool` test true exactly at `∞` gives WLPO
+#check @ZeroParadox.NInf.decEq_of_isolating_infty -- Statement: such a test gives `DecidableEq NInf`
+#check @ZeroParadox.NInf.isolating_infty_of_decEq -- Statement: and `DecidableEq NInf` gives such a test
+#check @ZeroParadox.Motion.overTrichotomy_ninf_of_isolating -- Statement: a test isolating `y` gives the trichotomy at `y`
+#check @ZeroParadox.Motion.wlpo_of_selfOnlyAt_infty -- Statement: a `Bool`-valued step on `NInf` stepping from `∞` to `∞` only gives WLPO
+#check @ZeroParadox.Motion.wlpo_or_leavesAt_infty -- Statement: if `p ∞ = true`, WLPO or `p` is `true` at some point other than `∞`
+-- Reading: on `NInf` the trichotomy at `∞` holds for every `Bool`-valued step; WLPO is reached through
+-- which of its three cells holds there, not through whether one does.
+-- Statement: WLPO and decidable equality on `NInf`, as `Prop` and as data.
+#check @ZeroParadox.NInf.wlpo_iff_eqOr         -- Statement: WLPO iff any two points of `NInf` are equal or not; both directions
+example : ZeroParadox.WLPO ↔ ∀ x y : ZeroParadox.NInf, x = y ∨ x ≠ y := ZeroParadox.NInf.wlpo_iff_eqOr
+#check @ZeroParadox.WLPOData                   -- Statement: a decision of `∀ n, r n = false` at every `r`
+#check @ZeroParadox.NInf.decEq_of_wlpoData     -- Statement: `WLPOData` gives `DecidableEq NInf`
+#check @ZeroParadox.NInf.wlpoData_of_decEq     -- Statement: `DecidableEq NInf` gives `WLPOData`
+#check @ZeroParadox.NInf.decEq_of_wlpo_uc      -- Statement: WLPO with unique choice into `Bool` as a hypothesis gives `DecidableEq NInf`
+#check @ZeroParadox.NInf.decEq_classical       -- Statement: CONTROL: `DecidableEq NInf` from `Classical.decEq`, with no WLPO hypothesis
+-- Statement: the chain `Option ℕ` → `NInf` → `Part ℕ`: forward maps with no hypothesis, and the
+-- triangle with Mathlib's `Part.ofOption` commutes.
+#check @ZeroParadox.NInf.ofOption              -- Statement: `none ↦ ∞`, `some n ↦ NInf.ofNat n`
+#check @ZeroParadox.NInf.toPart                -- Statement: defined iff some bit is `false`, value the least such index
+#check @ZeroParadox.NInf.mem_toPart_iff        -- Statement: `n ∈ toPart x ↔ x = NInf.ofNat n`
+#check @ZeroParadox.NInf.toPart_injective      -- Statement: `toPart` is one-to-one
+#check @ZeroParadox.NInf.toPart_ofOption       -- Statement: `toPart ∘ ofOption = Part.ofOption`
+-- Statement: backward, each exact map gives a taboo.
+#check @ZeroParadox.NInf.lpo_of_exactTag       -- Statement: `NInf → Option ℕ` with `g x = some n ↔ x = NInf.ofNat n` gives LPO
+#check @ZeroParadox.NInf.wlpo_of_tag           -- Statement: `NInf → Option ℕ` with `g x = none ↔ x = ∞` gives WLPO
+#check @ZeroParadox.NInf.em_of_partToNInf      -- Statement: `Part ℕ → NInf` with `g o = NInf.ofNat n ↔ n ∈ o` gives excluded middle
+example (g : Part ℕ → ZeroParadox.NInf) (hg : ∀ o n, g o = ZeroParadox.NInf.ofNat n ↔ n ∈ o) :
+    ZeroParadox.ExcludedMiddle := ZeroParadox.NInf.em_of_partToNInf g hg
+-- Statement: `Part` to `Option` is § IX's `em_of_poleDiscriminator` at `Part Unit`.
+#check @ZeroParadox.NInf.ninfEquivComp         -- Statement: `NInf ≃ Computation Unit`, Mathlib's delay type at `Unit`
+#check @ZeroParadox.NInf.toComp_infty          -- Statement: `∞` goes to `Computation.empty Unit`
+-- Reading (cited, not claimed): Escardó, preprint of JSL 78(3) (2013): `NInf` is his `ℕ∞` (p. 1),
+-- `eps` his selection function (Theorem 3.5, p. 5), `exists_ne_infty_eq_false_or` his Lemma 8.1 by his
+-- proof (p. 14), and `wlpo_of_eqOr_infty` his WLPO row (p. 4); his Theorem 7.1(1) (p. 13) gets WLPO
+-- from a discontinuous map `ℕ∞ → 2` assuming countable choice. Escardó and Knapp, CSL 2017, LIPIcs 82,
+-- § 2.7, p. 21:6: lifting by the decidable dominance is `X + 1` and by all propositions is `L X`;
+-- § 2.8, pp. 21:6–21:7: "the decidability of Rosolini propositions is known as LPO", and the Rosolini
+-- structures sit in their `ℕ∞`, presented there as `Σ α, isProp ⟨α⟩`, which is not related to
+-- `NInf` in Lean here. The trichotomy route through `hmap` is constructed here, not from a source.
 
 end DieCannotBeIndex
