@@ -4043,14 +4043,16 @@ example :
 #check @ZeroParadox.Motion.mkHom                 -- Statement: for an UP-compatible setoid, the class map is a strict map into `quotUp`
 #check @ZeroParadox.Motion.mkHom_stepBack        -- Statement: if the setoid is also step-compatible, the class map has the back clause
 #check @ZeroParadox.Motion.mkHom_surjective      -- Statement: the class map is onto
--- Reading: a strict onto map with the back clause (the observer) gives a compatible kernel, and a
--- compatible setoid gives such a map onto its quotient (the observed); in the die's terms, Rutten's
--- Propositions 5.7 and 5.8 (TCS 249 (2000), pp. 33–34).
-#check @ZeroParadox.Motion.Hom.upTotal_iff       -- Statement: along an onto strict map, UP total upstairs iff downstairs
-#check @ZeroParadox.Motion.Hom.hasLanding_iff    -- Statement: along an onto strict map, a landing upstairs iff one downstairs
+-- Reading: a strict map with the back clause (the observer) gives a compatible kernel, and a
+-- compatible setoid gives such a map onto its quotient (the observed motion; Rutten's homomorphic
+-- image, or quotient, TCS 249 (2000), p. 10). How this relates to Rutten's Propositions* 5.7 and 5.8
+-- (pp. 33–34) is in the Readings on `Hom.stepCompat_ker` and `mkHom_stepBack`, with the bisimulation
+-- `example` after `mkHom_surjective`, `ZeroParadox/Die.lean` § XXI.
+#check @ZeroParadox.Motion.Hom.upTotal_iff       -- Statement: along an onto strict map, UP total in the source iff in the target
+#check @ZeroParadox.Motion.Hom.hasLanding_iff    -- Statement: along an onto strict map, a landing in the source iff one in the target
 #check @ZeroParadox.Motion.LaxHom.noStepAt_iff   -- Statement: along a lax map with the back clause, no step at `y` iff none at its image
-#check @ZeroParadox.Motion.Hom.corner_of_image   -- Statement: along an onto strict map with the back clause, a corner downstairs gives one upstairs
-#check @ZeroParadox.Motion.Hom.climb_of_image    -- Statement: along an onto strict map with the back clause, a climb downstairs gives one upstairs
+#check @ZeroParadox.Motion.Hom.corner_of_image   -- Statement: along an onto strict map with the back clause, a corner in the target gives one in the source
+#check @ZeroParadox.Motion.Hom.climb_of_image    -- Statement: along an onto strict map with the back clause, a climb in the target gives one in the source
 #check @ZeroParadox.Motion.LaxHom.leavesAt_of_image -- Statement: along a lax map with the back clause, stepping elsewhere at the image gives it at `y`
 #check @ZeroParadox.Motion.LaxHom.selfOnlyAt     -- Statement: along a lax map with the back clause, stepping to itself only at `y` gives it at the image
 -- Statement: NO-GO `example`s, each a strict onto map with the back clause, in `ZeroParadox/Die.lean`
@@ -4122,8 +4124,8 @@ example :
     rw [← hs]; exact r
   · rintro p ⟨Y, ⟨a', b, hs, ha', rfl⟩, hne⟩
     exact hne (Quotient.sound ((ZeroParadox.carry_stutters a' b hs).trans (Quotient.exact ha')))
--- Reading: stepping elsewhere is reflected by the observation (`leavesAt_of_quot`) and, by `carry`,
--- not carried forward.
+-- Reading: when the kernel of the observation is step-compatible, stepping elsewhere is reflected by
+-- the observation (`leavesAt_of_quot`) and, by `carry`, not carried forward.
 #check @ZeroParadox.Motion.dom_factor            -- Statement: if the kernel of `obs` is UP-compatible, UP-definedness is `D ∘ obs` for some `D`
 #check @ZeroParadox.Motion.registeredDecidable_of_factor -- Statement: if UP-definedness is `D ∘ obs` and `D` is decided at every point, registration is decided
 #check @ZeroParadox.Motion.upCompat_ker_dom      -- Statement: the kernel of the definedness map `a ↦ (up a).Dom` is UP-compatible

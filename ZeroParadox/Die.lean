@@ -2651,8 +2651,8 @@ end Motion
 
 /-! ### § XXI. Observation: a motion and a map out of it, as a pair
 `Reading:` an observation is an explicit second argument (a strict map `φ`, or a map `obs` into any
-type); each result here is about the pair, none about the motion alone. Two motions are related as
-observer and observed when a strict onto map with the back clause runs from one to the other. -/
+type); each result here is about the pair, none about the motion alone. The observer is the map; when
+it is a strict onto map with the back clause, the motion it maps onto is the observed motion. -/
 
 namespace Motion
 
@@ -2668,8 +2668,11 @@ theorem Hom.upCompat_ker (φ : Hom M N) : M.UpCompat (Setoid.ker φ.toFun) := by
   exact ⟨y', hy', e.symm⟩
 
 /-- `Statement:` the kernel of a strict map with the back clause is step-compatible. `Reading:` with
-    `upCompat_ker` and `coalgHom_iff`, the die's form of Rutten's Proposition 5.7 (TCS 249 (2000),
-    p. 33): the kernel of a homomorphism is a bisimulation equivalence. -/
+    `upCompat_ker`, `coalgHom_iff` and the bisimulation `example` after `mkHom_surjective`, the kernel
+    of a coalgebra homomorphism for `Part × Set` is a bisimulation equivalence in Rutten's sense
+    (TCS 249 (2000), p. 11). Rutten states this as Proposition* 5.7 (p. 33), starred for a
+    weak-pullback hypothesis on the functor; here it is proved directly, and that hypothesis is not
+    checked for `Part × Set`. -/
 theorem Hom.stepCompat_ker (φ : Hom M N) (hb : StepBack M N φ.toFun) :
     M.StepCompat (Setoid.ker φ.toFun) := by
   intro a a' b (r : φ.toFun a = φ.toFun a') hs
@@ -2683,7 +2686,8 @@ def mkHom (s : Setoid α) (hu : M.UpCompat s) : Hom M (M.quotUp s hu) :=
   ⟨Quotient.mk s, fun {a b} h => ⟨a, b, h, rfl, rfl⟩, fun _ => rfl⟩
 
 /-- `Statement:` if the setoid is also step-compatible, the class map has the back clause.
-    `Reading:` with `mkHom_surjective`, the die's form of Rutten's Proposition 5.8 (p. 34). -/
+    `Reading:` with `mkHom_surjective` and `coalgHom_iff`, an onto coalgebra homomorphism: the
+    existence half of Rutten's Proposition 5.8 (p. 34), for a compatible setoid; uniqueness is not built. -/
 theorem mkHom_stepBack (s : Setoid α) (hu : M.UpCompat s) (hc : M.StepCompat s) :
     StepBack M (M.quotUp s hu) (mkHom M s hu).toFun := fun a c h =>
   (quot_step_mk_iff hc a c).1 h
@@ -2691,6 +2695,38 @@ theorem mkHom_stepBack (s : Setoid α) (hu : M.UpCompat s) (hc : M.StepCompat s)
 /-- `Statement:` the class map is onto. -/
 theorem mkHom_surjective (s : Setoid α) (hu : M.UpCompat s) :
     Function.Surjective (mkHom M s hu).toFun := Quotient.mk_surjective
+
+-- Statement: a UP- and step-compatible setoid `s` is a bisimulation in Rutten's sense (TCS 249 (2000),
+-- p. 11): some structure map on the pairs related by `s` makes both projections homomorphisms, each
+-- square checked against `structMap`.
+example {γ : Type*} (P : Motion γ) (s : Setoid γ) (hu : P.UpCompat s) (hc : P.StepCompat s) :
+    ∃ c : {p : γ × γ // s.r p.1 p.2} → Part {p : γ × γ // s.r p.1 p.2} × Set {p : γ × γ // s.r p.1 p.2},
+      ∀ p, ((c p).1.map (fun q => q.1.1), (fun q => q.1.1) '' (c p).2) = P.structMap p.1.1 ∧
+           ((c p).1.map (fun q => q.1.2), (fun q => q.1.2) '' (c p).2) = P.structMap p.1.2 := by
+  have hd : ∀ p : {p : γ × γ // s.r p.1 p.2}, (P.up p.1.1).Dom → (P.up p.1.2).Dom := fun p h => by
+    obtain ⟨y', hy', -⟩ := hu _ _ _ p.2 (Part.get_mem h); exact Part.dom_iff_mem.2 ⟨y', hy'⟩
+  have hr : ∀ (p : {p : γ × γ // s.r p.1 p.2}) (h : (P.up p.1.1).Dom),
+      s.r ((P.up p.1.1).get h) ((P.up p.1.2).get (hd p h)) := fun p h => by
+    obtain ⟨y', hy', r⟩ := hu _ _ _ p.2 (Part.get_mem h)
+    rw [Part.get_eq_of_mem hy' (hd p h)]; exact r
+  refine ⟨fun p => (⟨(P.up p.1.1).Dom, fun h => ⟨((P.up p.1.1).get h,
+      (P.up p.1.2).get (hd p h)), hr p h⟩⟩,
+      {q | P.step p.1.1 q.1.1 ∧ P.step p.1.2 q.1.2}), fun p => ⟨?_, ?_⟩⟩
+  · refine Prod.ext ?_ (Set.ext fun b => ⟨?_, ?_⟩)
+    · exact Part.ext' Iff.rfl (fun _ _ => rfl)
+    · rintro ⟨q, ⟨h1, -⟩, rfl⟩; exact h1
+    · intro hb
+      obtain ⟨b', hb', r⟩ := hc _ _ _ p.2 hb
+      exact ⟨⟨(b, b'), r⟩, ⟨hb, hb'⟩, rfl⟩
+  · refine Prod.ext ?_ (Set.ext fun b => ⟨?_, ?_⟩)
+    · refine Part.ext' ⟨fun h => hd p h, fun h => ?_⟩ (fun _ _ => rfl)
+      obtain ⟨y', hy', -⟩ := hu _ _ _ (s.symm p.2) (Part.get_mem h)
+      change (P.up p.1.1).Dom
+      exact Part.dom_iff_mem.2 ⟨y', hy'⟩
+    · rintro ⟨q, ⟨-, h2⟩, rfl⟩; exact h2
+    · intro hb
+      obtain ⟨b', hb', r⟩ := hc _ _ _ (s.symm p.2) hb
+      exact ⟨⟨(b', b), s.symm r⟩, ⟨hb', hb⟩, rfl⟩
 
 /-- `Statement:` along an onto strict map, UP of `M` is total iff UP of `N` is; both directions. -/
 theorem Hom.upTotal_iff (φ : Hom M N) (hs : Function.Surjective φ.toFun) : M.UpTotal ↔ N.UpTotal :=
