@@ -4044,8 +4044,9 @@ example :
 #check @ZeroParadox.Motion.mkHom_stepBack        -- Statement: if the setoid is also step-compatible, the class map has the back clause
 #check @ZeroParadox.Motion.mkHom_surjective      -- Statement: the class map is onto
 -- Reading: a strict map with the back clause (the observer) gives a compatible kernel, and a
--- compatible setoid gives such a map onto its quotient (the observed motion; Rutten's homomorphic
--- image, or quotient, TCS 249 (2000), p. 10). How this relates to Rutten's Propositions* 5.7 and 5.8
+-- compatible setoid gives such a map onto its quotient (the image motion, what the observer shows;
+-- the observed motion is the source; Rutten's homomorphic image, or quotient, TCS 249 (2000), p. 10).
+-- How this relates to Rutten's Proposition* 5.7 and Proposition 5.8
 -- (pp. 33–34) is in the Readings on `Hom.stepCompat_ker` and `mkHom_stepBack`, with the bisimulation
 -- `example` after `mkHom_surjective`, `ZeroParadox/Die.lean` § XXI.
 #check @ZeroParadox.Motion.Hom.upTotal_iff       -- Statement: along an onto strict map, UP total in the source iff in the target
