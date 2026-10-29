@@ -233,14 +233,15 @@ theorem decidable_route_unaffected {β : Type} [DecidableEq β] {b₀ b₁ : β}
 
 /-! ## § V — The omniscience principles on bit sequences
 
-Instances, for sequences `ℕ → Bool`, of excluded middle, weak excluded middle, De Morgan's law and
-double negation elimination, in the same hypothesis form as § I: never an `axiom`, always discharged
-by the caller. Each arrow runs from the stronger principle to the weaker one. The equivalence
+Forms, for sequences `ℕ → Bool`, of the principles Ishihara states over `ℕ^ℕ` as instances of
+excluded middle, weak excluded middle, De Morgan's law and double negation elimination (§§ 2–4,
+pp. 47–50); `LLPO` here is Diener's at-most-once form. All are in the same hypothesis form as § I:
+never an `axiom`, always discharged by the caller. Each arrow runs from the stronger principle to the weaker one. The equivalence
 `LPO ↔ WLPO ∧ MP` in its ⊥-of-`ℕ → Bool` form is the `example` in
 `ZeroParadox/Category/ChoiceCannotBe.lean` § II. -/
 
--- Reading (cited, not claimed): the forms over `ℕ → Bool` are Escardó, "Infinite sets that satisfy
--- the principle of omniscience in any variety of constructive mathematics", JSL 78(3) (2013), § 3,
+-- Reading (cited, not claimed): the `LPO` and `WLPO` forms over `ℕ → Bool` are Escardó, "Infinite
+-- sets that satisfy the principle of omniscience in any variety of constructive mathematics", JSL 78(3) (2013), § 3,
 -- p. 4 of the preprint, with `true` and `false` exchanged ("Clearly LPO ⟺ WLPO ∧ MP"); preprint p. 1:
 -- "For X finite this is trivial, and for X = ℕ, this is LPO". Ishihara, "Reverse mathematics in
 -- Bishop's constructive mathematics", Philosophia Scientiae CS 6 (2006), §§ 2–4, pp. 47–50, states
