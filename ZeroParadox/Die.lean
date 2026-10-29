@@ -13,6 +13,7 @@ import Mathlib.CategoryTheory.Endofunctor.Algebra
 import Mathlib.CategoryTheory.Types.Basic
 import Mathlib.CategoryTheory.Limits.Shapes.FunctorToTypes
 import Mathlib.CategoryTheory.Limits.Types.Pullbacks
+import Mathlib.Data.Seq.Computation
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -3271,6 +3272,793 @@ theorem isBisim_preimage {M : Motion α} {N : Motion β} {f : α → β}
 
 end Motion
 
+/-! ### § XXIII. The adjoined point: tagged or a limit
+`Reading:` a second coordinate on the adjoined-points switch (`ZeroParadox/DieCannotBe.lean` § I):
+one point adjoined to the finite stages of `ℕ` as a constructor (`Option ℕ`, the tagged point;
+Mathlib's `ENat` is `WithTop ℕ`), or as their limit (`NInf`, the untagged point: Escardó's
+one-point compactification of `ℕ`, the generic convergent sequence, preprint of JSL 78(3) (2013),
+p. 1). `ℕ` adjoins none. -/
+
+/-- `Statement:` Escardó's `ℕ∞`: the decreasing sequences, `x (i + 1) = true → x i = true`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `ENat` (`WithTop ℕ`) and `OnePoint ℕ`
+-- (`Option ℕ`) adjoin the point at infinity as a constructor; the decreasing-sequence presentation
+-- was not located in the pinned Mathlib (the dated search is in `LEAN_CUSTOM_REGISTRY.md`).
+def NInf : Type := {x : ℕ → Bool // ∀ i, x (i + 1) = true → x i = true}
+
+namespace NInf
+
+/-- `Statement:` the finite stage `n̲ = 1ⁿ0^ω`. -/
+def ofNat (n : ℕ) : NInf := ⟨fun i => decide (i < n), fun i h => by
+  simp only [decide_eq_true_eq] at h ⊢; omega⟩
+
+/-- `Statement:` the point `∞ = 1^ω`. -/
+def infty : NInf := ⟨fun _ => true, fun _ _ => rfl⟩
+
+/-- `Statement:` points agreeing at every index are equal. -/
+theorem ext {x y : NInf} (h : ∀ i, x.1 i = y.1 i) : x = y := Subtype.ext (funext h)
+
+/-- `Statement:` a `true` at `n` gives `true` at every `i ≤ n`. -/
+theorem true_le (x : NInf) {n : ℕ} (h : x.1 n = true) : ∀ i, i ≤ n → x.1 i = true := by
+  induction n with
+  | zero => intro i hi; rw [Nat.le_zero.1 hi]; exact h
+  | succ n ih =>
+    intro i hi
+    rcases Nat.lt_or_ge i (n + 1) with hlt | hge
+    · exact ih (x.2 n h) i (by omega)
+    · rw [show i = n + 1 by omega]; exact h
+
+/-- `Statement:` a `false` at `n` gives `false` at every `i ≥ n`. -/
+theorem false_ge (x : NInf) {n : ℕ} (h : x.1 n = false) : ∀ i, n ≤ i → x.1 i = false := by
+  intro i hi
+  cases hx : x.1 i
+  · rfl
+  · rw [true_le x hx n hi] at h; cases h
+
+/-- `Statement:` if `x n = false`, `x = k̲` for some `k ≤ n` (Escardó, Lemma 3.2, p. 4). -/
+theorem eq_ofNat_of_false (x : NInf) : ∀ n, x.1 n = false → ∃ k, k ≤ n ∧ x = ofNat k := by
+  intro n
+  induction n with
+  | zero =>
+    intro h
+    refine ⟨0, le_refl _, ext fun i => ?_⟩
+    rw [false_ge x h i (Nat.zero_le _)]; rfl
+  | succ n ih =>
+    intro h
+    cases hn : x.1 n with
+    | false => obtain ⟨k, hk, e⟩ := ih hn; exact ⟨k, by omega, e⟩
+    | true =>
+      refine ⟨n + 1, le_refl _, ext fun i => ?_⟩
+      show x.1 i = decide (i < n + 1)
+      rcases Nat.lt_or_ge i (n + 1) with hlt | hge
+      · rw [true_le x hn i (by omega)]; exact (decide_eq_true hlt).symm
+      · rw [false_ge x h i hge]; exact (decide_eq_false (Nat.not_lt.2 hge)).symm
+
+/-- `Statement:` a point other than every `k̲` is `∞` (Escardó, Lemma 3.3, p. 4). -/
+theorem eq_infty_of_ne_ofNat (x : NInf) (h : ∀ k, x ≠ ofNat k) : x = infty :=
+  ext fun n => by
+    cases hx : x.1 n with
+    | true => rfl
+    | false => obtain ⟨k, _, e⟩ := eq_ofNat_of_false x n hx; exact absurd e (h k)
+
+/-- `Statement:` no finite stage is `∞`. -/
+theorem ofNat_ne_infty (n : ℕ) : ofNat n ≠ infty := fun h => by
+  have := congrArg (fun x : NInf => x.1 n) h; simp [ofNat, infty] at this
+
+/-- `Statement:` `epsSeq p n = p 0̲ && … && p n̲`. -/
+def epsSeq (p : NInf → Bool) : ℕ → Bool
+  | 0 => p (ofNat 0)
+  | n + 1 => epsSeq p n && p (ofNat (n + 1))
+
+/-- `Statement:` the point with sequence `epsSeq p` (Escardó, Theorem 3.5, p. 5). -/
+def eps (p : NInf → Bool) : NInf := ⟨epsSeq p, fun i h => by
+  simp only [epsSeq, Bool.and_eq_true] at h; exact h.1⟩
+
+/-- `Statement:` if `epsSeq p n = true`, then `p n̲ = true`. -/
+theorem eps_ofNat_val (p : NInf → Bool) (n : ℕ) : epsSeq p n = true → p (ofNat n) = true := by
+  cases n with
+  | zero => exact id
+  | succ n => intro h; simp only [epsSeq, Bool.and_eq_true] at h; exact h.2
+
+/-- `Statement:` if `p (eps p) = true`, `p` is `true` everywhere: `eps` is a selection function
+    (Escardó, Definition 2.1, p. 3, and Theorem 3.5, p. 5). -/
+theorem eps_spec (p : NInf → Bool) (h : p (eps p) = true) : ∀ x, p x = true := by
+  have hall : ∀ n, epsSeq p n = true := by
+    intro n
+    induction n with
+    | zero =>
+      cases h0 : epsSeq p 0 with
+      | true => rfl
+      | false =>
+        have e : eps p = ofNat 0 := ext fun i => by
+          show epsSeq p i = decide (i < 0)
+          have := false_ge (eps p) (show (eps p).1 0 = false from h0) i (Nat.zero_le _)
+          rw [show epsSeq p i = false from this]; exact (decide_eq_false (Nat.not_lt_zero i)).symm
+        rw [e] at h; exact absurd h (by simpa [epsSeq] using h0)
+    | succ n ih =>
+      cases h1 : epsSeq p (n + 1) with
+      | true => rfl
+      | false =>
+        have e : eps p = ofNat (n + 1) := ext fun i => by
+          show epsSeq p i = decide (i < n + 1)
+          rcases Nat.lt_or_ge i (n + 1) with hlt | hge
+          · rw [show epsSeq p i = true from
+              true_le (eps p) (show (eps p).1 n = true from ih) i (by omega)]
+            exact (decide_eq_true hlt).symm
+          · rw [show epsSeq p i = false from
+              false_ge (eps p) (show (eps p).1 (n + 1) = false from h1) i hge]
+            exact (decide_eq_false (Nat.not_lt.2 hge)).symm
+        rw [e] at h
+        simp only [epsSeq, ih, Bool.true_and] at h1
+        rw [h] at h1; cases h1
+  have hinf : eps p = infty := ext hall
+  have hω : p infty = true := hinf ▸ h
+  intro x
+  cases hx : p x with
+  | true => rfl
+  | false =>
+    exfalso
+    have : ∀ k, x ≠ ofNat k := fun k e => by
+      rw [e, eps_ofNat_val p k (hall k)] at hx; cases hx
+    rw [eq_infty_of_ne_ofNat x this, hω] at hx; cases hx
+
+/-- `Statement:` every `p : NInf → Bool` is `false` somewhere or `true` everywhere (Escardó,
+    Corollary 3.6, p. 5). -/
+theorem omniscient (p : NInf → Bool) : (∃ x, p x = false) ∨ ∀ x, p x = true := by
+  cases h : p (eps p) with
+  | false => exact Or.inl ⟨eps p, h⟩
+  | true => exact Or.inr (eps_spec p h)
+
+/-- `Statement:` `detSeq r n = !r 0 && … && !r n`. -/
+def detSeq (r : ℕ → Bool) : ℕ → Bool
+  | 0 => !r 0
+  | n + 1 => detSeq r n && !r (n + 1)
+
+/-- `Statement:` the point with sequence `detSeq r`. -/
+def det (r : ℕ → Bool) : NInf := ⟨detSeq r, fun i h => by
+  simp only [detSeq, Bool.and_eq_true] at h; exact h.1⟩
+
+/-- `Statement:` if `detSeq r n = true`, `r k = false` for every `k ≤ n`. -/
+theorem detSeq_true (r : ℕ → Bool) : ∀ n, detSeq r n = true → ∀ k ≤ n, r k = false := by
+  intro n
+  induction n with
+  | zero => intro h k hk; rw [Nat.le_zero.1 hk]; simpa [detSeq] using h
+  | succ n ih =>
+    intro h k hk
+    simp only [detSeq, Bool.and_eq_true, Bool.not_eq_true'] at h
+    rcases Nat.lt_or_ge k (n + 1) with hl | hg
+    · exact ih h.1 k (by omega)
+    · rw [show k = n + 1 by omega]; exact h.2
+
+/-- `Statement:` if `detSeq r n = false`, `r k = true` for some `k ≤ n`. -/
+theorem detSeq_false (r : ℕ → Bool) : ∀ n, detSeq r n = false → ∃ k, k ≤ n ∧ r k = true := by
+  intro n
+  induction n with
+  | zero => intro h; exact ⟨0, le_rfl, by simpa [detSeq] using h⟩
+  | succ n ih =>
+    intro h
+    simp only [detSeq, Bool.and_eq_false_iff, Bool.not_eq_false'] at h
+    rcases h with h | h
+    · obtain ⟨k, hk, e⟩ := ih h; exact ⟨k, by omega, e⟩
+    · exact ⟨n + 1, le_rfl, h⟩
+
+/-- `Statement:` `det r = ∞` iff `r` is `false` everywhere; both directions. -/
+theorem det_eq_infty_iff (r : ℕ → Bool) : det r = infty ↔ ∀ n, r n = false := by
+  constructor
+  · intro hinf n
+    exact detSeq_true r n (by
+      have := congrArg (fun x : NInf => x.1 n) hinf; simpa [det, infty] using this) n le_rfl
+  · intro hall
+    exact ext fun n => by
+      show detSeq r n = true
+      induction n with
+      | zero => simp [detSeq, hall 0]
+      | succ n ih => simp [detSeq, ih, hall (n + 1)]
+
+/-- `Statement:` on `Bool`, `(a != b) = false ↔ a = b`; both directions. -/
+theorem bool_bne_eq_false_iff (a b : Bool) : (a != b) = false ↔ a = b := by
+  cases a <;> cases b <;> exact ⟨fun h => by first | rfl | exact absurd h (by decide),
+    fun h => by first | rfl | exact absurd h (by decide)⟩
+
+/-- `Statement:` `x = y` iff `x.1 n != y.1 n` is `false` at every `n`; both directions. -/
+theorem eq_iff_all_bne_false (x y : NInf) : x = y ↔ ∀ n, (x.1 n != y.1 n) = false :=
+  ⟨fun e n => by rw [e]; exact (bool_bne_eq_false_iff _ _).2 rfl,
+   fun h => ext fun n => (bool_bne_eq_false_iff _ _).1 (h n)⟩
+
+/-- `Statement:` `none ↦ ∞`, `some n ↦ n̲`. -/
+def ofOption : Option ℕ → NInf
+  | none => infty
+  | some n => ofNat n
+
+/-- `Statement:` successor: prepend a `true`. -/
+def succ (x : NInf) : NInf := ⟨fun i => match i with
+  | 0 => true
+  | j + 1 => x.1 j, fun i h => by
+    cases i with
+    | zero => rfl
+    | succ j => exact x.2 j h⟩
+
+/-- `Statement:` `succ ∞ = ∞`. -/
+theorem succ_infty : succ infty = infty := ext fun i => by cases i <;> rfl
+
+/-- `Statement:` `succ n̲ = (n + 1)̲`. -/
+theorem succ_ofNat (n : ℕ) : succ (ofNat n) = ofNat (n + 1) := ext fun i => by
+  cases i with
+  | zero => exact (decide_eq_true (Nat.succ_pos n)).symm
+  | succ j =>
+    show decide (j < n) = decide (j + 1 < n + 1)
+    exact decide_eq_decide.2 Nat.succ_lt_succ_iff.symm
+
+/-- `Statement:` if `succ y = ∞`, then `y = ∞`. -/
+theorem infty_of_succ_eq_infty {y : NInf} (h : succ y = infty) : y = infty :=
+  ext fun j => congrArg (fun z : NInf => z.1 (j + 1)) h
+
+/-- `Statement:` for every `p : NInf → Bool`, some point other than `∞` has `p = false`, or every
+    finite stage has `p = true` (Escardó, Lemma 8.1, p. 14, by his proof). -/
+theorem exists_ne_infty_eq_false_or (p : NInf → Bool) :
+    (∃ x, x ≠ infty ∧ p x = false) ∨ ∀ n, p (ofNat n) = true := by
+  rcases omniscient (fun y => p y == p (succ y)) with ⟨y, hy⟩ | hall
+  · have hne : y ≠ infty := fun e => by
+      subst e
+      rw [succ_infty] at hy
+      cases h : p infty <;> rw [h] at hy <;> exact absurd hy (by decide)
+    have hne' : succ y ≠ infty := fun e => hne (infty_of_succ_eq_infty e)
+    left
+    cases hp : p y with
+    | false => exact ⟨y, hne, hp⟩
+    | true =>
+      cases hs : p (succ y) with
+      | false => exact ⟨succ y, hne', hs⟩
+      | true => rw [hp, hs] at hy; exact absurd hy (by decide)
+  · cases h0 : p (ofNat 0) with
+    | false => exact Or.inl ⟨ofNat 0, ofNat_ne_infty 0, h0⟩
+    | true =>
+      right
+      intro n
+      induction n with
+      | zero => exact h0
+      | succ n ih =>
+        have := hall (ofNat n)
+        rw [succ_ofNat, ih] at this
+        cases hq : p (ofNat (n + 1)) with
+        | true => rfl
+        | false => rw [hq] at this; exact absurd this (by decide)
+
+/-- `Statement:` `NInf` is separated: `¬¬ (b = y) → b = y` (Escardó's term, p. 5). -/
+theorem separated {b y : NInf} (h : ¬¬ b = y) : b = y := ext fun i => by
+  cases hb : b.1 i <;> cases hy : y.1 i
+  · rfl
+  · exact absurd (fun e : b = y => by rw [e, hy] at hb; cases hb) h
+  · exact absurd (fun e : b = y => by rw [e, hy] at hb; cases hb) h
+  · rfl
+
+/-- `Statement:` a point other than `∞` is not not a finite stage. -/
+theorem not_not_exists_ofNat (x : NInf) (hx : x ≠ infty) : ¬¬ ∃ k, x = ofNat k :=
+  fun hn => hx (eq_infty_of_ne_ofNat x fun k e => hn ⟨k, e⟩)
+
+/-- `Statement:` `isAt 0 b = !b 0`, `isAt (m + 1) b = b m && !b (m + 1)`. -/
+def isAt : ℕ → NInf → Bool
+  | 0, b => !b.1 0
+  | m + 1, b => b.1 m && !b.1 (m + 1)
+
+/-- `Statement:` `isAt m b = true ↔ b = m̲`: a `Bool` test isolating each finite stage; both
+    directions. -/
+theorem isAt_iff (m : ℕ) (b : NInf) : isAt m b = true ↔ b = ofNat m := by
+  constructor
+  · intro h
+    cases m with
+    | zero =>
+      have h0 : b.1 0 = false := by
+        cases hb : b.1 0
+        · rfl
+        · simp [isAt, hb] at h
+      obtain ⟨k, hk, e⟩ := eq_ofNat_of_false b 0 h0
+      rw [e, show k = 0 by omega]
+    | succ m =>
+      simp only [isAt, Bool.and_eq_true, Bool.not_eq_true'] at h
+      obtain ⟨k, hk, e⟩ := eq_ofNat_of_false b (m + 1) h.2
+      have hm : (ofNat k).1 m = true := e ▸ h.1
+      have hmk : m < k := of_decide_eq_true hm
+      rw [e, show k = m + 1 by omega]
+  · rintro rfl
+    cases m with
+    | zero => rfl
+    | succ m =>
+      show (decide (m < m + 1) && !decide (m + 1 < m + 1)) = true
+      rw [decide_eq_true (Nat.lt_succ_self m), decide_eq_false (Nat.lt_irrefl _)]; rfl
+
+/-- `Statement:` `hmap y z` is `z i || (succ z i && !y i)` at every `i`. -/
+def hmap (y z : NInf) : NInf := ⟨fun i => z.1 i || ((succ z).1 i && !y.1 i), fun i h => by
+  change (z.1 (i + 1) || ((succ z).1 (i + 1) && !y.1 (i + 1))) = true at h
+  change (z.1 i || ((succ z).1 i && !y.1 i)) = true
+  cases hz : z.1 (i + 1) with
+  | true => rw [z.2 i hz]; rfl
+  | false =>
+    rw [hz, Bool.false_or] at h
+    have : (succ z).1 (i + 1) = z.1 i := rfl
+    rw [this, Bool.and_eq_true] at h
+    rw [h.1]; rfl⟩
+
+/-- `Statement:` if `y n = true`, `hmap y n̲ = n̲`. -/
+theorem hmap_ofNat_of_true (y : NInf) (n : ℕ) (hy : y.1 n = true) :
+    hmap y (ofNat n) = ofNat n := ext fun i => by
+  show ((ofNat n).1 i || ((succ (ofNat n)).1 i && !y.1 i)) = (ofNat n).1 i
+  rw [succ_ofNat]
+  show (decide (i < n) || (decide (i < n + 1) && !y.1 i)) = decide (i < n)
+  rcases Nat.lt_trichotomy i n with h | h | h
+  · rw [decide_eq_true h]; rfl
+  · subst h; rw [hy, decide_eq_false (Nat.lt_irrefl i)]; cases decide (i < i + 1) <;> rfl
+  · rw [decide_eq_false (by omega : ¬ i < n), decide_eq_false (by omega : ¬ i < n + 1)]; rfl
+
+/-- `Statement:` if `y n = false`, `hmap y n̲ = (n + 1)̲`. -/
+theorem hmap_ofNat_of_false (y : NInf) (n : ℕ) (hy : y.1 n = false) :
+    hmap y (ofNat n) = ofNat (n + 1) := ext fun i => by
+  show ((ofNat n).1 i || ((succ (ofNat n)).1 i && !y.1 i)) = (ofNat (n + 1)).1 i
+  rw [succ_ofNat]
+  show (decide (i < n) || (decide (i < n + 1) && !y.1 i)) = decide (i < n + 1)
+  rcases Nat.lt_trichotomy i n with h | h | h
+  · rw [decide_eq_true h, decide_eq_true (by omega : i < n + 1)]; rfl
+  · subst h
+    rw [hy, decide_eq_false (Nat.lt_irrefl i), decide_eq_true (Nat.lt_succ_self i)]; rfl
+  · rw [decide_eq_false (by omega : ¬ i < n), decide_eq_false (by omega : ¬ i < n + 1)]; rfl
+
+/-- `Statement:` `hmap y n̲ ≠ y` at every finite stage. -/
+theorem hmap_ofNat_ne (y : NInf) (n : ℕ) : hmap y (ofNat n) ≠ y := by
+  cases hy : y.1 n with
+  | true =>
+    rw [hmap_ofNat_of_true y n hy]
+    intro e
+    have := congrArg (fun z : NInf => z.1 n) e
+    simp only at this
+    rw [hy] at this
+    exact absurd this (by rw [show (ofNat n).1 n = false from decide_eq_false (Nat.lt_irrefl n)]; decide)
+  | false =>
+    rw [hmap_ofNat_of_false y n hy]
+    intro e
+    have := congrArg (fun z : NInf => z.1 n) e
+    simp only at this
+    rw [hy] at this
+    exact absurd this (by
+      rw [show (ofNat (n + 1)).1 n = true from decide_eq_true (Nat.lt_succ_self n)]; decide)
+
+/-- `Statement:` if `z ≠ ∞`, then `hmap y z ≠ y`. -/
+theorem hmap_ne_of_ne_infty (y z : NInf) (hz : z ≠ infty) : hmap y z ≠ y := fun e =>
+  hz (eq_infty_of_ne_ofNat z fun k ek => by rw [ek] at e; exact hmap_ofNat_ne y k e)
+
+/-- `Statement:` every finite stage other than `y` is `hmap y j̲` for some `j`. -/
+theorem exists_hmap_eq (y : NInf) (k : ℕ) (hk : ofNat k ≠ y) :
+    ∃ j, hmap y (ofNat j) = ofNat k := by
+  cases hyk : y.1 k with
+  | true => exact ⟨k, hmap_ofNat_of_true y k hyk⟩
+  | false =>
+    cases k with
+    | zero =>
+      have : isAt 0 y = true := by show (!y.1 0) = true; rw [hyk]; rfl
+      exact absurd ((isAt_iff 0 y).1 this).symm hk
+    | succ j =>
+      cases hyj : y.1 j with
+      | false => exact ⟨j, hmap_ofNat_of_false y j hyj⟩
+      | true =>
+        have : isAt (j + 1) y = true := by
+          show (y.1 j && !y.1 (j + 1)) = true; rw [hyj, hyk]; rfl
+        exact absurd ((isAt_iff (j + 1) y).1 this).symm hk
+
+end NInf
+
+namespace Motion
+
+/-- `Statement:` if a `Bool` test `t` isolates `y` (`t b = true ↔ b = y`), every `Bool`-valued step
+    on `NInf` meets the trichotomy at `y`. -/
+theorem overTrichotomy_ninf_of_isolating (y : NInf) (t : NInf → Bool)
+    (ht : ∀ b, t b = true ↔ b = y) (r : NInf → NInf → Bool) :
+    (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y := by
+  rcases NInf.omniscient (fun b => !(r y b && !t b)) with ⟨b, hb⟩ | hall
+  · have hb2 : (!(r y b && !t b)) = false := hb
+    have h1 : r y b = true ∧ t b = false := by
+      revert hb2; cases r y b <;> cases t b <;> decide
+    refine Or.inr (Or.inr ⟨b, h1.1, fun e => ?_⟩)
+    have := (ht b).2 e
+    rw [h1.2] at this; cases this
+  · have key : ∀ b, r y b = true → t b = true := fun b hb => by
+      have h3 : (!(r y b && !t b)) = true := hall b
+      revert h3 hb; cases r y b <;> cases t b <;> decide
+    cases hyy : r y y with
+    | true => exact Or.inr (Or.inl ⟨hyy, fun b hb => (ht b).1 (key b hb)⟩)
+    | false =>
+      refine Or.inl fun b hb => ?_
+      have hb' : r y b = true := hb
+      have e := (ht b).1 (key b hb')
+      rw [e, hyy] at hb'; cases hb'
+
+/-- `Statement:` every `Bool`-valued step on `NInf` meets the trichotomy at every point, with no
+    hypothesis. `Reading:` Escardó's Lemma 8.1 (`NInf.exists_ne_infty_eq_false_or`) composed with
+    `NInf.hmap`, which avoids `y`, and `NInf.separated`; the route is constructed here. -/
+theorem overTrichotomy_ninf_boolStep (r : NInf → NInf → Bool) (y : NInf) :
+    (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y := by
+  cases hyy : r y y with
+  | false =>
+    rcases NInf.omniscient (fun b => !r y b) with ⟨b, hb⟩ | hall
+    · have hb2 : (!r y b) = false := hb
+      have hb' : r y b = true := by revert hb2; cases r y b <;> decide
+      exact Or.inr (Or.inr ⟨b, hb', fun e => by rw [e, hyy] at hb'; cases hb'⟩)
+    · exact Or.inl fun b hb => by
+        have hb' : r y b = true := hb
+        have h3 : (!r y b) = true := hall b
+        rw [hb'] at h3; cases h3
+  | true =>
+    rcases NInf.exists_ne_infty_eq_false_or (fun z => !r y (NInf.hmap y z)) with ⟨z, hz, hq⟩ | hB
+    · have hq2 : (!r y (NInf.hmap y z)) = false := hq
+      have hq' : r y (NInf.hmap y z) = true := by revert hq2; cases r y (NInf.hmap y z) <;> decide
+      exact Or.inr (Or.inr ⟨NInf.hmap y z, hq', NInf.hmap_ne_of_ne_infty y z hz⟩)
+    · have hB' : ∀ n, r y (NInf.hmap y (NInf.ofNat n)) = false := fun n => by
+        have h3 : (!r y (NInf.hmap y (NInf.ofNat n))) = true := hB n
+        revert h3; cases r y (NInf.hmap y (NInf.ofNat n)) <;> decide
+      cases hinf : r y NInf.infty with
+      | false =>
+        refine Or.inr (Or.inl ⟨hyy, fun b hb => NInf.separated fun hne => ?_⟩)
+        have hb' : r y b = true := hb
+        have hbinf : b ≠ NInf.infty := fun e => by rw [e, hinf] at hb'; cases hb'
+        apply NInf.not_not_exists_ofNat b hbinf
+        rintro ⟨k, rfl⟩
+        obtain ⟨j, hj⟩ := NInf.exists_hmap_eq y k hne
+        have := hB' j
+        rw [hj, hb'] at this; cases this
+      | true =>
+        rcases NInf.exists_ne_infty_eq_false_or (fun x => !r y x) with ⟨x, hx, hpx⟩ | hN
+        · have hpx2 : (!r y x) = false := hpx
+          have hpx' : r y x = true := by revert hpx2; cases r y x <;> decide
+          have hy : y ≠ NInf.infty := by
+            intro e
+            apply NInf.not_not_exists_ofNat x hx
+            rintro ⟨k, rfl⟩
+            have := hB' k
+            rw [NInf.hmap_ofNat_of_true y k (by rw [e]; rfl), hpx'] at this; cases this
+          exact Or.inr (Or.inr ⟨NInf.infty, hinf, fun e => hy e.symm⟩)
+        · have hN' : ∀ n, r y (NInf.ofNat n) = false := fun n => by
+            have h3 : (!r y (NInf.ofNat n)) = true := hN n
+            revert h3; cases r y (NInf.ofNat n) <;> decide
+          have hyinf : y = NInf.infty := NInf.eq_infty_of_ne_ofNat y fun k e => by
+            have := hN' k; rw [← e, hyy] at this; cases this
+          refine Or.inr (Or.inl ⟨hyy, fun b hb => ?_⟩)
+          have hb' : r y b = true := hb
+          rw [hyinf]
+          exact NInf.eq_infty_of_ne_ofNat b fun k e => by rw [e, hN' k] at hb'; cases hb'
+
+/-- `Statement:` every `Bool`-valued step on `NInf` has a total selector, `a ↦ eps (b ↦ !r a b)`. -/
+theorem selectedTotal_ninf_boolStep (r : NInf → NInf → Bool) :
+    (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).SelectedTotal := by
+  refine ⟨fun a => NInf.eps (fun b => !r a b), fun a ⟨b, hb⟩ => ?_⟩
+  show r a (NInf.eps fun b => !r a b) = true
+  cases h : r a (NInf.eps fun b => !r a b) with
+  | true => rfl
+  | false =>
+    have := NInf.eps_spec (fun b => !r a b) (show (!r a (NInf.eps fun b => !r a b)) = true by
+      rw [h]; rfl) b
+    have hb' : r a b = true := hb
+    have h2 : (!r a b) = true := this
+    rw [hb'] at h2; cases h2
+
+/-- `Statement:` if the trichotomy holds at every point of every `Bool`-valued step on `Option ℕ`,
+    then the limited principle of omniscience (LPO) holds; read at `none`. -/
+theorem lpo_of_trichotomy_option_boolStep
+    (H : ∀ (r : Option ℕ → Option ℕ → Bool) (y : Option ℕ),
+      (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y) :
+    ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false := by
+  intro α
+  rcases H (fun _ b => b.elim false α) none with h | ⟨hs, _⟩ | ⟨b, hb, _⟩
+  · exact Or.inr fun n => by
+      cases hn : α n with
+      | false => rfl
+      | true => exact absurd (show (some n).elim false α = true from hn) (h (some n))
+  · exact absurd (show false = true from hs) Bool.false_ne_true
+  · cases b with
+    | none => exact absurd (show false = true from hb) Bool.false_ne_true
+    | some n => exact Or.inl ⟨n, hb⟩
+
+/-- `Statement:` and back: LPO gives the trichotomy at every point of every `Bool`-valued step on
+    `Option ℕ`. -/
+theorem overTrichotomy_option_boolStep_of_lpo
+    (h : ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false)
+    (r : Option ℕ → Option ℕ → Bool) (y : Option ℕ) :
+    (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y := by
+  have hb : ∀ b, (r y b && !decide (b = y)) = true → r y b = true ∧ b ≠ y := by
+    intro b hb
+    rcases decEq b y with hne | he
+    · cases hr : r y b
+      · rw [hr] at hb; cases hb
+      · exact ⟨rfl, hne⟩
+    · rw [decide_eq_true he] at hb
+      cases hr : r y b <;> rw [hr] at hb <;> cases hb
+  have hc : ∀ b, (r y b && !decide (b = y)) = false → r y b = true → b = y := by
+    intro b hb hr
+    rcases decEq b y with hne | he
+    · rw [hr, decide_eq_false hne] at hb; cases hb
+    · exact he
+  rcases h (fun n => r y (some n) && !decide (some n = y)) with ⟨n, hn⟩ | hall
+  · exact Or.inr (Or.inr ⟨some n, hb _ hn⟩)
+  · cases hnone : (r y none && !decide (none = y)) with
+    | true => exact Or.inr (Or.inr ⟨none, hb _ hnone⟩)
+    | false =>
+      have hall' : ∀ b, r y b = true → b = y := by
+        intro b hr
+        cases b with
+        | none => exact hc none hnone hr
+        | some n => exact hc (some n) (hall n) hr
+      cases hyy : r y y with
+      | true => exact Or.inr (Or.inl ⟨hyy, hall'⟩)
+      | false =>
+        refine Or.inl fun b hs => ?_
+        have hr : r y b = true := hs
+        have e := hall' b hr
+        rw [e, hyy] at hr; cases hr
+
+/-- `Statement:` if every `Bool`-valued step on `Option ℕ` has a total selector, then LPO; one way,
+    read at `none`. -/
+theorem lpo_of_selectedTotal_option_boolStep
+    (h : ∀ r : Option ℕ → Option ℕ → Bool,
+      (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).SelectedTotal) :
+    ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false := by
+  intro α
+  obtain ⟨f, hf⟩ := h (fun _ b => b.elim false α)
+  have key : ∀ n, α n = true → (f none).elim false α = true := fun n hn => hf none ⟨some n, hn⟩
+  cases hfn : f none with
+  | none =>
+    refine Or.inr fun n => ?_
+    cases hn : α n with
+    | false => rfl
+    | true =>
+      have := key n hn
+      rw [hfn] at this; cases this
+  | some m =>
+    cases hm : α m with
+    | true => exact Or.inl ⟨m, hm⟩
+    | false =>
+      refine Or.inr fun n => ?_
+      cases hn : α n with
+      | false => rfl
+      | true =>
+        have := key n hn
+        rw [hfn] at this
+        have h2 : α m = true := this
+        rw [hm] at h2; cases h2
+
+end Motion
+
+namespace NInf
+
+/-- `Statement:` if a `Bool` test `t` isolates `∞`, the weak limited principle of omniscience (WLPO)
+    holds. `Reading:` Escardó's Theorem 7.1(1) (p. 13) gets WLPO from any discontinuous map
+    `ℕ∞ → 2` assuming countable choice; `t` is `false` at every `n̲` and `true` at `∞`, and this
+    reduction uses no choice principle. -/
+theorem wlpo_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b = infty) :
+    ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r => by
+  cases h : t (det r) with
+  | true => exact Or.inl ((det_eq_infty_iff r).1 ((ht _).1 h))
+  | false =>
+    refine Or.inr fun hall => ?_
+    rw [(ht _).2 ((det_eq_infty_iff r).2 hall)] at h; cases h
+
+/-- `Statement:` if WLPO holds, any two points of `NInf` are equal or not. -/
+theorem eqOr_of_wlpo (h : ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false)
+    (x y : NInf) : x = y ∨ x ≠ y :=
+  (h (fun n => x.1 n != y.1 n)).imp (eq_iff_all_bne_false x y).2
+    (fun hn e => hn ((eq_iff_all_bne_false x y).1 e))
+
+/-- `Statement:` if every point of `NInf` is `∞` or not, WLPO holds (Escardó, p. 4, the WLPO row). -/
+theorem wlpo_of_eqOr_infty (h : ∀ x : NInf, x = infty ∨ x ≠ infty) :
+    ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r =>
+  (h (det r)).imp (det_eq_infty_iff r).1 (fun hne hall => hne ((det_eq_infty_iff r).2 hall))
+
+/-- `Statement:` WLPO iff any two points of `NInf` are equal or not; both directions. -/
+theorem wlpo_iff_eqOr :
+    (∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false) ↔ ∀ x y : NInf, x = y ∨ x ≠ y :=
+  ⟨eqOr_of_wlpo, fun h => wlpo_of_eqOr_infty fun x => h x infty⟩
+
+end NInf
+
+namespace Motion
+
+/-- `Statement:` if some `Bool`-valued step on `NInf` steps from `∞` to `∞` only, WLPO holds. -/
+theorem wlpo_of_selfOnlyAt_infty (r : NInf → NInf → Bool)
+    (h : (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).SelfOnlyAt NInf.infty) :
+    ∀ α : ℕ → Bool, (∀ n, α n = false) ∨ ¬ ∀ n, α n = false :=
+  NInf.wlpo_of_isolating_infty (r NInf.infty) fun b => ⟨fun hb => h.2 b hb, fun e => e ▸ h.1⟩
+
+/-- `Statement:` if `p ∞ = true`, WLPO holds or `p` is `true` at some point other than `∞`: the
+    trichotomy at `∞` of the step `a ↦ {b | p b}`, by `overTrichotomy_ninf_boolStep`. -/
+theorem wlpo_or_leavesAt_infty (p : NInf → Bool) (hp : p NInf.infty = true) :
+    (∀ α : ℕ → Bool, (∀ n, α n = false) ∨ ¬ ∀ n, α n = false) ∨
+      ∃ b, b ≠ NInf.infty ∧ p b = true := by
+  rcases overTrichotomy_ninf_boolStep (fun _ b => p b) NInf.infty with h | h | ⟨b, hb, hne⟩
+  · exact absurd hp (h NInf.infty)
+  · exact Or.inl (wlpo_of_selfOnlyAt_infty _ h)
+  · exact Or.inr ⟨b, hne, hb⟩
+
+end Motion
+
+/-- `Statement:` WLPO as data: at every `r : ℕ → Bool`, a decision of `∀ n, r n = false`. -/
+def WLPOData : Type := ∀ r : ℕ → Bool, Decidable (∀ n, r n = false)
+
+namespace NInf
+
+/-- `Statement:` WLPO as data gives decidable equality on `NInf`. -/
+def decEq_of_wlpoData (d : WLPOData) : DecidableEq NInf := fun x y =>
+  @decidable_of_iff _ _ (eq_iff_all_bne_false x y).symm (d fun n => x.1 n != y.1 n)
+
+/-- `Statement:` decidable equality on `NInf` gives WLPO as data. -/
+def wlpoData_of_decEq (d : DecidableEq NInf) : WLPOData := fun r =>
+  @decidable_of_iff _ _ (det_eq_infty_iff r) (d (det r) infty)
+
+/-- `Statement:` WLPO with unique choice into `Bool` (a hypothesis) gives decidable equality on
+    `NInf`. -/
+def decEq_of_wlpo_uc (uc : ∀ P : Bool → Prop, (∃! b, P b) → {b : Bool // P b})
+    (h : ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false) : DecidableEq NInf := fun x y =>
+  let P : Bool → Prop := fun b => (b = true ∧ x = y) ∨ (b = false ∧ x ≠ y)
+  have hu : ∃! b, P b := by
+    rcases eqOr_of_wlpo h x y with e | ne
+    · exact ⟨true, Or.inl ⟨rfl, e⟩, fun b hb => hb.elim And.left (fun h' => absurd e h'.2)⟩
+    · exact ⟨false, Or.inr ⟨rfl, ne⟩, fun b hb => hb.elim (fun h' => absurd h'.2 ne) And.left⟩
+  match uc P hu with
+  | ⟨true, hb⟩ => isTrue (hb.elim And.right (fun h' => absurd h'.1 (by decide)))
+  | ⟨false, hb⟩ => isFalse (hb.elim (fun h' => absurd h'.1 (by decide)) And.right)
+
+/-- `Statement:` CONTROL: `NInf` has decidable equality by `Classical.decEq`, with no WLPO hypothesis. -/
+noncomputable def decEq_classical : DecidableEq NInf := Classical.decEq NInf
+
+/-- `Statement:` a `Bool` test isolating `∞` gives decidable equality on `NInf`. -/
+def decEq_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b = infty) :
+    DecidableEq NInf := decEq_of_wlpoData fun r =>
+  @decidable_of_iff _ _ ((ht (det r)).trans (det_eq_infty_iff r)) (instDecidableEqBool (t (det r)) true)
+
+/-- `Statement:` and back: decidable equality on `NInf` gives a `Bool` test isolating `∞`. -/
+theorem isolating_infty_of_decEq (d : DecidableEq NInf) :
+    ∃ t : NInf → Bool, ∀ b, t b = true ↔ b = infty :=
+  ⟨fun b => @decide _ (d b infty), fun b => @decide_eq_true_iff _ (d b infty)⟩
+
+/-- `Statement:` a map `NInf → Option ℕ` sending exactly `∞` to `none` gives WLPO. -/
+theorem wlpo_of_tag (g : NInf → Option ℕ) (hg : ∀ x, g x = none ↔ x = infty) :
+    ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
+  wlpo_of_isolating_infty (fun x => (g x).isNone) fun b => by
+    show (g b).isNone = true ↔ b = infty
+    cases hb : g b with
+    | none => exact ⟨fun _ => (hg b).1 hb, fun _ => rfl⟩
+    | some n =>
+      refine ⟨fun h => Bool.noConfusion h, fun e => ?_⟩
+      have := (hg b).2 e
+      rw [hb] at this; cases this
+
+/-- `Statement:` `toPart x` is defined iff `x n = false` for some `n`, with value the least such `n`. -/
+def toPart (x : NInf) : Part ℕ := ⟨∃ n, x.1 n = false, fun h => Nat.find h⟩
+
+/-- `Statement:` `n ∈ toPart x ↔ x = n̲`; both directions. -/
+theorem mem_toPart_iff (x : NInf) (n : ℕ) : n ∈ toPart x ↔ x = ofNat n := by
+  constructor
+  · rintro ⟨h, hv⟩
+    have hv' : Nat.find h = n := hv
+    have hs : x.1 n = false := hv' ▸ Nat.find_spec h
+    obtain ⟨k, hk, e⟩ := eq_ofNat_of_false x n hs
+    have hxk : x.1 k = false := by
+      rw [e]; exact decide_eq_false (Nat.lt_irrefl k)
+    have := Nat.find_min' h hxk
+    rw [e, show k = n by omega]
+  · rintro rfl
+    have hd : ∃ m, (ofNat n).1 m = false := ⟨n, decide_eq_false (Nat.lt_irrefl n)⟩
+    refine ⟨hd, ?_⟩
+    show Nat.find hd = n
+    have h1 : Nat.find hd ≤ n := Nat.find_min' hd (decide_eq_false (Nat.lt_irrefl n))
+    have h2 : ¬ Nat.find hd < n := fun hk => by
+      have hs := Nat.find_spec hd
+      have : (ofNat n).1 (Nat.find hd) = true := decide_eq_true hk
+      rw [this] at hs; cases hs
+    omega
+
+/-- `Statement:` `toPart` is one-to-one. -/
+theorem toPart_injective : Function.Injective toPart := by
+  have key : ∀ x y : NInf, toPart x = toPart y → ∀ n, x.1 n = false → x = y := by
+    intro x y hxy n hn
+    obtain ⟨k, -, hk⟩ := eq_ofNat_of_false x n hn
+    have hky : k ∈ toPart y := hxy ▸ (mem_toPart_iff x k).2 hk
+    exact hk.trans ((mem_toPart_iff y k).1 hky).symm
+  intro x y hxy
+  exact ext fun n => by
+    cases hx : x.1 n with
+    | false => exact (congrArg (fun z : NInf => z.1 n) (key x y hxy n hx)).symm.trans hx |>.symm
+    | true =>
+      cases hy : y.1 n with
+      | false =>
+        have e := key y x hxy.symm n hy
+        have := congrArg (fun z : NInf => z.1 n) e
+        simp only at this; rw [hy, hx] at this; exact this.symm
+      | true => rfl
+
+/-- `Statement:` `toPart ∘ ofOption = Part.ofOption` on `Option ℕ`. -/
+theorem toPart_ofOption (o : Option ℕ) : toPart (ofOption o) = Part.ofOption o := by
+  apply Part.ext
+  intro n
+  rw [mem_toPart_iff, Part.mem_ofOption]
+  cases o with
+  | none =>
+    exact ⟨fun h => absurd h.symm (ofNat_ne_infty n), fun h => by cases h⟩
+  | some m =>
+    constructor
+    · intro h
+      have := congrArg (fun z : NInf => z.1 m) h
+      have h2 := congrArg (fun z : NInf => z.1 n) h
+      simp [ofOption, ofNat] at this h2
+      exact congrArg some (by omega)
+    · intro h; cases h; rfl
+
+/-- `Statement:` a map `g : NInf → Option ℕ` with `g x = some n ↔ x = n̲` gives LPO. -/
+theorem lpo_of_exactTag (g : NInf → Option ℕ) (hg : ∀ x n, g x = some n ↔ x = ofNat n) :
+    ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false := by
+  intro r
+  cases hx : g (det r) with
+  | some k =>
+    left
+    have e := (hg _ k).1 hx
+    have hd : (det r).1 k = false := by rw [e]; exact decide_eq_false (Nat.lt_irrefl k)
+    obtain ⟨j, _, hj⟩ := detSeq_false r k hd
+    exact ⟨j, hj⟩
+  | none =>
+    right
+    have hinf : det r = infty :=
+      eq_infty_of_ne_ofNat _ fun k e => by rw [(hg _ k).2 e] at hx; cases hx
+    exact (det_eq_infty_iff r).1 hinf
+
+/-- `Statement:` a map `g : Part ℕ → NInf` with `g o = n̲ ↔ n ∈ o` gives excluded middle. -/
+theorem em_of_partToNInf (g : Part ℕ → NInf) (hg : ∀ o n, g o = ofNat n ↔ n ∈ o) :
+    ∀ p : Prop, p ∨ ¬ p := by
+  intro p
+  let o : Part ℕ := ⟨p, fun _ => 0⟩
+  cases h : (g o).1 0 with
+  | false =>
+    left
+    obtain ⟨k, _, e⟩ := eq_ofNat_of_false (g o) 0 h
+    exact ((hg o k).1 e).1
+  | true =>
+    right
+    intro hp
+    have e := (hg o 0).2 ⟨hp, rfl⟩
+    rw [e] at h; cases h
+
+/-- `Statement:` `toComp x` is `none` at `n` where `x n = true`, and `some ()` where `x n = false`. -/
+def toComp (x : NInf) : Computation Unit :=
+  ⟨fun n => bif x.1 n then none else some (), fun n a h => by
+    cases hx : x.1 n with
+    | true => simp [hx] at h
+    | false =>
+      have := false_ge x hx (n + 1) (Nat.le_succ n)
+      show (bif x.1 (n + 1) then none else some ()) = some a
+      rw [this]; cases a; rfl⟩
+
+/-- `Statement:` `ofComp c` is `true` at `n` where `c` is `none` at `n`. -/
+def ofComp (c : Computation Unit) : NInf :=
+  ⟨fun n => (c.1 n).isNone, fun i h => by
+    change (c.1 (i + 1)).isNone = true at h
+    change (c.1 i).isNone = true
+    cases hc : c.1 i with
+    | none => rfl
+    | some a =>
+      have := c.2 hc
+      rw [this] at h; cases h⟩
+
+/-- `Statement:` `NInf ≃ Computation Unit` (Mathlib's delay type at `Unit`), by `toComp` and `ofComp`. -/
+def ninfEquivComp : NInf ≃ Computation Unit where
+  toFun := toComp
+  invFun := ofComp
+  left_inv x := ext fun n => by
+    show ((bif x.1 n then none else some ()) : Option Unit).isNone = x.1 n
+    cases x.1 n <;> rfl
+  right_inv c := Subtype.ext (funext fun n => by
+    show (bif (c.1 n).isNone then none else some ()) = c.1 n
+    cases c.1 n with
+    | none => rfl
+    | some a => cases a; rfl)
+
+/-- `Statement:` `toComp ∞` is Mathlib's `Computation.empty Unit`, by `rfl`. -/
+theorem toComp_infty : toComp infty = Computation.empty Unit := rfl
+
+end NInf
+
 end ZeroParadox
 
 section PurityCheck
@@ -3611,5 +4399,72 @@ open ZeroParadox
 #print axioms Motion.isBisim_ker
 #print axioms Motion.isBisim_ker_coalgHom
 #print axioms Motion.isBisim_preimage
+#print axioms NInf
+#print axioms NInf.ofNat
+#print axioms NInf.infty
+#print axioms NInf.ext
+#print axioms NInf.true_le
+#print axioms NInf.false_ge
+#print axioms NInf.eq_ofNat_of_false
+#print axioms NInf.eq_infty_of_ne_ofNat
+#print axioms NInf.ofNat_ne_infty
+#print axioms NInf.epsSeq
+#print axioms NInf.eps
+#print axioms NInf.eps_ofNat_val
+#print axioms NInf.eps_spec
+#print axioms NInf.omniscient
+#print axioms NInf.detSeq
+#print axioms NInf.det
+#print axioms NInf.detSeq_true
+#print axioms NInf.detSeq_false
+#print axioms NInf.det_eq_infty_iff
+#print axioms NInf.bool_bne_eq_false_iff
+#print axioms NInf.eq_iff_all_bne_false
+#print axioms NInf.ofOption
+#print axioms NInf.succ
+#print axioms NInf.succ_infty
+#print axioms NInf.succ_ofNat
+#print axioms NInf.infty_of_succ_eq_infty
+#print axioms NInf.exists_ne_infty_eq_false_or
+#print axioms NInf.separated
+#print axioms NInf.not_not_exists_ofNat
+#print axioms NInf.isAt
+#print axioms NInf.isAt_iff
+#print axioms NInf.hmap
+#print axioms NInf.hmap_ofNat_of_true
+#print axioms NInf.hmap_ofNat_of_false
+#print axioms NInf.hmap_ofNat_ne
+#print axioms NInf.hmap_ne_of_ne_infty
+#print axioms NInf.exists_hmap_eq
+#print axioms Motion.overTrichotomy_ninf_of_isolating
+#print axioms Motion.overTrichotomy_ninf_boolStep
+#print axioms Motion.selectedTotal_ninf_boolStep
+#print axioms Motion.lpo_of_trichotomy_option_boolStep
+#print axioms Motion.overTrichotomy_option_boolStep_of_lpo
+#print axioms Motion.lpo_of_selectedTotal_option_boolStep
+#print axioms NInf.wlpo_of_isolating_infty
+#print axioms NInf.eqOr_of_wlpo
+#print axioms NInf.wlpo_of_eqOr_infty
+#print axioms NInf.wlpo_iff_eqOr
+#print axioms Motion.wlpo_of_selfOnlyAt_infty
+#print axioms Motion.wlpo_or_leavesAt_infty
+#print axioms WLPOData
+#print axioms NInf.decEq_of_wlpoData
+#print axioms NInf.wlpoData_of_decEq
+#print axioms NInf.decEq_of_wlpo_uc
+#print axioms NInf.decEq_classical
+#print axioms NInf.decEq_of_isolating_infty
+#print axioms NInf.isolating_infty_of_decEq
+#print axioms NInf.wlpo_of_tag
+#print axioms NInf.toPart
+#print axioms NInf.mem_toPart_iff
+#print axioms NInf.toPart_injective
+#print axioms NInf.toPart_ofOption
+#print axioms NInf.lpo_of_exactTag
+#print axioms NInf.em_of_partToNInf
+#print axioms NInf.toComp
+#print axioms NInf.ofComp
+#print axioms NInf.ninfEquivComp
+#print axioms NInf.toComp_infty
 
 end PurityCheck

@@ -483,6 +483,12 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Reason:** Related by some bisimulation: the union of all bisimulations, Rutten's greatest bisimulation of Corollary 5.6 (TCS 249 (2000), p. 33). `isBisim_bisimilar` shows it is a bisimulation, and `bisimilar_equivalence` that on one motion it is an equivalence relation. The search recorded under `Motion.IsBisim` covers this entry.
 
+### `NInf` — `ZeroParadox/Die.lean`
+
+**Relationship to Mathlib:** Mathlib's `ENat` is `WithTop ℕ` and `OnePoint ℕ` is `Option ℕ`, each with the point at infinity as a constructor; Mathlib's `Computation Unit` is equivalent to `NInf` (`NInf.ninfEquivComp`); no Mathlib analog for the decreasing-sequence presentation
+
+**Reason:** Escardó's `ℕ∞`, the decreasing sequences `ℕ → Bool` (preprint of JSL 78(3) (2013), p. 1), in the presentation his selection function (Theorem 3.5, p. 5) and his Lemma 8.1 (p. 14) are stated for, so the proofs in `ZeroParadox/Die.lean` § XXIII follow his. The decreasing-sequence presentation was not located in the pinned Mathlib as of 2026-10-29, searched as follows: a grep of `Mathlib/` (`.lean` files) for `generic convergent` and `one-point compactification of` (hits only in `Topology/Compactification/OnePoint/`, whose `OnePoint` is `Option`), for the decreasing condition `x (i + 1) = true → x i = true` and `∀ n, f (n + 1) ≤ f n` (one hit, `antitone_nat_of_succ_le`, a lemma on antitone maps, not a type), and for `Conat`, `omniscient`, `Omniscient` and `Searchable` (no hits); and for `def ENat` (one hit, `WithTop ℕ`).
+
 ### `clockStep` — `ZeroParadox/Computability/Occurrence.lean`
 
 **Relationship to Mathlib:** Built from Mathlib's `Nat.Partrec.Code.evaln`; no Mathlib analog
