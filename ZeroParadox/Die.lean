@@ -3277,7 +3277,9 @@ end Motion
 one point adjoined to the finite stages of `ℕ` as a constructor (`Option ℕ`, the tagged point;
 Mathlib's `ENat` is `WithTop ℕ`), or as their limit (`NInf`, the untagged point: Escardó's
 one-point compactification of `ℕ`, the generic convergent sequence, preprint of JSL 78(3) (2013),
-p. 1). `ℕ` adjoins none. -/
+p. 1). `ℕ` adjoins none. The corpus's other conatural carriers: `Cofix natPF_NatListRegime.Obj`,
+with `natInfinity` (`ZeroParadox/Computability/NatListRegime.lean`,
+`ZeroParadox/Computability/GroundZero.lean`), and `ENat` (`enat_fp_iff`, `ZeroParadox/Miniature.lean`). -/
 
 /-- `Statement:` Escardó's `ℕ∞`: the decreasing sequences, `x (i + 1) = true → x i = true`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `ENat` (`WithTop ℕ`) and `OnePoint ℕ`
@@ -3671,7 +3673,8 @@ theorem overTrichotomy_ninf_of_isolating (y : NInf) (t : NInf → Bool)
 
 /-- `Statement:` every `Bool`-valued step on `NInf` meets the trichotomy at every point, with no
     hypothesis. `Reading:` Escardó's Lemma 8.1 (`NInf.exists_ne_infty_eq_false_or`) composed with
-    `NInf.hmap`, which avoids `y`, and `NInf.separated`; the route is constructed here. -/
+    `NInf.hmap`, which avoids `y` at every `z ≠ ∞` (`NInf.hmap_ne_of_ne_infty`), and
+    `NInf.separated`; the route is constructed here. -/
 theorem overTrichotomy_ninf_boolStep (r : NInf → NInf → Bool) (y : NInf) :
     (ofTotal id (fun _ => rfl) (fun a b => r a b = true)).OverTrichotomy y := by
   cases hyy : r y y with
@@ -3826,9 +3829,11 @@ end Motion
 namespace NInf
 
 /-- `Statement:` if a `Bool` test `t` isolates `∞`, the weak limited principle of omniscience (WLPO)
-    holds. `Reading:` Escardó's Theorem 7.1(1) (p. 13) gets WLPO from any discontinuous map
-    `ℕ∞ → 2` assuming countable choice; `t` is `false` at every `n̲` and `true` at `∞`, and this
-    reduction uses no choice principle. -/
+    holds. `Reading:` `t` is `false` at every `n̲` and `true` at `∞`; with that hypothesis the
+    choice-free reduction is Escardó's own, his WLPO row (p. 4) with Lemma 3.3 (p. 4), formalized as
+    `basic-discontinuity-taboo` in his TypeTopology module `Taboos.BasicDiscontinuity` (retrieved
+    2026-10-29). His Theorem 7.1(1) (p. 13) is the weaker-hypothesis form, any discontinuous map
+    `ℕ∞ → 2`, and assumes countable choice. -/
 theorem wlpo_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b = infty) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r => by
   cases h : t (det r) with
@@ -3843,12 +3848,15 @@ theorem eqOr_of_wlpo (h : ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ 
   (h (fun n => x.1 n != y.1 n)).imp (eq_iff_all_bne_false x y).2
     (fun hn e => hn ((eq_iff_all_bne_false x y).1 e))
 
-/-- `Statement:` if every point of `NInf` is `∞` or not, WLPO holds (Escardó, p. 4, the WLPO row). -/
+/-- `Statement:` if every point of `NInf` is `∞` or not, WLPO holds (Escardó, p. 4, the WLPO row,
+    right to left). -/
 theorem wlpo_of_eqOr_infty (h : ∀ x : NInf, x = infty ∨ x ≠ infty) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r =>
   (h (det r)).imp (det_eq_infty_iff r).1 (fun hne hall => hne ((det_eq_infty_iff r).2 hall))
 
-/-- `Statement:` WLPO iff any two points of `NInf` are equal or not; both directions. -/
+/-- `Statement:` WLPO iff any two points of `NInf` are equal or not; both directions. `Reading:`
+    the `Prop` form of TypeTopology `Taboos.WLPO`'s `ℕ∞-discrete-gives-WLPO` and
+    `WLPO-gives-ℕ∞-discrete` (Escardó; retrieved 2026-10-29), whose WLPO is type-valued. -/
 theorem wlpo_iff_eqOr :
     (∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false) ↔ ∀ x y : NInf, x = y ∨ x ≠ y :=
   ⟨eqOr_of_wlpo, fun h => wlpo_of_eqOr_infty fun x => h x infty⟩
@@ -3880,11 +3888,13 @@ def WLPOData : Type := ∀ r : ℕ → Bool, Decidable (∀ n, r n = false)
 
 namespace NInf
 
-/-- `Statement:` WLPO as data gives decidable equality on `NInf`. -/
+/-- `Statement:` WLPO as data gives decidable equality on `NInf` (TypeTopology `Taboos.WLPO`,
+    `WLPO-gives-ℕ∞-discrete`, which also takes function extensionality). -/
 def decEq_of_wlpoData (d : WLPOData) : DecidableEq NInf := fun x y =>
   @decidable_of_iff _ _ (eq_iff_all_bne_false x y).symm (d fun n => x.1 n != y.1 n)
 
-/-- `Statement:` decidable equality on `NInf` gives WLPO as data. -/
+/-- `Statement:` decidable equality on `NInf` gives WLPO as data (TypeTopology `Taboos.WLPO`,
+    `ℕ∞-discrete-gives-WLPO`). -/
 def wlpoData_of_decEq (d : DecidableEq NInf) : WLPOData := fun r =>
   @decidable_of_iff _ _ (det_eq_infty_iff r) (d (det r) infty)
 
@@ -3914,7 +3924,8 @@ theorem isolating_infty_of_decEq (d : DecidableEq NInf) :
     ∃ t : NInf → Bool, ∀ b, t b = true ↔ b = infty :=
   ⟨fun b => @decide _ (d b infty), fun b => @decide_eq_true_iff _ (d b infty)⟩
 
-/-- `Statement:` a map `NInf → Option ℕ` sending exactly `∞` to `none` gives WLPO. -/
+/-- `Statement:` a map `NInf → Option ℕ` sending exactly `∞` to `none` gives WLPO (Escardó, p. 4,
+    the WLPO row, right to left). -/
 theorem wlpo_of_tag (g : NInf → Option ℕ) (hg : ∀ x, g x = none ↔ x = infty) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false :=
   wlpo_of_isolating_infty (fun x => (g x).isNone) fun b => by
@@ -3987,7 +3998,8 @@ theorem toPart_ofOption (o : Option ℕ) : toPart (ofOption o) = Part.ofOption o
       exact congrArg some (by omega)
     · intro h; cases h; rfl
 
-/-- `Statement:` a map `g : NInf → Option ℕ` with `g x = some n ↔ x = n̲` gives LPO. -/
+/-- `Statement:` a map `g : NInf → Option ℕ` with `g x = some n ↔ x = n̲` gives LPO (Escardó, p. 4,
+    the LPO row `ℕ∞ = ℕ ∪ {∞}`, right to left; compare his Corollary 3.7, p. 5). -/
 theorem lpo_of_exactTag (g : NInf → Option ℕ) (hg : ∀ x n, g x = some n ↔ x = ofNat n) :
     ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false := by
   intro r
@@ -4041,7 +4053,10 @@ def ofComp (c : Computation Unit) : NInf :=
       have := c.2 hc
       rw [this] at h; cases h⟩
 
-/-- `Statement:` `NInf ≃ Computation Unit` (Mathlib's delay type at `Unit`), by `toComp` and `ofComp`. -/
+/-- `Statement:` `NInf ≃ Computation Unit` (Mathlib's delay type at `Unit`), by `toComp` and `ofComp`.
+    `Reading:` compare C. Knapp, "Partial Functions and Recursion in Univalent Type Theory," 2020
+    (arXiv:2011.00272), § 4.1, Lemma 4.4 (p. 76) and Theorem 4.7 (p. 78) at `X = 1`, where his `ℕ∞`
+    is the sequences with at most one `1`. -/
 def ninfEquivComp : NInf ≃ Computation Unit where
   toFun := toComp
   invFun := ofComp
