@@ -111,3 +111,5 @@ The mathematics of this genre is not new and is not claimed as new.
 - § II  The witness: three tokens glued by `p` on one side and by `¬p` on the other
 - § III The taboo: the general fixed-point-free statement implies weak excluded middle
 - § IV  Non-vacuity, and the ledger consequence for `Lawvere.lean`
+- § V   The omniscience principles on bit sequences (LPO, WLPO, LLPO, Markov's principle) and the
+  arrows between them; prior art cited in the file, not claimed

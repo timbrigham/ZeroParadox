@@ -172,7 +172,8 @@ the boundary and its scope fence. -/
 -- J. Symbolic Logic 78(3) (2013) 764–784, doi 10.2178/jsl.7803040, § 3, which also restates all three
 -- as questions about the point ∞ = 1^ω of ℕ∞; with `true` and `false` exchanged, that point is this ⊥.
 -- The form over ℕ^ℕ is Ishihara, "Reverse mathematics in Bishop's constructive mathematics"
--- (Philosophia Scientiae CS 6, 2006), § 6, Prop 10.1, p. 53.
+-- (Philosophia Scientiae CS 6, 2006), § 6, Prop 10.1, p. 53. The named principles and the arrows among
+-- them are `ZeroParadox/Category/LawvereTaboo.lean` § V.
 example :
     (∀ f : ℕ → Bool, f = ⊥ ∨ ∃ n, f n = true) ↔
       (∀ f : ℕ → Bool, f = ⊥ ∨ f ≠ ⊥) ∧ (∀ f : ℕ → Bool, f ≠ ⊥ → ∃ n, f n = true) := by

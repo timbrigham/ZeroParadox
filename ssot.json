@@ -652,8 +652,8 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2785,
-        "files": 183
+        "declarations": 2847,
+        "files": 184
       },
       "entries": [
         {
@@ -1837,6 +1837,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0295432e-ea50-488c-99f4-10e4e745e570",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.LPO",
+            "short": "LPO"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.LPO",
+            "short": "LPO",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0299f9c1-4175-4713-a70c-f789aa418d8a",
           "new": {
@@ -2977,6 +3012,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "051b41de-b0d9-46e2-8c50-2b35961e8597",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.id",
+            "short": "id"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.id",
+            "short": "id",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4802,6 +4872,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "0952af15-2993-4bd4-9930-fabf1d2e44d1",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.isLanding_of_image",
+            "short": "isLanding_of_image"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.isLanding_of_image",
+            "short": "isLanding_of_image",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "09535661-d89a-4202-af9e-5485f3057a86",
           "new": {
             "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
@@ -5893,6 +5998,41 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0c5086bd-742c-4748-95da-22a9e3f4b02f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upStrict_iff",
+            "short": "upStrict_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upStrict_iff",
+            "short": "upStrict_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9502,6 +9642,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "154013f7-f399-44bc-a624-d9b422aca111",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.id",
+            "short": "id"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.id",
+            "short": "id",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "154523d6-5c48-48fa-b972-37cab2a38b70",
           "new": {
             "file": "ZeroParadox/Valuation/PoleCorners.lean",
@@ -9897,6 +10072,41 @@
             ]
           },
           "reason": "Die v2 final batch: the four corners as die motions and the tower as a span of motions (experimental PoleCorners / PoleCornersBridge)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "16093ad0-9601-4888-ad12-479689f42c47",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.llpo_of_wlpo",
+            "short": "llpo_of_wlpo"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.llpo_of_wlpo",
+            "short": "llpo_of_wlpo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10464,6 +10674,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "17518762-46e0-408f-9059-a3776b6ab660",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.stepBack_ofFun",
+            "short": "stepBack_ofFun"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.stepBack_ofFun",
+            "short": "stepBack_ofFun",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1755e02b-dc44-472d-8a33-f7a3c41cb763",
           "new": {
@@ -10940,6 +11185,41 @@
             ]
           },
           "reason": "The pole-FIXING maps on the 2-adic sphere: scaling, its one-parameter additivity, and its conjugation by the pole-swapping inversion",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "18c4aeae-25ce-4e2f-986d-b5cf3682f9df",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.toHomOfUpTotal",
+            "short": "toHomOfUpTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.toHomOfUpTotal",
+            "short": "toHomOfUpTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12028,6 +12308,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1b9e0ed6-13fb-47c0-a941-8bd279793710",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.arrives",
+            "short": "arrives"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.arrives",
+            "short": "arrives",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1c2c8c7c-b46c-43c5-87dc-36cccb0d0d8a",
           "new": {
@@ -12460,6 +12775,41 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1d216f7e-f0be-4b69-afab-9d0a5bb3cc49",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.MarkovPrinciple",
+            "short": "MarkovPrinciple"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.MarkovPrinciple",
+            "short": "MarkovPrinciple",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -13606,6 +13956,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "20387928-d62c-43dd-a75d-d0222601e2ef",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.corner",
+            "short": "corner"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.corner",
+            "short": "corner",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15502,6 +15887,41 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "258050cf-dd93-4986-befd-c3014536c968",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.noStepAt",
+            "short": "noStepAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.noStepAt",
+            "short": "noStepAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18971,6 +19391,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2ce1be8f-8b6e-437d-b9f6-3f3a34c78568",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.id_comp",
+            "short": "id_comp"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.id_comp",
+            "short": "id_comp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2ceb3c9d-afd7-4897-a1ad-c68fcf01ef74",
           "new": {
@@ -20910,6 +21365,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "31990371-a2fe-4285-aef6-6a1e36a00546",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.exists_fanIn_bool",
+            "short": "exists_fanIn_bool"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.exists_fanIn_bool",
+            "short": "exists_fanIn_bool",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24794,6 +25284,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3cb235ca-9e3e-4fff-bec4-40b1264bafe2",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.three_of_not_runClose",
+            "short": "three_of_not_runClose"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.three_of_not_runClose",
+            "short": "three_of_not_runClose",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32601,6 +33126,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "50138fa0-0547-4351-8979-43f492ea35a8",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.selfOnlyAt_of_image",
+            "short": "selfOnlyAt_of_image"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.selfOnlyAt_of_image",
+            "short": "selfOnlyAt_of_image",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "502d6ad9-21c5-48b0-bb90-c33fea27005a",
           "new": {
@@ -38909,6 +39469,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5ee75165-74e1-44c4-b6de-af4d9d336066",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.fanIn",
+            "short": "fanIn"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.fanIn",
+            "short": "fanIn",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5efc6ded-efc3-4962-9916-bfcf3cff315a",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -39085,6 +39680,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5fb1d010-3d04-48fe-ab3a-2e31a4322c11",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.WLPO",
+            "short": "WLPO"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.WLPO",
+            "short": "WLPO",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40193,6 +40823,41 @@
             ]
           },
           "reason": "Superseded within the same session by _VSlit: the numeral counterfactual belongs at the class, not at a bare ℕ∞ value. Both gates found the value-level pair could not carry the class-level claim it was cited for.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "63f2a3a5-de5f-440c-b534-61346f99b4ec",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.LLPO",
+            "short": "LLPO"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.LLPO",
+            "short": "LLPO",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41483,6 +42148,41 @@
             ]
           },
           "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "678c2b19-13ce-4f30-bb88-9f842f6de5bd",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wlpo_of_weakExcludedMiddle",
+            "short": "wlpo_of_weakExcludedMiddle"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wlpo_of_weakExcludedMiddle",
+            "short": "wlpo_of_weakExcludedMiddle",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42931,6 +43631,41 @@
             ]
           },
           "reason": "New experimental probe LawvereBridge.lean — selfApp fixed point as an instance of Lawvere's general engine (conjecture step c, the Lawvere stab)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6af976cf-1d93-40aa-aa42-c78562bda2fd",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.four_of_not_runClose",
+            "short": "four_of_not_runClose"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.four_of_not_runClose",
+            "short": "four_of_not_runClose",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47358,6 +48093,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "755a854d-92f2-4d1c-9071-8f0e5998461c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.isLanding",
+            "short": "isLanding"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.isLanding",
+            "short": "isLanding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "755bcab3-cb02-4140-8b26-5f512d0ea8b7",
           "new": {
@@ -47384,6 +48154,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "755c3f54-5285-431b-a2f6-6f11cf240774",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.semiconj_iff_exists_hom",
+            "short": "semiconj_iff_exists_hom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.semiconj_iff_exists_hom",
+            "short": "semiconj_iff_exists_hom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48766,6 +49571,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "78fe1753-f31a-41a4-980a-255a4e0eaed0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.leavesAt_of_image",
+            "short": "leavesAt_of_image"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.leavesAt_of_image",
+            "short": "leavesAt_of_image",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "790da4fb-14c2-4884-8ac6-1b0a49e290b0",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -50110,6 +50950,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7c3e9e03-67f4-477d-91bc-dbb530a05d83",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.lpo_of_selectedTotal_nat_boolStep",
+            "short": "lpo_of_selectedTotal_nat_boolStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.lpo_of_selectedTotal_nat_boolStep",
+            "short": "lpo_of_selectedTotal_nat_boolStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7c437e71-d6ec-41e4-84cc-1cabe5c22920",
           "new": {
             "file": "ZeroParadox/Multihomed/Boundary.lean",
@@ -50731,6 +51608,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7dd8bdd5-5541-4854-9631-06c008390975",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.selfOnlyAt",
+            "short": "selfOnlyAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.selfOnlyAt",
+            "short": "selfOnlyAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7df646a3-2fb5-417a-a5c1-0f492fb391ba",
           "new": {
@@ -50866,6 +51778,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7e131ef0-d173-4b9c-b88e-3b58df7dc51d",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.lpo_of_trichotomy_nat_boolStep",
+            "short": "lpo_of_trichotomy_nat_boolStep"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.lpo_of_trichotomy_nat_boolStep",
+            "short": "lpo_of_trichotomy_nat_boolStep",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -51122,6 +52071,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7ec02ca0-e74f-47c0-9cae-9d7b1b8c2a97",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.overAtLanding",
+            "short": "overAtLanding"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.overAtLanding",
+            "short": "overAtLanding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -56165,6 +57149,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8ba46c69-07b1-4463-bd0b-bfddbe7d165c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.reverse_comp",
+            "short": "reverse_comp"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.reverse_comp",
+            "short": "reverse_comp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8bdd9521-3f60-4645-99a1-a300c24e559e",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -58496,6 +59515,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "921397e6-a5f7-4267-9b5c-59849430a2d6",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom",
+            "short": "LaxHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom",
+            "short": "LaxHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9244aee8-9060-4ed7-80e0-e2a5dfad13d9",
           "new": {
@@ -60285,6 +61339,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "965c2413-1586-4e8f-aa03-9a7fb7419e95",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.everyStepCovered_of_finite",
+            "short": "everyStepCovered_of_finite"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.everyStepCovered_of_finite",
+            "short": "everyStepCovered_of_finite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "965c2701-8a67-4a7c-ae99-b353575916c7",
           "new": {
@@ -60976,6 +62065,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9861f358-c77e-4897-99b2-adad3847e719",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lpo_of_wlpo_of_markovPrinciple",
+            "short": "lpo_of_wlpo_of_markovPrinciple"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lpo_of_wlpo_of_markovPrinciple",
+            "short": "lpo_of_wlpo_of_markovPrinciple",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66972,6 +68096,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a7a02d2a-a791-42ac-a8fe-48cb76ff79a8",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.comp",
+            "short": "comp"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.comp",
+            "short": "comp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a7a4242f-97ef-49c3-8dad-f575a2573d7d",
           "new": {
             "file": "ZeroParadox/Category/DieNucleus.lean",
@@ -67927,6 +69086,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aa1f8576-8404-4269-9dc7-47cfa0a8bdcf",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.toLax",
+            "short": "toLax"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.toLax",
+            "short": "toLax",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -72197,6 +73391,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b39ad380-f7c4-4aec-9410-18a73f9aaadf",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.comp",
+            "short": "comp"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.comp",
+            "short": "comp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b3b96bfa-0f67-4b01-95ec-995f80867210",
           "new": {
             "file": "ZeroParadox/Computability/SelfCopyReference.lean",
@@ -75937,6 +77166,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "bc179556-b626-49d8-bee6-7d94b9c190fb",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.reverse_reverse",
+            "short": "reverse_reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.reverse_reverse",
+            "short": "reverse_reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "bc35a809-877f-4c32-ac5d-24581ce24d90",
           "new": {
@@ -76846,6 +78110,41 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "be1368f5-82a2-4531-a23a-4ec4d98cea39",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.markovPrinciple_of_lpo",
+            "short": "markovPrinciple_of_lpo"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.markovPrinciple_of_lpo",
+            "short": "markovPrinciple_of_lpo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -78838,6 +80137,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c499aae8-ccd8-4dc3-8779-b636c82f7772",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wlpo_of_lpo",
+            "short": "wlpo_of_lpo"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.wlpo_of_lpo",
+            "short": "wlpo_of_lpo",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c49d57d5-644e-4ac2-86e3-fcebd6f39523",
           "new": {
@@ -79311,6 +80645,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c58b1370-ff9d-41eb-8126-70271d3d8782",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofRelHomIdUp",
+            "short": "ofRelHomIdUp"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.ofRelHomIdUp",
+            "short": "ofRelHomIdUp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c58fcb4c-de78-4df6-b8ac-53c2f609e23f",
           "new": {
@@ -79701,6 +81070,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c67a2fc5-6bbf-4950-9346-f2d1325e666c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.hasLanding",
+            "short": "hasLanding"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.hasLanding",
+            "short": "hasLanding",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -82444,6 +83848,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cd049b4f-5115-4fa3-8f96-3d0e6615150d",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upStrict_upLax",
+            "short": "upStrict_upLax"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upStrict_upLax",
+            "short": "upStrict_upLax",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cd20c6d1-e1ef-45dc-b799-1e6dafe90e92",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -82847,6 +84286,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ce36d385-8fe0-48c3-9c95-79ac401e8937",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.loop",
+            "short": "loop"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.loop",
+            "short": "loop",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -85064,6 +86538,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d3a03417-f300-40e9-a68a-c1c435d4e775",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upStrict_of_upLax_of_upTotal",
+            "short": "upStrict_of_upLax_of_upTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upStrict_of_upLax_of_upTotal",
+            "short": "upStrict_of_upLax_of_upTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d3aacc24-917c-418b-8d62-bd2ec4453136",
           "new": {
@@ -87014,6 +88523,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d8a8c902-73b3-443b-aea7-b956d34e3ef7",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.reverse",
+            "short": "reverse"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.reverse",
+            "short": "reverse",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d8ba07fe-8a80-4a2e-8aa9-6fedfe1bbe24",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -88702,6 +90246,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dc5738cc-0e0e-4da9-9fcf-57b0d2b0fec5",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.upTotal_of",
+            "short": "upTotal_of"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.upTotal_of",
+            "short": "upTotal_of",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -90950,6 +92529,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e21addf9-1d77-4a6e-ab1c-c1c399251b44",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botCovered_of_finite",
+            "short": "botCovered_of_finite"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.botCovered_of_finite",
+            "short": "botCovered_of_finite",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e2219f9d-ea9c-473b-a9e5-39647f88237c",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -91836,6 +93450,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e3e7ecf8-7386-4acb-9521-1abc7e7356ea",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StepBack",
+            "short": "StepBack"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.StepBack",
+            "short": "StepBack",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e3ef1f1b-8c7a-473f-93bd-be9eef52095a",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -92113,6 +93762,41 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e480a3ea-d9ab-45f7-ac43-c116519efbea",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpLax",
+            "short": "UpLax"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpLax",
+            "short": "UpLax",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -92900,6 +94584,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e642f8fe-c43a-4d7a-8019-60d06155f5d8",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.upTotal",
+            "short": "upTotal"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.upTotal",
+            "short": "upTotal",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e67bef8e-9857-4867-82cb-2105ede6be10",
           "new": {
@@ -93109,6 +94828,41 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e6b030a5-6fa6-46cb-979c-4f2cbf56ab1c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom",
+            "short": "Hom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom",
+            "short": "Hom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -94026,6 +95780,41 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e8f0cd43-fa5b-4d17-a714-088edb9ed5f9",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.elbow",
+            "short": "elbow"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.elbow",
+            "short": "elbow",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -95175,6 +96964,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ebca3b06-f5e6-4e84-b41c-04806f7e408e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.comp_id",
+            "short": "comp_id"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.comp_id",
+            "short": "comp_id",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ebca83ae-509f-4cc7-a84c-fea8d0c4cc03",
           "new": {
@@ -95571,6 +97395,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ed5049b0-c88e-40f5-ac12-f99a55a9e05e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.em_of_corner_loop_or_climb",
+            "short": "em_of_corner_loop_or_climb"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.em_of_corner_loop_or_climb",
+            "short": "em_of_corner_loop_or_climb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -96658,6 +98519,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f102ee58-b77c-4c69-bad4-53889fff9658",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpStrict",
+            "short": "UpStrict"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.UpStrict",
+            "short": "UpStrict",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f10d368e-2e2b-49d9-8d49-77030d1a5785",
           "new": {
@@ -96833,6 +98729,41 @@
             ]
           },
           "reason": "Die computability face (halting as arrival, clock machine), quotients of a motion (drawing vs set: hypersets, codes), carrier-changing steps (wrap, Option), PoleEnds with inhabitation",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f16e5de9-c475-4cb7-bc68-d60aa6dec5f0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.comp_assoc",
+            "short": "comp_assoc"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.comp_assoc",
+            "short": "comp_assoc",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -99528,6 +101459,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f72cb72c-9a1b-42c8-a04d-6fb727d3c9b5",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.toLax_comp",
+            "short": "toLax_comp"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.toLax_comp",
+            "short": "toLax_comp",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f72fc4ea-5732-4f3d-b631-81a87f10868b",
           "new": {
@@ -99937,6 +101903,76 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f81a4bb6-8a82-439e-b653-952a093b617c",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upLax_iff_le",
+            "short": "upLax_iff_le"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upLax_iff_le",
+            "short": "upLax_iff_le",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f8299fc7-920b-4dc0-990a-f397d75f6ad9",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.climb",
+            "short": "climb"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.climb",
+            "short": "climb",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f85bbdff-9b42-43ca-9f8d-defdb33f24d9",
           "new": {
             "file": "ZeroParadox/Computability/UniversalChoiceFree.lean",
@@ -100072,6 +102108,41 @@
             ]
           },
           "reason": "UniversalChoiceFree § IX: a self-printing universal code at [propext, Quot.sound] (restated SelfPrints ∧ Universal via encodeCode/ofNatCodeCF), faithfulness bridges, statement controls, controls zero_selfPrints_not_universal / universal_not_selfPrints_cf / unshifted_incompatible",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f8d28925-54f2-43cd-8024-918841a4dacd",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.noStepAt_of_image",
+            "short": "noStepAt_of_image"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.noStepAt_of_image",
+            "short": "noStepAt_of_image",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -100252,6 +102323,41 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f9ab557d-75e3-4b91-89d5-e98ba86b3c40",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lpo_of_excludedMiddle",
+            "short": "lpo_of_excludedMiddle"
+          },
+          "old": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.lpo_of_excludedMiddle",
+            "short": "lpo_of_excludedMiddle",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -102783,6 +104889,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fe7bc5ac-a3fc-433d-9326-e4cdfed73354",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mp_of_exists_fanIn_nat",
+            "short": "mp_of_exists_fanIn_nat"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mp_of_exists_fanIn_nat",
+            "short": "mp_of_exists_fanIn_nat",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fe8ed64a-58b7-4990-9846-ceb608133639",
           "new": {
@@ -103107,6 +105250,41 @@
             ]
           },
           "reason": "UniversalChoiceFree: a universal code for Nat.Partrec.Code at [propext, Quot.sound], by Kleene normal form over a small-step machine for Code; Nat.Primrec closure of its step on ℕ; control zero_not_universal",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ff4a5ef8-05fa-4d75-8231-4a66ecd4cece",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.leavesAt",
+            "short": "leavesAt"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.leavesAt",
+            "short": "leavesAt",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-land-1028: motion maps (Die § XIX), omniscience principles (LawvereTaboo § V), finite-carrier forcing and taboo reductions (Die §§ III, V, VI, VIII, IX, XVI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true

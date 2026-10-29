@@ -231,6 +231,97 @@ theorem decidable_route_unaffected {β : Type} [DecidableEq β] {b₀ b₁ : β}
     ∃ g : β → β, ∀ x, g x ≠ x :=
   fixedPointFree_of_nontrivial_decidable hne
 
+/-! ## § V — The omniscience principles on bit sequences
+
+Forms, for sequences `ℕ → Bool`, of the principles Ishihara states over `ℕ^ℕ` as instances of
+excluded middle, weak excluded middle, De Morgan's law and double negation elimination (§§ 2–4,
+pp. 47–50); `LLPO` here is Diener's at-most-once form. All are in the same hypothesis form as § I:
+never an `axiom`, always discharged by the caller. Each arrow runs from the stronger principle to
+the weaker one. The equivalence
+`LPO ↔ WLPO ∧ MP` in its ⊥-of-`ℕ → Bool` form is the `example` in
+`ZeroParadox/Category/ChoiceCannotBe.lean` § II. -/
+
+-- Reading (cited, not claimed): the `LPO` and `WLPO` forms over `ℕ → Bool` are Escardó, "Infinite
+-- sets that satisfy the principle of omniscience in any variety of constructive mathematics",
+-- JSL 78(3) (2013), § 3, p. 4 of the preprint, with `true` and `false` exchanged ("Clearly LPO ⟺ WLPO ∧ MP"); preprint p. 1:
+-- "For X finite this is trivial, and for X = ℕ, this is LPO". Ishihara, "Reverse mathematics in
+-- Bishop's constructive mathematics", Philosophia Scientiae CS 6 (2006), §§ 2–4, pp. 47–50, states
+-- LPO, WLPO, LLPO and MP over `ℕ^ℕ` as instances of excluded middle, weak excluded middle, De Morgan's law and double
+-- negation elimination, and Prop 10, p. 53, gives `LPO ↔ WLPO + MP` and `WLPO → LLPO`. The LLPO form
+-- below is Diener, "Constructive Reverse Mathematics", arXiv:1804.05495v3, § 1.4, p. 25, indexed
+-- from 0.
+
+/-- **LPO.** `Statement:` every `r : ℕ → Bool` is `true` somewhere or `false` everywhere. -/
+def LPO : Prop := ∀ r : ℕ → Bool, (∃ n, r n = true) ∨ ∀ n, r n = false
+
+/-- **WLPO.** `Statement:` every `r : ℕ → Bool` is `false` everywhere or is not. -/
+def WLPO : Prop := ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false
+
+/-- **The lesser limited principle of omniscience.** `Statement:` if `r : ℕ → Bool` takes the value
+`true` at most once, it is `false` at every even index or at every odd index. -/
+def LLPO : Prop := ∀ r : ℕ → Bool, (∀ m n, r m = true → r n = true → m = n) →
+    (∀ n, r (2 * n) = false) ∨ (∀ n, r (2 * n + 1) = false)
+
+/-- **Markov's principle.** `Statement:` if `r : ℕ → Bool` is not never `true`, some `r n` is. -/
+def MarkovPrinciple : Prop := ∀ r : ℕ → Bool, ¬ ¬ (∃ n, r n = true) → ∃ n, r n = true
+
+/-- `Statement:` excluded middle implies the limited principle of omniscience. -/
+theorem lpo_of_excludedMiddle (h : ExcludedMiddle) : LPO := fun r =>
+  (h (∃ n, r n = true)).imp id fun hn n => by
+    cases hr : r n
+    · rfl
+    · exact absurd ⟨n, hr⟩ hn
+
+/-- `Statement:` weak excluded middle implies the weak limited principle of omniscience. -/
+theorem wlpo_of_weakExcludedMiddle (h : WeakExcludedMiddle) : WLPO := fun r =>
+  (h (∃ n, r n = true)).imp
+    (fun hn n => by
+      cases hr : r n
+      · rfl
+      · exact absurd ⟨n, hr⟩ hn)
+    (fun hnn hall => hnn fun ⟨n, hn⟩ => by rw [hall n] at hn; cases hn)
+
+/-- `Statement:` the limited principle of omniscience implies the weak one. -/
+theorem wlpo_of_lpo (h : LPO) : WLPO := fun r =>
+  (h r).elim (fun ⟨n, hn⟩ => Or.inr fun hall => by rw [hall n] at hn; cases hn) Or.inl
+
+/-- `Statement:` the limited principle of omniscience implies Markov's principle. -/
+theorem markovPrinciple_of_lpo (h : LPO) : MarkovPrinciple := fun r hnn =>
+  (h r).elim id fun hall => absurd (fun ⟨n, hn⟩ => by rw [hall n] at hn; cases hn) hnn
+
+/-- `Statement:` the weak limited principle of omniscience and Markov's principle together imply the
+limited principle of omniscience. -/
+theorem lpo_of_wlpo_of_markovPrinciple (hw : WLPO) (hm : MarkovPrinciple) : LPO := fun r =>
+  (hw r).elim Or.inr fun hn => Or.inl (hm r fun hne => hn fun n => by
+    cases hr : r n
+    · rfl
+    · exact absurd ⟨n, hr⟩ hne)
+
+/-- `Statement:` the weak limited principle of omniscience implies the lesser one: decide whether
+the even-indexed values are all `false`; if not, the odd-indexed ones are. -/
+theorem llpo_of_wlpo (h : WLPO) : LLPO := by
+  intro r hone
+  rcases h (fun n => r (2 * n)) with he | hne
+  · exact Or.inl he
+  · refine Or.inr fun n => ?_
+    cases hodd : r (2 * n + 1)
+    · rfl
+    · exfalso; apply hne; intro m
+      cases hev : r (2 * m)
+      · rfl
+      · have := hone _ _ hev hodd; omega
+
+-- Reading (cited, not claimed): none of the converses is proved here, and Lean cannot prove a
+-- non-implication between these principles, each of which holds classically. Separations by
+-- topological models, Diener (above), § 7.2, read for these entries: the model over ℝ does not
+-- validate weak excluded middle (Prop 7.2.2, p. 102; a weak counterexample in Diener's sense, p. 102)
+-- and validates the sequence form of LPO (pp. 106–107), so LPO does not imply weak
+-- excluded middle; the Sierpinski space validates weak excluded middle and not excluded middle
+-- (p. 102; Remark 7.2.9, p. 107); the space `X_U` validates weak excluded middle and does not
+-- validate the REAL-number form of MP (Prop 7.2.12, p. 110), which by itself does not separate weak
+-- excluded middle from the sequence form of MP used here. Ishihara, pp. 47–50: LPO, WLPO and LLPO are
+-- false in INT and in RUSS, and MP is accepted in RUSS.
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -268,5 +359,17 @@ open ZeroParadox
 -- together they localize the cost.
 #print axioms decidable_route_unaffected
 #print axioms fixedPointFree_of_nontrivial
+
+-- § V — the omniscience principles and the arrows between them.
+#print axioms LPO
+#print axioms WLPO
+#print axioms LLPO
+#print axioms MarkovPrinciple
+#print axioms lpo_of_excludedMiddle
+#print axioms wlpo_of_weakExcludedMiddle
+#print axioms wlpo_of_lpo
+#print axioms markovPrinciple_of_lpo
+#print axioms lpo_of_wlpo_of_markovPrinciple
+#print axioms llpo_of_wlpo
 
 end PurityCheck
