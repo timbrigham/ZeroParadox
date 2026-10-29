@@ -2671,7 +2671,8 @@ theorem Hom.upCompat_ker (φ : Hom M N) : M.UpCompat (Setoid.ker φ.toFun) := by
 
 /-- `Statement:` the kernel of a strict map with the back clause is step-compatible. `Reading:` with
     `upCompat_ker`, `isBisim_of_compat` (§ XXII) makes this kernel a bisimulation in Rutten's sense
-    (TCS 249 (2000), p. 11). Rutten's Proposition* 5.7 (p. 33) for `Part × Set` is `isBisim_ker`
+    (TCS 249 (2000), p. 11). The bisimulation half of Rutten's Proposition* 5.7 (p. 33) for
+    `Part × Set` is `isBisim_ker`
     (§ XXII); its star marks weak-pullback preservation, which § XXII proves for this functor. -/
 theorem Hom.stepCompat_ker (φ : Hom M N) (hb : StepBack M N φ.toFun) :
     M.StepCompat (Setoid.ker φ.toFun) := by
@@ -3006,7 +3007,10 @@ example :
 
 -- Statement: NO-GO, constructed here: the functor `S ↦ (S → Prop) → Prop`,
 -- `f ↦ (x ↦ (V ↦ x (V ∘ f)))` fails `PreservesWeakPullbacksElementwise`, at `f : Bool → Bool`
--- constant `false` and `g : Unit → Bool` constant `true`, whose pullback is empty.
+-- constant `false` and `g : Unit → Bool` constant `true`, whose pullback is empty. Reading: the
+-- functor is the contravariant powerset composed with itself, the neighbourhood functor with `Prop`
+-- for `2`, which Gumm and Freese (arXiv:2103.09566, p. 1) name as an exception to weak preservation
+-- of pullbacks.
 example : ¬ PreservesWeakPullbacksElementwise
     { obj := fun S : Type => (S → Prop) → Prop
       map := fun f => TypeCat.ofHom fun x V => x fun a => V (f a) } := by
@@ -3033,8 +3037,8 @@ variable {α β γ : Type*}
 
 /-- `Statement:` some `c` on the pairs related by `R` has, at every pair `p`, its `Part.map` and
     image along the first projection equal to `M.structMap p.1.1`, and along the second equal to
-    `N.structMap p.1.2`. `isBisim_iff_coalgHom` states it as Rutten's bisimulation (TCS 249 (2000),
-    p. 11) for the functor of § XX. -/
+    `N.structMap p.1.2`. `Reading:` for carriers in one universe, `isBisim_iff_coalgHom` states it as
+    Rutten's bisimulation (TCS 249 (2000), p. 11) for the functor of § XX. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: over `Motion`, the die's project-local structure; the
 -- dated search is in `LEAN_CUSTOM_REGISTRY.md`.
 def IsBisim (M : Motion α) (N : Motion β) (R : α → β → Prop) : Prop :=
@@ -3123,16 +3127,19 @@ theorem isBisim_iff_coalgHom {α β : Type u} (M : Motion α) (N : Motion β) (R
 
 -- Statement: CONTROL: on `Bool` with UP the identity and the one step `false → true`, the map onto
 -- `Unit` (UP the identity, every step) is a strict map whose kernel is not a bisimulation (`false`
--- steps, `true` does not); it has no back clause.
+-- steps, `true` does not) and which has no back clause (`StepBack`).
 example : let M := ofTotal (id : Bool → Bool) (fun _ => rfl) (fun a b => a = false ∧ b = true)
     let N := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)
-    ∃ φ : Hom M N, ¬ IsBisim M M (fun a a' => φ.toFun a = φ.toFun a') := by
+    ∃ φ : Hom M N, ¬ IsBisim M M (fun a a' => φ.toFun a = φ.toFun a') ∧
+      ¬ StepBack M N φ.toFun := by
   intro M N
   refine ⟨⟨fun _ => (), fun _ => trivial, fun x => by
-    show Part.some () = (Part.some x).map _; rw [Part.map_some]⟩, fun h => ?_⟩
-  obtain ⟨-, -, fo, -⟩ := (isBisim_iff M M _).1 h false true rfl
-  obtain ⟨b', ⟨h1, -⟩, -⟩ := fo true ⟨rfl, rfl⟩
-  exact Bool.noConfusion h1
+    show Part.some () = (Part.some x).map _; rw [Part.map_some]⟩, fun h => ?_, fun hb => ?_⟩
+  · obtain ⟨-, -, fo, -⟩ := (isBisim_iff M M _).1 h false true rfl
+    obtain ⟨b', ⟨h1, -⟩, -⟩ := fo true ⟨rfl, rfl⟩
+    exact Bool.noConfusion h1
+  · obtain ⟨b, ⟨h1, -⟩, -⟩ := hb true () trivial
+    exact Bool.noConfusion h1
 
 /-- `Statement:` equality is a bisimulation from a motion to itself. `Reading:` Rutten's
     Proposition 5.1 (TCS 249 (2000), p. 31). -/
@@ -3207,8 +3214,9 @@ theorem isBisim_of_compat (M : Motion α) (s : Setoid α) (hu : M.UpCompat s) (h
     exact ⟨b', hb', s.symm r'⟩
 
 /-- `Statement:` if `f` carries steps to steps and has `StepBack` and `UpStrict`, the kernel of `f`
-    is a bisimulation from `M` to itself. `Reading:` by `coalgHom_iff` (§ XX) the hypotheses say `f`
-    is a coalgebra homomorphism; Rutten's Proposition* 5.7 (p. 33). -/
+    is a bisimulation from `M` to itself. `Reading:` for carriers in one universe, by `coalgHom_iff`
+    (§ XX) the hypotheses say `f` is a coalgebra homomorphism; the bisimulation half of Rutten's
+    Proposition* 5.7 (p. 33). -/
 theorem isBisim_ker {M : Motion α} {N : Motion β} {f : α → β}
     (hf : ∀ a b, M.step a b → N.step (f a) (f b)) (hb : StepBack M N f) (hu : UpStrict M N f) :
     IsBisim M M (fun a a' => f a = f a') := by

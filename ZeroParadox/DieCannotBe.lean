@@ -4048,7 +4048,7 @@ example :
 -- the observed motion is the source; Rutten's homomorphic image, or quotient, TCS 249 (2000), p. 10).
 -- How this relates to Rutten's Proposition* 5.7 and Proposition 5.8
 -- (pp. 33–34) is in the Readings on `Hom.stepCompat_ker` and `mkHom_stepBack`
--- (`ZeroParadox/Die.lean` § XXI); 5.7 for `Part × Set` is `isBisim_ker`, § XXVI below.
+-- (`ZeroParadox/Die.lean` § XXI); the bisimulation half of 5.7 for `Part × Set` is `isBisim_ker`, § XXVI below.
 #check @ZeroParadox.Motion.Hom.upTotal_iff       -- Statement: along an onto strict map, UP total in the source iff in the target
 #check @ZeroParadox.Motion.Hom.hasLanding_iff    -- Statement: along an onto strict map, a landing in the source iff one in the target
 #check @ZeroParadox.Motion.LaxHom.noStepAt_iff   -- Statement: along a lax map with the back clause, no step at `y` iff none at its image
@@ -4163,12 +4163,14 @@ example :
 #check @ZeroParadox.Motion.isBisim_ker          -- Statement: the kernel of a map carrying steps to steps, with `StepBack` and `UpStrict`, is a bisimulation
 #check @ZeroParadox.Motion.isBisim_ker_coalgHom -- Statement: the kernel of a coalgebra homomorphism's underlying map is a bisimulation
 #check @ZeroParadox.Motion.isBisim_preimage     -- Statement: under the same map, the preimage of a bisimulation on `N` is one on `M`
--- Statement: CONTROL in `ZeroParadox/Die.lean` § XXII: a strict map from `Bool` onto `Unit` without
--- the back clause whose kernel is not a bisimulation.
+-- Statement: CONTROL in `ZeroParadox/Die.lean` § XXII: a strict map from `Bool` onto `Unit` whose
+-- kernel is not a bisimulation and which has no back clause.
 -- Reading: Rutten, TCS 249 (2000): `isBisim_iff_coalgHom` states `IsBisim` as the bisimulation of
--- p. 11 for this functor;
+-- p. 11 for this functor, for carriers in one universe;
 -- `isBisim_eq` is Proposition 5.1 and `isBisim_flip` Theorem 5.2 (p. 31), `isBisim_comp` Theorem* 5.4
--- (p. 32), `Bisimilar` with `isBisim_bisimilar` and `bisimilar_equivalence` Corollary 5.6 (p. 33),
--- `isBisim_ker` Proposition* 5.7 (p. 33), `isBisim_preimage` Proposition* 5.9(2) (p. 34).
+-- (p. 32); `Bisimilar` with `isBisim_bisimilar` is the clause of Corollary 5.6 (p. 33) that the
+-- greatest bisimulation exists, and `bisimilar_equivalence` its last clause, that on one system it
+-- is an equivalence (its complete-lattice clause is not built); `isBisim_ker` is the bisimulation
+-- half of Proposition* 5.7 (p. 33), `isBisim_preimage` Proposition* 5.9(2) (p. 34).
 
 end DieCannotBeIndex
