@@ -652,7 +652,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 2847,
+        "declarations": 2869,
         "files": 184
       },
       "entries": [
@@ -2449,6 +2449,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "03e56878-c118-484f-8777-99b1e8c41621",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.upCompat_ker",
+            "short": "upCompat_ker"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.upCompat_ker",
+            "short": "upCompat_ker",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4314,6 +4349,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "082d39e1-dec0-4caf-a395-91022edef71f",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.coalgHom_iff",
+            "short": "coalgHom_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.coalgHom_iff",
+            "short": "coalgHom_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "085aaae4-9850-48ee-afce-7c98f80bb6e1",
           "new": {
             "file": "ZeroParadox/Valuation/PadicKozyrev.lean",
@@ -4600,6 +4670,41 @@
             ]
           },
           "reason": "Die v2 final batch: drawing vs set (self-steps, accessibility, forced rank), ends of a view, orders on motions, placements as views, relaxed least-fixed-point schema, UP legs as nuclei",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "08f431af-cdc2-4d49-979a-004bc962a7c4",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.stepCompat_ker",
+            "short": "stepCompat_ker"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.stepCompat_ker",
+            "short": "stepCompat_ker",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5518,6 +5623,41 @@
             ]
           },
           "reason": "KleeneChoiceFree: code-form Kleene second recursion theorem with choice-free proofs, clean re-proofs of Mathlib pairing/sqrt/eval lemmas, statement controls",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0ab9eed2-d754-470a-b1e9-0a2526cd9d8e",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.dom_factor",
+            "short": "dom_factor"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.dom_factor",
+            "short": "dom_factor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14568,6 +14708,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "21455244-87e5-4f3d-9257-40d560b504ec",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mkHom_surjective",
+            "short": "mkHom_surjective"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mkHom_surjective",
+            "short": "mkHom_surjective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "21c4778c-b077-45b8-839b-d92a49559c75",
           "new": {
@@ -21870,6 +22045,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "32fb7584-7e42-404e-aa56-a34f9d923ce3",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.upTotal_iff",
+            "short": "upTotal_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.upTotal_iff",
+            "short": "upTotal_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31695,6 +31905,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4c6f3a77-828f-4206-a2fa-47249ac91503",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.toCoalgebra",
+            "short": "toCoalgebra"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.toCoalgebra",
+            "short": "toCoalgebra",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4c764940-8249-4eb6-a19f-39ebefd9e818",
           "new": {
             "file": "ZeroParadox/Order/UpAndOver.lean",
@@ -34365,6 +34610,41 @@
             ]
           },
           "reason": "Die CannotBe mining batch: trap sets (order and function causes), keep-above kernel and a two-node UpAndOver on HSet 2, SelfCopyRef in die form",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "52447e38-6f63-4873-98e1-a52e12b84402",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.climb_of_image",
+            "short": "climb_of_image"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.climb_of_image",
+            "short": "climb_of_image",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40717,6 +40997,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "631ba529-ce03-47ba-94cf-bc2e96a13ea0",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.noStepAt_iff",
+            "short": "noStepAt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.LaxHom.noStepAt_iff",
+            "short": "noStepAt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -55892,6 +56207,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "88364094-03ff-440b-b3d0-68f80026a250",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.registeredDecidable_of_factor",
+            "short": "registeredDecidable_of_factor"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.registeredDecidable_of_factor",
+            "short": "registeredDecidable_of_factor",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "885e4330-71db-4a3a-b52e-ac976cf64da4",
           "new": {
@@ -56210,6 +56560,41 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8968e668-a7dd-4ee4-adc3-105dfaf36ffa",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.hasLanding_iff",
+            "short": "hasLanding_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.hasLanding_iff",
+            "short": "hasLanding_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -62076,6 +62461,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "985e7e22-f909-4053-a22a-d5fea5dd0e16",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.idem_of_inj",
+            "short": "idem_of_inj"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.idem_of_inj",
+            "short": "idem_of_inj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9861f358-c77e-4897-99b2-adad3847e719",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -62844,6 +63264,41 @@
             ]
           },
           "reason": "Die diagonal faces batch (2026-10-20): encodings of a self-map in the die's motion, Lawvere/Cantor in die form, the eval-quotient witness, Kleene/ordinal/Loeb/BottomUndecidable/Rice die forms",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "99f912f1-af5c-41f3-b9f7-6dbe6a87d3a6",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.corner_of_image",
+            "short": "corner_of_image"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.Hom.corner_of_image",
+            "short": "corner_of_image",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -66544,6 +66999,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a304958d-8530-46c1-944c-0f92b2f3f998",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upCompat_ker_dom",
+            "short": "upCompat_ker_dom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.upCompat_ker_dom",
+            "short": "upCompat_ker_dom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a311bcd4-eefc-4003-8102-ec3956fb8489",
           "new": {
             "file": "ZeroParadox/Settheory/GraphBisim.lean",
@@ -67233,6 +67723,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a4fb8336-281e-4b90-aff4-387d3fe71d79",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.stepCompat_ker_of_injective",
+            "short": "stepCompat_ker_of_injective"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.stepCompat_ker_of_injective",
+            "short": "stepCompat_ker_of_injective",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -76128,6 +76653,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b9670af4-44e7-4ba0-8a12-5c968d109b80",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mkHom_stepBack",
+            "short": "mkHom_stepBack"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mkHom_stepBack",
+            "short": "mkHom_stepBack",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b96fb107-4d47-41b5-8486-a1121b1a625e",
           "new": {
             "file": "ZeroParadox/Computability/KleeneChoiceFree.lean",
@@ -76710,6 +77270,41 @@
             ]
           },
           "reason": "Die views batch: views (order as data), restriction to an up-closed set, adjoined points and the empty carrier, arrival and fan-in",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "baf5ba07-209c-4a94-b877-2263a12cf99a",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mkHom",
+            "short": "mkHom"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.mkHom",
+            "short": "mkHom",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -83246,6 +83841,41 @@
             ]
           },
           "reason": "New files Die.lean + DieCannotBe.lean — the die: order-free Motion, switches, existence premises (provisional)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cbdb4c21-b96c-40e5-9132-afe8ad02d531",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.motionEquiv",
+            "short": "motionEquiv"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.motionEquiv",
+            "short": "motionEquiv",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -91325,6 +91955,41 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "df6c90d7-1f64-472a-bf9d-573eaff4c3b5",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.leavesAt_of_quot",
+            "short": "leavesAt_of_quot"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.leavesAt_of_quot",
+            "short": "leavesAt_of_quot",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "df726866-96ec-4933-af05-9ad2d86d18ef",
           "new": {
             "file": "ZeroParadox/Order/Snap.lean",
@@ -94464,6 +95129,41 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e5927bd0-b9d2-40a6-b51e-f376f453902d",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.structMap",
+            "short": "structMap"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.structMap",
+            "short": "structMap",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -98026,6 +98726,41 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "eeec791d-9b3a-4a75-a05a-bc06421bff13",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.quot_leavesAt_iff",
+            "short": "quot_leavesAt_iff"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.quot_leavesAt_iff",
+            "short": "quot_leavesAt_iff",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -105393,6 +106128,41 @@
             "role": []
           },
           "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ff8e16da-19c1-4897-b3d9-e199c9a7859d",
+          "new": {
+            "file": "ZeroParadox/Die.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.idem_of_surj",
+            "short": "idem_of_surj"
+          },
+          "old": {
+            "file": "ZeroParadox/Die.lean",
+            "kind": null,
+            "line": null,
+            "prefix": "ZeroParadox",
+            "qualified": "ZeroParadox.Motion.idem_of_surj",
+            "short": "idem_of_surj",
+            "synthetic": true
+          },
+          "ontology": {
+            "domain": [
+              "unscoped"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "die-coalg-1028: motion as a Part x Set coalgebra (Die § XX) and observation as a parameter of a pair (Die § XXI); Tim ruling 2026-10-28",
           "verify": {
             "axioms": null,
             "sorry_free": true

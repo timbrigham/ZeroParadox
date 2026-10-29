@@ -11,6 +11,7 @@ import Mathlib.Data.Fintype.Card
 import Mathlib.Order.Atoms.Finite
 import Mathlib.CategoryTheory.Endofunctor.Algebra
 import Mathlib.CategoryTheory.Types.Basic
+import Mathlib.CategoryTheory.Limits.Shapes.FunctorToTypes
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -36,7 +37,7 @@ The die has evolved, and it is on version two now. I think what we are describin
 ## Formal Overview (AI-assisted)
 Version 2; the index `ZeroParadox/DieCannotBe.lean` numbers its sections differently. Here: MOTION (§ I–IV;
 no order); VIEWS (§ XII, § XIV–XV; an order as data); CELLS (§ IX–XI, § XVI; arrival, fan-in); TRAP SETS
-(§ XII–XIII, § XVI); the DATUM behind a cell (§ V–VIII, § XIII); MAPS, ORDERS, QUOTIENTS (§ XIII, XVII–XIX).
+(§ XII–XIII, § XVI); the DATUM behind a cell (§ V–VIII, § XIII); MAPS, ORDERS, QUOTIENTS (§ XIII, XVII–XXI).
 -/
 
 namespace ZeroParadox
@@ -52,7 +53,8 @@ universe u
     and Lack, TCS 270 (2002), p. 227), which in Par are the partial identities (Cockett and
     Hofstra, p. 186): the identity UP is one, the `Bool` control below is not. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: pairs an idempotent partial map (Mathlib `PFun`) with a
--- step relation; Mathlib has each part, not the pair.
+-- step relation. The pair without `up_idem` is a Mathlib `Endofunctor.Coalgebra` for `Part × Set`
+-- (`motionEquiv`, § XX); the `up_idem` law on the `Part` component has no Mathlib analog.
 structure Motion (α : Type u) where
   /-- The UP leg, a partial map; total or partial is the switch of § II. -/
   up : α →. α
@@ -2172,7 +2174,8 @@ example (M : Motion α) (N : Motion β) (f : α → β) :
 /-- `Statement:` a strict map of motions: a map carrying steps to steps, with `UpStrict`. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: a Mathlib `RelHom` on the OVER leg paired with a commuting
 -- square on the partial UP leg; Mathlib has each half separately (`RelHom`, and
--- `Endofunctor.Coalgebra.Hom` for `Part`), not the pair.
+-- `Endofunctor.Coalgebra.Hom` for `Part`). With the back clause added, the pair is Mathlib's
+-- `Endofunctor.Coalgebra.Hom` for `Part × Set` (`coalgHom_iff`, § XX); without it, not.
 structure Hom (M : Motion α) (N : Motion β) where
   /-- The underlying map. -/
   toFun : α → β
@@ -2500,6 +2503,400 @@ example : ∃ (M : Motion Empty) (_ : Hom M (ofTotal (id : Unit → Unit) (fun _
 
 end Motion
 
+/-! ### § XX. A motion as a coalgebra for `Part × Set`
+`Reading:` an `F`-coalgebra is a set `S` with a map `S → F S` (Rutten, "Universal coalgebra", TCS 249
+(2000), § 2, p. 8). Here `F` is the product of Mathlib's `ofTypeFunctor Part` and `ofTypeFunctor Set`;
+a motion is such a coalgebra with one further law on the `Part` component (`motionEquiv`). -/
+
+namespace Motion
+
+open CategoryTheory
+
+/-- `Statement:` the structure map of a motion: `x ↦ (up x, {b | step x b})`. -/
+def structMap {α : Type u} (M : Motion α) : α → Part α × Set α := fun x => (M.up x, {b | M.step x b})
+
+/-- `Statement:` a motion as a coalgebra (Mathlib `Endofunctor.Coalgebra`) for the product (Mathlib
+    `FunctorToTypes.prod`) of `ofTypeFunctor Part` and `ofTypeFunctor Set`, with map `structMap`. -/
+def toCoalgebra {α : Type u} (M : Motion α) :
+    Endofunctor.Coalgebra (FunctorToTypes.prod (ofTypeFunctor Part.{u}) (ofTypeFunctor Set.{u})) :=
+  ⟨α, TypeCat.ofHom M.structMap⟩
+
+-- Statement: that functor sends `f` to `Part.map f` on the first component and to the image `f ''` on
+-- the second, by `rfl`.
+example {X Y : Type u} (f : X ⟶ Y) (p : Part X × Set X) :
+    (FunctorToTypes.prod (ofTypeFunctor Part.{u}) (ofTypeFunctor Set.{u})).map f p =
+      (p.1.map f, f '' p.2) := rfl
+
+/-- `Statement:` an equivalence (Mathlib `Equiv`) between motions on `α` and maps
+    `c : α → Part α × Set α` whose first component satisfies `up_idem`'s law; its forward map is
+    `structMap` (next `example`). `Reading:` `up_idem` is a law on the structure map that the functor
+    does not express (the `Bool` control below fails it). -/
+def motionEquiv (α : Type u) :
+    Motion α ≃ {c : α → Part α × Set α // ∀ x y, y ∈ (c x).1 → y ∈ (c y).1} where
+  toFun M := ⟨M.structMap, M.up_idem⟩
+  invFun c := ⟨fun x => (c.1 x).1, c.2, fun x b => b ∈ (c.1 x).2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+-- Statement: the forward map of `motionEquiv` is `structMap`, by `rfl`.
+example {α : Type u} (M : Motion α) : (motionEquiv α M).1 = M.structMap := rfl
+
+-- Statement: CONTROL: the law is a restriction: on `Bool`, the map `b ↦ (some (!b), ∅)` is a structure
+-- map whose first component fails it.
+example : ¬ ∀ x y : Bool, y ∈ (Part.some (!x), (∅ : Set Bool)).1 →
+    y ∈ (Part.some (!y), (∅ : Set Bool)).1 := fun h =>
+  absurd (Part.mem_some_iff.1 (h true false (Part.mem_some _))) (by decide)
+
+/-- `Statement:` some coalgebra homomorphism (Mathlib `Endofunctor.Coalgebra.Hom`) from
+    `M.toCoalgebra` to `N.toCoalgebra` has underlying map `f` iff `f` carries steps to steps, has the
+    back clause (`StepBack`) and has `UpStrict`; both directions. `Reading:` these are the strict maps
+    with the back clause; the `Set` half is Rutten's homomorphism of transition systems, TCS 249
+    (2000), p. 10, and the `Part` half is § XIX's `UpStrict` `example`. -/
+theorem coalgHom_iff {α β : Type u} (M : Motion α) (N : Motion β) (f : α → β) :
+    (∃ h : Endofunctor.Coalgebra.Hom M.toCoalgebra N.toCoalgebra, h.f = TypeCat.ofHom f) ↔
+      (∀ a b, M.step a b → N.step (f a) (f b)) ∧ StepBack M N f ∧ UpStrict M N f := by
+  have pw : (∀ x, ((M.up x).map f, f '' {b | M.step x b}) = (N.up (f x), {c | N.step (f x) c})) ↔
+      ((∀ a b, M.step a b → N.step (f a) (f b)) ∧ StepBack M N f ∧ UpStrict M N f) := by
+    constructor
+    · intro h
+      refine ⟨fun a b hab => ?_, fun a c hc => ?_, fun x => (congrArg Prod.fst (h x)).symm⟩
+      · have e : f '' {b | M.step a b} = {c | N.step (f a) c} := congrArg Prod.snd (h a)
+        have hm : f b ∈ f '' {b | M.step a b} := ⟨b, hab, rfl⟩
+        rw [e] at hm
+        exact hm
+      · have e : f '' {b | M.step a b} = {c | N.step (f a) c} := congrArg Prod.snd (h a)
+        have hm : c ∈ {c | N.step (f a) c} := hc
+        rw [← e] at hm
+        obtain ⟨b, hb, rfl⟩ := hm
+        exact ⟨b, hb, rfl⟩
+    · rintro ⟨hf, hb, hu⟩ x
+      refine Prod.ext (hu x).symm (Set.ext fun c => ⟨?_, ?_⟩)
+      · rintro ⟨b, hb', rfl⟩
+        exact hf x b hb'
+      · intro hc
+        obtain ⟨b, hs, rfl⟩ := hb x c hc
+        exact ⟨b, hs, rfl⟩
+  rw [← pw]
+  constructor
+  · rintro ⟨⟨g, hg⟩, rfl⟩ x
+    exact ConcreteCategory.congr_hom hg x
+  · intro h
+    refine ⟨⟨TypeCat.ofHom f, ?_⟩, rfl⟩
+    apply ConcreteCategory.hom_ext
+    intro x
+    exact h x
+
+-- Statement: CONTROL: a strict map that is no coalgebra homomorphism: the identity from `Unit` with no
+-- step to `Unit` with every step.
+example : let M := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => False)
+    let N := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)
+    ∃ φ : Hom M N, ¬ ∃ h : Endofunctor.Coalgebra.Hom M.toCoalgebra N.toCoalgebra,
+      h.f = TypeCat.ofHom φ.toFun := by
+  intro M N
+  refine ⟨⟨id, fun h => h.elim, fun _ => rfl⟩, fun h => ?_⟩
+  obtain ⟨-, hb, -⟩ := (coalgHom_iff M N _).1 h
+  obtain ⟨_, hb', -⟩ := hb () () trivial
+  exact hb'
+
+/-- `Statement:` if `f` is onto and `v (f x) = (u x).map f` at every `x`, `u` satisfying `up_idem`'s law
+    gives `v` satisfying it. One way (the `Bool` control below). `Reading:` closure of the law under
+    homomorphic images, one of a covariety's three closure conditions (Rutten, TCS 249 (2000), p. 7;
+    Theorem 17.3, p. 64). -/
+theorem idem_of_surj {α β : Type*} (u : α →. α) (v : β →. β) (f : α → β)
+    (hf : Function.Surjective f) (hc : ∀ x, v (f x) = (u x).map f)
+    (hu : ∀ x y, y ∈ u x → y ∈ u y) : ∀ x y, y ∈ v x → y ∈ v y := by
+  intro x y hy
+  obtain ⟨x, rfl⟩ := hf x
+  rw [hc] at hy
+  obtain ⟨z, hz, rfl⟩ := (Part.mem_map_iff _).1 hy
+  rw [hc]
+  exact Part.mem_map f (hu x z hz)
+
+/-- `Statement:` if `f` is one-to-one and `v (f x) = (u x).map f` at every `x`, `v` satisfying
+    `up_idem`'s law gives `u` satisfying it. One way (the `Empty` control below). `Reading:` closure
+    under subsystems, a second of the three (same pages). Closure under sums, the third, is not
+    stated here, so no covariety is claimed. -/
+theorem idem_of_inj {α β : Type*} (u : α →. α) (v : β →. β) (f : α → β)
+    (hf : Function.Injective f) (hc : ∀ x, v (f x) = (u x).map f)
+    (hv : ∀ x y, y ∈ v x → y ∈ v y) : ∀ x y, y ∈ u x → y ∈ u y := by
+  intro x y hy
+  have h1 : f y ∈ v (f x) := by rw [hc]; exact Part.mem_map f hy
+  have h2 := hv _ _ h1
+  rw [hc] at h2
+  obtain ⟨z, hz, e⟩ := (Part.mem_map_iff _).1 h2
+  exact hf e ▸ hz
+
+-- Statement: CONTROL: the constant map from `Bool` onto `Unit` makes the square commute between the
+-- swap on `Bool`, which fails the law, and the identity on `Unit`, which satisfies it; so the law is
+-- not reflected along an onto map, and `idem_of_inj` needs one-to-one.
+example : let u : Bool →. Bool := fun b => Part.some (!b)
+    let v : Unit →. Unit := fun x => Part.some x
+    (∀ x, v ((fun _ => ()) x) = (u x).map (fun _ => ())) ∧ (∀ x y, y ∈ v x → y ∈ v y) ∧
+      ¬ ∀ x y, y ∈ u x → y ∈ u y := by
+  intro u v
+  refine ⟨fun x => by simp [u, v, Part.map_some], fun x y h => ?_, fun h => ?_⟩
+  · rw [Part.mem_some_iff.1 h]; exact Part.mem_some _
+  · have := h true false (Part.mem_some _)
+    exact absurd (Part.mem_some_iff.1 this) (by decide)
+
+-- Statement: CONTROL: the map out of `Empty` into `Bool` is one-to-one and makes the square commute
+-- vacuously, the source satisfies the law and the swap on `Bool` does not; so the law is not carried
+-- forward along a one-to-one map, and `idem_of_surj` needs onto.
+example : (∀ x : Empty, (fun b : Bool => Part.some (!b)) (Empty.elim x) =
+      ((fun _ : Empty => (Part.none : Part Empty)) x).map Empty.elim) ∧
+    ¬ ∀ x y : Bool, y ∈ (fun b : Bool => Part.some (!b)) x → y ∈ (fun b : Bool => Part.some (!b)) y :=
+  ⟨fun x => x.elim, fun h => absurd (Part.mem_some_iff.1 (h true false (Part.mem_some _))) (by decide)⟩
+
+end Motion
+
+/-! ### § XXI. Observation: a motion and a map out of it, as a pair
+`Reading:` an observation is an explicit second argument (a strict map `φ`, or a map `obs` into any
+type); each result here is about the pair, none about the motion alone. The observer is the map and
+the observed motion is its source; when the map is a strict onto map with the back clause, the motion
+it maps onto is the image motion (what the observer shows). -/
+
+namespace Motion
+
+variable {α β O : Type*} {M : Motion α} {N : Motion β}
+
+/-- `Statement:` the kernel of a strict map is UP-compatible. -/
+theorem Hom.upCompat_ker (φ : Hom M N) : M.UpCompat (Setoid.ker φ.toFun) := by
+  intro a a' y (r : φ.toFun a = φ.toFun a') hy
+  have h1 : φ.toFun y ∈ N.up (φ.toFun a') := by
+    rw [← r, φ.map_up]; exact Part.mem_map _ hy
+  rw [φ.map_up] at h1
+  obtain ⟨y', hy', e⟩ := (Part.mem_map_iff _).1 h1
+  exact ⟨y', hy', e.symm⟩
+
+/-- `Statement:` the kernel of a strict map with the back clause is step-compatible. `Reading:` with
+    `upCompat_ker`, `coalgHom_iff` and the bisimulation `example` after `mkHom_surjective`, the kernel
+    of a coalgebra homomorphism for `Part × Set` is a bisimulation equivalence in Rutten's sense
+    (TCS 249 (2000), p. 11). Rutten states this as Proposition* 5.7 (p. 33), starred for a
+    weak-pullback hypothesis on the functor; here it is proved directly, and that hypothesis is not
+    checked for `Part × Set`. -/
+theorem Hom.stepCompat_ker (φ : Hom M N) (hb : StepBack M N φ.toFun) :
+    M.StepCompat (Setoid.ker φ.toFun) := by
+  intro a a' b (r : φ.toFun a = φ.toFun a') hs
+  have h1 : N.step (φ.toFun a') (φ.toFun b) := r ▸ φ.map_step hs
+  obtain ⟨b', hb', e⟩ := hb a' _ h1
+  exact ⟨b', hb', e.symm⟩
+
+variable (M) in
+/-- `Statement:` for an UP-compatible setoid, the class map is a strict map into `quotUp`. -/
+def mkHom (s : Setoid α) (hu : M.UpCompat s) : Hom M (M.quotUp s hu) :=
+  ⟨Quotient.mk s, fun {a b} h => ⟨a, b, h, rfl, rfl⟩, fun _ => rfl⟩
+
+/-- `Statement:` if the setoid is also step-compatible, the class map has the back clause.
+    `Reading:` with `mkHom_surjective` and `coalgHom_iff`, an onto coalgebra homomorphism: the
+    existence half of Rutten's Proposition 5.8 (p. 34), for a compatible setoid; uniqueness is not built. -/
+theorem mkHom_stepBack (s : Setoid α) (hu : M.UpCompat s) (hc : M.StepCompat s) :
+    StepBack M (M.quotUp s hu) (mkHom M s hu).toFun := fun a c h =>
+  (quot_step_mk_iff hc a c).1 h
+
+/-- `Statement:` the class map is onto. -/
+theorem mkHom_surjective (s : Setoid α) (hu : M.UpCompat s) :
+    Function.Surjective (mkHom M s hu).toFun := Quotient.mk_surjective
+
+-- Statement: a UP- and step-compatible setoid `s` is a bisimulation in Rutten's sense (TCS 249 (2000),
+-- p. 11): some structure map on the pairs related by `s` makes both projections homomorphisms, each
+-- square checked against `structMap`.
+example {γ : Type*} (P : Motion γ) (s : Setoid γ) (hu : P.UpCompat s) (hc : P.StepCompat s) :
+    ∃ c : {p : γ × γ // s.r p.1 p.2} → Part {p : γ × γ // s.r p.1 p.2} × Set {p : γ × γ // s.r p.1 p.2},
+      ∀ p, ((c p).1.map (fun q => q.1.1), (fun q => q.1.1) '' (c p).2) = P.structMap p.1.1 ∧
+           ((c p).1.map (fun q => q.1.2), (fun q => q.1.2) '' (c p).2) = P.structMap p.1.2 := by
+  have hd : ∀ p : {p : γ × γ // s.r p.1 p.2}, (P.up p.1.1).Dom → (P.up p.1.2).Dom := fun p h => by
+    obtain ⟨y', hy', -⟩ := hu _ _ _ p.2 (Part.get_mem h); exact Part.dom_iff_mem.2 ⟨y', hy'⟩
+  have hr : ∀ (p : {p : γ × γ // s.r p.1 p.2}) (h : (P.up p.1.1).Dom),
+      s.r ((P.up p.1.1).get h) ((P.up p.1.2).get (hd p h)) := fun p h => by
+    obtain ⟨y', hy', r⟩ := hu _ _ _ p.2 (Part.get_mem h)
+    rw [Part.get_eq_of_mem hy' (hd p h)]; exact r
+  refine ⟨fun p => (⟨(P.up p.1.1).Dom, fun h => ⟨((P.up p.1.1).get h,
+      (P.up p.1.2).get (hd p h)), hr p h⟩⟩,
+      {q | P.step p.1.1 q.1.1 ∧ P.step p.1.2 q.1.2}), fun p => ⟨?_, ?_⟩⟩
+  · refine Prod.ext ?_ (Set.ext fun b => ⟨?_, ?_⟩)
+    · exact Part.ext' Iff.rfl (fun _ _ => rfl)
+    · rintro ⟨q, ⟨h1, -⟩, rfl⟩; exact h1
+    · intro hb
+      obtain ⟨b', hb', r⟩ := hc _ _ _ p.2 hb
+      exact ⟨⟨(b, b'), r⟩, ⟨hb, hb'⟩, rfl⟩
+  · refine Prod.ext ?_ (Set.ext fun b => ⟨?_, ?_⟩)
+    · refine Part.ext' ⟨fun h => hd p h, fun h => ?_⟩ (fun _ _ => rfl)
+      obtain ⟨y', hy', -⟩ := hu _ _ _ (s.symm p.2) (Part.get_mem h)
+      change (P.up p.1.1).Dom
+      exact Part.dom_iff_mem.2 ⟨y', hy'⟩
+    · rintro ⟨q, ⟨-, h2⟩, rfl⟩; exact h2
+    · intro hb
+      obtain ⟨b', hb', r⟩ := hc _ _ _ (s.symm p.2) hb
+      exact ⟨⟨(b', b), s.symm r⟩, ⟨hb', hb⟩, rfl⟩
+
+/-- `Statement:` along an onto strict map, UP of `M` is total iff UP of `N` is; both directions. -/
+theorem Hom.upTotal_iff (φ : Hom M N) (hs : Function.Surjective φ.toFun) : M.UpTotal ↔ N.UpTotal :=
+  ⟨φ.toLax.upTotal hs, φ.upTotal_of⟩
+
+/-- `Statement:` along an onto strict map, `M` has a landing iff `N` has one; both directions. -/
+theorem Hom.hasLanding_iff (φ : Hom M N) (hs : Function.Surjective φ.toFun) :
+    M.HasLanding ↔ N.HasLanding := by
+  refine ⟨φ.toLax.hasLanding, fun ⟨Y, hY⟩ => ?_⟩
+  obtain ⟨x, rfl⟩ := hs Y
+  have h : φ.toFun x ∈ N.up (φ.toFun x) := hY
+  rw [φ.map_up] at h
+  obtain ⟨z, hz, -⟩ := (Part.mem_map_iff _).1 h
+  exact ⟨z, M.up_idem x z hz⟩
+
+/-- `Statement:` along a lax map with the back clause, no step leaves `y` iff none leaves its image;
+    both directions. -/
+theorem LaxHom.noStepAt_iff (φ : LaxHom M N) (hb : StepBack M N φ.toFun) (y : α) :
+    M.NoStepAt y ↔ N.NoStepAt (φ.toFun y) :=
+  ⟨φ.noStepAt hb, φ.noStepAt_of_image⟩
+
+/-- `Statement:` along an onto strict map with the back clause, if the corner of `N` fires, the corner
+    of `M` fires. One way (the `Bool` NO-GO below). -/
+theorem Hom.corner_of_image (φ : Hom M N) (hb : StepBack M N φ.toFun)
+    (hs : Function.Surjective φ.toFun) : N.Corner → M.Corner := by
+  rintro ⟨Y, B, Z, hY, hYB, hZ, hZB⟩
+  obtain ⟨y, rfl⟩ := hs Y
+  have h : φ.toFun y ∈ N.up (φ.toFun y) := hY
+  rw [φ.map_up] at h
+  obtain ⟨y', hy', e⟩ := (Part.mem_map_iff _).1 h
+  rw [← e] at hYB
+  obtain ⟨b, hb', rfl⟩ := hb y' B hYB
+  rw [φ.map_up] at hZ
+  obtain ⟨z, hz, rfl⟩ := (Part.mem_map_iff _).1 hZ
+  exact ⟨y', b, z, M.up_idem y y' hy', hb', hz, fun h => hZB (h ▸ rfl)⟩
+
+/-- `Statement:` along an onto strict map with the back clause, if `N` climbs, `M` climbs. One way
+    (the `Fin 4` NO-GO below). -/
+theorem Hom.climb_of_image (φ : Hom M N) (hb : StepBack M N φ.toFun)
+    (hs : Function.Surjective φ.toFun) : N.Climb → M.Climb := by
+  rintro ⟨Y, B, Z, hY, hYB, hZ, hZB, hZY⟩
+  obtain ⟨y, rfl⟩ := hs Y
+  have h : φ.toFun y ∈ N.up (φ.toFun y) := hY
+  rw [φ.map_up] at h
+  obtain ⟨y', hy', e⟩ := (Part.mem_map_iff _).1 h
+  rw [← e] at hYB hZY
+  obtain ⟨b, hb', rfl⟩ := hb y' B hYB
+  rw [φ.map_up] at hZ
+  obtain ⟨z, hz, rfl⟩ := (Part.mem_map_iff _).1 hZ
+  exact ⟨y', b, z, M.up_idem y y' hy', hb', hz, fun h => hZB (h ▸ rfl), fun h => hZY (h ▸ rfl)⟩
+
+-- Statement: NO-GO, a climb seen as a loop: on `Fin 4`, UP `1 ↦ 2`, `3 ↦ 0`, else fixed; OVER `0 → 1`,
+-- `2 → 3`. The map `x ↦ decide (x = 1 ∨ x = 3)` to `Bool` (UP constant `false`, OVER `false → true`) is
+-- a strict onto map with the back clause; the source climbs and does not loop, the target loops and
+-- does not climb. So a climb is not carried forward and a loop is not reflected.
+example : let r : Fin 4 → Fin 4 := fun x => if x = 1 then 2 else if x = 3 then 0 else x
+    let st : Fin 4 → Fin 4 → Prop := fun a b => (a = 0 ∧ b = 1) ∨ (a = 2 ∧ b = 3)
+    let N := ofTotal (fun _ : Bool => false) (fun _ => rfl) (fun a b => a = false ∧ b = true)
+    ∃ hr : ∀ x, r (r x) = r x, ∃ φ : Hom (ofTotal r hr st) N,
+      StepBack (ofTotal r hr st) N φ.toFun ∧ Function.Surjective φ.toFun ∧
+      (ofTotal r hr st).Climb ∧ ¬ (ofTotal r hr st).Loop ∧ N.Loop ∧ ¬ N.Climb := by
+  intro r st N
+  have hr : ∀ x, r (r x) = r x := by decide
+  let g : Fin 4 → Bool := fun x => decide (x = 1 ∨ x = 3)
+  have hstep : ∀ a b, st a b → g a = false ∧ g b = true := by
+    intro a b h; rcases h with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> decide
+  have hgr : ∀ x, g (r x) = false := by decide
+  have hback : ∀ a, g a = false → ∃ b, st a b ∧ g b = true := by decide
+  refine ⟨hr, ⟨g, fun h => hstep _ _ h, fun x => ?_⟩, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · show Part.some false = (Part.some (r x)).map g
+    rw [Part.map_some, hgr]
+  · rintro a c ⟨ha, rfl⟩
+    exact hback a ha
+  · intro c; cases c
+    · exact ⟨0, rfl⟩
+    · exact ⟨1, rfl⟩
+  · exact ⟨0, 1, 2, Part.mem_some_iff.2 (by decide), Or.inl ⟨rfl, rfl⟩,
+      Part.mem_some_iff.2 (by decide), by decide, by decide⟩
+  · rintro ⟨y, b, -, hs, -, hyb⟩
+    have e : y = r b := Part.mem_some_iff.1 hyb
+    rcases hs with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> exact absurd e (by decide)
+  · exact ⟨false, true, Part.mem_some _, ⟨rfl, rfl⟩, by decide, Part.mem_some _⟩
+  · intro h
+    obtain ⟨y, b, z, hyb, hbz, hzy⟩ := N.climb_three h
+    revert hyb hbz hzy; revert y b z; decide
+
+-- Statement: NO-GO, a loop seen as a stutter: on `Bool`, UP constant `true`, OVER `b → !b`; the constant
+-- map onto `Unit` (UP the identity, every step) is a strict onto map with the back clause; the source
+-- loops and fires the corner and `true` does not step to itself only, the target does not loop, does
+-- not fire the corner, and `()` steps to itself only. So the loop and the corner are not carried
+-- forward, and stepping to itself only is not reflected.
+example : let M := ofTotal (fun _ : Bool => true) (fun _ => rfl) (fun a b => b = !a)
+    let N := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)
+    ∃ φ : Hom M N, StepBack M N φ.toFun ∧ Function.Surjective φ.toFun ∧
+      M.Loop ∧ M.Corner ∧ ¬ M.SelfOnlyAt true ∧ ¬ N.Loop ∧ ¬ N.Corner ∧ N.SelfOnlyAt (φ.toFun true) := by
+  intro M N
+  refine ⟨⟨fun _ => (), fun _ => trivial, fun _ => by
+      show Part.some () = (Part.some true).map _; rw [Part.map_some]⟩,
+    fun a _ _ => ⟨!a, rfl, rfl⟩, fun _ => ⟨true, rfl⟩,
+    ⟨true, false, Part.mem_some _, rfl, by decide, Part.mem_some _⟩,
+    ⟨true, false, true, Part.mem_some _, rfl, Part.mem_some _, by decide⟩,
+    fun ⟨h, _⟩ => Bool.noConfusion (show true = false from h),
+    fun ⟨_, _, _, _, h, _⟩ => h rfl, fun ⟨_, _, _, _, _, _, h⟩ => h rfl,
+    ⟨trivial, fun _ _ => rfl⟩⟩
+
+variable (M) in
+/-- `Statement:` if the kernel of `obs` is step-compatible, the class of `a` steps elsewhere in the
+    quotient iff `a` has a successor with a different observation; both directions. -/
+theorem quot_leavesAt_iff (obs : α → O) (hc : M.StepCompat (Setoid.ker obs)) (a : α) :
+    (M.quot (Setoid.ker obs)).LeavesAt (Quotient.mk _ a) ↔ ∃ b, M.step a b ∧ obs b ≠ obs a := by
+  constructor
+  · rintro ⟨Y, hY, hne⟩
+    obtain ⟨b, hb, rfl⟩ := (quot_step_mk_iff hc a Y).1 hY
+    exact ⟨b, hb, fun e => hne (Quotient.sound e)⟩
+  · rintro ⟨b, hb, hne⟩
+    exact ⟨Quotient.mk _ b, (quot_step_mk_iff hc a _).2 ⟨b, hb, rfl⟩,
+      fun e => hne (Quotient.exact e)⟩
+
+variable (M) in
+/-- `Statement:` under the same hypothesis, if the class of `a` steps elsewhere, `a` steps elsewhere.
+    One way (`carry` under `Prod.fst`, `ZeroParadox/DieCannotBe.lean` § XXV). -/
+theorem leavesAt_of_quot (obs : α → O) (hc : M.StepCompat (Setoid.ker obs)) (a : α)
+    (h : (M.quot (Setoid.ker obs)).LeavesAt (Quotient.mk _ a)) : M.LeavesAt a :=
+  let ⟨b, hb, hne⟩ := (quot_leavesAt_iff M obs hc a).1 h
+  ⟨b, hb, fun e => hne (e ▸ rfl)⟩
+
+variable (M) in
+/-- `Statement:` the kernel of a one-to-one `obs` is step-compatible. -/
+theorem stepCompat_ker_of_injective (obs : α → O) (hi : Function.Injective obs) :
+    M.StepCompat (Setoid.ker obs) := fun a a' b r hs =>
+  (hi r : a = a') ▸ ⟨b, hs, rfl⟩
+
+/-- `Statement:` if the kernel of `obs` is UP-compatible, some `D` on `O` has `(up a).Dom ↔ D (obs a)`
+    at every `a`. -/
+theorem dom_factor (obs : α → O) (hu : M.UpCompat (Setoid.ker obs)) :
+    ∃ D : O → Prop, ∀ a, (M.up a).Dom ↔ D (obs a) := by
+  refine ⟨fun o => ∃ a, obs a = o ∧ (M.up a).Dom, fun a => ⟨fun h => ⟨a, rfl, h⟩, ?_⟩⟩
+  rintro ⟨a', e, hd⟩
+  obtain ⟨y, hy⟩ := Part.dom_iff_mem.1 hd
+  obtain ⟨y', hy', -⟩ := hu a' a y e hy
+  exact Part.dom_iff_mem.2 ⟨y', hy'⟩
+
+/-- `Statement:` if `(up a).Dom ↔ D (obs a)` at every `a`, and `D` is decided at every point of `O`
+    (passed as data `dD`), registration is decided (`RegisteredDecidable`). -/
+theorem registeredDecidable_of_factor (obs : α → O) (D : O → Prop) (dD : ∀ o, Decidable (D o))
+    (hD : ∀ a, (M.up a).Dom ↔ D (obs a)) : M.RegisteredDecidable :=
+  ⟨fun a => @decidable_of_iff _ _ (hD a).symm (dD (obs a))⟩
+
+/-- `Statement:` the kernel of the definedness map `a ↦ (up a).Dom` is UP-compatible. -/
+theorem upCompat_ker_dom : M.UpCompat (Setoid.ker fun a => (M.up a).Dom) := by
+  intro a a' y (r : (M.up a).Dom = (M.up a').Dom) hy
+  have hd : (M.up a').Dom := r ▸ Part.dom_iff_mem.2 ⟨y, hy⟩
+  refine ⟨(M.up a').get hd, Part.get_mem hd, ?_⟩
+  show (M.up y).Dom = (M.up _).Dom
+  exact propext ⟨fun _ => Part.dom_iff_mem.2 ⟨_, M.up_idem _ _ (Part.get_mem hd)⟩,
+    fun _ => Part.dom_iff_mem.2 ⟨y, M.up_idem _ _ hy⟩⟩
+
+-- Statement: CONTROL, the constant observation on `Bool` with UP defined at `true` only: no `D` on
+-- `Unit` has `(up a).Dom ↔ D ()` at every `a`.
+example : let M : Motion Bool := ⟨fun b => ⟨b = true, fun _ => b⟩, fun _ _ ⟨h, e⟩ => ⟨e ▸ h, rfl⟩,
+      fun _ _ => False⟩
+    ¬ ∃ D : Unit → Prop, ∀ a, (M.up a).Dom ↔ D ((fun _ => ()) a) := by
+  intro M ⟨D, hD⟩
+  have h1 := (hD true).1 rfl
+  have h2 := (hD false).2 h1
+  exact absurd h2 (by decide)
+
+end Motion
+
 end ZeroParadox
 
 section PurityCheck
@@ -2796,5 +3193,27 @@ open ZeroParadox
 #print axioms Motion.LaxHom.arrives
 #print axioms Motion.Hom.upTotal_of
 #print axioms Motion.Hom.isLanding_of_image
+#print axioms Motion.structMap
+#print axioms Motion.toCoalgebra
+#print axioms Motion.motionEquiv
+#print axioms Motion.coalgHom_iff
+#print axioms Motion.idem_of_surj
+#print axioms Motion.idem_of_inj
+#print axioms Motion.Hom.upCompat_ker
+#print axioms Motion.Hom.stepCompat_ker
+#print axioms Motion.mkHom
+#print axioms Motion.mkHom_stepBack
+#print axioms Motion.mkHom_surjective
+#print axioms Motion.Hom.upTotal_iff
+#print axioms Motion.Hom.hasLanding_iff
+#print axioms Motion.LaxHom.noStepAt_iff
+#print axioms Motion.Hom.corner_of_image
+#print axioms Motion.Hom.climb_of_image
+#print axioms Motion.quot_leavesAt_iff
+#print axioms Motion.leavesAt_of_quot
+#print axioms Motion.stepCompat_ker_of_injective
+#print axioms Motion.dom_factor
+#print axioms Motion.registeredDecidable_of_factor
+#print axioms Motion.upCompat_ker_dom
 
 end PurityCheck

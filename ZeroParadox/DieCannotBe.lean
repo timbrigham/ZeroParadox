@@ -4017,4 +4017,122 @@ example :
   intro S
   exact ⟨by decide, ⟨2, ⟨0, rfl, rfl⟩, by decide⟩, fun h => h.2 (c := 1) (by decide) (by decide)⟩
 
+/-! ### § XXIV. A motion as a coalgebra for `Part × Set` -/
+#check @ZeroParadox.Motion.structMap             -- Statement: `x ↦ (up x, {b | step x b})`
+#check @ZeroParadox.Motion.toCoalgebra           -- Statement: a motion as a Mathlib `Endofunctor.Coalgebra` for `FunctorToTypes.prod (ofTypeFunctor Part) (ofTypeFunctor Set)`
+#check @ZeroParadox.Motion.motionEquiv           -- Statement: motions on `α` are equivalent to maps `α → Part α × Set α` whose `Part` component satisfies `up_idem`'s law
+#check @ZeroParadox.Motion.coalgHom_iff          -- Statement: a coalgebra homomorphism with underlying map `f` exists iff `f` carries steps to steps, has the back clause and has `UpStrict`; both directions
+#check @ZeroParadox.Motion.idem_of_surj          -- Statement: along an onto map making the `Part` square commute, the law is carried forward
+#check @ZeroParadox.Motion.idem_of_inj           -- Statement: along a one-to-one such map, the law is reflected
+-- Statement: CONTROLS in `ZeroParadox/Die.lean` § XX: a structure map on `Bool` failing the law; the
+-- swap on `Bool` mapped onto `Unit` (not reflected along onto); the map out of `Empty` into the swap
+-- (not carried forward along one-to-one); a strict map that is no coalgebra homomorphism.
+-- Reading (cited, not claimed): Rutten, "Universal coalgebra", TCS 249 (2000): coalgebras p. 8,
+-- homomorphisms of transition systems p. 10; a covariety is a class closed under subsystems,
+-- homomorphic images and sums (p. 7; Theorem 17.3, p. 64). `idem_of_inj` and `idem_of_surj` give the
+-- first two closures for the `up_idem` law; sums are not built here, so no covariety is claimed. The
+-- powerset functor has no final coalgebra (p. 43); a final coalgebra for `Part × Set` is not stated.
+-- A coalgebra whose structure map has an idempotent component was not located as of 2026-10-28 (the
+-- search is recorded under `Motion` in `LEAN_CUSTOM_REGISTRY.md`).
+
+/-! ### § XXV. Observation as a parameter: a motion paired with a map out of it -/
+-- Reading: each entry takes the observation as an argument (a strict map `φ`, or `obs : α → O`) and is
+-- about the pair; none states that a motion alone is or is not observable.
+#check @ZeroParadox.Motion.Hom.upCompat_ker      -- Statement: the kernel of a strict map is UP-compatible
+#check @ZeroParadox.Motion.Hom.stepCompat_ker    -- Statement: with the back clause, that kernel is step-compatible
+#check @ZeroParadox.Motion.mkHom                 -- Statement: for an UP-compatible setoid, the class map is a strict map into `quotUp`
+#check @ZeroParadox.Motion.mkHom_stepBack        -- Statement: if the setoid is also step-compatible, the class map has the back clause
+#check @ZeroParadox.Motion.mkHom_surjective      -- Statement: the class map is onto
+-- Reading: a strict map with the back clause (the observer) gives a compatible kernel, and a
+-- compatible setoid gives such a map onto its quotient (the image motion, what the observer shows;
+-- the observed motion is the source; Rutten's homomorphic image, or quotient, TCS 249 (2000), p. 10).
+-- How this relates to Rutten's Proposition* 5.7 and Proposition 5.8
+-- (pp. 33–34) is in the Readings on `Hom.stepCompat_ker` and `mkHom_stepBack`, with the bisimulation
+-- `example` after `mkHom_surjective`, `ZeroParadox/Die.lean` § XXI.
+#check @ZeroParadox.Motion.Hom.upTotal_iff       -- Statement: along an onto strict map, UP total in the source iff in the target
+#check @ZeroParadox.Motion.Hom.hasLanding_iff    -- Statement: along an onto strict map, a landing in the source iff one in the target
+#check @ZeroParadox.Motion.LaxHom.noStepAt_iff   -- Statement: along a lax map with the back clause, no step at `y` iff none at its image
+#check @ZeroParadox.Motion.Hom.corner_of_image   -- Statement: along an onto strict map with the back clause, a corner in the target gives one in the source
+#check @ZeroParadox.Motion.Hom.climb_of_image    -- Statement: along an onto strict map with the back clause, a climb in the target gives one in the source
+#check @ZeroParadox.Motion.LaxHom.leavesAt_of_image -- Statement: along a lax map with the back clause, stepping elsewhere at the image gives it at `y`
+#check @ZeroParadox.Motion.LaxHom.selfOnlyAt     -- Statement: along a lax map with the back clause, stepping to itself only at `y` gives it at the image
+-- Statement: NO-GO `example`s, each a strict onto map with the back clause, in `ZeroParadox/Die.lean`
+-- § XXI: on `Fin 4` a climb is seen as a loop (a climb not carried forward, a loop not reflected); on
+-- `Bool` a loop is seen as a stutter (a loop and a corner not carried forward, stepping to itself
+-- only not reflected). Reading: under these hypotheses the loop transfers in neither direction.
+#check @ZeroParadox.Motion.quot_leavesAt_iff     -- Statement: with a step-compatible kernel of `obs`, the class of `a` steps elsewhere iff `a` has a successor with a different observation
+#check @ZeroParadox.Motion.leavesAt_of_quot      -- Statement: under the same hypothesis, if the class of `a` steps elsewhere, `a` does
+#check @ZeroParadox.Motion.stepCompat_ker_of_injective -- Statement: the kernel of a one-to-one `obs` is step-compatible
+-- Statement: CONTROL, a one-to-one observation: the class of `a` steps elsewhere iff `a` does.
+example {α O : Type} (M : ZeroParadox.Motion α) (obs : α → O) (hi : Function.Injective obs) (a : α) :
+    (M.quot (Setoid.ker obs)).LeavesAt (Quotient.mk _ a) ↔ M.LeavesAt a := by
+  rw [ZeroParadox.Motion.quot_leavesAt_iff M obs
+    (ZeroParadox.Motion.stepCompat_ker_of_injective M obs hi)]
+  exact ⟨fun ⟨b, hb, h⟩ => ⟨b, hb, fun e => h (e ▸ rfl)⟩, fun ⟨b, hb, h⟩ => ⟨b, hb, fun e => h (hi e)⟩⟩
+-- Statement: CONTROL, a constant observation: no class steps elsewhere.
+example {α O : Type} (M : ZeroParadox.Motion α) (o : O) (a : α) :
+    ¬ (M.quot (Setoid.ker fun _ : α => o)).LeavesAt (Quotient.mk _ a) := by
+  rintro ⟨Y, -, hne⟩
+  induction Y using Quotient.ind
+  exact hne (Quotient.sound rfl)
+-- Statement: `Stutters f obs` (`ZeroParadox/Computability/Occurrence.lean`) gives that no class of the
+-- quotient of `ofPartialFun f` by the kernel of `obs` steps elsewhere.
+example {σ O : Type} (f : σ → Option σ) (obs : σ → O) (h : ZeroParadox.Stutters f obs) (a : σ) :
+    ¬ ((ZeroParadox.Motion.ofPartialFun f).quot (Setoid.ker obs)).LeavesAt (Quotient.mk _ a) := by
+  rintro ⟨Y, ⟨a', b, hs, ha', rfl⟩, hne⟩
+  exact hne (Quotient.sound ((h a' b hs).trans (Quotient.exact ha')))
+-- Statement: with decidable equality on `O`, the converse holds as well; both directions.
+example {σ O : Type} [DecidableEq O] (f : σ → Option σ) (obs : σ → O) :
+    ZeroParadox.Stutters f obs ↔
+      ∀ a, ¬ ((ZeroParadox.Motion.ofPartialFun f).quot (Setoid.ker obs)).LeavesAt (Quotient.mk _ a) := by
+  refine ⟨fun h a => ?_, fun h s s' hs => ?_⟩
+  · rintro ⟨Y, ⟨a', b, hs, ha', rfl⟩, hne⟩
+    exact hne (Quotient.sound ((h a' b hs).trans (Quotient.exact ha')))
+  · cases decEq (obs s') (obs s) with
+    | isTrue e => exact e
+    | isFalse e => exact (h s ⟨Quotient.mk _ s', ⟨s, s', hs, rfl, rfl⟩, fun q => e (Quotient.exact q)⟩).elim
+-- Statement: the converse for every `O : Type` gives double-negation elimination: `Bool`, `true ↦ false`,
+-- observed in `Prop` as `true ↦ True`, `false ↦ P`.
+example (H : ∀ (σ O : Type) (f : σ → Option σ) (obs : σ → O),
+      (∀ a, ¬ ((ZeroParadox.Motion.ofPartialFun f).quot (Setoid.ker obs)).LeavesAt
+        (Quotient.mk _ a)) → ZeroParadox.Stutters f obs)
+    (P : Prop) : ¬¬P → P := by
+  intro hnn
+  have hq : ∀ a, ¬ ((ZeroParadox.Motion.ofPartialFun fun b : Bool => cond b (some false) none).quot
+      (Setoid.ker fun b : Bool => cond b True P)).LeavesAt (Quotient.mk _ a) := by
+    rintro a ⟨Y, ⟨a', b, hs, ha', rfl⟩, hne⟩
+    change cond a' (some false) none = some b at hs
+    cases a' <;> cases b
+    · exact absurd hs (by decide)
+    · exact absurd hs (by decide)
+    · exact hnn fun hp => hne (ha' ▸ Quotient.sound (show P = True from eq_true hp))
+    · exact absurd hs (by decide)
+  exact of_eq_true (show P = True from H Bool Prop _ _ hq true false rfl)
+-- Reading: so the converse is classified STATEMENT-CARRIED: decidable equality on `O` makes it
+-- choice-free, and stated for every `O` it is a taboo (double-negation elimination).
+-- Statement: `carry` (`ZeroParadox/Computability/Occurrence.lean`) under `Prod.fst`: the kernel is
+-- step-compatible, every state steps elsewhere, and no class of the quotient does.
+example :
+    (ZeroParadox.Motion.ofPartialFun ZeroParadox.carry).StepCompat (Setoid.ker Prod.fst) ∧
+    (∀ p, (ZeroParadox.Motion.ofPartialFun ZeroParadox.carry).LeavesAt p) ∧
+    ∀ p, ¬ ((ZeroParadox.Motion.ofPartialFun ZeroParadox.carry).quot (Setoid.ker Prod.fst)).LeavesAt
+      (Quotient.mk _ p) := by
+  refine ⟨?_, fun p => ⟨(p.1, p.2 + 1), rfl, fun h => by simpa using congrArg Prod.snd h⟩, ?_⟩
+  · intro a a' b (r : a.1 = a'.1) (hs : ZeroParadox.carry a = some b)
+    refine ⟨(a'.1, a'.2 + 1), rfl, ?_⟩
+    simp only [ZeroParadox.carry, Option.some.injEq] at hs
+    show b.1 = a'.1
+    rw [← hs]; exact r
+  · rintro p ⟨Y, ⟨a', b, hs, ha', rfl⟩, hne⟩
+    exact hne (Quotient.sound ((ZeroParadox.carry_stutters a' b hs).trans (Quotient.exact ha')))
+-- Reading: when the kernel of the observation is step-compatible, stepping elsewhere is reflected by
+-- the observation (`leavesAt_of_quot`) and, by `carry`, not carried forward.
+#check @ZeroParadox.Motion.dom_factor            -- Statement: if the kernel of `obs` is UP-compatible, UP-definedness is `D ∘ obs` for some `D`
+#check @ZeroParadox.Motion.registeredDecidable_of_factor -- Statement: if UP-definedness is `D ∘ obs` and `D` is decided at every point, registration is decided
+#check @ZeroParadox.Motion.upCompat_ker_dom      -- Statement: the kernel of the definedness map `a ↦ (up a).Dom` is UP-compatible
+-- Statement: CONTROL, the constant observation on `Bool` with UP defined at `true` only:
+-- `ZeroParadox/Die.lean` § XXI's last `example`. Reading: these are sufficient conditions for deciding
+-- registration through an observation; the definedness map always meets the first hypothesis, so the
+-- content is in `D` being decided.
+
 end DieCannotBeIndex
