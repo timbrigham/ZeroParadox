@@ -12,6 +12,7 @@ import Mathlib.Order.Atoms.Finite
 import Mathlib.CategoryTheory.Endofunctor.Algebra
 import Mathlib.CategoryTheory.Types.Basic
 import Mathlib.CategoryTheory.Limits.Shapes.FunctorToTypes
+import Mathlib.CategoryTheory.Limits.Types.Pullbacks
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -35,9 +36,9 @@ The die has evolved, and it is on version two now. I think what we are describin
 ---
 
 ## Formal Overview (AI-assisted)
-Version 2; the index `ZeroParadox/DieCannotBe.lean` numbers its sections differently. Here: MOTION (§ I–IV;
-no order); VIEWS (§ XII, § XIV–XV; an order as data); CELLS (§ IX–XI, § XVI; arrival, fan-in); TRAP SETS
-(§ XII–XIII, § XVI); the DATUM behind a cell (§ V–VIII, § XIII); MAPS, ORDERS, QUOTIENTS (§ XIII, XVII–XXI).
+Version 2; the index `ZeroParadox/DieCannotBe.lean` numbers its sections differently. Here: MOTION (§ I–IV; no order);
+VIEWS (§ XII, § XIV–XV; an order as data); CELLS (§ IX–XI, § XVI; arrival, fan-in); TRAP SETS (§ XII–XIII, § XVI);
+the DATUM behind a cell (§ V–VIII, § XIII); MAPS, ORDERS, QUOTIENTS, BISIMULATIONS (§ XIII, XVII–XXII).
 -/
 
 namespace ZeroParadox
@@ -2669,11 +2670,9 @@ theorem Hom.upCompat_ker (φ : Hom M N) : M.UpCompat (Setoid.ker φ.toFun) := by
   exact ⟨y', hy', e.symm⟩
 
 /-- `Statement:` the kernel of a strict map with the back clause is step-compatible. `Reading:` with
-    `upCompat_ker`, `coalgHom_iff` and the bisimulation `example` after `mkHom_surjective`, the kernel
-    of a coalgebra homomorphism for `Part × Set` is a bisimulation equivalence in Rutten's sense
-    (TCS 249 (2000), p. 11). Rutten states this as Proposition* 5.7 (p. 33), starred for a
-    weak-pullback hypothesis on the functor; here it is proved directly, and that hypothesis is not
-    checked for `Part × Set`. -/
+    `upCompat_ker`, `isBisim_of_compat` (§ XXII) makes this kernel a bisimulation in Rutten's sense
+    (TCS 249 (2000), p. 11). Rutten's Proposition* 5.7 (p. 33) for `Part × Set` is `isBisim_ker`
+    (§ XXII); its star marks weak-pullback preservation, which § XXII proves for this functor. -/
 theorem Hom.stepCompat_ker (φ : Hom M N) (hb : StepBack M N φ.toFun) :
     M.StepCompat (Setoid.ker φ.toFun) := by
   intro a a' b (r : φ.toFun a = φ.toFun a') hs
@@ -2696,38 +2695,6 @@ theorem mkHom_stepBack (s : Setoid α) (hu : M.UpCompat s) (hc : M.StepCompat s)
 /-- `Statement:` the class map is onto. -/
 theorem mkHom_surjective (s : Setoid α) (hu : M.UpCompat s) :
     Function.Surjective (mkHom M s hu).toFun := Quotient.mk_surjective
-
--- Statement: a UP- and step-compatible setoid `s` is a bisimulation in Rutten's sense (TCS 249 (2000),
--- p. 11): some structure map on the pairs related by `s` makes both projections homomorphisms, each
--- square checked against `structMap`.
-example {γ : Type*} (P : Motion γ) (s : Setoid γ) (hu : P.UpCompat s) (hc : P.StepCompat s) :
-    ∃ c : {p : γ × γ // s.r p.1 p.2} → Part {p : γ × γ // s.r p.1 p.2} × Set {p : γ × γ // s.r p.1 p.2},
-      ∀ p, ((c p).1.map (fun q => q.1.1), (fun q => q.1.1) '' (c p).2) = P.structMap p.1.1 ∧
-           ((c p).1.map (fun q => q.1.2), (fun q => q.1.2) '' (c p).2) = P.structMap p.1.2 := by
-  have hd : ∀ p : {p : γ × γ // s.r p.1 p.2}, (P.up p.1.1).Dom → (P.up p.1.2).Dom := fun p h => by
-    obtain ⟨y', hy', -⟩ := hu _ _ _ p.2 (Part.get_mem h); exact Part.dom_iff_mem.2 ⟨y', hy'⟩
-  have hr : ∀ (p : {p : γ × γ // s.r p.1 p.2}) (h : (P.up p.1.1).Dom),
-      s.r ((P.up p.1.1).get h) ((P.up p.1.2).get (hd p h)) := fun p h => by
-    obtain ⟨y', hy', r⟩ := hu _ _ _ p.2 (Part.get_mem h)
-    rw [Part.get_eq_of_mem hy' (hd p h)]; exact r
-  refine ⟨fun p => (⟨(P.up p.1.1).Dom, fun h => ⟨((P.up p.1.1).get h,
-      (P.up p.1.2).get (hd p h)), hr p h⟩⟩,
-      {q | P.step p.1.1 q.1.1 ∧ P.step p.1.2 q.1.2}), fun p => ⟨?_, ?_⟩⟩
-  · refine Prod.ext ?_ (Set.ext fun b => ⟨?_, ?_⟩)
-    · exact Part.ext' Iff.rfl (fun _ _ => rfl)
-    · rintro ⟨q, ⟨h1, -⟩, rfl⟩; exact h1
-    · intro hb
-      obtain ⟨b', hb', r⟩ := hc _ _ _ p.2 hb
-      exact ⟨⟨(b, b'), r⟩, ⟨hb, hb'⟩, rfl⟩
-  · refine Prod.ext ?_ (Set.ext fun b => ⟨?_, ?_⟩)
-    · refine Part.ext' ⟨fun h => hd p h, fun h => ?_⟩ (fun _ _ => rfl)
-      obtain ⟨y', hy', -⟩ := hu _ _ _ (s.symm p.2) (Part.get_mem h)
-      change (P.up p.1.1).Dom
-      exact Part.dom_iff_mem.2 ⟨y', hy'⟩
-    · rintro ⟨q, ⟨-, h2⟩, rfl⟩; exact h2
-    · intro hb
-      obtain ⟨b', hb', r⟩ := hc _ _ _ (s.symm p.2) hb
-      exact ⟨⟨(b', b), s.symm r⟩, ⟨hb', hb⟩, rfl⟩
 
 /-- `Statement:` along an onto strict map, UP of `M` is total iff UP of `N` is; both directions. -/
 theorem Hom.upTotal_iff (φ : Hom M N) (hs : Function.Surjective φ.toFun) : M.UpTotal ↔ N.UpTotal :=
@@ -2894,6 +2861,378 @@ example : let M : Motion Bool := ⟨fun b => ⟨b = true, fun _ => b⟩, fun _ _
   have h1 := (hD true).1 rfl
   have h2 := (hD false).2 h1
   exact absurd h2 (by decide)
+
+end Motion
+
+/-! ### § XXII. Weak pullbacks for `Part × Set`, and bisimulations of motions
+`Reading:` Rutten, "Universal coalgebra", TCS 249 (2000), defines a weak pullback as a pullback
+without uniqueness of the mediating map (Appendix, p. 74), and from Convention 4.4 (p. 28) assumes
+the functor preserves weak pullbacks, starring each result whose proof uses it; Proposition A.3
+(p. 76) reads this as "transforms weak pullbacks into weak pullbacks", which is
+`PreservesWeakPullbacks`. `PreservesWeakPullbacksElementwise` is the elementwise form over the
+canonical pullback `{(a, b) | f a = g b}` (p. 74): Rutten's form gives it without `Classical.choice`
+(`PreservesWeakPullbacks.elementwise`), and it gives Rutten's form with `Classical.choice`
+(`PreservesWeakPullbacksElementwise.preserves`). -/
+
+open CategoryTheory
+
+/-- `Statement:` the square `k ≫ f = l ≫ g` commutes, and every commuting cone `(X, i, j)` has
+    some mediating `h` with `h ≫ k = i` and `h ≫ l = j`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `IsPullback` requires a unique mediating map;
+-- the dated search is in `LEAN_CUSTOM_REGISTRY.md`.
+def IsWeakPullback {A B C W : Type u} (f : A ⟶ C) (g : B ⟶ C) (k : W ⟶ A) (l : W ⟶ B) : Prop :=
+  k ≫ f = l ≫ g ∧ ∀ (X : Type u) (i : X ⟶ A) (j : X ⟶ B), i ≫ f = j ≫ g →
+    ∃ h : X ⟶ W, h ≫ k = i ∧ h ≫ l = j
+
+/-- `Statement:` `F` sends every square satisfying `IsWeakPullback` to one satisfying it. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: over `IsWeakPullback`; Mathlib's `PreservesLimit` is for
+-- limits with unique mediating maps.
+def PreservesWeakPullbacks (F : Type u ⥤ Type u) : Prop :=
+  ∀ {A B C W : Type u} (f : A ⟶ C) (g : B ⟶ C) (k : W ⟶ A) (l : W ⟶ B),
+    IsWeakPullback f g k l → IsWeakPullback (F.map f) (F.map g) (F.map k) (F.map l)
+
+/-- `Statement:` for every `x : F A` and `y : F B` with `F f x = F g y`, some `z` in `F` of
+    Mathlib's `Types.PullbackObj f g` (the pairs with `f a = g b`) maps to `x` and `y` under `F` of
+    the two projections. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: the elementwise form of `PreservesWeakPullbacks`, over
+-- Mathlib's `Types.PullbackObj`.
+def PreservesWeakPullbacksElementwise (F : Type u ⥤ Type u) : Prop :=
+  ∀ {A B C : Type u} (f : A ⟶ C) (g : B ⟶ C) (x : F.obj A) (y : F.obj B), F.map f x = F.map g y →
+    ∃ z : F.obj (Limits.Types.PullbackObj f g),
+      F.map (TypeCat.ofHom fun p : Limits.Types.PullbackObj f g => p.1.1) z = x ∧
+        F.map (TypeCat.ofHom fun p : Limits.Types.PullbackObj f g => p.1.2) z = y
+
+/-- `Statement:` `PreservesWeakPullbacks F` gives `PreservesWeakPullbacksElementwise F`. -/
+theorem PreservesWeakPullbacks.elementwise {F : Type u ⥤ Type u} (h : PreservesWeakPullbacks F) :
+    PreservesWeakPullbacksElementwise F := by
+  intro A B C f g x y e
+  have hpb : IsWeakPullback f g (TypeCat.ofHom fun p : Limits.Types.PullbackObj f g => p.1.1)
+      (TypeCat.ofHom fun p : Limits.Types.PullbackObj f g => p.1.2) :=
+    ⟨by ext p; exact p.2, fun X i j e =>
+      ⟨TypeCat.ofHom fun x => ⟨(i x, j x), ConcreteCategory.congr_hom e x⟩, rfl, rfl⟩⟩
+  obtain ⟨-, hm⟩ := h f g _ _ hpb
+  obtain ⟨m, h1, h2⟩ := hm PUnit (TypeCat.ofHom fun _ => x) (TypeCat.ofHom fun _ => y)
+    (by ext; exact e)
+  exact ⟨m PUnit.unit, ConcreteCategory.congr_hom h1 _, ConcreteCategory.congr_hom h2 _⟩
+
+/-- `Statement:` `PreservesWeakPullbacksElementwise F` gives `PreservesWeakPullbacks F`.
+    `Reading:` the proof picks each lift with `Classical.choice`; whether that is avoidable is not
+    claimed. -/
+theorem PreservesWeakPullbacksElementwise.preserves {F : Type u ⥤ Type u}
+    (h : PreservesWeakPullbacksElementwise F) : PreservesWeakPullbacks F := by
+  intro A B C W f g k l ⟨hc, hw⟩
+  obtain ⟨m, hm1, hm2⟩ := hw (Limits.Types.PullbackObj f g)
+    (TypeCat.ofHom fun p => p.1.1) (TypeCat.ofHom fun p => p.1.2) (by ext p; exact p.2)
+  refine ⟨by rw [← F.map_comp, ← F.map_comp, hc], fun X i j e => ?_⟩
+  have hz : ∀ x, ∃ z : F.obj (Limits.Types.PullbackObj f g),
+      F.map (TypeCat.ofHom fun p : Limits.Types.PullbackObj f g => p.1.1) z = i x ∧
+        F.map (TypeCat.ofHom fun p : Limits.Types.PullbackObj f g => p.1.2) z = j x :=
+    fun x => h f g _ _ (ConcreteCategory.congr_hom e x)
+  refine ⟨TypeCat.ofHom fun x => F.map m (Classical.choose (hz x)), ?_, ?_⟩
+  · ext x
+    change F.map k (F.map m _) = i x
+    rw [← Functor.map_comp_apply, hm1]
+    exact (Classical.choose_spec (hz x)).1
+  · ext x
+    change F.map l (F.map m _) = j x
+    rw [← Functor.map_comp_apply, hm2]
+    exact (Classical.choose_spec (hz x)).2
+
+namespace PreservesWeakPullbacksElementwise
+
+/-- `Statement:` Mathlib's `ofTypeFunctor Part` satisfies `PreservesWeakPullbacksElementwise`. -/
+theorem part : PreservesWeakPullbacksElementwise (ofTypeFunctor Part.{u}) := by
+  intro A B C f g x y e
+  have e' : x.map f = y.map g := e
+  have hd : x.Dom → y.Dom := fun h => by
+    have : (x.map f).Dom := h
+    rw [e'] at this; exact this
+  have hd' : y.Dom → x.Dom := fun h => by
+    have : (y.map g).Dom := h
+    rw [← e'] at this; exact this
+  have hr : ∀ h : x.Dom, f (x.get h) = g (y.get (hd h)) := fun h => by
+    have m1 : f (x.get h) ∈ x.map f := Part.mem_map f (Part.get_mem h)
+    have m2 : g (y.get (hd h)) ∈ y.map g := Part.mem_map g (Part.get_mem (hd h))
+    rw [e'] at m1
+    exact Part.mem_unique m1 m2
+  refine ⟨⟨x.Dom, fun h => ⟨(x.get h, y.get (hd h)), hr h⟩⟩, ?_, ?_⟩
+  · exact Part.ext' Iff.rfl (fun _ _ => rfl)
+  · exact Part.ext' ⟨hd, hd'⟩ (fun _ _ => rfl)
+
+/-- `Statement:` Mathlib's `ofTypeFunctor Set` satisfies `PreservesWeakPullbacksElementwise`. -/
+theorem set : PreservesWeakPullbacksElementwise (ofTypeFunctor Set.{u}) := by
+  intro A B C f g x y e
+  change Set A at x
+  change Set B at y
+  have e' : f '' x = g '' y := e
+  refine ⟨{p | p.1.1 ∈ x ∧ p.1.2 ∈ y}, ?_, ?_⟩
+  · show (fun p : Limits.Types.PullbackObj f g => p.1.1) '' _ = x
+    ext a
+    refine ⟨fun ⟨p, ⟨ha, _⟩, e1⟩ => e1 ▸ ha, fun ha => ?_⟩
+    have hm : f a ∈ g '' y := e' ▸ ⟨a, ha, rfl⟩
+    obtain ⟨b, hb, hfb⟩ := hm
+    exact ⟨⟨(a, b), hfb.symm⟩, ⟨ha, hb⟩, rfl⟩
+  · show (fun p : Limits.Types.PullbackObj f g => p.1.2) '' _ = y
+    ext b
+    refine ⟨fun ⟨p, ⟨_, hb⟩, e1⟩ => e1 ▸ hb, fun hb => ?_⟩
+    have hm : g b ∈ f '' x := e'.symm ▸ ⟨b, hb, rfl⟩
+    obtain ⟨a, ha, hga⟩ := hm
+    exact ⟨⟨(a, b), hga⟩, ⟨ha, hb⟩, rfl⟩
+
+/-- `Statement:` if `F` and `G` satisfy `PreservesWeakPullbacksElementwise`, so does Mathlib's
+    `FunctorToTypes.prod F G`. -/
+theorem prod {F G : Type u ⥤ Type u} (hF : PreservesWeakPullbacksElementwise F)
+    (hG : PreservesWeakPullbacksElementwise G) :
+    PreservesWeakPullbacksElementwise (FunctorToTypes.prod F G) := by
+  intro A B C f g x y e
+  obtain ⟨z1, h11, h12⟩ := hF f g x.1 y.1 (congrArg Prod.fst e)
+  obtain ⟨z2, h21, h22⟩ := hG f g x.2 y.2 (congrArg Prod.snd e)
+  exact ⟨(z1, z2), Prod.ext h11 h21, Prod.ext h12 h22⟩
+
+/-- `Statement:` `FunctorToTypes.prod (ofTypeFunctor Part) (ofTypeFunctor Set)`, the functor of
+    `Motion.toCoalgebra` (§ XX), satisfies `PreservesWeakPullbacksElementwise`. -/
+theorem partSet :
+    PreservesWeakPullbacksElementwise
+      (FunctorToTypes.prod (ofTypeFunctor Part.{u}) (ofTypeFunctor Set.{u})) :=
+  prod part set
+
+end PreservesWeakPullbacksElementwise
+
+-- Statement: the functor of `Motion.toCoalgebra` satisfies `PreservesWeakPullbacks` (by
+-- `partSet.preserves`, so with `Classical.choice`).
+example :
+    PreservesWeakPullbacks (FunctorToTypes.prod (ofTypeFunctor Part.{u}) (ofTypeFunctor Set.{u})) :=
+  PreservesWeakPullbacksElementwise.partSet.preserves
+
+-- Statement: NO-GO, constructed here: the functor `S ↦ (S → Prop) → Prop`,
+-- `f ↦ (x ↦ (V ↦ x (V ∘ f)))` fails `PreservesWeakPullbacksElementwise`, at `f : Bool → Bool`
+-- constant `false` and `g : Unit → Bool` constant `true`, whose pullback is empty.
+example : ¬ PreservesWeakPullbacksElementwise
+    { obj := fun S : Type => (S → Prop) → Prop
+      map := fun f => TypeCat.ofHom fun x V => x fun a => V (f a) } := by
+  intro h
+  let f : Bool ⟶ Bool := TypeCat.ofHom fun _ => false
+  let g : Unit ⟶ Bool := TypeCat.ofHom fun _ => true
+  let x : (Bool → Prop) → Prop := fun A => A true ∧ ¬ A false
+  let y : (Unit → Prop) → Prop := fun _ => False
+  obtain ⟨z, hz, -⟩ := h f g x y
+    (funext fun V => propext ⟨fun ⟨h1, h2⟩ => h2 h1, False.elim⟩)
+  have hP : (fun p : Limits.Types.PullbackObj f g => p.1.1 = true) = fun _ => False :=
+    funext fun p => (Bool.false_ne_true p.2).elim
+  have h1 : x (fun b => b = true) := ⟨rfl, by decide⟩
+  have h2 : x (fun b => b = true) = x (fun _ => False) := by
+    rw [← congrFun hz (fun b => b = true), ← congrFun hz (fun _ => False)]
+    show z (fun p : Limits.Types.PullbackObj f g => p.1.1 = true) = z (fun _ => False)
+    rw [hP]
+  rw [h2] at h1
+  exact h1.1
+
+namespace Motion
+
+variable {α β γ : Type*}
+
+/-- `Statement:` some `c` on the pairs related by `R` has, at every pair `p`, its `Part.map` and
+    image along the first projection equal to `M.structMap p.1.1`, and along the second equal to
+    `N.structMap p.1.2`. `Reading:` Rutten's bisimulation (TCS 249 (2000), p. 11) for the functor of
+    § XX: both projections are homomorphisms. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: over `Motion`, the die's project-local structure; the
+-- dated search is in `LEAN_CUSTOM_REGISTRY.md`.
+def IsBisim (M : Motion α) (N : Motion β) (R : α → β → Prop) : Prop :=
+  ∃ c : {p : α × β // R p.1 p.2} → Part {p : α × β // R p.1 p.2} × Set {p : α × β // R p.1 p.2},
+    ∀ p, ((c p).1.map (fun q => q.1.1), (fun q => q.1.1) '' (c p).2) = M.structMap p.1.1 ∧
+         ((c p).1.map (fun q => q.1.2), (fun q => q.1.2) '' (c p).2) = N.structMap p.1.2
+
+/-- `Statement:` `IsBisim M N R` iff at every pair with `R a b`: UP is defined at `a` iff at `b`,
+    the two UP values are related, each step from `a` is matched by a step from `b` to a related
+    point, and each step from `b` by one from `a`; both directions. -/
+theorem isBisim_iff (M : Motion α) (N : Motion β) (R : α → β → Prop) :
+    IsBisim M N R ↔ ∀ a b, R a b →
+      ((M.up a).Dom ↔ (N.up b).Dom) ∧
+      (∀ (ha : (M.up a).Dom) (hb : (N.up b).Dom), R ((M.up a).get ha) ((N.up b).get hb)) ∧
+      (∀ a', M.step a a' → ∃ b', N.step b b' ∧ R a' b') ∧
+      (∀ b', N.step b b' → ∃ a', M.step a a' ∧ R a' b') := by
+  constructor
+  · rintro ⟨c, hc⟩ a b r
+    let p : {p : α × β // R p.1 p.2} := ⟨(a, b), r⟩
+    obtain ⟨h1, h2⟩ := hc p
+    have u1 : (c p).1.map (fun q => q.1.1) = M.up a := congrArg Prod.fst h1
+    have u2 : (c p).1.map (fun q => q.1.2) = N.up b := congrArg Prod.fst h2
+    have s1 : (fun q : {p : α × β // R p.1 p.2} => q.1.1) '' (c p).2 = {x | M.step a x} :=
+      congrArg Prod.snd h1
+    have s2 : (fun q : {p : α × β // R p.1 p.2} => q.1.2) '' (c p).2 = {x | N.step b x} :=
+      congrArg Prod.snd h2
+    have dA : (M.up a).Dom ↔ (c p).1.Dom := by rw [← u1]; exact Iff.rfl
+    have dB : (N.up b).Dom ↔ (c p).1.Dom := by rw [← u2]; exact Iff.rfl
+    refine ⟨dA.trans dB.symm, fun ha hb => ?_, fun a' ha' => ?_, fun b' hb' => ?_⟩
+    · obtain ⟨q, hq⟩ := Part.dom_iff_mem.1 (dA.1 ha)
+      have m1 : q.1.1 ∈ M.up a := by
+        have := Part.mem_map (fun q : {p : α × β // R p.1 p.2} => q.1.1) hq; rwa [u1] at this
+      have m2 : q.1.2 ∈ N.up b := by
+        have := Part.mem_map (fun q : {p : α × β // R p.1 p.2} => q.1.2) hq; rwa [u2] at this
+      rw [Part.get_eq_of_mem m1 ha, Part.get_eq_of_mem m2 hb]
+      exact q.2
+    · have : a' ∈ (fun q : {p : α × β // R p.1 p.2} => q.1.1) '' (c p).2 := s1 ▸ ha'
+      obtain ⟨q, hq, rfl⟩ := this
+      have : q.1.2 ∈ {x | N.step b x} := s2 ▸ ⟨q, hq, rfl⟩
+      exact ⟨q.1.2, this, q.2⟩
+    · have : b' ∈ (fun q : {p : α × β // R p.1 p.2} => q.1.2) '' (c p).2 := s2 ▸ hb'
+      obtain ⟨q, hq, rfl⟩ := this
+      have : q.1.1 ∈ {x | M.step a x} := s1 ▸ ⟨q, hq, rfl⟩
+      exact ⟨q.1.1, this, q.2⟩
+  · intro h
+    refine ⟨fun p => (⟨(M.up p.1.1).Dom, fun hd => ⟨((M.up p.1.1).get hd,
+        (N.up p.1.2).get ((h _ _ p.2).1.1 hd)), (h _ _ p.2).2.1 _ _⟩⟩,
+        {q | M.step p.1.1 q.1.1 ∧ N.step p.1.2 q.1.2}), fun p => ⟨?_, ?_⟩⟩
+    · refine Prod.ext (Part.ext' Iff.rfl (fun _ _ => rfl)) (Set.ext fun a' => ⟨?_, ?_⟩)
+      · rintro ⟨q, ⟨h1, -⟩, rfl⟩; exact h1
+      · intro ha'
+        obtain ⟨b', hb', r⟩ := (h _ _ p.2).2.2.1 a' ha'
+        exact ⟨⟨(a', b'), r⟩, ⟨ha', hb'⟩, rfl⟩
+    · refine Prod.ext (Part.ext' (h _ _ p.2).1 (fun _ _ => rfl)) (Set.ext fun b' => ⟨?_, ?_⟩)
+      · rintro ⟨q, ⟨-, h2⟩, rfl⟩; exact h2
+      · intro hb'
+        obtain ⟨a', ha', r⟩ := (h _ _ p.2).2.2.2 b' hb'
+        exact ⟨⟨(a', b'), r⟩, ⟨ha', hb'⟩, rfl⟩
+
+-- Statement: CONTROL: on `Bool` with UP the identity and the one step `false → true`, the map onto
+-- `Unit` (UP the identity, every step) is a strict map whose kernel is not a bisimulation (`false`
+-- steps, `true` does not); it has no back clause.
+example : let M := ofTotal (id : Bool → Bool) (fun _ => rfl) (fun a b => a = false ∧ b = true)
+    let N := ofTotal (id : Unit → Unit) (fun _ => rfl) (fun _ _ => True)
+    ∃ φ : Hom M N, ¬ IsBisim M M (fun a a' => φ.toFun a = φ.toFun a') := by
+  intro M N
+  refine ⟨⟨fun _ => (), fun _ => trivial, fun x => by
+    show Part.some () = (Part.some x).map _; rw [Part.map_some]⟩, fun h => ?_⟩
+  obtain ⟨-, -, fo, -⟩ := (isBisim_iff M M _).1 h false true rfl
+  obtain ⟨b', ⟨h1, -⟩, -⟩ := fo true ⟨rfl, rfl⟩
+  exact Bool.noConfusion h1
+
+/-- `Statement:` equality is a bisimulation from a motion to itself. `Reading:` Rutten's
+    Proposition 5.1 (TCS 249 (2000), p. 31). -/
+theorem isBisim_eq (M : Motion α) : IsBisim M M Eq :=
+  (isBisim_iff M M Eq).2 fun a _ e => by
+    subst e
+    exact ⟨Iff.rfl, fun _ _ => rfl, fun a' h => ⟨a', h, rfl⟩, fun a' h => ⟨a', h, rfl⟩⟩
+
+/-- `Statement:` if `R` is a bisimulation from `M` to `N`, `flip R` is one from `N` to `M`.
+    `Reading:` Rutten's Theorem 5.2 (p. 31). -/
+theorem isBisim_flip {M : Motion α} {N : Motion β} {R : α → β → Prop} (h : IsBisim M N R) :
+    IsBisim N M (flip R) := by
+  rw [isBisim_iff] at h ⊢
+  intro b a r
+  obtain ⟨d, g, fo, ba⟩ := h a b r
+  exact ⟨d.symm, fun hb ha => g ha hb, fun b' hb' => ba b' hb', fun a' ha' => fo a' ha'⟩
+
+/-- `Statement:` if `R` is a bisimulation from `M` to `N` and `Q` one from `N` to `P`, their
+    composite (Mathlib `Relation.Comp`) is one from `M` to `P`. `Reading:` Rutten's Theorem* 5.4
+    (p. 32), proved here from `isBisim_iff`. -/
+theorem isBisim_comp {M : Motion α} {N : Motion β} {P : Motion γ} {R : α → β → Prop}
+    {Q : β → γ → Prop} (hR : IsBisim M N R) (hQ : IsBisim N P Q) :
+    IsBisim M P (Relation.Comp R Q) := by
+  rw [isBisim_iff] at hR hQ ⊢
+  rintro a c ⟨b, rab, qbc⟩
+  obtain ⟨d1, g1, f1, b1⟩ := hR a b rab
+  obtain ⟨d2, g2, f2, b2⟩ := hQ b c qbc
+  refine ⟨d1.trans d2, fun ha hc => ⟨_, g1 ha (d1.1 ha), g2 (d1.1 ha) hc⟩,
+    fun a' ha' => ?_, fun c' hc' => ?_⟩
+  · obtain ⟨b', hb', r'⟩ := f1 a' ha'
+    obtain ⟨c', hc', q'⟩ := f2 b' hb'
+    exact ⟨c', hc', b', r', q'⟩
+  · obtain ⟨b', hb', q'⟩ := b2 c' hc'
+    obtain ⟨a', ha', r'⟩ := b1 b' hb'
+    exact ⟨a', ha', b', r', q'⟩
+
+/-- `Statement:` `a` and `b` are related by some bisimulation from `M` to `N`. `Reading:` the union
+    of all bisimulations, Rutten's `∼` of Corollary 5.6 (p. 33). -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: over `Motion.IsBisim`.
+def Bisimilar (M : Motion α) (N : Motion β) (a : α) (b : β) : Prop := ∃ R, IsBisim M N R ∧ R a b
+
+/-- `Statement:` `Bisimilar M M` is an equivalence relation (Mathlib `Equivalence`). `Reading:` the
+    last clause of Rutten's Corollary 5.6 (p. 33); transitivity here uses `isBisim_comp`. -/
+theorem bisimilar_equivalence (M : Motion α) : Equivalence (Bisimilar M M) :=
+  ⟨fun _ => ⟨Eq, isBisim_eq M, rfl⟩,
+   fun ⟨R, hR, r⟩ => ⟨flip R, isBisim_flip hR, r⟩,
+   fun ⟨R, hR, r⟩ ⟨Q, hQ, q⟩ => ⟨Relation.Comp R Q, isBisim_comp hR hQ, _, r, q⟩⟩
+
+/-- `Statement:` `Bisimilar M N` is a bisimulation from `M` to `N`. `Reading:` Rutten's Corollary
+    5.6 (p. 33): the greatest bisimulation exists. -/
+theorem isBisim_bisimilar (M : Motion α) (N : Motion β) : IsBisim M N (Bisimilar M N) := by
+  rw [isBisim_iff]
+  rintro a b ⟨R, hR, r⟩
+  rw [isBisim_iff] at hR
+  obtain ⟨d, g, fo, ba⟩ := hR a b r
+  refine ⟨d, fun ha hb => ⟨R, (isBisim_iff M N R).2 hR, g ha hb⟩, fun a' ha' => ?_,
+    fun b' hb' => ?_⟩
+  · obtain ⟨b', hb', r'⟩ := fo a' ha'; exact ⟨b', hb', R, (isBisim_iff M N R).2 hR, r'⟩
+  · obtain ⟨a', ha', r'⟩ := ba b' hb'; exact ⟨a', ha', R, (isBisim_iff M N R).2 hR, r'⟩
+
+/-- `Statement:` if `s` is UP- and step-compatible, `s` is a bisimulation from `M` to itself. -/
+theorem isBisim_of_compat (M : Motion α) (s : Setoid α) (hu : M.UpCompat s) (hc : M.StepCompat s) :
+    IsBisim M M s.r := by
+  rw [isBisim_iff]
+  intro a a' r
+  have hd : ∀ {x x'}, s.r x x' → (M.up x).Dom → (M.up x').Dom := fun r h => by
+    obtain ⟨y', hy', -⟩ := hu _ _ _ r (Part.get_mem h); exact Part.dom_iff_mem.2 ⟨y', hy'⟩
+  refine ⟨⟨hd r, hd (s.symm r)⟩, fun ha ha' => ?_, fun b hb => hc _ _ _ r hb, fun b hb => ?_⟩
+  · obtain ⟨y', hy', r'⟩ := hu _ _ _ r (Part.get_mem ha)
+    rw [Part.get_eq_of_mem hy' ha']; exact r'
+  · obtain ⟨b', hb', r'⟩ := hc _ _ _ (s.symm r) hb
+    exact ⟨b', hb', s.symm r'⟩
+
+/-- `Statement:` if `f` carries steps to steps and has `StepBack` and `UpStrict`, the kernel of `f`
+    is a bisimulation from `M` to itself. `Reading:` by `coalgHom_iff` (§ XX) the hypotheses say `f`
+    is a coalgebra homomorphism; Rutten's Proposition* 5.7 (p. 33). -/
+theorem isBisim_ker {M : Motion α} {N : Motion β} {f : α → β}
+    (hf : ∀ a b, M.step a b → N.step (f a) (f b)) (hb : StepBack M N f) (hu : UpStrict M N f) :
+    IsBisim M M (fun a a' => f a = f a') := by
+  rw [isBisim_iff]
+  intro a a' r
+  have dA : (M.up a).Dom ↔ (N.up (f a)).Dom := by rw [hu]; exact Iff.rfl
+  have dA' : (M.up a').Dom ↔ (N.up (f a')).Dom := by rw [hu]; exact Iff.rfl
+  refine ⟨dA.trans (r ▸ dA'.symm), fun ha ha' => ?_, fun a1 h1 => ?_, fun a1 h1 => ?_⟩
+  · have m : f ((M.up a).get ha) ∈ N.up (f a) := by rw [hu]; exact Part.mem_map f (Part.get_mem ha)
+    have m' : f ((M.up a').get ha') ∈ N.up (f a') := by
+      rw [hu]; exact Part.mem_map f (Part.get_mem ha')
+    rw [r] at m
+    exact Part.mem_unique m m'
+  · obtain ⟨b, hs, e⟩ := hb a' (f a1) (r ▸ hf a a1 h1)
+    exact ⟨b, hs, e.symm⟩
+  · obtain ⟨b, hs, e⟩ := hb a (f a1) (r.symm ▸ hf a' a1 h1)
+    exact ⟨b, hs, e⟩
+
+/-- `Statement:` the kernel of the underlying map of a coalgebra homomorphism (Mathlib
+    `Endofunctor.Coalgebra.Hom`) from `M.toCoalgebra` to `N.toCoalgebra` is a bisimulation from `M`
+    to itself. -/
+theorem isBisim_ker_coalgHom {α β : Type u} {M : Motion α} {N : Motion β}
+    (h : Endofunctor.Coalgebra.Hom M.toCoalgebra N.toCoalgebra) :
+    IsBisim M M (fun a a' => h.f a = h.f a') := by
+  obtain ⟨hf, hb, hu⟩ := (coalgHom_iff M N (fun a => h.f a)).1 ⟨h, rfl⟩
+  exact isBisim_ker hf hb hu
+
+/-- `Statement:` if `f` carries steps to steps and has `StepBack` and `UpStrict`, and `Q` is a
+    bisimulation from `N` to itself, `fun a a' => Q (f a) (f a')` is one from `M` to itself.
+    `Reading:` Rutten's Proposition* 5.9(2) (p. 34). -/
+theorem isBisim_preimage {M : Motion α} {N : Motion β} {f : α → β}
+    (hf : ∀ a b, M.step a b → N.step (f a) (f b)) (hb : StepBack M N f) (hu : UpStrict M N f)
+    {Q : β → β → Prop} (hQ : IsBisim N N Q) : IsBisim M M (fun a a' => Q (f a) (f a')) := by
+  rw [isBisim_iff] at hQ ⊢
+  intro a a' q
+  obtain ⟨d, g, fo, ba⟩ := hQ _ _ q
+  have dA : (M.up a).Dom ↔ (N.up (f a)).Dom := by rw [hu]; exact Iff.rfl
+  have dA' : (M.up a').Dom ↔ (N.up (f a')).Dom := by rw [hu]; exact Iff.rfl
+  refine ⟨dA.trans (d.trans dA'.symm), fun ha ha' => ?_, fun a1 h1 => ?_, fun a1 h1 => ?_⟩
+  · have m : f ((M.up a).get ha) ∈ N.up (f a) := by rw [hu]; exact Part.mem_map f (Part.get_mem ha)
+    have m' : f ((M.up a').get ha') ∈ N.up (f a') := by
+      rw [hu]; exact Part.mem_map f (Part.get_mem ha')
+    have := g (dA.1 ha) (dA'.1 ha')
+    rw [Part.get_eq_of_mem m, Part.get_eq_of_mem m'] at this
+    exact this
+  · obtain ⟨t, ht, qt⟩ := fo (f a1) (hf a a1 h1)
+    obtain ⟨b, hs, rfl⟩ := hb a' t ht
+    exact ⟨b, hs, qt⟩
+  · obtain ⟨t, ht, qt⟩ := ba (f a1) (hf a' a1 h1)
+    obtain ⟨b, hs, rfl⟩ := hb a t ht
+    exact ⟨b, hs, qt⟩
 
 end Motion
 
@@ -3215,5 +3554,26 @@ open ZeroParadox
 #print axioms Motion.dom_factor
 #print axioms Motion.registeredDecidable_of_factor
 #print axioms Motion.upCompat_ker_dom
+#print axioms IsWeakPullback
+#print axioms PreservesWeakPullbacks
+#print axioms PreservesWeakPullbacksElementwise
+#print axioms PreservesWeakPullbacks.elementwise
+#print axioms PreservesWeakPullbacksElementwise.preserves
+#print axioms PreservesWeakPullbacksElementwise.part
+#print axioms PreservesWeakPullbacksElementwise.set
+#print axioms PreservesWeakPullbacksElementwise.prod
+#print axioms PreservesWeakPullbacksElementwise.partSet
+#print axioms Motion.IsBisim
+#print axioms Motion.isBisim_iff
+#print axioms Motion.isBisim_eq
+#print axioms Motion.isBisim_flip
+#print axioms Motion.isBisim_comp
+#print axioms Motion.Bisimilar
+#print axioms Motion.bisimilar_equivalence
+#print axioms Motion.isBisim_bisimilar
+#print axioms Motion.isBisim_of_compat
+#print axioms Motion.isBisim_ker
+#print axioms Motion.isBisim_ker_coalgHom
+#print axioms Motion.isBisim_preimage
 
 end PurityCheck

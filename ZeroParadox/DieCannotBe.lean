@@ -4047,8 +4047,8 @@ example :
 -- compatible setoid gives such a map onto its quotient (the image motion, what the observer shows;
 -- the observed motion is the source; Rutten's homomorphic image, or quotient, TCS 249 (2000), p. 10).
 -- How this relates to Rutten's Proposition* 5.7 and Proposition 5.8
--- (pp. 33–34) is in the Readings on `Hom.stepCompat_ker` and `mkHom_stepBack`, with the bisimulation
--- `example` after `mkHom_surjective`, `ZeroParadox/Die.lean` § XXI.
+-- (pp. 33–34) is in the Readings on `Hom.stepCompat_ker` and `mkHom_stepBack`
+-- (`ZeroParadox/Die.lean` § XXI); 5.7 for `Part × Set` is `isBisim_ker`, § XXVI below.
 #check @ZeroParadox.Motion.Hom.upTotal_iff       -- Statement: along an onto strict map, UP total in the source iff in the target
 #check @ZeroParadox.Motion.Hom.hasLanding_iff    -- Statement: along an onto strict map, a landing in the source iff one in the target
 #check @ZeroParadox.Motion.LaxHom.noStepAt_iff   -- Statement: along a lax map with the back clause, no step at `y` iff none at its image
@@ -4134,5 +4134,39 @@ example :
 -- `ZeroParadox/Die.lean` § XXI's last `example`. Reading: these are sufficient conditions for deciding
 -- registration through an observation; the definedness map always meets the first hypothesis, so the
 -- content is in `D` being decided.
+
+/-! ### § XXVI. Weak pullbacks for `Part × Set`, and bisimulations of motions -/
+#check @ZeroParadox.IsWeakPullback              -- Statement: the square commutes and every commuting cone has some mediating map
+#check @ZeroParadox.PreservesWeakPullbacks      -- Statement: `F` sends every `IsWeakPullback` square to one
+#check @ZeroParadox.PreservesWeakPullbacksElementwise -- Statement: `F f x = F g y` gives some `z` in `F` of `Types.PullbackObj f g` projecting to `x` and `y`
+#check @ZeroParadox.PreservesWeakPullbacks.elementwise -- Statement: `PreservesWeakPullbacks F` gives the elementwise form
+#check @ZeroParadox.PreservesWeakPullbacksElementwise.preserves -- Statement: the elementwise form gives `PreservesWeakPullbacks F`
+#check @ZeroParadox.PreservesWeakPullbacksElementwise.part -- Statement: `ofTypeFunctor Part` has the elementwise form
+#check @ZeroParadox.PreservesWeakPullbacksElementwise.set -- Statement: `ofTypeFunctor Set` has the elementwise form
+#check @ZeroParadox.PreservesWeakPullbacksElementwise.prod -- Statement: if `F` and `G` have it, `FunctorToTypes.prod F G` has it
+#check @ZeroParadox.PreservesWeakPullbacksElementwise.partSet -- Statement: the functor of `Motion.toCoalgebra` has the elementwise form
+-- Statement: in `ZeroParadox/Die.lean` § XXII, an `example` that the functor of `Motion.toCoalgebra`
+-- satisfies `PreservesWeakPullbacks`, and a NO-GO `example`: `S ↦ (S → Prop) → Prop` fails the
+-- elementwise form. Reading: `.elementwise` is choice-free and `.preserves` is proved with
+-- `Classical.choice` (`ZeroParadox/Die.lean`, `section PurityCheck`); the hypothesis Rutten's star
+-- marks (TCS 249 (2000), Convention 4.4, p. 28) holds for `Part × Set`.
+#check @ZeroParadox.Motion.IsBisim              -- Statement: some map on the related pairs makes both projections match `structMap`
+#check @ZeroParadox.Motion.isBisim_iff          -- Statement: `IsBisim` iff, at related pairs, UP-definedness agrees, UP values are related, and steps are matched both ways
+#check @ZeroParadox.Motion.isBisim_eq           -- Statement: equality is a bisimulation
+#check @ZeroParadox.Motion.isBisim_flip         -- Statement: the flip of a bisimulation is one
+#check @ZeroParadox.Motion.isBisim_comp         -- Statement: the composite of two bisimulations is one
+#check @ZeroParadox.Motion.Bisimilar            -- Statement: related by some bisimulation
+#check @ZeroParadox.Motion.bisimilar_equivalence -- Statement: `Bisimilar M M` is an equivalence relation
+#check @ZeroParadox.Motion.isBisim_bisimilar    -- Statement: `Bisimilar M N` is a bisimulation
+#check @ZeroParadox.Motion.isBisim_of_compat    -- Statement: a UP- and step-compatible setoid is a bisimulation
+#check @ZeroParadox.Motion.isBisim_ker          -- Statement: the kernel of a map carrying steps to steps, with `StepBack` and `UpStrict`, is a bisimulation
+#check @ZeroParadox.Motion.isBisim_ker_coalgHom -- Statement: the kernel of a coalgebra homomorphism's underlying map is a bisimulation
+#check @ZeroParadox.Motion.isBisim_preimage     -- Statement: under the same map, the preimage of a bisimulation on `N` is one on `M`
+-- Statement: CONTROL in `ZeroParadox/Die.lean` § XXII: a strict map from `Bool` onto `Unit` without
+-- the back clause whose kernel is not a bisimulation.
+-- Reading: Rutten, TCS 249 (2000): `IsBisim` is the bisimulation of p. 11 for this functor;
+-- `isBisim_eq` is Proposition 5.1 and `isBisim_flip` Theorem 5.2 (p. 31), `isBisim_comp` Theorem* 5.4
+-- (p. 32), `Bisimilar` with `isBisim_bisimilar` and `bisimilar_equivalence` Corollary 5.6 (p. 33),
+-- `isBisim_ker` Proposition* 5.7 (p. 33), `isBisim_preimage` Proposition* 5.9(2) (p. 34).
 
 end DieCannotBeIndex
