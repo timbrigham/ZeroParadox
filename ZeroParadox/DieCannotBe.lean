@@ -4218,9 +4218,12 @@ example : (∀ (r : Option ℕ → Option ℕ → Bool) (y : Option ℕ),
 -- and for `_of_lpo` (`Motion.selectedTotal_of_classical` gets one classically, not from LPO).
 -- Statement: the other direction of the trade: a `Bool` test for "is this the adjoined point" exists
 -- on `Option ℕ` with no hypothesis (`registeredDecider`, § IX), and on `NInf` one for each finite
--- stage (`isAt_iff`); a test isolating `∞` (`t b = true ↔ b = ∞`, a decidable singleton, not a
--- topological claim; equivalently `t` is `false` at every `n̲` and `true` at `∞`,
--- `NInf.isolating_infty_iff`, TypeTopology's `basic-discontinuity`) gives WLPO.
+-- stage (`isAt_iff`); a test isolating `∞`, that is, deciding membership in `{∞}`
+-- (`t b = true ↔ b = ∞`; equivalently `t` is `false` at every `n̲` and `true` at `∞`,
+-- `NInf.isolating_infty_iff`, `basic-discontinuity` in TypeTopology `Taboos.BasicDiscontinuity`),
+-- gives WLPO.
+-- Reading: "isolating" is meant logically, as decidable membership in `{∞}`; that decision is the
+-- whole content of the hypothesis.
 #check @ZeroParadox.NInf.isAt_iff              -- Statement: `isAt m b = true ↔ b = NInf.ofNat m`
 #check @ZeroParadox.NInf.wlpo_of_isolating_infty -- Statement: a `Bool` test true exactly at `∞` gives WLPO
 #check @ZeroParadox.NInf.isolating_infty_iff   -- Statement: a `Bool` test isolates `∞` iff it is `false` at every `NInf.ofNat n` and `true` at `∞`
@@ -4351,11 +4354,11 @@ example (g : Part ℕ → ZeroParadox.NInf) (hg : ∀ o n, g o = ZeroParadox.NIn
 -- proof (p. 14), `wlpo_of_eqOr_infty` the right-to-left half of his WLPO row (p. 4) and
 -- `wlpo_of_tag` its data form, `lpo_of_exactTag` the right-to-left half of his LPO row (p. 4; compare
 -- his Corollary 3.7, p. 5), and `wlpo_of_isolating_infty`, whose hypothesis his Lemma 3.3 (p. 4)
--- makes equivalent (`isolating_infty_iff`) to the basic discontinuity (p. 5; TypeTopology
--- `basic-discontinuity`), which his WLPO row, with Lemma 3.3 again, turns into WLPO; compare de
--- Jong and Escardó, arXiv:2601.12536, § 7.2, Lemma 7.2, p. 25, for a map `f : ℕ∞ → ℕ∞` with
--- `f n̲ = 0` and `f ∞ = 1`. Escardó's Theorem 7.1(1) (p. 13) gets WLPO from any discontinuous map
--- `ℕ∞ → 2` assuming countable choice.
+-- makes equivalent (`isolating_infty_iff`) to the basic discontinuity (p. 5; `basic-discontinuity`
+-- in TypeTopology `Taboos.BasicDiscontinuity`), which his WLPO row, with Lemma 3.3 again, turns
+-- into WLPO; compare de Jong and Escardó, arXiv:2601.12536, § 7.2, Lemma 7.2, p. 25, for a map
+-- `f : ℕ∞ → ℕ∞` with `f n̲ = 0` and `f ∞ = 1`. Escardó's Theorem 7.1(1) (p. 13) gets WLPO from
+-- any discontinuous map `ℕ∞ → 2` assuming countable choice.
 -- `wlpo_iff_eqOr`, `decEq_of_wlpoData` and `wlpoData_of_decEq`: compare Escardó's TypeTopology
 -- module `Taboos.WLPO` (retrieved 2026-10-29), `ℕ∞-discrete-gives-WLPO` and
 -- `WLPO-gives-ℕ∞-discrete`, for his `WLPO` indexed by the points of `ℕ∞`; the bit-sequence form
@@ -4368,14 +4371,16 @@ example (g : Part ℕ → ZeroParadox.NInf) (hg : ∀ o n, g o = ZeroParadox.NIn
 -- Escardó and Knapp, CSL 2017, LIPIcs 82, § 2.7, p. 21:6: lifting by the decidable dominance is
 -- `X + 1` and by all propositions is `L X`; § 2.8, pp. 21:6–21:7: "the decidability of Rosolini
 -- propositions is known as LPO", and the Rosolini structures sit in their `ℕ∞`, presented there
--- as `Σ α, isProp ⟨α⟩`, which is not related to `NInf` in Lean here. The trichotomy route through `hmap` is constructed here, not from
--- a source.
--- `ofOption` is TypeTopology's `ι𝟙 : ℕ + 𝟙 → ℕ∞`. `density` is the two-map form of Escardó's
--- Lemma 3.4, by the same argument, with Lemma 3.3 (pp. 4–5); it is the `Y = ℕ∞` instance of
--- TypeTopology `ℕ∞-density`; `not_not_mem_range_ofOption` his fullness of `ℕ ∪ {∞}` (Lemma 3.3,
--- p. 4; TypeTopology `ι𝟙-dense`, `not-finite-is-∞`). `rightInverse_of_leftInverse` is an instance
--- of TypeTopology `dense-maps-into-¬¬-separated-types-are-rc` (module `TypeTopology.Density`) at
--- `ι𝟙` with `ι𝟙-dense`, using that `NInf` is ¬¬-separated (`NInf.separated`): `ofOption` is
+-- as `Σ α, isProp ⟨α⟩`, which is not related to `NInf` in Lean here. The trichotomy route through
+-- `hmap` is constructed here, not from a source.
+-- `ofOption` is `ι𝟙 : ℕ + 𝟙 → ℕ∞` in TypeTopology's module
+-- `TypeTopology.GenericConvergentSequence` (retrieved 2026-10-29), which also holds `ℕ∞-density`,
+-- `ι𝟙-dense` and `not-finite-is-∞`. `density` is the two-map form of Escardó's Lemma 3.4, by the
+-- same argument, with Lemma 3.3 (pp. 4–5); it is the `Y = ℕ∞` instance of `ℕ∞-density`;
+-- `not_not_mem_range_ofOption` his fullness of `ℕ ∪ {∞}` (Lemma 3.3, p. 4; `ι𝟙-dense`,
+-- `not-finite-is-∞`). `rightInverse_of_leftInverse` is an instance of TypeTopology
+-- `dense-maps-into-¬¬-separated-types-are-rc` (module `TypeTopology.Density`) at `ι𝟙` with
+-- `ι𝟙-dense`, using that `NInf` is ¬¬-separated (`NInf.separated`): `ofOption` is
 -- right-cancellable against ¬¬-separated codomains (the `example` after `density` above), so a
 -- left inverse is a right inverse. `lpo_of_rightInverse`: compare `ι𝟙-has-section-gives-LPO`, and
 -- `equivOptionOfLPOData`: compare `LPO-gives-ι𝟙-is-equiv` (module `Taboos.LPO`, retrieved
@@ -4384,8 +4389,9 @@ example (g : Part ℕ → ZeroParadox.NInf) (hg : ∀ o n, g o = ZeroParadox.NIn
 -- compare his Corollary 3.7 (p. 5). For a model in which `ℕ ⊔ {∞} → ℕ∞` is not an isomorphism, see
 -- D. Wärn, arXiv:2409.12835 (2024), Lemma 2, p. 3; his `ℕ∞` is the one-point compactification in
 -- LCond (light condensed sets), which is not related to `NInf` in Lean here.
--- `markovPrinciple_of_lpo`: compare Escardó's "LPO ⟺ WLPO ∧ MP" (p. 4). The left-inverse form `lpo_of_leftInverse` was not located as one
--- statement as of 2026-10-30, searched as follows: GitHub code search of TypeTopology for `ι𝟙`, for
+-- `markovPrinciple_of_lpo`: compare Escardó's "LPO ⟺ WLPO ∧ MP" (p. 4). The left-inverse form
+-- `lpo_of_leftInverse` was not located as one statement as of 2026-10-30, searched as follows:
+-- GitHub code search of TypeTopology for `ι𝟙`, for
 -- `"is-section ι𝟙" OR "retraction ι𝟙" OR "ι𝟙-has-retraction"`, for `is-dense has-retraction` and
 -- for `ℕ∞ retraction LPO`; the 2013 paper; theoremsearch in four phrasings; the open web. The
 -- composition is assembled here from his lemmas. In the pinned Mathlib, `DenseRange.equalizer` is a
