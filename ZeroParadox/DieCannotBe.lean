@@ -4270,6 +4270,52 @@ example (g : Part ℕ → Option ℕ) (hg : ∀ o n, g o = some n ↔ n ∈ o) :
       rw [(hg _ 0).2 hm]; rfl⟩
 #check @ZeroParadox.NInf.ninfEquivComp         -- Statement: `NInf ≃ Computation Unit`, Mathlib's delay type at `Unit`
 #check @ZeroParadox.NInf.toComp_infty          -- Statement: `∞` goes to `Computation.empty Unit`
+-- Statement: the round trip through `ofOption`: a left inverse is a right inverse, and either gives LPO.
+#check @ZeroParadox.NInf.ofNat_injective       -- Statement: `ofNat` is one-to-one
+#check @ZeroParadox.NInf.ofOption_injective    -- Statement: `ofOption` is one-to-one
+#check @ZeroParadox.NInf.density               -- Statement: maps `NInf → NInf` agreeing at `∞` and every `NInf.ofNat n` agree at every point
+#check @ZeroParadox.NInf.not_not_mem_range_ofOption -- Statement: every point is not not in the range of `ofOption`
+-- Statement: the same, as no point outside the range; and a point other than `∞` and every `n̲` is
+-- refuted by `eq_infty_of_ne_ofNat`.
+example : ¬ ∃ x : ZeroParadox.NInf, x ∉ Set.range ZeroParadox.NInf.ofOption :=
+  fun ⟨x, hx⟩ => ZeroParadox.NInf.not_not_mem_range_ofOption x hx
+example : ¬ ∃ x : ZeroParadox.NInf, x ≠ ZeroParadox.NInf.infty ∧ ∀ n, x ≠ ZeroParadox.NInf.ofNat n :=
+  fun ⟨x, hx, hn⟩ => hx (ZeroParadox.NInf.eq_infty_of_ne_ofNat x hn)
+#check @ZeroParadox.NInf.rightInverse_of_leftInverse -- Statement: a left inverse of `ofOption` is a right inverse
+#check @ZeroParadox.NInf.leftInverse_iff_rightInverse -- Statement: left inverse iff right inverse of `ofOption`; both directions
+#check @ZeroParadox.NInf.lpo_of_rightInverse   -- Statement: a right inverse of `ofOption` gives LPO
+#check @ZeroParadox.NInf.lpo_of_leftInverse    -- Statement: a left inverse of `ofOption` gives LPO
+example (r : ZeroParadox.NInf → Option ℕ) (h : Function.LeftInverse r ZeroParadox.NInf.ofOption) :
+    ZeroParadox.LPO := ZeroParadox.NInf.lpo_of_leftInverse r h
+-- Statement: and Markov's principle, through `markovPrinciple_of_lpo`.
+example (r : ZeroParadox.NInf → Option ℕ) (h : Function.LeftInverse r ZeroParadox.NInf.ofOption) :
+    ZeroParadox.MarkovPrinciple :=
+  ZeroParadox.markovPrinciple_of_lpo (ZeroParadox.NInf.lpo_of_leftInverse r h)
+#check @ZeroParadox.NInf.surjective_ofOption_iff -- Statement: `ofOption` is onto iff LPO; both directions
+example : Function.Surjective ZeroParadox.NInf.ofOption ↔ ZeroParadox.LPO :=
+  ZeroParadox.NInf.surjective_ofOption_iff
+#check @ZeroParadox.LPOData                    -- Statement: a decision of `∃ n, r n = true` at every `r`
+#check @ZeroParadox.NInf.ofLPOData             -- Statement: from `LPOData`, a map `NInf → Option ℕ`
+#check @ZeroParadox.NInf.rightInverse_ofLPOData -- Statement: it is a right inverse of `ofOption`
+#check @ZeroParadox.NInf.equivOptionOfLPOData  -- Statement: `LPOData` gives `NInf ≃ Option ℕ`, inverse `ofOption`
+#check @ZeroParadox.NInf.equivOptionClassical  -- Statement: CONTROL: `NInf ≃ Option ℕ` from `Classical.dec`, with no LPO hypothesis
+-- Statement: CONTROL: into `Part ℕ` instead of `Option ℕ`, the round trip closes with no hypothesis.
+example (o : Option ℕ) :
+    ZeroParadox.NInf.toPart (ZeroParadox.NInf.ofOption o) = Part.ofOption o :=
+  ZeroParadox.NInf.toPart_ofOption o
+-- Statement: the round trip as a motion on `Option ℕ ⊕ NInf`: UP `toLimit`, OVER from `r`.
+#check @ZeroParadox.Motion.LoopAt              -- Statement: a landing `y`, a step to `b ≠ y`, and `up b` returns to `y`
+#check @ZeroParadox.Motion.loop_iff_exists_loopAt -- Statement: `Loop` iff `LoopAt` some `y`; both directions
+#check @ZeroParadox.NInf.TaggedOrLimit         -- Statement: the carrier `Option ℕ ⊕ NInf`
+#check @ZeroParadox.NInf.toLimit               -- Statement: UP: `inl o ↦ inr (ofOption o)`, `inr x ↦ inr x`
+#check @ZeroParadox.NInf.toLimit_idem          -- Statement: `toLimit` is idempotent
+#check @ZeroParadox.NInf.returnStep            -- Statement: OVER: `inr x` steps to `inl o` iff `r x = o`
+#check @ZeroParadox.NInf.returnMotion          -- Statement: the motion with UP `toLimit` and OVER `returnStep r`
+#check @ZeroParadox.Motion.loopAt_returnMotion_iff -- Statement: loops at `inr x` iff `ofOption (r x) = x`; both directions
+#check @ZeroParadox.Motion.loopAt_all_iff_rightInverse -- Statement: loops at every `inr x` iff `r` is a right inverse of `ofOption`; both directions
+#check @ZeroParadox.Motion.loopAt_image_iff_leftInverse -- Statement: loops at every `inr (ofOption o)` iff `r` is a left inverse; both directions
+#check @ZeroParadox.Motion.loopAt_image_iff_loopAt_all -- Statement: loops at every `inr (ofOption o)` iff at every `inr x`; both directions
+#check @ZeroParadox.Motion.lpo_of_loopAt_image -- Statement: loops at every `inr (ofOption o)` give LPO
 -- Reading (cited, not claimed): Escardó, preprint of JSL 78(3) (2013): `NInf` is his `ℕ∞` (p. 1),
 -- `eps` his selection function (Theorem 3.5, p. 5), `exists_ne_infty_eq_false_or` his Lemma 8.1 by his
 -- proof (p. 14), `wlpo_of_eqOr_infty` the right-to-left half of his WLPO row (p. 4) and
@@ -4291,5 +4337,22 @@ example (g : Part ℕ → Option ℕ) (hg : ∀ o n, g o = some n ↔ n ∈ o) :
 -- the Rosolini structures sit in their `ℕ∞`, presented there as `Σ α, isProp ⟨α⟩`, which is not
 -- related to `NInf` in Lean here. The trichotomy route through `hmap` is constructed here, not from
 -- a source.
+-- `ofOption` is TypeTopology's `ι𝟙 : ℕ + 𝟙 → ℕ∞`. `density` is Escardó's Lemma 3.4 with Lemma 3.3
+-- (pp. 4–5), TypeTopology `ℕ∞-density`; `not_not_mem_range_ofOption` his fullness of `ℕ ∪ {∞}`
+-- (Lemma 3.3, p. 4; TypeTopology `ι𝟙-dense`, `not-finite-is-∞`). `rightInverse_of_leftInverse` is an
+-- instance of TypeTopology `dense-maps-into-¬¬-separated-types-are-rc` (module `TypeTopology.Density`) at `ι𝟙`
+-- with `ι𝟙-dense`. `lpo_of_rightInverse`: compare `ι𝟙-has-section-gives-LPO`, and
+-- `equivOptionOfLPOData`: compare `LPO-gives-ι𝟙-is-equiv` (module `Taboos.LPO`, retrieved
+-- 2026-10-30), where a section of `ι𝟙` is our right inverse, a retraction our left inverse, and `LPO`
+-- is every point of `ℕ∞` decidably finite. `surjective_ofOption_iff` is his LPO row (p. 4);
+-- compare his Corollary 3.7 (p. 5). For a model in which `ℕ ⊔ {∞} → ℕ∞` is not an isomorphism, see
+-- D. Wärn, arXiv:2409.12835 (2024), Lemma 2, p. 3. `markovPrinciple_of_lpo`: compare Escardó's
+-- "LPO ⟺ WLPO ∧ MP" (p. 4). The left-inverse form `lpo_of_leftInverse` was not located as one
+-- statement as of 2026-10-30, searched as follows: GitHub code search of TypeTopology for `ι𝟙`, for
+-- `"is-section ι𝟙" OR "retraction ι𝟙" OR "ι𝟙-has-retraction"`, for `is-dense has-retraction` and
+-- for `ℕ∞ retraction LPO`; the 2013 paper; theoremsearch in four phrasings; the open web. The
+-- composition is assembled here from his lemmas. In the pinned Mathlib, `DenseRange.equalizer` is a
+-- topological analogue of `density` and does not apply to `NInf` as a bare type; `exact?` on the
+-- statements of `density` and `rightInverse_of_leftInverse` closed neither (2026-10-30).
 
 end DieCannotBeIndex
