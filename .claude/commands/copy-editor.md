@@ -1,6 +1,6 @@
 **ISOLATION REQUIRED: Do not run this review inline. Use the Agent tool to spawn a fresh instance with no conversation context.**
 
-**⚠⚠ AND SPAWN THREE OF THEM, IN ONE MESSAGE, WITH IDENTICAL PROMPTS.** This gate is `D9`: three copy editors. A unanimous PASS with no BEDROCK or MEANING finding from any reader proceeds. A 2-of-3 split proceeds only when the lone DIVERGENT vote states its ground as EXPRESSION and reports at least one finding, every one of them WORDING and graded ORDINARY by its own reader, no Stage 2 pair that reader reported differs, and no reader reported a BEDROCK or MEANING finding — the dissent then rides on the record. Every other outcome blocks: three DIVERGENT votes record FAIL, and everything else records UNDECIDED and escalates. One is not a cheaper version of this gate — it is a different gate with no divergence signal at all.
+**⚠⚠ AND SPAWN THREE OF THEM, IN ONE MESSAGE, WITH IDENTICAL PROMPTS.** This gate is `D9`: three copy editors. A unanimous PASS with no BEDROCK or MEANING finding from any reader proceeds. A 2-of-3 split proceeds only when the lone DIVERGENT vote states its ground as EXPRESSION and reports at least one finding, every one of them WORDING and graded ORDINARY by its own reader, no Stage 2 pair that reader reported differs (a CORRECTED pair, Stage 2c, does not), and no reader reported a BEDROCK or MEANING finding — the dissent then rides on the record. Every other outcome blocks: three DIVERGENT votes record FAIL, and everything else records UNDECIDED and escalates. One is not a cheaper version of this gate — it is a different gate with no divergence signal at all.
 
 Read `$ARGUMENTS` to determine the two states and the references, then spawn three Agents using the Agent tool with `subagent_type` omitted (general-purpose). Pass the prompt below verbatim to each, substituting `ARGUMENTS_VALUE` for the actual value of `$ARGUMENTS`. None of them may have knowledge of the current session, or of each other.
 
@@ -36,7 +36,7 @@ Read `$ARGUMENTS` to determine the two states and the references, then spawn thr
 **⭐ FINDINGS UNION. ONLY THE VERDICT IS VOTED (`D10`).**
 
 - **Findings: take the UNION.** A lone reader who catches a meaning shift the other two missed **must not be outvoted** — measured this week, the reviewer who found seven sites saw four the others did not. Majority decides *"may this proceed"*; it never decides *"did anyone find something"*. Same rule as `outstanding`, which unions across every covering record. **So the `--outstanding-file` on ANY `copy_editor` PASS — `agreement` or `panel` — carries EVERY finding from all three readers**, each with its own reader's severity, shift and vote.
-- **Verdict: tally the readers' VOTES (`PASS` | `DIVERGENT`) and their findings' tags — never a count of who "said it survived".** Three outcomes decide, and everything else is `UNDECIDED`. All three vote PASS and no reader reported a BEDROCK or MEANING finding: a PASS under `--how agreement`. All three vote DIVERGENT: a `FAIL`. Two vote PASS, and the lone DIVERGENT states its ground as EXPRESSION, reports at least one finding, every one WORDING and graded ORDINARY by that reader, no Stage 2 pair that reader reported differs, and no reader reported a BEDROCK or MEANING finding: a PASS under `--how panel`. Every finding goes on the record with the marker, grade and vote its reader gave it — you never regrade or relabel one. **Anything else is `UNDECIDED`:** a DIVERGENT with any MEANING finding, whatever its grade; any BEDROCK finding; a DIVERGENT that reports no findings at all (nothing on the record could show what it objected to); a DIVERGENT whose stated ground is MEANING, or whose Stage 2 pairs differ, while its findings are all WORDING (an inconsistent report: never relabel it, record `UNDECIDED` and carry the raw output to Tim); two DIVERGENT votes; or fewer than three readers having run. **A BEDROCK or MEANING finding from ANY reader blocks, including one from a reader who voted PASS: under the union rule a finding is not owned by the vote it came with, so the record is never a PASS: `UNDECIDED` unless all three voted DIVERGENT, which is `FAIL`.** A lone "the meaning moved" is exactly what the first bullet protects, so the panel outvotes a wording dissent and never a meaning one. The ledger's V3 rule (quoted in full below, § Recording) keeps `agreement` unanimous; `panel` is the separate value for the 2-of-3 case.
+- **Verdict: tally the readers' VOTES (`PASS` | `DIVERGENT`) and their findings' tags — never a count of who "said it survived".** Three outcomes decide, and everything else is `UNDECIDED`. All three vote PASS and no reader reported a BEDROCK or MEANING finding: a PASS under `--how agreement`. All three vote DIVERGENT: a `FAIL`. Two vote PASS, and the lone DIVERGENT states its ground as EXPRESSION, reports at least one finding, every one WORDING and graded ORDINARY by that reader, no Stage 2 pair that reader reported differs (a CORRECTED pair, Stage 2c, does not), and no reader reported a BEDROCK or MEANING finding: a PASS under `--how panel`. Every finding goes on the record with the marker, grade and vote its reader gave it — you never regrade or relabel one. A CORRECTED finding (Stage 2c) is WORDING: it tallies as WORDING, rides on `outstanding`, and blocks nothing. **Anything else is `UNDECIDED`:** a DIVERGENT with any MEANING finding, whatever its grade; any BEDROCK finding; a DIVERGENT that reports no findings at all (nothing on the record could show what it objected to); a DIVERGENT whose stated ground is MEANING, or whose Stage 2 pairs differ, while its findings are all WORDING (an inconsistent report: never relabel it, record `UNDECIDED` and carry the raw output to Tim); two DIVERGENT votes; or fewer than three readers having run. **A BEDROCK or MEANING finding from ANY reader blocks, including one from a reader who voted PASS: under the union rule a finding is not owned by the vote it came with, so the record is never a PASS: `UNDECIDED` unless all three voted DIVERGENT, which is `FAIL`.** A lone "the meaning moved" is exactly what the first bullet protects, so the panel outvotes a wording dissent and never a meaning one. The ledger's V3 rule (quoted in full below, § Recording) keeps `agreement` unanimous; `panel` is the separate value for the 2-of-3 case.
 
 **On any split that `panel` does not cover, record `UNDECIDED` and escalate.** ⚠ **When ALL THREE vote DIVERGENT, that is `FAIL`, not `UNDECIDED`** (AR8-1): unanimity is not a contested answer, and filing the panel's strongest finding as a disagreement misdescribes it. Both block; only one is true. ⚠ **And "which BLOCKS" is true of the VERDICT CLASS and, as of 2026-09-26, of this gate too.** This line read *"`copy_editor` is in no admission set today, `inventory(tag)` renders it NOT_APPLICABLE, and there are 0 records ever, so the fence exists downstream and is not wired here"* until today (2026-09-27) — re-derived live rather than trusted: `gitRobot admission(action='push')` and `admission(action='tag')` both list `copy_editor` among the admitted steps (`registered_not_admitted` only at commit), and the ledger holds exactly one `copy_editor` record, `copy_editor@f08e7ec9...#0`, `UNDECIDED` from 2026-09-22 (3 readers, 0 agreed). Do not describe this gate as fail-closed regardless (AR8-2) — a step with no record at all is `MISSING`, a status distinct from `FAIL`/`UNDECIDED`, and admission does not turn silence into a block; it means a record that has run and come back `UNDECIDED` blocks. ⚠ **Escalation goes to YOU, and you carry it to the author (`D4`). Gates never report to the author directly** — one channel up, and the carrier holds it. **An `UNDECIDED` split IS the signal**, and it is no longer hypothetical: the one record on file already blocks a real push or tag.
 
@@ -106,7 +106,7 @@ You are a **copy editor** — one of **three**, running in parallel, with identi
 
 > **The copy editor decides EXPRESSION. The moment a choice stops being about how something is said and becomes about WHAT IS CLAIMED, it is no longer a copy-edit — it is a decision about content, and content decisions are the author's.**
 
-**Clarifying language passes. Genuine improvement passes. A change that moves the mathematics is DIVERGENCE** and routes to the author via the carrier (`D7`, `D4`).
+**Clarifying language passes. Genuine improvement passes. A change that moves the mathematics is DIVERGENCE** and routes to the author via the carrier (`D7`, `D4`), unless your probe shows it moved TO what the Lean or a recorded ruling says: that is CORRECTED (Stage 2c).
 
 ⚠⚠ **SELF-ASSESSMENT OF THAT LINE FAILED 3 OUT OF 3.** Every failed reformulation of the one-wayness claim on the arc that designed this role crossed it, and the author believed all three were wording choices: deleting *"cannot be free"* removed a modal claim; *"cannot be a group"* authored a universal out of a conditional theorem; *"where the hypothesis fails so does the conclusion"* turned a conditional into a biconditional.
 
@@ -175,9 +175,14 @@ Enumerate every site editorial touched. **Report the count, always, including ze
 
 ⚠ **A footprint measurement does not settle a MODAL claim.** *"not a necessity"*, *"an artifact"*, *"could be removed"*, *"eliminable"* are claims about what no proof can establish. ACCIDENTAL is established only by exhibiting the clean proof; ESSENTIAL only by reduction to a taboo. **`#print axioms` follows the STATEMENT, not the proof** — a TYPE can carry an axiom, making "removable" false for every possible proof. **Measure the type.** A modal shift is divergence; it does not resolve.
 
-**2b. Where it does not reduce to Lean** — state the claim **twice**, stripped of framing, one line each, in the field's native terms: as the pre-editorial text makes it, and as the post-editorial text makes it. **If those two lines differ in what they assert, the meaning moved.** The deliverable is that the drift is VISIBLE.
+**2b. Where it does not reduce to Lean** — state the claim **twice**, stripped of framing, one line each, in the field's native terms: as the pre-editorial text makes it, and as the post-editorial text makes it. **If those two lines differ in what they assert, the meaning moved** (toward the referent is CORRECTED, 2c). The deliverable is that the drift is VISIBLE.
 
 **Watch specifically for:** a quantifier changing (*for all* ⇄ *for some*, *every* ⇄ *a*); a conditional becoming a biconditional; a conditional theorem restated as a universal; a hedge deleted; a modal verb added or removed; a scope silently widened from one carrier to all carriers.
+
+**2c. CORRECTED, the third outcome.** When the pre-text was FALSE and your probe settles the pair FOR the post-text, the pair is neither "same statement" nor divergence. Report it in this shape: *the pre-text asserted X; the Lean says Y (name the `example` that elaborated or the `#check` that matched), or a recorded ruling says Y (cite it); the post-text says Y.* It covers a correction a previous review round or gate asked for, and any editorial correction toward the referent. Mark it WORDING with the measurement attached. It does not by itself make your verdict DIVERGENT, and wherever this brief says a Stage 2 pair "differs", a CORRECTED pair does not.
+
+- **The control is the DIRECTION of the probe.** It settles FOR the post-text: CORRECTED. It goes AGAINST the post-text, or settles nothing: MEANING. Unsure: MEANING. Recorded slices. Real MEANING: panel-2 reader `4064d4dfeeec` F1 ("no theorem here says so", underclaiming a proved role half); arc-2 reader `04866fcda7cf` F1 (the rungs sentence); the ℕ∞ round-1 `Part ℕ` control, `ZeroParadox/DieCannotBe.lean` line 4302 at tree 018a047f, "the round trip closes" where the example proved one leg. CORRECTED: panel-3 reader `4781140c9e59` F1–F3 (a header and two glosses moved to their theorems' types); arc-2 reader `fae8cc7629e3` F1–F3.
+- ⛔ **A change of a CLAIM'S STATUS is never CORRECTED, even when the probe agrees:** `Statement:` ↔ `Reading:`, a chart claim ↔ a placement, a conditional ↔ a universal. That is a decision about content, so it is MEANING and routes to the author (arc-2 reader `3ed73350ae85` F1, ratified by Tim 2026-10-22).
 
 ---
 
@@ -190,7 +195,7 @@ Enumerate every site editorial touched. **Report the count, always, including ze
 3. **PROBE IT** in your scratchpad. A probe beats another draft.
 4. **Report what the MEASUREMENT showed** — never that something was re-worded.
 
-⚠ If the probe settles it, say so *with the measurement*. **If it does not, that is divergence. Report it and stop — you do not choose.**
+⚠ If the probe settles it FOR the post-text, the pair is CORRECTED (Stage 2c): say so *with the measurement*. **If it settles it against the post-text, or does not settle it, that is divergence. Report it and stop — you do not choose.**
 
 ---
 
@@ -198,8 +203,8 @@ Enumerate every site editorial touched. **Report the count, always, including ze
 
 **Your verdict is one of two**, and it is about proceeding, not about whether you found things:
 
-- **PASS** — editorial's changes are expression and you accept them. Clarifying language, improvements, no claim moved.
-- **DIVERGENT** — at least one change moves the mathematics, or you cannot establish that it does not, or you object to a change on expression alone.
+- **PASS** — editorial's changes are expression and you accept them. Clarifying language, improvements, no claim moved except as CORRECTED (Stage 2c).
+- **DIVERGENT** — at least one change moves the mathematics other than as CORRECTED, or you cannot establish that it does not, or you object to a change on expression alone.
 
 ⚠ **Report every finding regardless of your verdict.** Findings union across all three of us; only the verdict is voted. **Do not suppress a finding because it did not change your verdict**, and do not inflate your verdict because you have findings.
 
@@ -207,7 +212,7 @@ Tag every finding **VERIFIED** (you re-ran it — name what you ran and quote wh
 
 **Mark every finding MEANING or WORDING, and grade it BEDROCK or ORDINARY.**
 
-- **MEANING** — what the sentence asserts moved, or you cannot establish that it did not. **WORDING** — only how it is said changed. Unsure which is the "cannot establish" case: mark it MEANING. Any MEANING finding makes your verdict DIVERGENT, and the converse binds too: if you vote DIVERGENT because a change moves the mathematics, or because you cannot establish that it does not, that site MUST appear under Findings marked MEANING. A Stage 2 pair that differs is a MEANING finding; report it there as well as in Stage 2. Every ground of your divergence goes under Findings. State the ground on the `Divergence ground` line: MEANING if any of your findings is MEANING, EXPRESSION only when your objection is to expression alone and every finding is WORDING.
+- **MEANING** — what the sentence asserts moved, other than as CORRECTED, or you cannot establish that it did not. **WORDING** — only how it is said changed, or the pair is CORRECTED. Unsure which is the "cannot establish" case: mark it MEANING. Any MEANING finding makes your verdict DIVERGENT, and the converse binds too: if you vote DIVERGENT because a change moves the mathematics, or because you cannot establish that it does not, that site MUST appear under Findings marked MEANING. A Stage 2 pair that differs is a MEANING finding, unless your probe settled it FOR the post-text, which is CORRECTED: report a CORRECTED pair under Findings as WORDING with its measurement. Report a MEANING pair there as well as in Stage 2. Every ground of your divergence goes under Findings. State the ground on the `Divergence ground` line: MEANING if any of your findings is MEANING, EXPRESSION only when your objection is to expression alone and every finding is WORDING.
 - **BEDROCK** — a violated core invariant, a fabricated claim about a source, or a false premise carrying a conclusion. **ORDINARY** — anything else: citation scope, a mischaracterized lemma, hedging, wording.
 
 ⚠ **The marker and the grade are yours, and nobody changes them.** The carrier records each exactly as you give it. Together they decide what a dissent does: when you vote DIVERGENT, the other two vote PASS, your ground is EXPRESSION, and you report at least one finding and every one is WORDING and ORDINARY, your dissent rides on a recorded PASS instead of blocking it. If your ground, your Stage 2 pairs and your findings disagree, the carrier records `UNDECIDED` and never relabels anything. One MEANING finding, or one BEDROCK finding, from any of the three of us blocks, whatever the votes were, yours included. **Grade the finding, never the outcome you want for it.**
@@ -231,6 +236,7 @@ Tag every finding **VERIFIED** (you re-ran it — name what you ran and quote wh
   the claim as the pre-editorial text makes it
   the claim as the post-editorial text makes it
   what was RUN, and what the elaborator said
+  outcome: SAME | CORRECTED (with its measurement) | DIVERGENT
 
 ### Findings   (report ALL — these union across the three of us)
   each tagged VERIFIED or RELAYED, each naming what its numbers price
@@ -330,7 +336,7 @@ meaning-change could not say it had caught one.
       ground EXPRESSION, reports at least one
       finding, all WORDING and all ORDINARY
       (its own grade), no Stage 2 pair of it
-      differs, and no reader reported a
+      differs (CORRECTED does not), and no reader reported a
       BEDROCK or MEANING finding             -> --verdict pass       --how panel     --passes 3 --agreed 2
     ALL THREE vote DIVERGENT                 -> --verdict fail       --how agreement --passes 3 --agreed 3
     ALL THREE vote PASS, and a reader
@@ -342,6 +348,9 @@ meaning-change could not say it had caught one.
       ground or Stage 2 pairs disagree with
       its findings, two DIVERGENT votes      -> --verdict undecided  --how agreement --passes 3 --agreed 2
     FEWER THAN THREE READERS RAN             -> --verdict undecided  --how agreement --passes <how many ran> --agreed <the larger voting bloc among them>
+
+A CORRECTED finding (Stage 2c) tallies as WORDING in every row above: it goes on `--outstanding-file`
+with `"shift": "wording"` and its measurement in `note`, and it blocks no row.
 
 ⛔⛔ **`--agreed` COUNTS CONCURRENCE WITH THE VERDICT YOU ARE RECORDING — NOT VOTES FOR "SURVIVED"** (on `UNDECIDED`, which no reader votes, the larger voting bloc; the one-line rule below).
 `record.py --help` defines it as *"how many of them concurred"*, which is why V3's arithmetic is
@@ -387,7 +396,7 @@ provenance.
     --how agreement --verdict undecided --passes 3 --agreed 1  ->  VALID
 
 **So a 2-1 split is never an `agreement` PASS.** When the lone DIVERGENT's ground is EXPRESSION,
-its findings are all WORDING and all ORDINARY, none of its Stage 2 pairs differs, and no reader
+its findings are all WORDING and all ORDINARY, none of its Stage 2 pairs differs (CORRECTED does not), and no reader
 reported a BEDROCK or MEANING finding, record it under
 `--how panel` with all three readers' findings on `--outstanding-file` (template above). Otherwise
 record it as `--verdict undecided` with `--agreed 2` and `--failing-file` narrowing it to the
@@ -399,7 +408,7 @@ vocabulary for exit 3, *asked, ran to completion, answer contested*, and it is t
 `agreement` is unanimous among `min_passes` readers, as V3 requires. The 2-of-3 PASS exists only
 as `panel`, and only for a dissent that states its ground as EXPRESSION and reports at least one
 finding, every one marked WORDING and graded ORDINARY by its own reader, with no differing Stage 2
-pair from that reader and no BEDROCK or MEANING finding from any reader.
+pair from that reader (CORRECTED does not differ) and no BEDROCK or MEANING finding from any reader.
 **Whatever records `UNDECIDED` escalates and blocks; whatever records a PASS proceeds, a carried
 dissent included.** What the panel found and what the carrier does about it remain different
 QUESTIONS, and they share one answer to "how much agreement is enough." `STOP-ORDINARY` (*"a
@@ -494,7 +503,8 @@ single dissenting reader can be outvoted out of existence.
 ⚠ **`panel` DECIDES AT TALLY TIME AND RESOLVES NOTHING AFTERWARDS.** `decided.how = "panel"` is
 the ledger value for an M-of-N panel that counts as DECIDED with no human: for `copy_editor`, 2 of
 3, all three having run, and a lone DIVERGENT whose ground is EXPRESSION and whose findings — at
-least one — are all marked WORDING and graded ORDINARY by its own reader. A split outside that — any
+least one — are all marked WORDING and graded ORDINARY by its own reader, CORRECTED findings
+included. A split outside that — any
 MEANING finding, any BEDROCK finding, a DIVERGENT with no findings, a DIVERGENT whose ground or
 Stage 2 pairs disagree with its findings, fewer than two concurring, fewer than three run —
 records `UNDECIDED`, and re-recording it as `panel` over the same content would be
