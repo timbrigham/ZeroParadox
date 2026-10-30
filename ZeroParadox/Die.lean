@@ -4128,8 +4128,8 @@ theorem ofOption_injective : Function.Injective ofOption := by
     | some m => exact congrArg some (ofNat_injective h)
 
 /-- `Statement:` if two maps `NInf → NInf` agree at `∞` and at every `n̲`, they agree at every point.
-    `Reading:` Escardó's density lemma, his Lemma 3.4 with Lemma 3.3 (pp. 4–5), TypeTopology
-    `ℕ∞-density`. -/
+    `Reading:` the two-map form of Escardó's Lemma 3.4, by the same argument, with Lemma 3.3
+    (pp. 4–5); it is TypeTopology `ℕ∞-density`. -/
 theorem density (f g : NInf → NInf) (hinf : f infty = g infty)
     (hn : ∀ n, f (ofNat n) = g (ofNat n)) : ∀ x, f x = g x := fun x =>
   separated fun hne => hne (by
@@ -4223,7 +4223,7 @@ def equivOptionOfLPOData (d : LPOData) : NInf ≃ Option ℕ where
 noncomputable def equivOptionClassical : NInf ≃ Option ℕ :=
   equivOptionOfLPOData fun _ => Classical.dec _
 
-/-- `Statement:` the carrier `Option ℕ ⊕ NInf`, the tagged reading beside the limit reading. -/
+/-- `Statement:` the carrier `Option ℕ ⊕ NInf`. `Reading:` the tagged reading beside the limit reading. -/
 abbrev TaggedOrLimit : Type := Option ℕ ⊕ NInf
 
 /-- `Statement:` UP on `TaggedOrLimit`: `inl o ↦ inr (ofOption o)`, `inr x ↦ inr x`. -/

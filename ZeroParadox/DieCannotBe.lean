@@ -4299,7 +4299,9 @@ example : Function.Surjective ZeroParadox.NInf.ofOption ↔ ZeroParadox.LPO :=
 #check @ZeroParadox.NInf.rightInverse_ofLPOData -- Statement: it is a right inverse of `ofOption`
 #check @ZeroParadox.NInf.equivOptionOfLPOData  -- Statement: `LPOData` gives `NInf ≃ Option ℕ`, inverse `ofOption`
 #check @ZeroParadox.NInf.equivOptionClassical  -- Statement: CONTROL: `NInf ≃ Option ℕ` from `Classical.dec`, with no LPO hypothesis
--- Statement: CONTROL: into `Part ℕ` instead of `Option ℕ`, the round trip closes with no hypothesis.
+-- Statement: CONTROL: into `Part ℕ` instead of `Option ℕ`, the left leg `toPart ∘ ofOption =
+-- Part.ofOption` holds with no hypothesis; a map back `Part ℕ → NInf` with `g o = NInf.ofNat n ↔
+-- n ∈ o` gives excluded middle (`NInf.em_of_partToNInf`).
 example (o : Option ℕ) :
     ZeroParadox.NInf.toPart (ZeroParadox.NInf.ofOption o) = Part.ofOption o :=
   ZeroParadox.NInf.toPart_ofOption o
@@ -4337,22 +4339,26 @@ example (o : Option ℕ) :
 -- the Rosolini structures sit in their `ℕ∞`, presented there as `Σ α, isProp ⟨α⟩`, which is not
 -- related to `NInf` in Lean here. The trichotomy route through `hmap` is constructed here, not from
 -- a source.
--- `ofOption` is TypeTopology's `ι𝟙 : ℕ + 𝟙 → ℕ∞`. `density` is Escardó's Lemma 3.4 with Lemma 3.3
--- (pp. 4–5), TypeTopology `ℕ∞-density`; `not_not_mem_range_ofOption` his fullness of `ℕ ∪ {∞}`
+-- `ofOption` is TypeTopology's `ι𝟙 : ℕ + 𝟙 → ℕ∞`. `density` is the two-map form of Escardó's
+-- Lemma 3.4, by the same argument, with Lemma 3.3 (pp. 4–5); it is TypeTopology `ℕ∞-density`;
+-- `not_not_mem_range_ofOption` his fullness of `ℕ ∪ {∞}`
 -- (Lemma 3.3, p. 4; TypeTopology `ι𝟙-dense`, `not-finite-is-∞`). `rightInverse_of_leftInverse` is an
 -- instance of TypeTopology `dense-maps-into-¬¬-separated-types-are-rc` (module `TypeTopology.Density`) at `ι𝟙`
--- with `ι𝟙-dense`. `lpo_of_rightInverse`: compare `ι𝟙-has-section-gives-LPO`, and
+-- with `ι𝟙-dense`, using that `NInf` is ¬¬-separated (`NInf.separated`): `ofOption` is
+-- right-cancellable against ¬¬-separated codomains, so a left inverse is a right inverse. `lpo_of_rightInverse`: compare `ι𝟙-has-section-gives-LPO`, and
 -- `equivOptionOfLPOData`: compare `LPO-gives-ι𝟙-is-equiv` (module `Taboos.LPO`, retrieved
 -- 2026-10-30), where a section of `ι𝟙` is our right inverse, a retraction our left inverse, and `LPO`
 -- is every point of `ℕ∞` decidably finite. `surjective_ofOption_iff` is his LPO row (p. 4);
 -- compare his Corollary 3.7 (p. 5). For a model in which `ℕ ⊔ {∞} → ℕ∞` is not an isomorphism, see
--- D. Wärn, arXiv:2409.12835 (2024), Lemma 2, p. 3. `markovPrinciple_of_lpo`: compare Escardó's
+-- D. Wärn, arXiv:2409.12835 (2024), Lemma 2, p. 3; his `ℕ∞` is the one-point compactification in
+-- LCond (light condensed sets), which is not related to `NInf` in Lean here. `markovPrinciple_of_lpo`: compare Escardó's
 -- "LPO ⟺ WLPO ∧ MP" (p. 4). The left-inverse form `lpo_of_leftInverse` was not located as one
 -- statement as of 2026-10-30, searched as follows: GitHub code search of TypeTopology for `ι𝟙`, for
 -- `"is-section ι𝟙" OR "retraction ι𝟙" OR "ι𝟙-has-retraction"`, for `is-dense has-retraction` and
 -- for `ℕ∞ retraction LPO`; the 2013 paper; theoremsearch in four phrasings; the open web. The
 -- composition is assembled here from his lemmas. In the pinned Mathlib, `DenseRange.equalizer` is a
 -- topological analogue of `density` and does not apply to `NInf` as a bare type; `exact?` on the
--- statements of `density` and `rightInverse_of_leftInverse` closed neither (2026-10-30).
+-- statements of `density` and `rightInverse_of_leftInverse`, run against the corpus before these
+-- lemmas existed, closed neither (2026-10-30).
 
 end DieCannotBeIndex
