@@ -4218,8 +4218,9 @@ example : (∀ (r : Option ℕ → Option ℕ → Bool) (y : Option ℕ),
 -- and for `_of_lpo` (`Motion.selectedTotal_of_classical` gets one classically, not from LPO).
 -- Statement: the other direction of the trade: a `Bool` test for "is this the adjoined point" exists
 -- on `Option ℕ` with no hypothesis (`registeredDecider`, § IX), and on `NInf` one for each finite
--- stage (`isAt_iff`); a test isolating `∞` (`t b = true ↔ b = ∞`; equivalently `t` is `false` at
--- every `n̲` and `true` at `∞`, `NInf.isolating_infty_iff`, Escardó's basic discontinuity) gives WLPO.
+-- stage (`isAt_iff`); a test isolating `∞` (`t b = true ↔ b = ∞`, a decidable singleton, not a
+-- topological claim; equivalently `t` is `false` at every `n̲` and `true` at `∞`,
+-- `NInf.isolating_infty_iff`, TypeTopology's `basic-discontinuity`) gives WLPO.
 #check @ZeroParadox.NInf.isAt_iff              -- Statement: `isAt m b = true ↔ b = NInf.ofNat m`
 #check @ZeroParadox.NInf.wlpo_of_isolating_infty -- Statement: a `Bool` test true exactly at `∞` gives WLPO
 #check @ZeroParadox.NInf.isolating_infty_iff   -- Statement: a `Bool` test isolates `∞` iff it is `false` at every `NInf.ofNat n` and `true` at `∞`
@@ -4274,6 +4275,14 @@ example (g : Part ℕ → Option ℕ) (hg : ∀ o n, g o = some n ↔ n ∈ o) :
 #check @ZeroParadox.NInf.ofNat_injective       -- Statement: `ofNat` is one-to-one
 #check @ZeroParadox.NInf.ofOption_injective    -- Statement: `ofOption` is one-to-one
 #check @ZeroParadox.NInf.density               -- Statement: maps `NInf → NInf` agreeing at `∞` and every `NInf.ofNat n` agree at every point
+-- Statement: the same into any ¬¬-separated codomain `Y`: `ofOption` is right-cancellable there.
+example {Y : Sort*} (hY : ∀ a b : Y, ¬¬ a = b → a = b) (f g : ZeroParadox.NInf → Y)
+    (h : ∀ o, f (ZeroParadox.NInf.ofOption o) = g (ZeroParadox.NInf.ofOption o)) :
+    ∀ x, f x = g x := fun x =>
+  hY _ _ fun hne => hne (by
+    have : x = ZeroParadox.NInf.infty :=
+      ZeroParadox.NInf.eq_infty_of_ne_ofNat x fun n e => hne (e ▸ h (some n))
+    rw [this]; exact h none)
 #check @ZeroParadox.NInf.not_not_mem_range_ofOption -- Statement: every point is not not in the range of `ofOption`
 -- Statement: the same, as no point outside the range; and a point other than `∞` and every `n̲` is
 -- refuted by `eq_infty_of_ne_ofNat`.
@@ -4299,12 +4308,31 @@ example : Function.Surjective ZeroParadox.NInf.ofOption ↔ ZeroParadox.LPO :=
 #check @ZeroParadox.NInf.rightInverse_ofLPOData -- Statement: it is a right inverse of `ofOption`
 #check @ZeroParadox.NInf.equivOptionOfLPOData  -- Statement: `LPOData` gives `NInf ≃ Option ℕ`, inverse `ofOption`
 #check @ZeroParadox.NInf.equivOptionClassical  -- Statement: CONTROL: `NInf ≃ Option ℕ` from `Classical.dec`, with no LPO hypothesis
--- Statement: CONTROL: into `Part ℕ` instead of `Option ℕ`, the left leg `toPart ∘ ofOption =
--- Part.ofOption` holds with no hypothesis; a map back `Part ℕ → NInf` with `g o = NInf.ofNat n ↔
--- n ∈ o` gives excluded middle (`NInf.em_of_partToNInf`).
+-- Statement: CONTROL: into `Part ℕ` instead of `Option ℕ`, `toPart` undoes `ofOption` up to
+-- `Part.ofOption` (`toPart ∘ ofOption = Part.ofOption`) with no hypothesis; a map back
+-- `g : Part ℕ → NInf` with `g o = NInf.ofNat n ↔ n ∈ o`, which is then a two-sided inverse of
+-- `toPart` (the second `example` below), gives excluded middle (`NInf.em_of_partToNInf`).
 example (o : Option ℕ) :
     ZeroParadox.NInf.toPart (ZeroParadox.NInf.ofOption o) = Part.ofOption o :=
   ZeroParadox.NInf.toPart_ofOption o
+example (g : Part ℕ → ZeroParadox.NInf) (hg : ∀ o n, g o = ZeroParadox.NInf.ofNat n ↔ n ∈ o) :
+    Function.RightInverse g ZeroParadox.NInf.toPart ∧
+      Function.LeftInverse g ZeroParadox.NInf.toPart := by
+  constructor
+  · intro o
+    ext n
+    rw [ZeroParadox.NInf.mem_toPart_iff, hg]
+  · intro x
+    apply ZeroParadox.NInf.separated
+    intro hne
+    apply hne
+    have hx : ∀ k, x ≠ ZeroParadox.NInf.ofNat k := fun k e => hne (by
+      rw [e]; exact (hg _ k).2 ((ZeroParadox.NInf.mem_toPart_iff _ k).2 rfl))
+    have hy : ∀ k, g (ZeroParadox.NInf.toPart x) ≠ ZeroParadox.NInf.ofNat k := fun k e => hne (by
+      have := (ZeroParadox.NInf.mem_toPart_iff x k).1 ((hg _ k).1 e)
+      rw [e, this])
+    rw [ZeroParadox.NInf.eq_infty_of_ne_ofNat _ hy]
+    exact (ZeroParadox.NInf.eq_infty_of_ne_ofNat _ hx).symm
 -- Statement: the round trip as a motion on `Option ℕ ⊕ NInf`: UP `toLimit`, OVER from `r`.
 #check @ZeroParadox.Motion.LoopAt              -- Statement: a landing `y`, a step to `b ≠ y`, and `up b` returns to `y`
 #check @ZeroParadox.Motion.loop_iff_exists_loopAt -- Statement: `Loop` iff `LoopAt` some `y`; both directions
@@ -4324,35 +4352,39 @@ example (o : Option ℕ) :
 -- `wlpo_of_tag` its data form, `lpo_of_exactTag` the right-to-left half of his LPO row (p. 4; compare
 -- his Corollary 3.7, p. 5), and `wlpo_of_isolating_infty`, whose hypothesis his Lemma 3.3 (p. 4)
 -- makes equivalent (`isolating_infty_iff`) to the basic discontinuity (p. 5; TypeTopology
--- `basic-discontinuity`) his WLPO row turns into WLPO; compare de Jong and Escardó,
--- arXiv:2601.12536, § 7.2, Lemma 7.2, p. 25, for a map `ℕ∞ → ℕ∞` with values `0` and `1`. His
--- Theorem 7.1(1) (p. 13) gets WLPO from any discontinuous map `ℕ∞ → 2` assuming countable choice.
+-- `basic-discontinuity`), which his WLPO row, with Lemma 3.3 again, turns into WLPO; compare de
+-- Jong and Escardó, arXiv:2601.12536, § 7.2, Lemma 7.2, p. 25, for a map `f : ℕ∞ → ℕ∞` with
+-- `f n̲ = 0` and `f ∞ = 1`. Escardó's Theorem 7.1(1) (p. 13) gets WLPO from any discontinuous map
+-- `ℕ∞ → 2` assuming countable choice.
 -- `wlpo_iff_eqOr`, `decEq_of_wlpoData` and `wlpoData_of_decEq`: compare Escardó's TypeTopology
 -- module `Taboos.WLPO` (retrieved 2026-10-29), `ℕ∞-discrete-gives-WLPO` and
 -- `WLPO-gives-ℕ∞-discrete`, for his `WLPO` indexed by the points of `ℕ∞`; the bit-sequence form
--- here is his `WLPO-traditional`, linked there by `WLPO-gives-WLPO-traditional` and
--- `WLPO-traditional-gives-WLPO`, here by `eqOr_of_wlpo` and `wlpo_of_eqOr_infty`. `ninfEquivComp`:
+-- here is the `Prop` form of his `WLPO-traditional`, with the bits complemented (`r n = false` for
+-- his `α n ＝ ₁`), linked there by `WLPO-gives-WLPO-traditional` and `WLPO-traditional-gives-WLPO`,
+-- here by `wlpo_of_eqOr_infty` and, to every pair rather than to `∞` only, `eqOr_of_wlpo` (there
+-- `WLPO-traditional-gives-WLPO` then `WLPO-gives-ℕ∞-discrete`). `ninfEquivComp`:
 -- C. Knapp, "Partial Functions and Recursion in Univalent Type Theory," 2020 (arXiv:2011.00272),
 -- § 4.1, Lemma 4.4 (p. 76) and Theorem 4.7 (p. 78) at `X = 1`.
 -- Escardó and Knapp, CSL 2017, LIPIcs 82, § 2.7, p. 21:6: lifting by the decidable dominance is
--- `X + 1` and by all propositions is `L X`; § 2.8, pp. 21:6–21:7: "the decidability of Rosolini propositions is known as LPO", and
--- the Rosolini structures sit in their `ℕ∞`, presented there as `Σ α, isProp ⟨α⟩`, which is not
--- related to `NInf` in Lean here. The trichotomy route through `hmap` is constructed here, not from
+-- `X + 1` and by all propositions is `L X`; § 2.8, pp. 21:6–21:7: "the decidability of Rosolini
+-- propositions is known as LPO", and the Rosolini structures sit in their `ℕ∞`, presented there
+-- as `Σ α, isProp ⟨α⟩`, which is not related to `NInf` in Lean here. The trichotomy route through `hmap` is constructed here, not from
 -- a source.
 -- `ofOption` is TypeTopology's `ι𝟙 : ℕ + 𝟙 → ℕ∞`. `density` is the two-map form of Escardó's
--- Lemma 3.4, by the same argument, with Lemma 3.3 (pp. 4–5); it is TypeTopology `ℕ∞-density`;
--- `not_not_mem_range_ofOption` his fullness of `ℕ ∪ {∞}`
--- (Lemma 3.3, p. 4; TypeTopology `ι𝟙-dense`, `not-finite-is-∞`). `rightInverse_of_leftInverse` is an
--- instance of TypeTopology `dense-maps-into-¬¬-separated-types-are-rc` (module `TypeTopology.Density`) at `ι𝟙`
--- with `ι𝟙-dense`, using that `NInf` is ¬¬-separated (`NInf.separated`): `ofOption` is
--- right-cancellable against ¬¬-separated codomains, so a left inverse is a right inverse. `lpo_of_rightInverse`: compare `ι𝟙-has-section-gives-LPO`, and
+-- Lemma 3.4, by the same argument, with Lemma 3.3 (pp. 4–5); it is the `Y = ℕ∞` instance of
+-- TypeTopology `ℕ∞-density`; `not_not_mem_range_ofOption` his fullness of `ℕ ∪ {∞}` (Lemma 3.3,
+-- p. 4; TypeTopology `ι𝟙-dense`, `not-finite-is-∞`). `rightInverse_of_leftInverse` is an instance
+-- of TypeTopology `dense-maps-into-¬¬-separated-types-are-rc` (module `TypeTopology.Density`) at
+-- `ι𝟙` with `ι𝟙-dense`, using that `NInf` is ¬¬-separated (`NInf.separated`): `ofOption` is
+-- right-cancellable against ¬¬-separated codomains (the `example` after `density` above), so a
+-- left inverse is a right inverse. `lpo_of_rightInverse`: compare `ι𝟙-has-section-gives-LPO`, and
 -- `equivOptionOfLPOData`: compare `LPO-gives-ι𝟙-is-equiv` (module `Taboos.LPO`, retrieved
 -- 2026-10-30), where a section of `ι𝟙` is our right inverse, a retraction our left inverse, and `LPO`
 -- is every point of `ℕ∞` decidably finite. `surjective_ofOption_iff` is his LPO row (p. 4);
 -- compare his Corollary 3.7 (p. 5). For a model in which `ℕ ⊔ {∞} → ℕ∞` is not an isomorphism, see
 -- D. Wärn, arXiv:2409.12835 (2024), Lemma 2, p. 3; his `ℕ∞` is the one-point compactification in
--- LCond (light condensed sets), which is not related to `NInf` in Lean here. `markovPrinciple_of_lpo`: compare Escardó's
--- "LPO ⟺ WLPO ∧ MP" (p. 4). The left-inverse form `lpo_of_leftInverse` was not located as one
+-- LCond (light condensed sets), which is not related to `NInf` in Lean here.
+-- `markovPrinciple_of_lpo`: compare Escardó's "LPO ⟺ WLPO ∧ MP" (p. 4). The left-inverse form `lpo_of_leftInverse` was not located as one
 -- statement as of 2026-10-30, searched as follows: GitHub code search of TypeTopology for `ι𝟙`, for
 -- `"is-section ι𝟙" OR "retraction ι𝟙" OR "ι𝟙-has-retraction"`, for `is-dense has-retraction` and
 -- for `ℕ∞ retraction LPO`; the 2013 paper; theoremsearch in four phrasings; the open web. The
