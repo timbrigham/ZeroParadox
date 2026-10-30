@@ -121,6 +121,14 @@ def Climb : Prop := ∃ y b z, M.IsLanding y ∧ M.step y b ∧ z ∈ M.up b ∧
 /-- `Statement:` loop: from a landing `y`, a step to some `b ≠ y`, and `up b` returns to `y`. -/
 def Loop : Prop := ∃ y b, M.IsLanding y ∧ M.step y b ∧ b ≠ y ∧ y ∈ M.up b
 
+/-- `Statement:` loop at a landing `y`: a step to some `b ≠ y`, and `up b` returns to `y`. -/
+def LoopAt (y : α) : Prop := M.IsLanding y ∧ ∃ b, M.step y b ∧ b ≠ y ∧ y ∈ M.up b
+
+/-- `Statement:` a loop exists iff a loop at some `y` exists; both directions. -/
+theorem loop_iff_exists_loopAt : M.Loop ↔ ∃ y, M.LoopAt y :=
+  ⟨fun ⟨y, b, hy, hs, hb, hu⟩ => ⟨y, hy, b, hs, hb, hu⟩,
+   fun ⟨y, hy, b, hs, hb, hu⟩ => ⟨y, b, hy, hs, hb, hu⟩⟩
+
 /-! ### § III. Premises on a motion -/
 
 /-- `Statement:` some point is a landing. -/
@@ -3904,6 +3912,9 @@ end Motion
 /-- `Statement:` WLPO as data: at every `r : ℕ → Bool`, a decision of `∀ n, r n = false`. -/
 def WLPOData : Type := ∀ r : ℕ → Bool, Decidable (∀ n, r n = false)
 
+/-- `Statement:` LPO as data: at every `r : ℕ → Bool`, a decision of `∃ n, r n = true`. -/
+def LPOData : Type := ∀ r : ℕ → Bool, Decidable (∃ n, r n = true)
+
 namespace NInf
 
 /-- `Statement:` WLPO as data gives decidable equality on `NInf` (compare TypeTopology `Taboos.WLPO`,
@@ -4090,7 +4101,198 @@ def ninfEquivComp : NInf ≃ Computation Unit where
 /-- `Statement:` `toComp ∞` is Mathlib's `Computation.empty Unit`, by `rfl`. -/
 theorem toComp_infty : toComp infty = Computation.empty Unit := rfl
 
+/-- `Statement:` `ofNat` is one-to-one. -/
+theorem ofNat_injective : Function.Injective ofNat := by
+  have key : ∀ a b, a < b → ofNat a ≠ ofNat b := fun a b hab h => by
+    have e : (ofNat a).1 a = (ofNat b).1 a := congrArg (fun x : NInf => x.1 a) h
+    rw [show (ofNat a).1 a = false from decide_eq_false (Nat.lt_irrefl a),
+      show (ofNat b).1 a = true from decide_eq_true hab] at e
+    cases e
+  intro a b h
+  rcases Nat.lt_trichotomy a b with hab | e | hab
+  · exact absurd h (key a b hab)
+  · exact e
+  · exact absurd h.symm (key b a hab)
+
+/-- `Statement:` `ofOption` is one-to-one. -/
+theorem ofOption_injective : Function.Injective ofOption := by
+  intro a b h
+  cases a with
+  | none =>
+    cases b with
+    | none => rfl
+    | some m => exact absurd h.symm (ofNat_ne_infty m)
+  | some n =>
+    cases b with
+    | none => exact absurd h (ofNat_ne_infty n)
+    | some m => exact congrArg some (ofNat_injective h)
+
+/-- `Statement:` if two maps `NInf → NInf` agree at `∞` and at every `n̲`, they agree at every point.
+    `Reading:` Escardó's density lemma, his Lemma 3.4 with Lemma 3.3 (pp. 4–5), TypeTopology
+    `ℕ∞-density`. -/
+theorem density (f g : NInf → NInf) (hinf : f infty = g infty)
+    (hn : ∀ n, f (ofNat n) = g (ofNat n)) : ∀ x, f x = g x := fun x =>
+  separated fun hne => hne (by
+    have : x = infty := eq_infty_of_ne_ofNat x fun n e => hne (e ▸ hn n)
+    rw [this]; exact hinf)
+
+/-- `Statement:` every point of `NInf` is not not in the range of `ofOption`. `Reading:` Escardó's
+    fullness of `ℕ ∪ {∞}` (Lemma 3.3, p. 4; TypeTopology `ι𝟙-dense`, `not-finite-is-∞`). -/
+theorem not_not_mem_range_ofOption (x : NInf) : ¬¬ x ∈ Set.range ofOption := fun hx =>
+  hx ⟨none, (eq_infty_of_ne_ofNat x fun n e => hx ⟨some n, e.symm⟩).symm⟩
+
+/-- `Statement:` if `r` is a left inverse of `ofOption` (a retraction of it), then `r` is a right
+    inverse of `ofOption` (a section of it), by `density`. -/
+theorem rightInverse_of_leftInverse (r : NInf → Option ℕ)
+    (h : Function.LeftInverse r ofOption) : Function.RightInverse r ofOption :=
+  density (fun x => ofOption (r x)) id (congrArg ofOption (h none))
+    (fun n => congrArg ofOption (h (some n)))
+
+/-- `Statement:` `r` is a left inverse of `ofOption` iff it is a right inverse; both directions. -/
+theorem leftInverse_iff_rightInverse (r : NInf → Option ℕ) :
+    Function.LeftInverse r ofOption ↔ Function.RightInverse r ofOption :=
+  ⟨rightInverse_of_leftInverse r, fun h o => ofOption_injective (h (ofOption o))⟩
+
+/-- `Statement:` if `ofOption` has a right inverse, LPO holds (compare TypeTopology `Taboos.LPO`,
+    `ι𝟙-has-section-gives-LPO`). -/
+theorem lpo_of_rightInverse (r : NInf → Option ℕ) (h : Function.RightInverse r ofOption) :
+    ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false :=
+  lpo_of_exactTag r fun x n =>
+    ⟨fun e => by rw [← h x, e]; rfl, fun e => ofOption_injective (by rw [h x, e]; rfl)⟩
+
+/-- `Statement:` if `ofOption` has a left inverse, LPO holds: `rightInverse_of_leftInverse`, then
+    `lpo_of_rightInverse`. -/
+theorem lpo_of_leftInverse (r : NInf → Option ℕ) (h : Function.LeftInverse r ofOption) :
+    ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false :=
+  lpo_of_rightInverse r (rightInverse_of_leftInverse r h)
+
+/-- `Statement:` `ofOption` is onto iff LPO; both directions (Escardó, p. 4, the LPO row). -/
+theorem surjective_ofOption_iff :
+    Function.Surjective ofOption ↔ ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false := by
+  constructor
+  · intro h α
+    obtain ⟨o, ho⟩ := h (det α)
+    cases o with
+    | none => exact Or.inr ((det_eq_infty_iff α).1 ho.symm)
+    | some n =>
+      have hd : (det α).1 n = false := by
+        rw [← ho]; exact decide_eq_false (Nat.lt_irrefl n)
+      obtain ⟨j, -, hj⟩ := detSeq_false α n hd
+      exact Or.inl ⟨j, hj⟩
+  · intro h x
+    rcases h fun n => !x.1 n with ⟨n, hn⟩ | hall
+    · have hn' : x.1 n = false := by
+        cases e : x.1 n with
+        | false => rfl
+        | true => rw [e] at hn; cases hn
+      obtain ⟨k, -, e⟩ := eq_ofNat_of_false x n hn'
+      exact ⟨some k, e.symm⟩
+    · refine ⟨none, (ext fun n => ?_).symm⟩
+      have hn := hall n
+      cases e : x.1 n with
+      | true => rfl
+      | false => rw [e] at hn; cases hn
+
+/-- `Statement:` from LPO as data, `x ↦ some n` if `x n = false` for some `n`, with `n` the least
+    such index (`toPart`), and `x ↦ none` otherwise. -/
+def ofLPOData (d : LPOData) (x : NInf) : Option ℕ :=
+  @dite _ (∃ n, x.1 n = false)
+    (@decidable_of_iff _ _ ⟨fun ⟨n, hn⟩ => ⟨n, by simpa using hn⟩,
+      fun ⟨n, hn⟩ => ⟨n, by simp [hn]⟩⟩ (d fun n => !x.1 n))
+    (fun h => some ((toPart x).get h)) (fun _ => none)
+
+/-- `Statement:` `ofLPOData d` is a right inverse of `ofOption`. -/
+theorem rightInverse_ofLPOData (d : LPOData) :
+    Function.RightInverse (ofLPOData d) ofOption := fun x => by
+  unfold ofLPOData
+  split
+  · next h => exact ((mem_toPart_iff x _).1 (Part.get_mem h)).symm
+  · next h =>
+    exact (eq_infty_of_ne_ofNat x fun k e => h ⟨k, by
+      rw [e]; exact decide_eq_false (Nat.lt_irrefl k)⟩).symm
+
+/-- `Statement:` LPO as data gives `NInf ≃ Option ℕ`, with inverse `ofOption` (compare TypeTopology
+    `Taboos.LPO`, `LPO-gives-ι𝟙-is-equiv`). -/
+def equivOptionOfLPOData (d : LPOData) : NInf ≃ Option ℕ where
+  toFun := ofLPOData d
+  invFun := ofOption
+  left_inv := rightInverse_ofLPOData d
+  right_inv := (leftInverse_iff_rightInverse _).2 (rightInverse_ofLPOData d)
+
+/-- `Statement:` CONTROL: `NInf ≃ Option ℕ` from `Classical.dec`, with no LPO hypothesis. -/
+noncomputable def equivOptionClassical : NInf ≃ Option ℕ :=
+  equivOptionOfLPOData fun _ => Classical.dec _
+
+/-- `Statement:` the carrier `Option ℕ ⊕ NInf`, the tagged reading beside the limit reading. -/
+abbrev TaggedOrLimit : Type := Option ℕ ⊕ NInf
+
+/-- `Statement:` UP on `TaggedOrLimit`: `inl o ↦ inr (ofOption o)`, `inr x ↦ inr x`. -/
+def toLimit : TaggedOrLimit → TaggedOrLimit
+  | .inl o => .inr (ofOption o)
+  | .inr x => .inr x
+
+/-- `Statement:` `toLimit` is idempotent. -/
+theorem toLimit_idem (p : TaggedOrLimit) : toLimit (toLimit p) = toLimit p := by
+  cases p <;> rfl
+
+/-- `Statement:` OVER from `r : NInf → Option ℕ`: `inr x` steps to `inl o` iff `r x = o`, and no
+    other step holds. -/
+def returnStep (r : NInf → Option ℕ) : TaggedOrLimit → TaggedOrLimit → Prop
+  | .inr x, .inl o => r x = o
+  | _, _ => False
+
+/-- `Statement:` the motion with UP `toLimit` and OVER `returnStep r`. -/
+def returnMotion (r : NInf → Option ℕ) : Motion TaggedOrLimit :=
+  Motion.ofTotal toLimit toLimit_idem (returnStep r)
+
 end NInf
+
+namespace Motion
+
+/-- `Statement:` `returnMotion r` loops at `inr x` iff `ofOption (r x) = x`; both directions. -/
+theorem loopAt_returnMotion_iff (r : NInf → Option ℕ) (x : NInf) :
+    (NInf.returnMotion r).LoopAt (.inr x) ↔ NInf.ofOption (r x) = x := by
+  constructor
+  · rintro ⟨-, b, hs, -, hu⟩
+    cases b with
+    | inr _ => exact (show False from hs).elim
+    | inl o =>
+      have hs' : r x = o := hs
+      have hu' : (Sum.inr x : NInf.TaggedOrLimit) = .inr (NInf.ofOption o) :=
+        Part.mem_some_iff.1 hu
+      rw [hs']; exact (Sum.inr_injective hu').symm
+  · intro h
+    exact ⟨Part.mem_some _, .inl (r x), rfl, Sum.inl_ne_inr,
+      Part.mem_some_iff.2 (congrArg Sum.inr h.symm)⟩
+
+/-- `Statement:` `returnMotion r` loops at every `inr x` iff `r` is a right inverse of `ofOption`;
+    both directions. -/
+theorem loopAt_all_iff_rightInverse (r : NInf → Option ℕ) :
+    (∀ x, (NInf.returnMotion r).LoopAt (.inr x)) ↔ Function.RightInverse r NInf.ofOption :=
+  forall_congr' (loopAt_returnMotion_iff r)
+
+/-- `Statement:` `returnMotion r` loops at every `inr (ofOption o)` iff `r` is a left inverse of
+    `ofOption`; both directions. -/
+theorem loopAt_image_iff_leftInverse (r : NInf → Option ℕ) :
+    (∀ o, (NInf.returnMotion r).LoopAt (.inr (NInf.ofOption o))) ↔
+      Function.LeftInverse r NInf.ofOption :=
+  forall_congr' fun _ => (loopAt_returnMotion_iff r _).trans NInf.ofOption_injective.eq_iff
+
+/-- `Statement:` `returnMotion r` loops at every `inr (ofOption o)` iff at every `inr x`; both
+    directions, left to right by `NInf.rightInverse_of_leftInverse`. -/
+theorem loopAt_image_iff_loopAt_all (r : NInf → Option ℕ) :
+    (∀ o, (NInf.returnMotion r).LoopAt (.inr (NInf.ofOption o))) ↔
+      ∀ x, (NInf.returnMotion r).LoopAt (.inr x) :=
+  (loopAt_image_iff_leftInverse r).trans
+    ((NInf.leftInverse_iff_rightInverse r).trans (loopAt_all_iff_rightInverse r).symm)
+
+/-- `Statement:` if `returnMotion r` loops at every `inr (ofOption o)`, LPO holds. -/
+theorem lpo_of_loopAt_image (r : NInf → Option ℕ)
+    (h : ∀ o, (NInf.returnMotion r).LoopAt (.inr (NInf.ofOption o))) :
+    ∀ α : ℕ → Bool, (∃ n, α n = true) ∨ ∀ n, α n = false :=
+  NInf.lpo_of_leftInverse r ((loopAt_image_iff_leftInverse r).1 h)
+
+end Motion
 
 end ZeroParadox
 
@@ -4500,5 +4702,31 @@ open ZeroParadox
 #print axioms NInf.ofComp
 #print axioms NInf.ninfEquivComp
 #print axioms NInf.toComp_infty
+#print axioms Motion.LoopAt
+#print axioms Motion.loop_iff_exists_loopAt
+#print axioms LPOData
+#print axioms NInf.ofNat_injective
+#print axioms NInf.ofOption_injective
+#print axioms NInf.density
+#print axioms NInf.not_not_mem_range_ofOption
+#print axioms NInf.rightInverse_of_leftInverse
+#print axioms NInf.leftInverse_iff_rightInverse
+#print axioms NInf.lpo_of_rightInverse
+#print axioms NInf.lpo_of_leftInverse
+#print axioms NInf.surjective_ofOption_iff
+#print axioms NInf.ofLPOData
+#print axioms NInf.rightInverse_ofLPOData
+#print axioms NInf.equivOptionOfLPOData
+#print axioms NInf.equivOptionClassical
+#print axioms NInf.TaggedOrLimit
+#print axioms NInf.toLimit
+#print axioms NInf.toLimit_idem
+#print axioms NInf.returnStep
+#print axioms NInf.returnMotion
+#print axioms Motion.loopAt_returnMotion_iff
+#print axioms Motion.loopAt_all_iff_rightInverse
+#print axioms Motion.loopAt_image_iff_leftInverse
+#print axioms Motion.loopAt_image_iff_loopAt_all
+#print axioms Motion.lpo_of_loopAt_image
 
 end PurityCheck
