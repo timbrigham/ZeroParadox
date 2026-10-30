@@ -3841,8 +3841,9 @@ namespace NInf
 /-- `Statement:` if a `Bool` test `t` isolates `∞`, the weak limited principle of omniscience (WLPO)
     holds. `Reading:` `t` is `false` at every `n̲` and `true` at `∞` (`isolating_infty_iff`); with
     that hypothesis the choice-free reduction is Escardó's own, his WLPO row (p. 4) with Lemma 3.3
-    (p. 4), formalized as `basic-discontinuity-taboo` in his TypeTopology module
-    `Taboos.BasicDiscontinuity` (retrieved 2026-10-29). His Theorem 7.1(1) (p. 13) is the weaker-hypothesis form, any discontinuous map
+    (p. 4), formalized, with the `ℕ∞`-indexed `WLPO` as its conclusion, as
+    `basic-discontinuity-taboo` in his TypeTopology module `Taboos.BasicDiscontinuity` (retrieved
+    2026-10-29). His Theorem 7.1(1) (p. 13) is the weaker-hypothesis form, any discontinuous map
     `ℕ∞ → 2`, and assumes countable choice. -/
 theorem wlpo_of_isolating_infty (t : NInf → Bool) (ht : ∀ b, t b = true ↔ b = infty) :
     ∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false := fun r => by
@@ -3881,8 +3882,8 @@ theorem wlpo_of_eqOr_infty (h : ∀ x : NInf, x = infty ∨ x ≠ infty) :
   (h (det r)).imp (det_eq_infty_iff r).1 (fun hne hall => hne ((det_eq_infty_iff r).2 hall))
 
 /-- `Statement:` WLPO iff any two points of `NInf` are equal or not; both directions. `Reading:`
-    compare TypeTopology `Taboos.WLPO`, whose `WLPO` is type-valued and indexed by `ℕ∞`; the
-    bit-sequence form here is its `WLPO-traditional` (`ZeroParadox/DieCannotBe.lean` § XXVII). -/
+    compare TypeTopology `Taboos.WLPO`, whose `WLPO` is type-valued, `ℕ∞`-indexed; ours is the `Prop`
+    form of its `WLPO-traditional`, bits complemented (`ZeroParadox/DieCannotBe.lean` § XXVII). -/
 theorem wlpo_iff_eqOr :
     (∀ r : ℕ → Bool, (∀ n, r n = false) ∨ ¬ ∀ n, r n = false) ↔ ∀ x y : NInf, x = y ∨ x ≠ y :=
   ⟨eqOr_of_wlpo, fun h => wlpo_of_eqOr_infty fun x => h x infty⟩
@@ -4129,7 +4130,7 @@ theorem ofOption_injective : Function.Injective ofOption := by
 
 /-- `Statement:` if two maps `NInf → NInf` agree at `∞` and at every `n̲`, they agree at every point.
     `Reading:` the two-map form of Escardó's Lemma 3.4, by the same argument, with Lemma 3.3
-    (pp. 4–5); it is TypeTopology `ℕ∞-density`. -/
+    (pp. 4–5); it is the `Y = ℕ∞` instance of TypeTopology `ℕ∞-density`. -/
 theorem density (f g : NInf → NInf) (hinf : f infty = g infty)
     (hn : ∀ n, f (ofNat n) = g (ofNat n)) : ∀ x, f x = g x := fun x =>
   separated fun hne => hne (by
