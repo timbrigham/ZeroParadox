@@ -81,21 +81,21 @@ the thing a title search cannot reach. Four standing rules, each measured:
 - **ONE PHRASING RUNS WITH `formality: "formal"`; `"both"` does not count.** The default is
   `"informal"`, so without it no Lean library is searched, and under `"both"` informal hits crowd the
   capped list (2026-10-31: a Carleson query returned 6 carleson-repo hits under `"formal"`, 0 under
-  `"both"`). Coverage, a dated sample (2026-10-31): hits in Mathlib, pfr, carleson, FLT, cam-combi,
+  `"both"`). Coverage, a dated sample (2026-10-31): hits in Mathlib, pfr, carleson, FLT,
   HarderNarasimhan; misses on the probes run, teorth/equational_theories and this repository. A formal
   null is coverage-bounded.
 
 **Rung 3 — Lean libraries, always run.** LeanExplore (Justin Asher, arXiv:2506.11085): `search_summary`,
-two phrasings minimum, then `get_source_code` on any candidate plus its elaborated type, because the
-returned text can omit section binders (2026-10-31: `OrderHom.lfp` lost `[CompleteLattice α]`); its
-`description` is AI-generated. Then GitHub code search with `language:Lean` for the Reservoir long tail
-(about 920 packages, 2026-10-31). If the LeanExplore tools are unavailable, record that half NOT RUN,
-never a null. Its null is uninformative too; it is hosted, rate-limited and sees every query. Full
-rules: `.claude/commands/prior-art-review.md`, rung B2.
+two phrasings minimum, then `get_source_code` on any candidate plus its elaborated type from `#check`
+(the only route; `get_dependencies` returns names only), because the returned text can omit section
+binders (2026-10-31: `OrderHom.lfp` lost `[CompleteLattice α]`). Then GitHub code search with
+`extension:lean`, not `language:Lean` (2026-10-31: 9 files against 0), for the Reservoir long tail
+(about 920 packages, 2026-10-31). The LeanExplore half may be recorded NOT RUN if the tools are
+unavailable; the code search is always required. Its null is uninformative too; both services are
+rate-limited. Full rules: `.claude/commands/prior-art-review.md`, rung B2.
 
-**Rung 4 — the open web.** Runs when rung 2 returns no good match, **and also when rung 2 or 3 returns
-a neighbourhood hit whose actual source needs identifying**; a Lean declaration is not a literature
-citation. This is where everything pre-arXiv lives —
+**Rung 4 — the open web.** Runs when rung 2 returns no good match, **and also when it returns a
+neighbourhood hit whose actual source needs identifying**. This is where everything pre-arXiv lives —
 Lawvere 1969, Aczel 1988, Ostrowski, Gentzen, Carlström — and `theoremsearch` structurally cannot return
 those as sources, only as things other people cite. Skipping rung 4 on a rung-2 null is how a coverage
 gap becomes a recorded novelty claim.
@@ -121,8 +121,8 @@ content-exact statements. Veltri, Ahrens–Capriotti–Spadotti and Yanofsky wer
 
 **Coverage is real and provable.** arXiv:2104.02549 is **verifiably absent** from the index while sitting
 in `papers/`. So a gate blocking on "no prior art found" would have returned clear for a claim whose prior
-art this project is physically holding. ⚠ `paper_filter` takes a **TITLE, not an arXiv id** — passing an
-id returns empty, which reads exactly like absence. Verify the filter before believing its zero.
+art this project is physically holding. `paper_filter` matches arXiv ids as a prefix and other tokens as
+title substrings (the tool's schema; 2026-10-31). Verify the filter before believing its zero.
 
 **Precision: one correct abstention, and one control that was itself wrong.** The two-forks universal
 negative (`ZeroParadox/Algebra/WheelFrac.md`) drew only unrelated combinatorics — correct abstention.
@@ -147,8 +147,8 @@ which is precisely the AMM Thm 8.1 trap this project already records (those cond
 
 ⚠ **WHY THIS IS NOT A GATE, and the reasoning transfers to the next such tool.** A gate must be able to
 fail informatively. Here a null is uninformative (coverage) and a hit is a candidate, not a finding — so
-enforcement would manufacture the appearance of coverage, which is `RLY25-1` exactly. This is the rung-5
-shape from § *WHEN A FAILURE RECURS*: **the screen may replace the ENUMERATION, never the VERDICT.**
+enforcement would manufacture the appearance of coverage, which is `RLY25-1` exactly. This is rung 5 of
+the recurrence escalation ladder (`R-NOCONV`), not of the literature ladder above: **the screen may replace the ENUMERATION, never the VERDICT.**
 
 ⚠ **ITS CONTROLS SHIP WITH IT**, per the `check_checkers.py` move — the control is the deliverable. The
 two standing controls are the WheelFrac two-forks negative (must return nothing usable) and a Lawvere /
@@ -285,7 +285,7 @@ free analyticity lemmas, and the standard NAME for a thing described longhand.
    `@[simps]`) that have **no source line to grep**.
 3. **One literature search** if the object has a name — **run the LADDER in order: `.claude-local/papers/`
    → `theoremsearch` (one phrasing `formality: "formal"`) → Lean libraries (LeanExplore, GitHub
-   `language:Lean`) → the open web → RETRIEVE THE FULL DOCUMENT.** Three phrasings minimum at
+   `extension:lean`) → the open web → RETRIEVE THE FULL DOCUMENT.** Three phrasings minimum at
    `theoremsearch`; ignore its similarity score; **every null is UNINFORMATIVE** (coverage-bounded).
    **Rungs 1–4 are DISCOVERY, only rung 5 is VERIFICATION** — a returned body is not a passage in hand.
    📖 `tools/process/prior-art.md` §§ 2a–2b.
